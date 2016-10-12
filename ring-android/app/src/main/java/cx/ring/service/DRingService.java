@@ -1476,5 +1476,55 @@ public class DRingService extends Service {
                 }
             });
         }
+
+        public void lookupName(final String account, final String nameserver, final String name) {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "DRingService.lookupName thread running() " + name);
+                    if (!Ringservice.lookupName(account, nameserver, name)) {
+                        Intent intent = new Intent(ConfigurationManagerCallback.NAME_LOOKUP_ENDED);
+                        intent.putExtra("account", account);
+                        intent.putExtra("state", -1);
+                        intent.putExtra("name", name);
+                        sendBroadcast(intent);
+                    }
+                    Log.i(TAG, "DRingService.lookupName DONE " + name);
+                }
+            });
+        }
+
+        public void lookupAddress(final String account, final String nameserver, final String address) {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.i(TAG, "DRingService.lookupAddress thread running() " + address);
+                    if (!Ringservice.lookupAddress(account, nameserver, address)) {
+                        Intent intent = new Intent(ConfigurationManagerCallback.NAME_LOOKUP_ENDED);
+                        intent.putExtra("account", account);
+                        intent.putExtra("state", -1);
+                        intent.putExtra("address", address);
+                        sendBroadcast(intent);
+                    }
+                }
+            });
+        }
+
+        public void registerName(final String account, final String password, final String name) {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    Log.w(TAG, "DRingService.registerName thread running() " + name);
+                    if (!Ringservice.registerName(account, password, name)) {
+                        Intent intent = new Intent(ConfigurationManagerCallback.NAME_REGISTRATION_ENDED);
+                        intent.putExtra("account", account);
+                        intent.putExtra("state", -1);
+                        intent.putExtra("name", name);
+                        sendBroadcast(intent);
+                    }
+                }
+            });
+        }
+
     };
 }

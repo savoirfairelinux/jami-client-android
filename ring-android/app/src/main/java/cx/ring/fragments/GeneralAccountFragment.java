@@ -19,6 +19,16 @@
  */
 package cx.ring.fragments;
 
+import cx.ring.R;
+import cx.ring.interfaces.AccountCallbacks;
+import cx.ring.interfaces.AccountChangedListener;
+import cx.ring.model.account.Account;
+import cx.ring.model.account.AccountConfig;
+import cx.ring.model.account.ConfigKey;
+import cx.ring.views.EditTextIntegerPreference;
+import cx.ring.views.EditTextPreferenceDialog;
+import cx.ring.views.PasswordPreference;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v14.preference.PreferenceFragment;
@@ -27,16 +37,6 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.TwoStatePreference;
 import android.util.Log;
 import android.view.inputmethod.EditorInfo;
-
-import cx.ring.R;
-import cx.ring.interfaces.AccountCallbacks;
-import cx.ring.interfaces.AccountChangedListener;
-import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountDetail;
-import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.views.EditTextIntegerPreference;
-import cx.ring.views.EditTextPreferenceDialog;
-import cx.ring.views.PasswordPreference;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
@@ -70,8 +70,8 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
 
     @Override
     public void accountChanged(Account acc) {
-        setPreferenceDetails(acc.getBasicDetails());
-        setPreferenceListener(acc.getBasicDetails(), changeBasicPreferenceListener);
+        setPreferenceDetails(acc.getConfig());
+        setPreferenceListener(acc.getConfig(), changeBasicPreferenceListener);
     }
 
     @Override
@@ -128,31 +128,33 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
         }
     }
 
-    private void setPreferenceDetails(AccountDetail details) {
-        for (AccountDetail.PreferenceEntry preferenceEntry : details.getDetailValues()) {
-            Preference pref = findPreference(preferenceEntry.mKey);
+    private void setPreferenceDetails(AccountConfig details) {
+        for (ConfigKey k : details.getKeys()) {
+            Preference pref = findPreference(k.key());
             if (pref != null) {
-                if (!preferenceEntry.isTwoState) {
-                    ((EditTextPreference) pref).setText(preferenceEntry.mValue);
+                if (!k.isTwoState()) {
+                    String val = details.get(k);
+                    ((EditTextPreference) pref).setText(val);
                     if (pref instanceof PasswordPreference) {
                         String tmp = "";
-                        for (int i = 0; i < preferenceEntry.mValue.length(); ++i) {
+                        for (int i = 0; i < val.length(); ++i) {
                             tmp += "*";
                         }
                         pref.setSummary(tmp);
                     } else {
-                        pref.setSummary(preferenceEntry.mValue);
+                        pref.setSummary(val);
                     }
                 } else {
-                    ((TwoStatePreference) pref).setChecked(preferenceEntry.isChecked());
+                    ((TwoStatePreference) pref).setChecked(details.getBool(k));
                 }
             }
         }
     }
 
-    private void setPreferenceListener(AccountDetail details, Preference.OnPreferenceChangeListener listener) {
-        for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Preference pref = findPreference(p.mKey);
+    private void setPreferenceListener(AccountConfig details, Preference.OnPreferenceChangeListener listener) {
+        for (ConfigKey k : details.getKeys()) {
+            //Log.i(TAG, "setPreferenceListener: pref " + p.mKey + " " + p.mValue);
+            Preference pref = findPreference(k.key());
             if (pref != null) {
                 pref.setOnPreferenceChangeListener(listener);
             }
@@ -164,31 +166,31 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
         public boolean onPreferenceChange(Preference preference, Object newValue) {
 
             Log.i(TAG, "Changing preference " + preference.getKey() + " to value:" + newValue);
-            final Account account = mCallbacks.getAccount();
+            final Account acc = mCallbacks.getAccount();
+            final ConfigKey key = ConfigKey.fromString(preference.getKey());
             if (preference instanceof TwoStatePreference) {
-                account.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
+                acc.setDetail(key, newValue.toString());
             } else {
                 if (preference instanceof PasswordPreference) {
                     String tmp = "";
                     for (int i = 0; i < ((String) newValue).length(); ++i) {
                         tmp += "*";
                     }
-                    if (account.isSip()) {
-                        account.getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
-                    }
+                    if(acc.isSip())
+                        acc.getCredentials().get(0).setDetail(key, newValue.toString());
                     preference.setSummary(tmp);
-                } else if (preference.getKey().contentEquals(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME)) {
-                    if (account.isSip()) {
-                        account.getCredentials().get(0).setDetailString(preference.getKey(), newValue.toString());
-                    }
+                } else if(key == ConfigKey.ACCOUNT_USERNAME) {
+					if(acc.isSip()){
+                        acc.getCredentials().get(0).setDetail(key, newValue.toString());
+					}
                     preference.setSummary((CharSequence) newValue);
                 } else {
                     preference.setSummary((CharSequence) newValue);
                 }
 
-                account.getBasicDetails().setDetailString(preference.getKey(), newValue.toString());
+                acc.setDetail(key, newValue.toString());
             }
-            account.notifyObservers();
+            mCallbacks.saveAccount();
             return true;
         }
     };

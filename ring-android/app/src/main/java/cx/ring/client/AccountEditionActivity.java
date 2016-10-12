@@ -41,6 +41,7 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.ActivityCompat;
@@ -99,12 +100,13 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         }
 
         @Override
-        public void addOnAccountChanged(AccountChangedListener list) {
-        }
+        public void addOnAccountChanged(AccountChangedListener list) {}
 
         @Override
-        public void removeOnAccountChanged(AccountChangedListener list) {
-        }
+        public void removeOnAccountChanged(AccountChangedListener list) {}
+
+        @Override
+        public void saveAccount() {}
     };
 
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
@@ -116,41 +118,22 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     private LocalService mService;
 
     private Account mAccSelected = null;
+    private ViewPager mViewPager = null;
+    private PagerSlidingTabStrip mSlidingTabLayout = null;
+
     private final ArrayList<AccountChangedListener> listeners = new ArrayList<>();
 
-    private Observer mAccountObserver = new Observer() {
+    private final Observer mAccountObserver = new Observer() {
 
         @Override
         public void update(Observable observable, Object data) {
-            if (mAccSelected == null || mService == null) {
-                return;
-            }
-
-            final Account acc = mAccSelected;
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().setTitle(acc.getAlias());
-            }
-
-            final IDRingService remote = getRemoteService();
-            if (remote == null) {
-                Log.w(TAG, "Error updating account, remote service is null");
-                return;
-            }
-            mService.getThreadPool().submit(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        remote.setCredentials(acc.getAccountID(), acc.getCredentialsHashMapList());
-                        remote.setAccountDetails(acc.getAccountID(), acc.getDetails());
-                    } catch (RemoteException e) {
-                        Log.e(TAG, "Error while setting credentials", e);
-                    }
-                }
-            });
+            Log.i(TAG, "Observer: account changed !");
+            for (AccountChangedListener l : listeners)
+                l.accountChanged(mAccSelected);
         }
     };
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder s) {
@@ -169,15 +152,20 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             mAccSelected.addObserver(mAccountObserver);
             getSupportActionBar().setTitle(mAccSelected.getAlias());
 
-            final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+            mViewPager = (ViewPager) findViewById(R.id.pager);
             mViewPager.setOffscreenPageLimit(4);
             mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), AccountEditionActivity.this, mAccSelected.isRing()));
-
-            PagerSlidingTabStrip mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
+            mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
             mSlidingTabLayout.setViewPager(mViewPager);
 
             for (AccountChangedListener l : listeners)
                 l.accountChanged(mAccSelected);
+
+            if (mAccSelected.isRing()) {
+                mSlidingTabLayout.setVisibility(View.GONE);
+                mViewPager.setVisibility(View.GONE);
+                getFragmentManager().beginTransaction().add(R.id.fragment_container, new DeviceAccountFragment()).addToBackStack(null).commit();
+            }
         }
 
         @Override
@@ -197,10 +185,20 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
+
         if (!mBound) {
             Intent intent = new Intent(this, LocalService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
+    }
+
+
+    public void editAdvanced() {
+        getFragmentManager().popBackStack();
+        mSlidingTabLayout.setVisibility(View.VISIBLE);
+        mViewPager.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -412,6 +410,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         return new File(path, getAccount().getAlias() + ".ring");
     }
 
+
     private class ExportAccountTask extends AsyncTask<String, Void, Integer> {
         ProgressDialog exportDialog;
         private String path;
@@ -475,8 +474,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
         @Override
         public int getCount() {
-            // For now we have 4 panels in each account type (Ring/SIP), but it may change
-            return isRing ? 4 : 4;
+            return isRing ? 3 : 4;
         }
 
         @Override
@@ -494,12 +492,10 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             Log.i(TAG, "PreferencesPagerAdapter getFragment " + position);
             switch (position) {
                 case 0:
-                    return new DeviceAccountFragment();
-                case 1:
                     return new GeneralAccountFragment();
-                case 2:
+                case 1:
                     return new MediaPreferenceFragment();
-                case 3:
+                case 2:
                     return new AdvancedAccountFragment();
                 default:
                     return null;
@@ -522,6 +518,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             }
         }
 
+        @StringRes
         private static int getRingPanelTitle(int position) {
             switch (position) {
                 case 0:
@@ -537,6 +534,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             }
         }
 
+        @StringRes
         private static int getSIPPanelTitle(int position) {
             switch (position) {
                 case 0:
@@ -568,4 +566,6 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         listeners.remove(list);
     }
 
+    @Override
+    public void saveAccount() {}
 }

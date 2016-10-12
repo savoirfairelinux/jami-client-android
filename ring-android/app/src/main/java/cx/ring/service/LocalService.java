@@ -91,9 +91,8 @@ import cx.ring.model.SipCall;
 import cx.ring.model.SipUri;
 import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountDetailSrtp;
-import cx.ring.model.account.AccountDetailTls;
-import cx.ring.model.account.AccountDetailVolatile;
+import cx.ring.model.account.AccountConfig;
+import cx.ring.model.account.ConfigKey;
 import cx.ring.utils.MediaManager;
 
 public class LocalService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -153,6 +152,20 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     private boolean mAreConversationsLoaded = false;
 
+    public interface NameLookupCallback {
+        void onFound(String name, String address);
+        void onInvalidName(String name);
+        void onError(String name, String address);
+    };
+    final private Map<String, ArrayList<NameLookupCallback>> currentNameLookup = new HashMap<>();
+    final private Map<String, ArrayList<NameLookupCallback>> currentAddressLookup = new HashMap<>();
+
+    public interface NameRegistrationCallback {
+        void onRegistered(String name);
+        void onError(String name, CharSequence err);
+    };
+    final private Map<String, ArrayList<NameRegistrationCallback>> currentNameRegistrations = new HashMap<>();
+
     public ContactsLoader.Result getSortedContacts() {
         Log.w(TAG, "getSortedContacts " + lastContactLoaderResult.contacts.size() + " contacts, " + lastContactLoaderResult.starred.size() + " starred.");
         return lastContactLoaderResult;
@@ -202,8 +215,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             call.setCallID(callId);
             Account account = getAccount(call.getAccount());
             if (account.isRing()
-                    || account.getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_SRTP_ENABLE)
-                    || account.getTlsDetails().getDetailBoolean(AccountDetailTls.CONFIG_TLS_ENABLE)) {
+                    || account.getDetailBoolean(ConfigKey.SRTP_ENABLE)
+                    || account.getDetailBoolean(ConfigKey.TLS_ENABLE)) {
                 Log.i(TAG, "placeCall() call is secure");
                 SecureSipCall secureCall = new SecureSipCall(call, account.getSrtpDetails().getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE));
                 conf = new Conference(secureCall);
@@ -246,6 +259,52 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         } catch (RemoteException e) {
             Log.e(TAG, "sendTextMessage", e);
         }
+    }
+
+    public void lookupName(final String account, final String name, final NameLookupCallback cb) {
+        try {
+            ArrayList<NameLookupCallback> cbs = currentNameLookup.get(name);
+            if (cbs == null) {
+                cbs = new ArrayList<>();
+                currentNameLookup.put(name, cbs);
+            }
+            cbs.add(cb);
+            mService.lookupName(account == null ? "" : account, "", name);
+        } catch (RemoteException e) {
+            cb.onError(name, null);
+        }
+    }
+    public void lookupAddress(final String account, final String address, final NameLookupCallback cb) {
+        try {
+            ArrayList<NameLookupCallback> cbs = currentAddressLookup.get(address);
+            if (cbs == null) {
+                cbs = new ArrayList<>();
+                currentAddressLookup.put(address, cbs);
+            }
+            cbs.add(cb);
+            mService.lookupAddress(account, null, address);
+        } catch (RemoteException e) {
+            cb.onError(null, address);
+        }
+    }
+    public void registerName(final Account account, final String password, final String name, final NameRegistrationCallback cb) {
+        if (account.registeringUsername) {
+            Log.w(TAG, "Already trying to register username");
+            return;
+        }
+        try {
+            ArrayList<NameRegistrationCallback> cbs = currentNameRegistrations.get(name);
+            if (cbs == null) {
+                cbs = new ArrayList<>();
+                currentNameRegistrations.put(name, cbs);
+            }
+            cbs.add(cb);
+            account.registeringUsername = true;
+            mService.registerName(account.getAccountID(), password, name);
+        } catch (RemoteException e) {
+            account.registeringUsername = false;
+        }
+        account.notifyObservers();
     }
 
     public void sendTextMessage(Conference conf, String txt) {
@@ -1090,10 +1149,10 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                             call = new SipCall(call_id, mService.getCallDetails(call_id));
                         }
                         Account acc = getAccount(call.getAccount());
-                        if (acc.isRing()
-                                || acc.getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_SRTP_ENABLE)
-                                || acc.getTlsDetails().getDetailBoolean(AccountDetailTls.CONFIG_TLS_ENABLE)) {
-                            call = new SecureSipCall(call, acc.getSrtpDetails().getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE));
+                        if(acc.isRing()
+                                || acc.getDetailBoolean(ConfigKey.SRTP_ENABLE)
+                                || acc.getDetailBoolean(ConfigKey.TLS_ENABLE)) {
+                            call = new SecureSipCall(call, acc.getDetail(ConfigKey.SRTP_KEY_EXCHANGE));
                         }
                         conf.addParticipant(call);
                     }
@@ -1337,12 +1396,13 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     } else {
                         Account account = getAccount(intent.getStringExtra("account"));
                         if (account != null) {
-                            String stateOld = account.getRegistrationState();
-                            String stateNew = intent.getStringExtra("state");
-                            if (stateOld.contentEquals(AccountDetailVolatile.STATE_INITIALIZING) &&
-                                    !stateNew.contentEquals(AccountDetailVolatile.STATE_INITIALIZING)) {
+                            String state_old = account.getRegistrationState();
+                            String state_new = intent.getStringExtra("state");
+                            if (state_old != null
+                                    && state_old.contentEquals(AccountConfig.STATE_INITIALIZING)
+                                    && !state_new.contentEquals(AccountConfig.STATE_INITIALIZING)) {
                                 try {
-                                    account.setBasicDetails((Map<String, String>) mService.getAccountDetails(account.getAccountID()));
+                                    account.setDetails((Map<String, String>) mService.getAccountDetails(account.getAccountID()));
                                     account.setCredentials((ArrayList<Map<String, String>>) mService.getCredentials(account.getAccountID()));
                                     account.setDevices((Map<String, String>) mService.getKnownRingDevices(account.getAccountID()));
                                     account.setVolatileDetails((Map<String, String>) mService.getVolatileAccountDetails(account.getAccountID()));
@@ -1350,7 +1410,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                                     Log.e(TAG, "Error while setting accound details", e);
                                 }
                             } else {
-                                account.setRegistrationState(intent.getStringExtra("state"), intent.getIntExtra("code", 0));
+                                account.setRegistrationState(state_new, intent.getIntExtra("code", 0));
                             }
                         }
                         sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
@@ -1419,6 +1479,75 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     }
                     break;
                 }
+                case ConfigurationManagerCallback.NAME_LOOKUP_ENDED: {
+                    String name = intent.getStringExtra("name");
+                    String address = intent.getStringExtra("address");
+                    int state = intent.getIntExtra("state", -1);
+                    ArrayList<NameLookupCallback> name_cbs = currentNameLookup.get(name);
+                    ArrayList<NameLookupCallback> addr_cbs = currentAddressLookup.get(address);
+                    if (name_cbs != null) {
+                        for (NameLookupCallback cb : name_cbs) {
+                            if (state == 0)
+                                cb.onFound(name, address);
+                            else if (state == 1)
+                                cb.onInvalidName(name);
+                            else
+                                cb.onError(name, address);
+                        }
+                        name_cbs.clear();
+                    }
+                    if (addr_cbs != null) {
+                        for (NameLookupCallback cb : addr_cbs) {
+                            if (state == 0)
+                                cb.onFound(name, address);
+                            else if (state == 1)
+                                cb.onInvalidName(name);
+                            else
+                                cb.onError(name, address);
+                        }
+                        addr_cbs.clear();
+                    }
+                    break;
+                }
+                case ConfigurationManagerCallback.NAME_REGISTRATION_ENDED : {
+                    Account acc = getAccount(intent.getStringExtra("account"));
+                    if (acc == null) {
+                        Log.w(TAG, "Can't find account for name registration callback");
+                        break;
+                    }
+                    String name = intent.getStringExtra("name");
+                    int state = intent.getIntExtra("state", -1);
+                    acc.registeringUsername = false;
+                    ArrayList<NameRegistrationCallback> reg_cbs = currentNameRegistrations.get(name);
+                    if (reg_cbs != null) {
+                        for (NameRegistrationCallback cb : reg_cbs) {
+                            if (state == 0) {
+                                try {
+                                    acc.setVolatileDetails((Map<String, String>) mService.getVolatileAccountDetails(acc.getAccountID()));
+                                } catch (RemoteException e) {
+                                    e.printStackTrace();
+                                }
+                                cb.onRegistered(name);
+                            } else {
+                                int res = -1;
+                                switch (state) {
+                                    case 1:
+                                        res = R.string.register_name_wrong_password; break;
+                                    case 2:
+                                        res = R.string.register_name_invalid; break;
+                                    case 3:
+                                        res = R.string.register_name_already_taken; break;
+                                    case 4:
+                                        res = R.string.register_name_network_error; break;
+                                }
+                                cb.onError(name, getText(res));
+                            }
+                        }
+                        reg_cbs.clear();
+                    }
+                    acc.notifyObservers();
+                    break;
+                }
                 case CallManagerCallBack.INCOMING_CALL: {
                     String callId = intent.getStringExtra("call");
                     String accountId = intent.getStringExtra("account");
@@ -1433,7 +1562,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
                     Conference toAdd;
                     if (account.useSecureLayer()) {
-                        SecureSipCall secureCall = new SecureSipCall(call, account.getSrtpDetails().getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE));
+                        SecureSipCall secureCall = new SecureSipCall(call, account.getDetail(ConfigKey.SRTP_KEY_EXCHANGE));
                         toAdd = new Conference(secureCall);
                     } else {
                         toAdd = new Conference(call);
@@ -1546,6 +1675,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_DEVICES_CHANGED);
         intentFilter.addAction(ConfigurationManagerCallback.INCOMING_TEXT);
         intentFilter.addAction(ConfigurationManagerCallback.MESSAGE_STATE_CHANGED);
+        intentFilter.addAction(ConfigurationManagerCallback.NAME_LOOKUP_ENDED);
+        intentFilter.addAction(ConfigurationManagerCallback.NAME_REGISTRATION_ENDED);
 
         intentFilter.addAction(CallManagerCallBack.INCOMING_CALL);
         intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);

@@ -18,8 +18,8 @@
         app:elevation="4dp"
         app:titleTextAppearance="@style/ToolbarTitle" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
