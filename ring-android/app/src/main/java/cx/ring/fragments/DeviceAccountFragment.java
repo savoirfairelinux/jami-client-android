@@ -55,18 +55,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
-
 import cx.ring.R;
+import cx.ring.client.AccountEditionActivity;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.account.Account;
+import cx.ring.model.account.ConfigKey;
+import cx.ring.service.LocalService;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.views.LinkNewDeviceLayout;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
-public class DeviceAccountFragment extends Fragment implements AccountChangedListener, BackHandlerInterface {
+public class DeviceAccountFragment extends Fragment implements AccountChangedListener,
+        BackHandlerInterface,
+        RegisterNameDialog.RegisterNameDialogListener {
 
     private static final String TAG = DeviceAccountFragment.class.getSimpleName();
 
@@ -88,6 +92,30 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     @BindView(R.id.account_link_info)
     TextView mExportInfos;
 
+    @BindView(R.id.account_edit_btn)
+    View editBtn;
+
+    @BindView(R.id.account_alias_txt)
+    TextView accNameTxt;
+
+    @BindView(R.id.account_id_txt)
+    TextView accIdTxt;
+
+    @BindView(R.id.registered_name_txt)
+    TextView accUsernameTxt;
+
+    @BindView(R.id.register_name_btn)
+    Button registerNameBtn;
+
+    @BindView(R.id.group_registering_name)
+    ViewGroup registeringNameGroup;
+
+    @BindView(R.id.group_register_name)
+    ViewGroup registerNameGroup;
+
+    @BindView(R.id.group_registered_name)
+    ViewGroup registeredNameGroup;
+
     @BindView(R.id.device_list)
     ListView mDeviceList;
 
@@ -99,24 +127,6 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
     private DeviceAdapter mDeviceAdapter;
 
-    /*
-    Fragment LifeCycle
-     */
-    @Nullable
-    @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup devLayout = (ViewGroup) inflater.inflate(R.layout.frag_device_list, container, false);
-
-        ButterKnife.bind(this, devLayout);
-
-        Account account = mCallbacks.getAccount();
-        if (account != null) {
-            accountChanged(account);
-        }
-        mLinkAccountView.setContainer(this);
-        hidePopWizard();
-        return devLayout;
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -144,6 +154,18 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     public void accountChanged(Account account) {
         mDeviceAdapter = new DeviceAdapter(getActivity(), account.getDevices());
         mDeviceList.setAdapter(mDeviceAdapter);
+
+        accNameTxt.setText(account.getAlias());
+        accIdTxt.setText(account.getUsername());
+        String username = account.getRegisteredName();
+        boolean currentRegisteredName = account.registeringUsername;
+        boolean hasRegisteredName = !currentRegisteredName && username != null && !username.isEmpty();
+        registeringNameGroup.setVisibility(currentRegisteredName ? View.VISIBLE : View.GONE);
+        registerNameGroup.setVisibility((!hasRegisteredName && !currentRegisteredName) ? View.VISIBLE : View.GONE);
+        registeredNameGroup.setVisibility(hasRegisteredName ? View.VISIBLE : View.GONE);
+        if (hasRegisteredName) {
+            accUsernameTxt.setText(username);
+        }
         account.devicesListener = new Account.OnDevicesChangedListener() {
             @Override
             public void devicesChanged(Map<String, String> devices) {
@@ -159,6 +181,7 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     */
     @Override
     public boolean onBackPressed() {
+
         if (isDisplayingWizard()) {
             hideWizard();
             return true;
@@ -249,6 +272,31 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
         } else {
             new ExportOnRingTask().execute(mRingPassword.getText().toString());
         }
+    }
+
+    @OnClick(R.id.register_name_btn)
+    public void showUsernameRegistrationPopup() {
+        RegisterNameDialog registrationDialog = new RegisterNameDialog();
+        registrationDialog.setListener(this);
+        registrationDialog.show(getFragmentManager(), TAG);
+    }
+
+    @Override
+    public void onRegisterName(String name, String password) {
+        final Account account = mCallbacks.getAccount();
+        account.setDetail(ConfigKey.ACCOUNT_REGISTERED_NAME, name);
+        mCallbacks.getService().registerName(account, password, name, new LocalService.NameRegistrationCallback() {
+            @Override
+            public void onRegistered(String name) {
+                Log.w(TAG, "Account wizard, onRegistered " + name);
+                mCallbacks.saveAccount();
+            }
+
+            @Override
+            public void onError(String name, CharSequence err) {
+                Log.w(TAG, "Account wizard, onError " + name);
+            }
+        });
     }
 
     class DeviceAdapter extends BaseAdapter {
@@ -356,6 +404,30 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
             }
             return pin;
         }
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (container == null) return null;
+        ViewGroup devLayout = (ViewGroup) inflater.inflate(R.layout.frag_device_list, container, false);
+
+        ButterKnife.bind(this, devLayout);
+
+        Account acc = mCallbacks.getAccount();
+        if (acc != null) {
+            accountChanged(acc);
+        }
+
+        mLinkAccountView.setContainer(this);
+        hidePopWizard();
+
+        return devLayout;
+    }
+
+    @OnClick(R.id.account_edit_btn)
+    public void editAccount() {
+        ((AccountEditionActivity) getActivity()).editAdvanced();
     }
 
 }

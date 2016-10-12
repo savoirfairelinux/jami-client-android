@@ -146,7 +146,7 @@ along with this program; if not, write to the Free Software
     <string name="account_restore_decryption_password">Decryption password</string>
     <string name="account_new_device">Add new device</string>
     <string name="account_new_device_message">Unlock Ring account to associate new device.</string>
-    <string name="account_new_device_password">Enter main account password</string>
+    <string name="account_new_device_password">Enter main password to unlock account</string>
 
     <string name="restore_dialog_title">Restoring</string>
     <string name="restore_backup_wait">Please wait…</string>
@@ -190,6 +190,7 @@ along with this program; if not, write to the Free Software
     <string name="account_device_updated_title">Account device updated</string>
 
     <string name="account_link_button">Link this device to an account</string>
+    <string name="account_import_title">Link to an existing account</string>
     <string name="account_link_prompt_password">Enter your password</string>
     <string name="account_link_prompt_pin">Enter PIN</string>
     <string name="account_wizard_title">Ring account</string>
@@ -201,4 +202,20 @@ along with this program; if not, write to the Free Software
     <string name="account_start_export_button">Generate Pin</string>
     <string name="account_end_export_button">close</string>
     <string name="account_end_export_infos">Your Pin is:\n\n%%\n\nTo complete the process, you need to open Ring on the new device. Create a new account with \"Link this device to an account\". Your pin is valid for 10 minutes.</string>
+
+    <!-- Name registration -->
+    <string name="register_name_wrong_password">Can\'t register name: wrong account password.</string>
+    <string name="register_name_invalid">Can\'t register name: invalid name.</string>
+    <string name="register_name_already_taken">Can\'t register name: name already taken.</string>
+    <string name="register_name_network_error">Can\'t register name: network or server error.</string>
+    <string name="error_username_empty">Enter a username</string>
+    <string name="no_registered_name_for_account">No registered name found for this account</string>
+    <string name="register_name">Register name</string>
+    <string name="trying_to_register_name">Trying to register name</string>
+    <string name="registered_username">Registered username</string>
+    <string name="register_username">Register a public Ring username that will be stored in the public blockchain registry</string>
+    <string name="username_already_taken">Username already taken</string>
+    <string name="invalid_username">Invalid username</string>
+    <string name="looking_for_username_availability">Looking for username availability ...</string>
+
 </resources>
