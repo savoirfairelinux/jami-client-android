@@ -77,7 +77,7 @@ interface IDRingService {
     /* IM */
     void sendTextMessage(in String callID, in String message);
     long sendAccountTextMessage(in String accountid, in String to, in String msg);
-
+    void sendProfile(in String callID);
 
     void transfer(in String callID, in String to);
     void attendedTransfer(in String transferID, in String targetID);

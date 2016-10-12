@@ -91,8 +91,6 @@ import cx.ring.model.SipCall;
 import cx.ring.model.SipUri;
 import cx.ring.model.TextMessage;
 import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountCredentials;
-import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.model.account.AccountDetailSrtp;
 import cx.ring.model.account.AccountDetailTls;
 import cx.ring.model.account.AccountDetailVolatile;
@@ -187,25 +185,27 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     public Conference placeCall(SipCall call) {
         Conference conf = null;
         CallContact contact = call.getContact();
-        if (contact == null)
+        if (contact == null) {
             contact = findContactByNumber(call.getNumberUri());
+        }
         Conversation conv = startConversation(contact);
         try {
             mService.setPreviewSettings();
             SipUri number = call.getNumberUri();
-            if (number == null || number.isEmpty())
+            if (number == null || number.isEmpty()) {
                 number = contact.getPhones().get(0).getNumber();
+            }
             String callId = mService.placeCall(call.getAccount(), number.getUriString(), !call.isVideoMuted());
             if (callId == null || callId.isEmpty()) {
                 return null;
             }
             call.setCallID(callId);
-            Account acc = getAccount(call.getAccount());
-            if (acc.isRing()
-                    || acc.getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_SRTP_ENABLE)
-                    || acc.getTlsDetails().getDetailBoolean(AccountDetailTls.CONFIG_TLS_ENABLE)) {
+            Account account = getAccount(call.getAccount());
+            if (account.isRing()
+                    || account.getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_SRTP_ENABLE)
+                    || account.getTlsDetails().getDetailBoolean(AccountDetailTls.CONFIG_TLS_ENABLE)) {
                 Log.i(TAG, "placeCall() call is secure");
-                SecureSipCall secureCall = new SecureSipCall(call, acc.getSrtpDetails().getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE));
+                SecureSipCall secureCall = new SecureSipCall(call, account.getSrtpDetails().getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE));
                 conf = new Conference(secureCall);
             } else {
                 conf = new Conference(call);
@@ -219,24 +219,23 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     }
 
     public Account createAccount(HashMap<String, String> conf) {
-        Account acc = null;
+        Account account = null;
         try {
-            final String acc_id = mService.addAccount(conf);
-            acc = getAccount(acc_id);
-            if (acc == null) {
-                acc = new Account(acc_id);
-                accounts.add(acc);
+            final String accountId = mService.addAccount(conf);
+            account = getAccount(accountId);
+            if (account == null) {
+                account = new Account(accountId);
+                accounts.add(account);
             }
         } catch (RemoteException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error while creating account", e);
         }
-        return acc;
+        return account;
     }
 
     public void sendTextMessage(String account, SipUri to, String txt) {
         try {
             long id = mService.sendAccountTextMessage(account, to.getRawUriString(), txt);
-            Log.w(TAG, "sendAccountTextMessage " + txt + " got id " + id);
             Log.w(TAG, "sendAccountTextMessage " + txt + " got id " + id);
             TextMessage message = new TextMessage(false, txt, to, null, account);
             message.setID(id);
@@ -272,8 +271,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         for (HistoryEntry h : conv.getRawHistory().values()) {
             NavigableMap<Long, TextMessage> messages = h.getTextMessages();
             for (TextMessage msg : messages.descendingMap().values()) {
-                if (msg.isRead())
+                if (msg.isRead()) {
                     break;
+                }
                 readTextMessage(msg);
             }
         }
@@ -297,10 +297,11 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         Log.d(TAG, "Sent text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getNumberUri() + " " + txt.getMessage());
         Conversation conv = conversationFromMessage(txt);
         conv.addTextMessage(txt);
-        if (conv.mVisible)
+        if (conv.mVisible) {
             txt.read();
-        else
+        } else {
             updateTextNotifications();
+        }
         sendBroadcast(new Intent(ACTION_CONF_UPDATE));
     }
 
@@ -397,24 +398,26 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         public void onLoadComplete(Loader<ArrayList<Account>> loader, ArrayList<Account> data) {
             Log.w(TAG, "AccountsLoader Loader.OnLoadCompleteListener " + data.size());
             ArrayList<Account> naccs = new ArrayList<>(data.size());
-            for (Account acc : data) {
-                Account f = getAccount(acc.getAccountID());
-                if (f != null)
-                    f.update(acc);
-                else
-                    f = acc;
-                naccs.add(f);
+            for (Account account : data) {
+                Account acc = getAccount(account.getAccountID());
+                if (acc != null) {
+                    acc.update(account);
+                } else {
+                    acc = account;
+                }
+                naccs.add(acc);
             }
             accounts = naccs;
             mAccountLoader.stopLoading();
             boolean haveSipAccount = false;
             boolean haveRingAccount = false;
-            for (Account acc : accounts) {
-                if (!acc.isEnabled())
+            for (Account account : accounts) {
+                if (!account.isEnabled()) {
                     continue;
-                if (acc.isSip()) {
+                }
+                if (account.isSip()) {
                     haveSipAccount = true;
-                } else if (acc.isRing()) {
+                } else if (account.isRing()) {
                     haveRingAccount = true;
                 }
             }
@@ -435,7 +438,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     private final Loader.OnLoadCompleteListener<ContactsLoader.Result> onSystemContactsLoaded = new Loader.OnLoadCompleteListener<ContactsLoader.Result>() {
         @Override
         public void onLoadComplete(Loader<ContactsLoader.Result> loader, ContactsLoader.Result data) {
-            Log.w(TAG, "ContactsLoader Loader.OnLoadCompleteListener " + data.contacts.size() + " contacts, " + data.starred.size() + " starred.");
+            Log.d(TAG, "ContactsLoader Loader.OnLoadCompleteListener " + data.contacts.size() + " contacts, " + data.starred.size() + " starred.");
 
             lastContactLoaderResult = data;
             systemContactCache.clear();
@@ -481,7 +484,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-            Log.w(TAG, "onServiceDisconnected " + arg0.getClassName());
+            Log.d(TAG, "onServiceDisconnected " + arg0.getClassName());
             if (mAccountLoader != null) {
                 mAccountLoader.unregisterListener(onAccountsLoaded);
                 mAccountLoader.cancelLoad();
@@ -517,7 +520,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     @Override
     public boolean onUnbind(Intent intent) {
-        Log.e(TAG, "onUnbind");
+        Log.d(TAG, "onUnbind");
         if (mConnection != null) {
             unbindService(mConnection);
             mConnection = null;
@@ -540,24 +543,24 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     @NonNull
     public static String[] checkRequiredPermissions(Context c) {
         ArrayList<String> perms = new ArrayList<>();
-        for (String p : REQUIRED_RUNTIME_PERMISSIONS) {
-            if (!checkPermission(c, p)) {
-                perms.add(p);
+        for (String permissionString : REQUIRED_RUNTIME_PERMISSIONS) {
+            if (!checkPermission(c, permissionString)) {
+                perms.add(permissionString);
             }
         }
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(c);
-        boolean contact_perm = sharedPref.getBoolean(c.getString(R.string.pref_systemContacts_key), true);
-        if (contact_perm && !checkPermission(c, Manifest.permission.READ_CONTACTS)) {
+        boolean contactPerm = sharedPref.getBoolean(c.getString(R.string.pref_systemContacts_key), true);
+        if (contactPerm && !checkPermission(c, Manifest.permission.READ_CONTACTS)) {
             perms.add(Manifest.permission.READ_CONTACTS);
         }
 
-        boolean camera_perm = sharedPref.getBoolean(c.getString(R.string.pref_systemCamera_key), true);
-        if (camera_perm && !checkPermission(c, Manifest.permission.CAMERA)) {
+        boolean cameraPerm = sharedPref.getBoolean(c.getString(R.string.pref_systemCamera_key), true);
+        if (cameraPerm && !checkPermission(c, Manifest.permission.CAMERA)) {
             perms.add(Manifest.permission.CAMERA);
         }
 
-        boolean sys_dialer = sharedPref.getBoolean(c.getString(R.string.pref_systemDialer_key), false);
-        if (sys_dialer && !checkPermission(c, Manifest.permission.WRITE_CALL_LOG)) {
+        boolean sysDialer = sharedPref.getBoolean(c.getString(R.string.pref_systemDialer_key), false);
+        if (sysDialer && !checkPermission(c, Manifest.permission.WRITE_CALL_LOG)) {
             perms.add(Manifest.permission.WRITE_CALL_LOG);
         }
 
@@ -576,9 +579,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         if (accountId == null || accountId.isEmpty()) {
             return null;
         }
-        for (Account acc : accounts) {
-            if (acc.getAccountID().equals(accountId)) {
-                return acc;
+        for (Account account : accounts) {
+            if (account.getAccountID().equals(accountId)) {
+                return account;
             }
         }
         return null;
@@ -587,12 +590,12 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     public void setAccountOrder(List<String> accountOrder) {
         ArrayList<Account> newlist = new ArrayList<>(accounts.size());
         String order = "";
-        for (String acc_id : accountOrder) {
-            Account acc = getAccount(acc_id);
-            if (acc != null) {
-                newlist.add(acc);
+        for (String accountId : accountOrder) {
+            Account account = getAccount(accountId);
+            if (account != null) {
+                newlist.add(account);
             }
-            order += acc_id + File.separator;
+            order += accountId + File.separator;
         }
         accounts = newlist;
         try {
@@ -644,10 +647,10 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     public Conversation getByContact(CallContact contact) {
         ArrayList<String> keys = contact.getIds();
-        for (String k : keys) {
-            Conversation c = conversations.get(k);
-            if (c != null) {
-                return c;
+        for (String key : keys) {
+            Conversation conversation = conversations.get(key);
+            if (conversation != null) {
+                return conversation;
             }
         }
         Log.w(TAG, "getByContact failed");
@@ -655,10 +658,10 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     }
 
     public Conversation getConversationByCallId(String callId) {
-        for (Conversation conv : conversations.values()) {
-            Conference conf = conv.getConference(callId);
+        for (Conversation conversation : conversations.values()) {
+            Conference conf = conversation.getConference(callId);
             if (conf != null) {
-                return conv;
+                return conversation;
             }
         }
         return null;
@@ -668,18 +671,18 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         if (contact.isUnknown()) {
             contact = findContactByNumber(contact.getPhones().get(0).getNumber());
         }
-        Conversation c = getByContact(contact);
-        if (c == null) {
-            c = new Conversation(contact);
-            conversations.put(contact.getIds().get(0), c);
+        Conversation conversation = getByContact(contact);
+        if (conversation == null) {
+            conversation = new Conversation(contact);
+            conversations.put(contact.getIds().get(0), conversation);
         }
-        return c;
+        return conversation;
     }
 
     public CallContact findContactByNumber(SipUri number) {
-        for (Conversation conv : conversations.values()) {
-            if (conv.contact.hasNumber(number)) {
-                return conv.contact;
+        for (Conversation conversation : conversations.values()) {
+            if (conversation.contact.hasNumber(number)) {
+                return conversation.contact;
             }
         }
         return canUseContacts ? findContactByNumber(getContentResolver(), number.getRawUriString()) : CallContact.buildUnknown(number);
@@ -689,9 +692,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         if (number == null || number.isEmpty()) {
             return null;
         }
-        for (Conversation conv : conversations.values()) {
-            if (conv.contact.hasNumber(number)) {
-                return conv;
+        for (Conversation conversation : conversations.values()) {
+            if (conversation.contact.hasNumber(number)) {
+                return conversation;
             }
         }
         return startConversation(canUseContacts ? findContactByNumber(getContentResolver(), number.getRawUriString()) : CallContact.buildUnknown(number));
@@ -701,13 +704,13 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         if (id <= 0) {
             return null;
         }
-        CallContact c = systemContactCache.get(id);
-        if (c == null) {
+        CallContact contact = systemContactCache.get(id);
+        if (contact == null) {
             Log.w(TAG, "getContactById : cache miss for " + id);
-            c = findById(getContentResolver(), id, null);
-            systemContactCache.put(id, c);
+            contact = findById(getContentResolver(), id, null);
+            systemContactCache.put(id, contact);
         }
-        return c;
+        return contact;
     }
 
     public Account guessAccount(SipUri uri) {
@@ -720,15 +723,15 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             // ring ids must be called with ring accounts
             return null;
         }
-        for (Account a : accounts) {
-            if (a.isSip() && a.getHost().equals(uri.host)) {
-                return a;
+        for (Account account : accounts) {
+            if (account.isSip() && account.getHost().equals(uri.host)) {
+                return account;
             }
         }
         if (uri.isSingleIp()) {
-            for (Account a : accounts) {
-                if (a.isIP2IP()) {
-                    return a;
+            for (Account account : accounts) {
+                if (account.isIP2IP()) {
+                    return account;
                 }
             }
         }
@@ -779,25 +782,25 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     private static final String ID_SELECTION = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?";
 
-    private static void lookupDetails(@NonNull ContentResolver res, @NonNull CallContact c) {
+    private static void lookupDetails(@NonNull ContentResolver res, @NonNull CallContact callContact) {
         //Log.w(TAG, "lookupDetails " + c.getKey());
         try {
             Cursor cPhones = res.query(
                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                     CONTACTS_PHONES_PROJECTION, ID_SELECTION,
-                    new String[]{String.valueOf(c.getId())}, null);
+                    new String[]{String.valueOf(callContact.getId())}, null);
             if (cPhones != null) {
                 final int iNum = cPhones.getColumnIndex(Phone.NUMBER);
                 final int iType = cPhones.getColumnIndex(Phone.TYPE);
                 final int iLabel = cPhones.getColumnIndex(Phone.LABEL);
                 while (cPhones.moveToNext()) {
-                    c.addNumber(cPhones.getString(iNum), cPhones.getInt(iType), cPhones.getString(iLabel), CallContact.NumberType.TEL);
+                    callContact.addNumber(cPhones.getString(iNum), cPhones.getInt(iType), cPhones.getString(iLabel), CallContact.NumberType.TEL);
                     Log.w(TAG, "Phone:" + cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)));
                 }
                 cPhones.close();
             }
 
-            Uri baseUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, c.getId());
+            Uri baseUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, callContact.getId());
             Uri targetUri = Uri.withAppendedPath(baseUri, ContactsContract.Contacts.Data.CONTENT_DIRECTORY);
             Cursor cSip = res.query(targetUri,
                     CONTACTS_SIP_PROJECTION,
@@ -812,7 +815,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     String mime = cSip.getString(iMime);
                     String number = cSip.getString(iSip);
                     if (!mime.contentEquals(Im.CONTENT_ITEM_TYPE) || new SipUri(number).isRingId() || "ring".equalsIgnoreCase(cSip.getString(iLabel))) {
-                        c.addNumber(number, cSip.getInt(iType), cSip.getString(iLabel), CallContact.NumberType.SIP);
+                        callContact.addNumber(number, cSip.getInt(iType), cSip.getString(iLabel), CallContact.NumberType.SIP);
                     }
                     Log.w(TAG, "SIP phone:" + number + " " + mime + " ");
                 }
@@ -846,7 +849,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 int iStared = result.getColumnIndex(ContactsContract.Contacts.STARRED);
                 long cid = result.getLong(iID);
 
-                Log.w(TAG, "Contact name: " + result.getString(iName) + " id:" + cid + " key:" + result.getString(iKey));
+                Log.d(TAG, "Contact name: " + result.getString(iName) + " id:" + cid + " key:" + result.getString(iKey));
 
                 contact = new CallContact(cid, result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
                 if (result.getInt(iStared) != 0) {
@@ -880,7 +883,6 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             int iKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
             int iName = result.getColumnIndex(ContactsContract.Data.DISPLAY_NAME);
             int iPhoto = result.getColumnIndex(ContactsContract.Data.PHOTO_ID);
-            int iPhotoThumb = result.getColumnIndex(ContactsContract.Data.PHOTO_THUMBNAIL_URI);
             int iStared = result.getColumnIndex(ContactsContract.Contacts.STARRED);
 
             while (result.moveToNext()) {
@@ -905,7 +907,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     @NonNull
     public static CallContact findContactByNumber(@NonNull ContentResolver res, String number) {
-        CallContact c = null;
+        CallContact callContact = null;
         try {
             Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
             Cursor result = res.query(uri, PHONELOOKUP_PROJECTION, null, null, null);
@@ -918,19 +920,19 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 int iKey = result.getColumnIndex(ContactsContract.Data.LOOKUP_KEY);
                 int iName = result.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
                 int iPhoto = result.getColumnIndex(ContactsContract.Contacts.PHOTO_ID);
-                c = new CallContact(result.getLong(iID), result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
-                lookupDetails(res, c);
-                Log.w(TAG, "findContactByNumber " + number + " found " + c.getDisplayName());
+                callContact = new CallContact(result.getLong(iID), result.getString(iKey), result.getString(iName), result.getLong(iPhoto));
+                lookupDetails(res, callContact);
+                Log.w(TAG, "findContactByNumber " + number + " found " + callContact.getDisplayName());
             }
             result.close();
         } catch (Exception e) {
             Log.w(TAG, e);
         }
-        if (c == null) {
+        if (callContact == null) {
             Log.w(TAG, "findContactByNumber " + number + " can't find contact.");
-            c = findContactBySipNumber(res, number);
+            callContact = findContactBySipNumber(res, number);
         }
-        return c;
+        return callContact;
     }
 
     private class ConversationLoader extends AsyncTask<Void, Void, Map<String, Conversation>> {
@@ -944,15 +946,16 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         }
 
         private CallContact getByNumber(HashMap<String, CallContact> cache, String number) {
-            if (number == null || number.isEmpty())
+            if (number == null || number.isEmpty()) {
                 return null;
-            number = CallContact.canonicalNumber(number);
-            CallContact c = cache.get(number);
-            if (c == null) {
-                c = canUseContacts ? findContactByNumber(cr, number) : CallContact.buildUnknown(number);
-                cache.put(number, c);
             }
-            return c;
+            number = CallContact.canonicalNumber(number);
+            CallContact callContact = cache.get(number);
+            if (callContact == null) {
+                callContact = canUseContacts ? findContactByNumber(cr, number) : CallContact.buildUnknown(number);
+                cache.put(number, callContact);
+            }
+            return callContact;
         }
 
         Pair<HistoryEntry, HistoryCall> findHistoryByCallId(final Map<String, Conversation> confs, String id) {
@@ -965,19 +968,19 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             return null;
         }
 
-        CallContact getCreateContact(long contact_id, String contact_key, String cnumber) {
+        CallContact getCreateContact(long contactId, String contactKey, String cnumber) {
             String number = CallContact.canonicalNumber(cnumber);
             CallContact contact;
-            if (contact_id <= CallContact.DEFAULT_ID) {
+            if (contactId <= CallContact.DEFAULT_ID) {
                 contact = getByNumber(localNumberCache, number);
             } else {
-                contact = localContactCache.get(contact_id);
+                contact = localContactCache.get(contactId);
                 if (contact == null) {
-                    contact = canUseContacts ? findById(cr, contact_id, contact_key) : CallContact.buildUnknown(number);
+                    contact = canUseContacts ? findById(cr, contactId, contactKey) : CallContact.buildUnknown(number);
                     if (contact != null) {
                         contact.addPhoneNumber(cnumber);
                     } else {
-                        Log.w(TAG, "Can't find contact with id " + contact_id);
+                        Log.w(TAG, "Can't find contact with id " + contactId);
                         contact = getByNumber(localNumberCache, number);
                     }
                     localContactCache.put(contact.getId(), contact);
@@ -999,29 +1002,29 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
                     Map.Entry<String, Conversation> merge = null;
                     for (Map.Entry<String, Conversation> ce : ret.entrySet()) {
-                        Conversation c = ce.getValue();
-                        if ((contact.getId() > 0 && contact.getId() == c.contact.getId()) || c.contact.hasNumber(call.getNumber())) {
+                        Conversation conversation = ce.getValue();
+                        if ((contact.getId() > 0 && contact.getId() == conversation.contact.getId()) || conversation.contact.hasNumber(call.getNumber())) {
                             merge = ce;
                             break;
                         }
                     }
                     if (merge != null) {
-                        Conversation c = merge.getValue();
-                        if (c.getContact().getId() <= 0 && contact.getId() > 0) {
-                            c.contact = contact;
+                        Conversation conversation = merge.getValue();
+                        if (conversation.getContact().getId() <= 0 && contact.getId() > 0) {
+                            conversation.contact = contact;
                             ret.remove(merge.getKey());
-                            ret.put(contact.getIds().get(0), c);
+                            ret.put(contact.getIds().get(0), conversation);
                         }
-                        c.addHistoryCall(call);
+                        conversation.addHistoryCall(call);
                         continue;
                     }
                     String key = contact.getIds().get(0);
                     if (ret.containsKey(key)) {
                         ret.get(key).addHistoryCall(call);
                     } else {
-                        Conversation c = new Conversation(contact);
-                        c.addHistoryCall(call);
-                        ret.put(key, c);
+                        Conversation conversation = new Conversation(contact);
+                        conversation.addHistoryCall(call);
+                        ret.put(key, conversation);
                     }
                 }
 
@@ -1029,10 +1032,12 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     CallContact contact = getCreateContact(htext.getContactID(), htext.getContactKey(), htext.getNumber());
                     Pair<HistoryEntry, HistoryCall> p = findHistoryByCallId(ret, htext.getCallId());
 
-                    if (contact == null && p != null)
+                    if (contact == null && p != null) {
                         contact = p.first.getContact();
-                    if (contact == null)
+                    }
+                    if (contact == null) {
                         continue;
+                    }
 
                     TextMessage msg = new TextMessage(htext);
                     msg.setContact(contact);
@@ -1110,9 +1115,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     }
 
     private void updated(Map<String, Conversation> res) {
-        for (Conversation conv : conversations.values()) {
-            for (Conference c : conv.current_calls) {
-                notificationManager.cancel(c.notificationId);
+        for (Conversation conversation : conversations.values()) {
+            for (Conference conference : conversation.current_calls) {
+                notificationManager.cancel(conference.notificationId);
             }
         }
         conversations = res;
@@ -1235,7 +1240,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.w(TAG, "BroadcastReceiver onReceive " + intent.getAction());
+            Log.d(TAG, "BroadcastReceiver onReceive " + intent.getAction());
             switch (intent.getAction()) {
                 case DRingService.DRING_CONNECTION_CHANGED: {
                     boolean connected = intent.getBooleanExtra("connected", false);
@@ -1269,8 +1274,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     }
                     updateAudioState();
                     Conference conf = getConference(callId);
-                    if (conf != null && !conf.mVisible)
+                    if (conf != null && !conf.mVisible) {
                         startActivity(conf.getViewIntent(LocalService.this).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    }
                     break;
                 }
                 case ACTION_CALL_REFUSE: {
@@ -1306,22 +1312,22 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                         mAccountLoader.startLoading();
                         mAccountLoader.onContentChanged();
                     } else {
-                        Account a = getAccount(intent.getStringExtra("account"));
-                        if (a != null) {
-                            String state_old = a.getRegistrationState();
-                            String state_new = intent.getStringExtra("state");
-                            if (state_old.contentEquals(AccountDetailVolatile.STATE_INITIALIZING) &&
-                                    !state_new.contentEquals(AccountDetailVolatile.STATE_INITIALIZING)) {
+                        Account account = getAccount(intent.getStringExtra("account"));
+                        if (account != null) {
+                            String stateOld = account.getRegistrationState();
+                            String stateNew = intent.getStringExtra("state");
+                            if (stateOld.contentEquals(AccountDetailVolatile.STATE_INITIALIZING) &&
+                                    !stateNew.contentEquals(AccountDetailVolatile.STATE_INITIALIZING)) {
                                 try {
-                                    a.setBasicDetails((Map<String, String>) mService.getAccountDetails(a.getAccountID()));
-                                    a.setCredentials((ArrayList<Map<String, String>>) mService.getCredentials(a.getAccountID()));
-                                    a.setDevices((Map<String, String>) mService.getKnownRingDevices(a.getAccountID()));
-                                    a.setVolatileDetails((Map<String, String>) mService.getVolatileAccountDetails(a.getAccountID()));
+                                    account.setBasicDetails((Map<String, String>) mService.getAccountDetails(account.getAccountID()));
+                                    account.setCredentials((ArrayList<Map<String, String>>) mService.getCredentials(account.getAccountID()));
+                                    account.setDevices((Map<String, String>) mService.getKnownRingDevices(account.getAccountID()));
+                                    account.setVolatileDetails((Map<String, String>) mService.getVolatileAccountDetails(account.getAccountID()));
                                 } catch (RemoteException e) {
-                                    e.printStackTrace();
+                                    Log.e(TAG, "Error while setting accound details", e);
                                 }
                             } else {
-                                a.setRegistrationState(intent.getStringExtra("state"), intent.getIntExtra("code", 0));
+                                account.setRegistrationState(intent.getStringExtra("state"), intent.getIntExtra("code", 0));
                             }
                         }
                         sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
@@ -1334,14 +1340,14 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     }
                     break;
                 case ConfigurationManagerCallback.ACCOUNTS_DEVICES_CHANGED: {
-                    Account acc = getAccount(intent.getStringExtra("account"));
-                    acc.setDevices((Map<String, String>) intent.getSerializableExtra("devices"));
+                    Account account = getAccount(intent.getStringExtra("account"));
+                    account.setDevices((Map<String, String>) intent.getSerializableExtra("devices"));
                     break;
                 }
                 case ConfigurationManagerCallback.ACCOUNTS_EXPORT_ENDED: {
-                    Account acc = getAccount(intent.getStringExtra("account"));
-                    if (acc != null && acc.exportListener != null) {
-                        acc.exportListener.exportEnded(intent.getIntExtra("code", -1), intent.getStringExtra("pin"));
+                    Account account = getAccount(intent.getStringExtra("account"));
+                    if (account != null && account.exportListener != null) {
+                        account.exportListener.exportEnded(intent.getIntExtra("code", -1), intent.getStringExtra("pin"));
                     }
                     break;
                 }
@@ -1354,20 +1360,20 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     TextMessage txt = new TextMessage(true, message, new SipUri(number), call, account);
                     Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
 
-                    Conversation conv;
+                    Conversation conversation;
                     if (call != null && !call.isEmpty()) {
-                        conv = getConversationByCallId(call);
+                        conversation = getConversationByCallId(call);
                     } else {
-                        conv = startConversation(findContactByNumber(txt.getNumberUri()));
-                        txt.setContact(conv.getContact());
+                        conversation = startConversation(findContactByNumber(txt.getNumberUri()));
+                        txt.setContact(conversation.getContact());
                     }
-                    if (conv.mVisible) {
+                    if (conversation.mVisible) {
                         txt.read();
                     }
                     historyManager.insertNewTextMessage(txt);
 
-                    conv.addTextMessage(txt);
-                    if (!conv.mVisible) {
+                    conversation.addTextMessage(txt);
+                    if (!conversation.mVisible) {
                         updateTextNotifications();
                     }
 
@@ -1382,7 +1388,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     );
                     TextMessage msg = messages.get(id);
                     if (msg != null) {
-                        Log.w(TAG, "Message status changed " + id + " " + status);
+                        Log.d(TAG, "Message status changed " + id + " " + status);
                         msg.setStatus(status);
                         sendBroadcast(new Intent(ACTION_CONF_UPDATE).
                                 putExtra(ACTION_CONF_UPDATE_EXTRA_MSG, id)
@@ -1395,7 +1401,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     String accountId = intent.getStringExtra("account");
                     SipUri number = new SipUri(intent.getStringExtra("from"));
                     CallContact contact = findContactByNumber(number);
-                    Conversation conv = startConversation(contact);
+                    Conversation conversation = startConversation(contact);
 
                     SipCall call = new SipCall(callId, accountId, number, SipCall.Direction.INCOMING);
                     call.setContact(contact);
@@ -1410,7 +1416,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                         toAdd = new Conference(call);
                     }
 
-                    conv.addConference(toAdd);
+                    conversation.addConference(toAdd);
                     toAdd.showCallNotification(LocalService.this);
                     updateAudioState();
 
@@ -1424,12 +1430,12 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     break;
                 }
                 case CallManagerCallBack.CALL_STATE_CHANGED: {
-                    String call_id = intent.getStringExtra("call");
+                    String callId = intent.getStringExtra("call");
                     Conversation conversation = null;
                     Conference found = null;
 
                     for (Conversation conv : conversations.values()) {
-                        Conference tconf = conv.getConference(call_id);
+                        Conference tconf = conv.getConference(callId);
                         if (tconf != null) {
                             conversation = conv;
                             found = tconf;
@@ -1438,20 +1444,28 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     }
 
                     if (found == null) {
-                        Log.w(TAG, "CALL_STATE_CHANGED : Can't find conference " + call_id);
+                        Log.w(TAG, "CALL_STATE_CHANGED : Can't find conference " + callId);
                     } else {
-                        SipCall call = found.getCallById(call_id);
-                        int old_state = call.getCallState();
-                        int new_state = SipCall.stateFromString(intent.getStringExtra("state"));
+                        SipCall call = found.getCallById(callId);
+                        int oldState = call.getCallState();
+                        int newState = SipCall.stateFromString(intent.getStringExtra("state"));
 
-                        Log.w(TAG, "Call state change for " + call_id + " : " + SipCall.stateToString(old_state) + " -> " + SipCall.stateToString(new_state));
+                        Log.w(TAG, "Call state change for " + callId + " : " + SipCall.stateToString(oldState) + " -> " + SipCall.stateToString(newState));
 
-                        if (new_state != old_state) {
-                            Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + new_state);
-                            if ((call.isRinging() || new_state == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
+                        if (newState != oldState) {
+                            Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + newState);
+                            if ((call.isRinging() || newState == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
                                 call.setTimestampStart(System.currentTimeMillis());
+                                Log.d(TAG, "call state is ringing and it starts. You can send the vcard.");
                             }
-                            call.setCallState(new_state);
+                            if (newState == SipCall.State.RINGING) {
+                                try {
+                                    getRemoteService().sendProfile(callId);
+                                } catch (Exception e) {
+                                    Log.e(TAG, "Error while sending profile", e);
+                                }
+                            }
+                            call.setCallState(newState);
                         }
 
                         try {
@@ -1460,12 +1474,12 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                             Log.w(TAG, "Can't set call details.", e);
                         }
 
-                        if (new_state == SipCall.State.HUNGUP
-                                || new_state == SipCall.State.BUSY
-                                || new_state == SipCall.State.FAILURE
-                                || new_state == SipCall.State.INACTIVE
-                                || new_state == SipCall.State.OVER) {
-                            if (new_state == SipCall.State.HUNGUP) {
+                        if (newState == SipCall.State.HUNGUP
+                                || newState == SipCall.State.BUSY
+                                || newState == SipCall.State.FAILURE
+                                || newState == SipCall.State.INACTIVE
+                                || newState == SipCall.State.OVER) {
+                            if (newState == SipCall.State.HUNGUP) {
                                 call.setTimestampEnd(System.currentTimeMillis());
                             }
                             historyManager.insertNewEntry(found);
@@ -1475,9 +1489,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                         } else {
                             found.showCallNotification(LocalService.this);
                         }
-                        if (new_state == SipCall.State.FAILURE || new_state == SipCall.State.BUSY) {
+                        if (newState == SipCall.State.FAILURE || newState == SipCall.State.BUSY) {
                             try {
-                                mService.hangUp(call_id);
+                                mService.hangUp(callId);
                             } catch (RemoteException e) {
                                 Log.e(TAG, "hangUp", e);
                             }

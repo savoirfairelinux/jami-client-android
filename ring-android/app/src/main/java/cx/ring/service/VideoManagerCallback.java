@@ -90,8 +90,8 @@ public class VideoManagerCallback extends VideoCallback
         int id = Integer.valueOf(camid);
         DeviceParams p = native_params.get(id);
         DRingService.VideoParams new_params = new DRingService.VideoParams(id, format, p.size.x, p.size.y, rate);
-        new_params.rot_width = width;
-        new_params.rot_height = height;
+        new_params.rotWidth = width;
+        new_params.rotHeight = height;
         mService.setVideoRotation(new_params, p.infos);
         params.put(camid, new_params);
     }
