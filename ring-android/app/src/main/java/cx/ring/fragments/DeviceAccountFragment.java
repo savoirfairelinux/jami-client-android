@@ -55,8 +55,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
-
 import cx.ring.R;
+import cx.ring.client.AccountEditionActivity;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.interfaces.BackHandlerInterface;
@@ -87,6 +87,32 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
 
     @BindView(R.id.account_link_info)
     TextView mExportInfos;
+
+    @BindView(R.id.account_edit_btn)
+    View editBtn;
+
+    @BindView(R.id.account_alias_txt)
+    TextView accNameTxt;
+
+    @BindView(R.id.account_id_txt)
+    TextView accIdTxt;
+
+    @BindView(R.id.registred_name_txt)
+    TextView accUsernameTxt;
+
+    @BindView(R.id.register_name_btn)
+    Button registerNameBtn;
+
+    @BindView(R.id.group_registering_name)
+    ViewGroup registeringNameGroup;
+
+    @BindView(R.id.group_register_name)
+    ViewGroup registerNameGroup;
+
+    @BindView(R.id.group_registered_name)
+    ViewGroup registeredNameGroup;
+
+    private DeviceAdapter adapter;
 
     @BindView(R.id.device_list)
     ListView mDeviceList;
@@ -144,6 +170,18 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     public void accountChanged(Account account) {
         mDeviceAdapter = new DeviceAdapter(getActivity(), account.getDevices());
         mDeviceList.setAdapter(mDeviceAdapter);
+
+        accNameTxt.setText(account.getAlias());
+        accIdTxt.setText(account.getUsername());
+        String username = account.getRegisteredName();
+        boolean cur_reg_name = account.registeringUsername;
+        boolean has_reg_name = !cur_reg_name && username != null && !username.isEmpty();
+        registeringNameGroup.setVisibility(cur_reg_name ? View.VISIBLE : View.GONE);
+        registerNameGroup.setVisibility((!has_reg_name && !cur_reg_name) ? View.VISIBLE : View.GONE);
+        registeredNameGroup.setVisibility(has_reg_name ? View.VISIBLE : View.GONE);
+        if (has_reg_name) {
+            accUsernameTxt.setText(username);
+        }
         account.devicesListener = new Account.OnDevicesChangedListener() {
             @Override
             public void devicesChanged(Map<String, String> devices) {
@@ -358,4 +396,69 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
         }
     }
 
+<<<<<<< HEAD
+=======
+    @Nullable
+    @Override
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (container == null) return null;
+        ViewGroup devLayout = (ViewGroup) inflater.inflate(R.layout.frag_device_list, container, false);
+
+        ButterKnife.bind(this, devLayout);
+
+        Account acc = mCallbacks.getAccount();
+        if (acc != null) {
+            accountChanged(acc);
+        }
+
+        return devLayout;
+    }
+
+    @OnClick(R.id.account_edit_btn)
+    public void editAccount() {
+        ((AccountEditionActivity)getActivity()).editAdvanced();
+    }
+
+    @OnClick(R.id.btn_add_device)
+    @SuppressWarnings("unused")
+    public void addDevice() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final ViewGroup v = (ViewGroup) LayoutInflater.from(getActivity()).inflate(R.layout.dialog_new_device, null);
+        final TextView pwd = (TextView) v.findViewById(R.id.pwd_txt);
+        builder.setMessage(R.string.account_new_device_message)
+                .setTitle(R.string.account_new_device)
+                .setPositiveButton(R.string.account_export, null)
+                .setNegativeButton(android.R.string.cancel, null).setView(v);
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        pwd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                Log.i(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    if (pwd.getText().length() == 0) {
+                        pwd.setError(getString(R.string.account_enter_password));
+                    } else {
+                        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).callOnClick();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pwd.setError(null);
+                if (pwd.getText().length() == 0) {
+                    pwd.setError(getString(R.string.account_enter_password));
+                } else {
+                    alertDialog.dismiss();
+                    new ExportOnRingTask().execute(pwd.getText().toString());
+                }
+            }
+        });
+    }
+
+>>>>>>> 0c6948f... ui: add name registration
 }

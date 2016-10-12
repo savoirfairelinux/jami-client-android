@@ -42,6 +42,7 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.ActivityCompat;
@@ -122,41 +123,22 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     private boolean mBound = false;
     private LocalService mService;
     private Account mAccSelected = null;
-    private Fragment mCurrentlyDisplayed;
 
-    private Observer mAccountObserver = new Observer() {
+    private Fragment mCurrentlyDisplayed;
+    private ViewPager mViewPager = null;
+    private PagerSlidingTabStrip mSlidingTabLayout = null;
+
+    private final Observer mAccountObserver = new Observer() {
 
         @Override
         public void update(Observable observable, Object data) {
-            if (mAccSelected == null || mService == null) {
-                return;
-            }
-
-            final Account acc = mAccSelected;
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().setTitle(acc.getAlias());
-            }
-
-            final IDRingService remote = getRemoteService();
-            if (remote == null) {
-                Log.w(TAG, "Error updating account, remote service is null");
-                return;
-            }
-            mService.getThreadPool().submit(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        remote.setCredentials(acc.getAccountID(), acc.getCredentialsHashMapList());
-                        remote.setAccountDetails(acc.getAccountID(), acc.getDetails());
-                    } catch (RemoteException e) {
-                        Log.e(TAG, "Error while setting credentials", e);
-                    }
-                }
-            });
+            Log.i(TAG, "Observer: account changed !");
+            for (AccountChangedListener l : listeners)
+                l.accountChanged(mAccSelected);
         }
     };
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder s) {
             LocalService.LocalBinder binder = (LocalService.LocalBinder) s;
@@ -174,7 +156,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             mAccSelected.addObserver(mAccountObserver);
             getSupportActionBar().setTitle(mAccSelected.getAlias());
 
-            final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+            mViewPager = (ViewPager) findViewById(R.id.pager);
             mViewPager.setOffscreenPageLimit(4);
             mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), AccountEditionActivity.this, mAccSelected.isRing()));
 
@@ -210,6 +192,12 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
                 }
             });
+
+            if (mAccSelected.isRing()) {
+                mSlidingTabLayout.setVisibility(View.GONE);
+                mViewPager.setVisibility(View.GONE);
+                getFragmentManager().beginTransaction().add(R.id.fragment_container, new DeviceAccountFragment()).addToBackStack(null).commit();
+            }
         }
 
         @Override
@@ -229,10 +217,20 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
+
         if (!mBound) {
             Intent intent = new Intent(this, LocalService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
+    }
+
+
+    public void editAdvanced() {
+        getFragmentManager().popBackStack();
+        mSlidingTabLayout.setVisibility(View.VISIBLE);
+        mViewPager.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -451,6 +449,51 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         return new File(path, getAccount().getAlias() + ".ring");
     }
 
+<<<<<<< HEAD
+=======
+
+    private class ExportAccountTask extends AsyncTask<String, Void, Integer> {
+        ProgressDialog exportDialog;
+        private String path;
+
+        @Override
+        protected void onPreExecute() {
+            exportDialog = ProgressDialog.show(AccountEditionActivity.this,
+                    getString(R.string.export_dialog_title),
+                    getString(R.string.import_export_wait), true);
+            exportDialog.setCancelable(false);
+        }
+
+        protected Integer doInBackground(String... args) {
+            int ret = 1;
+            ArrayList<String> ids = new ArrayList<>(1);
+            ids.add(mAccSelected.getAccountID());
+            File filePath = getExportStorageDir();
+            path = filePath.getAbsolutePath();
+            try {
+                ret = getRemoteService().exportAccounts(ids, path, args[0]);
+            } catch (RemoteException e) {
+                Log.e(TAG, "Error while exporting account", e);
+            }
+            return ret;
+        }
+
+        protected void onPostExecute(Integer ret) {
+            if (exportDialog != null) {
+                exportDialog.dismiss();
+            }
+
+            Log.d(TAG, "Account export to " + path + " returned " + ret);
+            if (ret == 0) {
+                Snackbar.make(findViewById(android.R.id.content), getString(R.string.account_export_result, path), Snackbar.LENGTH_LONG).show();
+            } else
+                new AlertDialog.Builder(AccountEditionActivity.this).setTitle(R.string.export_failed_dialog_title)
+                        .setMessage(R.string.export_failed_dialog_msg)
+                        .setPositiveButton(android.R.string.ok, null).show();
+        }
+    }
+
+>>>>>>> 0c6948f... ui: add name registration
     @Override
     public IDRingService getRemoteService() {
         return mService.getRemoteService();
@@ -488,6 +531,56 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             isRing = ring;
         }
 
+<<<<<<< HEAD
+=======
+        @Override
+        public int getCount() {
+            return isRing ? 3 : 4;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return isRing ? getRingPanel(position) : getSIPPanel(position);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            int resId = isRing ? getRingPanelTitle(position) : getSIPPanelTitle(position);
+            return ctx.getString(resId);
+        }
+
+        private static Fragment getRingPanel(int position) {
+            Log.i(TAG, "PreferencesPagerAdapter getFragment " + position);
+            switch (position) {
+                case 0:
+                    return new GeneralAccountFragment();
+                case 1:
+                    return new MediaPreferenceFragment();
+                case 2:
+                    return new AdvancedAccountFragment();
+                default:
+                    return null;
+            }
+        }
+
+        private static Fragment getSIPPanel(int position) {
+            Log.i(TAG, "PreferencesPagerAdapter getFragment " + position);
+            switch (position) {
+                case 0:
+                    return new GeneralAccountFragment();
+                case 1:
+                    return new MediaPreferenceFragment();
+                case 2:
+                    return new AdvancedAccountFragment();
+                case 3:
+                    return new SecurityAccountFragment();
+                default:
+                    return null;
+            }
+        }
+
+        @StringRes
+>>>>>>> 0c6948f... ui: add name registration
         private static int getRingPanelTitle(int position) {
             switch (position) {
                 case 0:
@@ -503,6 +596,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             }
         }
 
+        @StringRes
         private static int getSIPPanelTitle(int position) {
             switch (position) {
                 case 0:
@@ -616,5 +710,4 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             }
         });
     }
-
 }
