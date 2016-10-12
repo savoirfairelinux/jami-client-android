@@ -1,37 +1,49 @@
 /**
  * Copyright (C) 2010-2012 Regis Montoya (aka r3gis - www.r3gis.fr)
  * Copyright (C) 2004-2016 Savoir-faire Linux Inc.
- *
- *  Author: Regis Montoya <r3gis.3R@gmail.com>
- *  Author: Emeric Vigier <emeric.vigier@savoirfairelinux.com>
- *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
- *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *  If you own a pjsip commercial license you can also redistribute it
- *  and/or modify it under the terms of the GNU Lesser General Public License
- *  as an android library.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * <p>
+ * Author: Regis Montoya <r3gis.3R@gmail.com>
+ * Author: Emeric Vigier <emeric.vigier@savoirfairelinux.com>
+ * Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ * Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * If you own a pjsip commercial license you can also redistribute it
+ * and/or modify it under the terms of the GNU Lesser General Public License
+ * as an android library.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package cx.ring.service;
 
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.media.AudioManager;
+import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.IBinder;
+import android.os.Looper;
+import android.os.Message;
+import android.os.RemoteException;
+import android.os.SystemClock;
+import android.util.Log;
+import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.WindowManager;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -40,20 +52,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import android.app.Service;
-import android.content.Intent;
-import android.os.*;
-import android.util.Log;
+import java.util.Random;
 
 import cx.ring.BuildConfig;
-
-import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.WindowManager;
-
 import cx.ring.model.Codec;
 import cx.ring.utils.SwigNativeConverter;
+import cx.ring.utils.VCardUtils;
+import ezvcard.VCard;
 
 
 public class DRingService extends Service {
@@ -64,6 +69,7 @@ public class DRingService extends Service {
 
     static public final String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
     static public final String VIDEO_EVENT = BuildConfig.APPLICATION_ID + ".event.VIDEO_EVENT";
+    private static final int VCARD_CHUNK_SIZE = 1000;
 
     private Handler handler = new Handler();
     private static int POLLING_TIMEOUT = 50;
@@ -91,7 +97,7 @@ public class DRingService extends Service {
         int w, h;
         boolean mixer;
         long window = 0;
-    };
+    }
 
     static public WeakReference<SurfaceHolder> mCameraPreviewSurface = new WeakReference<>(null);
     static public Map<String, WeakReference<SurfaceHolder>> videoSurfaces = Collections.synchronizedMap(new HashMap<String, WeakReference<SurfaceHolder>>());
@@ -164,18 +170,18 @@ public class DRingService extends Service {
         return mExecutor;
     }
 
-    public void decodingStarted(String id, String shm_path, int w, int h, boolean is_mixer) {
-        Log.i(TAG, "DRingService.decodingStarted() " + id + " " + w + "x" + h);
+    public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
+        Log.i(TAG, "DRingService.decodingStarted() " + id + " " + width + "x" + height);
         Shm shm = new Shm();
         shm.id = id;
-        shm.path = shm_path;
-        shm.w = w;
-        shm.h = h;
-        shm.mixer = is_mixer;
+        shm.path = shmPath;
+        shm.w = width;
+        shm.h = height;
+        shm.mixer = isMixer;
         videoInputs.put(id, shm);
-        WeakReference<SurfaceHolder> w_holder = videoSurfaces.get(id);
-        if (w_holder != null) {
-            SurfaceHolder holder = w_holder.get();
+        WeakReference<SurfaceHolder> weakSurfaceHolder = videoSurfaces.get(id);
+        if (weakSurfaceHolder != null) {
+            SurfaceHolder holder = weakSurfaceHolder.get();
             if (holder != null)
                 startVideo(shm, holder);
         }
@@ -231,13 +237,6 @@ public class DRingService extends Service {
             this.height = height;
             this.rate = rate;
         }
-        public VideoParams(VideoParams p) {
-            this.id = p.id;
-            this.format = p.format;
-            this.width = p.width;
-            this.height = p.height;
-            this.rate = p.rate;
-        }
 
         public int id;
         public int format;
@@ -247,37 +246,41 @@ public class DRingService extends Service {
         public int height;
 
         //size, rotated, as seen by the daemon
-        public int rot_width;
-        public int rot_height;
+        public int rotWidth;
+        public int rotHeight;
 
         public int rate;
         public int rotation;
     }
 
-    static public int rotationToDegrees(int r) {
-        switch (r) {
-            case Surface.ROTATION_0: return 0;
-            case Surface.ROTATION_90: return 90;
-            case Surface.ROTATION_180: return 180;
-            case Surface.ROTATION_270: return 270;
+    static public int rotationToDegrees(int rotation) {
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                return 0;
+            case Surface.ROTATION_90:
+                return 90;
+            case Surface.ROTATION_180:
+                return 180;
+            case Surface.ROTATION_270:
+                return 270;
         }
         return 0;
     }
 
-    public void setVideoRotation(VideoParams p, Camera.CameraInfo info) {
+    public void setVideoRotation(VideoParams videoParams, Camera.CameraInfo info) {
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         int rotation = rotationToDegrees(windowManager.getDefaultDisplay().getRotation());
         if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-            p.rotation =  (info.orientation + rotation + 360) % 360;
+            videoParams.rotation = (info.orientation + rotation + 360) % 360;
         } else {
-            p.rotation =  (info.orientation - rotation + 360) % 360;
+            videoParams.rotation = (info.orientation - rotation + 360) % 360;
         }
     }
 
-    public void setCameraDisplayOrientation(int cam_id, android.hardware.Camera camera) {
+    public void setCameraDisplayOrientation(int camId, android.hardware.Camera camera) {
         android.hardware.Camera.CameraInfo info =
                 new android.hardware.Camera.CameraInfo();
-        android.hardware.Camera.getCameraInfo(cam_id, info);
+        android.hardware.Camera.getCameraInfo(camId, info);
         WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         int rotation = rotationToDegrees(windowManager.getDefaultDisplay().getRotation());
         int result;
@@ -290,29 +293,29 @@ public class DRingService extends Service {
         camera.setDisplayOrientation(result);
     }
 
-    public void startCapture(final VideoParams p) {
+    public void startCapture(final VideoParams videoParams) {
         stopCapture();
 
         SurfaceHolder surface = mCameraPreviewSurface.get();
         if (surface == null) {
             Log.w(TAG, "Can't start capture: no surface registered.");
-            previewParams = p;
+            previewParams = videoParams;
             Intent intent = new Intent(VIDEO_EVENT);
             intent.putExtra("start", true);
             sendBroadcast(intent);
             return;
         }
 
-        if (p == null) {
+        if (videoParams == null) {
             Log.w(TAG, "startCapture: no video parameters ");
             return;
         }
-        Log.d(TAG, "startCapture " + p.id);
+        Log.d(TAG, "startCapture " + videoParams.id);
 
         final Camera preview;
         try {
-            preview = Camera.open(p.id);
-            setCameraDisplayOrientation(p.id, preview);
+            preview = Camera.open(videoParams.id);
+            setCameraDisplayOrientation(videoParams.id, preview);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
             return;
@@ -327,11 +330,11 @@ public class DRingService extends Service {
         }
 
         Camera.Parameters parameters = preview.getParameters();
-        parameters.setPreviewFormat(p.format);
-        parameters.setPreviewSize(p.width, p.height);
+        parameters.setPreviewFormat(videoParams.format);
+        parameters.setPreviewSize(videoParams.width, videoParams.height);
         for (int[] fps : parameters.getSupportedPreviewFpsRange()) {
-            if (p.rate >= fps[Camera.Parameters.PREVIEW_FPS_MIN_INDEX] &&
-                    p.rate <= fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]) {
+            if (videoParams.rate >= fps[Camera.Parameters.PREVIEW_FPS_MIN_INDEX] &&
+                    videoParams.rate <= fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]) {
                 parameters.setPreviewFpsRange(fps[Camera.Parameters.PREVIEW_FPS_MIN_INDEX],
                         fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]);
             }
@@ -340,15 +343,16 @@ public class DRingService extends Service {
         try {
             preview.setParameters(parameters);
         } catch (RuntimeException e) {
-            Log.e(TAG, e.getMessage());
+            Log.e(TAG, "Error while settings preview parameters", e);
         }
 
         preview.setPreviewCallback(new Camera.PreviewCallback() {
             @Override
             public void onPreviewFrame(byte[] data, Camera camera) {
                 long ptr = RingserviceJNI.obtainFrame(data.length);
-                if (ptr != 0)
-                    RingserviceJNI.setVideoFrame(data, data.length, ptr, p.width, p.height, p.rotation);
+                if (ptr != 0) {
+                    RingserviceJNI.setVideoFrame(data, data.length, ptr, videoParams.width, videoParams.height, videoParams.rotation);
+                }
                 RingserviceJNI.releaseFrame(ptr);
             }
         });
@@ -356,20 +360,21 @@ public class DRingService extends Service {
             @Override
             public void onError(int error, Camera cam) {
                 Log.w(TAG, "Camera onError " + error);
-                if (preview == cam)
+                if (preview == cam) {
                     stopCapture();
+                }
             }
         });
         preview.startPreview();
 
         previewCamera = preview;
-        previewParams = p;
+        previewParams = videoParams;
 
         Intent intent = new Intent(VIDEO_EVENT);
-        intent.putExtra("camera", p.id == 1);
+        intent.putExtra("camera", videoParams.id == 1);
         intent.putExtra("started", true);
-        intent.putExtra("width", p.rot_width);
-        intent.putExtra("height", p.rot_height);
+        intent.putExtra("width", videoParams.rotWidth);
+        intent.putExtra("height", videoParams.rotHeight);
         sendBroadcast(intent);
     }
 
@@ -435,6 +440,7 @@ public class DRingService extends Service {
             BlockingRunnable br = new BlockingRunnable(r);
             return br.postAndWait(this, 0);
         }
+
         public final <T> T executeAndReturn(final SipRunnableWithReturn<T> r) {
             if (r == null) {
                 throw new IllegalArgumentException("runnable must not be null");
@@ -445,8 +451,9 @@ public class DRingService extends Service {
             }
 
             BlockingRunnable br = new BlockingRunnable(r);
-            if (!br.postAndWait(this, 0))
+            if (!br.postAndWait(this, 0)) {
                 throw new RuntimeException("Can't execute runnable");
+            }
             return r.getVal();
         }
 
@@ -462,8 +469,8 @@ public class DRingService extends Service {
             public void run() {
                 try {
                     mTask.run();
-                } catch(Exception e){
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    Log.e(TAG, "Error in Blocking Runnable task " + mTask.toString(), e);
                 } finally {
                     synchronized (this) {
                         mDone = true;
@@ -488,6 +495,7 @@ public class DRingService extends Service {
                             try {
                                 wait(delay);
                             } catch (InterruptedException ex) {
+                                Log.e(TAG, "Error in postAndWait", ex);
                             }
                         }
                     } else {
@@ -495,6 +503,7 @@ public class DRingService extends Service {
                             try {
                                 wait();
                             } catch (InterruptedException ex) {
+                                Log.e(TAG, "Error in postAndWait", ex);
                             }
                         }
                     }
@@ -527,7 +536,6 @@ public class DRingService extends Service {
         try {
             System.loadLibrary("ring");
             isPjSipStackStarted = true;
-
         } catch (UnsatisfiedLinkError e) {
             Log.e(TAG, "Problem with the current Pj stack...", e);
             isPjSipStackStarted = false;
@@ -572,8 +580,8 @@ public class DRingService extends Service {
                 doRun();
             } catch (SameThreadException e) {
                 Log.e(TAG, "Not done from same thread");
-            } catch (RemoteException e) {
-                Log.e(TAG, e.toString());
+            } catch (RemoteException ex) {
+                Log.e(TAG, ex.getMessage(), ex);
             }
         }
     }
@@ -590,10 +598,11 @@ public class DRingService extends Service {
         @Override
         public void run() {
             try {
-                if (isPjSipStackStarted)
+                if (isPjSipStackStarted) {
                     obj = doRun();
-                else
+                } else {
                     Log.e(TAG, "Can't perform operation: daemon not started.");
+                }
                 //done = true;
             } catch (SameThreadException e) {
                 Log.e(TAG, "Not done from same thread");
@@ -626,16 +635,18 @@ public class DRingService extends Service {
 
     protected final IDRingService.Stub mBinder = new IDRingService.Stub() {
 
+
         @Override
         public String placeCall(final String account, final String number, final boolean video) {
             return getExecutor().executeAndReturn(new SipRunnableWithReturn<String>() {
                 @Override
                 protected String doRun() throws SameThreadException {
                     Log.i(TAG, "DRingService.placeCall() thread running... " + number + " video: " + video);
-                    String call_id = Ringservice.placeCall(account, number);
-                    if (!video)
-                        Ringservice.muteLocalMedia(call_id, "MEDIA_TYPE_VIDEO", true);
-                    return call_id;
+                    String callId = Ringservice.placeCall(account, number);
+                    if (!video) {
+                        Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
+                    }
+                    return callId;
                 }
             });
         }
@@ -694,6 +705,39 @@ public class DRingService extends Service {
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "DRingService.unhold() thread running...");
                     Ringservice.unhold(callID);
+                }
+            });
+        }
+
+        @Override
+        public void sendProfile(final String callID) {
+            getExecutor().execute(new SipRunnable() {
+                @Override
+                protected void doRun() throws SameThreadException, RemoteException {
+                    final String ringProfileVCardMime = "x-ring/ring.profile.vcard";
+
+                    VCard vcard = VCardUtils.loadLocalProfileFromDisk(DRingService.this);
+                    String stringVCard = VCardUtils.vcardToString(vcard);
+
+                    int nbTotal = stringVCard.length() / VCARD_CHUNK_SIZE + (stringVCard.length() % VCARD_CHUNK_SIZE != 0 ? 1 : 0);
+                    int i = 1;
+                    Random r = new Random(System.currentTimeMillis());
+                    int key = r.nextInt();
+
+                    Log.d(TAG, "sendProfile, vcard " + stringVCard);
+
+                    while (i <= nbTotal) {
+                        HashMap<String, String> chunk = new HashMap<>();
+                        Log.d(TAG, "lenght vcard " + stringVCard.length() + " id " + key + " part " + i + " nbTotal " + nbTotal);
+                        String keyHashMap = ringProfileVCardMime + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
+                        String message = stringVCard.substring(0, Math.min(VCARD_CHUNK_SIZE, stringVCard.length()));
+                        chunk.put(keyHashMap, message);
+                        if (stringVCard.length() > VCARD_CHUNK_SIZE) {
+                            stringVCard = stringVCard.substring(VCARD_CHUNK_SIZE);
+                        }
+                        i++;
+                        Ringservice.sendTextMessage(callID, StringMap.toSwig(chunk), "Me", false);
+                    }
                 }
             });
         }
@@ -805,7 +849,7 @@ public class DRingService extends Service {
                 protected void doRun() throws SameThreadException {
                     Log.i(TAG, "DRingService.setAccountsActive() thread running... " + active);
                     StringVect list = Ringservice.getAccountList();
-                    for (int i=0, n=list.size(); i<n; i++)
+                    for (int i = 0, n = list.size(); i < n; i++)
                         Ringservice.setAccountActive(list.get(i), active);
                 }
             });
@@ -890,8 +934,9 @@ public class DRingService extends Service {
                         Intent intent = new Intent(CallManagerCallBack.CALL_STATE_CHANGED);
                         intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
                         sendBroadcast(intent);
-                    } else
+                    } else {
                         Log.i(TAG, "NOT OK");
+                    }
                 }
             });
 
@@ -905,8 +950,9 @@ public class DRingService extends Service {
                     Log.i(TAG, "DRingService.attendedTransfer() thread running...");
                     if (Ringservice.attendedTransfer(transferID, targetID)) {
                         Log.i(TAG, "OK");
-                    } else
+                    } else {
                         Log.i(TAG, "NOT OK");
+                    }
                 }
             });
 
@@ -929,12 +975,12 @@ public class DRingService extends Service {
         }
 
         @Override
-        public void joinParticipant(final String sel_callID, final String drag_callID) throws RemoteException {
+        public void joinParticipant(final String selCallID, final String dragCallID) throws RemoteException {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "DRingService.joinParticipant() thread running...");
-                    Ringservice.joinParticipant(sel_callID, drag_callID);
+                    Ringservice.joinParticipant(selCallID, dragCallID);
                     // Generate a CONF_CREATED callback
                 }
             });
@@ -978,12 +1024,12 @@ public class DRingService extends Service {
         }
 
         @Override
-        public void joinConference(final String sel_confID, final String drag_confID) throws RemoteException {
+        public void joinConference(final String selConfID, final String dragConfID) throws RemoteException {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "DRingService.joinConference() thread running...");
-                    Ringservice.joinConference(sel_confID, drag_confID);
+                    Ringservice.joinConference(selConfID, dragConfID);
                 }
             });
 
@@ -1043,19 +1089,20 @@ public class DRingService extends Service {
                 @Override
                 protected Map<String, ArrayList<String>> doRun() throws SameThreadException {
                     Log.i(TAG, "DRingService.getConferenceList() thread running...");
-                    StringVect call_ids = Ringservice.getCallList();
-                    HashMap<String, ArrayList<String>> confs = new HashMap<>(call_ids.size());
-                    for (int i=0; i<call_ids.size(); i++) {
-                        String call_id = call_ids.get(i);
-                        String conf_id = Ringservice.getConferenceId(call_id);
-                        if (conf_id == null || conf_id.isEmpty())
-                            conf_id = call_id;
-                        ArrayList<String> calls = confs.get(conf_id);
+                    StringVect callIds = Ringservice.getCallList();
+                    HashMap<String, ArrayList<String>> confs = new HashMap<>(callIds.size());
+                    for (int i = 0; i < callIds.size(); i++) {
+                        String callId = callIds.get(i);
+                        String confId = Ringservice.getConferenceId(callId);
+                        if (confId == null || confId.isEmpty()) {
+                            confId = callId;
+                        }
+                        ArrayList<String> calls = confs.get(confId);
                         if (calls == null) {
                             calls = new ArrayList<>();
-                            confs.put(conf_id, calls);
+                            confs.put(confId, calls);
                         }
-                        calls.add(call_id);
+                        calls.add(callId);
                     }
                     return confs;
                 }
@@ -1152,7 +1199,7 @@ public class DRingService extends Service {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     Log.i(TAG, "DRingService.sendTextMessage() thread running...");
-                    StringMap messages  = new StringMap();
+                    StringMap messages = new StringMap();
                     messages.setRaw("text/plain", Blob.fromString(msg));
                     Ringservice.sendTextMessage(callID, messages, "", false);
                 }
@@ -1180,112 +1227,29 @@ public class DRingService extends Service {
                     Log.i(TAG, "DRingService.getCodecList() thread running...");
                     ArrayList<Codec> results = new ArrayList<>();
 
-                    UintVect active_payloads = Ringservice.getActiveCodecList(accountID);
-                    for (int i = 0; i < active_payloads.size(); ++i) {
-                        Log.i(TAG, "DRingService.getCodecDetails(" + accountID +", "+ active_payloads.get(i) +")");
-                        results.add(new Codec(active_payloads.get(i), Ringservice.getCodecDetails(accountID, active_payloads.get(i)), true));
-
+                    UintVect activePayloads = Ringservice.getActiveCodecList(accountID);
+                    for (int i = 0; i < activePayloads.size(); ++i) {
+                        Log.i(TAG, "DRingService.getCodecDetails(" + accountID + ", " + activePayloads.get(i) + ")");
+                        results.add(new Codec(activePayloads.get(i), Ringservice.getCodecDetails(accountID, activePayloads.get(i)), true));
                     }
                     UintVect payloads = Ringservice.getCodecList();
 
-                    cl : for (int i = 0; i < payloads.size(); ++i) {
+                    cl:
+                    for (int i = 0; i < payloads.size(); ++i) {
                         for (Codec co : results)
                             if (co.getPayload() == payloads.get(i))
                                 continue cl;
                         StringMap details = Ringservice.getCodecDetails(accountID, payloads.get(i));
-                        if (details.size() > 1)
+                        if (details.size() > 1) {
                             results.add(new Codec(payloads.get(i), details, false));
-                        else
+                        } else {
                             Log.i(TAG, "Error loading codec " + i);
+                        }
                     }
                     return results;
                 }
             });
         }
-
-        /*
-        @Override
-        public Map getRingtoneList() throws RemoteException {
-            class RingtoneList extends SipRunnableWithReturn {
-
-                @Override
-                protected StringMap doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getRingtoneList() thread running...");
-                    return Ringservice.getR();
-                }
-            }
-
-            RingtoneList runInstance = new RingtoneList();
-            getExecutor().execute(runInstance);
-            while (!runInstance.isDone()) {
-            }
-            StringMap ringtones = (StringMap) runInstance.getVal();
-
-            for (int i = 0; i < ringtones.size(); ++i) {
-                // Log.i(TAG,"ringtones "+i+" "+ ringtones.);
-            }
-
-            return null;
-        }
-
-
-        @Override
-        public boolean checkForPrivateKey(final String pemPath) throws RemoteException {
-            class hasPrivateKey extends SipRunnableWithReturn {
-
-                @Override
-                protected Boolean doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.isCaptureMuted() thread running...");
-                    return Ringservice.sflph_config_check_for_private_key(pemPath);
-                }
-            }
-
-            hasPrivateKey runInstance = new hasPrivateKey();
-            getExecutor().execute(runInstance);
-            while (!runInstance.isDone()) {
-            }
-
-            return (Boolean) runInstance.getVal();
-        }
-
-        @Override
-        public boolean checkCertificateValidity(final String pemPath) throws RemoteException {
-            class isValid extends SipRunnableWithReturn {
-
-                @Override
-                protected Boolean doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.isCaptureMuted() thread running...");
-                    return Ringservice.sflph_config_check_certificate_validity(pemPath, pemPath);
-                }
-            }
-
-            isValid runInstance = new isValid();
-            getExecutor().execute(runInstance);
-            while (!runInstance.isDone()) {
-            }
-
-            return (Boolean) runInstance.getVal();
-        }
-
-        @Override
-        public boolean checkHostnameCertificate(final String certificatePath, final String host, final String port) throws RemoteException {
-            class isValid extends SipRunnableWithReturn {
-
-                @Override
-                protected Boolean doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.isCaptureMuted() thread running...");
-                    return Ringservice.sflph_config_check_hostname_certificate(host, port);
-                }
-            }
-
-            isValid runInstance = new isValid();
-            getExecutor().execute(runInstance);
-            while (!runInstance.isDone()) {
-            }
-
-            return (Boolean) runInstance.getVal();
-        }
-*/
 
         @Override
         public Map<String, String> validateCertificatePath(final String accountID, final String certificatePath, final String privateKeyPath, final String privateKeyPass) throws RemoteException {
@@ -1391,7 +1355,7 @@ public class DRingService extends Service {
         }
 
         @Override
-        public List<String> getTlsSupportedMethods(){
+        public List<String> getTlsSupportedMethods() {
             Log.i(TAG, "DRingService.getTlsSupportedMethods()");
             return SwigNativeConverter.convertSwigToNative(Ringservice.getSupportedTlsMethod());
         }
@@ -1434,8 +1398,7 @@ public class DRingService extends Service {
             });
         }
 
-        public void videoSurfaceAdded(String id)
-        {
+        public void videoSurfaceAdded(String id) {
             Log.d(TAG, "DRingService.videoSurfaceAdded() " + id);
             Shm shm = videoInputs.get(id);
             SurfaceHolder holder = videoSurfaces.get(id).get();
@@ -1443,8 +1406,7 @@ public class DRingService extends Service {
                 startVideo(shm, holder);
         }
 
-        public void videoSurfaceRemoved(String id)
-        {
+        public void videoSurfaceRemoved(String id) {
             Log.d(TAG, "DRingService.videoSurfaceRemoved() " + id);
             Shm shm = videoInputs.get(id);
             if (shm != null)
@@ -1465,10 +1427,10 @@ public class DRingService extends Service {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
-                    int cam_id = (front ? videoManagerCallback.cameraFront : videoManagerCallback.cameraBack);
-                    String uri = "camera://" + cam_id;
+                    int camId = (front ? videoManagerCallback.cameraFront : videoManagerCallback.cameraBack);
+                    String uri = "camera://" + camId;
                     Log.i(TAG, "DRingService.switchInput() " + uri);
-                    Ringservice.applySettings(id, videoManagerCallback.getNativeParams(cam_id).toMap(getResources().getConfiguration().orientation));
+                    Ringservice.applySettings(id, videoManagerCallback.getNativeParams(camId).toMap(getResources().getConfiguration().orientation));
                     Ringservice.switchInput(id, uri);
                 }
             });
@@ -1478,7 +1440,7 @@ public class DRingService extends Service {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
-                    for (int i=0, n=Camera.getNumberOfCameras(); i<n; i++) {
+                    for (int i = 0, n = Camera.getNumberOfCameras(); i < n; i++) {
                         Ringservice.applySettings(Integer.toString(i), videoManagerCallback.getNativeParams(i).toMap(getResources().getConfiguration().orientation));
                     }
                 }
@@ -1491,7 +1453,7 @@ public class DRingService extends Service {
                 protected Integer doRun() throws SameThreadException, RemoteException {
                     StringVect ids = new StringVect();
                     for (Object s : accountIDs)
-                        ids.add((String)s);
+                        ids.add((String) s);
                     return Ringservice.exportAccounts(ids, toDir, password);
                 }
             });
