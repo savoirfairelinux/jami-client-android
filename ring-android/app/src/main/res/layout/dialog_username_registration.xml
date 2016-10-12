@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ring_username_box"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/ring_password_txt_box"
+        android:id="@+id/ring_username_txt_box"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/pwd_txt"
+            android:id="@+id/ring_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:hint="@string/account_new_device_password"
-            android:inputType="textPassword" />
+            android:hint="@string/prompt_new_username"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLines="1" />
     </android.support.design.widget.TextInputLayout>
+
 </LinearLayout>
