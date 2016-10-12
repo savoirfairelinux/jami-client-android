@@ -57,7 +57,7 @@ along with this program; if not, write to the Free Software
             android:elevation="@dimen/toolbar_elevation"
             android:layout_below="@+id/main_toolbar"
             android:background="@color/color_primary_light"
-            android:visibility="visible"
+            android:visibility="gone"
             android:paddingLeft="@dimen/toolbar_content_inset"
             android:gravity="center_vertical">
 
@@ -97,11 +97,7 @@ along with this program; if not, write to the Free Software
             app:elevation="6dp"
             app:fabSize="mini"
             app:pressedTranslationZ="12dp"
-            app:rippleColor="@android:color/white">
-
-
-
-            </android.support.design.widget.FloatingActionButton>
+            app:rippleColor="@android:color/white" />
 
     </RelativeLayout>
 

@@ -39,17 +39,12 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.1.0'
     compile 'com.skyfishjy.ripplebackground:library:1.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
 }
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.2"
-
-    defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 24
-    }
-
+    buildToolsVersion "24.0.3"
     sourceSets {
         main {
             aidl.srcDirs = ['src/main/java']

@@ -15,8 +15,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package cx.ring.model.account;
@@ -29,16 +28,18 @@ import java.util.Map;
 public class Account extends java.util.Observable {
     private static final String TAG = Account.class.getName();
 
-    private final String accountID;
+    private String accountID;
+
     private AccountConfig mVolatileDetails;
     private AccountConfig mDetails;
     private ArrayList<AccountCredentials> credentialsDetails = new ArrayList<>();
-
     private Map<String, String> devices = new HashMap<>();
 
     public OnDevicesChangedListener devicesListener = null;
     public OnExportEndedListener exportListener = null;
     public OnStateChangedListener stateListener = null;
+
+    public boolean registeringUsername = false;
 
     public Account(String bAccountID) {
         accountID = bAccountID;
