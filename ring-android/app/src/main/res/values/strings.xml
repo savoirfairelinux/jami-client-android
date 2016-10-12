@@ -166,5 +166,15 @@ along with this program; if not, write to the Free Software
     <string name="add_call_contact_number_to_contacts">Add %1$s ?</string>
     <string name="prompt_new_password">New password</string>
     <string name="prompt_new_password_repeat">Repeat new password</string>
+    <string name="account_create_title">Create a Ring account</string>
+    <string name="ab_next">Next</string>
+    <string name="help_username_register">Choose a Ring username that will be registered in the public blockchain-based registry.</string>
+    <string name="prompt_new_username">Enter new username</string>
+    <string name="help_password_choose">Choose a strong password you will remember to protect your Ring account.</string>
+    <string name="btn_use_existing_account">Use an existing Ring account instead</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_create_account">Create new account instead</string>
+    <string name="help_password_enter">Enter your main Ring account password</string>
+    <string name="help_pin_enter">Enter the PIN from another configured Ring account. Use the \"export account on Ring\" feature to obtain a PIN.</string>
 
 </resources>

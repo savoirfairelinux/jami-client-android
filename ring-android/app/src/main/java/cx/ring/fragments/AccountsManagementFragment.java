@@ -44,7 +44,7 @@ import cx.ring.client.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountDetailBasic;
+import cx.ring.model.account.ConfigKey;
 import cx.ring.service.LocalService;
 import cx.ring.views.dragsortlv.DragSortListView;
 
@@ -258,11 +258,10 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
             else if (item.isSip())
                 entryView.host.setText(item.getHost() + " - " + item.getRegistrationState());
             else
-                entryView.host.setText(item.getBasicDetails().getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME));
+                entryView.host.setText(item.getDetail(ConfigKey.ACCOUNT_USERNAME));
 
             entryView.enabled.setChecked(item.isEnabled());
             entryView.enabled.setOnClickListener(new OnClickListener() {
-
                 @Override
                 public void onClick(View v) {
                     item.setEnabled(!item.isEnabled());
