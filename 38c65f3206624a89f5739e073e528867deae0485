@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_7db682de",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountWizard.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-13T15:08:12Z",
+      "side": 1,
+      "message": "This activity could be Butterknifized",
+      "range": {
+        "startLine": 46,
+        "startChar": 13,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "38c65f3206624a89f5739e073e528867deae0485",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_9dbb26c4",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-13T15:08:12Z",
+      "side": 1,
+      "message": "This activity could be Butterknifized",
+      "range": {
+        "startLine": 89,
+        "startChar": 13,
+        "endLine": 89,
+        "endChar": 25
+      },
+      "revId": "38c65f3206624a89f5739e073e528867deae0485",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_5d9e1e58",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-13T15:08:12Z",
+      "side": 1,
+      "message": "May be we can use directly the constructor  new Intent(HomeActivity.this, AccountWizard.class)",
+      "range": {
+        "startLine": 231,
+        "startChar": 35,
+        "endLine": 231,
+        "endChar": 96
+      },
+      "revId": "38c65f3206624a89f5739e073e528867deae0485",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_fda27299",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-13T15:08:12Z",
+      "side": 1,
+      "message": "Is this usefull ?",
+      "range": {
+        "startLine": 404,
+        "startChar": 0,
+        "endLine": 408,
+        "endChar": 5
+      },
+      "revId": "38c65f3206624a89f5739e073e528867deae0485",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_fdc9125b",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountsManagementFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-13T15:08:12Z",
+      "side": 1,
+      "message": "This fragment could be Butterknifized",
+      "range": {
+        "startLine": 61,
+        "startChar": 13,
+        "endLine": 61,
+        "endChar": 39
+      },
+      "revId": "38c65f3206624a89f5739e073e528867deae0485",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_3d99da6e",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountsManagementFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-13T15:08:12Z",
+      "side": 1,
+      "message": "May be change this to use the constructor with arguments ?",
+      "range": {
+        "startLine": 148,
+        "startChar": 32,
+        "endLine": 148,
+        "endChar": 90
+      },
+      "revId": "38c65f3206624a89f5739e073e528867deae0485",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_9d948638",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountsManagementFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-13T15:08:12Z",
+      "side": 1,
+      "message": "Why do you not used the constructor : new Intent(getActivity(), AccountWizard.class) ?",
+      "range": {
+        "startLine": 338,
+        "startChar": 11,
+        "endLine": 338,
+        "endChar": 86
+      },
+      "revId": "38c65f3206624a89f5739e073e528867deae0485",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
