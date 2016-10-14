@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_7dee828d",
+        "filename": "ring-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-14T14:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_1d23b606",
+      "revId": "4ac791149cc27f2e88daf74a2503d7c7563fb4ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_3d0c7a94",
         "filename": "ring-android/app/src/main/java/cx/ring/client/NewConversationActivity.java",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2016-10-13T17:18:30Z",
       "side": 1,
       "message": "I don\u0027t think you need to change this in this patch",
+      "range": {
+        "startLine": 22,
+        "startChar": 45,
+        "endLine": 22,
+        "endChar": 55
+      },
+      "revId": "4ac791149cc27f2e88daf74a2503d7c7563fb4ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_9df32673",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/NewConversationActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-14T14:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_3d0c7a94",
       "range": {
         "startLine": 22,
         "startChar": 45,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_306ee1ca",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-14T14:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_bd1f0ab7",
+      "range": {
+        "startLine": 204,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 11
+      },
+      "revId": "4ac791149cc27f2e88daf74a2503d7c7563fb4ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_dd1c4ec4",
         "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
         "patchSetId": 9
@@ -76,6 +142,30 @@
       "writtenOn": "2016-10-13T17:18:30Z",
       "side": 1,
       "message": "Watch out, you are opening the gallery without asking permission",
+      "range": {
+        "startLine": 213,
+        "startChar": 8,
+        "endLine": 220,
+        "endChar": 11
+      },
+      "revId": "4ac791149cc27f2e88daf74a2503d7c7563fb4ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_507365b1",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-14T14:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_dd1c4ec4",
       "range": {
         "startLine": 213,
         "startChar": 8,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_b04ad153",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-14T14:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_dd73ee13",
+      "range": {
+        "startLine": 224,
+        "startChar": 35,
+        "endLine": 224,
+        "endChar": 41
+      },
+      "revId": "4ac791149cc27f2e88daf74a2503d7c7563fb4ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_1d6ad61a",
         "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
         "patchSetId": 9
@@ -122,6 +236,30 @@
       "writtenOn": "2016-10-13T17:18:30Z",
       "side": 1,
       "message": "should be in strings.xml for translation\n\nYou can also use getContext().getString(android.R.string.ok)\n\nOk and Cancel can be provided by the system",
+      "range": {
+        "startLine": 231,
+        "startChar": 35,
+        "endLine": 231,
+        "endChar": 37
+      },
+      "revId": "4ac791149cc27f2e88daf74a2503d7c7563fb4ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_103e3db9",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-14T14:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_1d6ad61a",
       "range": {
         "startLine": 231,
         "startChar": 35,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_b06171d5",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-14T14:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_7dc76213",
+      "range": {
+        "startLine": 288,
+        "startChar": 28,
+        "endLine": 288,
+        "endChar": 44
+      },
+      "revId": "4ac791149cc27f2e88daf74a2503d7c7563fb4ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_5d113eab",
         "filename": "ring-android/app/src/main/res/layout/dialog_profile.xml",
         "patchSetId": 9
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_5dedbe8a",
+        "filename": "ring-android/app/src/main/res/layout/dialog_profile.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-14T14:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_5d113eab",
+      "range": {
+        "startLine": 15,
+        "startChar": 30,
+        "endLine": 15,
+        "endChar": 37
+      },
+      "revId": "4ac791149cc27f2e88daf74a2503d7c7563fb4ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_fd25920a",
         "filename": "ring-android/app/src/main/res/layout/dialog_profile.xml",
         "patchSetId": 9
@@ -191,6 +377,30 @@
       "writtenOn": "2016-10-13T17:18:30Z",
       "side": 1,
       "message": "Conventions for ids in xml is snake case not camel case",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 41
+      },
+      "revId": "4ac791149cc27f2e88daf74a2503d7c7563fb4ed",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_3de8fa7b",
+        "filename": "ring-android/app/src/main/res/layout/dialog_profile.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-14T14:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_fd25920a",
       "range": {
         "startLine": 23,
         "startChar": 29,
