@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_909a2d13",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ContactDetailsTask.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-14T19:46:49Z",
+      "side": 1,
+      "message": "You should use Constants for such values ... perhaps even an enum",
+      "revId": "acd259d0e6569f985c75a09be8b2c833962d6cfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_309fc105",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ContactDetailsTask.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-14T19:46:49Z",
+      "side": 1,
+      "message": "You should use String constants for these Mime types",
+      "revId": "acd259d0e6569f985c75a09be8b2c833962d6cfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_50a4c556",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ContactDetailsTask.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-14T19:46:49Z",
+      "side": 1,
+      "message": "you should use this syntax: Log.e(TAG, \"Error message\", e)",
+      "revId": "acd259d0e6569f985c75a09be8b2c833962d6cfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_b092d1f4",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/VCardUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-14T19:46:49Z",
+      "side": 1,
+      "message": "indentation issue",
+      "revId": "acd259d0e6569f985c75a09be8b2c833962d6cfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_b0fbb146",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/VCardUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-14T19:46:49Z",
+      "side": 1,
+      "message": "you have to use Log.e (TAG, \"Error message\", e);",
+      "revId": "acd259d0e6569f985c75a09be8b2c833962d6cfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_d0f8b54b",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/VCardUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-14T19:46:49Z",
+      "side": 1,
+      "message": "you have to use Log.e (TAG, \"Error message\", e);",
+      "revId": "acd259d0e6569f985c75a09be8b2c833962d6cfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_709549e3",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/VCardUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-14T19:46:49Z",
+      "side": 1,
+      "message": "\"Me\" does not seem appropriate as default name. You should ask Alexandre about that",
+      "revId": "acd259d0e6569f985c75a09be8b2c833962d6cfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_50bb6572",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-14T19:46:49Z",
+      "side": 1,
+      "message": "you should call updatePhoto(Bitmap) here",
+      "revId": "acd259d0e6569f985c75a09be8b2c833962d6cfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_7063091b",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-14T19:46:49Z",
+      "side": 1,
+      "message": "you already have this code in the updateUserView method. You should consider make a common method for this code",
+      "revId": "acd259d0e6569f985c75a09be8b2c833962d6cfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_f07619d8",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-14T19:46:49Z",
+      "side": 1,
+      "message": "indentation issue",
+      "revId": "acd259d0e6569f985c75a09be8b2c833962d6cfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_1074fdcd",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-10-14T19:46:49Z",
+      "side": 1,
+      "message": "indentation issue",
+      "revId": "acd259d0e6569f985c75a09be8b2c833962d6cfb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
