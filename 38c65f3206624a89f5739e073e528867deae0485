@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_738f9324",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountWizard.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-17T14:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_7db682de",
+      "range": {
+        "startLine": 46,
+        "startChar": 13,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "38c65f3206624a89f5739e073e528867deae0485",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_9dbb26c4",
         "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2016-10-13T15:08:12Z",
       "side": 1,
       "message": "This activity could be Butterknifized",
+      "range": {
+        "startLine": 89,
+        "startChar": 13,
+        "endLine": 89,
+        "endChar": 25
+      },
+      "revId": "38c65f3206624a89f5739e073e528867deae0485",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_13a0878f",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-17T14:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_9dbb26c4",
       "range": {
         "startLine": 89,
         "startChar": 13,
@@ -71,6 +119,53 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_b3ac1b8e",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-17T14:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_5d9e1e58",
+      "range": {
+        "startLine": 231,
+        "startChar": 35,
+        "endLine": 231,
+        "endChar": 96
+      },
+      "revId": "38c65f3206624a89f5739e073e528867deae0485",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_dd452eb4",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-17T14:04:07Z",
+      "side": 1,
+      "message": "int collision with REQUEST_CODE_PREFERENCES for onActivityResult case.",
+      "range": {
+        "startLine": 232,
+        "startChar": 19,
+        "endLine": 232,
+        "endChar": 69
+      },
+      "revId": "38c65f3206624a89f5739e073e528867deae0485",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_fda27299",
         "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
         "patchSetId": 3
@@ -82,6 +177,30 @@
       "writtenOn": "2016-10-13T15:08:12Z",
       "side": 1,
       "message": "Is this usefull ?",
+      "range": {
+        "startLine": 404,
+        "startChar": 0,
+        "endLine": 408,
+        "endChar": 5
+      },
+      "revId": "38c65f3206624a89f5739e073e528867deae0485",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_d3a99f7c",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-17T14:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_fda27299",
       "range": {
         "startLine": 404,
         "startChar": 0,
@@ -128,6 +247,30 @@
       "writtenOn": "2016-10-13T15:08:12Z",
       "side": 1,
       "message": "May be change this to use the constructor with arguments ?",
+      "range": {
+        "startLine": 148,
+        "startChar": 32,
+        "endLine": 148,
+        "endChar": 90
+      },
+      "revId": "38c65f3206624a89f5739e073e528867deae0485",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_73b6b3de",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountsManagementFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-17T14:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_3d99da6e",
       "range": {
         "startLine": 148,
         "startChar": 32,
