@@ -792,6 +792,11 @@ public class AccountCreationFragment extends Fragment {
                                         .setMessage(R.string.account_no_network_message);
                                 break;
                             default:
+                                if (account.isSip()) {
+                                    // Exit the wizard without showing additional dialog
+                                    getActivity().finish();
+                                    return;
+                                }
                                 dialog.setTitle(R.string.account_device_added_title)
                                         .setMessage(R.string.account_device_added_message);
                                 success = true;
