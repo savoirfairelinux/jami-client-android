@@ -80,14 +80,14 @@ public class MenuHeaderView extends FrameLayout {
     @BindView(R.id.account_selection)
     Spinner mSpinnerAccounts;
 
-    @BindView(R.id.share_btn)
-    ImageButton mShareBtn;
+    /*@BindView(R.id.share_btn)
+    ImageButton mShareBtn;*/
 
     @BindView(R.id.addaccount_btn)
     Button mNewAccountBtn;
 
-    @BindView(R.id.qr_image)
-    ImageButton mQrImage;
+    /*@BindView(R.id.qr_image)
+    ImageButton mQrImage;*/
 
     @BindView(R.id.user_photo)
     ImageView mUserImage;
@@ -123,10 +123,10 @@ public class MenuHeaderView extends FrameLayout {
                     }
                     String shareUri = getSelectedAccount().getShareURI();
                     if (!shareUri.isEmpty()) {
-                        Bitmap qrBitmap = HomeActivity.QRCodeFragment.encodeStringAsQrBitmap(shareUri, mQrImage.getWidth());
-                        mQrImage.setImageBitmap(qrBitmap);
+                        //Bitmap qrBitmap = HomeActivity.QRCodeFragment.encodeStringAsQrBitmap(shareUri, mQrImage.getWidth());
+                        //mQrImage.setImageBitmap(qrBitmap);
                     } else {
-                        mQrImage.setImageBitmap(null);
+                        //mQrImage.setImageBitmap(null);
                     }
                 }
 
@@ -277,21 +277,21 @@ public class MenuHeaderView extends FrameLayout {
     public void updateAccounts(List<Account> accounts) {
         if (accounts.isEmpty()) {
             mNewAccountBtn.setVisibility(View.VISIBLE);
-            mShareBtn.setVisibility(View.GONE);
+            //mShareBtn.setVisibility(View.GONE);
             mSpinnerAccounts.setVisibility(View.GONE);
-            mQrImage.setVisibility(View.GONE);
+            //mQrImage.setVisibility(View.GONE);
         } else {
             mNewAccountBtn.setVisibility(View.GONE);
-            mShareBtn.setVisibility(View.VISIBLE);
+            //mShareBtn.setVisibility(View.VISIBLE);
             mSpinnerAccounts.setVisibility(View.VISIBLE);
-            mQrImage.setVisibility(View.VISIBLE);
+            //mQrImage.setVisibility(View.VISIBLE);
             mAccountAdapter.replaceAll(accounts);
             mSpinnerAccounts.setSelection(0);
         }
     }
 
     public void setQRCodeListener(OnClickListener l) {
-        mQrImage.setOnClickListener(l);
+        //mQrImage.setOnClickListener(l);
     }
 
     /**

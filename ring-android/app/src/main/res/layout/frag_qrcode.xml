@@ -1,27 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:background="@color/black">
+    android:clickable="true">
 
-    <ImageButton
-        android:id="@+id/exit"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@null"
-        android:src="@drawable/ic_action_remove" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="24dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:text="@string/share_message"
+        android:textColor="@color/text_color_primary"
+        android:textSize="14sp"
+        android:layout_alignRight="@+id/qr_image_panel"
+        android:layout_alignEnd="@+id/qr_image_panel"
+        android:layout_alignLeft="@+id/qr_image_panel"
+        android:layout_alignStart="@+id/qr_image_panel" />
 
-    <ImageView
-        android:id="@+id/qr_image"
+    <LinearLayout
+        android:id="@+id/qr_image_panel"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
-        android:background="@null" />
+        android:padding="10dp"
+        android:background="@color/black">
+
+        <ImageView
+            android:id="@+id/qr_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/share_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:layout_alignLeft="@id/qr_image_panel"
+        android:layout_below="@id/qr_image_panel"
+        android:text="@string/share_label"
+        android:textColor="@color/color_primary_dark"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/share_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/qr_image_panel"
+        android:layout_below="@id/share_label"
+        android:autoLink="web"
+        tools:text="ring:0686476ddef320c78a71fe48fb2660f6d895f03d"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

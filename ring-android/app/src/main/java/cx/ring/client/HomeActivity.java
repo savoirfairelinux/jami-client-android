@@ -797,12 +797,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             return rootView;
         }
 
-        @OnClick(R.id.exit)
-        @SuppressWarnings("unused")
-        void onExitClickListener(View view) {
-            getFragmentManager().popBackStack();
-        }
-
         /**
          * @param input          uri to be displayed
          * @param qrWindowPixels the ImageView size that will contain the QRcode
