@@ -20,7 +20,6 @@
 package cx.ring.client;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -43,7 +42,6 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -52,21 +50,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Explode;
-import android.transition.Fade;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -77,12 +66,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.fragments.AboutFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.ContactListFragment;
 import cx.ring.fragments.SettingsFragment;
+import cx.ring.fragments.ShareFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.account.Account;
@@ -99,7 +88,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     static final String TAG = HomeActivity.class.getSimpleName();
 
     public static final int REQUEST_CODE_PREFERENCES = 1;
-    public static final int REQUEST_CODE_CREATE_ACCOUNT= 7;
+    public static final int REQUEST_CODE_CREATE_ACCOUNT = 7;
     public static final int REQUEST_CODE_CALL = 3;
     public static final int REQUEST_CODE_CONVERSATION = 4;
 
@@ -111,6 +100,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private static final String HOME_TAG = "Home";
     private static final String ACCOUNTS_TAG = "Accounts";
     private static final String ABOUT_TAG = "About";
+    private static final String SETTINGS_TAG = "Prefs";
+    private static final String SHARE_TAG = "Share";
 
 
     private LocalService service;
@@ -216,27 +207,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
         }
     }
-
-    /**
-     * Listener given to the MenuHeaderView to be notified when the QRCode is clicked
-     */
-    private View.OnClickListener mQRCodeClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            QRCodeFragment zoom = QRCodeFragment.newInstance(fMenuHead.getSelectedAccount().getShareURI());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                zoom.setEnterTransition(new Explode());
-                zoom.setReturnTransition(new Fade());
-            }
-
-            mNavigationDrawer.closeDrawers();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.drawer_layout, zoom)
-                    .addToBackStack(null)
-                    .commit();
-        }
-    };
 
     final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -539,7 +509,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 fMenuHead = new MenuHeaderView(HomeActivity.this);
                 fMenuHead.setCallbacks(service);
                 fMenu.addHeaderView(fMenuHead);
-                fMenuHead.setQRCodeListener(mQRCodeClickListener);
             }
 
             FragmentManager fragmentManager = getFragmentManager();
@@ -589,13 +558,13 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 }
                 break;
             case REQUEST_CODE_PHOTO:
-                if(resultCode == RESULT_OK && data != null){
+                if (resultCode == RESULT_OK && data != null) {
                     fMenuHead.updatePhoto((Bitmap) data.getExtras().get("data"));
 
                 }
                 break;
             case REQUEST_CODE_GALLERY:
-                if(resultCode == RESULT_OK && data != null) {
+                if (resultCode == RESULT_OK && data != null) {
                     fMenuHead.updatePhoto(data.getData());
                 }
                 break;
@@ -643,10 +612,29 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             case R.id.menuitem_prefs:
                 this.goToSettings();
                 break;
+            case R.id.menuitem_share:
+                goToShare();
+                break;
             default:
                 return false;
         }
         return true;
+    }
+
+    private void goToShare() {
+        if (fContent instanceof ShareFragment) {
+            return;
+        }
+        fContent = new ShareFragment();
+
+        if (fMenuHead != null) {
+            fMenuHead.registerAccountSelectionListener((MenuHeaderView.MenuHeaderAccountSelectionListener) fContent);
+        }
+
+        Bundle args = new Bundle();
+        args.putString(ShareFragment.ARG_URI, fMenuHead.getSelectedAccount().getShareURI());
+        fContent.setArguments(args);
+        getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, SHARE_TAG).addToBackStack(SHARE_TAG).commit();
     }
 
     public void goToSettings() {
@@ -666,8 +654,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         getFragmentManager()
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .replace(R.id.main_frame, fContent, "Prefs")
-                .addToBackStack("Prefs")
+                .replace(R.id.main_frame, fContent, SETTINGS_TAG)
+                .addToBackStack(SETTINGS_TAG)
                 .commit();
     }
 
@@ -749,92 +737,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                     }
                 }
             }
-        }
-    }
-
-    /**
-     * Inner fragment used to show a fullscreen QRCode
-     * Only used here, may need its own file if used somewhere else
-     */
-    public static class QRCodeFragment extends android.support.v4.app.Fragment {
-
-        private static String ARG_URI = "QRCodeFragment.URI";
-
-        @BindView(R.id.qr_image)
-        ImageView mQrImage;
-
-        /**
-         * Create a new QRCodeFragment
-         *
-         * @param uri the string representing the uri to be displayed
-         * @return a new QRCodeFragment instance
-         */
-        public static QRCodeFragment newInstance(String uri) {
-            Bundle args = new Bundle();
-            args.putString(ARG_URI, uri);
-            QRCodeFragment fragment = new QRCodeFragment();
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Nullable
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.frag_qrcode, container, false);
-            ButterKnife.bind(this,rootView);
-
-            final String uriToShow = getArguments().getString(ARG_URI);
-
-            mQrImage.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                @Override
-                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                    if (uriToShow != null) {
-                        Bitmap qrBitmap = encodeStringAsQrBitmap(uriToShow, mQrImage.getMeasuredWidth());
-                        mQrImage.setImageBitmap(qrBitmap);
-                    }
-                }
-            });
-            return rootView;
-        }
-
-        @OnClick(R.id.exit)
-        @SuppressWarnings("unused")
-        void onExitClickListener(View view) {
-            getFragmentManager().popBackStack();
-        }
-
-        /**
-         * @param input          uri to be displayed
-         * @param qrWindowPixels the ImageView size that will contain the QRcode
-         * @return the resulting image
-         */
-        public static Bitmap encodeStringAsQrBitmap(String input, int qrWindowPixels) {
-            QRCodeWriter qrWriter = new QRCodeWriter();
-            BitMatrix qrImageMatrix;
-            try {
-                qrImageMatrix = qrWriter.encode(input, BarcodeFormat.QR_CODE, qrWindowPixels, qrWindowPixels);
-            } catch (WriterException e) {
-                Log.e(TAG, "Error while encoding QR", e);
-                return null;
-            }
-
-            int qrImageWidth = qrImageMatrix.getWidth();
-            int qrImageHeight = qrImageMatrix.getHeight();
-            int[] pixels = new int[qrImageWidth * qrImageHeight];
-
-            final int BLACK = 0x00FFFFFF;
-            final int WHITE = 0xFFFFFFFF;
-
-            for (int row = 0; row < qrImageHeight; row++) {
-                int offset = row * qrImageWidth;
-                for (int column = 0; column < qrImageWidth; column++) {
-                    pixels[offset + column] = qrImageMatrix.get(column, row) ? BLACK : WHITE;
-                }
-            }
-
-            Bitmap bitmap = Bitmap.createBitmap(qrImageWidth, qrImageHeight, Bitmap.Config.ARGB_8888);
-            bitmap.setPixels(pixels, 0, qrImageWidth, 0, 0, qrImageWidth, qrImageHeight);
-            return bitmap;
         }
     }
 }

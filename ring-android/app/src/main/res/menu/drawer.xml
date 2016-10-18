@@ -15,6 +15,10 @@
             android:icon="@drawable/ic_settings_black_24dp"
             android:title="@string/menu_item_settings"/>
         <item
+            android:id="@+id/menuitem_share"
+            android:icon="@drawable/ic_share_black_24dp"
+            android:title="@string/menu_item_share"/>
+        <item
             android:id="@+id/menuitem_about"
             android:icon="@drawable/ic_info_black_48dp"
             android:title="@string/menu_item_about"/>
