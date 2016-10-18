@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_aed82e54",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-18T13:16:03Z",
+      "side": 1,
+      "message": "I have fixed versions for android support since bumping them automatically can introduce issues",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 56
+      },
+      "revId": "0d07fe727c941c151aaa5b8518e7a61ced75f58b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_4edd0242",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-18T13:16:03Z",
+      "side": 1,
+      "message": "I kept Android 16 as the lowest, no reason given on why bumping to 17",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 24
+      },
+      "revId": "0d07fe727c941c151aaa5b8518e7a61ced75f58b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
