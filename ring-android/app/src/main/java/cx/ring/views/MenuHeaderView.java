@@ -49,6 +49,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,14 +78,8 @@ public class MenuHeaderView extends FrameLayout {
     @BindView(R.id.account_selection)
     Spinner mSpinnerAccounts;
 
-    @BindView(R.id.share_btn)
-    ImageButton mShareBtn;
-
     @BindView(R.id.addaccount_btn)
     Button mNewAccountBtn;
-
-    @BindView(R.id.qr_image)
-    ImageButton mQrImage;
 
     @BindView(R.id.user_photo)
     ImageView mUserImage;
@@ -93,6 +88,8 @@ public class MenuHeaderView extends FrameLayout {
     TextView mUserName;
     private ImageView mProfilePhoto;
     private VCard mVCardProfile;
+
+    private List<WeakReference<MenuHeaderAccountSelectionListener>> mListeners;
 
     public MenuHeaderView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -118,12 +115,12 @@ public class MenuHeaderView extends FrameLayout {
                         mAccountAdapter.setSelectedAccount(pos);
                         service.setAccountOrder(mAccountAdapter.getAccountOrder());
                     }
-                    String shareUri = getSelectedAccount().getShareURI();
-                    if (!shareUri.isEmpty()) {
-                        Bitmap qrBitmap = HomeActivity.QRCodeFragment.encodeStringAsQrBitmap(shareUri, mQrImage.getWidth());
-                        mQrImage.setImageBitmap(qrBitmap);
-                    } else {
-                        mQrImage.setImageBitmap(null);
+
+                    for (WeakReference<MenuHeaderAccountSelectionListener> weakListener : mListeners) {
+                        MenuHeaderAccountSelectionListener listener = weakListener.get();
+                        if (listener != null) {
+                            listener.accountSelected(getSelectedAccount());
+                        }
                     }
                 }
 
@@ -134,6 +131,10 @@ public class MenuHeaderView extends FrameLayout {
             });
             updateAccounts(service.getAccounts());
         }
+    }
+
+    public void registerAccountSelectionListener(MenuHeaderAccountSelectionListener listener) {
+        mListeners.add(new WeakReference<>(listener));
     }
 
     public void updateUserView() {
@@ -182,6 +183,8 @@ public class MenuHeaderView extends FrameLayout {
         mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getContext());
 
         updateUserView();
+
+        mListeners = new ArrayList<>();
     }
 
     @OnClick(R.id.profile_container)
@@ -274,37 +277,16 @@ public class MenuHeaderView extends FrameLayout {
     public void updateAccounts(List<Account> accounts) {
         if (accounts.isEmpty()) {
             mNewAccountBtn.setVisibility(View.VISIBLE);
-            mShareBtn.setVisibility(View.GONE);
             mSpinnerAccounts.setVisibility(View.GONE);
-            mQrImage.setVisibility(View.GONE);
         } else {
             mNewAccountBtn.setVisibility(View.GONE);
-            mShareBtn.setVisibility(View.VISIBLE);
             mSpinnerAccounts.setVisibility(View.VISIBLE);
-            mQrImage.setVisibility(View.VISIBLE);
             mAccountAdapter.replaceAll(accounts);
             mSpinnerAccounts.setSelection(0);
         }
     }
 
-    public void setQRCodeListener(OnClickListener l) {
-        mQrImage.setOnClickListener(l);
+    public interface MenuHeaderAccountSelectionListener {
+        void accountSelected(Account account);
     }
-
-    /**
-     * Click listeners
-     */
-
-    @OnClick(R.id.share_btn)
-    public void shareButtonClicked() {
-        Account account = mAccountAdapter.getSelectedAccount();
-        String shareUri = account.getShareURI();
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-        sharingIntent.setType("text/plain");
-        String shareBody = getContext().getString(R.string.account_share_body, shareUri);
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getContext().getString(R.string.account_contact_me));
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        getContext().startActivity(Intent.createChooser(sharingIntent, getContext().getText(R.string.share_via)));
-    }
-
 }
