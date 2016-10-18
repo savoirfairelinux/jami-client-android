@@ -195,6 +195,7 @@ public class AccountCreationFragment extends Fragment {
         }
         return true;
     }
+
     /***********************
      * Ring Account Creation
      ***********************/
@@ -239,12 +240,13 @@ public class AccountCreationFragment extends Fragment {
             }
         }
     }
+
     /************************
      * Ring Account ADD
      ***********************/
     @OnEditorAction(R.id.ring_add_password)
     @SuppressWarnings("unused")
-     public boolean keyPressedOnPasswordAddField(TextView v, int actionId, KeyEvent event) {
+    public boolean keyPressedOnPasswordAddField(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             addRingAccount();
             return true;
@@ -263,6 +265,7 @@ public class AccountCreationFragment extends Fragment {
             initAccountCreation(null, mRingPin.getText().toString(), mRingAddPassword.getText().toString());
         }
     }
+
     /************************
      * SIP Account ADD
      ***********************/
@@ -603,7 +606,7 @@ public class AccountCreationFragment extends Fragment {
             if (loadingDialog != null) {
                 loadingDialog.dismiss();
             }
-            if (ret == 0){
+            if (ret == 0) {
                 getActivity().finish();
             } else {
                 new AlertDialog.Builder(getActivity()).setTitle(R.string.import_failed_dialog_title)
@@ -764,6 +767,7 @@ public class AccountCreationFragment extends Fragment {
         @Override
         protected final String doInBackground(HashMap<String, String>... accounts) {
             final Account account = mCallbacks.getService().createAccount(accounts[0]);
+
             account.stateListener = new Account.OnStateChangedListener() {
                 @Override
                 public void stateChanged(String state, int code) {
@@ -775,6 +779,13 @@ public class AccountCreationFragment extends Fragment {
                             }
                             progress = null;
                         }
+
+                        if (account.isSip()) {
+                            getActivity().setResult(Activity.RESULT_OK, new Intent());
+                            getActivity().finish();
+                            return;
+                        }
+
                         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                         dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
