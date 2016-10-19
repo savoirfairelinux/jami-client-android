@@ -21,9 +21,6 @@
 
 package cx.ring.model.account;
 
-import android.text.TextUtils;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,11 +30,8 @@ public class Account extends java.util.Observable {
     private static final String TAG = Account.class.getName();
 
     private final String accountID;
-    private AccountDetailBasic basicDetails = null;
-    private AccountDetailAdvanced advancedDetails = null;
-    private AccountDetailSrtp srtpDetails = null;
-    private AccountDetailTls tlsDetails = null;
-    private AccountDetailVolatile volatileDetails = null;
+    private AccountConfig mVolatileDetails;
+    private AccountConfig mDetails;
     private ArrayList<AccountCredentials> credentialsDetails = new ArrayList<>();
 
     private Map<String, String> devices = new HashMap<>();
@@ -48,36 +42,27 @@ public class Account extends java.util.Observable {
 
     public Account(String bAccountID) {
         accountID = bAccountID;
-        volatileDetails = new AccountDetailVolatile();
-        basicDetails = new AccountDetailBasic();
+        mDetails = new AccountConfig();
+        mVolatileDetails = new AccountConfig();
     }
 
-    public Account(String bAccountID, final Map<String, String> details, final ArrayList<Map<String, String>> credentials, final Map<String, String> volatile_details) {
+    public Account(String bAccountID, final Map<String, String> details,
+                   final ArrayList<Map<String, String>> credentials,
+                   final Map<String, String> volDetails) {
         accountID = bAccountID;
-        basicDetails = new AccountDetailBasic(details);
-        advancedDetails = new AccountDetailAdvanced(details);
-        srtpDetails = new AccountDetailSrtp(details);
-        tlsDetails = new AccountDetailTls(details);
-        if (volatile_details != null) {
-            volatileDetails = new AccountDetailVolatile(volatile_details);
-        }
+        this.mDetails = new AccountConfig(details);
+        mVolatileDetails = new AccountConfig(volDetails);
         setCredentials(credentials);
     }
 
     public void update(Account acc) {
         String old = getRegistrationState();
-        basicDetails = acc.basicDetails;
-        advancedDetails = acc.advancedDetails;
-        srtpDetails = acc.srtpDetails;
-        tlsDetails = acc.tlsDetails;
-        volatileDetails = acc.volatileDetails;
+        mVolatileDetails = acc.mVolatileDetails;
         credentialsDetails = acc.credentialsDetails;
         devices = acc.devices;
-        String new_reg_state = getRegistrationState();
-        if (!old.contentEquals(new_reg_state)) {
-            if (stateListener != null) {
-                stateListener.stateChanged(new_reg_state, getRegistrationStateCode());
-            }
+        String newRegState = getRegistrationState();
+        if (old != null && !old.contentEquals(newRegState) && stateListener != null) {
+            stateListener.stateChanged(newRegState, getRegistrationStateCode());
         }
     }
 
@@ -93,6 +78,22 @@ public class Account extends java.util.Observable {
                 credentialsDetails.add(new AccountCredentials(credentials.get(i)));
             }
         }
+    }
+
+    public void setDetails(Map<String, String> details) {
+        this.mDetails = new AccountConfig(details);
+    }
+
+    public void setDetail(ConfigKey key, String d) {
+        mDetails.put(key, d);
+    }
+
+    public void setDetail(ConfigKey key, boolean b) {
+        mDetails.put(key, b);
+    }
+
+    public AccountConfig getConfig() {
+        return mDetails;
     }
 
     public interface OnDevicesChangedListener {
@@ -117,158 +118,125 @@ public class Account extends java.util.Observable {
         return accountID;
     }
 
+    public String getUsername() {
+        return mDetails.get(ConfigKey.ACCOUNT_USERNAME);
+    }
+
     public String getHost() {
-        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME);
+        return mDetails.get(ConfigKey.ACCOUNT_HOSTNAME);
     }
 
     public void setHost(String host) {
-        basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, host);
+        mDetails.put(ConfigKey.ACCOUNT_HOSTNAME, host);
     }
 
     public String getProxy() {
-        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ROUTESET);
+        return mDetails.get(ConfigKey.ACCOUNT_ROUTESET);
     }
 
     public void setProxy(String proxy) {
-        basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ROUTESET, proxy);
+        mDetails.put(ConfigKey.ACCOUNT_ROUTESET, proxy);
     }
 
     public String getRegistrationState() {
-        return volatileDetails.getDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATUS);
+        return mVolatileDetails.get(ConfigKey.ACCOUNT_REGISTRATION_STATUS);
     }
 
     public int getRegistrationStateCode() {
-        String codeStr = volatileDetails.getDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE);
+        String codeStr = mVolatileDetails.get(ConfigKey.ACCOUNT_REGISTRATION_STATE_CODE);
         if (codeStr == null || codeStr.isEmpty()) {
             return 0;
         }
         return Integer.parseInt(codeStr);
     }
 
-    public void setRegistrationState(String registered_state, int code) {
-        Log.d(TAG, "setRegistrationState " + registered_state + " " + code);
+    public void setRegistrationState(String registeredState, int code) {
         String old = getRegistrationState();
-        volatileDetails.setDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATUS, registered_state);
-        volatileDetails.setDetailString(AccountDetailVolatile.CONFIG_ACCOUNT_REGISTRATION_STATE_CODE, Integer.toString(code));
-        if (!old.contentEquals(registered_state)) {
-            if (stateListener != null) {
-                stateListener.stateChanged(registered_state, code);
-            }
+        mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATUS, registeredState);
+        mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATE_CODE, Integer.toString(code));
+        if (old != null && !old.contentEquals(registeredState) && stateListener != null) {
+            stateListener.stateChanged(registeredState, code);
         }
     }
 
-    public void setVolatileDetails(Map<String, String> volatile_details) {
-        String state_old = getRegistrationState();
-        volatileDetails = new AccountDetailVolatile(volatile_details);
-        String state_new = getRegistrationState();
-        if (!state_old.contentEquals(state_new)) {
-            if (stateListener != null) {
-                stateListener.stateChanged(state_new, getRegistrationStateCode());
-            }
+    public void setVolatileDetails(Map<String, String> volatileDetails) {
+        String stateOld = getRegistrationState();
+        this.mVolatileDetails = new AccountConfig(volatileDetails);
+        String stateNew = getRegistrationState();
+        if (!stateOld.contentEquals(stateNew) && stateListener != null) {
+            stateListener.stateChanged(stateNew, getRegistrationStateCode());
         }
+    }
+
+    public String getRegisteredName() {
+        return mVolatileDetails.get(ConfigKey.ACCOUNT_REGISTRED_NAME);
     }
 
     public String getAlias() {
-        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS);
+        return mDetails.get(ConfigKey.ACCOUNT_ALIAS);
     }
 
     public Boolean isSip() {
-        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_TYPE).equals("SIP");
+        return mDetails.get(ConfigKey.ACCOUNT_TYPE).equals(AccountConfig.ACCOUNT_TYPE_SIP);
     }
 
     public Boolean isRing() {
-        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_TYPE).equals("RING");
+        return mDetails.get(ConfigKey.ACCOUNT_TYPE).equals(AccountConfig.ACCOUNT_TYPE_RING);
     }
 
     public void setAlias(String alias) {
-        basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, alias);
+        mDetails.put(ConfigKey.ACCOUNT_ALIAS, alias);
     }
 
-    public void setPassword(String password) {
-        Map<String, String> details = basicDetails.getDetailsHashMap();
-        details.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, password);
-        setBasicDetails(details);
+    public String getDetail(ConfigKey k) {
+        return mDetails.get(k);
     }
 
-    public AccountDetailBasic getBasicDetails() {
-        return basicDetails;
-    }
-
-    public void setBasicDetails(final Map<String, String> details) {
-        this.basicDetails = new AccountDetailBasic(details);
-    }
-
-    public AccountDetailAdvanced getAdvancedDetails() {
-        return advancedDetails;
-    }
-
-    public void setAdvancedDetails(AccountDetailAdvanced advancedDetails) {
-        this.advancedDetails = advancedDetails;
-    }
-
-    public AccountDetailSrtp getSrtpDetails() {
-        return srtpDetails;
-    }
-
-    public void setSrtpDetails(AccountDetailSrtp srtpDetails) {
-        this.srtpDetails = srtpDetails;
-    }
-
-    public AccountDetailTls getTlsDetails() {
-        return tlsDetails;
-    }
-
-    public void setTlsDetails(AccountDetailTls tlsDetails) {
-        this.tlsDetails = tlsDetails;
+    public boolean getDetailBoolean(ConfigKey k) {
+        return mDetails.getBool(k);
     }
 
     public boolean isEnabled() {
-        return (basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE).contentEquals(AccountDetail.TRUE_STR));
+        return mDetails.getBool(ConfigKey.ACCOUNT_ENABLE);
     }
 
     public void setEnabled(boolean isChecked) {
-        basicDetails.setDetailString(AccountDetailBasic.CONFIG_ACCOUNT_ENABLE, (isChecked ? AccountDetail.TRUE_STR
-                : AccountDetail.FALSE_STR));
+        mDetails.put(ConfigKey.ACCOUNT_ENABLE, isChecked);
     }
 
     public HashMap<String, String> getDetails() {
-        HashMap<String, String> results = new HashMap<>();
-
-        results.putAll(basicDetails.getDetailsHashMap());
-        results.putAll(advancedDetails.getDetailsHashMap());
-        results.putAll(tlsDetails.getDetailsHashMap());
-        results.putAll(srtpDetails.getDetailsHashMap());
-        return results;
+        return mDetails.getAll();
     }
 
     public boolean isTrying() {
-        return getRegistrationState().contentEquals(AccountDetailVolatile.STATE_TRYING);
+        return getRegistrationState().contentEquals(AccountConfig.STATE_TRYING);
     }
 
     public boolean isRegistered() {
-        return (getRegistrationState().contentEquals(AccountDetailVolatile.STATE_READY) || getRegistrationState().contentEquals(AccountDetailVolatile.STATE_REGISTERED));
+        return (getRegistrationState().contentEquals(AccountConfig.STATE_READY) || getRegistrationState().contentEquals(AccountConfig.STATE_REGISTERED));
     }
 
     public boolean isInError() {
         String state = getRegistrationState();
-        return (state.contentEquals(AccountDetailVolatile.STATE_ERROR)
-                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_AUTH)
-                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_CONF_STUN)
-                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_EXIST_STUN)
-                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_GENERIC)
-                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_HOST)
-                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_NETWORK)
-                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_NOT_ACCEPTABLE)
-                || state.contentEquals(AccountDetailVolatile.STATE_ERROR_SERVICE_UNAVAILABLE)
-                || state.contentEquals(AccountDetailVolatile.STATE_REQUEST_TIMEOUT));
+        return (state.contentEquals(AccountConfig.STATE_ERROR)
+                || state.contentEquals(AccountConfig.STATE_ERROR_AUTH)
+                || state.contentEquals(AccountConfig.STATE_ERROR_CONF_STUN)
+                || state.contentEquals(AccountConfig.STATE_ERROR_EXIST_STUN)
+                || state.contentEquals(AccountConfig.STATE_ERROR_GENERIC)
+                || state.contentEquals(AccountConfig.STATE_ERROR_HOST)
+                || state.contentEquals(AccountConfig.STATE_ERROR_NETWORK)
+                || state.contentEquals(AccountConfig.STATE_ERROR_NOT_ACCEPTABLE)
+                || state.contentEquals(AccountConfig.STATE_ERROR_SERVICE_UNAVAILABLE)
+                || state.contentEquals(AccountConfig.STATE_REQUEST_TIMEOUT));
     }
 
     public boolean isIP2IP() {
-        return isSip() && TextUtils.isEmpty(getHost());
+        boolean emptyHost = getHost() == null || (getHost() != null && getHost().isEmpty());
+        return isSip() && emptyHost;
     }
 
     public boolean isAutoanswerEnabled() {
-        return basicDetails.getDetailString(AccountDetailBasic.CONFIG_ACCOUNT_AUTOANSWER).contentEquals(AccountDetail.TRUE_STR);
+        return mDetails.getBool(ConfigKey.ACCOUNT_AUTOANSWER);
     }
 
     public ArrayList<AccountCredentials> getCredentials() {
@@ -289,33 +257,29 @@ public class Account extends java.util.Observable {
     }
 
     public List getCredentialsHashMapList() {
-        ArrayList<HashMap<String, String>> result = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> result = new ArrayList<>();
         for (AccountCredentials cred : credentialsDetails) {
-            result.add(cred.getDetailsHashMap());
+            result.add(cred.getDetails());
         }
         return result;
     }
 
-    public boolean hasSDESEnabled() {
-        return srtpDetails.getDetailString(AccountDetailSrtp.CONFIG_SRTP_KEY_EXCHANGE).contentEquals("sdes");
-    }
-
     public boolean useSecureLayer() {
-        return getSrtpDetails().getDetailBoolean(AccountDetailSrtp.CONFIG_SRTP_ENABLE) || getTlsDetails().getDetailBoolean(AccountDetailTls.CONFIG_TLS_ENABLE);
+        return mDetails.getBool(ConfigKey.SRTP_ENABLE) || mDetails.getBool(ConfigKey.TLS_ENABLE);
     }
 
     public String getShareURI() {
         String shareUri;
         if (isRing()) {
-            shareUri = getBasicDetails().getUsername();
+            shareUri = getUsername();
         } else {
-            shareUri = getBasicDetails().getUsername() + "@" + getBasicDetails().getHostname();
+            shareUri = getUsername() + "@" + getHost();
         }
 
         return shareUri;
     }
 
     public boolean needsMigration() {
-        return getRegistrationState().contentEquals(AccountDetailVolatile.STATE_NEED_MIGRATION);
+        return AccountConfig.STATE_NEED_MIGRATION.equals(getRegistrationState());
     }
 }
