@@ -21,20 +21,19 @@
 
 package cx.ring.adapters;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import cx.ring.R;
-
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cx.ring.R;
 import cx.ring.model.account.Account;
 
 public class AccountSelectionAdapter extends BaseAdapter {
@@ -124,9 +123,9 @@ public class AccountSelectionAdapter extends BaseAdapter {
     private void updateAccountView(AccountView entryView, Account acc) {
         entryView.alias.setText(acc.getAlias());
         if (acc.isRing()) {
-            entryView.host.setText(acc.getBasicDetails().getUsername());
+            entryView.host.setText(acc.getUsername());
         } else {
-            entryView.host.setText(acc.getBasicDetails().getUsername() + "@" + acc.getBasicDetails().getHostname());
+            entryView.host.setText(acc.getUsername() + "@" + acc.getHost());
         }
         entryView.error.setVisibility(acc.isRegistered() ? View.GONE : View.VISIBLE);
     }
