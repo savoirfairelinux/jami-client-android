@@ -38,8 +38,8 @@ import java.util.Enumeration;
 import cx.ring.R;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountDetail;
-import cx.ring.model.account.AccountDetailAdvanced;
+import cx.ring.model.account.AccountConfig;
+import cx.ring.model.account.ConfigKey;
 import cx.ring.views.EditTextIntegerPreference;
 import cx.ring.views.EditTextPreferenceDialog;
 import cx.ring.views.PasswordPreference;
@@ -76,8 +76,8 @@ public class AdvancedAccountFragment extends PreferenceFragment {
 
         Account account = mCallbacks.getAccount();
         if (account != null) {
-            setPreferenceDetails(account.getAdvancedDetails());
-            addPreferenceListener(account.getAdvancedDetails(), changeAdvancedPreferenceListener);
+            setPreferenceDetails(account.getConfig());
+            setPreferenceListener(account.getConfig(), changeAdvancedPreferenceListener);
         }
     }
 
@@ -99,36 +99,35 @@ public class AdvancedAccountFragment extends PreferenceFragment {
         }
     }
 
-    private void setPreferenceDetails(AccountDetail details) {
-        for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Log.i(TAG, "setPreferenceDetails: pref " + p.mKey + " value " + p.mValue);
-            Preference pref = findPreference(p.mKey);
+    private void setPreferenceDetails(AccountConfig details) {
+        for (ConfigKey confKey : details.getKeys()) {
+            Preference pref = findPreference(confKey.key());
             if (pref != null) {
-                if (p.mKey.equals(AccountDetailAdvanced.CONFIG_LOCAL_INTERFACE)) {
+                if (confKey == ConfigKey.LOCAL_INTERFACE) {
+                    String val = details.get(confKey);
                     ArrayList<CharSequence> entries = getNetworkInterfaces();
                     CharSequence[] display = entries.toArray(new CharSequence[entries.size()]);
-                    ListPreference lp = (ListPreference) pref;
-                    lp.setEntries(display);
-                    lp.setEntryValues(display);
-                    lp.setSummary(p.mValue);
-                    lp.setValue(p.mValue);
-                    continue;
-                }
-                if (!p.isTwoState) {
-                    pref.setSummary(p.mValue);
+                    ListPreference listPref = (ListPreference) pref;
+                    listPref.setEntries(display);
+                    listPref.setEntryValues(display);
+                    listPref.setSummary(val);
+                    listPref.setValue(val);
+                } else if (!confKey.isTwoState()) {
+                    String val = details.get(confKey);
+                    pref.setSummary(val);
                     if (pref instanceof EditTextPreference) {
-                        ((EditTextPreference) pref).setText(p.mValue);
+                        ((EditTextPreference) pref).setText(val);
                     }
                 } else {
-                    ((TwoStatePreference) pref).setChecked(p.mValue.contentEquals(AccountDetail.TRUE_STR));
+                    ((TwoStatePreference) pref).setChecked(details.getBool(confKey));
                 }
             }
         }
     }
 
-    private void addPreferenceListener(AccountDetail details, Preference.OnPreferenceChangeListener listener) {
-        for (AccountDetail.PreferenceEntry p : details.getDetailValues()) {
-            Preference pref = findPreference(p.mKey);
+    private void setPreferenceListener(AccountConfig details, Preference.OnPreferenceChangeListener listener) {
+        for (ConfigKey confKey : details.getKeys()) {
+            Preference pref = findPreference(confKey.key());
             if (pref != null) {
                 pref.setOnPreferenceChangeListener(listener);
             }
@@ -155,25 +154,24 @@ public class AdvancedAccountFragment extends PreferenceFragment {
     Preference.OnPreferenceChangeListener changeAdvancedPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Account acc = mCallbacks.getAccount();
-
+            final Account account = mCallbacks.getAccount();
+            final ConfigKey key = ConfigKey.fromString(preference.getKey());
             Log.i(TAG, "Changing " + preference.getKey() + " value: " + newValue);
 
             if (preference instanceof TwoStatePreference) {
-                acc.getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
+                account.setDetail(key, newValue.toString());
             } else if (preference instanceof PasswordPreference) {
-                acc.getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
+                account.setDetail(key, newValue.toString());
                 preference.setSummary(TextUtils.isEmpty(newValue.toString()) ? "" : "******");
             } else {
-                if (preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MAX) ||
-                        preference.getKey().contentEquals(AccountDetailAdvanced.CONFIG_AUDIO_PORT_MIN)) {
+                if (key == ConfigKey.AUDIO_PORT_MAX || key == ConfigKey.AUDIO_PORT_MIN) {
                     newValue = adjustRtpRange(Integer.valueOf((String) newValue));
                 }
                 preference.setSummary(newValue.toString());
-                acc.getAdvancedDetails().setDetailString(preference.getKey(), newValue.toString());
+                account.setDetail(key, newValue.toString());
             }
 
-            acc.notifyObservers();
+            mCallbacks.saveAccount();
             return true;
         }
     };

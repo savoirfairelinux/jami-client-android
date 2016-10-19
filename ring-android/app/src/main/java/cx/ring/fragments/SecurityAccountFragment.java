@@ -40,9 +40,9 @@ import cx.ring.R;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.model.account.Account;
+import cx.ring.model.account.AccountConfig;
 import cx.ring.model.account.AccountCredentials;
-import cx.ring.model.account.AccountDetailAdvanced;
-import cx.ring.model.account.AccountDetailTls;
+import cx.ring.model.account.ConfigKey;
 import cx.ring.views.CredentialPreferenceDialog;
 import cx.ring.views.CredentialsPreference;
 
@@ -137,7 +137,6 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
             credentialsCategory.addPreference(toAdd);
             i++;
         }
-
     }
 
     private void removeAllCredentials() {
@@ -164,7 +163,7 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
                 // There is a new value for this credentials it means it has been edited (otherwise deleted)
                 account.addCredential(result.second);
             }
-            account.notifyObservers();
+            mCallbacks.saveAccount();
             reloadCredentials();
             return false;
         }
@@ -177,7 +176,7 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
             Account account = mCallbacks.getAccount();
             Pair<AccountCredentials, AccountCredentials> result = (Pair<AccountCredentials, AccountCredentials>) newValue;
             account.addCredential(result.second);
-            account.notifyObservers();
+            mCallbacks.saveAccount();
             reloadCredentials();
             return false;
         }
@@ -186,13 +185,13 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
     private Preference.OnPreferenceClickListener filePickerListener = new Preference.OnPreferenceClickListener() {
         @Override
         public boolean onPreferenceClick(Preference preference) {
-            if (preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE)) {
+            if (preference.getKey().contentEquals(ConfigKey.TLS_CA_LIST_FILE.key())) {
                 performFileSearch(SELECT_CA_LIST_RC);
             }
-            if (preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE)) {
+            if (preference.getKey().contentEquals(ConfigKey.TLS_PRIVATE_KEY_FILE.key())) {
                 performFileSearch(SELECT_PRIVATE_KEY_RC);
             }
-            if (preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE)) {
+            if (preference.getKey().contentEquals(ConfigKey.TLS_CERTIFICATE_FILE.key())) {
                 performFileSearch(SELECT_CERTIFICATE_RC);
             }
             return true;
@@ -204,22 +203,20 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             Account account = mCallbacks.getAccount();
-
             Log.i("TLS", "Setting " + preference.getKey() + " to " + newValue);
-
-            if (preference.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_ENABLE)) {
-                if (((Boolean) newValue)) {
-                    account.getAdvancedDetails().setDetailString(AccountDetailAdvanced.CONFIG_STUN_ENABLE, Boolean.toString(false));
+            if (preference.getKey().contentEquals(ConfigKey.TLS_ENABLE.key())) {
+                if((Boolean)newValue){
+                    account.setDetail(ConfigKey.STUN_ENABLE, false);
                 }
             }
 
             if (preference instanceof TwoStatePreference) {
-                account.getTlsDetails().setDetailString(preference.getKey(), Boolean.toString((Boolean) newValue));
+                account.setDetail(ConfigKey.fromString(preference.getKey()), (Boolean) newValue);
             } else {
                 preference.setSummary((String) newValue);
-                account.getTlsDetails().setDetailString(preference.getKey(), (String) newValue);
+                account.setDetail(ConfigKey.fromString(preference.getKey()), (String) newValue);
             }
-            account.notifyObservers();
+            mCallbacks.saveAccount();
             return true;
         }
     };
@@ -237,42 +234,43 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
     }
 
     private void setDetails() {
-        final AccountDetailTls details = mCallbacks.getAccount().getTlsDetails();
+        final AccountConfig details = mCallbacks.getAccount().getConfig();
 
         for (int i = 0; i < tlsCategory.getPreferenceCount(); ++i) {
             final Preference current = tlsCategory.getPreference(i);
+            final ConfigKey key = ConfigKey.fromString(current.getKey());
 
             if (current instanceof TwoStatePreference) {
-                ((TwoStatePreference) current).setChecked(details.getDetailBoolean(current.getKey()));
+                ((TwoStatePreference) current).setChecked(details.getBool(key));
             } else {
-                if (current.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE)) {
-                    File crtFile = new File(details.getDetailString(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE));
-                    current.setSummary(crtFile.getName());
+                if (key == ConfigKey.TLS_CA_LIST_FILE) {
+                    File crt = new File(details.get(ConfigKey.TLS_CA_LIST_FILE));
+                    current.setSummary(crt.getName());
                     current.setOnPreferenceClickListener(filePickerListener);
-                    setFeedbackIcon(current, crtFile.getAbsolutePath());
-                } else if (current.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE)) {
-                    current.setSummary(new File(details.getDetailString(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE)).getName());
+                    setFeedbackIcon(current, crt.getAbsolutePath());
+                } else if (key == ConfigKey.TLS_PRIVATE_KEY_FILE) {
+                    current.setSummary(new File(details.get(ConfigKey.TLS_PRIVATE_KEY_FILE)).getName());
                     current.setOnPreferenceClickListener(filePickerListener);
-                } else if (current.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE)) {
-                    File pemFile = new File(details.getDetailString(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE));
-                    current.setSummary(pemFile.getName());
+                } else if (key == ConfigKey.TLS_CERTIFICATE_FILE) {
+                    File pem = new File(details.get(ConfigKey.TLS_CERTIFICATE_FILE));
+                    current.setSummary(pem.getName());
                     current.setOnPreferenceClickListener(filePickerListener);
-                    setFeedbackIcon(current, pemFile.getAbsolutePath());
-                    checkForRSAKey(pemFile.getAbsolutePath());
-                } else if (current.getKey().contentEquals(AccountDetailTls.CONFIG_TLS_METHOD)) {
+                    setFeedbackIcon(current, pem.getAbsolutePath());
+                    checkForRSAKey(pem.getAbsolutePath());
+                } else if (key == ConfigKey.TLS_METHOD) {
                     String[] values = getTlsMethods();
-                    ListPreference listPreference = (ListPreference) current;
-                    String curVal = details.getDetailString(current.getKey());
-                    listPreference.setEntries(values);
-                    listPreference.setEntryValues(values);
-                    listPreference.setValue(curVal);
+                    ListPreference listPref = (ListPreference)current;
+                    String curVal = details.get(key);
+                    listPref.setEntries(values);
+                    listPref.setEntryValues(values);
+                    listPref.setValue(curVal);
                     current.setSummary(curVal);
                 } else if (current instanceof EditTextPreference) {
-                    String val = details.getDetailString(current.getKey());
+                    String val = details.get(key);
                     ((EditTextPreference) current).setText(val);
                     current.setSummary(val);
                 } else {
-                    current.setSummary(details.getDetailString(current.getKey()));
+                    current.setSummary(details.get(key));
                 }
             }
 
@@ -281,28 +279,20 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
     }
 
     public boolean checkCertificate(String crt) {
-        /*try {
-             return mCallbacks.getService().validateCertificate(crt);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }*/
+        // Not implemented
         return false;
     }
 
     public boolean findRSAKey(String pemPath) {
-        /*try {
-            return mCallbacks.getService().checkForPrivateKey(pemPath);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }*/
+        // Not implemented
         return false;
     }
 
     private void checkForRSAKey(String path) {
-        if (findRSAKey(path)) {
-            tlsCategory.findPreference(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE).setEnabled(false);
-        } else {
-            tlsCategory.findPreference(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE).setEnabled(true);
+        if(findRSAKey(path)){
+            tlsCategory.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key()).setEnabled(false);
+        }else {
+            tlsCategory.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key()).setEnabled(true);
         }
     }
 
@@ -344,26 +334,27 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
         Preference preference;
         switch (requestCode) {
             case SELECT_CA_LIST_RC:
-                preference = tlsCategory.findPreference(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE);
+                preference = tlsCategory.findPreference(ConfigKey.TLS_CA_LIST_FILE.key());
                 preference.setSummary(myFile.getName());
-                account.getTlsDetails().setDetailString(AccountDetailTls.CONFIG_TLS_CA_LIST_FILE, myFile.getAbsolutePath());
-                account.notifyObservers();
+                account.setDetail(ConfigKey.TLS_CA_LIST_FILE, myFile.getAbsolutePath());
+                mCallbacks.saveAccount();
                 setFeedbackIcon(preference, myFile.getAbsolutePath());
                 break;
             case SELECT_PRIVATE_KEY_RC:
-                tlsCategory.findPreference(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE).setSummary(myFile.getName());
-                account.getTlsDetails().setDetailString(AccountDetailTls.CONFIG_TLS_PRIVATE_KEY_FILE, myFile.getAbsolutePath());
-                account.notifyObservers();
+                tlsCategory.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key()).setSummary(myFile.getName());
+                account.setDetail(ConfigKey.TLS_PRIVATE_KEY_FILE, myFile.getAbsolutePath());
+                mCallbacks.saveAccount();
                 break;
             case SELECT_CERTIFICATE_RC:
-                preference = tlsCategory.findPreference(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE);
+                preference = tlsCategory.findPreference(ConfigKey.TLS_CERTIFICATE_FILE.key());
                 preference.setSummary(myFile.getName());
-                account.getTlsDetails().setDetailString(AccountDetailTls.CONFIG_TLS_CERTIFICATE_FILE, myFile.getAbsolutePath());
-                account.notifyObservers();
+                account.setDetail(ConfigKey.TLS_CERTIFICATE_FILE, myFile.getAbsolutePath());
+                mCallbacks.saveAccount();
                 setFeedbackIcon(preference, myFile.getAbsolutePath());
                 checkForRSAKey(myFile.getAbsolutePath());
                 break;
+            default:
+                break;
         }
     }
-
 }
