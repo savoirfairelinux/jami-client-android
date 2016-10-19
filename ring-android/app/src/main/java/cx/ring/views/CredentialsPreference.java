@@ -24,6 +24,7 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v7.preference.DialogPreference;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import cx.ring.R;
@@ -35,12 +36,15 @@ public class CredentialsPreference extends DialogPreference {
     public CredentialsPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
+
     public CredentialsPreference(Context context, AttributeSet attrs, int defStyle) {
         this(context, attrs, defStyle, 0);
     }
+
     public CredentialsPreference(Context context, AttributeSet attrs) {
         this(context, attrs, android.support.v7.preference.R.attr.dialogPreferenceStyle);
     }
+
     public CredentialsPreference(Context context) {
         this(context, null);
     }
@@ -48,11 +52,12 @@ public class CredentialsPreference extends DialogPreference {
     public AccountCredentials getCreds() {
         return creds;
     }
+
     public void setCreds(AccountCredentials c) {
         creds = c;
         if (creds != null) {
             setTitle(creds.getUsername());
-            setSummary(creds.getRealm().isEmpty() ? "*" : creds.getRealm());
+            setSummary(TextUtils.isEmpty(creds.getRealm()) ? "*" : creds.getRealm());
             setDialogTitle(R.string.account_credentials_edit);
             setPositiveButtonText(android.R.string.ok);
             setNegativeButtonText(android.R.string.cancel);
@@ -61,7 +66,7 @@ public class CredentialsPreference extends DialogPreference {
 
     protected Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
-        if(this.isPersistent()) {
+        if (this.isPersistent()) {
             return superState;
         } else {
             CredentialsPreference.SavedState myState = new CredentialsPreference.SavedState(superState);
@@ -71,8 +76,8 @@ public class CredentialsPreference extends DialogPreference {
     }
 
     protected void onRestoreInstanceState(Parcelable state) {
-        if(state != null && state.getClass().equals(CredentialsPreference.SavedState.class)) {
-            CredentialsPreference.SavedState myState = (CredentialsPreference.SavedState)state;
+        if (state != null && state.getClass().equals(CredentialsPreference.SavedState.class)) {
+            CredentialsPreference.SavedState myState = (CredentialsPreference.SavedState) state;
             super.onRestoreInstanceState(myState.getSuperState());
             setCreds(myState.creds);
         } else {

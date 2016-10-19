@@ -49,8 +49,8 @@ import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
 import cx.ring.R;
 import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.model.account.AccountDetailVolatile;
+import cx.ring.model.account.AccountConfig;
+import cx.ring.model.account.ConfigKey;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
@@ -211,7 +211,7 @@ public class AccountMigrationFragment extends Fragment {
                 @Override
                 public void stateChanged(String state, int code) {
                     Log.d(TAG, "stateListener -> stateChanged " + state + " " + code);
-                    if (!AccountDetailVolatile.STATE_INITIALIZING.contentEquals(state)) {
+                    if (!AccountConfig.STATE_INITIALIZING.contentEquals(state)) {
                         if (progress != null) {
                             progress.dismiss();
                             progress = null;
@@ -224,11 +224,11 @@ public class AccountMigrationFragment extends Fragment {
                         });
                         boolean success = false;
                         switch (state) {
-                            case AccountDetailVolatile.STATE_ERROR_GENERIC:
+                            case AccountConfig.STATE_ERROR_GENERIC:
                                 dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
                                         .setMessage(R.string.account_cannot_be_found_message);
                                 break;
-                            case AccountDetailVolatile.STATE_ERROR_NETWORK:
+                            case AccountConfig.STATE_ERROR_NETWORK:
                                 dialogBuilder.setTitle(R.string.account_no_network_title)
                                         .setMessage(R.string.account_no_network_message);
                                 break;
@@ -254,7 +254,7 @@ public class AccountMigrationFragment extends Fragment {
             };
 
             HashMap<String, String> details = account.getDetails();
-            details.put(AccountDetailBasic.CONFIG_ARCHIVE_PASSWORD, mPassword);
+            details.put(ConfigKey.ARCHIVE_PASSWORD.key(), mPassword);
 
             try {
                 remote.setAccountDetails(account.getAccountID(), details);
