@@ -60,27 +60,23 @@ public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
     public ArrayList<Account> loadInBackground() {
         Log.d(TAG, "AccountsLoader loadInBackground");
         ArrayList<Account> accounts = new ArrayList<>();
-        if (checkCancel() || mService == null) {
+        if (checkCancel() || mService == null)
             return null;
-        }
         try {
-            ArrayList<String> accountIDs = (ArrayList<String>) mService.getAccountList();
-            Map<String, String> details;
-            ArrayList<Map<String, String>> credentials;
-            Map<String, String> state;
+            final ArrayList<String> accountIDs = (ArrayList<String>) mService.getAccountList();
             for (String id : accountIDs) {
                 if (checkCancel()) {
                     return null;
                 }
-                details = (Map<String, String>) mService.getAccountDetails(id);
-                state = (Map<String, String>) mService.getVolatileAccountDetails(id);
-                credentials = (ArrayList<Map<String, String>>) mService.getCredentials(id);
-                Account tmpAccount = new Account(id, details, credentials, state);
-                tmpAccount.setDevices((Map<String, String>) mService.getKnownRingDevices(id));
-                accounts.add(tmpAccount);
+                final Map<String, String> details = (Map<String, String>) mService.getAccountDetails(id);
+                final ArrayList<Map<String, String>> credentials = (ArrayList<Map<String, String>>) mService.getCredentials(id);
+                final Map<String, String> vstate = (Map<String, String>) mService.getVolatileAccountDetails(id);
+                Account tmp = new Account(id, details, credentials, vstate);
+                tmp.setDevices((Map<String, String>) mService.getKnownRingDevices(id));
+                accounts.add(tmp);
             }
         } catch (RemoteException | NullPointerException e) {
-            Log.e(TAG, "Error while loading account", e);
+            Log.e(TAG, "Exception loading accounts", e);
         }
         if (checkCancel()) {
             return null;
