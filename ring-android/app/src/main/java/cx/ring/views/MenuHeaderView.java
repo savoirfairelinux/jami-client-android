@@ -27,7 +27,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -91,6 +90,7 @@ public class MenuHeaderView extends FrameLayout {
 
     @BindView(R.id.user_name)
     TextView mUserName;
+    private Bitmap mSourcePhoto;
     private ImageView mProfilePhoto;
     private VCard mVCardProfile;
 
@@ -158,8 +158,8 @@ public class MenuHeaderView extends FrameLayout {
     }
 
     public void updatePhoto(Bitmap image) {
-        image = CropImageUtils.cropImageToCircle(image);
-        mProfilePhoto.setImageBitmap(image);
+        mSourcePhoto = image;
+        mProfilePhoto.setImageBitmap(CropImageUtils.cropImageToCircle(image));
     }
 
     private void initViews() {
@@ -249,10 +249,9 @@ public class MenuHeaderView extends FrameLayout {
                 }
                 mVCardProfile.setFormattedName(new FormattedName(username));
 
-                if (mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null)) {
-                    Bitmap bmp = ((BitmapDrawable) mProfilePhoto.getDrawable()).getBitmap();
+                if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null)) {
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
                     mVCardProfile.removeProperties(Photo.class);
                     mVCardProfile.addPhoto(photo);

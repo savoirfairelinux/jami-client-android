@@ -591,7 +591,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             case REQUEST_CODE_PHOTO:
                 if(resultCode == RESULT_OK && data != null){
                     fMenuHead.updatePhoto((Bitmap) data.getExtras().get("data"));
-
                 }
                 break;
             case REQUEST_CODE_GALLERY:
