@@ -100,10 +100,17 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
         @Override
         public void addOnAccountChanged(AccountChangedListener list) {
+            // Dummy
         }
 
         @Override
         public void removeOnAccountChanged(AccountChangedListener list) {
+            // Dummy
+        }
+
+        @Override
+        public void saveAccount() {
+            // Dummy
         }
     };
 
@@ -525,13 +532,13 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         private static int getRingPanelTitle(int position) {
             switch (position) {
                 case 0:
-                    return R.string.account_preferences_basic_tab;
+                    return R.string.account_preferences_devices_tab;
                 case 1:
-                    return R.string.account_preferences_media_tab;
+                    return R.string.account_preferences_basic_tab;
                 case 2:
-                    return R.string.account_preferences_advanced_tab;
+                    return R.string.account_preferences_media_tab;
                 case 3:
-                    return R.string.account_preferences_security_tab;
+                    return R.string.account_preferences_advanced_tab;
                 default:
                     return -1;
             }
@@ -566,6 +573,36 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     @Override
     public void removeOnAccountChanged(AccountChangedListener list) {
         listeners.remove(list);
+    }
+
+    @Override
+    public void saveAccount() {
+        if (mAccSelected == null || mService == null) {
+            return;
+        }
+
+        final Account acc = mAccSelected;
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(acc.getAlias());
+        }
+
+        final IDRingService remote = getRemoteService();
+        if (remote == null) {
+            Log.w(TAG, "Error updating account, remote service is null");
+            return;
+        }
+        mService.getThreadPool().submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Log.w(TAG, "updating account");
+                    remote.setCredentials(acc.getAccountID(), acc.getCredentialsHashMapList());
+                    remote.setAccountDetails(acc.getAccountID(), acc.getDetails());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 }
