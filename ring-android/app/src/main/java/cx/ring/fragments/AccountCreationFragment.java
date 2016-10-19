@@ -73,10 +73,8 @@ import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
 import cx.ring.R;
 import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountDetail;
-import cx.ring.model.account.AccountDetailAdvanced;
-import cx.ring.model.account.AccountDetailBasic;
-import cx.ring.model.account.AccountDetailVolatile;
+import cx.ring.model.account.AccountConfig;
+import cx.ring.model.account.ConfigKey;
 import cx.ring.service.LocalService;
 
 public class AccountCreationFragment extends Fragment {
@@ -234,7 +232,7 @@ public class AccountCreationFragment extends Fragment {
             flipForm(false, true);
         } else {
             if (!checkPassword(mRingPassword, mRingPasswordRepeat)) {
-                mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
+                mAccountType = AccountConfig.ACCOUNT_TYPE_RING;
                 mUsername = mAlias;
                 initAccountCreation(null, null, mRingPassword.getText().toString());
             }
@@ -260,7 +258,7 @@ public class AccountCreationFragment extends Fragment {
         if (mAddAccountLayout.getVisibility() == View.GONE) {
             flipForm(true, false);
         } else if (mRingPin.getText().length() != 0 && mRingAddPassword.getText().length() != 0) {
-            mAccountType = AccountDetailBasic.ACCOUNT_TYPE_RING;
+            mAccountType = AccountConfig.ACCOUNT_TYPE_RING;
             mUsername = mAlias;
             initAccountCreation(null, mRingPin.getText().toString(), mRingAddPassword.getText().toString());
         }
@@ -271,7 +269,7 @@ public class AccountCreationFragment extends Fragment {
      ***********************/
     @OnClick(R.id.create_sip_button)
     public void createSIPAccount() {
-        mAccountType = AccountDetailBasic.ACCOUNT_TYPE_SIP;
+        mAccountType = AccountConfig.ACCOUNT_TYPE_SIP;
         mAlias = mAliasView.getText().toString();
         mHostname = mHostnameView.getText().toString();
         mUsername = mUsernameView.getText().toString();
@@ -520,11 +518,11 @@ public class AccountCreationFragment extends Fragment {
                     this.mDataPath = getPath(getActivity(), data.getData());
                     if (TextUtils.isEmpty(this.mDataPath)) {
                         try {
-                            this.mDataPath = getContext().getCacheDir().getPath() + "/temp.gz";
+                            this.mDataPath = getActivity().getCacheDir().getPath() + "/temp.gz";
                             readFromUri(data.getData(), this.mDataPath);
                             showImportDialog();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            Log.e(TAG, "Exception reading file", e);
                             Toast.makeText(getActivity(), getContext().getString(R.string.account_cannot_read, data.getData()), Toast.LENGTH_LONG).show();
                         }
                     } else {
@@ -701,33 +699,35 @@ public class AccountCreationFragment extends Fragment {
     private void initAccountCreation(String newUsername, String pin, String password) {
         try {
             HashMap<String, String> accountDetails = (HashMap<String, String>) mCallbacks.getRemoteService().getAccountTemplate(mAccountType);
-            accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_TYPE, mAccountType);
+            accountDetails.put(ConfigKey.ACCOUNT_TYPE.key(), mAccountType);
             //~ Checking the state of the Camera permission to enable Video or not.
             boolean hasCameraPermission = ContextCompat.checkSelfPermission(getActivity(),
                     Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
-            accountDetails.put(AccountDetailBasic.CONFIG_VIDEO_ENABLED, Boolean.toString(hasCameraPermission));
+            accountDetails.put(ConfigKey.VIDEO_ENABLED.key(), Boolean.toString(hasCameraPermission));
 
             //~ Sipinfo is forced for any sipaccount since overrtp is not supported yet.
             //~ This will have to be removed when it will be supported.
-            accountDetails.put(AccountDetailAdvanced.CONFIG_ACCOUNT_DTMF_TYPE, getString(R.string.account_sip_dtmf_type_sipinfo));
+            accountDetails.put(ConfigKey.ACCOUNT_DTMF_TYPE.key(), getString(R.string.account_sip_dtmf_type_sipinfo));
 
-            if (mAccountType.equals(AccountDetailBasic.ACCOUNT_TYPE_RING)) {
-                accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, "Ring");
-                accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, "bootstrap.ring.cx");
+            if (mAccountType.equals(AccountConfig.ACCOUNT_TYPE_RING)) {
+                accountDetails.put(ConfigKey.ACCOUNT_ALIAS.key(), "Ring");
+                accountDetails.put(ConfigKey.ACCOUNT_HOSTNAME.key(), "bootstrap.ring.cx");
                 if (password != null && !password.isEmpty()) {
-                    accountDetails.put(AccountDetailBasic.CONFIG_ARCHIVE_PASSWORD, password);
+                    accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), password);
                 }
                 if (pin != null && !pin.isEmpty()) {
-                    accountDetails.put(AccountDetailBasic.CONFIG_ARCHIVE_PIN, pin);
+                    accountDetails.put(ConfigKey.ARCHIVE_PIN.key(), pin);
                 }
                 // Enable UPNP by default for Ring accounts
-                accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_UPNP_ENABLE, AccountDetail.TRUE_STR);
+                accountDetails.put(ConfigKey.ACCOUNT_UPNP_ENABLE.key(), AccountConfig.TRUE_STR);
                 createNewAccount(accountDetails, mUsername);
             } else {
-                accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_ALIAS, mAlias);
-                accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_HOSTNAME, mHostname);
-                accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_USERNAME, mUsername);
-                accountDetails.put(AccountDetailBasic.CONFIG_ACCOUNT_PASSWORD, mPassword);
+                accountDetails.put(ConfigKey.ACCOUNT_ALIAS.key(), mUsername);
+                if (!TextUtils.isEmpty(mHostname)) {
+                    accountDetails.put(ConfigKey.ACCOUNT_HOSTNAME.key(), mHostname);
+                    accountDetails.put(ConfigKey.ACCOUNT_USERNAME.key(), mUsername);
+                    accountDetails.put(ConfigKey.ACCOUNT_PASSWORD.key(), password);
+                }
                 createNewAccount(accountDetails, null);
             }
 
@@ -771,7 +771,7 @@ public class AccountCreationFragment extends Fragment {
             account.stateListener = new Account.OnStateChangedListener() {
                 @Override
                 public void stateChanged(String state, int code) {
-                    if (!AccountDetailVolatile.STATE_INITIALIZING.contentEquals(state)) {
+                    if (!AccountConfig.STATE_INITIALIZING.contentEquals(state)) {
                         account.stateListener = null;
                         if (progress != null) {
                             if (progress.isShowing()) {
@@ -794,11 +794,11 @@ public class AccountCreationFragment extends Fragment {
                         });
                         boolean success = false;
                         switch (state) {
-                            case AccountDetailVolatile.STATE_ERROR_GENERIC:
+                            case AccountConfig.STATE_ERROR_GENERIC:
                                 dialog.setTitle(R.string.account_cannot_be_found_title)
                                         .setMessage(R.string.account_cannot_be_found_message);
                                 break;
-                            case AccountDetailVolatile.STATE_ERROR_NETWORK:
+                            case AccountConfig.STATE_ERROR_NETWORK:
                                 dialog.setTitle(R.string.account_no_network_title)
                                         .setMessage(R.string.account_no_network_message);
                                 break;
