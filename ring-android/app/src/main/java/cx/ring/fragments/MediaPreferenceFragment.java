@@ -51,6 +51,7 @@ import cx.ring.model.account.AccountDetail;
 import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.LocalService;
+import cx.ring.utils.FileUtils;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
@@ -126,8 +127,9 @@ public class MediaPreferenceFragment extends PreferenceFragment
             return;
         }
 
-        File myFile = new File(data.getData().getPath());
-        Log.i(TAG, "file selected:" + data.getData());
+        String path = FileUtils.getRealPathFromURI(getActivity(), data.getData());
+        File myFile = new File(path);
+        Log.i(TAG, "file selected:" + myFile.getAbsolutePath());
         if (requestCode == SELECT_RINGTONE_PATH) {
             findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setSummary(myFile.getName());
             mCallbacks.getAccount().getAdvancedDetails().setDetailString(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, myFile.getAbsolutePath());
@@ -147,9 +149,9 @@ public class MediaPreferenceFragment extends PreferenceFragment
         addPreferencesFromResource(R.xml.account_media_prefs);
         audioCodecsPref = (CodecPreference) findPreference("Account.audioCodecs");
         videoCodecsPref = (CodecPreference) findPreference("Account.videoCodecs");
+        boolean isChecked = Boolean.valueOf(mCallbacks.getAccount().getAdvancedDetails().getDetailString(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED));
+        findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled(isChecked);
 
-        findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled(
-                ((TwoStatePreference) findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED)).isChecked());
         addPreferenceListener(AccountDetailBasic.CONFIG_VIDEO_ENABLED, changeVideoPreferenceListener);
         final Account acc = mCallbacks.getAccount();
         if (acc != null) {
