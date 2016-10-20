@@ -73,7 +73,7 @@ along with this program; if not, write to the Free Software
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:paddingTop="24dp"
-                    android:text="Ring account"
+                    android:text="@string/account_wizard_title"
                     android:textColor="@color/text_color_primary"
                     android:textSize="24sp" />
 
@@ -100,31 +100,54 @@ along with this program; if not, write to the Free Software
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <EditText
-                        android:id="@+id/ring_add_pin"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginStart="12dp"
-                        android:hint="Enter PIN"
-                        android:maxLines="1"
-                        android:inputType="text"
-                        android:imeOptions="actionNext" />
+                        android:paddingBottom="24dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingTop="16dp"
+                        android:text="@string/account_link_infos"
+                        android:textColor="@color/text_color_primary"
+                        android:textSize="14sp" />
 
-                    <EditText
-                        android:id="@+id/ring_add_password"
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginStart="12dp"
-                        android:hint="Enter your password"
-                        android:inputType="textPassword" />
+                        app:passwordToggleEnabled="true">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/ring_add_pin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginEnd="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginStart="12dp"
+                            android:hint="@string/account_link_prompt_pin"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLines="1" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:passwordToggleEnabled="true">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/ring_add_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginEnd="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginStart="12dp"
+                            android:hint="@string/account_link_prompt_password"
+                            android:inputType="textPassword" />
+                    </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
 
                 <Button
@@ -134,7 +157,7 @@ along with this program; if not, write to the Free Software
                     android:layout_height="wrap_content"
                     android:layout_below="@id/addAccountLayout"
                     android:background="?android:attr/selectableItemBackground"
-                    android:text="Add existing account" />
+                    android:text="@string/account_link_button" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -144,35 +167,60 @@ along with this program; if not, write to the Free Software
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/newAccountLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:id="@+id/newAccountLayout"
                         android:background="@color/color_primary_light"
+                        android:orientation="vertical"
                         android:visibility="gone">
 
-                        <EditText
-                            android:id="@+id/ring_password"
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:hint="@string/prompt_new_password"
-                            android:inputType="textPassword"
-                            android:imeOptions="actionNext" />
+                            android:paddingBottom="24dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingTop="16dp"
+                            android:text="@string/account_new_infos"
+                            android:textColor="@color/text_color_primary"
+                            android:textSize="14sp" />
 
-                        <EditText
-                            android:id="@+id/ring_password_repeat"
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/etPasswordLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:hint="@string/prompt_new_password_repeat"
-                            android:imeActionId="@integer/register_sip_account_actionid"
-                            android:imeActionLabel="@string/action_create_short"
-                            android:inputType="textPassword" />
+                            app:passwordToggleEnabled="true">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/ring_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="12dp"
+                                android:hint="@string/prompt_new_password"
+                                android:imeOptions="actionNext"
+                                android:inputType="textPassword" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/etRepeatPasswordLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:passwordToggleEnabled="true">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/ring_password_repeat"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="12dp"
+                                android:hint="@string/prompt_new_password_repeat"
+                                android:imeActionId="@integer/register_sip_account_actionid"
+                                android:imeActionLabel="@string/action_create_short"
+                                android:inputType="textPassword" />
+                        </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
 
                     <Button
@@ -182,7 +230,7 @@ along with this program; if not, write to the Free Software
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="?android:attr/selectableItemBackground"
-                        android:text="Create new account"
+                        android:text="@string/account_new_button"
                         android:textColor="@color/text_color_primary_dark" />
                 </LinearLayout>
 
@@ -299,19 +347,26 @@ along with this program; if not, write to the Free Software
                         android:singleLine="true"
                         android:typeface="monospace" />
 
-                    <EditText
-                        android:id="@+id/password"
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/etSipPasswordLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:hint="@string/prompt_password"
-                        android:imeActionId="@integer/register_sip_account_actionid"
-                        android:imeActionLabel="@string/action_create_short"
-                        android:inputType="textPassword"
-                        android:singleLine="true"
-                        android:typeface="monospace" />
+                        app:passwordToggleEnabled="true">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:hint="@string/prompt_password"
+                            android:imeActionId="@integer/register_sip_account_actionid"
+                            android:imeActionLabel="@string/action_create_short"
+                            android:inputType="textPassword"
+                            android:singleLine="true"
+                            android:typeface="monospace" />
+                    </android.support.design.widget.TextInputLayout>
 
                     <Button
                         android:id="@+id/create_sip_button"

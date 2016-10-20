@@ -187,4 +187,16 @@ along with this program; if not, write to the Free Software
     <string name="account_device_added_message">You have successfully setup your Ring account on this device.</string>
     <string name="account_device_updated_title">Account device updated</string>
 
+    <string name="account_link_button">Link this device to an account</string>
+    <string name="account_link_prompt_password">Enter your password</string>
+    <string name="account_link_prompt_pin">Enter PIN</string>
+    <string name="account_wizard_title">Ring account</string>
+    <string name="account_new_button">Create a new account</string>
+    <string name="account_link_infos">To link another device to this account, you first need to obtain a pin code. To generate the pin code, go to the account management setting of a previous device, choose the Ring Account to use and select "Link another device to this account". </string>
+    <string name="account_new_infos">Please choose a password of at least 6 characters. This password will be asked to add new devices to your Ring account.</string>
+    <string name="account_link_export_button">Link another device to this account</string>
+    <string name="account_link_export_info">To use this account on other devices, you must first expose it on Ring. This will generate a PIN code that you must enter on the new device to set up the account. The PIN is valid for 10 minutes. \n\nPlease provide your password to start:</string>
+    <string name="account_start_export_button">Generate Pin</string>
+    <string name="account_end_export_button">close</string>
+    <string name="account_end_export_infos">Your Pin is :\n\n%%\n\nTo complete the process, you need to open Ring on the new device. Create a new account with \"Link this device to an account\". Your pin is valid for 10 minutes.</string>
 </resources>
