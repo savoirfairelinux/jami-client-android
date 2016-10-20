@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_69bb2073",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/QRCodeUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-20T18:26:33Z",
+      "side": 1,
+      "message": "Copyright should be changed",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 3
+      },
+      "revId": "f4783fe39f74829076c54ac776d9a17b3c6b45e3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_09b0548a",
+        "filename": "ring-android/app/src/main/res/layout/frag_menu_header.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-20T18:26:33Z",
+      "side": 1,
+      "message": "Should be toEndOf ?",
+      "range": {
+        "startLine": 68,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 32
+      },
+      "revId": "f4783fe39f74829076c54ac776d9a17b3c6b45e3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_29ad1832",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2016-10-20T18:26:33Z",
+      "side": 1,
+      "message": "More explicit string : Share my account",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "f4783fe39f74829076c54ac776d9a17b3c6b45e3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
