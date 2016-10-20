@@ -68,6 +68,8 @@ public class MediaPreferenceFragment extends PreferenceFragment
 
     protected AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
 
+    private int MAX_SIZE_RINGTONE = 3000;
+
     private static final int SELECT_RINGTONE_PATH = 40;
     private Preference.OnPreferenceClickListener filePickerListener = new Preference.OnPreferenceClickListener() {
         @Override
@@ -132,11 +134,26 @@ public class MediaPreferenceFragment extends PreferenceFragment
 
         String path = getRealPathFromURI(getActivity(), data.getData());
         File myFile = new File(path);
-        Log.i(TAG, "file selected:" + myFile.getAbsolutePath());
+        Log.i(TAG, "file selected: " + myFile.getAbsolutePath());
         if (requestCode == SELECT_RINGTONE_PATH) {
-            findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setSummary(myFile.getName());
-            mCallbacks.getAccount().getAdvancedDetails().setDetailString(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, myFile.getAbsolutePath());
-            mCallbacks.getAccount().notifyObservers();
+            String type = getActivity().getContentResolver().getType(data.getData());
+            if ("audio/mpeg3".equals(type) || "audio/x-mpeg-3".equals(type) || "audio/mpeg".equals(type) || "audio/x-mpeg".equals(type)) {
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+                builder.setTitle("Error");
+                builder.setMessage("This format is not supported.");
+                builder.show();
+                Log.d(TAG, "The extension file is not supported");
+            } else if (myFile.length() / 1024 > MAX_SIZE_RINGTONE) {
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+                builder.setTitle("Error");
+                builder.setMessage("This file is too big. The maximum size is 3MB.");
+                builder.show();
+                Log.d(TAG, "The file is too big " + myFile.length() / 1024);
+            } else {
+                findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setSummary(myFile.getName());
+                mCallbacks.getAccount().getAdvancedDetails().setDetailString(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, myFile.getAbsolutePath());
+                mCallbacks.getAccount().notifyObservers();
+            }
         }
     }
 
