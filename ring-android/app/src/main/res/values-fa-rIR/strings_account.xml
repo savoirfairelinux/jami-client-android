@@ -78,4 +78,5 @@
   <string name="account_rtp_port_range">دامنهٔ درگاه RTP صدا</string>
   <!--Import/export-->
   <string name="account_import_title">درون‌ریزی حساب‌ها</string>
+  <string name="account_export_end_error_title">خطا</string>
 </resources>

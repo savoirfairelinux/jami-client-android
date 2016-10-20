@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="section_licence">Lisans</string>
+  <string name="sponsor_section">Ring bir özgür yazılımdır ve şunun tarafından desteklenir</string>
   <string name="copyright_section">Telif Hakkı</string>
   <string name="contribute_section">Katkı Yap</string>
   <string name="version_section">Sürüm</string>
@@ -10,6 +11,7 @@
   <string name="title_section0">Çevir</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ağ bağlantısı yok</string>
+  <string name="error_mobile_network_available_but_disabled">Lütfen ayarlar ekranında hücre ağına erişim verin.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Yeni hesap</string>
   <string name="ab_account_edition_1">Sil</string>
@@ -62,9 +64,11 @@
   <!--Call Fragment-->
   <string name="me">Ben</string>
   <string name="you_txt_prefix">Sen:</string>
+  <string name="action_call_attended_transfer">katılınmış aktarma</string>
   <string name="action_call_conference">Toplantı</string>
   <string name="action_call_hangup">Kapat</string>
   <string name="action_settings">Ayarlar</string>
+  <string name="help_gestures">Bu görünüm arama sırasında çeşitli etkileşimlerle kullanıcılara yardım edecektir. Çeşitli eylemler şunlardır; Uzun basmak, sallamak, kaydırmak vb.</string>
   <string name="ongoing_call">Giden arama</string>
   <string name="hist_in_call">%1$s gelen arama</string>
   <string name="hist_out_call">%1$s giden arama</string>
@@ -74,7 +78,9 @@
   <string name="action_call_decline">Reddet</string>
   <string name="ab_action_speakerphone">Hoparlörü etkinleştir</string>
   <string name="ab_action_contact_add">Kişilere ekle</string>
+  <string name="ab_action_contact_add_question">Kişilere eklensin mi?</string>
   <string name="ab_action_audio_call">Sesli arama</string>
+  <string name="ab_action_video_call">Görüntülü arama</string>
   <string name="share_via">Paylaş</string>
   <string name="write_a_message">Bir ileti yaz</string>
   <string name="scan_qr">Kare Kod Tara</string>
@@ -83,18 +89,31 @@
   <string name="send_message">İleti gönder</string>
   <string name="message_sending">İleti gönderiliyor...</string>
   <string name="time_just_now">Şimdi</string>
+  <string name="permission_read_denied">Uygulamaya deponuzu okuma izni verilmedi. Bu yüzden düzgün işleyemez. Lütfen bu izni vermeyi göz ardı etmeyin.</string>
+  <string name="permission_write_denied">Uygulamaya deponuza yazma izni verilmedi. Bu yüzden düzgün işleyemez. Lütfen bu izni vermeyi göz ardı etmeyin.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera izni</string>
+  <string name="permission_dialog_camera_message">Görüntülü görüşme için kamera çalıştırma izni gereklidir.Lütfen etkinleştirmeyi gözden kaçırmayın.</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring bu özelliği etkinleştirmek için \"Kişileri okuma\" iznine gereksiniyor. Lütfen verin.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring bu özelliği etkinleştirmek için \"Çağrı kaydına yazma\" iznine gereksiniyor. Lütfen verin.</string>
   <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Eklemek istediğiniz hesabın QR kodunu tarayın.</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Geçmişi temizle ?</string>
   <string name="clear_history_dialog_message">Bu eylem geri alınamaz.</string>
+  <string name="clear_history_completed">Geçmiş temizlenmiş</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Bu konuşmayı sil</string>
   <string name="conversation_action_delete_this_title">Bu konuşmayı sil ?</string>
   <string name="conversation_action_delete_this_message">Bu eylem geri alınamaz.</string>
   <string name="conversation_action_copy_peer_number">Numarayı kopyala</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s panoya kopyalandı</string>
+  <string name="conversation_action_select_peer_number">Bir numara seçin</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">%1$s eklensin mi ?</string>
+  <string name="prompt_new_password">Yeni parola</string>
+  <!--MenuHeaderView-->
+  <string name="unknown">Bilinmeyen</string>
 </resources>

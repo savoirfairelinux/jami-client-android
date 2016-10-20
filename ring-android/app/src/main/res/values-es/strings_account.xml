@@ -111,4 +111,5 @@ Puedes editar tu cuenta luego</string>
   <string name="error_passwords_not_equals">Las contraseñas no coinciden</string>
   <string name="import_failed_dialog_title">Error de importación</string>
   <string name="import_failed_dialog_msg">Ha ocurrido un error</string>
+  <string name="account_export_end_error_title">Error</string>
 </resources>

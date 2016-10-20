@@ -49,4 +49,5 @@
   <!--Conversation-->
   <string name="conversation_action_copy_peer_number">העתק מספר</string>
   <!--Contacts-->
+  <!--MenuHeaderView-->
 </resources>

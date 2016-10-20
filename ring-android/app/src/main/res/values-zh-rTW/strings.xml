@@ -86,4 +86,6 @@
   <string name="conversation_action_select_peer_number">選擇號碼</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">加入 %1$s 嗎？</string>
+  <string name="prompt_new_password">新密碼</string>
+  <!--MenuHeaderView-->
 </resources>

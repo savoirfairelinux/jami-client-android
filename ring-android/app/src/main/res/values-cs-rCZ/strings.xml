@@ -107,4 +107,7 @@
   <string name="conversation_action_select_peer_number">Vyberte číslo</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Přidat %1$s ?</string>
+  <string name="prompt_new_password">Nové heslo</string>
+  <!--MenuHeaderView-->
+  <string name="unknown">Neznámý</string>
 </resources>

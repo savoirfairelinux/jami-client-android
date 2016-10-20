@@ -10,6 +10,16 @@
   <string name="error_field_required">Ce champ est requis</string>
   <string name="dialog_wait_create">Ajout du compte</string>
   <string name="dialog_wait_create_details">Merci de patienter pendant l\'ajout de votre compte…</string>
+  <string name="dialog_warn_ip2ip_account_title">Créer un compte SIP vide ?</string>
+  <string name="dialog_warn_ip2ip_account_message">Vous êtes sur le point de créer un compte SIP sans avoir fourni un nom d\'hôte correcte.
+Vous pourrez uniquement faire et recevoir des appels directs directs sur IP.
+Vous pouvez modifier le compte plus tard.</string>
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+  </string-array>
+  <string name="help_ring_title">Créer un compte Ring</string>
+  <string name="help_ring">Un compte Ring permet de se connecter sécuritairement avec un autre interlocuteur à travers un réseau distribué</string>
   <string name="help_sip_title">Ajouter votre compte SIP</string>
   <string name="help_sip">Configurez un compte SIP existant.</string>
   <string name="create_sip_account">Ajouter</string>
@@ -31,6 +41,7 @@
   <string name="account_optionnal_category">Réglages optionnels</string>
   <string name="account_useragent_label">User-agent</string>
   <string name="account_autoanswer_label">Décroche automatiquement l\'appel</string>
+  <string name="account_upnp_label">Activer UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
@@ -84,7 +95,21 @@
   <string name="account_import_account">Importer un compte</string>
   <string name="account_export_title">Exporter un compte</string>
   <string name="account_import_title">Importer compte</string>
+  <string name="account_import_explanation">Vous pouvez importer des comptes que vous avez précédemment exportés.</string>
+  <string name="account_export_message">Enregistre les paramètres du compte et les identifiants, en chiffrant le mot de passe.</string>
   <string name="account_export_new_password">Nouveau mot de passe</string>
   <string name="account_export_confirm_password">Confirmer le mot de passe</string>
   <string name="account_import_message">Entrer le mot de passe pour déchiffrer le fichier.</string>
+  <string name="account_import_decryption_password">Mot de passe en clair</string>
+  <string name="import_dialog_title">Importer</string>
+  <string name="import_export_wait">Veuillez patienter</string>
+  <string name="export_dialog_title">Compte exporté</string>
+  <string name="account_export_result">Compte exporté vers %1$s</string>
+  <string name="export_failed_dialog_title">Échec d\'exportation</string>
+  <string name="export_failed_dialog_msg">Une erreur s\'est produite</string>
+  <string name="error_password_char_count">6 caractères maximales</string>
+  <string name="error_passwords_not_equals">Mot de passe erronné</string>
+  <string name="import_failed_dialog_title">Échec d\'importation</string>
+  <string name="import_failed_dialog_msg">Une erreur s\'est produite</string>
+  <string name="account_export_end_error_title">Erreur</string>
 </resources>

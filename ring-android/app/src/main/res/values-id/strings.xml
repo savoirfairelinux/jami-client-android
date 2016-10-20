@@ -23,4 +23,6 @@
   <!--Settings-->
   <!--Conversation-->
   <!--Contacts-->
+  <!--MenuHeaderView-->
+  <string name="unknown">Tidak diketahui</string>
 </resources>

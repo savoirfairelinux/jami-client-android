@@ -16,6 +16,7 @@
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
+  <string name="account_ringtone_label">Suonerie</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <!--Advanced Details-->
