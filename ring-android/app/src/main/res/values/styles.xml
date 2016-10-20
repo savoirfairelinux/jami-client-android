@@ -52,5 +52,9 @@
         <item name="android:typeface">normal</item>
         <item name="android:textColor">@color/text_color_secondary</item>
     </style>
-
+    <style name="ActionEditText" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorControlNormal">@color/color_primary_light</item>
+        <item name="colorControlActivated">@color/color_primary_light</item>
+        <item name="colorControlHighlight">@color/color_primary_light</item>
+    </style>
 </resources>
