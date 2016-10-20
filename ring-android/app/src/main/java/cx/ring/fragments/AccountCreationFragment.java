@@ -523,7 +523,7 @@ public class AccountCreationFragment extends Fragment {
                             showImportDialog();
                         } catch (IOException e) {
                             Log.e(TAG, "Exception reading file", e);
-                            Toast.makeText(getActivity(), getContext().getString(R.string.account_cannot_read, data.getData()), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), getActivity().getString(R.string.account_cannot_read, data.getData()), Toast.LENGTH_LONG).show();
                         }
                     } else {
                         showImportDialog();

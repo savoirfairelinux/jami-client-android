@@ -50,6 +50,7 @@ import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountConfig;
 import cx.ring.model.account.ConfigKey;
 import cx.ring.service.LocalService;
+import cx.ring.utils.FileUtils;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
@@ -125,8 +126,9 @@ public class MediaPreferenceFragment extends PreferenceFragment
             return;
         }
 
-        File myFile = new File(data.getData().getPath());
-        Log.i(TAG, "file selected:" + data.getData());
+        String path = FileUtils.getRealPathFromURI(getActivity(), data.getData());
+        File myFile = new File(path);
+        Log.i(TAG, "file selected:" + myFile.getAbsolutePath());
         if (requestCode == SELECT_RINGTONE_PATH) {
             findPreference(ConfigKey.RINGTONE_PATH.key()).setSummary(myFile.getName());
             mCallbacks.getAccount().setDetail(ConfigKey.RINGTONE_PATH, myFile.getAbsolutePath());
@@ -146,9 +148,9 @@ public class MediaPreferenceFragment extends PreferenceFragment
         addPreferencesFromResource(R.xml.account_media_prefs);
         audioCodecsPref = (CodecPreference) findPreference("Account.audioCodecs");
         videoCodecsPref = (CodecPreference) findPreference("Account.videoCodecs");
+        boolean isChecked = Boolean.valueOf(mCallbacks.getAccount().getDetail(ConfigKey.RINGTONE_ENABLED));
+        findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(isChecked);
 
-        findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(
-                ((TwoStatePreference) findPreference(ConfigKey.RINGTONE_ENABLED.key())).isChecked());
         addPreferenceListener(ConfigKey.VIDEO_ENABLED, changeVideoPreferenceListener);
         final Account acc = mCallbacks.getAccount();
         if (acc != null) {
@@ -185,8 +187,8 @@ public class MediaPreferenceFragment extends PreferenceFragment
                     getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled((Boolean) newValue);
                 }
                 account.setDetail(key, newValue.toString());
-            } else  if (key == ConfigKey.ACCOUNT_DTMF_TYPE) {
-                preference.setSummary(((String)newValue).contentEquals("overrtp") ? "RTP" : "SIP");
+            } else if (key == ConfigKey.ACCOUNT_DTMF_TYPE) {
+                preference.setSummary(((String) newValue).contentEquals("overrtp") ? "RTP" : "SIP");
             } else {
                 preference.setSummary((CharSequence) newValue);
                 Log.i(TAG, "Changing" + key + " value:" + newValue);
