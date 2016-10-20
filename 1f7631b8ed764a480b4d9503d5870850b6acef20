@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_04135b5d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-20T19:46:40Z",
+      "side": 1,
+      "message": "ringtones: fix behaviour\n\n- add default.wav\n- Fix the initial state of ringtone preference (now Enabled by default)\n- extract file handling methods in a dedicated class",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 70
+      },
+      "revId": "1f7631b8ed764a480b4d9503d5870850b6acef20",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_2410df4d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-20T19:46:40Z",
+      "side": 1,
+      "message": "You need to add a space between : and #",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "1f7631b8ed764a480b4d9503d5870850b6acef20",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_4409632b",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountCreationFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-20T19:46:40Z",
+      "side": 1,
+      "message": "I think we should have a separate class for that, a FileUtils.java for example",
+      "range": {
+        "startLine": 850,
+        "startChar": 4,
+        "endLine": 898,
+        "endChar": 5
+      },
+      "revId": "1f7631b8ed764a480b4d9503d5870850b6acef20",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
