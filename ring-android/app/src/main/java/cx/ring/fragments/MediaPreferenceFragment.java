@@ -24,6 +24,7 @@ package cx.ring.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,7 +33,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.RemoteException;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentCompat;
@@ -67,6 +70,8 @@ public class MediaPreferenceFragment extends PreferenceFragment
     private CodecPreference videoCodecsPref = null;
 
     protected AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
+
+    private int MAX_SIZE_RINGTONE = 800;
 
     private static final int SELECT_RINGTONE_PATH = 40;
     private Preference.OnPreferenceClickListener filePickerListener = new Preference.OnPreferenceClickListener() {
@@ -132,27 +137,97 @@ public class MediaPreferenceFragment extends PreferenceFragment
 
         String path = getRealPathFromURI(getActivity(), data.getData());
         File myFile = new File(path);
-        Log.i(TAG, "file selected:" + myFile.getAbsolutePath());
+        Log.i(TAG, "file selected: " + myFile.getAbsolutePath());
         if (requestCode == SELECT_RINGTONE_PATH) {
-            findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setSummary(myFile.getName());
-            mCallbacks.getAccount().getAdvancedDetails().setDetailString(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, myFile.getAbsolutePath());
-            mCallbacks.getAccount().notifyObservers();
+            String type = getActivity().getContentResolver().getType(data.getData());
+            if ("audio/mpeg3".equals(type) || "audio/x-mpeg-3".equals(type) || "audio/mpeg".equals(type) || "audio/x-mpeg".equals(type)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(R.string.ringtone_error_title);
+                builder.setMessage(R.string.ringtone_error_format_not_supported);
+                builder.show();
+                Log.d(TAG, "The extension file is not supported");
+            } else if (myFile.length() / 1024 > MAX_SIZE_RINGTONE) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(R.string.ringtone_error_title);
+                builder.setMessage(getString(R.string.ringtone_error_size_too_big, MAX_SIZE_RINGTONE));
+                builder.show();
+                Log.d(TAG, "The file is too big " + myFile.length() / 1024);
+            } else {
+                findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setSummary(myFile.getName());
+                mCallbacks.getAccount().getAdvancedDetails().setDetailString(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, myFile.getAbsolutePath());
+                mCallbacks.getAccount().notifyObservers();
+            }
         }
     }
 
-    private String getRealPathFromURI(Context context, Uri contentUri) {
-        String path;
-        Cursor cursor;
+    private String getRealPathFromURI(Context context, Uri uri) {
+        String path = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, uri)) {
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+                if ("primary".equalsIgnoreCase(type)) {
+                    path = Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+            } else if (isDownloadsDocument(uri)) {
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                path = getDataColumn(context, contentUri, null, null);
+            } else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[]{split[1]};
+                path = getDataColumn(context, contentUri, selection, selectionArgs);
+            }
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            path = getDataColumn(context, uri, null, null);
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            path = uri.getPath();
+        }
+
+        return path;
+    }
+
+    private static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    private static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    private static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    private static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+        Cursor cursor = null;
+        String path = null;
+        final String column = "_data";
+        final String[] projection = {column};
         try {
-            String[] proj = {MediaStore.Audio.Media.DATA};
-            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA);
-            cursor.moveToFirst();
-            path = cursor.getString(column_index);
-            cursor.close();
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int column_index = cursor.getColumnIndexOrThrow(column);
+                path = cursor.getString(column_index);
+            }
         } catch (Exception e) {
-            Log.e(TAG, "Error while saving file to disk", e);
-            path = null;
+            Log.e(TAG, "Error while saving the ringtone", e);
+        } finally {
+            if (cursor != null)
+                cursor.close();
         }
         return path;
     }
