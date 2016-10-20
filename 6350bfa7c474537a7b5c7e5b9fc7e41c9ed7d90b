@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_24da1f79",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/account/AccountConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-20T21:39:19Z",
+      "side": 1,
+      "message": "this method was returning null instead of an empty string if the value is not found. This was breaking the behaviour",
+      "range": {
+        "startLine": 77,
+        "startChar": 15,
+        "endLine": 77,
+        "endChar": 58
+      },
+      "revId": "6350bfa7c474537a7b5c7e5b9fc7e41c9ed7d90b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
