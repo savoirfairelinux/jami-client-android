@@ -114,4 +114,7 @@
   <string name="conversation_action_select_peer_number">Виберіть номер</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Додати %1$s ?</string>
+  <string name="prompt_new_password">Новий пароль</string>
+  <!--MenuHeaderView-->
+  <string name="unknown">Невідомий</string>
 </resources>

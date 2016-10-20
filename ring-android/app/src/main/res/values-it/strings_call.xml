@@ -23,8 +23,22 @@ along with this program; if not, write to the Free Software
 <resources>
     <!-- SipCalls -->
     <string name="call_human_state_incoming">Suonando</string>
+    <string name="call_human_state_connecting">Connessione in corso </string>
     <string name="call_human_state_ringing">Chiamando</string>
     <string name="call_human_state_current">Parlando</string>
+    <string name="call_human_state_hungup">Finito</string>
     <string name="call_human_state_busy">Occupato</string>
     <string name="call_human_state_failure">Fallito</string>
-    </resources>
+    <string name="call_human_state_hold">Pausa</string>
+    <string name="call_human_state_unhold">Riprendere</string>
+    <string name="call_human_state_over">Finito</string>
+    <string name="call_human_state_none">Nessuno</string>
+    <!-- Conferences -->
+    <string name="conference_human_state_active_attached">Attivo e presente</string>
+    <string name="conference_human_state_active_detached">Attivo ma assente</string>
+    <string name="conference_human_state_active_attached_rec">Attivo, presente e registrando</string>
+    <string name="conference_human_state_active_detached_rec">Attivo, assente ma registrando</string>
+    <string name="conference_human_state_hold">Pausa</string>
+    <string name="conference_human_state_hold_rec">Pausa registrazione</string>
+    <string name="conference_human_state_default">Nessuno</string>
+</resources>

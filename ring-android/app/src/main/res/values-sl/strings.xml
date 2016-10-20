@@ -1,27 +1,25 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="section_licence">Licenca</string>
+  <string name="sponsor_section">Ring je prosto programje, ki ga razvija in podpira</string>
+  <string name="copyright_section">Avtorske pravice</string>
+  <string name="contribute_section">Prispevaj</string>
+  <string name="version_section">Različica</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">ਰਿੰਗ</string>
+  <string name="title_activity_sflphone_home">Ring</string>
   <!--AB menus-->
-  <string name="ab_account_creation">ਨਵਾਂ ਖਾਤਾ</string>
-  <string name="ab_account_edition_1">ਮਿਟਾਓ</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <!--Sections-->
-  <string name="menu_item_settings">ਸੈਟਿੰਗ</string>
-  <string name="menu_item_about">ਰਿੰਗ ਬਾਰੇ</string>
   <!--Dialing Fragment-->
-  <string name="dial_hint">ਫੋਨ ਨੰਬਰ ਮਿਲਾਓ</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
-  <string name="choose_number">ਨੰਬਰ ਚੁਣੋ</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
-  <string name="action_settings">ਸੈਟਿੰਗ</string>
   <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->

@@ -111,4 +111,5 @@ Du kan rette din konto senere</string>
   <string name="error_passwords_not_equals">Kodeord stemmer ikke overens</string>
   <string name="import_failed_dialog_title">Import fejlede</string>
   <string name="import_failed_dialog_msg">Der skete en fejl</string>
+  <string name="account_export_end_error_title">Fejl</string>
 </resources>

@@ -107,4 +107,5 @@ Du kan endre kontoen din senere</string>
   <string name="error_passwords_not_equals">Passordene stemmer ikke</string>
   <string name="import_failed_dialog_title">Importen feilet</string>
   <string name="import_failed_dialog_msg">Det skjedde en feil</string>
+  <string name="account_export_end_error_title">Feil</string>
 </resources>

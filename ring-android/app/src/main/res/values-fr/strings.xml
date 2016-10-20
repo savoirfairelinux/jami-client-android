@@ -5,11 +5,13 @@
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuer</string>
   <string name="version_section">Version</string>
+  <string name="no_email_app_installed">Application d\'envoi de courriel non-trouvée, installez-en un et renvoyez-nous votre rapport</string>
   <string name="email_chooser_title">Envoi du courriel à travers ...</string>
   <!--RingActivity-->
   <string name="title_section0">Numéroter</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Pas d\'accès au réseau</string>
+  <string name="error_mobile_network_available_but_disabled">SVP, autorisez l\'accès au réseau cellulaire dans les options de configuration</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nouveau compte</string>
   <string name="ab_account_edition_1">Supprimer</string>
@@ -87,9 +89,15 @@
   <string name="send_message">Envoyer le message</string>
   <string name="message_sending">Envoi du message</string>
   <string name="time_just_now">A l\'instant</string>
+  <string name="permission_read_denied">L\'application n\'a pas été autorisée à lire dans la mémoire du dispositif. En conséquence, elle ne peut pas fonctionner correctement. Merci de lui accorder cette permission.</string>
+  <string name="permission_write_denied">L\'application n\'a pas été autorisée à écrire dans la mémoire du dispositif. En conséquence, elle ne peut pas fonctionner correctement. Merci de lui accorder cette permission.</string>
   <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Permission d\'accès au caméra</string>
+  <string name="permission_dialog_camera_message">Les conversation vidéo nécessitent la permission d\'utiliser l\'objectif. Merci de l\'autoriser.</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring a besoin d\'accéder en lecture à votre liste de contact. SVP autorisez-le.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring a besoin d\'accéder en écriture à votre liste de contact. SVP autorisez-le.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Numérisez le code QR de votre interlocuteur.</string>
   <!--Settings-->
@@ -101,5 +109,11 @@
   <string name="conversation_action_delete_this_title">Supprimer la conversation ?</string>
   <string name="conversation_action_delete_this_message">Cette action est irréversible.</string>
   <string name="conversation_action_copy_peer_number">Copier le numéro ou identifiant Ring</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s copié vers leclipboard</string>
+  <string name="conversation_action_select_peer_number">Choisir un numéro</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Ajouter %1$s</string>
+  <string name="prompt_new_password">Nouveau mot de passe</string>
+  <!--MenuHeaderView-->
+  <string name="unknown">Inconnu</string>
 </resources>

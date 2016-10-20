@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account creation-->
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <!--Basic Details-->
+  <!--Audio Details-->
+  <string name="account_audio_label">audio</string>
+  <string name="account_ringtone_label">Sonneries</string>
+  <!--Video Details-->
+  <string name="account_video_label">Vidéo</string>
+  <!--Advanced Details-->
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <!--SIP-->
+  <!--TLS Details-->
+  <!--Import/export-->
+</resources>

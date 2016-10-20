@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings related to account creation-->
-  <string name="prompt_alias">Aliasname</string>
+  <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Rechnername</string>
   <string name="prompt_username">Benutzername</string>
   <string name="prompt_password">Passwort</string>
@@ -9,7 +9,12 @@
   <string name="action_create_short">Registrieren</string>
   <string name="error_field_required">Dieses Feld ist erforderlich</string>
   <string name="dialog_wait_create">Konto hinzufügen</string>
-  <string name="dialog_wait_create_details">Bitte warten während das neue Konto eingerichtet wird...</string>
+  <string name="dialog_wait_create_details">Bitte warten Sie während Ihr neues Konto eingerichtet wird...</string>
+  <string name="dialog_warn_ip2ip_account_title">Ein leeres SIP-Konto erstellen?</string>
+  <string-array name="accountType">
+    <item>RING</item>
+    <item>SIP</item>
+  </string-array>
   <string name="help_ring_title">Ein Ring-Konto erstellen</string>
   <string name="help_ring">Ein Ring-Konto erlaubt es ihnen andere Menschen auf sichere Art direkt über ein verteiltes Netzwerk zu erreichen</string>
   <string name="help_sip_title">Ihr SIP-Konto hinzufgügen</string>
@@ -33,6 +38,7 @@
   <string name="account_optionnal_category">Weitere Einstellungen</string>
   <string name="account_useragent_label">User Agent</string>
   <string name="account_autoanswer_label">Automatisch antworten</string>
+  <string name="account_upnp_label"> UPnP aktivieren</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
   <string name="account_audio_label">Audio</string>
@@ -70,11 +76,11 @@
   <string name="account_tls_port_label">TLS Listener Port</string>
   <string name="account_tls_certificate_list_label">Zertifizierungsstellen</string>
   <string name="account_tls_certificate_file_label">Zertifikatsdatei</string>
-  <string name="account_tls_private_key_file_label">Pfad zu privaten schlüssel</string>
-  <string name="account_tls_password_label">Passwort für privaten schlüssel</string>
+  <string name="account_tls_private_key_file_label">Private Schlüsseldatei</string>
+  <string name="account_tls_password_label">Passwort für den privaten Schlüssel</string>
   <string name="account_tls_method_label">TLS-Methode</string>
-  <string name="account_tls_ciphers_label">TLS-Chiffre</string>
-  <string name="account_tls_server_name_label">Server-Name</string>
+  <string name="account_tls_ciphers_label">TLS-Verschlüsselungsverfahren</string>
+  <string name="account_tls_server_name_label">Servername</string>
   <string name="account_tls_verify_server_label">Server verifizieren</string>
   <string name="account_tls_verify_client_label">Client verifizieren</string>
   <string name="account_tls_negotiation_timeout_sec">Timeout für Verbindungsaufbau (sek.)</string>
@@ -86,7 +92,7 @@
   <string name="account_import_account">Ein Konto importieren</string>
   <string name="account_export_title">Ein Konto exportieren</string>
   <string name="account_import_title">Konten importieren</string>
-  <string name="account_import_explanation">Die kannst vorher exportierte Konten wieder importieren.</string>
+  <string name="account_import_explanation">Du kannst zuvor exportierte Konten wieder importieren.</string>
   <string name="account_export_message">Speichere Kontoeinstellungen und Zugangsdaten, verschlüsselt mit Passwort</string>
   <string name="account_export_new_password">Neues Passwort</string>
   <string name="account_export_confirm_password">Passwort bestätigen</string>
@@ -94,12 +100,13 @@
   <string name="account_import_decryption_password">Passwort zum Entschlüsseln</string>
   <string name="import_dialog_title">Import</string>
   <string name="import_export_wait">Bitte warten…</string>
-  <string name="export_dialog_title">Konto exportieren</string>
-  <string name="account_export_result">Konto wurde exportiert nach %1$s</string>
+  <string name="export_dialog_title">Konto wird exportiert</string>
+  <string name="account_export_result">Konto wurde nach %1$s exportiert</string>
   <string name="export_failed_dialog_title">Der Export ist fehlgeschlagen</string>
   <string name="export_failed_dialog_msg">Ein Fehler ist aufgetreten</string>
   <string name="error_password_char_count">Mindestens 6 Zeichen</string>
-  <string name="error_passwords_not_equals">Die Passwörter stimmen nciht überein</string>
+  <string name="error_passwords_not_equals">Die Passwörter stimmen nicht überein</string>
   <string name="import_failed_dialog_title">Der Import ist fehlgeschlagen</string>
   <string name="import_failed_dialog_msg">Ein Fehler ist aufgetreten</string>
+  <string name="account_export_end_error_title">Fehler</string>
 </resources>

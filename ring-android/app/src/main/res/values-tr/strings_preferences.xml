@@ -8,6 +8,8 @@
   <string name="pref_mobileData_summary">Ring\'i Wi-Fi\'ye ek olarak 3G/LTE ağlarında da çalıştır</string>
   <string name="pref_systemContacts_title">Düzen kişilerini kullan</string>
   <string name="pref_systemContacts_summary">Arayan detaylarını göstermek için düzen kişilerini kullan</string>
+  <string name="pref_systemDialer_title">Ring kullanarak sistem aramalarını yerleştirin.</string>
+  <string name="pref_systemDialer_summary">Mümkün olduğunda Sistem aramalarını yerleştirmek için Ring\'i kullanın.</string>
   <string name="pref_startOnBoot_title">Ring\'i başlangıçta çalıştır</string>
   <string name="pref_startOnBoot_summary">Düzen başladığında arka planda Ring\'i çalıştır.</string>
   <string name="pref_clearHistory_title">Geçmişi temizle</string>

@@ -102,4 +102,6 @@
   <!--Conversation-->
   <string name="conversation_action_copy_peer_number">Szám másolása</string>
   <!--Contacts-->
+  <!--MenuHeaderView-->
+  <string name="unknown">Ismeretlen</string>
 </resources>
