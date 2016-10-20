@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="section_licence">Licence</string>
+  <string name="sponsor_section">Ring est un logiciel développé et suporté par</string>
+  <string name="copyright_section">Droits d\'auteurs</string>
+  <string name="contribute_section">Contribuer</string>
+  <string name="version_section">Version</string>
+  <string name="no_email_app_installed">Aucune adresse courriel n\'a étée trouvée, ajoutez en une pour nous envoyer un rapport.</string>
+  <string name="email_chooser_title">Envoyer un courriel en utilisant</string>
+  <!--RingActivity-->
+  <string name="title_section0">Composez</string>
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_mobile_network_available_but_disabled">Veuillez permettre l\'accès au réseau cellulaire dans l\'écran des réglages.</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Nouveau compte</string>
+  <string name="ab_account_edition_1">Supprimer</string>
+  <string name="ab_action_chat">Messagerie texte</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <string name="menu_item_home">Maison</string>
+  <string name="menu_item_accounts">Gérer les comptes</string>
+  <string name="menu_item_settings">Réglages</string>
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <string name="action_settings">Réglages</string>
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
+  <!--MenuHeaderView-->
+</resources>

@@ -1,9 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="section_licence">Lizenz</string>
+  <string name="sponsor_section">Ring ist eine freie Software entwickelt und unterstützt von</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Mitwirken</string>
   <string name="version_section">Version</string>
+  <string name="no_email_app_installed">Keine E-Mail-App gefunden, installieren Sie eine, um uns einen Bericht zu schicken</string>
   <string name="email_chooser_title">Senden von E-Mails über...</string>
   <!--RingActivity-->
   <string name="title_section0">Wählen</string>
@@ -31,6 +33,10 @@
   <!--DetailsHistory Fragment-->
   <string name="detail_hist_call_number">%1$s anrufen</string>
   <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Gespräche</item>
+    <item quantity="other">%d Gespräche</item>
+  </plurals>
   <string name="home_transfering">%1$s werden an %1$s übertragen</string>
   <string name="home_transfer_complet">Übertragung abgeschlossen</string>
   <!--ContactList Fragment-->
@@ -40,6 +46,7 @@
   <string name="choose_number">Nummer auswählen</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Durchstellen zu einem anderen aktuellen Anruf:</string>
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Verpasster Anruf von %1$s</string>
   <string name="notif_missed_outgoing_call">Verpasster Anruf zu %1$s</string>
@@ -55,25 +62,31 @@
   <string name="action_call_conference">Konferenz</string>
   <string name="action_call_hangup">Auflegen</string>
   <string name="action_settings">Einstellungen</string>
+  <string name="help_gestures">Diese Ansicht wird die Benutzer mit verschiedenen Interaktionen während der Gespräche helfen. Verschiedene Aktionen werden beschrieben; Langer Druck, fling, Swype, usw.</string>
   <string name="ongoing_call">Aktiver Anruf</string>
   <string name="hist_in_call">Eingehender Anruf von %1$s</string>
   <string name="hist_out_call">Ausgehende Anruf von %1$s</string>
+  <string name="start_error_title">Kann nicht Ring starten!</string>
   <string name="action_call_accept">Abnehmen</string>
   <string name="action_call_decline">Ablehnen</string>
+  <string name="ab_action_speakerphone">Lautsprecher aktivieren</string>
   <string name="ab_action_contact_add">Kontakte hinzufügen</string>
   <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen?</string>
   <string name="ab_action_audio_call">Audioanruf</string>
   <string name="ab_action_video_call">Videoanruf</string>
   <string name="share_via">Teilen über</string>
   <string name="write_a_message">Eine Nachricht schreiben</string>
+  <string name="scan_qr">QR-Code scannen</string>
   <!--Text messages-->
   <string name="send_message">Nachricht senden</string>
   <string name="message_sending">Nachricht senden</string>
   <string name="time_just_now">Vorhin</string>
   <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Kamera-Berechtigung</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Scannen Sie den QR-Code des Kontos, das Sie hinzufügen möchten.</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Verlauf löschen?</string>
   <string name="clear_history_dialog_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
@@ -87,4 +100,7 @@
   <string name="conversation_action_select_peer_number">Nummer auswählen</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Fügen %1$s hinzu?</string>
+  <string name="prompt_new_password">Neues Kennwort</string>
+  <!--MenuHeaderView-->
+  <string name="unknown">Unbekannt</string>
 </resources>

@@ -89,4 +89,5 @@ Moćete urediti vaš račun kasnije</string>
   <string name="error_passwords_not_equals">Lozinke se ne podudaraju</string>
   <string name="import_failed_dialog_title">Neuspjeli uvoz</string>
   <string name="import_failed_dialog_msg">Došlo je do greške</string>
+  <string name="account_export_end_error_title">Greška</string>
 </resources>

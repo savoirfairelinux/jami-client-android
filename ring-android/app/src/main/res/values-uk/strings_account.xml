@@ -111,4 +111,5 @@
   <string name="error_passwords_not_equals">Паролі не збігаються</string>
   <string name="import_failed_dialog_title">Невдалий імпорт</string>
   <string name="import_failed_dialog_msg">Виникла помилка</string>
+  <string name="account_export_end_error_title">Помилка</string>
 </resources>

@@ -107,4 +107,7 @@
   <string name="conversation_action_delete_this_message">Denne handlingen kan ikke gjøres om.</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
+  <string name="prompt_new_password">Nytt passord</string>
+  <!--MenuHeaderView-->
+  <string name="unknown">Ukjent</string>
 </resources>

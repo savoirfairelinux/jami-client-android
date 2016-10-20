@@ -111,4 +111,5 @@
   <string name="error_passwords_not_equals">Hesla se neshodují</string>
   <string name="import_failed_dialog_title">Import selhal</string>
   <string name="import_failed_dialog_msg">Nastala chyba</string>
+  <string name="account_export_end_error_title">Chyba</string>
 </resources>

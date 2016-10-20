@@ -111,4 +111,5 @@ Możesz edytować swoje konto później</string>
   <string name="error_passwords_not_equals">Hasła nie pasują do siebie</string>
   <string name="import_failed_dialog_title">Błąd w importowaniu</string>
   <string name="import_failed_dialog_msg">Wystąpił błąd</string>
+  <string name="account_export_end_error_title">Błąd</string>
 </resources>

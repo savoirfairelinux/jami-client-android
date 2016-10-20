@@ -6,15 +6,20 @@
   <string name="prompt_username">Naudotojo vardas</string>
   <string name="prompt_password">Slaptažodis</string>
   <string name="action_create">Pridėti paskyrą</string>
+  <string name="action_create_short">Registruoti</string>
   <string name="error_field_required">Šis laukas yra būtinas</string>
   <string name="dialog_wait_create">Pridedama paskyra</string>
   <string name="dialog_wait_create_details">Prašome palaukti, kol jūsų nauja paskyra yra pridedama</string>
   <string name="dialog_warn_ip2ip_account_title">Sukurti tuščią SIP paskyrą ?</string>
+  <string name="dialog_warn_ip2ip_account_message">Jūs ruošiatės sukurti SIP paskyrą, nenurodę teisingo kompiuterio vardo.
+Jūs galėsite atlikti ir priimti tik tiesioginius ip skambučius. 
+Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string-array name="accountType">
     <item>RING</item>
     <item>SIP</item>
   </string-array>
   <string name="help_ring_title">Sukurti Ring paskyrą</string>
+  <string name="help_sip_title">Pridėti savo SIP paskyrą</string>
   <string name="help_sip">Konfigūruokite esamą SIP paskyrą.</string>
   <string name="create_sip_account">Pridėti</string>
   <!--Strings related to account deletion-->
@@ -31,6 +36,9 @@
   <string name="account_bootstrap_label">Pradinė įkeltis</string>
   <string name="account_username_label">Naudotojo vardas</string>
   <string name="account_password_label">Slaptažodis</string>
+  <string name="account_optionnal_category">Pasirinktini nustatymai</string>
+  <string name="account_useragent_label">Naudotojo agentas</string>
+  <string name="account_autoanswer_label">Automatinis atsiliepimas</string>
   <string name="account_upnp_label">Įjungti UPnP</string>
   <string name="account_proxy_field">Įgaliotasis serveris</string>
   <!--Audio Details-->
@@ -44,6 +52,7 @@
   <string name="account_video_enable">Įjungti vaizdą</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Išplėstiniai</string>
+  <string name="account_registration_exp_label">Registracijos galiojimo laikas</string>
   <string name="account_local_interface_label">Vietinė sąsaja</string>
   <string name="account_local_port_label">Vietinis prievadas</string>
   <string name="account_stun_enable_label">Naudoti Stun</string>
@@ -56,18 +65,27 @@
   <string name="account_published_port_label">Paskelbtas prievadas</string>
   <string name="account_published_address_label">Paskelbtas adresas</string>
   <!--Security Details-->
+  <string name="account_credentials_label">Prisijungimo duomenys</string>
+  <string name="account_credentials_edit">Taisyti prisijungimo duomenis</string>
+  <string name="account_credentials_add">Pridėti prisijungimo duomenis</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Saugumas</string>
   <!--SIP-->
   <!--TLS Details-->
-  <string name="account_tls_private_key_file_label">Privataus rakto failas</string>
-  <string name="account_tls_password_label">Privataus rakto slaptažodis</string>
+  <string name="account_tls_transport_switch_label">Naudoti TLS perdavimą</string>
+  <string name="account_tls_port_label">TLS gavėjo prievadas</string>
+  <string name="account_tls_certificate_list_label">Liudijimų įstaiga</string>
+  <string name="account_tls_certificate_file_label">Liudijimo failas</string>
+  <string name="account_tls_private_key_file_label">Privačiojo rakto failas</string>
+  <string name="account_tls_password_label">Privačiojo rakto slaptažodis</string>
   <string name="account_tls_method_label">TLS metodas</string>
   <string name="account_tls_ciphers_label">TLS šifrai</string>
   <string name="account_tls_server_name_label">Serverio pavadinimas</string>
   <string name="account_tls_verify_server_label">Tikrinti serverį</string>
   <string name="account_tls_verify_client_label">Tikrinti klientą</string>
   <string name="account_tls_negotiation_timeout_sec">Derėjimuisi skirtas laikas (sek.)</string>
+  <string name="account_rtp_max_port">Didžiausias</string>
+  <string name="account_rtp_min_port">Mažiausias</string>
   <string name="account_rtp_port_range">Garso RTP prievadų rėžis</string>
   <!--Import/export-->
   <string name="account_export">Eksportuoti</string>
@@ -75,6 +93,7 @@
   <string name="account_export_title">Eksportuoti paskyrą</string>
   <string name="account_import_title">Importuoti paskyras</string>
   <string name="account_import_explanation">Galite importuoti anksčiau eksportuotas paskyras.</string>
+  <string name="account_export_message">Įrašykite paskyros nustatymus ir prisijungimo duomenis, užšifruotus slaptažodžiu.</string>
   <string name="account_export_new_password">Naujas slaptažodis</string>
   <string name="account_export_confirm_password">Patvirtinkite slaptažodį</string>
   <string name="account_import_message">Įrašykite slaptažodį, kad iššifruotumėte failą.</string>
@@ -89,4 +108,5 @@
   <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
   <string name="import_failed_dialog_title">Importavimas nepavyko</string>
   <string name="import_failed_dialog_msg">Įvyko klaida</string>
+  <string name="account_export_end_error_title">Klaida</string>
 </resources>

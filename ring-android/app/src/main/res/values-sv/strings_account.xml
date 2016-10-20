@@ -111,4 +111,5 @@ Du kan ändra kontot senare.</string>
   <string name="error_passwords_not_equals">Lösenorden stämmer inte</string>
   <string name="import_failed_dialog_title">Importen misslyckades</string>
   <string name="import_failed_dialog_msg">Et fel inträffade</string>
+  <string name="account_export_end_error_title">Fel</string>
 </resources>

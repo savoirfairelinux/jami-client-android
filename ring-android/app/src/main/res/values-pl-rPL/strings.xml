@@ -1,27 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">ਰਿੰਗ</string>
+  <string name="title_activity_sflphone_home">Ring</string>
   <!--AB menus-->
-  <string name="ab_account_creation">ਨਵਾਂ ਖਾਤਾ</string>
-  <string name="ab_account_edition_1">ਮਿਟਾਓ</string>
+  <string name="ab_account_edition_1">Usun</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <!--Sections-->
-  <string name="menu_item_settings">ਸੈਟਿੰਗ</string>
-  <string name="menu_item_about">ਰਿੰਗ ਬਾਰੇ</string>
+  <string name="menu_item_about">O Ringu</string>
   <!--Dialing Fragment-->
-  <string name="dial_hint">ਫੋਨ ਨੰਬਰ ਮਿਲਾਓ</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
-  <string name="choose_number">ਨੰਬਰ ਚੁਣੋ</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
-  <string name="action_settings">ਸੈਟਿੰਗ</string>
   <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->

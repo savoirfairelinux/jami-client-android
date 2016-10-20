@@ -21,10 +21,24 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_incoming">Çalıyor</string>
+    <string name="call_human_state_connecting">Bağlanılıyor</string>
     <string name="call_human_state_ringing">Aranıyor</string>
     <string name="call_human_state_current">Konuşuyor</string>
+    <string name="call_human_state_hungup">Bitti</string>
     <string name="call_human_state_busy">Meşgul</string>
     <string name="call_human_state_failure">Başarısız</string>
     <string name="call_human_state_hold">Beklet</string>
+    <string name="call_human_state_unhold">Bekletmeyi kaldır</string>
+    <string name="call_human_state_over">Bitti</string>
+    <string name="call_human_state_none">Hiçbiri</string>
+    <!-- Conferences -->
+    <string name="conference_human_state_active_attached">Eklenmiş etkin</string>
+    <string name="conference_human_state_active_detached">Ayrılmış etkin</string>
+    <string name="conference_human_state_active_attached_rec">Eklenmiş kayıt etkin</string>
+    <string name="conference_human_state_active_detached_rec">Ayrılmış kayıt etkin</string>
     <string name="conference_human_state_hold">Beklet</string>
-    </resources>
+    <string name="conference_human_state_hold_rec">Kayda ara ver</string>
+    <string name="conference_human_state_default">Hiçbiri</string>
+</resources>

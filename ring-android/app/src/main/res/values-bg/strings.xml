@@ -108,4 +108,7 @@
   <string name="conversation_action_copy_peer_number">Копиране на номера</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавяне на %1$s?</string>
+  <string name="prompt_new_password">Нова парола</string>
+  <!--MenuHeaderView-->
+  <string name="unknown">Неизвестно</string>
 </resources>
