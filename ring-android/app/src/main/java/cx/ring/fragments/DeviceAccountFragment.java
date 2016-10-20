@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *          Loïc Siret <loic.siret@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,18 +24,24 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
+import android.text.Layout;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AlignmentSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -44,22 +51,66 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
+
 import cx.ring.R;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
+import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.account.Account;
+import cx.ring.utils.KeyboardVisibilityManager;
+import cx.ring.views.LinkNewDeviceLayout;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
-public class DeviceAccountFragment extends Fragment implements AccountChangedListener {
+public class DeviceAccountFragment extends Fragment implements AccountChangedListener, BackHandlerInterface {
 
     private static final String TAG = DeviceAccountFragment.class.getSimpleName();
 
+    /*
+    UI Bindings
+     */
+    @BindView(R.id.linkaccount_container)
+    LinkNewDeviceLayout mLinkAccountView;
+
+    @BindView(R.id.ring_password)
+    EditText mRingPassword;
+
+    @BindView(R.id.btn_end_export)
+    Button mEndBtn;
+
+    @BindView(R.id.btn_start_export)
+    Button mStartBtn;
+
+    @BindView(R.id.account_link_info)
+    TextView mExportInfos;
+
+    /*
+    Declarations
+    */
     private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
     private DeviceAdapter adapter;
 
     @BindView(R.id.device_list)
     ListView deviceList;
+
+    /*
+    Fragment LifeCycle
+     */
+    @Nullable
+    @Override
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ViewGroup devLayout = (ViewGroup) inflater.inflate(R.layout.frag_device_list, container, false);
+
+        ButterKnife.bind(this, devLayout);
+
+        Account acc = mCallbacks.getAccount();
+        if (acc != null) {
+            accountChanged(acc);
+        }
+        mLinkAccountView.setContainer(this);
+        return devLayout;
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -95,6 +146,96 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
                 }
             }
         };
+    }
+
+    /*
+    BackHandlerInterface
+    */
+    @Override
+    public boolean onBackPressed() {
+        if (isDisplayingWizard()) {
+            hideWizard();
+            return true;
+        }
+
+        return false;
+    }
+    /*
+    Add a new device UI management
+     */
+    @OnClick({R.id.btn_add_device})
+    void flipForm() {
+        if (!isDisplayingWizard()) {
+            showWizard();
+        } else {
+            hideWizard();
+        }
+    }
+
+    private void showWizard() {
+        mLinkAccountView.setVisibility(View.VISIBLE);
+        mRingPassword.setVisibility(View.VISIBLE);
+        mEndBtn.setVisibility(View.GONE);
+        mStartBtn.setVisibility(View.VISIBLE);
+        mExportInfos.setText(R.string.account_link_export_info);
+        KeyboardVisibilityManager.showKeyboard(getActivity(), mRingPassword, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    @OnClick(R.id.btn_end_export)
+    public void hidePopWizard() {
+        mLinkAccountView.setVisibility(View.GONE);
+    }
+
+    public void hideWizard() {
+        mLinkAccountView.setVisibility(View.GONE);
+        mRingPassword.setText("");
+        KeyboardVisibilityManager.hideKeyboard(getActivity(), 0);
+    }
+
+    public boolean isDisplayingWizard() {
+        return mLinkAccountView.getVisibility() == View.VISIBLE;
+    }
+
+    private void showGeneratingResult(String pin) {
+        hideWizard();
+        mLinkAccountView.setVisibility(View.VISIBLE);
+        mRingPassword.setVisibility(View.GONE);
+        mEndBtn.setVisibility(View.VISIBLE);
+        mStartBtn.setVisibility(View.GONE);
+
+        String pined = getString(R.string.account_end_export_infos).replace("%%", pin);
+        final SpannableString styledResultText = new SpannableString(pined);
+        int pos = pined.lastIndexOf(pin);
+        styledResultText.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mExportInfos.setText(styledResultText);
+
+        KeyboardVisibilityManager.hideKeyboard(getActivity(), 0);
+    }
+
+    @OnEditorAction(R.id.ring_password)
+    public boolean onPasswordEditorAction(TextView pwd, int actionId, KeyEvent event) {
+        Log.i(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            if (pwd.getText().length() == 0) {
+                pwd.setError(getString(R.string.account_enter_password));
+            } else {
+                onClickStart();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @OnClick(R.id.btn_start_export)
+    public void onClickStart() {
+        mRingPassword.setError(null);
+        if (mRingPassword.getText().length() == 0) {
+            mRingPassword.setError(getString(R.string.account_enter_password));
+        } else if (mRingPassword.getText().length() < 6) {
+            mRingPassword.setError(getString(R.string.error_password_char_count));
+        } else {
+            new ExportOnRingTask().execute(mRingPassword.getText().toString());
+        }
     }
 
     class DeviceAdapter extends BaseAdapter {
@@ -149,7 +290,7 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     }
 
     private class ExportOnRingTask extends AsyncTask<String, Void, String> {
-        private final Account acc = mCallbacks.getAccount();
+        private final Account account = mCallbacks.getAccount();
 
         @Override
         protected void onPreExecute() {
@@ -157,22 +298,27 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
                     getString(R.string.export_account_wait_title),
                     getString(R.string.export_account_wait_message));
 
-            acc.exportListener = new Account.OnExportEndedListener() {
+            account.exportListener = new Account.OnExportEndedListener() {
+                final static int PIN_GENERATION_SUCCESS = 0;
+                final static int PIN_GENERATION_WRONG_PASSWORD = 1;
+                final static int PIN_GENERATION_NETWORK_ERROR = 2;
                 @Override
                 public void exportEnded(int code, String pin) {
-                    acc.exportListener = null;
+                    account.exportListener = null;
                     wait.dismiss();
+                    if (code == PIN_GENERATION_SUCCESS) {
+                        showGeneratingResult(pin);
+                        return;
+                    }
                     AlertDialog.Builder b = new AlertDialog.Builder(getActivity());
                     switch (code) {
-                        case 0:
-                            b.setTitle(getString(R.string.account_export_end_pin_title) + pin)
-                                    .setMessage(R.string.account_export_end_pin_message);
-                            break;
-                        case 1:
+                        case PIN_GENERATION_WRONG_PASSWORD:
                             b.setTitle(R.string.account_export_end_decryption_title)
                                     .setMessage(R.string.account_export_end_decryption_message);
+                            mRingPassword.setError(getString(R.string.account_export_end_decryption_message));
+                            mRingPassword.setText("");
                             break;
-                        case 2:
+                        case PIN_GENERATION_NETWORK_ERROR:
                             b.setTitle(R.string.account_export_end_network_title)
                                     .setMessage(R.string.account_export_end_network_message);
                             break;
@@ -189,68 +335,12 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
         protected String doInBackground(String... params) {
             String pin = null;
             try {
-                pin = mCallbacks.getRemoteService().exportOnRing(acc.getAccountID(), params[0]);
+                pin = mCallbacks.getRemoteService().exportOnRing(account.getAccountID(), params[0]);
             } catch (RemoteException e) {
                 Log.e(TAG, "Error while exporting in background", e);
             }
             return pin;
         }
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup devLayout = (ViewGroup) inflater.inflate(R.layout.frag_device_list, container, false);
-
-        ButterKnife.bind(this, devLayout);
-
-        Account acc = mCallbacks.getAccount();
-        if (acc != null) {
-            accountChanged(acc);
-        }
-
-        return devLayout;
-    }
-
-    @OnClick(R.id.btn_add_device)
-    @SuppressWarnings("unused")
-    public void addDevice() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        final ViewGroup v = (ViewGroup) LayoutInflater.from(getActivity()).inflate(R.layout.dialog_new_device, null);
-        final TextView pwd = (TextView) v.findViewById(R.id.pwd_txt);
-        builder.setMessage(R.string.account_new_device_message)
-                .setTitle(R.string.account_new_device)
-                .setPositiveButton(R.string.account_export, null)
-                .setNegativeButton(android.R.string.cancel, null).setView(v);
-        final AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-        pwd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.i(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    if (pwd.getText().length() == 0) {
-                        pwd.setError(getString(R.string.account_enter_password));
-                    } else {
-                        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).callOnClick();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-        alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pwd.setError(null);
-                if (pwd.getText().length() == 0) {
-                    pwd.setError(getString(R.string.account_enter_password));
-                } else {
-                    alertDialog.dismiss();
-                    new ExportOnRingTask().execute(pwd.getText().toString());
-                }
-            }
-        });
     }
 
 }

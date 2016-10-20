@@ -4,6 +4,7 @@
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *          Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *          Loïc Siret <loic.siret@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -76,6 +77,7 @@ import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
+import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.account.Account;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
@@ -118,6 +120,8 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     private Account mAccSelected = null;
     private final ArrayList<AccountChangedListener> listeners = new ArrayList<>();
 
+    private Fragment currentlyDisplayed;
+
     private Observer mAccountObserver = new Observer() {
 
         @Override
@@ -151,7 +155,6 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     };
 
     private ServiceConnection mConnection = new ServiceConnection() {
-
         @Override
         public void onServiceConnected(ComponentName className, IBinder s) {
             LocalService.LocalBinder binder = (LocalService.LocalBinder) s;
@@ -173,11 +176,37 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             mViewPager.setOffscreenPageLimit(4);
             mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), AccountEditionActivity.this, mAccSelected.isRing()));
 
-            PagerSlidingTabStrip mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
+            final PagerSlidingTabStrip mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
             mSlidingTabLayout.setViewPager(mViewPager);
+
 
             for (AccountChangedListener l : listeners)
                 l.accountChanged(mAccSelected);
+
+            mSlidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    PreferencesPagerAdapter adapter = (PreferencesPagerAdapter) mViewPager.getAdapter();
+                    currentlyDisplayed = adapter.getItem(position);
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    if (currentlyDisplayed instanceof DeviceAccountFragment) {
+                        DeviceAccountFragment deviceAccountFragment = (DeviceAccountFragment)currentlyDisplayed;
+                        if (deviceAccountFragment.isDisplayingWizard()){
+                            deviceAccountFragment.hideWizard();
+                        }
+                    }
+                    PreferencesPagerAdapter adapter = (PreferencesPagerAdapter) mViewPager.getAdapter();
+                    currentlyDisplayed = adapter.getItem(position);
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
         }
 
         @Override
@@ -220,6 +249,13 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                 mAccSelected.deleteObserver(mAccountObserver);
             }
             mBound = false;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!(currentlyDisplayed instanceof BackHandlerInterface)|| !((BackHandlerInterface)currentlyDisplayed).onBackPressed()) {
+            super.onBackPressed();
         }
     }
 
@@ -467,6 +503,9 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         private Context ctx;
         boolean isRing = false;
 
+        Fragment[] ringFragments = {new DeviceAccountFragment(),new GeneralAccountFragment(),new MediaPreferenceFragment(),new AdvancedAccountFragment()};
+        Fragment[] sipFragments = {new GeneralAccountFragment(),new MediaPreferenceFragment(),new AdvancedAccountFragment(),new SecurityAccountFragment()};
+
         PreferencesPagerAdapter(FragmentManager fm, Context c, boolean ring) {
             super(fm);
             ctx = c;
@@ -476,7 +515,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         @Override
         public int getCount() {
             // For now we have 4 panels in each account type (Ring/SIP), but it may change
-            return isRing ? 4 : 4;
+            return isRing ? ringFragments.length : sipFragments.length;
         }
 
         @Override
@@ -490,36 +529,14 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             return ctx.getString(resId);
         }
 
-        private static Fragment getRingPanel(int position) {
+        private Fragment getRingPanel(int position) {
             Log.i(TAG, "PreferencesPagerAdapter getFragment " + position);
-            switch (position) {
-                case 0:
-                    return new DeviceAccountFragment();
-                case 1:
-                    return new GeneralAccountFragment();
-                case 2:
-                    return new MediaPreferenceFragment();
-                case 3:
-                    return new AdvancedAccountFragment();
-                default:
-                    return null;
-            }
+           return ringFragments[position];
         }
 
-        private static Fragment getSIPPanel(int position) {
+        private Fragment getSIPPanel(int position) {
             Log.i(TAG, "PreferencesPagerAdapter getFragment " + position);
-            switch (position) {
-                case 0:
-                    return new GeneralAccountFragment();
-                case 1:
-                    return new MediaPreferenceFragment();
-                case 2:
-                    return new AdvancedAccountFragment();
-                case 3:
-                    return new SecurityAccountFragment();
-                default:
-                    return null;
-            }
+            return sipFragments[position];
         }
 
         private static int getRingPanelTitle(int position) {
