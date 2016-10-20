@@ -20,7 +20,6 @@
 package cx.ring.client;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -33,7 +32,6 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -69,10 +67,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 
 import butterknife.BindView;
@@ -89,6 +83,7 @@ import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.utils.FileUtils;
 import cx.ring.views.MenuHeaderView;
 
 public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks,
@@ -99,7 +94,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     static final String TAG = HomeActivity.class.getSimpleName();
 
     public static final int REQUEST_CODE_PREFERENCES = 1;
-    public static final int REQUEST_CODE_CREATE_ACCOUNT= 7;
+    public static final int REQUEST_CODE_CREATE_ACCOUNT = 7;
     public static final int REQUEST_CODE_CALL = 3;
     public static final int REQUEST_CODE_CONVERSATION = 4;
 
@@ -320,10 +315,13 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @Override
     protected void onStart() {
         Log.d(TAG, "onStart");
-        if (!PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("installed", false)) {
-            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("installed", true).commit();
-            copyAssetFolder(getAssets(), "ringtones", getFilesDir().getAbsolutePath() + "/ringtones");
+
+        String path = getFilesDir().getAbsolutePath() + "/ringtones";
+        if (!(new File(path + "/default.wav")).exists()) {
+            Log.d(TAG, "default.wav doesn't exist. Copying ringtones.");
+            FileUtils.copyAssetFolder(getAssets(), "ringtones", path);
         }
+
         super.onStart();
     }
 
@@ -431,53 +429,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     public FloatingActionButton getActionButton() {
         return actionButton;
-    }
-
-    private static boolean copyAssetFolder(AssetManager assetManager, String fromAssetPath, String toPath) {
-        try {
-            String[] files = assetManager.list(fromAssetPath);
-            new File(toPath).mkdirs();
-            Log.d(TAG, "Creating :" + toPath);
-            boolean res = true;
-            for (String file : files)
-                if (file.contains("")) {
-                    Log.d(TAG, "Copying file :" + fromAssetPath + "/" + file + " to " + toPath + "/" + file);
-                    res &= copyAsset(assetManager, fromAssetPath + "/" + file, toPath + "/" + file);
-                } else {
-                    Log.d(TAG, "Copying folder :" + fromAssetPath + "/" + file + " to " + toPath + "/" + file);
-                    res &= copyAssetFolder(assetManager, fromAssetPath + "/" + file, toPath + "/" + file);
-                }
-            return res;
-        } catch (Exception e) {
-            Log.e(TAG, "Error while copying asset folder", e);
-            return false;
-        }
-    }
-
-    private static boolean copyAsset(AssetManager assetManager, String fromAssetPath, String toPath) {
-        InputStream in;
-        OutputStream out;
-        try {
-            in = assetManager.open(fromAssetPath);
-            new File(toPath).createNewFile();
-            out = new FileOutputStream(toPath);
-            copyFile(in, out);
-            in.close();
-            out.flush();
-            out.close();
-            return true;
-        } catch (Exception e) {
-            Log.e(TAG, "Error while copying asset", e);
-            return false;
-        }
-    }
-
-    private static void copyFile(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[1024];
-        int read;
-        while ((read = in.read(buffer)) != -1) {
-            out.write(buffer, 0, read);
-        }
     }
 
     /* activity gets back to the foreground and user input */
@@ -589,12 +540,12 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 }
                 break;
             case REQUEST_CODE_PHOTO:
-                if(resultCode == RESULT_OK && data != null){
+                if (resultCode == RESULT_OK && data != null) {
                     fMenuHead.updatePhoto((Bitmap) data.getExtras().get("data"));
                 }
                 break;
             case REQUEST_CODE_GALLERY:
-                if(resultCode == RESULT_OK && data != null) {
+                if (resultCode == RESULT_OK && data != null) {
                     fMenuHead.updatePhoto(data.getData());
                 }
                 break;
@@ -780,7 +731,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.frag_qrcode, container, false);
-            ButterKnife.bind(this,rootView);
+            ButterKnife.bind(this, rootView);
 
             final String uriToShow = getArguments().getString(ARG_URI);
 
