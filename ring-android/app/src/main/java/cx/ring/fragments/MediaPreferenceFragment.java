@@ -24,12 +24,16 @@ package cx.ring.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentCompat;
 import android.support.v14.preference.PreferenceFragment;
@@ -126,13 +130,31 @@ public class MediaPreferenceFragment extends PreferenceFragment
             return;
         }
 
-        File myFile = new File(data.getData().getPath());
-        Log.i(TAG, "file selected:" + data.getData());
+        String path = getRealPathFromURI(getActivity(), data.getData());
+        File myFile = new File(path);
+        Log.i(TAG, "file selected:" + myFile.getAbsolutePath());
         if (requestCode == SELECT_RINGTONE_PATH) {
             findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setSummary(myFile.getName());
             mCallbacks.getAccount().getAdvancedDetails().setDetailString(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, myFile.getAbsolutePath());
             mCallbacks.getAccount().notifyObservers();
         }
+    }
+
+    private String getRealPathFromURI(Context context, Uri contentUri) {
+        String path;
+        Cursor cursor;
+        try {
+            String[] proj = {MediaStore.Audio.Media.DATA};
+            cursor = context.getContentResolver().query(contentUri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA);
+            cursor.moveToFirst();
+            path = cursor.getString(column_index);
+            cursor.close();
+        } catch (Exception e) {
+            Log.e(TAG, "Error while saving file to disk", e);
+            path = null;
+        }
+        return path;
     }
 
     public void performFileSearch(int requestCodeToSet) {
@@ -147,9 +169,9 @@ public class MediaPreferenceFragment extends PreferenceFragment
         addPreferencesFromResource(R.xml.account_media_prefs);
         audioCodecsPref = (CodecPreference) findPreference("Account.audioCodecs");
         videoCodecsPref = (CodecPreference) findPreference("Account.videoCodecs");
+        boolean isChecked = Boolean.valueOf(mCallbacks.getAccount().getAdvancedDetails().getDetailString(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED));
+        findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled(isChecked);
 
-        findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setEnabled(
-                ((TwoStatePreference) findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_ENABLED)).isChecked());
         addPreferenceListener(AccountDetailBasic.CONFIG_VIDEO_ENABLED, changeVideoPreferenceListener);
         final Account acc = mCallbacks.getAccount();
         if (acc != null) {

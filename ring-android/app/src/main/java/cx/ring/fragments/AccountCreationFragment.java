@@ -59,6 +59,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -78,6 +79,7 @@ import cx.ring.model.account.AccountDetailAdvanced;
 import cx.ring.model.account.AccountDetailBasic;
 import cx.ring.model.account.AccountDetailVolatile;
 import cx.ring.service.LocalService;
+import cx.ring.utils.FileUtils;
 
 public class AccountCreationFragment extends Fragment {
     static final String TAG = AccountCreationFragment.class.getSimpleName();
@@ -520,12 +522,12 @@ public class AccountCreationFragment extends Fragment {
                     this.mDataPath = getPath(getActivity(), data.getData());
                     if (TextUtils.isEmpty(this.mDataPath)) {
                         try {
-                            this.mDataPath = getContext().getCacheDir().getPath() + "/temp.gz";
+                            this.mDataPath = getActivity().getCacheDir().getPath() + "/temp.gz";
                             readFromUri(data.getData(), this.mDataPath);
                             showImportDialog();
                         } catch (IOException e) {
                             e.printStackTrace();
-                            Toast.makeText(getActivity(), getContext().getString(R.string.account_cannot_read, data.getData()), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), getActivity().getString(R.string.account_cannot_read, data.getData()), Toast.LENGTH_LONG).show();
                         }
                     } else {
                         showImportDialog();
@@ -829,6 +831,12 @@ public class AccountCreationFragment extends Fragment {
     private void createNewAccount(HashMap<String, String> accountDetails, String registerName) {
         if (mAccountTask != null) {
             return;
+        }
+
+        String path = getActivity().getFilesDir().getAbsolutePath() + "/ringtones";
+        if (!(new File(path + "/default.wav")).exists()) {
+            Log.d(TAG, "default.wav doesn't exist. Copying ringtones.");
+            FileUtils.copyAssetFolder(getActivity().getAssets(), "ringtones", path);
         }
 
         //noinspection unchecked
