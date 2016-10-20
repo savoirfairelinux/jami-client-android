@@ -31,6 +31,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -59,9 +60,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.HashMap;
@@ -520,12 +525,12 @@ public class AccountCreationFragment extends Fragment {
                     this.mDataPath = getPath(getActivity(), data.getData());
                     if (TextUtils.isEmpty(this.mDataPath)) {
                         try {
-                            this.mDataPath = getContext().getCacheDir().getPath() + "/temp.gz";
+                            this.mDataPath = getActivity().getCacheDir().getPath() + "/temp.gz";
                             readFromUri(data.getData(), this.mDataPath);
                             showImportDialog();
                         } catch (IOException e) {
                             e.printStackTrace();
-                            Toast.makeText(getActivity(), getContext().getString(R.string.account_cannot_read, data.getData()), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), getActivity().getString(R.string.account_cannot_read, data.getData()), Toast.LENGTH_LONG).show();
                         }
                     } else {
                         showImportDialog();
@@ -831,8 +836,64 @@ public class AccountCreationFragment extends Fragment {
             return;
         }
 
+        String path = getActivity().getFilesDir().getAbsolutePath() + "/ringtones";
+        if(!(new File(path + "/default.wav")).exists()){
+            Log.d(TAG, "default.wav doesn't exist. Copying ringtones.");
+            copyAssetFolder(getActivity().getAssets(), "ringtones", path);
+        }
+
         //noinspection unchecked
         mAccountTask = new CreateAccountTask(registerName);
         mAccountTask.execute(accountDetails);
+    }
+
+    private static boolean copyAssetFolder(AssetManager assetManager, String fromAssetPath, String toPath) {
+        try {
+            String[] files = assetManager.list(fromAssetPath);
+            File fileTmp = new File(toPath);
+            if(!fileTmp.exists()) {
+                fileTmp.mkdirs();
+            }
+            Log.d(TAG, "Creating :" + toPath);
+            boolean res = true;
+            for (String file : files)
+                if (file.contains("")) {
+                    Log.d(TAG, "Copying file :" + fromAssetPath + "/" + file + " to " + toPath + "/" + file);
+                    res &= copyAsset(assetManager, fromAssetPath + "/" + file, toPath + "/" + file);
+                } else {
+                    Log.d(TAG, "Copying folder :" + fromAssetPath + "/" + file + " to " + toPath + "/" + file);
+                    res &= copyAssetFolder(assetManager, fromAssetPath + "/" + file, toPath + "/" + file);
+                }
+            return res;
+        } catch (Exception e) {
+            Log.e(TAG, "Error while copying asset folder", e);
+            return false;
+        }
+    }
+
+    private static boolean copyAsset(AssetManager assetManager, String fromAssetPath, String toPath) {
+        InputStream in;
+        OutputStream out;
+        try {
+            in = assetManager.open(fromAssetPath);
+            new File(toPath).createNewFile();
+            out = new FileOutputStream(toPath);
+            copyFile(in, out);
+            in.close();
+            out.flush();
+            out.close();
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "Error while copying asset", e);
+            return false;
+        }
+    }
+
+    private static void copyFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
     }
 }
