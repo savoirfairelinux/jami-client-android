@@ -65,6 +65,8 @@ public class MediaPreferenceFragment extends PreferenceFragment
 
     protected AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
 
+    private int MAX_SIZE_RINGTONE = 800;
+
     private static final int SELECT_RINGTONE_PATH = 40;
     private Preference.OnPreferenceClickListener filePickerListener = new Preference.OnPreferenceClickListener() {
         @Override
@@ -129,11 +131,26 @@ public class MediaPreferenceFragment extends PreferenceFragment
 
         String path = FileUtils.getRealPathFromURI(getActivity(), data.getData());
         File myFile = new File(path);
-        Log.i(TAG, "file selected:" + myFile.getAbsolutePath());
+        Log.i(TAG, "file selected: " + myFile.getAbsolutePath());
         if (requestCode == SELECT_RINGTONE_PATH) {
-            findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setSummary(myFile.getName());
-            mCallbacks.getAccount().getAdvancedDetails().setDetailString(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, myFile.getAbsolutePath());
-            mCallbacks.getAccount().notifyObservers();
+            String type = getActivity().getContentResolver().getType(data.getData());
+            if ("audio/mpeg3".equals(type) || "audio/x-mpeg-3".equals(type) || "audio/mpeg".equals(type) || "audio/x-mpeg".equals(type)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(R.string.ringtone_error_title);
+                builder.setMessage(R.string.ringtone_error_format_not_supported);
+                builder.show();
+                Log.d(TAG, "The extension file is not supported");
+            } else if (myFile.length() / 1024 > MAX_SIZE_RINGTONE) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(R.string.ringtone_error_title);
+                builder.setMessage(getString(R.string.ringtone_error_size_too_big, MAX_SIZE_RINGTONE));
+                builder.show();
+                Log.d(TAG, "The file is too big " + myFile.length() / 1024);
+            } else {
+                findPreference(AccountDetailAdvanced.CONFIG_RINGTONE_PATH).setSummary(myFile.getName());
+                mCallbacks.getAccount().getAdvancedDetails().setDetailString(AccountDetailAdvanced.CONFIG_RINGTONE_PATH, myFile.getAbsolutePath());
+                mCallbacks.getAccount().notifyObservers();
+            }
         }
     }
 
