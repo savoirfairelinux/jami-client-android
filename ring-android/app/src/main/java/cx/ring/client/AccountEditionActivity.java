@@ -4,6 +4,7 @@
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *          Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *          Loïc Siret <loic.siret@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -76,6 +77,7 @@ import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
+import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.account.Account;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
@@ -106,17 +108,14 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         public void removeOnAccountChanged(AccountChangedListener list) {
         }
     };
-
-    private static final String TAG = AccountEditionActivity.class.getSimpleName();
-
     public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "accounts");
+    private static final String TAG = AccountEditionActivity.class.getSimpleName();
     private static final int REQUEST_WRITE_STORAGE = 112;
-
+    private final ArrayList<AccountChangedListener> listeners = new ArrayList<>();
     private boolean mBound = false;
     private LocalService mService;
-
     private Account mAccSelected = null;
-    private final ArrayList<AccountChangedListener> listeners = new ArrayList<>();
+    private Fragment mCurrentlyDisplayed;
 
     private Observer mAccountObserver = new Observer() {
 
@@ -151,7 +150,6 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     };
 
     private ServiceConnection mConnection = new ServiceConnection() {
-
         @Override
         public void onServiceConnected(ComponentName className, IBinder s) {
             LocalService.LocalBinder binder = (LocalService.LocalBinder) s;
@@ -173,11 +171,38 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             mViewPager.setOffscreenPageLimit(4);
             mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), AccountEditionActivity.this, mAccSelected.isRing()));
 
-            PagerSlidingTabStrip mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
+            final PagerSlidingTabStrip mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
             mSlidingTabLayout.setViewPager(mViewPager);
 
-            for (AccountChangedListener l : listeners)
-                l.accountChanged(mAccSelected);
+
+            for (AccountChangedListener listener : listeners) {
+                listener.accountChanged(mAccSelected);
+            }
+
+            mSlidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    PreferencesPagerAdapter adapter = (PreferencesPagerAdapter) mViewPager.getAdapter();
+                    mCurrentlyDisplayed = adapter.getItem(position);
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    if (mCurrentlyDisplayed instanceof DeviceAccountFragment) {
+                        DeviceAccountFragment deviceAccountFragment = (DeviceAccountFragment) mCurrentlyDisplayed;
+                        if (deviceAccountFragment.isDisplayingWizard()) {
+                            deviceAccountFragment.hideWizard();
+                        }
+                    }
+                    PreferencesPagerAdapter adapter = (PreferencesPagerAdapter) mViewPager.getAdapter();
+                    mCurrentlyDisplayed = adapter.getItem(position);
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
         }
 
         @Override
@@ -220,6 +245,13 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                 mAccSelected.deleteObserver(mAccountObserver);
             }
             mBound = false;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!(mCurrentlyDisplayed instanceof BackHandlerInterface) || !((BackHandlerInterface) mCurrentlyDisplayed).onBackPressed()) {
+            super.onBackPressed();
         }
     }
 
@@ -412,6 +444,101 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         return new File(path, getAccount().getAlias() + ".ring");
     }
 
+    @Override
+    public IDRingService getRemoteService() {
+        return mService.getRemoteService();
+    }
+
+    @Override
+    public LocalService getService() {
+        return mService;
+    }
+
+    @Override
+    public Account getAccount() {
+        return mAccSelected;
+    }
+
+    @Override
+    public void addOnAccountChanged(AccountChangedListener list) {
+        listeners.add(list);
+    }
+
+    @Override
+    public void removeOnAccountChanged(AccountChangedListener list) {
+        listeners.remove(list);
+    }
+
+    private static class PreferencesPagerAdapter extends FragmentPagerAdapter {
+        boolean isRing = false;
+        Fragment[] ringFragments = {new DeviceAccountFragment(), new GeneralAccountFragment(), new MediaPreferenceFragment(), new AdvancedAccountFragment()};
+        Fragment[] sipFragments = {new GeneralAccountFragment(), new MediaPreferenceFragment(), new AdvancedAccountFragment(), new SecurityAccountFragment()};
+        private Context ctx;
+
+        PreferencesPagerAdapter(FragmentManager fm, Context c, boolean ring) {
+            super(fm);
+            ctx = c;
+            isRing = ring;
+        }
+
+        private static int getRingPanelTitle(int position) {
+            switch (position) {
+                case 0:
+                    return R.string.account_preferences_basic_tab;
+                case 1:
+                    return R.string.account_preferences_media_tab;
+                case 2:
+                    return R.string.account_preferences_advanced_tab;
+                case 3:
+                    return R.string.account_preferences_security_tab;
+                default:
+                    return -1;
+            }
+        }
+
+        private static int getSIPPanelTitle(int position) {
+            switch (position) {
+                case 0:
+                    return R.string.account_preferences_basic_tab;
+                case 1:
+                    return R.string.account_preferences_media_tab;
+                case 2:
+                    return R.string.account_preferences_advanced_tab;
+                case 3:
+                    return R.string.account_preferences_security_tab;
+                default:
+                    return -1;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            // For now we have 4 panels in each account type (Ring/SIP), but it may change
+            return isRing ? ringFragments.length : sipFragments.length;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return isRing ? getRingPanel(position) : getSIPPanel(position);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            int resId = isRing ? getRingPanelTitle(position) : getSIPPanelTitle(position);
+            return ctx.getString(resId);
+        }
+
+        private Fragment getRingPanel(int position) {
+            Log.i(TAG, "PreferencesPagerAdapter getFragment " + position);
+            return ringFragments[position];
+        }
+
+        private Fragment getSIPPanel(int position) {
+            Log.i(TAG, "PreferencesPagerAdapter getFragment " + position);
+            return sipFragments[position];
+        }
+    }
+
     private class ExportAccountTask extends AsyncTask<String, Void, Integer> {
         ProgressDialog exportDialog;
         private String path;
@@ -451,121 +578,6 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                         .setMessage(R.string.export_failed_dialog_msg)
                         .setPositiveButton(android.R.string.ok, null).show();
         }
-    }
-
-    @Override
-    public IDRingService getRemoteService() {
-        return mService.getRemoteService();
-    }
-
-    @Override
-    public LocalService getService() {
-        return mService;
-    }
-
-    private static class PreferencesPagerAdapter extends FragmentPagerAdapter {
-        private Context ctx;
-        boolean isRing = false;
-
-        PreferencesPagerAdapter(FragmentManager fm, Context c, boolean ring) {
-            super(fm);
-            ctx = c;
-            isRing = ring;
-        }
-
-        @Override
-        public int getCount() {
-            // For now we have 4 panels in each account type (Ring/SIP), but it may change
-            return isRing ? 4 : 4;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return isRing ? getRingPanel(position) : getSIPPanel(position);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            int resId = isRing ? getRingPanelTitle(position) : getSIPPanelTitle(position);
-            return ctx.getString(resId);
-        }
-
-        private static Fragment getRingPanel(int position) {
-            Log.i(TAG, "PreferencesPagerAdapter getFragment " + position);
-            switch (position) {
-                case 0:
-                    return new DeviceAccountFragment();
-                case 1:
-                    return new GeneralAccountFragment();
-                case 2:
-                    return new MediaPreferenceFragment();
-                case 3:
-                    return new AdvancedAccountFragment();
-                default:
-                    return null;
-            }
-        }
-
-        private static Fragment getSIPPanel(int position) {
-            Log.i(TAG, "PreferencesPagerAdapter getFragment " + position);
-            switch (position) {
-                case 0:
-                    return new GeneralAccountFragment();
-                case 1:
-                    return new MediaPreferenceFragment();
-                case 2:
-                    return new AdvancedAccountFragment();
-                case 3:
-                    return new SecurityAccountFragment();
-                default:
-                    return null;
-            }
-        }
-
-        private static int getRingPanelTitle(int position) {
-            switch (position) {
-                case 0:
-                    return R.string.account_preferences_basic_tab;
-                case 1:
-                    return R.string.account_preferences_media_tab;
-                case 2:
-                    return R.string.account_preferences_advanced_tab;
-                case 3:
-                    return R.string.account_preferences_security_tab;
-                default:
-                    return -1;
-            }
-        }
-
-        private static int getSIPPanelTitle(int position) {
-            switch (position) {
-                case 0:
-                    return R.string.account_preferences_basic_tab;
-                case 1:
-                    return R.string.account_preferences_media_tab;
-                case 2:
-                    return R.string.account_preferences_advanced_tab;
-                case 3:
-                    return R.string.account_preferences_security_tab;
-                default:
-                    return -1;
-            }
-        }
-    }
-
-    @Override
-    public Account getAccount() {
-        return mAccSelected;
-    }
-
-    @Override
-    public void addOnAccountChanged(AccountChangedListener list) {
-        listeners.add(list);
-    }
-
-    @Override
-    public void removeOnAccountChanged(AccountChangedListener list) {
-        listeners.remove(list);
     }
 
 }
