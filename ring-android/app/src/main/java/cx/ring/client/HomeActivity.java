@@ -287,7 +287,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     protected void onStart() {
         Log.d(TAG, "onStart");
 
-        String path = getFilesDir().getAbsolutePath() + "/ringtones";
+        String path = FileUtils.ringtonesPath(this);
         if (!(new File(path + "/default.wav")).exists()) {
             Log.d(TAG, "default.wav doesn't exist. Copying ringtones.");
             FileUtils.copyAssetFolder(getAssets(), "ringtones", path);

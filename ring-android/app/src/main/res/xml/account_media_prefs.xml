@@ -29,6 +29,12 @@ along with this program; if not, write to the Free Software
             android:persistent="false"
             android:title="@string/account_ringtone_enabled_label" />
 
+        <android.support.v14.preference.SwitchPreference
+            android:id="@+id/audio_ringtone_custom"
+            android:key="Account.ringtoneCustom"
+            android:persistent="true"
+            android:title="@string/account_ringtone_custom_label" />
+
         <android.support.v7.preference.Preference
             android:id="@+id/audio_ringtone_path"
             android:key="Account.ringtonePath"
