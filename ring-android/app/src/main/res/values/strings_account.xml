@@ -80,6 +80,7 @@ along with this program; if not, write to the Free Software
     <string name="account_ringtone_label">Ringtones</string>
     <string name="account_ringtone_enabled_label">Activate ringtones</string>
     <string name="account_ringtone_path_label">Ringtone path</string>
+    <string name="account_ringtone_custom_label">Custom ringtone</string>
 
     <!-- Video Details -->
     <string name="account_video_label">Video</string>

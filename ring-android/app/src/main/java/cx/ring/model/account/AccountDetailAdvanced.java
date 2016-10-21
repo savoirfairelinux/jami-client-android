@@ -1,23 +1,23 @@
 /**
  * Copyright (C) 2004-2016 Savoir-faire Linux Inc.
- *
- *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *  If you own a pjsip commercial license you can also redistribute it
- *  and/or modify it under the terms of the GNU Lesser General Public License
- *  as an android library.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * <p>
+ * Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * If you own a pjsip commercial license you can also redistribute it
+ * and/or modify it under the terms of the GNU Lesser General Public License
+ * as an android library.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package cx.ring.model.account;
 
@@ -40,6 +40,7 @@ public class AccountDetailAdvanced implements AccountDetail {
     public static final String CONFIG_ACCOUNT_DTMF_TYPE = "Account.dtmfType";
     public static final String CONFIG_RINGTONE_PATH = "Account.ringtonePath";
     public static final String CONFIG_RINGTONE_ENABLED = "Account.ringtoneEnabled";
+    public static final String CONFIG_RINGTONE_CUSTOM = "Account.ringtoneCustom";
     public static final String CONFIG_KEEP_ALIVE_ENABLED = "Account.keepAliveEnabled";
 
     public static final String CONFIG_LOCAL_INTERFACE = "Account.localInterface";
@@ -65,7 +66,7 @@ public class AccountDetailAdvanced implements AccountDetail {
             CONFIG_ACCOUNT_REGISTRATION_EXPIRE,
             CONFIG_CREDENTIAL_NUMBER,
             CONFIG_ACCOUNT_DTMF_TYPE,
-            CONFIG_RINGTONE_PATH, CONFIG_RINGTONE_ENABLED,
+            CONFIG_RINGTONE_PATH, CONFIG_RINGTONE_ENABLED, CONFIG_RINGTONE_CUSTOM,
             CONFIG_KEEP_ALIVE_ENABLED,
             CONFIG_LOCAL_INTERFACE, CONFIG_PUBLISHED_SAMEAS_LOCAL, CONFIG_LOCAL_PORT,
             CONFIG_PUBLISHED_PORT, CONFIG_PUBLISHED_ADDRESS,
@@ -75,6 +76,7 @@ public class AccountDetailAdvanced implements AccountDetail {
 
     private static final Set<String> TWO_STATES = new HashSet<>(Arrays.asList(
             CONFIG_RINGTONE_ENABLED,
+            CONFIG_RINGTONE_CUSTOM,
             CONFIG_KEEP_ALIVE_ENABLED,
             CONFIG_PUBLISHED_SAMEAS_LOCAL,
             CONFIG_STUN_ENABLE, CONFIG_TURN_ENABLE));
@@ -85,8 +87,9 @@ public class AccountDetailAdvanced implements AccountDetail {
         privateArray = new ArrayList<>(pref.size());
 
         for (String key : pref.keySet()) {
-            if (!CONFIG_KEYS.contains(key))
+            if (!CONFIG_KEYS.contains(key)) {
                 continue;
+            }
             PreferenceEntry p = new PreferenceEntry(key, TWO_STATES.contains(key));
             p.mValue = pref.get(key);
             privateArray.add(p);
