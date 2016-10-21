@@ -160,4 +160,8 @@ public class FileUtils {
         }
         return path;
     }
+
+    public static String ringtonesPath(Context context) {
+        return context.getFilesDir().getAbsolutePath() + File.separator + "ringtones";
+    }
 }
