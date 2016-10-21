@@ -148,11 +148,15 @@ public class MediaPreferenceFragment extends PreferenceFragment
                 builder.show();
                 Log.d(TAG, "The file is too big " + myFile.length() / 1024);
             } else {
-                findPreference(ConfigKey.RINGTONE_PATH.key()).setSummary(myFile.getName());
-                mCallbacks.getAccount().setDetail(ConfigKey.RINGTONE_PATH, myFile.getAbsolutePath());
-                mCallbacks.getAccount().notifyObservers();
+                setRingtonepath(myFile);
             }
         }
+    }
+
+    private void setRingtonepath(File file) {
+        findPreference(ConfigKey.RINGTONE_PATH.key()).setSummary(file.getName());
+        mCallbacks.getAccount().setDetail(ConfigKey.RINGTONE_PATH, file.getAbsolutePath());
+        mCallbacks.getAccount().notifyObservers();
     }
 
     public void performFileSearch(int requestCodeToSet) {
@@ -167,10 +171,14 @@ public class MediaPreferenceFragment extends PreferenceFragment
         addPreferencesFromResource(R.xml.account_media_prefs);
         audioCodecsPref = (CodecPreference) findPreference("Account.audioCodecs");
         videoCodecsPref = (CodecPreference) findPreference("Account.videoCodecs");
+
         boolean isChecked = Boolean.valueOf(mCallbacks.getAccount().getDetail(ConfigKey.RINGTONE_ENABLED));
+        findPreference(ConfigKey.RINGTONE_CUSTOM.key()).setEnabled(isChecked);
+        isChecked = isChecked ? Boolean.valueOf(mCallbacks.getAccount().getDetail(ConfigKey.RINGTONE_CUSTOM)) : false;
         findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(isChecked);
 
         addPreferenceListener(ConfigKey.VIDEO_ENABLED, changeVideoPreferenceListener);
+        addPreferenceListener(ConfigKey.RINGTONE_CUSTOM, changeAudioPreferenceListener);
         final Account acc = mCallbacks.getAccount();
         if (acc != null) {
             accountChanged(acc);
@@ -203,7 +211,15 @@ public class MediaPreferenceFragment extends PreferenceFragment
             final ConfigKey key = ConfigKey.fromString(preference.getKey());
             if (preference instanceof TwoStatePreference) {
                 if (key == ConfigKey.RINGTONE_ENABLED) {
+                    getPreferenceScreen().findPreference(ConfigKey.RINGTONE_CUSTOM.key()).setEnabled((Boolean) newValue);
+                    Boolean isEnabled = (Boolean) newValue ?
+                            ((TwoStatePreference) findPreference(ConfigKey.RINGTONE_CUSTOM.key())).isChecked() : false;
+                    getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(isEnabled);
+                } else if (key == ConfigKey.RINGTONE_CUSTOM) {
                     getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled((Boolean) newValue);
+                    if ("false".equals(newValue.toString())) {
+                        setRingtonepath(new File(getActivity().getFilesDir().getAbsolutePath() + "/ringtones/default.wav"));
+                    }
                 }
                 account.setDetail(key, newValue.toString());
             } else if (key == ConfigKey.ACCOUNT_DTMF_TYPE) {
