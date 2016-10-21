@@ -33,6 +33,7 @@ import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentCompat;
 import android.support.v14.preference.PreferenceFragment;
+import android.support.v14.preference.SwitchPreference;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
@@ -61,6 +62,7 @@ public class MediaPreferenceFragment extends PreferenceFragment
 
     private CodecPreference audioCodecsPref = null;
     private CodecPreference videoCodecsPref = null;
+    private SwitchPreference mRingtoneCustom = null;
 
     protected AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
 
@@ -97,6 +99,7 @@ public class MediaPreferenceFragment extends PreferenceFragment
 
     @Override
     public void accountChanged(Account account) {
+        Log.d(TAG, "accountChanged");
         setPreferenceDetails(account.getConfig());
         addPreferenceListener(account.getConfig(), changeAudioPreferenceListener);
         final ArrayList<Codec> audioCodec = new ArrayList<>();
@@ -119,6 +122,8 @@ public class MediaPreferenceFragment extends PreferenceFragment
 
         videoCodecsPref.setCodecs(videoCodec);
         videoCodecsPref.setOnPreferenceChangeListener(changeCodecListener);
+
+        mRingtoneCustom.setOnPreferenceChangeListener(changeAudioPreferenceListener);
     }
 
     @Override
@@ -148,11 +153,15 @@ public class MediaPreferenceFragment extends PreferenceFragment
                 builder.show();
                 Log.d(TAG, "The file is too big " + myFile.length() / 1024);
             } else {
-                findPreference(ConfigKey.RINGTONE_PATH.key()).setSummary(myFile.getName());
-                mCallbacks.getAccount().setDetail(ConfigKey.RINGTONE_PATH, myFile.getAbsolutePath());
-                mCallbacks.saveAccount();
+                setRingtonepath(myFile);
             }
         }
+    }
+
+    private void setRingtonepath(File file) {
+        findPreference(ConfigKey.RINGTONE_PATH.key()).setSummary(file.getName());
+        mCallbacks.getAccount().setDetail(ConfigKey.RINGTONE_PATH, file.getAbsolutePath());
+        mCallbacks.saveAccount();
     }
 
     public void performFileSearch(int requestCodeToSet) {
@@ -164,13 +173,19 @@ public class MediaPreferenceFragment extends PreferenceFragment
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
+        Log.d(TAG, "onCreatePreferences");
         addPreferencesFromResource(R.xml.account_media_prefs);
         audioCodecsPref = (CodecPreference) findPreference("Account.audioCodecs");
         videoCodecsPref = (CodecPreference) findPreference("Account.videoCodecs");
-        boolean isChecked = Boolean.valueOf(mCallbacks.getAccount().getDetail(ConfigKey.RINGTONE_ENABLED));
-        findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(isChecked);
+        mRingtoneCustom = (SwitchPreference) findPreference("Account.ringtoneCustom");
+
+        boolean isRingtoneEnabled = Boolean.valueOf(mCallbacks.getAccount().getDetail(ConfigKey.RINGTONE_ENABLED));
+        mRingtoneCustom.setEnabled(isRingtoneEnabled);
+        boolean isCustomRingtoneEnabled = isRingtoneEnabled && mRingtoneCustom.isChecked();
+        findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(isCustomRingtoneEnabled);
 
         addPreferenceListener(ConfigKey.VIDEO_ENABLED, changeVideoPreferenceListener);
+        mRingtoneCustom.setOnPreferenceChangeListener(changeAudioPreferenceListener);
         final Account acc = mCallbacks.getAccount();
         if (acc != null) {
             accountChanged(acc);
@@ -203,9 +218,18 @@ public class MediaPreferenceFragment extends PreferenceFragment
             final ConfigKey key = ConfigKey.fromString(preference.getKey());
             if (preference instanceof TwoStatePreference) {
                 if (key == ConfigKey.RINGTONE_ENABLED) {
+                    mRingtoneCustom.setEnabled((Boolean) newValue);
+                    Boolean isEnabled = (Boolean) newValue && mRingtoneCustom.isChecked();
+                    getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(isEnabled);
+                } else if (preference == mRingtoneCustom) {
                     getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled((Boolean) newValue);
+                    if (newValue.toString().contentEquals("false")) {
+                        setRingtonepath(new File(FileUtils.ringtonesPath(getActivity()) + File.separator + "default.wav"));
+                    }
                 }
-                account.setDetail(key, newValue.toString());
+                if (key != null) {
+                    account.setDetail(key, newValue.toString());
+                }
             } else if (key == ConfigKey.ACCOUNT_DTMF_TYPE) {
                 preference.setSummary(((String) newValue).contentEquals("overrtp") ? "RTP" : "SIP");
             } else {
