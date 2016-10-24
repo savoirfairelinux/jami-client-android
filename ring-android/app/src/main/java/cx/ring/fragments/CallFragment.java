@@ -949,7 +949,12 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
         if (!vcard.getPhotos().isEmpty()) {
             Photo tmp = vcard.getPhotos().get(0);
-            contactBubbleView.setImageBitmap(CropImageUtils.cropImageToCircle(tmp.getData()));
+            if(tmp.getData() != null) {
+                contactBubbleView.setImageBitmap(CropImageUtils.cropImageToCircle(tmp.getData()));
+            }
+            else{
+                setDefaultPhoto();
+            }
         } else {
             setDefaultPhoto();
         }
