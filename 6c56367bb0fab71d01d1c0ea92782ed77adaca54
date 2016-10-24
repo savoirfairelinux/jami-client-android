@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_9f4d5575",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/MediaPreferenceFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-24T18:16:16Z",
+      "side": 1,
+      "message": "This could be in FileUtils I think",
+      "range": {
+        "startLine": 163,
+        "startChar": 4,
+        "endLine": 233,
+        "endChar": 5
+      },
+      "revId": "6c56367bb0fab71d01d1c0ea92782ed77adaca54",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_bf529911",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/FileUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-24T18:16:16Z",
+      "side": 1,
+      "message": "This should be in your previous patch",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 3
+      },
+      "revId": "6c56367bb0fab71d01d1c0ea92782ed77adaca54",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
