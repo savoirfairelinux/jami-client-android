@@ -153,7 +153,15 @@ public class ContactDetailsTask implements Runnable {
 
         if (vcard != null && !vcard.getPhotos().isEmpty()) {
             Photo tmp = vcard.getPhotos().get(0);
-            externalBMP = CropImageUtils.cropImageToCircle(tmp.getData());
+            Bitmap croppedBitmap;
+            if (tmp != null && tmp.getData() != null) {
+                croppedBitmap = CropImageUtils.cropImageToCircle(tmp.getData());
+            } else {
+                croppedBitmap = decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture, mViewWidth, mViewHeight);
+            }
+
+            externalBMP = croppedBitmap != null ? croppedBitmap : decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture, mViewWidth, mViewHeight);
+
         } else {
             Bitmap photoBmp;
             try {

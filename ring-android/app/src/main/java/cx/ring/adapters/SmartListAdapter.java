@@ -138,10 +138,14 @@ public class SmartListAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        @BindView(R.id.conv_participant) TextView convParticipants;
-        @BindView(R.id.conv_last_item) TextView convStatus;
-        @BindView(R.id.conv_last_time) TextView convTime;
-        @BindView(R.id.photo) ImageView photo;
+        @BindView(R.id.conv_participant)
+        TextView convParticipants;
+        @BindView(R.id.conv_last_item)
+        TextView convStatus;
+        @BindView(R.id.conv_last_time)
+        TextView convTime;
+        @BindView(R.id.photo)
+        ImageView photo;
         int position;
         public Conversation conv;
 

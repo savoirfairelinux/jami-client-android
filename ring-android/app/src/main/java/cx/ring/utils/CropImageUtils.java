@@ -36,7 +36,11 @@ public class CropImageUtils {
     @Nullable
     public static Bitmap cropImageToCircle(@NonNull byte[] bArray) {
         Bitmap bitmap = BitmapFactory.decodeByteArray(bArray, 0, bArray.length);
-        return cropImageToCircle(bitmap);
+        if (bitmap != null) {
+            return cropImageToCircle(bitmap);
+        }
+
+        return null;
     }
 
     @Nullable
