@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_5fa5ad02",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/account/AccountConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-24T18:55:02Z",
+      "side": 1,
+      "message": "put more explicit variable name",
+      "range": {
+        "startLine": 63,
+        "startChar": 43,
+        "endLine": 63,
+        "endChar": 44
+      },
+      "revId": "e10208d5d279f64a40f730961bffe0f9704fe2bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_7faaf1d5",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/account/AccountConfig.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-24T18:55:02Z",
+      "side": 1,
+      "message": "put more explicit variable name",
+      "range": {
+        "startLine": 64,
+        "startChar": 26,
+        "endLine": 64,
+        "endChar": 27
+      },
+      "revId": "e10208d5d279f64a40f730961bffe0f9704fe2bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_ff5ee111",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/account/ConfigKey.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-24T18:55:02Z",
+      "side": 1,
+      "message": "put more explicit variable name.",
+      "range": {
+        "startLine": 122,
+        "startChar": 46,
+        "endLine": 122,
+        "endChar": 47
+      },
+      "revId": "e10208d5d279f64a40f730961bffe0f9704fe2bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_bfa059f5",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/account/ConfigKey.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-24T18:55:02Z",
+      "side": 1,
+      "message": "put more explicit variable name",
+      "range": {
+        "startLine": 123,
+        "startChar": 23,
+        "endLine": 123,
+        "endChar": 24
+      },
+      "revId": "e10208d5d279f64a40f730961bffe0f9704fe2bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
