@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_df767d06",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/MediaPreferenceFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-25T16:24:07Z",
+      "side": 1,
+      "message": "Can be simplified to:\n\n(Boolean) newValue \u0026\u0026 ((TwoStatePreference) findPreference(ConfigKey.RINGTONE_CUSTOM.key())).isChecked()",
+      "range": {
+        "startLine": 215,
+        "startChar": 40,
+        "endLine": 216,
+        "endChar": 118
+      },
+      "revId": "5b5628a969ca6e8a643821098575e7ea05d43a40",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_3f6a291b",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/MediaPreferenceFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-25T16:24:07Z",
+      "side": 1,
+      "message": "I remember that in HomeActivity you also access this directory to check the existence of default.wav file. You could add a static method in FileUtils to retrieve the path of the Ringtone directory (giving a context in argument)",
+      "range": {
+        "startLine": 221,
+        "startChar": 63,
+        "endLine": 221,
+        "endChar": 120
+      },
+      "revId": "5b5628a969ca6e8a643821098575e7ea05d43a40",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_ff4a61ab",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/account/ConfigKey.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-25T16:24:07Z",
+      "side": 1,
+      "message": "This should not be here since this is not key of the account in the daemon.\nWhen loading accounts daemon will not send this key, so the preference state won\u0027t be accurate. Try this:\n\n- Enable ringtones and custom ringtones switch\n- set a custom ringtone\n- kill the app\n- restart the app; the accounts will be reloaded\n- Go to the media panel; Custom ringtones will be disabled and the Ringtone path entry will be greyed out.",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 45
+      },
+      "revId": "5b5628a969ca6e8a643821098575e7ea05d43a40",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
