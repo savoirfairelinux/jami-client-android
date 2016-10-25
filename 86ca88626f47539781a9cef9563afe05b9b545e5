@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_1f7725d6",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-25T18:43:14Z",
+      "side": 1,
+      "message": "bump dependencies in a separate patch, it has a lot of impacts across the app and should be tested appropriately",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 56
+      },
+      "revId": "86ca88626f47539781a9cef9563afe05b9b545e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_5f6dad03",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/DeviceAccountFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-25T18:43:14Z",
+      "side": 1,
+      "message": "snake case for layout ids",
+      "range": {
+        "startLine": 96,
+        "startChar": 19,
+        "endLine": 96,
+        "endChar": 35
+      },
+      "revId": "86ca88626f47539781a9cef9563afe05b9b545e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_7f72f1e6",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/DeviceAccountFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-25T18:43:14Z",
+      "side": 1,
+      "message": "Not a fan of this name, mPasswordLayout maybe",
+      "range": {
+        "startLine": 97,
+        "startChar": 20,
+        "endLine": 97,
+        "endChar": 36
+      },
+      "revId": "86ca88626f47539781a9cef9563afe05b9b545e5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
