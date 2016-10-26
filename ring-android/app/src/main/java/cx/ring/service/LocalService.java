@@ -62,6 +62,7 @@ import android.util.LruCache;
 import android.util.Pair;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -380,6 +381,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     }
 
     private void startDRingService() {
+        // start Listener
+        startListener();
         Intent intent = new Intent(this, DRingService.class);
         startService(intent);
         bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
@@ -434,8 +437,6 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 }
             }
 
-            // start Listener
-            startListener();
             // Signal UI that accounts are loaded
             sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
 
