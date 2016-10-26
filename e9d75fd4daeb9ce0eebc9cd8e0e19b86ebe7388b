@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_c209c296",
+        "filename": "ring-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-26T18:11:38Z",
+      "side": 1,
+      "message": "backing up",
+      "range": {
+        "startLine": 55,
+        "startChar": 129,
+        "endLine": 55,
+        "endChar": 135
+      },
+      "revId": "e9d75fd4daeb9ce0eebc9cd8e0e19b86ebe7388b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_62fed66d",
+        "filename": "ring-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-26T18:11:38Z",
+      "side": 1,
+      "message": "Back up",
+      "range": {
+        "startLine": 137,
+        "startChar": 34,
+        "endLine": 137,
+        "endChar": 40
+      },
+      "revId": "e9d75fd4daeb9ce0eebc9cd8e0e19b86ebe7388b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_42f5d281",
+        "filename": "ring-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-26T18:11:38Z",
+      "side": 1,
+      "message": "Back up",
+      "range": {
+        "startLine": 139,
+        "startChar": 40,
+        "endLine": 139,
+        "endChar": 46
+      },
+      "revId": "e9d75fd4daeb9ce0eebc9cd8e0e19b86ebe7388b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_c2e222d5",
+        "filename": "ring-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-26T18:11:38Z",
+      "side": 1,
+      "message": "Back up",
+      "range": {
+        "startLine": 153,
+        "startChar": 39,
+        "endLine": 153,
+        "endChar": 45
+      },
+      "revId": "e9d75fd4daeb9ce0eebc9cd8e0e19b86ebe7388b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_02d82a1c",
+        "filename": "ring-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-26T18:11:38Z",
+      "side": 1,
+      "message": "Backup saved in %1$s",
+      "range": {
+        "startLine": 154,
+        "startChar": 42,
+        "endLine": 154,
+        "endChar": 56
+      },
+      "revId": "e9d75fd4daeb9ce0eebc9cd8e0e19b86ebe7388b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
