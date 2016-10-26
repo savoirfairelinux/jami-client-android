@@ -52,7 +52,7 @@ along with this program; if not, write to the Free Software
 
     <!-- Strings related to account deletion -->
     <string name="account_delete_dialog_title">Delete account ?</string>
-    <string name="account_delete_dialog_message">This action can not be undone. If you haven\'t done it yet, you should consider exporting your account before deleting it.</string>
+    <string name="account_delete_dialog_message">This action can not be undone. If you haven\'t done it yet, you should consider backing up your account before deleting it.</string>
 
     <!-- AccountManagementFragment -->
     <string name="empty_account_list">No account registered</string>
@@ -133,31 +133,32 @@ along with this program; if not, write to the Free Software
     <string name="account_rtp_min_port">Minimum</string>
     <string name="account_rtp_port_range">Audio RTP Port Range</string>
 
-    <!-- Import/export -->
-    <string name="account_export">Export</string>
-    <string name="account_import_account">Import an account</string>
-    <string name="account_export_title">Export an account</string>
-    <string name="account_import_title">Import accounts</string>
-    <string name="account_import_explanation">You can import previously exported accounts.</string>
-    <string name="account_export_message">Save account settings and credentials, password encrypted.</string>
-    <string name="account_export_new_password">New password</string>
-    <string name="account_export_confirm_password">Confirm password</string>
-    <string name="account_import_message">Enter password to decrypt the file.</string>
-    <string name="account_import_decryption_password">Decryption password</string>
+    <!-- restore/backup -->
+    <string name="account_backup">Back up</string>
+    <string name="account_restore_account">Restore an account</string>
+    <string name="account_backup_title">Back up an account</string>
+    <string name="account_restore_title">Restore accounts</string>
+    <string name="account_restore_explanation">You can restore previous backup accounts.</string>
+    <string name="account_backup_message">Save account settings and credentials, password encrypted.</string>
+    <string name="account_backup_new_password">New password</string>
+    <string name="account_backup_confirm_password">Confirm password</string>
+    <string name="account_restore_message">Enter password to decrypt the file.</string>
+    <string name="account_restore_decryption_password">Decryption password</string>
     <string name="account_new_device">Add new device</string>
     <string name="account_new_device_message">Unlock Ring account to associate new device.</string>
     <string name="account_new_device_password">Enter main account password</string>
 
-    <string name="import_dialog_title">Importing</string>
-    <string name="import_export_wait">Please wait…</string>
-    <string name="export_dialog_title">Exporting account</string>
-    <string name="account_export_result">"Account exported to %1$s"</string>
-    <string name="export_failed_dialog_title">Export failed</string>
-    <string name="export_failed_dialog_msg">An error occurred</string>
+    <string name="restore_dialog_title">Restoring</string>
+    <string name="restore_backup_wait">Please wait…</string>
+    <string name="backup_dialog_title">Back up account</string>
+    <string name="account_backup_result">"Backup saved in %1$s"</string>
+    <string name="backup_failed_dialog_title">Backup failed</string>
+    <string name="backup_failed_dialog_msg">An error occurred</string>
     <string name="error_password_char_count">6 characters minimum</string>
     <string name="error_passwords_not_equals">Passwords do not match</string>
-    <string name="import_failed_dialog_title">Import failed</string>
-    <string name="import_failed_dialog_msg">An error occurred</string>
+    <string name="restore_failed_dialog_title">Restore failed</string>
+    <string name="restore_failed_dialog_msg">An error occurred</string>
+    <string name="account_export">Export</string>
     <string name="export_account_wait_title">Please wait...</string>
     <string name="export_account_wait_message">Publishing new account information</string>
     <string name="account_export_end_pin_title">"PIN : "</string>
