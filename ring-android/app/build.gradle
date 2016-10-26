@@ -34,6 +34,8 @@ dependencies {
     // VCard parsing
     compile('com.googlecode.ez-vcard:ez-vcard:0.9.10') {
         exclude module: 'freemarker'
+        exclude module: 'jackson-core'
+        exclude module: 'jsoup'
     }
 
     // Butterknife
