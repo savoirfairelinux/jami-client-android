@@ -240,8 +240,8 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                 AlertDialog deleteDialog = createDeleteDialog();
                 deleteDialog.show();
                 break;
-            case R.id.menuitem_export:
-                startExport();
+            case R.id.menuitem_backup:
+                startBackup();
                 break;
             default:
                 break;
@@ -274,10 +274,10 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                         /* Terminate with no action */
                     }
                 })
-                .setNeutralButton(R.string.account_export, new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.account_backup, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        startExport();
+                        startBackup();
                     }
                 });
 
@@ -306,10 +306,10 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         return error;
     }
 
-    private void startExport() {
+    private void startBackup() {
         boolean hasPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
         if (hasPermission) {
-            showExportDialog();
+            showBackupDialog();
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
         }
@@ -321,7 +321,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         switch (requestCode) {
             case REQUEST_WRITE_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    showExportDialog();
+                    showBackupDialog();
                 } else {
                     Toast.makeText(this, R.string.permission_write_denied, Toast.LENGTH_LONG).show();
                 }
@@ -329,17 +329,17 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         }
     }
 
-    private AlertDialog showExportDialog() {
+    private AlertDialog showBackupDialog() {
         Activity ownerActivity = this;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
         LayoutInflater inflater = getLayoutInflater();
-        ViewGroup v = (ViewGroup) inflater.inflate(R.layout.dialog_account_export, null);
+        ViewGroup v = (ViewGroup) inflater.inflate(R.layout.dialog_account_backup, null);
         final TextView pwd = (TextView) v.findViewById(R.id.newpwd_txt);
         final TextView pwdConfirm = (TextView) v.findViewById(R.id.newpwd_confirm_txt);
-        builder.setMessage(R.string.account_export_message)
-                .setTitle(R.string.account_export_title)
-                .setPositiveButton(R.string.account_export, null)
+        builder.setMessage(R.string.account_backup_message)
+                .setTitle(R.string.account_backup_title)
+                .setPositiveButton(R.string.account_backup, null)
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -388,7 +388,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                     final String pwd_txt = pwd.getText().toString();
                     alertDialog.dismiss();
 
-                    new ExportAccountTask().execute(pwd_txt);
+                    new BackupAccountTask().execute(pwd_txt);
                 }
             }
         });
@@ -396,7 +396,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         return alertDialog;
     }
 
-    public File getExportStorageDir() {
+    public File getBackupStorageDir() {
         // Get the directory for the user's public pictures directory.
         String env = Environment.DIRECTORY_DOWNLOADS;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -419,43 +419,43 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         return new File(path, getAccount().getAlias() + ".ring");
     }
 
-    private class ExportAccountTask extends AsyncTask<String, Void, Integer> {
-        ProgressDialog exportDialog;
+    private class BackupAccountTask extends AsyncTask<String, Void, Integer> {
+        ProgressDialog backupDialog;
         private String path;
 
         @Override
         protected void onPreExecute() {
-            exportDialog = ProgressDialog.show(AccountEditionActivity.this,
-                    getString(R.string.export_dialog_title),
-                    getString(R.string.import_export_wait), true);
-            exportDialog.setCancelable(false);
+            backupDialog = ProgressDialog.show(AccountEditionActivity.this,
+                    getString(R.string.backup_dialog_title),
+                    getString(R.string.restore_backup_wait), true);
+            backupDialog.setCancelable(false);
         }
 
         protected Integer doInBackground(String... args) {
             int ret = 1;
             ArrayList<String> ids = new ArrayList<>(1);
             ids.add(mAccSelected.getAccountID());
-            File filePath = getExportStorageDir();
+            File filePath = getBackupStorageDir();
             path = filePath.getAbsolutePath();
             try {
-                ret = getRemoteService().exportAccounts(ids, path, args[0]);
+                ret = getRemoteService().backupAccounts(ids, path, args[0]);
             } catch (RemoteException e) {
-                Log.e(TAG, "Error while exporting account", e);
+                Log.e(TAG, "Error while backup account", e);
             }
             return ret;
         }
 
         protected void onPostExecute(Integer ret) {
-            if (exportDialog != null) {
-                exportDialog.dismiss();
+            if (backupDialog != null) {
+                backupDialog.dismiss();
             }
 
-            Log.d(TAG, "Account export to " + path + " returned " + ret);
+            Log.d(TAG, "Account backup to " + path + " returned " + ret);
             if (ret == 0) {
-                Snackbar.make(findViewById(android.R.id.content), getString(R.string.account_export_result, path), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(findViewById(android.R.id.content), getString(R.string.account_backup_result, path), Snackbar.LENGTH_LONG).show();
             } else
-                new AlertDialog.Builder(AccountEditionActivity.this).setTitle(R.string.export_failed_dialog_title)
-                        .setMessage(R.string.export_failed_dialog_msg)
+                new AlertDialog.Builder(AccountEditionActivity.this).setTitle(R.string.backup_failed_dialog_title)
+                        .setMessage(R.string.backup_failed_dialog_msg)
                         .setPositiveButton(android.R.string.ok, null).show();
         }
     }

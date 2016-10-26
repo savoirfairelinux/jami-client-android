@@ -110,8 +110,8 @@ interface IDRingService {
 
     Map getConference(in String id);
 
-    int exportAccounts(in List accountIDs, in String toDir, in String password);
-    int importAccounts(in String archivePath, in String password);
+    int backupAccounts(in List accountIDs, in String toDir, in String password);
+    int restoreAccounts(in String archivePath, in String password);
 
     void connectivityChanged();
 }

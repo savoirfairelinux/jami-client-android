@@ -520,33 +520,33 @@ public class AccountCreationFragment extends Fragment {
                         try {
                             this.mDataPath = getActivity().getCacheDir().getPath() + "/temp.gz";
                             readFromUri(data.getData(), this.mDataPath);
-                            showImportDialog();
+                            showRestoreDialog();
                         } catch (IOException e) {
                             Log.e(TAG, "Exception reading file", e);
                             Toast.makeText(getActivity(), getActivity().getString(R.string.account_cannot_read, data.getData()), Toast.LENGTH_LONG).show();
                         }
                     } else {
-                        showImportDialog();
+                        showRestoreDialog();
                     }
                 }
                 break;
         }
     }
 
-    private AlertDialog showImportDialog() {
+    private AlertDialog showRestoreDialog() {
         Activity ownerActivity = getActivity();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
         LayoutInflater inflater = ownerActivity.getLayoutInflater();
-        ViewGroup v = (ViewGroup) inflater.inflate(R.layout.dialog_account_import, null);
+        ViewGroup v = (ViewGroup) inflater.inflate(R.layout.dialog_account_restore, null);
         final TextView pwd = (TextView) v.findViewById(R.id.pwd_txt);
-        builder.setMessage(R.string.account_import_message)
-                .setTitle(R.string.account_import_account)
-                .setPositiveButton(R.string.account_import_account, new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.account_restore_message)
+                .setTitle(R.string.account_restore_account)
+                .setPositiveButton(R.string.account_restore_account, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (!TextUtils.isEmpty(mDataPath)) {
-                            new ImportAccountTask().execute(mDataPath, pwd.getText().toString());
+                            new RestoreAccountTask().execute(mDataPath, pwd.getText().toString());
                         }
                     }
                 })
@@ -580,22 +580,22 @@ public class AccountCreationFragment extends Fragment {
         }
     }
 
-    private class ImportAccountTask extends AsyncTask<String, Void, Integer> {
+    private class RestoreAccountTask extends AsyncTask<String, Void, Integer> {
         private ProgressDialog loadingDialog = null;
 
         @Override
         protected void onPreExecute() {
             loadingDialog = ProgressDialog.show(getActivity(),
-                    getActivity().getString(R.string.import_dialog_title),
-                    getActivity().getString(R.string.import_export_wait), true);
+                    getActivity().getString(R.string.restore_dialog_title),
+                    getActivity().getString(R.string.restore_backup_wait), true);
         }
 
         protected Integer doInBackground(String... args) {
             int ret = 1;
             try {
-                ret = mCallbacks.getRemoteService().importAccounts(args[0], args[1]);
+                ret = mCallbacks.getRemoteService().restoreAccounts(args[0], args[1]);
             } catch (RemoteException e) {
-                Log.e(TAG, "Error while importing account", e);
+                Log.e(TAG, "Error while restoring account", e);
             }
             return ret;
         }
@@ -607,8 +607,8 @@ public class AccountCreationFragment extends Fragment {
             if (ret == 0) {
                 getActivity().finish();
             } else {
-                new AlertDialog.Builder(getActivity()).setTitle(R.string.import_failed_dialog_title)
-                        .setMessage(R.string.import_failed_dialog_msg)
+                new AlertDialog.Builder(getActivity()).setTitle(R.string.restore_failed_dialog_title)
+                        .setMessage(R.string.restore_failed_dialog_msg)
                         .setPositiveButton(android.R.string.ok, null).show();
             }
         }
