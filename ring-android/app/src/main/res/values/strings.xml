@@ -184,6 +184,6 @@ along with this program; if not, write to the Free Software
     <!-- Share fragment -->
     <string name="share_label">Click on the Ring id to share</string>
     <string name="share_message">Scan this QRCode with the embedded scanner of the Ring application that wants to communicate with you.</string>
-    <string name="share_your_account_information">Share your contact information</string>
+    <string name="share_your_account_information">Share my contact information</string>
 
 </resources>
