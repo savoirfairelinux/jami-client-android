@@ -6,8 +6,8 @@
 
 -keep class android.support.v7.widget.LinearLayoutManager { *; }
 
--keep class cx.ring.service.**
--keepclassmembers class cx.ring.service.** { *; }
+-keep,includedescriptorclasses class cx.ring.** { *; }
+-keepclassmembers class cx.ring.** { *; }
 
 #OrmLite uses reflection
 -keep class com.j256.**
@@ -27,3 +27,21 @@
     @com.j256.ormlite.field.ForeignCollectionField <fields>;
     <init>();
 }
+
+-dontwarn ezvcard.io.json.JCardModule
+-dontwarn com.fasterxml.jackson.**
+-dontwarn org.jsoup.**
+-dontwarn freemarker.**
+
+-keep,includedescriptorclasses class ezvcard.io.json.JCardModule { *; }
+-keepclassmembers class ezvcard.io.json.JCardModule { *; }
+-keep,includedescriptorclasses enum ezvcard.io.json.JCardModule { *; }
+-keepclassmembers enum ezvcard.io.json.JCardModule { *; }
+-keep,includedescriptorclasses interface ezvcard.io.json.JCardModule { *; }
+-keepclassmembers interface ezvcard.io.json.JCardModule { *; }
+
+-keep,includedescriptorclasses class com.journeyapps.barcodescanner.** { *; }
+-keepclassmembers class com.journeyapps.barcodescanner.** { *; }
+
+-keep,includedescriptorclasses class se.emilsjolander.stickylistheaders.** { *; }
+-keepclassmembers class se.emilsjolander.stickylistheaders.** { *; }
