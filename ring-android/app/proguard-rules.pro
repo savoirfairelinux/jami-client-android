@@ -27,3 +27,15 @@
     @com.j256.ormlite.field.ForeignCollectionField <fields>;
     <init>();
 }
+
+-dontwarn ezvcard.io.json.JCardModule
+-dontwarn com.fasterxml.jackson.**
+-dontwarn org.jsoup.**
+-dontwarn freemarker.**
+
+-keep class ezvcard.io.json.JCardModule
+-keepclassmembers class ezvcard.io.json.JCardModule { *; }
+-keep enum ezvcard.io.json.JCardModule
+-keepclassmembers enum ezvcard.io.json.JCardModule { *; }
+-keep interface ezvcard.io.json.JCardModule
+-keepclassmembers interface ezvcard.io.json.JCardModule { *; }
