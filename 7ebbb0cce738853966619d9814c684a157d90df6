@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_4274f2ce",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/DeviceAccountFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-26T21:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_c2946239",
+      "range": {
+        "startLine": 329,
+        "startChar": 28,
+        "endLine": 330,
+        "endChar": 96
+      },
+      "revId": "7ebbb0cce738853966619d9814c684a157d90df6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_829e5a55",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/DeviceAccountFragment.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2016-10-26T16:52:27Z",
       "side": 1,
       "message": "Add a \u0027Ok\u0027 button to the dialog, it feels weird not to have one",
+      "range": {
+        "startLine": 335,
+        "startChar": 28,
+        "endLine": 336,
+        "endChar": 93
+      },
+      "revId": "7ebbb0cce738853966619d9814c684a157d90df6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_e280868d",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/DeviceAccountFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-26T21:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_829e5a55",
       "range": {
         "startLine": 335,
         "startChar": 28,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_027eeaae",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/DeviceAccountFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-26T21:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_22a3ee9f",
+      "range": {
+        "startLine": 339,
+        "startChar": 28,
+        "endLine": 340,
+        "endChar": 91
+      },
+      "revId": "7ebbb0cce738853966619d9814c684a157d90df6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_6299f66d",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/DeviceAccountFragment.java",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2016-10-26T16:52:27Z",
       "side": 1,
       "message": "b is not a good var name",
+      "range": {
+        "startLine": 342,
+        "startChar": 20,
+        "endLine": 342,
+        "endChar": 21
+      },
+      "revId": "7ebbb0cce738853966619d9814c684a157d90df6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_a24a7e81",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/DeviceAccountFragment.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-10-26T21:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_6299f66d",
       "range": {
         "startLine": 342,
         "startChar": 20,
