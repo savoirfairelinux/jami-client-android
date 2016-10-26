@@ -199,7 +199,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 return null;
             }
             call.setCallID(callId);
-             Account account = getAccount(call.getAccount());
+            Account account = getAccount(call.getAccount());
             if (account.isRing()
                     || account.getDetailBoolean(ConfigKey.SRTP_ENABLE)
                     || account.getDetailBoolean(ConfigKey.TLS_ENABLE)) {
@@ -380,6 +380,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     }
 
     private void startDRingService() {
+        // start Listener
+        startListener();
         Intent intent = new Intent(this, DRingService.class);
         startService(intent);
         bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
@@ -434,8 +436,6 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 }
             }
 
-            // start Listener
-            startListener();
             // Signal UI that accounts are loaded
             sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
 
