@@ -1447,7 +1447,7 @@ public class DRingService extends Service {
             });
         }
 
-        public int exportAccounts(final List accountIDs, final String toDir, final String password) {
+        public int backupAccounts(final List accountIDs, final String toDir, final String password) {
             return getExecutor().executeAndReturn(new SipRunnableWithReturn<Integer>() {
                 @Override
                 protected Integer doRun() throws SameThreadException, RemoteException {
@@ -1459,7 +1459,7 @@ public class DRingService extends Service {
             });
         }
 
-        public int importAccounts(final String archivePath, final String password) {
+        public int restoreAccounts(final String archivePath, final String password) {
             return getExecutor().executeAndReturn(new SipRunnableWithReturn<Integer>() {
                 @Override
                 protected Integer doRun() throws SameThreadException, RemoteException {

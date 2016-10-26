@@ -9,9 +9,9 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/menuitem_export"
+        android:id="@+id/menuitem_backup"
         android:icon="@drawable/ic_archive_white_24dp"
-        android:title="@string/account_export_title"
+        android:title="@string/account_backup_title"
         app:showAsAction="ifRoom"/>
 
 </menu>
