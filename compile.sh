@@ -10,13 +10,25 @@ pushd ring-android
 ./make-swig.sh
 popd
 
+RELEASE=0
+for i in ${@}; do
+    case "$i" in
+        release|--release)
+        RELEASE=1
+        ;;
+        *)
+        ;;
+    esac
+done
+export RELEASE
+
 ANDROID_ABIS=""
 ANDROID_ABI_LIST="${ANDROID_ABI}"
 echo "Building ABIs: ${ANDROID_ABI_LIST}"
 for i in ${ANDROID_ABI_LIST}; do
     echo "$i starts building"
     ANDROID_NDK=$ANDROID_NDK ANDROID_SDK=$ANDROID_SDK ANDROID_ABI=$i \
-        ./build-daemon.sh $* || { echo "$i build KO"; exit 1; }
+       ./build-daemon.sh $* || { echo "$i build KO"; exit 1; }
     echo "$i build OK"
 done
 export ANDROID_ABIS
