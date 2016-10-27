@@ -45,7 +45,7 @@ public class CallManagerCallBack extends Callback {
         intent.putExtra("state", newState);
         intent.putExtra("detail_code", detail_code);
         try {
-            intent.putExtra("details", (HashMap)mService.mBinder.getCallDetails(callID));
+            intent.putExtra("details", (HashMap) mService.mBinder.getCallDetails(callID));
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -78,12 +78,11 @@ public class CallManagerCallBack extends Callback {
         final String ringProfileVCardMime = "x-ring/ring.profile.vcard";
 
         if (messages != null) {
-            HashMap<String,String> messageKeyValue = VCardUtils.parseMimeAttributes(messages);
+            HashMap<String, String> messageKeyValue = VCardUtils.parseMimeAttributes(messages);
             if (messageKeyValue.containsKey(VCardUtils.VCARD_KEY_MIME_TYPE) &&
                     messageKeyValue.get(VCardUtils.VCARD_KEY_MIME_TYPE).equals(textPlainMime)) {
                 msg = messages.getRaw(textPlainMime).toJavaString();
-            }
-            else if (messageKeyValue.containsKey(VCardUtils.VCARD_KEY_MIME_TYPE) &&
+            } else if (messageKeyValue.containsKey(VCardUtils.VCARD_KEY_MIME_TYPE) &&
                     messageKeyValue.get(VCardUtils.VCARD_KEY_MIME_TYPE).equals(ringProfileVCardMime)) {
                 int part = Integer.parseInt(messageKeyValue.get(VCardUtils.VCARD_KEY_PART));
                 int nbPart = Integer.parseInt(messageKeyValue.get(VCardUtils.VCARD_KEY_OF));
@@ -108,11 +107,14 @@ public class CallManagerCallBack extends Callback {
                         mService.sendBroadcast(intent);
                     }
                 }
+            } else if (messages.has_key(textPlainMime)) {
+                msg = messages.getRaw(textPlainMime).toJavaString();
             }
         }
 
-        if (msg == null)
+        if (msg == null) {
             return;
+        }
 
         Intent intent = new Intent(INCOMING_TEXT);
         intent.putExtra("txt", msg);
