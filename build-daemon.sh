@@ -19,17 +19,6 @@ if [ -z "$ANDROID_ABI" ]; then
    exit 1
 fi
 
-RELEASE=0
-for i in ${@}; do
-    case "$i" in
-        release|--release)
-        RELEASE=1
-        ;;
-        *)
-        ;;
-    esac
-done
-
 ANDROID_TOPLEVEL_DIR="`pwd`"
 ANDROID_APP_DIR="$(pwd)/ring-android"
 
@@ -183,15 +172,13 @@ pushd contrib/native-${TARGET_TUPLE}
 [ ${ANDROID_ABI} = "armeabi-v7a" ] && echo "NOTHUMB := -marm" >> config.mak
 [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] && echo "NOTHUMB := -marm" >> config.mak
 
-# Release or not?
-if [ $# -ne 0 ] && [ "$1" = "release" ]; then
+EXTRA_CFLAGS="${EXTRA_CFLAGS} -DNDEBUG "
+if [ "${RELEASE}" -eq 1 ]; then
+    echo "Contribs in release mode."
     OPTS=""
-    EXTRA_CFLAGS="${EXTRA_CFLAGS} -DNDEBUG "
-    RELEASE=1
 else
+    echo "Contribs in debug mode."
     OPTS="--enable-debug"
-    EXTRA_CFLAGS="${EXTRA_CFLAGS} -DNDEBUG "
-    RELEASE=0
 fi
 
 export SYSROOT=$ANDROID_TOOLCHAIN/sysroot
