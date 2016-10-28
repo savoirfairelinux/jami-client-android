@@ -415,14 +415,21 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             mNavigationDrawer.closeDrawer(GravityCompat.START);
             return;
         }
-        super.onBackPressed();
-        FragmentManager fm = getFragmentManager();
-        int count = fm.getBackStackEntryCount();
-        if (count == 0) {
-            fContent = fm.findFragmentByTag(HOME_TAG);
-        } else {
-            FragmentManager.BackStackEntry entry = fm.getBackStackEntryAt(count - 1);
-            fContent = fm.findFragmentById(entry.getId());
+        if (getFragmentManager().getBackStackEntryCount() > 1) {
+            popCustomBackStack();
+            fMenu.getMenu().findItem(R.id.menuitem_home).setChecked(true);
+            return;
+        }
+
+        finish();
+    }
+
+    private void popCustomBackStack() {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(0);
+        fContent = fragmentManager.findFragmentByTag(entry.getName());
+        for (int i = 0; i < fragmentManager.getBackStackEntryCount() - 1; ++i) {
+            fragmentManager.popBackStack();
         }
     }
 
@@ -542,8 +549,11 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 if (fContent instanceof SmartListFragment) {
                     break;
                 }
-                while (getFragmentManager().popBackStackImmediate()) {
+                if (getFragmentManager().getBackStackEntryCount() == 1) {
+                    break;
                 }
+
+                popCustomBackStack();
                 fContent = getFragmentManager().findFragmentByTag(HOME_TAG);
                 break;
             case R.id.menuitem_accounts:
@@ -551,14 +561,20 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                     break;
                 }
                 fContent = new AccountsManagementFragment();
-                getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, ACCOUNTS_TAG).addToBackStack(ACCOUNTS_TAG).commit();
+                getFragmentManager().beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .replace(R.id.main_frame, fContent, ACCOUNTS_TAG)
+                        .addToBackStack(ACCOUNTS_TAG).commit();
                 break;
             case R.id.menuitem_about:
                 if (fContent instanceof AboutFragment) {
                     break;
                 }
                 fContent = new AboutFragment();
-                getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, ABOUT_TAG).addToBackStack(ABOUT_TAG).commit();
+                getFragmentManager().beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .replace(R.id.main_frame, fContent, ABOUT_TAG)
+                        .addToBackStack(ABOUT_TAG).commit();
                 break;
             case R.id.menuitem_prefs:
                 this.goToSettings();
@@ -585,7 +601,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         Bundle args = new Bundle();
         args.putString(ShareFragment.ARG_URI, fMenuHead.getSelectedAccount().getShareURI());
         fContent.setArguments(args);
-        getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.main_frame, fContent, SHARE_TAG).addToBackStack(SHARE_TAG).commit();
+        getFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.main_frame, fContent, SHARE_TAG)
+                .addToBackStack(SHARE_TAG).commit();
     }
 
     public void goToSettings() {
@@ -606,8 +625,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 .beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, SETTINGS_TAG)
-                .addToBackStack(SETTINGS_TAG)
-                .commit();
+                .addToBackStack(SETTINGS_TAG).commit();
     }
 
     @Override
