@@ -671,12 +671,16 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         if (videoPreview.getVisibility() == View.VISIBLE) {
-            try {
-                mCallbacks.getRemoteService().setPreviewSettings();
-                mCallbacks.getRemoteService().videoPreviewSurfaceAdded();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+            updatePreview();
+        }
+    }
+
+    private void updatePreview() {
+        try {
+            mCallbacks.getRemoteService().setPreviewSettings();
+            mCallbacks.getRemoteService().videoPreviewSurfaceAdded();
+        } catch (RemoteException e) {
+            Log.e(TAG, "service not found ", e);
         }
     }
 
@@ -843,6 +847,8 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
         contactBubbleLayout.setVisibility(haveVideo ? View.GONE : View.VISIBLE);
         updateSecurityDisplay();
+
+        updatePreview();
     }
 
     private void updateSecurityDisplay() {
@@ -949,10 +955,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
         if (!vcard.getPhotos().isEmpty()) {
             Photo tmp = vcard.getPhotos().get(0);
-            if(tmp.getData() != null) {
+            if (tmp.getData() != null) {
                 contactBubbleView.setImageBitmap(CropImageUtils.cropImageToCircle(tmp.getData()));
-            }
-            else{
+            } else {
                 setDefaultPhoto();
             }
         } else {
