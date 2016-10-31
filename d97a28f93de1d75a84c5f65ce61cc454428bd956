@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_19417d39",
+        "filename": "ring-android/app/proguard-rules.pro",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-31T18:53:11Z",
+      "side": 1,
+      "message": "It compiles with this modifications but it compiles also with your version.",
+      "parentUuid": "dad5f5cf_5909452b",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 34
+      },
+      "revId": "d97a28f93de1d75a84c5f65ce61cc454428bd956",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_6e40fd56",
         "filename": "ring-android/app/proguard-rules.pro",
         "patchSetId": 7
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "If I do this it fails because of freemarker.template.Template\nDid you try it? Does it fail only on my machine?",
       "parentUuid": "dad5f5cf_6e40fd56",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 23
+      },
+      "revId": "d97a28f93de1d75a84c5f65ce61cc454428bd956",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_393ec1b9",
+        "filename": "ring-android/app/proguard-rules.pro",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-10-31T18:53:11Z",
+      "side": 1,
+      "message": "It compiles with this modifications but it compiles also with your version.",
+      "parentUuid": "dad5f5cf_790e8936",
       "range": {
         "startLine": 34,
         "startChar": 10,
