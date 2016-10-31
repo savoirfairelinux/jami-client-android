@@ -843,6 +843,13 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
         contactBubbleLayout.setVisibility(haveVideo ? View.GONE : View.VISIBLE);
         updateSecurityDisplay();
+
+        try {
+            mCallbacks.getRemoteService().setPreviewSettings();
+            mCallbacks.getRemoteService().videoPreviewSurfaceAdded();
+        } catch (RemoteException e) {
+            Log.e(TAG, "service not found ", e);
+        }
     }
 
     private void updateSecurityDisplay() {
@@ -949,10 +956,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
         if (!vcard.getPhotos().isEmpty()) {
             Photo tmp = vcard.getPhotos().get(0);
-            if(tmp.getData() != null) {
+            if (tmp.getData() != null) {
                 contactBubbleView.setImageBitmap(CropImageUtils.cropImageToCircle(tmp.getData()));
-            }
-            else{
+            } else {
                 setDefaultPhoto();
             }
         } else {
