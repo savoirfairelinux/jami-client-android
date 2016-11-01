@@ -42,6 +42,6 @@
         android:layout_marginStart="16dp"
         android:clickable="false"
         android:focusable="false"
-        android:src="@drawable/ic_error_white_24dp" />
+        android:src="@drawable/ic_error_white" />
 
 </RelativeLayout>

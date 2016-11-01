@@ -85,7 +85,7 @@ public class NumberAdapter extends BaseAdapter {
         CallContact.Phone number = mNumbers.get(position);
         ImageView numberIcon = (ImageView) convertView.findViewById(R.id.number_icon);
         numberIcon.setImageResource(number.getNumber().isRingId() ?
-                R.drawable.ring_logo_24dp : R.drawable.ic_dialer_sip_black_24dp);
+                R.drawable.ring_logo_24dp : R.drawable.ic_dialer_sip_black);
 
         if (longView) {
             TextView numberTxt = (TextView) convertView.findViewById(R.id.number_txt);
