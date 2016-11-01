@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_14f944c8",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-11-01T19:33:30Z",
+      "side": 1,
+      "message": "This could be factorized, this code is used as is two times.",
+      "range": {
+        "startLine": 308,
+        "startChar": 24,
+        "endLine": 324,
+        "endChar": 25
+      },
+      "revId": "1aff8d310e8db060dc0f26903df8efb9a87f8b2a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
