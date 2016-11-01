@@ -146,7 +146,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
         refresh();
         ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
         FloatingActionButton btn = ((HomeActivity) getActivity()).getActionButton();
-        btn.setImageResource(R.drawable.ic_add_white_24dp);
+        btn.setImageResource(R.drawable.ic_add_white);
         btn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -287,7 +287,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
                     entryView.errorIndicator.setColorFilter(Color.RED);
                     entryView.errorIndicator.setVisibility(View.VISIBLE);
                 } else if (item.isInError()) {
-                    entryView.errorIndicator.setImageResource(R.drawable.ic_error_white_24dp);
+                    entryView.errorIndicator.setImageResource(R.drawable.ic_error_white);
                     entryView.errorIndicator.setColorFilter(Color.RED);
                     entryView.errorIndicator.setVisibility(View.VISIBLE);
                     entryView.loadingIndicator.setVisibility(View.GONE);

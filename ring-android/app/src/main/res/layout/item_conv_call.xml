@@ -50,7 +50,7 @@ along with this program; if not, write to the Free Software
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:alpha="0.75"
-                android:src="@drawable/ic_call_missed_black_24dp" />
+                android:src="@drawable/ic_call_missed_black" />
         </LinearLayout>
 
         <LinearLayout

@@ -65,7 +65,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:background="?selectableItemBackgroundBorderless"
-                        app:srcCompat="@drawable/ic_settings_black_24dp" />
+                        app:srcCompat="@drawable/ic_settings_black" />
 
                 </LinearLayout>
 

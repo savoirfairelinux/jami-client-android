@@ -213,9 +213,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         convViewHolder.mPhoto.setScaleY(1);
         if (convElement.call.isMissed()) {
             if (convElement.call.isIncoming()) {
-                pictureResID = R.drawable.ic_call_missed_black_24dp;
+                pictureResID = R.drawable.ic_call_missed_black;
             } else {
-                pictureResID = R.drawable.ic_call_missed_outgoing_black_24dp;
+                pictureResID = R.drawable.ic_call_missed_outgoing_black;
                 // Flip the photo upside down to show a "missed outgoing call"
                 convViewHolder.mPhoto.setScaleY(-1);
             }
@@ -224,8 +224,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     mContext.getString(R.string.notif_missed_outgoing_call, callNumber);
         } else {
             pictureResID = (convElement.call.isIncoming()) ?
-                    R.drawable.ic_call_received_black_24dp :
-                    R.drawable.ic_call_made_black_24dp;
+                    R.drawable.ic_call_received_black :
+                    R.drawable.ic_call_made_black;
             histTxt = convElement.call.isIncoming() ?
                     mContext.getString(R.string.notif_incoming_call_title, callNumber) :
                     mContext.getString(R.string.notif_outgoing_call_title, callNumber);

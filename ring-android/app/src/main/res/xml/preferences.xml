@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <android.support.v7.preference.PreferenceCategory android:title="@string/pref_category_contacts">
         <android.support.v14.preference.SwitchPreference
             android:defaultValue="true"
-            android:icon="@drawable/ic_group_black_24dp"
+            android:icon="@drawable/ic_group_black"
             android:key="@string/pref_systemContacts_key"
             android:summary="@string/pref_systemContacts_summary"
             android:title="@string/pref_systemContacts_title" />
@@ -40,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <android.support.v14.preference.SwitchPreference
             android:defaultValue="false"
-            android:icon="@drawable/ic_dialpad_black_24dp"
+            android:icon="@drawable/ic_dialpad_black"
             android:key="@string/pref_systemDialer_key"
             android:summary="@string/pref_systemDialer_summary"
             android:title="@string/pref_systemDialer_title" />
@@ -48,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <android.support.v14.preference.SwitchPreference
             android:defaultValue="true"
-            android:icon="@drawable/ic_android_black_24dp"
+            android:icon="@drawable/ic_android_black"
             android:key="@string/pref_startOnBoot_key"
             android:summary="@string/pref_startOnBoot_summary"
             android:title="@string/pref_startOnBoot_title" />

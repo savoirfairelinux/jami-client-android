@@ -27,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        app:srcCompat="@drawable/ic_desktop_windows_black_24dp" />
+        app:srcCompat="@drawable/ic_desktop_windows_black" />
 
     <TextView
         android:id="@+id/txt_device_label"
