@@ -59,6 +59,8 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.lang.ref.WeakReference;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -70,14 +72,19 @@ import cx.ring.client.QRCodeScannerActivity;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.account.Account;
 import cx.ring.service.LocalService;
+import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ClipboardHelper;
+import cx.ring.views.MenuHeaderView;
 
 public class SmartListFragment extends Fragment implements SearchView.OnQueryTextListener,
         HomeActivity.Refreshable,
         SmartListAdapter.SmartListAdapterCallback,
         Conversation.ConversationActionCallback,
-        ClipboardHelper.ClipboardHelperCallback {
+        ClipboardHelper.ClipboardHelperCallback,
+        LocalService.NameLookupCallback,
+        MenuHeaderView.MenuHeaderAccountSelectionListener {
     private static final String TAG = SmartListFragment.class.getSimpleName();
 
     private static final int USER_INPUT_DELAY = 300;
@@ -85,6 +92,8 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
     private SmartListAdapter mSmartListAdapter;
+    private BlockchainInputHandler mBlockchainInputHandler;
+    private Account mCurrentAccount;
 
     @BindView(R.id.newconv_fab)
     FloatingActionButton mFloatingActionButton;
@@ -286,26 +295,46 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         if (TextUtils.isEmpty(query)) {
             mNewContact.setVisibility(View.GONE);
         } else {
-            ((TextView) mNewContact.findViewById(R.id.display_name)).setText(query);
-            CallContact contact = CallContact.buildUnknown(query);
-            mNewContact.setTag(contact);
-            mNewContact.setVisibility(View.VISIBLE);
-        }
 
-        mUserInputHandler.removeCallbacksAndMessages(null);
-        mUserInputHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mCallbacks.getService() == null) {
-                    Log.d(TAG, "onQueryTextChange: null service");
-                } else {
-                    mSmartListAdapter.updateDataset(
-                            mCallbacks.getService().getConversations(),
-                            query
-                    );
-                }
+            if (mCurrentAccount == null) {
+                return false;
             }
-        }, USER_INPUT_DELAY);
+
+            if (mCurrentAccount.isSip()) {
+                // sip search
+                ((TextView) mNewContact.findViewById(R.id.display_name)).setText(query);
+                CallContact contact = CallContact.buildUnknown(query);
+                mNewContact.setTag(contact);
+                mNewContact.setVisibility(View.VISIBLE);
+            } else {
+                // Ring search
+                if (mBlockchainInputHandler == null) {
+                    mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mCallbacks.getService()), this);
+                }
+
+                // searching for a ringId or a blockchained username
+                if (!mBlockchainInputHandler.isAlive()) {
+                    mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mCallbacks.getService()), this);
+                }
+
+                mBlockchainInputHandler.enqueueNextLookup(query);
+            }
+
+            mUserInputHandler.removeCallbacksAndMessages(null);
+            mUserInputHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (mCallbacks.getService() == null) {
+                        Log.d(TAG, "onQueryTextChange: null service");
+                    } else {
+                        mSmartListAdapter.updateDataset(
+                                mCallbacks.getService().getConversations(),
+                                query
+                        );
+                    }
+                }
+            }, USER_INPUT_DELAY);
+        }
 
         return true;
     }
@@ -636,5 +665,28 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             mErrorImageView.setVisibility(visibility);
             mErrorImageView.setImageResource(imageResId);
         }
+    }
+
+    @Override
+    public void onFound(String name, String address) {
+        ((TextView) mNewContact.findViewById(R.id.display_name)).setText(name);
+        CallContact contact = CallContact.buildUnknown(name);
+        mNewContact.setTag(contact);
+        mNewContact.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onInvalidName(String name) {
+        mNewContact.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onError(String name, String address) {
+        mNewContact.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void accountSelected(Account account) {
+        mCurrentAccount = account;
     }
 }

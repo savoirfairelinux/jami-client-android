@@ -18,7 +18,6 @@
  */
 package cx.ring.utils;
 
-import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -130,67 +129,10 @@ public class BlockchainTextWatcher implements TextWatcher, LocalService.NameLook
             mInputLayout.get().setError(mLookinForAvailability);
         }
 
-        if (mBlockchainInputHandler.isAlive()) {
-            mBlockchainInputHandler.enqueueNextLookup(name);
-        } else {
+        if (!mBlockchainInputHandler.isAlive()) {
             mBlockchainInputHandler = new BlockchainInputHandler(mLocalService, this);
-            mBlockchainInputHandler.enqueueNextLookup(name);
-        }
-    }
-
-    private class BlockchainInputHandler extends Thread {
-
-        private WeakReference<LocalService> mLocalService;
-        private String mTextToLookup;
-        private LocalService.NameLookupCallback mLookupCallback;
-
-        private boolean mIsWaitingForInputs = false;
-        private long mLastEnqueuedInputTimeStamp = -1;
-
-        public BlockchainInputHandler(@NonNull WeakReference<LocalService> localService, @NonNull LocalService.NameLookupCallback lookupCallback) {
-            mLocalService = localService;
-            mLookupCallback = lookupCallback;
         }
 
-        public void enqueueNextLookup(String text) {
-
-            if (mLocalService.get() == null) {
-                return;
-            }
-
-            mLastEnqueuedInputTimeStamp = System.currentTimeMillis();
-            mTextToLookup = text;
-
-            if (!mIsWaitingForInputs) {
-                mIsWaitingForInputs = true;
-                start();
-            }
-        }
-
-        @Override
-        public void run() {
-            while (mIsWaitingForInputs) {
-                try {
-                    Thread.sleep(100);
-
-                    long timeFromLastEnqueuedInput = System.currentTimeMillis() - mLastEnqueuedInputTimeStamp;
-                    if (timeFromLastEnqueuedInput >= 6000) {
-                        // we've been waiting for a long time, stop the wait
-                        // the next user input will trigger the next wait
-                        mIsWaitingForInputs = false;
-                    } else if (timeFromLastEnqueuedInput >= 3000) {
-                        // trigger the blockchain lookup
-                        final LocalService localService = mLocalService.get();
-                        localService.lookupName("", mTextToLookup, mLookupCallback);
-                        // stop the wait
-                        mIsWaitingForInputs = false;
-                    }
-
-                } catch (InterruptedException e) {
-                    Log.e(TAG, "Error while waiting for next Blockchain lookup", e);
-                }
-            }
-
-        }
+        mBlockchainInputHandler.enqueueNextLookup(name);
     }
 }
