@@ -282,7 +282,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 currentAddressLookup.put(address, cbs);
             }
             cbs.add(cb);
-            mService.lookupAddress(account, null, address);
+            mService.lookupAddress(account == null ? "" : account, "", address);
         } catch (RemoteException e) {
             cb.onError(null, address);
         }

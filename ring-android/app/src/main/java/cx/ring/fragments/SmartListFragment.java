@@ -83,6 +83,8 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private static final int USER_INPUT_DELAY = 300;
     private static final String STATE_LOADING = TAG + ".STATE_LOADING";
 
+    private static final String SEARCH_RING_PREFIX = "ring:";
+    private static final String RINGID_PATTERN = "^[a-f0-9]{40}$";
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
     private SmartListAdapter mSmartListAdapter;
 
@@ -224,6 +226,14 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
         mSearchView = (SearchView) mSearchMenuItem.getActionView();
         mSearchView.setOnQueryTextListener(this);
+        mSearchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    mSearchView.setQuery(SEARCH_RING_PREFIX, false);
+                }
+            }
+        });
         mSearchView.setQueryHint(getString(R.string.searchbar_hint));
         mSearchView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT));
         mSearchView.setImeOptions(EditorInfo.IME_ACTION_GO);
@@ -286,26 +296,94 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         if (TextUtils.isEmpty(query)) {
             mNewContact.setVisibility(View.GONE);
         } else {
-            ((TextView) mNewContact.findViewById(R.id.display_name)).setText(query);
-            CallContact contact = CallContact.buildUnknown(query);
-            mNewContact.setTag(contact);
-            mNewContact.setVisibility(View.VISIBLE);
-        }
 
-        mUserInputHandler.removeCallbacksAndMessages(null);
-        mUserInputHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mCallbacks.getService() == null) {
-                    Log.d(TAG, "onQueryTextChange: null service");
+            if (query.startsWith(SEARCH_RING_PREFIX)) {
+
+                final String ringQuery = query.substring(SEARCH_RING_PREFIX.length(), query.length());
+
+                // searching for a ringId or a blockchained username
+                if (ringQuery.matches(RINGID_PATTERN)) {
+                    // ringId
+                    mCallbacks.getService().lookupAddress("", ringQuery, new LocalService.NameLookupCallback() {
+                        @Override
+                        public void onFound(String name, String address) {
+                            ((TextView) mNewContact.findViewById(R.id.display_name)).setText(name);
+                            CallContact contact = CallContact.buildUnknown(name);
+                            mNewContact.setTag(contact);
+                            mNewContact.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onInvalidName(String name) {
+                            mNewContact.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onError(String name, String address) {
+                            mNewContact.setVisibility(View.GONE);
+                        }
+                    });
                 } else {
-                    mSmartListAdapter.updateDataset(
-                            mCallbacks.getService().getConversations(),
-                            query
-                    );
+                    // username
+                    mCallbacks.getService().lookupName("", ringQuery, new LocalService.NameLookupCallback() {
+                        @Override
+                        public void onFound(String name, String address) {
+                            ((TextView) mNewContact.findViewById(R.id.display_name)).setText(name);
+                            CallContact contact = CallContact.buildUnknown(name);
+                            mNewContact.setTag(contact);
+                            mNewContact.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onInvalidName(String name) {
+                            mNewContact.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onError(String name, String address) {
+                            mNewContact.setVisibility(View.GONE);
+                        }
+                    });
                 }
+
+                mUserInputHandler.removeCallbacksAndMessages(null);
+                mUserInputHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mCallbacks.getService() == null) {
+                            Log.d(TAG, "onQueryTextChange: null service");
+                        } else {
+                            mSmartListAdapter.updateDataset(
+                                    mCallbacks.getService().getConversations(),
+                                    ringQuery
+                            );
+                        }
+                    }
+                }, USER_INPUT_DELAY);
+
+            } else {
+                // sip call
+                ((TextView) mNewContact.findViewById(R.id.display_name)).setText(query);
+                CallContact contact = CallContact.buildUnknown(query);
+                mNewContact.setTag(contact);
+                mNewContact.setVisibility(View.VISIBLE);
+
+                mUserInputHandler.removeCallbacksAndMessages(null);
+                mUserInputHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mCallbacks.getService() == null) {
+                            Log.d(TAG, "onQueryTextChange: null service");
+                        } else {
+                            mSmartListAdapter.updateDataset(
+                                    mCallbacks.getService().getConversations(),
+                                    query
+                            );
+                        }
+                    }
+                }, USER_INPUT_DELAY);
             }
-        }, USER_INPUT_DELAY);
+        }
 
         return true;
     }
