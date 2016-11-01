@@ -604,7 +604,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         if (service.isMobileNetworkConnectedButNotGranted()) {
             this.showErrorPanel(R.string.error_mobile_network_available_but_disabled,
                     true,
-                    R.drawable.ic_settings_white_48dp,
+                    R.drawable.ic_settings_white,
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

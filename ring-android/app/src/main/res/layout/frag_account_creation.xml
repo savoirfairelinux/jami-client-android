@@ -288,7 +288,7 @@ along with this program; if not, write to the Free Software
                             android:layout_marginTop="16dp"
                             android:layout_weight="0"
                             android:contentDescription="@string/help_sip_title"
-                            android:src="@drawable/ic_dialer_sip_black_48dp" />
+                            android:src="@drawable/ic_dialer_sip_black" />
                     </LinearLayout>
 
                     <TextView
