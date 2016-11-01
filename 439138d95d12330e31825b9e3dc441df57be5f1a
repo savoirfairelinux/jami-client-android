@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_742530aa",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T18:04:10Z",
+      "side": 1,
+      "message": "you have the same code in onConfigurationChanged, extract it in a method",
+      "range": {
+        "startLine": 847,
+        "startChar": 8,
+        "endLine": 852,
+        "endChar": 9
+      },
+      "revId": "439138d95d12330e31825b9e3dc441df57be5f1a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
