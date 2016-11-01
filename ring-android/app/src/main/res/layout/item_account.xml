@@ -55,7 +55,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:src="@drawable/ic_error_white_24dp"
+        android:src="@drawable/ic_error_white"
         android:tint="@android:color/holo_red_light" />
 
 </RelativeLayout>

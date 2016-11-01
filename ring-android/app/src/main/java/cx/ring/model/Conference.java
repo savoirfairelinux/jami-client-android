@@ -301,7 +301,7 @@ public class Conference {
             noti.setContentTitle(ctx.getString(R.string.notif_current_call_title, contact.getDisplayName()))
                     .setContentText(ctx.getText(R.string.notif_current_call))
                     .setContentIntent(goto_intent)
-                    .addAction(R.drawable.ic_call_end_white_24dp, ctx.getText(R.string.action_call_hangup),
+                    .addAction(R.drawable.ic_call_end_white, ctx.getText(R.string.action_call_hangup),
                             PendingIntent.getService(ctx, new Random().nextInt(),
                                     new Intent(LocalService.ACTION_CALL_END)
                                             .setClass(ctx, LocalService.class)
@@ -320,7 +320,7 @@ public class Conference {
                                                 .setClass(ctx, LocalService.class)
                                                 .setData(call_uri),
                                         PendingIntent.FLAG_ONE_SHOT))
-                        .addAction(R.drawable.ic_call_end_white_24dp, ctx.getText(R.string.action_call_decline),
+                        .addAction(R.drawable.ic_call_end_white, ctx.getText(R.string.action_call_decline),
                                 PendingIntent.getService(ctx, new Random().nextInt(),
                                         new Intent(LocalService.ACTION_CALL_REFUSE)
                                                 .setClass(ctx, LocalService.class)
@@ -330,7 +330,7 @@ public class Conference {
                 noti.setContentTitle(ctx.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
                         .setContentText(ctx.getText(R.string.notif_outgoing_call))
                         .setContentIntent(goto_intent)
-                        .addAction(R.drawable.ic_call_end_white_24dp, ctx.getText(R.string.action_call_hangup),
+                        .addAction(R.drawable.ic_call_end_white, ctx.getText(R.string.action_call_hangup),
                                 PendingIntent.getService(ctx, new Random().nextInt(),
                                         new Intent(LocalService.ACTION_CALL_END)
                                                 .setClass(ctx, LocalService.class)

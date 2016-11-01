@@ -8,14 +8,14 @@
         android:id="@+id/menu_contact_search"
         android:actionViewClass="android.widget.SearchView"
         android:hint="@string/searchbar_hint"
-        android:icon="@drawable/ic_search_white_24dp"
+        android:icon="@drawable/ic_search_white"
         android:title="@string/searchbar_hint"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="collapseActionView|ifRoom" />
 
     <item
         android:id="@+id/menu_contact_dial"
-        android:icon="@drawable/ic_dialpad_white_24dp"
+        android:icon="@drawable/ic_dialpad_white"
         android:title="@string/dial_number"
         android:visible="false"
         app:showAsAction="always" />

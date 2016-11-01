@@ -314,7 +314,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                                 AlertDialog.Builder builder = new AlertDialog.Builder(this)
                                         .setTitle(R.string.start_error_title)
                                         .setMessage(R.string.start_error_mic_required)
-                                        .setIcon(R.drawable.ic_mic_black_48dp)
+                                        .setIcon(R.drawable.ic_mic_black)
                                         .setCancelable(false)
                                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                             @Override

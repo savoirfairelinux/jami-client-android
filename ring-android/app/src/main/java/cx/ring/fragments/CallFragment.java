@@ -452,7 +452,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-                item.setIcon(lastVideoSource ? R.drawable.ic_camera_front_white_24dp : R.drawable.ic_camera_rear_white_24dp);
+                item.setIcon(lastVideoSource ? R.drawable.ic_camera_front_white : R.drawable.ic_camera_rear_white);
                 break;
             case R.id.menuitem_dialpad:
                 KeyboardVisibilityManager.showKeyboard(getActivity(),

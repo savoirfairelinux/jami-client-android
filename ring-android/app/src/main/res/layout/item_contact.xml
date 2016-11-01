@@ -64,7 +64,7 @@ along with this program; if not, write to the Free Software
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/contact_quick_call_description"
         android:padding="16dp"
-        android:src="@drawable/ic_call_white_24dp"
+        android:src="@drawable/ic_call_white"
         android:tint="@color/black" />
 
 </RelativeLayout>

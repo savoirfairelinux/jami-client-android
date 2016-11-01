@@ -36,7 +36,7 @@ along with this program; if not, write to the Free Software
         android:layout_centerVertical="true"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:src="@drawable/ic_dialer_sip_black_24dp" />
+        android:src="@drawable/ic_dialer_sip_black" />
 
     <TextView
         android:id="@+id/number_txt"
