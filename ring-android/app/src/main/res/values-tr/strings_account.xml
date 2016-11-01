@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!--Strings related to account creation-->
   <string name="prompt_alias">Takma ad</string>
   <string name="prompt_hostname">Sunucu adı</string>
@@ -92,24 +92,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_rtp_port_range">Ses RTP Delik Aralığı</string>
   <!--Import/export-->
   <string name="account_export">Dışa aktar</string>
-  <string name="account_import_account">Hesabı içe aktar</string>
-  <string name="account_export_title">Hesabı dışa aktar</string>
-  <string name="account_import_title">Hesapları içe aktar</string>
-  <string name="account_import_explanation">Daha önceden dışa aktarılan hesapları içe aktarabilirsiniz.</string>
-  <string name="account_export_message">Hesap ayarlarını ve kimlik bilgilerini parola ile şifrelenmiş olarak kaydet.</string>
-  <string name="account_export_new_password">Yeni parola</string>
-  <string name="account_export_confirm_password">Parolayı onayla</string>
-  <string name="account_import_message">Dosya şifresini çözmek için parolayı girin.</string>
-  <string name="account_import_decryption_password">Şifre çözme parolası</string>
-  <string name="import_dialog_title">İçe aktarılıyor</string>
-  <string name="import_export_wait">Lütfen bekleyin...</string>
-  <string name="export_dialog_title">Hesap dışa aktarılıyor</string>
-  <string name="account_export_result">Hesap %1$s\'e aktarıldı</string>
-  <string name="export_failed_dialog_title">Dışa aktarma başarısız</string>
-  <string name="export_failed_dialog_msg">Bir hata oluştu</string>
   <string name="error_password_char_count">En az 6 harf</string>
   <string name="error_passwords_not_equals">Parolalar eşleşmedi</string>
-  <string name="import_failed_dialog_title">İçe aktarma başarısız</string>
-  <string name="import_failed_dialog_msg">Bir hata oluştu</string>
   <string name="account_export_end_error_title">Hata</string>
 </resources>

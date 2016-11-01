@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!--Strings related to account creation-->
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Vertsnavn</string>
@@ -89,23 +89,7 @@ Du kan endre kontoen din senere</string>
   <string name="account_rtp_port_range">RTP-portintervall for tale</string>
   <!--Import/export-->
   <string name="account_export">Eksporter</string>
-  <string name="account_import_account">Importer en konto</string>
-  <string name="account_export_title">Eksporter en konto</string>
-  <string name="account_import_title">Importer kontoer</string>
-  <string name="account_import_explanation">Du kan importere kontoer du tidligere har eksportert</string>
-  <string name="account_export_new_password">Nytt passord</string>
-  <string name="account_export_confirm_password">Bekreft passord</string>
-  <string name="account_import_message">Skriv inn passord for å dekryptere filen.</string>
-  <string name="account_import_decryption_password">Dekrypteringspassord</string>
-  <string name="import_dialog_title">Importerer</string>
-  <string name="import_export_wait">Vennligst vent...</string>
-  <string name="export_dialog_title">Eksporterer konto</string>
-  <string name="account_export_result">Konto eksportert til %1$s</string>
-  <string name="export_failed_dialog_title">Eksport feilet</string>
-  <string name="export_failed_dialog_msg">Det skjedde en feil</string>
   <string name="error_password_char_count">minimum 6 tegn</string>
   <string name="error_passwords_not_equals">Passordene stemmer ikke</string>
-  <string name="import_failed_dialog_title">Importen feilet</string>
-  <string name="import_failed_dialog_msg">Det skjedde en feil</string>
   <string name="account_export_end_error_title">Feil</string>
 </resources>

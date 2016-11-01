@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!--Strings related to account creation-->
   <string name="prompt_alias">Ψευδώνυμο</string>
   <string name="prompt_hostname">Hostname</string>
@@ -35,6 +35,5 @@
   <string name="account_rtp_port_range">Εύρος θυρών RTP ήχου</string>
   <!--Import/export-->
   <string name="account_export">Εξαγωγή</string>
-  <string name="account_import_title">Εισαγωγή λογαριασμών</string>
   <string name="account_export_end_error_title">Σφάλμα</string>
 </resources>

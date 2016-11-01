@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!--Strings related to account creation-->
   <string name="prompt_alias">Apelido</string>
   <string name="prompt_hostname">Servidor</string>
@@ -92,24 +92,7 @@ Você pode editar sua conta depois.</string>
   <string name="account_rtp_port_range">Variação de portas de audio RTP</string>
   <!--Import/export-->
   <string name="account_export">Exportar</string>
-  <string name="account_import_account">Importar conta</string>
-  <string name="account_export_title">Exportar conta</string>
-  <string name="account_import_title">Importar contas</string>
-  <string name="account_import_explanation">Você pode importar contas já exportadas.</string>
-  <string name="account_export_message">Salvar configurações de conta e credenciais, senha criptografada.</string>
-  <string name="account_export_new_password">Nova senha</string>
-  <string name="account_export_confirm_password">Confirmar senha</string>
-  <string name="account_import_message">Digite a senha para descriptografar o arquivo.</string>
-  <string name="account_import_decryption_password">Senha de descriptografia</string>
-  <string name="import_dialog_title">Importando</string>
-  <string name="import_export_wait">Por favor, aguarde...</string>
-  <string name="export_dialog_title">Exportando conta</string>
-  <string name="account_export_result">Conta exportada para %1$s</string>
-  <string name="export_failed_dialog_title">Falha ao exportar</string>
-  <string name="export_failed_dialog_msg">Um erro ocorreu</string>
   <string name="error_password_char_count">Pelo menos 6 caracteres</string>
   <string name="error_passwords_not_equals">Senhas não correspondem</string>
-  <string name="import_failed_dialog_title">Falha ao importar</string>
-  <string name="import_failed_dialog_msg">Um erro ocorreu</string>
   <string name="account_export_end_error_title">Erro</string>
 </resources>

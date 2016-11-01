@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!--Strings related to account creation-->
   <string name="prompt_alias">Slapyvardis</string>
   <string name="prompt_hostname">Kompiuterio vardas</string>
@@ -89,24 +89,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_rtp_port_range">Garso RTP prievadų rėžis</string>
   <!--Import/export-->
   <string name="account_export">Eksportuoti</string>
-  <string name="account_import_account">Importuoti paskyrą</string>
-  <string name="account_export_title">Eksportuoti paskyrą</string>
-  <string name="account_import_title">Importuoti paskyras</string>
-  <string name="account_import_explanation">Galite importuoti anksčiau eksportuotas paskyras.</string>
-  <string name="account_export_message">Įrašykite paskyros nustatymus ir prisijungimo duomenis, užšifruotus slaptažodžiu.</string>
-  <string name="account_export_new_password">Naujas slaptažodis</string>
-  <string name="account_export_confirm_password">Patvirtinkite slaptažodį</string>
-  <string name="account_import_message">Įrašykite slaptažodį, kad iššifruotumėte failą.</string>
-  <string name="account_import_decryption_password">Iššifravimo slaptažodis</string>
-  <string name="import_dialog_title">Importuojama</string>
-  <string name="import_export_wait">Prašome palaukti...</string>
-  <string name="export_dialog_title">Eksportuojama paskyra</string>
-  <string name="account_export_result">Paskyra eksportuota į %1$s</string>
-  <string name="export_failed_dialog_title">Eksportavimas nepavyko</string>
-  <string name="export_failed_dialog_msg">Įvyko klaida</string>
   <string name="error_password_char_count">Mažiausiai 6 simboliai</string>
   <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
-  <string name="import_failed_dialog_title">Importavimas nepavyko</string>
-  <string name="import_failed_dialog_msg">Įvyko klaida</string>
   <string name="account_export_end_error_title">Klaida</string>
 </resources>

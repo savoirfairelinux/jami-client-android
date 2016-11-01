@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!--Strings related to account creation-->
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nombre del host</string>
@@ -92,24 +92,7 @@ Puedes editar tu cuenta luego</string>
   <string name="account_rtp_port_range">Intervalo de puertos de audio RTP</string>
   <!--Import/export-->
   <string name="account_export">Exportar</string>
-  <string name="account_import_account">Importar una cuenta</string>
-  <string name="account_export_title">Exportar una cuenta</string>
-  <string name="account_import_title">Importar cuentas</string>
-  <string name="account_import_explanation">Puedes importar cuentas exportadas previamente.</string>
-  <string name="account_export_message">Guardar configuración y credenciales de la cuenta, contraseña cifrada.</string>
-  <string name="account_export_new_password">Contraseña nueva</string>
-  <string name="account_export_confirm_password">Confirmar contraseña</string>
-  <string name="account_import_message">Introduce la contraseña para descifrar el archivo.</string>
-  <string name="account_import_decryption_password">Contraseña de descifrado</string>
-  <string name="import_dialog_title">Importando</string>
-  <string name="import_export_wait">Por favor, espera...</string>
-  <string name="export_dialog_title">Exportando cuenta</string>
-  <string name="account_export_result">Cuenta exportada a %1$s</string>
-  <string name="export_failed_dialog_title">Error de exportación</string>
-  <string name="export_failed_dialog_msg">Ha ocurrido un error</string>
   <string name="error_password_char_count">6 caracteres mínimo</string>
   <string name="error_passwords_not_equals">Las contraseñas no coinciden</string>
-  <string name="import_failed_dialog_title">Error de importación</string>
-  <string name="import_failed_dialog_msg">Ha ocurrido un error</string>
   <string name="account_export_end_error_title">Error</string>
 </resources>

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!--Strings related to account creation-->
   <string name="prompt_alias">نام مستعار</string>
   <string name="prompt_hostname">نام میزبان</string>
@@ -77,6 +77,5 @@
   <string name="account_rtp_min_port">کمینه</string>
   <string name="account_rtp_port_range">دامنهٔ درگاه RTP صدا</string>
   <!--Import/export-->
-  <string name="account_import_title">درون‌ریزی حساب‌ها</string>
   <string name="account_export_end_error_title">خطا</string>
 </resources>

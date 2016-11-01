@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!--Strings related to account creation-->
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nome Host</string>
@@ -88,24 +88,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_rtp_port_range">Intervallo porti audio RTP</string>
   <!--Import/export-->
   <string name="account_export">Esportare</string>
-  <string name="account_import_account">Importare un account</string>
-  <string name="account_export_title">Esportare un account</string>
-  <string name="account_import_title">Importare più account</string>
-  <string name="account_import_explanation">È possibile importare degli account che erano stati esportati.</string>
-  <string name="account_export_message">Salvare le impostazioni dell\'account et gli identificanti con la password cifrata.</string>
-  <string name="account_export_new_password">Nuovo password</string>
-  <string name="account_export_confirm_password">Confermare password</string>
-  <string name="account_import_message">Digitare la password per decifrare il file.</string>
-  <string name="account_import_decryption_password">Password per decifrare</string>
-  <string name="import_dialog_title">Importazione in corso</string>
-  <string name="import_export_wait">Aspettare</string>
-  <string name="export_dialog_title">Esportazione account in corso</string>
-  <string name="account_export_result">Account esportato in %1$s</string>
-  <string name="export_failed_dialog_title">L\'esportazione è fallita</string>
-  <string name="export_failed_dialog_msg">C\'è stato un errore</string>
   <string name="error_password_char_count">6 caratteri minimo</string>
   <string name="error_passwords_not_equals">Le password no corrispondono</string>
-  <string name="import_failed_dialog_title">L\'importazione è fallita</string>
-  <string name="import_failed_dialog_msg">C\'è stato un errore</string>
   <string name="account_export_end_error_title">Errore</string>
 </resources>

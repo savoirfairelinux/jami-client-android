@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!--Strings related to account creation-->
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Ime poslužitelja</string>
@@ -71,23 +71,7 @@ Moćete urediti vaš račun kasnije</string>
   <string name="account_rtp_min_port">Minimum</string>
   <!--Import/export-->
   <string name="account_export">Izvezi</string>
-  <string name="account_import_account">Uvezi račun</string>
-  <string name="account_export_title">Izvezi račun</string>
-  <string name="account_import_title">Uvezi račune</string>
-  <string name="account_import_explanation">Možete uvesti prethodno izvezene račune.</string>
-  <string name="account_export_new_password">Nova lozinka</string>
-  <string name="account_export_confirm_password">Potvrdi lozinku</string>
-  <string name="account_import_message">Unesite lozinku za dešifriranje datoteke.</string>
-  <string name="account_import_decryption_password">Lozinka za dešifriranje</string>
-  <string name="import_dialog_title">Uvozim</string>
-  <string name="import_export_wait">Molim pričekajte...</string>
-  <string name="export_dialog_title">izvozim račun</string>
-  <string name="account_export_result">Račun izvezen u %1$s</string>
-  <string name="export_failed_dialog_title">Neuspjeli izvoz</string>
-  <string name="export_failed_dialog_msg">Došlo je do greške</string>
   <string name="error_password_char_count">6 znakova minimum</string>
   <string name="error_passwords_not_equals">Lozinke se ne podudaraju</string>
-  <string name="import_failed_dialog_title">Neuspjeli uvoz</string>
-  <string name="import_failed_dialog_msg">Došlo je do greške</string>
   <string name="account_export_end_error_title">Greška</string>
 </resources>

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!--Strings related to account creation-->
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nom du serveur</string>
@@ -92,24 +92,7 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_rtp_port_range">Plage de port RTP pour l\'audio</string>
   <!--Import/export-->
   <string name="account_export">Exporter</string>
-  <string name="account_import_account">Importer un compte</string>
-  <string name="account_export_title">Exporter un compte</string>
-  <string name="account_import_title">Importer compte</string>
-  <string name="account_import_explanation">Vous pouvez importer des comptes que vous avez précédemment exportés.</string>
-  <string name="account_export_message">Enregistre les paramètres du compte et les identifiants, en chiffrant le mot de passe.</string>
-  <string name="account_export_new_password">Nouveau mot de passe</string>
-  <string name="account_export_confirm_password">Confirmer le mot de passe</string>
-  <string name="account_import_message">Entrer le mot de passe pour déchiffrer le fichier.</string>
-  <string name="account_import_decryption_password">Mot de passe en clair</string>
-  <string name="import_dialog_title">Importer</string>
-  <string name="import_export_wait">Veuillez patienter</string>
-  <string name="export_dialog_title">Compte exporté</string>
-  <string name="account_export_result">Compte exporté vers %1$s</string>
-  <string name="export_failed_dialog_title">Échec d\'exportation</string>
-  <string name="export_failed_dialog_msg">Une erreur s\'est produite</string>
   <string name="error_password_char_count">6 caractères maximales</string>
   <string name="error_passwords_not_equals">Mot de passe erronné</string>
-  <string name="import_failed_dialog_title">Échec d\'importation</string>
-  <string name="import_failed_dialog_msg">Une erreur s\'est produite</string>
   <string name="account_export_end_error_title">Erreur</string>
 </resources>

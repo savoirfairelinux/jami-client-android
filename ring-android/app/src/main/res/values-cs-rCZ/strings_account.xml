@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!--Strings related to account creation-->
   <string name="prompt_alias">Přezdívka</string>
   <string name="prompt_hostname">Hostitelské jméno</string>
@@ -92,24 +92,7 @@
   <string name="account_rtp_port_range">Rozsah Portů Zvukového RTP</string>
   <!--Import/export-->
   <string name="account_export">Export</string>
-  <string name="account_import_account">Importovat účet</string>
-  <string name="account_export_title">Exportovat účet</string>
-  <string name="account_import_title">Importovat účty</string>
-  <string name="account_import_explanation">Můžete importovat dříve exportované účty.</string>
-  <string name="account_export_message">Uložit nastavení a ověřovací údaje účtu, heslo zašifrované.</string>
-  <string name="account_export_new_password">Nové heslo</string>
-  <string name="account_export_confirm_password">Potvrdit heslo</string>
-  <string name="account_import_message">Vložte heslo pro dešifrování souboru.</string>
-  <string name="account_import_decryption_password">Heslo dešifrování</string>
-  <string name="import_dialog_title">Importuji</string>
-  <string name="import_export_wait">Please vyčkejte…</string>
-  <string name="export_dialog_title">Exportuji účet</string>
-  <string name="account_export_result">Účet exportován do %1$s</string>
-  <string name="export_failed_dialog_title">Export selhal</string>
-  <string name="export_failed_dialog_msg">Nastala chyba</string>
   <string name="error_password_char_count">Minimálně 6 znaků</string>
   <string name="error_passwords_not_equals">Hesla se neshodují</string>
-  <string name="import_failed_dialog_title">Import selhal</string>
-  <string name="import_failed_dialog_msg">Nastala chyba</string>
   <string name="account_export_end_error_title">Chyba</string>
 </resources>

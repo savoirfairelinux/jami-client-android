@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!--Strings related to account creation-->
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Hostnaam</string>
@@ -92,24 +92,7 @@ U kan uw account later bewerken</string>
   <string name="account_rtp_port_range">Audio RTP poortenreeks</string>
   <!--Import/export-->
   <string name="account_export">Exporteren</string>
-  <string name="account_import_account">Account importeren</string>
-  <string name="account_export_title">Account exporteren</string>
-  <string name="account_import_title">Accounts importeren</string>
-  <string name="account_import_explanation">U kunt voorheen geëxporteerde accounts importeren.</string>
-  <string name="account_export_message">Accountinstellingen, legitimatie en wachtwoord versleuteld opslaan.</string>
-  <string name="account_export_new_password">Nieuw wachtwoord</string>
-  <string name="account_export_confirm_password">Wachtwoord bevestigen</string>
-  <string name="account_import_message">Wachtwoord ingeven om bestand te ontsleutelen</string>
-  <string name="account_import_decryption_password">Ontsleutelingswachtwoord</string>
-  <string name="import_dialog_title">Importeren</string>
-  <string name="import_export_wait">Even geduld...</string>
-  <string name="export_dialog_title">Account exporteren</string>
-  <string name="account_export_result">Account geëxporteerd naar %1$s</string>
-  <string name="export_failed_dialog_title">Exporteren mislukt</string>
-  <string name="export_failed_dialog_msg">Er is een fout opgetreden</string>
   <string name="error_password_char_count">Minimaal 6 karakters</string>
   <string name="error_passwords_not_equals">Wachtwoorden komen niet overeen</string>
-  <string name="import_failed_dialog_title">Importeren mislukt</string>
-  <string name="import_failed_dialog_msg">Er is een fout opgetreden</string>
   <string name="account_export_end_error_title">Fout</string>
 </resources>
