@@ -83,7 +83,7 @@ public class ShareFragment extends Fragment implements MenuHeaderView.MenuHeader
     }
 
     private void updateView() {
-        if (!TextUtils.isEmpty(mUriToShow)) {
+        if (!TextUtils.isEmpty(mUriToShow) && mQrImage != null) {
             Bitmap qrBitmap = QRCodeUtils.encodeStringAsQrBitmap(mUriToShow, mQrImage.getMeasuredWidth());
             mQrImage.setImageBitmap(qrBitmap);
         }

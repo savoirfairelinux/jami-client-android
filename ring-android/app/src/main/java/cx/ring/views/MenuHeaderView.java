@@ -135,6 +135,7 @@ public class MenuHeaderView extends FrameLayout {
 
     public void registerAccountSelectionListener(MenuHeaderAccountSelectionListener listener) {
         mListeners.add(new WeakReference<>(listener));
+        listener.accountSelected(getSelectedAccount());
     }
 
     public void updateUserView() {
