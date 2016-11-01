@@ -1,0 +1,696 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_d4489cce",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "put that with google deps",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 53
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_143f0427",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_343c882f",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "too much",
+      "range": {
+        "startLine": 523,
+        "startChar": 23,
+        "endLine": 523,
+        "endChar": 25
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_7403f073",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountWizard.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_14f8647b",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountWizard.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "to remove",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_d4f17c96",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountWizard.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_b4307857",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountWizard.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "account",
+      "range": {
+        "startLine": 253,
+        "startChar": 26,
+        "endLine": 253,
+        "endChar": 29
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_942bf4ea",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountWizard.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "a bit too much",
+      "range": {
+        "startLine": 257,
+        "startChar": 24,
+        "endLine": 257,
+        "endChar": 25
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_54358c44",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountWizard.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "TextUtils.isEmpty()",
+      "range": {
+        "startLine": 291,
+        "startChar": 32,
+        "endLine": 291,
+        "endChar": 72
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_743a1038",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountWizard.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "not a warning",
+      "range": {
+        "startLine": 292,
+        "startChar": 36,
+        "endLine": 292,
+        "endChar": 37
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_74ec50c8",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountCreationFragment.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "To remove",
+      "range": {
+        "startLine": 112,
+        "startChar": 3,
+        "endLine": 138,
+        "endChar": 7
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_14d144fb",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountCreationFragment.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_34cec85b",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountCreationFragment.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_d4dadc16",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountCreationFragment.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "to remove",
+      "range": {
+        "startLine": 231,
+        "startChar": 16,
+        "endLine": 231,
+        "endChar": 41
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_f4d7e0eb",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountCreationFragment.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "Unnecessary",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_9404547f",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountCreationFragment.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_b4095897",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountCreationFragment.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_94dd3417",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/DeviceAccountFragment.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "Naming convention?",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 34
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_14caa44f",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/RingAccountCreationFragment.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "Butterknife?\nNaming conventions?",
+      "range": {
+        "startLine": 52,
+        "startChar": 23,
+        "endLine": 61,
+        "endChar": 34
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_34c7a847",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/RingAccountCreationFragment.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "Necessary?",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 5
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_74b530cc",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/RingAccountLoginFragment.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "Necessary?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 5
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_94b694db",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/RingAccountLoginFragment.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "{\n}",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_f4a9207c",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/ConfigurationManagerCallback.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "hardcoded strings... hardcoded strings everywhere",
+      "range": {
+        "startLine": 164,
+        "startChar": 24,
+        "endLine": 164,
+        "endChar": 33
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_d4ac1c8f",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 1487,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "we should put this in constants",
+      "range": {
+        "startLine": 1487,
+        "startChar": 40,
+        "endLine": 1487,
+        "endChar": 49
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_34a00890",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "Run Android studio code formatter",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_948f7423",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/SwigNativeConverter.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "Not related to this patch",
+      "range": {
+        "startLine": 46,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 24
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_f4728048",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/BoundedLinearLayout.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "No copyright?",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_d475fc32",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/BoundedRelativeLayout.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "No copyright?",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_3479e82f",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/BoundedScrollView.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "No copyright?",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_147ce41f",
+        "filename": "ring-android/app/src/main/res/layout/frag_register_name.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "Run android studio code formatter here",
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_74877010",
+        "filename": "ring-android/app/src/main/res/values/dimens.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "Not related to this patch",
+      "range": {
+        "startLine": 1,
+        "startChar": 35,
+        "endLine": 1,
+        "endChar": 42
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_f49b6070",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "Not used anymore?",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 40
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_9488d423",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "Not used anymore",
+      "range": {
+        "startLine": 179,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 41
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_b48dd833",
+        "filename": "ring-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-01T20:35:56Z",
+      "side": 1,
+      "message": "To be coherent, we could rename that to \u0027Create account\u0027",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 44
+      },
+      "revId": "1bfcfc72d3fcaea658daf03321b591a69b8992da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
