@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "dad5f5cf_b97e31e3",
+        "filename": "ring-android/app/proguard-rules.pro",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2016-11-01T13:28:26Z",
+      "side": 1,
+      "message": "What do you mean?",
+      "parentUuid": "dad5f5cf_19417d39",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 34
+      },
+      "revId": "d97a28f93de1d75a84c5f65ce61cc454428bd956",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_6e40fd56",
         "filename": "ring-android/app/proguard-rules.pro",
         "patchSetId": 7
