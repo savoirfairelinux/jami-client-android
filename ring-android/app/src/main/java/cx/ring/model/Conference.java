@@ -343,7 +343,7 @@ public class Conference {
             return;
         }
 
-        noti.setOngoing(true).setCategory(NotificationCompat.CATEGORY_CALL).setSmallIcon(R.drawable.ic_launcher);
+        noti.setOngoing(true).setCategory(NotificationCompat.CATEGORY_CALL).setSmallIcon(R.drawable.ic_ring_logo_white);
 
         if (contact.getPhoto() != null) {
             Resources res = ctx.getResources();

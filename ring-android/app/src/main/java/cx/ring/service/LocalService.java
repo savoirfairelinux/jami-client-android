@@ -1191,7 +1191,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                 c.notificationBuilder.setCategory(NotificationCompat.CATEGORY_MESSAGE)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setDefaults(NotificationCompat.DEFAULT_ALL)
-                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setSmallIcon(R.drawable.ic_ring_logo_white)
                         .setContentTitle(contact.getDisplayName());
             }
             NotificationCompat.Builder noti = c.notificationBuilder;
