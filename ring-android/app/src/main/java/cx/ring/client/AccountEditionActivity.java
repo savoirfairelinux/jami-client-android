@@ -272,9 +272,6 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                 AlertDialog deleteDialog = createDeleteDialog();
                 deleteDialog.show();
                 break;
-            case R.id.menuitem_backup:
-                startBackup();
-                break;
             default:
                 break;
         }
@@ -304,12 +301,6 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         /* Terminate with no action */
-                    }
-                })
-                .setNeutralButton(R.string.account_backup, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        startBackup();
                     }
                 });
 
