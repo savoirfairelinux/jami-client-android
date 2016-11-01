@@ -59,6 +59,8 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.lang.ref.WeakReference;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -71,20 +73,24 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.service.LocalService;
+import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ClipboardHelper;
 
 public class SmartListFragment extends Fragment implements SearchView.OnQueryTextListener,
         HomeActivity.Refreshable,
         SmartListAdapter.SmartListAdapterCallback,
         Conversation.ConversationActionCallback,
-        ClipboardHelper.ClipboardHelperCallback {
+        ClipboardHelper.ClipboardHelperCallback,
+        LocalService.NameLookupCallback {
     private static final String TAG = SmartListFragment.class.getSimpleName();
 
     private static final int USER_INPUT_DELAY = 300;
     private static final String STATE_LOADING = TAG + ".STATE_LOADING";
 
+    private static final String SEARCH_RING_PREFIX = "ring:";
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
     private SmartListAdapter mSmartListAdapter;
+    private BlockchainInputHandler mBlockchainInputHandler;
 
     @BindView(R.id.newconv_fab)
     FloatingActionButton mFloatingActionButton;
@@ -224,6 +230,14 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
         mSearchView = (SearchView) mSearchMenuItem.getActionView();
         mSearchView.setOnQueryTextListener(this);
+        mSearchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    mSearchView.setQuery(SEARCH_RING_PREFIX, false);
+                }
+            }
+        });
         mSearchView.setQueryHint(getString(R.string.searchbar_hint));
         mSearchView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT));
         mSearchView.setImeOptions(EditorInfo.IME_ACTION_GO);
@@ -286,26 +300,60 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         if (TextUtils.isEmpty(query)) {
             mNewContact.setVisibility(View.GONE);
         } else {
-            ((TextView) mNewContact.findViewById(R.id.display_name)).setText(query);
-            CallContact contact = CallContact.buildUnknown(query);
-            mNewContact.setTag(contact);
-            mNewContact.setVisibility(View.VISIBLE);
-        }
 
-        mUserInputHandler.removeCallbacksAndMessages(null);
-        mUserInputHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mCallbacks.getService() == null) {
-                    Log.d(TAG, "onQueryTextChange: null service");
-                } else {
-                    mSmartListAdapter.updateDataset(
-                            mCallbacks.getService().getConversations(),
-                            query
-                    );
+            if (query.startsWith(SEARCH_RING_PREFIX)) {
+
+                final String ringQuery = query.substring(SEARCH_RING_PREFIX.length(), query.length());
+
+                if (mBlockchainInputHandler == null) {
+                    mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mCallbacks.getService()), this);
                 }
+
+                // searching for a ringId or a blockchained username
+                if (!mBlockchainInputHandler.isAlive()) {
+                    mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mCallbacks.getService()), this);
+                }
+
+                mBlockchainInputHandler.enqueueNextLookup(ringQuery);
+
+                mUserInputHandler.removeCallbacksAndMessages(null);
+                mUserInputHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mCallbacks.getService() == null) {
+                            Log.d(TAG, "onQueryTextChange: null service");
+                        } else {
+                            mSmartListAdapter.updateDataset(
+                                    mCallbacks.getService().getConversations(),
+                                    ringQuery
+                            );
+                        }
+                    }
+                }, USER_INPUT_DELAY);
+
+            } else {
+                // sip call
+                ((TextView) mNewContact.findViewById(R.id.display_name)).setText(query);
+                CallContact contact = CallContact.buildUnknown(query);
+                mNewContact.setTag(contact);
+                mNewContact.setVisibility(View.VISIBLE);
+
+                mUserInputHandler.removeCallbacksAndMessages(null);
+                mUserInputHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mCallbacks.getService() == null) {
+                            Log.d(TAG, "onQueryTextChange: null service");
+                        } else {
+                            mSmartListAdapter.updateDataset(
+                                    mCallbacks.getService().getConversations(),
+                                    query
+                            );
+                        }
+                    }
+                }, USER_INPUT_DELAY);
             }
-        }, USER_INPUT_DELAY);
+        }
 
         return true;
     }
@@ -636,5 +684,23 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             mErrorImageView.setVisibility(visibility);
             mErrorImageView.setImageResource(imageResId);
         }
+    }
+
+    @Override
+    public void onFound(String name, String address) {
+        ((TextView) mNewContact.findViewById(R.id.display_name)).setText(name);
+        CallContact contact = CallContact.buildUnknown(name);
+        mNewContact.setTag(contact);
+        mNewContact.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onInvalidName(String name) {
+        mNewContact.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onError(String name, String address) {
+        mNewContact.setVisibility(View.GONE);
     }
 }
