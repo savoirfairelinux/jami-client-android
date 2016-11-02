@@ -22,6 +22,30 @@
       "revId": "1aff8d310e8db060dc0f26903df8efb9a87f8b2a",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_cf125d58",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-02T20:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_14f944c8",
+      "range": {
+        "startLine": 308,
+        "startChar": 24,
+        "endLine": 324,
+        "endChar": 25
+      },
+      "revId": "1aff8d310e8db060dc0f26903df8efb9a87f8b2a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
