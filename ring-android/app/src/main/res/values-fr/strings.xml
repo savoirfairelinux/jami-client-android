@@ -94,6 +94,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permission d\'accès au caméra</string>
   <string name="permission_dialog_camera_message">Les conversation vidéo nécessitent la permission d\'utiliser l\'objectif. Merci de l\'autoriser.</string>
+  <string name="ringtone_error_title">Erreur</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring a besoin d\'accéder en lecture à votre liste de contact. SVP autorisez-le.</string>
   <!--Write call log permission-->
@@ -116,4 +117,5 @@
   <string name="prompt_new_password">Nouveau mot de passe</string>
   <!--MenuHeaderView-->
   <string name="unknown">Inconnu</string>
+  <!--Share fragment-->
 </resources>

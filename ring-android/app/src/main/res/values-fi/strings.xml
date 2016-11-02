@@ -94,6 +94,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera oikeudet</string>
   <string name="permission_dialog_camera_message">Videopuhelut vaativat toimiakseen kameran käyttöoikeudet.</string>
+  <string name="ringtone_error_title">Virhe</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring tarvitsee yhteystietojen lukuoikeudet tätä toimintoa varten.</string>
   <!--Write call log permission-->
@@ -116,4 +117,5 @@
   <string name="prompt_new_password">Uusi salasana</string>
   <!--MenuHeaderView-->
   <string name="unknown">Tuntematon</string>
+  <!--Share fragment-->
 </resources>

@@ -79,6 +79,7 @@
   <string name="message_sending">در حال ارسال پیام…</string>
   <string name="time_just_now">هم‌اکنون</string>
   <!--MediaPreferenceFragment-->
+  <string name="ringtone_error_title">خطا</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -86,4 +87,5 @@
   <!--Conversation-->
   <!--Contacts-->
   <!--MenuHeaderView-->
+  <!--Share fragment-->
 </resources>

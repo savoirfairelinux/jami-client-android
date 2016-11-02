@@ -95,6 +95,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Дозволи для камери</string>
   <string name="permission_dialog_camera_message">Для здійснення відерозмови необхідно надати дозвіл на роботу камери. Будь ласка, розглянути можливість її увімкнення.</string>
+  <string name="ringtone_error_title">Помилка</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring потребує права \"Зчитування контактів\" для включення цього функціоналу. Будь ласка надайте це право.</string>
   <!--Write call log permission-->
@@ -117,4 +118,5 @@
   <string name="prompt_new_password">Новий пароль</string>
   <!--MenuHeaderView-->
   <string name="unknown">Невідомий</string>
+  <!--Share fragment-->
 </resources>

@@ -104,4 +104,5 @@
   <!--Contacts-->
   <!--MenuHeaderView-->
   <string name="unknown">Ismeretlen</string>
+  <!--Share fragment-->
 </resources>

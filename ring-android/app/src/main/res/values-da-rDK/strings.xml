@@ -94,6 +94,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-tilladelse</string>
   <string name="permission_dialog_camera_message">Video-samtaler kræver kamera-tilladelse for at fungere. Overvej venligst at give denne tilladelse.</string>
+  <string name="ringtone_error_title">Fejl</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring har brug for \"Læs kontakter\"-tilladelse for at kunne udføre denne funktion. Vær venlig at tillade den.</string>
   <!--Write call log permission-->
@@ -116,4 +117,5 @@
   <string name="prompt_new_password">Nyt kodeord</string>
   <!--MenuHeaderView-->
   <string name="unknown">Ukendt</string>
+  <!--Share fragment-->
 </resources>

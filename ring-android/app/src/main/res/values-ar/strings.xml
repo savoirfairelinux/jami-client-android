@@ -82,6 +82,7 @@
   <string name="send_message">إبعث رسالة</string>
   <string name="time_just_now">للتوّ</string>
   <!--MediaPreferenceFragment-->
+  <string name="ringtone_error_title">خطأ</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -91,4 +92,5 @@
   <!--Contacts-->
   <!--MenuHeaderView-->
   <string name="unknown">مجهول</string>
+  <!--Share fragment-->
 </resources>

@@ -94,6 +94,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera Berechtigung</string>
   <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die Anwendung Zugriff auf die Kamera. Bitte geben Sie diese Berechtigung frei.</string>
+  <string name="ringtone_error_title">Fehler</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring benötigt die Berechtigung \"Kontaktdaten lesen\" für diese Funktion. Bitte geben Sie sie frei.</string>
   <!--Write call log permission-->
@@ -114,6 +115,14 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s hinzufügen?</string>
   <string name="prompt_new_password">Neues Passwort</string>
+  <string name="prompt_new_password_repeat">Neues Passwort wiederholen</string>
+  <string name="account_device_updated_message">Sie haben erfolgreich ihr Ring-Konto aktualisiert</string>
   <!--MenuHeaderView-->
+  <string name="profile">Mein Profil</string>
+  <string name="profile_message_warning">Dies wird mit ihren Kontakten geteilt</string>
+  <string name="open_the_gallery">Gallerie öffnen</string>
+  <string name="take_a_photo">Foto machen</string>
+  <string name="unknowm_if_empty">\'Unbekannt\' falls leer...</string>
   <string name="unknown">Unbekannt</string>
+  <!--Share fragment-->
 </resources>

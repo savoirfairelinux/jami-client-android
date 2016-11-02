@@ -94,6 +94,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Attivare videocamera</string>
   <string name="permission_dialog_camera_message">La videochiamata richiede l\'attivazione della videocamera. Concedi il permesso.</string>
+  <string name="ringtone_error_title">Errore</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring richiede permesso di \"Lettura dei contatti\" per abilitare questa funzione. Concedi il permesso.</string>
   <!--Write call log permission-->
@@ -116,4 +117,5 @@
   <string name="prompt_new_password">Nuovo password</string>
   <!--MenuHeaderView-->
   <string name="unknown">Sconosciuto</string>
+  <!--Share fragment-->
 </resources>

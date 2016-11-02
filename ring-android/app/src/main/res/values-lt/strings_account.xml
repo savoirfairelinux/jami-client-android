@@ -24,7 +24,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="create_sip_account">Pridėti</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Ištrinti paskyrą ?</string>
-  <string name="account_delete_dialog_message">Šio veiksmo negalima bus atšaukti. Jeigu dar to nepadarėte, prieš ištrinant paskyrą, turėtumėte pagalvoti apie jos eksportavimą.</string>
+  <string name="account_delete_dialog_message">Šio veiksmo negalima bus atšaukti.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nėra užregistruotų paskyrų</string>
   <string name="normal_accounts_titles">Paskyros</string>
@@ -87,26 +87,17 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_rtp_max_port">Didžiausias</string>
   <string name="account_rtp_min_port">Mažiausias</string>
   <string name="account_rtp_port_range">Garso RTP prievadų rėžis</string>
-  <!--Import/export-->
-  <string name="account_export">Eksportuoti</string>
-  <string name="account_import_account">Importuoti paskyrą</string>
-  <string name="account_export_title">Eksportuoti paskyrą</string>
-  <string name="account_import_title">Importuoti paskyras</string>
-  <string name="account_import_explanation">Galite importuoti anksčiau eksportuotas paskyras.</string>
-  <string name="account_export_message">Įrašykite paskyros nustatymus ir prisijungimo duomenis, užšifruotus slaptažodžiu.</string>
-  <string name="account_export_new_password">Naujas slaptažodis</string>
-  <string name="account_export_confirm_password">Patvirtinkite slaptažodį</string>
-  <string name="account_import_message">Įrašykite slaptažodį, kad iššifruotumėte failą.</string>
-  <string name="account_import_decryption_password">Iššifravimo slaptažodis</string>
-  <string name="import_dialog_title">Importuojama</string>
-  <string name="import_export_wait">Prašome palaukti...</string>
-  <string name="export_dialog_title">Eksportuojama paskyra</string>
-  <string name="account_export_result">Paskyra eksportuota į %1$s</string>
-  <string name="export_failed_dialog_title">Eksportavimas nepavyko</string>
-  <string name="export_failed_dialog_msg">Įvyko klaida</string>
+  <!--restore/backup-->
+  <string name="account_backup_message">Įrašykite paskyros nustatymus ir prisijungimo duomenis, užšifruotus slaptažodžiu.</string>
+  <string name="account_backup_new_password">Naujas slaptažodis</string>
+  <string name="account_backup_confirm_password">Patvirtinkite slaptažodį</string>
+  <string name="account_restore_message">Įrašykite slaptažodį, kad iššifruotumėte failą.</string>
+  <string name="account_restore_decryption_password">Iššifravimo slaptažodis</string>
+  <string name="restore_backup_wait">Prašome palaukti...</string>
+  <string name="backup_failed_dialog_msg">Įvyko klaida</string>
   <string name="error_password_char_count">Mažiausiai 6 simboliai</string>
   <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
-  <string name="import_failed_dialog_title">Importavimas nepavyko</string>
-  <string name="import_failed_dialog_msg">Įvyko klaida</string>
+  <string name="restore_failed_dialog_msg">Įvyko klaida</string>
+  <string name="account_export">Eksportuoti</string>
   <string name="account_export_end_error_title">Klaida</string>
 </resources>

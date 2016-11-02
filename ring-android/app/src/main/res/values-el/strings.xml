@@ -88,6 +88,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Άδεια πρόσβασης στην κάμερα</string>
   <string name="permission_dialog_camera_message">Οι κλήσεις μέσω βίντεο χρειάζεται την άδεια στην κάμερά  για να δουλέψει. Παρακαλώ σκεφτείτε να την ενεργοποιήσετε.</string>
+  <string name="ringtone_error_title">Σφάλμα</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Η εφαρμογή Ring χρειάζεται να διαβάσει τις επαφές σας ώστε να ενεργοποιήσει αυτή την λειτουργία. Παρακαλώ δώστε την.</string>
   <!--Write call log permission-->
@@ -108,4 +109,5 @@
   <string name="add_call_contact_number_to_contacts">Προσθήκη %1$s ;</string>
   <!--MenuHeaderView-->
   <string name="unknown">Άγνωστοι</string>
+  <!--Share fragment-->
 </resources>

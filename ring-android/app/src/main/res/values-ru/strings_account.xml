@@ -71,6 +71,6 @@
   <string name="account_rtp_max_port">Максимум</string>
   <string name="account_rtp_min_port">Минимум</string>
   <string name="account_rtp_port_range">Диапазон портов для RTP аудио</string>
-  <!--Import/export-->
+  <!--restore/backup-->
   <string name="account_export_end_error_title">Ошибка</string>
 </resources>

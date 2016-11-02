@@ -20,7 +20,7 @@
   <string name="share_number">Jaa numero</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Poistetaanko tunnus?</string>
-  <string name="account_delete_dialog_message">Tätä toimintoa ei voi perua. Jos et ole vielä varmuuskopioinut tunnustasi niin tässä on hyvä paikka tehdä niin.</string>
+  <string name="account_delete_dialog_message">Tätä toimintoa ei voi perua.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ei rekistöröityjä tunnuksia</string>
   <string name="normal_accounts_titles">Tunnukset</string>
@@ -72,26 +72,17 @@
   <string name="account_rtp_max_port">Maksimi</string>
   <string name="account_rtp_min_port">Minimi</string>
   <string name="account_rtp_port_range">RTP porttiväli</string>
-  <!--Import/export-->
-  <string name="account_export">Vie</string>
-  <string name="account_import_account">Tuo tunnus</string>
-  <string name="account_export_title">Vie tunnus</string>
-  <string name="account_import_title">Tuo tunnuksia</string>
-  <string name="account_import_explanation">Voit tuoda aikaisemmin viemiäsi tunnuksia.</string>
-  <string name="account_export_message">Tallenna tunnuksen asetukset ja käyttäjäoikeudet, salasana salattuna.</string>
-  <string name="account_export_new_password">Uusi salasana</string>
-  <string name="account_export_confirm_password">Varmista salasana</string>
-  <string name="account_import_message">Syötä salasana purkaaksesi tiedoton salauksen.</string>
-  <string name="account_import_decryption_password">Salauksen purku salasana</string>
-  <string name="import_dialog_title">Tuonti</string>
-  <string name="import_export_wait">Odota hetki...</string>
-  <string name="export_dialog_title">Tunnuksen vienti</string>
-  <string name="account_export_result">Tunnus viety %1$s</string>
-  <string name="export_failed_dialog_title">Vienti epäonnistui</string>
-  <string name="export_failed_dialog_msg">Virhe tapahtui</string>
+  <!--restore/backup-->
+  <string name="account_backup_message">Tallenna tunnuksen asetukset ja käyttäjäoikeudet, salasana salattuna.</string>
+  <string name="account_backup_new_password">Uusi salasana</string>
+  <string name="account_backup_confirm_password">Varmista salasana</string>
+  <string name="account_restore_message">Syötä salasana purkaaksesi tiedoton salauksen.</string>
+  <string name="account_restore_decryption_password">Salauksen purku salasana</string>
+  <string name="restore_backup_wait">Odota hetki...</string>
+  <string name="backup_failed_dialog_msg">Virhe tapahtui</string>
   <string name="error_password_char_count">Vähintään 6 merkkiä</string>
   <string name="error_passwords_not_equals">Salasanat eivät täsmää</string>
-  <string name="import_failed_dialog_title">Tuonti epäonnistui</string>
-  <string name="import_failed_dialog_msg">Virhe tapahtui</string>
+  <string name="restore_failed_dialog_msg">Virhe tapahtui</string>
+  <string name="account_export">Vie</string>
   <string name="account_export_end_error_title">Virhe</string>
 </resources>

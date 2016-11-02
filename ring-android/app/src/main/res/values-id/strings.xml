@@ -17,6 +17,7 @@
   <string name="me">Saya</string>
   <!--Text messages-->
   <!--MediaPreferenceFragment-->
+  <string name="ringtone_error_title">Eror</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -25,4 +26,5 @@
   <!--Contacts-->
   <!--MenuHeaderView-->
   <string name="unknown">Tidak diketahui</string>
+  <!--Share fragment-->
 </resources>

@@ -95,6 +95,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Uprawnienia do aparatu</string>
   <string name="permission_dialog_camera_message">Wideorozmowa wymaga przyznania uprawnień dla aparatu. Proszę rozważyć odblokowanie jej.</string>
+  <string name="ringtone_error_title">Błąd</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring potrzebuje pozwolenia \"Kontakty\" żeby odblokować tą funkcję. Proszę udzielić go.</string>
   <!--Write call log permission-->
@@ -117,4 +118,5 @@
   <string name="prompt_new_password">Nowe hasło</string>
   <!--MenuHeaderView-->
   <string name="unknown">Nieznane</string>
+  <!--Share fragment-->
 </resources>

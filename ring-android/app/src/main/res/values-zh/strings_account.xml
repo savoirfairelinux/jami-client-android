@@ -31,6 +31,6 @@
   <string name="account_preferences_security_tab">安全</string>
   <!--SIP-->
   <!--TLS Details-->
-  <!--Import/export-->
+  <!--restore/backup-->
   <string name="account_export">輸出</string>
 </resources>

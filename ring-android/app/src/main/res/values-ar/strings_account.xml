@@ -70,7 +70,7 @@
   <string name="account_rtp_max_port">الحد الاقصى</string>
   <string name="account_rtp_min_port">الحد الأدنى</string>
   <string name="account_rtp_port_range">نطاق المنفذ RTP الصوتي</string>
-  <!--Import/export-->
+  <!--restore/backup-->
   <string name="account_export">تصدير</string>
   <string name="account_export_end_error_title">خطأ</string>
 </resources>

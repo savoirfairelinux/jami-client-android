@@ -84,6 +84,7 @@
   <string name="send_message">Отправить сообщение</string>
   <string name="message_sending">Отправка сообщения...</string>
   <!--MediaPreferenceFragment-->
+  <string name="ringtone_error_title">Ошибка</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -97,4 +98,5 @@
   <string name="add_call_contact_number_to_contacts">Добавить %1$s ?</string>
   <!--MenuHeaderView-->
   <string name="unknown">Неизвестно</string>
+  <!--Share fragment-->
 </resources>

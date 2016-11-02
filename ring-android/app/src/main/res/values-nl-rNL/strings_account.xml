@@ -11,6 +11,7 @@
   <string name="share_number">Telefoonnummer delen</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Account verwijderen?</string>
+  <string name="account_delete_dialog_message">Deze actie kan niet ongedaan worden</string>
   <!--AccountManagementFragment-->
   <string name="normal_accounts_titles">Accounts</string>
   <!--Basic Details-->
@@ -31,5 +32,5 @@
   <string name="account_preferences_security_tab">Beveiliging</string>
   <!--SIP-->
   <!--TLS Details-->
-  <!--Import/export-->
+  <!--restore/backup-->
 </resources>

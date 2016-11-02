@@ -10,6 +10,8 @@
   <string name="error_field_required">Este campo é obrigatório</string>
   <string name="dialog_wait_create">Adicionando conta</string>
   <string name="dialog_wait_create_details">Por favor, aguarde enquanto sua nova conta é adicionada...</string>
+  <string name="dialog_wait_update">Atualizando conta</string>
+  <string name="dialog_wait_update_details">Por favor, aguarde enquanto sua nova conta é atualizada...</string>
   <string name="dialog_warn_ip2ip_account_title">Criar uma conta SIP vazia?</string>
   <string name="dialog_warn_ip2ip_account_message">Você está prestes a criar uma conta SIP com nenhum nome de host válido.
 Você só será capaz de fazer e receber chamadas IP diretos.
@@ -26,12 +28,14 @@ Você pode editar sua conta depois.</string>
   <string name="share_number">Compartilhar o número</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Deletar conta?</string>
-  <string name="account_delete_dialog_message">Esta ação não pode ser revista. Se você ainda não o fez, considere exportar sua conta antes de deletá-la.</string>
+  <string name="account_delete_dialog_message">Esta ação não pode ser revista.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Nenhuma conta registrada</string>
   <string name="normal_accounts_titles">Contas</string>
+  <string name="normal_devices_titles">Dispositivos conhecidos conectados à esta conta Ring</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Geral</string>
+  <string name="account_preferences_devices_tab">Dispositivos</string>
   <string name="account_basic_category">Configurações básicas</string>
   <string name="account_alias_label">Nome da conta</string>
   <string name="account_hostname_label">Servidor</string>
@@ -90,26 +94,49 @@ Você pode editar sua conta depois.</string>
   <string name="account_rtp_max_port">Máximo</string>
   <string name="account_rtp_min_port">Mínimo</string>
   <string name="account_rtp_port_range">Variação de portas de audio RTP</string>
-  <!--Import/export-->
-  <string name="account_export">Exportar</string>
-  <string name="account_import_account">Importar conta</string>
-  <string name="account_export_title">Exportar conta</string>
-  <string name="account_import_title">Importar contas</string>
-  <string name="account_import_explanation">Você pode importar contas já exportadas.</string>
-  <string name="account_export_message">Salvar configurações de conta e credenciais, senha criptografada.</string>
-  <string name="account_export_new_password">Nova senha</string>
-  <string name="account_export_confirm_password">Confirmar senha</string>
-  <string name="account_import_message">Digite a senha para descriptografar o arquivo.</string>
-  <string name="account_import_decryption_password">Senha de descriptografia</string>
-  <string name="import_dialog_title">Importando</string>
-  <string name="import_export_wait">Por favor, aguarde...</string>
-  <string name="export_dialog_title">Exportando conta</string>
-  <string name="account_export_result">Conta exportada para %1$s</string>
-  <string name="export_failed_dialog_title">Falha ao exportar</string>
-  <string name="export_failed_dialog_msg">Um erro ocorreu</string>
+  <!--restore/backup-->
+  <string name="account_backup_message">Salvar configurações de conta e credenciais, senha criptografada.</string>
+  <string name="account_backup_new_password">Nova senha</string>
+  <string name="account_backup_confirm_password">Confirmar senha</string>
+  <string name="account_restore_message">Digite a senha para descriptografar o arquivo.</string>
+  <string name="account_restore_decryption_password">Senha de descriptografia</string>
+  <string name="account_new_device">Adicionar novo dispositivo</string>
+  <string name="account_new_device_message">Desbloquear conta Ring para associar novo dispositivo.</string>
+  <string name="account_new_device_password">Entre com a senha da conta principal</string>
+  <string name="restore_backup_wait">Por favor, aguarde...</string>
+  <string name="backup_failed_dialog_msg">Um erro ocorreu</string>
   <string name="error_password_char_count">Pelo menos 6 caracteres</string>
   <string name="error_passwords_not_equals">Senhas não correspondem</string>
-  <string name="import_failed_dialog_title">Falha ao importar</string>
-  <string name="import_failed_dialog_msg">Um erro ocorreu</string>
+  <string name="restore_failed_dialog_msg">Um erro ocorreu</string>
+  <string name="account_export">Exportar</string>
+  <string name="export_account_wait_title">Por favor, aguarde...</string>
+  <string name="export_account_wait_message">Propagando informação da nova conta</string>
+  <string name="account_export_end_pin_title">PIN :</string>
+  <string name="account_export_end_pin_message">Use este PIN junto com a senha de sua conta principal para conectar seu novo dispositivo à sua conta Ring dentro dos próximos 10 minutos.</string>
+  <string name="account_export_end_decryption_title">Erro de decriptação</string>
+  <string name="account_export_end_decryption_message">Não foi possível desbloquear sua conta utilizando a senha fornecida.</string>
+  <string name="account_export_end_network_title">Erro de rede</string>
+  <string name="account_export_end_network_message">Não foi possível exportar a conta na rede. Verifique sua conexão.</string>
   <string name="account_export_end_error_title">Erro</string>
+  <string name="account_export_end_error_message">Não foi possível exportar a conta. Um erro desconhecido ocorreu.</string>
+  <string name="account_enter_password">Entre a senha</string>
+  <string name="account_share_body">Entre em contato comigo utilizando %1$s na plataforma Ring de comunicação distribuída: http://ring.cx</string>
+  <string name="account_contact_me">Encontre-me no Ring !</string>
+  <string name="update_account">Atualize a conta</string>
+  <string name="account_migration">Agora sua conta Ring pode ser compartilhada entre todos os seus dispositivos. Você só precisa fornecer uma senha.</string>
+  <string name="ring_account">Conta Ring</string>
+  <string name="account_migration_title_dialog">Migração de conta</string>
+  <string name="account_migration_message_dialog">Para ser utilizada em múltiplos dispositivos, suas contas precisam ser atualizadas. Você quer ir à tela de administração de conta para realizar esta operação?</string>
+  <string name="account_update_needed">Atualização necessária</string>
+  <string name="account_creation_file_too_big">Arquivo muito grande</string>
+  <string name="account_cannot_read">Não foi possível ler %1$s</string>
+  <string name="account_creation_error">Erro ao criar conta</string>
+  <string name="account_cannot_be_found_title">Não foi possível localizar conta</string>
+  <string name="account_cannot_be_found_message">Não foi possível localizar a conta na rede Ring.\nCertifique-se de que foi exportada no Ring de um dispositivo existente, e que as informações fornecidas estão corretas.</string>
+  <string name="account_no_network_title">Não foi possível conectar-se à rede.</string>
+  <string name="account_no_network_message">Não foi possível adicionar a conta porque o Ring não pôde conectar-se à rede distribuída. Verifique a conexão do seu dispositivo.</string>
+  <string name="account_device_added_title">Dispositivo adicionado à conta</string>
+  <string name="account_device_added_message">Você configurou sua conta Ring neste dispositivo com sucesso.</string>
+  <string name="account_device_updated_title">Dispositivo da conta atualizado</string>
+  <string name="account_wizard_title">Conta Ring</string>
 </resources>
