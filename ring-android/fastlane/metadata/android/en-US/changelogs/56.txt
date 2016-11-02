@@ -1,0 +1,4 @@
+- Better support of usernames in text messaging
+- New account wizards: one for Ring accounts, one for SIP
+- Improved crash handling
+- Bugfixes in communication mechanism

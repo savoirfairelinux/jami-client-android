@@ -1,0 +1,2 @@
+- Fix migration issue
+- Restore binary size
