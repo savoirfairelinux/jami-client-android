@@ -1,0 +1,6 @@
+- add dialpad in call
+- ability to delete conversations individually
+- ability to copy a contact's number to the clipboard
+- integration of the Android contact sheets on the Smartlist
+- text conversations improvements
+- minor improvements and bug fixes
