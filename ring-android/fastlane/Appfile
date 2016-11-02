@@ -1,0 +1,6 @@
+
+# Path to the json secret file - Follow https://github.com/fastlane/supply#setup to get one
+json_key_file "/home/alision/dev/fastlane-googleapi-access.json"
+
+# App package
+package_name "cx.ring"

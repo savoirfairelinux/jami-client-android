@@ -1,0 +1,6 @@
+* Stable text message acknowledgement of receipt
+* Ability to make audio-only calls
+* Improved text conversations (capitalization and multiline text)
+* In-App Embedded QR Code scanner
+* Improved conversations search
+* UI/UX improvements
