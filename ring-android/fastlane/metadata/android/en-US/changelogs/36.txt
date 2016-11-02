@@ -1,0 +1,4 @@
+* new beta release "Louis-Joseph Papineau"
+* add TURN server settings
+* update translations
+* bug fixes
