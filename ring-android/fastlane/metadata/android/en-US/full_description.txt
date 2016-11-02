@@ -1,0 +1,13 @@
+Ring (Beta Test) allows to make audio or video calls, and to send messages, safely and freely, in confidence. Powered by Savoir-faire Linux, Ring is a open source software that requires no central server.
+
+What can you do with Ring:
+  - make audio calls 
+  - send text messages
+  - make video calls (experimental support)
+  - use your existing SIP account
+
+Ring is in beta. There are plenty of ways to help us, check out: https://ring.cx/en/contribute
+
+You can also install Ring on Windows, Mac OS X and GNU/Linux.
+
+All the info is on https://ring.cx/en

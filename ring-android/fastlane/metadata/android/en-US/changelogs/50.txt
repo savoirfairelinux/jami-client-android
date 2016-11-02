@@ -1,0 +1,4 @@
+- Connectivity improvements when switching between differents networks (wifi, cellular networks...)
+- Respect system orientation preference
+- Update translations
+- Stability improvements

@@ -1,0 +1,2 @@
+- Improve communication reliability
+- improve quality of profile picture took from gallery storage
