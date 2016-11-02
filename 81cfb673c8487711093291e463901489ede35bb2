@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_683eb0ba",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountsManagementFragment.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-02T12:43:15Z",
+      "side": 1,
+      "message": "unneeded",
+      "revId": "81cfb673c8487711093291e463901489ede35bb2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_084b645a",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/MediaPreferenceFragment.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-02T12:43:15Z",
+      "side": 1,
+      "message": "not needed",
+      "revId": "81cfb673c8487711093291e463901489ede35bb2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_2848a85a",
+        "filename": "ring-android/app/src/main/jni/jni_interface.i",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-02T12:43:15Z",
+      "side": 1,
+      "message": "indentation and {}",
+      "range": {
+        "startLine": 64,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 18
+      },
+      "revId": "81cfb673c8487711093291e463901489ede35bb2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
