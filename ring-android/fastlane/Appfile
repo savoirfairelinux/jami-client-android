@@ -1,0 +1,2 @@
+json_key_file "/home/alision/dev/fastlane-googleapi-access.json" # Path to the json secret file - Follow https://github.com/fastlane/supply#setup to get one
+package_name "cx.ring" # e.g. com.krausefx.app
