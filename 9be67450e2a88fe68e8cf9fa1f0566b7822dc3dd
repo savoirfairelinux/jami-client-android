@@ -22,6 +22,30 @@
       "revId": "9be67450e2a88fe68e8cf9fa1f0566b7822dc3dd",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_c89b1cc8",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-02T13:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_081da466",
+      "range": {
+        "startLine": 851,
+        "startChar": 8,
+        "endLine": 851,
+        "endChar": 24
+      },
+      "revId": "9be67450e2a88fe68e8cf9fa1f0566b7822dc3dd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
