@@ -1,0 +1,3 @@
+* QR-code scanning (thanks to Alexander Zahdeh)
+* Added start on boot setting
+* Bug fixes

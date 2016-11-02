@@ -1,0 +1,53 @@
+# Customise this file, documentation can be found here:
+# https://github.com/fastlane/fastlane/tree/master/fastlane/docs
+# All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "1.106.2"
+
+default_platform :android
+
+platform :android do
+
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Submit a new Beta Build to the Play Store"
+  lane :beta do |options|
+    sign_apk(
+      apk_path: options[:apk_path],
+      signed_apk_path: options[:signed_apk_path],
+      keystore_path: options[:keystore_path],
+      alias: options[:keyalias],
+      storepass: options[:storepass],
+      keypass: options[:keypass]
+    )
+
+    zipalign(
+        apk_path: options[:signed_apk_path]
+    )
+
+    supply(
+      apk: options[:signed_apk_path],
+      track: "beta",
+      json_key: options[:json_key]
+    )
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :deploy do
+    supply
+  end
+
+end
+
