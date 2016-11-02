@@ -87,6 +87,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permeso je kamerao</string>
   <string name="permission_dialog_camera_message">Video-konversacioj bezonas permeson je kamerao por funkcii. Bonvole pripensu permesi ĝin.</string>
+  <string name="ringtone_error_title">Eraro</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring bezonas la \"Legu kontaktojn\" permeson por ŝalti tiu ĉi funkcion. Bonvole permesu ĝin.</string>
   <!--Write call log permission-->
@@ -109,4 +110,5 @@
   <string name="prompt_new_password">Nova pasvorto</string>
   <!--MenuHeaderView-->
   <string name="unknown">Nekonata</string>
+  <!--Share fragment-->
 </resources>

@@ -60,6 +60,6 @@
   <string name="account_tls_verify_client_label">אמת לקוח</string>
   <string name="account_rtp_max_port">מרבי</string>
   <string name="account_rtp_min_port">נומינלי</string>
-  <!--Import/export-->
+  <!--restore/backup-->
   <string name="account_export_end_error_title">שגיאה</string>
 </resources>

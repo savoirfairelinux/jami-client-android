@@ -29,5 +29,5 @@
   <string name="account_preferences_security_tab">Seguretat</string>
   <!--SIP-->
   <!--TLS Details-->
-  <!--Import/export-->
+  <!--restore/backup-->
 </resources>

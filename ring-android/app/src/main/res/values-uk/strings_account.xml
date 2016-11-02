@@ -26,7 +26,7 @@
   <string name="share_number">Поділитися номером</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Видалити акаунт?</string>
-  <string name="account_delete_dialog_message">Ця дія не може бути скасована. Якщо ви ще не зробили цього, слід розглянути можливість експортувати свій обліковий запис перед його видаленням.</string>
+  <string name="account_delete_dialog_message">Ця дія не може бути скасована.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Немає зареєстрованного аккаунту</string>
   <string name="normal_accounts_titles">Аккаунти</string>
@@ -90,26 +90,17 @@
   <string name="account_rtp_max_port">Максимум</string>
   <string name="account_rtp_min_port">Мінімум</string>
   <string name="account_rtp_port_range">Порти для передачі аудіо по RTP</string>
-  <!--Import/export-->
-  <string name="account_export">Експортувати</string>
-  <string name="account_import_account">Імпортувати акаунт</string>
-  <string name="account_export_title">Експортувати акаунт</string>
-  <string name="account_import_title">Імпортувати акаунти</string>
-  <string name="account_import_explanation">Ви можете імпортувати попередньо експортовані акаунти.</string>
-  <string name="account_export_message">Зберегти налаштування облікового запису та облікові дані, пароль в зашифрованому вигляді.</string>
-  <string name="account_export_new_password">Новий пароль</string>
-  <string name="account_export_confirm_password">Підтвердити пароль</string>
-  <string name="account_import_message">Введіть пароль для розшифрування файлу.</string>
-  <string name="account_import_decryption_password">Розшифрування паролю</string>
-  <string name="import_dialog_title">Імпортування</string>
-  <string name="import_export_wait">Будь ласка зачекайте</string>
-  <string name="export_dialog_title">Експортувати акаунт</string>
-  <string name="account_export_result">Акаунт експортовано до %1$s</string>
-  <string name="export_failed_dialog_title">Невдалий експорт</string>
-  <string name="export_failed_dialog_msg">Виникла помилка</string>
+  <!--restore/backup-->
+  <string name="account_backup_message">Зберегти налаштування облікового запису та облікові дані, пароль в зашифрованому вигляді.</string>
+  <string name="account_backup_new_password">Новий пароль</string>
+  <string name="account_backup_confirm_password">Підтвердити пароль</string>
+  <string name="account_restore_message">Введіть пароль для розшифрування файлу.</string>
+  <string name="account_restore_decryption_password">Розшифрування паролю</string>
+  <string name="restore_backup_wait">Будь ласка зачекайте</string>
+  <string name="backup_failed_dialog_msg">Виникла помилка</string>
   <string name="error_password_char_count">мінімум 6 символів</string>
   <string name="error_passwords_not_equals">Паролі не збігаються</string>
-  <string name="import_failed_dialog_title">Невдалий імпорт</string>
-  <string name="import_failed_dialog_msg">Виникла помилка</string>
+  <string name="restore_failed_dialog_msg">Виникла помилка</string>
+  <string name="account_export">Експортувати</string>
   <string name="account_export_end_error_title">Помилка</string>
 </resources>

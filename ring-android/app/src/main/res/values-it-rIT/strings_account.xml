@@ -27,5 +27,5 @@
   <string name="account_preferences_security_tab">Sicurezza</string>
   <!--SIP-->
   <!--TLS Details-->
-  <!--Import/export-->
+  <!--restore/backup-->
 </resources>

@@ -24,6 +24,7 @@
   <string name="menu_item_home">Hem</string>
   <string name="menu_item_accounts">Hantera konton</string>
   <string name="menu_item_settings">Inställningar</string>
+  <string name="menu_item_share">Dela min kontakt</string>
   <string name="menu_item_about">Om Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_action_call">Ring upp</string>
@@ -94,6 +95,9 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarättighet</string>
   <string name="permission_dialog_camera_message">Videokonversationer kräver kamerarättigheter. Överväg att aktivera det.</string>
+  <string name="ringtone_error_title">Fel</string>
+  <string name="ringtone_error_format_not_supported">Detta format saknar stöd.</string>
+  <string name="ringtone_error_size_too_big">Denna fil är för stor. Maximal storlek är %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring behöver rättighet att läsa kontakter för att aktivera den här funktionen. Överväg att tilldela rättigheter.</string>
   <!--Write call log permission-->
@@ -114,6 +118,17 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Vill du lägga till %1$s ?</string>
   <string name="prompt_new_password">Nytt lösenord</string>
+  <string name="prompt_new_password_repeat">Upprepa nytt lösenord</string>
+  <string name="account_device_updated_message">Du har lyckats uppdatera ditt Ring-konto.</string>
   <!--MenuHeaderView-->
+  <string name="profile">Min profil</string>
+  <string name="profile_message_warning">Detta delas med dina kontakter</string>
+  <string name="open_the_gallery">Öppna galleriet</string>
+  <string name="take_a_photo">Ta ett foto</string>
+  <string name="unknowm_if_empty">Okänd om tom</string>
   <string name="unknown">Okänd</string>
+  <!--Share fragment-->
+  <string name="share_label">Tryck på Ring-ID för att dela</string>
+  <string name="share_message">Skanna denna QR-kod med den inbyggda skanner som finns i det Ring-program som vill kommunicera med dig.</string>
+  <string name="share_your_account_information">Dela min kontaktinformation</string>
 </resources>

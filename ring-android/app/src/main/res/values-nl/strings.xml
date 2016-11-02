@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string name="section_licence">Licentie</string>
-  <string name="sponsor_section">Ring is een vrije software ontwikkelend en ondersteund door</string>
+  <string name="sponsor_section">Ring is vrije software ontwikkeld en ondersteund door</string>
   <string name="copyright_section">Auteursrecht</string>
   <string name="contribute_section">Bijdragen</string>
   <string name="version_section">Versie</string>
-  <string name="no_email_app_installed">Geen e-mailapplicatie gevonden, installeer er één om ons een rapport te kunnen sturen</string>
+  <string name="no_email_app_installed">Geen e-mailapplicatie gevonden, installeer er een om ons een rapport te kunnen sturen</string>
   <string name="email_chooser_title">E-mail versturen met...</string>
   <!--RingActivity-->
   <string name="title_section0">Kiezen</string>
@@ -24,6 +24,7 @@
   <string name="menu_item_home">Thuis</string>
   <string name="menu_item_accounts">Accounts beheren</string>
   <string name="menu_item_settings">Instellingen</string>
+  <string name="menu_item_share">Deel mijn contact</string>
   <string name="menu_item_about">Over Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_action_call">Oproep</string>
@@ -40,7 +41,7 @@
     <item quantity="one">%d gesprek</item>
     <item quantity="other">%d gesprekken</item>
   </plurals>
-  <string name="home_transfering">Versturen van %1$s naar %1$s</string>
+  <string name="home_transfering">%1$s wordt verstuurd naar %1$s</string>
   <string name="home_transfer_complet">Overdracht compleet</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Geen contacten gevonden</string>
@@ -63,7 +64,7 @@
   <string name="notif_current_call">Huidige oproep</string>
   <!--Call Fragment-->
   <string name="me">Ik</string>
-  <string name="you_txt_prefix">U:</string>
+  <string name="you_txt_prefix">Jij:</string>
   <string name="action_call_attended_transfer">Bijgewoonde overdracht</string>
   <string name="action_call_conference">Vergadering</string>
   <string name="action_call_hangup">Ophangen</string>
@@ -89,17 +90,20 @@
   <string name="send_message">Bericht versturen</string>
   <string name="message_sending">Bericht wordt verstuurd...</string>
   <string name="time_just_now">Zojuist</string>
-  <string name="permission_read_denied">De applicatie heeft geen machtiging om uw opslag te lezen, deze kan daardoor niet correct functioneren. Gelieve te overwegen om deze machtiging alsnog toe te kennen.</string>
-  <string name="permission_write_denied">De applicatie heeft geen machtiging om naar uw opslag te schrijven, deze kan daardoor niet correct functioneren. Gelieve te overwegen om deze machtiging alsnog toe te kennen.</string>
+  <string name="permission_read_denied">De applicatie heeft geen machtiging om je opslag te lezen en kan daardoor niet correct functioneren. Gelieve te overwegen deze machtiging alsnog toe te kennen</string>
+  <string name="permission_write_denied">De applicatie heeft geen machtiging om naar je opslag te schrijven en kan daardoor niet correct functioneren. Gelieve te overwegen deze machtiging alsnog toe te kennen</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Cameramachtiging</string>
-  <string name="permission_dialog_camera_message">Videogesprekken vereisen machtiging voor gebruik van de camera. Gelieve te overwegen om deze machtiging alsnog toe te kennen.</string>
+  <string name="permission_dialog_camera_message">Videogesprekken vereisen machtiging voor gebruik van de camera. Gelieve te overwegen deze machtiging alsnog toe te kennen.</string>
+  <string name="ringtone_error_title">Fout</string>
+  <string name="ringtone_error_format_not_supported">Dit formaat wordt niet ondersteund.</string>
+  <string name="ringtone_error_size_too_big">Dit bestand is te groot. De maximale grootte is %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring vereist de \"Contacten\"-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Ring vereist de \"Oproepgeschiedenis\"-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">Scan de QR-code van het toe te voegen account.</string>
+  <string name="scan_qr_account_message">Scan de QR-code van de toe te voegen account.</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Geschiedenis wissen?</string>
   <string name="clear_history_dialog_message">Handeling kan niet ongedaan gemaakt worden.</string>
@@ -114,6 +118,17 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s toevoegen?</string>
   <string name="prompt_new_password">Nieuw wachtwoord</string>
+  <string name="prompt_new_password_repeat">Herhaal nieuw wachtwoord</string>
+  <string name="account_device_updated_message">Je Ring-account is met succes bijgewerkt.</string>
   <!--MenuHeaderView-->
+  <string name="profile">Mijn profiel</string>
+  <string name="profile_message_warning">Dit wordt gedeeld met je contacten</string>
+  <string name="open_the_gallery">Galerij openen</string>
+  <string name="take_a_photo">Foto nemen</string>
+  <string name="unknowm_if_empty">Onbekend wanneer leeg</string>
   <string name="unknown">Onbekend</string>
+  <!--Share fragment-->
+  <string name="share_label">Tik op de Ring-ID om te delen</string>
+  <string name="share_message">Scan deze QR-code met de ingebouwde scanner van de Ring-toepassing die met je wil communiceren.</string>
+  <string name="share_your_account_information">Deel mijn contactinformatie</string>
 </resources>

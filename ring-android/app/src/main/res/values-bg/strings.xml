@@ -91,6 +91,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Право за използване на камерата</string>
   <string name="permission_dialog_camera_message">Разговорите с видео изискват правото за използване на камерата. Моля, дайте това право на приложението.</string>
+  <string name="ringtone_error_title">Грешка</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring се нуждае от правото за четене на контактите, за да работи тази функционалност. Моля, разрешете го.</string>
   <!--Write call log permission-->
@@ -111,4 +112,5 @@
   <string name="prompt_new_password">Нова парола</string>
   <!--MenuHeaderView-->
   <string name="unknown">Неизвестно</string>
+  <!--Share fragment-->
 </resources>

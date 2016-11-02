@@ -10,6 +10,8 @@
   <string name="error_field_required">Bu alan gerekli</string>
   <string name="dialog_wait_create">Hesap ekleniyor</string>
   <string name="dialog_wait_create_details">Yeni hesabınız eklenirken lütfen bekleyin...</string>
+  <string name="dialog_wait_update">Hesap güncelleniyor</string>
+  <string name="dialog_wait_update_details">Yeni hesabınız güncellenirken lütfen bekleyin...</string>
   <string name="dialog_warn_ip2ip_account_title">Boş SIP hesabı oluşturulsun mu?</string>
   <string name="dialog_warn_ip2ip_account_message">Bir SIP hesabı oluşturabilmeniz için makine adınız geçersiz.
 Sadece ip çağrıları alabilirsiniz.
@@ -25,13 +27,15 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="create_sip_account">Ekle</string>
   <string name="share_number">Numara paylaş</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Hesabı sil ?</string>
-  <string name="account_delete_dialog_message">Bu eylem geri alınamaz. Eğer daha bitirmediyseniz silmeden önce hesabınızı dışa aktarmayı düşünmelisiniz.</string>
+  <string name="account_delete_dialog_title">Hesabı silinsin mi ?</string>
+  <string name="account_delete_dialog_message">Bu eylem geri alınamaz.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Kayıtlı hesap yok</string>
   <string name="normal_accounts_titles">Hesaplar</string>
+  <string name="normal_devices_titles">Bu Ring hesabına bilinen aygıtlar bağlı</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Genel</string>
+  <string name="account_preferences_devices_tab">Aygıtlar</string>
   <string name="account_basic_category">Temel Ayarlar</string>
   <string name="account_alias_label">Hesap adı</string>
   <string name="account_hostname_label">Sunucu adı</string>
@@ -40,7 +44,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_password_label">Parola</string>
   <string name="account_optionnal_category">İsteğe Bağlı Ayarlar</string>
   <string name="account_useragent_label">Kullanıcı Kimliği</string>
-  <string name="account_autoanswer_label">Otomatik Cevapla</string>
+  <string name="account_autoanswer_label">Kendiliğinden Yanıtla</string>
   <string name="account_upnp_label">UPnP\'yi etkinleştir</string>
   <string name="account_proxy_field">Vekil</string>
   <!--Audio Details-->
@@ -63,9 +67,9 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_turn_server_label">TURN sunucusu</string>
   <string name="account_turn_username_label">TURN kullanıcı adı</string>
   <string name="account_turn_password_label">TURN parolası</string>
-  <string name="account_published_same_as_local_label">Yayınlanan yerel ile aynı</string>
-  <string name="account_published_port_label">Yayınlanan Delik</string>
-  <string name="account_published_address_label">Yayınlanan Yer</string>
+  <string name="account_published_same_as_local_label">Yayımlanan yerel ile aynı</string>
+  <string name="account_published_port_label">Yayımlanan Delik</string>
+  <string name="account_published_address_label">Yayımlanan Yer</string>
   <!--Security Details-->
   <string name="account_credentials_label">Kimlik Bilgileri</string>
   <string name="account_credentials_edit">Kimlik bilgilerini düzenle</string>
@@ -86,30 +90,49 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_tls_server_name_label">Sunucu Adı</string>
   <string name="account_tls_verify_server_label">Sunucu Doğrula</string>
   <string name="account_tls_verify_client_label">İstemciyi Doğrula</string>
-  <string name="account_tls_negotiation_timeout_sec">Müzakere Zaman Aşımı (saniye)</string>
+  <string name="account_tls_negotiation_timeout_sec">Görüşme Zaman Aşımı (saniye)</string>
   <string name="account_rtp_max_port">Azami</string>
   <string name="account_rtp_min_port">Asgari</string>
   <string name="account_rtp_port_range">Ses RTP Delik Aralığı</string>
-  <!--Import/export-->
-  <string name="account_export">Dışa aktar</string>
-  <string name="account_import_account">Hesabı içe aktar</string>
-  <string name="account_export_title">Hesabı dışa aktar</string>
-  <string name="account_import_title">Hesapları içe aktar</string>
-  <string name="account_import_explanation">Daha önceden dışa aktarılan hesapları içe aktarabilirsiniz.</string>
-  <string name="account_export_message">Hesap ayarlarını ve kimlik bilgilerini parola ile şifrelenmiş olarak kaydet.</string>
-  <string name="account_export_new_password">Yeni parola</string>
-  <string name="account_export_confirm_password">Parolayı onayla</string>
-  <string name="account_import_message">Dosya şifresini çözmek için parolayı girin.</string>
-  <string name="account_import_decryption_password">Şifre çözme parolası</string>
-  <string name="import_dialog_title">İçe aktarılıyor</string>
-  <string name="import_export_wait">Lütfen bekleyin...</string>
-  <string name="export_dialog_title">Hesap dışa aktarılıyor</string>
-  <string name="account_export_result">Hesap %1$s\'e aktarıldı</string>
-  <string name="export_failed_dialog_title">Dışa aktarma başarısız</string>
-  <string name="export_failed_dialog_msg">Bir hata oluştu</string>
+  <!--restore/backup-->
+  <string name="account_backup_message">Hesap ayarlarını ve kimlik bilgilerini parola ile şifrelenmiş olarak kaydet.</string>
+  <string name="account_backup_new_password">Yeni parola</string>
+  <string name="account_backup_confirm_password">Parolayı onayla</string>
+  <string name="account_restore_message">Dosya şifresini çözmek için parolayı girin.</string>
+  <string name="account_restore_decryption_password">Şifre çözme parolası</string>
+  <string name="account_new_device">Yeni aygıt ekle</string>
+  <string name="account_new_device_message">Yeni aygıtla ilişkilendirmek için Ring hesabının kilidini açın.</string>
+  <string name="account_new_device_password">Ana hesap parolasını girin</string>
+  <string name="restore_backup_wait">Lütfen bekleyin...</string>
+  <string name="backup_failed_dialog_msg">Bir hata oluştu</string>
   <string name="error_password_char_count">En az 6 harf</string>
   <string name="error_passwords_not_equals">Parolalar eşleşmedi</string>
-  <string name="import_failed_dialog_title">İçe aktarma başarısız</string>
-  <string name="import_failed_dialog_msg">Bir hata oluştu</string>
+  <string name="restore_failed_dialog_msg">Bir hata oluştu</string>
+  <string name="account_export">Dışa aktar</string>
+  <string name="export_account_wait_title">Lütfen bekleyin...</string>
+  <string name="export_account_wait_message">Yeni hesap bilgisi yayınlanıyor</string>
+  <string name="account_export_end_pin_title">PIN : </string>
+  <string name="account_export_end_decryption_title">Şifre çözme hatası</string>
+  <string name="account_export_end_decryption_message">Hesabınızın açılamıyor buradan aldığınız parolayı kullanın.</string>
+  <string name="account_export_end_network_title">Ağ hatası</string>
+  <string name="account_export_end_network_message">Hesap ağdan dışarı aktarılamadı. Bağlanabilirliğinizi denetleyin.</string>
   <string name="account_export_end_error_title">Hata</string>
+  <string name="account_export_end_error_message">Hesap dışa aktarılamadı.Bilinmeyen bir hata oluştu.</string>
+  <string name="account_enter_password">Parolayı girin</string>
+  <string name="account_contact_me">Benimle Ring üzerinden iletişime geç</string>
+  <string name="update_account">Hesabı güncelle</string>
+  <string name="account_migration">Hesabınız şimdi bütün aygıtlarınızda kullanılabilir. Bütün bunlar için parolanız olması yeterli.</string>
+  <string name="ring_account">Ring Hesabı</string>
+  <string name="account_migration_title_dialog">Hesabın yerini değiştirme</string>
+  <string name="account_update_needed">Güncelleme gerekli</string>
+  <string name="account_creation_file_too_big">Dosya çok büyük</string>
+  <string name="account_cannot_read">%1$s okunamıyor</string>
+  <string name="account_creation_error">Hesap oluşturma hatası</string>
+  <string name="account_cannot_be_found_title">Hesap bulunamadı</string>
+  <string name="account_no_network_title">Ağa bağlanılamıyor</string>
+  <string name="account_no_network_message">Hesap eklenemiyor çünkü Ring ağ bağlantısından yararlanamıyor. Bağlanabilirliğinizi denetleyin.</string>
+  <string name="account_device_added_title">Hesap aygıtı eklendi</string>
+  <string name="account_device_added_message">Bu aygıttaki Ring hesabı ayarlarını başarıyla tamamladınız.</string>
+  <string name="account_device_updated_title">Hesap aygıtı güncellendi</string>
+  <string name="account_wizard_title">Ring Hesabı</string>
 </resources>

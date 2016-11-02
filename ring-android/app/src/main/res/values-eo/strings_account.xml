@@ -27,12 +27,13 @@
   <string name="share_number">Kunhavi numeron</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Ĉu forigi konton ?</string>
-  <string name="account_delete_dialog_message">Tiu ĉi ago ne povos malfariĝi. Se vi ne faris ĝin jam, eble pripensu elporti vian konton antaŭ forigi ĝin.</string>
+  <string name="account_delete_dialog_message">Tiu ĉi ago ne povos malfariĝi.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Sen registrita konto</string>
   <string name="normal_accounts_titles">Kontoj</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Ĝenerala</string>
+  <string name="account_preferences_devices_tab">Aparatoj</string>
   <string name="account_basic_category">Bazaj Agordoj</string>
   <string name="account_alias_label">Nomo de konto</string>
   <string name="account_hostname_label">Nomo de gastiga komputilo</string>
@@ -90,26 +91,17 @@
   <string name="account_rtp_max_port">Maksimumo</string>
   <string name="account_rtp_min_port">Minimumo</string>
   <string name="account_rtp_port_range">Intervalo de Aŭdia RTP</string>
-  <!--Import/export-->
-  <string name="account_export">Elporti</string>
-  <string name="account_import_account">Enporti konton</string>
-  <string name="account_export_title">Elporti konton</string>
-  <string name="account_import_title">Enporti kontojn</string>
-  <string name="account_import_explanation">Vi povas enporti elportitajn kontojn.</string>
-  <string name="account_export_message">Savi agordojn kaj ensalutilojn de konto, pasvorto ĉifrita.</string>
-  <string name="account_export_new_password">Nova pasvorto</string>
-  <string name="account_export_confirm_password">Konfirmu pasvorton</string>
-  <string name="account_import_message">Entajpu pasvorton por malĉifri la dosieron.</string>
-  <string name="account_import_decryption_password">Malĉifra pasvorto</string>
-  <string name="import_dialog_title">Enportanta</string>
-  <string name="import_export_wait">Bonvole atendu…</string>
-  <string name="export_dialog_title">Elportanta konton</string>
-  <string name="account_export_result">Konto elportita al %1$s</string>
-  <string name="export_failed_dialog_title">Elporto fiaskis</string>
-  <string name="export_failed_dialog_msg">Eraro okazis</string>
+  <!--restore/backup-->
+  <string name="account_backup_message">Savi agordojn kaj ensalutilojn de konto, pasvorto ĉifrita.</string>
+  <string name="account_backup_new_password">Nova pasvorto</string>
+  <string name="account_backup_confirm_password">Konfirmu pasvorton</string>
+  <string name="account_restore_message">Entajpu pasvorton por malĉifri la dosieron.</string>
+  <string name="account_restore_decryption_password">Malĉifra pasvorto</string>
+  <string name="restore_backup_wait">Bonvole atendu…</string>
+  <string name="backup_failed_dialog_msg">Eraro okazis</string>
   <string name="error_password_char_count">6 signoj minimume</string>
   <string name="error_passwords_not_equals">Pasvortoj ne kongruas</string>
-  <string name="import_failed_dialog_title">Enporto fiaskis</string>
-  <string name="import_failed_dialog_msg">Eraro okazis</string>
+  <string name="restore_failed_dialog_msg">Eraro okazis</string>
+  <string name="account_export">Elporti</string>
   <string name="account_export_end_error_title">Eraro</string>
 </resources>

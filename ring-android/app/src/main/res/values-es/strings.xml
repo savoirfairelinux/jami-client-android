@@ -94,6 +94,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permiso de cámara</string>
   <string name="permission_dialog_camera_message">Las conversaciones con vídeo requieren utilizar la cámara. Considera conceder este permiso.</string>
+  <string name="ringtone_error_title">Error</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring necesita permiso para leer los contactos. Por favor, concede este permiso.</string>
   <!--Write call log permission-->
@@ -116,4 +117,5 @@
   <string name="prompt_new_password">Contraseña nueva</string>
   <!--MenuHeaderView-->
   <string name="unknown">Desconocido</string>
+  <!--Share fragment-->
 </resources>

@@ -89,6 +89,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dozvola kamere</string>
   <string name="permission_dialog_camera_message">Video pozivi zahtjevaju dozvolu korištenja kamere. Molimo dozvolite aplikaciji korištenje kamere.</string>
+  <string name="ringtone_error_title">Greška</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -109,4 +110,5 @@
   <string name="prompt_new_password">Nova lozinka</string>
   <!--MenuHeaderView-->
   <string name="unknown">Nepoznato</string>
+  <!--Share fragment-->
 </resources>

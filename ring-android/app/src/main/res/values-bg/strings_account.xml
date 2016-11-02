@@ -18,7 +18,7 @@
   <string name="share_number">Споделяне на номера</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Изтриване на акаунта?</string>
-  <string name="account_delete_dialog_message">Това действие е необратимо. Ако не сте го направили вече, ще е добре да изнесете данните за акаунта си, преди да го изтриете.</string>
+  <string name="account_delete_dialog_message">Това действие е необратимо.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Няма регистриран акаунт</string>
   <string name="normal_accounts_titles">Акаунти</string>
@@ -78,26 +78,17 @@
   <string name="account_tls_negotiation_timeout_sec">Време за изчакване на договарянето (сек)</string>
   <string name="account_rtp_max_port">Максимален</string>
   <string name="account_rtp_min_port">Минимален</string>
-  <!--Import/export-->
-  <string name="account_export">Изнасяне</string>
-  <string name="account_import_account">Внасяне на акаунт</string>
-  <string name="account_export_title">Изнасяне на акаунт</string>
-  <string name="account_import_title">Внасяне на акаунти</string>
-  <string name="account_import_explanation">Можете да внесете предварително изнесените данни за акаунти.</string>
-  <string name="account_export_message">Запазете настройките на акаунта и данните за удостоверяване, шифрирани с парола.</string>
-  <string name="account_export_new_password">Нова парола</string>
-  <string name="account_export_confirm_password">Потвърдете паролата</string>
-  <string name="account_import_message">Въведете парола за дешифриране на файла.</string>
-  <string name="account_import_decryption_password">Парола за дешифриране</string>
-  <string name="import_dialog_title">Внасяне</string>
-  <string name="import_export_wait">Моля, изчакайте…</string>
-  <string name="export_dialog_title">Изнасяне на акаунта</string>
-  <string name="account_export_result">Данните за акаунта бяха изнесени в %1$s</string>
-  <string name="export_failed_dialog_title">Неуспешно изнасяне</string>
-  <string name="export_failed_dialog_msg">Възникна грешка</string>
+  <!--restore/backup-->
+  <string name="account_backup_message">Запазете настройките на акаунта и данните за удостоверяване, шифрирани с парола.</string>
+  <string name="account_backup_new_password">Нова парола</string>
+  <string name="account_backup_confirm_password">Потвърдете паролата</string>
+  <string name="account_restore_message">Въведете парола за дешифриране на файла.</string>
+  <string name="account_restore_decryption_password">Парола за дешифриране</string>
+  <string name="restore_backup_wait">Моля, изчакайте…</string>
+  <string name="backup_failed_dialog_msg">Възникна грешка</string>
   <string name="error_password_char_count">Най-малко 6 знака</string>
   <string name="error_passwords_not_equals">Паролите не съвпадат</string>
-  <string name="import_failed_dialog_title">Неуспешно внасяне</string>
-  <string name="import_failed_dialog_msg">Възникна грешка</string>
+  <string name="restore_failed_dialog_msg">Възникна грешка</string>
+  <string name="account_export">Изнасяне</string>
   <string name="account_export_end_error_title">Грешка</string>
 </resources>

@@ -94,6 +94,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera izni</string>
   <string name="permission_dialog_camera_message">Görüntülü görüşme için kamera çalıştırma izni gereklidir.Lütfen etkinleştirmeyi gözden kaçırmayın.</string>
+  <string name="ringtone_error_title">Hata</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring bu özelliği etkinleştirmek için \"Kişileri okuma\" iznine gereksiniyor. Lütfen verin.</string>
   <!--Write call log permission-->
@@ -114,6 +115,14 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s eklensin mi ?</string>
   <string name="prompt_new_password">Yeni parola</string>
+  <string name="prompt_new_password_repeat">Yeni parola tekrar</string>
+  <string name="account_device_updated_message">Ring hesabınızı başarıyla güncellediniz.</string>
   <!--MenuHeaderView-->
+  <string name="profile">Profilim</string>
+  <string name="profile_message_warning">Bu, kişileriniz ile paylaşıldı</string>
+  <string name="open_the_gallery">Galeriyi aç</string>
+  <string name="take_a_photo">Fotograf çek</string>
+  <string name="unknowm_if_empty">Boş ise bilinmiyor</string>
   <string name="unknown">Bilinmeyen</string>
+  <!--Share fragment-->
 </resources>

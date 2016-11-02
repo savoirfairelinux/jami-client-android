@@ -26,7 +26,7 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="share_number">Partager votre identifiant Ring</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Supprimer le compte ?</string>
-  <string name="account_delete_dialog_message">Cette action est irréversible. Si vous ne l\'avez pas déjà fait, nous vous sugérons d\'exporter votre compte avant de poursuivre.</string>
+  <string name="account_delete_dialog_message">Cette action est irréversible.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Aucun compte enregistré</string>
   <string name="normal_accounts_titles">Comptes</string>
@@ -90,26 +90,17 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Plage de port RTP pour l\'audio</string>
-  <!--Import/export-->
-  <string name="account_export">Exporter</string>
-  <string name="account_import_account">Importer un compte</string>
-  <string name="account_export_title">Exporter un compte</string>
-  <string name="account_import_title">Importer compte</string>
-  <string name="account_import_explanation">Vous pouvez importer des comptes que vous avez précédemment exportés.</string>
-  <string name="account_export_message">Enregistre les paramètres du compte et les identifiants, en chiffrant le mot de passe.</string>
-  <string name="account_export_new_password">Nouveau mot de passe</string>
-  <string name="account_export_confirm_password">Confirmer le mot de passe</string>
-  <string name="account_import_message">Entrer le mot de passe pour déchiffrer le fichier.</string>
-  <string name="account_import_decryption_password">Mot de passe en clair</string>
-  <string name="import_dialog_title">Importer</string>
-  <string name="import_export_wait">Veuillez patienter</string>
-  <string name="export_dialog_title">Compte exporté</string>
-  <string name="account_export_result">Compte exporté vers %1$s</string>
-  <string name="export_failed_dialog_title">Échec d\'exportation</string>
-  <string name="export_failed_dialog_msg">Une erreur s\'est produite</string>
+  <!--restore/backup-->
+  <string name="account_backup_message">Enregistre les paramètres du compte et les identifiants, en chiffrant le mot de passe.</string>
+  <string name="account_backup_new_password">Nouveau mot de passe</string>
+  <string name="account_backup_confirm_password">Confirmer le mot de passe</string>
+  <string name="account_restore_message">Entrer le mot de passe pour déchiffrer le fichier.</string>
+  <string name="account_restore_decryption_password">Mot de passe en clair</string>
+  <string name="restore_backup_wait">Veuillez patienter</string>
+  <string name="backup_failed_dialog_msg">Une erreur s\'est produite</string>
   <string name="error_password_char_count">6 caractères maximales</string>
   <string name="error_passwords_not_equals">Mot de passe erronné</string>
-  <string name="import_failed_dialog_title">Échec d\'importation</string>
-  <string name="import_failed_dialog_msg">Une erreur s\'est produite</string>
+  <string name="restore_failed_dialog_msg">Une erreur s\'est produite</string>
+  <string name="account_export">Exporter</string>
   <string name="account_export_end_error_title">Erreur</string>
 </resources>

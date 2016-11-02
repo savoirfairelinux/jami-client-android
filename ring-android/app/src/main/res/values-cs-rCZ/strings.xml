@@ -88,6 +88,7 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Povolení ke kameře</string>
   <string name="permission_dialog_camera_message">Video konverzace vyžadují povolení ke kameře. Prosím zvažte jeho povolení.</string>
+  <string name="ringtone_error_title">Chyba</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring potřebuje povolení číst kontakty pro umožnění této vlastnosti. Prosím povolte jej.</string>
   <!--Write call log permission-->
@@ -110,4 +111,5 @@
   <string name="prompt_new_password">Nové heslo</string>
   <!--MenuHeaderView-->
   <string name="unknown">Neznámý</string>
+  <!--Share fragment-->
 </resources>

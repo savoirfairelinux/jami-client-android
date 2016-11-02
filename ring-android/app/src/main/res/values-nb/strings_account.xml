@@ -26,7 +26,7 @@ Du kan endre kontoen din senere</string>
   <string name="share_number">Del nummer</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Slett konto?</string>
-  <string name="account_delete_dialog_message">Denne handlingen kan ikke gjøres om.  Hvis du ikke allerede har gjort det, så bør du vurdere å eksportere kontoen din før du sletter den.</string>
+  <string name="account_delete_dialog_message">Denne handlingen kan ikke gjøres om.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ingen konto registrert</string>
   <string name="normal_accounts_titles">Kontoer</string>
@@ -87,25 +87,16 @@ Du kan endre kontoen din senere</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">RTP-portintervall for tale</string>
-  <!--Import/export-->
-  <string name="account_export">Eksporter</string>
-  <string name="account_import_account">Importer en konto</string>
-  <string name="account_export_title">Eksporter en konto</string>
-  <string name="account_import_title">Importer kontoer</string>
-  <string name="account_import_explanation">Du kan importere kontoer du tidligere har eksportert</string>
-  <string name="account_export_new_password">Nytt passord</string>
-  <string name="account_export_confirm_password">Bekreft passord</string>
-  <string name="account_import_message">Skriv inn passord for å dekryptere filen.</string>
-  <string name="account_import_decryption_password">Dekrypteringspassord</string>
-  <string name="import_dialog_title">Importerer</string>
-  <string name="import_export_wait">Vennligst vent...</string>
-  <string name="export_dialog_title">Eksporterer konto</string>
-  <string name="account_export_result">Konto eksportert til %1$s</string>
-  <string name="export_failed_dialog_title">Eksport feilet</string>
-  <string name="export_failed_dialog_msg">Det skjedde en feil</string>
+  <!--restore/backup-->
+  <string name="account_backup_new_password">Nytt passord</string>
+  <string name="account_backup_confirm_password">Bekreft passord</string>
+  <string name="account_restore_message">Skriv inn passord for å dekryptere filen.</string>
+  <string name="account_restore_decryption_password">Dekrypteringspassord</string>
+  <string name="restore_backup_wait">Vennligst vent...</string>
+  <string name="backup_failed_dialog_msg">Det skjedde en feil</string>
   <string name="error_password_char_count">minimum 6 tegn</string>
   <string name="error_passwords_not_equals">Passordene stemmer ikke</string>
-  <string name="import_failed_dialog_title">Importen feilet</string>
-  <string name="import_failed_dialog_msg">Det skjedde en feil</string>
+  <string name="restore_failed_dialog_msg">Det skjedde en feil</string>
+  <string name="account_export">Eksporter</string>
   <string name="account_export_end_error_title">Feil</string>
 </resources>

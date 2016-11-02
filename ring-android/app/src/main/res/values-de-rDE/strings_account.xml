@@ -19,6 +19,7 @@
   <string name="share_number">Telefonnummer teilen</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Konto löschen?</string>
+  <string name="account_delete_dialog_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
   <!--AccountManagementFragment-->
   <string name="normal_accounts_titles">Kontos</string>
   <!--Basic Details-->
@@ -70,23 +71,15 @@
   <string name="account_tls_verify_client_label">Client überprüfen</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
-  <!--Import/export-->
-  <string name="account_export">Exportieren</string>
-  <string name="account_import_account">Importieren ein Konto</string>
-  <string name="account_export_title">Exportieren ein Konto</string>
-  <string name="account_import_title">Kontos importieren</string>
-  <string name="account_export_new_password">Neues Kennwort</string>
-  <string name="account_export_confirm_password">Konto bestätigen</string>
-  <string name="account_import_decryption_password">Entschlüsselungskennwort</string>
-  <string name="import_dialog_title">Importieren</string>
-  <string name="import_export_wait">Bitte warten...</string>
-  <string name="export_dialog_title">Konto wird exportiert</string>
-  <string name="account_export_result">Konto nach %1$s exportiert</string>
-  <string name="export_failed_dialog_title">Fehler beim Exportieren</string>
-  <string name="export_failed_dialog_msg">Fehler aufgetreten</string>
+  <!--restore/backup-->
+  <string name="account_backup_new_password">Neues Kennwort</string>
+  <string name="account_backup_confirm_password">Konto bestätigen</string>
+  <string name="account_restore_decryption_password">Entschlüsselungskennwort</string>
+  <string name="restore_backup_wait">Bitte warten...</string>
+  <string name="backup_failed_dialog_msg">Fehler aufgetreten</string>
   <string name="error_password_char_count">Mindestens 6 Zeichen</string>
   <string name="error_passwords_not_equals">Kennwörter stimmen nicht überein</string>
-  <string name="import_failed_dialog_title">Fehler beim Import</string>
-  <string name="import_failed_dialog_msg">Fehler aufgetreten</string>
+  <string name="restore_failed_dialog_msg">Fehler aufgetreten</string>
+  <string name="account_export">Exportieren</string>
   <string name="account_export_end_error_title">Fehler</string>
 </resources>

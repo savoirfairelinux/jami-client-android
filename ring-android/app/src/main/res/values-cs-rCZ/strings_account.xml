@@ -27,12 +27,13 @@
   <string name="share_number">Sdílet číslo</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Odstranit účet ?</string>
-  <string name="account_delete_dialog_message">Tuto činnost nelze vrátit zpět. Poked jste tak ještě neučinili, měli byste zvážit export vašeho účtu, než ho odstraníte.</string>
+  <string name="account_delete_dialog_message">Tuto činnost nelze vrátit zpět.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Žádný registrovaný účet</string>
   <string name="normal_accounts_titles">Účty</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Obecné</string>
+  <string name="account_preferences_devices_tab">Zařízení</string>
   <string name="account_basic_category">Základní Nastavení</string>
   <string name="account_alias_label">Název účtu</string>
   <string name="account_hostname_label">Hostitelské jméno</string>
@@ -90,26 +91,17 @@
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Rozsah Portů Zvukového RTP</string>
-  <!--Import/export-->
-  <string name="account_export">Export</string>
-  <string name="account_import_account">Importovat účet</string>
-  <string name="account_export_title">Exportovat účet</string>
-  <string name="account_import_title">Importovat účty</string>
-  <string name="account_import_explanation">Můžete importovat dříve exportované účty.</string>
-  <string name="account_export_message">Uložit nastavení a ověřovací údaje účtu, heslo zašifrované.</string>
-  <string name="account_export_new_password">Nové heslo</string>
-  <string name="account_export_confirm_password">Potvrdit heslo</string>
-  <string name="account_import_message">Vložte heslo pro dešifrování souboru.</string>
-  <string name="account_import_decryption_password">Heslo dešifrování</string>
-  <string name="import_dialog_title">Importuji</string>
-  <string name="import_export_wait">Please vyčkejte…</string>
-  <string name="export_dialog_title">Exportuji účet</string>
-  <string name="account_export_result">Účet exportován do %1$s</string>
-  <string name="export_failed_dialog_title">Export selhal</string>
-  <string name="export_failed_dialog_msg">Nastala chyba</string>
+  <!--restore/backup-->
+  <string name="account_backup_message">Uložit nastavení a ověřovací údaje účtu, heslo zašifrované.</string>
+  <string name="account_backup_new_password">Nové heslo</string>
+  <string name="account_backup_confirm_password">Potvrdit heslo</string>
+  <string name="account_restore_message">Vložte heslo pro dešifrování souboru.</string>
+  <string name="account_restore_decryption_password">Heslo dešifrování</string>
+  <string name="restore_backup_wait">Please vyčkejte…</string>
+  <string name="backup_failed_dialog_msg">Nastala chyba</string>
   <string name="error_password_char_count">Minimálně 6 znaků</string>
   <string name="error_passwords_not_equals">Hesla se neshodují</string>
-  <string name="import_failed_dialog_title">Import selhal</string>
-  <string name="import_failed_dialog_msg">Nastala chyba</string>
+  <string name="restore_failed_dialog_msg">Nastala chyba</string>
+  <string name="account_export">Export</string>
   <string name="account_export_end_error_title">Chyba</string>
 </resources>

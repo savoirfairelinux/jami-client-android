@@ -42,6 +42,7 @@
   <!--Text messages-->
   <string name="send_message">שלח הודעה</string>
   <!--MediaPreferenceFragment-->
+  <string name="ringtone_error_title">שגיאה</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -50,4 +51,5 @@
   <string name="conversation_action_copy_peer_number">העתק מספר</string>
   <!--Contacts-->
   <!--MenuHeaderView-->
+  <!--Share fragment-->
 </resources>

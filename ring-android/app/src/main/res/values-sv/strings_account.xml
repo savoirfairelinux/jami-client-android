@@ -10,6 +10,8 @@
   <string name="error_field_required">Det här fältet är obligatoriskt</string>
   <string name="dialog_wait_create">Lägger till konto</string>
   <string name="dialog_wait_create_details">Vänta medan ditt nya konto läggs till...</string>
+  <string name="dialog_wait_update">Uppdaterar konto</string>
+  <string name="dialog_wait_update_details">Vänta medan ditt nya konto uppdateras...</string>
   <string name="dialog_warn_ip2ip_account_title">Vill du skapa ett tomt SIP-konto?</string>
   <string name="dialog_warn_ip2ip_account_message">Du håller på att skapa ett SIP-konto utan giltigt värdnamn.
 Du kommer bara att kunna ringa och ta emot direkta IP-samtal.
@@ -26,12 +28,14 @@ Du kan ändra kontot senare.</string>
   <string name="share_number">Dela nummer</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Vill du ta bort kontot?</string>
-  <string name="account_delete_dialog_message">Denna åtgärd kan inte ångras. Om du inte redan gjort det, bör du överväga att exportera ditt konto innan du tar bort det.</string>
+  <string name="account_delete_dialog_message">Denna åtgärd kan inte ångras.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Inget konto registrerat</string>
   <string name="normal_accounts_titles">Konton</string>
+  <string name="normal_devices_titles">Kända enheter, länkade till detta Ring-konto</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allmänt</string>
+  <string name="account_preferences_devices_tab">Enheter</string>
   <string name="account_basic_category">Grundläggande inställningar</string>
   <string name="account_alias_label">Kontonamn</string>
   <string name="account_hostname_label">Värdnamn</string>
@@ -90,26 +94,49 @@ Du kan ändra kontot senare.</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Audio RTP portintervall</string>
-  <!--Import/export-->
-  <string name="account_export">Exportera</string>
-  <string name="account_import_account">Importera ett konto</string>
-  <string name="account_export_title">Exportera ett konto</string>
-  <string name="account_import_title">Importera konton</string>
-  <string name="account_import_explanation">Du kan importera tididigare exporterade konton.</string>
-  <string name="account_export_message">Spara kontoinställningar och autentiseringsuppgifter, lösenordet krypterat.</string>
-  <string name="account_export_new_password">Nytt lösenord</string>
-  <string name="account_export_confirm_password">Bekräfta lösenord</string>
-  <string name="account_import_message">Ange lösenord för att dekryptera filen</string>
-  <string name="account_import_decryption_password">Dekrypteringslösenord</string>
-  <string name="import_dialog_title">Importerar</string>
-  <string name="import_export_wait">Vänta...</string>
-  <string name="export_dialog_title">Exporterar konto</string>
-  <string name="account_export_result">Konto exporterat till %1$s</string>
-  <string name="export_failed_dialog_title">Exporten misslyckades</string>
-  <string name="export_failed_dialog_msg">Et fel inträffade</string>
+  <!--restore/backup-->
+  <string name="account_backup_message">Spara kontoinställningar och autentiseringsuppgifter, lösenordet krypterat.</string>
+  <string name="account_backup_new_password">Nytt lösenord</string>
+  <string name="account_backup_confirm_password">Bekräfta lösenord</string>
+  <string name="account_restore_message">Ange lösenord för att dekryptera filen</string>
+  <string name="account_restore_decryption_password">Dekrypteringslösenord</string>
+  <string name="account_new_device">Lägg till ny enhet</string>
+  <string name="account_new_device_message">Lås upp Ring-kontot för att associera ny enhet.</string>
+  <string name="account_new_device_password">Ange kontots lösenord</string>
+  <string name="restore_backup_wait">Vänta...</string>
+  <string name="backup_failed_dialog_msg">Et fel inträffade</string>
   <string name="error_password_char_count">6 tecken minimum</string>
   <string name="error_passwords_not_equals">Lösenorden stämmer inte</string>
-  <string name="import_failed_dialog_title">Importen misslyckades</string>
-  <string name="import_failed_dialog_msg">Et fel inträffade</string>
+  <string name="restore_failed_dialog_msg">Et fel inträffade</string>
+  <string name="account_export">Exportera</string>
+  <string name="export_account_wait_title">Vänta...</string>
+  <string name="export_account_wait_message">Publicerar ny kontoinformation</string>
+  <string name="account_export_end_pin_title">PIN : </string>
+  <string name="account_export_end_pin_message">Använd PIN-koden tillsammans med ditt kontolösenord för att associera den nya enheten med ditt Ring-konto, de närmaste 10 minuterna.</string>
+  <string name="account_export_end_decryption_title">Dekrypteringsfel</string>
+  <string name="account_export_end_decryption_message">Kunde inte låsa upp ditt konto med det givna lösenordet.</string>
+  <string name="account_export_end_network_title">Nätverksfel</string>
+  <string name="account_export_end_network_message">Kunde inte exportera kontot över nätverket. Kontrollera din uppkoppling.</string>
   <string name="account_export_end_error_title">Fel</string>
+  <string name="account_export_end_error_message">Kunde inte exportera kontot. Ett okänt fel har inträffat.</string>
+  <string name="account_enter_password">Ange lösenord</string>
+  <string name="account_share_body">Kontakta mig via %1$s på kommunikationsplattformen Ring: http://ring.cx</string>
+  <string name="account_contact_me">Kontakta mig på Ring !</string>
+  <string name="update_account">Uppdatera konto</string>
+  <string name="account_migration">Ditt Ring-konto kan nu delas mellan alla dina enheter. Allt du behöver göra, är att ange ett lösenord.</string>
+  <string name="ring_account">Ring-konto</string>
+  <string name="account_migration_title_dialog">Kontodelning</string>
+  <string name="account_migration_message_dialog">Ditt konto måste uppdateras för att kunna användas på flera enheter. Vill du gå till kontohanteringen för att utföra denna åtgärd?</string>
+  <string name="account_update_needed">Uppdatering behövs</string>
+  <string name="account_creation_file_too_big">Filen är för stor</string>
+  <string name="account_cannot_read">Kan inte läsa %1$s</string>
+  <string name="account_creation_error">Fel vid kontoskapande</string>
+  <string name="account_cannot_be_found_title">Kan inte hitta kontot</string>
+  <string name="account_cannot_be_found_message">Kontot kunde inte hittas i Ring-nätverket.\nTillse att det har exporterats från en befintlig enhet och att angivna kontouppgifter är korrekt.</string>
+  <string name="account_no_network_title">Kan inte ansluta till nätverket</string>
+  <string name="account_no_network_message">Kunde inte lägga till kontot, eftersom Ring inte kunde ansluta till det distribuerade nätverket. Kontrollera enhetens anslutning.</string>
+  <string name="account_device_added_title">Kontoenhet tillagd</string>
+  <string name="account_device_added_message">Du har lyckats konfigurera ditt Ring-konto på denna enhet.</string>
+  <string name="account_device_updated_title">Kontoenhet uppdaterad</string>
+  <string name="account_wizard_title">Ring-konto</string>
 </resources>

@@ -30,6 +30,6 @@
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_rtp_port_range">Hang RTP port korlát</string>
-  <!--Import/export-->
+  <!--restore/backup-->
   <string name="account_export">Exportálás</string>
 </resources>
