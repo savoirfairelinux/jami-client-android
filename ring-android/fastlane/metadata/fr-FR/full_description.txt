@@ -1,0 +1,12 @@
+Ring (version Bêta) permet de communiquer, de façon confidentielle, sécuritaire et gratuite. Proposé par Savoir-faire Linux, Ring est un logiciel libre qui fonctionne sans serveur central.
+
+Ce que vous pouvez faire avec Ring:
+  - passer des appels audio 
+  - envoyer des messages texte
+  - passer des appels vidéo (fonction expérimentale)
+
+Ring est en version Bêta. Il y a différents façons de nous aider, rendez-vous sur: https://ring.cx/en/contribute
+
+Vous pouvez aussi installer Ring sur Windows, Mac OS X et GNU/Linux.
+
+Toutes les infos sont sur https://ring.cx/fr

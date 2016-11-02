@@ -1,0 +1,8 @@
+* Clickable QRCode for fullscreen display
+* x86 support
+* Better runtime permissions handling
+* UI improvements (About, Account creation wizard)
+* Better video handling
+* Bug fixes
+* Stable account import/export
+* Experimental text message confirmation

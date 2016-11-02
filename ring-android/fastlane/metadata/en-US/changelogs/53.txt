@@ -1,0 +1,4 @@
+- New release Gaston Miron Beta 2
+- Multi-device support: use the same account across multiple devices
+- Name registry: Share a username instead of your RingID
+- UI and stability improvements
