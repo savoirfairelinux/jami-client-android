@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -80,28 +81,36 @@ public class RingAccountCreationFragment extends Fragment {
     @BindView(R.id.ring_username_box)
     ViewGroup mUsernameBox;
 
+    /**
+     * Checks the validity of the given password.
+     *
+     * @param pwd     the first password.
+     * @param confirm the confirmation password.
+     * @return false if there is no error, true otherwise.
+     */
     private boolean checkPassword(@NonNull TextInputLayout pwd, TextInputLayout confirm) {
+        //~ Init
         boolean error = false;
         pwd.setError(null);
-        if (mUsernameSwitch.isChecked()) {
-            if (mUsernameTxt.getText().toString().isEmpty()) {
-                mUsernameTxtBox.setErrorEnabled(true);
-                mUsernameTxtBox.setError(getString(R.string.error_username_empty));
-                return true;
-            }
+        //~ Checking username presence.
+        if (mUsernameSwitch.isChecked() && TextUtils.isEmpty(mUsernameTxt.getText().toString())) {
+            mUsernameTxtBox.setErrorEnabled(true);
+            mUsernameTxtBox.setError(getString(R.string.error_username_empty));
+            return true;
         }
-        if (pwd.getEditText().getText().length() == 0) {
+        //~ Checking initial password.
+        if (pwd.getEditText() == null || TextUtils.isEmpty(pwd.getEditText().getText())) {
+            error = true;
+        } else if (pwd.getEditText().getText().length() < PASSWORD_MIN_LENGTH) {
+            pwd.setError(getString(R.string.error_password_char_count));
             error = true;
         } else {
-            if (pwd.getEditText().getText().length() < PASSWORD_MIN_LENGTH) {
-                pwd.setError(getString(R.string.error_password_char_count));
-                error = true;
-            } else {
-                pwd.setError(null);
-            }
+            pwd.setError(null);
         }
+        //~ Checking confirmation password.
         if (confirm != null) {
-            if (!pwd.getEditText().getText().toString().equals(confirm.getEditText().getText().toString())) {
+            if (confirm.getEditText() == null || !pwd.getEditText().getText().toString()
+                    .equals(confirm.getEditText().getText().toString())) {
                 confirm.setError(getString(R.string.error_passwords_not_equals));
                 error = true;
             } else {
@@ -163,9 +172,23 @@ public class RingAccountCreationFragment extends Fragment {
     }
 
     @OnClick(R.id.add_button)
-    public void onAddButtonClick(View view) {
-        if (!checkPassword(mPasswordTxtBox, mPasswordRepeatTxtBox))
-            ((AccountWizard) getActivity()).initAccountCreation(true, mUsernameTxt.getText().toString(), null, mPasswordTxt.getText().toString(), null);
+    public void onAddButtonClick() {
+        if (!checkPassword(mPasswordTxtBox, mPasswordRepeatTxtBox)) {
+            Activity wizardActivity = getActivity();
+            if (wizardActivity != null && wizardActivity instanceof AccountWizard) {
+                AccountWizard wizard = (AccountWizard) wizardActivity;
+                String username = null;
+                if (mUsernameSwitch.isChecked()
+                        && !TextUtils.isEmpty(mUsernameTxt.getText().toString())) {
+                    username = mUsernameTxt.getText().toString();
+                }
+                wizard.initAccountCreation(true,
+                        username,
+                        null,
+                        mPasswordTxt.getText().toString(),
+                        null);
+            }
+        }
     }
 
     @Override
