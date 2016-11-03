@@ -87,6 +87,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">加入 %1$s 嗎？</string>
   <string name="prompt_new_password">新密碼</string>
+  <string name="account_create_title">建立一個 Ring 帳號</string>
   <!--MenuHeaderView-->
   <!--Share fragment-->
 </resources>

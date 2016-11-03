@@ -116,6 +116,7 @@
   <string name="add_call_contact_number_to_contacts">%1$s hinzufügen?</string>
   <string name="prompt_new_password">Neues Passwort</string>
   <string name="prompt_new_password_repeat">Neues Passwort wiederholen</string>
+  <string name="account_create_title">Ein Ring-Konto erstellen</string>
   <string name="account_device_updated_message">Sie haben erfolgreich ihr Ring-Konto aktualisiert</string>
   <!--MenuHeaderView-->
   <string name="profile">Mein Profil</string>

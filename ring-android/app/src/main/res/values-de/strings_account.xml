@@ -5,7 +5,6 @@
   <string name="prompt_hostname">Rechnername</string>
   <string name="prompt_username">Benutzername</string>
   <string name="prompt_password">Passwort</string>
-  <string name="action_create">Konto hinzufügen</string>
   <string name="action_create_short">Registrieren</string>
   <string name="error_field_required">Dieses Feld ist erforderlich</string>
   <string name="dialog_wait_create">Konto hinzufügen</string>
@@ -102,7 +101,6 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_restore_decryption_password">Passwort zum Entschlüsseln</string>
   <string name="account_new_device">Neues Gerät hinzufügen</string>
   <string name="account_new_device_message">Ring-Konto entsperren um mit neuem Gerät zu verbinden</string>
-  <string name="account_new_device_password">Passwort für das Hauptkonto eingeben</string>
   <string name="restore_backup_wait">Bitte warten…</string>
   <string name="backup_failed_dialog_msg">Ein Fehler ist aufgetreten</string>
   <string name="error_password_char_count">Mindestens 6 Zeichen</string>
@@ -139,4 +137,6 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_device_added_message">Sie haben erfolgreich ihr Ring-Konto auf diesem Gerät erstellt.</string>
   <string name="account_device_updated_title">Geräte-Konto aktualisiert</string>
   <string name="account_wizard_title">Ring-Konto</string>
+  <string name="account_new_button">Ein Ring-Konto erstellen</string>
+  <!--Name registration-->
 </resources>

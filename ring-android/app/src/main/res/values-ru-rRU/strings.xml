@@ -117,6 +117,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s ?</string>
   <string name="prompt_new_password">Новый пароль</string>
+  <string name="account_create_title">Создать Ring аккаунт</string>
   <!--MenuHeaderView-->
   <string name="unknown">Неизвестно</string>
   <!--Share fragment-->

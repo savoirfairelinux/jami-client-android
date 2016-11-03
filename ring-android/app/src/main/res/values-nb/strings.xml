@@ -109,6 +109,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
   <string name="prompt_new_password">Nytt passord</string>
+  <string name="account_create_title">Opprett en Ring-konto</string>
   <!--MenuHeaderView-->
   <string name="unknown">Ukjent</string>
   <!--Share fragment-->

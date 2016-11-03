@@ -5,7 +5,6 @@
   <string name="prompt_hostname">Vertsnavn</string>
   <string name="prompt_username">Brukernavn</string>
   <string name="prompt_password">Passord</string>
-  <string name="action_create">Legg til konto</string>
   <string name="action_create_short">Registrer</string>
   <string name="error_field_required">Dette feltet er påkrevd</string>
   <string name="dialog_wait_create">Legger til konto</string>
@@ -99,4 +98,6 @@ Du kan endre kontoen din senere</string>
   <string name="restore_failed_dialog_msg">Det skjedde en feil</string>
   <string name="account_export">Eksporter</string>
   <string name="account_export_end_error_title">Feil</string>
+  <string name="account_new_button">Opprett en Ring-konto</string>
+  <!--Name registration-->
 </resources>

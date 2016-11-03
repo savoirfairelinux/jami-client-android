@@ -5,7 +5,6 @@
   <string name="prompt_hostname">Nombre del host</string>
   <string name="prompt_username">Nombre de usuario</string>
   <string name="prompt_password">Contraseña</string>
-  <string name="action_create">Agregar cuenta</string>
   <string name="action_create_short">Registrar</string>
   <string name="error_field_required">Este campo es obligatorio</string>
   <string name="dialog_wait_create">Agregando cuenta</string>
@@ -103,4 +102,6 @@ Puedes editar tu cuenta luego</string>
   <string name="restore_failed_dialog_msg">Ha ocurrido un error</string>
   <string name="account_export">Exportar</string>
   <string name="account_export_end_error_title">Error</string>
+  <string name="account_new_button">Crear una cuenta en Ring</string>
+  <!--Name registration-->
 </resources>

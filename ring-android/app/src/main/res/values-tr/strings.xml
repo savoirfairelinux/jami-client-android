@@ -116,6 +116,7 @@
   <string name="add_call_contact_number_to_contacts">%1$s eklensin mi ?</string>
   <string name="prompt_new_password">Yeni parola</string>
   <string name="prompt_new_password_repeat">Yeni parola tekrar</string>
+  <string name="account_create_title">Bir Ring hesabı oluştur</string>
   <string name="account_device_updated_message">Ring hesabınızı başarıyla güncellediniz.</string>
   <!--MenuHeaderView-->
   <string name="profile">Profilim</string>

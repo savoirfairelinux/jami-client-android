@@ -89,6 +89,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Pridėti %1$s ?</string>
   <string name="prompt_new_password">Naujas slaptažodis</string>
+  <string name="account_create_title">Sukurti Ring paskyrą</string>
   <!--MenuHeaderView-->
   <string name="unknown">Nežinomas</string>
   <!--Share fragment-->

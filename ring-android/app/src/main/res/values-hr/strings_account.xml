@@ -5,7 +5,6 @@
   <string name="prompt_hostname">Ime poslužitelja</string>
   <string name="prompt_username">Korisničko ime</string>
   <string name="prompt_password">Lozinka</string>
-  <string name="action_create">Dodaj račun</string>
   <string name="action_create_short">Registriraj</string>
   <string name="error_field_required">Potrebno je ovo polje</string>
   <string name="dialog_wait_create">Dodajem račun</string>
@@ -82,4 +81,6 @@ Moćete urediti vaš račun kasnije</string>
   <string name="restore_failed_dialog_msg">Došlo je do greške</string>
   <string name="account_export">Izvezi</string>
   <string name="account_export_end_error_title">Greška</string>
+  <string name="account_new_button">Napravite Ring račun</string>
+  <!--Name registration-->
 </resources>

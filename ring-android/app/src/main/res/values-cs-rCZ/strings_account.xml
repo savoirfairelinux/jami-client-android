@@ -5,7 +5,6 @@
   <string name="prompt_hostname">Hostitelské jméno</string>
   <string name="prompt_username">Uživatelské jméno</string>
   <string name="prompt_password">Heslo</string>
-  <string name="action_create">Přidat účet</string>
   <string name="action_create_short">Zaregistrovat</string>
   <string name="error_field_required">Toto pole je vyžadováno</string>
   <string name="dialog_wait_create">Přidávám účet</string>
@@ -104,4 +103,6 @@
   <string name="restore_failed_dialog_msg">Nastala chyba</string>
   <string name="account_export">Export</string>
   <string name="account_export_end_error_title">Chyba</string>
+  <string name="account_new_button">Vytvořit účet Ring</string>
+  <!--Name registration-->
 </resources>
