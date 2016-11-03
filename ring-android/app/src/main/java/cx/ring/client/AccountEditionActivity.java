@@ -36,9 +36,11 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -46,7 +48,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -68,7 +69,6 @@ import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
 public class AccountEditionActivity extends AppCompatActivity implements AccountCallbacks {
-
     public static final AccountCallbacks DUMMY_CALLBACKS = new AccountCallbacks() {
         @Override
         public IDRingService getRemoteService() {
@@ -100,9 +100,9 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             // Dummy
         }
     };
+
     public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "accounts");
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
-    private static final int REQUEST_WRITE_STORAGE = 112;
     private final ArrayList<AccountChangedListener> listeners = new ArrayList<>();
     private boolean mBound = false;
     private LocalService mService;
@@ -113,7 +113,6 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     private PagerSlidingTabStrip mSlidingTabLayout = null;
 
     private final Observer mAccountObserver = new Observer() {
-
         @Override
         public void update(Observable observable, Object data) {
             Log.i(TAG, "Observer: account changed !");
@@ -139,7 +138,11 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             }
 
             mAccSelected.addObserver(mAccountObserver);
-            getSupportActionBar().setTitle(mAccSelected.getAlias());
+
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle(mAccSelected.getAlias());
+            }
 
             mViewPager = (ViewPager) findViewById(R.id.pager);
             mViewPager.setOffscreenPageLimit(4);
@@ -173,7 +176,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
                 @Override
                 public void onPageScrollStateChanged(int state) {
-
+                    //~ Empty.
                 }
             });
 
@@ -200,7 +203,11 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         setContentView(R.layout.activity_account_settings);
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
@@ -268,10 +275,10 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             default:
                 break;
         }
-
         return true;
     }
 
+    @NonNull
     private AlertDialog createDeleteDialog() {
         Activity ownerActivity = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
@@ -299,27 +306,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
         AlertDialog alertDialog = builder.create();
         alertDialog.setOwnerActivity(ownerActivity);
-
         return alertDialog;
-    }
-
-    boolean checkPassword(@NonNull TextView pwd, TextView confirm) {
-        boolean error = false;
-        if (pwd.getText().length() < 6) {
-            pwd.setError(getString(R.string.error_password_char_count));
-            error = true;
-        } else {
-            pwd.setError(null);
-        }
-        if (confirm != null) {
-            if (!pwd.getText().toString().equals(confirm.getText().toString())) {
-                confirm.setError(getString(R.string.error_passwords_not_equals));
-                error = true;
-            } else {
-                confirm.setError(null);
-            }
-        }
-        return error;
     }
 
     @Override
@@ -404,8 +391,8 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             return ctx.getString(resId);
         }
 
+        @Nullable
         private static Fragment getRingPanel(int position) {
-            Log.i(TAG, "PreferencesPagerAdapter getFragment " + position);
             switch (position) {
                 case 0:
                     return new GeneralAccountFragment();
@@ -418,8 +405,8 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             }
         }
 
+        @Nullable
         private static Fragment getSIPPanel(int position) {
-            Log.i(TAG, "PreferencesPagerAdapter getFragment " + position);
             switch (position) {
                 case 0:
                     return new GeneralAccountFragment();
@@ -438,12 +425,10 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         private static int getRingPanelTitle(int position) {
             switch (position) {
                 case 0:
-                    return R.string.account_preferences_devices_tab;
-                case 1:
                     return R.string.account_preferences_basic_tab;
-                case 2:
+                case 1:
                     return R.string.account_preferences_media_tab;
-                case 3:
+                case 2:
                     return R.string.account_preferences_advanced_tab;
                 default:
                     return -1;
