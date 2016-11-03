@@ -194,7 +194,7 @@ along with this program; if not, write to the Free Software
     <string name="account_link_prompt_password">Enter your password</string>
     <string name="account_link_prompt_pin">Enter PIN</string>
     <string name="account_wizard_title">Ring account</string>
-    <string name="account_new_button">Create a new account</string>
+    <string name="account_new_button">Create a Ring account</string>
     <string name="account_link_infos">To link another device to this account, you first need to obtain a pin code. To generate the pin code, go to the account management setting of a previous device, choose the Ring Account to use and select "Link another device to this account". </string>
     <string name="account_new_infos">Please choose a password of at least 6 characters. This password will be asked to add new devices to your Ring account.</string>
     <string name="account_link_export_button">Link another device to this account</string>
@@ -213,7 +213,7 @@ along with this program; if not, write to the Free Software
     <string name="register_name">Register name</string>
     <string name="trying_to_register_name">Trying to register name</string>
     <string name="registered_username">Registered username</string>
-    <string name="register_username">Register a public Ring username that will be stored in the public blockchain registry</string>
+    <string name="register_username">Register name publicly (experimental)</string>
     <string name="username_already_taken">Username already taken</string>
     <string name="invalid_username">Invalid username</string>
     <string name="looking_for_username_availability">Looking for username availability ...</string>
