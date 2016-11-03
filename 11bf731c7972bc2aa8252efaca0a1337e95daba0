@@ -1,0 +1,7 @@
+Code-Review+2: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
+Verified+1: Jenkins CI <jenkins@ring-packaging.cx>
+Submitted-by: Guillaume Roguez <guillaume.roguez@savoirfairelinux.com>
+Submitted-at: Thu, 03 Nov 2016 17:29:46 -0400
+Reviewed-on: https://gerrit-ring.savoirfairelinux.com/5398
+Project: ring-client-android
+Branch: refs/heads/master
