@@ -5,7 +5,6 @@
   <string name="prompt_hostname">Узел</string>
   <string name="prompt_username">Пользователь</string>
   <string name="prompt_password">Пароль</string>
-  <string name="action_create">Добавить аккаунт</string>
   <string name="action_create_short">Зарегистрировать</string>
   <string name="error_field_required">Это обязательное поле</string>
   <string name="dialog_wait_create">Добавление аккаунта</string>
@@ -96,4 +95,6 @@
   <string name="restore_failed_dialog_msg">Произошла ошибка</string>
   <string name="account_export">Экспорт</string>
   <string name="account_export_end_error_title">Ошибка</string>
+  <string name="account_new_button">Создать Ring аккаунт</string>
+  <!--Name registration-->
 </resources>

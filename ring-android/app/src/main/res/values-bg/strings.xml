@@ -110,6 +110,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавяне на %1$s?</string>
   <string name="prompt_new_password">Нова парола</string>
+  <string name="account_create_title">Създаване на акаунт за Ring</string>
   <!--MenuHeaderView-->
   <string name="unknown">Неизвестно</string>
   <!--Share fragment-->

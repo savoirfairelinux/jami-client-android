@@ -5,7 +5,6 @@
   <string name="prompt_hostname">اسم المضيف</string>
   <string name="prompt_username">اسم المستخدم</string>
   <string name="prompt_password">كلمة السر</string>
-  <string name="action_create">أضف حساب</string>
   <string name="action_create_short">سجل</string>
   <string name="error_field_required">هذا الحقل مطلوب</string>
   <string name="dialog_wait_create">في طور إضافة حساب</string>
@@ -73,4 +72,5 @@
   <!--restore/backup-->
   <string name="account_export">تصدير</string>
   <string name="account_export_end_error_title">خطأ</string>
+  <!--Name registration-->
 </resources>

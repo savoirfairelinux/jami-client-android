@@ -108,6 +108,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodaj %1$s ?</string>
   <string name="prompt_new_password">Nova lozinka</string>
+  <string name="account_create_title">Napravite Ring račun</string>
   <!--MenuHeaderView-->
   <string name="unknown">Nepoznato</string>
   <!--Share fragment-->

@@ -24,6 +24,7 @@
   <string name="menu_item_home">Accueil</string>
   <string name="menu_item_accounts">Gérer les comptes</string>
   <string name="menu_item_settings">Paramètres</string>
+  <string name="menu_item_share">partagez ce contact</string>
   <string name="menu_item_about">À propos de Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_action_call">Appelez</string>
@@ -95,6 +96,8 @@
   <string name="permission_dialog_camera_title">Permission d\'accès au caméra</string>
   <string name="permission_dialog_camera_message">Les conversation vidéo nécessitent la permission d\'utiliser l\'objectif. Merci de l\'autoriser.</string>
   <string name="ringtone_error_title">Erreur</string>
+  <string name="ringtone_error_format_not_supported">Cette extension de fichier n\'est pas supportée.</string>
+  <string name="ringtone_error_size_too_big">Ce fichier est trop gros. La taille maximale est de %1$iko.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring a besoin d\'accéder en lecture à votre liste de contact. SVP autorisez-le.</string>
   <!--Write call log permission-->
@@ -115,7 +118,25 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Ajouter %1$s</string>
   <string name="prompt_new_password">Nouveau mot de passe</string>
+  <string name="prompt_new_password_repeat">Confirmez le mot de passe</string>
+  <string name="account_create_title">Créer un compte Ring</string>
+  <string name="help_username_register">Choisir un nom public (expérimental)</string>
+  <string name="prompt_new_username">Entrez un nouveau nom d\'utilisateur</string>
+  <string name="help_password_choose">Choisissez un mot de passe sécurisé dont vous vous rappellerez pour protéger votre compte Ring.</string>
+  <string name="btn_use_existing_account">Utiliser un compte Ring existant</string>
+  <string name="btn_create_account">Créer un nouveau compte</string>
+  <string name="help_password_enter">Entrez le mot de passe de votre compte Ring</string>
+  <string name="help_pin_enter">Entrez le code PIN obtenu en configurant un autre compte Ring . Utilisez la fonction \"exportez un compte sur Ring\" pour obtenir un code PIN.</string>
+  <string name="account_device_updated_message">Mise à jour de votre compte Ring réalisée avec succès. </string>
   <!--MenuHeaderView-->
+  <string name="profile">Mon profil</string>
+  <string name="profile_message_warning">Ceci sera partagé avec vos contacts.</string>
+  <string name="open_the_gallery">Ouvrir la galerie</string>
+  <string name="take_a_photo">Prendre une photo</string>
+  <string name="unknowm_if_empty">Inconnu si laissé vide</string>
   <string name="unknown">Inconnu</string>
   <!--Share fragment-->
+  <string name="share_label">Sélectionnez le Ring ID à partager. </string>
+  <string name="share_message">Scannez ce QRCode avec le scanner intégré de l\'application Ring qui souhaite communiquer avec vous.</string>
+  <string name="share_your_account_information">Partagez mes coordonnées</string>
 </resources>

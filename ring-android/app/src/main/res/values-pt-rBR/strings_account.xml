@@ -5,7 +5,6 @@
   <string name="prompt_hostname">Servidor</string>
   <string name="prompt_username">Nome de usuário</string>
   <string name="prompt_password">Senha</string>
-  <string name="action_create">Adicionar conta</string>
   <string name="action_create_short">Registrar</string>
   <string name="error_field_required">Este campo é obrigatório</string>
   <string name="dialog_wait_create">Adicionando conta</string>
@@ -102,7 +101,6 @@ Você pode editar sua conta depois.</string>
   <string name="account_restore_decryption_password">Senha de descriptografia</string>
   <string name="account_new_device">Adicionar novo dispositivo</string>
   <string name="account_new_device_message">Desbloquear conta Ring para associar novo dispositivo.</string>
-  <string name="account_new_device_password">Entre com a senha da conta principal</string>
   <string name="restore_backup_wait">Por favor, aguarde...</string>
   <string name="backup_failed_dialog_msg">Um erro ocorreu</string>
   <string name="error_password_char_count">Pelo menos 6 caracteres</string>
@@ -139,4 +137,6 @@ Você pode editar sua conta depois.</string>
   <string name="account_device_added_message">Você configurou sua conta Ring neste dispositivo com sucesso.</string>
   <string name="account_device_updated_title">Dispositivo da conta atualizado</string>
   <string name="account_wizard_title">Conta Ring</string>
+  <string name="account_new_button">Criar uma conta no Ring</string>
+  <!--Name registration-->
 </resources>

@@ -119,6 +119,13 @@
   <string name="add_call_contact_number_to_contacts">Vill du lägga till %1$s ?</string>
   <string name="prompt_new_password">Nytt lösenord</string>
   <string name="prompt_new_password_repeat">Upprepa nytt lösenord</string>
+  <string name="account_create_title">Skapa ett Ring-konto</string>
+  <string name="prompt_new_username">Ange nytt användarnamn</string>
+  <string name="help_password_choose">Ange ett starkt lösenord, som du kommer ihåg, för att skydda ditt Ring-konto.</string>
+  <string name="btn_use_existing_account">Använd ett befintligt Ring-konto istället</string>
+  <string name="btn_create_account">Skapa nytt konto istället</string>
+  <string name="help_password_enter">Ange ditt huvudsakliga Ring-kontos lösenord</string>
+  <string name="help_pin_enter">Ange PIN-koden från ett annat konfigurerat Ring-konto. Använd \"Exportera konto på Ring\", för att få din PIN-kod.</string>
   <string name="account_device_updated_message">Du har lyckats uppdatera ditt Ring-konto.</string>
   <!--MenuHeaderView-->
   <string name="profile">Min profil</string>

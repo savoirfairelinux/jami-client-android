@@ -5,7 +5,7 @@
   <string name="prompt_hostname">Värdnamn</string>
   <string name="prompt_username">Användarnamn</string>
   <string name="prompt_password">Lösenord</string>
-  <string name="action_create">Lägg till konto</string>
+  <string name="action_create">Skapa konto</string>
   <string name="action_create_short">Registrera</string>
   <string name="error_field_required">Det här fältet är obligatoriskt</string>
   <string name="dialog_wait_create">Lägger till konto</string>
@@ -53,6 +53,7 @@ Du kan ändra kontot senare.</string>
   <string name="account_ringtone_label">Ringsignaler</string>
   <string name="account_ringtone_enabled_label">Aktivera ringsignaler</string>
   <string name="account_ringtone_path_label">Sökväg till ringsignal</string>
+  <string name="account_ringtone_custom_label">Använd anpassad ringsignal</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
   <string name="account_video_enable">Aktivera video</string>
@@ -95,6 +96,11 @@ Du kan ändra kontot senare.</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Audio RTP portintervall</string>
   <!--restore/backup-->
+  <string name="account_backup">Säkerhetskopiera</string>
+  <string name="account_restore_account">Återställ ett konto</string>
+  <string name="account_backup_title">Säkerhetskopiera ett konto</string>
+  <string name="account_restore_title">Återställ konto</string>
+  <string name="account_restore_explanation">Du kan återställa tidigare säkerhetskopierade konton.</string>
   <string name="account_backup_message">Spara kontoinställningar och autentiseringsuppgifter, lösenordet krypterat.</string>
   <string name="account_backup_new_password">Nytt lösenord</string>
   <string name="account_backup_confirm_password">Bekräfta lösenord</string>
@@ -102,11 +108,16 @@ Du kan ändra kontot senare.</string>
   <string name="account_restore_decryption_password">Dekrypteringslösenord</string>
   <string name="account_new_device">Lägg till ny enhet</string>
   <string name="account_new_device_message">Lås upp Ring-kontot för att associera ny enhet.</string>
-  <string name="account_new_device_password">Ange kontots lösenord</string>
+  <string name="account_new_device_password">Ange huvudlösenordet för att låsa upp kontot</string>
+  <string name="restore_dialog_title">Återställer</string>
   <string name="restore_backup_wait">Vänta...</string>
+  <string name="backup_dialog_title">Säkerhetskopiera konto</string>
+  <string name="account_backup_result">Säkerhetskopia sparad i %1$s</string>
+  <string name="backup_failed_dialog_title">Säkerhetskopiering misslyckades</string>
   <string name="backup_failed_dialog_msg">Et fel inträffade</string>
   <string name="error_password_char_count">6 tecken minimum</string>
   <string name="error_passwords_not_equals">Lösenorden stämmer inte</string>
+  <string name="restore_failed_dialog_title">Återställning misslyckades</string>
   <string name="restore_failed_dialog_msg">Et fel inträffade</string>
   <string name="account_export">Exportera</string>
   <string name="export_account_wait_title">Vänta...</string>
@@ -138,5 +149,31 @@ Du kan ändra kontot senare.</string>
   <string name="account_device_added_title">Kontoenhet tillagd</string>
   <string name="account_device_added_message">Du har lyckats konfigurera ditt Ring-konto på denna enhet.</string>
   <string name="account_device_updated_title">Kontoenhet uppdaterad</string>
+  <string name="account_link_button">Koppla denna enhet till ett konto</string>
+  <string name="account_import_title">Koppla ett befintligt konto</string>
+  <string name="account_link_prompt_password">Ange ditt lösenord</string>
+  <string name="account_link_prompt_pin">Ange PIN-kod</string>
   <string name="account_wizard_title">Ring-konto</string>
+  <string name="account_new_button">Skapa ett Ring-konto</string>
+  <string name="account_link_infos">För att koppla en enhet till det här kontot, måste du först ha en PIN-kod. För att generera PIN-koden, går du till kontohanteringen i en befintlig enhet, väljer det Ring-konto du vill koppla, och väljer \"Koppla en annan enhet till detta konto\".</string>
+  <string name="account_new_infos">Ange ett lösenord på minst 6 tecken. Detta lösenord används för att lägga till en ny enhet till ditt Ring-konto.</string>
+  <string name="account_link_export_button">Koppla en annan enhet till detta konto</string>
+  <string name="account_link_export_info">För att använda detta konto på en annan enhet, måste du först exponera det på Ring. Detta genererar en PIN-kod som du måste ange på den nya enheten för att öppna kontot. Pin-koden är giltig i 10 minuter.\n\nAnge ditt lösenord för att starta:</string>
+  <string name="account_start_export_button">Generera PIN-kod</string>
+  <string name="account_end_export_button">stäng</string>
+  <string name="account_end_export_infos">Din PIN-kod är:\n\n%%\n\nFör att slutföra åtgärden, måste du nu öppna Ring på den nya enheten. Skapa ett nytt konto med \"Koppla den här enheten till ett konto\". PIN-koden är giltig i 10 minuter.</string>
+  <!--Name registration-->
+  <string name="register_name_wrong_password">Kan inte registrera namnet. Fel kontolösenord.</string>
+  <string name="register_name_invalid">Kan inte registrera namnet. Ogiltigt namn.</string>
+  <string name="register_name_already_taken">Kan inte registrera namnet. Namnet finns redan.</string>
+  <string name="register_name_network_error">Kan inte registrera namnet. Nätverks- eller serverfel.</string>
+  <string name="error_username_empty">Ange ett användarnamn</string>
+  <string name="no_registered_name_for_account">Inget registrerat namn hittades för detta konto</string>
+  <string name="register_name">Registrera namn</string>
+  <string name="trying_to_register_name">Försöker registrera namnet</string>
+  <string name="registered_username">Registrerat namn</string>
+  <string name="register_username">Registrera namn offentligt (experimentellt)</string>
+  <string name="username_already_taken">Användarnamnet finns redan</string>
+  <string name="invalid_username">Ogiltigt användarnamn</string>
+  <string name="looking_for_username_availability">Kollar användarnamnets tillgänglighet...</string>
 </resources>

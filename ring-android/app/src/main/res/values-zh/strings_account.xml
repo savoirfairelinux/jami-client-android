@@ -33,4 +33,5 @@
   <!--TLS Details-->
   <!--restore/backup-->
   <string name="account_export">輸出</string>
+  <!--Name registration-->
 </resources>

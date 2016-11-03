@@ -5,7 +5,6 @@
   <string name="prompt_hostname">Nomo de gastiga komputilo</string>
   <string name="prompt_username">Uzantnomo</string>
   <string name="prompt_password">Pasvorto</string>
-  <string name="action_create">Aldoni konton</string>
   <string name="action_create_short">Registri</string>
   <string name="error_field_required">Tiu ĉi kampo bezonatas.</string>
   <string name="dialog_wait_create">Aldonanta konton</string>
@@ -104,4 +103,6 @@
   <string name="restore_failed_dialog_msg">Eraro okazis</string>
   <string name="account_export">Elporti</string>
   <string name="account_export_end_error_title">Eraro</string>
+  <string name="account_new_button">Krei Ring konton</string>
+  <!--Name registration-->
 </resources>

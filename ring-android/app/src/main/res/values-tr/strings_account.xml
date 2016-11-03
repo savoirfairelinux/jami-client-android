@@ -5,7 +5,6 @@
   <string name="prompt_hostname">Sunucu adı</string>
   <string name="prompt_username">Kullanıcı adı</string>
   <string name="prompt_password">Parola</string>
-  <string name="action_create">Hesap ekle</string>
   <string name="action_create_short">Kaydol</string>
   <string name="error_field_required">Bu alan gerekli</string>
   <string name="dialog_wait_create">Hesap ekleniyor</string>
@@ -102,7 +101,6 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_restore_decryption_password">Şifre çözme parolası</string>
   <string name="account_new_device">Yeni aygıt ekle</string>
   <string name="account_new_device_message">Yeni aygıtla ilişkilendirmek için Ring hesabının kilidini açın.</string>
-  <string name="account_new_device_password">Ana hesap parolasını girin</string>
   <string name="restore_backup_wait">Lütfen bekleyin...</string>
   <string name="backup_failed_dialog_msg">Bir hata oluştu</string>
   <string name="error_password_char_count">En az 6 harf</string>
@@ -135,4 +133,6 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_device_added_message">Bu aygıttaki Ring hesabı ayarlarını başarıyla tamamladınız.</string>
   <string name="account_device_updated_title">Hesap aygıtı güncellendi</string>
   <string name="account_wizard_title">Ring Hesabı</string>
+  <string name="account_new_button">Bir Ring hesabı oluştur</string>
+  <!--Name registration-->
 </resources>

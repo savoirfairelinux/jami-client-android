@@ -5,7 +5,6 @@
   <string name="prompt_hostname">Име на сървъра</string>
   <string name="prompt_username">Потребителско име</string>
   <string name="prompt_password">Парола</string>
-  <string name="action_create">Добавяне на акаунт</string>
   <string name="action_create_short">Регистриране</string>
   <string name="error_field_required">Това поле е задължително</string>
   <string name="dialog_wait_create">Добавяне на акаунт</string>
@@ -91,4 +90,6 @@
   <string name="restore_failed_dialog_msg">Възникна грешка</string>
   <string name="account_export">Изнасяне</string>
   <string name="account_export_end_error_title">Грешка</string>
+  <string name="account_new_button">Създаване на акаунт за Ring</string>
+  <!--Name registration-->
 </resources>

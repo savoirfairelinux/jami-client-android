@@ -5,7 +5,6 @@
   <string name="prompt_hostname">שם מארח</string>
   <string name="prompt_username">שם משתמש</string>
   <string name="prompt_password">סיסמה</string>
-  <string name="action_create">הוסף חשבון</string>
   <string name="action_create_short">הירשם</string>
   <string name="error_field_required">שדה זה הינו חובה</string>
   <string name="dialog_wait_create">הוספת חשבון</string>
@@ -62,4 +61,5 @@
   <string name="account_rtp_min_port">נומינלי</string>
   <!--restore/backup-->
   <string name="account_export_end_error_title">שגיאה</string>
+  <!--Name registration-->
 </resources>
