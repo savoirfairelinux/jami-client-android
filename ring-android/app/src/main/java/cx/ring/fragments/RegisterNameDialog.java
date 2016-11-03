@@ -30,6 +30,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -83,7 +84,7 @@ public class RegisterNameDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         View view = getActivity().getLayoutInflater().inflate(R.layout.frag_register_name, null);
 
@@ -102,21 +103,36 @@ public class RegisterNameDialog extends DialogFragment {
 
         builder.setMessage(mRegisterMessage)
                 .setTitle(mRegisterTitle)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        validate();
-                    }
-                })
+                .setPositiveButton(android.R.string.ok, null) //Set to null. We override the onclick
                 .setNegativeButton(android.R.string.cancel,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        dismiss();
-                    }
-                }
-        );
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dismiss();
+                            }
+                        }
+                );
 
-        return builder.create();
+        AlertDialog result = builder.create();
+
+        result.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+            public void onShow(DialogInterface dialog) {
+
+                Button positiveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                positiveButton.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        if (validate()) {
+                            dismiss();
+                        }
+                    }
+                });
+            }
+        });
+
+        return result;
     }
 
     @Override
@@ -139,15 +155,25 @@ public class RegisterNameDialog extends DialogFragment {
         return mUsernameTxt.getText().toString();
     }
 
+    private boolean isValidUsername() {
+        return mUsernameTxtBox.getError() == null;
+    }
+
     public boolean checkInput() {
         if (mUsernameTxt.getText().toString().isEmpty()) {
             mUsernameTxtBox.setErrorEnabled(true);
             mUsernameTxtBox.setError(mPromptUsername);
             return false;
-        } else {
-            mUsernameTxtBox.setErrorEnabled(false);
-            mUsernameTxtBox.setError(null);
         }
+
+        if (!isValidUsername()) {
+            mUsernameTxt.requestFocus();
+            return false;
+        }
+
+        mUsernameTxtBox.setErrorEnabled(false);
+        mUsernameTxtBox.setError(null);
+
         if (mPasswordTxt.getText().toString().isEmpty()) {
             mPasswordTxtBox.setErrorEnabled(true);
             mPasswordTxtBox.setError(mPromptPassword);
@@ -163,7 +189,6 @@ public class RegisterNameDialog extends DialogFragment {
         if (checkInput() && mListener != null) {
             final String username = mUsernameTxt.getText().toString();
             final String password = mPasswordTxt.getText().toString();
-            getDialog().dismiss();
             mListener.onRegisterName(username, password);
             return true;
         }
@@ -174,7 +199,12 @@ public class RegisterNameDialog extends DialogFragment {
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (v == mPasswordTxt) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                return validate();
+                boolean validationResult = validate();
+                if (validationResult) {
+                    getDialog().dismiss();
+                }
+
+                return validationResult;
             }
         }
         return false;
