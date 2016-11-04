@@ -9,6 +9,7 @@
     <cx.ring.views.BoundedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/add_action_panel"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:background="@color/cardview_light_background"
@@ -68,16 +69,21 @@
                     android:textColor="@color/text_color_secondary"
                     android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/ring_password"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/ring_password_txt_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:hint="@string/prompt_password"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPassword" />
+                    android:layout_marginRight="12dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/ring_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_password"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPassword" />
+                </android.support.design.widget.TextInputLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -90,25 +96,30 @@
                     android:textColor="@color/text_color_secondary"
                     android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/ring_add_pin"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/ring_add_pin_txt_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="12dp"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_marginStart="12dp"
-                    android:digits="0123456789abcdefABCDEF"
-                    android:hint="Enter PIN"
-                    android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:maxLines="1" />
+                    android:layout_marginRight="12dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/ring_add_pin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789abcdefABCDEF"
+                        android:hint="Enter PIN"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:maxLines="1" />
+
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
         </RelativeLayout>
     </cx.ring.views.BoundedScrollView>
 
     <LinearLayout
+        android:id="@+id/add_action_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
