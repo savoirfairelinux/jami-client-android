@@ -28,7 +28,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import butterknife.BindString;
@@ -48,9 +47,6 @@ public class ShareFragment extends Fragment implements MenuHeaderView.MenuHeader
     @BindView(R.id.qr_image)
     ImageView mQrImage;
 
-    @BindView(R.id.share_button)
-    Button mShareButton;
-
     @BindString(R.string.account_contact_me)
     String mAccountCountactMe;
 
@@ -58,6 +54,7 @@ public class ShareFragment extends Fragment implements MenuHeaderView.MenuHeader
     String mShareVia;
 
     String mUriToShow;
+    String mBlockchainUsername;
 
     @Override
     public void onResume() {
@@ -94,9 +91,12 @@ public class ShareFragment extends Fragment implements MenuHeaderView.MenuHeader
         if (!TextUtils.isEmpty(mUriToShow)) {
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            String shareBody = getString(R.string.account_share_body, mUriToShow);
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, mAccountCountactMe);
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            if (!TextUtils.isEmpty(mBlockchainUsername)) {
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.account_share_body_with_username, mUriToShow, mBlockchainUsername));
+            } else {
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.account_share_body, mUriToShow));
+            }
             startActivity(Intent.createChooser(sharingIntent, mShareVia));
         }
     }
@@ -104,6 +104,7 @@ public class ShareFragment extends Fragment implements MenuHeaderView.MenuHeader
     @Override
     public void accountSelected(Account account) {
         mUriToShow = account.getShareURI();
+        mBlockchainUsername = account.getRegisteredName();
         updateView();
     }
 }
