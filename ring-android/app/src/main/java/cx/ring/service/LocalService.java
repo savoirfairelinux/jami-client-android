@@ -1590,6 +1590,14 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                         Log.e(TAG, "INCOMING_CALL", e);
                     }
 
+                    // Sending VCard when receiving a call
+                    try {
+                        getRemoteService().sendProfile(callId);
+                        Log.d(TAG, "send vcard");
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error while sending profile", e);
+                    }
+
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(Uri.withAppendedPath(SipCall.CONTENT_URI, callId)));
                     break;
                 }
