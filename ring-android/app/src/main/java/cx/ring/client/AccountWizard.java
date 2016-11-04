@@ -328,6 +328,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
                     }
                 }
             };
+            mCreatingAccount = false;
             return account.getAccountID();
         }
     }
