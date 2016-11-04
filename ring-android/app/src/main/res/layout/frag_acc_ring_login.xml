@@ -12,7 +12,8 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:background="@color/cardview_light_background"
-        app:bounded_width="500dp">
+        app:bounded_width="500dp"
+        android:layout_above="@+id/add_action_panel">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -68,16 +69,21 @@
                     android:textColor="@color/text_color_secondary"
                     android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/ring_password"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/ring_password_txt_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:hint="@string/prompt_password"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPassword" />
+                    android:layout_marginRight="12dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/ring_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_password"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPassword" />
+                </android.support.design.widget.TextInputLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -109,6 +115,7 @@
     </cx.ring.views.BoundedScrollView>
 
     <LinearLayout
+        android:id="@+id/add_action_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
