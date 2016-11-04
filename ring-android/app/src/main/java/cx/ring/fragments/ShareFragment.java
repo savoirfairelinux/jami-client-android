@@ -24,12 +24,13 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -45,11 +46,17 @@ public class ShareFragment extends Fragment implements MenuHeaderView.MenuHeader
 
     public static final String ARG_URI = "ShareFragment.URI";
 
+    @BindView(R.id.share_instruction)
+    TextView mShareInstruction;
+
     @BindView(R.id.qr_image)
     ImageView mQrImage;
 
-    @BindView(R.id.share_button)
-    Button mShareButton;
+    @BindString(R.string.share_message)
+    String mShareMessage;
+
+    @BindString(R.string.share_message_no_account)
+    String mShareMessageNoAccount;
 
     @BindString(R.string.account_contact_me)
     String mAccountCountactMe;
@@ -57,7 +64,11 @@ public class ShareFragment extends Fragment implements MenuHeaderView.MenuHeader
     @BindString(R.string.share_via)
     String mShareVia;
 
+    @BindView(R.id.share_button)
+    AppCompatButton mShareButton;
+
     String mUriToShow;
+    String mBlockchainUsername;
 
     @Override
     public void onResume() {
@@ -68,9 +79,12 @@ public class ShareFragment extends Fragment implements MenuHeaderView.MenuHeader
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(R.layout.frag_share, parent, false);
+
         ButterKnife.bind(this, inflatedView);
 
-        mUriToShow = getArguments().getString(ARG_URI);
+        if (getArguments() != null) {
+            mUriToShow = getArguments().getString(ARG_URI);
+        }
 
         mQrImage.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
@@ -83,9 +97,21 @@ public class ShareFragment extends Fragment implements MenuHeaderView.MenuHeader
     }
 
     private void updateView() {
-        if (!TextUtils.isEmpty(mUriToShow) && mQrImage != null) {
+
+        if (mQrImage == null || mShareButton == null || mShareInstruction == null) {
+            return;
+        }
+
+        if (!TextUtils.isEmpty(mUriToShow)) {
             Bitmap qrBitmap = QRCodeUtils.encodeStringAsQrBitmap(mUriToShow, mQrImage.getMeasuredWidth());
             mQrImage.setImageBitmap(qrBitmap);
+            mQrImage.setVisibility(View.VISIBLE);
+            mShareButton.setEnabled(true);
+            mShareInstruction.setText(mShareMessage);
+        } else {
+            mShareButton.setEnabled(false);
+            mShareInstruction.setText(mShareMessageNoAccount);
+            mQrImage.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -94,16 +120,22 @@ public class ShareFragment extends Fragment implements MenuHeaderView.MenuHeader
         if (!TextUtils.isEmpty(mUriToShow)) {
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            String shareBody = getString(R.string.account_share_body, mUriToShow);
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, mAccountCountactMe);
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            if (!TextUtils.isEmpty(mBlockchainUsername)) {
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.account_share_body_with_username, mUriToShow, mBlockchainUsername));
+            } else {
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.account_share_body, mUriToShow));
+            }
             startActivity(Intent.createChooser(sharingIntent, mShareVia));
         }
     }
 
     @Override
     public void accountSelected(Account account) {
-        mUriToShow = account.getShareURI();
-        updateView();
+        if (account != null) {
+            mUriToShow = account.getShareURI();
+            mBlockchainUsername = account.getRegisteredName();
+            updateView();
+        }
     }
 }

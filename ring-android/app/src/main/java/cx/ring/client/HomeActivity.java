@@ -603,8 +603,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
 
         Bundle args = new Bundle();
-        args.putString(ShareFragment.ARG_URI, fMenuHead.getSelectedAccount().getShareURI());
-        fContent.setArguments(args);
+        if (fMenuHead.getSelectedAccount() != null) {
+            args.putString(ShareFragment.ARG_URI, fMenuHead.getSelectedAccount().getShareURI());
+            fContent.setArguments(args);
+        }
         getFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, SHARE_TAG)
