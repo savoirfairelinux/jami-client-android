@@ -35,8 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_marginTop="5dp"
             android:contentDescription="@string/app_name"
             android:maxWidth="250dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/logo_ring_beta2" />
+            android:scaleType="fitCenter" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,10 +52,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/app_release"
+                android:id="@+id/release"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/app_release"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </LinearLayout>
@@ -67,8 +65,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:background="@color/darker_gray" />
 
         <LinearLayout
+            android:id="@+id/contribute_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:layout_margin="5dp"
             android:gravity="center_vertical"
             android:orientation="vertical">
@@ -84,8 +85,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/web_site"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:text="@string/app_website_contribute"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </LinearLayout>
@@ -113,7 +112,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/copyright"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/copyright"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </LinearLayout>
@@ -124,8 +122,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:background="@color/darker_gray" />
 
         <LinearLayout
+            android:id="@+id/licence_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:layout_margin="5dp"
             android:gravity="center_vertical"
             android:orientation="vertical">
@@ -141,8 +142,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/licence"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="false"
-                android:text="@string/licence" />
+                android:singleLine="false" />
 
         </LinearLayout>
 
@@ -156,8 +156,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:clickable="true"
             android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -173,8 +173,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:id="@+id/email_report"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="false"
-                android:text="@string/report" />
+                android:clickable="false"/>
 
         </LinearLayout>
 
@@ -195,7 +194,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="@string/sponsor_section"
                 android:textColor="@color/color_primary_dark"
                 android:textSize="15sp" />
 
@@ -207,8 +205,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_marginTop="5dp"
                 android:contentDescription="@string/app_author"
                 android:maxWidth="250dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/logo_sfl_coul_rgb" />
+                android:scaleType="fitCenter" />
 
         </LinearLayout>
 
