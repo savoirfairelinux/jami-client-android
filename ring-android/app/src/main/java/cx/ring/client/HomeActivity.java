@@ -62,7 +62,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
-import cx.ring.fragments.AboutFragment;
+import cx.ring.about.AboutFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.ContactListFragment;
 import cx.ring.fragments.SettingsFragment;
