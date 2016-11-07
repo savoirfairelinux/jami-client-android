@@ -22,6 +22,7 @@ package cx.ring.application;
 import android.app.Application;
 
 import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
+import cx.ring.dependencyinjection.PresenterInjectionModule;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionModule;
 
@@ -36,6 +37,7 @@ public class RingApplication extends Application {
         // building injection dependency tree
         mRingInjectionComponent = DaggerRingInjectionComponent.builder()
                 .ringInjectionModule(new RingInjectionModule(this))
+                .presenterInjectionModule(new PresenterInjectionModule())
                 .build();
 
         // we can now inject in our self whatever modules define
