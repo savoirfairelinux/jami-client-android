@@ -17,18 +17,24 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.dependencyinjection;
+package cx.ring.about;
 
-import javax.inject.Singleton;
+public interface AboutView {
 
-import cx.ring.about.AboutFragment;
-import cx.ring.application.RingApplication;
-import dagger.Component;
+    void showRingLogo(byte[] image);
 
-@Singleton
-@Component(modules = {RingInjectionModule.class, PresenterInjectionModule.class})
-public interface RingInjectionComponent {
-    void inject(RingApplication app);
+    void showSavoirFaireLinuxLogo(byte[] image);
 
-    void inject(AboutFragment fragment);
+    void showRelease(String release);
+
+    void showContribute(String contribute);
+
+    void showCopyright(String copyright);
+
+    void showLicence(String licence);
+
+    void showFeedback(String feedback);
+
+    void showSupport(String support);
+
 }

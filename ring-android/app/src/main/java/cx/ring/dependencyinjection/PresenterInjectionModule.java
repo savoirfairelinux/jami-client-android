@@ -21,14 +21,20 @@ package cx.ring.dependencyinjection;
 
 import javax.inject.Singleton;
 
-import cx.ring.about.AboutFragment;
-import cx.ring.application.RingApplication;
-import dagger.Component;
+import cx.ring.about.AboutPresenter;
+import dagger.Module;
+import dagger.Provides;
 
-@Singleton
-@Component(modules = {RingInjectionModule.class, PresenterInjectionModule.class})
-public interface RingInjectionComponent {
-    void inject(RingApplication app);
+@Module
+public class PresenterInjectionModule {
 
-    void inject(AboutFragment fragment);
+    public PresenterInjectionModule() {
+    }
+
+    @Provides
+    @Singleton
+    AboutPresenter provideAboutPresenter() {
+        return new AboutPresenter();
+    }
+
 }
