@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_83174ea3",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ShareFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-07T14:58:59Z",
+      "side": 1,
+      "message": "You should verify if account is not empty.",
+      "range": {
+        "startLine": 106,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 58
+      },
+      "revId": "d66f138c461d1a942488bc354605f37953643e6e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_63126ab6",
+        "filename": "ring-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-07T14:58:59Z",
+      "side": 1,
+      "message": "This is not necessary a RingID. It can be an IP adress.",
+      "range": {
+        "startLine": 173,
+        "startChar": 55,
+        "endLine": 173,
+        "endChar": 64
+      },
+      "revId": "d66f138c461d1a942488bc354605f37953643e6e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
