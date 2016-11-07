@@ -7,6 +7,7 @@ repositories {
 
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
+    compile project(':libringclient')
 
     compile 'com.android.support:support-v13:24.2.1'
     compile 'com.android.support:design:24.2.1'
@@ -23,7 +24,7 @@ dependencies {
 
     // Parsing, formatting, and validating international phone numbers
     compile 'com.googlecode.libphonenumber:libphonenumber:7.0.11'
-
+    
     // Library for listview headers
     compile 'se.emilsjolander:stickylistheaders:2.7.0'
 
@@ -98,6 +99,6 @@ android {
             def sp = archs.split(',')
             include(sp)
             universalApk true
+        }
     }
-  }
 }
