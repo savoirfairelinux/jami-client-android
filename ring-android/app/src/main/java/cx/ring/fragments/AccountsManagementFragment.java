@@ -54,8 +54,8 @@ import cx.ring.R;
 import cx.ring.client.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
-import cx.ring.model.account.Account;
-import cx.ring.model.account.ConfigKey;
+import cx.ring.model.Account;
+import cx.ring.model.ConfigKey;
 import cx.ring.service.LocalService;
 import cx.ring.views.dragsortlv.DragSortListView;
 
