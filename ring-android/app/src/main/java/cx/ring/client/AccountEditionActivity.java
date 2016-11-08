@@ -64,7 +64,7 @@ import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.interfaces.BackHandlerInterface;
-import cx.ring.model.account.Account;
+import cx.ring.model.Account;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 

@@ -17,15 +17,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cx.ring.model.account;
+package cx.ring.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AccountCredentials implements Parcelable {
+public class AccountCredentials implements Serializable {
 
     @SuppressWarnings("unused")
     private static final String TAG = AccountCredentials.class.getSimpleName();
@@ -38,18 +36,6 @@ public class AccountCredentials implements Parcelable {
     private String mPassword;
     private String mRealm;
 
-    public static final Creator<AccountCredentials> CREATOR = new Creator<AccountCredentials>() {
-        @Override
-        public AccountCredentials createFromParcel(Parcel in) {
-            return new AccountCredentials(in);
-        }
-
-        @Override
-        public AccountCredentials[] newArray(int size) {
-            return new AccountCredentials[size];
-        }
-    };
-
     public AccountCredentials(Map<String, String> pref) {
         mUsername = pref.get(CONFIG_ACCOUNT_USERNAME);
         mPassword = pref.get(CONFIG_ACCOUNT_PASSWORD);
@@ -60,22 +46,6 @@ public class AccountCredentials implements Parcelable {
         setUsername(username);
         setPassword(password);
         setRealm(realm);
-    }
-
-    private AccountCredentials(Parcel in) {
-        mUsername = in.readString();
-        mPassword = in.readString();
-        mRealm = in.readString();
-    }
-
-    public int describeContents() {
-        return 0;
-    }
-
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeString(mUsername);
-        out.writeString(mPassword);
-        out.writeString(mRealm);
     }
 
     public void setUsername(String val) {
@@ -111,12 +81,18 @@ public class AccountCredentials implements Parcelable {
     }
 
     public void setDetail(ConfigKey key, String value) {
-        if (key == ConfigKey.ACCOUNT_USERNAME)
-            mUsername = value;
-        else if (key == ConfigKey.ACCOUNT_PASSWORD)
-            mPassword = value;
-        else if (key == ConfigKey.ACCOUNT_REALM)
-            mRealm = value;
+
+        switch (key) {
+            case ACCOUNT_USERNAME:
+                mUsername = value;
+                break;
+            case ACCOUNT_PASSWORD:
+                mPassword = value;
+                break;
+            case ACCOUNT_REALM:
+                mRealm = value;
+                break;
+        }
     }
 
 }
