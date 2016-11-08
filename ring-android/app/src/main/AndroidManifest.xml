@@ -20,8 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cx.ring"
     android:installLocation="auto"
-    android:versionCode="53"
-    android:versionName="20161103">
+    android:versionCode="54"
+    android:versionName="20161108">
 
     <supports-screens
         android:anyDensity="true"
