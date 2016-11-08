@@ -23,6 +23,11 @@ import cx.ring.mvp.RootPresenter;
 
 public class AboutPresenter extends RootPresenter<AboutView> {
 
+    @Override
+    public void afterInjection() {
+        // no need to do after injection extra work
+    }
+
     public void loadAbout() {
         if (getView() != null) {
             getView().showRingLogo(null);

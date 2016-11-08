@@ -56,9 +56,9 @@ import cx.ring.fragments.AccountCreationFragment;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.RingAccountCreationFragment;
 import cx.ring.fragments.RingAccountLoginFragment;
-import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountConfig;
-import cx.ring.model.account.ConfigKey;
+import cx.ring.model.Account;
+import cx.ring.model.AccountConfig;
+import cx.ring.model.ConfigKey;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
