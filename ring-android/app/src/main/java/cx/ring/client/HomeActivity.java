@@ -66,13 +66,13 @@ import cx.ring.about.AboutFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.ContactListFragment;
 import cx.ring.fragments.SettingsFragment;
-import cx.ring.fragments.ShareFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.ConfigKey;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.share.ShareFragment;
 import cx.ring.utils.FileUtils;
 import cx.ring.views.MenuHeaderView;
 
@@ -598,15 +598,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
         fContent = new ShareFragment();
 
-        if (fMenuHead != null) {
-            fMenuHead.registerAccountSelectionListener((MenuHeaderView.MenuHeaderAccountSelectionListener) fContent);
-        }
-
-        Bundle args = new Bundle();
-        if (fMenuHead.getSelectedAccount() != null) {
-            args.putString(ShareFragment.ARG_URI, fMenuHead.getSelectedAccount().getShareURI());
-            fContent.setArguments(args);
-        }
         getFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, SHARE_TAG)
