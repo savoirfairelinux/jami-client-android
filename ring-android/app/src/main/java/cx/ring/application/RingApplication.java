@@ -25,6 +25,7 @@ import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
 import cx.ring.dependencyinjection.PresenterInjectionModule;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionModule;
+import cx.ring.dependencyinjection.ServiceInjectionModule;
 
 public class RingApplication extends Application {
 
@@ -37,7 +38,8 @@ public class RingApplication extends Application {
         // building injection dependency tree
         mRingInjectionComponent = DaggerRingInjectionComponent.builder()
                 .ringInjectionModule(new RingInjectionModule(this))
-                .presenterInjectionModule(new PresenterInjectionModule())
+                .presenterInjectionModule(new PresenterInjectionModule(this))
+                .serviceInjectionModule(new ServiceInjectionModule(this))
                 .build();
 
         // we can now inject in our self whatever modules define

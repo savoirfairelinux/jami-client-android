@@ -30,7 +30,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import cx.ring.R;
-import cx.ring.model.account.AccountCredentials;
+import cx.ring.model.AccountCredentials;
 
 public class CredentialPreferenceDialog extends PreferenceDialogFragment {
     private static final String SAVE_STATE_TEXT = "CredentialPreferenceDialog.creds";
@@ -52,16 +52,16 @@ public class CredentialPreferenceDialog extends PreferenceDialogFragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             creds = this.getCredentialsPreference().getCreds();
         } else {
-            creds = savedInstanceState.getParcelable(SAVE_STATE_TEXT);
+            creds = (AccountCredentials) savedInstanceState.getSerializable(SAVE_STATE_TEXT);
         }
     }
 
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(SAVE_STATE_TEXT, creds);
+        outState.putSerializable(SAVE_STATE_TEXT, creds);
     }
 
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
@@ -82,7 +82,7 @@ public class CredentialPreferenceDialog extends PreferenceDialogFragment {
         mUsernameField = (EditText) view.findViewById(R.id.credentials_username);
         mPasswordField = (EditText) view.findViewById(R.id.credentials_password);
         mRealmField = (EditText) view.findViewById(R.id.credentials_realm);
-        if(mUsernameField == null) {
+        if (mUsernameField == null) {
             throw new IllegalStateException("Dialog view must contain an EditText with id @id/credentials_username");
         } else if (creds != null) {
             mUsernameField.setText(creds.getUsername());
@@ -92,7 +92,7 @@ public class CredentialPreferenceDialog extends PreferenceDialogFragment {
     }
 
     private CredentialsPreference getCredentialsPreference() {
-        return (CredentialsPreference)this.getPreference();
+        return (CredentialsPreference) this.getPreference();
     }
 
     protected boolean needInputMethod() {
@@ -104,8 +104,8 @@ public class CredentialPreferenceDialog extends PreferenceDialogFragment {
                 mUsernameField.getText().toString(),
                 mPasswordField.getText().toString(),
                 mRealmField.getText().toString());
-        if(positiveResult) {
-            if(this.getCredentialsPreference().callChangeListener(new Pair<>(creds, newcreds))) {
+        if (positiveResult) {
+            if (this.getCredentialsPreference().callChangeListener(new Pair<>(creds, newcreds))) {
                 this.getCredentialsPreference().setCreds(newcreds);
             }
         }
