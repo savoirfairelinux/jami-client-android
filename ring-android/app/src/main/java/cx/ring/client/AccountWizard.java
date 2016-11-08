@@ -24,6 +24,7 @@ package cx.ring.client;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
@@ -211,10 +212,20 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     public void ringChoose() {
         boolean migrate = getIntent().getData() != null && !TextUtils.isEmpty(getIntent().getData().getLastPathSegment());
 
+        Bundle args = new Bundle();
+        Fragment fragment;
+        if (migrate) {
+            args.putString(AccountMigrationFragment.ACCOUNT_ID, getIntent().getData().getLastPathSegment());
+            fragment = new AccountMigrationFragment();
+            fragment.setArguments(args);
+        } else {
+            fragment = new AccountCreationFragment();
+        }
+
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.fragment_container, migrate ? new AccountMigrationFragment() : new AccountCreationFragment())
+                .replace(R.id.fragment_container, fragment)
                 .commit();
     }
 
