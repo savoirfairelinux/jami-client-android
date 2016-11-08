@@ -37,9 +37,9 @@ import java.util.Enumeration;
 
 import cx.ring.R;
 import cx.ring.interfaces.AccountCallbacks;
-import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountConfig;
-import cx.ring.model.account.ConfigKey;
+import cx.ring.model.Account;
+import cx.ring.model.AccountConfig;
+import cx.ring.model.ConfigKey;
 import cx.ring.views.EditTextIntegerPreference;
 import cx.ring.views.EditTextPreferenceDialog;
 import cx.ring.views.PasswordPreference;
