@@ -48,9 +48,9 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
 import cx.ring.R;
-import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountConfig;
-import cx.ring.model.account.ConfigKey;
+import cx.ring.model.Account;
+import cx.ring.model.AccountConfig;
+import cx.ring.model.ConfigKey;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 

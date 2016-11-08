@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cx.ring.R;
-import cx.ring.model.account.Account;
+import cx.ring.model.Account;
 
 public class AccountSelectionAdapter extends BaseAdapter {
 
