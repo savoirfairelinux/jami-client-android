@@ -203,7 +203,16 @@ public class AccountMigrationFragment extends Fragment {
             final Account account = mCallbacks.getService().getAccount(mAccountId);
             final IDRingService remote = mCallbacks.getService().getRemoteService();
             if (account == null || remote == null) {
+                if (progress != null) {
+                    progress.dismiss();
+                    progress = null;
+                }
                 Log.e(TAG, "Error updating account, no account or remote service");
+                AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+                dialogBuilder.setPositiveButton(android.R.string.ok, null);
+                dialogBuilder.setTitle(R.string.generic_error_migration)
+                        .setMessage(R.string.generic_error_migration_message);
+                dialogBuilder.create().show();
                 return null;
             }
 
