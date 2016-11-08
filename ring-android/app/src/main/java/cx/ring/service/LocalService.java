@@ -83,16 +83,16 @@ import cx.ring.history.HistoryManager;
 import cx.ring.history.HistoryText;
 import cx.ring.loaders.AccountsLoader;
 import cx.ring.loaders.ContactsLoader;
+import cx.ring.model.Account;
+import cx.ring.model.AccountConfig;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
+import cx.ring.model.ConfigKey;
 import cx.ring.model.Conversation;
 import cx.ring.model.SecureSipCall;
 import cx.ring.model.SipCall;
 import cx.ring.model.SipUri;
 import cx.ring.model.TextMessage;
-import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountConfig;
-import cx.ring.model.account.ConfigKey;
 import cx.ring.utils.MediaManager;
 
 public class LocalService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener {

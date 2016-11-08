@@ -51,7 +51,7 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;
 import cx.ring.model.SipUri;
-import cx.ring.model.account.Account;
+import cx.ring.model.Account;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.utils.CallProximityManager;

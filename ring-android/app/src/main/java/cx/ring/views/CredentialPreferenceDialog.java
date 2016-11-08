@@ -30,7 +30,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import cx.ring.R;
-import cx.ring.model.account.AccountCredentials;
+import cx.ring.model.AccountCredentials;
 
 public class CredentialPreferenceDialog extends PreferenceDialogFragment {
     private static final String SAVE_STATE_TEXT = "CredentialPreferenceDialog.creds";
@@ -52,16 +52,16 @@ public class CredentialPreferenceDialog extends PreferenceDialogFragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             creds = this.getCredentialsPreference().getCreds();
         } else {
-            creds = savedInstanceState.getParcelable(SAVE_STATE_TEXT);
+            creds = (AccountCredentials) savedInstanceState.getSerializable(SAVE_STATE_TEXT);
         }
     }
 
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(SAVE_STATE_TEXT, creds);
+        outState.putSerializable(SAVE_STATE_TEXT, creds);
     }
 
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {

@@ -16,10 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cx.ring.model.account;
-
-import android.support.annotation.NonNull;
-import android.util.Log;
+package cx.ring.model;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,22 +31,22 @@ public class AccountConfig {
     public static final String ACCOUNT_TYPE_RING = "RING";
     public static final String ACCOUNT_TYPE_SIP = "SIP";
 
-    public static final String STATE_REGISTERED                 = "REGISTERED";
-    public static final String STATE_READY                      = "READY";
-    public static final String STATE_UNREGISTERED               = "UNREGISTERED";
-    public static final String STATE_TRYING                     = "TRYING";
-    public static final String STATE_ERROR                      = "ERROR";
-    public static final String STATE_ERROR_GENERIC              = "ERROR_GENERIC";
-    public static final String STATE_ERROR_AUTH                 = "ERROR_AUTH";
-    public static final String STATE_ERROR_NETWORK              = "ERROR_NETWORK";
-    public static final String STATE_ERROR_HOST                 = "ERROR_HOST";
-    public static final String STATE_ERROR_CONF_STUN            = "ERROR_CONF_STUN";
-    public static final String STATE_ERROR_EXIST_STUN           = "ERROR_EXIST_STUN";
-    public static final String STATE_ERROR_SERVICE_UNAVAILABLE  = "ERROR_SERVICE_UNAVAILABLE";
-    public static final String STATE_ERROR_NOT_ACCEPTABLE       = "ERROR_NOT_ACCEPTABLE";
-    public static final String STATE_REQUEST_TIMEOUT            = "Request Timeout";
-    public static final String STATE_INITIALIZING               = "INITIALIZING";
-    public static final String STATE_NEED_MIGRATION             = "ERROR_NEED_MIGRATION";
+    public static final String STATE_REGISTERED = "REGISTERED";
+    public static final String STATE_READY = "READY";
+    public static final String STATE_UNREGISTERED = "UNREGISTERED";
+    public static final String STATE_TRYING = "TRYING";
+    public static final String STATE_ERROR = "ERROR";
+    public static final String STATE_ERROR_GENERIC = "ERROR_GENERIC";
+    public static final String STATE_ERROR_AUTH = "ERROR_AUTH";
+    public static final String STATE_ERROR_NETWORK = "ERROR_NETWORK";
+    public static final String STATE_ERROR_HOST = "ERROR_HOST";
+    public static final String STATE_ERROR_CONF_STUN = "ERROR_CONF_STUN";
+    public static final String STATE_ERROR_EXIST_STUN = "ERROR_EXIST_STUN";
+    public static final String STATE_ERROR_SERVICE_UNAVAILABLE = "ERROR_SERVICE_UNAVAILABLE";
+    public static final String STATE_ERROR_NOT_ACCEPTABLE = "ERROR_NOT_ACCEPTABLE";
+    public static final String STATE_REQUEST_TIMEOUT = "Request Timeout";
+    public static final String STATE_INITIALIZING = "INITIALIZING";
+    public static final String STATE_NEED_MIGRATION = "ERROR_NEED_MIGRATION";
 
     private final Map<ConfigKey, String> mValues;
 
@@ -63,7 +60,7 @@ public class AccountConfig {
             for (Map.Entry<String, String> entry : details.entrySet()) {
                 ConfigKey confKey = ConfigKey.fromString(entry.getKey());
                 if (confKey == null) {
-                    Log.w(TAG, "Can't find key: " + entry.getKey());
+                    //Log.w(TAG, "Can't find key: " + entry.getKey());
                 } else {
                     mValues.put(confKey, entry.getValue());
                 }
@@ -73,7 +70,6 @@ public class AccountConfig {
         }
     }
 
-    @NonNull
     public String get(ConfigKey key) {
         return mValues.get(key) != null ? mValues.get(key) : "";
     }
