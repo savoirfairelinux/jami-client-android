@@ -60,7 +60,7 @@ import cx.ring.adapters.AccountSelectionAdapter;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
-import cx.ring.model.account.Account;
+import cx.ring.model.Account;
 import cx.ring.service.LocalService;
 import cx.ring.utils.CropImageUtils;
 import cx.ring.utils.VCardUtils;

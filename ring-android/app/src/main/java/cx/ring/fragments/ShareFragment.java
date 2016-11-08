@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
-import cx.ring.model.account.Account;
+import cx.ring.model.Account;
 import cx.ring.utils.QRCodeUtils;
 import cx.ring.views.MenuHeaderView;
 

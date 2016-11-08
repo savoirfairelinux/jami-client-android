@@ -39,10 +39,10 @@ import java.util.ArrayList;
 import cx.ring.R;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
-import cx.ring.model.account.Account;
-import cx.ring.model.account.AccountConfig;
-import cx.ring.model.account.AccountCredentials;
-import cx.ring.model.account.ConfigKey;
+import cx.ring.model.Account;
+import cx.ring.model.AccountConfig;
+import cx.ring.model.AccountCredentials;
+import cx.ring.model.ConfigKey;
 import cx.ring.views.CredentialPreferenceDialog;
 import cx.ring.views.CredentialsPreference;
 
