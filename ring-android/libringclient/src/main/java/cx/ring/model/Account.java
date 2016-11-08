@@ -285,3 +285,4 @@ public class Account extends java.util.Observable {
         return AccountConfig.STATE_NEED_MIGRATION.equals(getRegistrationState());
     }
 }
+

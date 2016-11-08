@@ -20,9 +20,6 @@
 
 package cx.ring.utils;
 
-import android.graphics.Bitmap;
-import android.util.Log;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -32,18 +29,19 @@ public class QRCodeUtils {
 
     private final static String TAG = QRCodeUtils.class.getName();
 
+    private final static int QRCODE_IMAGE_SIZE = 300;
+
     /**
      * @param input          uri to be displayed
-     * @param qrWindowPixels the ImageView size that will contain the QRcode
-     * @return the resulting image
+     * @return the resulting data
      */
-    public static Bitmap encodeStringAsQrBitmap(String input, int qrWindowPixels) {
+    public static QRCodeData encodeStringAsQRCodeData(String input) {
         QRCodeWriter qrWriter = new QRCodeWriter();
         BitMatrix qrImageMatrix;
         try {
-            qrImageMatrix = qrWriter.encode(input, BarcodeFormat.QR_CODE, qrWindowPixels, qrWindowPixels);
+            qrImageMatrix = qrWriter.encode(input, BarcodeFormat.QR_CODE, QRCODE_IMAGE_SIZE, QRCODE_IMAGE_SIZE);
         } catch (WriterException e) {
-            Log.e(TAG, "Error while encoding QR", e);
+            //Log.e(TAG, "Error while encoding QR", e);
             return null;
         }
 
@@ -61,9 +59,31 @@ public class QRCodeUtils {
             }
         }
 
-        Bitmap bitmap = Bitmap.createBitmap(qrImageWidth, qrImageHeight, Bitmap.Config.ARGB_8888);
-        bitmap.setPixels(pixels, 0, qrImageWidth, 0, 0, qrImageWidth, qrImageHeight);
-        return bitmap;
+        return new QRCodeData(pixels, qrImageWidth, qrImageHeight);
+    }
+
+    public static class QRCodeData {
+        private int[] mData;
+        private int mWidth;
+        private int mHeight;
+
+        public QRCodeData (int[] data, int width, int height) {
+            mData = data;
+            mWidth = width;
+            mHeight = height;
+        }
+
+        public int[] getData() {
+            return mData;
+        }
+
+        public int getWidth() {
+            return mWidth;
+        }
+
+        public int getHeight() {
+            return mHeight;
+        }
     }
 
 }

@@ -101,5 +101,5 @@ public class AccountConfig {
     public Set<Map.Entry<ConfigKey, String>> getEntries() {
         return mValues.entrySet();
     }
-
 }
+

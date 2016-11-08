@@ -17,40 +17,14 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.mvp;
+package cx.ring.share;
 
-import java.lang.ref.WeakReference;
+import cx.ring.utils.QRCodeUtils;
 
-public abstract class RootPresenter<T> {
+public interface ShareView {
 
-    public RootPresenter () {
+    void showQRCode(QRCodeUtils.QRCodeData qrCodeData);
 
-    }
-
-    private WeakReference<T> mView;
-
-    public void bindView(T view) {
-        mView = new WeakReference<>(view);
-    }
-
-    public void unbindView() {
-        if (mView != null) {
-            mView.clear();
-        }
-
-        mView = null;
-    }
-
-    public T getView() {
-        if (mView != null) {
-            return mView.get();
-        }
-
-        return null;
-    }
-
-    public abstract void afterInjection ();
+    void showShareMessage(String uri, String username);
 
 }
-
-
