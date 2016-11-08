@@ -17,40 +17,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.mvp;
+package cx.ring.share;
 
-import java.lang.ref.WeakReference;
+public interface ShareView {
 
-public abstract class RootPresenter<T> {
-
-    public RootPresenter () {
-
-    }
-
-    private WeakReference<T> mView;
-
-    public void bindView(T view) {
-        mView = new WeakReference<>(view);
-    }
-
-    public void unbindView() {
-        if (mView != null) {
-            mView.clear();
-        }
-
-        mView = null;
-    }
-
-    public T getView() {
-        if (mView != null) {
-            return mView.get();
-        }
-
-        return null;
-    }
-
-    public abstract void afterInjection ();
+    void showShareInformation(ShareViewModel viewModel);
 
 }
-
-

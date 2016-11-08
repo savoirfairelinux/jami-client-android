@@ -17,28 +17,42 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.about;
+package cx.ring.share;
 
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.inject.Inject;
+
+import cx.ring.model.Account;
 import cx.ring.mvp.RootPresenter;
+import cx.ring.services.StateService;
 
-public class AboutPresenter extends RootPresenter<AboutView> {
+public class SharePresenter extends RootPresenter<ShareView> implements Observer {
+
+    @Inject
+    StateService mStateService;
 
     @Override
     public void afterInjection() {
-        // no need to do after injection extra work
+        // We observe the application state changes
+        mStateService.addObserver(this);
     }
 
-    public void loadAbout() {
-        if (getView() != null) {
-            getView().showRingLogo(null);
-            getView().showSavoirFaireLinuxLogo(null);
-            getView().showContribute("");
-            getView().showCopyright("");
-            getView().showFeedback("");
-            getView().showLicence("");
-            getView().showSupport("");
-            getView().showRelease("");
+    public void loadContactInformation() {
+        if (getView() == null) {
+            return;
         }
+
+        // ask for the current app state
+        Account currentAccount = mStateService.getCurrentAccount();
+
+        // let the view display the ViewModel
+        getView().showShareInformation(new ShareViewModel(currentAccount));
     }
 
+    @Override
+    public void update(Observable observable, Object o) {
+        loadContactInformation();
+    }
 }
