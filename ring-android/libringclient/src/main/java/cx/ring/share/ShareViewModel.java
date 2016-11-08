@@ -17,40 +17,47 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.mvp;
+package cx.ring.share;
 
 import java.lang.ref.WeakReference;
 
-public abstract class RootPresenter<T> {
+import cx.ring.model.Account;
+import cx.ring.utils.QRCodeUtils;
 
-    public RootPresenter () {
+public class ShareViewModel {
 
+    private WeakReference<Account> mAccount;
+
+    public ShareViewModel(Account account) {
+        mAccount = new WeakReference<>(account);
     }
 
-    private WeakReference<T> mView;
-
-    public void bindView(T view) {
-        mView = new WeakReference<>(view);
+    private boolean isAccountValid() {
+        return mAccount != null && mAccount.get() != null && mAccount.get().isEnabled();
     }
 
-    public void unbindView() {
-        if (mView != null) {
-            mView.clear();
+    public QRCodeUtils.QRCodeData getAccountQRCodeData() {
+        if (!isAccountValid()) {
+            return null;
         }
 
-        mView = null;
+        return QRCodeUtils.encodeStringAsQRCodeData(mAccount.get().getShareURI());
     }
 
-    public T getView() {
-        if (mView != null) {
-            return mView.get();
+    public String getAccountShareUri() {
+        if (!isAccountValid()) {
+            return null;
         }
 
-        return null;
+        return mAccount.get().getShareURI();
     }
 
-    public abstract void afterInjection ();
+    public String getAccountRegisteredUsername() {
+        if (!isAccountValid()) {
+            return null;
+        }
+
+        return mAccount.get().getRegisteredName();
+    }
 
 }
-
-

@@ -17,40 +17,26 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.mvp;
+package cx.ring.services;
 
-import java.lang.ref.WeakReference;
+import java.util.Observable;
 
-public abstract class RootPresenter<T> {
+import cx.ring.model.Account;
 
-    public RootPresenter () {
+public class StateService extends Observable {
 
+    private Account mCurrentAccount;
+
+    public StateService() {
     }
 
-    private WeakReference<T> mView;
-
-    public void bindView(T view) {
-        mView = new WeakReference<>(view);
+    public Account getCurrentAccount() {
+        return mCurrentAccount;
     }
 
-    public void unbindView() {
-        if (mView != null) {
-            mView.clear();
-        }
-
-        mView = null;
+    public void setCurrentAccount(Account currentAccount) {
+        this.mCurrentAccount = currentAccount;
+        setChanged();
+        notifyObservers();
     }
-
-    public T getView() {
-        if (mView != null) {
-            return mView.get();
-        }
-
-        return null;
-    }
-
-    public abstract void afterInjection ();
-
 }
-
-
