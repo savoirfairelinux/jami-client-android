@@ -22,19 +22,35 @@ package cx.ring.dependencyinjection;
 import javax.inject.Singleton;
 
 import cx.ring.about.AboutPresenter;
+import cx.ring.application.RingApplication;
+import cx.ring.share.SharePresenter;
 import dagger.Module;
 import dagger.Provides;
 
 @Module
 public class PresenterInjectionModule {
 
-    public PresenterInjectionModule() {
+    RingApplication mRingApplication;
+
+    public PresenterInjectionModule(RingApplication app) {
+        mRingApplication = app;
     }
 
     @Provides
     @Singleton
     AboutPresenter provideAboutPresenter() {
-        return new AboutPresenter();
+        AboutPresenter presenter = new AboutPresenter();
+        mRingApplication.getRingInjectionComponent().inject(presenter);
+        presenter.afterInjection();
+        return presenter;
     }
 
+    @Provides
+    @Singleton
+    SharePresenter provideSharePresenter() {
+        SharePresenter presenter = new SharePresenter();
+        mRingApplication.getRingInjectionComponent().inject(presenter);
+        presenter.afterInjection();
+        return presenter;
+    }
 }

@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2016 Savoir-faire Linux Inc.
  *
- *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,16 +14,29 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.interfaces;
+package cx.ring.services;
+
+import java.util.Observable;
 
 import cx.ring.model.Account;
-import cx.ring.service.LocalService;
 
-public interface AccountCallbacks extends LocalService.Callbacks {
-    Account getAccount();
-    void addOnAccountChanged(AccountChangedListener list);
-    void removeOnAccountChanged(AccountChangedListener list);
-    void saveAccount();
+public class StateService extends Observable {
+
+    private Account mCurrentAccount;
+
+    public StateService() {
+    }
+
+    public Account getCurrentAccount() {
+        return mCurrentAccount;
+    }
+
+    public void setCurrentAccount(Account currentAccount) {
+        this.mCurrentAccount = currentAccount;
+        setChanged();
+        notifyObservers();
+    }
 }

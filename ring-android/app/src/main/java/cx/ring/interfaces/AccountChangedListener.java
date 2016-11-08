@@ -19,7 +19,7 @@
 
 package cx.ring.interfaces;
 
-import cx.ring.model.account.Account;
+import cx.ring.model.Account;
 
 public interface AccountChangedListener {
     void accountChanged(Account acc);

@@ -28,7 +28,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import cx.ring.R;
-import cx.ring.model.account.AccountCredentials;
+import cx.ring.model.AccountCredentials;
 
 public class CredentialsPreference extends DialogPreference {
     private AccountCredentials creds;
@@ -99,12 +99,12 @@ public class CredentialsPreference extends DialogPreference {
 
         public SavedState(Parcel source) {
             super(source);
-            creds = source.readParcelable(AccountCredentials.class.getClassLoader());
+            creds = (AccountCredentials) source.readSerializable();
         }
 
         public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
-            dest.writeParcelable(creds, 0);
+            dest.writeSerializable(creds);
         }
 
         public SavedState(Parcelable superState) {

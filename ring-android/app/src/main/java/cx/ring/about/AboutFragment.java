@@ -100,19 +100,14 @@ public class AboutFragment extends Fragment implements AboutView {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        // view unbinding
-        mAboutPresenter.unbindView();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
         // Butterknife unbinding
         mUnbinder.unbind();
+
+        // view unbinding
+        mAboutPresenter.unbindView();
     }
 
     @OnClick({R.id.contribute_container, R.id.licence_container})
