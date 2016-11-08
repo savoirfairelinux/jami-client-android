@@ -19,38 +19,8 @@
  */
 package cx.ring.mvp;
 
-import java.lang.ref.WeakReference;
+public interface GenericView<VM> {
 
-public abstract class RootPresenter<T> {
-
-    public RootPresenter () {
-
-    }
-
-    private WeakReference<T> mView;
-
-    public void bindView(T view) {
-        mView = new WeakReference<>(view);
-    }
-
-    public void unbindView() {
-        if (mView != null) {
-            mView.clear();
-        }
-
-        mView = null;
-    }
-
-    public T getView() {
-        if (mView != null) {
-            return mView.get();
-        }
-
-        return null;
-    }
-
-    public abstract void afterInjection ();
+    void showViewModel(VM viewModel);
 
 }
-
-
