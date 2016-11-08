@@ -18,7 +18,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cx.ring.fragments;
+package cx.ring.share;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -32,19 +32,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
-import cx.ring.model.Account;
+import cx.ring.mvp.GenericView;
 import cx.ring.utils.QRCodeUtils;
-import cx.ring.views.MenuHeaderView;
 
-public class ShareFragment extends Fragment implements MenuHeaderView.MenuHeaderAccountSelectionListener {
+public class ShareFragment extends Fragment implements GenericView<ShareViewModel> {
 
-    public static final String ARG_URI = "ShareFragment.URI";
+    @Inject
+    SharePresenter mSharePresenter;
 
     @BindView(R.id.share_instruction)
     TextView mShareInstruction;
@@ -67,75 +71,94 @@ public class ShareFragment extends Fragment implements MenuHeaderView.MenuHeader
     @BindView(R.id.share_button)
     AppCompatButton mShareButton;
 
-    String mUriToShow;
-    String mBlockchainUsername;
+    Unbinder mUnbinder;
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_share);
-    }
+    private String mUriToShow;
+    private String mBlockchainUsername;
+    private int mQRCodeSize = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(R.layout.frag_share, parent, false);
 
-        ButterKnife.bind(this, inflatedView);
+        // views injection
+        mUnbinder = ButterKnife.bind(this, inflatedView);
 
-        if (getArguments() != null) {
-            mUriToShow = getArguments().getString(ARG_URI);
-        }
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         mQrImage.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                updateView();
+                mQRCodeSize = mQrImage.getMeasuredWidth();
+
+                // when view is ready, we search for contact infos to display
+                mSharePresenter.loadContactInformation();
             }
         });
 
         return inflatedView;
     }
 
-    private void updateView() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_share);
 
-        if (mQrImage == null || mShareButton == null || mShareInstruction == null) {
-            return;
-        }
+        // view binding
+        mSharePresenter.bindView(this);
+    }
 
-        if (!TextUtils.isEmpty(mUriToShow)) {
-            Bitmap qrBitmap = QRCodeUtils.encodeStringAsQrBitmap(mUriToShow, mQrImage.getMeasuredWidth());
-            mQrImage.setImageBitmap(qrBitmap);
-            mQrImage.setVisibility(View.VISIBLE);
-            mShareButton.setEnabled(true);
-            mShareInstruction.setText(mShareMessage);
-        } else {
-            mShareButton.setEnabled(false);
-            mShareInstruction.setText(mShareMessageNoAccount);
-            mQrImage.setVisibility(View.INVISIBLE);
-        }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // Butterknife unbinding
+        mUnbinder.unbind();
+
+        // view unbinding
+        mSharePresenter.unbindView();
     }
 
     @OnClick(R.id.share_button)
     public void shareRingAccount() {
         if (!TextUtils.isEmpty(mUriToShow)) {
-            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, mAccountCountactMe);
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mAccountCountactMe);
             if (!TextUtils.isEmpty(mBlockchainUsername)) {
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.account_share_body_with_username, mUriToShow, mBlockchainUsername));
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.account_share_body_with_username, mUriToShow, mBlockchainUsername));
             } else {
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.account_share_body, mUriToShow));
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.account_share_body, mUriToShow));
             }
             startActivity(Intent.createChooser(sharingIntent, mShareVia));
         }
     }
 
+    //region View Methods Implementation
     @Override
-    public void accountSelected(Account account) {
-        if (account != null) {
-            mUriToShow = account.getShareURI();
-            mBlockchainUsername = account.getRegisteredName();
-            updateView();
+    public void showViewModel(ShareViewModel viewModel) {
+        QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData();
+
+        if (qrCodeData == null || mQRCodeSize <= 0) {
+            mQrImage.setVisibility(View.INVISIBLE);
+            mShareInstruction.setText(mShareMessageNoAccount);
+        } else {
+            Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
+            bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
+            mQrImage.setImageBitmap(bitmap);
+            mShareInstruction.setText(mShareMessage);
+            mQrImage.setVisibility(View.VISIBLE);
+        }
+
+        mUriToShow = viewModel.getAccountShareUri();
+        mBlockchainUsername = viewModel.getAccountRegisteredUsername();
+
+        if (TextUtils.isEmpty(mUriToShow)) {
+            mShareButton.setEnabled(false);
+        } else {
+            mShareButton.setEnabled(true);
         }
     }
+    //endregion
 }
