@@ -52,16 +52,20 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.adapters.AccountSelectionAdapter;
 import cx.ring.adapters.ContactDetailsTask;
+import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
 import cx.ring.service.LocalService;
+import cx.ring.services.StateService;
 import cx.ring.utils.CropImageUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -74,6 +78,10 @@ public class MenuHeaderView extends FrameLayout {
     private static final String TAG = MenuHeaderView.class.getSimpleName();
 
     private AccountSelectionAdapter mAccountAdapter;
+
+    @Inject
+    StateService mStateService;
+
     @BindView(R.id.account_selection)
     Spinner mSpinnerAccounts;
 
@@ -103,6 +111,11 @@ public class MenuHeaderView extends FrameLayout {
 
     public MenuHeaderView(Context context) {
         super(context);
+
+        if (context instanceof Activity) {
+            ((RingApplication)((Activity)context).getApplication()).getRingInjectionComponent().inject(this);
+        }
+
         initViews();
     }
 
@@ -115,6 +128,10 @@ public class MenuHeaderView extends FrameLayout {
                         mAccountAdapter.setSelectedAccount(pos);
                         service.setAccountOrder(mAccountAdapter.getAccountOrder());
                     }
+
+                    // modify the state of the app
+                    // State observers will be notified
+                    mStateService.setCurrentAccount(getSelectedAccount());
 
                     for (WeakReference<MenuHeaderAccountSelectionListener> weakListener : mListeners) {
                         MenuHeaderAccountSelectionListener listener = weakListener.get();
