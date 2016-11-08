@@ -172,6 +172,9 @@ pushd contrib/native-${TARGET_TUPLE}
 [ ${ANDROID_ABI} = "armeabi-v7a" ] && echo "NOTHUMB := -marm" >> config.mak
 [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] && echo "NOTHUMB := -marm" >> config.mak
 
+# Always strip symbols for libring.so remove it if you want to debug the daemon
+STRIP_ARG="-s "
+
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -DNDEBUG "
 if [ "${RELEASE}" -eq 1 ]; then
     echo "Contribs in release mode."
@@ -263,6 +266,6 @@ ${NDK_TOOLCHAIN_PATH}/clang++ --shared -Wall -Wextra  ${ANDROID_APP_DIR}/app/src
                                         ${RING_BUILD_DIR}/src/.libs/libring.a \
                                         -static-libstdc++ \
                                         -I${RING_SRC_DIR}/src -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib \
-                                        --std=c++11 \
+                                        ${STRIP_ARG} --std=c++11 \
                                         ${STATIC_LIBS_ALL} \
                                         -o ${LIBRING_JNI_DIR}/libring.so
