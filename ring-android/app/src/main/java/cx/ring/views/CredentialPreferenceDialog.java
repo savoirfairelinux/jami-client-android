@@ -82,7 +82,7 @@ public class CredentialPreferenceDialog extends PreferenceDialogFragment {
         mUsernameField = (EditText) view.findViewById(R.id.credentials_username);
         mPasswordField = (EditText) view.findViewById(R.id.credentials_password);
         mRealmField = (EditText) view.findViewById(R.id.credentials_realm);
-        if(mUsernameField == null) {
+        if (mUsernameField == null) {
             throw new IllegalStateException("Dialog view must contain an EditText with id @id/credentials_username");
         } else if (creds != null) {
             mUsernameField.setText(creds.getUsername());
@@ -92,7 +92,7 @@ public class CredentialPreferenceDialog extends PreferenceDialogFragment {
     }
 
     private CredentialsPreference getCredentialsPreference() {
-        return (CredentialsPreference)this.getPreference();
+        return (CredentialsPreference) this.getPreference();
     }
 
     protected boolean needInputMethod() {
@@ -104,8 +104,8 @@ public class CredentialPreferenceDialog extends PreferenceDialogFragment {
                 mUsernameField.getText().toString(),
                 mPasswordField.getText().toString(),
                 mRealmField.getText().toString());
-        if(positiveResult) {
-            if(this.getCredentialsPreference().callChangeListener(new Pair<>(creds, newcreds))) {
+        if (positiveResult) {
+            if (this.getCredentialsPreference().callChangeListener(new Pair<>(creds, newcreds))) {
                 this.getCredentialsPreference().setCreds(newcreds);
             }
         }

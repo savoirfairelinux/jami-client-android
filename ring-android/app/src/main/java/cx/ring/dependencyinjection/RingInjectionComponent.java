@@ -22,13 +22,25 @@ package cx.ring.dependencyinjection;
 import javax.inject.Singleton;
 
 import cx.ring.about.AboutFragment;
+import cx.ring.about.AboutPresenter;
 import cx.ring.application.RingApplication;
+import cx.ring.share.ShareFragment;
+import cx.ring.share.SharePresenter;
+import cx.ring.views.MenuHeaderView;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {RingInjectionModule.class, PresenterInjectionModule.class})
+@Component(modules = {RingInjectionModule.class, PresenterInjectionModule.class, ServiceInjectionModule.class})
 public interface RingInjectionComponent {
     void inject(RingApplication app);
 
+    void inject(MenuHeaderView view);
+
     void inject(AboutFragment fragment);
+
+    void inject(ShareFragment fragment);
+
+    void inject(AboutPresenter presenter);
+
+    void inject(SharePresenter presenter);
 }
