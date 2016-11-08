@@ -29,7 +29,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Map;
 
-import cx.ring.model.account.Account;
+import cx.ring.model.Account;
 import cx.ring.service.IDRingService;
 
 public class AccountsLoader extends AsyncTaskLoader<ArrayList<Account>> {
