@@ -174,7 +174,9 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
     public interface OnNavigationSectionSelected {
         void onNavigationSectionSelected(Section position);
+
         void onAccountSelected();
+
         void onAddAccountSelected();
     }
 
@@ -242,8 +244,6 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), getString(R.string.unknown));
-
         updateUserView();
 
         setupNavigationMenu();
@@ -305,7 +305,8 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
     public void updateUserView() {
         Log.d(TAG, "updateUserView");
-        mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), getString(R.string.unknown));
+        String accountID = mStateService.getCurrentAccount() != null ? mStateService.getCurrentAccount().getAccountID() : null;
+        mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), accountID, getString(R.string.unknown));
         if (!mVCardProfile.getPhotos().isEmpty()) {
             Photo tmp = mVCardProfile.getPhotos().get(0);
             mUserImage.setImageBitmap(BitmapUtils.cropImageToCircle(tmp.getData()));
@@ -426,7 +427,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
                 }
 
                 mVCardProfile.removeProperties(RawProperty.class);
-                VCardUtils.saveLocalProfileToDisk(mVCardProfile, getActivity().getFilesDir());
+                VCardUtils.saveLocalProfileToDisk(mVCardProfile, mStateService.getCurrentAccount().getAccountID(), getActivity().getFilesDir());
                 updateUserView();
             }
         });
