@@ -17,37 +17,16 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.dependencyinjection;
+package cx.ring.services;
 
-import javax.inject.Singleton;
+import java.util.Observable;
 
-import cx.ring.application.RingApplication;
-import cx.ring.services.SettingsService;
-import cx.ring.services.SettingsServiceImpl;
-import cx.ring.services.StateService;
-import dagger.Module;
-import dagger.Provides;
+import cx.ring.model.Settings;
 
-@Module
-public class ServiceInjectionModule {
+public abstract class HistoryService extends Observable {
 
-    RingApplication mRingApplication;
+    public abstract void saveSettings(Settings settings);
 
-    public ServiceInjectionModule(RingApplication app) {
-        mRingApplication = app;
-    }
+    public abstract Settings loadSettings();
 
-    @Provides
-    @Singleton
-    StateService provideStateService() {
-        return new StateService();
-    }
-
-    @Provides
-    @Singleton
-    SettingsService provideSettingsService() {
-        SettingsServiceImpl settingsService = new SettingsServiceImpl();
-        mRingApplication.getRingInjectionComponent().inject(settingsService);
-        return settingsService;
-    }
 }
