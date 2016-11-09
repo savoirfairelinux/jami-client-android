@@ -25,11 +25,15 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.widget.SwitchCompat;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -117,6 +121,13 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
 
     @BindView(R.id.password_layout)
     TextInputLayout mPasswordLayout;
+
+    @BindView(R.id.account_switch)
+    SwitchCompat mAccountSwitch;
+
+    @BindView(R.id.account_status)
+    TextView mAccountStatus;
+
     /*
     Declarations
     */
@@ -151,6 +162,7 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
         mDeviceAdapter = new DeviceAdapter(getActivity(), account.getDevices());
         mDeviceList.setAdapter(mDeviceAdapter);
 
+        mAccountSwitch.setChecked(account.isEnabled());
         mAccountNameTxt.setText(account.getAlias());
         mAccountIdTxt.setText(account.getUsername());
         String username = account.getRegisteredName();
@@ -162,6 +174,38 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
         if (hasRegisteredName) {
             mAccountUsernameTxt.setText(username);
         }
+
+        int color;
+        String status;
+
+        if (account.isEnabled()) {
+            if (account.isTrying()) {
+                status = "Connecting";
+                color = ContextCompat.getColor(getActivity(), R.color.holo_red_light);
+            } else if (account.needsMigration()) {
+                status = getString(R.string.account_update_needed);
+                color = ContextCompat.getColor(getActivity(), R.color.holo_red_light);
+            } else if (account.isInError()) {
+                status = "Connection error";
+                color = ContextCompat.getColor(getActivity(), R.color.holo_red_light);
+            } else if (account.isRegistered()) {
+                status = "Online";
+                color = ContextCompat.getColor(getActivity(), R.color.holo_green_dark);
+            } else {
+                color = ContextCompat.getColor(getActivity(), R.color.holo_red_light);
+                status = "Unknown";
+            }
+        } else {
+            color = ContextCompat.getColor(getActivity(), R.color.darker_gray);
+            status = "Offline";
+        }
+
+        mAccountStatus.setText(status);
+        Drawable drawable = ContextCompat.getDrawable(getActivity(), R.drawable.static_rounded_background);
+        Drawable wrapped = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(wrapped, color);
+        mAccountStatus.setBackground(wrapped);
+
         account.devicesListener = new Account.OnDevicesChangedListener() {
             @Override
             public void devicesChanged(Map<String, String> devices) {
@@ -268,6 +312,16 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
         } else {
             new ExportOnRingTask().execute(mRingPassword.getText().toString());
         }
+    }
+
+    @OnClick(R.id.account_switch)
+    public void onToggleAccount() {
+        if (mCallbacks == null) {
+            Log.w(TAG, "Can't toggle account state, callback is null");
+            return;
+        }
+        mCallbacks.getAccount().setEnabled(mAccountSwitch.isChecked());
+        mCallbacks.saveAccount();
     }
 
     @OnClick(R.id.register_name_btn)
@@ -405,7 +459,9 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (container == null) return null;
+        if (container == null) {
+            return null;
+        }
         ViewGroup devLayout = (ViewGroup) inflater.inflate(R.layout.frag_device_list, container, false);
 
         ButterKnife.bind(this, devLayout);
