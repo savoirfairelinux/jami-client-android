@@ -3,28 +3,34 @@ package cx.ring.service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
-import cx.ring.R;
-import cx.ring.fragments.SettingsFragment;
+import javax.inject.Inject;
+
+import cx.ring.application.RingApplication;
+import cx.ring.services.SettingsService;
 
 public class BootReceiver extends BroadcastReceiver {
     private static final String TAG = BootReceiver.class.getSimpleName();
+
+    @Inject
+    SettingsService mSettingsService;
 
     public BootReceiver() {
     }
 
     @Override
-    public void onReceive(Context c, Intent intent) {
+    public void onReceive(Context context, Intent intent) {
+        
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(c);
-            boolean startOnBoot = sharedPreferences.getBoolean(c.getString(R.string.pref_startOnBoot_key), true);
-            if (startOnBoot) {
+
+            ((RingApplication) context.getApplicationContext()).getRingInjectionComponent().inject(this);
+            boolean isAllowRingOnStartup = mSettingsService.loadSettings().isAllowRingOnStartup();
+
+            if (isAllowRingOnStartup) {
                 Log.w(TAG, "Starting Ring on boot");
-                Intent serviceIntent = new Intent(c, LocalService.class);
-                c.startService(serviceIntent);
+                Intent serviceIntent = new Intent(context, LocalService.class);
+                context.startService(serviceIntent);
             }
         }
     }

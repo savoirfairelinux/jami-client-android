@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import cx.ring.services.HistoryServiceImpl;
+
 public class HistoryTimeModel {
 
     static ArrayList<String> timeCategories;
@@ -37,7 +39,7 @@ public class HistoryTimeModel {
         String NEVER = "Never"; // 24
     }
 
-    private static final String TAG = HistoryManager.class.getSimpleName();
+    private static final String TAG = HistoryServiceImpl.class.getSimpleName();
 
     static Calendar removeDays(int ago) {
         Calendar cal = Calendar.getInstance(Locale.getDefault());

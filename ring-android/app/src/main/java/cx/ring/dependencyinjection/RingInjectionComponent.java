@@ -24,6 +24,12 @@ import javax.inject.Singleton;
 import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
 import cx.ring.application.RingApplication;
+import cx.ring.service.BootReceiver;
+import cx.ring.service.LocalService;
+import cx.ring.services.HistoryServiceImpl;
+import cx.ring.services.SettingsServiceImpl;
+import cx.ring.settings.SettingsFragment;
+import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.ShareFragment;
 import cx.ring.share.SharePresenter;
 import cx.ring.views.MenuHeaderView;
@@ -40,7 +46,19 @@ public interface RingInjectionComponent {
 
     void inject(ShareFragment fragment);
 
+    void inject(SettingsFragment fragment);
+
+    void inject(LocalService service);
+
+    void inject(SettingsServiceImpl service);
+
+    void inject(HistoryServiceImpl service);
+
+    void inject(BootReceiver receiver);
+
     void inject(AboutPresenter presenter);
 
     void inject(SharePresenter presenter);
+
+    void inject(SettingsPresenter presenter);
 }

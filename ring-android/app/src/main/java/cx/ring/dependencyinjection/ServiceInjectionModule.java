@@ -22,6 +22,10 @@ package cx.ring.dependencyinjection;
 import javax.inject.Singleton;
 
 import cx.ring.application.RingApplication;
+import cx.ring.services.HistoryService;
+import cx.ring.services.HistoryServiceImpl;
+import cx.ring.services.SettingsService;
+import cx.ring.services.SettingsServiceImpl;
 import cx.ring.services.StateService;
 import dagger.Module;
 import dagger.Provides;
@@ -39,5 +43,22 @@ public class ServiceInjectionModule {
     @Singleton
     StateService provideStateService() {
         return new StateService();
+    }
+
+    @Provides
+    @Singleton
+    SettingsService provideSettingsService() {
+        SettingsServiceImpl settingsService = new SettingsServiceImpl();
+        mRingApplication.getRingInjectionComponent().inject(settingsService);
+        return settingsService;
+    }
+
+    @Provides
+    @Singleton
+    HistoryService provideHistoryService() {
+        HistoryServiceImpl historyService = new HistoryServiceImpl();
+        mRingApplication.getRingInjectionComponent().inject(historyService);
+        historyService.initHelper();
+        return historyService;
     }
 }
