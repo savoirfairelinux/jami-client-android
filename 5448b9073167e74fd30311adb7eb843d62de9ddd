@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_a4b60edb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-09T22:50:27Z",
+      "side": 1,
+      "message": "Start a new line here.",
+      "range": {
+        "startLine": 9,
+        "startChar": 70,
+        "endLine": 9,
+        "endChar": 71
+      },
+      "revId": "5448b9073167e74fd30311adb7eb843d62de9ddd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_64b026de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-09T22:50:27Z",
+      "side": 1,
+      "message": "all accounts is enough",
+      "range": {
+        "startLine": 9,
+        "startChar": 25,
+        "endLine": 9,
+        "endChar": 32
+      },
+      "revId": "5448b9073167e74fd30311adb7eb843d62de9ddd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_c4bb12c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-09T22:50:27Z",
+      "side": 1,
+      "message": "Disabled accounts are displayed in error state",
+      "range": {
+        "startLine": 9,
+        "startChar": 71,
+        "endLine": 10,
+        "endChar": 38
+      },
+      "revId": "5448b9073167e74fd30311adb7eb843d62de9ddd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
