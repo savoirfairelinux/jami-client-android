@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_61b018de",
+        "filename": "ring-android/app/src/main/java/cx/ring/dependencyinjection/RingInjectionModule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-09T13:20:36Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be annotated with @Singleton ?\n\nExample I found in the Dagger doc:\n\n@Module\npublic class AppModule {\n\n    Application mApplication;\n\n    public AppModule(Application application) {\n        mApplication \u003d application;\n    }\n\n    @Provides\n    @Singleton\n    Application providesApplication() {\n        return mApplication;\n    }\n}",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 5
+      },
+      "revId": "550308798c702dd82a115e87b8a2306cb85b75d1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
