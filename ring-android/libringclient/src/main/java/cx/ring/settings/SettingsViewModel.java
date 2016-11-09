@@ -17,37 +17,31 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.dependencyinjection;
+package cx.ring.settings;
 
-import javax.inject.Singleton;
+import cx.ring.model.Settings;
 
-import cx.ring.application.RingApplication;
-import cx.ring.services.SettingsService;
-import cx.ring.services.SettingsServiceImpl;
-import cx.ring.services.StateService;
-import dagger.Module;
-import dagger.Provides;
+public class SettingsViewModel {
 
-@Module
-public class ServiceInjectionModule {
+    Settings mSettings;
 
-    RingApplication mRingApplication;
-
-    public ServiceInjectionModule(RingApplication app) {
-        mRingApplication = app;
+    public SettingsViewModel(Settings settings) {
+        mSettings = settings;
     }
 
-    @Provides
-    @Singleton
-    StateService provideStateService() {
-        return new StateService();
+    public boolean isAllowMobileData() {
+        return mSettings.isAllowMobileData();
     }
 
-    @Provides
-    @Singleton
-    SettingsService provideSettingsService() {
-        SettingsServiceImpl settingsService = new SettingsServiceImpl();
-        mRingApplication.getRingInjectionComponent().inject(settingsService);
-        return settingsService;
+    public boolean isAllowSystemContacts() {
+        return mSettings.isAllowSystemContacts();
+    }
+
+    public boolean isAllowPlaceSystemCalls() {
+        return mSettings.isAllowPlaceSystemCalls();
+    }
+
+    public boolean isAllowRingOnStartup() {
+        return mSettings.isAllowRingOnStartup();
     }
 }
