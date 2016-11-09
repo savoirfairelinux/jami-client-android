@@ -21,6 +21,9 @@ package cx.ring.application;
 
 import android.app.Application;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
 import cx.ring.dependencyinjection.PresenterInjectionModule;
 import cx.ring.dependencyinjection.RingInjectionComponent;
@@ -31,9 +34,13 @@ public class RingApplication extends Application {
 
     private RingInjectionComponent mRingInjectionComponent;
 
+    private Map<String, Boolean> mPermissionsBeingAsked;
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        mPermissionsBeingAsked = new HashMap<>();
 
         // building injection dependency tree
         mRingInjectionComponent = DaggerRingInjectionComponent.builder()
@@ -48,5 +55,22 @@ public class RingApplication extends Application {
 
     public RingInjectionComponent getRingInjectionComponent() {
         return mRingInjectionComponent;
+    }
+
+    public boolean canAskForPermission (String permission) {
+
+        Boolean isBeingAsked = mPermissionsBeingAsked.get(permission);
+
+        if (isBeingAsked!=null && isBeingAsked) {
+            return false;
+        }
+
+        mPermissionsBeingAsked.put(permission, true);
+
+        return true;
+    }
+
+    public void permissionHasBeenAsked (String permission) {
+        mPermissionsBeingAsked.remove(permission);
     }
 }

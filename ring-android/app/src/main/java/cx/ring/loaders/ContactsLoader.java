@@ -25,11 +25,9 @@ import android.Manifest;
 import android.content.AsyncTaskLoader;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.OperationCanceledException;
-import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Im;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
@@ -40,7 +38,6 @@ import android.util.LongSparseArray;
 
 import java.util.ArrayList;
 
-import cx.ring.R;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipUri;
 import cx.ring.service.LocalService;
@@ -79,6 +76,7 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
     private final Uri baseUri;
     private final LongSparseArray<CallContact> filterFrom;
     private volatile boolean abandon = false;
+    private boolean mCanUseSystemContact = true;
 
     public boolean loadSipContacts = true;
     public boolean loadRingContacts = true;
@@ -91,6 +89,10 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
         super(context);
         baseUri = base;
         filterFrom = filter;
+    }
+
+    public void setSystemContactPermission (boolean canUseSystemContact) {
+        mCanUseSystemContact = canUseSystemContact;
     }
 
     private boolean checkCancel() {
@@ -116,9 +118,7 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
     public Result loadInBackground()
     {
         final Result res = new Result();
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        boolean canUseContacts = sharedPreferences.getBoolean(getContext().getString(R.string.pref_systemContacts_key), true);
-        if (!canUseContacts || !LocalService.checkPermission(getContext(), Manifest.permission.READ_CONTACTS))
+        if (!mCanUseSystemContact || !LocalService.checkPermission(getContext(), Manifest.permission.READ_CONTACTS))
             return res;
 
         long startTime = System.nanoTime();
