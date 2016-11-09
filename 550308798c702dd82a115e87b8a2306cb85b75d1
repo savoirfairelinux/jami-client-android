@@ -22,6 +22,30 @@
       "revId": "550308798c702dd82a115e87b8a2306cb85b75d1",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_21ca1050",
+        "filename": "ring-android/app/src/main/java/cx/ring/dependencyinjection/RingInjectionModule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-09T14:20:26Z",
+      "side": 1,
+      "message": "Thanks for you concerns. As Application is already a singleton by nature I decided to not annotate this method with @Singleton. Nice try :-)",
+      "parentUuid": "9adffdf1_61b018de",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 5
+      },
+      "revId": "550308798c702dd82a115e87b8a2306cb85b75d1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
