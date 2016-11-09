@@ -16,41 +16,75 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <cx.ring.views.BoundedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        app:bounded_width="360dp">
+        android:layout_marginBottom="50dp"
+        android:layout_gravity="center_horizontal">
 
-        <android.support.v7.widget.CardView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/ring_account_status_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="24dp">
+
+                <TextView
+                    android:id="@+id/account_alias_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/account_switch"
+                    android:layout_toStartOf="@+id/account_switch"
+                    android:paddingBottom="8dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    tools:text="@string/ring_account" />
+
+                <TextView
+                    android:id="@+id/account_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/account_alias_txt"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
+                    android:textColor="@color/white"
+                    tools:text="Registered" />
+
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/account_switch"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_below="@+id/ring_account_status_container"
+                android:orientation="vertical"
+                android:paddingBottom="8dp"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="24dp">
 
                 <TextView
-                    android:id="@+id/account_alias_txt"
+                    android:id="@+id/account_identity_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingBottom="8dp"
-                    android:paddingEnd="16dp"
-                    android:paddingStart="16dp"
-                    android:paddingTop="24dp"
-                    android:text="@string/ring_account"
+                    android:text="@string/ring_account_identity"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
                 <TextView
@@ -58,13 +92,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     style="@style/Subheader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="middle"
+                    android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:lines="1"
                     android:paddingBottom="8dp"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-                    android:paddingTop="4dp"
+                    android:paddingTop="8dp"
+                    android:textStyle="bold"
                     android:textIsSelectable="false"
                     tools:text="ring:8F29045378ACA68F2ACA2346078ACA68F2ACA290" />
 
@@ -84,7 +119,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:gravity="center_vertical"
                         android:paddingBottom="8dp"
                         android:paddingTop="8dp"
-                        android:text="@string/no_registered_name_for_account" />
+                        android:text="@string/no_registered_name_for_account"
+                        android:textAlignment="center" />
 
                     <Button
                         android:id="@+id/register_name_btn"
@@ -154,6 +190,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:paddingTop="4dp"
                         android:textAlignment="viewStart"
                         tools:text="blockchain_name" />
+
                 </LinearLayout>
 
                 <TextView
@@ -200,7 +237,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </FrameLayout>
 
             </LinearLayout>
-        </android.support.v7.widget.CardView>
+        </RelativeLayout>
     </cx.ring.views.BoundedScrollView>
 
     <include
