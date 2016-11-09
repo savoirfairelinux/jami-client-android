@@ -26,10 +26,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -51,8 +53,6 @@ import android.view.View;
 import com.astuetz.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import cx.ring.R;
 import cx.ring.fragments.AdvancedAccountFragment;
@@ -110,12 +110,13 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     private ViewPager mViewPager = null;
     private PagerSlidingTabStrip mSlidingTabLayout = null;
 
-    private final Observer mAccountObserver = new Observer() {
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
-        public void update(Observable observable, Object data) {
-            Log.i(TAG, "Observer: account changed !");
-            for (AccountChangedListener l : listeners) {
-                l.accountChanged(mAccSelected);
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().contentEquals(LocalService.ACTION_ACCOUNT_UPDATE)) {
+                for (AccountChangedListener l : listeners) {
+                    l.accountChanged(mAccSelected);
+                }
             }
         }
     };
@@ -135,7 +136,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                 finish();
             }
 
-            mAccSelected.addObserver(mAccountObserver);
+            registerReceiver(mReceiver, new IntentFilter(LocalService.ACTION_ACCOUNT_UPDATE));
 
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
@@ -189,7 +190,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
             // Called in case of service crashing or getting killed
-            mAccSelected.deleteObserver(mAccountObserver);
+            unregisterReceiver(mReceiver);
             mBound = false;
         }
     };
@@ -235,12 +236,9 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        unregisterReceiver(mReceiver);
         if (mBound) {
             unbindService(mConnection);
-            if (mAccSelected != null) {
-                mAccSelected.deleteObserver(mAccountObserver);
-            }
             mBound = false;
         }
     }

@@ -156,6 +156,7 @@ along with this program; if not, write to the Free Software
     <string name="update_account">Update account</string>
     <string name="account_migration">Your Ring account can now be shared between all your devices. All you need to do is provide a password.</string>
     <string name="ring_account">Ring account</string>
+    <string name="ring_account_identity">Identity</string>
     <string name="account_migration_title_dialog">Account migration</string>
     <string name="account_migration_message_dialog">In order to be usable on multiple devices, your accounts need to be updated. Do you want to go the Account management screen to perform this operation ?</string>
     <string name="account_update_needed">Update needed</string>
@@ -194,5 +195,10 @@ along with this program; if not, write to the Free Software
     <string name="username_already_taken">Username already taken</string>
     <string name="invalid_username">Invalid username</string>
     <string name="looking_for_username_availability">Looking for username availability ...</string>
+    <string name="account_status_connecting">Connecting</string>
+    <string name="account_status_connection_error">Connection error</string>
+    <string name="account_status_online">Online</string>
+    <string name="account_status_unknown">Unknown</string>
+    <string name="account_status_offline">Offline</string>
 
 </resources>
