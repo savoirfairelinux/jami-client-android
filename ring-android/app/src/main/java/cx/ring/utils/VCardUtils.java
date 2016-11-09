@@ -87,29 +87,15 @@ public class VCardUtils {
         saveToDisk(vcard, filename, path, context);
     }
 
-    public static void saveLocalProfileToDisk(String vcard, Context context) {
+    public static void saveLocalProfileToDisk(String vcard, String accountID, Context context) {
         String path = localProfilePath(context);
-        File vcardPath = new File(path);
-        String filename;
-        if (vcardPath.exists() && vcardPath.listFiles().length > 0) {
-            filename = vcardPath.listFiles()[0].getName();
-        } else {
-            filename = String.valueOf(System.currentTimeMillis()) + ".vcf";
-        }
-
+        String filename = accountID + ".vcf";
         saveToDisk(vcard, filename, path, context);
     }
 
-    public static void saveLocalProfileToDisk(VCard vcard, Context context) {
+    public static void saveLocalProfileToDisk(VCard vcard, String accountID, Context context) {
         String path = localProfilePath(context);
-        File vcardPath = new File(path);
-        String filename;
-        if (vcardPath.exists() && vcardPath.listFiles().length > 0) {
-            filename = vcardPath.listFiles()[0].getName();
-        } else {
-            filename = String.valueOf(System.currentTimeMillis()) + ".vcf";
-        }
-
+        String filename = accountID + ".vcf";
         saveToDisk(vcard, filename, path, context);
     }
 
@@ -175,22 +161,20 @@ public class VCardUtils {
         return loadFromDisk(path, context);
     }
 
-    public static VCard loadLocalProfileFromDisk(@Nullable Context context) {
+    public static VCard loadLocalProfileFromDisk(String accountID, @Nullable Context context) {
         VCard vcard = null;
         String path = localProfilePath(context);
         if (!TextUtils.isEmpty(path)) {
-            File vcardPath = new File(path);
+            File vcardPath = new File(path + File.separator + accountID + ".vcf");
             if (vcardPath.exists()) {
-                File[] listvCard = vcardPath.listFiles();
-                if (listvCard.length > 0) {
-                    vcard = loadFromDisk(listvCard[0].toString(), context);
-                }
+                vcard = loadFromDisk(vcardPath.getAbsolutePath(), context);
             }
         }
 
         if (vcard == null) {
             Log.d(TAG, "load default profile");
             vcard = setupDefaultProfile(context);
+            saveLocalProfileToDisk(vcard, accountID, context);
         }
 
         return vcard;
@@ -254,11 +238,10 @@ public class VCardUtils {
         return context.getFilesDir().getAbsolutePath() + File.separator + "profiles";
     }
 
-    private static VCard setupDefaultProfile(Context context) {
+    public static VCard setupDefaultProfile(Context context) {
         VCard vcard = new VCard();
         vcard.setFormattedName(new FormattedName(context.getString(R.string.unknown)));
         vcard.setUid(new Uid(String.valueOf(System.currentTimeMillis())));
-        saveLocalProfileToDisk(vcard, context);
         return vcard;
     }
 }

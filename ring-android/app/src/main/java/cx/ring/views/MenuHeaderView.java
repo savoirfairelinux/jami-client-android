@@ -88,6 +88,7 @@ public class MenuHeaderView extends FrameLayout {
     private Bitmap mSourcePhoto;
     private ImageView mProfilePhoto;
     private VCard mVCardProfile;
+    private String mAccountID;
 
     private List<WeakReference<MenuHeaderAccountSelectionListener>> mListeners;
 
@@ -122,11 +123,13 @@ public class MenuHeaderView extends FrameLayout {
                             listener.accountSelected(getSelectedAccount());
                         }
                     }
+                    updateUserView();
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> arg0) {
                     mAccountAdapter.setSelectedAccount(-1);
+                    updateUserView();
                 }
             });
             updateAccounts(service.getAccounts());
@@ -142,7 +145,13 @@ public class MenuHeaderView extends FrameLayout {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         Log.d(TAG, "updateUserView");
         if (null != inflater) {
-            mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getContext());
+            Log.d(TAG, "accountID " + mAccountID);
+            if(mAccountID != null){
+                mVCardProfile = VCardUtils.loadLocalProfileFromDisk(mAccountID, getContext());
+            }
+            else{
+                mVCardProfile = VCardUtils.setupDefaultProfile(getContext());
+            }
             if (!mVCardProfile.getPhotos().isEmpty()) {
                 Photo tmp = mVCardProfile.getPhotos().get(0);
                 mUserImage.setImageBitmap(CropImageUtils.cropImageToCircle(tmp.getData()));
@@ -180,8 +189,6 @@ public class MenuHeaderView extends FrameLayout {
         mAccountAdapter = new AccountSelectionAdapter(inflater.getContext(), new ArrayList<Account>());
 
         mSpinnerAccounts.setAdapter(mAccountAdapter);
-
-        mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getContext());
 
         updateUserView();
 
@@ -262,7 +269,7 @@ public class MenuHeaderView extends FrameLayout {
                 }
 
                 mVCardProfile.removeProperties(RawProperty.class);
-                VCardUtils.saveLocalProfileToDisk(mVCardProfile, getContext());
+                VCardUtils.saveLocalProfileToDisk(mVCardProfile, mAccountID, getContext());
                 updateUserView();
             }
         });
@@ -275,14 +282,22 @@ public class MenuHeaderView extends FrameLayout {
     }
 
     public void updateAccounts(List<Account> accounts) {
+        Log.d(TAG, "updateAccounts");
         if (accounts.isEmpty()) {
             mNewAccountBtn.setVisibility(View.VISIBLE);
             mSpinnerAccounts.setVisibility(View.GONE);
+            mAccountID = null;
         } else {
             mNewAccountBtn.setVisibility(View.GONE);
             mSpinnerAccounts.setVisibility(View.VISIBLE);
             mAccountAdapter.replaceAll(accounts);
             mSpinnerAccounts.setSelection(0);
+            if(getSelectedAccount() != null) {
+                mAccountID = getSelectedAccount().getAccountID();
+            }
+            else{
+                mAccountID = null;
+            }
         }
     }
 

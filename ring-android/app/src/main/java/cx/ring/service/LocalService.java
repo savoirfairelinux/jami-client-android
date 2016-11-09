@@ -1592,7 +1592,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
                     // Sending VCard when receiving a call
                     try {
-                        getRemoteService().sendProfile(callId);
+                        getRemoteService().sendProfile(callId, accountId);
                         Log.d(TAG, "send vcard");
                     } catch (Exception e) {
                         Log.e(TAG, "Error while sending profile", e);
@@ -1631,8 +1631,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                             }
                             if (newState == SipCall.State.RINGING) {
                                 try {
-                                    getRemoteService().sendProfile(callId);
-                                    Log.d(TAG, "send vcard");
+                                    getRemoteService().sendProfile(callId, call.getAccount());
+                                    Log.d(TAG, "send vcard " + call.getAccount());
                                 } catch (Exception e) {
                                     Log.e(TAG, "Error while sending profile", e);
                                 }
