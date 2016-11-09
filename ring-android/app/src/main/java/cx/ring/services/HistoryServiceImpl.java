@@ -19,7 +19,7 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.history;
+package cx.ring.services;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -38,21 +38,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import cx.ring.R;
+import cx.ring.history.DatabaseHelper;
+import cx.ring.history.HistoryCall;
+import cx.ring.history.HistoryEntry;
+import cx.ring.history.HistoryText;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 
-public class HistoryManager {
-    private static final String TAG = HistoryManager.class.getSimpleName();
+public class HistoryServiceImpl extends HistoryService {
+    private static final String TAG = HistoryServiceImpl.class.getSimpleName();
 
-    private Context mContext;
+    @Inject
+    Context mContext;
+
     private DatabaseHelper historyDBHelper = null;
 
-    public HistoryManager(Context context) {
-        mContext = context;
-        getHelper();
+    public HistoryServiceImpl() {
     }
 
     public boolean insertNewEntry(Conference toInsert) {
@@ -80,7 +86,7 @@ public class HistoryManager {
 
             HistoryCall persistent = new HistoryCall(call);
             try {
-                Log.w("HistoryManager", "HistoryDao().create() " + persistent.getNumber() + " " + persistent.getStartDate().toString() + " " + persistent.getEndDate());
+                Log.w("HistoryServiceImpl", "HistoryDao().create() " + persistent.getNumber() + " " + persistent.getStartDate().toString() + " " + persistent.getEndDate());
                 getHelper().getHistoryDao().create(persistent);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -92,7 +98,7 @@ public class HistoryManager {
 
     public boolean insertNewTextMessage(HistoryText txt) {
         try {
-            Log.d("HistoryManager", "HistoryDao().create() id:" + txt.id + " acc:" + txt.getAccountID() + " num:" + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage());
+            Log.d("HistoryServiceImpl", "HistoryDao().create() id:" + txt.id + " acc:" + txt.getAccountID() + " num:" + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage());
             getHelper().getTextHistoryDao().create(txt);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -111,7 +117,7 @@ public class HistoryManager {
 
     public boolean updateTextMessage(HistoryText txt) {
         try {
-            Log.w("HistoryManager", "HistoryDao().update() id:" + txt.id + " acc:" + txt.getAccountID() + " num:" + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage());
+            Log.w("HistoryServiceImpl", "HistoryDao().update() id:" + txt.id + " acc:" + txt.getAccountID() + " num:" + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage());
             getHelper().getTextHistoryDao().update(txt);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,6 +132,15 @@ public class HistoryManager {
     */
     public boolean insertNewEntry(SipCall toInsert) {
         return true;
+    }
+
+    /**
+     * Init Helper for our DB
+     */
+    public void initHelper() {
+        if (historyDBHelper == null) {
+            historyDBHelper = OpenHelperManager.getHelper(mContext, DatabaseHelper.class);
+        }
     }
 
     /**
@@ -189,14 +204,17 @@ public class HistoryManager {
         }
     }
 
-    public boolean clearDB() {
+    @Override
+    public void clearHistory() {
         try {
             TableUtils.clearTable(getHelper().getConnectionSource(), HistoryCall.class);
             TableUtils.clearTable(getHelper().getConnectionSource(), HistoryText.class);
+
+            // notify the observers
+            setChanged();
+            notifyObservers();
         } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            Log.e(TAG, "Error while clearing history tables", e);
         }
-        return true;
     }
 }
