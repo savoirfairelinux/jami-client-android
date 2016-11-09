@@ -218,12 +218,6 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         }
     }
 
-
-    public void editAdvanced() {
-        mSlidingTabLayout.setVisibility(View.VISIBLE);
-        mViewPager.setVisibility(View.VISIBLE);
-    }
-
     private void finishAdvanced() {
         mSlidingTabLayout.setVisibility(View.GONE);
         mViewPager.setVisibility(View.GONE);
@@ -271,6 +265,10 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             case R.id.menuitem_delete:
                 AlertDialog deleteDialog = createDeleteDialog();
                 deleteDialog.show();
+                break;
+            case R.id.menuitem_advanced:
+                mSlidingTabLayout.setVisibility(View.VISIBLE);
+                mViewPager.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;

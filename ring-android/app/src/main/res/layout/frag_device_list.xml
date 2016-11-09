@@ -41,33 +41,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/account_alias_txt"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/account_alias_txt"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingBottom="8dp"
-                        android:paddingEnd="16dp"
-                        android:paddingStart="16dp"
-                        android:paddingTop="24dp"
-                        android:text="@string/ring_account"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
-
-                    <ImageButton
-                        android:id="@+id/account_edit_btn"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:background="?selectableItemBackgroundBorderless"
-                        app:srcCompat="@drawable/ic_settings_black" />
-
-                </LinearLayout>
+                    android:layout_weight="1"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="24dp"
+                    android:text="@string/ring_account"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
                 <TextView
                     android:id="@+id/account_id_txt"
@@ -161,15 +145,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         style="@style/Base.TextAppearance.AppCompat.Title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="start"
                         android:paddingBottom="16dp"
                         android:paddingEnd="8dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="8dp"
                         android:paddingStart="16dp"
                         android:paddingTop="4dp"
-                        tools:text="Wagaf"
                         android:textAlignment="viewStart"
-                        android:layout_gravity="start"/>
+                        tools:text="blockchain_name" />
                 </LinearLayout>
 
                 <TextView

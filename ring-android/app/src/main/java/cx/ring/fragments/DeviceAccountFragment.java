@@ -56,7 +56,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.R;
-import cx.ring.client.AccountEditionActivity;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.interfaces.BackHandlerInterface;
@@ -91,9 +90,6 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
 
     @BindView(R.id.account_link_info)
     TextView mExportInfos;
-
-    @BindView(R.id.account_edit_btn)
-    View mEditBtn;
 
     @BindView(R.id.account_alias_txt)
     TextView mAccountNameTxt;
@@ -424,10 +420,4 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
 
         return devLayout;
     }
-
-    @OnClick(R.id.account_edit_btn)
-    public void editAccount() {
-        ((AccountEditionActivity) getActivity()).editAdvanced();
-    }
-
 }
