@@ -117,7 +117,6 @@ public class RingAccountCreationFragment extends Fragment {
                 confirm.setError(null);
             }
         }
-        mAddAccountBtn.setEnabled(!error);
         return error;
     }
 
@@ -161,7 +160,7 @@ public class RingAccountCreationFragment extends Fragment {
 
     @OnEditorAction(R.id.ring_password_repeat)
     public boolean onPasswordRepeatEditorAction(TextView view, int actionId, KeyEvent event) {
-        Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
+        Log.i(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             if (mPasswordTxt.getText().length() != 0 && !checkPassword(mPasswordTxtBox, mPasswordRepeatTxtBox)) {
                 mAddAccountBtn.callOnClick();
