@@ -69,17 +69,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.inject.Inject;
+
 import cx.ring.BuildConfig;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
-import cx.ring.history.HistoryManager;
 import cx.ring.history.HistoryText;
 import cx.ring.loaders.AccountsLoader;
 import cx.ring.loaders.ContactsLoader;
@@ -93,9 +97,11 @@ import cx.ring.model.SecureSipCall;
 import cx.ring.model.SipCall;
 import cx.ring.model.SipUri;
 import cx.ring.model.TextMessage;
+import cx.ring.services.HistoryService;
+import cx.ring.services.HistoryServiceImpl;
 import cx.ring.utils.MediaManager;
 
-public class LocalService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class LocalService extends Service implements SharedPreferences.OnSharedPreferenceChangeListener, Observer {
     static final String TAG = LocalService.class.getSimpleName();
 
     // Emitting events
@@ -117,6 +123,9 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
 
     public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
 
+    @Inject
+    HistoryService mHistoryService;
+
     private IDRingService mService = null;
     private boolean dringStarted = false;
 
@@ -129,8 +138,6 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     private LongSparseArray<TextMessage> messages = new LongSparseArray<>();
 
     private List<Account> accounts = new ArrayList<>();
-
-    private HistoryManager historyManager;
 
     private final LongSparseArray<CallContact> systemContactCache = new LongSparseArray<>();
     private ContactsLoader.Result lastContactLoaderResult = new ContactsLoader.Result();
@@ -260,7 +267,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             TextMessage message = new TextMessage(false, txt, to, null, account);
             message.setID(id);
             message.read();
-            historyManager.insertNewTextMessage(message);
+            ((HistoryServiceImpl)mHistoryService).insertNewTextMessage(message);
             messages.put(id, message);
             textMessageSent(message);
         } catch (RemoteException e) {
@@ -322,7 +329,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             SipCall call = conf.getParticipants().get(0);
             TextMessage message = new TextMessage(false, txt, call.getNumberUri(), conf.getId(), call.getAccount());
             message.read();
-            historyManager.insertNewTextMessage(message);
+            ((HistoryServiceImpl)mHistoryService).insertNewTextMessage(message);
             textMessageSent(message);
         } catch (RemoteException e) {
             Log.e(TAG, "sendTextMessage", e);
@@ -332,7 +339,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     private void readTextMessage(TextMessage message) {
         message.read();
         HistoryText ht = new HistoryText(message);
-        historyManager.updateTextMessage(ht);
+        ((HistoryServiceImpl)mHistoryService).updateTextMessage(ht);
     }
 
     public void readConversation(Conversation conv) {
@@ -432,7 +439,13 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
             }
         };
 
-        historyManager = new HistoryManager(this);
+        // dependency injection
+        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+
+        // temporary listen for history modifications
+        // When MVP/DI injection will be done, only the concerned presenters should listen
+        // for model modifications
+        mHistoryService.addObserver(this);
 
         startDRingService();
 
@@ -830,7 +843,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     }
 
     public void clearHistory() {
-        historyManager.clearDB();
+        mHistoryService.clearHistory();
         refreshConversations();
     }
 
@@ -1084,8 +1097,8 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
         protected Map<String, Conversation> doInBackground(Void... params) {
             final Map<String, Conversation> ret = new HashMap<>();
             try {
-                final List<HistoryCall> history = historyManager.getAll();
-                final List<HistoryText> historyTexts = historyManager.getAllTextMessages();
+                final List<HistoryCall> history = ((HistoryServiceImpl)mHistoryService).getAll();
+                final List<HistoryText> historyTexts = ((HistoryServiceImpl)mHistoryService).getAllTextMessages();
                 final Map<String, ArrayList<String>> confs = mService.getConferenceList();
 
                 for (HistoryCall call : history) {
@@ -1461,7 +1474,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                     if (conversation.mVisible) {
                         txt.read();
                     }
-                    historyManager.insertNewTextMessage(txt);
+                    ((HistoryServiceImpl)mHistoryService).insertNewTextMessage(txt);
 
                     conversation.addTextMessage(txt);
                     if (!conversation.mVisible) {
@@ -1654,7 +1667,7 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
                             if (newState == SipCall.State.HUNGUP) {
                                 call.setTimestampEnd(System.currentTimeMillis());
                             }
-                            historyManager.insertNewEntry(found);
+                            ((HistoryServiceImpl)mHistoryService).insertNewEntry(found);
                             conversation.addHistoryCall(new HistoryCall(call));
                             notificationManager.cancel(found.notificationId);
                             found.removeParticipant(call);
@@ -1742,7 +1755,12 @@ public class LocalService extends Service implements SharedPreferences.OnSharedP
     }
 
     public void deleteConversation(Conversation conversation) {
-        historyManager.clearHistoryForConversation(conversation);
+        ((HistoryServiceImpl)mHistoryService).clearHistoryForConversation(conversation);
+        refreshConversations();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
         refreshConversations();
     }
 }

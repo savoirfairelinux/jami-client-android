@@ -65,7 +65,7 @@ import cx.ring.R;
 import cx.ring.about.AboutFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.ContactListFragment;
-import cx.ring.fragments.SettingsFragment;
+import cx.ring.settings.SettingsFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
