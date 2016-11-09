@@ -711,14 +711,14 @@ public class DRingService extends Service {
         }
 
         @Override
-        public void sendProfile(final String callID) {
+        public void sendProfile(final String callID, final String accountID) {
             getExecutor().execute(new SipRunnable() {
                 @Override
                 protected void doRun() throws SameThreadException, RemoteException {
                     final String ringProfileVCardMime = "x-ring/ring.profile.vcard";
 
                     Context context = DRingService.this;
-                    VCard vcard = VCardUtils.loadLocalProfileFromDisk(context.getFilesDir(), context.getString(R.string.unknown));
+                    VCard vcard = VCardUtils.loadLocalProfileFromDisk(context.getFilesDir(), accountID, context.getString(R.string.unknown));
                     String stringVCard = VCardUtils.vcardToString(vcard);
 
                     int nbTotal = stringVCard.length() / VCARD_CHUNK_SIZE + (stringVCard.length() % VCARD_CHUNK_SIZE != 0 ? 1 : 0);
