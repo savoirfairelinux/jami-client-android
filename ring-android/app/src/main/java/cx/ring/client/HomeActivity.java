@@ -57,21 +57,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
+import cx.ring.application.RingApplication;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.ContactListFragment;
-import cx.ring.fragments.SettingsFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.ConfigKey;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
 import cx.ring.utils.FileUtils;
 import cx.ring.views.MenuHeaderView;
@@ -194,8 +196,16 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
         // Bind to LocalService
         String[] toRequest = LocalService.checkRequiredPermissions(this);
-        if (toRequest.length > 0) {
-            ActivityCompat.requestPermissions(this, toRequest, LocalService.PERMISSIONS_REQUEST);
+        ArrayList<String> permissionsWeCanAsk = new ArrayList<>();
+
+        for (String permission: toRequest) {
+            if (((RingApplication)getApplication()).canAskForPermission(permission)) {
+                permissionsWeCanAsk.add(permission);
+            }
+        }
+
+        if (!permissionsWeCanAsk.isEmpty()) {
+            ActivityCompat.requestPermissions(this, permissionsWeCanAsk.toArray(new String[permissionsWeCanAsk.size()]), LocalService.PERMISSIONS_REQUEST);
         } else if (!mBound) {
             Log.d(TAG, "onCreate: Binding service...");
             Intent intent = new Intent(this, LocalService.class);
@@ -307,7 +317,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 }
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
                 for (int i = 0, n = permissions.length; i < n; i++) {
-                    switch (permissions[i]) {
+                    String permission = permissions[i];
+                    ((RingApplication)getApplication()).permissionHasBeenAsked(permission);
+                    switch (permission) {
                         case Manifest.permission.RECORD_AUDIO:
                             if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                                 Log.e(TAG, "Missing required permission RECORD_AUDIO");
