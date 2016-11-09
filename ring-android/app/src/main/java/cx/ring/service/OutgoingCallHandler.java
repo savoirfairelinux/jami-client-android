@@ -26,11 +26,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import cx.ring.R;
 import cx.ring.client.CallActivity;
-import cx.ring.fragments.SettingsFragment;
 import cx.ring.model.SipUri;
 
 public class OutgoingCallHandler extends BroadcastReceiver

@@ -37,7 +37,7 @@ public class HistoryTimeModel {
         String NEVER = "Never"; // 24
     }
 
-    private static final String TAG = HistoryManager.class.getSimpleName();
+    private static final String TAG = HistoryTimeModel.class.getSimpleName();
 
     static Calendar removeDays(int ago) {
         Calendar cal = Calendar.getInstance(Locale.getDefault());
