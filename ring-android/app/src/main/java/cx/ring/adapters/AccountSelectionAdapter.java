@@ -40,8 +40,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
     private static final String TAG = AccountSelectionAdapter.class.getSimpleName();
 
-    private final List<Account> all_accounts = new ArrayList<>();
-    private final List<Account> accounts = new ArrayList<>();
+    private final List<Account> mAccounts = new ArrayList<>();
     private final Context mContext;
     private int selectedAccount = -1;
 
@@ -53,12 +52,12 @@ public class AccountSelectionAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return accounts.size();
+        return mAccounts.size();
     }
 
     @Override
     public Account getItem(int pos) {
-        return accounts.get(pos);
+        return mAccounts.get(pos);
     }
 
     @Override
@@ -85,15 +84,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
         }
         entryView.error.setColorFilter(ContextCompat.getColor(mContext, R.color.error_red));
 
-/*
-        entryView.alias.setText(accounts.get(pos).getAlias());
-
-        entryView.host.setText(accounts.get(pos).getHost() + " - " + accounts.get(pos).getRegistrationState());
-        // accManager.displayAccountDetails(accounts.get(pos), entryView);
-        entryView.error.setVisibility(View.GONE);
-*/
-        updateAccountView(entryView, accounts.get(pos));
-
+        updateAccountView(entryView, mAccounts.get(pos));
         return rowView;
     }
 
@@ -116,22 +107,22 @@ public class AccountSelectionAdapter extends BaseAdapter {
         }
         entryView.error.setColorFilter(ContextCompat.getColor(mContext, R.color.error_red));
 
-        updateAccountView(entryView, accounts.get(pos));
+        updateAccountView(entryView, mAccounts.get(pos));
         return rowView;
     }
 
-    private void updateAccountView(AccountView entryView, Account acc) {
-        entryView.alias.setText(acc.getAlias());
-        if (acc.isRing()) {
-            entryView.host.setText(acc.getUsername());
+    private void updateAccountView(AccountView entryView, Account account) {
+        entryView.alias.setText(account.getAlias());
+        if (account.isRing()) {
+            entryView.host.setText(account.getUsername());
         } else {
-            entryView.host.setText(acc.getUsername() + "@" + acc.getHost());
+            entryView.host.setText(account.getUsername() + "@" + account.getHost());
         }
-        entryView.error.setVisibility(acc.isRegistered() ? View.GONE : View.VISIBLE);
+        entryView.error.setVisibility(account.isRegistered() ? View.GONE : View.VISIBLE);
     }
 
     public Account getAccount(String accountID) {
-        for(Account acc : accounts) {
+        for(Account acc : mAccounts) {
             if(acc.getAccountID().contentEquals(accountID))
                 return acc;
         }
@@ -161,26 +152,22 @@ public class AccountSelectionAdapter extends BaseAdapter {
     }
 
     private void setAccounts(List<Account> results) {
-        all_accounts.clear();
-        accounts.clear();
-        all_accounts.addAll(results);
-        for (Account acc : results)
-            if (acc.isEnabled())
-                accounts.add(acc);
-        setSelectedAccount(accounts.isEmpty() ? -1 : 0);
+        mAccounts.clear();
+        mAccounts.addAll(results);
+        setSelectedAccount(mAccounts.isEmpty() ? -1 : 0);
     }
 
     public Account getAccount(int pos) {
-        if (pos < 0 || pos >= accounts.size())
+        if (pos < 0 || pos >= mAccounts.size())
             return null;
-        return accounts.get(pos);
+        return mAccounts.get(pos);
     }
 
     public List<String> getAccountOrder() {
-        List<String> result = new ArrayList<>(accounts.size());
-        String selectedID = accounts.get(selectedAccount).getAccountID();
+        List<String> result = new ArrayList<>(mAccounts.size());
+        String selectedID = mAccounts.get(selectedAccount).getAccountID();
         result.add(selectedID);
-        for (Account a : all_accounts) {
+        for (Account a : mAccounts) {
             if (a.getAccountID().contentEquals(selectedID))
                 continue;
             result.add(a.getAccountID());
