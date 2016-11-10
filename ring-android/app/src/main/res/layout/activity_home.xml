@@ -106,10 +106,35 @@ along with this program; if not, write to the Free Software
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
         android:theme="@style/AppThemeBase"
-        android:windowBackground="@color/white"
-        app:itemTextColor="?android:textColorPrimary"
-        app:menu="@menu/drawer" />
+        android:windowBackground="@color/white">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <cx.ring.views.MenuHeaderView
+                    android:id="@+id/header_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/nav_drawer_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:nestedScrollingEnabled="false"
+                    tools:targetApi="lollipop" />
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

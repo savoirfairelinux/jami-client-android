@@ -194,7 +194,7 @@ public class MenuHeaderView extends FrameLayout {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(R.string.profile);
 
-        LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
+        LayoutInflater inflater = LayoutInflater.from(getContext());
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.dialog_profile, null);
 
         final EditText editText = (EditText) view.findViewById(R.id.user_name);

@@ -42,17 +42,20 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -77,7 +80,7 @@ import cx.ring.utils.FileUtils;
 import cx.ring.views.MenuHeaderView;
 
 public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks,
-        NavigationView.OnNavigationItemSelectedListener,
+        android.support.design.widget.NavigationView.OnNavigationItemSelectedListener,
         ActivityCompat.OnRequestPermissionsResultCallback,
         ContactListFragment.Callbacks {
 
@@ -105,11 +108,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private boolean mNoAccountOpened = false;
     private boolean mIsMigrationDialogAlreadyShowed;
 
-    private MenuHeaderView fMenuHead = null;
     private ActionBarDrawerToggle mDrawerToggle;
 
     @BindView(R.id.left_drawer)
-    NavigationView fMenu;
+    android.support.design.widget.NavigationView fMenu;
 
     @BindView(R.id.drawer_layout)
     DrawerLayout mNavigationDrawer;
@@ -125,6 +127,12 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @BindView(R.id.action_button)
     FloatingActionButton actionButton;
+
+    @BindView(R.id.header_view)
+    MenuHeaderView mHeadView;
+
+    @BindView(R.id.nav_drawer_recycler_view)
+    RecyclerView mNavigationView;
 
     private float mToolbarSize;
     protected android.app.Fragment fContent;
@@ -165,7 +173,15 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
         setSupportActionBar(mToolbar);
 
-        fMenu.setNavigationItemSelectedListener(this);
+//        fMenu.setNavigationItemSelectedListener(this);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mNavigationView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mNavigationView.setLayoutManager(mLayoutManager);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -184,8 +200,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             @Override
             public void onDrawerOpened(View drawerView) {
                 invalidateOptionsMenu();
-                if (null != fMenuHead) {
-                    fMenuHead.updateUserView();
+                if (null != mHeadView) {
+                    mHeadView.updateUserView();
                 }
             }
         };
@@ -216,11 +232,16 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                             showMigrationDialog();
                         }
                     }
+
+                    // specify an adapter (see also next example)
+                    AccountAdapter mAdapter = new AccountAdapter(service.getAccounts());
+                    mNavigationView.setAdapter(mAdapter);
+
                     if (!mNoAccountOpened && service.getAccounts().isEmpty()) {
                         mNoAccountOpened = true;
                         startActivityForResult(new Intent(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
                     } else {
-                        fMenuHead.updateAccounts(service.getAccounts());
+                        mHeadView.updateAccounts(service.getAccounts());
                     }
                     break;
             }
@@ -463,12 +484,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             registerReceiver(receiver, intentFilter);
             mBound = true;
 
-            fMenuHead = (MenuHeaderView) fMenu.getHeaderView(0);
-            if (fMenuHead == null) {
-                fMenuHead = new MenuHeaderView(HomeActivity.this);
-                fMenuHead.setCallbacks(service);
-                fMenu.addHeaderView(fMenuHead);
-            }
+            mHeadView.setCallbacks(service);
 
             FragmentManager fragmentManager = getFragmentManager();
             fContent = fragmentManager.findFragmentById(R.id.main_frame);
@@ -476,8 +492,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 fContent = new SmartListFragment();
                 fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commit();
 
-                if (fMenuHead != null) {
-                    fMenuHead.registerAccountSelectionListener((MenuHeaderView.MenuHeaderAccountSelectionListener) fContent);
+                if (mHeadView != null) {
+                    mHeadView.registerAccountSelectionListener((MenuHeaderView.MenuHeaderAccountSelectionListener) fContent);
                 }
             } else if (fContent instanceof Refreshable) {
                 fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commit();
@@ -489,9 +505,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         @Override
         public void onServiceDisconnected(ComponentName className) {
             Log.d(TAG, "onServiceDisconnected " + className.getClassName());
-            if (fMenuHead != null) {
-                fMenuHead.setCallbacks(null);
-                fMenuHead = null;
+            if (mHeadView != null) {
+                mHeadView.setCallbacks(null);
+                mHeadView = null;
             }
             mBound = false;
         }
@@ -511,8 +527,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 mNoAccountOpened = false;
             case REQUEST_CODE_PREFERENCES:
             case AccountsManagementFragment.ACCOUNT_EDIT_REQUEST:
-                if (fMenuHead != null) {
-                    fMenuHead.updateAccounts(service.getAccounts());
+                if (mHeadView != null) {
+                    mHeadView.updateAccounts(service.getAccounts());
                 }
                 break;
             case REQUEST_CODE_CALL:
@@ -522,12 +538,12 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 break;
             case REQUEST_CODE_PHOTO:
                 if (resultCode == RESULT_OK && data != null) {
-                    fMenuHead.updatePhoto((Bitmap) data.getExtras().get("data"));
+                    mHeadView.updatePhoto((Bitmap) data.getExtras().get("data"));
                 }
                 break;
             case REQUEST_CODE_GALLERY:
                 if (resultCode == RESULT_OK && data != null) {
-                    fMenuHead.updatePhoto(data.getData());
+                    mHeadView.updatePhoto(data.getData());
                 }
                 break;
         }
@@ -710,4 +726,110 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             }
         }
     }
+
+    public class AccountAdapter extends RecyclerView.Adapter<AccountAdapter.AccountView> {
+        private List<Account> mDataset;
+
+        public class AccountView extends RecyclerView.ViewHolder {
+
+            @BindView(R.id.account_alias)
+            TextView alias;
+
+            @BindView(R.id.account_host)
+            TextView host;
+
+            @BindView(R.id.error_indicator)
+            ImageView error;
+
+            public AccountView(View view) {
+                super(view);
+                ButterKnife.bind(this, view);
+            }
+        }
+
+        // Provide a suitable constructor (depends on the kind of dataset)
+        public AccountAdapter(List<Account> accounts) {
+            mDataset = accounts;
+        }
+
+        // Create new views (invoked by the layout manager)
+        @Override
+        public AccountAdapter.AccountView onCreateViewHolder(ViewGroup parent,
+                                                             int viewType) {
+            // create a new view
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_account, parent, false);
+            // set the view's size, margins, paddings and layout parameters
+
+            AccountView vh = new AccountView(v);
+            return vh;
+        }
+
+        // Replace the contents of a view (invoked by the layout manager)
+        @Override
+        public void onBindViewHolder(AccountView holder, int position) {
+            // - get element from your dataset at this position
+            // - replace the contents of the view with that element
+            holder.alias.setText(mDataset.get(position).getAlias());
+
+        }
+
+        // Return the size of your dataset (invoked by the layout manager)
+        @Override
+        public int getItemCount() {
+            return mDataset.size();
+        }
+    }
+
+    public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.NavigationView> {
+        private List<Account> mDataset;
+
+        public class NavigationView extends RecyclerView.ViewHolder {
+
+            @BindView(R.id.account_alias)
+            TextView alias;
+
+            @BindView(R.id.account_host)
+            TextView host;
+
+            public NavigationView(View view) {
+                super(view);
+                ButterKnife.bind(this, view);
+            }
+        }
+
+        // Provide a suitable constructor (depends on the kind of dataset)
+        public NavigationAdapter(List<Account> accounts) {
+            mDataset = accounts;
+        }
+
+        // Create new views (invoked by the layout manager)
+        @Override
+        public NavigationAdapter.NavigationView onCreateViewHolder(ViewGroup parent,
+                                                        int viewType) {
+            // create a new view
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_account, parent, false);
+            // set the view's size, margins, paddings and layout parameters
+
+            NavigationView vh = new NavigationView(v);
+            return vh;
+        }
+
+        // Replace the contents of a view (invoked by the layout manager)
+        @Override
+        public void onBindViewHolder(NavigationView holder, int position) {
+            // - get element from your dataset at this position
+            // - replace the contents of the view with that element
+            holder.alias.setText(mDataset.get(position).getAlias());
+
+        }
+
+        // Return the size of your dataset (invoked by the layout manager)
+        @Override
+        public int getItemCount() {
+            return mDataset.size();
+        }
+    }
+
 }
