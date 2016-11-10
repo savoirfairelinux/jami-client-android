@@ -7,6 +7,7 @@
     <color name="action_blue">#004C60</color>
 
     <!-- SFL colors-->
+    <color name="sfl_blue_lines">#0a90ce</color>
 
     <color name="darker_gray">#aaaaaa</color>
     <color name="light">#eee</color>
