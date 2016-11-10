@@ -35,42 +35,62 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
-import cx.ring.fragments.AccountCreationFragment;
-import cx.ring.fragments.AccountMigrationFragment;
+import cx.ring.fragments.HomeAccountCreationFragment;
+import cx.ring.fragments.ProfileCreationFragment;
 import cx.ring.fragments.RingAccountCreationFragment;
-import cx.ring.fragments.RingAccountLoginFragment;
+import cx.ring.fragments.RingLinkAccountFragment;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.utils.VCardUtils;
+import cx.ring.views.WizardViewPager;
+import ezvcard.VCard;
+import ezvcard.parameter.ImageType;
+import ezvcard.property.FormattedName;
+import ezvcard.property.Photo;
+import ezvcard.property.RawProperty;
 
 public class AccountWizard extends AppCompatActivity implements LocalService.Callbacks {
     static final String TAG = AccountWizard.class.getName();
     private boolean mBound = false;
     private LocalService mService;
     private boolean mCreatingAccount = false;
+    private ProfileCreationFragment mProfileFragment;
+    private HomeAccountCreationFragment mHomeFragment;
 
-    @BindView(R.id.main_toolbar)
-    Toolbar mToolbar;
+    private boolean mLinkAccount = false;
+    private boolean mIsNew = false;
+    private Bitmap mPhotoProfile;
+    private String mFullname;
+    private String mUsername;
+    private String mPassword;
+    private String mPin;
+
+    @BindView(R.id.pager)
+    WizardViewPager mViewPager;
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -78,6 +98,8 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         public void onServiceConnected(ComponentName className, IBinder binder) {
             mService = ((LocalService.LocalBinder) binder).getService();
             mBound = true;
+            mIsNew = mService.getAccounts().isEmpty();
+            mViewPager.getAdapter().notifyDataSetChanged();
         }
 
         @Override
@@ -92,17 +114,16 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         setContentView(R.layout.activity_wizard);
         ButterKnife.bind(this);
 
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
         if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
             Intent intent = new Intent(this, LocalService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
 
-        ringChoose();
+        mViewPager.setOffscreenPageLimit(4);
+        mIsNew = !(mBound && !mService.getAccounts().isEmpty());
+        Log.d(TAG, "is first account " + mIsNew);
+        mViewPager.setAdapter(new WizardPagerAdapter(getFragmentManager()));
     }
 
     @Override
@@ -152,9 +173,14 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
 
     @Override
     public void onBackPressed() {
-        FragmentManager fm = getFragmentManager();
-        if (fm.getBackStackEntryCount() >= 1) {
-            fm.popBackStack();
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() >= 1) {
+            fragmentManager.popBackStack();
+            return;
+        }
+        if (mViewPager.getCurrentItem() >= 1) {
+            fragmentManager.popBackStack();
+            mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
             return;
         }
         super.onBackPressed();
@@ -209,24 +235,16 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
 
     }
 
-    public void ringChoose() {
-        boolean migrate = getIntent().getData() != null && !TextUtils.isEmpty(getIntent().getData().getLastPathSegment());
-
-        Bundle args = new Bundle();
-        Fragment fragment;
-        if (migrate) {
-            args.putString(AccountMigrationFragment.ACCOUNT_ID, getIntent().getData().getLastPathSegment());
-            fragment = new AccountMigrationFragment();
-            fragment.setArguments(args);
-        } else {
-            fragment = new AccountCreationFragment();
-        }
-
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit();
+    public void saveProfile(String accountID) {
+        VCard vcard = new VCard();
+        vcard.setFormattedName(new FormattedName(mFullname));
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        mPhotoProfile.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
+        vcard.removeProperties(Photo.class);
+        vcard.addPhoto(photoVCard);
+        vcard.removeProperties(RawProperty.class);
+        VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir());
     }
 
     public void ringCreate(boolean switchFragment) {
@@ -235,9 +253,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         if (!switchFragment) {
             fragmentTransaction.addToBackStack(null);
         }
-        fragmentTransaction
-                .replace(R.id.fragment_container, new RingAccountCreationFragment())
-                .commit();
+        mProfileFragment = new ProfileCreationFragment();
     }
 
     public void ringLogin(boolean switchFragment) {
@@ -246,9 +262,58 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         if (!switchFragment) {
             fragmentTransaction.addToBackStack(null);
         }
-        fragmentTransaction
-                .replace(R.id.fragment_container, new RingAccountLoginFragment())
-                .commit();
+    }
+
+    public void newAccount(boolean linkAccount) {
+        Log.d(TAG, "new account. linkAccount is " + linkAccount);
+        mLinkAccount = linkAccount;
+        mViewPager.getAdapter().notifyDataSetChanged();
+        mViewPager.setCurrentItem(1);
+    }
+
+    public void profileLast() {
+        mViewPager.setCurrentItem(0);
+    }
+
+    public void profileNext(String fullname, Bitmap photo) {
+        mPhotoProfile = photo;
+        mFullname = fullname;
+
+        mViewPager.setCurrentItem(2);
+    }
+
+    public void accountLast() {
+        mViewPager.setCurrentItem(1);
+    }
+
+    public void accountNext(String username, String pin, String password) {
+        mUsername = username;
+        mPassword = password;
+        mPin = pin;
+        mViewPager.setCurrentItem(3);
+    }
+
+    public void permissionsLast() {
+        mViewPager.setCurrentItem(2);
+    }
+
+    public void createAccount(String username, String pin, String password) {
+        mUsername = username;
+        mPassword = password;
+        mPin = pin;
+        createAccount();
+    }
+
+    public void createAccount() {
+        if (mLinkAccount) {
+            initAccountCreation(true, null, mPin, mPassword, null);
+        } else {
+            initAccountCreation(true, mUsername, null, mPassword, null);
+        }
+    }
+
+    public Boolean isFirstAccount() {
+        return mIsNew && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
     private class CreateAccountTask extends AsyncTask<HashMap<String, String>, Void, String> {
@@ -280,65 +345,72 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
                 @Override
                 public void stateChanged(String state, int code) {
                     Log.i(TAG, "stateListener -> stateChanged " + state + " " + code);
-                    if (!AccountConfig.STATE_INITIALIZING.contentEquals(state)) {
-                        account.stateListener = null;
-                        if (progress != null) {
-                            if (progress.isShowing()) {
-                                progress.dismiss();
-                            }
-                            progress = null;
+                    if (state.isEmpty() || state.contentEquals(AccountConfig.STATE_INITIALIZING)) {
+                        return;
+                    }
+                    account.stateListener = null;
+                    if (progress != null) {
+                        if (progress.isShowing()) {
+                            progress.dismiss();
                         }
-                        //Intent resultIntent = new Intent();
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(ctx);
-                        dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //do things
-                            }
-                        });
-                        boolean success = false;
-                        switch (state) {
-                            case AccountConfig.STATE_ERROR_GENERIC:
-                                dialog.setTitle(R.string.account_cannot_be_found_title)
-                                        .setMessage(R.string.account_cannot_be_found_message);
-                                break;
-                            case AccountConfig.STATE_ERROR_NETWORK:
-                                dialog.setTitle(R.string.account_no_network_title)
-                                        .setMessage(R.string.account_no_network_message);
-                                break;
-                            default:
+                        progress = null;
+                    }
+
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(ctx);
+                    dialog.setPositiveButton(android.R.string.ok, null);
+                    boolean success = false;
+                    switch (state) {
+                        case AccountConfig.STATE_UNREGISTERED:
+                            if (!mLinkAccount) {
                                 dialog.setTitle(R.string.account_device_added_title)
                                         .setMessage(R.string.account_device_added_message);
                                 success = true;
                                 break;
-                        }
-                        AlertDialog alertDialog = dialog.show();
-                        if (success) {
-                            if (!TextUtils.isEmpty(username)) {
-                                Log.i(TAG, "Account created, registering " + username);
-                                mService.registerName(account, "", username, new LocalService.NameRegistrationCallback() {
-                                    @Override
-                                    public void onRegistered(String name) {
-                                        Log.i(TAG, "Account wizard, onRegistered " + name);
-                                    }
-
-                                    @Override
-                                    public void onError(String name, CharSequence err) {
-                                        Log.w(TAG, "Account wizard, onError " + name);
-                                    }
-                                });
                             }
-
-                            alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        case AccountConfig.STATE_ERROR_GENERIC:
+                            dialog.setTitle(R.string.account_cannot_be_found_title)
+                                    .setMessage(R.string.account_cannot_be_found_message);
+                            break;
+                        case AccountConfig.STATE_ERROR_NETWORK:
+                            dialog.setTitle(R.string.account_no_network_title)
+                                    .setMessage(R.string.account_no_network_message);
+                            break;
+                        default:
+                            dialog.setTitle(R.string.account_device_added_title)
+                                    .setMessage(R.string.account_device_added_message);
+                            success = true;
+                            break;
+                    }
+                    AlertDialog alertDialog = dialog.show();
+                    if (success) {
+                        saveProfile(account.getAccountID());
+                        if (!TextUtils.isEmpty(username)) {
+                            Log.i(TAG, "Account created, registering " + username);
+                            mService.registerName(account, "", username, new LocalService.NameRegistrationCallback() {
                                 @Override
-                                public void onDismiss(DialogInterface dialogInterface) {
-                                    setResult(Activity.RESULT_OK, new Intent());
-                                    finish();
+                                public void onRegistered(String name) {
+                                    Log.i(TAG, "Account wizard, onRegistered " + name);
+                                }
+
+                                @Override
+                                public void onError(String name, CharSequence err) {
+                                    Log.w(TAG, "Account wizard, onError " + name);
                                 }
                             });
                         }
+
+                        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                setResult(Activity.RESULT_OK, new Intent());
+                                finish();
+                            }
+                        });
                     }
                 }
-            };
+            }
+
+            ;
             mCreatingAccount = false;
             return account.getAccountID();
         }
@@ -356,6 +428,26 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case ProfileCreationFragment.REQUEST_CODE_PHOTO:
+                if (resultCode == RESULT_OK && data != null) {
+                    mProfileFragment.updatePhoto((Bitmap) data.getExtras().get("data"));
+                }
+                break;
+            case ProfileCreationFragment.REQUEST_CODE_GALLERY:
+                if (resultCode == RESULT_OK && data != null) {
+                    mProfileFragment.updatePhoto(data.getData());
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
     public IDRingService getRemoteService() {
         return mService.getRemoteService();
     }
@@ -363,6 +455,45 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     @Override
     public LocalService getService() {
         return mService;
+    }
+
+    private class WizardPagerAdapter extends FragmentStatePagerAdapter {
+
+        WizardPagerAdapter(FragmentManager fm) {
+            super(fm);
+            mHomeFragment = new HomeAccountCreationFragment();
+            mProfileFragment = new ProfileCreationFragment();
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Log.d(TAG, "getItem");
+            switch (position) {
+                case 0:
+                    return mHomeFragment;
+                case 1:
+                    return mProfileFragment;
+                case 2:
+                    if (mLinkAccount) {
+                        return new RingLinkAccountFragment();
+                    } else {
+                        return new RingAccountCreationFragment();
+                    }
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            Log.d(TAG, "getItemPosition");
+            return POSITION_NONE;
+        }
     }
 
 }

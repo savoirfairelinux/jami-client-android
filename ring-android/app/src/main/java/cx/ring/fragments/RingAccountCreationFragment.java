@@ -23,7 +23,6 @@ package cx.ring.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
@@ -46,6 +45,7 @@ import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
+import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.client.AccountWizard;
 import cx.ring.service.LocalService;
@@ -75,46 +75,60 @@ public class RingAccountCreationFragment extends Fragment {
     @BindView(R.id.ring_password_repeat_txt_box)
     TextInputLayout mPasswordRepeatTxtBox;
 
-    @BindView(R.id.add_button)
-    Button mAddAccountBtn;
+    @BindView(R.id.last_create_account)
+    Button mLastButton;
 
     @BindView(R.id.ring_username_box)
     ViewGroup mUsernameBox;
 
+    @BindView(R.id.create_account)
+    Button mCreateAccountButton;
+
+    @OnTextChanged({R.id.ring_password, R.id.ring_password_repeat})
+    @OnCheckedChanged(R.id.switch_ring_username)
+    public void checkNextState() {
+        boolean formHasError = validateForm();
+        mCreateAccountButton.setEnabled(!formHasError);
+    }
+
     /**
      * Checks the validity of the given password.
-     *
-     * @param pwd     the first password.
-     * @param confirm the confirmation password.
      * @return false if there is no error, true otherwise.
      */
-    private boolean checkPassword(@NonNull TextInputLayout pwd, TextInputLayout confirm) {
+    private boolean validateForm() {
         //~ Init
         boolean error = false;
-        pwd.setError(null);
+        mPasswordTxtBox.setError(null);
         //~ Checking username presence.
+        if (mUsernameSwitch.isChecked() && mUsernameTxtBox.getError() != null) {
+            return true;
+        }
+
         if (mUsernameSwitch.isChecked() && TextUtils.isEmpty(mUsernameTxt.getText().toString())) {
             mUsernameTxtBox.setErrorEnabled(true);
             mUsernameTxtBox.setError(getString(R.string.error_username_empty));
             return true;
         }
+
         //~ Checking initial password.
-        if (pwd.getEditText() == null || TextUtils.isEmpty(pwd.getEditText().getText())) {
+        if (mPasswordTxtBox.getEditText() == null || TextUtils.isEmpty(mPasswordTxtBox.getEditText().getText())) {
             error = true;
-        } else if (pwd.getEditText().getText().length() < PASSWORD_MIN_LENGTH) {
-            pwd.setError(getString(R.string.error_password_char_count));
-            error = true;
+        } else if (mPasswordTxtBox.getEditText().getText().length() < PASSWORD_MIN_LENGTH) {
+            mPasswordTxtBox.setErrorEnabled(true);
+            mPasswordTxtBox.setError(getString(R.string.error_password_char_count));
+            return true;
         } else {
-            pwd.setError(null);
+            mPasswordTxtBox.setError(null);
         }
         //~ Checking confirmation password.
-        if (confirm != null) {
-            if (confirm.getEditText() == null || !pwd.getEditText().getText().toString()
-                    .equals(confirm.getEditText().getText().toString())) {
-                confirm.setError(getString(R.string.error_passwords_not_equals));
+        if (mPasswordRepeatTxtBox != null) {
+            mPasswordRepeatTxtBox.setErrorEnabled(true);
+            if (mPasswordRepeatTxtBox.getEditText() == null || !mPasswordTxtBox.getEditText().getText().toString()
+                    .equals(mPasswordRepeatTxtBox.getEditText().getText().toString())) {
+                mPasswordRepeatTxtBox.setError(getString(R.string.error_passwords_not_equals));
                 error = true;
             } else {
-                confirm.setError(null);
+                mPasswordRepeatTxtBox.setError(null);
             }
         }
         return error;
@@ -143,8 +157,8 @@ public class RingAccountCreationFragment extends Fragment {
     public boolean onPasswordEditorAction(TextView view, int actionId, KeyEvent event) {
         Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
         if (actionId == EditorInfo.IME_ACTION_DONE) {
-            if (mPasswordTxt.getText().length() != 0 && !checkPassword(mPasswordTxtBox, mPasswordRepeatTxtBox)) {
-                mAddAccountBtn.callOnClick();
+            if (mPasswordTxt.getText().length() != 0 && !validateForm()) {
+                nextAccount(false);
                 return true;
             }
         }
@@ -154,7 +168,7 @@ public class RingAccountCreationFragment extends Fragment {
     @OnFocusChange(R.id.ring_password)
     public void onFocusChange(View view, boolean hasFocus) {
         if (!hasFocus) {
-            checkPassword(mPasswordTxtBox, null);
+            validateForm();
         }
     }
 
@@ -162,8 +176,8 @@ public class RingAccountCreationFragment extends Fragment {
     public boolean onPasswordRepeatEditorAction(TextView view, int actionId, KeyEvent event) {
         Log.i(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
         if (actionId == EditorInfo.IME_ACTION_DONE) {
-            if (mPasswordTxt.getText().length() != 0 && !checkPassword(mPasswordTxtBox, mPasswordRepeatTxtBox)) {
-                mAddAccountBtn.callOnClick();
+            if (mPasswordTxt.getText().length() != 0 && !validateForm()) {
+                nextAccount(true);
                 return true;
             }
         }
@@ -174,9 +188,13 @@ public class RingAccountCreationFragment extends Fragment {
         return mUsernameTxtBox.getError() == null;
     }
 
-    @OnClick(R.id.add_button)
-    public void onAddButtonClick() {
-        if (!checkPassword(mPasswordTxtBox, mPasswordRepeatTxtBox)) {
+    @OnClick(R.id.create_account)
+    public void onCreateAccountButtonClick() {
+        nextAccount(true);
+    }
+
+    private void nextAccount(Boolean startCreation) {
+        if (!validateForm()) {
             Activity wizardActivity = getActivity();
             if (wizardActivity != null && wizardActivity instanceof AccountWizard) {
                 AccountWizard wizard = (AccountWizard) wizardActivity;
@@ -190,13 +208,20 @@ public class RingAccountCreationFragment extends Fragment {
 
                     username = mUsernameTxt.getText().toString();
                 }
-                wizard.initAccountCreation(true,
-                        username,
-                        null,
-                        mPasswordTxt.getText().toString(),
-                        null);
+
+                if (startCreation) {
+                    wizard.createAccount(username, null, mPasswordTxt.getText().toString());
+                } else {
+                    wizard.accountNext(username, null, mPasswordTxt.getText().toString());
+                }
             }
         }
+    }
+
+    @OnClick(R.id.last_create_account)
+    public void lastClicked() {
+        AccountWizard accountWizard = (AccountWizard) getActivity();
+        accountWizard.accountLast();
     }
 
     @Override
