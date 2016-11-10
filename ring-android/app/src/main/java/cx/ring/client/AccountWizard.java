@@ -35,11 +35,13 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -55,7 +57,7 @@ import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.fragments.AccountCreationFragment;
 import cx.ring.fragments.AccountMigrationFragment;
-import cx.ring.fragments.RingAccountCreationFragment;
+import cx.ring.fragments.ProfileAccountCreationFragment;
 import cx.ring.fragments.RingAccountLoginFragment;
 import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountConfig;
@@ -68,9 +70,13 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     private boolean mBound = false;
     private LocalService mService;
     private boolean mCreatingAccount = false;
+    private ProfileAccountCreationFragment mProfileFragment;
 
-    @BindView(R.id.main_toolbar)
-    Toolbar mToolbar;
+    /*@BindView(R.id.main_toolbar)
+    Toolbar mToolbar;*/
+
+    @BindView(R.id.fragment_container)
+    ViewPager mFragmentContainer;
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -92,9 +98,9 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         setContentView(R.layout.activity_wizard);
         ButterKnife.bind(this);
 
-        setSupportActionBar(mToolbar);
+        /*setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);*/
 
         if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
@@ -235,8 +241,9 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         if (!switchFragment) {
             fragmentTransaction.addToBackStack(null);
         }
+        mProfileFragment = new ProfileAccountCreationFragment();
         fragmentTransaction
-                .replace(R.id.fragment_container, new RingAccountCreationFragment())
+                .replace(R.id.fragment_container, mProfileFragment)
                 .commit();
     }
 
@@ -353,6 +360,24 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
 
         //noinspection unchecked
         new CreateAccountTask(registerName, this).execute(accountDetails);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case ProfileAccountCreationFragment.REQUEST_CODE_PHOTO:
+                if (resultCode == RESULT_OK && data != null) {
+                    mProfileFragment.updatePhoto((Bitmap) data.getExtras().get("data"));
+                }
+                break;
+            case ProfileAccountCreationFragment.REQUEST_CODE_GALLERY:
+                if (resultCode == RESULT_OK && data != null) {
+                    mProfileFragment.updatePhoto(data.getData());
+                }
+                break;
+        }
     }
 
     @Override
