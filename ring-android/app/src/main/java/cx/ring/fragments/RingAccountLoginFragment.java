@@ -20,15 +20,14 @@
 
 package cx.ring.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import butterknife.BindView;
@@ -47,7 +46,10 @@ public class RingAccountLoginFragment extends Fragment {
     EditText mPasswordTxt;
 
     @BindView(R.id.link_button)
-    AppCompatButton mLinkAccountBtn;
+    Button mLinkAccountBtn;
+
+    @BindView(R.id.last_create_account)
+    Button mLastButton;
 
     void checkNextState() {
         mLinkAccountBtn.setEnabled(!mPinTxt.getText().toString().isEmpty() && !mPasswordTxt.getText().toString().isEmpty());
@@ -67,8 +69,13 @@ public class RingAccountLoginFragment extends Fragment {
     }
 
     @OnClick(R.id.link_button)
-    public void onLinkClick(View view) {
-        ((AccountWizard) getActivity()).initAccountCreation(true, null, mPinTxt.getText().toString(), mPasswordTxt.getText().toString(), null);
+    public void onLinkClick() {
+        ((AccountWizard) getActivity()).createAccount(null, mPinTxt.getText().toString(), mPasswordTxt.getText().toString());
+    }
+
+    @OnClick(R.id.last_create_account)
+    public void onLastClick() {
+        ((AccountWizard) getActivity()).accountLast();
     }
 
     private final TextWatcher inputWatcher = new TextWatcher() {
@@ -85,13 +92,4 @@ public class RingAccountLoginFragment extends Fragment {
             checkNextState();
         }
     };
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        AccountWizard account = (AccountWizard) getActivity();
-        if (account != null) {
-            account.getSupportActionBar().setTitle(R.string.account_import_title);
-        }
-    }
 }
