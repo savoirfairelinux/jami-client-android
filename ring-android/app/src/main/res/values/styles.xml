@@ -57,4 +57,19 @@
         <item name="colorControlActivated">@color/color_primary_light</item>
         <item name="colorControlHighlight">@color/color_primary_light</item>
     </style>
+    <style name="Wizard">
+        <item name="android:textColorPrimary">@color/text_color_primary_dark</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
+        <item name="android:textColor">@color/text_color_primary_dark</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="android:background">@color/color_primary_dark</item>
+    </style>
+    <style name="ButtonColoredInverse" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/color_primary_light</item>
+        <item name="android:textColor">@color/text_color_primary_dark</item>
+    </style>
+    <style name="ButtonColored" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/color_primary_dark</item>
+        <item name="android:textColor">@color/text_color_primary_dark</item>
+    </style>
 </resources>
