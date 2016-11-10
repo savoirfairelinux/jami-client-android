@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9adffdf1_c4c1d2e5",
+        "filename": "ring-android/app/src/main/java/cx/ring/dependencyinjection/RingInjectionComponent.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-10T15:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9adffdf1_044b5ab1",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "c45b5399152551eea509e5c8801463dea38b43a5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9adffdf1_c4cc7238",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/mvp/GenericView.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2016-11-10T15:26:34Z",
       "side": 1,
       "message": "header",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 3
+      },
+      "revId": "c45b5399152551eea509e5c8801463dea38b43a5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_24b0de8a",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/mvp/GenericView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-10T15:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9adffdf1_c4cc7238",
       "range": {
         "startLine": 3,
         "startChar": 0,
