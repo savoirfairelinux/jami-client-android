@@ -35,6 +35,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -55,7 +56,7 @@ import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.fragments.AccountCreationFragment;
 import cx.ring.fragments.AccountMigrationFragment;
-import cx.ring.fragments.RingAccountCreationFragment;
+import cx.ring.fragments.ProfileAccountCreationFragment;
 import cx.ring.fragments.RingAccountLoginFragment;
 import cx.ring.model.account.Account;
 import cx.ring.model.account.AccountConfig;
@@ -68,6 +69,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     private boolean mBound = false;
     private LocalService mService;
     private boolean mCreatingAccount = false;
+    private ProfileAccountCreationFragment mProfileFragment;
 
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
@@ -235,8 +237,9 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         if (!switchFragment) {
             fragmentTransaction.addToBackStack(null);
         }
+        mProfileFragment = new ProfileAccountCreationFragment();
         fragmentTransaction
-                .replace(R.id.fragment_container, new RingAccountCreationFragment())
+                .replace(R.id.fragment_container, mProfileFragment)
                 .commit();
     }
 
@@ -353,6 +356,24 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
 
         //noinspection unchecked
         new CreateAccountTask(registerName, this).execute(accountDetails);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case ProfileAccountCreationFragment.REQUEST_CODE_PHOTO:
+                if (resultCode == RESULT_OK && data != null) {
+                    mProfileFragment.updatePhoto((Bitmap) data.getExtras().get("data"));
+                }
+                break;
+            case ProfileAccountCreationFragment.REQUEST_CODE_GALLERY:
+                if (resultCode == RESULT_OK && data != null) {
+                    mProfileFragment.updatePhoto(data.getData());
+                }
+                break;
+        }
     }
 
     @Override
