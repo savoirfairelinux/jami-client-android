@@ -67,11 +67,11 @@ along with this program; if not, write to the Free Software
                     android:id="@+id/ring_acc_title_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_toStartOf="@+id/imageView6"
                     android:layout_toLeftOf="@+id/imageView6"
+                    android:layout_toStartOf="@+id/imageView6"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:paddingTop="24dp"
@@ -83,8 +83,8 @@ along with this program; if not, write to the Free Software
                     android:id="@+id/ring_acc_descr_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_below="@+id/ring_acc_title_txt"
                     android:paddingBottom="24dp"
                     android:paddingLeft="16dp"
@@ -93,7 +93,6 @@ along with this program; if not, write to the Free Software
                     android:text="@string/help_ring"
                     android:textColor="@color/text_color_primary"
                     android:textSize="14sp" />
-
 
                 <Button
                     android:id="@+id/ring_add_account"
