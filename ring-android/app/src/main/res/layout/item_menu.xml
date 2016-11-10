@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/menu_title_categorie"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:gravity="center_vertical"
-    android:paddingBottom="10dip"
-    android:paddingLeft="15dip"
-    android:paddingTop="10dip"
-    android:background="?android:attr/activatedBackgroundIndicator"
-    android:textColor="@color/black"
-    android:textSize="20sp" />
+    android:layout_height="48dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginRight="16dp">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/navigation_item_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        tools:src="@drawable/ic_home_black" />
+
+    <TextView
+        android:id="@+id/navigation_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="72dp"
+        android:layout_marginStart="72dp"
+        android:background="?android:attr/activatedBackgroundIndicator"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        tools:text="Home" />
+
+</RelativeLayout>

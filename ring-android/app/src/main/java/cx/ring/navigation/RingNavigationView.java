@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package cx.ring.views;
+package cx.ring.navigation;
 
 import android.Manifest;
 import android.app.Activity;
@@ -29,9 +29,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,7 +44,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -74,8 +76,8 @@ import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 
-public class MenuHeaderView extends FrameLayout {
-    private static final String TAG = MenuHeaderView.class.getSimpleName();
+public class RingNavigationView extends NavigationView {
+    private static final String TAG = RingNavigationView.class.getSimpleName();
 
     private AccountSelectionAdapter mAccountAdapter;
 
@@ -97,19 +99,27 @@ public class MenuHeaderView extends FrameLayout {
     private ImageView mProfilePhoto;
     private VCard mVCardProfile;
 
+    /***********/
+
+    @BindView(R.id.drawer_menu)
+    RecyclerView mMenuView;
+
+    @BindView(R.id.drawer_accounts)
+    RecyclerView mAccountsView;
+
     private List<WeakReference<MenuHeaderAccountSelectionListener>> mListeners;
 
-    public MenuHeaderView(Context context, AttributeSet attrs, int defStyle) {
+    public RingNavigationView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initViews();
     }
 
-    public MenuHeaderView(Context context, AttributeSet attrs) {
+    public RingNavigationView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initViews();
     }
 
-    public MenuHeaderView(Context context) {
+    public RingNavigationView(Context context) {
         super(context);
 
         if (context instanceof Activity) {
@@ -183,7 +193,7 @@ public class MenuHeaderView extends FrameLayout {
 
     private void initViews() {
         final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View inflatedView = inflater.inflate(R.layout.frag_menu_header, this);
+        View inflatedView = inflater.inflate(R.layout.ring_navigation_view, this);
 
         ButterKnife.bind(this, inflatedView);
 
@@ -203,6 +213,24 @@ public class MenuHeaderView extends FrameLayout {
         updateUserView();
 
         mListeners = new ArrayList<>();
+
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mAccountsView.setHasFixedSize(true);
+        // use a linear layout manager
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        mAccountsView.setLayoutManager(mLayoutManager);
+        mAccountsView.setVisibility(GONE);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mMenuView.setHasFixedSize(true);
+        // use a linear layout manager
+        LinearLayoutManager mLayoutManager2 = new LinearLayoutManager(getContext());
+        mMenuView.setLayoutManager(mLayoutManager2);
+        mMenuView.setAdapter(new NavigationAdapter());
+
     }
 
     @OnClick(R.id.profile_container)
@@ -211,7 +239,7 @@ public class MenuHeaderView extends FrameLayout {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(R.string.profile);
 
-        LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
+        LayoutInflater inflater = LayoutInflater.from(getContext());
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.dialog_profile, null);
 
         final EditText editText = (EditText) view.findViewById(R.id.user_name);
@@ -292,6 +320,11 @@ public class MenuHeaderView extends FrameLayout {
     }
 
     public void updateAccounts(List<Account> accounts) {
+
+        // specify an adapter (see also next example)
+        AccountAdapter mAdapter = new AccountAdapter(accounts);
+        mAccountsView.setAdapter(mAdapter);
+
         if (accounts.isEmpty()) {
             mNewAccountBtn.setVisibility(View.VISIBLE);
             mSpinnerAccounts.setVisibility(View.GONE);
