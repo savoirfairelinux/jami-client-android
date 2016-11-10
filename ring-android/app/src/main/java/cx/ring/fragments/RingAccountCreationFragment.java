@@ -75,11 +75,17 @@ public class RingAccountCreationFragment extends Fragment {
     @BindView(R.id.ring_password_repeat_txt_box)
     TextInputLayout mPasswordRepeatTxtBox;
 
-    @BindView(R.id.add_button)
-    Button mAddAccountBtn;
+    @BindView(R.id.next_create_account)
+    Button mNextButton;
+
+    @BindView(R.id.last_create_account)
+    Button mLastButton;
 
     @BindView(R.id.ring_username_box)
     ViewGroup mUsernameBox;
+
+    @BindView(R.id.create_account)
+    Button mCreateAccountButton;
 
     /**
      * Checks the validity of the given password.
@@ -131,6 +137,13 @@ public class RingAccountCreationFragment extends Fragment {
             mUsernameTextWatcher = BlockchainUtils.attachUsernameTextWatcher((LocalService.Callbacks) getActivity(), mUsernameTxtBox, mUsernameTxt);
         }
 
+        AccountWizard accountWizard = (AccountWizard) getActivity();
+        if (accountWizard.isFirstAccount()) {
+            mCreateAccountButton.setVisibility(View.GONE);
+        } else {
+            mNextButton.setVisibility(View.GONE);
+        }
+
         return view;
     }
 
@@ -144,7 +157,7 @@ public class RingAccountCreationFragment extends Fragment {
         Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             if (mPasswordTxt.getText().length() != 0 && !checkPassword(mPasswordTxtBox, mPasswordRepeatTxtBox)) {
-                mAddAccountBtn.callOnClick();
+                mNextButton.callOnClick();
                 return true;
             }
         }
@@ -163,7 +176,7 @@ public class RingAccountCreationFragment extends Fragment {
         Log.i(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             if (mPasswordTxt.getText().length() != 0 && !checkPassword(mPasswordTxtBox, mPasswordRepeatTxtBox)) {
-                mAddAccountBtn.callOnClick();
+                mNextButton.callOnClick();
                 return true;
             }
         }
@@ -174,8 +187,17 @@ public class RingAccountCreationFragment extends Fragment {
         return mUsernameTxtBox.getError() == null;
     }
 
-    @OnClick(R.id.add_button)
-    public void onAddButtonClick() {
+    @OnClick(R.id.next_create_account)
+    public void onNextButtonClick() {
+        nextAccount(false);
+    }
+
+    @OnClick(R.id.create_account)
+    public void onCreateAccountButtonClick() {
+        nextAccount(true);
+    }
+
+    private void nextAccount(Boolean startCreation) {
         if (!checkPassword(mPasswordTxtBox, mPasswordRepeatTxtBox)) {
             Activity wizardActivity = getActivity();
             if (wizardActivity != null && wizardActivity instanceof AccountWizard) {
@@ -190,13 +212,20 @@ public class RingAccountCreationFragment extends Fragment {
 
                     username = mUsernameTxt.getText().toString();
                 }
-                wizard.initAccountCreation(true,
-                        username,
-                        null,
-                        mPasswordTxt.getText().toString(),
-                        null);
+
+                if (startCreation) {
+                    wizard.createAccount(username, null, mPasswordTxt.getText().toString());
+                } else {
+                    wizard.accountNext(username, null, mPasswordTxt.getText().toString());
+                }
             }
         }
+    }
+
+    @OnClick(R.id.last_create_account)
+    public void lastClicked() {
+        AccountWizard accountWizard = (AccountWizard) getActivity();
+        accountWizard.accountLast();
     }
 
     @Override
