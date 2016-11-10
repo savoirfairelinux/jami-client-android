@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_443c0230",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-10T14:23:08Z",
+      "side": 1,
+      "message": "spelling mistake",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "d0a36f30548248a94155e4f47b156015dce84615",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_e44896ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-10T14:23:08Z",
+      "side": 1,
+      "message": "missing period",
+      "range": {
+        "startLine": 10,
+        "startChar": 59,
+        "endLine": 10,
+        "endChar": 64
+      },
+      "revId": "d0a36f30548248a94155e4f47b156015dce84615",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
