@@ -105,6 +105,9 @@ public class RingNavigationView extends NavigationView {
     @BindView(R.id.drawer_menu)
     RecyclerView mMenuView;
 
+    @BindView(R.id.drawer_accounts)
+    RecyclerView mAccountsView;
+
     private NavigationAdapter mMenuAdapter;
 
     public interface OnNavigationItemClicked {
@@ -208,6 +211,11 @@ public class RingNavigationView extends NavigationView {
 
         mListeners = new ArrayList<>();
 
+        mAccountsView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        mAccountsView.setLayoutManager(mLayoutManager);
+        mAccountsView.setVisibility(GONE);
+
         mMenuView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager2 = new LinearLayoutManager(getContext());
         mMenuView.setLayoutManager(mLayoutManager2);
@@ -306,6 +314,10 @@ public class RingNavigationView extends NavigationView {
     }
 
     public void updateAccounts(List<Account> accounts) {
+
+        // specify an adapter (see also next example)
+        AccountAdapter mAdapter = new AccountAdapter(accounts);
+        mAccountsView.setAdapter(mAdapter);
 
         if (accounts.isEmpty()) {
             mNewAccountBtn.setVisibility(View.VISIBLE);
