@@ -78,7 +78,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
             entryView = new AccountView();
             entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
             entryView.host = (TextView) rowView.findViewById(R.id.account_host);
-            entryView.error = (ImageView) rowView.findViewById(R.id.error_indicator);
+            entryView.error = (ImageView) rowView.findViewById(R.id.account_selected_error_indicator);
             rowView.setTag(entryView);
         } else {
             entryView = (AccountView) rowView.getTag();
@@ -109,7 +109,7 @@ public class AccountSelectionAdapter extends BaseAdapter {
             entryView = new AccountView();
             entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
             entryView.host = (TextView) rowView.findViewById(R.id.account_host);
-            entryView.error = (ImageView) rowView.findViewById(R.id.error_indicator);
+            entryView.error = (ImageView) rowView.findViewById(R.id.account_selected_error_indicator);
             rowView.setTag(entryView);
         } else {
             entryView = (AccountView) rowView.getTag();

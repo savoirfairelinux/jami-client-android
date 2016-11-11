@@ -23,7 +23,7 @@
         android:layout_marginStart="72dp"
         android:layout_marginTop="16dp"
         android:textAppearance="@style/ListPrimary"
-        android:layout_toStartOf="@id/error_indicator"
+        android:layout_toStartOf="@id/account_selected_error_indicator"
         android:textAlignment="viewStart"
         android:focusable="false" />
 
@@ -37,7 +37,7 @@
         android:ellipsize="middle"
         android:singleLine="true"
         android:textAppearance="@style/ListSecondary"
-        android:layout_toStartOf="@id/error_indicator"
+        android:layout_toStartOf="@id/account_selected_error_indicator"
         android:textAlignment="viewStart"
         android:focusable="false" />
 
