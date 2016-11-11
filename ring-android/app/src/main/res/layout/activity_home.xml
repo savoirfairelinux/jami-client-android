@@ -40,37 +40,36 @@ along with this program; if not, write to the Free Software
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:background="@color/color_primary_light"
+            android:elevation="@dimen/toolbar_elevation"
             android:minHeight="?attr/actionBarSize"
             android:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:titleTextAppearance="@style/ToolbarTitle"
             app:contentInsetStart="@dimen/toolbar_content_inset"
-            android:elevation="@dimen/toolbar_elevation"
             app:elevation="@dimen/toolbar_elevation"
-            app:titleTextAppearance="@style/ToolbarTitle"/>
+            app:titleTextAppearance="@style/ToolbarTitle" />
 
         <LinearLayout
             android:id="@+id/toolbar_spacer"
             android:layout_width="match_parent"
             android:layout_height="72sp"
-            android:orientation="horizontal"
-            android:elevation="@dimen/toolbar_elevation"
             android:layout_below="@+id/main_toolbar"
             android:background="@color/color_primary_light"
-            android:visibility="gone"
+            android:elevation="@dimen/toolbar_elevation"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingLeft="@dimen/toolbar_content_inset"
-            android:gravity="center_vertical">
+            android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/toolbar_spacer_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/menu_item_accounts"
-                    style="@style/ToolbarTitle"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    />
+            <TextView
+                android:id="@+id/toolbar_spacer_title"
+                style="@style/ToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_item_accounts"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-            </LinearLayout>
+        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/main_frame"
@@ -109,7 +108,13 @@ along with this program; if not, write to the Free Software
         android:fitsSystemWindows="true"
         android:theme="@style/AppThemeBase"
         android:windowBackground="@color/white"
-        app:itemTextColor="?android:textColorPrimary"
-        app:menu="@menu/drawer" />
+        app:itemTextColor="?android:textColorPrimary">
+
+        <FrameLayout
+            android:id="@+id/navigation_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>
