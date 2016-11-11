@@ -76,7 +76,7 @@ import cx.ring.model.Account;
 import cx.ring.service.LocalService;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ClipboardHelper;
-import cx.ring.views.MenuHeaderView;
+import cx.ring.navigation.RingNavigationFragment;
 
 public class SmartListFragment extends Fragment implements SearchView.OnQueryTextListener,
         HomeActivity.Refreshable,
@@ -84,7 +84,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
         LocalService.NameLookupCallback,
-        MenuHeaderView.MenuHeaderAccountSelectionListener {
+        RingNavigationFragment.MenuHeaderAccountSelectionListener {
     private static final String TAG = SmartListFragment.class.getSimpleName();
 
     private static final int USER_INPUT_DELAY = 300;
