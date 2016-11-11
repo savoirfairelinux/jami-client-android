@@ -22,6 +22,30 @@
       "revId": "22765dd845c02e6c021a39520897fd9b4d559876",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ac40928_2ee20704",
+        "filename": "ring-android/app/src/main/java/cx/ring/views/MenuHeaderView.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-11T14:30:40Z",
+      "side": 1,
+      "message": "the state service in this constructor but there are two others",
+      "parentUuid": "7ac40928_6ed80f54",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 9
+      },
+      "revId": "22765dd845c02e6c021a39520897fd9b4d559876",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
