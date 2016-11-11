@@ -71,15 +71,15 @@ import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.ConfigKey;
+import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
 import cx.ring.utils.FileUtils;
-import cx.ring.views.MenuHeaderView;
 
 public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks,
-        NavigationView.OnNavigationItemSelectedListener,
+        RingNavigationFragment.OnNavigationSectionSelected,
         ActivityCompat.OnRequestPermissionsResultCallback,
         ContactListFragment.Callbacks {
 
@@ -107,11 +107,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private boolean mNoAccountOpened = false;
     private boolean mIsMigrationDialogAlreadyShowed;
 
-    private MenuHeaderView fMenuHead = null;
     private ActionBarDrawerToggle mDrawerToggle;
 
     @BindView(R.id.left_drawer)
-    NavigationView fMenu;
+    NavigationView mNavigationView;
 
     @BindView(R.id.drawer_layout)
     DrawerLayout mNavigationDrawer;
@@ -130,6 +129,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     private float mToolbarSize;
     protected android.app.Fragment fContent;
+    protected RingNavigationFragment fNavigation;
 
     public interface Refreshable {
         void refresh();
@@ -167,8 +167,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
         setSupportActionBar(mToolbar);
 
-        fMenu.setNavigationItemSelectedListener(this);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -186,8 +184,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             @Override
             public void onDrawerOpened(View drawerView) {
                 invalidateOptionsMenu();
-                if (null != fMenuHead) {
-                    fMenuHead.updateUserView();
+                if (mNavigationView != null) {
+                    fNavigation.updateUserView();
                 }
             }
         };
@@ -226,11 +224,12 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                             showMigrationDialog();
                         }
                     }
+
                     if (!mNoAccountOpened && service.getAccounts().isEmpty()) {
                         mNoAccountOpened = true;
                         startActivityForResult(new Intent(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
                     } else {
-                        fMenuHead.updateAccounts(service.getAccounts());
+                        fNavigation.updateAccounts(service.getAccounts());
                     }
                     break;
             }
@@ -254,8 +253,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        onNavigationItemSelected(fMenu.getMenu().findItem(R.id.menuitem_accounts));
-                        fMenu.getMenu().findItem(R.id.menuitem_accounts).setChecked(true);
+                        fNavigation.selectSection(RingNavigationFragment.Section.MANAGE);
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -429,7 +427,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
         if (getFragmentManager().getBackStackEntryCount() > 1) {
             popCustomBackStack();
-            fMenu.getMenu().findItem(R.id.menuitem_home).setChecked(true);
+            fNavigation.selectSection(RingNavigationFragment.Section.HOME);
             return;
         }
 
@@ -475,11 +473,11 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             registerReceiver(receiver, intentFilter);
             mBound = true;
 
-            fMenuHead = (MenuHeaderView) fMenu.getHeaderView(0);
-            if (fMenuHead == null) {
-                fMenuHead = new MenuHeaderView(HomeActivity.this);
-                fMenuHead.setCallbacks(service);
-                fMenu.addHeaderView(fMenuHead);
+            if (fNavigation == null) {
+                fNavigation = new RingNavigationFragment();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.navigation_container, fNavigation, null)
+                        .commit();
             }
 
             FragmentManager fragmentManager = getFragmentManager();
@@ -488,9 +486,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 fContent = new SmartListFragment();
                 fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commit();
 
-                if (fMenuHead != null) {
-                    fMenuHead.registerAccountSelectionListener((MenuHeaderView.MenuHeaderAccountSelectionListener) fContent);
-                }
+
             } else if (fContent instanceof Refreshable) {
                 fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commit();
                 ((Refreshable) fContent).refresh();
@@ -501,13 +497,22 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         @Override
         public void onServiceDisconnected(ComponentName className) {
             Log.d(TAG, "onServiceDisconnected " + className.getClassName());
-            if (fMenuHead != null) {
-                fMenuHead.setCallbacks(null);
-                fMenuHead = null;
+            if (fNavigation != null) {
+                fNavigation.setCallbacks(null);
+                fNavigation = null;
             }
             mBound = false;
         }
     };
+
+    // TODO: Remove this when low level services are ready
+    public void onNavigationViewReady() {
+            if (fNavigation != null) {
+                fNavigation.setCallbacks(service);
+                fNavigation.setNavigationSectionSelectedListener(HomeActivity.this);
+                fNavigation.registerAccountSelectionListener((RingNavigationFragment.MenuHeaderAccountSelectionListener) fContent);
+            }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -523,8 +528,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 mNoAccountOpened = false;
             case REQUEST_CODE_PREFERENCES:
             case AccountsManagementFragment.ACCOUNT_EDIT_REQUEST:
-                if (fMenuHead != null) {
-                    fMenuHead.updateAccounts(service.getAccounts());
+                if (fNavigation != null) {
+                    fNavigation.updateAccounts(service.getAccounts());
                 }
                 break;
             case REQUEST_CODE_CALL:
@@ -534,12 +539,12 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 break;
             case REQUEST_CODE_PHOTO:
                 if (resultCode == RESULT_OK && data != null) {
-                    fMenuHead.updatePhoto((Bitmap) data.getExtras().get("data"));
+                    fNavigation.updatePhoto((Bitmap) data.getExtras().get("data"));
                 }
                 break;
             case REQUEST_CODE_GALLERY:
                 if (resultCode == RESULT_OK && data != null) {
-                    fMenuHead.updatePhoto(data.getData());
+                    fNavigation.updatePhoto(data.getData());
                 }
                 break;
         }
@@ -556,12 +561,11 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem pos) {
-        pos.setChecked(true);
+    public void onNavigationSectionSelected(RingNavigationFragment.Section section) {
         mNavigationDrawer.closeDrawers();
 
-        switch (pos.getItemId()) {
-            case R.id.menuitem_home:
+        switch (section) {
+            case HOME:
                 if (fContent instanceof SmartListFragment) {
                     break;
                 }
@@ -572,7 +576,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 popCustomBackStack();
                 fContent = getFragmentManager().findFragmentByTag(HOME_TAG);
                 break;
-            case R.id.menuitem_accounts:
+            case MANAGE:
                 if (fContent instanceof AccountsManagementFragment) {
                     break;
                 }
@@ -582,7 +586,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                         .replace(R.id.main_frame, fContent, ACCOUNTS_TAG)
                         .addToBackStack(ACCOUNTS_TAG).commit();
                 break;
-            case R.id.menuitem_about:
+            case ABOUT:
                 if (fContent instanceof AboutFragment) {
                     break;
                 }
@@ -592,16 +596,15 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                         .replace(R.id.main_frame, fContent, ABOUT_TAG)
                         .addToBackStack(ABOUT_TAG).commit();
                 break;
-            case R.id.menuitem_prefs:
+            case SETTINGS:
                 this.goToSettings();
                 break;
-            case R.id.menuitem_share:
+            case SHARE:
                 goToShare();
                 break;
             default:
-                return false;
+                break;
         }
-        return true;
     }
 
     private void goToShare() {
@@ -617,12 +620,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     public void goToSettings() {
-        if (fMenu != null) {
-            MenuItem settingsItem = fMenu.getMenu().findItem(R.id.menuitem_prefs);
-            if (settingsItem != null) {
-                settingsItem.setChecked(true);
-            }
-        }
         if (mNavigationDrawer != null) {
             mNavigationDrawer.closeDrawers();
         }

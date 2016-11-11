@@ -32,7 +32,7 @@ import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.ShareFragment;
 import cx.ring.share.SharePresenter;
-import cx.ring.views.MenuHeaderView;
+import cx.ring.navigation.RingNavigationFragment;
 import dagger.Component;
 
 @Singleton
@@ -40,7 +40,7 @@ import dagger.Component;
 public interface RingInjectionComponent {
     void inject(RingApplication app);
 
-    void inject(MenuHeaderView view);
+    void inject(RingNavigationFragment view);
 
     void inject(AboutFragment fragment);
 
