@@ -180,6 +180,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             @Override
             public void onDrawerClosed(View view) {
                 invalidateOptionsMenu();
+                if (fNavigation != null) {
+                    fNavigation.displayNavigation();
+                }
             }
 
             @Override
@@ -486,8 +489,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             if (fContent == null) {
                 fContent = new SmartListFragment();
                 fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commit();
-
-
             } else if (fContent instanceof Refreshable) {
                 fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commit();
                 ((Refreshable) fContent).refresh();
@@ -499,7 +500,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         public void onServiceDisconnected(ComponentName className) {
             Log.d(TAG, "onServiceDisconnected " + className.getClassName());
             if (fNavigation != null) {
-                fNavigation.setCallbacks(null);
                 fNavigation = null;
             }
             mBound = false;
@@ -509,7 +509,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     // TODO: Remove this when low level services are ready
     public void onNavigationViewReady() {
             if (fNavigation != null) {
-                fNavigation.setCallbacks(service);
+                if (service != null) {
+                    fNavigation.updateAccounts(service.getAccounts());
+                }
+                fNavigation.setCallback(service);
                 fNavigation.setNavigationSectionSelectedListener(HomeActivity.this);
                 fNavigation.registerAccountSelectionListener((RingNavigationFragment.MenuHeaderAccountSelectionListener) fContent);
             }
@@ -606,6 +609,17 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onAccountSelected() {
+        mNavigationDrawer.closeDrawers();
+    }
+
+    @Override
+    public void onAddAccountSelected() {
+        mNavigationDrawer.closeDrawers();
+        startActivityForResult(new Intent(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
     }
 
     private void goToShare() {
