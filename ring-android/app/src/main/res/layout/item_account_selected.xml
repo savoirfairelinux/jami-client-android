@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="72dp"
-    android:paddingBottom="16dp"
-    android:paddingRight="16dp"
-    android:paddingStart="16dp"
-    android:paddingTop="16dp">
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/account_alias"
@@ -15,8 +13,8 @@
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/white" />
+        android:textAppearance="?android:attr/textAppearanceMediumInverse"
+        tools:text="Alias" />
 
     <TextView
         android:id="@+id/account_host"
@@ -28,11 +26,12 @@
         android:layout_toLeftOf="@+id/error_indicator"
         android:layout_toStartOf="@+id/error_indicator"
         android:ellipsize="middle"
-        android:singleLine="true"
+        android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/secondary_text_default_material_dark" />
+        android:textColor="@color/secondary_text_default_material_dark"
+        tools:text="Host" />
 
-    <ImageView
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/error_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

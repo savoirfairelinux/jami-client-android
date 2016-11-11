@@ -135,16 +135,16 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     private static void setDefaultUncaughtExceptionHandler() {
-        try {
-            Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-                @Override
-                public void uncaughtException(Thread t, Throwable e) {
-                    Log.e(TAG, "Uncaught Exception detected in thread ", e);
-                }
-            });
-        } catch (SecurityException e) {
-            Log.e(TAG, "Could not set the Default Uncaught Exception Handler");
-        }
+//        try {
+//            Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+//                @Override
+//                public void uncaughtException(Thread t, Throwable e) {
+//                    Log.e(TAG, "Uncaught Exception detected in thread ", e);
+//                }
+//            });
+//        } catch (SecurityException e) {
+//            Log.e(TAG, "Could not set the Default Uncaught Exception Handler");
+//        }
     }
 
     /* called before activity is killed, e.g. rotation */
@@ -487,7 +487,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         public void onServiceDisconnected(ComponentName className) {
             Log.d(TAG, "onServiceDisconnected " + className.getClassName());
             if (fNavigation != null) {
-                fNavigation.setCallbacks(null);
                 fNavigation = null;
             }
             mBound = false;
@@ -497,7 +496,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     // TODO: Remove this when low level services are ready
     public void onNavigationViewReady() {
             if (fNavigation != null) {
-                fNavigation.setCallbacks(service);
                 fNavigation.setNavigationSectionSelectedListener(HomeActivity.this);
                 fNavigation.registerAccountSelectionListener((RingNavigationFragment.MenuHeaderAccountSelectionListener) fContent);
             }

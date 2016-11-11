@@ -34,19 +34,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
@@ -60,13 +59,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.adapters.AccountSelectionAdapter;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
-import cx.ring.service.LocalService;
 import cx.ring.services.StateService;
 import cx.ring.utils.CropImageUtils;
 import cx.ring.utils.VCardUtils;
@@ -76,10 +73,11 @@ import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 
-public class RingNavigationFragment extends Fragment implements NavigationAdapter.OnNavigationItemClicked {
+public class RingNavigationFragment extends Fragment implements NavigationAdapter.OnNavigationItemClicked,
+        AccountAdapter.OnAccountActionClicked {
     private static final String TAG = RingNavigationFragment.class.getSimpleName();
 
-    private AccountSelectionAdapter mAccountAdapter;
+    private AccountAdapter mAccountAdapter;
 
     @Inject
     StateService mStateService;
@@ -92,7 +90,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
      ***************/
 
     @BindView(R.id.account_selection)
-    Spinner mSpinnerAccounts;
+    RelativeLayout mSpinnerAccounts;
 
     @BindView(R.id.addaccount_btn)
     Button mNewAccountBtn;
@@ -106,6 +104,17 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     private ImageView mProfilePhoto;
     private VCard mVCardProfile;
 
+    private Account mSelectedAccount;
+
+    @BindView(R.id.account_alias)
+    TextView mSelectedAccountAlias;
+
+    @BindView(R.id.account_host)
+    TextView mSelectedAccountHost;
+
+    @BindView(R.id.error_indicator)
+    AppCompatImageView mSelectedAccountError;
+
     /**************
      * Menu views
      **************/
@@ -113,9 +122,41 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     @BindView(R.id.drawer_menu)
     RecyclerView mMenuView;
 
+    @BindView(R.id.drawer_accounts)
+    RecyclerView mAccountsView;
+
     private NavigationAdapter mMenuAdapter;
     private OnNavigationSectionSelected mSectionListener;
     private List<WeakReference<MenuHeaderAccountSelectionListener>> mListeners;
+
+    @Override
+    public void onAccountSelected(Account account) {
+//        if (mAccountAdapter.getAccount(pos) != mAccountAdapter.getSelectedAccount()) {
+//            mAccountAdapter.setSelectedAccount(pos);
+//            service.setAccountOrder(mAccountAdapter.getAccountOrder());
+//        }
+
+        // modify the state of the app
+        // State observers will be notified
+        mStateService.setCurrentAccount(getSelectedAccount());
+
+        for (WeakReference<MenuHeaderAccountSelectionListener> weakListener : mListeners) {
+            MenuHeaderAccountSelectionListener listener = weakListener.get();
+            if (listener != null) {
+                listener.accountSelected(getSelectedAccount());
+            }
+        }
+    }
+
+    @Override
+    public void onAddRINGAccountSelected() {
+
+    }
+
+    @Override
+    public void onAddSIPAccountSelected() {
+
+    }
 
     public interface OnNavigationSectionSelected {
         void onNavigationSectionSelected(Section position);
@@ -176,8 +217,6 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        mAccountAdapter = new AccountSelectionAdapter(mContext, new ArrayList<Account>());
-        mSpinnerAccounts.setAdapter(mAccountAdapter);
         mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity());
 
         updateUserView();
@@ -185,7 +224,18 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         mListeners = new ArrayList<>();
 
         setupNavigationMenu();
+        setupAccountList();
+
         return inflatedView;
+    }
+
+    private void setupAccountList() {
+        mAccountAdapter = new AccountAdapter(new ArrayList<Account>());
+        mAccountsView.setHasFixedSize(true);
+        mAccountAdapter.setOnAccountActionClickedListener(this);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(mContext);
+        mAccountsView.setLayoutManager(mLayoutManager);
+        mAccountsView.setVisibility(View.GONE);
     }
 
     @Override
@@ -199,42 +249,16 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         mMenuAdapter.setSelection(manage.position);
     }
 
+    @OnClick(R.id.account_selection)
+    public void toggleAccountList() {
+        mMenuView.setVisibility(mMenuView.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+        mAccountsView.setVisibility(mMenuView.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+    }
+
     @Override
     public void onNavigationItemClicked(int position) {
         if (mSectionListener != null) {
             mSectionListener.onNavigationSectionSelected(Section.valueOf(position));
-        }
-    }
-
-
-    public void setCallbacks(final LocalService service) {
-        if (service != null) {
-            mSpinnerAccounts.setOnItemSelectedListener(new OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> arg0, View view, int pos, long arg3) {
-                    if (mAccountAdapter.getAccount(pos) != mAccountAdapter.getSelectedAccount()) {
-                        mAccountAdapter.setSelectedAccount(pos);
-                        service.setAccountOrder(mAccountAdapter.getAccountOrder());
-                    }
-
-                    // modify the state of the app
-                    // State observers will be notified
-                    mStateService.setCurrentAccount(getSelectedAccount());
-
-                    for (WeakReference<MenuHeaderAccountSelectionListener> weakListener : mListeners) {
-                        MenuHeaderAccountSelectionListener listener = weakListener.get();
-                        if (listener != null) {
-                            listener.accountSelected(getSelectedAccount());
-                        }
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> arg0) {
-                    mAccountAdapter.setSelectedAccount(-1);
-                }
-            });
-            updateAccounts(service.getAccounts());
         }
     }
 
@@ -376,10 +400,19 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     }
 
     public Account getSelectedAccount() {
-        return mAccountAdapter.getSelectedAccount();
+        return mSelectedAccount;
     }
 
     public void updateAccounts(List<Account> accounts) {
+        if (!accounts.isEmpty()) {
+            mSelectedAccount = accounts.get(0);
+            accounts.remove(0);
+            updateSelectedAccountView();
+        }
+
+        // specify an adapter (see also next example)
+        AccountAdapter mAdapter = new AccountAdapter(accounts);
+        mAccountsView.setAdapter(mAdapter);
 
         if (accounts.isEmpty()) {
             mNewAccountBtn.setVisibility(View.VISIBLE);
@@ -391,12 +424,24 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         } else {
             mNewAccountBtn.setVisibility(View.GONE);
             mSpinnerAccounts.setVisibility(View.VISIBLE);
-            mAccountAdapter.replaceAll(accounts);
-            mSpinnerAccounts.setSelection(0);
+//            mAccountAdapter.replaceAll(accounts);
+//            mSpinnerAccounts.setSelection(0);
 
             // modify the state of the app
             // State observers will be notified
             mStateService.setCurrentAccount(getSelectedAccount());
         }
+    }
+
+    private void updateSelectedAccountView() {
+        mSelectedAccountAlias.setText(mSelectedAccount.getAlias());
+        if (mSelectedAccount.isRing()) {
+            mSelectedAccountHost.setText(mSelectedAccount.getUsername());
+        } else if (mSelectedAccount.isSip() && !mSelectedAccount.isIP2IP()) {
+            mSelectedAccountHost.setText(mSelectedAccount.getUsername() + "@" + mSelectedAccount.getHost());
+        } else {
+            mSelectedAccountHost.setText("IP account");
+        }
+        mSelectedAccountError.setVisibility(mSelectedAccount.isRegistered() ? View.GONE : View.VISIBLE);
     }
 }
