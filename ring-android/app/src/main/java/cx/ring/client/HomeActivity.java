@@ -42,7 +42,6 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -70,14 +69,14 @@ import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.ConfigKey;
+import cx.ring.navigation.RingNavigationView;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.share.ShareFragment;
 import cx.ring.utils.FileUtils;
-import cx.ring.views.MenuHeaderView;
 
 public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks,
-        NavigationView.OnNavigationItemSelectedListener,
+        RingNavigationView.OnNavigationItemClicked,
         ActivityCompat.OnRequestPermissionsResultCallback,
         ContactListFragment.Callbacks {
 
@@ -105,11 +104,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private boolean mNoAccountOpened = false;
     private boolean mIsMigrationDialogAlreadyShowed;
 
-    private MenuHeaderView fMenuHead = null;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    @BindView(R.id.left_drawer)
-    NavigationView fMenu;
+    RingNavigationView mNavigationView;
 
     @BindView(R.id.drawer_layout)
     DrawerLayout mNavigationDrawer;
@@ -165,8 +162,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
         setSupportActionBar(mToolbar);
 
-        fMenu.setNavigationItemSelectedListener(this);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -184,8 +179,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             @Override
             public void onDrawerOpened(View drawerView) {
                 invalidateOptionsMenu();
-                if (null != fMenuHead) {
-                    fMenuHead.updateUserView();
+                if (mNavigationView != null) {
+                    mNavigationView.updateUserView();
                 }
             }
         };
@@ -216,11 +211,12 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                             showMigrationDialog();
                         }
                     }
+
                     if (!mNoAccountOpened && service.getAccounts().isEmpty()) {
                         mNoAccountOpened = true;
                         startActivityForResult(new Intent(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
                     } else {
-                        fMenuHead.updateAccounts(service.getAccounts());
+                        mNavigationView.updateAccounts(service.getAccounts());
                     }
                     break;
             }
@@ -463,11 +459,14 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             registerReceiver(receiver, intentFilter);
             mBound = true;
 
-            fMenuHead = (MenuHeaderView) fMenu.getHeaderView(0);
-            if (fMenuHead == null) {
-                fMenuHead = new MenuHeaderView(HomeActivity.this);
-                fMenuHead.setCallbacks(service);
-                fMenu.addHeaderView(fMenuHead);
+            if (mNavigationView == null) {
+                mNavigationView = new RingNavigationView(HomeActivity.this);
+                mNavigationView.setCallbacks(service);
+                mNavigationDrawer.addView(mNavigationView);
+                DrawerLayout.LayoutParams navLayout = new DrawerLayout.LayoutParams(DrawerLayout.LayoutParams.WRAP_CONTENT,
+                        DrawerLayout.LayoutParams.MATCH_PARENT, GravityCompat.START);
+                mNavigationView.setLayoutParams(navLayout);
+                mNavigationView.setNavigationItemSelectedListener(HomeActivity.this);
             }
 
             FragmentManager fragmentManager = getFragmentManager();
@@ -476,8 +475,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 fContent = new SmartListFragment();
                 fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commit();
 
-                if (fMenuHead != null) {
-                    fMenuHead.registerAccountSelectionListener((MenuHeaderView.MenuHeaderAccountSelectionListener) fContent);
+                if (mNavigationView != null) {
+                    mNavigationView.registerAccountSelectionListener((RingNavigationView.MenuHeaderAccountSelectionListener) fContent);
                 }
             } else if (fContent instanceof Refreshable) {
                 fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commit();
@@ -489,9 +488,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         @Override
         public void onServiceDisconnected(ComponentName className) {
             Log.d(TAG, "onServiceDisconnected " + className.getClassName());
-            if (fMenuHead != null) {
-                fMenuHead.setCallbacks(null);
-                fMenuHead = null;
+            if (mNavigationView != null) {
+                mNavigationView.setCallbacks(null);
+                mNavigationView = null;
             }
             mBound = false;
         }
@@ -511,8 +510,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 mNoAccountOpened = false;
             case REQUEST_CODE_PREFERENCES:
             case AccountsManagementFragment.ACCOUNT_EDIT_REQUEST:
-                if (fMenuHead != null) {
-                    fMenuHead.updateAccounts(service.getAccounts());
+                if (mNavigationView != null) {
+                    mNavigationView.updateAccounts(service.getAccounts());
                 }
                 break;
             case REQUEST_CODE_CALL:
@@ -522,12 +521,12 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 break;
             case REQUEST_CODE_PHOTO:
                 if (resultCode == RESULT_OK && data != null) {
-                    fMenuHead.updatePhoto((Bitmap) data.getExtras().get("data"));
+                    mNavigationView.updatePhoto((Bitmap) data.getExtras().get("data"));
                 }
                 break;
             case REQUEST_CODE_GALLERY:
                 if (resultCode == RESULT_OK && data != null) {
-                    fMenuHead.updatePhoto(data.getData());
+                    mNavigationView.updatePhoto(data.getData());
                 }
                 break;
         }
@@ -544,12 +543,11 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem pos) {
-        pos.setChecked(true);
+    public void onNavigationItemSelected(int position) {
         mNavigationDrawer.closeDrawers();
 
-        switch (pos.getItemId()) {
-            case R.id.menuitem_home:
+        switch (position) {
+            case 0:
                 if (fContent instanceof SmartListFragment) {
                     break;
                 }
@@ -560,7 +558,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 popCustomBackStack();
                 fContent = getFragmentManager().findFragmentByTag(HOME_TAG);
                 break;
-            case R.id.menuitem_accounts:
+            case 1:
                 if (fContent instanceof AccountsManagementFragment) {
                     break;
                 }
@@ -570,7 +568,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                         .replace(R.id.main_frame, fContent, ACCOUNTS_TAG)
                         .addToBackStack(ACCOUNTS_TAG).commit();
                 break;
-            case R.id.menuitem_about:
+            case 4:
                 if (fContent instanceof AboutFragment) {
                     break;
                 }
@@ -580,16 +578,15 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                         .replace(R.id.main_frame, fContent, ABOUT_TAG)
                         .addToBackStack(ABOUT_TAG).commit();
                 break;
-            case R.id.menuitem_prefs:
+            case 2:
                 this.goToSettings();
                 break;
-            case R.id.menuitem_share:
+            case 3:
                 goToShare();
                 break;
             default:
-                return false;
+                break;
         }
-        return true;
     }
 
     private void goToShare() {
@@ -605,8 +602,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     public void goToSettings() {
-        if (fMenu != null) {
-            MenuItem settingsItem = fMenu.getMenu().findItem(R.id.menuitem_prefs);
+        if (mNavigationView != null) {
+            MenuItem settingsItem = mNavigationView.getMenu().findItem(R.id.menuitem_prefs);
             if (settingsItem != null) {
                 settingsItem.setChecked(true);
             }

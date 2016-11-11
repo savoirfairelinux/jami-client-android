@@ -26,7 +26,7 @@ import cx.ring.about.AboutPresenter;
 import cx.ring.application.RingApplication;
 import cx.ring.share.ShareFragment;
 import cx.ring.share.SharePresenter;
-import cx.ring.views.MenuHeaderView;
+import cx.ring.navigation.RingNavigationView;
 import dagger.Component;
 
 @Singleton
@@ -34,7 +34,7 @@ import dagger.Component;
 public interface RingInjectionComponent {
     void inject(RingApplication app);
 
-    void inject(MenuHeaderView view);
+    void inject(RingNavigationView view);
 
     void inject(AboutFragment fragment);
 

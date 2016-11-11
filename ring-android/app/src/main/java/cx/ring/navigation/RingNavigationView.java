@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package cx.ring.views;
+package cx.ring.navigation;
 
 import android.Manifest;
 import android.app.Activity;
@@ -29,10 +29,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
-import android.util.AttributeSet;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +43,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -74,13 +75,15 @@ import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 
-public class MenuHeaderView extends FrameLayout {
-    private static final String TAG = MenuHeaderView.class.getSimpleName();
+public class RingNavigationView extends NavigationView {
+    private static final String TAG = RingNavigationView.class.getSimpleName();
 
     private AccountSelectionAdapter mAccountAdapter;
 
     @Inject
     StateService mStateService;
+
+    /****** Header views ******/
 
     @BindView(R.id.account_selection)
     Spinner mSpinnerAccounts;
@@ -97,19 +100,24 @@ public class MenuHeaderView extends FrameLayout {
     private ImageView mProfilePhoto;
     private VCard mVCardProfile;
 
+    /****** Menu views ******/
+
+    @BindView(R.id.drawer_menu)
+    RecyclerView mMenuView;
+
+    private NavigationAdapter mMenuAdapter;
+
+    public interface OnNavigationItemClicked {
+        void onNavigationItemSelected(int position);
+    }
+
+    public interface MenuHeaderAccountSelectionListener {
+        void accountSelected(Account account);
+    }
+
     private List<WeakReference<MenuHeaderAccountSelectionListener>> mListeners;
 
-    public MenuHeaderView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        initViews();
-    }
-
-    public MenuHeaderView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initViews();
-    }
-
-    public MenuHeaderView(Context context) {
+    public RingNavigationView(Context context) {
         super(context);
 
         if (context instanceof Activity) {
@@ -181,28 +189,34 @@ public class MenuHeaderView extends FrameLayout {
         mProfilePhoto.setImageBitmap(CropImageUtils.cropImageToCircle(image));
     }
 
+    @OnClick(R.id.addaccount_btn)
+    public void addNewAccount(View sender) {
+        getContext().startActivity(new Intent(sender.getContext(), AccountWizard.class));
+    }
+
     private void initViews() {
         final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View inflatedView = inflater.inflate(R.layout.frag_menu_header, this);
+        View inflatedView = inflater.inflate(R.layout.ring_navigation_view, this);
 
         ButterKnife.bind(this, inflatedView);
 
-        mNewAccountBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getContext().startActivity(new Intent(v.getContext(), AccountWizard.class));
-            }
-        });
-
         mAccountAdapter = new AccountSelectionAdapter(inflater.getContext(), new ArrayList<Account>());
-
         mSpinnerAccounts.setAdapter(mAccountAdapter);
-
         mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getContext());
 
         updateUserView();
 
         mListeners = new ArrayList<>();
+
+        mMenuView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager2 = new LinearLayoutManager(getContext());
+        mMenuView.setLayoutManager(mLayoutManager2);
+        mMenuAdapter = new NavigationAdapter();
+        mMenuView.setAdapter(mMenuAdapter);
+    }
+
+    public void setNavigationItemSelectedListener(OnNavigationItemClicked listener) {
+        mMenuAdapter.setOnNavigationItemClickedListener(listener);
     }
 
     @OnClick(R.id.profile_container)
@@ -211,7 +225,7 @@ public class MenuHeaderView extends FrameLayout {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(R.string.profile);
 
-        LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
+        LayoutInflater inflater = LayoutInflater.from(getContext());
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.dialog_profile, null);
 
         final EditText editText = (EditText) view.findViewById(R.id.user_name);
@@ -292,6 +306,7 @@ public class MenuHeaderView extends FrameLayout {
     }
 
     public void updateAccounts(List<Account> accounts) {
+
         if (accounts.isEmpty()) {
             mNewAccountBtn.setVisibility(View.VISIBLE);
             mSpinnerAccounts.setVisibility(View.GONE);
@@ -309,9 +324,5 @@ public class MenuHeaderView extends FrameLayout {
             // State observers will be notified
             mStateService.setCurrentAccount(getSelectedAccount());
         }
-    }
-
-    public interface MenuHeaderAccountSelectionListener {
-        void accountSelected(Account account);
     }
 }
