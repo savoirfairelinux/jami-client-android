@@ -19,9 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
     android:padding="16dp">
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/account_alias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_alignParentTop="true"
         android:textAppearance="@style/ListPrimary" />
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/account_host"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,11 +40,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_below="@+id/account_alias"
         android:layout_toLeftOf="@+id/error_indicator"
         android:layout_toStartOf="@+id/error_indicator"
-        android:ellipsize="middle"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:singleLine="true"
         android:textAppearance="@style/ListSecondary" />
 
-    <ImageView
+    <android.support.v7.widget.AppCompatImageView
         android:id="@+id/error_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

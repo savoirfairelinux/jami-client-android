@@ -25,6 +25,7 @@ along with this program; if not, write to the Free Software
     <string name="ic_advanced_menu">Advanced settings</string>
 
     <!-- Strings related to account creation -->
+    <string name="add_account_title">Add account</string>
     <string name="prompt_alias">Alias</string>
     <string name="prompt_hostname">Hostname</string>
     <string name="prompt_username">Username</string>
@@ -46,6 +47,7 @@ along with this program; if not, write to the Free Software
         <item>RING</item>
         <item>SIP</item>
     </string-array>
+    <string name="account_type_ip2ip">IP account</string>
     <string name="help_ring_title">Create a Ring account</string>
     <string name="help_ring">A Ring account allows you to reach people securely in peer to peer through a fully distributed network.</string>
 
