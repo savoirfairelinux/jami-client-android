@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
     android:padding="16dp">
 
     <TextView
@@ -39,8 +40,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_below="@+id/account_alias"
         android:layout_toLeftOf="@+id/error_indicator"
         android:layout_toStartOf="@+id/error_indicator"
-        android:ellipsize="middle"
-        android:singleLine="true"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:textAppearance="@style/ListSecondary" />
 
     <ImageView
