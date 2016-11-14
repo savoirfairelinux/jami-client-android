@@ -26,7 +26,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -43,7 +42,7 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
 import cx.ring.model.SipCall;
-import cx.ring.model.SipUri;
+import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
 
 public class ActionHelper {
@@ -166,7 +165,7 @@ public class ActionHelper {
         ArrayList<ContentValues> data = new ArrayList<>();
         ContentValues values = new ContentValues();
 
-        SipUri number = contact.getPhones().get(0).getNumber();
+        Uri number = contact.getPhones().get(0).getNumber();
         if (number.isRingId()) {
             values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE);
             values.put(ContactsContract.CommonDataKinds.Im.DATA, number.getRawUriString());
@@ -194,7 +193,7 @@ public class ActionHelper {
             Log.d(TAG, "displayContact: contact is known, displaying...");
             try {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
+                android.net.Uri uri = android.net.Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
                         String.valueOf(contact.getId()));
                 intent.setData(uri);
                 context.startActivity(intent);
@@ -212,7 +211,7 @@ public class ActionHelper {
             return;
         SipCall call = conference.getParticipants().get(0);
         CallContact contact = call.getContact();
-        final Uri callUri = Uri.withAppendedPath(ContentUriHandler.CALL_CONTENT_URI, call.getCallId());
+        final android.net.Uri callUri = android.net.Uri.withAppendedPath(ContentUriHandler.CALL_CONTENT_URI, call.getCallId());
         PendingIntent gotoIntent = PendingIntent.getActivity(ctx, new Random().nextInt(),
                 getViewIntent(ctx, conference), PendingIntent.FLAG_ONE_SHOT);
 
@@ -278,7 +277,7 @@ public class ActionHelper {
     }
 
     public static Intent getViewIntent(Context context, Conference conference) {
-        final Uri confUri = Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI, conference.getId());
+        final android.net.Uri confUri = android.net.Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI, conference.getId());
         return new Intent(Intent.ACTION_VIEW).setData(confUri).setClass(context, CallActivity.class);
     }
 }

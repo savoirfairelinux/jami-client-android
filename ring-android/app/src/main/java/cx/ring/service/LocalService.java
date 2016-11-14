@@ -40,7 +40,6 @@ import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
@@ -97,7 +96,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.SecureSipCall;
 import cx.ring.model.Settings;
 import cx.ring.model.SipCall;
-import cx.ring.model.SipUri;
+import cx.ring.model.Uri;
 import cx.ring.model.TextMessage;
 import cx.ring.services.HistoryService;
 import cx.ring.services.HistoryServiceImpl;
@@ -226,7 +225,7 @@ public class LocalService extends Service implements Observer {
         Conversation conv = startConversation(contact);
         try {
             mService.setPreviewSettings();
-            SipUri number = call.getNumberUri();
+            Uri number = call.getNumberUri();
             if (number == null || number.isEmpty()) {
                 number = contact.getPhones().get(0).getNumber();
             }
@@ -268,7 +267,7 @@ public class LocalService extends Service implements Observer {
         return account;
     }
 
-    public void sendTextMessage(String account, SipUri to, String txt) {
+    public void sendTextMessage(String account, Uri to, String txt) {
         try {
             long id = mService.sendAccountTextMessage(account, to.getRawUriString(), txt);
             Log.i(TAG, "sendAccountTextMessage " + txt + " got id " + id);
@@ -785,7 +784,7 @@ public class LocalService extends Service implements Observer {
         return conversation;
     }
 
-    public CallContact findContactByNumber(SipUri number) {
+    public CallContact findContactByNumber(Uri number) {
         for (Conversation conversation : conversations.values()) {
             if (conversation.getContact().hasNumber(number)) {
                 return conversation.getContact();
@@ -794,7 +793,7 @@ public class LocalService extends Service implements Observer {
         return canUseContacts ? findContactByNumber(getContentResolver(), number.getRawUriString()) : CallContact.buildUnknown(number);
     }
 
-    public Conversation findConversationByNumber(SipUri number) {
+    public Conversation findConversationByNumber(Uri number) {
         if (number == null || number.isEmpty()) {
             return null;
         }
@@ -819,7 +818,7 @@ public class LocalService extends Service implements Observer {
         return contact;
     }
 
-    public Account guessAccount(SipUri uri) {
+    public Account guessAccount(Uri uri) {
         if (uri.isRingId()) {
             for (Account a : accounts) {
                 if (a.isRing()) {
@@ -830,7 +829,7 @@ public class LocalService extends Service implements Observer {
             return null;
         }
         for (Account account : accounts) {
-            if (account.isSip() && account.getHost().equals(uri.host)) {
+            if (account.isSip() && account.getHost().equals(uri.getHost())) {
                 return account;
             }
         }
@@ -906,8 +905,8 @@ public class LocalService extends Service implements Observer {
                 cPhones.close();
             }
 
-            Uri baseUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, callContact.getId());
-            Uri targetUri = Uri.withAppendedPath(baseUri, ContactsContract.Contacts.Data.CONTENT_DIRECTORY);
+            android.net.Uri baseUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, callContact.getId());
+            android.net.Uri targetUri = android.net.Uri.withAppendedPath(baseUri, ContactsContract.Contacts.Data.CONTENT_DIRECTORY);
             Cursor cSip = res.query(targetUri,
                     CONTACTS_SIP_PROJECTION,
                     ContactsContract.Data.MIMETYPE + "=? OR " + ContactsContract.Data.MIMETYPE + " =?",
@@ -920,7 +919,7 @@ public class LocalService extends Service implements Observer {
                 while (cSip.moveToNext()) {
                     String mime = cSip.getString(iMime);
                     String number = cSip.getString(iSip);
-                    if (!mime.contentEquals(Im.CONTENT_ITEM_TYPE) || new SipUri(number).isRingId() || "ring".equalsIgnoreCase(cSip.getString(iLabel))) {
+                    if (!mime.contentEquals(Im.CONTENT_ITEM_TYPE) || new Uri(number).isRingId() || "ring".equalsIgnoreCase(cSip.getString(iLabel))) {
                         callContact.addNumber(number, cSip.getInt(iType), cSip.getString(iLabel), cx.ring.model.Phone.NumberType.SIP);
                     }
                     Log.w(TAG, "SIP phone:" + number + " " + mime + " ");
@@ -935,7 +934,7 @@ public class LocalService extends Service implements Observer {
     public static CallContact findById(@NonNull ContentResolver res, long id, String key) {
         CallContact contact = null;
         try {
-            Uri contentUri;
+            android.net.Uri contentUri;
             if (key != null) {
                 contentUri = ContactsContract.Contacts.lookupContact(res, ContactsContract.Contacts.getLookupUri(id, key));
             } else {
@@ -1015,7 +1014,7 @@ public class LocalService extends Service implements Observer {
     public static CallContact findContactByNumber(@NonNull ContentResolver res, String number) {
         CallContact callContact = null;
         try {
-            Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
+            android.net.Uri uri = android.net.Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, android.net.Uri.encode(number));
             Cursor result = res.query(uri, PHONELOOKUP_PROJECTION, null, null, null);
             if (result == null) {
                 Log.w(TAG, "findContactByNumber " + number + " can't find contact.");
@@ -1152,7 +1151,7 @@ public class LocalService extends Service implements Observer {
 
                     if (p != null) {
                         if (msg.getNumberUri() == null) {
-                            msg.setNumber(new SipUri(p.second.getNumber()));
+                            msg.setNumber(new Uri(p.second.getNumber()));
                         }
                         p.first.addTextMessage(msg);
                     }
@@ -1282,10 +1281,10 @@ public class LocalService extends Service implements Observer {
             }
             Intent c_intent = new Intent(Intent.ACTION_VIEW)
                     .setClass(this, ConversationActivity.class)
-                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
+                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
             Intent d_intent = new Intent(ACTION_CONV_READ)
                     .setClass(this, LocalService.class)
-                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
+                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
             mMessageNotificationBuilder.setContentIntent(PendingIntent.getActivity(this, new Random().nextInt(), c_intent, 0))
                     .setDeleteIntent(PendingIntent.getService(this, new Random().nextInt(), d_intent, 0));
 
@@ -1373,7 +1372,8 @@ public class LocalService extends Service implements Observer {
                     if (conversation != null) {
                         readConversation(conversation);
                     }
-                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, convId)));
+
+                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, convId)));
                     break;
                 }
                 case ACTION_CALL_ACCEPT: {
@@ -1468,7 +1468,7 @@ public class LocalService extends Service implements Observer {
                     String number = intent.getStringExtra("from");
                     String call = intent.getStringExtra("call");
                     String account = intent.getStringExtra("account");
-                    TextMessage txt = new TextMessage(true, message, new SipUri(number), call, account);
+                    TextMessage txt = new TextMessage(true, message, new Uri(number), call, account);
                     Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
 
                     Conversation conversation;
@@ -1586,7 +1586,7 @@ public class LocalService extends Service implements Observer {
                 case CallManagerCallBack.INCOMING_CALL: {
                     String callId = intent.getStringExtra("call");
                     String accountId = intent.getStringExtra("account");
-                    SipUri number = new SipUri(intent.getStringExtra("from"));
+                    Uri number = new Uri(intent.getStringExtra("from"));
                     CallContact contact = findContactByNumber(number);
                     Conversation conversation = startConversation(contact);
 
@@ -1621,7 +1621,7 @@ public class LocalService extends Service implements Observer {
                         Log.e(TAG, "Error while sending profile", e);
                     }
 
-                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(Uri.withAppendedPath(ContentUriHandler.CALL_CONTENT_URI, callId)));
+                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(android.net.Uri.withAppendedPath(ContentUriHandler.CALL_CONTENT_URI, callId)));
                     break;
                 }
                 case CallManagerCallBack.CALL_STATE_CHANGED: {
@@ -1745,7 +1745,7 @@ public class LocalService extends Service implements Observer {
         }
 
         @Override
-        public void onChange(boolean selfChange, Uri uri) {
+        public void onChange(boolean selfChange, android.net.Uri uri) {
             super.onChange(selfChange, uri);
             Log.d(TAG, "ContactsContentObserver.onChange");
             refreshContacts();
