@@ -20,22 +20,18 @@
  */
 package cx.ring.model;
 
-import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Profile;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
@@ -44,8 +40,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.utils.VCardUtils;
-import ezvcard.VCard;
 
 public class CallContact implements Parcelable {
     static final String TAG = CallContact.class.getSimpleName();
@@ -320,13 +314,13 @@ public class CallContact implements Parcelable {
         @Override
         public void writeToParcel(Parcel dest, int arg1) {
             dest.writeInt(ntype.type);
-            dest.writeParcelable(number, 0);
+            dest.writeSerializable(number);
             dest.writeInt(category);
         }
 
         private void readFromParcel(Parcel in) {
             ntype = NumberType.fromInteger(in.readInt());
-            number = in.readParcelable(SipUri.class.getClassLoader());
+            number = (SipUri) in.readSerializable();
             category = in.readInt();
         }
 
