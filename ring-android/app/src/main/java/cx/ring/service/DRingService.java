@@ -1230,7 +1230,8 @@ public class DRingService extends Service {
                     UintVect activePayloads = Ringservice.getActiveCodecList(accountID);
                     for (int i = 0; i < activePayloads.size(); ++i) {
                         Log.i(TAG, "DRingService.getCodecDetails(" + accountID + ", " + activePayloads.get(i) + ")");
-                        results.add(new Codec(activePayloads.get(i), Ringservice.getCodecDetails(accountID, activePayloads.get(i)), true));
+                        StringMap codecsDetails = Ringservice.getCodecDetails(accountID, activePayloads.get(i));
+                        results.add(new Codec(activePayloads.get(i), codecsDetails.toNative(), true));
                     }
                     UintVect payloads = Ringservice.getCodecList();
 
@@ -1241,7 +1242,7 @@ public class DRingService extends Service {
                                 continue cl;
                         StringMap details = Ringservice.getCodecDetails(accountID, payloads.get(i));
                         if (details.size() > 1) {
-                            results.add(new Codec(payloads.get(i), details, false));
+                            results.add(new Codec(payloads.get(i), details.toNative(), false));
                         } else {
                             Log.i(TAG, "Error loading codec " + i);
                         }
