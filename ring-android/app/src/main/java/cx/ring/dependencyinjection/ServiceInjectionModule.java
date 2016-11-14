@@ -24,6 +24,8 @@ import javax.inject.Singleton;
 import cx.ring.application.RingApplication;
 import cx.ring.services.HistoryService;
 import cx.ring.services.HistoryServiceImpl;
+import cx.ring.services.LogService;
+import cx.ring.services.LogServiceImpl;
 import cx.ring.services.SettingsService;
 import cx.ring.services.SettingsServiceImpl;
 import cx.ring.services.StateService;
@@ -60,5 +62,11 @@ public class ServiceInjectionModule {
         mRingApplication.getRingInjectionComponent().inject(historyService);
         historyService.initHelper();
         return historyService;
+    }
+
+    @Provides
+    @Singleton
+    LogService provideLogService() {
+        return new LogServiceImpl();
     }
 }

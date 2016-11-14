@@ -41,7 +41,7 @@ public class QRCodeUtils {
         try {
             qrImageMatrix = qrWriter.encode(input, BarcodeFormat.QR_CODE, QRCODE_IMAGE_SIZE, QRCODE_IMAGE_SIZE);
         } catch (WriterException e) {
-            //Log.e(TAG, "Error while encoding QR", e);
+            Log.e(TAG, "Error while encoding QR", e);
             return null;
         }
 

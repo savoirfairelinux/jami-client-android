@@ -23,6 +23,8 @@ package cx.ring.model;
 
 import java.util.Map;
 
+import cx.ring.utils.Log;
+
 public class Codec {
 
     public enum Type {AUDIO, VIDEO}
@@ -36,12 +38,11 @@ public class Codec {
     private boolean mIsEnabled;
 
     public Codec(long i, Map<String, String> audioCodecDetails, boolean enabled) {
-        // todo use a Log abstraction compliant with separation of concerns
 
-       /* Log.d("CodecDetail", Long.toString(i));
-        for (String s : audioCodecDetails.keys()) {
+        Log.d("CodecDetail", Long.toString(i));
+        for (String s : audioCodecDetails.keySet()) {
             Log.d("CodecDetail", s + " -> " + audioCodecDetails.get(s));
-        }*/
+        }
 
         mPayload = i;
         mName = audioCodecDetails.get("CodecInfo.name");

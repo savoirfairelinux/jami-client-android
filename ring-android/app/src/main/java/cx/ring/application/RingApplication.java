@@ -24,17 +24,25 @@ import android.app.Application;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
 import cx.ring.dependencyinjection.PresenterInjectionModule;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionModule;
 import cx.ring.dependencyinjection.ServiceInjectionModule;
+import cx.ring.services.LogService;
+import cx.ring.utils.Log;
 
 public class RingApplication extends Application {
 
-    private RingInjectionComponent mRingInjectionComponent;
+    private final static String TAG = RingApplication.class.getName();
 
+    private RingInjectionComponent mRingInjectionComponent;
     private Map<String, Boolean> mPermissionsBeingAsked;
+
+    @Inject
+    LogService mLogService;
 
     @Override
     public void onCreate() {
@@ -51,6 +59,11 @@ public class RingApplication extends Application {
 
         // we can now inject in our self whatever modules define
         mRingInjectionComponent.inject(this);
+        // Injecting LogService into the app logger
+        // as it is a static class, the injection is done manually
+        Log.injectLogService(mLogService);
+
+        Log.d(TAG, "Dependency Injection finished");
     }
 
     public RingInjectionComponent getRingInjectionComponent() {
