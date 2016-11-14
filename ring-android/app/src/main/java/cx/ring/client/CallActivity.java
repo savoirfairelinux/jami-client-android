@@ -30,7 +30,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,7 +49,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;
-import cx.ring.model.SipUri;
+import cx.ring.model.Uri;
 import cx.ring.model.Account;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
@@ -265,7 +264,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
         }
     };
 
-    private Pair<Account, SipUri> guess(SipUri number, String account_id) {
+    private Pair<Account, Uri> guess(Uri number, String account_id) {
         Account a = service.getAccount(account_id);
         Conversation conv = service.findConversationByNumber(number);
 
@@ -275,7 +274,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
         // Guess number from account/call history
         if (a != null && (number == null || number.isEmpty()))
-            number = new SipUri(conv.getLastNumberUsed(a.getAccountID()));
+            number = new Uri(conv.getLastNumberUsed(a.getAccountID()));
 
         // If no account found, use first active
         if (a == null)
@@ -296,7 +295,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
             return false;
         }
 
-        Uri u = getIntent().getData();
+        android.net.Uri u = getIntent().getData();
         if (u == null) {
             terminateCall();
             return false;
@@ -306,11 +305,11 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
         String action = getIntent().getAction();
         if (Intent.ACTION_CALL.equals(action) || ACTION_CALL.equals(action)) {
-            SipUri number = new SipUri(u.getSchemeSpecificPart());
+            Uri number = new Uri(u.getSchemeSpecificPart());
             Log.d(TAG, "number " + number);
 
             boolean hasVideo = getIntent().getBooleanExtra("video", false);
-            Pair<Account, SipUri> g = guess(number, getIntent().getStringExtra("account"));
+            Pair<Account, Uri> g = guess(number, getIntent().getStringExtra("account"));
 
             SipCall call = new SipCall(null, g.first.getAccountID(), g.second, SipCall.Direction.OUTGOING);
             call.muteVideo(!hasVideo);

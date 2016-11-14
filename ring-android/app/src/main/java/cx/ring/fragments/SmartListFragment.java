@@ -78,7 +78,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
-import cx.ring.model.SipUri;
+import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
 import cx.ring.services.StateService;
 import cx.ring.utils.ActionHelper;
@@ -316,7 +316,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 displayNewContactRowWithName(query);
             } else {
 
-                SipUri uri = new SipUri(query);
+                Uri uri = new Uri(query);
                 if (uri.isRingId()) {
                     displayNewContactRowWithName(query);
                 } else {
@@ -733,7 +733,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void onInvalidName(String name) {
-        SipUri uri = new SipUri(name);
+        Uri uri = new Uri(name);
         if (uri.isRingId()) {
             displayNewContactRowWithName(name);
         } else {
@@ -743,7 +743,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void onError(String name, String address) {
-        SipUri uri = new SipUri(address);
+        Uri uri = new Uri(address);
         if (uri.isRingId()) {
             displayNewContactRowWithName(address);
         } else {
