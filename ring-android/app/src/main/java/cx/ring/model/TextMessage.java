@@ -19,19 +19,17 @@
  */
 package cx.ring.model;
 
-import android.net.Uri;
-
 import cx.ring.history.HistoryText;
 import cx.ring.service.LocalService;
 
 public class TextMessage {
     private static final String TAG = TextMessage.class.getSimpleName();
-    public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "message");
+    public static final android.net.Uri CONTENT_URI = android.net.Uri.withAppendedPath(LocalService.AUTHORITY_URI, "message");
 
     private long mID = 0;
     private String mAccount = null;
     private CallContact mContact = null;
-    private SipUri mNumber = null;
+    private Uri mNumber = null;
     private long mTimestamp = 0;
 
     private int mType;
@@ -82,7 +80,7 @@ public class TextMessage {
         }
     }
 
-    public TextMessage(boolean in, String message, SipUri number, String callid, String account) {
+    public TextMessage(boolean in, String message, Uri number, String callid, String account) {
         mAccount = account;
         mNumber = number;
         mMessage = message;
@@ -94,7 +92,7 @@ public class TextMessage {
     public TextMessage(HistoryText h) {
         mID = h.id;
         mAccount = h.getAccountID();
-        mNumber = new SipUri(h.getNumber());
+        mNumber = new Uri(h.getNumber());
         mTimestamp = h.getDate().getTime();
         mType = h.isIncoming() ? direction.INCOMING : direction.OUTGOING;
         mMessage = h.getMessage();
@@ -126,7 +124,7 @@ public class TextMessage {
         return mCallID;
     }
 
-    public void setNumber(SipUri number) {
+    public void setNumber(Uri number) {
         this.mNumber = number;
     }
 
@@ -190,7 +188,7 @@ public class TextMessage {
         return mNumber == null ? null : mNumber.getRawUriString();
     }
 
-    public SipUri getNumberUri() {
+    public Uri getNumberUri() {
         return mNumber;
     }
 

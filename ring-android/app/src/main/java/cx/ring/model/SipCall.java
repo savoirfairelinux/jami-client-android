@@ -20,10 +20,8 @@
  */
 package cx.ring.model;
 
-import android.net.Uri;
 import android.util.Log;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import cx.ring.R;
@@ -32,12 +30,12 @@ import cx.ring.service.LocalService;
 public class SipCall
 {
     private static final String TAG = SipCall.class.getSimpleName();
-    public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "calls");
+    public static final android.net.Uri CONTENT_URI = android.net.Uri.withAppendedPath(LocalService.AUTHORITY_URI, "calls");
 
     private String mCallID = "";
     private String mAccount = "";
     private CallContact mContact = null;
-    private SipUri mNumber = null;
+    private Uri mNumber = null;
     private boolean isPeerHolding = false;
     private boolean isAudioMuted = false;
     private boolean isVideoMuted = false;
@@ -51,14 +49,14 @@ public class SipCall
 
     private String videoSource = null;
 
-    public SipCall(String id, String account, SipUri number, int direction) {
+    public SipCall(String id, String account, Uri number, int direction) {
         mCallID = id;
         mAccount = account;
         mNumber = number;
         mCallType = direction;
     }
     public SipCall(String id, String account, String number, int direction) {
-        this(id, account, new SipUri(number), direction);
+        this(id, account, new Uri(number), direction);
     }
 
     public SipCall(SipCall call) {
@@ -198,16 +196,16 @@ public class SipCall
     }
 
     public void setNumber(String n) {
-        mNumber = new SipUri(n);
+        mNumber = new Uri(n);
     }
-    public void setNumber(SipUri n) {
+    public void setNumber(Uri n) {
         mNumber = n;
     }
 
     public String getNumber() {
         return mNumber.getUriString();
     }
-    public SipUri getNumberUri() {
+    public Uri getNumberUri() {
         return mNumber;
     }
 

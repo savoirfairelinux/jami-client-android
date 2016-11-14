@@ -28,7 +28,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -63,7 +62,7 @@ import cx.ring.adapters.NumberAdapter;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.model.SipUri;
+import cx.ring.model.Uri;
 import cx.ring.model.Account;
 import cx.ring.service.LocalService;
 import cx.ring.utils.ClipboardHelper;
@@ -75,7 +74,7 @@ public class ConversationActivity extends AppCompatActivity implements
     private static final String TAG = ConversationActivity.class.getSimpleName();
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
 
-    public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI,
+    public static final android.net.Uri CONTENT_URI = android.net.Uri.withAppendedPath(LocalService.AUTHORITY_URI,
             "conversations");
     public static final int REQ_ADD_CONTACT = 42;
     static final long REFRESH_INTERVAL_MS = 30 * 1000;
@@ -87,7 +86,7 @@ public class ConversationActivity extends AppCompatActivity implements
 
     private LocalService mService = null;
     private Conversation mConversation = null;
-    private SipUri mPreferredNumber = null;
+    private Uri mPreferredNumber = null;
 
     private RecyclerView mHistList = null;
     private EditText mMsgEditTxt = null;
@@ -100,12 +99,12 @@ public class ConversationActivity extends AppCompatActivity implements
 
     private final Handler mRefreshTaskHandler = new Handler();
 
-    static private Pair<Conversation, SipUri> getConversation(LocalService s, Intent i) {
+    static private Pair<Conversation, Uri> getConversation(LocalService s, Intent i) {
         if (s == null || i == null || i.getData() == null)
             return new Pair<>(null, null);
 
         String conv_id = i.getData().getLastPathSegment();
-        SipUri number = new SipUri(i.getStringExtra("number"));
+        Uri number = new Uri(i.getStringExtra("number"));
         Log.d(TAG, "getConversation " + conv_id + " " + number);
         Conversation conv = s.getConversation(conv_id);
         if (conv == null) {
@@ -115,7 +114,7 @@ public class ConversationActivity extends AppCompatActivity implements
             if (contact_id >= 0)
                 contact = s.findContactById(contact_id);
             if (contact == null) {
-                SipUri conv_uri = new SipUri(conv_id);
+                Uri conv_uri = new Uri(conv_id);
                 if (!number.isEmpty()) {
                     contact = s.findContactByNumber(number);
                     if (contact == null)
@@ -137,7 +136,7 @@ public class ConversationActivity extends AppCompatActivity implements
         return new Pair<>(conv, number);
     }
 
-    static private int getIndex(Spinner spinner, SipUri myString) {
+    static private int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
             if (((CallContact.Phone) spinner.getItemAtPosition(i)).getNumber().equals(myString))
                 return i;
@@ -151,7 +150,7 @@ public class ConversationActivity extends AppCompatActivity implements
     }
 
     private void refreshView(long refreshed) {
-        Pair<Conversation, SipUri> conv = getConversation(mService, getIntent());
+        Pair<Conversation, Uri> conv = getConversation(mService, getIntent());
         mConversation = conv.first;
         mPreferredNumber = conv.second;
         if (mConversation == null) {
@@ -180,7 +179,7 @@ public class ConversationActivity extends AppCompatActivity implements
                 public void onClick(View v) {
                     startActivity(new Intent(Intent.ACTION_VIEW)
                             .setClass(getApplicationContext(), CallActivity.class)
-                            .setData(Uri.withAppendedPath(Conference.CONTENT_URI,
+                            .setData(android.net.Uri.withAppendedPath(Conference.CONTENT_URI,
                                     mConversation.getCurrentCall().getId())));
                 }
             });
@@ -195,7 +194,7 @@ public class ConversationActivity extends AppCompatActivity implements
                     false);
             mNumberSpinner.setAdapter(mNumberAdapter);
             if (mPreferredNumber == null || mPreferredNumber.isEmpty()) {
-                mPreferredNumber = new SipUri(
+                mPreferredNumber = new Uri(
                         mConversation.getLastNumberUsed(mConversation.getLastAccountUsed())
                 );
             }
@@ -447,8 +446,8 @@ public class ConversationActivity extends AppCompatActivity implements
     /**
      * Guess account and number to use to initiate a call
      */
-    private Pair<Account, SipUri> guess() {
-        SipUri number = mNumberAdapter == null ?
+    private Pair<Account, Uri> guess() {
+        Uri number = mNumberAdapter == null ?
                 mPreferredNumber : ((CallContact.Phone) mNumberSpinner.getSelectedItem()).getNumber();
         Account a = mService.getAccount(mConversation.getLastAccountUsed());
 
@@ -458,7 +457,7 @@ public class ConversationActivity extends AppCompatActivity implements
 
         // Guess number from account/call history
         if (a != null && (number == null/* || number.isEmpty()*/))
-            number = new SipUri(mConversation.getLastNumberUsed(a.getAccountID()));
+            number = new Uri(mConversation.getLastNumberUsed(a.getAccountID()));
 
         // If no account found, use first active
         if (a == null) {
@@ -480,7 +479,7 @@ public class ConversationActivity extends AppCompatActivity implements
     private void onSendTextMessage(String txt) {
         Conference conf = mConversation == null ? null : mConversation.getCurrentCall();
         if (conf == null || !conf.isOnGoing()) {
-            Pair<Account, SipUri> g = guess();
+            Pair<Account, Uri> g = guess();
             if (g == null || g.first == null)
                 return;
             mService.sendTextMessage(g.first.getAccountID(), g.second, txt);
@@ -494,10 +493,10 @@ public class ConversationActivity extends AppCompatActivity implements
         if (conf != null) {
             startActivity(new Intent(Intent.ACTION_VIEW)
                     .setClass(getApplicationContext(), CallActivity.class)
-                    .setData(Uri.withAppendedPath(Conference.CONTENT_URI, conf.getId())));
+                    .setData(android.net.Uri.withAppendedPath(Conference.CONTENT_URI, conf.getId())));
             return;
         }
-        Pair<Account, SipUri> g = guess();
+        Pair<Account, Uri> g = guess();
         if (g == null || g.first == null)
             return;
 
@@ -506,7 +505,7 @@ public class ConversationActivity extends AppCompatActivity implements
                     .setClass(getApplicationContext(), CallActivity.class)
                     .putExtra("account", g.first.getAccountID())
                     .putExtra("video", has_video)
-                    .setData(Uri.parse(g.second.getRawUriString()));
+                    .setData(android.net.Uri.parse(g.second.getRawUriString()));
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
         } catch (Exception e) {
             e.printStackTrace();

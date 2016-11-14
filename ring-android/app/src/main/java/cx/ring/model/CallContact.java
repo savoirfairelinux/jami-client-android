@@ -20,22 +20,17 @@
  */
 package cx.ring.model;
 
-import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Profile;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
@@ -44,8 +39,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.utils.VCardUtils;
-import ezvcard.VCard;
 
 public class CallContact implements Parcelable {
     static final String TAG = CallContact.class.getSimpleName();
@@ -83,7 +76,7 @@ public class CallContact implements Parcelable {
         isUser = user;
     }
 
-    public static CallContact buildUnknown(SipUri to) {
+    public static CallContact buildUnknown(Uri to) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, 0));
         return new CallContact(UNKNOWN_ID, null, to.getRawUriString(), 0, phones, "", false);
@@ -111,7 +104,7 @@ public class CallContact implements Parcelable {
     public static String canonicalNumber(String number) {
         if (number == null || number.isEmpty())
             return null;
-        return new SipUri(number).getRawUriString();
+        return new Uri(number).getRawUriString();
     }
 
     public ArrayList<String> getIds() {
@@ -172,10 +165,10 @@ public class CallContact implements Parcelable {
 
 
     public boolean hasNumber(String number) {
-        return hasNumber(new SipUri(number));
+        return hasNumber(new Uri(number));
     }
 
-    public boolean hasNumber(SipUri number) {
+    public boolean hasNumber(Uri number) {
         if (number == null || number.isEmpty())
             return false;
         for (Phone p : phones)
@@ -279,11 +272,11 @@ public class CallContact implements Parcelable {
 
     public static class Phone implements Parcelable {
         NumberType ntype;
-        SipUri number;
+        Uri number;
         int category; // Home, work, custom etc.
         String label;
 
-        public Phone(SipUri num, int cat) {
+        public Phone(Uri num, int cat) {
             ntype = NumberType.UNKNOWN;
             number = num;
             label = null;
@@ -297,13 +290,13 @@ public class CallContact implements Parcelable {
         public Phone(String num, int cat, String label) {
             ntype = NumberType.UNKNOWN;
             category = cat;
-            number = new SipUri(num);
+            number = new Uri(num);
             this.label = label;
         }
 
         public Phone(String num, int cat, String label, NumberType nty) {
             ntype = nty;
-            number = new SipUri(num);
+            number = new Uri(num);
             this.label = label;
             category = cat;
         }
@@ -320,13 +313,13 @@ public class CallContact implements Parcelable {
         @Override
         public void writeToParcel(Parcel dest, int arg1) {
             dest.writeInt(ntype.type);
-            dest.writeParcelable(number, 0);
+            dest.writeSerializable(number);
             dest.writeInt(category);
         }
 
         private void readFromParcel(Parcel in) {
             ntype = NumberType.fromInteger(in.readInt());
-            number = in.readParcelable(SipUri.class.getClassLoader());
+            number = (Uri) in.readSerializable();
             category = in.readInt();
         }
 
@@ -350,12 +343,12 @@ public class CallContact implements Parcelable {
             this.ntype = NumberType.fromInteger(type);
         }
 
-        public SipUri getNumber() {
+        public Uri getNumber() {
             return number;
         }
 
         public void setNumber(String number) {
-            this.number = new SipUri(number);
+            this.number = new Uri(number);
         }
 
         public CharSequence getTypeString(Resources r) {
@@ -417,7 +410,7 @@ public class CallContact implements Parcelable {
         ArrayList<ContentValues> data = new ArrayList<>();
         ContentValues values = new ContentValues();
 
-        SipUri number = getPhones().get(0).getNumber();
+        Uri number = getPhones().get(0).getNumber();
         if (number.isRingId()) {
             values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE);
             values.put(ContactsContract.CommonDataKinds.Im.DATA, number.getRawUriString());
@@ -465,7 +458,7 @@ public class CallContact implements Parcelable {
             Log.d(TAG, "displayContact: contact is known, displaying...");
             try {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
+                android.net.Uri uri = android.net.Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI,
                         String.valueOf(getId()));
                 intent.setData(uri);
                 context.startActivity(intent);

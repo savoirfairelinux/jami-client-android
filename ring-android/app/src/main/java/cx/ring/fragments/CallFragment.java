@@ -942,7 +942,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         }
 
         VCard vcard;
-        String username = participant.getNumberUri().username;
+        String username = participant.getNumberUri().getUsername();
         Log.d(TAG, "username " + username);
         vcard = VCardUtils.loadPeerProfileFromDisk(username + ".vcf", context);
         if (vcard == null) {
