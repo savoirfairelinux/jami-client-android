@@ -24,12 +24,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.preference.PreferenceManager;
 
 import cx.ring.R;
 import cx.ring.client.CallActivity;
-import cx.ring.model.SipUri;
+import cx.ring.model.Uri;
 
 public class OutgoingCallHandler extends BroadcastReceiver
 {
@@ -50,12 +49,12 @@ public class OutgoingCallHandler extends BroadcastReceiver
             boolean systemDialerSip = sharedPreferences.getBoolean(KEY_CACHE_HAVE_SIPACCOUNT, false);
             boolean systemDialerRing = sharedPreferences.getBoolean(KEY_CACHE_HAVE_RINGACCOUNT, false);
 
-            SipUri sipUri = new SipUri(phoneNumber);
-            boolean isRingId = sipUri.isRingId();
-            if ((!isRingId && systemDialerSip) || (isRingId && systemDialerRing) || sipUri.isSingleIp()) {
+            Uri uri = new Uri(phoneNumber);
+            boolean isRingId = uri.isRingId();
+            if ((!isRingId && systemDialerSip) || (isRingId && systemDialerRing) || uri.isSingleIp()) {
                 Intent i = new Intent(CallActivity.ACTION_CALL)
                         .setClass(context, CallActivity.class)
-                        .setData(Uri.parse(phoneNumber))
+                        .setData(android.net.Uri.parse(phoneNumber))
                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 context.startActivity(i);
