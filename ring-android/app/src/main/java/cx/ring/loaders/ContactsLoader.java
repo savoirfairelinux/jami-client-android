@@ -26,7 +26,6 @@ import android.content.AsyncTaskLoader;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.OperationCanceledException;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Im;
@@ -39,7 +38,7 @@ import android.util.LongSparseArray;
 import java.util.ArrayList;
 
 import cx.ring.model.CallContact;
-import cx.ring.model.SipUri;
+import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
 
 public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
@@ -73,7 +72,7 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
 
     static private final String SELECT = "((" + Contacts.DISPLAY_NAME + " NOTNULL) AND (" + Contacts.DISPLAY_NAME + " != '' ))";
 
-    private final Uri baseUri;
+    private final android.net.Uri baseUri;
     private final LongSparseArray<CallContact> filterFrom;
     private volatile boolean abandon = false;
     private boolean mCanUseSystemContact = true;
@@ -85,7 +84,7 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
         this(context, null, null);
     }
 
-    public ContactsLoader(Context context, Uri base, LongSparseArray < CallContact > filter) {
+    public ContactsLoader(Context context, android.net.Uri base, LongSparseArray < CallContact > filter) {
         super(context);
         baseUri = base;
         filterFrom = filter;
@@ -176,7 +175,7 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
                         String number = c.getString(iNumber);
                         int type = c.getInt(iType);
                         String label = c.getString(iLabel);
-                        SipUri uri = new SipUri(number);
+                        Uri uri = new Uri(number);
                         if (uri.isSingleIp() || (uri.isRingId() && loadRingContacts) || loadSipContacts) {
                             switch (c.getString(iMime)) {
                                 case Phone.CONTENT_ITEM_TYPE:
@@ -186,7 +185,7 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
                                     contact.addNumber(number, type, label, cx.ring.model.Phone.NumberType.SIP);
                                     break;
                                 case Im.CONTENT_ITEM_TYPE:
-                                    if (new SipUri(number).isRingId())
+                                    if (new Uri(number).isRingId())
                                         contact.addNumber(number, type, label, cx.ring.model.Phone.NumberType.UNKNOWN);
                                     break;
                             }
