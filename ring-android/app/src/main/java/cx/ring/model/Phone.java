@@ -19,14 +19,15 @@ package cx.ring.model;
 
 public class Phone {
 
-    // TODO: make sure this is usefull since a SipUri should already know this
+    // TODO: make sure this is usefull since a Uri should already know this
     private NumberType mNumberType;
 
-    private SipUri mNumber;
+    private Uri mNumber;
     private int mCategory; // Home, work, custom etc.
     private String mLabel;
 
-    public Phone(SipUri number, int category) {
+
+    public Phone(Uri number, int category) {
         mNumberType = NumberType.UNKNOWN;
         mNumber = number;
         mLabel = null;
@@ -38,22 +39,33 @@ public class Phone {
     }
 
     public Phone(String number, int category, String label) {
-        this(number, category, label, NumberType.UNKNOWN);
+        mNumberType = NumberType.UNKNOWN;
+        mCategory = category;
+        mNumber = new Uri(number);
+        mLabel = label;
     }
 
     public Phone(String number, int category, String label, NumberType numberType) {
         mNumberType = numberType;
-        mNumber = new SipUri(number);
+        mNumber = new Uri(number);
         mLabel = label;
         mCategory = category;
     }
 
-    public SipUri getNumber() {
+    public NumberType getType() {
+        return getNumbertype();
+    }
+
+    public void setType(int type) {
+        setNumberType(NumberType.fromInteger(type));
+    }
+
+    public Uri getNumber() {
         return mNumber;
     }
 
     public void setNumber(String number) {
-        setNumber(new SipUri(number));
+        setNumber(new Uri(number));
     }
 
     public static String getShortenedNumber(String number) {
@@ -67,7 +79,7 @@ public class Phone {
         return mNumberType;
     }
 
-    public void setNumber(SipUri number) {
+    public void setNumber(Uri number) {
         this.mNumber = number;
     }
 

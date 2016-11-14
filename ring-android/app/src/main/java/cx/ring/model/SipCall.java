@@ -20,8 +20,8 @@
  */
 package cx.ring.model;
 
-import java.util.Map;
 
+import java.util.Map;
 
 import cx.ring.utils.Log;
 
@@ -31,7 +31,7 @@ public class SipCall {
     private String mCallID = "";
     private String mAccount = "";
     private CallContact mContact = null;
-    private SipUri mNumber = null;
+    private Uri mNumber = null;
     private boolean isPeerHolding = false;
     private boolean isAudioMuted = false;
     private boolean isVideoMuted = false;
@@ -45,7 +45,7 @@ public class SipCall {
 
     private String videoSource = null;
 
-    public SipCall(String id, String account, SipUri number, int direction) {
+    public SipCall(String id, String account, Uri number, int direction) {
         mCallID = id;
         mAccount = account;
         mNumber = number;
@@ -53,7 +53,7 @@ public class SipCall {
     }
 
     public SipCall(String id, String account, String number, int direction) {
-        this(id, account, new SipUri(number), direction);
+        this(id, account, new Uri(number), direction);
     }
 
     public SipCall(SipCall call) {
@@ -193,10 +193,10 @@ public class SipCall {
     }
 
     public void setNumber(String n) {
-        mNumber = new SipUri(n);
+        mNumber = new Uri(n);
     }
 
-    public void setNumber(SipUri n) {
+    public void setNumber(Uri n) {
         mNumber = n;
     }
 
@@ -204,7 +204,7 @@ public class SipCall {
         return mNumber.getUriString();
     }
 
-    public SipUri getNumberUri() {
+    public Uri getNumberUri() {
         return mNumber;
     }
 

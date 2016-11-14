@@ -20,6 +20,7 @@
  */
 package cx.ring.model;
 
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
@@ -55,7 +56,7 @@ public class CallContact {
         isUser = user;
     }
 
-    public static CallContact buildUnknown(SipUri to) {
+    public static CallContact buildUnknown(Uri to) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, 0));
         return new CallContact(UNKNOWN_ID, null, to.getRawUriString(), 0, phones, "", false);
@@ -83,7 +84,7 @@ public class CallContact {
     public static String canonicalNumber(String number) {
         if (number == null || number.isEmpty())
             return null;
-        return new SipUri(number).getRawUriString();
+        return new Uri(number).getRawUriString();
     }
 
     public ArrayList<String> getIds() {
@@ -126,10 +127,10 @@ public class CallContact {
     }
 
     public boolean hasNumber(String number) {
-        return hasNumber(new SipUri(number));
+        return hasNumber(new Uri(number));
     }
 
-    public boolean hasNumber(SipUri number) {
+    public boolean hasNumber(Uri number) {
         if (number == null || number.isEmpty())
             return false;
         for (Phone p : mPhones)
