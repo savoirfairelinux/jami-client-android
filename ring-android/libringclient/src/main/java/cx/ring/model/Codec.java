@@ -21,13 +21,9 @@
 
 package cx.ring.model;
 
-import cx.ring.service.StringMap;
+import java.util.Map;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.Log;
-
-public class Codec implements Parcelable {
+public class Codec{
 
     public enum Type {AUDIO, VIDEO}
 
@@ -39,57 +35,21 @@ public class Codec implements Parcelable {
     String channels;
     boolean enabled;
 
-    public Codec(long i, StringMap audioCodecDetails, boolean b) {
-        Log.d("CodecDetail", Long.toString(i));
+    public Codec(long i, Map<String, String> audioCodecDetails, boolean b) {
+       /* Log.d("CodecDetail", Long.toString(i));
         for (String s : audioCodecDetails.keys()) {
             Log.d("CodecDetail", s + " -> " + audioCodecDetails.get(s));
-        }
+        }*/
         payload = i;
         name = audioCodecDetails.get("CodecInfo.name");
         type = audioCodecDetails.get("CodecInfo.type").contentEquals("AUDIO") ? Type.AUDIO : Type.VIDEO;
-        if (audioCodecDetails.has_key("CodecInfo.sampleRate"))
+        if (audioCodecDetails.containsKey("CodecInfo.sampleRate"))
             sampleRate = audioCodecDetails.get("CodecInfo.sampleRate");
-        if (audioCodecDetails.has_key("CodecInfo.bitrate"))
+        if (audioCodecDetails.containsKey("CodecInfo.bitrate"))
             bitRate = audioCodecDetails.get("CodecInfo.bitrate");
-        if (audioCodecDetails.has_key("CodecInfo.channelNumber"))
+        if (audioCodecDetails.containsKey("CodecInfo.channelNumber"))
             channels = audioCodecDetails.get("CodecInfo.channelNumber");
         enabled = b;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeByte(type == Type.AUDIO ? (byte)0 : (byte)1);
-        out.writeLong(payload);
-        out.writeString(name);
-        out.writeString(sampleRate);
-        out.writeString(bitRate);
-        out.writeString(channels);
-        out.writeByte((byte) (enabled ? 1 : 0));
-    }
-
-    public static final Parcelable.Creator<Codec> CREATOR = new Parcelable.Creator<Codec>() {
-        public Codec createFromParcel(Parcel in) {
-            return new Codec(in);
-        }
-
-        public Codec[] newArray(int size) {
-            return new Codec[size];
-        }
-    };
-
-    private Codec(Parcel in) {
-        type = in.readByte() == 0 ? Type.AUDIO : Type.VIDEO;
-        payload = in.readInt();
-        name = in.readString();
-        sampleRate = in.readString();
-        bitRate = in.readString();
-        channels = in.readString();
-        enabled = in.readByte() != 0;
     }
 
     @Override
