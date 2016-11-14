@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ac40928_91547ecb",
+        "filename": "ring-android/app/src/main/java/cx/ring/history/HistoryTimeModel.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-14T21:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac40928_11f3ae0b",
+      "range": {
+        "startLine": 42,
+        "startChar": 38,
+        "endLine": 42,
+        "endChar": 56
+      },
+      "revId": "68d009fe708321aad80ac66664f5358190dddec5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac40928_31cfcab2",
         "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2016-11-14T21:48:01Z",
       "side": 1,
       "message": "Add a todo note, to not forget to remove this cast once model is in libringclient module",
+      "range": {
+        "startLine": 275,
+        "startChar": 12,
+        "endLine": 275,
+        "endChar": 50
+      },
+      "revId": "68d009fe708321aad80ac66664f5358190dddec5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ac40928_515e16eb",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-14T21:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac40928_31cfcab2",
       "range": {
         "startLine": 275,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7ac40928_716312b2",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-14T21:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac40928_d1c3e688",
+      "range": {
+        "startLine": 337,
+        "startChar": 11,
+        "endLine": 337,
+        "endChar": 50
+      },
+      "revId": "68d009fe708321aad80ac66664f5358190dddec5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac40928_f1c0627e",
         "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2016-11-14T21:48:01Z",
       "side": 1,
       "message": "Add a todo note, to not forget to remove this cast once model is in libringclient module",
+      "range": {
+        "startLine": 347,
+        "startChar": 8,
+        "endLine": 347,
+        "endChar": 46
+      },
+      "revId": "68d009fe708321aad80ac66664f5358190dddec5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ac40928_11588ef9",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-14T21:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac40928_f1c0627e",
       "range": {
         "startLine": 347,
         "startChar": 8,
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "7ac40928_d171a678",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-14T21:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac40928_91bd5e05",
+      "revId": "68d009fe708321aad80ac66664f5358190dddec5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac40928_b1bada08",
         "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
         "patchSetId": 9
@@ -122,6 +236,30 @@
       "writtenOn": "2016-11-14T21:48:01Z",
       "side": 1,
       "message": "Add a todo note, to not forget to remove this cast once model is in libringclient module",
+      "range": {
+        "startLine": 1092,
+        "startChar": 50,
+        "endLine": 1093,
+        "endChar": 76
+      },
+      "revId": "68d009fe708321aad80ac66664f5358190dddec5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ac40928_f16e2296",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-14T21:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac40928_b1bada08",
       "range": {
         "startLine": 1092,
         "startChar": 50,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "7ac40928_916b1e85",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-14T21:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac40928_5137f6b0",
+      "range": {
+        "startLine": 1469,
+        "startChar": 20,
+        "endLine": 1469,
+        "endChar": 58
+      },
+      "revId": "68d009fe708321aad80ac66664f5358190dddec5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac40928_713c7294",
         "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
         "patchSetId": 9
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "7ac40928_b1689a88",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1662,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-14T21:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac40928_713c7294",
+      "range": {
+        "startLine": 1662,
+        "startChar": 29,
+        "endLine": 1662,
+        "endChar": 66
+      },
+      "revId": "68d009fe708321aad80ac66664f5358190dddec5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ac40928_11416e0b",
         "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
         "patchSetId": 9
@@ -191,6 +377,30 @@
       "writtenOn": "2016-11-14T21:48:01Z",
       "side": 1,
       "message": "Add a todo note, to not forget to remove this cast once model is in libringclient module",
+      "range": {
+        "startLine": 1751,
+        "startChar": 7,
+        "endLine": 1751,
+        "endChar": 46
+      },
+      "revId": "68d009fe708321aad80ac66664f5358190dddec5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ac40928_5105b6c0",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1751,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-14T21:56:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ac40928_11416e0b",
       "range": {
         "startLine": 1751,
         "startChar": 7,
