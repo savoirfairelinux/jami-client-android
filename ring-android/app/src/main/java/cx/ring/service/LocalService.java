@@ -85,6 +85,7 @@ import cx.ring.client.ConversationActivity;
 import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
 import cx.ring.history.HistoryText;
+import cx.ring.history.Tuple;
 import cx.ring.loaders.AccountsLoader;
 import cx.ring.loaders.ContactsLoader;
 import cx.ring.model.Account;
@@ -1060,9 +1061,9 @@ public class LocalService extends Service implements Observer {
             return callContact;
         }
 
-        Pair<HistoryEntry, HistoryCall> findHistoryByCallId(final Map<String, Conversation> confs, String id) {
+        Tuple<HistoryEntry, HistoryCall> findHistoryByCallId(final Map<String, Conversation> confs, String id) {
             for (Conversation c : confs.values()) {
-                Pair<HistoryEntry, HistoryCall> h = c.findHistoryByCallId(id);
+                Tuple<HistoryEntry, HistoryCall> h = c.findHistoryByCallId(id);
                 if (h != null) {
                     return h;
                 }
@@ -1134,7 +1135,7 @@ public class LocalService extends Service implements Observer {
 
                 for (HistoryText htext : historyTexts) {
                     CallContact contact = getCreateContact(htext.getContactID(), htext.getContactKey(), htext.getNumber());
-                    Pair<HistoryEntry, HistoryCall> p = findHistoryByCallId(ret, htext.getCallId());
+                    Tuple<HistoryEntry, HistoryCall> p = findHistoryByCallId(ret, htext.getCallId());
 
                     if (contact == null && p != null) {
                         contact = p.first.getContact();
