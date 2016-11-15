@@ -60,13 +60,14 @@ import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.adapters.NumberAdapter;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.SipUri;
-import cx.ring.model.Account;
 import cx.ring.service.LocalService;
 import cx.ring.utils.ClipboardHelper;
+import cx.ring.utils.ContentUriHandler;
 
 public class ConversationActivity extends AppCompatActivity implements
         Conversation.ConversationActionCallback,
@@ -75,8 +76,6 @@ public class ConversationActivity extends AppCompatActivity implements
     private static final String TAG = ConversationActivity.class.getSimpleName();
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
 
-    public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI,
-            "conversations");
     public static final int REQ_ADD_CONTACT = 42;
     static final long REFRESH_INTERVAL_MS = 30 * 1000;
 
@@ -180,7 +179,7 @@ public class ConversationActivity extends AppCompatActivity implements
                 public void onClick(View v) {
                     startActivity(new Intent(Intent.ACTION_VIEW)
                             .setClass(getApplicationContext(), CallActivity.class)
-                            .setData(Uri.withAppendedPath(Conference.CONTENT_URI,
+                            .setData(Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI,
                                     mConversation.getCurrentCall().getId())));
                 }
             });
@@ -494,7 +493,7 @@ public class ConversationActivity extends AppCompatActivity implements
         if (conf != null) {
             startActivity(new Intent(Intent.ACTION_VIEW)
                     .setClass(getApplicationContext(), CallActivity.class)
-                    .setData(Uri.withAppendedPath(Conference.CONTENT_URI, conf.getId())));
+                    .setData(Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI, conf.getId())));
             return;
         }
         Pair<Account, SipUri> g = guess();

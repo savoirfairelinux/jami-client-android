@@ -57,6 +57,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
 import cx.ring.service.LocalService;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.views.dragsortlv.DragSortListView;
 
 public class AccountsManagementFragment extends Fragment implements HomeActivity.Refreshable {
@@ -161,7 +162,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
 
         Intent intent = new Intent(getActivity(), AccountEditionActivity.class)
                 .setAction(Intent.ACTION_EDIT)
-                .setData(Uri.withAppendedPath(AccountEditionActivity.CONTENT_URI, acc.getAccountID()));
+                .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, acc.getAccountID()));
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
     }
 
@@ -170,7 +171,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
 
         Intent intent = new Intent()
                 .setClass(getActivity(), AccountWizard.class)
-                .setData(Uri.withAppendedPath(AccountEditionActivity.CONTENT_URI, acc.getAccountID()));
+                .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, acc.getAccountID()));
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
     }
 

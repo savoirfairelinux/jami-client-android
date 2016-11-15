@@ -85,6 +85,7 @@ import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.DRingService;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.CropImageUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.VCardUtils;
@@ -430,7 +431,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                         .setClass(getActivity(), ConversationActivity.class)
                         .setAction(Intent.ACTION_VIEW)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                        .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, firstParticipant.getContact().getIds().get(0)));
+                        .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, firstParticipant.getContact().getIds().get(0)));
                 intent.putExtra("resuming", true);
                 startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
 

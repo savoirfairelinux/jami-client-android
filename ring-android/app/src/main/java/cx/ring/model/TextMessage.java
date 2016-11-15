@@ -19,14 +19,10 @@
  */
 package cx.ring.model;
 
-import android.net.Uri;
-
 import cx.ring.history.HistoryText;
-import cx.ring.service.LocalService;
 
 public class TextMessage {
     private static final String TAG = TextMessage.class.getSimpleName();
-    public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "message");
 
     private long mID = 0;
     private String mAccount = null;

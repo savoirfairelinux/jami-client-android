@@ -21,8 +21,6 @@
 
 package cx.ring.model;
 
-import java.util.ArrayList;
-
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -32,15 +30,15 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import cx.ring.R;
 import cx.ring.client.CallActivity;
 import cx.ring.service.LocalService;
+import cx.ring.utils.ContentUriHandler;
 
 public class Conference {
-
-    public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "conferences");
 
     private String id;
     private int mConfState;
@@ -279,7 +277,7 @@ public class Conference {
 
     public Intent getViewIntent(Context ctx)
     {
-        final Uri conf_uri = Uri.withAppendedPath(CONTENT_URI, getId());
+        final Uri conf_uri = Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI, getId());
         return new Intent(Intent.ACTION_VIEW).setData(conf_uri).setClass(ctx, CallActivity.class);
     }
 
@@ -292,7 +290,7 @@ public class Conference {
             return;
         SipCall call = getParticipants().get(0);
         CallContact contact = call.getContact();
-        final Uri call_uri = Uri.withAppendedPath(SipCall.CONTENT_URI, call.getCallId());
+        final Uri call_uri = Uri.withAppendedPath(ContentUriHandler.CALL_CONTENT_URI, call.getCallId());
         PendingIntent goto_intent = PendingIntent.getActivity(ctx, new Random().nextInt(),
                 getViewIntent(ctx), PendingIntent.FLAG_ONE_SHOT);
 
