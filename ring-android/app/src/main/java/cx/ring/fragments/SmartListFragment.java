@@ -76,6 +76,7 @@ import cx.ring.model.Account;
 import cx.ring.service.LocalService;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ClipboardHelper;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.views.MenuHeaderView;
 
 public class SmartListFragment extends Fragment implements SearchView.OnQueryTextListener,
@@ -412,7 +413,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         Intent intent = new Intent()
                 .setClass(getActivity(), ConversationActivity.class)
                 .setAction(Intent.ACTION_VIEW)
-                .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
+                .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)));
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
     }
 

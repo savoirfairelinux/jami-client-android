@@ -17,6 +17,7 @@ import cx.ring.fragments.ContactListFragment;
 import cx.ring.model.CallContact;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.utils.ContentUriHandler;
 
 public class NewConversationActivity extends Activity implements ContactListFragment.Callbacks {
 
@@ -108,7 +109,7 @@ public class NewConversationActivity extends Activity implements ContactListFrag
                     CharSequence selected = numbers[which];
                     Intent intent = new Intent(Intent.ACTION_VIEW)
                             .setClass(NewConversationActivity.this, ConversationActivity.class)
-                            .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)))
+                            .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)))
                             .putExtra("number", selected);
                     startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
                 }
@@ -117,7 +118,7 @@ public class NewConversationActivity extends Activity implements ContactListFrag
         } else {
             Intent intent = new Intent(Intent.ACTION_VIEW)
                     .setClass(this, ConversationActivity.class)
-                    .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
+                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)));
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
         }
     }

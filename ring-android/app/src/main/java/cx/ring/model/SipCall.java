@@ -20,19 +20,14 @@
  */
 package cx.ring.model;
 
-import android.net.Uri;
 import android.util.Log;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import cx.ring.R;
-import cx.ring.service.LocalService;
 
-public class SipCall
-{
+public class SipCall {
     private static final String TAG = SipCall.class.getSimpleName();
-    public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "calls");
 
     private String mCallID = "";
     private String mAccount = "";
@@ -57,6 +52,7 @@ public class SipCall
         mNumber = number;
         mCallType = direction;
     }
+
     public SipCall(String id, String account, String number, int direction) {
         this(id, account, new SipUri(number), direction);
     }
@@ -200,6 +196,7 @@ public class SipCall
     public void setNumber(String n) {
         mNumber = new SipUri(n);
     }
+
     public void setNumber(SipUri n) {
         mNumber = n;
     }
@@ -207,6 +204,7 @@ public class SipCall
     public String getNumber() {
         return mNumber.getUriString();
     }
+
     public SipUri getNumberUri() {
         return mNumber;
     }
