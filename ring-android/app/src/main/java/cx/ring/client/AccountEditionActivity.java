@@ -31,7 +31,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -101,7 +100,6 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         }
     };
 
-    public static final Uri CONTENT_URI = Uri.withAppendedPath(LocalService.AUTHORITY_URI, "accounts");
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
     private final ArrayList<AccountChangedListener> listeners = new ArrayList<>();
     private boolean mBound = false;

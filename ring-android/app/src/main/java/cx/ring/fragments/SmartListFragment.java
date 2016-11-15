@@ -69,14 +69,15 @@ import cx.ring.adapters.SmartListAdapter;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeScannerActivity;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.model.Account;
+import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.LocalService;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ClipboardHelper;
-import cx.ring.navigation.RingNavigationFragment;
+import cx.ring.utils.ContentUriHandler;
 
 public class SmartListFragment extends Fragment implements SearchView.OnQueryTextListener,
         HomeActivity.Refreshable,
@@ -412,7 +413,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         Intent intent = new Intent()
                 .setClass(getActivity(), ConversationActivity.class)
                 .setAction(Intent.ACTION_VIEW)
-                .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
+                .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)));
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
     }
 
