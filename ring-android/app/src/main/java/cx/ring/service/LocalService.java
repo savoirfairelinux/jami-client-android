@@ -101,6 +101,7 @@ import cx.ring.model.TextMessage;
 import cx.ring.services.HistoryService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.SettingsService;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaManager;
 
 public class LocalService extends Service implements Observer {
@@ -119,8 +120,6 @@ public class LocalService extends Service implements Observer {
     static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
     static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
 
-
-    public static final Uri AUTHORITY_URI = Uri.parse("content://" + BuildConfig.APPLICATION_ID);
     public static final int PERMISSIONS_REQUEST = 57;
 
     public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
@@ -1280,10 +1279,10 @@ public class LocalService extends Service implements Observer {
             NotificationCompat.Builder noti = c.notificationBuilder;
             Intent c_intent = new Intent(Intent.ACTION_VIEW)
                     .setClass(this, ConversationActivity.class)
-                    .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, contact.getIds().get(0)));
+                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
             Intent d_intent = new Intent(ACTION_CONV_READ)
                     .setClass(this, LocalService.class)
-                    .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, contact.getIds().get(0)));
+                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
             noti.setContentIntent(PendingIntent.getActivity(this, new Random().nextInt(), c_intent, 0))
                     .setDeleteIntent(PendingIntent.getService(this, new Random().nextInt(), d_intent, 0));
 
@@ -1367,7 +1366,7 @@ public class LocalService extends Service implements Observer {
                     if (conversation != null) {
                         readConversation(conversation);
                     }
-                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, convId)));
+                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, convId)));
                     break;
                 }
                 case ACTION_CALL_ACCEPT: {
@@ -1615,7 +1614,7 @@ public class LocalService extends Service implements Observer {
                         Log.e(TAG, "Error while sending profile", e);
                     }
 
-                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(Uri.withAppendedPath(SipCall.CONTENT_URI, callId)));
+                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(Uri.withAppendedPath(ContentUriHandler.CALL_CONTENT_URI, callId)));
                     break;
                 }
                 case CallManagerCallBack.CALL_STATE_CHANGED: {

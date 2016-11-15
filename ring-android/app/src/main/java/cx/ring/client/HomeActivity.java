@@ -75,6 +75,7 @@ import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.FileUtils;
 import cx.ring.views.MenuHeaderView;
 
@@ -685,7 +686,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                     CharSequence selected = numbers[which];
                     Intent intent = new Intent(Intent.ACTION_VIEW)
                             .setClass(HomeActivity.this, ConversationActivity.class)
-                            .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)))
+                            .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)))
                             .putExtra("number", selected);
                     startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
                 }
@@ -694,7 +695,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         } else {
             Intent intent = new Intent(Intent.ACTION_VIEW)
                     .setClass(this, ConversationActivity.class)
-                    .setData(Uri.withAppendedPath(ConversationActivity.CONTENT_URI, c.getIds().get(0)));
+                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)));
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
         }
     }
