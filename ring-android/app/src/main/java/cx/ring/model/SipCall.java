@@ -20,11 +20,10 @@
  */
 package cx.ring.model;
 
-import android.util.Log;
-
 import java.util.Map;
 
 import cx.ring.R;
+import cx.ring.utils.Log;
 
 public class SipCall {
     private static final String TAG = SipCall.class.getSimpleName();
