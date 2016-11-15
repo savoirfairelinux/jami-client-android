@@ -27,7 +27,6 @@ import android.database.ContentObservable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,6 +43,7 @@ import cx.ring.R;
 import cx.ring.adapters.NumberAdapter;
 import cx.ring.history.HistoryCall;
 import cx.ring.history.HistoryEntry;
+import cx.ring.history.Tuple;
 
 public class Conversation extends ContentObservable {
     static final String TAG = Conversation.class.getSimpleName();
@@ -82,11 +82,11 @@ public class Conversation extends ContentObservable {
         current_calls.remove(c);
     }
 
-    public Pair<HistoryEntry, HistoryCall> findHistoryByCallId(String id) {
+    public Tuple<HistoryEntry, HistoryCall> findHistoryByCallId(String id) {
         for (HistoryEntry e : history.values()) {
             for (HistoryCall c : e.getCalls().values()) {
                 if (c.getCallId().equals(id))
-                    return new Pair<>(e, c);
+                    return new Tuple<>(e, c);
             }
         }
         return null;
@@ -131,7 +131,7 @@ public class Conversation extends ContentObservable {
 
         //for (Map.Entry<String, HistoryEntry> e : history.entrySet()) {
         for (HistoryEntry e : history.values()) {
-            Date nd = e.getLastInteraction();
+            Date nd = e.getLastInteractionDate();
             if (d.compareTo(nd) < 0)
                 d = nd;
         }
@@ -142,16 +142,43 @@ public class Conversation extends ContentObservable {
         if (!current_calls.isEmpty()) {
             return resources.getString(R.string.ongoing_call);
         }
-        Pair<Date, String> d = new Pair<>(new Date(0), null);
+        Tuple<Date, String> d = new Tuple<>(new Date(0), null);
 
         for (HistoryEntry e : history.values()) {
-            Pair<Date, String> nd = e.getLastInteractionSumary(resources);
-            if (nd == null)
+            Date entryDate = e.getLastInteractionDate();
+            String entrySummary = getLastInteractionSummary(e, resources);
+            if (entryDate == null || entrySummary == null) {
                 continue;
-            if (d.first.compareTo(nd.first) < 0)
-                d = nd;
+            }
+            Tuple<Date, String> tmp = new Tuple<>(entryDate, entrySummary);
+            if (d.first.compareTo(entryDate) < 0) {
+                d = tmp;
+            }
         }
         return d.second;
+    }
+
+    private String getLastInteractionSummary(HistoryEntry e, Resources resources) {
+        long lastTextTimestamp = e.getTextMessages().isEmpty() ? 0 : e.getTextMessages().lastEntry().getKey();
+        long lastCallTimestamp = e.getCalls().isEmpty() ? 0 : e.getCalls().lastEntry().getKey();
+        if (lastTextTimestamp > 0 && lastTextTimestamp > lastCallTimestamp) {
+            TextMessage msg = e.getTextMessages().lastEntry().getValue();
+            String msgString = msg.getMessage();
+            if (msgString != null && !msgString.isEmpty() && msgString.contains("\n")) {
+                int lastIndexOfChar = msgString.lastIndexOf("\n");
+                if (lastIndexOfChar + 1 < msgString.length()) {
+                    msgString = msgString.substring(msgString.lastIndexOf("\n") + 1);
+                }
+            }
+            return (msg.isIncoming() ? "" : resources.getText(R.string.you_txt_prefix) + " ") + msgString;
+        }
+        if (lastCallTimestamp > 0) {
+            HistoryCall lastCall = e.getCalls().lastEntry().getValue();
+            return String.format(resources.getString(lastCall.isIncoming()
+                    ? R.string.hist_in_call
+                    : R.string.hist_out_call), lastCall.getDurationString());
+        }
+        return null;
     }
 
     public void addHistoryCall(HistoryCall c) {
@@ -204,7 +231,7 @@ public class Conversation extends ContentObservable {
         String last = null;
         Date d = new Date(0);
         for (Map.Entry<String, HistoryEntry> e : history.entrySet()) {
-            Date nd = e.getValue().getLastInteraction();
+            Date nd = e.getValue().getLastInteractionDate();
             if (d.compareTo(nd) < 0) {
                 d = nd;
                 last = e.getKey();
@@ -268,8 +295,8 @@ public class Conversation extends ContentObservable {
     }
 
     public static AlertDialog launchDeleteAction(final Activity activity,
-                                          final Conversation conversation,
-                                          final ConversationActionCallback callback) {
+                                                 final Conversation conversation,
+                                                 final ConversationActionCallback callback) {
         if (activity == null) {
             Log.d(TAG, "launchDeleteAction: activity is null");
             return null;

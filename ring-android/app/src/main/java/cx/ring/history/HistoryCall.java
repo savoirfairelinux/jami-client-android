@@ -22,24 +22,20 @@
 
 package cx.ring.history;
 
-import android.content.res.Resources;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import cx.ring.R;
-import cx.ring.model.SipCall;
-
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import cx.ring.model.SipCall;
+
 @DatabaseTable(tableName = HistoryCall.TABLE_NAME)
-public class HistoryCall implements Parcelable {
+public class HistoryCall implements Serializable {
 
     public static final String TABLE_NAME = "historycall";
     public static final String COLUMN_TIMESTAMP_START_NAME = "TIMESTAMP_START";
@@ -132,23 +128,19 @@ public class HistoryCall implements Parcelable {
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
         sdf.setTimeZone(TimeZone.getDefault());
         return sdf.format(date);
-
     }
 
     public String getDurationString() {
-
         long duration = (call_end - call_start) / 1000;
-        if (duration < 60)
+        if (duration < 60) {
             return String.format(Locale.getDefault(), "%02d secs", duration);
+        }
 
-        if (duration < 3600)
+        if (duration < 3600) {
             return String.format(Locale.getDefault(), "%02d mins %02d secs", (duration % 3600) / 60, (duration % 60));
+        }
 
         return String.format(Locale.getDefault(), "%d h %02d mins %02d secs", duration / 3600, (duration % 3600) / 60, (duration % 60));
-    }
-
-    public String getDescription(Resources res) {
-        return String.format(res.getString(isIncoming() ? R.string.hist_in_call : R.string.hist_out_call), getDurationString());
     }
 
     public long getDuration() {
@@ -161,48 +153,6 @@ public class HistoryCall implements Parcelable {
 
     public String getNumber() {
         return number;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(call_start);
-        dest.writeLong(call_end);
-        dest.writeString(accountID);
-        dest.writeString(number);
-        dest.writeByte((byte) (missed ? 1 : 0));
-        dest.writeInt(direction);
-        dest.writeString(recordPath);
-        dest.writeLong(contactID);
-        dest.writeString(contactKey);
-        dest.writeString(callID);
-    }
-
-    public static final Parcelable.Creator<HistoryCall> CREATOR = new Parcelable.Creator<HistoryCall>() {
-        public HistoryCall createFromParcel(Parcel in) {
-            return new HistoryCall(in);
-        }
-
-        public HistoryCall[] newArray(int size) {
-            return new HistoryCall[size];
-        }
-    };
-
-    private HistoryCall(Parcel in) {
-        call_start = in.readLong();
-        call_end = in.readLong();
-        accountID = in.readString();
-        number = in.readString();
-        missed = in.readByte() == 1;
-        direction = in.readInt();
-        recordPath = in.readString();
-        contactID = in.readLong();
-        contactKey = in.readString();
-        callID = in.readString();
     }
 
     public boolean hasRecord() {
