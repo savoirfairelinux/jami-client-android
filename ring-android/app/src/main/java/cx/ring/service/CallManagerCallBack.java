@@ -6,6 +6,9 @@ import android.util.Log;
 
 import java.util.HashMap;
 
+import cx.ring.daemon.Callback;
+import cx.ring.daemon.StringMap;
+import cx.ring.daemon.IntegerMap;
 import cx.ring.model.SipCall;
 import cx.ring.utils.ProfileChunk;
 import cx.ring.utils.VCardUtils;

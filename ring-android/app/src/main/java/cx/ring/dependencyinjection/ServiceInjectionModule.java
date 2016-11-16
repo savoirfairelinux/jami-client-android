@@ -19,9 +19,15 @@
  */
 package cx.ring.dependencyinjection;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
 import javax.inject.Singleton;
 
 import cx.ring.application.RingApplication;
+import cx.ring.services.DaemonService;
+import cx.ring.services.DaemonServiceImpl;
 import cx.ring.services.HistoryService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.LogService;
@@ -68,5 +74,25 @@ public class ServiceInjectionModule {
     @Singleton
     LogService provideLogService() {
         return new LogServiceImpl();
+    }
+
+    @Provides
+    @Singleton
+    DaemonService provideDaemonService() {
+        DaemonService daemonService = new DaemonServiceImpl();
+        mRingApplication.getRingInjectionComponent().inject(daemonService);
+        return daemonService;
+    }
+
+    @Provides
+    @Singleton
+    public ExecutorService provideExecutorService() {
+        return Executors.newFixedThreadPool(6);
+    }
+
+    @Provides
+    @Singleton
+    public ScheduledExecutorService provideScheduledExecutorService() {
+        return Executors.newScheduledThreadPool(1);
     }
 }

@@ -24,10 +24,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import cx.ring.service.Blob;
-import cx.ring.service.StringMap;
-import cx.ring.service.StringVect;
-import cx.ring.service.VectMap;
+import cx.ring.daemon.Blob;
+import cx.ring.daemon.StringMap;
+import cx.ring.daemon.StringVect;
+import cx.ring.daemon.VectMap;
 
 public class SwigNativeConverter {
 
@@ -44,7 +44,7 @@ public class SwigNativeConverter {
     public static Blob convertFromNativeToSwig(byte[] data) {
         Blob toReturn = new Blob();
         toReturn.reserve(data.length);
-        for (int i=0; i<data.length; i++)
+        for (int i = 0; i < data.length; i++)
             toReturn.add(data[i]);
         return toReturn;
     }
