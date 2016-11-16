@@ -24,7 +24,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import cx.ring.service.StringVect;
+import cx.ring.daemon.StringVect;
 
 public class ProfileChunk {
     public final static String TAG = ProfileChunk.class.getSimpleName();
@@ -35,6 +35,7 @@ public class ProfileChunk {
 
     /**
      * Constructor
+     *
      * @param numberOfParts Number of part to complete the Profile
      */
     public ProfileChunk(long numberOfParts) {
@@ -46,17 +47,19 @@ public class ProfileChunk {
 
     /**
      * Inserts a profile part in the data structure, at a given position
-     * @param part the part to insert
+     *
+     * @param part  the part to insert
      * @param index the given position to insert the part
      */
     public void addPartAtIndex(@NonNull String part, int index) {
-        this.mParts.set(index, part);
-        this.mInsertedParts++;
+        mParts.set(index, part);
+        mInsertedParts++;
         Log.d(TAG, "Inserting part " + part + " at index " + index);
     }
 
     /**
      * Tells if the profile is complete: all the needed parts have been gathered
+     *
      * @return true if complete, false otherwise
      */
     public boolean isProfileComplete() {
@@ -65,6 +68,7 @@ public class ProfileChunk {
 
     /**
      * Builds the profile based on the gathered parts.
+     *
      * @return the complete profile as a String
      */
     @Nullable
@@ -75,8 +79,7 @@ public class ProfileChunk {
                 stringBuilder.append(this.mParts.get(i));
             }
             return stringBuilder.toString();
-        }
-        else {
+        } else {
             return null;
         }
     }
