@@ -32,14 +32,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.Camera;
 import android.media.AudioManager;
-import android.os.Bundle;
-import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
-import android.os.Message;
 import android.os.RemoteException;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -52,41 +48,33 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+
+import javax.inject.Inject;
 
 import cx.ring.BuildConfig;
-import cx.ring.R;
+import cx.ring.application.RingApplication;
+import cx.ring.daemon.StringMap;
 import cx.ring.model.Codec;
-import cx.ring.utils.SwigNativeConverter;
-import cx.ring.utils.VCardUtils;
-import ezvcard.VCard;
+import cx.ring.services.DaemonService;
 
 
 public class DRingService extends Service {
 
-    static final String TAG = "DRingService";
-    private SipServiceExecutor mExecutor;
+    @Inject
+    DaemonService mDaemonService;
+
+    @Inject
+    ExecutorService mExecutor;
+
+    static final String TAG = DRingService.class.getName();
+
     private static HandlerThread executorThread;
 
     static public final String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
     static public final String VIDEO_EVENT = BuildConfig.APPLICATION_ID + ".event.VIDEO_EVENT";
-    private static final int VCARD_CHUNK_SIZE = 1000;
-
-    private Handler handler = new Handler();
-    private static int POLLING_TIMEOUT = 50;
-    private Runnable pollEvents = new Runnable() {
-        @Override
-        public void run() {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException {
-                    Ringservice.pollEvents();
-                }
-            });
-            handler.postDelayed(this, POLLING_TIMEOUT);
-        }
-    };
-    private boolean isPjSipStackStarted = false;
 
     private ConfigurationManagerCallback configurationCallback;
     private CallManagerCallBack callManagerCallBack;
@@ -116,20 +104,46 @@ public class DRingService extends Service {
 
     private void ringerModeChanged(int newMode) {
         boolean mute = newMode == AudioManager.RINGER_MODE_VIBRATE || newMode == AudioManager.RINGER_MODE_SILENT;
-        Log.d(TAG, (mute ? "Muting." : "Unmuting.") + " ringtone.");
-        Ringservice.muteRingtone(mute);
+        mDaemonService.muteRingTone(mute);
     }
 
-    /* called once by startService() */
     @Override
     public void onCreate() {
         Log.i(TAG, "onCreated");
         super.onCreate();
 
-        getExecutor().execute(new StartRunnable());
+        // dependency injection
+        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+
+        Future<Boolean> startResult = mExecutor.submit(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                configurationCallback = new ConfigurationManagerCallback(DRingService.this);
+                callManagerCallBack = new CallManagerCallBack(DRingService.this);
+                videoManagerCallback = new VideoManagerCallback(DRingService.this);
+
+                mDaemonService.startDaemon(callManagerCallBack, configurationCallback, videoManagerCallback);
+
+                ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
+                registerReceiver(ringerModeListener, RINGER_FILTER);
+
+                Intent intent = new Intent(DRING_CONNECTION_CHANGED);
+                intent.putExtra("connected", mDaemonService.isStarted());
+                sendBroadcast(intent);
+
+                videoManagerCallback.init();
+
+                return true;
+            }
+        });
+
+        try {
+            startResult.get();
+        } catch (Exception e) {
+            Log.e(TAG, "DRingService start failed", e);
+        }
     }
 
-    /* called for each startService() */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
@@ -139,36 +153,49 @@ public class DRingService extends Service {
     @Override
     public void onDestroy() {
         Log.i(TAG, "onDestroy");
-        getExecutor().execute(new FinalizeRunnable());
-        super.onDestroy();
 
+        Future<Boolean> stopResult = mExecutor.submit(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                unregisterReceiver(ringerModeListener);
+                mDaemonService.stopDaemon();
+                configurationCallback = null;
+                callManagerCallBack = null;
+                videoManagerCallback = null;
+                Intent intent = new Intent(DRING_CONNECTION_CHANGED);
+                intent.putExtra("connected", mDaemonService.isStarted());
+                sendBroadcast(intent);
+
+                return true;
+            }
+        });
+
+        try {
+            stopResult.get();
+        } catch (Exception e) {
+            Log.e(TAG, "DRingService stop failed", e);
+        }
+
+        super.onDestroy();
     }
 
     @Override
     public IBinder onBind(Intent arg0) {
         Log.i(TAG, "onBound");
         Intent intent = new Intent(DRING_CONNECTION_CHANGED);
-        intent.putExtra("connected", isPjSipStackStarted);
+        intent.putExtra("connected", mDaemonService.isStarted());
         sendBroadcast(intent);
         return mBinder;
     }
 
     private static Looper createLooper() {
         if (executorThread == null) {
-            Log.d(TAG, "Creating new handler thread");
+            Log.d(TAG, "Creating new mHandler thread");
             // ADT gives a fake warning due to bad parse rule.
             executorThread = new HandlerThread("DRingService.Executor");
             executorThread.start();
         }
         return executorThread.getLooper();
-    }
-
-    public SipServiceExecutor getExecutor() {
-        // create mExecutor lazily
-        if (mExecutor == null) {
-            mExecutor = new SipServiceExecutor();
-        }
-        return mExecutor;
     }
 
     public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
@@ -183,21 +210,25 @@ public class DRingService extends Service {
         WeakReference<SurfaceHolder> weakSurfaceHolder = videoSurfaces.get(id);
         if (weakSurfaceHolder != null) {
             SurfaceHolder holder = weakSurfaceHolder.get();
-            if (holder != null)
+            if (holder != null) {
                 startVideo(shm, holder);
+            }
         }
     }
 
     public void decodingStopped(String id) {
         Log.i(TAG, "DRingService.decodingStopped() " + id);
         Shm shm = videoInputs.remove(id);
-        if (shm != null)
+        if (shm != null) {
             stopVideo(shm);
+        }
     }
 
     private void startVideo(Shm input, SurfaceHolder holder) {
         Log.i(TAG, "DRingService.startVideo() " + input.id);
-        input.window = RingserviceJNI.acquireNativeWindow(holder.getSurface());
+
+        input.window = mDaemonService.startVideo(input.id, holder.getSurface(), input.w, input.h);
+
         if (input.window == 0) {
             Log.i(TAG, "DRingService.startVideo() no window ! " + input.id);
             Intent intent = new Intent(VIDEO_EVENT);
@@ -205,8 +236,6 @@ public class DRingService extends Service {
             sendBroadcast(intent);
             return;
         }
-        RingserviceJNI.setNativeWindowGeometry(input.window, input.w, input.h);
-        RingserviceJNI.registerVideoCallback(input.id, input.window);
 
         Intent intent = new Intent(VIDEO_EVENT);
         intent.putExtra("started", true);
@@ -219,8 +248,7 @@ public class DRingService extends Service {
     private void stopVideo(Shm input) {
         Log.i(TAG, "DRingService.stopVideo() " + input.id);
         if (input.window != 0) {
-            RingserviceJNI.unregisterVideoCallback(input.id, input.window);
-            RingserviceJNI.releaseNativeWindow(input.window);
+            mDaemonService.stopVideo(input.id, input.window);
             input.window = 0;
         }
 
@@ -350,11 +378,7 @@ public class DRingService extends Service {
         preview.setPreviewCallback(new Camera.PreviewCallback() {
             @Override
             public void onPreviewFrame(byte[] data, Camera camera) {
-                long ptr = RingserviceJNI.obtainFrame(data.length);
-                if (ptr != 0) {
-                    RingserviceJNI.setVideoFrame(data, data.length, ptr, videoParams.width, videoParams.height, videoParams.rotation);
-                }
-                RingserviceJNI.releaseFrame(ptr);
+                mDaemonService.setVideoFrame(data, videoParams.width, videoParams.height, videoParams.rotation);
             }
         });
         preview.setErrorCallback(new Camera.ErrorCallback() {
@@ -399,234 +423,6 @@ public class DRingService extends Service {
         }
     }
 
-    // Executes immediate tasks in a single executorThread.
-    public static class SipServiceExecutor extends Handler {
-
-        SipServiceExecutor() {
-            super(createLooper());
-        }
-
-        public void execute(Runnable task) {
-            // TODO: add wakelock
-            Message.obtain(SipServiceExecutor.this, 0/* don't care */, task).sendToTarget();
-            //Log.w(TAG, "SenT!");
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.obj instanceof Runnable) {
-                executeInternal((Runnable) msg.obj);
-            } else {
-                Log.w(TAG, "can't handle msg: " + msg);
-            }
-        }
-
-        private void executeInternal(Runnable task) {
-            try {
-                task.run();
-            } catch (Throwable t) {
-                Log.e(TAG, "run task: " + task, t);
-            }
-        }
-
-        public final boolean executeSynced(final Runnable r) {
-            if (r == null) {
-                throw new IllegalArgumentException("runnable must not be null");
-            }
-            if (Looper.myLooper() == getLooper()) {
-                r.run();
-                return true;
-            }
-
-            BlockingRunnable br = new BlockingRunnable(r);
-            return br.postAndWait(this, 0);
-        }
-
-        public final <T> T executeAndReturn(final SipRunnableWithReturn<T> r) {
-            if (r == null) {
-                throw new IllegalArgumentException("runnable must not be null");
-            }
-            if (Looper.myLooper() == getLooper()) {
-                r.run();
-                return r.getVal();
-            }
-
-            BlockingRunnable br = new BlockingRunnable(r);
-            if (!br.postAndWait(this, 0)) {
-                throw new RuntimeException("Can't execute runnable");
-            }
-            return r.getVal();
-        }
-
-        private static final class BlockingRunnable implements Runnable {
-            private final Runnable mTask;
-            private boolean mDone;
-
-            public BlockingRunnable(Runnable task) {
-                mTask = task;
-            }
-
-            @Override
-            public void run() {
-                try {
-                    mTask.run();
-                } catch (Exception e) {
-                    Log.e(TAG, "Error in Blocking Runnable task " + mTask.toString(), e);
-                } finally {
-                    synchronized (this) {
-                        mDone = true;
-                        notifyAll();
-                    }
-                }
-            }
-
-            public boolean postAndWait(Handler handler, long timeout) {
-                if (!handler.post(this)) {
-                    return false;
-                }
-
-                synchronized (this) {
-                    if (timeout > 0) {
-                        final long expirationTime = SystemClock.uptimeMillis() + timeout;
-                        while (!mDone) {
-                            long delay = expirationTime - SystemClock.uptimeMillis();
-                            if (delay <= 0) {
-                                return false; // timeout
-                            }
-                            try {
-                                wait(delay);
-                            } catch (InterruptedException ex) {
-                                Log.e(TAG, "Error in postAndWait", ex);
-                            }
-                        }
-                    } else {
-                        while (!mDone) {
-                            try {
-                                wait();
-                            } catch (InterruptedException ex) {
-                                Log.e(TAG, "Error in postAndWait", ex);
-                            }
-                        }
-                    }
-                }
-                return true;
-            }
-        }
-    }
-
-    private void stopDaemon() {
-        unregisterReceiver(ringerModeListener);
-        handler.removeCallbacks(pollEvents);
-        if (isPjSipStackStarted) {
-            Ringservice.fini();
-            configurationCallback = null;
-            callManagerCallBack = null;
-            videoManagerCallback = null;
-            isPjSipStackStarted = false;
-            Log.i(TAG, "PjSIPStack stopped");
-            Intent intent = new Intent(DRING_CONNECTION_CHANGED);
-            intent.putExtra("connected", isPjSipStackStarted);
-            sendBroadcast(intent);
-        }
-    }
-
-    private void startPjSipStack() throws SameThreadException {
-        if (isPjSipStackStarted)
-            return;
-
-        try {
-            System.loadLibrary("ring");
-            isPjSipStackStarted = true;
-        } catch (UnsatisfiedLinkError e) {
-            Log.e(TAG, "Problem with the current Pj stack...", e);
-            isPjSipStackStarted = false;
-            return;
-        } catch (Exception e) {
-            Log.e(TAG, "Problem with the current Pj stack...", e);
-            isPjSipStackStarted = false;
-        }
-
-        configurationCallback = new ConfigurationManagerCallback(this);
-        callManagerCallBack = new CallManagerCallBack(this);
-        videoManagerCallback = new VideoManagerCallback(this);
-        Ringservice.init(configurationCallback, callManagerCallBack, videoManagerCallback);
-
-        ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
-        registerReceiver(ringerModeListener, RINGER_FILTER);
-
-        handler.postDelayed(pollEvents, POLLING_TIMEOUT);
-        Log.i(TAG, "PjSIPStack started");
-        Intent intent = new Intent(DRING_CONNECTION_CHANGED);
-        intent.putExtra("connected", isPjSipStackStarted);
-        sendBroadcast(intent);
-
-        videoManagerCallback.init();
-    }
-
-    // Enforce same thread contract to ensure we do not call from somewhere else
-    public class SameThreadException extends Exception {
-        private static final long serialVersionUID = -905639124232613768L;
-
-        public SameThreadException() {
-            super("Should be launched from a single worker thread");
-        }
-    }
-
-    public abstract static class SipRunnable implements Runnable {
-        protected abstract void doRun() throws SameThreadException, RemoteException;
-
-        @Override
-        public void run() {
-            try {
-                doRun();
-            } catch (SameThreadException e) {
-                Log.e(TAG, "Not done from same thread");
-            } catch (RemoteException ex) {
-                Log.e(TAG, ex.getMessage(), ex);
-            }
-        }
-    }
-
-    public abstract class SipRunnableWithReturn<T> implements Runnable {
-        private T obj = null;
-
-        protected abstract T doRun() throws SameThreadException, RemoteException;
-
-        public T getVal() {
-            return obj;
-        }
-
-        @Override
-        public void run() {
-            try {
-                if (isPjSipStackStarted) {
-                    obj = doRun();
-                } else {
-                    Log.e(TAG, "Can't perform operation: daemon not started.");
-                }
-                //done = true;
-            } catch (SameThreadException e) {
-                Log.e(TAG, "Not done from same thread");
-            } catch (RemoteException e) {
-                Log.e(TAG, e.toString());
-            }
-        }
-    }
-
-    class StartRunnable extends SipRunnable {
-        @Override
-        protected void doRun() throws SameThreadException {
-            startPjSipStack();
-        }
-    }
-
-    class FinalizeRunnable extends SipRunnable {
-        @Override
-        protected void doRun() throws SameThreadException {
-            stopDaemon();
-        }
-    }
-
     /* ************************************
      *
      * Implement public interface for the service
@@ -636,287 +432,121 @@ public class DRingService extends Service {
 
     protected final IDRingService.Stub mBinder = new IDRingService.Stub() {
 
-
         @Override
         public String placeCall(final String account, final String number, final boolean video) {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<String>() {
-                @Override
-                protected String doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.placeCall() thread running... " + number + " video: " + video);
-                    String callId = Ringservice.placeCall(account, number);
-                    if (!video) {
-                        Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
-                    }
-                    return callId;
-                }
-            });
+            return mDaemonService.placeCall(account, number, video);
         }
 
         @Override
         public void refuse(final String callID) {
-            Log.e(TAG, "REFUSE");
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.refuse() thread running...");
-                    Ringservice.refuse(callID);
-                    Ringservice.hangUp(callID);
-                }
-            });
+            mDaemonService.refuse(callID);
         }
 
         @Override
         public void accept(final String callID) {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.accept() thread running...");
-                    Ringservice.accept(callID);
-                }
-            });
+            mDaemonService.accept(callID);
         }
 
         @Override
         public void hangUp(final String callID) {
-            Log.e(TAG, "HANGING UP " + callID);
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.hangUp() thread running...");
-                    Ringservice.hangUp(callID);
-                }
-            });
+            mDaemonService.hangUp(callID);
         }
 
         @Override
         public void hold(final String callID) {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.hold() thread running...");
-                    Ringservice.hold(callID);
-                }
-            });
+            mDaemonService.hold(callID);
         }
 
         @Override
         public void unhold(final String callID) {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.unhold() thread running...");
-                    Ringservice.unhold(callID);
-                }
-            });
+            mDaemonService.unhold(callID);
         }
 
-        @Override
-        public void sendProfile(final String callID, final String accountID) {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    final String ringProfileVCardMime = "x-ring/ring.profile.vcard";
-
-                    Context context = DRingService.this;
-                    VCard vcard = VCardUtils.loadLocalProfileFromDisk(context.getFilesDir(), accountID, context.getString(R.string.unknown));
-                    String stringVCard = VCardUtils.vcardToString(vcard);
-
-                    int nbTotal = stringVCard.length() / VCARD_CHUNK_SIZE + (stringVCard.length() % VCARD_CHUNK_SIZE != 0 ? 1 : 0);
-                    int i = 1;
-                    Random r = new Random(System.currentTimeMillis());
-                    int key = r.nextInt();
-
-                    Log.d(TAG, "sendProfile, vcard " + stringVCard);
-
-                    while (i <= nbTotal) {
-                        HashMap<String, String> chunk = new HashMap<>();
-                        Log.d(TAG, "lenght vcard " + stringVCard.length() + " id " + key + " part " + i + " nbTotal " + nbTotal);
-                        String keyHashMap = ringProfileVCardMime + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
-                        String message = stringVCard.substring(0, Math.min(VCARD_CHUNK_SIZE, stringVCard.length()));
-                        chunk.put(keyHashMap, message);
-                        if (stringVCard.length() > VCARD_CHUNK_SIZE) {
-                            stringVCard = stringVCard.substring(VCARD_CHUNK_SIZE);
-                        }
-                        i++;
-                        Ringservice.sendTextMessage(callID, StringMap.toSwig(chunk), "Me", false);
-                    }
-                }
-            });
+        public void sendProfile(final String callId, final String accountId) {
+            mDaemonService.sendProfile(callId, accountId);
         }
 
         @Override
         public boolean isStarted() throws RemoteException {
-            return isPjSipStackStarted;
+            return mDaemonService.isStarted();
         }
 
         @Override
         public Map<String, String> getCallDetails(final String callID) throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
-                @Override
-                protected Map<String, String> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getCallDetails() thread running...");
-                    return Ringservice.getCallDetails(callID).toNative();
-                }
-            });
+            return mDaemonService.getCallDetails(callID);
         }
 
         @Override
         public void setAudioPlugin(final String audioPlugin) {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.setAudioPlugin() thread running...");
-                    Ringservice.setAudioPlugin(audioPlugin);
-                }
-            });
+            mDaemonService.setAudioPlugin(audioPlugin);
         }
 
         @Override
         public String getCurrentAudioOutputPlugin() {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<String>() {
-                @Override
-                protected String doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getCurrentAudioOutputPlugin() thread running...");
-                    return Ringservice.getCurrentAudioOutputPlugin();
-                }
-            });
+            return mDaemonService.getCurrentAudioOutputPlugin();
         }
 
         @Override
         public List<String> getAccountList() {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<List<String>>() {
-                @Override
-                protected List<String> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getAccountList() thread running...");
-                    return new ArrayList<>(Ringservice.getAccountList());
-                }
-            });
+            return mDaemonService.getAccountList();
         }
 
         @Override
         public void setAccountOrder(final String order) {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.setAccountsOrder() " + order + " thread running...");
-                    Ringservice.setAccountsOrder(order);
-                }
-            });
+            mDaemonService.setAccountOrder(order);
         }
 
         @Override
         public Map<String, String> getAccountDetails(final String accountID) {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
-                @Override
-                protected Map<String, String> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getAccountDetails() thread running...");
-                    return Ringservice.getAccountDetails(accountID).toNative();
-                }
-            });
+            return mDaemonService.getAccountDetails(accountID);
         }
 
         @SuppressWarnings("unchecked")
         // Hashmap runtime cast
         @Override
         public void setAccountDetails(final String accountId, final Map map) {
-            Log.i(TAG, "DRingService.setAccountDetails() " + map.get("Account.hostname"));
-            final StringMap swigmap = StringMap.toSwig(map);
-
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException {
-
-                    Ringservice.setAccountDetails(accountId, swigmap);
-                    Log.i(TAG, "DRingService.setAccountDetails() thread running... " + swigmap.get("Account.hostname"));
-                }
-
-            });
+            mDaemonService.setAccountDetails(accountId, map);
         }
 
         @Override
         public void setAccountActive(final String accountId, final boolean active) {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.setAccountActive() thread running... " + accountId + " -> " + active);
-                    Ringservice.setAccountActive(accountId, active);
-                }
-            });
+            mDaemonService.setAccountActive(accountId, active);
         }
 
         @Override
         public void setAccountsActive(final boolean active) {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.setAccountsActive() thread running... " + active);
-                    StringVect list = Ringservice.getAccountList();
-                    for (int i = 0, n = list.size(); i < n; i++)
-                        Ringservice.setAccountActive(list.get(i), active);
-                }
-            });
+            mDaemonService.setAccountsActive(active);
         }
 
         @Override
         public Map<String, String> getVolatileAccountDetails(final String accountId) {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
-                @Override
-                protected Map<String, String> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getVolatileAccountDetails() thread running...");
-                    return Ringservice.getVolatileAccountDetails(accountId).toNative();
-                }
-            });
+            return mDaemonService.getVolatileAccountDetails(accountId);
         }
 
         @Override
         public Map<String, String> getAccountTemplate(final String accountType) throws RemoteException {
-            Log.i(TAG, "DRingService.getAccountTemplate() " + accountType);
-            return Ringservice.getAccountTemplate(accountType).toNative();
+            return mDaemonService.getAccountTemplate(accountType);
         }
 
         @SuppressWarnings("unchecked")
         // Hashmap runtime cast
         @Override
         public String addAccount(final Map map) {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<String>() {
-                @Override
-                protected String doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.addAccount() thread running...");
-                    return Ringservice.addAccount(StringMap.toSwig(map));
-                }
-            });
+            return mDaemonService.addAccount(map);
         }
 
         @Override
         public void removeAccount(final String accountId) {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.removeAccount() thread running...");
-                    Ringservice.removeAccount(accountId);
-                }
-            });
+            mDaemonService.removeAccount(accountId);
         }
 
         @Override
         public String exportOnRing(final String accountId, final String password) {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<String>() {
-                @Override
-                protected String doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.addRingDevice() thread running...");
-                    return Ringservice.exportOnRing(accountId, password);
-                }
-            });
+            return mDaemonService.exportOnRing(accountId, password);
         }
 
         public Map<String, String> getKnownRingDevices(final String accountId) {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
-                @Override
-                protected Map<String, String> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getKnownRingDevices() thread running...");
-                    return Ringservice.getKnownRingDevices(accountId).toNative();
-                }
-            });
+            return mDaemonService.getKnownRingDevices(accountId);
         }
 
         /*************************
@@ -925,39 +555,12 @@ public class DRingService extends Service {
 
         @Override
         public void transfer(final String callID, final String to) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.transfer() thread running...");
-                    if (Ringservice.transfer(callID, to)) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("CallID", callID);
-                        bundle.putString("State", "HUNGUP");
-                        Intent intent = new Intent(CallManagerCallBack.CALL_STATE_CHANGED);
-                        intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
-                        sendBroadcast(intent);
-                    } else {
-                        Log.i(TAG, "NOT OK");
-                    }
-                }
-            });
-
+            mDaemonService.transfer(callID, to);
         }
 
         @Override
         public void attendedTransfer(final String transferID, final String targetID) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.attendedTransfer() thread running...");
-                    if (Ringservice.attendedTransfer(transferID, targetID)) {
-                        Log.i(TAG, "OK");
-                    } else {
-                        Log.i(TAG, "NOT OK");
-                    }
-                }
-            });
-
+            mDaemonService.attendedTransfer(transferID, targetID);
         }
 
         /*************************
@@ -966,454 +569,194 @@ public class DRingService extends Service {
 
         @Override
         public void removeConference(final String confID) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.createConference() thread running...");
-                    Ringservice.removeConference(confID);
-                }
-            });
-
+            mDaemonService.removeConference(confID);
         }
 
         @Override
         public void joinParticipant(final String selCallID, final String dragCallID) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.joinParticipant() thread running...");
-                    Ringservice.joinParticipant(selCallID, dragCallID);
-                    // Generate a CONF_CREATED callback
-                }
-            });
-            Log.i(TAG, "After joining participants");
+            mDaemonService.joinParticipant(selCallID, dragCallID);
         }
 
         @Override
         public void addParticipant(final String callID, final String confID) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.addParticipant() thread running...");
-                    Ringservice.addParticipant(callID, confID);
-                }
-            });
-
+            mDaemonService.addParticipant(callID, confID);
         }
 
         @Override
         public void addMainParticipant(final String confID) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.addMainParticipant() thread running...");
-                    Ringservice.addMainParticipant(confID);
-                }
-            });
-
+            mDaemonService.addMainParticipant(confID);
         }
 
         @Override
         public void detachParticipant(final String callID) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.detachParticipant() thread running... " + callID);
-                    Ringservice.detachParticipant(callID);
-                }
-            });
-
+            mDaemonService.detachParticipant(callID);
         }
 
         @Override
         public void joinConference(final String selConfID, final String dragConfID) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.joinConference() thread running...");
-                    Ringservice.joinConference(selConfID, dragConfID);
-                }
-            });
-
+            mDaemonService.joinConference(selConfID, dragConfID);
         }
 
         @Override
         public void hangUpConference(final String confID) throws RemoteException {
-            Log.e(TAG, "HANGING UP CONF");
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.hangUpConference() thread running...");
-                    Ringservice.hangUpConference(confID);
-                }
-            });
-
+            mDaemonService.hangUpConference(confID);
         }
 
         @Override
         public void holdConference(final String confID) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.holdConference() thread running...");
-                    Ringservice.holdConference(confID);
-                }
-            });
-
+            mDaemonService.holdConference(confID);
         }
 
         @Override
         public void unholdConference(final String confID) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.unholdConference() thread running...");
-                    Ringservice.unholdConference(confID);
-                }
-            });
-
+            mDaemonService.unholdConference(confID);
         }
 
         @Override
         public boolean isConferenceParticipant(final String callID) throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Boolean>() {
-                @Override
-                protected Boolean doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.isRecording() thread running...");
-                    return Ringservice.isConferenceParticipant(callID);
-                }
-            });
+            return mDaemonService.isConferenceParticipant(callID);
         }
 
         @Override
         public Map<String, ArrayList<String>> getConferenceList() throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, ArrayList<String>>>() {
-                @Override
-                protected Map<String, ArrayList<String>> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getConferenceList() thread running...");
-                    StringVect callIds = Ringservice.getCallList();
-                    HashMap<String, ArrayList<String>> confs = new HashMap<>(callIds.size());
-                    for (int i = 0; i < callIds.size(); i++) {
-                        String callId = callIds.get(i);
-                        String confId = Ringservice.getConferenceId(callId);
-                        if (confId == null || confId.isEmpty()) {
-                            confId = callId;
-                        }
-                        ArrayList<String> calls = confs.get(confId);
-                        if (calls == null) {
-                            calls = new ArrayList<>();
-                            confs.put(confId, calls);
-                        }
-                        calls.add(callId);
-                    }
-                    return confs;
-                }
-            });
+            return mDaemonService.getConferenceList();
         }
 
         @Override
         public List<String> getParticipantList(final String confID) throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<List<String>>() {
-                @Override
-                protected List<String> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getParticipantList() thread running...");
-                    return new ArrayList<>(Ringservice.getParticipantList(confID));
-                }
-            });
+            return mDaemonService.getParticipantList(confID);
         }
 
         @Override
         public String getConferenceId(String callID) throws RemoteException {
-            Log.e(TAG, "getConferenceId not implemented");
-            return Ringservice.getConferenceId(callID);
+            return mDaemonService.getConferenceId(callID);
         }
 
         @Override
         public String getConferenceDetails(final String callID) throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<String>() {
-                @Override
-                protected String doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getConferenceDetails() thread running...");
-                    return Ringservice.getConferenceDetails(callID).get("CONF_STATE");
-                }
-            });
+            return mDaemonService.getConferenceDetails(callID);
         }
 
         @Override
         public String getRecordPath() throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<String>() {
-                @Override
-                protected String doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getRecordPath() thread running...");
-                    return Ringservice.getRecordPath();
-                }
-            });
+            return mDaemonService.getRecordPath();
         }
 
         @Override
         public boolean toggleRecordingCall(final String id) throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Boolean>() {
-                @Override
-                protected Boolean doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.toggleRecordingCall() thread running...");
-                    return Ringservice.toggleRecording(id);
-                }
-            });
+            return mDaemonService.toggleRecordingCall(id);
         }
 
         @Override
         public boolean startRecordedFilePlayback(final String filepath) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.setRecordingCall() thread running...");
-                    Ringservice.startRecordedFilePlayback(filepath);
-                }
-            });
-            return false;
+            return mDaemonService.startRecordedFilePlayback(filepath);
         }
 
         @Override
         public void stopRecordedFilePlayback(final String filepath) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.stopRecordedFilePlayback() thread running...");
-                    Ringservice.stopRecordedFilePlayback(filepath);
-                }
-            });
+            mDaemonService.stopRecordedFilePlayback(filepath);
         }
 
         @Override
         public void setRecordPath(final String path) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.setRecordPath() " + path + " thread running...");
-                    Ringservice.setRecordPath(path);
-                }
-            });
+            mDaemonService.setRecordPath(path);
         }
 
         @Override
         public void sendTextMessage(final String callID, final String msg) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.sendTextMessage() thread running...");
-                    StringMap messages = new StringMap();
-                    messages.setRaw("text/plain", Blob.fromString(msg));
-                    Ringservice.sendTextMessage(callID, messages, "", false);
-                }
-            });
+            mDaemonService.sendTextMessage(callID, msg);
         }
 
         @Override
         public long sendAccountTextMessage(final String accountID, final String to, final String msg) {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Long>() {
-                @Override
-                protected Long doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.sendAccountTextMessage() thread running... " + accountID + " " + to + " " + msg);
-                    StringMap msgs = new StringMap();
-                    msgs.setRaw("text/plain", Blob.fromString(msg));
-                    return Ringservice.sendAccountTextMessage(accountID, to, msgs);
-                }
-            });
+            return mDaemonService.sendAccountTextMessage(accountID, to, msg);
         }
 
         @Override
         public List<Codec> getCodecList(final String accountID) throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<ArrayList<Codec>>() {
-                @Override
-                protected ArrayList<Codec> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getCodecList() thread running...");
-                    ArrayList<Codec> results = new ArrayList<>();
-
-                    UintVect activePayloads = Ringservice.getActiveCodecList(accountID);
-                    for (int i = 0; i < activePayloads.size(); ++i) {
-                        Log.i(TAG, "DRingService.getCodecDetails(" + accountID + ", " + activePayloads.get(i) + ")");
-                        StringMap codecsDetails = Ringservice.getCodecDetails(accountID, activePayloads.get(i));
-                        results.add(new Codec(activePayloads.get(i), codecsDetails.toNative(), true));
-                    }
-                    UintVect payloads = Ringservice.getCodecList();
-
-                    cl:
-                    for (int i = 0; i < payloads.size(); ++i) {
-                        for (Codec co : results)
-                            if (co.getPayload() == payloads.get(i))
-                                continue cl;
-                        StringMap details = Ringservice.getCodecDetails(accountID, payloads.get(i));
-                        if (details.size() > 1) {
-                            results.add(new Codec(payloads.get(i), details.toNative(), false));
-                        } else {
-                            Log.i(TAG, "Error loading codec " + i);
-                        }
-                    }
-                    return results;
-                }
-            });
+            return mDaemonService.getCodecList(accountID);
         }
 
         @Override
         public Map<String, String> validateCertificatePath(final String accountID, final String certificatePath, final String privateKeyPath, final String privateKeyPass) throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
-                @Override
-                protected Map<String, String> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.validateCertificatePath() thread running...");
-                    return Ringservice.validateCertificatePath(accountID, certificatePath, privateKeyPath, "", "").toNative();
-                }
-            });
+            return mDaemonService.validateCertificatePath(accountID, certificatePath, privateKeyPath, privateKeyPass);
         }
 
         @Override
         public Map<String, String> validateCertificate(final String accountID, final String certificate) throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
-                @Override
-                protected Map<String, String> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.validateCertificate() thread running...");
-                    return Ringservice.validateCertificate(accountID, certificate).toNative();
-                }
-            });
+            return mDaemonService.validateCertificate(accountID, certificate);
         }
 
         @Override
         public Map<String, String> getCertificateDetailsPath(final String certificatePath) throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
-                @Override
-                protected Map<String, String> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getCertificateDetailsPath() thread running...");
-                    return Ringservice.getCertificateDetails(certificatePath).toNative();
-                }
-            });
+            return mDaemonService.getCertificateDetailsPath(certificatePath);
         }
 
         @Override
         public Map<String, String> getCertificateDetails(final String certificateRaw) throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
-                @Override
-                protected Map<String, String> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getCertificateDetails() thread running...");
-                    return Ringservice.getCertificateDetails(certificateRaw).toNative();
-                }
-            });
+            return mDaemonService.getCertificateDetails(certificateRaw);
         }
 
         @Override
         public void setActiveCodecList(final List codecs, final String accountID) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.setActiveCodecList() thread running...");
-                    UintVect list = new UintVect(codecs.size());
-                    for (Object codec : codecs)
-                        list.add((Long) codec);
-                    Ringservice.setActiveCodecList(accountID, list);
-                }
-            });
+            mDaemonService.setActiveCodecList(codecs, accountID);
         }
 
         @Override
         public void playDtmf(final String key) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.playDtmf() thread running...");
-                    Ringservice.playDTMF(key);
-                }
-            });
+            mDaemonService.playDtmf(key);
         }
 
         @Override
         public Map<String, String> getConference(final String id) throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Map<String, String>>() {
-                @Override
-                protected Map<String, String> doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getCredentials() thread running...");
-                    return Ringservice.getConferenceDetails(id).toNative();
-                }
-            });
+            return mDaemonService.getConference(id);
         }
 
         @Override
         public void setMuted(final boolean mute) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.setMuted() thread running...");
-                    Ringservice.muteCapture(mute);
-                }
-            });
+            mDaemonService.setMuted(mute);
         }
 
         @Override
         public boolean isCaptureMuted() throws RemoteException {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Boolean>() {
-
-                @Override
-                protected Boolean doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.isCaptureMuted() thread running...");
-                    return Ringservice.isCaptureMuted();
-                }
-            });
+            return mDaemonService.isCaptureMuted();
         }
 
         @Override
         public List<String> getTlsSupportedMethods() {
-            Log.i(TAG, "DRingService.getTlsSupportedMethods()");
-            return SwigNativeConverter.convertSwigToNative(Ringservice.getSupportedTlsMethod());
+            return mDaemonService.getTlsSupportedMethods();
         }
 
         @Override
         public List getCredentials(final String accountID) throws RemoteException {
-            class Credentials extends SipRunnableWithReturn {
-
-                @Override
-                protected List doRun() throws SameThreadException {
-                    Log.i(TAG, "DRingService.getCredentials() thread running...");
-                    return Ringservice.getCredentials(accountID).toNative();
-                }
-            }
-
-            Credentials runInstance = new Credentials();
-            getExecutor().executeSynced(runInstance);
-            return (List) runInstance.getVal();
+            return mDaemonService.getCredentials(accountID);
         }
 
         @Override
         public void setCredentials(final String accountID, final List creds) throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.setCredentials() thread running...");
-                    Ringservice.setCredentials(accountID, SwigNativeConverter.convertFromNativeToSwig(creds));
-                }
-            });
+            mDaemonService.setCredentials(accountID, creds);
         }
 
         @Override
         public void registerAllAccounts() throws RemoteException {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.registerAllAccounts() thread running...");
-                    Ringservice.registerAllAccounts();
-                }
-            });
+            mDaemonService.registerAllAccounts();
         }
 
         public void videoSurfaceAdded(String id) {
             Log.d(TAG, "DRingService.videoSurfaceAdded() " + id);
             Shm shm = videoInputs.get(id);
             SurfaceHolder holder = videoSurfaces.get(id).get();
-            if (shm != null && holder != null && shm.window == 0)
+            if (shm != null && holder != null && shm.window == 0) {
                 startVideo(shm, holder);
+            }
         }
 
         public void videoSurfaceRemoved(String id) {
             Log.d(TAG, "DRingService.videoSurfaceRemoved() " + id);
             Shm shm = videoInputs.get(id);
-            if (shm != null)
+            if (shm != null) {
                 stopVideo(shm);
+            }
         }
 
         public void videoPreviewSurfaceAdded() {
@@ -1427,107 +770,43 @@ public class DRingService extends Service {
         }
 
         public void switchInput(final String id, final boolean front) {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    int camId = (front ? videoManagerCallback.cameraFront : videoManagerCallback.cameraBack);
-                    String uri = "camera://" + camId;
-                    Log.i(TAG, "DRingService.switchInput() " + uri);
-                    Ringservice.applySettings(id, videoManagerCallback.getNativeParams(camId).toMap(getResources().getConfiguration().orientation));
-                    Ringservice.switchInput(id, uri);
-                }
-            });
+            final int camId = (front ? videoManagerCallback.cameraFront : videoManagerCallback.cameraBack);
+            final String uri = "camera://" + camId;
+            final cx.ring.daemon.StringMap map = videoManagerCallback.getNativeParams(camId).toMap(getResources().getConfiguration().orientation);
+            mDaemonService.switchInput(id, uri, map);
         }
 
         public void setPreviewSettings() {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    for (int i = 0, n = Camera.getNumberOfCameras(); i < n; i++) {
-                        Ringservice.applySettings(Integer.toString(i), videoManagerCallback.getNativeParams(i).toMap(getResources().getConfiguration().orientation));
-                    }
-                }
-            });
+            Map<String, StringMap> camSettings = new HashMap<>();
+            for (int i = 0; i < Camera.getNumberOfCameras(); i++) {
+                camSettings.put(Integer.toString(i), videoManagerCallback.getNativeParams(i).toMap(getResources().getConfiguration().orientation));
+            }
+
+            mDaemonService.setPreviewSettings(camSettings);
         }
 
         public int backupAccounts(final List accountIDs, final String toDir, final String password) {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Integer>() {
-                @Override
-                protected Integer doRun() throws SameThreadException, RemoteException {
-                    StringVect ids = new StringVect();
-                    for (Object s : accountIDs)
-                        ids.add((String) s);
-                    return Ringservice.exportAccounts(ids, toDir, password);
-                }
-            });
+            return mDaemonService.backupAccounts(accountIDs, toDir, password);
         }
 
         public int restoreAccounts(final String archivePath, final String password) {
-            return getExecutor().executeAndReturn(new SipRunnableWithReturn<Integer>() {
-                @Override
-                protected Integer doRun() throws SameThreadException, RemoteException {
-                    return Ringservice.importAccounts(archivePath, password);
-                }
-            });
+            return mDaemonService.restoreAccounts(archivePath, password);
         }
 
         public void connectivityChanged() {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Ringservice.connectivityChanged();
-                }
-            });
+            mDaemonService.connectivityChanged();
         }
 
         public void lookupName(final String account, final String nameserver, final String name) {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.lookupName thread running() " + name);
-                    if (!Ringservice.lookupName(account, nameserver, name)) {
-                        Intent intent = new Intent(ConfigurationManagerCallback.NAME_LOOKUP_ENDED);
-                        intent.putExtra("account", account);
-                        intent.putExtra("state", -1);
-                        intent.putExtra("name", name);
-                        sendBroadcast(intent);
-                    }
-                    Log.i(TAG, "DRingService.lookupName DONE " + name);
-                }
-            });
+            mDaemonService.lookupName(account, nameserver, name);
         }
 
         public void lookupAddress(final String account, final String nameserver, final String address) {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.i(TAG, "DRingService.lookupAddress thread running() " + address);
-                    if (!Ringservice.lookupAddress(account, nameserver, address)) {
-                        Intent intent = new Intent(ConfigurationManagerCallback.NAME_LOOKUP_ENDED);
-                        intent.putExtra("account", account);
-                        intent.putExtra("state", -1);
-                        intent.putExtra("address", address);
-                        sendBroadcast(intent);
-                    }
-                }
-            });
+            mDaemonService.lookupAddress(account, nameserver, address);
         }
 
         public void registerName(final String account, final String password, final String name) {
-            getExecutor().execute(new SipRunnable() {
-                @Override
-                protected void doRun() throws SameThreadException, RemoteException {
-                    Log.w(TAG, "DRingService.registerName thread running() " + name);
-                    if (!Ringservice.registerName(account, password, name)) {
-                        Intent intent = new Intent(ConfigurationManagerCallback.NAME_REGISTRATION_ENDED);
-                        intent.putExtra("account", account);
-                        intent.putExtra("state", -1);
-                        intent.putExtra("name", name);
-                        sendBroadcast(intent);
-                    }
-                }
-            });
+            mDaemonService.registerName(account, password, name);
         }
-
     };
 }

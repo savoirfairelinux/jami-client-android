@@ -27,6 +27,10 @@ import android.content.Intent;
 import android.util.Log;
 
 import cx.ring.BuildConfig;
+import cx.ring.daemon.ConfigurationCallback;
+import cx.ring.daemon.IntVect;
+import cx.ring.daemon.StringMap;
+import cx.ring.daemon.StringVect;
 
 class ConfigurationManagerCallback extends ConfigurationCallback {
 
