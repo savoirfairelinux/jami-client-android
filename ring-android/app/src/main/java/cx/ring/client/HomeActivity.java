@@ -609,7 +609,13 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     @Override
-    public void onAddAccountSelected() {
+    public void onAddSipAccountSelected() {
+        mNavigationDrawer.closeDrawers();
+        startActivityForResult(new Intent(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
+    }
+
+    @Override
+    public void onAddRingAccountSelected() {
         mNavigationDrawer.closeDrawers();
         startActivityForResult(new Intent(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
     }
