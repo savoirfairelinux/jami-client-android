@@ -66,7 +66,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
 import cx.ring.service.LocalService;
 import cx.ring.services.StateService;
-import cx.ring.utils.CropImageUtils;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
@@ -308,7 +308,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), getString(R.string.unknown));
         if (!mVCardProfile.getPhotos().isEmpty()) {
             Photo tmp = mVCardProfile.getPhotos().get(0);
-            mUserImage.setImageBitmap(CropImageUtils.cropImageToCircle(tmp.getData()));
+            mUserImage.setImageBitmap(BitmapUtils.cropImageToCircle(tmp.getData()));
         } else {
             mUserImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null));
         }
@@ -323,7 +323,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
     public void updatePhoto(Bitmap image) {
         mSourcePhoto = image;
-        mProfilePhoto.setImageBitmap(CropImageUtils.cropImageToCircle(image));
+        mProfilePhoto.setImageBitmap(BitmapUtils.cropImageToCircle(image));
     }
 
     @OnClick(R.id.addaccount_btn)
