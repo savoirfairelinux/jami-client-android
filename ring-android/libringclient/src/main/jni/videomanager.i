@@ -89,7 +89,7 @@ void rotateNV21(std::vector<uint8_t>& input, unsigned width, unsigned height, in
     return;
 }
 
-JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_setVideoFrame(JNIEnv *jenv, jclass jcls, jbyteArray frame, int frame_size, jlong target, int w, int h, int rotation)
+JNIEXPORT void JNICALL Java_cx_ring_daemon_RingserviceJNI_setVideoFrame(JNIEnv *jenv, jclass jcls, jbyteArray frame, int frame_size, jlong target, int w, int h, int rotation)
 {
     uint8_t* f_target = (uint8_t*) ((intptr_t) target);
     if (rotation == 0)
@@ -101,19 +101,19 @@ JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_setVideoFrame(JNIEnv 
     }
 }
 
-JNIEXPORT jlong JNICALL Java_cx_ring_service_RingserviceJNI_acquireNativeWindow(JNIEnv *jenv, jclass jcls, jobject javaSurface)
+JNIEXPORT jlong JNICALL Java_cx_ring_daemon_RingserviceJNI_acquireNativeWindow(JNIEnv *jenv, jclass jcls, jobject javaSurface)
 {
     return (jlong)(intptr_t)ANativeWindow_fromSurface(jenv, javaSurface);
 }
 
-JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_releaseNativeWindow(JNIEnv *jenv, jclass jcls, jlong window_)
+JNIEXPORT void JNICALL Java_cx_ring_daemon_RingserviceJNI_releaseNativeWindow(JNIEnv *jenv, jclass jcls, jlong window_)
 {
     std::lock_guard<std::mutex> guard(windows_mutex);
     ANativeWindow *window = (ANativeWindow*)((intptr_t) window_);
     ANativeWindow_release(window);
 }
 
-JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_setNativeWindowGeometry(JNIEnv *jenv, jclass jcls, jlong window_, int width, int height)
+JNIEXPORT void JNICALL Java_cx_ring_daemon_RingserviceJNI_setNativeWindowGeometry(JNIEnv *jenv, jclass jcls, jlong window_, int width, int height)
 {
     ANativeWindow *window = (ANativeWindow*)((intptr_t) window_);
     ANativeWindow_setBuffersGeometry(window, width, height, WINDOW_FORMAT_RGBA_8888);
@@ -169,7 +169,7 @@ std::unique_ptr<DRing::FrameBuffer> sinkTargetPullCallback(ANativeWindow *window
     }
 }
 
-JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_registerVideoCallback(JNIEnv *jenv, jclass jcls, jstring sinkId, jlong window)
+JNIEXPORT void JNICALL Java_cx_ring_daemon_RingserviceJNI_registerVideoCallback(JNIEnv *jenv, jclass jcls, jstring sinkId, jlong window)
 {
     if(!sinkId) {
         SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
@@ -190,7 +190,7 @@ JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_registerVideoCallback
     DRing::registerSinkTarget(sink, DRing::SinkTarget {.pull=p_display_cb, .push=f_display_cb});
 }
 
-JNIEXPORT void JNICALL Java_cx_ring_service_RingserviceJNI_unregisterVideoCallback(JNIEnv *jenv, jclass jcls, jstring sinkId, jlong window)
+JNIEXPORT void JNICALL Java_cx_ring_daemon_RingserviceJNI_unregisterVideoCallback(JNIEnv *jenv, jclass jcls, jstring sinkId, jlong window)
 {
     if(!sinkId) {
         SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
