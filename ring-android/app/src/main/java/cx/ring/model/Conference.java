@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -347,7 +348,11 @@ public class Conference {
             Resources res = ctx.getResources();
             int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
             int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
-            noti.setLargeIcon(Bitmap.createScaledBitmap(contact.getPhoto(), width, height, false));
+            byte[] imageData = contact.getPhoto();
+            if (imageData != null && imageData.length > 0) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+                noti.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
+            }
         }
         notificationManager.notify(notificationId, noti.build());
     }

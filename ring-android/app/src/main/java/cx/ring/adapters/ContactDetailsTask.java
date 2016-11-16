@@ -40,6 +40,7 @@ import android.widget.TextView;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 import cx.ring.R;
@@ -179,7 +180,10 @@ public class ContactDetailsTask implements Runnable {
         }
 
         final String formattedName = additionnalName;
-        mContact.setPhoto(externalBMP);
+        int bytes = externalBMP.getByteCount();
+        ByteBuffer buffer = ByteBuffer.allocate(bytes); //Create a new buffer
+        externalBMP.copyPixelsToBuffer(buffer); //Move the byte data to the buffer
+        mContact.setPhoto(buffer.array());
         synchronized (mCallbacks) {
             final ImageView v = mImageViewWeakRef.get();
             final TextView textView = mTextViewWeakRef.get();

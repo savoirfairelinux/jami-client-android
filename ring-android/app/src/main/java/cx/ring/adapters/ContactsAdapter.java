@@ -23,6 +23,7 @@ package cx.ring.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 
@@ -133,11 +135,18 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         });
         final Long cid = item.getId();
         final Long pid = item.getPhotoId();
-        Bitmap bmp = item.getPhoto();
+        Bitmap bmp = null;
+        byte[] imageData = item.getPhoto();
+        if (imageData != null && imageData.length > 0) {
+            bmp = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+        }
         if (bmp == null) {
             bmp = mMemoryCache.get(pid);
             if (bmp != null) {
-                item.setPhoto(bmp);
+                int bytes = bmp.getByteCount();
+                ByteBuffer buffer = ByteBuffer.allocate(bytes); //Create a new buffer
+                bmp.copyPixelsToBuffer(buffer); //Move the byte data to the buffer
+                item.setPhoto(buffer.array());
             }
         }
 
@@ -160,7 +169,10 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
                             public void run() {
                                 final CallContact c = fh.contact.get();
                                 if (c.getId() == cid) {
-                                    c.setPhoto(bmp);
+                                    int bytes = bmp.getByteCount();
+                                    ByteBuffer buffer = ByteBuffer.allocate(bytes); //Create a new buffer
+                                    bmp.copyPixelsToBuffer(buffer); //Move the byte data to the buffer
+                                    item.setPhoto(buffer.array());
                                     fh.photo.setImageBitmap(bmp);
                                     fh.photo.startAnimation(AnimationUtils.loadAnimation(fh.photo.getContext(), R.anim.contact_fadein));
                                 }
