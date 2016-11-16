@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ac10518_ad459db4",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/ContentUriHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-16T19:25:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_adeefdb2",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 10
+      },
+      "revId": "96c74d6efc590a8a3fa8f4b8626a2c45656a3bcf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac10518_6d301557",
         "filename": "ring-android/app/src/main/java/cx/ring/utils/ContentUriHandler.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2016-11-16T19:07:06Z",
       "side": 1,
       "message": "Redundant.",
+      "range": {
+        "startLine": 37,
+        "startChar": 76,
+        "endLine": 37,
+        "endChar": 94
+      },
+      "revId": "96c74d6efc590a8a3fa8f4b8626a2c45656a3bcf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_6d17b5a4",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/ContentUriHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-16T19:25:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac10518_6d301557",
       "range": {
         "startLine": 37,
         "startChar": 76,
