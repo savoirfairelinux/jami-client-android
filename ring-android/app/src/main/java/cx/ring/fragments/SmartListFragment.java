@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
@@ -36,6 +37,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -75,6 +77,7 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.LocalService;
+import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
@@ -428,12 +431,45 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
-                    Conversation.presentActions(getActivity(),
+                    presentActions(getActivity(),
                             ((SmartListAdapter.ViewHolder) v.getTag()).conv,
                             SmartListFragment.this);
                     return true;
                 }
             };
+
+    public static void presentActions(final Activity activity,
+                                      final Conversation conversation,
+                                      final Conversation.ConversationActionCallback callback) {
+        if (activity == null) {
+            cx.ring.utils.Log.d(TAG, "presentActions: activity is null");
+            return;
+        }
+
+        if (conversation == null) {
+            cx.ring.utils.Log.d(TAG, "presentActions: conversation is null");
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setItems(R.array.conversation_actions, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        ActionHelper.launchCopyNumberToClipboardFromContact(activity,
+                                conversation.getContact(),
+                                callback);
+                        break;
+                    case 1:
+                        ActionHelper.launchDeleteAction(activity, conversation, callback);
+                        break;
+                }
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

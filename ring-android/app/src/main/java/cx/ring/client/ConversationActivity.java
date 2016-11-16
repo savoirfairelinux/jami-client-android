@@ -66,6 +66,7 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.SipUri;
 import cx.ring.service.LocalService;
+import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
 
@@ -185,7 +186,7 @@ public class ConversationActivity extends AppCompatActivity implements
             });
         }
 
-        mAdapter.updateDataset(mConversation.getHistory(), refreshed);
+        mAdapter.updateDataset(mConversation.getAggregateHistory(), refreshed);
 
         if (mConversation.getContact().getPhones().size() > 1) {
             mNumberSpinner.setVisibility(View.VISIBLE);
@@ -227,13 +228,13 @@ public class ConversationActivity extends AppCompatActivity implements
             registerReceiver(receiver, filter);
 
             mBound = true;
-            if (mVisible && mConversation != null && !mConversation.mVisible) {
-                mConversation.mVisible = true;
+            if (mVisible && mConversation != null && !mConversation.isVisible()) {
+                mConversation.setVisible(true);
                 mService.readConversation(mConversation);
             }
 
             if (mDeleteConversation) {
-                mDeleteDialog = Conversation.launchDeleteAction(ConversationActivity.this, mConversation, ConversationActivity.this);
+                mDeleteDialog = ActionHelper.launchDeleteAction(ConversationActivity.this, mConversation, ConversationActivity.this);
             }
 
             mRefreshTaskHandler.postDelayed(refreshTask, REFRESH_INTERVAL_MS);
@@ -245,7 +246,7 @@ public class ConversationActivity extends AppCompatActivity implements
             mBound = false;
             mRefreshTaskHandler.removeCallbacks(refreshTask);
             if (mConversation != null) {
-                mConversation.mVisible = false;
+                mConversation.setVisible(false);
             }
         }
     };
@@ -349,7 +350,7 @@ public class ConversationActivity extends AppCompatActivity implements
         mVisible = false;
         if (mConversation != null) {
             mService.readConversation(mConversation);
-            mConversation.mVisible = false;
+            mConversation.setVisible(false);
         }
     }
 
@@ -359,7 +360,7 @@ public class ConversationActivity extends AppCompatActivity implements
         Log.d(TAG, "onResume " + mConversation);
         mVisible = true;
         if (mConversation != null) {
-            mConversation.mVisible = true;
+            mConversation.setVisible(true);
             if (mBound && mService != null) {
                 mService.readConversation(mConversation);
             }
@@ -429,13 +430,13 @@ public class ConversationActivity extends AppCompatActivity implements
                 onCallWithVideo(true);
                 return true;
             case R.id.menuitem_addcontact:
-                startActivityForResult(mConversation.contact.getAddNumberIntent(), REQ_ADD_CONTACT);
+                startActivityForResult(mConversation.getContact().getAddNumberIntent(), REQ_ADD_CONTACT);
                 return true;
             case R.id.menuitem_delete:
-                mDeleteDialog = Conversation.launchDeleteAction(this, this.mConversation, this);
+                mDeleteDialog = ActionHelper.launchDeleteAction(this, this.mConversation, this);
                 return true;
             case R.id.menuitem_copy_content:
-                Conversation.launchCopyNumberToClipboardFromContact(this,
+                ActionHelper.launchCopyNumberToClipboardFromContact(this,
                         this.mConversation.getContact(), this);
                 return true;
             default:
@@ -471,7 +472,7 @@ public class ConversationActivity extends AppCompatActivity implements
 
         // If no number found, use first from contact
         if (number == null || number.isEmpty())
-            number = mConversation.contact.getPhones().get(0).getNumber();
+            number = mConversation.getContact().getPhones().get(0).getNumber();
 
         return new Pair<>(a, number);
     }

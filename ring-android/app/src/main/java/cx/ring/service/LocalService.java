@@ -163,6 +163,7 @@ public class LocalService extends Service implements Observer {
     private boolean canUseMobile = false;
 
     private boolean mAreConversationsLoaded = false;
+    private NotificationCompat.Builder mMessageNotificationBuilder;
 
     public interface NameLookupCallback {
         void onFound(String name, String address);
@@ -363,7 +364,7 @@ public class LocalService extends Service implements Observer {
                 readTextMessage(msg);
             }
         }
-        notificationManager.cancel(conv.notificationId);
+        notificationManager.cancel(conv.getUuid());
         updateTextNotifications();
     }
 
@@ -383,7 +384,7 @@ public class LocalService extends Service implements Observer {
         Log.d(TAG, "Sent text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getNumberUri() + " " + txt.getMessage());
         Conversation conv = conversationFromMessage(txt);
         conv.addTextMessage(txt);
-        if (conv.mVisible) {
+        if (conv.isVisible()) {
             txt.read();
         } else {
             updateTextNotifications();
@@ -784,8 +785,8 @@ public class LocalService extends Service implements Observer {
 
     public CallContact findContactByNumber(SipUri number) {
         for (Conversation conversation : conversations.values()) {
-            if (conversation.contact.hasNumber(number)) {
-                return conversation.contact;
+            if (conversation.getContact().hasNumber(number)) {
+                return conversation.getContact();
             }
         }
         return canUseContacts ? findContactByNumber(getContentResolver(), number.getRawUriString()) : CallContact.buildUnknown(number);
@@ -796,7 +797,7 @@ public class LocalService extends Service implements Observer {
             return null;
         }
         for (Conversation conversation : conversations.values()) {
-            if (conversation.contact.hasNumber(number)) {
+            if (conversation.getContact().hasNumber(number)) {
                 return conversation;
             }
         }
@@ -1108,7 +1109,7 @@ public class LocalService extends Service implements Observer {
                     Map.Entry<String, Conversation> merge = null;
                     for (Map.Entry<String, Conversation> ce : ret.entrySet()) {
                         Conversation conversation = ce.getValue();
-                        if ((contact.getId() > 0 && contact.getId() == conversation.contact.getId()) || conversation.contact.hasNumber(call.getNumber())) {
+                        if ((contact.getId() > 0 && contact.getId() == conversation.getContact().getId()) || conversation.getContact().hasNumber(call.getNumber())) {
                             merge = ce;
                             break;
                         }
@@ -1116,7 +1117,7 @@ public class LocalService extends Service implements Observer {
                     if (merge != null) {
                         Conversation conversation = merge.getValue();
                         if (conversation.getContact().getId() <= 0 && contact.getId() > 0) {
-                            conversation.contact = contact;
+                            conversation.setContact(contact);
                             ret.remove(merge.getKey());
                             ret.put(contact.getIds().get(0), conversation);
                         }
@@ -1221,7 +1222,7 @@ public class LocalService extends Service implements Observer {
 
     private void updated(Map<String, Conversation> res) {
         for (Conversation conversation : conversations.values()) {
-            for (Conference conference : conversation.current_calls) {
+            for (Conference conference : conversation.getCurrentCalls()) {
                 notificationManager.cancel(conference.notificationId);
             }
         }
@@ -1265,51 +1266,50 @@ public class LocalService extends Service implements Observer {
             if (texts.isEmpty() || texts.lastEntry().getValue().isNotified()) {
                 continue;
             } else {
-                notificationManager.cancel(c.notificationId);
+                notificationManager.cancel(c.getUuid());
             }
 
             CallContact contact = c.getContact();
-            if (c.notificationBuilder == null) {
-                c.notificationBuilder = new NotificationCompat.Builder(getApplicationContext());
-                c.notificationBuilder.setCategory(NotificationCompat.CATEGORY_MESSAGE)
+            if (mMessageNotificationBuilder == null) {
+                mMessageNotificationBuilder = new NotificationCompat.Builder(getApplicationContext());
+                mMessageNotificationBuilder.setCategory(NotificationCompat.CATEGORY_MESSAGE)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setDefaults(NotificationCompat.DEFAULT_ALL)
                         .setSmallIcon(R.drawable.ic_ring_logo_white)
                         .setContentTitle(contact.getDisplayName());
             }
-            NotificationCompat.Builder noti = c.notificationBuilder;
             Intent c_intent = new Intent(Intent.ACTION_VIEW)
                     .setClass(this, ConversationActivity.class)
                     .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
             Intent d_intent = new Intent(ACTION_CONV_READ)
                     .setClass(this, LocalService.class)
                     .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
-            noti.setContentIntent(PendingIntent.getActivity(this, new Random().nextInt(), c_intent, 0))
+            mMessageNotificationBuilder.setContentIntent(PendingIntent.getActivity(this, new Random().nextInt(), c_intent, 0))
                     .setDeleteIntent(PendingIntent.getService(this, new Random().nextInt(), d_intent, 0));
 
             if (contact.getPhoto() != null) {
                 Resources res = getResources();
                 int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
                 int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
-                noti.setLargeIcon(Bitmap.createScaledBitmap(contact.getPhoto(), width, height, false));
+                mMessageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(contact.getPhoto(), width, height, false));
             }
             if (texts.size() == 1) {
                 TextMessage txt = texts.firstEntry().getValue();
                 txt.setNotified(true);
-                noti.setContentText(txt.getMessage());
-                noti.setStyle(null);
-                noti.setWhen(txt.getTimestamp());
+                mMessageNotificationBuilder.setContentText(txt.getMessage());
+                mMessageNotificationBuilder.setStyle(null);
+                mMessageNotificationBuilder.setWhen(txt.getTimestamp());
             } else {
                 NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
                 for (TextMessage s : texts.values()) {
                     inboxStyle.addLine(Html.fromHtml("<b>" + DateUtils.formatDateTime(this, s.getTimestamp(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL) + "</b> " + s.getMessage()));
                     s.setNotified(true);
                 }
-                noti.setContentText(texts.lastEntry().getValue().getMessage());
-                noti.setStyle(inboxStyle);
-                noti.setWhen(texts.lastEntry().getValue().getTimestamp());
+                mMessageNotificationBuilder.setContentText(texts.lastEntry().getValue().getMessage());
+                mMessageNotificationBuilder.setStyle(inboxStyle);
+                mMessageNotificationBuilder.setWhen(texts.lastEntry().getValue().getTimestamp());
             }
-            notificationManager.notify(c.notificationId, noti.build());
+            notificationManager.notify(c.getUuid(), mMessageNotificationBuilder.build());
         }
     }
 
@@ -1472,7 +1472,7 @@ public class LocalService extends Service implements Observer {
                         conversation = startConversation(findContactByNumber(txt.getNumberUri()));
                         txt.setContact(conversation.getContact());
                     }
-                    if (conversation.mVisible) {
+                    if (conversation.isVisible()) {
                         txt.read();
                     }
 
@@ -1481,7 +1481,7 @@ public class LocalService extends Service implements Observer {
                     ((HistoryServiceImpl) mHistoryService).insertNewTextMessage(txt);
 
                     conversation.addTextMessage(txt);
-                    if (!conversation.mVisible) {
+                    if (!conversation.isVisible()) {
                         updateTextNotifications();
                     }
 
