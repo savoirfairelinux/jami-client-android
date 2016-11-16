@@ -69,6 +69,7 @@ import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.ContactListFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
+import cx.ring.model.AccountConfig;
 import cx.ring.model.CallContact;
 import cx.ring.model.ConfigKey;
 import cx.ring.navigation.RingNavigationFragment;
@@ -611,13 +612,17 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @Override
     public void onAddSipAccountSelected() {
         mNavigationDrawer.closeDrawers();
-        startActivityForResult(new Intent(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
+        Intent intent = new Intent(HomeActivity.this, AccountWizard.class);
+        intent.setAction(AccountConfig.ACCOUNT_TYPE_SIP);
+        startActivityForResult(intent, AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
     }
 
     @Override
     public void onAddRingAccountSelected() {
         mNavigationDrawer.closeDrawers();
-        startActivityForResult(new Intent(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
+        Intent intent = new Intent(HomeActivity.this, AccountWizard.class);
+        intent.setAction(AccountConfig.ACCOUNT_TYPE_RING);
+        startActivityForResult(intent, AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
     }
 
     private void goToShare() {

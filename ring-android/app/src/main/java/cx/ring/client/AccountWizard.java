@@ -128,7 +128,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         mViewPager.setOffscreenPageLimit(4);
         mIsNew = !(mBound && !mService.getAccounts().isEmpty());
         Log.d(TAG, "is first account " + mIsNew);
-        mViewPager.setAdapter(new WizardPagerAdapter(getFragmentManager(), AccountWizard.this));
+        mViewPager.setAdapter(new WizardPagerAdapter(getFragmentManager(), AccountWizard.this, getIntent().getAction()));
         mViewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -494,10 +494,12 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
 
     private class WizardPagerAdapter extends FragmentStatePagerAdapter {
         private Context mContext;
+        private String typeAccount;
 
-        WizardPagerAdapter(FragmentManager fragment, Context context) {
+        WizardPagerAdapter(FragmentManager fragment, Context context, String type) {
             super(fragment);
             mContext = context;
+            typeAccount = type;
         }
 
         @Override
@@ -510,7 +512,11 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
             Log.d(TAG, "getItem");
             switch (position) {
                 case 0:
-                    return new HomeAccountCreationFragment();
+                    if (typeAccount == AccountConfig.ACCOUNT_TYPE_SIP) {
+                        return new AccountCreationFragment();
+                    } else {
+                        return new HomeAccountCreationFragment();
+                    }
                 case 1:
                     return mProfileFragment = new ProfileAccountCreationFragment();
                 case 2:
