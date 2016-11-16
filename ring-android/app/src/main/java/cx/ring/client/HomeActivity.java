@@ -71,6 +71,7 @@ import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.ConfigKey;
+import cx.ring.model.Phone;
 import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
@@ -641,7 +642,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         if (c.getPhones().size() > 1) {
             final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
             int i = 0;
-            for (CallContact.Phone p : c.getPhones()) {
+            for (Phone p : c.getPhones()) {
                 numbers[i++] = p.getNumber().getRawUriString();
             }
 
@@ -671,7 +672,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         if (c.getPhones().size() > 1) {
             final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
             int i = 0;
-            for (CallContact.Phone p : c.getPhones()) {
+            for (Phone p : c.getPhones()) {
                 numbers[i++] = p.getNumber().getRawUriString();
             }
 

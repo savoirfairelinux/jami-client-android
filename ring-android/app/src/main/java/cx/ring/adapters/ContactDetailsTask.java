@@ -44,7 +44,7 @@ import java.util.ArrayList;
 
 import cx.ring.R;
 import cx.ring.model.CallContact;
-import cx.ring.utils.CropImageUtils;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.property.Photo;
@@ -155,7 +155,7 @@ public class ContactDetailsTask implements Runnable {
             Photo tmp = vcard.getPhotos().get(0);
             Bitmap croppedBitmap;
             if (tmp != null && tmp.getData() != null) {
-                croppedBitmap = CropImageUtils.cropImageToCircle(tmp.getData());
+                croppedBitmap = BitmapUtils.cropImageToCircle(tmp.getData());
             } else {
                 croppedBitmap = decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture, mViewWidth, mViewHeight);
             }
@@ -174,12 +174,12 @@ public class ContactDetailsTask implements Runnable {
                 photoBmp = decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture, mViewWidth, mViewHeight);
             }
 
-            externalBMP = CropImageUtils.cropImageToCircle(photoBmp);
+            externalBMP = BitmapUtils.cropImageToCircle(photoBmp);
             photoBmp.recycle();
         }
 
         final String formattedName = additionnalName;
-        mContact.setPhoto(externalBMP);
+        mContact.setPhoto(BitmapUtils.bitmapToBytes(externalBMP));
         synchronized (mCallbacks) {
             final ImageView v = mImageViewWeakRef.get();
             final TextView textView = mTextViewWeakRef.get();

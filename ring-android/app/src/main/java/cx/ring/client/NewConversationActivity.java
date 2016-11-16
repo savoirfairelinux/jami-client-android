@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import cx.ring.R;
 import cx.ring.fragments.ContactListFragment;
 import cx.ring.model.CallContact;
+import cx.ring.model.Phone;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.utils.ContentUriHandler;
@@ -69,7 +70,7 @@ public class NewConversationActivity extends Activity implements ContactListFrag
         if (c.getPhones().size() > 1) {
             final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
             int i = 0;
-            for (CallContact.Phone p : c.getPhones())
+            for (Phone p : c.getPhones())
                 numbers[i++] = p.getNumber().getRawUriString();
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -98,7 +99,7 @@ public class NewConversationActivity extends Activity implements ContactListFrag
         if (c.getPhones().size() > 1) {
             final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
             int i = 0;
-            for (CallContact.Phone p : c.getPhones())
+            for (Phone p : c.getPhones())
                 numbers[i++] = p.getNumber().getRawUriString();
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

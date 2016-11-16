@@ -64,6 +64,7 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.Phone;
 import cx.ring.model.SipUri;
 import cx.ring.service.LocalService;
 import cx.ring.utils.ActionHelper;
@@ -139,7 +140,7 @@ public class ConversationActivity extends AppCompatActivity implements
 
     static private int getIndex(Spinner spinner, SipUri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
-            if (((CallContact.Phone) spinner.getItemAtPosition(i)).getNumber().equals(myString))
+            if (((Phone) spinner.getItemAtPosition(i)).getNumber().equals(myString))
                 return i;
         return 0;
     }
@@ -430,7 +431,7 @@ public class ConversationActivity extends AppCompatActivity implements
                 onCallWithVideo(true);
                 return true;
             case R.id.menuitem_addcontact:
-                startActivityForResult(mConversation.getContact().getAddNumberIntent(), REQ_ADD_CONTACT);
+                startActivityForResult(ActionHelper.getAddNumberIntentForContact(mConversation.getContact()), REQ_ADD_CONTACT);
                 return true;
             case R.id.menuitem_delete:
                 mDeleteDialog = ActionHelper.launchDeleteAction(this, this.mConversation, this);
@@ -449,7 +450,7 @@ public class ConversationActivity extends AppCompatActivity implements
      */
     private Pair<Account, SipUri> guess() {
         SipUri number = mNumberAdapter == null ?
-                mPreferredNumber : ((CallContact.Phone) mNumberSpinner.getSelectedItem()).getNumber();
+                mPreferredNumber : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
         Account a = mService.getAccount(mConversation.getLastAccountUsed());
 
         // Guess account from number
@@ -532,7 +533,7 @@ public class ConversationActivity extends AppCompatActivity implements
         View view = this.findViewById(android.R.id.content);
         if (view != null) {
             String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
-                    CallContact.Phone.getShortenedNumber(copiedNumber));
+                    Phone.getShortenedNumber(copiedNumber));
             Snackbar.make(view, snackbarText, Snackbar.LENGTH_LONG).show();
         }
     }

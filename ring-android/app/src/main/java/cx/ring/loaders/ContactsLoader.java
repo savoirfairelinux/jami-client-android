@@ -183,11 +183,11 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
                                     contact.addPhoneNumber(number, type, label);
                                     break;
                                 case SipAddress.CONTENT_ITEM_TYPE:
-                                    contact.addNumber(number, type, label, CallContact.NumberType.SIP);
+                                    contact.addNumber(number, type, label, cx.ring.model.Phone.NumberType.SIP);
                                     break;
                                 case Im.CONTENT_ITEM_TYPE:
                                     if (new SipUri(number).isRingId())
-                                        contact.addNumber(number, type, label, CallContact.NumberType.UNKNOWN);
+                                        contact.addNumber(number, type, label, cx.ring.model.Phone.NumberType.UNKNOWN);
                                     break;
                             }
                         }
