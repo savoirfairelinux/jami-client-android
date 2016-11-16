@@ -55,6 +55,7 @@ import java.util.Map;
 import java.util.Random;
 
 import cx.ring.BuildConfig;
+import cx.ring.R;
 import cx.ring.model.Codec;
 import cx.ring.utils.SwigNativeConverter;
 import cx.ring.utils.VCardUtils;
