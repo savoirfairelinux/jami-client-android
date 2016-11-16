@@ -42,6 +42,7 @@ import java.util.concurrent.ExecutorService;
 import cx.ring.R;
 import cx.ring.fragments.ContactListFragment;
 import cx.ring.model.CallContact;
+import cx.ring.utils.BitmapUtils;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAdapter, SectionIndexer {
@@ -133,11 +134,11 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
         });
         final Long cid = item.getId();
         final Long pid = item.getPhotoId();
-        Bitmap bmp = item.getPhoto();
+        Bitmap bmp = BitmapUtils.bytesToBitmap(item.getPhoto());
         if (bmp == null) {
             bmp = mMemoryCache.get(pid);
             if (bmp != null) {
-                item.setPhoto(bmp);
+                item.setPhoto(BitmapUtils.bitmapToBytes(bmp));
             }
         }
 
@@ -160,7 +161,7 @@ public class ContactsAdapter extends BaseAdapter implements StickyListHeadersAda
                             public void run() {
                                 final CallContact c = fh.contact.get();
                                 if (c.getId() == cid) {
-                                    c.setPhoto(bmp);
+                                    c.setPhoto(BitmapUtils.bitmapToBytes(bmp));
                                     fh.photo.setImageBitmap(bmp);
                                     fh.photo.startAnimation(AnimationUtils.loadAnimation(fh.photo.getContext(), R.anim.contact_fadein));
                                 }
