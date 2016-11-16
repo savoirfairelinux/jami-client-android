@@ -41,7 +41,6 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -50,9 +49,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,9 +81,6 @@ public class AccountCreationFragment extends Fragment {
     private String mDataPath;
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
 
-    @BindView(R.id.sipFormLinearLayout)
-    LinearLayout mSipFormLinearLayout;
-
     @BindView(R.id.alias)
     EditText mAliasView;
 
@@ -100,18 +93,14 @@ public class AccountCreationFragment extends Fragment {
     @BindView(R.id.password)
     EditText mPasswordView;
 
-    @BindView(R.id.login_form)
-    ScrollView mSIPLoginForm;
-
     @BindView(R.id.create_sip_button)
     Button mCreateSIPAccountButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        final View inflatedView = inflater.inflate(R.layout.frag_account_creation, parent, false);
+        final View inflatedView = inflater.inflate(R.layout.frag_acc_sip_create, parent, false);
 
         ButterKnife.bind(this, inflatedView);
-        mSipFormLinearLayout.setVisibility(View.GONE);
 
         return inflatedView;
     }
@@ -127,23 +116,6 @@ public class AccountCreationFragment extends Fragment {
         return true;
     }
 
-    @OnClick(R.id.ring_create_btn)
-    public void createRingAccount() {
-        AccountWizard accountWizard = (AccountWizard) getActivity();
-        if (accountWizard != null) {
-            accountWizard.ringCreate(false);
-        }
-    }
-
-    @OnClick(R.id.ring_add_account)
-    @SuppressWarnings("unused")
-    public void addRingAccount() {
-        AccountWizard accountWizard = (AccountWizard) getActivity();
-        if (accountWizard != null) {
-            accountWizard.ringLogin(false);
-        }
-    }
-
     /************************
      * SIP Account ADD
      ***********************/
@@ -154,39 +126,6 @@ public class AccountCreationFragment extends Fragment {
         mUsername = mUsernameView.getText().toString();
         mPassword = mPasswordView.getText().toString();
         attemptCreation();
-    }
-
-    @OnClick(R.id.sipHeaderLinearLayout)
-    void presentSIPForm() {
-        if (mSipFormLinearLayout != null && mSipFormLinearLayout.getVisibility() != View.VISIBLE) {
-            mSipFormLinearLayout.setVisibility(View.VISIBLE);
-            //~ Let the time to perform setVisibility before scrolling.
-            mSIPLoginForm.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mSIPLoginForm.fullScroll(ScrollView.FOCUS_DOWN);
-                    mAliasView.requestFocus();
-                }
-            }, 100);
-        }
-    }
-
-    @OnClick(R.id.sipHeaderLinearLayout)
-    @SuppressWarnings("unused")
-    public void onClickHeader(View v) {
-        if (null != mSipFormLinearLayout) {
-            if (mSipFormLinearLayout.getVisibility() != View.VISIBLE) {
-                mSipFormLinearLayout.setVisibility(View.VISIBLE);
-                //~ Let the time to perform setVisibility before scrolling.
-                mSIPLoginForm.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mSIPLoginForm.fullScroll(ScrollView.FOCUS_DOWN);
-                        mAliasView.requestFocus();
-                    }
-                }, 100);
-            }
-        }
     }
 
     /**
@@ -492,12 +431,6 @@ public class AccountCreationFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.ab_account_creation);
-    }
-
-    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (!(activity instanceof LocalService.Callbacks)) {
@@ -551,7 +484,7 @@ public class AccountCreationFragment extends Fragment {
         } else {
             AccountWizard accountWizard = (AccountWizard) getActivity();
             if (accountWizard != null) {
-                accountWizard.initAccountCreation(false, mUsernameView.getText().toString(), null, mPasswordView.getText().toString(), mHostnameView.getText().toString());
+                accountWizard.initSipAccountCreation(mAliasView.getText().toString(), mUsernameView.getText().toString(), mPasswordView.getText().toString(), mHostnameView.getText().toString());
             }
         }
     }
@@ -565,7 +498,7 @@ public class AccountCreationFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         AccountWizard a = (AccountWizard) getActivity();
                         if (a != null)
-                            a.initAccountCreation(false, mAliasView.getText().toString(), null, null, null);
+                            a.initSipAccountCreation(mAliasView.getText().toString(), null, null, null);
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
