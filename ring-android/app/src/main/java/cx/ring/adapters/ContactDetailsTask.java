@@ -139,7 +139,7 @@ public class ContactDetailsTask implements Runnable {
         if (!mContact.getPhones().isEmpty()) {
             String username = mContact.getPhones().get(0).getNumber().host;
             Log.d(TAG, "getPhones not empty. Username : " + username);
-            vcard = VCardUtils.loadPeerProfileFromDisk(username + ".vcf", mContext);
+            vcard = VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), username + ".vcf");
 
             if (vcard != null && vcard.getFormattedName() != null) {
                 if (!TextUtils.isEmpty(vcard.getFormattedName().getValue())) {

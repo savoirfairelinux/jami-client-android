@@ -242,7 +242,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity());
+        mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), getString(R.string.unknown));
 
         updateUserView();
 
@@ -305,7 +305,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
     public void updateUserView() {
         Log.d(TAG, "updateUserView");
-        mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity());
+        mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), getString(R.string.unknown));
         if (!mVCardProfile.getPhotos().isEmpty()) {
             Photo tmp = mVCardProfile.getPhotos().get(0);
             mUserImage.setImageBitmap(CropImageUtils.cropImageToCircle(tmp.getData()));
@@ -426,7 +426,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
                 }
 
                 mVCardProfile.removeProperties(RawProperty.class);
-                VCardUtils.saveLocalProfileToDisk(mVCardProfile, getActivity());
+                VCardUtils.saveLocalProfileToDisk(mVCardProfile, getActivity().getFilesDir());
                 updateUserView();
             }
         });
