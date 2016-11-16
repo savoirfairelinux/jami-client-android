@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_6df33574",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-16T20:13:32Z",
+      "side": 1,
+      "message": "layer",
+      "range": {
+        "startLine": 9,
+        "startChar": 33,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "efeafaa5aa37f91027f8f5c734e1c7563066ba54",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_0de8717b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-16T20:13:32Z",
+      "side": 1,
+      "message": "line too long",
+      "range": {
+        "startLine": 9,
+        "startChar": 71,
+        "endLine": 9,
+        "endChar": 85
+      },
+      "revId": "efeafaa5aa37f91027f8f5c734e1c7563066ba54",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_4dee798d",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/utils/VCardUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-16T20:13:32Z",
+      "side": 1,
+      "message": "from a string array?",
+      "range": {
+        "startLine": 48,
+        "startChar": 29,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "efeafaa5aa37f91027f8f5c734e1c7563066ba54",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
