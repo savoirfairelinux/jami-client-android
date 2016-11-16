@@ -42,7 +42,8 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     interface OnAccountActionClicked {
         void onAccountSelected(Account account);
 
-        void onAddAccountSelected();
+        void onAddSIPAccountSelected();
+        void onAddRINGAccountSelected();
     }
 
     AccountAdapter(List<Account> accounts) {
@@ -121,11 +122,12 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (mListener == null) {
                 return;
             }
-            if (viewtype == TYPE_ADD_RING_ACCOUNT || viewtype == TYPE_ADD_SIP_ACCOUNT) {
-                mListener.onAddAccountSelected();
+            if (viewtype == TYPE_ADD_RING_ACCOUNT) {
+                mListener.onAddRINGAccountSelected();
+            } else if (viewtype == TYPE_ADD_SIP_ACCOUNT) {
+                mListener.onAddSIPAccountSelected();
             }
         }
-
     }
 
     @Override
@@ -171,9 +173,12 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((AccountView) holder).error.setVisibility(acc.isRegistered() ? View.GONE : View.VISIBLE);
                 break;
             case TYPE_ADD_SIP_ACCOUNT:
+                ((AddAccountView) holder).icon.setImageResource(R.drawable.ic_add_black_24dp);
+                ((AddAccountView) holder).title.setText(R.string.add_sip_account_title);
+                break;
             case TYPE_ADD_RING_ACCOUNT:
                 ((AddAccountView) holder).icon.setImageResource(R.drawable.ic_add_black_24dp);
-                ((AddAccountView) holder).title.setText(R.string.add_account_title);
+                ((AddAccountView) holder).title.setText(R.string.add_ring_account_title);
                 break;
             default:
                 break;
@@ -184,6 +189,6 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemCount() {
         // Add two entries for account creation
-        return mDataset.size() + 1;
+        return mDataset.size() + 2;
     }
 }
