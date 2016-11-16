@@ -159,7 +159,7 @@ public class MenuHeaderView extends FrameLayout {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         Log.d(TAG, "updateUserView");
         if (null != inflater) {
-            mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getContext());
+            mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getContext().getFilesDir(), getContext().getString(R.string.unknown));
             if (!mVCardProfile.getPhotos().isEmpty()) {
                 Photo tmp = mVCardProfile.getPhotos().get(0);
                 mUserImage.setImageBitmap(CropImageUtils.cropImageToCircle(tmp.getData()));
@@ -198,7 +198,7 @@ public class MenuHeaderView extends FrameLayout {
 
         mSpinnerAccounts.setAdapter(mAccountAdapter);
 
-        mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getContext());
+        mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getContext().getFilesDir(), getContext().getString(R.string.unknown));
 
         updateUserView();
 
@@ -279,7 +279,7 @@ public class MenuHeaderView extends FrameLayout {
                 }
 
                 mVCardProfile.removeProperties(RawProperty.class);
-                VCardUtils.saveLocalProfileToDisk(mVCardProfile, getContext());
+                VCardUtils.saveLocalProfileToDisk(mVCardProfile, getContext().getFilesDir());
                 updateUserView();
             }
         });

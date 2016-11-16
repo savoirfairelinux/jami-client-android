@@ -716,7 +716,8 @@ public class DRingService extends Service {
                 protected void doRun() throws SameThreadException, RemoteException {
                     final String ringProfileVCardMime = "x-ring/ring.profile.vcard";
 
-                    VCard vcard = VCardUtils.loadLocalProfileFromDisk(DRingService.this);
+                    Context context = DRingService.this;
+                    VCard vcard = VCardUtils.loadLocalProfileFromDisk(context.getFilesDir(), context.getString(R.string.unknown));
                     String stringVCard = VCardUtils.vcardToString(vcard);
 
                     int nbTotal = stringVCard.length() / VCARD_CHUNK_SIZE + (stringVCard.length() % VCARD_CHUNK_SIZE != 0 ? 1 : 0);
