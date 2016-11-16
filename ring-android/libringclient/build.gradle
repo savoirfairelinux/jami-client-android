@@ -1,7 +1,15 @@
 apply plugin: 'java'
 
 dependencies {
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // VCard parsing
+    compile('com.googlecode.ez-vcard:ez-vcard:0.9.10') {
+        exclude module: 'freemarker'
+        exclude module: 'jackson-core'
+        exclude module: 'jsoup'
+    }
 
     // QRCode encoding
     compile 'com.google.zxing:core:3.2.1'

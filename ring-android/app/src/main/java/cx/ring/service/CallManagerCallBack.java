@@ -78,11 +78,17 @@ public class CallManagerCallBack extends Callback {
         final String ringProfileVCardMime = "x-ring/ring.profile.vcard";
 
         if (messages != null) {
-            HashMap<String, String> messageKeyValue = VCardUtils.parseMimeAttributes(messages);
-            if (messageKeyValue.containsKey(VCardUtils.VCARD_KEY_MIME_TYPE) &&
+
+            String origin = messages.keys().toString().replace("[", "");
+            origin = origin.replace("]", "");
+            String[] elements = origin.split(";");
+
+            HashMap<String, String> messageKeyValue = VCardUtils.parseMimeAttributes(elements);
+
+            if (messageKeyValue != null && messageKeyValue.containsKey(VCardUtils.VCARD_KEY_MIME_TYPE) &&
                     messageKeyValue.get(VCardUtils.VCARD_KEY_MIME_TYPE).equals(textPlainMime)) {
                 msg = messages.getRaw(textPlainMime).toJavaString();
-            } else if (messageKeyValue.containsKey(VCardUtils.VCARD_KEY_MIME_TYPE) &&
+            } else if (messageKeyValue != null && messageKeyValue.containsKey(VCardUtils.VCARD_KEY_MIME_TYPE) &&
                     messageKeyValue.get(VCardUtils.VCARD_KEY_MIME_TYPE).equals(ringProfileVCardMime)) {
                 int part = Integer.parseInt(messageKeyValue.get(VCardUtils.VCARD_KEY_PART));
                 int nbPart = Integer.parseInt(messageKeyValue.get(VCardUtils.VCARD_KEY_OF));
@@ -100,7 +106,7 @@ public class CallManagerCallBack extends Callback {
                         String filename = splitFrom[0] + ".vcf";
                         VCardUtils.savePeerProfileToDisk(mProfileChunk.getCompleteProfile(),
                                 filename,
-                                this.mService.getApplicationContext());
+                                this.mService.getApplicationContext().getFilesDir());
 
                         Intent intent = new Intent(VCARD_COMPLETED);
                         intent.putExtra("filename", filename);
