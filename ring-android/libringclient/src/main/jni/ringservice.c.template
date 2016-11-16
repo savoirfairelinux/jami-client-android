@@ -1,7 +1,7 @@
 #include "logger.h"
 
 JavaVM *gJavaVM;
-const char *kringservicePath = "cx/ring/service/RingserviceJNI";
+const char *kringservicePath = "cx/ring/daemon/RingserviceJNI";
 
 void deinitClassHelper(JNIEnv *env, jobject obj) {
 	RING_INFO("deinitClassHelper");
