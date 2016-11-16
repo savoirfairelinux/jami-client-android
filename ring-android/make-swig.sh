@@ -37,9 +37,9 @@
 #         ringserviceJNI.java
 #         ManagerImpl.java
 
-SRCDIR=app/src/main/jni
-PACKAGE=cx.ring.service
-PACKAGEDIR=app/src/main/java/cx/ring/service
+SRCDIR=libringclient/src/main/jni
+PACKAGE=cx.ring.daemon
+PACKAGEDIR=libringclient/src/main/java/cx/ring/daemon
 ROOT=`pwd`
 
 echo "in $ROOT"
@@ -80,6 +80,10 @@ else
     echo "exiting..."
     exit 3
 fi
+
+echo "Creating package folder $PACKAGEDIR ..."
+
+mkdir -p $PACKAGEDIR
 
 echo "Generating ring_wrapper.cpp..."
 
