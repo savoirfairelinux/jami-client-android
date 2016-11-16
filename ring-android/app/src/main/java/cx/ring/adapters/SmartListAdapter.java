@@ -22,6 +22,7 @@
 package cx.ring.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.text.TextUtils;
@@ -40,14 +41,19 @@ import java.lang.ref.WeakReference;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
+import cx.ring.history.HistoryCall;
+import cx.ring.history.HistoryEntry;
+import cx.ring.history.Tuple;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.TextMessage;
 
 public class SmartListAdapter extends BaseAdapter {
 
@@ -173,7 +179,7 @@ public class SmartListAdapter extends BaseAdapter {
         long lastInteraction = holder.conv.getLastInteraction().getTime();
         holder.convTime.setText(lastInteraction == 0 ? "" :
                 DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL));
-        holder.convStatus.setText(holder.conv.getLastInteractionSumary(mContext.getResources()));
+        holder.convStatus.setText(getLastInteractionSummary(holder.conv, mContext.getResources()));
         if (holder.conv.hasUnreadTextMessages()) {
             holder.convParticipants.setTypeface(null, Typeface.BOLD);
             holder.convTime.setTypeface(null, Typeface.BOLD);
@@ -248,5 +254,48 @@ public class SmartListAdapter extends BaseAdapter {
             return;
         }
         this.mCallbacks = callback;
+    }
+
+    private String getLastInteractionSummary(Conversation conversation, Resources resources) {
+        if (conversation.hasCurrentCall()) {
+            return resources.getString(R.string.ongoing_call);
+        }
+        Tuple<Date, String> d = new Tuple<>(new Date(0), null);
+
+        for (HistoryEntry e : conversation.getHistory().values()) {
+            Date entryDate = e.getLastInteractionDate();
+            String entrySummary = getLastInteractionSummary(e, resources);
+            if (entryDate == null || entrySummary == null) {
+                continue;
+            }
+            Tuple<Date, String> tmp = new Tuple<>(entryDate, entrySummary);
+            if (d.first.compareTo(entryDate) < 0) {
+                d = tmp;
+            }
+        }
+        return d.second;
+    }
+
+    private String getLastInteractionSummary(HistoryEntry e, Resources resources) {
+        long lastTextTimestamp = e.getTextMessages().isEmpty() ? 0 : e.getTextMessages().lastEntry().getKey();
+        long lastCallTimestamp = e.getCalls().isEmpty() ? 0 : e.getCalls().lastEntry().getKey();
+        if (lastTextTimestamp > 0 && lastTextTimestamp > lastCallTimestamp) {
+            TextMessage msg = e.getTextMessages().lastEntry().getValue();
+            String msgString = msg.getMessage();
+            if (msgString != null && !msgString.isEmpty() && msgString.contains("\n")) {
+                int lastIndexOfChar = msgString.lastIndexOf("\n");
+                if (lastIndexOfChar + 1 < msgString.length()) {
+                    msgString = msgString.substring(msgString.lastIndexOf("\n") + 1);
+                }
+            }
+            return (msg.isIncoming() ? "" : resources.getText(R.string.you_txt_prefix) + " ") + msgString;
+        }
+        if (lastCallTimestamp > 0) {
+            HistoryCall lastCall = e.getCalls().lastEntry().getValue();
+            return String.format(resources.getString(lastCall.isIncoming()
+                    ? R.string.hist_in_call
+                    : R.string.hist_out_call), lastCall.getDurationString());
+        }
+        return null;
     }
 }

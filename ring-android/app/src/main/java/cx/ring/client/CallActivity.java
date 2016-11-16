@@ -283,7 +283,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
         // If no number found, use first from contact
         if (number == null || number.isEmpty())
-            number = conv.contact.getPhones().get(0).getNumber();
+            number = conv.getContact().getPhones().get(0).getNumber();
 
         return new Pair<>(a, number);
     }
