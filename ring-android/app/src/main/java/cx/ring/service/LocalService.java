@@ -37,6 +37,7 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -102,6 +103,7 @@ import cx.ring.model.TextMessage;
 import cx.ring.services.HistoryService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.SettingsService;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaManager;
 
@@ -898,7 +900,7 @@ public class LocalService extends Service implements Observer {
                 final int iType = cPhones.getColumnIndex(Phone.TYPE);
                 final int iLabel = cPhones.getColumnIndex(Phone.LABEL);
                 while (cPhones.moveToNext()) {
-                    callContact.addNumber(cPhones.getString(iNum), cPhones.getInt(iType), cPhones.getString(iLabel), CallContact.NumberType.TEL);
+                    callContact.addNumber(cPhones.getString(iNum), cPhones.getInt(iType), cPhones.getString(iLabel), cx.ring.model.Phone.NumberType.TEL);
                     Log.w(TAG, "Phone:" + cPhones.getString(cPhones.getColumnIndex(Phone.NUMBER)));
                 }
                 cPhones.close();
@@ -919,7 +921,7 @@ public class LocalService extends Service implements Observer {
                     String mime = cSip.getString(iMime);
                     String number = cSip.getString(iSip);
                     if (!mime.contentEquals(Im.CONTENT_ITEM_TYPE) || new SipUri(number).isRingId() || "ring".equalsIgnoreCase(cSip.getString(iLabel))) {
-                        callContact.addNumber(number, cSip.getInt(iType), cSip.getString(iLabel), CallContact.NumberType.SIP);
+                        callContact.addNumber(number, cSip.getInt(iType), cSip.getString(iLabel), cx.ring.model.Phone.NumberType.SIP);
                     }
                     Log.w(TAG, "SIP phone:" + number + " " + mime + " ");
                 }
@@ -1291,7 +1293,11 @@ public class LocalService extends Service implements Observer {
                 Resources res = getResources();
                 int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
                 int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
-                mMessageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(contact.getPhoto(), width, height, false));
+
+                Bitmap bmp = BitmapUtils.bytesToBitmap(contact.getPhoto());
+                if (bmp != null) {
+                    mMessageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
+                }
             }
             if (texts.size() == 1) {
                 TextMessage txt = texts.firstEntry().getValue();
