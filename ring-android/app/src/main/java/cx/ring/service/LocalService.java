@@ -37,7 +37,6 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -1424,22 +1423,23 @@ public class LocalService extends Service implements Observer {
                         mAccountLoader.onContentChanged();
                     } else {
                         Account account = getAccount(intent.getStringExtra("account"));
-                        if (account != null) {
-                            String stateOld = account.getRegistrationState();
-                            String stateNew = intent.getStringExtra("state");
-                            if (stateOld.contentEquals(AccountConfig.STATE_INITIALIZING) &&
-                                    !stateNew.contentEquals(AccountConfig.STATE_INITIALIZING)) {
-                                try {
-                                    account.setDetails((Map<String, String>) mService.getAccountDetails(account.getAccountID()));
-                                    account.setCredentials((ArrayList<Map<String, String>>) mService.getCredentials(account.getAccountID()));
-                                    account.setDevices((Map<String, String>) mService.getKnownRingDevices(account.getAccountID()));
-                                    account.setVolatileDetails((Map<String, String>) mService.getVolatileAccountDetails(account.getAccountID()));
-                                } catch (RemoteException e) {
-                                    Log.e(TAG, "Error while setting accound details", e);
-                                }
-                            } else {
-                                account.setRegistrationState(stateNew, intent.getIntExtra("code", 0));
+                        if (account == null) {
+                            return;
+                        }
+                        String stateOld = account.getRegistrationState();
+                        String stateNew = intent.getStringExtra("state");
+                        if (stateOld.contentEquals(AccountConfig.STATE_INITIALIZING) &&
+                                !stateNew.contentEquals(AccountConfig.STATE_INITIALIZING)) {
+                            try {
+                                account.setDetails((Map<String, String>) mService.getAccountDetails(account.getAccountID()));
+                                account.setCredentials((ArrayList<Map<String, String>>) mService.getCredentials(account.getAccountID()));
+                                account.setDevices((Map<String, String>) mService.getKnownRingDevices(account.getAccountID()));
+                                account.setVolatileDetails((Map<String, String>) mService.getVolatileAccountDetails(account.getAccountID()));
+                            } catch (RemoteException e) {
+                                Log.e(TAG, "Error while setting accound details", e);
                             }
+                        } else {
+                            account.setRegistrationState(stateNew, intent.getIntExtra("code", 0));
                         }
                         sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
                     }

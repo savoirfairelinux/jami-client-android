@@ -262,7 +262,7 @@ echo "Building Ring for Android to ${LIBRING_JNI_DIR}"
 ARCH="${ANDROID_ABI}" DAEMON_DIR="${DAEMON_DIR}" make jniclean
 
 mkdir -p ${LIBRING_JNI_DIR}
-${NDK_TOOLCHAIN_PATH}/clang++ --shared -Wall -Wextra  ${ANDROID_APP_DIR}/app/src/main/jni/ring_wrapper.cpp \
+${NDK_TOOLCHAIN_PATH}/clang++ --shared -Wall -Wextra  ${ANDROID_APP_DIR}/libringclient/src/main/jni/ring_wrapper.cpp \
                                         ${RING_BUILD_DIR}/src/.libs/libring.a \
                                         -static-libstdc++ \
                                         -I${RING_SRC_DIR}/src -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib \
