@@ -31,7 +31,15 @@ import android.graphics.Shader;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public class CropImageUtils {
+import java.nio.ByteBuffer;
+
+/**
+ * Helper calls to manipulates Bitmaps
+ */
+public class BitmapUtils {
+
+    private BitmapUtils() {
+    }
 
     @Nullable
     public static Bitmap cropImageToCircle(@NonNull byte[] bArray) {
@@ -67,5 +75,19 @@ public class CropImageUtils {
                 paint);
 
         return externalBMP;
+    }
+
+    public static byte[] bitmapToBytes(Bitmap bmp) {
+        int bytes = bmp.getByteCount();
+        ByteBuffer buffer = ByteBuffer.allocate(bytes); //Create a new buffer
+        bmp.copyPixelsToBuffer(buffer); //Move the byte data to the buffer
+        return buffer.array();
+    }
+
+    public static Bitmap bytesToBitmap(byte[] imageData) {
+        if (imageData != null && imageData.length > 0) {
+            return BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+        }
+        return null;
     }
 }

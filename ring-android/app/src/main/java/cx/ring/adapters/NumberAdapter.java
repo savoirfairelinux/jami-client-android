@@ -22,6 +22,7 @@
 package cx.ring.adapters;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,16 +34,17 @@ import java.util.ArrayList;
 
 import cx.ring.R;
 import cx.ring.model.CallContact;
+import cx.ring.model.Phone;
 
 public class NumberAdapter extends BaseAdapter {
     final private Context mContext;
-    final private ArrayList<CallContact.Phone> mNumbers;
+    final private ArrayList<Phone> mNumbers;
     private boolean mUseFullCellForGetView = false;
 
     public NumberAdapter(Context context, CallContact c, boolean useFullCellForGetView) {
         mContext = context;
         mNumbers = (c != null && c.getPhones() != null) ?
-                c.getPhones() : new ArrayList<CallContact.Phone>();
+                c.getPhones() : new ArrayList<Phone>();
         mUseFullCellForGetView = useFullCellForGetView;
     }
 
@@ -82,7 +84,7 @@ public class NumberAdapter extends BaseAdapter {
             }
         }
 
-        CallContact.Phone number = mNumbers.get(position);
+        Phone number = mNumbers.get(position);
         ImageView numberIcon = (ImageView) convertView.findViewById(R.id.number_icon);
         numberIcon.setImageResource(number.getNumber().isRingId() ?
                 R.drawable.ring_logo_24dp : R.drawable.ic_dialer_sip_black);
@@ -92,7 +94,7 @@ public class NumberAdapter extends BaseAdapter {
             TextView numberLabelTxt = (TextView) convertView.findViewById(R.id.number_label_txt);
 
             numberTxt.setText(number.getNumber().getRawUriString());
-            numberLabelTxt.setText(number.getTypeString(mContext.getResources()));
+            numberLabelTxt.setText(ContactsContract.CommonDataKinds.Phone.getTypeLabel(mContext.getResources(), number.getCategory(), number.getLabel()));
         }
 
         return convertView;

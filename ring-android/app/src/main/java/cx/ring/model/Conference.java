@@ -36,6 +36,7 @@ import java.util.Random;
 import cx.ring.R;
 import cx.ring.client.CallActivity;
 import cx.ring.service.LocalService;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
 
 public class Conference {
@@ -347,7 +348,10 @@ public class Conference {
             Resources res = ctx.getResources();
             int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
             int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
-            noti.setLargeIcon(Bitmap.createScaledBitmap(contact.getPhoto(), width, height, false));
+            Bitmap bmp = BitmapUtils.bytesToBitmap(contact.getPhoto());
+            if (bmp != null) {
+                noti.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
+            }
         }
         notificationManager.notify(notificationId, noti.build());
     }

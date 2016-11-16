@@ -85,8 +85,9 @@ import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.DRingService;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
-import cx.ring.utils.CropImageUtils;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -440,7 +441,8 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                 if (firstParticipant == null || firstParticipant.getContact() == null) {
                     break;
                 }
-                startActivityForResult(firstParticipant.getContact().getAddNumberIntent(), ConversationActivity.REQ_ADD_CONTACT);
+                startActivityForResult(ActionHelper.getAddNumberIntentForContact(firstParticipant.getContact()),
+                        ConversationActivity.REQ_ADD_CONTACT);
                 break;
             case R.id.menuitem_speaker:
                 audioManager.setSpeakerphoneOn(!audioManager.isSpeakerphoneOn());
@@ -957,7 +959,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         if (!vcard.getPhotos().isEmpty()) {
             Photo tmp = vcard.getPhotos().get(0);
             if (tmp.getData() != null) {
-                contactBubbleView.setImageBitmap(CropImageUtils.cropImageToCircle(tmp.getData()));
+                contactBubbleView.setImageBitmap(BitmapUtils.cropImageToCircle(tmp.getData()));
             } else {
                 setDefaultPhoto();
             }
