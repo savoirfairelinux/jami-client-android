@@ -154,10 +154,18 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     }
 
     @Override
-    public void onAddAccountSelected() {
+    public void onAddRINGAccountSelected() {
         toggleAccountList();
         if (mSectionListener != null) {
-            mSectionListener.onAddAccountSelected();
+            mSectionListener.onAddRingAccountSelected();
+        }
+    }
+
+    @Override
+    public void onAddSIPAccountSelected() {
+        toggleAccountList();
+        if (mSectionListener != null) {
+            mSectionListener.onAddSipAccountSelected();
         }
     }
 
@@ -176,7 +184,8 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
         void onAccountSelected();
 
-        void onAddAccountSelected();
+        void onAddRingAccountSelected();
+        void onAddSipAccountSelected();
     }
 
     @Override
