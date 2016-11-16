@@ -77,6 +77,7 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.Phone;
 import cx.ring.model.SipUri;
 import cx.ring.service.LocalService;
 import cx.ring.services.StateService;
@@ -651,7 +652,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         if (conversation.getContact() != null) {
             Activity activity = getActivity();
             if (activity != null) {
-                conversation.getContact().displayContact(getActivity());
+                ActionHelper.displayContact(getActivity(), conversation.getContact());
             }
         }
     }
@@ -675,7 +676,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public void clipBoardDidCopyNumber(String copiedNumber) {
         if (getView() != null) {
             String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
-                    CallContact.Phone.getShortenedNumber(copiedNumber));
+                    Phone.getShortenedNumber(copiedNumber));
             Snackbar.make(getView(), snackbarText, Snackbar.LENGTH_LONG).show();
         }
     }

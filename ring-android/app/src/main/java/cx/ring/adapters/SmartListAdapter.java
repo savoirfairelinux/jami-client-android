@@ -53,6 +53,7 @@ import cx.ring.history.HistoryEntry;
 import cx.ring.history.Tuple;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.Phone;
 import cx.ring.model.TextMessage;
 
 public class SmartListAdapter extends BaseAdapter {
@@ -110,8 +111,8 @@ public class SmartListAdapter extends BaseAdapter {
                             stringFormatting(contact.getDisplayName()).contains(stringFormatting(query))) {
                         mConversations.add(c);
                     } else if (contact.getPhones() != null && !contact.getPhones().isEmpty()) {
-                        ArrayList<CallContact.Phone> phones = contact.getPhones();
-                        for (CallContact.Phone phone : phones) {
+                        ArrayList<Phone> phones = contact.getPhones();
+                        for (Phone phone : phones) {
                             if (phone.getNumber() != null) {
                                 String rawUriString = phone.getNumber().getRawUriString();
                                 if (!TextUtils.isEmpty(rawUriString) &&

@@ -21,13 +21,6 @@
 
 package cx.ring.adapters;
 
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import cx.ring.R;
-import cx.ring.model.CallContact;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +28,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import cx.ring.R;
+import cx.ring.model.CallContact;
+import cx.ring.utils.BitmapUtils;
 
 public class StarredContactsAdapter extends BaseAdapter {
 
@@ -85,8 +86,8 @@ public class StarredContactsAdapter extends BaseAdapter {
         ((TextView) v.findViewById(R.id.display_name)).setText(item.getDisplayName());
         ImageView photo_view = (ImageView) v.findViewById(R.id.photo);
 
-        if(item.hasPhoto()){
-            photo_view.setImageBitmap(item.getPhoto());
+        if (item.hasPhoto()) {
+            photo_view.setImageBitmap(BitmapUtils.bytesToBitmap(item.getPhoto()));
         } else {
             infos_fetcher.execute(new ContactDetailsTask(mContext, photo_view, item));
         }

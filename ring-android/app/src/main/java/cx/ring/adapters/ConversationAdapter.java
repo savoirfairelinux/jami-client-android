@@ -41,8 +41,8 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 
 import cx.ring.R;
-import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.Phone;
 import cx.ring.model.TextMessage;
 import cx.ring.views.ConversationViewHolder;
 
@@ -209,7 +209,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         int pictureResID;
         String histTxt;
-        String callNumber = CallContact.Phone.getShortenedNumber(convElement.call.number);
+        String callNumber = Phone.getShortenedNumber(convElement.call.number);
         convViewHolder.mPhoto.setScaleY(1);
         if (convElement.call.isMissed()) {
             if (convElement.call.isIncoming()) {
