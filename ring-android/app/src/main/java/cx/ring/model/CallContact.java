@@ -44,8 +44,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.utils.VCardUtils;
-import ezvcard.VCard;
 
 public class CallContact implements Parcelable {
     static final String TAG = CallContact.class.getSimpleName();
