@@ -25,7 +25,10 @@ import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
 import cx.ring.application.RingApplication;
 import cx.ring.service.BootReceiver;
+import cx.ring.service.DRingService;
 import cx.ring.service.LocalService;
+import cx.ring.service.VideoManagerCallback;
+import cx.ring.services.DaemonService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.SettingsServiceImpl;
 import cx.ring.settings.SettingsFragment;
@@ -49,6 +52,12 @@ public interface RingInjectionComponent {
     void inject(SettingsFragment fragment);
 
     void inject(LocalService service);
+
+    void inject(DRingService service);
+
+    void inject(VideoManagerCallback callback);
+
+    void inject(DaemonService service);
 
     void inject(SettingsServiceImpl service);
 
