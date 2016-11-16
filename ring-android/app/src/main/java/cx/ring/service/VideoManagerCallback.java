@@ -20,21 +20,31 @@
 package cx.ring.service;
 
 import android.content.res.Configuration;
+import android.graphics.Point;
 import android.hardware.Camera;
 import android.util.Log;
 import android.util.LongSparseArray;
-import android.graphics.Point;
 
 import java.util.HashMap;
 
+import javax.inject.Inject;
 
-public class VideoManagerCallback extends VideoCallback
-{
+import cx.ring.application.RingApplication;
+import cx.ring.daemon.StringMap;
+import cx.ring.daemon.VideoCallback;
+import cx.ring.daemon.UintVect;
+import cx.ring.daemon.IntVect;
+import cx.ring.services.DaemonService;
+
+public class VideoManagerCallback extends VideoCallback {
     private static final String TAG = VideoManagerCallback.class.getSimpleName();
 
+    @Inject
+    DaemonService mDaemonService;
+
     private final DRingService mService;
-    private final LongSparseArray<DeviceParams> native_params = new LongSparseArray<>();
-    private final HashMap<String, DRingService.VideoParams> params = new HashMap<>();
+    private final LongSparseArray<DeviceParams> mNativeParams = new LongSparseArray<>();
+    private final HashMap<String, DRingService.VideoParams> mParams = new HashMap<>();
 
     class DeviceParams {
         Point size;
@@ -42,11 +52,11 @@ public class VideoManagerCallback extends VideoCallback
         Camera.CameraInfo infos;
 
         public StringMap toMap(int orientation) {
-            StringMap p = new StringMap();
-            boolean rotated = (size.x >  size.y) == (orientation == Configuration.ORIENTATION_PORTRAIT);
-            p.set("size", Integer.toString(rotated ? size.y : size.x) + "x" + Integer.toString(rotated ? size.x : size.y));
-            p.set("rate", Long.toString(rate));
-            return p;
+            StringMap map = new StringMap();
+            boolean rotated = (size.x > size.y) == (orientation == Configuration.ORIENTATION_PORTRAIT);
+            map.set("size", Integer.toString(rotated ? size.y : size.x) + "x" + Integer.toString(rotated ? size.x : size.y));
+            map.set("rate", Long.toString(rate));
+            return map;
         }
     }
 
@@ -55,53 +65,56 @@ public class VideoManagerCallback extends VideoCallback
 
     public VideoManagerCallback(DRingService s) {
         mService = s;
+        ((RingApplication) mService.getApplication()).getRingInjectionComponent().inject(this);
     }
 
     public void init() {
         int number_cameras = getNumberOfCameras();
         Camera.CameraInfo camInfo = new Camera.CameraInfo();
-        for(int i = 0; i < number_cameras; i++) {
-            RingserviceJNI.addVideoDevice(Integer.toString(i));
+        for (int i = 0; i < number_cameras; i++) {
+            mDaemonService.addVideoDevice(Integer.toString(i));
             Camera.getCameraInfo(i, camInfo);
-            if (camInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT)
+            if (camInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
                 cameraFront = i;
-            else
+            } else {
                 cameraBack = i;
+            }
             Log.d(TAG, "Camera number " + i);
         }
-        RingserviceJNI.setDefaultDevice(Integer.toString(cameraFront));
+        mDaemonService.setDefaultVideoDevice(Integer.toString(cameraFront));
     }
 
     DeviceParams getNativeParams(int i) {
-        return native_params.get(i);
+        return mNativeParams.get(i);
     }
 
     @Override
-    public void decodingStarted(String id, String shm_path, int w, int h, boolean is_mixer) {
-        mService.decodingStarted(id, shm_path, w, h, is_mixer);
+    public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
+        mService.decodingStarted(id, shmPath, width, height, isMixer);
     }
 
     @Override
-    public void decodingStopped(String id, String shm_path, boolean is_mixer) {
+    public void decodingStopped(String id, String shmPath, boolean isMixer) {
         mService.decodingStopped(id);
     }
 
     public void setParameters(String camid, int format, int width, int height, int rate) {
         int id = Integer.valueOf(camid);
-        DeviceParams p = native_params.get(id);
+        DeviceParams p = mNativeParams.get(id);
         DRingService.VideoParams new_params = new DRingService.VideoParams(id, format, p.size.x, p.size.y, rate);
         new_params.rotWidth = width;
         new_params.rotHeight = height;
         mService.setVideoRotation(new_params, p.infos);
-        params.put(camid, new_params);
+        mParams.put(camid, new_params);
     }
 
-    public void startCapture(String camid) {
-        DRingService.VideoParams p = params.get(camid);
-        if (p == null)
+    public void startCapture(String camId) {
+        DRingService.VideoParams params = mParams.get(camId);
+        if (params == null) {
             return;
+        }
 
-        mService.startCapture(p);
+        mService.startCapture(params);
     }
 
     public void stopCapture() {
@@ -112,8 +125,9 @@ public class VideoManagerCallback extends VideoCallback
     public void getCameraInfo(String camid, IntVect formats, UintVect sizes, UintVect rates) {
         int id = Integer.valueOf(camid);
 
-        if (id < 0 || id >= getNumberOfCameras())
+        if (id < 0 || id >= getNumberOfCameras()) {
             return;
+        }
 
         Camera cam;
         try {
@@ -141,22 +155,22 @@ public class VideoManagerCallback extends VideoCallback
         p.infos = new Camera.CameraInfo();
         Camera.getCameraInfo(id, p.infos);
 
-        native_params.put(id, p);
+        mNativeParams.put(id, p);
     }
 
     private int getNumberOfCameras() {
         return Camera.getNumberOfCameras();
     }
 
-    private void getFormats(Camera.Parameters param, IntVect formats_) {
-        for(int fmt : param.getSupportedPreviewFormats()) {
-            formats_.add(fmt);
+    private void getFormats(Camera.Parameters param, IntVect formats) {
+        for (int fmt : param.getSupportedPreviewFormats()) {
+            formats.add(fmt);
         }
     }
 
     private Point getSizeToUse(Camera.Parameters param) {
         int sw = 1280, sh = 720;
-        for(Camera.Size s : param.getSupportedPreviewSizes()) {
+        for (Camera.Size s : param.getSupportedPreviewSizes()) {
             if (s.width < sw) {
                 sw = s.width;
                 sh = s.height;
@@ -166,10 +180,10 @@ public class VideoManagerCallback extends VideoCallback
         return new Point(sw, sh);
     }
 
-    private void getRates(Camera.Parameters param, UintVect rates_) {
-        for(int fps[] : param.getSupportedPreviewFpsRange()) {
-            int rate = (fps[Camera.Parameters.PREVIEW_FPS_MIN_INDEX] + fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX])/2;
-            rates_.add(rate);
+    private void getRates(Camera.Parameters param, UintVect rates) {
+        for (int fps[] : param.getSupportedPreviewFpsRange()) {
+            int rate = (fps[Camera.Parameters.PREVIEW_FPS_MIN_INDEX] + fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]) / 2;
+            rates.add(rate);
         }
     }
 }
