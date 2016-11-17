@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_d071a278",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/AccountAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-17T19:35:31Z",
+      "side": 1,
+      "message": "you should use a more explicit name variable",
+      "range": {
+        "startLine": 67,
+        "startChar": 21,
+        "endLine": 67,
+        "endChar": 24
+      },
+      "revId": "2846d7fbb8259be39da2c094ea7fffdba704ba3d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_f06e1e96",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/AccountAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-17T19:35:31Z",
+      "side": 1,
+      "message": "you should use a more explicit name variable",
+      "range": {
+        "startLine": 138,
+        "startChar": 8,
+        "endLine": 139,
+        "endChar": 15
+      },
+      "revId": "2846d7fbb8259be39da2c094ea7fffdba704ba3d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_906b1a85",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/AccountAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-17T19:35:31Z",
+      "side": 1,
+      "message": "you should use a more explicit name variable",
+      "range": {
+        "startLine": 165,
+        "startChar": 24,
+        "endLine": 165,
+        "endChar": 27
+      },
+      "revId": "2846d7fbb8259be39da2c094ea7fffdba704ba3d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_b0689688",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/RingNavigationFragment.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-17T19:35:31Z",
+      "side": 1,
+      "message": "you should use {}",
+      "range": {
+        "startLine": 146,
+        "startChar": 12,
+        "endLine": 147,
+        "endChar": 25
+      },
+      "revId": "2846d7fbb8259be39da2c094ea7fffdba704ba3d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
