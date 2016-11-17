@@ -42,9 +42,9 @@ import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.history.DatabaseHelper;
-import cx.ring.history.HistoryCall;
-import cx.ring.history.HistoryEntry;
-import cx.ring.history.HistoryText;
+import cx.ring.model.HistoryCall;
+import cx.ring.model.HistoryEntry;
+import cx.ring.model.HistoryText;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.SipCall;

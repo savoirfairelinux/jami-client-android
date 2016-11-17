@@ -34,6 +34,9 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import cx.ring.model.HistoryCall;
+import cx.ring.model.HistoryText;
+
 /**
  * Database History Version
  * 7 : changing columns names. See https://gerrit-ring.savoirfairelinux.com/#/c/4297

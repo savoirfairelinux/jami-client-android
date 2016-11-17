@@ -19,15 +19,13 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.history;
+package cx.ring.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 import java.util.Random;
-
-import cx.ring.model.TextMessage;
 
 @DatabaseTable(tableName = HistoryText.TABLE_NAME)
 public class HistoryText

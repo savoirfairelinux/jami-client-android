@@ -31,10 +31,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 
-import cx.ring.history.HistoryCall;
-import cx.ring.history.HistoryEntry;
-import cx.ring.history.Tuple;
 import cx.ring.utils.Log;
+import cx.ring.utils.Tuple;
 
 public class Conversation {
 
