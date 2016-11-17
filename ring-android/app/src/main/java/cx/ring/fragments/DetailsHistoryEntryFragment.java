@@ -44,8 +44,8 @@ import java.util.NavigableMap;
 
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
-import cx.ring.history.HistoryCall;
-import cx.ring.history.HistoryEntry;
+import cx.ring.model.HistoryCall;
+import cx.ring.model.HistoryEntry;
 import cx.ring.service.IDRingService;
 
 public class DetailsHistoryEntryFragment extends Fragment {

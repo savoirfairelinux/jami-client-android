@@ -19,16 +19,13 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.history;
+package cx.ring.model;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.NavigableMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
-import cx.ring.model.CallContact;
-import cx.ring.model.TextMessage;
 
 public class HistoryEntry {
 

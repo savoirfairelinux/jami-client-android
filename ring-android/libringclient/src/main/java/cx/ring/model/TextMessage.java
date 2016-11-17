@@ -19,8 +19,6 @@
  */
 package cx.ring.model;
 
-import cx.ring.history.HistoryText;
-
 public class TextMessage {
     private static final String TAG = TextMessage.class.getSimpleName();
 
