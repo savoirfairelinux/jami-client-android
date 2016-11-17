@@ -19,7 +19,6 @@ dependencies {
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
 
     // ORM
-    compile 'com.j256.ormlite:ormlite-core:4.48'
     compile 'com.j256.ormlite:ormlite-android:4.48'
 
     // Parsing, formatting, and validating international phone numbers
