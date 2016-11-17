@@ -16,6 +16,9 @@ dependencies {
 
     // dependency injection
     compile 'javax.inject:javax.inject:1'
+
+    // ORM
+    compile 'com.j256.ormlite:ormlite-core:4.48'
 }
 
 sourceCompatibility = "1.7"
