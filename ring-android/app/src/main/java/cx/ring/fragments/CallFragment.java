@@ -501,12 +501,12 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         }
 
         Conference c = getConference();
-        if (c != null && mVideoSurface != null && c.resumeVideo) {
+        if (c != null && mVideoSurface != null && c.shouldResumeVideo()) {
             Log.i(TAG, "Resuming video");
             haveVideo = true;
             mVideoSurface.setVisibility(View.VISIBLE);
             videoPreview.setVisibility(View.VISIBLE);
-            c.resumeVideo = false;
+            c.setResumeVideo(false);
         }
     }
 
@@ -514,24 +514,24 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     public void onResume() {
         super.onResume();
         Log.i(TAG, "onResume()");
-        Conference c = getConference();
+        Conference conference = getConference();
 
-        this.confUpdate();
+        confUpdate();
 
         if (getActivity() != null) {
             getActivity().invalidateOptionsMenu();
         }
 
-        if (c != null) {
-            c.mVisible = true;
+        if (conference != null) {
+            conference.setVisible(true);
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
-            notificationManager.cancel(c.notificationId);
-            if (c.resumeVideo) {
+            notificationManager.cancel(conference.getUuid());
+            if (conference.shouldResumeVideo()) {
                 Log.w(TAG, "Resuming video");
                 haveVideo = true;
                 mVideoSurface.setVisibility(View.VISIBLE);
                 videoPreview.setVisibility(View.VISIBLE);
-                c.resumeVideo = false;
+                conference.setResumeVideo(false);
             }
         }
 
@@ -545,9 +545,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
         Conference c = getConference();
         if (c != null) {
-            c.mVisible = false;
-            c.resumeVideo = haveVideo;
-            c.showCallNotification(getActivity());
+            c.setVisible(false);
+            c.setResumeVideo(haveVideo);
+            ActionHelper.showCallNotification(getActivity(), c);
         }
     }
 
@@ -565,7 +565,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             return;
         }
 
-        int newState = c.getHumanState();
+        int newState = getHumanState(c);
         String newStateString = (newState == R.string.call_human_state_none ||
                 newState == R.string.conference_human_state_default)
                 ? "" :
@@ -583,9 +583,63 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                 initOutGoingCallDisplay();
         } else {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getActivity());
-            notificationManager.cancel(c.notificationId);
+            notificationManager.cancel(c.getUuid());
             mCallStatusTxt.setText(newStateString);
             mCallbacks.terminateCall();
+        }
+    }
+
+    public int getHumanState(Conference conference) {
+        if (conference.getParticipants().size() == 1) {
+            return callStateToHumanState(conference.getParticipants().get(0).getCallState());
+        }
+        return getConferenceHumanState(conference.getState());
+    }
+
+    public static int callStateToHumanState(final int state) {
+        switch (state) {
+            case SipCall.State.INCOMING:
+                return R.string.call_human_state_incoming;
+            case SipCall.State.CONNECTING:
+                return R.string.call_human_state_connecting;
+            case SipCall.State.RINGING:
+                return R.string.call_human_state_ringing;
+            case SipCall.State.CURRENT:
+                return R.string.call_human_state_current;
+            case SipCall.State.HUNGUP:
+                return R.string.call_human_state_hungup;
+            case SipCall.State.BUSY:
+                return R.string.call_human_state_busy;
+            case SipCall.State.FAILURE:
+                return R.string.call_human_state_failure;
+            case SipCall.State.HOLD:
+                return R.string.call_human_state_hold;
+            case SipCall.State.UNHOLD:
+                return R.string.call_human_state_unhold;
+            case SipCall.State.OVER:
+                return R.string.call_human_state_over;
+            case SipCall.State.NONE:
+            default:
+                return R.string.call_human_state_none;
+        }
+    }
+
+    public int getConferenceHumanState(final int state) {
+        switch (state) {
+            case Conference.state.ACTIVE_ATTACHED:
+                return R.string.conference_human_state_active_attached;
+            case Conference.state.ACTIVE_DETACHED:
+                return R.string.conference_human_state_active_detached;
+            case Conference.state.ACTIVE_ATTACHED_REC:
+                return R.string.conference_human_state_active_attached_rec;
+            case Conference.state.ACTIVE_DETACHED_REC:
+                return R.string.conference_human_state_active_detached_rec;
+            case Conference.state.HOLD:
+                return R.string.conference_human_state_hold;
+            case Conference.state.HOLD_REC:
+                return R.string.conference_human_state_hold_rec;
+            default:
+                return R.string.conference_human_state_default;
         }
     }
 

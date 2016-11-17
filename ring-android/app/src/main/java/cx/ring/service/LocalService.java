@@ -37,7 +37,6 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -103,6 +102,7 @@ import cx.ring.model.TextMessage;
 import cx.ring.services.HistoryService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.SettingsService;
+import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaManager;
@@ -1225,7 +1225,7 @@ public class LocalService extends Service implements Observer {
     private void updated(Map<String, Conversation> res) {
         for (Conversation conversation : conversations.values()) {
             for (Conference conference : conversation.getCurrentCalls()) {
-                notificationManager.cancel(conference.notificationId);
+                notificationManager.cancel(conference.getUuid());
             }
         }
         conversations = res;
@@ -1385,8 +1385,8 @@ public class LocalService extends Service implements Observer {
                     }
                     updateAudioState();
                     Conference conf = getConference(callId);
-                    if (conf != null && !conf.mVisible) {
-                        startActivity(conf.getViewIntent(LocalService.this).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    if (conf != null && !conf.isVisible()) {
+                        startActivity(ActionHelper.getViewIntent(LocalService.this, conf).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                     }
                     break;
                 }
@@ -1604,7 +1604,7 @@ public class LocalService extends Service implements Observer {
                     }
 
                     conversation.addConference(toAdd);
-                    toAdd.showCallNotification(LocalService.this);
+                    ActionHelper.showCallNotification(LocalService.this, toAdd);
                     updateAudioState();
 
                     try {
@@ -1682,10 +1682,10 @@ public class LocalService extends Service implements Observer {
                             // we wont have to cast it anymore
                             ((HistoryServiceImpl) mHistoryService).insertNewEntry(found);
                             conversation.addHistoryCall(new HistoryCall(call));
-                            notificationManager.cancel(found.notificationId);
+                            notificationManager.cancel(found.getUuid());
                             found.removeParticipant(call);
                         } else {
-                            found.showCallNotification(LocalService.this);
+                            ActionHelper.showCallNotification(LocalService.this, found);
                         }
                         if (newState == SipCall.State.FAILURE || newState == SipCall.State.BUSY) {
                             try {

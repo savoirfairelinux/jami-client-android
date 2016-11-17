@@ -22,7 +22,7 @@ package cx.ring.model;
 
 import java.util.Map;
 
-import cx.ring.R;
+
 import cx.ring.utils.Log;
 
 public class SipCall {
@@ -267,38 +267,6 @@ public class SipCall {
             case "NONE":
             default:
                 return State.NONE;
-        }
-    }
-
-    public int getCallHumanState() {
-        return stateToHumanState(mCallState);
-    }
-
-    public static int stateToHumanState(final int state) {
-        switch (state) {
-            case State.INCOMING:
-                return R.string.call_human_state_incoming;
-            case State.CONNECTING:
-                return R.string.call_human_state_connecting;
-            case State.RINGING:
-                return R.string.call_human_state_ringing;
-            case State.CURRENT:
-                return R.string.call_human_state_current;
-            case State.HUNGUP:
-                return R.string.call_human_state_hungup;
-            case State.BUSY:
-                return R.string.call_human_state_busy;
-            case State.FAILURE:
-                return R.string.call_human_state_failure;
-            case State.HOLD:
-                return R.string.call_human_state_hold;
-            case State.UNHOLD:
-                return R.string.call_human_state_unhold;
-            case State.OVER:
-                return R.string.call_human_state_over;
-            case State.NONE:
-            default:
-                return R.string.call_human_state_none;
         }
     }
 
