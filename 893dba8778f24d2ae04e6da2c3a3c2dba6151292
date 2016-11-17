@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_3014a6f4",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/CallContact.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-17T20:53:30Z",
+      "side": 1,
+      "message": "you should use mPhones",
+      "range": {
+        "startLine": 35,
+        "startChar": 35,
+        "endLine": 35,
+        "endChar": 42
+      },
+      "revId": "893dba8778f24d2ae04e6da2c3a3c2dba6151292",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_f01cde15",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/Phone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-17T20:53:30Z",
+      "side": 1,
+      "message": "you should use more explicit variable names",
+      "range": {
+        "startLine": 29,
+        "startChar": 23,
+        "endLine": 29,
+        "endChar": 36
+      },
+      "revId": "893dba8778f24d2ae04e6da2c3a3c2dba6151292",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_9019da24",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/Phone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-17T20:53:30Z",
+      "side": 1,
+      "message": "you should use more explicit variable names",
+      "range": {
+        "startLine": 36,
+        "startChar": 17,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "893dba8778f24d2ae04e6da2c3a3c2dba6151292",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_b01656f0",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/Phone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-17T20:53:30Z",
+      "side": 1,
+      "message": "you should use more explicit variable names",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 36
+      },
+      "revId": "893dba8778f24d2ae04e6da2c3a3c2dba6151292",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_70d8ee53",
+        "filename": "ring-android/app/src/main/java/cx/ring/model/Phone.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-17T20:53:30Z",
+      "side": 1,
+      "message": "you should use more explicit variable names",
+      "range": {
+        "startLine": 47,
+        "startChar": 17,
+        "endLine": 47,
+        "endChar": 66
+      },
+      "revId": "893dba8778f24d2ae04e6da2c3a3c2dba6151292",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
