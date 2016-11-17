@@ -20,7 +20,7 @@
  */
 
 
-package cx.ring.history;
+package cx.ring.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -31,8 +31,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import cx.ring.model.SipCall;
 
 @DatabaseTable(tableName = HistoryCall.TABLE_NAME)
 public class HistoryCall implements Serializable {

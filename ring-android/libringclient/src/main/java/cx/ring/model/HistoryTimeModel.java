@@ -1,4 +1,4 @@
-package cx.ring.history;
+package cx.ring.model;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
