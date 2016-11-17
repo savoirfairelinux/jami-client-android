@@ -1,24 +1,3 @@
-package cx.ring.utils;
-
-import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
-import android.provider.ContactsContract;
-import android.support.v7.app.AlertDialog;
-
-import java.util.ArrayList;
-
-import cx.ring.R;
-import cx.ring.adapters.NumberAdapter;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
-import cx.ring.model.Phone;
-import cx.ring.model.SipUri;
-
 /**
  * Copyright (C) 2016 by Savoir-faire Linux
  * Author : Alexandre Lision <alexandre.lision@savoirfairelinux.com>
@@ -36,8 +15,41 @@ import cx.ring.model.SipUri;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package cx.ring.utils;
+
+import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.ContactsContract;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v7.app.AlertDialog;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+import cx.ring.R;
+import cx.ring.adapters.NumberAdapter;
+import cx.ring.client.CallActivity;
+import cx.ring.model.CallContact;
+import cx.ring.model.Conference;
+import cx.ring.model.Conversation;
+import cx.ring.model.Phone;
+import cx.ring.model.SipCall;
+import cx.ring.model.SipUri;
+import cx.ring.service.LocalService;
 
 public class ActionHelper {
+
+    private ActionHelper() {
+    }
 
     private static final String TAG = ActionHelper.class.getSimpleName();
 
@@ -190,5 +202,84 @@ public class ActionHelper {
                 Log.e(TAG, "Error displaying contact", exc);
             }
         }
+    }
+
+    public static void showCallNotification(Context ctx, Conference conference) {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ctx);
+        notificationManager.cancel(conference.getUuid());
+
+        if (conference.getParticipants().isEmpty()) {
+            return;
+        }
+        SipCall call = conference.getParticipants().get(0);
+        CallContact contact = call.getContact();
+        final Uri callUri = Uri.withAppendedPath(ContentUriHandler.CALL_CONTENT_URI, call.getCallId());
+        PendingIntent gotoIntent = PendingIntent.getActivity(ctx, new Random().nextInt(),
+                getViewIntent(ctx, conference), PendingIntent.FLAG_ONE_SHOT);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(ctx);
+        if (conference.isOnGoing()) {
+            notificationBuilder.setContentTitle(ctx.getString(R.string.notif_current_call_title, contact.getDisplayName()))
+                    .setContentText(ctx.getText(R.string.notif_current_call))
+                    .setContentIntent(gotoIntent)
+                    .addAction(R.drawable.ic_call_end_white, ctx.getText(R.string.action_call_hangup),
+                            PendingIntent.getService(ctx, new Random().nextInt(),
+                                    new Intent(LocalService.ACTION_CALL_END)
+                                            .setClass(ctx, LocalService.class)
+                                            .setData(callUri),
+                                    PendingIntent.FLAG_ONE_SHOT));
+        } else if (conference.isRinging()) {
+            if (conference.isIncoming()) {
+                notificationBuilder.setContentTitle(ctx.getString(R.string.notif_incoming_call_title, contact.getDisplayName()))
+                        .setPriority(NotificationCompat.PRIORITY_MAX)
+                        .setContentText(ctx.getText(R.string.notif_incoming_call))
+                        .setContentIntent(gotoIntent)
+                        .setFullScreenIntent(gotoIntent, true)
+                        .addAction(R.drawable.ic_action_accept, ctx.getText(R.string.action_call_accept),
+                                PendingIntent.getService(ctx, new Random().nextInt(),
+                                        new Intent(LocalService.ACTION_CALL_ACCEPT)
+                                                .setClass(ctx, LocalService.class)
+                                                .setData(callUri),
+                                        PendingIntent.FLAG_ONE_SHOT))
+                        .addAction(R.drawable.ic_call_end_white, ctx.getText(R.string.action_call_decline),
+                                PendingIntent.getService(ctx, new Random().nextInt(),
+                                        new Intent(LocalService.ACTION_CALL_REFUSE)
+                                                .setClass(ctx, LocalService.class)
+                                                .setData(callUri),
+                                        PendingIntent.FLAG_ONE_SHOT));
+            } else {
+                notificationBuilder.setContentTitle(ctx.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
+                        .setContentText(ctx.getText(R.string.notif_outgoing_call))
+                        .setContentIntent(gotoIntent)
+                        .addAction(R.drawable.ic_call_end_white, ctx.getText(R.string.action_call_hangup),
+                                PendingIntent.getService(ctx, new Random().nextInt(),
+                                        new Intent(LocalService.ACTION_CALL_END)
+                                                .setClass(ctx, LocalService.class)
+                                                .setData(callUri),
+                                        PendingIntent.FLAG_ONE_SHOT));
+            }
+
+        } else {
+            notificationManager.cancel(conference.getUuid());
+            return;
+        }
+
+        notificationBuilder.setOngoing(true).setCategory(NotificationCompat.CATEGORY_CALL).setSmallIcon(R.drawable.ic_ring_logo_white);
+
+        if (contact.getPhoto() != null) {
+            Resources res = ctx.getResources();
+            int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
+            int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
+            Bitmap bmp = BitmapUtils.bytesToBitmap(contact.getPhoto());
+            if (bmp != null) {
+                notificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
+            }
+        }
+        notificationManager.notify(conference.getUuid(), notificationBuilder.build());
+    }
+
+    public static Intent getViewIntent(Context context, Conference conference) {
+        final Uri confUri = Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI, conference.getId());
+        return new Intent(Intent.ACTION_VIEW).setData(confUri).setClass(context, CallActivity.class);
     }
 }
