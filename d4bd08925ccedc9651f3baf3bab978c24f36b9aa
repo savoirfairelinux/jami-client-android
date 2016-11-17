@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_30b586cd",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_sip_create.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-17T22:22:07Z",
+      "side": 1,
+      "message": "use custom ids even for labels",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "d4bd08925ccedc9651f3baf3bab978c24f36b9aa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
