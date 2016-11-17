@@ -28,7 +28,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
@@ -63,11 +62,14 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.lang.ref.WeakReference;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
+import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeScannerActivity;
@@ -75,8 +77,9 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.navigation.RingNavigationFragment;
+import cx.ring.model.SipUri;
 import cx.ring.service.LocalService;
+import cx.ring.services.StateService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ClipboardHelper;
@@ -87,8 +90,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         SmartListAdapter.SmartListAdapterCallback,
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
-        LocalService.NameLookupCallback,
-        RingNavigationFragment.MenuHeaderAccountSelectionListener {
+        LocalService.NameLookupCallback {
     private static final String TAG = SmartListFragment.class.getSimpleName();
 
     private static final int USER_INPUT_DELAY = 300;
@@ -97,7 +99,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
     private SmartListAdapter mSmartListAdapter;
     private BlockchainInputHandler mBlockchainInputHandler;
-    private Account mCurrentAccount;
 
     @BindView(R.id.newconv_fab)
     FloatingActionButton mFloatingActionButton;
@@ -128,6 +129,10 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     ImageView mErrorImageView;
 
     private Handler mUserInputHandler;
+
+    @Inject
+    StateService mStateService;
+
 
     final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -299,18 +304,24 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         if (TextUtils.isEmpty(query)) {
             mNewContact.setVisibility(View.GONE);
         } else {
-
-            if (mCurrentAccount == null) {
+            Account currentAccount = mStateService.getCurrentAccount();
+            if (currentAccount == null) {
+                Log.w(TAG, "No account selected");
                 return false;
             }
 
-            if (mCurrentAccount.isSip()) {
+            if (currentAccount.isSip()) {
                 // sip search
-                ((TextView) mNewContact.findViewById(R.id.display_name)).setText(query);
-                CallContact contact = CallContact.buildUnknown(query);
-                mNewContact.setTag(contact);
-                mNewContact.setVisibility(View.VISIBLE);
+                displayNewContactRowWithName(query);
             } else {
+
+                SipUri uri = new SipUri(query);
+                if (uri.isRingId()) {
+                    displayNewContactRowWithName(query);
+                } else {
+                    mNewContact.setVisibility(View.GONE);
+                }
+
                 // Ring search
                 if (mBlockchainInputHandler == null) {
                     mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mCallbacks.getService()), this);
@@ -323,22 +334,22 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
                 mBlockchainInputHandler.enqueueNextLookup(query);
             }
-
-            mUserInputHandler.removeCallbacksAndMessages(null);
-            mUserInputHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (mCallbacks.getService() == null) {
-                        Log.d(TAG, "onQueryTextChange: null service");
-                    } else {
-                        mSmartListAdapter.updateDataset(
-                                mCallbacks.getService().getConversations(),
-                                query
-                        );
-                    }
-                }
-            }, USER_INPUT_DELAY);
         }
+
+        mUserInputHandler.removeCallbacksAndMessages(null);
+        mUserInputHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mCallbacks.getService() == null) {
+                    Log.d(TAG, "onQueryTextChange: null service");
+                } else {
+                    mSmartListAdapter.updateDataset(
+                            mCallbacks.getService().getConversations(),
+                            query
+                    );
+                }
+            }
+        }, USER_INPUT_DELAY);
 
         return true;
     }
@@ -350,6 +361,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         View inflatedView = inflater.inflate(cx.ring.R.layout.frag_smartlist, container, false);
 
         ButterKnife.bind(this, inflatedView);
+
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         mUserInputHandler = new Handler();
 
@@ -416,7 +430,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         Intent intent = new Intent()
                 .setClass(getActivity(), ConversationActivity.class)
                 .setAction(Intent.ACTION_VIEW)
-                .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)));
+                .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)));
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
     }
 
@@ -706,6 +720,10 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void onFound(String name, String address) {
+        displayNewContactRowWithName(name);
+    }
+
+    private void displayNewContactRowWithName(String name) {
         ((TextView) mNewContact.findViewById(R.id.display_name)).setText(name);
         CallContact contact = CallContact.buildUnknown(name);
         mNewContact.setTag(contact);
@@ -714,16 +732,21 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void onInvalidName(String name) {
-        mNewContact.setVisibility(View.GONE);
+        SipUri uri = new SipUri(name);
+        if (uri.isRingId()) {
+            displayNewContactRowWithName(name);
+        } else {
+            mNewContact.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onError(String name, String address) {
-        mNewContact.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void accountSelected(Account account) {
-        mCurrentAccount = account;
+        SipUri uri = new SipUri(address);
+        if (uri.isRingId()) {
+            displayNewContactRowWithName(address);
+        } else {
+            mNewContact.setVisibility(View.GONE);
+        }
     }
 }

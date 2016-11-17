@@ -24,6 +24,7 @@ import javax.inject.Singleton;
 import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
 import cx.ring.application.RingApplication;
+import cx.ring.fragments.SmartListFragment;
 import cx.ring.service.BootReceiver;
 import cx.ring.service.LocalService;
 import cx.ring.services.HistoryServiceImpl;
@@ -43,6 +44,8 @@ public interface RingInjectionComponent {
     void inject(RingNavigationFragment view);
 
     void inject(AboutFragment fragment);
+
+    void inject(SmartListFragment fragment);
 
     void inject(ShareFragment fragment);
 

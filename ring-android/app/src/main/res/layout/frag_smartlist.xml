@@ -103,7 +103,7 @@ along with this program; if not, write to the Free Software
             android:id="@+id/emptyTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
+            tools:text="0 conversations"
             android:gravity="center"
             android:layout_gravity="center" />
 

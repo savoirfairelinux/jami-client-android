@@ -514,7 +514,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 }
                 fNavigation.setCallback(service);
                 fNavigation.setNavigationSectionSelectedListener(HomeActivity.this);
-                fNavigation.registerAccountSelectionListener((RingNavigationFragment.MenuHeaderAccountSelectionListener) fContent);
             }
     }
 

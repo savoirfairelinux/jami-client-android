@@ -48,7 +48,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -127,7 +126,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
     private NavigationAdapter mMenuAdapter;
     private OnNavigationSectionSelected mSectionListener;
-    private List<WeakReference<MenuHeaderAccountSelectionListener>> mListeners;
+
     private LocalService mLocalService;
 
     @Override
@@ -150,13 +149,6 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         }
 
         mLocalService.setAccountOrder(orderedAccountIdList);
-
-        for (WeakReference<MenuHeaderAccountSelectionListener> weakListener : mListeners) {
-            MenuHeaderAccountSelectionListener listener = weakListener.get();
-            if (listener != null) {
-                listener.accountSelected(mStateService.getCurrentAccount());
-            }
-        }
 
         if (mSectionListener != null) {
             mSectionListener.onAccountSelected();
@@ -184,10 +176,6 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         void onNavigationSectionSelected(Section position);
         void onAccountSelected();
         void onAddAccountSelected();
-    }
-
-    public interface MenuHeaderAccountSelectionListener {
-        void accountSelected(Account account);
     }
 
     @Override
@@ -258,8 +246,6 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
         updateUserView();
 
-        mListeners = new ArrayList<>();
-
         setupNavigationMenu();
         setupAccountList();
 
@@ -315,11 +301,6 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         if (mSectionListener != null) {
             mSectionListener.onNavigationSectionSelected(Section.valueOf(position));
         }
-    }
-
-    public void registerAccountSelectionListener(MenuHeaderAccountSelectionListener listener) {
-        mListeners.add(new WeakReference<>(listener));
-        listener.accountSelected(mStateService.getCurrentAccount());
     }
 
     public void updateUserView() {
