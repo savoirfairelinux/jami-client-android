@@ -21,42 +21,68 @@
 
 package cx.ring.model;
 
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-
 import java.util.ArrayList;
 import java.util.Random;
 
-import cx.ring.R;
-import cx.ring.client.CallActivity;
-import cx.ring.service.LocalService;
-import cx.ring.utils.BitmapUtils;
-import cx.ring.utils.ContentUriHandler;
-
 public class Conference {
 
-    private String id;
+    private String mId;
     private int mConfState;
-    private ArrayList<SipCall> participants;
-    private boolean recording;
-    private ArrayList<TextMessage> messages;
-    public int notificationId;
+    private ArrayList<SipCall> mParticipants;
+    private boolean mRecording;
+    private ArrayList<TextMessage> mMessages;
+    private int uuid;
     // true if this conference is currently presented to the user.
-    public boolean mVisible = false;
-    public boolean resumeVideo = false;
+    private boolean mVisible = false;
+    private boolean mResumeVideo = false;
 
-    private final static Random rand = new Random();
+    private static String DEFAULT_ID = "-1";
 
-    public static String DEFAULT_ID = "-1";
+    public Conference(SipCall call) {
+        this(DEFAULT_ID);
+        mParticipants.add(call);
+        uuid = new Random().nextInt();
+    }
+
+    public Conference(String cID) {
+        mId = cID;
+        mParticipants = new ArrayList<>();
+        mRecording = false;
+        uuid = new Random().nextInt();
+        mMessages = new ArrayList<>();
+    }
+
+    public Conference(Conference c) {
+        mId = c.mId;
+        mConfState = c.mConfState;
+        mParticipants = new ArrayList<>(c.mParticipants);
+        mRecording = c.mRecording;
+        uuid = c.getUuid();
+        mMessages = new ArrayList<>();
+    }
 
     public boolean isRinging() {
-        return !participants.isEmpty() && participants.get(0).isRinging();
+        return !mParticipants.isEmpty() && mParticipants.get(0).isRinging();
+    }
+
+    public int getUuid() {
+        return uuid;
+    }
+
+    public boolean ismVisible() {
+        return mVisible;
+    }
+
+    public void setmVisible(boolean mVisible) {
+        this.mVisible = mVisible;
+    }
+
+    public boolean isResumeVideo() {
+        return mResumeVideo;
+    }
+
+    public void setResumeVideo(boolean resumeVideo) {
+        this.mResumeVideo = resumeVideo;
     }
 
     public interface state {
@@ -69,7 +95,7 @@ public class Conference {
     }
 
     public void setCallState(String callID, int newState) {
-        if(id.contentEquals(callID))
+        if (mId.contentEquals(callID))
             mConfState = newState;
         else {
             getCallById(callID).setCallState(newState);
@@ -77,7 +103,7 @@ public class Conference {
     }
 
     public int getCallState(String callID) {
-        if(id.contentEquals(callID))
+        if (mId.contentEquals(callID))
             return mConfState;
         else {
             return getCallById(callID).getCallState();
@@ -100,117 +126,66 @@ public class Conference {
         }
     }
 
-    public Conference(SipCall call) {
-        this(DEFAULT_ID);
-        participants.add(call);
-        notificationId = rand.nextInt();
-    }
-
-    public Conference(String cID) {
-        id = cID;
-        participants = new ArrayList<>();
-        recording = false;
-        notificationId = rand.nextInt();
-        messages = new ArrayList<>();
-    }
-
-    public Conference(Conference c) {
-        id = c.id;
-        mConfState = c.mConfState;
-        participants = new ArrayList<>(c.participants);
-        recording = c.recording;
-        notificationId = c.notificationId;
-        messages = new ArrayList<>();
-    }
-
     public String getId() {
-        if (participants.size() == 1)
-            return participants.get(0).getCallId();
+        if (mParticipants.size() == 1)
+            return mParticipants.get(0).getCallId();
         else
-            return id;
+            return mId;
     }
 
-    public String getState() {
-        if (participants.size() == 1) {
-            return participants.get(0).stateToString();
+    public int getState() {
+        if (mParticipants.size() == 1) {
+            return mParticipants.get(0).getCallState();
         }
-        return getConferenceStateString();
+        return mConfState;
     }
 
-    public int getHumanState() {
-        if (participants.size() == 1) {
-            return participants.get(0).getCallHumanState();
-        }
-        return getConferenceHumanState();
-    }
-
-    public int getConferenceHumanState() {
+    String getConferenceStateString() {
+        String textState;
         switch (mConfState) {
             case state.ACTIVE_ATTACHED:
-                return R.string.conference_human_state_active_attached;
-            case state.ACTIVE_DETACHED:
-                return R.string.conference_human_state_active_detached;
-            case state.ACTIVE_ATTACHED_REC:
-                return R.string.conference_human_state_active_attached_rec;
-            case state.ACTIVE_DETACHED_REC:
-                return R.string.conference_human_state_active_detached_rec;
-            case state.HOLD:
-                return R.string.conference_human_state_hold;
-            case state.HOLD_REC:
-                return R.string.conference_human_state_hold_rec;
-            default:
-                return R.string.conference_human_state_default;
-        }
-    }
-
-    public String getConferenceStateString() {
-
-        String text_state;
-
-        switch (mConfState) {
-            case state.ACTIVE_ATTACHED:
-                text_state = "ACTIVE_ATTACHED";
+                textState = "ACTIVE_ATTACHED";
                 break;
             case state.ACTIVE_DETACHED:
-                text_state = "ACTIVE_DETACHED";
+                textState = "ACTIVE_DETACHED";
                 break;
             case state.ACTIVE_ATTACHED_REC:
-                text_state = "ACTIVE_ATTACHED_REC";
+                textState = "ACTIVE_ATTACHED_REC";
                 break;
             case state.ACTIVE_DETACHED_REC:
-                text_state = "ACTIVE_DETACHED_REC";
+                textState = "ACTIVE_DETACHED_REC";
                 break;
             case state.HOLD:
-                text_state = "HOLD";
+                textState = "HOLD";
                 break;
             case state.HOLD_REC:
-                text_state = "HOLD_REC";
+                textState = "HOLD_REC";
                 break;
             default:
-                text_state = "NULL";
+                textState = "NULL";
         }
 
-        return text_state;
+        return textState;
     }
 
     public ArrayList<SipCall> getParticipants() {
-        return participants;
+        return mParticipants;
     }
 
     public void addParticipant(SipCall part) {
-        participants.add(part);
+        mParticipants.add(part);
     }
 
     public void removeParticipant(SipCall toRemove) {
-        participants.remove(toRemove);
+        mParticipants.remove(toRemove);
     }
 
     public boolean hasMultipleParticipants() {
-        return participants.size() > 1;
+        return mParticipants.size() > 1;
     }
 
-    public boolean contains(String callID) {
-        for (SipCall participant : participants) {
+    boolean contains(String callID) {
+        for (SipCall participant : mParticipants) {
             if (participant.getCallId().contentEquals(callID))
                 return true;
         }
@@ -218,7 +193,7 @@ public class Conference {
     }
 
     public SipCall getCallById(String callID) {
-        for (SipCall participant : participants) {
+        for (SipCall participant : mParticipants) {
             if (participant.getCallId().contentEquals(callID))
                 return participant;
         }
@@ -226,16 +201,16 @@ public class Conference {
     }
 
     /**
-     * Compare conferences based on confID/participants
+     * Compare conferences based on confID/mParticipants
      */
     @Override
     public boolean equals(Object c) {
         if (c instanceof Conference) {
-            if (((Conference) c).id.contentEquals(id) && !id.contentEquals("-1")) {
+            if (((Conference) c).mId.contentEquals(mId) && !mId.contentEquals("-1")) {
                 return true;
             } else {
-                if (((Conference) c).id.contentEquals(id)) {
-                    for (SipCall participant : participants) {
+                if (((Conference) c).mId.contentEquals(mId)) {
+                    for (SipCall participant : mParticipants) {
                         if (!((Conference) c).contains(participant.getCallId()))
                             return false;
                     }
@@ -247,113 +222,32 @@ public class Conference {
     }
 
     public boolean isOnHold() {
-        return participants.size() == 1 && participants.get(0).isOnHold() || getConferenceStateString().contentEquals("HOLD");
+        return mParticipants.size() == 1 && mParticipants.get(0).isOnHold() || getConferenceStateString().contentEquals("HOLD");
     }
 
     public boolean isIncoming() {
-        return participants.size() == 1 && participants.get(0).isIncoming();
+        return mParticipants.size() == 1 && mParticipants.get(0).isIncoming();
     }
 
-
     public void setRecording(boolean b) {
-        recording = b;
+        mRecording = b;
     }
 
     public boolean isRecording() {
-            return recording;
+        return mRecording;
     }
 
 
     public boolean isOnGoing() {
-        return participants.size() == 1 && participants.get(0).isOngoing() || participants.size() > 1;
+        return mParticipants.size() == 1 && mParticipants.get(0).isOngoing() || mParticipants.size() > 1;
     }
 
     public ArrayList<TextMessage> getMessages() {
-        return messages;
+        return mMessages;
     }
 
     public void addSipMessage(TextMessage sipMessage) {
-        messages.add(sipMessage);
-    }
-
-    public Intent getViewIntent(Context ctx)
-    {
-        final Uri conf_uri = Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI, getId());
-        return new Intent(Intent.ACTION_VIEW).setData(conf_uri).setClass(ctx, CallActivity.class);
-    }
-
-    public void showCallNotification(Context ctx)
-    {
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ctx);
-        notificationManager.cancel(notificationId);
-
-        if (getParticipants().isEmpty())
-            return;
-        SipCall call = getParticipants().get(0);
-        CallContact contact = call.getContact();
-        final Uri call_uri = Uri.withAppendedPath(ContentUriHandler.CALL_CONTENT_URI, call.getCallId());
-        PendingIntent goto_intent = PendingIntent.getActivity(ctx, new Random().nextInt(),
-                getViewIntent(ctx), PendingIntent.FLAG_ONE_SHOT);
-
-        NotificationCompat.Builder noti = new NotificationCompat.Builder(ctx);
-        if (isOnGoing()) {
-            noti.setContentTitle(ctx.getString(R.string.notif_current_call_title, contact.getDisplayName()))
-                    .setContentText(ctx.getText(R.string.notif_current_call))
-                    .setContentIntent(goto_intent)
-                    .addAction(R.drawable.ic_call_end_white, ctx.getText(R.string.action_call_hangup),
-                            PendingIntent.getService(ctx, new Random().nextInt(),
-                                    new Intent(LocalService.ACTION_CALL_END)
-                                            .setClass(ctx, LocalService.class)
-                                            .setData(call_uri),
-                                    PendingIntent.FLAG_ONE_SHOT));
-        } else if (isRinging()) {
-            if (isIncoming()) {
-                noti.setContentTitle(ctx.getString(R.string.notif_incoming_call_title, contact.getDisplayName()))
-                        .setPriority(NotificationCompat.PRIORITY_MAX)
-                        .setContentText(ctx.getText(R.string.notif_incoming_call))
-                        .setContentIntent(goto_intent)
-                        .setFullScreenIntent(goto_intent, true)
-                        .addAction(R.drawable.ic_action_accept, ctx.getText(R.string.action_call_accept),
-                                PendingIntent.getService(ctx, new Random().nextInt(),
-                                        new Intent(LocalService.ACTION_CALL_ACCEPT)
-                                                .setClass(ctx, LocalService.class)
-                                                .setData(call_uri),
-                                        PendingIntent.FLAG_ONE_SHOT))
-                        .addAction(R.drawable.ic_call_end_white, ctx.getText(R.string.action_call_decline),
-                                PendingIntent.getService(ctx, new Random().nextInt(),
-                                        new Intent(LocalService.ACTION_CALL_REFUSE)
-                                                .setClass(ctx, LocalService.class)
-                                                .setData(call_uri),
-                                        PendingIntent.FLAG_ONE_SHOT));
-            } else {
-                noti.setContentTitle(ctx.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
-                        .setContentText(ctx.getText(R.string.notif_outgoing_call))
-                        .setContentIntent(goto_intent)
-                        .addAction(R.drawable.ic_call_end_white, ctx.getText(R.string.action_call_hangup),
-                                PendingIntent.getService(ctx, new Random().nextInt(),
-                                        new Intent(LocalService.ACTION_CALL_END)
-                                                .setClass(ctx, LocalService.class)
-                                                .setData(call_uri),
-                                        PendingIntent.FLAG_ONE_SHOT));
-            }
-
-        } else {
-            notificationManager.cancel(notificationId);
-            return;
-        }
-
-        noti.setOngoing(true).setCategory(NotificationCompat.CATEGORY_CALL).setSmallIcon(R.drawable.ic_ring_logo_white);
-
-        if (contact.getPhoto() != null) {
-            Resources res = ctx.getResources();
-            int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
-            int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
-            Bitmap bmp = BitmapUtils.bytesToBitmap(contact.getPhoto());
-            if (bmp != null) {
-                noti.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
-            }
-        }
-        notificationManager.notify(notificationId, noti.build());
+        mMessages.add(sipMessage);
     }
 
 }
