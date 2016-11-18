@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">Geen e-mailapplicatie gevonden, installeer er een om ons een rapport te kunnen sturen</string>
   <string name="email_chooser_title">E-mail versturen met...</string>
   <!--RingActivity-->
-  <string name="title_section0">Kiezen</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Geen netwerkverbinding</string>
   <string name="error_mobile_network_available_but_disabled">Geef toegang tot mobiel netwerk in de instellingen.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Account aanmaken</string>
-  <string name="ab_account_edition_1">Verwijderen</string>
   <string name="ab_action_chat">Tekstberichten</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -27,15 +25,11 @@
   <string name="menu_item_share">Deel mijn contact</string>
   <string name="menu_item_about">Over Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Oproep</string>
   <string name="dial_number">Kies een nummer</string>
-  <string name="dial_hint">Geef een telefoonnummer in</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Opnieuw afspelen</string>
   <string name="hist_replay_button_stop">Stoppen</string>
-  <string name="hist_no_history">Geen geschiedenis</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">%1$s bellen</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d gesprek</item>
@@ -63,13 +57,10 @@
   <string name="notif_current_call_title">Huidige oproep met %1$s</string>
   <string name="notif_current_call">Huidige oproep</string>
   <!--Call Fragment-->
-  <string name="me">Ik</string>
   <string name="you_txt_prefix">Jij:</string>
   <string name="action_call_attended_transfer">Bijgewoonde overdracht</string>
   <string name="action_call_conference">Vergadering</string>
   <string name="action_call_hangup">Ophangen</string>
-  <string name="action_settings">Instelllingen</string>
-  <string name="help_gestures">Dit scherm helpt gebruikers met de verschillende interacties tijdens oproepen. Verschillende acties worden beschreven; Lang aanraken; fling, swype etc.</string>
   <string name="ongoing_call">Lopende oproep</string>
   <string name="hist_in_call">Inkomende oproep van %1$s</string>
   <string name="hist_out_call">Uitgaande oproep van %1$s</string>
@@ -91,7 +82,6 @@
   <string name="message_sending">Bericht wordt verstuurd...</string>
   <string name="time_just_now">Zojuist</string>
   <string name="permission_read_denied">De applicatie heeft geen machtiging om je opslag te lezen en kan daardoor niet correct functioneren. Gelieve te overwegen deze machtiging alsnog toe te kennen</string>
-  <string name="permission_write_denied">De applicatie heeft geen machtiging om naar je opslag te schrijven en kan daardoor niet correct functioneren. Gelieve te overwegen deze machtiging alsnog toe te kennen</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Cameramachtiging</string>
   <string name="permission_dialog_camera_message">Videogesprekken vereisen machtiging voor gebruik van de camera. Gelieve te overwegen deze machtiging alsnog toe te kennen.</string>
@@ -122,8 +112,6 @@
   <string name="account_create_title">Een Ring-account aanmaken</string>
   <string name="prompt_new_username">Voer nieuwe gebruikersnaam in</string>
   <string name="help_password_choose">Kies een sterk wachtwoord om je Ring-account te beschermen.</string>
-  <string name="btn_use_existing_account">Gebruik een reeds bestaande Ring-account</string>
-  <string name="btn_create_account">Maak een nieuwe account aan</string>
   <string name="help_password_enter">Voer hoofdwachtwoord van je Ring-account in</string>
   <string name="help_pin_enter">Voer de PIN-code van een andere geconfigureerde Ring-account in. Gebruik de \"account exporteren op Ring\"-functie om een PIN-code te verkrijgen.</string>
   <string name="account_device_updated_message">Je Ring-account is met succes bijgewerkt.</string>
@@ -135,7 +123,6 @@
   <string name="unknowm_if_empty">Onbekend wanneer leeg</string>
   <string name="unknown">Onbekend</string>
   <!--Share fragment-->
-  <string name="share_label">Tik op de Ring-ID om te delen</string>
   <string name="share_message">Scan deze QR-code met de ingebouwde scanner van de Ring-toepassing die met je wil communiceren.</string>
   <string name="share_your_account_information">Deel mijn contactinformatie</string>
 </resources>

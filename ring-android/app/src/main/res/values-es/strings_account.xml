@@ -13,16 +13,10 @@
   <string name="dialog_warn_ip2ip_account_message">Estás a punto de crear una cuenta SIP con un nombre de host inválido.
 Solo podrás realizar y recibir llamadas directas a la IP.
 Puedes editar tu cuenta luego</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-  </string-array>
-  <string name="help_ring_title">Crear una cuenta en Ring</string>
   <string name="help_ring">Una cuenta en Ring te permite comunicarte con gente de forma segura a través de una red P2P completamente distribuida.</string>
   <string name="help_sip_title">Añadir tu cuenta SIP</string>
   <string name="help_sip">Configurar una cuenta SIP existente</string>
   <string name="create_sip_account">Agregar</string>
-  <string name="share_number">Compartir número</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">¿Borrar cuenta?</string>
   <string name="account_delete_dialog_message">Esta acción no puede deshacerse.</string>
@@ -71,7 +65,6 @@ Puedes editar tu cuenta luego</string>
   <string name="account_credentials_add">Agregar credenciales</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Seguridad</string>
-  <string name="account_srtp_deactivated">Desactivado</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Usar protocolo TLS</string>
@@ -90,17 +83,12 @@ Puedes editar tu cuenta luego</string>
   <string name="account_rtp_min_port">Mínimo</string>
   <string name="account_rtp_port_range">Intervalo de puertos de audio RTP</string>
   <!--restore/backup-->
-  <string name="account_backup_message">Guardar configuración y credenciales de la cuenta, contraseña cifrada.</string>
-  <string name="account_backup_new_password">Contraseña nueva</string>
-  <string name="account_backup_confirm_password">Confirmar contraseña</string>
   <string name="account_restore_message">Introduce la contraseña para descifrar el archivo.</string>
   <string name="account_restore_decryption_password">Contraseña de descifrado</string>
   <string name="restore_backup_wait">Por favor, espera...</string>
-  <string name="backup_failed_dialog_msg">Ha ocurrido un error</string>
   <string name="error_password_char_count">6 caracteres mínimo</string>
   <string name="error_passwords_not_equals">Las contraseñas no coinciden</string>
   <string name="restore_failed_dialog_msg">Ha ocurrido un error</string>
-  <string name="account_export">Exportar</string>
   <string name="account_export_end_error_title">Error</string>
   <string name="account_new_button">Crear una cuenta en Ring</string>
   <!--Name registration-->

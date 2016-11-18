@@ -1,12 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="title_section0">تماس</string>
   <string name="title_activity_sflphone_home">رینگ</string>
   <string name="error_no_network">بدون اتصال شبکه</string>
   <!--AB menus-->
   <string name="ab_account_creation">حساب جدید</string>
-  <string name="ab_account_edition_1">حذف</string>
   <string name="ab_action_chat">پیام متنی</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -18,15 +16,11 @@
   <string name="menu_item_settings">تنظیمات</string>
   <string name="menu_item_about">دربارهٔ رینگ</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">تماس</string>
   <string name="dial_number">تماس با یک شماره</string>
-  <string name="dial_hint">شماره تلفن را وارد کنید</string>
   <!--History Fragment-->
   <string name="hist_replay_button">پاسخ</string>
   <string name="hist_replay_button_stop">پایان</string>
-  <string name="hist_no_history">بدون تاریخچه</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">تماس با %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="other">%d گفتگو</item>
@@ -53,13 +47,10 @@
   <string name="notif_current_call_title">تماس کنونی با %1$s</string>
   <string name="notif_current_call">تماس کنونی</string>
   <!--Call Fragment-->
-  <string name="me">من</string>
   <string name="you_txt_prefix">شما:</string>
   <string name="action_call_attended_transfer">جابه‌جایی توجّه شده</string>
   <string name="action_call_conference">نشست</string>
   <string name="action_call_hangup">قطع کردن</string>
-  <string name="action_settings">تنظیمات</string>
-  <string name="help_gestures">این نما کاربران را دربارهٔ برهم‌کنش‌ها هنگام تماس راهنمایی می‌کند. اعمال مختلف شرح داده می‌شوند؛ فشار طولانی، پرت کردن، کشیدن و…</string>
   <string name="ongoing_call">تماس خروجی</string>
   <string name="hist_in_call">تماس دریافتی به مدّت  %1$s</string>
   <string name="hist_out_call">تماس خروجی به مدّت %1$s</string>

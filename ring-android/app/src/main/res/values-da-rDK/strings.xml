@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">Ingen email-app fundet, installerer en for at sende os en rapport</string>
   <string name="email_chooser_title">Send mail ved brug af...</string>
   <!--RingActivity-->
-  <string name="title_section0">Indtast</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ingen netværksforbindelse</string>
   <string name="error_mobile_network_available_but_disabled">Venligst tillad adgang til telefon netværk under Indstillinger.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Ny konto</string>
-  <string name="ab_account_edition_1">Slet</string>
   <string name="ab_action_chat">Text-besked</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -26,15 +24,11 @@
   <string name="menu_item_settings">Indstillinger</string>
   <string name="menu_item_about">Om Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Ring op</string>
   <string name="dial_number">Indtast et nummer</string>
-  <string name="dial_hint">Tast telefonnummer</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Genafspil</string>
   <string name="hist_replay_button_stop">Stop</string>
-  <string name="hist_no_history">Ingen historik</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Opkald %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Samtale</item>
@@ -62,13 +56,10 @@
   <string name="notif_current_call_title">Aktivt opkald med %1$s</string>
   <string name="notif_current_call">Nuværende opkald</string>
   <!--Call Fragment-->
-  <string name="me">Mig</string>
   <string name="you_txt_prefix">Dig:</string>
   <string name="action_call_attended_transfer">Overvåget Overførsel</string>
   <string name="action_call_conference">Konference</string>
   <string name="action_call_hangup">Læg på</string>
-  <string name="action_settings">Indstillinger</string>
-  <string name="help_gestures">Denne visning vil hjælpe brugere med at foretage forskellige handlinger under opkald. De forskellige handlinger beskrives; Langt tryk, fling, swype etc.</string>
   <string name="ongoing_call">Aktivt opkald</string>
   <string name="hist_in_call">Indgående opkald af %1$s</string>
   <string name="hist_out_call">Udgående opkald af %1$s</string>
@@ -90,7 +81,6 @@
   <string name="message_sending">Sender besked...</string>
   <string name="time_just_now">Lige nu</string>
   <string name="permission_read_denied">Mangler tilladelse til at læse fra lageret, og kan dermed ikke fungere ordentligt. Overvej venligst at give denne tilladelse</string>
-  <string name="permission_write_denied">Mangler tilladelse til at skrive til lageret, og kan dermed ikke fungere ordentligt. Overvej venligst at give denne tilladelse</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-tilladelse</string>
   <string name="permission_dialog_camera_message">Video-samtaler kræver kamera-tilladelse for at fungere. Overvej venligst at give denne tilladelse.</string>

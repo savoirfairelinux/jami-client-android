@@ -8,12 +8,10 @@
   <string name="no_email_app_installed">Aucune adresse courriel n\'a étée trouvée, ajoutez en une pour nous envoyer un rapport.</string>
   <string name="email_chooser_title">Envoyer un courriel en utilisant</string>
   <!--RingActivity-->
-  <string name="title_section0">Composez</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_mobile_network_available_but_disabled">Veuillez permettre l\'accès au réseau cellulaire dans l\'écran des réglages.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nouveau compte</string>
-  <string name="ab_account_edition_1">Supprimer</string>
   <string name="ab_action_chat">Messagerie texte</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -30,7 +28,6 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
-  <string name="action_settings">Réglages</string>
   <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->

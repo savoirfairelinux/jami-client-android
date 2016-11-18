@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">Es konnte keine Email-Anwendung gefunden werden, installieren sie eine um uns einen Bericht zu senden</string>
   <string name="email_chooser_title">Mail wird gesendet mit...</string>
   <!--RingActivity-->
-  <string name="title_section0">Wählen</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Keine Netzwerkverbindung</string>
   <string name="error_mobile_network_available_but_disabled">Bitte erlaube den Zugang zum Mobilfunknetz in den Einstellungen</string>
   <!--AB menus-->
   <string name="ab_account_creation">Neues Konto</string>
-  <string name="ab_account_edition_1">Löschen</string>
   <string name="ab_action_chat">Textnachrichten</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -26,15 +24,11 @@
   <string name="menu_item_settings">Einstellungen</string>
   <string name="menu_item_about">über Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Anruf</string>
   <string name="dial_number">Nummer wählen</string>
-  <string name="dial_hint">Nummer eingeben</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Erneut wiedergeben</string>
   <string name="hist_replay_button_stop">Stop</string>
-  <string name="hist_no_history">Kein Verlauf</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">%1$s anrufen</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Unterhaltung</item>
@@ -62,13 +56,10 @@
   <string name="notif_current_call_title">Aktueller Anruf mit %1$s</string>
   <string name="notif_current_call">Aktueller Anruf</string>
   <!--Call Fragment-->
-  <string name="me">Ich</string>
   <string name="you_txt_prefix">Du:</string>
   <string name="action_call_attended_transfer">Überwachter Transfer</string>
   <string name="action_call_conference">Konferenz</string>
   <string name="action_call_hangup">Auflegen</string>
-  <string name="action_settings">Einstellungen</string>
-  <string name="help_gestures">Diese Ansicht wird Nutzern mit unterschiedlichen Interaktionen während Anrufen helfen. Unterschiedliche Vorgänge werden beschrieben; lang drücken, schleudern, streichen usw.</string>
   <string name="ongoing_call">Fortlaufender Anruf</string>
   <string name="hist_in_call">Eingehender Anruf von %1$s</string>
   <string name="hist_out_call">Ausgehender Anruf von %1$s</string>
@@ -90,7 +81,6 @@
   <string name="message_sending">Nachricht wird gesendet…</string>
   <string name="time_just_now">Gerade eben</string>
   <string name="permission_read_denied">Die Anwendung hat keine Berechtigung den Speicher zu lesen und funktioniert deswegen nicht richtig. Bitte geben Sie diese Berechtigung frei.</string>
-  <string name="permission_write_denied">Die Anwendung hat keine Berechtigung in den Speicher zu schreiben und funktioniert deswegen nicht richtig. Bitte gaben Sie diese Berechtigung frei.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera Berechtigung</string>
   <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die Anwendung Zugriff auf die Kamera. Bitte geben Sie diese Berechtigung frei.</string>

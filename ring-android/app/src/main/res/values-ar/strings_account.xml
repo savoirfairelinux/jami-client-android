@@ -11,7 +11,6 @@
   <string name="dialog_wait_create_details">الرجاء الإنتظار في حين نظيف حسابك</string>
   <string name="help_sip">ترتيب حساب SIP موجود</string>
   <string name="create_sip_account">أضف</string>
-  <string name="share_number">تقاسم رقم</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="empty_account_list">لا حساب مسجل</string>
@@ -51,7 +50,6 @@
   <string name="account_credentials_label">الإعتمادات</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">تأمين</string>
-  <string name="account_srtp_deactivated">باطلة المفعول</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">إستعمل المواصلات TLS</string>
@@ -70,7 +68,6 @@
   <string name="account_rtp_min_port">الحد الأدنى</string>
   <string name="account_rtp_port_range">نطاق المنفذ RTP الصوتي</string>
   <!--restore/backup-->
-  <string name="account_export">تصدير</string>
   <string name="account_export_end_error_title">خطأ</string>
   <!--Name registration-->
 </resources>
