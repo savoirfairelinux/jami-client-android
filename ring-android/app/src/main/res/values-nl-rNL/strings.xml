@@ -10,7 +10,6 @@
   <string name="error_no_network">Geen netwerkverbinding</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nieuw account</string>
-  <string name="ab_account_edition_1">Verwijderen</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <!--Sections-->
@@ -18,13 +17,10 @@
   <string name="menu_item_settings">Instellingen</string>
   <string name="menu_item_about">Over Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Bellen</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Opnieuw afspelen</string>
   <string name="hist_replay_button_stop">Stoppen</string>
-  <string name="hist_no_history">Geen geschiedenis</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Bel %1$s</string>
   <!--Home Fragment-->
   <!--ContactList Fragment-->
   <string name="no_contact_found">Geen contact gevonden</string>
@@ -37,7 +33,6 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <string name="action_call_hangup">Ophangen</string>
-  <string name="action_settings">Instellingen</string>
   <string name="ab_action_contact_add">Voeg toe aan contacten</string>
   <!--Text messages-->
   <!--MediaPreferenceFragment-->

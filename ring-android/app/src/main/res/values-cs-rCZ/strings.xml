@@ -2,12 +2,10 @@
 <resources>
   <string name="version_section">Verze</string>
   <!--RingActivity-->
-  <string name="title_section0">Vytočit</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Chybí připojení</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nový účet</string>
-  <string name="ab_account_edition_1">Odstranit</string>
   <string name="ab_action_chat">Textové zprávy</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -19,15 +17,11 @@
   <string name="menu_item_settings">Nastavení</string>
   <string name="menu_item_about">O Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Volat</string>
   <string name="dial_number">Vytočit číslo</string>
-  <string name="dial_hint">Vložte telefonní číslo</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Znovu přehrát</string>
   <string name="hist_replay_button_stop">Stop</string>
-  <string name="hist_no_history">Žádná historie</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Volat %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Konverzace</item>
@@ -56,13 +50,10 @@
   <string name="notif_current_call_title">Současný hovor s %1$s</string>
   <string name="notif_current_call">Současný hovor</string>
   <!--Call Fragment-->
-  <string name="me">Já</string>
   <string name="you_txt_prefix">Vy:</string>
   <string name="action_call_attended_transfer">Přesměrování na Čekající Hovor</string>
   <string name="action_call_conference">Konference</string>
   <string name="action_call_hangup">Zavěsit</string>
-  <string name="action_settings">Nastavení</string>
-  <string name="help_gestures"> Tento pohled pomůže uživatelům s různými činnostmi během hovorů. Různé činnosti budou popsány; Dlouhé podržení, posouvání, atd.</string>
   <string name="ongoing_call">Probíhající hovor</string>
   <string name="hist_in_call">Příchozí hovor %1$s</string>
   <string name="hist_out_call">Odchozí hovor %1$s</string>
@@ -84,7 +75,6 @@
   <string name="message_sending">Odesílám zprávu…</string>
   <string name="time_just_now">Právě teď</string>
   <string name="permission_read_denied">Aplikace nemohla číst z vašeho úložiště, takže nemůže správně fungovat. Prosím zvažte poskytnutí jí tohoto povolení</string>
-  <string name="permission_write_denied">Aplikace nemohla zapisovat do vašeho úložiště, takže nemůže správně fungovat. Prosím zvažte poskytnutí jí tohoto povolení</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Povolení ke kameře</string>
   <string name="permission_dialog_camera_message">Video konverzace vyžadují povolení ke kameře. Prosím zvažte jeho povolení.</string>

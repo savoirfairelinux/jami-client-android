@@ -20,32 +20,9 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
 
-    <string-array name="menu_items_param">
-        <item>@string/menu_item_home</item>
-        <item>@string/menu_item_accounts</item>
-        <item>@string/menu_item_about</item>
-    </string-array>
     <string-array name="drop_actions">
         <item>@string/action_call_attended_transfer</item>
         <item>@string/action_call_conference</item>
-    </string-array>
-
-    <string-array name="srtp_entry_values" translatable="false">
-        <item>NONE</item>
-        <item>SDES</item>
-    </string-array>
-    <string-array name="srtp_entry" translatable="false">
-        <item>@string/account_srtp_deactivated</item>
-        <item>SDES</item>
-    </string-array>
-
-    <string-array name="dtmf_types_values" translatable="false">
-        <item>@string/account_sip_dtmf_type_overrtp</item>
-        <item>@string/account_sip_dtmf_type_sipinfo</item>
-    </string-array>
-    <string-array name="dtmf_types_entries" translatable="false">
-        <item>RTP</item>
-        <item>SIP</item>
     </string-array>
 
     <string-array name="conversation_actions">

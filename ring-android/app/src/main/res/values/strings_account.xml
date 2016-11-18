@@ -43,18 +43,12 @@ along with this program; if not, write to the Free Software
         You will only be able to make and receive direct ip calls.
         You can edit your account later</string>
 
-    <string-array name="accountType">
-        <item>RING</item>
-        <item>SIP</item>
-    </string-array>
     <string name="account_type_ip2ip">IP account</string>
-    <string name="help_ring_title">Create a Ring account</string>
     <string name="help_ring">A Ring account allows you to reach people securely in peer to peer through a fully distributed network.</string>
 
     <string name="help_sip_title">Add your SIP account</string>
     <string name="help_sip">Configure an existing SIP account.</string>
     <string name="create_sip_account">Add</string>
-    <string name="share_number">Share number</string>
 
     <!-- Strings related to account deletion -->
     <string name="account_delete_dialog_title">Delete account ?</string>
@@ -67,7 +61,6 @@ along with this program; if not, write to the Free Software
 
     <!-- Basic Details -->
     <string name="account_preferences_basic_tab">General</string>
-    <string name="account_preferences_devices_tab">Devices</string>
     <string name="account_basic_category">Basic Settings</string>
     <string name="account_alias_label">Account name</string>
     <string name="account_hostname_label">Hostname</string>
@@ -116,11 +109,9 @@ along with this program; if not, write to the Free Software
 
     <!-- SRTP Details -->
     <string name="account_preferences_security_tab">Security</string>
-    <string name="account_srtp_deactivated">Deactivated</string>
 
     <!-- SIP -->
     <string name="account_sip_dtmf_type_sipinfo" translatable="false">sipinfo</string>
-    <string name="account_sip_dtmf_type_overrtp" translatable="false">overrtp</string>
 
     <!-- TLS Details -->
     <string name="account_tls_transport_switch_label">Use TLS Transport</string>
@@ -140,36 +131,19 @@ along with this program; if not, write to the Free Software
     <string name="account_rtp_port_range">Audio RTP Port Range</string>
 
     <!-- restore/backup -->
-    <string name="account_backup">Back up</string>
     <string name="account_restore_account">Restore an account</string>
-    <string name="account_backup_title">Back up an account</string>
-    <string name="account_restore_title">Restore accounts</string>
-    <string name="account_restore_explanation">You can restore previous backup accounts.</string>
-    <string name="account_backup_message">Save account settings and credentials, password encrypted.</string>
-    <string name="account_backup_new_password">New password</string>
-    <string name="account_backup_confirm_password">Confirm password</string>
     <string name="account_restore_message">Enter password to decrypt the file.</string>
     <string name="account_restore_decryption_password">Decryption password</string>
-    <string name="account_new_device">Add new device</string>
-    <string name="account_new_device_message">Unlock Ring account to associate new device.</string>
     <string name="account_new_device_password">Enter main password to unlock account</string>
 
     <string name="restore_dialog_title">Restoring</string>
     <string name="restore_backup_wait">Please wait…</string>
-    <string name="backup_dialog_title">Back up account</string>
-    <string name="account_backup_result">"Backup saved in %1$s"</string>
-    <string name="backup_failed_dialog_title">Backup failed</string>
-    <string name="backup_failed_dialog_msg">An error occurred</string>
     <string name="error_password_char_count">6 characters minimum</string>
     <string name="error_passwords_not_equals">Passwords do not match</string>
     <string name="restore_failed_dialog_title">Restore failed</string>
     <string name="restore_failed_dialog_msg">An error occurred</string>
-    <string name="account_export">Export</string>
     <string name="export_account_wait_title">Please wait...</string>
     <string name="export_account_wait_message">Publishing new account information</string>
-    <string name="account_export_end_pin_title">"PIN : "</string>
-    <string name="account_export_end_pin_message">Use this PIN along with your main account password to associate your new device to your Ring account during the next 10 minutes.</string>
-    <string name="account_export_end_decryption_title">Decryption error</string>
     <string name="account_export_end_decryption_message">Couldn\'t unlock your account using the provided password.</string>
     <string name="account_export_end_network_title">Network error</string>
     <string name="account_export_end_network_message">Couldn\'t export account on the network. Check your connectivity.</string>
@@ -187,7 +161,6 @@ along with this program; if not, write to the Free Software
     <string name="account_update_needed">Update needed</string>
     <string name="account_creation_file_too_big">File is too big</string>
     <string name="account_cannot_read">Can\'t read %1$s</string>
-    <string name="account_creation_error">Error creating account</string>
     <string name="account_cannot_be_found_title">Can\'t find account</string>
     <string name="account_cannot_be_found_message">Account couldn\'t be found on the Ring network.\nMake sure it was exported on Ring from an existing device, and that provided credentials are correct.</string>
     <string name="account_no_network_title">Can\'t connect to the network</string>
@@ -198,12 +171,9 @@ along with this program; if not, write to the Free Software
 
     <string name="account_link_button">Link this device to an account</string>
     <string name="account_import_title">Link to an existing account</string>
-    <string name="account_link_prompt_password">Enter your password</string>
     <string name="account_link_prompt_pin">Enter PIN</string>
     <string name="account_wizard_title">Ring account</string>
     <string name="account_new_button">Create a Ring account</string>
-    <string name="account_link_infos">To link another device to this account, you first need to obtain a pin code. To generate the pin code, go to the account management setting of a previous device, choose the Ring Account to use and select "Link another device to this account". </string>
-    <string name="account_new_infos">Please choose a password of at least 6 characters. This password will be asked to add new devices to your Ring account.</string>
     <string name="account_link_export_button">Link another device to this account</string>
     <string name="account_link_export_info">To use this account on other devices, you must first expose it on Ring. This will generate a PIN code that you must enter on the new device to set up the account. The PIN is valid for 10 minutes. \n\nPlease provide your password to start:</string>
     <string name="account_start_export_button">Generate Pin</string>

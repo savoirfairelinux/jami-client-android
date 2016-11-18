@@ -7,12 +7,10 @@
   <string name="version_section">الإصدار</string>
   <string name="email_chooser_title">إرسال بريد إلكتروني باستخدام...</string>
   <!--RingActivity-->
-  <string name="title_section0">إتصل</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">الاتصال بالشبكة غير متوفر</string>
   <!--AB menus-->
   <string name="ab_account_creation">حساب جديد</string>
-  <string name="ab_account_edition_1">إحذف</string>
   <string name="ab_action_chat">رسائل نصية</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -24,15 +22,11 @@
   <string name="menu_item_settings">إعدادات</string>
   <string name="menu_item_about">عن Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">مكالمة</string>
   <string name="dial_number">أطلب رقم</string>
-  <string name="dial_hint">اكتب رقم هاتف</string>
   <!--History Fragment-->
   <string name="hist_replay_button">إعادة</string>
   <string name="hist_replay_button_stop">توقف</string>
-  <string name="hist_no_history">لا تاريخ</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">مكالمة: %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="zero">%d مكالمة</item>
@@ -58,13 +52,10 @@
   <string name="notif_incoming_call">مكالمة واردة</string>
   <string name="notif_current_call">المكالمات الحالية</string>
   <!--Call Fragment-->
-  <string name="me">أنا</string>
   <string name="you_txt_prefix">أنت:</string>
   <string name="action_call_attended_transfer">نقل</string>
   <string name="action_call_conference">مؤتمر</string>
   <string name="action_call_hangup">أنهي المكالمة</string>
-  <string name="action_settings">إعدادات</string>
-  <string name="help_gestures">هذه الرؤية سوف تعين المستخدمين في عدة تفاعلات أثناء المكالمات. سيتم وصف عدة إجراءات؛ ضغط مطول، قذف، swipe، إلخ.</string>
   <string name="ongoing_call">مكالمة جارية</string>
   <string name="hist_in_call">مكالمة واردة من %1$s</string>
   <string name="hist_out_call">مكالمة خارجة من %1$s</string>

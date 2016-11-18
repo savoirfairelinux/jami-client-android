@@ -1,17 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--RingActivity-->
-  <string name="title_section0">拨号</string>
   <string name="title_activity_sflphone_home">响铃</string>
   <string name="error_no_network">无网络连接</string>
   <!--AB menus-->
   <string name="ab_account_creation">新账户</string>
-  <string name="ab_account_edition_1">删除</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <!--Sections-->
   <!--Dialing Fragment-->
-  <string name="dial_action_call">打电话</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->

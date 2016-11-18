@@ -9,15 +9,9 @@
   <string name="error_field_required">這是必填欄位</string>
   <string name="dialog_wait_create">正在加入帳號</string>
   <string name="dialog_warn_ip2ip_account_title">建立空的 SIP 帳號嗎？</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-  </string-array>
-  <string name="help_ring_title">建立一個 Ring 帳號</string>
   <string name="help_sip_title">加入你的 SIP 帳號</string>
   <string name="help_sip">配製一個存在的 SIP 帳號。</string>
   <string name="create_sip_account">加入</string>
-  <string name="share_number">分享號碼</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">刪除帳號嗎？</string>
   <string name="account_delete_dialog_message">這個動作無法被復原。</string>
@@ -61,16 +55,12 @@
   <string name="account_rtp_min_port">最小值</string>
   <string name="account_rtp_port_range">音訊 RTP 連接埠範圍</string>
   <!--restore/backup-->
-  <string name="account_backup_new_password">新密碼</string>
-  <string name="account_backup_confirm_password">確認密碼</string>
   <string name="account_restore_message">輸入密碼來解密檔案。</string>
   <string name="account_restore_decryption_password">解密密碼</string>
   <string name="restore_backup_wait">請等待...</string>
-  <string name="backup_failed_dialog_msg">發生錯誤</string>
   <string name="error_password_char_count">最小6個字元</string>
   <string name="error_passwords_not_equals">密碼不相符</string>
   <string name="restore_failed_dialog_msg">發生錯誤</string>
-  <string name="account_export">匯出</string>
   <string name="account_new_button">建立一個 Ring 帳號</string>
   <!--Name registration-->
 </resources>

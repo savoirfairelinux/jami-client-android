@@ -13,11 +13,6 @@
   <string name="dialog_warn_ip2ip_account_message">Jūs ruošiatės sukurti SIP paskyrą, nenurodę teisingo kompiuterio vardo.
 Jūs galėsite atlikti ir priimti tik tiesioginius ip skambučius. 
 Vėliau, galėsite pataisyti savo paskyros informaciją</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-  </string-array>
-  <string name="help_ring_title">Sukurti Ring paskyrą</string>
   <string name="help_sip_title">Pridėti savo SIP paskyrą</string>
   <string name="help_sip">Konfigūruokite esamą SIP paskyrą.</string>
   <string name="create_sip_account">Pridėti</string>
@@ -87,17 +82,12 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_rtp_min_port">Mažiausias</string>
   <string name="account_rtp_port_range">Garso RTP prievadų rėžis</string>
   <!--restore/backup-->
-  <string name="account_backup_message">Įrašykite paskyros nustatymus ir prisijungimo duomenis, užšifruotus slaptažodžiu.</string>
-  <string name="account_backup_new_password">Naujas slaptažodis</string>
-  <string name="account_backup_confirm_password">Patvirtinkite slaptažodį</string>
   <string name="account_restore_message">Įrašykite slaptažodį, kad iššifruotumėte failą.</string>
   <string name="account_restore_decryption_password">Iššifravimo slaptažodis</string>
   <string name="restore_backup_wait">Prašome palaukti...</string>
-  <string name="backup_failed_dialog_msg">Įvyko klaida</string>
   <string name="error_password_char_count">Mažiausiai 6 simboliai</string>
   <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
   <string name="restore_failed_dialog_msg">Įvyko klaida</string>
-  <string name="account_export">Eksportuoti</string>
   <string name="account_export_end_error_title">Klaida</string>
   <string name="account_new_button">Sukurti Ring paskyrą</string>
   <!--Name registration-->

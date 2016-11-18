@@ -13,12 +13,10 @@
   <string name="dialog_warn_ip2ip_account_message">Si sta per creare un account SIP con un nome host non valido.
 Sara solo possibile fare e ricevere chiamate ip dirette.
 Si potra modificare questo account più tardi.</string>
-  <string name="help_ring_title">Creare un account Ring</string>
   <string name="help_ring">Un account Ring permette di raggiungere persone in modo sicuro, in peer to peer attraverso una rete completamente distribuita</string>
   <string name="help_sip_title">Aggiungere il suo account SIP</string>
   <string name="help_sip">Importare un account SIP esistente</string>
   <string name="create_sip_account">Aggiungiare</string>
-  <string name="share_number">Condividere il numero</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Rimuovere l\'account?</string>
   <string name="account_delete_dialog_message">Questa azione è irreversibilie.</string>
@@ -67,7 +65,6 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_credentials_add">Aggiungere dati d\'identificazione</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sicurezza</string>
-  <string name="account_srtp_deactivated">Disattivato</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Usare il trasporto TLS</string>
@@ -86,17 +83,12 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_rtp_min_port">Minimo</string>
   <string name="account_rtp_port_range">Intervallo porti audio RTP</string>
   <!--restore/backup-->
-  <string name="account_backup_message">Salvare le impostazioni dell\'account et gli identificanti con la password cifrata.</string>
-  <string name="account_backup_new_password">Nuovo password</string>
-  <string name="account_backup_confirm_password">Confermare password</string>
   <string name="account_restore_message">Digitare la password per decifrare il file.</string>
   <string name="account_restore_decryption_password">Password per decifrare</string>
   <string name="restore_backup_wait">Aspettare</string>
-  <string name="backup_failed_dialog_msg">C\'è stato un errore</string>
   <string name="error_password_char_count">6 caratteri minimo</string>
   <string name="error_passwords_not_equals">Le password no corrispondono</string>
   <string name="restore_failed_dialog_msg">C\'è stato un errore</string>
-  <string name="account_export">Esportare</string>
   <string name="account_export_end_error_title">Errore</string>
   <string name="account_new_button">Creare un account Ring</string>
   <!--Name registration-->

@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">Application d\'envoi de courriel non-trouvée, installez-en un et renvoyez-nous votre rapport</string>
   <string name="email_chooser_title">Envoi du courriel à travers ...</string>
   <!--RingActivity-->
-  <string name="title_section0">Numéroter</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Pas d\'accès au réseau</string>
   <string name="error_mobile_network_available_but_disabled">SVP, autorisez l\'accès au réseau cellulaire dans les options de configuration</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nouveau compte</string>
-  <string name="ab_account_edition_1">Supprimer</string>
   <string name="ab_action_chat">Messagerie texte</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -27,15 +25,11 @@
   <string name="menu_item_share">Partager mon contact</string>
   <string name="menu_item_about">À propos de Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Appelez</string>
   <string name="dial_number">Composez un numéro</string>
-  <string name="dial_hint">Entrez un numéro</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Écouter</string>
   <string name="hist_replay_button_stop">Stop</string>
-  <string name="hist_no_history">Pas d\'historique</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Appeler %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversation</item>
@@ -63,13 +57,10 @@
   <string name="notif_current_call_title">Appel en cours avec %1$s</string>
   <string name="notif_current_call">Appel en cours</string>
   <!--Call Fragment-->
-  <string name="me">Moi</string>
   <string name="you_txt_prefix">Vous :</string>
   <string name="action_call_attended_transfer">Transfert</string>
   <string name="action_call_conference">Conférence</string>
   <string name="action_call_hangup">Raccrocher</string>
-  <string name="action_settings">Paramètres</string>
-  <string name="help_gestures"> Cette vue aidera les utilisateurs avec des interactions différentes pendant des appels. Les actions différentes seront décrites; Appui long, fling, swype etc.</string>
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
@@ -91,7 +82,6 @@
   <string name="message_sending">Envoi du message</string>
   <string name="time_just_now">A l\'instant</string>
   <string name="permission_read_denied">L\'application n\'a pas été autorisée à lire dans la mémoire du dispositif. En conséquence, elle ne peut pas fonctionner correctement. Merci de lui accorder cette permission.</string>
-  <string name="permission_write_denied">L\'application n\'a pas été autorisée à écrire dans la mémoire du dispositif. En conséquence, elle ne peut pas fonctionner correctement. Merci de lui accorder cette permission.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permission d\'accès au caméra</string>
   <string name="permission_dialog_camera_message">Les conversation vidéo nécessitent la permission d\'utiliser l\'objectif. Merci de l\'autoriser.</string>
@@ -120,11 +110,8 @@
   <string name="prompt_new_password">Nouveau mot de passe</string>
   <string name="prompt_new_password_repeat">Confirmez le mot de passe</string>
   <string name="account_create_title">Créer un compte Ring</string>
-  <string name="help_username_register">Choisir un nom public (expérimental)</string>
   <string name="prompt_new_username">Entrez un nouveau nom d\'utilisateur</string>
   <string name="help_password_choose">Choisissez un mot de passe sécurisé dont vous vous rappellerez pour protéger votre compte Ring.</string>
-  <string name="btn_use_existing_account">Utiliser un compte Ring existant</string>
-  <string name="btn_create_account">Créer un nouveau compte</string>
   <string name="help_password_enter">Entrez le mot de passe de votre compte Ring</string>
   <string name="help_pin_enter">Entrez le code PIN obtenu en configurant un autre compte Ring . Utilisez la fonction \"exportez un compte sur Ring\" pour obtenir un code PIN.</string>
   <string name="account_device_updated_message">Mise à jour de votre compte Ring réalisée avec succès. </string>
@@ -136,7 +123,6 @@
   <string name="unknowm_if_empty">Inconnu si laissé vide</string>
   <string name="unknown">Inconnu</string>
   <!--Share fragment-->
-  <string name="share_label">Sélectionnez le Ring ID à partager. </string>
   <string name="share_message">Scannez ce QRCode avec le scanner intégré de l\'application Ring qui souhaite communiquer avec vous.</string>
   <string name="share_your_account_information">Partagez mes coordonnées</string>
 </resources>
