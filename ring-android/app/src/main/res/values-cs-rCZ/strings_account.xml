@@ -13,17 +13,10 @@
   <string name="dialog_warn_ip2ip_account_message">Vytváříte prázdný účet SIP bez platného hostitelského jména.
         Budete moci pouze vytvářet a přijímat přímé ip hovory.
         Svůj účet můžete upravit později</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-    <item>IAX</item>
-  </string-array>
-  <string name="help_ring_title">Vytvořit účet Ring</string>
   <string name="help_ring">Účet Ring vám umožňuje spojit se s lidmi bezpečně, uživatel s uživatelem, skrze plně decentralizovanou síť.</string>
   <string name="help_sip_title">Přidat váš účet SIP.</string>
   <string name="help_sip">Nastavit existující účet SIP.</string>
   <string name="create_sip_account">Přidat</string>
-  <string name="share_number">Sdílet číslo</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Odstranit účet ?</string>
   <string name="account_delete_dialog_message">Tuto činnost nelze vrátit zpět.</string>
@@ -32,7 +25,6 @@
   <string name="normal_accounts_titles">Účty</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Obecné</string>
-  <string name="account_preferences_devices_tab">Zařízení</string>
   <string name="account_basic_category">Základní Nastavení</string>
   <string name="account_alias_label">Název účtu</string>
   <string name="account_hostname_label">Hostitelské jméno</string>
@@ -72,7 +64,6 @@
   <string name="account_credentials_add">Přidat ověřovací údaje</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Bezpečnost</string>
-  <string name="account_srtp_deactivated">Vypnuto</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Použít Transport TLS</string>
@@ -91,17 +82,12 @@
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Rozsah Portů Zvukového RTP</string>
   <!--restore/backup-->
-  <string name="account_backup_message">Uložit nastavení a ověřovací údaje účtu, heslo zašifrované.</string>
-  <string name="account_backup_new_password">Nové heslo</string>
-  <string name="account_backup_confirm_password">Potvrdit heslo</string>
   <string name="account_restore_message">Vložte heslo pro dešifrování souboru.</string>
   <string name="account_restore_decryption_password">Heslo dešifrování</string>
   <string name="restore_backup_wait">Please vyčkejte…</string>
-  <string name="backup_failed_dialog_msg">Nastala chyba</string>
   <string name="error_password_char_count">Minimálně 6 znaků</string>
   <string name="error_passwords_not_equals">Hesla se neshodují</string>
   <string name="restore_failed_dialog_msg">Nastala chyba</string>
-  <string name="account_export">Export</string>
   <string name="account_export_end_error_title">Chyba</string>
   <string name="account_new_button">Vytvořit účet Ring</string>
   <!--Name registration-->

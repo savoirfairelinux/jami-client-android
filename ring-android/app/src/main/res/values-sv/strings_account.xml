@@ -16,16 +16,10 @@
   <string name="dialog_warn_ip2ip_account_message">Du håller på att skapa ett SIP-konto utan giltigt värdnamn.
 Du kommer bara att kunna ringa och ta emot direkta IP-samtal.
 Du kan ändra kontot senare.</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-  </string-array>
-  <string name="help_ring_title">Skapa ett Ring-konto</string>
   <string name="help_ring">Ett Ring-konto låter dig nå folk säkert via P2P, i ett fullständigt distribuerat närverk.</string>
   <string name="help_sip_title">Lägg till ditt SIP-konto</string>
   <string name="help_sip">Konfigurera ett befintligt SIP-konto.</string>
   <string name="create_sip_account">Lägg till</string>
-  <string name="share_number">Dela nummer</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Vill du ta bort kontot?</string>
   <string name="account_delete_dialog_message">Denna åtgärd kan inte ångras.</string>
@@ -35,7 +29,6 @@ Du kan ändra kontot senare.</string>
   <string name="normal_devices_titles">Kända enheter, länkade till detta Ring-konto</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allmänt</string>
-  <string name="account_preferences_devices_tab">Enheter</string>
   <string name="account_basic_category">Grundläggande inställningar</string>
   <string name="account_alias_label">Kontonamn</string>
   <string name="account_hostname_label">Värdnamn</string>
@@ -77,7 +70,6 @@ Du kan ändra kontot senare.</string>
   <string name="account_credentials_add">Lägg till inloggningsuppgifter</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Säkerhet</string>
-  <string name="account_srtp_deactivated">Inaktiverad</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Använd TLS-transport</string>
@@ -96,35 +88,18 @@ Du kan ändra kontot senare.</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Audio RTP portintervall</string>
   <!--restore/backup-->
-  <string name="account_backup">Säkerhetskopiera</string>
   <string name="account_restore_account">Återställ ett konto</string>
-  <string name="account_backup_title">Säkerhetskopiera ett konto</string>
-  <string name="account_restore_title">Återställ konto</string>
-  <string name="account_restore_explanation">Du kan återställa tidigare säkerhetskopierade konton.</string>
-  <string name="account_backup_message">Spara kontoinställningar och autentiseringsuppgifter, lösenordet krypterat.</string>
-  <string name="account_backup_new_password">Nytt lösenord</string>
-  <string name="account_backup_confirm_password">Bekräfta lösenord</string>
   <string name="account_restore_message">Ange lösenord för att dekryptera filen</string>
   <string name="account_restore_decryption_password">Dekrypteringslösenord</string>
-  <string name="account_new_device">Lägg till ny enhet</string>
-  <string name="account_new_device_message">Lås upp Ring-kontot för att associera ny enhet.</string>
   <string name="account_new_device_password">Ange huvudlösenordet för att låsa upp kontot</string>
   <string name="restore_dialog_title">Återställer</string>
   <string name="restore_backup_wait">Vänta...</string>
-  <string name="backup_dialog_title">Säkerhetskopiera konto</string>
-  <string name="account_backup_result">Säkerhetskopia sparad i %1$s</string>
-  <string name="backup_failed_dialog_title">Säkerhetskopiering misslyckades</string>
-  <string name="backup_failed_dialog_msg">Et fel inträffade</string>
   <string name="error_password_char_count">6 tecken minimum</string>
   <string name="error_passwords_not_equals">Lösenorden stämmer inte</string>
   <string name="restore_failed_dialog_title">Återställning misslyckades</string>
   <string name="restore_failed_dialog_msg">Et fel inträffade</string>
-  <string name="account_export">Exportera</string>
   <string name="export_account_wait_title">Vänta...</string>
   <string name="export_account_wait_message">Publicerar ny kontoinformation</string>
-  <string name="account_export_end_pin_title">PIN : </string>
-  <string name="account_export_end_pin_message">Använd PIN-koden tillsammans med ditt kontolösenord för att associera den nya enheten med ditt Ring-konto, de närmaste 10 minuterna.</string>
-  <string name="account_export_end_decryption_title">Dekrypteringsfel</string>
   <string name="account_export_end_decryption_message">Kunde inte låsa upp ditt konto med det givna lösenordet.</string>
   <string name="account_export_end_network_title">Nätverksfel</string>
   <string name="account_export_end_network_message">Kunde inte exportera kontot över nätverket. Kontrollera din uppkoppling.</string>
@@ -141,7 +116,6 @@ Du kan ändra kontot senare.</string>
   <string name="account_update_needed">Uppdatering behövs</string>
   <string name="account_creation_file_too_big">Filen är för stor</string>
   <string name="account_cannot_read">Kan inte läsa %1$s</string>
-  <string name="account_creation_error">Fel vid kontoskapande</string>
   <string name="account_cannot_be_found_title">Kan inte hitta kontot</string>
   <string name="account_cannot_be_found_message">Kontot kunde inte hittas i Ring-nätverket.\nTillse att det har exporterats från en befintlig enhet och att angivna kontouppgifter är korrekt.</string>
   <string name="account_no_network_title">Kan inte ansluta till nätverket</string>
@@ -151,12 +125,9 @@ Du kan ändra kontot senare.</string>
   <string name="account_device_updated_title">Kontoenhet uppdaterad</string>
   <string name="account_link_button">Koppla denna enhet till ett konto</string>
   <string name="account_import_title">Koppla ett befintligt konto</string>
-  <string name="account_link_prompt_password">Ange ditt lösenord</string>
   <string name="account_link_prompt_pin">Ange PIN-kod</string>
   <string name="account_wizard_title">Ring-konto</string>
   <string name="account_new_button">Skapa ett Ring-konto</string>
-  <string name="account_link_infos">För att koppla en enhet till det här kontot, måste du först ha en PIN-kod. För att generera PIN-koden, går du till kontohanteringen i en befintlig enhet, väljer det Ring-konto du vill koppla, och väljer \"Koppla en annan enhet till detta konto\".</string>
-  <string name="account_new_infos">Ange ett lösenord på minst 6 tecken. Detta lösenord används för att lägga till en ny enhet till ditt Ring-konto.</string>
   <string name="account_link_export_button">Koppla en annan enhet till detta konto</string>
   <string name="account_link_export_info">För att använda detta konto på en annan enhet, måste du först exponera det på Ring. Detta genererar en PIN-kod som du måste ange på den nya enheten för att öppna kontot. Pin-koden är giltig i 10 minuter.\n\nAnge ditt lösenord för att starta:</string>
   <string name="account_start_export_button">Generera PIN-kod</string>

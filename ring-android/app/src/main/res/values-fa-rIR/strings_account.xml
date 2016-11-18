@@ -11,7 +11,6 @@
   <string name="dialog_wait_create_details">لطفاً صبر کنید تا حساب جدیدتان افزوده شود…</string>
   <string name="help_sip">پیکربندی یک حساب سیپ موجود.</string>
   <string name="create_sip_account">افزودن</string>
-  <string name="share_number">هم‌رسانی شماره</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="empty_account_list">هیچ حسابی ثبت نشده</string>
@@ -57,7 +56,6 @@
   <string name="account_credentials_add">افزودن دست‌اندر کاران</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">امنیت</string>
-  <string name="account_srtp_deactivated">غیرفعّال شده</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">استفاده از جابه‌جایی TLS</string>

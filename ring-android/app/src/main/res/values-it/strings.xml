@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">Applicazione email non trovata, installane una per inviarci un rapporto</string>
   <string name="email_chooser_title">Mandaci un\'email usando...</string>
   <!--RingActivity-->
-  <string name="title_section0">Chiama</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Connessione di rete assente</string>
   <string name="error_mobile_network_available_but_disabled">Consenti l\'acceso alla rete cellulare dalla schermata impostazioni</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nuovo profilo</string>
-  <string name="ab_account_edition_1">Cancella</string>
   <string name="ab_action_chat">Messaggio di testo</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -26,15 +24,11 @@
   <string name="menu_item_settings">Impostazioni</string>
   <string name="menu_item_about">Info su Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Chiama</string>
   <string name="dial_number">Chiama un numero</string>
-  <string name="dial_hint">Digita un numero</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Ripeti</string>
   <string name="hist_replay_button_stop">Stop</string>
-  <string name="hist_no_history">Cronologia vuota</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Chiama %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversazione</item>
@@ -62,13 +56,10 @@
   <string name="notif_current_call_title">Chiamata in corso con %1$s</string>
   <string name="notif_current_call">Chiamata attiva</string>
   <!--Call Fragment-->
-  <string name="me">Io</string>
   <string name="you_txt_prefix">Tu</string>
   <string name="action_call_attended_transfer">Rispondere alla chiamata</string>
   <string name="action_call_conference">Conferenza</string>
   <string name="action_call_hangup">Riattacca</string>
-  <string name="action_settings">Impostazioni</string>
-  <string name="help_gestures">Questa finestra aiuta gli utenti consentendo multiple interazioni durante le chiamate. Le interazioni multiple sono qui descritte; Pressione prolungata, fling, swipe, ecc.</string>
   <string name="ongoing_call">Chiamata in corso</string>
   <string name="hist_in_call">Chiamata in arrivo di %1$s</string>
   <string name="hist_out_call">Chiamata a %1$s</string>
@@ -90,7 +81,6 @@
   <string name="message_sending">Invio messaggio in corso...</string>
   <string name="time_just_now">Immediatamente</string>
   <string name="permission_read_denied">L\'app non ha permessi di lettura della tua memoria. Non può funzionare correttamente. Concedile il permesso</string>
-  <string name="permission_write_denied">L\'app non ha permessi di scrittura sulla tua memoria. Non può funzionare correttamente. Concedile il permesso</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Attivare videocamera</string>
   <string name="permission_dialog_camera_message">La videochiamata richiede l\'attivazione della videocamera. Concedi il permesso.</string>

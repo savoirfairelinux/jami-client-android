@@ -20,6 +20,4 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
 
-    <dimen name="action_bar_title_margin_bottom">20dp</dimen>
-
 </resources>

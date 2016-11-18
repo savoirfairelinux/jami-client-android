@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">Δεν βρέθηκε κάποια εφαρμογή email, εγκαταστήστε μια για μας στείλετε μια αναφορά</string>
   <string name="email_chooser_title">Αποστολή email σε χρήση...</string>
   <!--RingActivity-->
-  <string name="title_section0">Κλήση</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Καμία σύνδεση στο δίκτυο</string>
   <string name="error_mobile_network_available_but_disabled">Παρακαλώ δώστε πρόσβαση στο δίκτυο κινητής τηλεφωνίας από τις  ρυθμίσεις του κινητού.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Νέος Λογαριασμός</string>
-  <string name="ab_account_edition_1">Διαγραφή</string>
   <string name="ab_action_chat">Μήνυμα κειμένου</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -26,15 +24,11 @@
   <string name="menu_item_settings">Ρυθμίσεις</string>
   <string name="menu_item_about">Σχετικά</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Κλήση</string>
   <string name="dial_number">Κλήση αριθμού</string>
-  <string name="dial_hint">Πληκτρολογήστε κάποιον αριθμό τηλεφώνου</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Απάντηση</string>
   <string name="hist_replay_button_stop">Τερματισμός</string>
-  <string name="hist_no_history">Όχι Ιστορικό</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Κάλεσε %1$s</string>
   <!--Home Fragment-->
   <string name="home_transfering">Μεταφορά κλήσης από %1$s σε %1$s</string>
   <string name="home_transfer_complet">Η προώθηση ολοκληρώθηκε</string>
@@ -58,12 +52,9 @@
   <string name="notif_current_call_title">Κλήση σε εξέλιξη με %1$s</string>
   <string name="notif_current_call">Κλήση σε εξέλιξη</string>
   <!--Call Fragment-->
-  <string name="me">Εγώ</string>
   <string name="you_txt_prefix">Εσύ</string>
   <string name="action_call_conference">Συνδιάσκεψη</string>
   <string name="action_call_hangup">Κλείσιμο</string>
-  <string name="action_settings">Ρυθμίσεις</string>
-  <string name="help_gestures">Αυτή η οθόνη θα βοηθήσει χρήστες με διαφορετικές επιλογές κατά την διάρκεια των κλήσεων. Διαφορετικές ενέργειες θα εξηγηθούν. Παρατεταμένο πάτημα, καταχώρηση, σύρσιμο κ.α.</string>
   <string name="ongoing_call">Εξερχόμενη κλήση</string>
   <string name="hist_in_call">Εισερχόμενη κλήση από %1$s</string>
   <string name="hist_out_call">Εξερχόμενη κλήση από %1$s</string>
@@ -84,7 +75,6 @@
   <string name="message_sending">Μήνυμα αποστέλλεται...</string>
   <string name="time_just_now">Μόλις τώρα</string>
   <string name="permission_read_denied">Η εφαρμογή δεν ήταν σε θέση να διαβάσει τον δίσκο σας. Με αποτέλεσμα να μην δουλεύει σωστά. Σκεφτείτε να δώσετε δικαιώματα στην λειτουργία αυτή</string>
-  <string name="permission_write_denied">Η εφαρμογή δεν ήταν σε θέση να γράψει στον δίσκο σας. Με αποτέλεσμα να μην δουλεύει σωστά. Σκεφτείτε να δώσετε δικαιώματα στην λειτουργία αυτή</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Άδεια πρόσβασης στην κάμερα</string>
   <string name="permission_dialog_camera_message">Οι κλήσεις μέσω βίντεο χρειάζεται την άδεια στην κάμερά  για να δουλέψει. Παρακαλώ σκεφτείτε να την ενεργοποιήσετε.</string>

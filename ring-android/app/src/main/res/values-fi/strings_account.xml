@@ -11,12 +11,10 @@
   <string name="dialog_wait_create_details">Odota kunnes tunnuksesi on lisätty...</string>
   <string name="dialog_warn_ip2ip_account_title">Luo tyhjä SIP tunnus?</string>
   <string name="dialog_warn_ip2ip_account_message">Olet luomassa SIP tunnusta epäkelvolla yhteysosoitteella, pystyt tekemään ja vastaanottamaan vain IP-puheluita. Voit muokata tunnustasi myöhemmin.</string>
-  <string name="help_ring_title">Luo Ring tunnus</string>
   <string name="help_ring">Ring tunnuksella tavoitat ihmiset turvalliseseti hajautetun verkon kautta.</string>
   <string name="help_sip_title">Lisää SIP tunnuksesi</string>
   <string name="help_sip">Määritä olemassa oleva SIP tunnus.</string>
   <string name="create_sip_account">Lisää</string>
-  <string name="share_number">Jaa numero</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Poistetaanko tunnus?</string>
   <string name="account_delete_dialog_message">Tätä toimintoa ei voi perua.</string>
@@ -55,7 +53,6 @@
   <string name="account_credentials_add">Lisää käyttöoikeudet</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Turvallisuus</string>
-  <string name="account_srtp_deactivated">Poistettu käytöstä</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Käytä TLS:ää</string>
@@ -72,17 +69,12 @@
   <string name="account_rtp_min_port">Minimi</string>
   <string name="account_rtp_port_range">RTP porttiväli</string>
   <!--restore/backup-->
-  <string name="account_backup_message">Tallenna tunnuksen asetukset ja käyttäjäoikeudet, salasana salattuna.</string>
-  <string name="account_backup_new_password">Uusi salasana</string>
-  <string name="account_backup_confirm_password">Varmista salasana</string>
   <string name="account_restore_message">Syötä salasana purkaaksesi tiedoton salauksen.</string>
   <string name="account_restore_decryption_password">Salauksen purku salasana</string>
   <string name="restore_backup_wait">Odota hetki...</string>
-  <string name="backup_failed_dialog_msg">Virhe tapahtui</string>
   <string name="error_password_char_count">Vähintään 6 merkkiä</string>
   <string name="error_passwords_not_equals">Salasanat eivät täsmää</string>
   <string name="restore_failed_dialog_msg">Virhe tapahtui</string>
-  <string name="account_export">Vie</string>
   <string name="account_export_end_error_title">Virhe</string>
   <string name="account_new_button">Luo Ring tunnus</string>
   <!--Name registration-->

@@ -8,12 +8,10 @@
   <string name="no_email_app_installed">Fant ingen epost-app.  Installer en for å sende oss en rapport</string>
   <string name="email_chooser_title">Send epost vha...</string>
   <!--RingActivity-->
-  <string name="title_section0">Slå nummer</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Mangler nettverksforbindelse</string>
   <!--AB menus-->
   <string name="ab_account_creation">Ny konto</string>
-  <string name="ab_account_edition_1">Slett</string>
   <string name="ab_action_chat">Tekstmelding</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -25,14 +23,10 @@
   <string name="menu_item_settings">Innstillinger</string>
   <string name="menu_item_about">Om Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Ring</string>
   <string name="dial_number">Slå et nummer</string>
-  <string name="dial_hint">Skriv inn telefonnummer</string>
   <!--History Fragment-->
   <string name="hist_replay_button_stop">Stopp</string>
-  <string name="hist_no_history">Ingen historikk</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Ring %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d samtale</item>
@@ -60,12 +54,10 @@
   <string name="notif_current_call_title">Pågående samtale med %1$s</string>
   <string name="notif_current_call">Pågående samtale</string>
   <!--Call Fragment-->
-  <string name="me">Meg</string>
   <string name="you_txt_prefix">Deg:</string>
   <string name="action_call_attended_transfer">Deltagende overføring</string>
   <string name="action_call_conference">Konferanse</string>
   <string name="action_call_hangup">Legg på</string>
-  <string name="action_settings">Innstillinger</string>
   <string name="ongoing_call">Pågående samtale</string>
   <string name="hist_in_call">Innkommende samtale med %1$s</string>
   <string name="hist_out_call">Utgående samtale med %1$s</string>
@@ -87,7 +79,6 @@
   <string name="message_sending">Sender melding...</string>
   <string name="time_just_now">Akkurat nå</string>
   <string name="permission_read_denied">Denne app-en fikk ikke lov til å lese fra lagringsområdet ditt.  Dermed kan den ikke fungere som det skal.  Vær så snill å vurder om den kan få lov til dette.</string>
-  <string name="permission_write_denied">Denne app-en fikk ikke lov til å skrive til lagringsområdet ditt. Dermed kan den ikke fungere som det skal. Vær så snill å vurder om den kan få lov til dette.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarettigheter</string>
   <string name="permission_dialog_camera_message">Videosamtaler krever tilgang til kameraet for å virke.  Vurder å aktivere det.</string>

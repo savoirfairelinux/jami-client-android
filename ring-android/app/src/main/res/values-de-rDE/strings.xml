@@ -8,12 +8,10 @@
   <string name="no_email_app_installed">Keine E-Mail-App gefunden, installieren Sie eine, um uns einen Bericht zu schicken</string>
   <string name="email_chooser_title">Senden von E-Mails über...</string>
   <!--RingActivity-->
-  <string name="title_section0">Wählen</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Keine Netzwerkkonnektivität</string>
   <!--AB menus-->
   <string name="ab_account_creation">Neues Konto</string>
-  <string name="ab_account_edition_1">Löschen</string>
   <string name="ab_action_chat">Textnachrichten</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -23,15 +21,11 @@
   <string name="menu_item_settings">Einstellungen</string>
   <string name="menu_item_about">Über Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Anrufen</string>
   <string name="dial_number">Nummer wählen</string>
-  <string name="dial_hint">Geben Sie die Telefonnummer ein</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Wiedergeben</string>
   <string name="hist_replay_button_stop">Beenden</string>
-  <string name="hist_no_history">Kein Verlauf</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">%1$s anrufen</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Gespräche</item>
@@ -57,12 +51,9 @@
   <string name="notif_current_call_title">Aktueller Anruf mit %1$s</string>
   <string name="notif_current_call">Aktueller Anruf</string>
   <!--Call Fragment-->
-  <string name="me">Ich</string>
   <string name="you_txt_prefix">Sie:</string>
   <string name="action_call_conference">Konferenz</string>
   <string name="action_call_hangup">Auflegen</string>
-  <string name="action_settings">Einstellungen</string>
-  <string name="help_gestures">Diese Ansicht wird die Benutzer mit verschiedenen Interaktionen während der Gespräche helfen. Verschiedene Aktionen werden beschrieben; Langer Druck, fling, Swype, usw.</string>
   <string name="ongoing_call">Aktiver Anruf</string>
   <string name="hist_in_call">Eingehender Anruf von %1$s</string>
   <string name="hist_out_call">Ausgehende Anruf von %1$s</string>

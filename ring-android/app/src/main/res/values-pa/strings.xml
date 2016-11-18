@@ -4,14 +4,12 @@
   <string name="title_activity_sflphone_home">ਰਿੰਗ</string>
   <!--AB menus-->
   <string name="ab_account_creation">ਨਵਾਂ ਖਾਤਾ</string>
-  <string name="ab_account_edition_1">ਮਿਟਾਓ</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <!--Sections-->
   <string name="menu_item_settings">ਸੈਟਿੰਗ</string>
   <string name="menu_item_about">ਰਿੰਗ ਬਾਰੇ</string>
   <!--Dialing Fragment-->
-  <string name="dial_hint">ਫੋਨ ਨੰਬਰ ਮਿਲਾਓ</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
@@ -21,7 +19,6 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <!--Call Fragment-->
-  <string name="action_settings">ਸੈਟਿੰਗ</string>
   <!--Text messages-->
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->

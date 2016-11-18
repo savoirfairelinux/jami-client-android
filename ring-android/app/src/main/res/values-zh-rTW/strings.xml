@@ -8,12 +8,10 @@
   <string name="no_email_app_installed">沒有找到電子郵件應用程式，請安裝一個來傳送報告給我們</string>
   <string name="email_chooser_title">傳送郵件藉由...</string>
   <!--RingActivity-->
-  <string name="title_section0">撥號</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">沒有網路連接</string>
   <!--AB menus-->
   <string name="ab_account_creation">新增帳號</string>
-  <string name="ab_account_edition_1">刪除</string>
   <string name="ab_action_chat">文字訊息</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -24,10 +22,8 @@
   <string name="menu_item_about">關於 Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">播打一個號碼</string>
-  <string name="dial_hint">輸入電話號碼</string>
   <!--History Fragment-->
   <string name="hist_replay_button_stop">停止</string>
-  <string name="hist_no_history">沒有記錄</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -50,11 +46,9 @@
   <string name="notif_current_call_title">目前通話和 %1$s</string>
   <string name="notif_current_call">目前通話</string>
   <!--Call Fragment-->
-  <string name="me">我</string>
   <string name="you_txt_prefix">你：</string>
   <string name="action_call_conference">會議</string>
   <string name="action_call_hangup">掛斷</string>
-  <string name="action_settings">設定</string>
   <string name="start_error_title">無法啟動 Ring ！</string>
   <string name="action_call_decline">拒絕</string>
   <string name="ab_action_contact_add">加到聯絡人</string>

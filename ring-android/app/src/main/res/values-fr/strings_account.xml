@@ -16,16 +16,10 @@
   <string name="dialog_warn_ip2ip_account_message">Vous êtes sur le point de créer un compte SIP sans avoir fourni un nom d\'hôte correcte.
 Vous pourrez uniquement faire et recevoir des appels directs directs sur IP.
 Vous pouvez modifier le compte plus tard.</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-  </string-array>
-  <string name="help_ring_title">Créer un compte Ring</string>
   <string name="help_ring">Un compte Ring permet de se connecter sécuritairement avec un autre interlocuteur à travers un réseau distribué</string>
   <string name="help_sip_title">Ajouter votre compte SIP</string>
   <string name="help_sip">Configurez un compte SIP existant.</string>
   <string name="create_sip_account">Ajouter</string>
-  <string name="share_number">Partager votre identifiant Ring</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Supprimer le compte ?</string>
   <string name="account_delete_dialog_message">Cette action est irréversible.</string>
@@ -35,7 +29,6 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="normal_devices_titles">Liste des appareils connus liés à votre compte Ring</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Général</string>
-  <string name="account_preferences_devices_tab">Appareils</string>
   <string name="account_basic_category">Réglages basiques</string>
   <string name="account_alias_label">Nom du compte</string>
   <string name="account_hostname_label">Serveur</string>
@@ -77,7 +70,6 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_credentials_add">Ajouter des identifiants</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sécurité</string>
-  <string name="account_srtp_deactivated">Désactivé</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Utiliser le transport TLS</string>
@@ -96,35 +88,18 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Plage de port RTP pour l\'audio</string>
   <!--restore/backup-->
-  <string name="account_backup">Sauvegarder</string>
   <string name="account_restore_account">Restaurer un compte</string>
-  <string name="account_backup_title">sauvegarder un compte</string>
-  <string name="account_restore_title">Restaurer des comptes</string>
-  <string name="account_restore_explanation">Vous pouvez restaurer des comptes précédemment sauvegardés.</string>
-  <string name="account_backup_message">Enregistre les paramètres du compte et les identifiants, en chiffrant le mot de passe.</string>
-  <string name="account_backup_new_password">Nouveau mot de passe</string>
-  <string name="account_backup_confirm_password">Confirmer le mot de passe</string>
   <string name="account_restore_message">Entrer le mot de passe pour déchiffrer le fichier.</string>
   <string name="account_restore_decryption_password">Mot de passe en clair</string>
-  <string name="account_new_device">Ajouter un nouvel appareil</string>
-  <string name="account_new_device_message">Déverrouiller le compte Ring pour lui associer un nouvel appareil.</string>
   <string name="account_new_device_password">Entrez le mot de passe principal pour déverrouiller le compte</string>
   <string name="restore_dialog_title">Restauration</string>
   <string name="restore_backup_wait">Veuillez patienter</string>
-  <string name="backup_dialog_title">Sauvegarder un compte</string>
-  <string name="account_backup_result">Sauvegarde effectuée dans %1$s</string>
-  <string name="backup_failed_dialog_title">Échec de la sauvegarde</string>
-  <string name="backup_failed_dialog_msg">Une erreur s\'est produite</string>
   <string name="error_password_char_count">6 caractères maximales</string>
   <string name="error_passwords_not_equals">Mot de passe erronné</string>
   <string name="restore_failed_dialog_title">Échec de la restauration</string>
   <string name="restore_failed_dialog_msg">Une erreur s\'est produite</string>
-  <string name="account_export">Exporter</string>
   <string name="export_account_wait_title">Merci de patienter...</string>
   <string name="export_account_wait_message">Édition des informations du nouveau compte</string>
-  <string name="account_export_end_pin_title">PIN :</string>
-  <string name="account_export_end_pin_message">Veuillez utiliser ce code PIN et le mot de passe de votre compte pour associer votre nouvel appareil à votre compte Ring. Il est valable pendant 10 minutes.</string>
-  <string name="account_export_end_decryption_title">Erreur de déchiffrement</string>
   <string name="account_export_end_decryption_message">Impossible de déverrouiller votre compte en utilisant le mot de passe fourni.</string>
   <string name="account_export_end_network_title">Erreur de réseau</string>
   <string name="account_export_end_network_message">Impossible d\'exporter le compte sur le réseau. Veuillez vérifier votre connexion. </string>
@@ -141,7 +116,6 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_update_needed">Mise à jour nécessaire</string>
   <string name="account_creation_file_too_big">Fichier trop gros</string>
   <string name="account_cannot_read">Impossible de lire %1$s</string>
-  <string name="account_creation_error">Erreur pendant la création du compte</string>
   <string name="account_cannot_be_found_title">Compte introuvable</string>
   <string name="account_cannot_be_found_message">Le compte n\'a pas pu être trouvé sur le réseau Ring. Veuillez vous assurer qu\'il a été correctement exporté sur Ring depuis un appareil existant et que les identifiants fournis sont corrects.</string>
   <string name="account_no_network_title">Impossible de se connecter au réseau</string>
@@ -151,12 +125,9 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_device_updated_title">Appareil mis à jour</string>
   <string name="account_link_button">Lier cet appareil à un compte</string>
   <string name="account_import_title">Lier à un compte existant</string>
-  <string name="account_link_prompt_password">Entrer votre mot de passe</string>
   <string name="account_link_prompt_pin">Entrer votre code PIN</string>
   <string name="account_wizard_title">Compte Ring</string>
   <string name="account_new_button">Créer un compte Ring</string>
-  <string name="account_link_infos">Pour lier un autre appareil à votre compte, vous devez d\'abord obtenir un code pin. Pour le générer, veuillez aller dans les paramètres de gestion de comptes d\'un autre appareil, choisissez le compte Ring à utiliser et sélectionnez \"lier un autre appareil à ce compte\"</string>
-  <string name="account_new_infos">Veuillez choisir un mot de passe de plus de 6 caractères. Ce mot de passe vous sera demandé pour ajouter un nouvel appareil à votre compte Ring. </string>
   <string name="account_link_export_button">Lier un autre appareil à ce compte</string>
   <string name="account_link_export_info">Pour utiliser ce compte sur un autre appareil, vous devez d\'abord l\'exposer sur Ring. Ceci générera un code PIN que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le code PIN sera valable pendant 10 minutes. \n\nMerci de commencer par entrer votre mot de passe:</string>
   <string name="account_start_export_button">Générer un code PIN</string>
