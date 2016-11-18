@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_d07682d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-18T16:40:25Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "6e8952914a1afd81a7f30c5e94b31e29b96fd89f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_704f8e93",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Uri.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-18T16:40:25Z",
+      "side": 1,
+      "message": "use {}",
+      "revId": "6e8952914a1afd81a7f30c5e94b31e29b96fd89f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ac10518_504a9284",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Uri.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-18T16:40:25Z",
+      "side": 1,
+      "message": "use {}",
+      "revId": "6e8952914a1afd81a7f30c5e94b31e29b96fd89f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
