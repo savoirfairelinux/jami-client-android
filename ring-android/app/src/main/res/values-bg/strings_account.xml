@@ -9,12 +9,10 @@
   <string name="error_field_required">Това поле е задължително</string>
   <string name="dialog_wait_create">Добавяне на акаунт</string>
   <string name="dialog_wait_create_details">Моля, изчакайте докато новият Ви акаунт бъде добавен…</string>
-  <string name="help_ring_title">Създаване на акаунт за Ring</string>
   <string name="help_ring">Акаунтът за Ring Ви позволява да се свързвате безопасно с хора чрез директна връзка през изцяло разпределена мрежа.</string>
   <string name="help_sip_title">Добавяне на акаунт за SIP</string>
   <string name="help_sip">Настройка на съществуващ акаунт за SIP</string>
   <string name="create_sip_account">Добавяне</string>
-  <string name="share_number">Споделяне на номера</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Изтриване на акаунта?</string>
   <string name="account_delete_dialog_message">Това действие е необратимо.</string>
@@ -60,7 +58,6 @@
   <string name="account_credentials_add">Добавяне на идентификационни данни</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Сигурност</string>
-  <string name="account_srtp_deactivated">Изключен</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Използване на TLS</string>
@@ -78,17 +75,12 @@
   <string name="account_rtp_max_port">Максимален</string>
   <string name="account_rtp_min_port">Минимален</string>
   <!--restore/backup-->
-  <string name="account_backup_message">Запазете настройките на акаунта и данните за удостоверяване, шифрирани с парола.</string>
-  <string name="account_backup_new_password">Нова парола</string>
-  <string name="account_backup_confirm_password">Потвърдете паролата</string>
   <string name="account_restore_message">Въведете парола за дешифриране на файла.</string>
   <string name="account_restore_decryption_password">Парола за дешифриране</string>
   <string name="restore_backup_wait">Моля, изчакайте…</string>
-  <string name="backup_failed_dialog_msg">Възникна грешка</string>
   <string name="error_password_char_count">Най-малко 6 знака</string>
   <string name="error_passwords_not_equals">Паролите не съвпадат</string>
   <string name="restore_failed_dialog_msg">Възникна грешка</string>
-  <string name="account_export">Изнасяне</string>
   <string name="account_export_end_error_title">Грешка</string>
   <string name="account_new_button">Създаване на акаунт за Ring</string>
   <!--Name registration-->

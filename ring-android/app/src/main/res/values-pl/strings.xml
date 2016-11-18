@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">Nie znaleziono aplikacji e-mail. Zainstaluj jedną aby wysłać nam raport.</string>
   <string name="email_chooser_title">Wyślij e-mail używając...</string>
   <!--RingActivity-->
-  <string name="title_section0">Wykręć</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Brak połączenia z siecią</string>
   <string name="error_mobile_network_available_but_disabled">Proszę w ustawieniach udzielić dostępu do sieci komórkowej.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nowe konto</string>
-  <string name="ab_account_edition_1">Usuń</string>
   <string name="ab_action_chat">Tekstowe powiadamiania</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -26,15 +24,11 @@
   <string name="menu_item_settings">Ustawienia</string>
   <string name="menu_item_about">o Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Dzwoń</string>
   <string name="dial_number">Wykręć numer</string>
-  <string name="dial_hint">Wpisz numer telefonu</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Powtórz</string>
   <string name="hist_replay_button_stop">Zatrzymaj</string>
-  <string name="hist_no_history">Brak histori</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Zadzwoń do %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Rozmowa</item>
@@ -63,13 +57,10 @@
   <string name="notif_current_call_title">Aktualna rozmowa z %1$s</string>
   <string name="notif_current_call">Aktualna rozmowa</string>
   <!--Call Fragment-->
-  <string name="me">Ja</string>
   <string name="you_txt_prefix">Ty:</string>
   <string name="action_call_attended_transfer">Ogłoszone przełaczenie</string>
   <string name="action_call_conference">Konferencja</string>
   <string name="action_call_hangup">Odłoż słuchawkę</string>
-  <string name="action_settings">Ustawienia</string>
-  <string name="help_gestures">Ten widok pomaga użytkownikom z różnymi interakcjami podczas rozmów. Różne akcje będą opisane; Przytrzymaj, przeciągnij, itd.</string>
   <string name="ongoing_call">Trwa połączenie</string>
   <string name="hist_in_call">Czas przychodzączego połączenia: %1$s</string>
   <string name="hist_out_call">Czas wychodzączego połączenia: %1$s</string>
@@ -91,7 +82,6 @@
   <string name="message_sending">Trwa wysyłanie wiadomości...</string>
   <string name="time_just_now">W tej chwili</string>
   <string name="permission_read_denied">Aplikacja nie może odczytać pamięci. Stąd, nie może funkcjonować prawidłowo. Proszę rozważyć przydzielenie jej uprawnień</string>
-  <string name="permission_write_denied">Aplikacja nie może odczytać pamięci. Stąd, nie może funkcjonować prawidłowo. Proszę rozważyć przydzielenie jej uprawnień</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Uprawnienia do aparatu</string>
   <string name="permission_dialog_camera_message">Wideorozmowa wymaga przyznania uprawnień dla aparatu. Proszę rozważyć odblokowanie jej.</string>

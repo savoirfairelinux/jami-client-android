@@ -34,7 +34,6 @@
   <!--TLS Details-->
   <string name="account_rtp_port_range">Εύρος θυρών RTP ήχου</string>
   <!--restore/backup-->
-  <string name="account_export">Εξαγωγή</string>
   <string name="account_export_end_error_title">Σφάλμα</string>
   <!--Name registration-->
 </resources>

@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">No se ha encontrado ninguna aplicación de correo. Instala una para enviarnos el informe</string>
   <string name="email_chooser_title">Enviar correo usando...</string>
   <!--RingActivity-->
-  <string name="title_section0">Marcar</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Sin conexión a la red</string>
   <string name="error_mobile_network_available_but_disabled">Permite el acceso a la red móvil en el menú de configuración.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Cuenta nueva</string>
-  <string name="ab_account_edition_1">Borrar</string>
   <string name="ab_action_chat">Mensaje de texto</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -26,15 +24,11 @@
   <string name="menu_item_settings">Configuración</string>
   <string name="menu_item_about">Acerca de Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Llamar</string>
   <string name="dial_number">Marcar un Número</string>
-  <string name="dial_hint">Escribir un número de teléfono</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Repetir</string>
   <string name="hist_replay_button_stop">Parar</string>
-  <string name="hist_no_history">No hay historial</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Llamar a %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversacion</item>
@@ -62,13 +56,10 @@
   <string name="notif_current_call_title">Llamada en curso con %1$s</string>
   <string name="notif_current_call">Llamada en curso</string>
   <!--Call Fragment-->
-  <string name="me">Yo</string>
   <string name="you_txt_prefix">Tú:</string>
   <string name="action_call_attended_transfer">Transferencia atendida</string>
   <string name="action_call_conference">Conferencia</string>
   <string name="action_call_hangup">Colgar</string>
-  <string name="action_settings">Configuración</string>
-  <string name="help_gestures">Esta vista ayuda a los usuarios con diferentes interacciones durante las llamadas. Las diferentes acciones se describen a continuación: pulsación larga, función fling y swype del teclado...</string>
   <string name="ongoing_call">Llamada en curso</string>
   <string name="hist_in_call">Llamada entrante de %1$s</string>
   <string name="hist_out_call">Llamada saliente a %1$s</string>
@@ -90,7 +81,6 @@
   <string name="message_sending">Enviando mensaje...</string>
   <string name="time_just_now">En este momento</string>
   <string name="permission_read_denied">La aplicación no puede funcionar correctamente porque tiene permiso para leer tus archivos. Considera darle los permisos necesarios</string>
-  <string name="permission_write_denied">La aplicación no puede funcionar correctamente porque no tiene permiso para modificar tus archivos. Considera otorgarle los permisos necesarios</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permiso de cámara</string>
   <string name="permission_dialog_camera_message">Las conversaciones con vídeo requieren utilizar la cámara. Considera conceder este permiso.</string>

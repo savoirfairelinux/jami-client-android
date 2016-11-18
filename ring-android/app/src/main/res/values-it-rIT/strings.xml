@@ -6,11 +6,9 @@
   <string name="contribute_section">Contributi</string>
   <string name="version_section">Versione</string>
   <!--RingActivity-->
-  <string name="title_section0">Componi</string>
   <string name="error_no_network">Assenza di connessione di rete</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nuovo account</string>
-  <string name="ab_account_edition_1">Cancella</string>
   <string name="ab_action_chat">Messaggiare</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -18,12 +16,9 @@
   <string name="menu_item_home">Home</string>
   <string name="menu_item_settings">Opzioni</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Chiamata</string>
   <string name="dial_number">Chiama un numero</string>
-  <string name="dial_hint">Digita un numero di telefono</string>
   <!--History Fragment-->
   <string name="hist_replay_button_stop">Stop</string>
-  <string name="hist_no_history">Nessuna cronologia</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <string name="home_transfer_complet">Trasferimento completato</string>
@@ -38,10 +33,8 @@
   <string name="notif_incoming_call">Chiamata in ingresso</string>
   <string name="notif_current_call">Chiamata corrente</string>
   <!--Call Fragment-->
-  <string name="me">Io</string>
   <string name="you_txt_prefix">Tu:</string>
   <string name="action_call_conference">Conferenza</string>
-  <string name="action_settings">Opzioni</string>
   <string name="ab_action_speakerphone">Attiva l\'audio</string>
   <string name="ab_action_contact_add">Aggiungi alla rubrica</string>
   <string name="ab_action_contact_add_question">Aggiungi alla rubrica?</string>

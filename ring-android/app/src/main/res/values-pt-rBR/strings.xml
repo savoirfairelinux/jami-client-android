@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">Aplicação de e-mail não encontrada. Instale uma para nos enviar um relatório de erros.</string>
   <string name="email_chooser_title">Enviar e-mail usando...</string>
   <!--RingActivity-->
-  <string name="title_section0">Discar</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Sem conectividade</string>
   <string name="error_mobile_network_available_but_disabled">Por favor, conceda acesso a rede do celular na tela de configurações .</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nova conta</string>
-  <string name="ab_account_edition_1">Deletar</string>
   <string name="ab_action_chat">Mensagens de texto</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -26,15 +24,11 @@
   <string name="menu_item_settings">Configurações</string>
   <string name="menu_item_about">Sobre o Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Chamar</string>
   <string name="dial_number">Disque um número</string>
-  <string name="dial_hint">Digite um número de telefone</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Repetir</string>
   <string name="hist_replay_button_stop">Parar</string>
-  <string name="hist_no_history">Sem histórico</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Ligação %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversa</item>
@@ -62,13 +56,10 @@
   <string name="notif_current_call_title">Chamada atual com %1$s</string>
   <string name="notif_current_call">Chamada atual</string>
   <!--Call Fragment-->
-  <string name="me">Eu</string>
   <string name="you_txt_prefix">Você:</string>
   <string name="action_call_attended_transfer">Transferência atendida</string>
   <string name="action_call_conference">Conferência</string>
   <string name="action_call_hangup">Desligar</string>
-  <string name="action_settings">Configurações</string>
-  <string name="help_gestures">Esta visão irá ajudar os usuários com diferentes interações durante as chamadas. Serão descritas diferentes ações como; Clique longo, fling, Swype etc.</string>
   <string name="ongoing_call">Chamada em andamento</string>
   <string name="hist_in_call">Recebimento de chamada %1$s</string>
   <string name="hist_out_call">Chamada de saída %1$s</string>
@@ -90,7 +81,6 @@
   <string name="message_sending">Enviando mensagem...</string>
   <string name="time_just_now">Agora há pouco</string>
   <string name="permission_read_denied">Não foi permitido acessar o armazenamento. Por isso, o aplicativo não pôde funcionar corretamente. Considere permitir este acesso.</string>
-  <string name="permission_write_denied">Não foi permitido alterar o armazenamento. Por isso, o aplicativo não pôde funcionar corretamente. Considere permitir este acesso.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permissão de câmera</string>
   <string name="permission_dialog_camera_message">Conversas de vídeo requerem permissão para acesso à câmera. Considere habilitá-la.</string>

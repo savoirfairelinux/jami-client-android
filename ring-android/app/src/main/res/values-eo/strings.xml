@@ -2,12 +2,10 @@
 <resources>
   <string name="version_section">Eldono</string>
   <!--RingActivity-->
-  <string name="title_section0">Diski</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Sen reta konekto</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nova konto</string>
-  <string name="ab_account_edition_1">Forigi</string>
   <string name="ab_action_chat">Text messaging</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -19,15 +17,11 @@
   <string name="menu_item_settings">Agordoj</string>
   <string name="menu_item_about">Pri Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Voko</string>
   <string name="dial_number">Diski numeron</string>
-  <string name="dial_hint">Entajpu telefonnumeron</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Reludi</string>
   <string name="hist_replay_button_stop">Stopi</string>
-  <string name="hist_no_history">Sen historio</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Voki %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Konversacio</item>
@@ -55,13 +49,10 @@
   <string name="notif_current_call_title">Aktiva voko kun %1$s</string>
   <string name="notif_current_call">Aktiva voko</string>
   <!--Call Fragment-->
-  <string name="me">Mi</string>
   <string name="you_txt_prefix">Vi:</string>
   <string name="action_call_attended_transfer">Attended Transfer</string>
   <string name="action_call_conference">Konferenco</string>
   <string name="action_call_hangup">Fini vokon</string>
-  <string name="action_settings">Agordoj</string>
-  <string name="help_gestures"> Tiu ĉi vido helpos al uzantoj kun diversaj interagoj dum vokoj. Diversaj agoj priskribatos; Long press, fling, swype etc.</string>
   <string name="ongoing_call">Aktiva voko</string>
   <string name="hist_in_call">Eniranta voko de %1$s</string>
   <string name="hist_out_call">Eliranta voko de %1$s</string>
@@ -83,7 +74,6 @@
   <string name="message_sending">Sendanta mesaĝon…</string>
   <string name="time_just_now">Ĵus</string>
   <string name="permission_read_denied">La aplikaĵo ne permesatis legi vian konservadon. Tial, ĝi ne funkcias ĝuste. Bonvole pripensu permesi ĝin</string>
-  <string name="permission_write_denied">La aplikaĵo ne permesatis skribi en vian konservadon. Tial, ĝi ne funkcias ĝuste. Bonvole pripensu permesi ĝin</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permeso je kamerao</string>
   <string name="permission_dialog_camera_message">Video-konversacioj bezonas permeson je kamerao por funkcii. Bonvole pripensu permesi ĝin.</string>

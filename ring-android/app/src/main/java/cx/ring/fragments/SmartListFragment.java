@@ -615,13 +615,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private void setOverflowMenuVisible(final Menu menu, boolean visible) {
         if (null != menu) {
             MenuItem scanQrMenuItem = menu.findItem(R.id.menu_scan_qr);
-            MenuItem clearHistoryMenuItem = menu.findItem(R.id.menu_clear_history);
 
             if (null != scanQrMenuItem) {
                 scanQrMenuItem.setVisible(visible);
-            }
-            if (null != clearHistoryMenuItem) {
-                clearHistoryMenuItem.setVisible(visible);
             }
         }
     }

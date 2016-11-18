@@ -15,16 +15,10 @@
   <string name="dialog_warn_ip2ip_account_message">Você está prestes a criar uma conta SIP com nenhum nome de host válido.
 Você só será capaz de fazer e receber chamadas IP diretos.
 Você pode editar sua conta depois.</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-  </string-array>
-  <string name="help_ring_title">Criar uma conta no Ring</string>
   <string name="help_ring">Uma conta do Ring permite que você entre em contato com pessoas de forma segura em uma rede peer-to-peer totalmente distribuída.</string>
   <string name="help_sip_title">Adicionar sua conta SIP</string>
   <string name="help_sip">Configurar uma conta SIP existente.</string>
   <string name="create_sip_account">Adicionar</string>
-  <string name="share_number">Compartilhar o número</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Deletar conta?</string>
   <string name="account_delete_dialog_message">Esta ação não pode ser revista.</string>
@@ -34,7 +28,6 @@ Você pode editar sua conta depois.</string>
   <string name="normal_devices_titles">Dispositivos conhecidos conectados à esta conta Ring</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Geral</string>
-  <string name="account_preferences_devices_tab">Dispositivos</string>
   <string name="account_basic_category">Configurações básicas</string>
   <string name="account_alias_label">Nome da conta</string>
   <string name="account_hostname_label">Servidor</string>
@@ -75,7 +68,6 @@ Você pode editar sua conta depois.</string>
   <string name="account_credentials_add">Adicionar credenciais</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Segurança</string>
-  <string name="account_srtp_deactivated">Desativado</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Use transporte TLS</string>
@@ -94,24 +86,14 @@ Você pode editar sua conta depois.</string>
   <string name="account_rtp_min_port">Mínimo</string>
   <string name="account_rtp_port_range">Variação de portas de audio RTP</string>
   <!--restore/backup-->
-  <string name="account_backup_message">Salvar configurações de conta e credenciais, senha criptografada.</string>
-  <string name="account_backup_new_password">Nova senha</string>
-  <string name="account_backup_confirm_password">Confirmar senha</string>
   <string name="account_restore_message">Digite a senha para descriptografar o arquivo.</string>
   <string name="account_restore_decryption_password">Senha de descriptografia</string>
-  <string name="account_new_device">Adicionar novo dispositivo</string>
-  <string name="account_new_device_message">Desbloquear conta Ring para associar novo dispositivo.</string>
   <string name="restore_backup_wait">Por favor, aguarde...</string>
-  <string name="backup_failed_dialog_msg">Um erro ocorreu</string>
   <string name="error_password_char_count">Pelo menos 6 caracteres</string>
   <string name="error_passwords_not_equals">Senhas não correspondem</string>
   <string name="restore_failed_dialog_msg">Um erro ocorreu</string>
-  <string name="account_export">Exportar</string>
   <string name="export_account_wait_title">Por favor, aguarde...</string>
   <string name="export_account_wait_message">Propagando informação da nova conta</string>
-  <string name="account_export_end_pin_title">PIN :</string>
-  <string name="account_export_end_pin_message">Use este PIN junto com a senha de sua conta principal para conectar seu novo dispositivo à sua conta Ring dentro dos próximos 10 minutos.</string>
-  <string name="account_export_end_decryption_title">Erro de decriptação</string>
   <string name="account_export_end_decryption_message">Não foi possível desbloquear sua conta utilizando a senha fornecida.</string>
   <string name="account_export_end_network_title">Erro de rede</string>
   <string name="account_export_end_network_message">Não foi possível exportar a conta na rede. Verifique sua conexão.</string>
@@ -128,7 +110,6 @@ Você pode editar sua conta depois.</string>
   <string name="account_update_needed">Atualização necessária</string>
   <string name="account_creation_file_too_big">Arquivo muito grande</string>
   <string name="account_cannot_read">Não foi possível ler %1$s</string>
-  <string name="account_creation_error">Erro ao criar conta</string>
   <string name="account_cannot_be_found_title">Não foi possível localizar conta</string>
   <string name="account_cannot_be_found_message">Não foi possível localizar a conta na rede Ring.\nCertifique-se de que foi exportada no Ring de um dispositivo existente, e que as informações fornecidas estão corretas.</string>
   <string name="account_no_network_title">Não foi possível conectar-se à rede.</string>

@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">Sähköpostiohjelmaa ei löydetty, asenna sellainen lähettääksesi meille raportin</string>
   <string name="email_chooser_title">Lähetä sähköpostia käyttäen...</string>
   <!--RingActivity-->
-  <string name="title_section0">Numeristo</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ei verkkoyhteyttä</string>
   <string name="error_mobile_network_available_but_disabled">Anna lupa muuttaa verkkoasetuksia asetusruudussa</string>
   <!--AB menus-->
   <string name="ab_account_creation">Uusi tunnus</string>
-  <string name="ab_account_edition_1">Poista</string>
   <string name="ab_action_chat">Tekstiviestittely</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -26,15 +24,11 @@
   <string name="menu_item_settings">Asetukset</string>
   <string name="menu_item_about">Tietoa Ringistä</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Soita</string>
   <string name="dial_number">Valitse numero</string>
-  <string name="dial_hint">Näppäile puhelinnumero</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Toista uudelleen</string>
   <string name="hist_replay_button_stop">Lopeta</string>
-  <string name="hist_no_history">Ei historiaa</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Puhelu %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d keskustelu</item>
@@ -62,13 +56,10 @@
   <string name="notif_current_call_title">Puhelu %1$s</string>
   <string name="notif_current_call">Puhelu</string>
   <!--Call Fragment-->
-  <string name="me">Minä</string>
   <string name="you_txt_prefix">Sinä:</string>
   <string name="action_call_attended_transfer">Yritetty siirto</string>
   <string name="action_call_conference">Kokous</string>
   <string name="action_call_hangup">Katkaise puhelu</string>
-  <string name="action_settings">Asetukset</string>
-  <string name="help_gestures">Tämä näkymä ohjeistaa käyttäjiä puhelunaikaisten eletoimintojen kanssa. Kuten esimerkiksi: pitkä painallus, sinkoaminen, pyyhkäisy ja niin edelleen.</string>
   <string name="ongoing_call">Tämänhetkinen puhelu</string>
   <string name="hist_in_call">Saapuva puhelu %1$s</string>
   <string name="hist_out_call">Lähtevä puhelu %1$s</string>
@@ -90,7 +81,6 @@
   <string name="message_sending">Viestiä lähetetään...</string>
   <string name="time_just_now">Juuri nyt</string>
   <string name="permission_read_denied">Ohjelmalla ei ole oikeuksia lukea massamuistia. </string>
-  <string name="permission_write_denied">Ohjelmalla ei ole kirjoitusoikeuksia massamuistiin.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera oikeudet</string>
   <string name="permission_dialog_camera_message">Videopuhelut vaativat toimiakseen kameran käyttöoikeudet.</string>

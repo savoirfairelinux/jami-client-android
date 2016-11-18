@@ -66,7 +66,6 @@ import cx.ring.R;
 import cx.ring.about.AboutFragment;
 import cx.ring.application.RingApplication;
 import cx.ring.fragments.AccountsManagementFragment;
-import cx.ring.fragments.ContactListFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
@@ -82,8 +81,7 @@ import cx.ring.utils.FileUtils;
 
 public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks,
         RingNavigationFragment.OnNavigationSectionSelected,
-        ActivityCompat.OnRequestPermissionsResultCallback,
-        ContactListFragment.Callbacks {
+        ActivityCompat.OnRequestPermissionsResultCallback {
 
     static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -649,7 +647,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 .addToBackStack(SETTINGS_TAG).commit();
     }
 
-    @Override
     public void onCallContact(final CallContact c) {
         Log.d(TAG, "onCallContact " + c.toString() + " " + c.getId() + " " + c.getKey());
         if (c.getPhones().size() > 1) {
@@ -680,7 +677,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
     }
 
-    @Override
     public void onTextContact(final CallContact c) {
         if (c.getPhones().size() > 1) {
             final CharSequence numbers[] = new CharSequence[c.getPhones().size()];

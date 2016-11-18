@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">Nijedna email aplikacija nije pronađena, instalairajte jednu da biste nam poslali izvješće</string>
   <string name="email_chooser_title">Pošalji mail koristeći...</string>
   <!--RingActivity-->
-  <string name="title_section0">Biraj</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Veza nedostupna</string>
   <string name="error_mobile_network_available_but_disabled">Molimo, dozvolite aplikaciji pristup mobilnim podacima u postavkama.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Novi račun</string>
-  <string name="ab_account_edition_1">Izbriši</string>
   <string name="ab_action_chat">Dopisivanje</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -24,15 +22,11 @@
   <string name="menu_item_settings">Postavke</string>
   <string name="menu_item_about">O Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Nazovi</string>
   <string name="dial_number">Pozovi broj</string>
-  <string name="dial_hint">Utipkajte telefonski broj</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Odgovori</string>
   <string name="hist_replay_button_stop">Prekini</string>
-  <string name="hist_no_history">Nema povijesti</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Zovi %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d razgovor</item>
@@ -60,11 +54,9 @@
   <string name="notif_current_call_title">Trenutni poziv sa %1$s</string>
   <string name="notif_current_call">Trenutni poziv</string>
   <!--Call Fragment-->
-  <string name="me">Ja</string>
   <string name="you_txt_prefix">Ti:</string>
   <string name="action_call_conference">Konferencija</string>
   <string name="action_call_hangup">Poklopi</string>
-  <string name="action_settings">Postavke</string>
   <string name="ongoing_call">Poziv koji je u tijeku</string>
   <string name="hist_in_call">Dolazni poziv od %1$s</string>
   <string name="hist_out_call">Odlazni poziv prema %1$s</string>

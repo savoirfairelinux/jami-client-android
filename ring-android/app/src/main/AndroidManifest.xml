@@ -151,11 +151,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:label="@string/app_name"
             android:screenOrientation="fullUser"
             android:theme="@style/AppThemeBase" />
-        <activity
-            android:name=".client.NewConversationActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="fullUser"
-            android:theme="@style/AppThemeBase" />
 
         <receiver android:name=".service.OutgoingCallHandler">
             <intent-filter>

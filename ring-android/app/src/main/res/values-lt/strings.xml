@@ -11,7 +11,6 @@
   <string name="error_mobile_network_available_but_disabled">Prašome nustatymų ekrane suteikti prieigą prie korinio tinklo.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nauja paskyra</string>
-  <string name="ab_account_edition_1">Ištrinti</string>
   <string name="ab_action_chat">Tekstinis susirašinėjimas</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -23,7 +22,6 @@
   <string name="menu_item_settings">Nustatymai</string>
   <string name="menu_item_about">Apie Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Skambutis</string>
   <!--History Fragment-->
   <string name="hist_replay_button_stop">Stabdyti</string>
   <!--DetailsHistory Fragment-->
@@ -47,10 +45,8 @@
   <string name="notif_current_call_title">Esamas skambutis su %1$s</string>
   <string name="notif_current_call">Esamas skambutis</string>
   <!--Call Fragment-->
-  <string name="me">Aš</string>
   <string name="you_txt_prefix">Jūs:</string>
   <string name="action_call_hangup">Padėti ragelį</string>
-  <string name="action_settings">Nustatymai</string>
   <string name="ongoing_call">Esamas skambutis</string>
   <string name="hist_in_call">%1$s gaunamasis skambutis</string>
   <string name="hist_out_call">%1$s išsiunčiamasis skambutis</string>

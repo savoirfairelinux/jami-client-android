@@ -16,16 +16,10 @@
   <string name="dialog_warn_ip2ip_account_message">Je staat op het punt een SIP-account zonder geldige hostnaam toe te voegen.
 Je zal er enkel directe IP-oproepen mee kunnen maken en ontvangen.
 Je kan je account later bewerken</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-  </string-array>
-  <string name="help_ring_title">Een Ring-account aanmaken</string>
   <string name="help_ring">Een Ring-account stelt je in staat andere mensen veilig te bereiken in peer-to-peer middels een volledig gedistribueerd netwerk.</string>
   <string name="help_sip_title">Je SIP-account toevoegen</string>
   <string name="help_sip">Een bestaande SIP-account configureren</string>
   <string name="create_sip_account">Toevoegen</string>
-  <string name="share_number">Nummer delen</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Account verwijderen?</string>
   <string name="account_delete_dialog_message">Handeling kan niet ongedaan gemaakt worden.</string>
@@ -35,7 +29,6 @@ Je kan je account later bewerken</string>
   <string name="normal_devices_titles">Bekende apparaten gekoppeld aan deze Ring-account</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Algemeen</string>
-  <string name="account_preferences_devices_tab">Apparaten</string>
   <string name="account_basic_category">Basisinstellingen</string>
   <string name="account_alias_label">Accountnaam</string>
   <string name="account_hostname_label">Hostnaam</string>
@@ -77,7 +70,6 @@ Je kan je account later bewerken</string>
   <string name="account_credentials_add">Legitimatie toevoegen</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Beveiliging</string>
-  <string name="account_srtp_deactivated">Uitgeschakeld</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS-transport gebruiken</string>
@@ -96,35 +88,18 @@ Je kan je account later bewerken</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Audio RTP-poortenreeks</string>
   <!--restore/backup-->
-  <string name="account_backup">Reservekopie</string>
   <string name="account_restore_account">Een account herstellen</string>
-  <string name="account_backup_title">Reservekopie van account maken</string>
-  <string name="account_restore_title">Accounts herstellen</string>
-  <string name="account_restore_explanation">Je kan accounts herstellen met een reservekopie</string>
-  <string name="account_backup_message">Accountinstellingen, legitimatie en wachtwoord versleuteld opslaan.</string>
-  <string name="account_backup_new_password">Nieuw wachtwoord</string>
-  <string name="account_backup_confirm_password">Bevestig wachtwoord</string>
   <string name="account_restore_message">Voer wachtwoord in om het bestand te ontsleutelen.</string>
   <string name="account_restore_decryption_password">Ontsleutelingswachtwoord</string>
-  <string name="account_new_device">Nieuw apparaat toevoegen</string>
-  <string name="account_new_device_message">Ontgrendel Ring-account om een nieuw apparaat te koppelen.</string>
   <string name="account_new_device_password">Voer hoofdwachtwoord in om account te ontgrendelen</string>
   <string name="restore_dialog_title">Herstellen</string>
   <string name="restore_backup_wait">Even geduld...</string>
-  <string name="backup_dialog_title">Reservekopie van account maken</string>
-  <string name="account_backup_result">Reservekopie opgeslagen in %1$s</string>
-  <string name="backup_failed_dialog_title">Reservekopie maken mislukt</string>
-  <string name="backup_failed_dialog_msg">Er is een fout opgetreden</string>
   <string name="error_password_char_count">Minimaal 6 tekens</string>
   <string name="error_passwords_not_equals">Wachtwoorden komen niet overeen</string>
   <string name="restore_failed_dialog_title">Herstellen mislukt</string>
   <string name="restore_failed_dialog_msg">Er is een fout opgetreden</string>
-  <string name="account_export">Exporteren</string>
   <string name="export_account_wait_title">Even geduld...</string>
   <string name="export_account_wait_message">Nieuwe accountinformatie wordt gepubliceerd</string>
-  <string name="account_export_end_pin_title">PIN-code:</string>
-  <string name="account_export_end_pin_message">Je kan deze PIN-code samen met het hoofdwachtwoord van je account gedurende 10 minuten gebruiken om een nieuw apparaat aan je Ring-account te koppelen.</string>
-  <string name="account_export_end_decryption_title">Ontsleutelingsfout</string>
   <string name="account_export_end_decryption_message">Kon je account niet ontgrendelen met het opgegeven wachtwoord.</string>
   <string name="account_export_end_network_title">Netwerkfout</string>
   <string name="account_export_end_network_message">Kon account niet exporteren over het netwerk. Controleer je netwerkverbinding.</string>
@@ -141,7 +116,6 @@ Je kan je account later bewerken</string>
   <string name="account_update_needed">Update vereist</string>
   <string name="account_creation_file_too_big">Bestand is te groot</string>
   <string name="account_cannot_read">Kan %1$s niet lezen</string>
-  <string name="account_creation_error">Fout bij aanmaken van account</string>
   <string name="account_cannot_be_found_title">Account kan niet gevonden worden</string>
   <string name="account_cannot_be_found_message">Account kon niet gevonden worden op het Ring-netwerk.\nControleer of de account geëxporteerd is van een bestaand apparaat en dat de ingevoerde gebruikersreferenties correct zijn</string>
   <string name="account_no_network_title">Kan geen verbinding maken met het netwerk</string>
@@ -151,12 +125,9 @@ Je kan je account later bewerken</string>
   <string name="account_device_updated_title">Accountapparaat bijgewerkt</string>
   <string name="account_link_button">Dit apparaat aan een account koppelen</string>
   <string name="account_import_title">Koppelen aan een bestaande account</string>
-  <string name="account_link_prompt_password">Voer je wachtwoord in</string>
   <string name="account_link_prompt_pin">Voer PIN-code in</string>
   <string name="account_wizard_title">Ring-account</string>
   <string name="account_new_button">Een Ring-account aanmaken</string>
-  <string name="account_link_infos">Om een ander apparaat aan deze account te koppelen moet je eerst een PIN-code verkrijgen. Ga om de PIN-code te genereren naar de accountbeheerinstellingen van een vorig apparaat, kies de Ring-account die je wil gebruiken en selecteer \"Een ander apparaat aan deze account koppelen\".</string>
-  <string name="account_new_infos">Kies een wachtwoord met minimaal 6 tekens. Dit wachtwoord wordt gevraagd wanneer je nieuwe apparaten aan je Ring-account toevoegt.</string>
   <string name="account_link_export_button">Een ander apparaat aan deze account koppelen</string>
   <string name="account_link_export_info">Om deze account op andere apparaten te gebruiken moet je deze eerst op Ring blootstellen. Er zal een PIN-code gegenereerd worden die je op het nieuwe apparaat invoert om de account in te stellen. De PIN-code is 10 minuten geldig. \n\nVoer je wachtwoord in om te beginnen:</string>
   <string name="account_start_export_button">PIN-code genereren</string>

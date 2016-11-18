@@ -3,14 +3,12 @@
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <!--AB menus-->
-  <string name="ab_account_edition_1">刪除</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <!--Sections-->
   <string name="menu_item_settings">設定</string>
   <string name="menu_item_about">關於Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">播打</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
@@ -20,7 +18,6 @@
   <!--Notifications-->
   <string name="notif_incoming_call">來電</string>
   <!--Call Fragment-->
-  <string name="action_settings">設定</string>
   <string name="ab_action_contact_add">加到聯絡人</string>
   <!--Text messages-->
   <!--MediaPreferenceFragment-->

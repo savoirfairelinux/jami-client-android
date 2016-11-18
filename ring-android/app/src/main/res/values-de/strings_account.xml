@@ -15,16 +15,10 @@
   <string name="dialog_warn_ip2ip_account_message">Sie sind im Begriff ein SIP-Konto ohne gültigen Hostnamen anzulegen
 Es wird ihnen nur möglich sein direkte IP-Anrufe zu machen und empfangen
 Sie können ihr Konto später bearbeiten</string>
-  <string-array name="accountType">
-    <item>RING</item>
-    <item>SIP</item>
-  </string-array>
-  <string name="help_ring_title">Ein Ring-Konto erstellen</string>
   <string name="help_ring">Ein Ring-Konto erlaubt es ihnen andere Menschen auf sichere Art direkt über ein verteiltes Netzwerk zu erreichen</string>
   <string name="help_sip_title">Ihr SIP-Konto hinzufgügen</string>
   <string name="help_sip">Mit bereits bestehendem SIP-Konto anmelden.</string>
   <string name="create_sip_account">Hinzufügen</string>
-  <string name="share_number">Nummer weitergeben</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Konto lôschen</string>
   <string name="account_delete_dialog_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
@@ -34,7 +28,6 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="normal_devices_titles">Bekannte Geräte die mit diesem Ring Konto verknüpft sind</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allgemein</string>
-  <string name="account_preferences_devices_tab">Geräte</string>
   <string name="account_basic_category">Grundlegende Einstellungen</string>
   <string name="account_alias_label">Kontoname</string>
   <string name="account_hostname_label">Rechnername</string>
@@ -75,7 +68,6 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_credentials_add">Anmeldedaten hinzufügen</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Sicherheit</string>
-  <string name="account_srtp_deactivated">Deaktiviert</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">TLS-Transportverschlüsselung benutzen</string>
@@ -94,24 +86,14 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Audio RTP Portbereich</string>
   <!--restore/backup-->
-  <string name="account_backup_message">Speichere Kontoeinstellungen und Zugangsdaten, verschlüsselt mit Passwort</string>
-  <string name="account_backup_new_password">Neues Passwort</string>
-  <string name="account_backup_confirm_password">Passwort bestätigen</string>
   <string name="account_restore_message">Passwort eingeben um die Datei zu entschlüsseln</string>
   <string name="account_restore_decryption_password">Passwort zum Entschlüsseln</string>
-  <string name="account_new_device">Neues Gerät hinzufügen</string>
-  <string name="account_new_device_message">Ring-Konto entsperren um mit neuem Gerät zu verbinden</string>
   <string name="restore_backup_wait">Bitte warten…</string>
-  <string name="backup_failed_dialog_msg">Ein Fehler ist aufgetreten</string>
   <string name="error_password_char_count">Mindestens 6 Zeichen</string>
   <string name="error_passwords_not_equals">Die Passwörter stimmen nicht überein</string>
   <string name="restore_failed_dialog_msg">Ein Fehler ist aufgetreten</string>
-  <string name="account_export">Export</string>
   <string name="export_account_wait_title">Bitte warten…</string>
   <string name="export_account_wait_message">Neue Konto-Informationen veröffentlichen</string>
-  <string name="account_export_end_pin_title">PIN:</string>
-  <string name="account_export_end_pin_message">Benutzen sie diese PIN zusammen mit ihrem Passwort für ihr Hauptkonto um ihr neues Gerät mit ihrem Ring-Konto in den nächsten 10 Minuten zu verbinden</string>
-  <string name="account_export_end_decryption_title">Entschlüsselungsfehler</string>
   <string name="account_export_end_decryption_message">Ihr Konto konnte mit dem angegebenen Passwort nicht entsperrt werden</string>
   <string name="account_export_end_network_title">Netzwerkfehler</string>
   <string name="account_export_end_network_message">Das Konto konnte nicht in das Netzwerk exportiert werden. Überprüfen sie ihre Verbindung.</string>
@@ -128,7 +110,6 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_update_needed">Aktualisierung durchführen</string>
   <string name="account_creation_file_too_big">Datei ist zu gross</string>
   <string name="account_cannot_read">Kann %1$s nicht lesen</string>
-  <string name="account_creation_error">Fehler beim Erstellen des Kontos</string>
   <string name="account_cannot_be_found_title">Kann Konto nicht finden</string>
   <string name="account_cannot_be_found_message">Konto kann im Ring-Netzwerk nicht gefunden werden.\nStellen sie sicher das es von einem existierenden Konto in Ring exportiert wurde und das die angegebenen Zugansdaten korrekt sind.</string>
   <string name="account_no_network_title">Verbindung mit dem Netzwerk nicht möglich</string>

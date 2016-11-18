@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">Inget e-postprogram hittades, installera ett och skicka en rapport</string>
   <string name="email_chooser_title">Skicka e-post med...</string>
   <!--RingActivity-->
-  <string name="title_section0">Ring upp</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ingen nätverksanslutning</string>
   <string name="error_mobile_network_available_but_disabled">Bevilja tillgång till mobilnätet på inställningssidan.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nytt konto</string>
-  <string name="ab_account_edition_1">Ta bort</string>
   <string name="ab_action_chat">Textmeddelande</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -27,15 +25,11 @@
   <string name="menu_item_share">Dela min kontakt</string>
   <string name="menu_item_about">Om Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Ring upp</string>
   <string name="dial_number">Slå ett nummer</string>
-  <string name="dial_hint">Ange telefonnummer</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Svara</string>
   <string name="hist_replay_button_stop">Stopp</string>
-  <string name="hist_no_history">Ingen historik</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Ring %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d konversation</item>
@@ -63,13 +57,10 @@
   <string name="notif_current_call_title">Aktuellt samtal med %1$s</string>
   <string name="notif_current_call">Aktuellt samtal</string>
   <!--Call Fragment-->
-  <string name="me">Jag</string>
   <string name="you_txt_prefix">Du:</string>
   <string name="action_call_attended_transfer">Bevakad överföring</string>
   <string name="action_call_conference">Konferens</string>
   <string name="action_call_hangup">Lägg på</string>
-  <string name="action_settings">Inställningar</string>
-  <string name="help_gestures">Denna vy hjälper användare med olika slags interaktioner under samtal. Olika åtgärder kommer att beskrivas, som långtryck, snärt, svep etc.</string>
   <string name="ongoing_call">Pågående samtal</string>
   <string name="hist_in_call">Inkommande samtal av %1$s</string>
   <string name="hist_out_call">Utgående samtal av %1$s</string>
@@ -91,7 +82,6 @@
   <string name="message_sending">Skickar meddelande...</string>
   <string name="time_just_now">Just nu</string>
   <string name="permission_read_denied">Appen nekas att läsa från din lagringsplats. Överväg att tilldela appen läsrättigheter, annars kommer den inte att fungera korrekt.</string>
-  <string name="permission_write_denied">Appen nekas att skriva till din lagringsplats. Överväg att tilldela appen skrivrättigheter, annars kommer den inte att fungera korrekt.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarättighet</string>
   <string name="permission_dialog_camera_message">Videokonversationer kräver kamerarättigheter. Överväg att aktivera det.</string>
@@ -122,8 +112,6 @@
   <string name="account_create_title">Skapa ett Ring-konto</string>
   <string name="prompt_new_username">Ange nytt användarnamn</string>
   <string name="help_password_choose">Ange ett starkt lösenord, som du kommer ihåg, för att skydda ditt Ring-konto.</string>
-  <string name="btn_use_existing_account">Använd ett befintligt Ring-konto istället</string>
-  <string name="btn_create_account">Skapa nytt konto istället</string>
   <string name="help_password_enter">Ange ditt huvudsakliga Ring-kontos lösenord</string>
   <string name="help_pin_enter">Ange PIN-koden från ett annat konfigurerat Ring-konto. Använd \"Exportera konto på Ring\", för att få din PIN-kod.</string>
   <string name="account_device_updated_message">Du har lyckats uppdatera ditt Ring-konto.</string>
@@ -135,7 +123,6 @@
   <string name="unknowm_if_empty">Okänd om tom</string>
   <string name="unknown">Okänd</string>
   <!--Share fragment-->
-  <string name="share_label">Tryck på Ring-ID för att dela</string>
   <string name="share_message">Skanna denna QR-kod med den inbyggda skanner som finns i det Ring-program som vill kommunicera med dig.</string>
   <string name="share_your_account_information">Dela min kontaktinformation</string>
 </resources>

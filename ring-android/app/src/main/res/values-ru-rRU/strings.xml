@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">Не найдено приложение электронной почты. Пожалуйста, установите его для отправки нам отчета.</string>
   <string name="email_chooser_title">Отправить почту, используя...</string>
   <!--RingActivity-->
-  <string name="title_section0">Вызвать</string>
   <string name="title_activity_sflphone_home">Звонок</string>
   <string name="error_no_network">Отсутствует сетевое подключение</string>
   <string name="error_mobile_network_available_but_disabled">Пожалуйста, разрешите доступ к мобильной сети в настройках</string>
   <!--AB menus-->
   <string name="ab_account_creation">Новая учетная запись</string>
-  <string name="ab_account_edition_1">Удалить</string>
   <string name="ab_action_chat">Тестовое сообщение</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -26,15 +24,11 @@
   <string name="menu_item_settings">Настройки</string>
   <string name="menu_item_about">О Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Вызов</string>
   <string name="dial_number">Набрать номер</string>
-  <string name="dial_hint">Ввод телефонного номера</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Ответ</string>
   <string name="hist_replay_button_stop">Стоп</string>
-  <string name="hist_no_history">Отсутствует история</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Вызовы %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Беседа</item>
@@ -64,13 +58,10 @@
   <string name="notif_current_call_title">Текущий вызов от %1$s</string>
   <string name="notif_current_call">Текущий вызов</string>
   <!--Call Fragment-->
-  <string name="me">Мне</string>
   <string name="you_txt_prefix">Вы</string>
   <string name="action_call_attended_transfer">Ручной перевод</string>
   <string name="action_call_conference">Конференция</string>
   <string name="action_call_hangup">Завершить</string>
-  <string name="action_settings">Настройки</string>
-  <string name="help_gestures">Эта вид поможет пользователям взаимодействовать во время телефонного разговора. Различные действия будут доступны: Длительное нажатие, интрижка, Swype и т.д.</string>
   <string name="ongoing_call">Текущий вызов</string>
   <string name="hist_in_call">Входящий вызов от %1$s</string>
   <string name="hist_out_call">Исходящий вызов от %1$s</string>
@@ -92,7 +83,6 @@
   <string name="message_sending">Отправка сообщения...</string>
   <string name="time_just_now">В данный момент</string>
   <string name="permission_read_denied">Приложение не имеет прав чтения с накопителя, потому не может функционировать правильно. Пожалуйста, добавьте права доступа к хранилищу данных.</string>
-  <string name="permission_write_denied">Приложение не имеет прав записи в накопитель, потому не может функционировать правильно. Пожалуйста, добавьте права доступа к хранилищу данных.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на использование камеры</string>
   <string name="permission_dialog_camera_message">Необходимо доступ к камере для работы с видеозвонками. Пожалуйста, предоставьте их.</string>

@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">Не знайдено жодного поштового додатку, будь ласка встановіть хоча б один поштовий додаток щоб надіслати нам повідомлення</string>
   <string name="email_chooser_title">Надіслати повідомлення за допомогою...</string>
   <!--RingActivity-->
-  <string name="title_section0">Виклик</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Відсутнє з’єднання з мережею</string>
   <string name="error_mobile_network_available_but_disabled">Будь ласка надайте права доступу для стільникової мережі у меню налаштувань.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Новий аккаунт</string>
-  <string name="ab_account_edition_1">Видалити</string>
   <string name="ab_action_chat">Текстова переписка</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -26,15 +24,11 @@
   <string name="menu_item_settings">Налаштування</string>
   <string name="menu_item_about">Про Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Дзвінок</string>
   <string name="dial_number">Набрати номер</string>
-  <string name="dial_hint">Введіть номер телефону</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Повторити</string>
   <string name="hist_replay_button_stop">Стоп</string>
-  <string name="hist_no_history">Немає історії</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">Виклик %1$s</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d груповий чат</item>
@@ -63,13 +57,10 @@
   <string name="notif_current_call_title">Діючий виклик з %1$s</string>
   <string name="notif_current_call">Діючий виклик</string>
   <!--Call Fragment-->
-  <string name="me">Я</string>
   <string name="you_txt_prefix">Ви:</string>
   <string name="action_call_attended_transfer">Прийняті обміни</string>
   <string name="action_call_conference">Конференція</string>
   <string name="action_call_hangup">Скинути</string>
-  <string name="action_settings">Налаштування</string>
-  <string name="help_gestures">Цей вид допомагає користувачам виконувати різні дії з викликом. Різні дії будуть підписані: довге натискання, свайпи і т.д. </string>
   <string name="ongoing_call">Поточний дзвінок</string>
   <string name="hist_in_call">Вхідний виклик тривалістю %1$s</string>
   <string name="hist_out_call">Вихідний виклик тривалістю %1$s</string>
@@ -91,7 +82,6 @@
   <string name="message_sending">ВІдправка повідомлення</string>
   <string name="time_just_now">Прямо зараз</string>
   <string name="permission_read_denied">Додатоку не було дозволено зчитувати фали з вашого пристрою. Отже, він не може функціонувати належним чином. Будь ласка, розгляньте питання про надання йому такого дозволу</string>
-  <string name="permission_write_denied">Додатоку не було дозволено записувати на ваш пристрій зберігання. Отже, він не може функціонувати належним чином. Будь ласка, розгляньте питання про надання йому такого дозволу</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Дозволи для камери</string>
   <string name="permission_dialog_camera_message">Для здійснення відерозмови необхідно надати дозвіл на роботу камери. Будь ласка, розглянути можливість її увімкнення.</string>

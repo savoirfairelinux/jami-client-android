@@ -8,13 +8,11 @@
   <string name="no_email_app_installed">Nem találtam emailalkalmazást. Telepítsen egyet, hogy jelentést tudjon küldeni nekünk!</string>
   <string name="email_chooser_title">Levél küldése a következővel…</string>
   <!--RingActivity-->
-  <string name="title_section0">Tárcsázás</string>
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Nincs hálózati csatlakozás</string>
   <string name="error_mobile_network_available_but_disabled">Kérem, engedélyezze a mobilhálózat-elérést a beállítások képernyőn!</string>
   <!--AB menus-->
   <string name="ab_account_creation">Új fiók</string>
-  <string name="ab_account_edition_1">Törlés</string>
   <string name="ab_action_chat">Szöveges üzenetek</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -26,15 +24,11 @@
   <string name="menu_item_settings">Beállítások</string>
   <string name="menu_item_about">A Ringről</string>
   <!--Dialing Fragment-->
-  <string name="dial_action_call">Hívás</string>
   <string name="dial_number">Szám tárcsázása</string>
-  <string name="dial_hint">Telefonszám beírása</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Visszajátszás</string>
   <string name="hist_replay_button_stop">Megállítás</string>
-  <string name="hist_no_history">Nincsenek előzmények</string>
   <!--DetailsHistory Fragment-->
-  <string name="detail_hist_call_number">%1$s hívása</string>
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d beszélgetés</item>
@@ -62,12 +56,9 @@
   <string name="notif_current_call_title">Jelenlegi hívás a következővel: %1$s</string>
   <string name="notif_current_call">Jelenlegi hívás</string>
   <!--Call Fragment-->
-  <string name="me">Én</string>
   <string name="you_txt_prefix">Ön:</string>
   <string name="action_call_conference">Konferencia</string>
   <string name="action_call_hangup">Lerak</string>
-  <string name="action_settings">Beállítások</string>
-  <string name="help_gestures">Ez a nézet különféle műveletek intézését segíti elő hívások közben. A különböző műveletek le lesznek írva; Hosszan tart, pöccint, oldalra húz stb.</string>
   <string name="ongoing_call">Folyamatban lévő hívás </string>
   <string name="hist_in_call">Bejövő hívás ennyi ideje: %1$s</string>
   <string name="hist_out_call">Kimenő hívás ennyi ideje: %1$s</string>
@@ -89,7 +80,6 @@
   <string name="message_sending">Üzenet küldése…</string>
   <string name="time_just_now">Éppen most</string>
   <string name="permission_read_denied">Az alkalmazás nem kapott engedélyt a tárhelye olvasásához, így nem képes megfelelően működni. Kérem, fontolja meg ennek az engedélynek a bekapcsolását!</string>
-  <string name="permission_write_denied">Az alkalmazás nem kapott engedélyt a tárhelyére való íráshoz, így nem képes megfelelően működni. Kérem, fontolja meg ennek az engedélynek a bekapcsolását!</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameraengedély</string>
   <string name="permission_dialog_camera_message">A videóhívások igénylik a kameraengedély jelenlétét. Kérem, fontolja meg ennek az engedélynek a bekapcsolását!</string>
