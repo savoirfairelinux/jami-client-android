@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_4c743f9c",
+        "filename": "ring-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-21T18:47:40Z",
+      "side": 1,
+      "message": "Registration failed.",
+      "range": {
+        "startLine": 194,
+        "startChar": 55,
+        "endLine": 194,
+        "endChar": 85
+      },
+      "revId": "468eb201675b372e4a71125c067f30baa636b261",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_2c73f3b2",
+        "filename": "ring-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-21T18:47:40Z",
+      "side": 1,
+      "message": "Please verify provided host and credentials",
+      "range": {
+        "startLine": 194,
+        "startChar": 88,
+        "endLine": 194,
+        "endChar": 135
+      },
+      "revId": "468eb201675b372e4a71125c067f30baa636b261",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_0c6e37ca",
+        "filename": "ring-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-21T18:47:40Z",
+      "side": 1,
+      "message": "registered",
+      "range": {
+        "startLine": 200,
+        "startChar": 57,
+        "endLine": 200,
+        "endChar": 63
+      },
+      "revId": "468eb201675b372e4a71125c067f30baa636b261",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_6c79fb92",
+        "filename": "ring-android/app/src/main/res/values/strings_account.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-21T18:47:40Z",
+      "side": 1,
+      "message": "registered",
+      "range": {
+        "startLine": 201,
+        "startChar": 69,
+        "endLine": 201,
+        "endChar": 75
+      },
+      "revId": "468eb201675b372e4a71125c067f30baa636b261",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
