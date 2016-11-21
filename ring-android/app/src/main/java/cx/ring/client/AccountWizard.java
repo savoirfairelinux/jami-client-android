@@ -470,6 +470,14 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
                 createdAccount = true;
                 break;
         }
+        if(!createdAccount && mAccount.isSip()){
+            dialog.setNegativeButton(R.string.account_sip_register_anyway, new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int id) {
+                    setResult(Activity.RESULT_OK, new Intent());
+                    finish();
+                }
+            });
+        }
         return dialog.show();
     }
 
