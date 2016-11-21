@@ -173,6 +173,7 @@ along with this program; if not, write to the Free Software
     <string name="account_device_updated_title">Account device updated</string>
     <string name="account_sip_success_title">Sip account registered</string>
     <string name="account_sip_success_message">You have successfully registered your Sip account.</string>
+    <string name="account_sip_register_anyway">Register anyway</string>
 
     <string name="account_link_button">Link this device to an account</string>
     <string name="account_import_title">Link to an existing account</string>
