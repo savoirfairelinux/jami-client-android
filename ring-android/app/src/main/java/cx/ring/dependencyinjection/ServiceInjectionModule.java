@@ -26,6 +26,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import javax.inject.Singleton;
 
 import cx.ring.application.RingApplication;
+import cx.ring.services.CallService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DaemonServiceImpl;
 import cx.ring.services.HistoryService;
@@ -83,6 +84,14 @@ public class ServiceInjectionModule {
         mRingApplication.getRingInjectionComponent().inject(daemonService);
         daemonService.loadNativeLibrary();
         return daemonService;
+    }
+
+    @Provides
+    @Singleton
+    CallService provideCallService() {
+        CallService callService = new CallService();
+        mRingApplication.getRingInjectionComponent().inject(callService);
+        return callService;
     }
 
     @Provides
