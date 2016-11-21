@@ -24,7 +24,9 @@ import javax.inject.Singleton;
 import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
 import cx.ring.application.RingApplication;
+import cx.ring.client.ConversationActivity;
 import cx.ring.fragments.SmartListFragment;
+import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.BootReceiver;
 import cx.ring.service.LocalService;
 import cx.ring.services.HistoryServiceImpl;
@@ -33,7 +35,6 @@ import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.ShareFragment;
 import cx.ring.share.SharePresenter;
-import cx.ring.navigation.RingNavigationFragment;
 import dagger.Component;
 
 @Singleton
@@ -42,6 +43,8 @@ public interface RingInjectionComponent {
     void inject(RingApplication app);
 
     void inject(RingNavigationFragment view);
+
+    void inject(ConversationActivity activity);
 
     void inject(AboutFragment fragment);
 

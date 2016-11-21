@@ -69,6 +69,17 @@ public class CallContact {
         return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
     }
 
+    public static CallContact buildUnknown(String to, String address) {
+        ArrayList<Phone> phones = new ArrayList<>();
+        if (address != null) {
+            phones.add(new Phone(address, 0));
+        } else {
+            phones.add(new Phone(to, 0));
+        }
+
+        return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
+    }
+
     public static CallContact buildUnknown(String to, int type) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, type));

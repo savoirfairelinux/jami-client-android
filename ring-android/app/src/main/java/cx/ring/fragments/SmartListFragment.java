@@ -134,7 +134,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     @Inject
     StateService mStateService;
 
-
     final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -313,12 +312,12 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
             if (currentAccount.isSip()) {
                 // sip search
-                displayNewContactRowWithName(query);
+                displayNewContactRowWithName(query, null);
             } else {
 
                 Uri uri = new Uri(query);
                 if (uri.isRingId()) {
-                    displayNewContactRowWithName(query);
+                    displayNewContactRowWithName(query, null);
                 } else {
                     mNewContact.setVisibility(View.GONE);
                 }
@@ -427,6 +426,10 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         if (mSearchMenuItem != null) {
             mSearchMenuItem.collapseActionView();
         }
+
+        // We add the contact to the current State so that we can
+        // get it from whatever part of the app as "an already used contact"
+        mStateService.addContact(c);
 
         Intent intent = new Intent()
                 .setClass(getActivity(), ConversationActivity.class)
@@ -721,12 +724,12 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void onFound(String name, String address) {
-        displayNewContactRowWithName(name);
+        displayNewContactRowWithName(name, address);
     }
 
-    private void displayNewContactRowWithName(String name) {
+    private void displayNewContactRowWithName(String name, String address) {
         ((TextView) mNewContact.findViewById(R.id.display_name)).setText(name);
-        CallContact contact = CallContact.buildUnknown(name);
+        CallContact contact = CallContact.buildUnknown(name, address);
         mNewContact.setTag(contact);
         mNewContact.setVisibility(View.VISIBLE);
     }
@@ -735,7 +738,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public void onInvalidName(String name) {
         Uri uri = new Uri(name);
         if (uri.isRingId()) {
-            displayNewContactRowWithName(name);
+            displayNewContactRowWithName(name, null);
         } else {
             mNewContact.setVisibility(View.GONE);
         }
@@ -745,7 +748,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public void onError(String name, String address) {
         Uri uri = new Uri(address);
         if (uri.isRingId()) {
-            displayNewContactRowWithName(address);
+            displayNewContactRowWithName(name, address);
         } else {
             mNewContact.setVisibility(View.GONE);
         }
