@@ -19,15 +19,21 @@
  */
 package cx.ring.services;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 
 import cx.ring.model.Account;
+import cx.ring.model.CallContact;
+import cx.ring.model.Uri;
 
 public class StateService extends Observable {
 
     private Account mCurrentAccount;
+    private Map<String, CallContact> mContacts;
 
     public StateService() {
+        mContacts = new HashMap<>();
     }
 
     public Account getCurrentAccount() {
@@ -39,4 +45,19 @@ public class StateService extends Observable {
         setChanged();
         notifyObservers();
     }
+
+    public void addContact(CallContact contact) {
+        if (contact == null
+                || contact.getPhones().isEmpty()
+                || contact.getPhones().get(0) == null
+                || contact.getPhones().get(0).getNumber() == null) {
+            return;
+        }
+        mContacts.put(contact.getPhones().get(0).getNumber().toString(), contact);
+    }
+
+    public CallContact getContact(Uri uri) {
+        return mContacts.get(uri.toString());
+    }
+
 }

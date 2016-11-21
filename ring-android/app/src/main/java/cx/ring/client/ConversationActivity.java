@@ -55,10 +55,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.adapters.NumberAdapter;
+import cx.ring.application.RingApplication;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -66,6 +69,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
 import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
+import cx.ring.services.StateService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
@@ -74,6 +78,10 @@ public class ConversationActivity extends AppCompatActivity implements
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
         ContactDetailsTask.DetailsLoadedCallback {
+
+    @Inject
+    StateService mStateService;
+
     private static final String TAG = ConversationActivity.class.getSimpleName();
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
 
@@ -106,6 +114,7 @@ public class ConversationActivity extends AppCompatActivity implements
 
         String conv_id = i.getData().getLastPathSegment();
         Uri number = new Uri(i.getStringExtra("number"));
+
         Log.d(TAG, "getConversation " + conv_id + " " + number);
         Conversation conv = s.getConversation(conv_id);
         if (conv == null) {
@@ -154,6 +163,7 @@ public class ConversationActivity extends AppCompatActivity implements
         Pair<Conversation, Uri> conv = getConversation(mService, getIntent());
         mConversation = conv.first;
         mPreferredNumber = conv.second;
+
         if (mConversation == null) {
             finish();
             return;
@@ -161,6 +171,13 @@ public class ConversationActivity extends AppCompatActivity implements
 
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
+            if (!mConversation.getContact().getPhones().isEmpty()) {
+                CallContact contact = mStateService.getContact(mConversation.getContact().getPhones().get(0).getNumber());
+                if (contact != null) {
+                    mConversation.setContact(contact);
+                }
+            }
+
             ab.setTitle(mConversation.getContact().getDisplayName());
         }
 
@@ -284,6 +301,9 @@ public class ConversationActivity extends AppCompatActivity implements
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Dependency injection
+        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
 
         mMsgEditTxt = (EditText) findViewById(R.id.msg_input_txt);
         mMsgEditTxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
