@@ -165,7 +165,7 @@ along with this program; if not, write to the Free Software
     <string name="account_cannot_read">Can\'t read %1$s</string>
     <string name="account_cannot_be_found_title">Can\'t find account</string>
     <string name="account_cannot_be_found_message">Account couldn\'t be found on the Ring network.\nMake sure it was exported on Ring from an existing device, and that provided credentials are correct.</string>
-    <string name="account_sip_cannot_be_registered_message">Please go to the account settings to edit the provided host and credentials.</string>
+    <string name="account_sip_cannot_be_registered_message">You can continue with the account creation process or edit your information here. Edition is still possible later in the account settings.</string>
     <string name="account_no_network_title">Can\'t connect to the network</string>
     <string name="account_no_network_message">Could not add account because Ring coudn\'t connect to the distributed network. Check your device connectivity.</string>
     <string name="account_device_added_title">Account device added</string>
@@ -173,6 +173,7 @@ along with this program; if not, write to the Free Software
     <string name="account_device_updated_title">Account device updated</string>
     <string name="account_sip_success_title">Sip account registered</string>
     <string name="account_sip_success_message">You have successfully registered your Sip account.</string>
+    <string name="account_sip_register_anyway">Register anyway</string>
 
     <string name="account_link_button">Link this device to an account</string>
     <string name="account_import_title">Link to an existing account</string>

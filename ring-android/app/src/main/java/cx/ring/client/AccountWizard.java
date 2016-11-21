@@ -481,18 +481,18 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
                 default:
                     dialogBuilder.setTitle(R.string.account_sip_success_title)
                             .setMessage(R.string.account_sip_success_message);
+                    createdAccount = true;
                     break;
             }
-            AlertDialog result = dialogBuilder.show();
-            // SIP account are always created, dismiss wizard no matter the state
-            result.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialogInterface) {
-                    setResult(Activity.RESULT_OK, new Intent());
-                    finish();
-                }
-            });
-            return result;
+            if (!createdAccount) {
+                dialogBuilder.setNegativeButton(R.string.account_sip_register_anyway, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        setResult(Activity.RESULT_OK, new Intent());
+                        finish();
+                    }
+                });
+            }
+            return dialogBuilder.show();
         }
 
         private AlertDialog createRingAlertDialog(Context context, String state) {
