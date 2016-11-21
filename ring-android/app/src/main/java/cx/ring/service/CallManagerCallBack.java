@@ -4,17 +4,20 @@ import android.content.Intent;
 import android.util.Log;
 
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 
-import cx.ring.daemon.Callback;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.StringMap;
+import cx.ring.model.DaemonEvent;
 import cx.ring.model.SipCall;
 import cx.ring.utils.ProfileChunk;
 import cx.ring.utils.VCardUtils;
 
-public class CallManagerCallBack extends Callback {
+public class CallManagerCallBack implements Observer {
 
-    private static final String TAG = "CallManagerCallBack";
+    private static final String TAG = CallManagerCallBack.class.getName();
+
     private DRingService mService;
     private ProfileChunk mProfileChunk;
 
@@ -26,7 +29,6 @@ public class CallManagerCallBack extends Callback {
     static public final String CONF_REMOVED = "conf_removed";
     static public final String CONF_CHANGED = "conf_changed";
     static public final String RECORD_STATE_CHANGED = "record_state";
-
     static public final String RTCP_REPORT_RECEIVED = "on_rtcp_report_received";
 
 
@@ -36,40 +38,86 @@ public class CallManagerCallBack extends Callback {
     }
 
     @Override
-    public void callStateChanged(String callID, String newState, int detail_code) {
-        Log.w(TAG, "on_call_state_changed : (" + callID + ", " + newState + ")");
+    public void update(Observable o, Object arg) {
+        if (arg instanceof DaemonEvent) {
+            DaemonEvent event = (DaemonEvent) arg;
+            switch (event.getEventType()) {
+                case CALL_STATE_CHANGED:
+                    callStateChanged(
+                            event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
+                            event.getEventInput(DaemonEvent.EventInput.STATE, String.class),
+                            event.getEventInput(DaemonEvent.EventInput.DETAIL_CODE, Integer.class)
+                    );
+                    break;
+                case INCOMING_CALL:
+                    incomingCall(
+                            event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
+                            event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
+                            event.getEventInput(DaemonEvent.EventInput.FROM, String.class)
+                    );
+                    break;
+                case INCOMING_MESSAGE:
+                    incomingMessage(
+                            event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
+                            event.getEventInput(DaemonEvent.EventInput.FROM, String.class),
+                            event.getEventInput(DaemonEvent.EventInput.MESSAGES, StringMap.class)
+                    );
+                    break;
+                case CONFERENCE_CREATED:
+                    conferenceCreated(event.getEventInput(DaemonEvent.EventInput.CONF_ID, String.class));
+                    break;
+                case CONFERENCE_CHANGED:
+                    conferenceChanged(
+                            event.getEventInput(DaemonEvent.EventInput.CONF_ID, String.class),
+                            event.getEventInput(DaemonEvent.EventInput.STATE, String.class)
+                    );
+                    break;
+                case CONFERENCE_REMOVED:
+                    conferenceRemoved(event.getEventInput(DaemonEvent.EventInput.CONF_ID, String.class));
+                    break;
+                case RECORD_PLAYBACK_FILEPATH:
+                    // todo
+                    break;
+                case RTCP_REPORT_RECEIVED:
+                    onRtcpReportReceived(
+                            event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
+                            event.getEventInput(DaemonEvent.EventInput.STATS, IntegerMap.class));
+                    break;
+                default:
+                    Log.i(TAG, "Unkown daemon event");
+                    break;
+            }
+        }
+    }
+
+    private void callStateChanged(String callId, String newState, int detailCode) {
         if (newState.equals(SipCall.stateToString(SipCall.State.INCOMING)) ||
                 newState.equals(SipCall.stateToString(SipCall.State.OVER))) {
             this.mProfileChunk = null;
         }
         Intent intent = new Intent(CALL_STATE_CHANGED);
-        intent.putExtra("call", callID);
+        intent.putExtra("call", callId);
         intent.putExtra("state", newState);
-        intent.putExtra("detail_code", detail_code);
+        intent.putExtra("detail_code", detailCode);
         mService.sendBroadcast(intent);
     }
 
-    @Override
-    public void incomingCall(String accountID, String callID, String from) {
-        Log.w(TAG, "on_incoming_call(" + accountID + ", " + callID + ", " + from + ")");
+    private void incomingCall(String accountId, String callId, String from) {
         Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
-        toSend.putExtra("call", callID);
-        toSend.putExtra("account", accountID);
+        toSend.putExtra("call", callId);
+        toSend.putExtra("account", accountId);
         toSend.putExtra("from", from);
         toSend.putExtra("resuming", false);
         mService.sendBroadcast(toSend);
     }
 
-    @Override
-    public void conferenceCreated(final String confID) {
-        Log.w(TAG, "CONFERENCE CREATED:" + confID);
+    private void conferenceCreated(final String confId) {
         Intent intent = new Intent(CONF_CREATED);
-        intent.putExtra("conference", confID);
+        intent.putExtra("conference", confId);
         mService.sendBroadcast(intent);
     }
 
-    @Override
-    public void incomingMessage(String call_id, String from, StringMap messages) {
+    private void incomingMessage(String callId, String from, StringMap messages) {
         String msg = null;
         final String textPlainMime = "text/plain";
         final String ringProfileVCardMime = "x-ring/ring.profile.vcard";
@@ -103,7 +151,7 @@ public class CallManagerCallBack extends Callback {
                         String filename = splitFrom[0] + ".vcf";
                         VCardUtils.savePeerProfileToDisk(mProfileChunk.getCompleteProfile(),
                                 filename,
-                                this.mService.getApplicationContext().getFilesDir());
+                                mService.getApplicationContext().getFilesDir());
 
                         Intent intent = new Intent(VCARD_COMPLETED);
                         intent.putExtra("filename", filename);
@@ -122,30 +170,23 @@ public class CallManagerCallBack extends Callback {
         Intent intent = new Intent(INCOMING_TEXT);
         intent.putExtra("txt", msg);
         intent.putExtra("from", from);
-        intent.putExtra("call", call_id);
+        intent.putExtra("call", callId);
         mService.sendBroadcast(intent);
     }
 
-    @Override
-    public void conferenceRemoved(String confID) {
-        Log.i(TAG, "on_conference_removed:");
+    private void conferenceRemoved(String confId) {
         Intent intent = new Intent(CONF_REMOVED);
-        intent.putExtra("conference", confID);
+        intent.putExtra("conference", confId);
         mService.sendBroadcast(intent);
     }
 
-    @Override
-    public void conferenceChanged(String confID, String state) {
-        Log.i(TAG, "on_conference_state_changed:");
-        Log.i(TAG, "State:" + state);
-
+    private void conferenceChanged(String confId, String state) {
         Intent intent = new Intent(CONF_CHANGED);
-        intent.putExtra("conference", confID);
+        intent.putExtra("conference", confId);
         intent.putExtra("state", state);
         mService.sendBroadcast(intent);
     }
 
-    @Override
     public void recordPlaybackFilepath(String id, String filename) {
         Intent intent = new Intent();
         intent.putExtra("call", id);
@@ -153,11 +194,8 @@ public class CallManagerCallBack extends Callback {
         mService.sendBroadcast(intent);
     }
 
-    @Override
-    public void onRtcpReportReceived(String callID, IntegerMap stats) {
-        Log.i(TAG, "on_rtcp_report_received");
+    private void onRtcpReportReceived(String callId, IntegerMap stats) {
         Intent intent = new Intent(RTCP_REPORT_RECEIVED);
         mService.sendBroadcast(intent);
     }
-
 }
