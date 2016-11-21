@@ -58,6 +58,7 @@ import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.Codec;
+import cx.ring.services.CallService;
 import cx.ring.services.DaemonService;
 
 
@@ -65,6 +66,9 @@ public class DRingService extends Service {
 
     @Inject
     DaemonService mDaemonService;
+
+    @Inject
+    CallService mCallService;
 
     @Inject
     ExecutorService mExecutor;
@@ -104,7 +108,7 @@ public class DRingService extends Service {
 
     private void ringerModeChanged(int newMode) {
         boolean mute = newMode == AudioManager.RINGER_MODE_VIBRATE || newMode == AudioManager.RINGER_MODE_SILENT;
-        mDaemonService.muteRingTone(mute);
+        mCallService.muteRingTone(mute);
     }
 
     @Override
@@ -119,10 +123,13 @@ public class DRingService extends Service {
             @Override
             public Boolean call() throws Exception {
                 configurationCallback = new ConfigurationManagerCallback(DRingService.this);
+
                 callManagerCallBack = new CallManagerCallBack(DRingService.this);
+                mCallService.addObserver(callManagerCallBack);
+
                 videoManagerCallback = new VideoManagerCallback(DRingService.this);
 
-                mDaemonService.startDaemon(callManagerCallBack, configurationCallback, videoManagerCallback);
+                mDaemonService.startDaemon(mCallService.getCallbackHandler(), configurationCallback, videoManagerCallback);
 
                 ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
                 registerReceiver(ringerModeListener, RINGER_FILTER);
@@ -434,32 +441,32 @@ public class DRingService extends Service {
 
         @Override
         public String placeCall(final String account, final String number, final boolean video) {
-            return mDaemonService.placeCall(account, number, video);
+            return mCallService.placeCall(account, number, video);
         }
 
         @Override
         public void refuse(final String callID) {
-            mDaemonService.refuse(callID);
+            mCallService.refuse(callID);
         }
 
         @Override
         public void accept(final String callID) {
-            mDaemonService.accept(callID);
+            mCallService.accept(callID);
         }
 
         @Override
         public void hangUp(final String callID) {
-            mDaemonService.hangUp(callID);
+            mCallService.hangUp(callID);
         }
 
         @Override
         public void hold(final String callID) {
-            mDaemonService.hold(callID);
+            mCallService.hold(callID);
         }
 
         @Override
         public void unhold(final String callID) {
-            mDaemonService.unhold(callID);
+            mCallService.unhold(callID);
         }
 
         @Override
@@ -474,17 +481,17 @@ public class DRingService extends Service {
 
         @Override
         public Map<String, String> getCallDetails(final String callID) throws RemoteException {
-            return mDaemonService.getCallDetails(callID);
+            return mCallService.getCallDetails(callID);
         }
 
         @Override
         public void setAudioPlugin(final String audioPlugin) {
-            mDaemonService.setAudioPlugin(audioPlugin);
+            mCallService.setAudioPlugin(audioPlugin);
         }
 
         @Override
         public String getCurrentAudioOutputPlugin() {
-            return mDaemonService.getCurrentAudioOutputPlugin();
+            return mCallService.getCurrentAudioOutputPlugin();
         }
 
         @Override
