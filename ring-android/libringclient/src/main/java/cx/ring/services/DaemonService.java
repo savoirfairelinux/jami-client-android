@@ -32,7 +32,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import cx.ring.daemon.Blob;
 import cx.ring.daemon.Callback;
 import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.Ringservice;
@@ -42,6 +41,7 @@ import cx.ring.daemon.StringVect;
 import cx.ring.daemon.UintVect;
 import cx.ring.daemon.VideoCallback;
 import cx.ring.model.Codec;
+import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.SwigNativeConverter;
 import cx.ring.utils.VCardUtils;
@@ -106,84 +106,6 @@ public class DaemonService {
         }
     }
 
-    private <T> T getFutureResult(Future<T> future) {
-        try {
-            return future.get();
-        } catch (Exception e) {
-            Log.e(TAG, "Error while getting Future value", e);
-        }
-
-        return null;
-    }
-
-    public String placeCall(final String account, final String number, final boolean video) {
-
-        Future<String> result = mExecutor.submit(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                Log.i(TAG, "placeCall() thread running... " + number + " video: " + video);
-                String callId = Ringservice.placeCall(account, number);
-                if (!video) {
-                    Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
-                }
-                return callId;
-            }
-        });
-
-        return getFutureResult(result);
-    }
-
-    public void refuse(final String callID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "refuse() thread running...");
-                Ringservice.refuse(callID);
-                Ringservice.hangUp(callID);
-            }
-        });
-    }
-
-    public void accept(final String callID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "accept() thread running...");
-                Ringservice.accept(callID);
-            }
-        });
-    }
-
-    public void hangUp(final String callID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "hangUp() thread running...");
-                Ringservice.hangUp(callID);
-            }
-        });
-    }
-
-    public void hold(final String callID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "hold() thread running...");
-                Ringservice.hold(callID);
-            }
-        });
-    }
-
-    public void unhold(final String callID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "unhold() thread running...");
-                Ringservice.unhold(callID);
-            }
-        });
-    }
-
     public void sendProfile(final String callId, final String accountId) {
         mExecutor.submit(new Runnable() {
             @Override
@@ -224,47 +146,6 @@ public class DaemonService {
         return mDaemonStarted;
     }
 
-    public Map<String, String> getCallDetails(final String callID) {
-
-        Future<Map<String, String>> result = mExecutor.submit(new Callable<Map<String, String>>() {
-            @Override
-            public Map<String, String> call() throws Exception {
-                Log.i(TAG, "getCallDetails() thread running...");
-                return Ringservice.getCallDetails(callID).toNative();
-            }
-        });
-
-        return getFutureResult(result);
-    }
-
-    public void muteRingTone(boolean mute) {
-        Log.d(TAG, (mute ? "Muting." : "Unmuting.") + " ringtone.");
-        Ringservice.muteRingtone(mute);
-    }
-
-    public void setAudioPlugin(final String audioPlugin) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "setAudioPlugin() thread running...");
-                Ringservice.setAudioPlugin(audioPlugin);
-            }
-        });
-    }
-
-    public String getCurrentAudioOutputPlugin() {
-
-        Future<String> result = mExecutor.submit(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                Log.i(TAG, "getCurrentAudioOutputPlugin() thread running...");
-                return Ringservice.getCurrentAudioOutputPlugin();
-            }
-        });
-
-        return getFutureResult(result);
-    }
-
     public List<String> getAccountList() {
 
         Future<List<String>> result = mExecutor.submit(new Callable<List<String>>() {
@@ -275,7 +156,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public void setAccountOrder(final String order) {
@@ -298,7 +179,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     @SuppressWarnings("unchecked")
@@ -350,7 +231,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public Map<String, String> getAccountTemplate(final String accountType) {
@@ -370,7 +251,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public void removeAccount(final String accountId) {
@@ -393,7 +274,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public Map<String, String> getKnownRingDevices(final String accountId) {
@@ -405,45 +286,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
-    }
-
-    /*************************
-     * Transfer related API
-     *************************/
-
-    public void transfer(final String callID, final String to) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "transfer() thread running...");
-                if (Ringservice.transfer(callID, to)) {
-                    // todo conference is not a priority in Android client for now
-                   /* Bundle bundle = new Bundle();
-                    bundle.putString("CallID", callID);
-                    bundle.putString("State", "HUNGUP");
-                    Intent intent = new Intent(CallManagerCallBack.CALL_STATE_CHANGED);
-                    intent.putExtra("com.savoirfairelinux.sflphone.service.newstate", bundle);
-                    sendBroadcast(intent);*/
-                } else {
-                    Log.i(TAG, "NOT OK");
-                }
-            }
-        });
-    }
-
-    public void attendedTransfer(final String transferID, final String targetID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "attendedTransfer() thread running...");
-                if (Ringservice.attendedTransfer(transferID, targetID)) {
-                    Log.i(TAG, "OK");
-                } else {
-                    Log.i(TAG, "NOT OK");
-                }
-            }
-        });
+        return FutureUtils.getFutureResult(result);
     }
 
     /*************************
@@ -551,7 +394,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public Map<String, ArrayList<String>> getConferenceList() {
@@ -579,7 +422,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public List<String> getParticipantList(final String confID) {
@@ -592,7 +435,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public String getConferenceId(String callID) {
@@ -609,89 +452,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
-    }
-
-    public String getRecordPath() {
-        Future<String> result = mExecutor.submit(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                Log.i(TAG, "getRecordPath() thread running...");
-                return Ringservice.getRecordPath();
-            }
-        });
-
-        return getFutureResult(result);
-    }
-
-    public boolean toggleRecordingCall(final String id) {
-
-        Future<Boolean> result = mExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                Log.i(TAG, "toggleRecordingCall() thread running...");
-                return Ringservice.toggleRecording(id);
-            }
-        });
-
-        return getFutureResult(result);
-    }
-
-    public boolean startRecordedFilePlayback(final String filepath) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "setRecordingCall() thread running...");
-                Ringservice.startRecordedFilePlayback(filepath);
-            }
-        });
-        return false;
-    }
-
-    public void stopRecordedFilePlayback(final String filepath) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "stopRecordedFilePlayback() thread running...");
-                Ringservice.stopRecordedFilePlayback(filepath);
-            }
-        });
-    }
-
-    public void setRecordPath(final String path) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "setRecordPath() " + path + " thread running...");
-                Ringservice.setRecordPath(path);
-            }
-        });
-    }
-
-    public void sendTextMessage(final String callID, final String msg) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "DsendTextMessage() thread running...");
-                StringMap messages = new StringMap();
-                messages.setRaw("text/plain", Blob.fromString(msg));
-                Ringservice.sendTextMessage(callID, messages, "", false);
-            }
-        });
-    }
-
-    public long sendAccountTextMessage(final String accountID, final String to, final String msg) {
-        Future<Long> result = mExecutor.submit(new Callable<Long>() {
-            @Override
-            public Long call() throws Exception {
-                Log.i(TAG, "sendAccountTextMessage() thread running... " + accountID + " " + to + " " + msg);
-                StringMap msgs = new StringMap();
-                msgs.setRaw("text/plain", Blob.fromString(msg));
-                return Ringservice.sendAccountTextMessage(accountID, to, msgs);
-            }
-        });
-
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public List<Codec> getCodecList(final String accountID) {
@@ -727,7 +488,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public Map<String, String> validateCertificatePath(final String accountID, final String certificatePath, final String privateKeyPath, final String privateKeyPass) {
@@ -739,7 +500,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public Map<String, String> validateCertificate(final String accountID, final String certificate) {
@@ -751,7 +512,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public Map<String, String> getCertificateDetailsPath(final String certificatePath) {
@@ -763,7 +524,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public Map<String, String> getCertificateDetails(final String certificateRaw) {
@@ -775,7 +536,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public void setActiveCodecList(final List codecs, final String accountID) {
@@ -792,16 +553,6 @@ public class DaemonService {
         });
     }
 
-    public void playDtmf(final String key) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "playDtmf() thread running...");
-                Ringservice.playDTMF(key);
-            }
-        });
-    }
-
     public Map<String, String> getConference(final String id) {
         Future<Map<String, String>> result = mExecutor.submit(new Callable<Map<String, String>>() {
             @Override
@@ -811,29 +562,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
-    }
-
-    public void setMuted(final boolean mute) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "setMuted() thread running...");
-                Ringservice.muteCapture(mute);
-            }
-        });
-    }
-
-    public boolean isCaptureMuted() {
-        Future<Boolean> result = mExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                Log.i(TAG, "isCaptureMuted() thread running...");
-                return Ringservice.isCaptureMuted();
-            }
-        });
-
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public List<String> getTlsSupportedMethods() {
@@ -851,7 +580,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public void setCredentials(final String accountID, final List creds) {
@@ -886,7 +615,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public int restoreAccounts(final String archivePath, final String password) {
@@ -897,7 +626,7 @@ public class DaemonService {
             }
         });
 
-        return getFutureResult(result);
+        return FutureUtils.getFutureResult(result);
     }
 
     public void connectivityChanged() {

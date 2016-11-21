@@ -31,6 +31,7 @@ import cx.ring.service.BootReceiver;
 import cx.ring.service.DRingService;
 import cx.ring.service.LocalService;
 import cx.ring.service.VideoManagerCallback;
+import cx.ring.services.CallService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeServiceImpl;
 import cx.ring.services.HistoryServiceImpl;
@@ -67,6 +68,8 @@ public interface RingInjectionComponent {
     void inject(DeviceRuntimeServiceImpl service);
 
     void inject(DaemonService service);
+
+    void inject(CallService service);
 
     void inject(SettingsServiceImpl service);
 
