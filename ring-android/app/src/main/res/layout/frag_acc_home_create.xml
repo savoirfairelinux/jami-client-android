@@ -55,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_gravity="center"
+            android:background="@drawable/button_background_dark"
             android:text="@string/account_link_button" />
 
 
@@ -64,6 +65,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@drawable/button_background_dark"
             android:text="@string/account_new_button" />
 
     </LinearLayout>
