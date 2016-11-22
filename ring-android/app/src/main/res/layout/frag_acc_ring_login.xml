@@ -110,10 +110,11 @@
             <Button
                 android:id="@+id/link_button"
                 android:theme="@style/ButtonColoredInverse"
-                android:layout_width="300dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
+                android:background="@drawable/button_background_light"
                 android:text="@string/account_link_button" />
 
         </LinearLayout>
