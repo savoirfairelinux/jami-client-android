@@ -244,8 +244,6 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        //mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), mStateService.getCurrentAccount().getAccountID(), getString(R.string.unknown));
-
         updateUserView();
 
         setupNavigationMenu();
@@ -255,7 +253,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     }
 
     private void setupAccountList() {
-        mAccountAdapter = new AccountAdapter(new ArrayList<Account>());
+        mAccountAdapter = new AccountAdapter(new ArrayList<Account>(), new ArrayList<VCard>());
         mAccountsView.setHasFixedSize(true);
         mAccountAdapter.setOnAccountActionClickedListener(this);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -431,6 +429,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
                 mVCardProfile.removeProperties(RawProperty.class);
                 VCardUtils.saveLocalProfileToDisk(mVCardProfile, mStateService.getCurrentAccount().getAccountID(), getActivity().getFilesDir());
                 updateUserView();
+                updateAccounts(mLocalService.getAccounts());
             }
         });
 
@@ -438,7 +437,12 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     }
 
     public void updateAccounts(List<Account> accounts) {
-        mAccountAdapter.replaceAll(accounts);
+        List<VCard> vcards = new ArrayList<VCard>();
+        for (Account account : accounts) {
+            VCard vcard = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), account.getAccountID(), getString(R.string.unknown));
+            vcards.add(vcard);
+        }
+        mAccountAdapter.replaceAll(accounts, vcards);
         if (accounts.isEmpty()) {
             mNewAccountBtn.setVisibility(View.VISIBLE);
             mSelectedAccountLayout.setVisibility(View.GONE);
