@@ -244,8 +244,6 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        //mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), mStateService.getCurrentAccount().getAccountID(), getString(R.string.unknown));
-
         updateUserView();
 
         setupNavigationMenu();
@@ -255,7 +253,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     }
 
     private void setupAccountList() {
-        mAccountAdapter = new AccountAdapter(new ArrayList<Account>());
+        mAccountAdapter = new AccountAdapter(new ArrayList<Account>(), getActivity());
         mAccountsView.setHasFixedSize(true);
         mAccountAdapter.setOnAccountActionClickedListener(this);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -431,6 +429,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
                 mVCardProfile.removeProperties(RawProperty.class);
                 VCardUtils.saveLocalProfileToDisk(mVCardProfile, mStateService.getCurrentAccount().getAccountID(), getActivity().getFilesDir());
                 updateUserView();
+                updateAccounts(mLocalService.getAccounts());
             }
         });
 
