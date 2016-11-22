@@ -95,9 +95,6 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
     @BindView(R.id.user_photo)
     ImageView mUserImage;
-
-    @BindView(R.id.user_name)
-    TextView mUserName;
     private Bitmap mSourcePhoto;
     private ImageView mProfilePhoto;
     private VCard mVCardProfile;
@@ -165,6 +162,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
     @Override
     public void update(Observable o, Object arg) {
+        updateUserView();
         updateSelectedAccountView();
     }
 
@@ -184,6 +182,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     public void onResume() {
         super.onResume();
         mStateService.addObserver(this);
+        updateUserView();
         updateSelectedAccountView();
     }
 
@@ -253,7 +252,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     }
 
     private void setupAccountList() {
-        mAccountAdapter = new AccountAdapter(new ArrayList<Account>());
+        mAccountAdapter = new AccountAdapter(new ArrayList<Account>(), getActivity());
         mAccountsView.setHasFixedSize(true);
         mAccountAdapter.setOnAccountActionClickedListener(this);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -313,7 +312,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         } else {
             mUserImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null));
         }
-        mUserName.setText(mVCardProfile.getFormattedName().getValue());
+        mSelectedAccountAlias.setText(mVCardProfile.getFormattedName().getValue());
         Log.d(TAG, "User did change, updating user view.");
     }
 
@@ -363,7 +362,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.dialog_profile, null);
 
         final EditText editText = (EditText) view.findViewById(R.id.user_name);
-        editText.setText(mUserName.getText());
+        editText.setText(mSelectedAccountAlias.getText());
         mProfilePhoto = (ImageView) view.findViewById(R.id.profile_photo);
         mProfilePhoto.setImageDrawable(mUserImage.getDrawable());
 
@@ -429,6 +428,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
                 mVCardProfile.removeProperties(RawProperty.class);
                 VCardUtils.saveLocalProfileToDisk(mVCardProfile, mStateService.getCurrentAccount().getAccountID(), getActivity().getFilesDir());
                 updateUserView();
+                updateAccounts(mLocalService.getAccounts());
             }
         });
 
@@ -457,7 +457,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         if (selectedAccount == null) {
             return;
         }
-        mSelectedAccountAlias.setText(selectedAccount.getAlias());
+        mSelectedAccountAlias.setText(mVCardProfile.getFormattedName().getValue());
         if (selectedAccount.isRing()) {
             mSelectedAccountHost.setText(selectedAccount.getUsername());
         } else if (selectedAccount.isSip() && !selectedAccount.isIP2IP()) {
