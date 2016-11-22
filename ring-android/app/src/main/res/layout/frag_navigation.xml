@@ -51,20 +51,6 @@
                     app:backgroundTint="@color/transparent_light"
                     app:fabSize="mini" />
 
-                <TextView
-                    android:id="@+id/user_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/edit_profile"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp"
-                    android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    tools:text="Username" />
-
             </RelativeLayout>
 
 
