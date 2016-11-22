@@ -17,6 +17,11 @@
  */
 package cx.ring.navigation;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,15 +29,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.model.Account;
+import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.VCardUtils;
+import ezvcard.VCard;
 
 class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Account> mDataset;
+    private Context mContext;
 
     private static final int TYPE_ACCOUNT = 0;
     private static final int TYPE_ADD_RING_ACCOUNT = 1;
@@ -49,8 +59,9 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         void onAddAccountSelected();
     }
 
-    AccountAdapter(List<Account> accounts) {
+    AccountAdapter(List<Account> accounts, Context context) {
         mDataset = accounts;
+        mContext = context;
     }
 
     void setOnAccountActionClickedListener(OnAccountActionClicked listener) {
@@ -65,11 +76,14 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private void setAccounts(List<Account> results) {
         mDataset.clear();
         for (Account account : results) {
-                mDataset.add(account);
+            mDataset.add(account);
         }
     }
 
     class AccountView extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        @BindView(R.id.account_photo)
+        ImageView photo;
 
         @BindView(R.id.account_alias)
         TextView alias;
@@ -85,6 +99,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ButterKnife.bind(this, view);
             view.setOnClickListener(this);
         }
+
         @Override
         public void onClick(View v) {
             if (mListener != null) {
@@ -120,6 +135,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             ButterKnife.bind(this, view);
             view.setOnClickListener(this);
         }
+
         @Override
         public void onClick(View v) {
             if (mListener == null) {
@@ -163,7 +179,15 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (getItemViewType(position)) {
             case TYPE_ACCOUNT:
                 Account account = mDataset.get(position);
-                ((AccountView) holder).alias.setText(account.getAlias());
+                VCard vcard = VCardUtils.loadLocalProfileFromDisk(mContext.getFilesDir(), account.getAccountID(), mContext.getString(R.string.unknown));
+                if (!vcard.getPhotos().isEmpty()) {
+                    Bitmap photo = BitmapUtils.cropImageToCircle(vcard.getPhotos().get(0).getData());
+                    ((AccountView) holder).photo.setImageBitmap(photo);
+                } else {
+                    Drawable photo = ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.ic_contact_picture, null);
+                    ((AccountView) holder).photo.setImageDrawable(photo);
+                }
+                ((AccountView) holder).alias.setText(vcard.getFormattedName().getValue());
                 if (account.isRing()) {
                     ((AccountView) holder).host.setText(account.getUsername());
                 } else if (account.isSip() && !account.isIP2IP()) {
