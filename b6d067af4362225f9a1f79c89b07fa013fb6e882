@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_6f2b2d83",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/RingNavigationFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-23T18:54:09Z",
+      "side": 1,
+      "message": "Remove this line",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 170
+      },
+      "revId": "b6d067af4362225f9a1f79c89b07fa013fb6e882",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
