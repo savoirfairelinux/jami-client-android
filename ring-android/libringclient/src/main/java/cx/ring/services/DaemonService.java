@@ -35,6 +35,7 @@ import javax.inject.Inject;
 
 import cx.ring.daemon.Callback;
 import cx.ring.daemon.ConfigurationCallback;
+import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
@@ -70,6 +71,19 @@ public abstract class DaemonService {
     public abstract String provideDefaultVCardName();
 
     public DaemonService() {
+
+    }
+
+    public Callback getDaemonCallbackHandler(CallService.CallbackHandler callCallbackHandler,
+                                             ConferenceService.ConferenceCallbackHandler confCallbackHandler) {
+        DaemonCallback callbackHandler = new DaemonCallback();
+        callbackHandler.setCallbackHandler(callCallbackHandler);
+        callbackHandler.setConferenceCallbackHandler(confCallbackHandler);
+        return callbackHandler;
+    }
+
+    public boolean isStarted() {
+        return mDaemonStarted;
     }
 
     public void startDaemon(final Callback callManagerCallback,
@@ -140,10 +154,6 @@ public abstract class DaemonService {
                 }
             }
         });
-    }
-
-    public boolean isStarted() {
-        return mDaemonStarted;
     }
 
     public List<String> getAccountList() {
@@ -289,172 +299,6 @@ public abstract class DaemonService {
         return FutureUtils.getFutureResult(result);
     }
 
-    /*************************
-     * Conference related API
-     *************************/
-
-    public void removeConference(final String confID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "createConference() thread running...");
-                Ringservice.removeConference(confID);
-            }
-        });
-    }
-
-    public void joinParticipant(final String selCallID, final String dragCallID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "joinParticipant() thread running...");
-                Ringservice.joinParticipant(selCallID, dragCallID);
-                // Generate a CONF_CREATED callback
-            }
-        });
-    }
-
-    public void addParticipant(final String callID, final String confID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "addParticipant() thread running...");
-                Ringservice.addParticipant(callID, confID);
-            }
-        });
-    }
-
-    public void addMainParticipant(final String confID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "addMainParticipant() thread running...");
-                Ringservice.addMainParticipant(confID);
-            }
-        });
-
-    }
-
-    public void detachParticipant(final String callID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "detachParticipant() thread running... " + callID);
-                Ringservice.detachParticipant(callID);
-            }
-        });
-    }
-
-    public void joinConference(final String selConfID, final String dragConfID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "joinConference() thread running...");
-                Ringservice.joinConference(selConfID, dragConfID);
-            }
-        });
-    }
-
-    public void hangUpConference(final String confID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "hangUpConference() thread running...");
-                Ringservice.hangUpConference(confID);
-            }
-        });
-    }
-
-    public void holdConference(final String confID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "holdConference() thread running...");
-                Ringservice.holdConference(confID);
-            }
-        });
-    }
-
-    public void unholdConference(final String confID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "unholdConference() thread running...");
-                Ringservice.unholdConference(confID);
-            }
-        });
-    }
-
-    public boolean isConferenceParticipant(final String callID) {
-        Future<Boolean> result = mExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                Log.i(TAG, "isConferenceParticipant() thread running...");
-                return Ringservice.isConferenceParticipant(callID);
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
-    }
-
-    public Map<String, ArrayList<String>> getConferenceList() {
-
-        Future<Map<String, ArrayList<String>>> result = mExecutor.submit(new Callable<Map<String, ArrayList<String>>>() {
-            @Override
-            public Map<String, ArrayList<String>> call() throws Exception {
-                Log.i(TAG, "DRingService.getConferenceList() thread running...");
-                StringVect callIds = Ringservice.getCallList();
-                HashMap<String, ArrayList<String>> confs = new HashMap<>(callIds.size());
-                for (int i = 0; i < callIds.size(); i++) {
-                    String callId = callIds.get(i);
-                    String confId = Ringservice.getConferenceId(callId);
-                    if (confId == null || confId.isEmpty()) {
-                        confId = callId;
-                    }
-                    ArrayList<String> calls = confs.get(confId);
-                    if (calls == null) {
-                        calls = new ArrayList<>();
-                        confs.put(confId, calls);
-                    }
-                    calls.add(callId);
-                }
-                return confs;
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
-    }
-
-    public List<String> getParticipantList(final String confID) {
-
-        Future<List<String>> result = mExecutor.submit(new Callable<List<String>>() {
-            @Override
-            public List<String> call() throws Exception {
-                Log.i(TAG, "getParticipantList() thread running...");
-                return new ArrayList<>(Ringservice.getParticipantList(confID));
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
-    }
-
-    public String getConferenceId(String callID) {
-        return Ringservice.getConferenceId(callID);
-    }
-
-    public String getConferenceDetails(final String callID) {
-
-        Future<String> result = mExecutor.submit(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                Log.i(TAG, "getConferenceDetails() thread running...");
-                return Ringservice.getConferenceDetails(callID).get("CONF_STATE");
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
-    }
-
     public List<Codec> getCodecList(final String accountID) {
         Future<List<Codec>> result = mExecutor.submit(new Callable<List<Codec>>() {
             @Override
@@ -551,18 +395,6 @@ public abstract class DaemonService {
                 Ringservice.setActiveCodecList(accountID, list);
             }
         });
-    }
-
-    public Map<String, String> getConference(final String id) {
-        Future<Map<String, String>> result = mExecutor.submit(new Callable<Map<String, String>>() {
-            @Override
-            public Map<String, String> call() throws Exception {
-                Log.i(TAG, "getCredentials() thread running...");
-                return Ringservice.getConferenceDetails(id).toNative();
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
     }
 
     public List<String> getTlsSupportedMethods() {
@@ -722,5 +554,60 @@ public abstract class DaemonService {
 
     public void setDefaultVideoDevice(String deviceId) {
         RingserviceJNI.setDefaultDevice(deviceId);
+    }
+
+    class DaemonCallback extends Callback {
+
+        private CallService.CallbackHandler mCallbackHandler;
+        private ConferenceService.ConferenceCallbackHandler mConferenceCallbackHandler;
+
+        void setCallbackHandler(CallService.CallbackHandler callbackHandler) {
+            mCallbackHandler = callbackHandler;
+        }
+
+        void setConferenceCallbackHandler(ConferenceService.ConferenceCallbackHandler callbackHandler) {
+            mConferenceCallbackHandler = callbackHandler;
+        }
+
+        @Override
+        public void callStateChanged(String callId, String newState, int detailCode) {
+            mCallbackHandler.callStateChanged(callId, newState, detailCode);
+        }
+
+        @Override
+        public void incomingCall(String accountId, String callId, String from) {
+            mCallbackHandler.incomingCall(accountId, callId, from);
+        }
+
+        @Override
+        public void incomingMessage(String callId, String from, StringMap messages) {
+            mCallbackHandler.incomingMessage(callId, from, messages);
+        }
+
+        @Override
+        public void conferenceCreated(final String confId) {
+            mConferenceCallbackHandler.conferenceCreated(confId);
+        }
+
+        @Override
+        public void conferenceRemoved(String confId) {
+            mConferenceCallbackHandler.conferenceRemoved(confId);
+        }
+
+        @Override
+        public void conferenceChanged(String confId, String state) {
+            mConferenceCallbackHandler.conferenceChanged(confId, state);
+        }
+
+        @Override
+        public void recordPlaybackFilepath(String id, String filename) {
+            mCallbackHandler.recordPlaybackFilepath(id, filename);
+        }
+
+        @Override
+        public void onRtcpReportReceived(String callId, IntegerMap stats) {
+            mCallbackHandler.onRtcpReportReceived(callId, stats);
+        }
+
     }
 }

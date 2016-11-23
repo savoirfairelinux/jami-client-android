@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
+import cx.ring.daemon.Callback;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.DaemonEvent;
@@ -14,7 +15,7 @@ import cx.ring.model.SipCall;
 import cx.ring.utils.ProfileChunk;
 import cx.ring.utils.VCardUtils;
 
-public class CallManagerCallBack implements Observer {
+public class CallManagerCallBack  extends Callback implements Observer {
 
     private static final String TAG = CallManagerCallBack.class.getName();
 
@@ -89,8 +90,8 @@ public class CallManagerCallBack implements Observer {
             }
         }
     }
-
-    private void callStateChanged(String callId, String newState, int detailCode) {
+    @Override
+    public void callStateChanged(String callId, String newState, int detailCode) {
         if (newState.equals(SipCall.stateToString(SipCall.State.INCOMING)) ||
                 newState.equals(SipCall.stateToString(SipCall.State.OVER))) {
             this.mProfileChunk = null;
@@ -101,8 +102,8 @@ public class CallManagerCallBack implements Observer {
         intent.putExtra("detail_code", detailCode);
         mService.sendBroadcast(intent);
     }
-
-    private void incomingCall(String accountId, String callId, String from) {
+    @Override
+    public void incomingCall(String accountId, String callId, String from) {
         Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
         toSend.putExtra("call", callId);
         toSend.putExtra("account", accountId);
@@ -110,14 +111,14 @@ public class CallManagerCallBack implements Observer {
         toSend.putExtra("resuming", false);
         mService.sendBroadcast(toSend);
     }
-
-    private void conferenceCreated(final String confId) {
+    @Override
+    public void conferenceCreated(final String confId) {
         Intent intent = new Intent(CONF_CREATED);
         intent.putExtra("conference", confId);
         mService.sendBroadcast(intent);
     }
-
-    private void incomingMessage(String callId, String from, StringMap messages) {
+    @Override
+    public void incomingMessage(String callId, String from, StringMap messages) {
         String msg = null;
         final String textPlainMime = "text/plain";
         final String ringProfileVCardMime = "x-ring/ring.profile.vcard";
@@ -173,28 +174,28 @@ public class CallManagerCallBack implements Observer {
         intent.putExtra("call", callId);
         mService.sendBroadcast(intent);
     }
-
-    private void conferenceRemoved(String confId) {
+    @Override
+    public void conferenceRemoved(String confId) {
         Intent intent = new Intent(CONF_REMOVED);
         intent.putExtra("conference", confId);
         mService.sendBroadcast(intent);
     }
-
-    private void conferenceChanged(String confId, String state) {
+    @Override
+    public void conferenceChanged(String confId, String state) {
         Intent intent = new Intent(CONF_CHANGED);
         intent.putExtra("conference", confId);
         intent.putExtra("state", state);
         mService.sendBroadcast(intent);
     }
-
+    @Override
     public void recordPlaybackFilepath(String id, String filename) {
         Intent intent = new Intent();
         intent.putExtra("call", id);
         intent.putExtra("file", filename);
         mService.sendBroadcast(intent);
     }
-
-    private void onRtcpReportReceived(String callId, IntegerMap stats) {
+    @Override
+    public void onRtcpReportReceived(String callId, IntegerMap stats) {
         Intent intent = new Intent(RTCP_REPORT_RECEIVED);
         mService.sendBroadcast(intent);
     }

@@ -28,7 +28,6 @@ import java.util.concurrent.Future;
 import javax.inject.Inject;
 
 import cx.ring.daemon.Blob;
-import cx.ring.daemon.Callback;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
@@ -43,13 +42,13 @@ public class CallService extends Observable {
     @Inject
     ExecutorService mExecutor;
 
-    Callback mCallbackHandler;
+    private CallbackHandler mCallbackHandler;
 
     public CallService(DaemonService daemonService) {
         mCallbackHandler = new CallbackHandler();
     }
 
-    public Callback getCallbackHandler() {
+    public CallbackHandler getCallbackHandler() {
         return mCallbackHandler;
     }
 
@@ -311,10 +310,9 @@ public class CallService extends Observable {
         return FutureUtils.getFutureResult(result);
     }
 
-    private class CallbackHandler extends Callback {
+    class CallbackHandler {
 
-        @Override
-        public void callStateChanged(String callId, String newState, int detailCode) {
+        void callStateChanged(String callId, String newState, int detailCode) {
             Log.d(TAG, "call state changed: " + callId + ", " + newState + ", " + detailCode);
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.CALL_STATE_CHANGED);
@@ -324,8 +322,7 @@ public class CallService extends Observable {
             notifyObservers(event);
         }
 
-        @Override
-        public void incomingCall(String accountId, String callId, String from) {
+        void incomingCall(String accountId, String callId, String from) {
             Log.d(TAG, "incoming call: " + accountId + ", " + callId + ", " + from);
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.INCOMING_CALL);
@@ -335,17 +332,7 @@ public class CallService extends Observable {
             notifyObservers(event);
         }
 
-        @Override
-        public void conferenceCreated(final String confId) {
-            Log.d(TAG, "conference created: " + confId);
-            setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.CONFERENCE_CREATED);
-            event.addEventInput(DaemonEvent.EventInput.CONF_ID, confId);
-            notifyObservers(event);
-        }
-
-        @Override
-        public void incomingMessage(String callId, String from, StringMap messages) {
+        void incomingMessage(String callId, String from, StringMap messages) {
             Log.d(TAG, "incoming message: " + callId + ", " + from);
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.INCOMING_MESSAGE);
@@ -355,33 +342,12 @@ public class CallService extends Observable {
             notifyObservers(event);
         }
 
-        @Override
-        public void conferenceRemoved(String confId) {
-            Log.d(TAG, "conference removed: " + confId);
-            setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.CONFERENCE_REMOVED);
-            event.addEventInput(DaemonEvent.EventInput.CONF_ID, confId);
-            notifyObservers(event);
-        }
-
-        @Override
-        public void conferenceChanged(String confId, String state) {
-            Log.d(TAG, "conference changed: " + confId + ", " + state);
-            setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.CONFERENCE_CHANGED);
-            event.addEventInput(DaemonEvent.EventInput.CONF_ID, confId);
-            event.addEventInput(DaemonEvent.EventInput.STATE, state);
-            notifyObservers(event);
-        }
-
-        @Override
-        public void recordPlaybackFilepath(String id, String filename) {
+        void recordPlaybackFilepath(String id, String filename) {
             Log.d(TAG, "record playback filepath: " + id + ", " + filename);
             // todo needs more explainations on that
         }
 
-        @Override
-        public void onRtcpReportReceived(String callId, IntegerMap stats) {
+        void onRtcpReportReceived(String callId, IntegerMap stats) {
             Log.i(TAG, "on RTCP report received: " + callId);
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.CONFERENCE_CHANGED);
