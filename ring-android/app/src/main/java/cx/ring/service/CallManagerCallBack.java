@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
-import cx.ring.daemon.Callback;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.DaemonEvent;
@@ -15,7 +14,7 @@ import cx.ring.model.SipCall;
 import cx.ring.utils.ProfileChunk;
 import cx.ring.utils.VCardUtils;
 
-public class CallManagerCallBack  extends Callback implements Observer {
+public class CallManagerCallBack implements Observer {
 
     private static final String TAG = CallManagerCallBack.class.getName();
 
@@ -40,58 +39,60 @@ public class CallManagerCallBack  extends Callback implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof DaemonEvent) {
-            DaemonEvent event = (DaemonEvent) arg;
-            switch (event.getEventType()) {
-                case CALL_STATE_CHANGED:
-                    callStateChanged(
-                            event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
-                            event.getEventInput(DaemonEvent.EventInput.STATE, String.class),
-                            event.getEventInput(DaemonEvent.EventInput.DETAIL_CODE, Integer.class)
-                    );
-                    break;
-                case INCOMING_CALL:
-                    incomingCall(
-                            event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
-                            event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
-                            event.getEventInput(DaemonEvent.EventInput.FROM, String.class)
-                    );
-                    break;
-                case INCOMING_MESSAGE:
-                    incomingMessage(
-                            event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
-                            event.getEventInput(DaemonEvent.EventInput.FROM, String.class),
-                            event.getEventInput(DaemonEvent.EventInput.MESSAGES, StringMap.class)
-                    );
-                    break;
-                case CONFERENCE_CREATED:
-                    conferenceCreated(event.getEventInput(DaemonEvent.EventInput.CONF_ID, String.class));
-                    break;
-                case CONFERENCE_CHANGED:
-                    conferenceChanged(
-                            event.getEventInput(DaemonEvent.EventInput.CONF_ID, String.class),
-                            event.getEventInput(DaemonEvent.EventInput.STATE, String.class)
-                    );
-                    break;
-                case CONFERENCE_REMOVED:
-                    conferenceRemoved(event.getEventInput(DaemonEvent.EventInput.CONF_ID, String.class));
-                    break;
-                case RECORD_PLAYBACK_FILEPATH:
-                    // todo
-                    break;
-                case RTCP_REPORT_RECEIVED:
-                    onRtcpReportReceived(
-                            event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
-                            event.getEventInput(DaemonEvent.EventInput.STATS, IntegerMap.class));
-                    break;
-                default:
-                    Log.i(TAG, "Unkown daemon event");
-                    break;
-            }
+        if (!(arg instanceof DaemonEvent)) {
+            return;
+        }
+
+        DaemonEvent event = (DaemonEvent) arg;
+        switch (event.getEventType()) {
+            case CALL_STATE_CHANGED:
+                callStateChanged(
+                        event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.STATE, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.DETAIL_CODE, Integer.class)
+                );
+                break;
+            case INCOMING_CALL:
+                incomingCall(
+                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.FROM, String.class)
+                );
+                break;
+            case INCOMING_MESSAGE:
+                incomingMessage(
+                        event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.FROM, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.MESSAGES, StringMap.class)
+                );
+                break;
+            case CONFERENCE_CREATED:
+                conferenceCreated(event.getEventInput(DaemonEvent.EventInput.CONF_ID, String.class));
+                break;
+            case CONFERENCE_CHANGED:
+                conferenceChanged(
+                        event.getEventInput(DaemonEvent.EventInput.CONF_ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.STATE, String.class)
+                );
+                break;
+            case CONFERENCE_REMOVED:
+                conferenceRemoved(event.getEventInput(DaemonEvent.EventInput.CONF_ID, String.class));
+                break;
+            case RECORD_PLAYBACK_FILEPATH:
+                // todo
+                break;
+            case RTCP_REPORT_RECEIVED:
+                onRtcpReportReceived(
+                        event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.STATS, IntegerMap.class));
+                break;
+            default:
+                Log.i(TAG, "Unkown daemon event");
+                break;
         }
     }
-    @Override
-    public void callStateChanged(String callId, String newState, int detailCode) {
+
+    private void callStateChanged(String callId, String newState, int detailCode) {
         if (newState.equals(SipCall.stateToString(SipCall.State.INCOMING)) ||
                 newState.equals(SipCall.stateToString(SipCall.State.OVER))) {
             this.mProfileChunk = null;
@@ -102,8 +103,8 @@ public class CallManagerCallBack  extends Callback implements Observer {
         intent.putExtra("detail_code", detailCode);
         mService.sendBroadcast(intent);
     }
-    @Override
-    public void incomingCall(String accountId, String callId, String from) {
+
+    private void incomingCall(String accountId, String callId, String from) {
         Intent toSend = new Intent(CallManagerCallBack.INCOMING_CALL);
         toSend.putExtra("call", callId);
         toSend.putExtra("account", accountId);
@@ -111,14 +112,14 @@ public class CallManagerCallBack  extends Callback implements Observer {
         toSend.putExtra("resuming", false);
         mService.sendBroadcast(toSend);
     }
-    @Override
-    public void conferenceCreated(final String confId) {
+
+    private void conferenceCreated(final String confId) {
         Intent intent = new Intent(CONF_CREATED);
         intent.putExtra("conference", confId);
         mService.sendBroadcast(intent);
     }
-    @Override
-    public void incomingMessage(String callId, String from, StringMap messages) {
+
+    private void incomingMessage(String callId, String from, StringMap messages) {
         String msg = null;
         final String textPlainMime = "text/plain";
         final String ringProfileVCardMime = "x-ring/ring.profile.vcard";
@@ -174,28 +175,28 @@ public class CallManagerCallBack  extends Callback implements Observer {
         intent.putExtra("call", callId);
         mService.sendBroadcast(intent);
     }
-    @Override
-    public void conferenceRemoved(String confId) {
+
+    private void conferenceRemoved(String confId) {
         Intent intent = new Intent(CONF_REMOVED);
         intent.putExtra("conference", confId);
         mService.sendBroadcast(intent);
     }
-    @Override
-    public void conferenceChanged(String confId, String state) {
+
+    private void conferenceChanged(String confId, String state) {
         Intent intent = new Intent(CONF_CHANGED);
         intent.putExtra("conference", confId);
         intent.putExtra("state", state);
         mService.sendBroadcast(intent);
     }
-    @Override
-    public void recordPlaybackFilepath(String id, String filename) {
+
+    private void recordPlaybackFilepath(String id, String filename) {
         Intent intent = new Intent();
         intent.putExtra("call", id);
         intent.putExtra("file", filename);
         mService.sendBroadcast(intent);
     }
-    @Override
-    public void onRtcpReportReceived(String callId, IntegerMap stats) {
+
+    private void onRtcpReportReceived(String callId, IntegerMap stats) {
         Intent intent = new Intent(RTCP_REPORT_RECEIVED);
         mService.sendBroadcast(intent);
     }
