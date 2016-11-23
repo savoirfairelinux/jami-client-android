@@ -32,18 +32,44 @@ public class DaemonEvent {
         CONFERENCE_REMOVED,
         CONFERENCE_CHANGED,
         RECORD_PLAYBACK_FILEPATH,
-        RTCP_REPORT_RECEIVED
+        RTCP_REPORT_RECEIVED,
+        VOLUME_CHANGED,
+        ACCOUNTS_CHANGED,
+        STUN_STATUS_FAILURE,
+        REGISTRATION_STATE_CHANGED,
+        INCOMING_ACCOUNT_MESSAGE,
+        ACCOUNT_MESSAGE_STATUS_CHANGED,
+        ERROR_ALERT,
+        GET_HARDWARE_AUDIO_FORMAT,
+        GET_APP_DATA_PATH,
+        KNOWN_DEVICES_CHANGED,
+        EXPORT_ON_RING_ENDED,
+        NAME_REGISTRATION_ENDED,
+        REGISTERED_NAME_FOUND
     }
 
     public enum EventInput {
         ACCOUNT_ID,
         CALL_ID,
         CONF_ID,
+        MESSAGE_ID,
         FROM,
+        TO,
         DETAIL_CODE,
+        DETAIL_STRING,
         STATE,
         MESSAGES,
-        STATS
+        STATS,
+        DEVICE,
+        DEVICES,
+        VALUE,
+        ALERT,
+        AUDIO_FORMATS,
+        NAME,
+        PATHS,
+        CODE,
+        PIN,
+        ADDRESS
     }
 
     private EventType mType;
