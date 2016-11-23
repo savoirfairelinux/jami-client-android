@@ -34,7 +34,6 @@ import android.hardware.Camera;
 import android.media.AudioManager;
 import android.os.HandlerThread;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.Surface;
@@ -57,8 +56,10 @@ import javax.inject.Inject;
 import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
 import cx.ring.daemon.Callback;
+import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.Codec;
+import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.DaemonService;
@@ -76,6 +77,9 @@ public class DRingService extends Service {
     ConferenceService mConferenceService;
 
     @Inject
+    AccountService mAccountService;
+
+    @Inject
     ExecutorService mExecutor;
 
     static final String TAG = DRingService.class.getName();
@@ -85,10 +89,14 @@ public class DRingService extends Service {
     static public final String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
     static public final String VIDEO_EVENT = BuildConfig.APPLICATION_ID + ".event.VIDEO_EVENT";
 
-    private ConfigurationManagerCallback configurationCallback;
-    private CallManagerCallBack callManagerCallBack;
-    private VideoManagerCallback videoManagerCallback;
-    private Callback daemonCallback;
+    // Android Specific callbacks handlers. The rely on low level service notifications
+    private ConfigurationManagerCallback mConfigurationCallback;
+    private CallManagerCallBack mCallManagerCallBack;
+    private VideoManagerCallback mVideoManagerCallback;
+
+    // true Daemon callbacks handlers. The notify the Android ones
+    private Callback mCallAndConferenceCallbackHandler;
+    private ConfigurationCallback mAccountCallbackHandler;
 
     class Shm {
         String id;
@@ -125,32 +133,30 @@ public class DRingService extends Service {
         // dependency injection
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
 
-        /*final DaemonCallback callback = new DaemonCallback();
-        callback.setCallbackHandler(mCallService.getCallbackHandler());
-        callback.setConferenceCallbackHandler(mConferenceService.getCallbackHandler());*/
-
         Future<Boolean> startResult = mExecutor.submit(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
-                configurationCallback = new ConfigurationManagerCallback(DRingService.this);
+                // Android specific callbacks handlers (rely on pure Java low level Services callbacks handlers as they
+                // observe them)
+                mConfigurationCallback = new ConfigurationManagerCallback(DRingService.this);
+                mCallManagerCallBack = new CallManagerCallBack(DRingService.this);
+                mVideoManagerCallback = new VideoManagerCallback(DRingService.this);
 
-                callManagerCallBack = new CallManagerCallBack(DRingService.this);
-
-                // daemonCallback is a wrapper to handle callCallbacks and ConferenceCallbacks
-                daemonCallback = mDaemonService.getDaemonCallbackHandler(
+                // mCallAndConferenceCallbackHandler is a wrapper to handle CallCallbacks and ConferenceCallbacks
+                mCallAndConferenceCallbackHandler = mDaemonService.getDaemonCallbackHandler(
                         mCallService.getCallbackHandler(),
                         mConferenceService.getCallbackHandler());
-                // callManagerCallBack observes Call ans Conference Service (these services are
-                // notified by the daemon callbacks)
-                mCallService.addObserver(callManagerCallBack);
-                mConferenceService.addObserver(callManagerCallBack);
+                mAccountCallbackHandler = mAccountService.getCallbackHandler();
 
-                videoManagerCallback = new VideoManagerCallback(DRingService.this);
+                // Android
+                mCallService.addObserver(mCallManagerCallBack);
+                mConferenceService.addObserver(mCallManagerCallBack);
+                mAccountService.addObserver(mConfigurationCallback);
 
                 mDaemonService.startDaemon(
-                        daemonCallback,
-                        configurationCallback,
-                        videoManagerCallback);
+                        mCallAndConferenceCallbackHandler,
+                        mAccountCallbackHandler,
+                        mVideoManagerCallback);
 
                 ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
                 registerReceiver(ringerModeListener, RINGER_FILTER);
@@ -159,7 +165,7 @@ public class DRingService extends Service {
                 intent.putExtra("connected", mDaemonService.isStarted());
                 sendBroadcast(intent);
 
-                videoManagerCallback.init();
+                mVideoManagerCallback.init();
 
                 return true;
             }
@@ -187,9 +193,9 @@ public class DRingService extends Service {
             public Boolean call() throws Exception {
                 unregisterReceiver(ringerModeListener);
                 mDaemonService.stopDaemon();
-                configurationCallback = null;
-                callManagerCallBack = null;
-                videoManagerCallback = null;
+                mConfigurationCallback = null;
+                mCallManagerCallBack = null;
+                mVideoManagerCallback = null;
                 Intent intent = new Intent(DRING_CONNECTION_CHANGED);
                 intent.putExtra("connected", mDaemonService.isStarted());
                 sendBroadcast(intent);
@@ -214,16 +220,6 @@ public class DRingService extends Service {
         intent.putExtra("connected", mDaemonService.isStarted());
         sendBroadcast(intent);
         return mBinder;
-    }
-
-    private static Looper createLooper() {
-        if (executorThread == null) {
-            Log.d(TAG, "Creating new mHandler thread");
-            // ADT gives a fake warning due to bad parse rule.
-            executorThread = new HandlerThread("DRingService.Executor");
-            executorThread.start();
-        }
-        return executorThread.getLooper();
     }
 
     public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
@@ -491,7 +487,7 @@ public class DRingService extends Service {
         }
 
         public void sendProfile(final String callId, final String accountId) {
-            mDaemonService.sendProfile(callId, accountId);
+            mAccountService.sendProfile(callId, accountId);
         }
 
         @Override
@@ -516,65 +512,65 @@ public class DRingService extends Service {
 
         @Override
         public List<String> getAccountList() {
-            return mDaemonService.getAccountList();
+            return mAccountService.getAccountList();
         }
 
         @Override
         public void setAccountOrder(final String order) {
-            mDaemonService.setAccountOrder(order);
+            mAccountService.setAccountOrder(order);
         }
 
         @Override
         public Map<String, String> getAccountDetails(final String accountID) {
-            return mDaemonService.getAccountDetails(accountID);
+            return mAccountService.getAccountDetails(accountID);
         }
 
         @SuppressWarnings("unchecked")
         // Hashmap runtime cast
         @Override
         public void setAccountDetails(final String accountId, final Map map) {
-            mDaemonService.setAccountDetails(accountId, map);
+            mAccountService.setAccountDetails(accountId, map);
         }
 
         @Override
         public void setAccountActive(final String accountId, final boolean active) {
-            mDaemonService.setAccountActive(accountId, active);
+            mAccountService.setAccountActive(accountId, active);
         }
 
         @Override
         public void setAccountsActive(final boolean active) {
-            mDaemonService.setAccountsActive(active);
+            mAccountService.setAccountsActive(active);
         }
 
         @Override
         public Map<String, String> getVolatileAccountDetails(final String accountId) {
-            return mDaemonService.getVolatileAccountDetails(accountId);
+            return mAccountService.getVolatileAccountDetails(accountId);
         }
 
         @Override
         public Map<String, String> getAccountTemplate(final String accountType) throws RemoteException {
-            return mDaemonService.getAccountTemplate(accountType);
+            return mAccountService.getAccountTemplate(accountType);
         }
 
         @SuppressWarnings("unchecked")
         // Hashmap runtime cast
         @Override
         public String addAccount(final Map map) {
-            return mDaemonService.addAccount(map);
+            return mAccountService.addAccount(map);
         }
 
         @Override
         public void removeAccount(final String accountId) {
-            mDaemonService.removeAccount(accountId);
+            mAccountService.removeAccount(accountId);
         }
 
         @Override
         public String exportOnRing(final String accountId, final String password) {
-            return mDaemonService.exportOnRing(accountId, password);
+            return mAccountService.exportOnRing(accountId, password);
         }
 
         public Map<String, String> getKnownRingDevices(final String accountId) {
-            return mDaemonService.getKnownRingDevices(accountId);
+            return mAccountService.getKnownRingDevices(accountId);
         }
 
         /*************************
@@ -702,32 +698,32 @@ public class DRingService extends Service {
 
         @Override
         public List<Codec> getCodecList(final String accountID) throws RemoteException {
-            return mDaemonService.getCodecList(accountID);
+            return mAccountService.getCodecList(accountID);
         }
 
         @Override
         public Map<String, String> validateCertificatePath(final String accountID, final String certificatePath, final String privateKeyPath, final String privateKeyPass) throws RemoteException {
-            return mDaemonService.validateCertificatePath(accountID, certificatePath, privateKeyPath, privateKeyPass);
+            return mAccountService.validateCertificatePath(accountID, certificatePath, privateKeyPath, privateKeyPass);
         }
 
         @Override
         public Map<String, String> validateCertificate(final String accountID, final String certificate) throws RemoteException {
-            return mDaemonService.validateCertificate(accountID, certificate);
+            return mAccountService.validateCertificate(accountID, certificate);
         }
 
         @Override
         public Map<String, String> getCertificateDetailsPath(final String certificatePath) throws RemoteException {
-            return mDaemonService.getCertificateDetailsPath(certificatePath);
+            return mAccountService.getCertificateDetailsPath(certificatePath);
         }
 
         @Override
         public Map<String, String> getCertificateDetails(final String certificateRaw) throws RemoteException {
-            return mDaemonService.getCertificateDetails(certificateRaw);
+            return mAccountService.getCertificateDetails(certificateRaw);
         }
 
         @Override
         public void setActiveCodecList(final List codecs, final String accountID) throws RemoteException {
-            mDaemonService.setActiveCodecList(codecs, accountID);
+            mAccountService.setActiveCodecList(codecs, accountID);
         }
 
         @Override
@@ -752,22 +748,22 @@ public class DRingService extends Service {
 
         @Override
         public List<String> getTlsSupportedMethods() {
-            return mDaemonService.getTlsSupportedMethods();
+            return mAccountService.getTlsSupportedMethods();
         }
 
         @Override
         public List getCredentials(final String accountID) throws RemoteException {
-            return mDaemonService.getCredentials(accountID);
+            return mAccountService.getCredentials(accountID);
         }
 
         @Override
         public void setCredentials(final String accountID, final List creds) throws RemoteException {
-            mDaemonService.setCredentials(accountID, creds);
+            mAccountService.setCredentials(accountID, creds);
         }
 
         @Override
         public void registerAllAccounts() throws RemoteException {
-            mDaemonService.registerAllAccounts();
+            mAccountService.registerAllAccounts();
         }
 
         public void videoSurfaceAdded(String id) {
@@ -798,27 +794,27 @@ public class DRingService extends Service {
         }
 
         public void switchInput(final String id, final boolean front) {
-            final int camId = (front ? videoManagerCallback.cameraFront : videoManagerCallback.cameraBack);
+            final int camId = (front ? mVideoManagerCallback.cameraFront : mVideoManagerCallback.cameraBack);
             final String uri = "camera://" + camId;
-            final cx.ring.daemon.StringMap map = videoManagerCallback.getNativeParams(camId).toMap(getResources().getConfiguration().orientation);
+            final cx.ring.daemon.StringMap map = mVideoManagerCallback.getNativeParams(camId).toMap(getResources().getConfiguration().orientation);
             mDaemonService.switchInput(id, uri, map);
         }
 
         public void setPreviewSettings() {
             Map<String, StringMap> camSettings = new HashMap<>();
             for (int i = 0; i < Camera.getNumberOfCameras(); i++) {
-                camSettings.put(Integer.toString(i), videoManagerCallback.getNativeParams(i).toMap(getResources().getConfiguration().orientation));
+                camSettings.put(Integer.toString(i), mVideoManagerCallback.getNativeParams(i).toMap(getResources().getConfiguration().orientation));
             }
 
             mDaemonService.setPreviewSettings(camSettings);
         }
 
         public int backupAccounts(final List accountIDs, final String toDir, final String password) {
-            return mDaemonService.backupAccounts(accountIDs, toDir, password);
+            return mAccountService.backupAccounts(accountIDs, toDir, password);
         }
 
         public int restoreAccounts(final String archivePath, final String password) {
-            return mDaemonService.restoreAccounts(archivePath, password);
+            return mAccountService.restoreAccounts(archivePath, password);
         }
 
         public void connectivityChanged() {
@@ -826,15 +822,15 @@ public class DRingService extends Service {
         }
 
         public void lookupName(final String account, final String nameserver, final String name) {
-            mDaemonService.lookupName(account, nameserver, name);
+            mAccountService.lookupName(account, nameserver, name);
         }
 
         public void lookupAddress(final String account, final String nameserver, final String address) {
-            mDaemonService.lookupAddress(account, nameserver, address);
+            mAccountService.lookupAddress(account, nameserver, address);
         }
 
         public void registerName(final String account, final String password, final String name) {
-            mDaemonService.registerName(account, password, name);
+            mAccountService.registerName(account, password, name);
         }
     };
 }

@@ -26,6 +26,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import javax.inject.Singleton;
 
 import cx.ring.application.RingApplication;
+import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.DaemonService;
@@ -101,6 +102,14 @@ public class ServiceInjectionModule {
         ConferenceService conferenceService = new ConferenceService(daemonService);
         mRingApplication.getRingInjectionComponent().inject(conferenceService);
         return conferenceService;
+    }
+
+    @Provides
+    @Singleton
+    AccountService provideAccountService(DaemonService daemonService) {
+        AccountService accountService = new AccountService(daemonService);
+        mRingApplication.getRingInjectionComponent().inject(accountService);
+        return accountService;
     }
 
     @Provides
