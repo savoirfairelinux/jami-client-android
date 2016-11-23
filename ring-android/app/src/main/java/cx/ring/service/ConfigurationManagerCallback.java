@@ -26,13 +26,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import cx.ring.BuildConfig;
-import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
+import cx.ring.model.DaemonEvent;
 
-class ConfigurationManagerCallback extends ConfigurationCallback {
+class ConfigurationManagerCallback implements Observer {
 
     private static final String TAG = ConfigurationManagerCallback.class.getSimpleName();
 
@@ -56,80 +59,146 @@ class ConfigurationManagerCallback extends ConfigurationCallback {
     }
 
     @Override
-    public void volumeChanged(String device, int value) {
-        super.volumeChanged(device, value);
+    public void update(Observable o, Object arg) {
+        if (!(arg instanceof DaemonEvent)) {
+            return;
+        }
+
+        DaemonEvent event = (DaemonEvent) arg;
+        switch (event.getEventType()) {
+            case VOLUME_CHANGED:
+                volumeChanged(
+                        event.getEventInput(DaemonEvent.EventInput.DEVICE, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.VALUE, Integer.class)
+                );
+                break;
+            case ACCOUNTS_CHANGED:
+                accountsChanged();
+                break;
+            case REGISTRATION_STATE_CHANGED:
+                registrationStateChanged(
+                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.STATE, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.DETAIL_CODE, Integer.class),
+                        event.getEventInput(DaemonEvent.EventInput.DETAIL_STRING, String.class)
+                );
+                break;
+            case STUN_STATUS_FAILURE:
+                stunStatusFailure(event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class));
+                break;
+            case INCOMING_ACCOUNT_MESSAGE:
+                incomingAccountMessage(
+                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.FROM, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.MESSAGES, String.class)
+                );
+                break;
+            case ACCOUNT_MESSAGE_STATUS_CHANGED:
+                accountMessageStatusChanged(
+                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.MESSAGE_ID, Long.class),
+                        event.getEventInput(DaemonEvent.EventInput.TO, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class)
+                );
+                break;
+            case ERROR_ALERT:
+                errorAlert(event.getEventInput(DaemonEvent.EventInput.ALERT, Integer.class));
+                break;
+            case GET_HARDWARE_AUDIO_FORMAT:
+                getHardwareAudioFormat(event.getEventInput(DaemonEvent.EventInput.AUDIO_FORMATS, IntVect.class));
+                break;
+            case GET_APP_DATA_PATH:
+                getAppDataPath(
+                        event.getEventInput(DaemonEvent.EventInput.NAME, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.PATHS, StringVect.class)
+                );
+                break;
+            case KNOWN_DEVICES_CHANGED:
+                knownDevicesChanged(
+                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.DEVICES, StringMap.class)
+                );
+                break;
+            case EXPORT_ON_RING_ENDED:
+                exportOnRingEnded(
+                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.CODE, Integer.class),
+                        event.getEventInput(DaemonEvent.EventInput.PIN, String.class)
+                );
+                break;
+            case NAME_REGISTRATION_ENDED:
+                nameRegistrationEnded(
+                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class),
+                        event.getEventInput(DaemonEvent.EventInput.NAME, String.class)
+                );
+                break;
+            case REGISTERED_NAME_FOUND:
+                registeredNameFound(
+                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class),
+                        event.getEventInput(DaemonEvent.EventInput.ADDRESS, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.NAME, String.class)
+                );
+                break;
+            default:
+                Log.i(TAG, "Unkown daemon event");
+                break;
+        }
     }
 
-    @Override
-    public void accountsChanged() {
-        super.accountsChanged();
+    private void volumeChanged(String device, int value) {
+        // nothing to be done here
+    }
+
+    private void accountsChanged() {
         Intent intent = new Intent(ACCOUNTS_CHANGED);
         mService.sendBroadcast(intent);
     }
 
-    @Override
-    public void stunStatusFailure(String account_id) {
-        Log.d(TAG, "configOnStunStatusFail : (" + account_id);
+    private void stunStatusFailure(String accountId) {
+        // nothing to be done here
     }
 
-    @Override
-    public void registrationStateChanged(String account_id, String state, int code, String detail_str) {
-        Log.d(getClass().getName(), "registrationStateChanged: " + account_id + " " + state + " " + code + " " + detail_str);
-        sendAccountStateChangedMessage(account_id, state, code);
-    }
-
-    @Override
-    public void incomingAccountMessage(String accountID, String from, StringMap messages) {
-        String msg = null;
-        final String textPlainMime = "text/plain";
-        if (null != messages && messages.has_key(textPlainMime)) {
-            msg = messages.getRaw(textPlainMime).toJavaString();
-        }
-        if (msg == null) {
-            return;
-        }
-
-        Log.d(TAG, "incomingAccountMessage : " + accountID + " " + from + " " + msg);
-
-        Intent intent = new Intent(INCOMING_TEXT);
-        intent.putExtra("txt", msg);
-        intent.putExtra("from", from);
-        intent.putExtra("account", accountID);
+    private void registrationStateChanged(String accountId, String state, int detailCode, String detailString) {
+        Intent intent = new Intent(ACCOUNT_STATE_CHANGED);
+        intent.putExtra("account", accountId);
+        intent.putExtra("state", state);
+        intent.putExtra("code", detailCode);
         mService.sendBroadcast(intent);
     }
 
-    @Override
-    public void accountMessageStatusChanged(String id, long messageId, String to, int status) {
-        Log.d(TAG, "accountMessageStatusChanged " + messageId + " " + status);
+    private void incomingAccountMessage(String accountId, String from, String msg) {
+        Intent intent = new Intent(INCOMING_TEXT);
+        intent.putExtra("txt", msg);
+        intent.putExtra("from", from);
+        intent.putExtra("account", accountId);
+        mService.sendBroadcast(intent);
+    }
+
+    private void accountMessageStatusChanged(String id, long messageId, String to, int status) {
         Intent intent = new Intent(MESSAGE_STATE_CHANGED);
         intent.putExtra(MESSAGE_STATE_CHANGED_EXTRA_ID, messageId);
         intent.putExtra(MESSAGE_STATE_CHANGED_EXTRA_STATUS, status);
         mService.sendBroadcast(intent);
     }
 
-    @Override
-    public void errorAlert(int alert) {
+    private void errorAlert(int alert) {
         Log.d(TAG, "errorAlert : " + alert);
     }
 
-    private void sendAccountStateChangedMessage(String account, String state, int code) {
-        Intent intent = new Intent(ACCOUNT_STATE_CHANGED);
-        intent.putExtra("account", account);
-        intent.putExtra("state", state);
-        intent.putExtra("code", code);
-        mService.sendBroadcast(intent);
-    }
-
-    @Override
-    public void getHardwareAudioFormat(IntVect ret) {
+    private void getHardwareAudioFormat(IntVect ret) {
         OpenSlParams audioParams = OpenSlParams.createInstance(mService);
         ret.add(audioParams.getSampleRate());
         ret.add(audioParams.getBufferSize());
         Log.d(TAG, "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
     }
 
-    @Override
-    public void getAppDataPath(String name, StringVect ret) {
+    private void getAppDataPath(String name, StringVect ret) {
+        if (name == null || ret == null) {
+            return;
+        }
+
         switch (name) {
             case "files":
                 ret.add(mService.getFilesDir().getAbsolutePath());
@@ -143,43 +212,35 @@ class ConfigurationManagerCallback extends ConfigurationCallback {
         }
     }
 
-    @Override
-    public void knownDevicesChanged(String account, StringMap devices) {
+    private void knownDevicesChanged(String accountId, StringMap devices) {
         Intent intent = new Intent(ACCOUNTS_DEVICES_CHANGED);
-        intent.putExtra("account", account);
+        intent.putExtra("account", accountId);
         intent.putExtra("devices", devices.toNative());
         mService.sendBroadcast(intent);
     }
 
-    @Override
-    public void exportOnRingEnded(String account, int code, String pin) {
-        Log.w(TAG, "exportOnRingEnded: " + account + " " + code + " " + pin);
+    private void exportOnRingEnded(String accountId, int code, String pin) {
         Intent intent = new Intent(ACCOUNTS_EXPORT_ENDED);
-        intent.putExtra("account", account);
+        intent.putExtra("account", accountId);
         intent.putExtra("code", code);
         intent.putExtra("pin", pin);
         mService.sendBroadcast(intent);
     }
 
-    @Override
-    public void nameRegistrationEnded(String account, int state, String name) {
-        Log.w(TAG, "nameRegistrationEnded: " + account + " " + state + " " + name);
+    private void nameRegistrationEnded(String accountId, int state, String name) {
         Intent intent = new Intent(NAME_REGISTRATION_ENDED);
-        intent.putExtra("account", account);
+        intent.putExtra("account", accountId);
         intent.putExtra("state", state);
         intent.putExtra("name", name);
         mService.sendBroadcast(intent);
     }
 
-    @Override
-    public void registeredNameFound(String account, int state, String address, String name) {
-        Log.w(TAG, "registeredNameFound: " + account + " " + state + " " + name + " " + address);
+    private void registeredNameFound(String accountId, int state, String address, String name) {
         Intent intent = new Intent(NAME_LOOKUP_ENDED);
-        intent.putExtra("account", account);
+        intent.putExtra("account", accountId);
         intent.putExtra("state", state);
         intent.putExtra("name", name);
         intent.putExtra("address", address);
         mService.sendBroadcast(intent);
     }
-
 }
