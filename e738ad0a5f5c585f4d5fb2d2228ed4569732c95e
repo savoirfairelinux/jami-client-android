@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_af5115da",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/utils/VCardUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-23T22:39:22Z",
+      "side": 1,
+      "message": "Could we remove this one? It is quite anoying to see it popping in the log with the full vcard",
+      "range": {
+        "startLine": 199,
+        "startChar": 12,
+        "endLine": 199,
+        "endChar": 77
+      },
+      "revId": "e738ad0a5f5c585f4d5fb2d2228ed4569732c95e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
