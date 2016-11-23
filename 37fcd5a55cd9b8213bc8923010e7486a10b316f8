@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_2f2525ab",
+        "filename": "ring-android/app/src/main/res/layout/item_account.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-23T18:57:24Z",
+      "side": 1,
+      "message": "Remove the alpha value here, photos do not need to be transparent",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 28
+      },
+      "revId": "37fcd5a55cd9b8213bc8923010e7486a10b316f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
