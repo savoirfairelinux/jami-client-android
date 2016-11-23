@@ -27,6 +27,7 @@ import javax.inject.Singleton;
 
 import cx.ring.application.RingApplication;
 import cx.ring.services.CallService;
+import cx.ring.services.ConferenceService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.DeviceRuntimeServiceImpl;
@@ -101,6 +102,14 @@ public class ServiceInjectionModule {
         CallService callService = new CallService();
         mRingApplication.getRingInjectionComponent().inject(callService);
         return callService;
+    }
+
+    @Provides
+    @Singleton
+    ConferenceService provideConferenceService(DaemonService daemonService) {
+        ConferenceService conferenceService = new ConferenceService();
+        mRingApplication.getRingInjectionComponent().inject(conferenceService);
+        return conferenceService;
     }
 
     @Provides
