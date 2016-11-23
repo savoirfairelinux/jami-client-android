@@ -32,6 +32,7 @@ import cx.ring.service.DRingService;
 import cx.ring.service.LocalService;
 import cx.ring.service.VideoManagerCallback;
 import cx.ring.services.CallService;
+import cx.ring.services.ConferenceService;
 import cx.ring.services.DaemonServiceImpl;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.SettingsServiceImpl;
@@ -65,6 +66,8 @@ public interface RingInjectionComponent {
     void inject(VideoManagerCallback callback);
 
     void inject(CallService service);
+
+    void inject(ConferenceService service);
 
     void inject(DaemonServiceImpl service);
 
