@@ -56,9 +56,11 @@ import javax.inject.Inject;
 
 import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
+import cx.ring.daemon.Callback;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.Codec;
 import cx.ring.services.CallService;
+import cx.ring.services.ConferenceService;
 import cx.ring.services.DaemonService;
 
 
@@ -69,6 +71,9 @@ public class DRingService extends Service {
 
     @Inject
     CallService mCallService;
+
+    @Inject
+    ConferenceService mConferenceService;
 
     @Inject
     ExecutorService mExecutor;
@@ -83,6 +88,7 @@ public class DRingService extends Service {
     private ConfigurationManagerCallback configurationCallback;
     private CallManagerCallBack callManagerCallBack;
     private VideoManagerCallback videoManagerCallback;
+    private Callback daemonCallback;
 
     class Shm {
         String id;
@@ -119,17 +125,32 @@ public class DRingService extends Service {
         // dependency injection
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
 
+        /*final DaemonCallback callback = new DaemonCallback();
+        callback.setCallbackHandler(mCallService.getCallbackHandler());
+        callback.setConferenceCallbackHandler(mConferenceService.getCallbackHandler());*/
+
         Future<Boolean> startResult = mExecutor.submit(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
                 configurationCallback = new ConfigurationManagerCallback(DRingService.this);
 
                 callManagerCallBack = new CallManagerCallBack(DRingService.this);
+
+                // daemonCallback is a wrapper to handle callCallbacks and ConferenceCallbacks
+                daemonCallback = mDaemonService.getDaemonCallbackHandler(
+                        mCallService.getCallbackHandler(),
+                        mConferenceService.getCallbackHandler());
+                // callManagerCallBack observes Call ans Conference Service (these services are
+                // notified by the daemon callbacks)
                 mCallService.addObserver(callManagerCallBack);
+                mConferenceService.addObserver(callManagerCallBack);
 
                 videoManagerCallback = new VideoManagerCallback(DRingService.this);
 
-                mDaemonService.startDaemon(mCallService.getCallbackHandler(), configurationCallback, videoManagerCallback);
+                mDaemonService.startDaemon(
+                        daemonCallback,
+                        configurationCallback,
+                        videoManagerCallback);
 
                 ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
                 registerReceiver(ringerModeListener, RINGER_FILTER);
@@ -577,72 +598,72 @@ public class DRingService extends Service {
 
         @Override
         public void removeConference(final String confID) throws RemoteException {
-            mDaemonService.removeConference(confID);
+            mConferenceService.removeConference(confID);
         }
 
         @Override
         public void joinParticipant(final String selCallID, final String dragCallID) throws RemoteException {
-            mDaemonService.joinParticipant(selCallID, dragCallID);
+            mConferenceService.joinParticipant(selCallID, dragCallID);
         }
 
         @Override
         public void addParticipant(final String callID, final String confID) throws RemoteException {
-            mDaemonService.addParticipant(callID, confID);
+            mConferenceService.addParticipant(callID, confID);
         }
 
         @Override
         public void addMainParticipant(final String confID) throws RemoteException {
-            mDaemonService.addMainParticipant(confID);
+            mConferenceService.addMainParticipant(confID);
         }
 
         @Override
         public void detachParticipant(final String callID) throws RemoteException {
-            mDaemonService.detachParticipant(callID);
+            mConferenceService.detachParticipant(callID);
         }
 
         @Override
         public void joinConference(final String selConfID, final String dragConfID) throws RemoteException {
-            mDaemonService.joinConference(selConfID, dragConfID);
+            mConferenceService.joinConference(selConfID, dragConfID);
         }
 
         @Override
         public void hangUpConference(final String confID) throws RemoteException {
-            mDaemonService.hangUpConference(confID);
+            mConferenceService.hangUpConference(confID);
         }
 
         @Override
         public void holdConference(final String confID) throws RemoteException {
-            mDaemonService.holdConference(confID);
+            mConferenceService.holdConference(confID);
         }
 
         @Override
         public void unholdConference(final String confID) throws RemoteException {
-            mDaemonService.unholdConference(confID);
+            mConferenceService.unholdConference(confID);
         }
 
         @Override
         public boolean isConferenceParticipant(final String callID) throws RemoteException {
-            return mDaemonService.isConferenceParticipant(callID);
+            return mConferenceService.isConferenceParticipant(callID);
         }
 
         @Override
         public Map<String, ArrayList<String>> getConferenceList() throws RemoteException {
-            return mDaemonService.getConferenceList();
+            return mConferenceService.getConferenceList();
         }
 
         @Override
         public List<String> getParticipantList(final String confID) throws RemoteException {
-            return mDaemonService.getParticipantList(confID);
+            return mConferenceService.getParticipantList(confID);
         }
 
         @Override
         public String getConferenceId(String callID) throws RemoteException {
-            return mDaemonService.getConferenceId(callID);
+            return mConferenceService.getConferenceId(callID);
         }
 
         @Override
         public String getConferenceDetails(final String callID) throws RemoteException {
-            return mDaemonService.getConferenceDetails(callID);
+            return mConferenceService.getConferenceDetails(callID);
         }
 
         @Override
@@ -717,7 +738,7 @@ public class DRingService extends Service {
 
         @Override
         public Map<String, String> getConference(final String id) throws RemoteException {
-            return mDaemonService.getConference(id);
+            return mConferenceService.getConference(id);
         }
 
         @Override
