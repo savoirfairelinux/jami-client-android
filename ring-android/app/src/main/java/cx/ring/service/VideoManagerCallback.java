@@ -26,25 +26,62 @@ import android.util.Log;
 import android.util.LongSparseArray;
 
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.inject.Inject;
 
 import cx.ring.application.RingApplication;
-import cx.ring.daemon.StringMap;
-import cx.ring.daemon.VideoCallback;
-import cx.ring.daemon.UintVect;
 import cx.ring.daemon.IntVect;
-import cx.ring.services.DaemonService;
+import cx.ring.daemon.StringMap;
+import cx.ring.daemon.UintVect;
+import cx.ring.model.DaemonEvent;
+import cx.ring.services.HardwareService;
 
-public class VideoManagerCallback extends VideoCallback {
+public class VideoManagerCallback implements Observer {
     private static final String TAG = VideoManagerCallback.class.getSimpleName();
 
     @Inject
-    DaemonService mDaemonService;
+    HardwareService mHardwareService;
 
     private final DRingService mService;
     private final LongSparseArray<DeviceParams> mNativeParams = new LongSparseArray<>();
     private final HashMap<String, DRingService.VideoParams> mParams = new HashMap<>();
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (!(arg instanceof DaemonEvent)) {
+            return;
+        }
+
+        DaemonEvent event = (DaemonEvent) arg;
+        switch (event.getEventType()) {
+            case DECODING_STARTED:
+                decodingStarted(
+                        event.getEventInput(DaemonEvent.EventInput.ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.PATHS, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.WIDTH, Integer.class),
+                        event.getEventInput(DaemonEvent.EventInput.HEIGHT, Integer.class),
+                        event.getEventInput(DaemonEvent.EventInput.IS_MIXER, Boolean.class)
+                );
+                break;
+            case DECODING_STOPPED:
+                decodingStopped(
+                        event.getEventInput(DaemonEvent.EventInput.ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.PATHS, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.IS_MIXER, Boolean.class)
+                );
+                break;
+            case GET_CAMERA_INFO:
+                getCameraInfo(
+                        event.getEventInput(DaemonEvent.EventInput.CAMERA_ID, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.FORMATS, IntVect.class),
+                        event.getEventInput(DaemonEvent.EventInput.SIZES, UintVect.class),
+                        event.getEventInput(DaemonEvent.EventInput.RATES, UintVect.class)
+                );
+                break;
+        }
+    }
 
     class DeviceParams {
         Point size;
@@ -63,7 +100,7 @@ public class VideoManagerCallback extends VideoCallback {
     public int cameraFront = 0;
     public int cameraBack = 0;
 
-    public VideoManagerCallback(DRingService s) {
+    VideoManagerCallback(DRingService s) {
         mService = s;
         ((RingApplication) mService.getApplication()).getRingInjectionComponent().inject(this);
     }
@@ -72,7 +109,7 @@ public class VideoManagerCallback extends VideoCallback {
         int number_cameras = getNumberOfCameras();
         Camera.CameraInfo camInfo = new Camera.CameraInfo();
         for (int i = 0; i < number_cameras; i++) {
-            mDaemonService.addVideoDevice(Integer.toString(i));
+            mHardwareService.addVideoDevice(Integer.toString(i));
             Camera.getCameraInfo(i, camInfo);
             if (camInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
                 cameraFront = i;
@@ -81,20 +118,18 @@ public class VideoManagerCallback extends VideoCallback {
             }
             Log.d(TAG, "Camera number " + i);
         }
-        mDaemonService.setDefaultVideoDevice(Integer.toString(cameraFront));
+        mHardwareService.setDefaultVideoDevice(Integer.toString(cameraFront));
     }
 
     DeviceParams getNativeParams(int i) {
         return mNativeParams.get(i);
     }
 
-    @Override
-    public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
+    private void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
         mService.decodingStarted(id, shmPath, width, height, isMixer);
     }
 
-    @Override
-    public void decodingStopped(String id, String shmPath, boolean isMixer) {
+    private void decodingStopped(String id, String shmPath, boolean isMixer) {
         mService.decodingStopped(id);
     }
 
@@ -121,8 +156,7 @@ public class VideoManagerCallback extends VideoCallback {
         mService.stopCapture();
     }
 
-    @Override
-    public void getCameraInfo(String camid, IntVect formats, UintVect sizes, UintVect rates) {
+    private void getCameraInfo(String camid, IntVect formats, UintVect sizes, UintVect rates) {
         int id = Integer.valueOf(camid);
 
         if (id < 0 || id >= getNumberOfCameras()) {

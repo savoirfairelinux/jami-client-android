@@ -31,6 +31,7 @@ import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DaemonServiceImpl;
+import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.LogService;
@@ -110,6 +111,14 @@ public class ServiceInjectionModule {
         AccountService accountService = new AccountService(daemonService);
         mRingApplication.getRingInjectionComponent().inject(accountService);
         return accountService;
+    }
+
+    @Provides
+    @Singleton
+    HardwareService provideHardwareService(DaemonService daemonService) {
+        HardwareService hardwareService = new HardwareService(daemonService);
+        mRingApplication.getRingInjectionComponent().inject(hardwareService);
+        return hardwareService;
     }
 
     @Provides

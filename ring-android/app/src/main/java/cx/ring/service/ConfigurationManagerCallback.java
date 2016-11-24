@@ -105,7 +105,7 @@ class ConfigurationManagerCallback implements Observer {
                 errorAlert(event.getEventInput(DaemonEvent.EventInput.ALERT, Integer.class));
                 break;
             case GET_HARDWARE_AUDIO_FORMAT:
-                getHardwareAudioFormat(event.getEventInput(DaemonEvent.EventInput.AUDIO_FORMATS, IntVect.class));
+                getHardwareAudioFormat(event.getEventInput(DaemonEvent.EventInput.FORMATS, IntVect.class));
                 break;
             case GET_APP_DATA_PATH:
                 getAppDataPath(
