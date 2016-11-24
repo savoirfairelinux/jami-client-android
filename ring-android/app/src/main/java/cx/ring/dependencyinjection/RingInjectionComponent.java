@@ -36,6 +36,7 @@ import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeServiceImpl;
+import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.SettingsServiceImpl;
 import cx.ring.settings.SettingsFragment;
@@ -76,6 +77,8 @@ public interface RingInjectionComponent {
     void inject(ConferenceService service);
 
     void inject(AccountService service);
+
+    void inject(HardwareService service);
 
     void inject(SettingsServiceImpl service);
 
