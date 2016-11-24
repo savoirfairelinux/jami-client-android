@@ -45,14 +45,22 @@ public class DaemonEvent {
         KNOWN_DEVICES_CHANGED,
         EXPORT_ON_RING_ENDED,
         NAME_REGISTRATION_ENDED,
-        REGISTERED_NAME_FOUND
+        REGISTERED_NAME_FOUND,
+        DECODING_STARTED,
+        DECODING_STOPPED,
+        GET_CAMERA_INFO,
+        START_CAPTURE,
+        STOP_CAPTURE,
+        SET_PARAMETERS
     }
 
     public enum EventInput {
+        ID,
         ACCOUNT_ID,
         CALL_ID,
         CONF_ID,
         MESSAGE_ID,
+        CAMERA_ID,
         FROM,
         TO,
         DETAIL_CODE,
@@ -64,12 +72,17 @@ public class DaemonEvent {
         DEVICES,
         VALUE,
         ALERT,
-        AUDIO_FORMATS,
+        FORMATS,
         NAME,
         PATHS,
         CODE,
         PIN,
-        ADDRESS
+        ADDRESS,
+        WIDTH,
+        HEIGHT,
+        IS_MIXER,
+        SIZES,
+        RATES
     }
 
     private EventType mType;
