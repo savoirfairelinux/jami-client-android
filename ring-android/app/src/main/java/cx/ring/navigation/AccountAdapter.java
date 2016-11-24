@@ -23,6 +23,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -189,7 +190,12 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
                 ((AccountView) holder).alias.setText(vcard.getFormattedName().getValue());
                 if (account.isRing()) {
-                    ((AccountView) holder).host.setText(account.getUsername());
+                    String username = account.getRegisteredName();
+                    if (!account.registeringUsername && !TextUtils.isEmpty(username)) {
+                        ((AccountView) holder).host.setText(username);
+                    } else {
+                        ((AccountView) holder).host.setText(account.getUsername());
+                    }
                 } else if (account.isSip() && !account.isIP2IP()) {
                     ((AccountView) holder).host.setText(account.getUsername() + "@" + account.getHost());
                 } else {

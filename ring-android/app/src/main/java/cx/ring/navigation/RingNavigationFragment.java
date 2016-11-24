@@ -36,6 +36,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -459,7 +460,12 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         }
         mSelectedAccountAlias.setText(mVCardProfile.getFormattedName().getValue());
         if (selectedAccount.isRing()) {
-            mSelectedAccountHost.setText(selectedAccount.getUsername());
+            String username = selectedAccount.getRegisteredName();
+            if (!selectedAccount.registeringUsername && !TextUtils.isEmpty(username)) {
+                mSelectedAccountHost.setText(username);
+            } else {
+                mSelectedAccountHost.setText(selectedAccount.getUsername());
+            }
         } else if (selectedAccount.isSip() && !selectedAccount.isIP2IP()) {
             mSelectedAccountHost.setText(selectedAccount.getUsername() + "@" + selectedAccount.getHost());
         } else {
