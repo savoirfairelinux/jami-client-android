@@ -32,7 +32,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.Camera;
 import android.media.AudioManager;
-import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
@@ -58,11 +57,13 @@ import cx.ring.application.RingApplication;
 import cx.ring.daemon.Callback;
 import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.StringMap;
+import cx.ring.daemon.VideoCallback;
 import cx.ring.model.Codec;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.DaemonService;
+import cx.ring.services.HardwareService;
 
 
 public class DRingService extends Service {
@@ -80,16 +81,17 @@ public class DRingService extends Service {
     AccountService mAccountService;
 
     @Inject
+    HardwareService mHardwareService;
+
+    @Inject
     ExecutorService mExecutor;
 
     static final String TAG = DRingService.class.getName();
 
-    private static HandlerThread executorThread;
-
     static public final String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
     static public final String VIDEO_EVENT = BuildConfig.APPLICATION_ID + ".event.VIDEO_EVENT";
 
-    // Android Specific callbacks handlers. The rely on low level service notifications
+    // Android Specific callbacks handlers. They rely on low level services notifications
     private ConfigurationManagerCallback mConfigurationCallback;
     private CallManagerCallBack mCallManagerCallBack;
     private VideoManagerCallback mVideoManagerCallback;
@@ -97,6 +99,7 @@ public class DRingService extends Service {
     // true Daemon callbacks handlers. The notify the Android ones
     private Callback mCallAndConferenceCallbackHandler;
     private ConfigurationCallback mAccountCallbackHandler;
+    private VideoCallback mHardwareCallbackHandler;
 
     class Shm {
         String id;
@@ -147,16 +150,18 @@ public class DRingService extends Service {
                         mCallService.getCallbackHandler(),
                         mConferenceService.getCallbackHandler());
                 mAccountCallbackHandler = mAccountService.getCallbackHandler();
+                mHardwareCallbackHandler = mHardwareService.getCallbackHandler();
 
-                // Android
+                // Android specific Low level Services observers
                 mCallService.addObserver(mCallManagerCallBack);
                 mConferenceService.addObserver(mCallManagerCallBack);
                 mAccountService.addObserver(mConfigurationCallback);
+                mHardwareService.addObserver(mVideoManagerCallback);
 
                 mDaemonService.startDaemon(
                         mCallAndConferenceCallbackHandler,
                         mAccountCallbackHandler,
-                        mVideoManagerCallback);
+                        mHardwareCallbackHandler);
 
                 ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
                 registerReceiver(ringerModeListener, RINGER_FILTER);
@@ -251,7 +256,7 @@ public class DRingService extends Service {
     private void startVideo(Shm input, SurfaceHolder holder) {
         Log.i(TAG, "DRingService.startVideo() " + input.id);
 
-        input.window = mDaemonService.startVideo(input.id, holder.getSurface(), input.w, input.h);
+        input.window = mHardwareService.startVideo(input.id, holder.getSurface(), input.w, input.h);
 
         if (input.window == 0) {
             Log.i(TAG, "DRingService.startVideo() no window ! " + input.id);
@@ -272,7 +277,7 @@ public class DRingService extends Service {
     private void stopVideo(Shm input) {
         Log.i(TAG, "DRingService.stopVideo() " + input.id);
         if (input.window != 0) {
-            mDaemonService.stopVideo(input.id, input.window);
+            mHardwareService.stopVideo(input.id, input.window);
             input.window = 0;
         }
 
@@ -402,7 +407,7 @@ public class DRingService extends Service {
         preview.setPreviewCallback(new Camera.PreviewCallback() {
             @Override
             public void onPreviewFrame(byte[] data, Camera camera) {
-                mDaemonService.setVideoFrame(data, videoParams.width, videoParams.height, videoParams.rotation);
+                mHardwareService.setVideoFrame(data, videoParams.width, videoParams.height, videoParams.rotation);
             }
         });
         preview.setErrorCallback(new Camera.ErrorCallback() {
@@ -797,7 +802,7 @@ public class DRingService extends Service {
             final int camId = (front ? mVideoManagerCallback.cameraFront : mVideoManagerCallback.cameraBack);
             final String uri = "camera://" + camId;
             final cx.ring.daemon.StringMap map = mVideoManagerCallback.getNativeParams(camId).toMap(getResources().getConfiguration().orientation);
-            mDaemonService.switchInput(id, uri, map);
+            mHardwareService.switchInput(id, uri, map);
         }
 
         public void setPreviewSettings() {
@@ -806,7 +811,7 @@ public class DRingService extends Service {
                 camSettings.put(Integer.toString(i), mVideoManagerCallback.getNativeParams(i).toMap(getResources().getConfiguration().orientation));
             }
 
-            mDaemonService.setPreviewSettings(camSettings);
+            mHardwareService.setPreviewSettings(camSettings);
         }
 
         public int backupAccounts(final List accountIDs, final String toDir, final String password) {
@@ -818,7 +823,7 @@ public class DRingService extends Service {
         }
 
         public void connectivityChanged() {
-            mDaemonService.connectivityChanged();
+            mHardwareService.connectivityChanged();
         }
 
         public void lookupName(final String account, final String nameserver, final String name) {

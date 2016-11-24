@@ -1,0 +1,192 @@
+/*
+ *  Copyright (C) 2016 Savoir-faire Linux Inc.
+ *
+ *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+package cx.ring.services;
+
+import java.util.Map;
+import java.util.Observable;
+import java.util.concurrent.ExecutorService;
+
+import javax.inject.Inject;
+
+import cx.ring.daemon.IntVect;
+import cx.ring.daemon.Ringservice;
+import cx.ring.daemon.RingserviceJNI;
+import cx.ring.daemon.StringMap;
+import cx.ring.daemon.UintVect;
+import cx.ring.daemon.VideoCallback;
+import cx.ring.model.DaemonEvent;
+import cx.ring.utils.Log;
+
+public class HardwareService extends Observable {
+
+    private static final String TAG = DaemonService.class.getName();
+
+    @Inject
+    ExecutorService mExecutor;
+
+    private VideoCallback mVideoCallback;
+
+    public HardwareService(DaemonService daemonService) {
+        mVideoCallback = new VideoCallbackHandler();
+    }
+
+    public VideoCallback getCallbackHandler() {
+        return mVideoCallback;
+    }
+
+    public void connectivityChanged() {
+        mExecutor.submit(new Runnable() {
+            @Override
+            public void run() {
+                Ringservice.connectivityChanged();
+            }
+        });
+    }
+
+    public void switchInput(final String id, final String uri, final StringMap map) {
+        mExecutor.submit(new Runnable() {
+            @Override
+            public void run() {
+                Log.i(TAG, "switchInput() thread running..." + uri);
+                Ringservice.applySettings(id, map);
+                Ringservice.switchInput(id, uri);
+            }
+        });
+    }
+
+    public void setPreviewSettings(final Map<String, StringMap> cameraMaps) {
+        mExecutor.submit(new Runnable() {
+            @Override
+            public void run() {
+                Log.i(TAG, "applySettings() thread running...");
+                for (Map.Entry<String, StringMap> entry : cameraMaps.entrySet()) {
+                    Ringservice.applySettings(entry.getKey(), entry.getValue());
+                }
+            }
+        });
+    }
+
+    public long startVideo(final String inputId, Object surface, int width, int height) {
+        long inputWindow = RingserviceJNI.acquireNativeWindow(surface);
+        if (inputWindow == 0) {
+            return inputWindow;
+        }
+
+        RingserviceJNI.setNativeWindowGeometry(inputWindow, width, height);
+        RingserviceJNI.registerVideoCallback(inputId, inputWindow);
+
+        return inputWindow;
+    }
+
+    public void stopVideo(final String inputId, long inputWindow) {
+        RingserviceJNI.unregisterVideoCallback(inputId, inputWindow);
+        RingserviceJNI.releaseNativeWindow(inputWindow);
+    }
+
+    public void setVideoFrame(byte[] data, int width, int height, int rotation) {
+        long frame = RingserviceJNI.obtainFrame(data.length);
+        if (frame != 0) {
+            RingserviceJNI.setVideoFrame(data, data.length, frame, width, height, rotation);
+        }
+        RingserviceJNI.releaseFrame(frame);
+    }
+
+    public void addVideoDevice(String deviceId) {
+        RingserviceJNI.addVideoDevice(deviceId);
+    }
+
+    public void setDefaultVideoDevice(String deviceId) {
+        RingserviceJNI.setDefaultDevice(deviceId);
+    }
+
+    private class VideoCallbackHandler extends VideoCallback {
+
+        public VideoCallbackHandler() {
+            //super();
+        }
+
+        @Override
+        public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
+            Log.d(TAG, "decodingStarted: " + id + ", " + shmPath + ", " + width + ", " + height + ", " + isMixer);
+            setChanged();
+            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.DECODING_STARTED);
+            event.addEventInput(DaemonEvent.EventInput.ID, id);
+            event.addEventInput(DaemonEvent.EventInput.PATHS, shmPath);
+            event.addEventInput(DaemonEvent.EventInput.WIDTH, width);
+            event.addEventInput(DaemonEvent.EventInput.HEIGHT, height);
+            event.addEventInput(DaemonEvent.EventInput.IS_MIXER, isMixer);
+            notifyObservers(event);
+        }
+
+        @Override
+        public void decodingStopped(String id, String shmPath, boolean isMixer) {
+            Log.d(TAG, "decodingStopped: " + id + ", " + shmPath + ", " + isMixer);
+            setChanged();
+            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.DECODING_STOPPED);
+            event.addEventInput(DaemonEvent.EventInput.ID, id);
+            event.addEventInput(DaemonEvent.EventInput.PATHS, shmPath);
+            event.addEventInput(DaemonEvent.EventInput.IS_MIXER, isMixer);
+            notifyObservers(event);
+        }
+
+        @Override
+        public void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates) {
+            Log.d(TAG, "getCameraInfo: " + camId + ", " + formats + ", " + sizes + ", " + rates);
+            setChanged();
+            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.GET_CAMERA_INFO);
+            event.addEventInput(DaemonEvent.EventInput.CAMERA_ID, camId);
+            event.addEventInput(DaemonEvent.EventInput.FORMATS, formats);
+            event.addEventInput(DaemonEvent.EventInput.SIZES, sizes);
+            event.addEventInput(DaemonEvent.EventInput.RATES, rates);
+            notifyObservers(event);
+        }
+
+        @Override
+        public void setParameters(String camId, int format, int width, int height, int rate) {
+            Log.d(TAG, "setParameters: " + camId + ", " + format + ", " + width + ", " + height + ", " + rate);
+            setChanged();
+            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.SET_PARAMETERS);
+            event.addEventInput(DaemonEvent.EventInput.CAMERA_ID, camId);
+            event.addEventInput(DaemonEvent.EventInput.FORMATS, format);
+            event.addEventInput(DaemonEvent.EventInput.WIDTH, width);
+            event.addEventInput(DaemonEvent.EventInput.HEIGHT, height);
+            event.addEventInput(DaemonEvent.EventInput.RATES, rate);
+            notifyObservers(event);
+        }
+
+        @Override
+        public void startCapture(String camId) {
+            Log.d(TAG, "startCapture: " + camId);
+            setChanged();
+            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.START_CAPTURE);
+            event.addEventInput(DaemonEvent.EventInput.CAMERA_ID, camId);
+            notifyObservers(event);
+        }
+
+        @Override
+        public void stopCapture() {
+            Log.d(TAG, "stopCapture");
+            setChanged();
+            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.STOP_CAPTURE);
+            notifyObservers(event);
+        }
+    }
+
+}

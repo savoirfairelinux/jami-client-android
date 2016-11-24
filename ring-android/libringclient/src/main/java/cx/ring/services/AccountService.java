@@ -535,7 +535,7 @@ public class AccountService extends Observable {
 
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.GET_HARDWARE_AUDIO_FORMAT);
-            event.addEventInput(DaemonEvent.EventInput.AUDIO_FORMATS, ret);
+            event.addEventInput(DaemonEvent.EventInput.FORMATS, ret);
             notifyObservers(event);
         }
 
