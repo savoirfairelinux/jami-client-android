@@ -19,7 +19,6 @@
  */
 package cx.ring.services;
 
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -30,7 +29,6 @@ import cx.ring.daemon.Callback;
 import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
-import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.VideoCallback;
 import cx.ring.utils.Log;
@@ -50,7 +48,6 @@ public class DaemonService {
     private boolean mDaemonStarted = false;
 
     public DaemonService() {
-
     }
 
     public Callback getDaemonCallbackHandler(CallService.CallbackHandler callCallbackHandler,
@@ -101,71 +98,6 @@ public class DaemonService {
             mDaemonStarted = false;
             Log.i(TAG, "DaemonService stopped");
         }
-    }
-
-    public void connectivityChanged() {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Ringservice.connectivityChanged();
-            }
-        });
-    }
-
-    public void switchInput(final String id, final String uri, final StringMap map) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "switchInput() thread running..." + uri);
-                Ringservice.applySettings(id, map);
-                Ringservice.switchInput(id, uri);
-            }
-        });
-    }
-
-    public void setPreviewSettings(final Map<String, StringMap> cameraMaps) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "applySettings() thread running...");
-                for (Map.Entry<String, StringMap> entry : cameraMaps.entrySet()) {
-                    Ringservice.applySettings(entry.getKey(), entry.getValue());
-                }
-            }
-        });
-    }
-
-    public long startVideo(final String inputId, Object surface, int width, int height) {
-        long inputWindow = RingserviceJNI.acquireNativeWindow(surface);
-        if (inputWindow == 0) {
-            return inputWindow;
-        }
-
-        RingserviceJNI.setNativeWindowGeometry(inputWindow, width, height);
-        RingserviceJNI.registerVideoCallback(inputId, inputWindow);
-
-        return inputWindow;
-    }
-
-    public void stopVideo(final String inputId, long inputWindow) {
-        RingserviceJNI.unregisterVideoCallback(inputId, inputWindow);
-        RingserviceJNI.releaseNativeWindow(inputWindow);
-    }
-
-    public void setVideoFrame(byte[] data, int width, int height, int rotation) {
-        long frame = RingserviceJNI.obtainFrame(data.length);
-        if (frame != 0) {
-            RingserviceJNI.setVideoFrame(data, data.length, frame, width, height, rotation);
-        }
-        RingserviceJNI.releaseFrame(frame);
-    }
-
-    public void addVideoDevice(String deviceId) {
-        RingserviceJNI.addVideoDevice(deviceId);
-    }
-
-    public void setDefaultVideoDevice(String deviceId) {
-        RingserviceJNI.setDefaultDevice(deviceId);
     }
 
     class DaemonCallback extends Callback {
