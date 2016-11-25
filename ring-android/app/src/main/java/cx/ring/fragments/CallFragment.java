@@ -87,13 +87,14 @@ import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.property.Photo;
 
-public class CallFragment extends Fragment implements CallInterface, ContactDetailsTask.DetailsLoadedCallback {
+public class CallFragment extends Fragment implements CallInterface, ContactDetailsTask.DetailsLoadedCallback, LocalService.NameLookupCallback {
 
     static final private String TAG = CallFragment.class.getSimpleName();
 
@@ -163,6 +164,8 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     private Conference mCachedConference = null;
 
     private boolean ongoingCall = false;
+
+    private BlockchainInputHandler mBlockchainInputHandler;
 
     private DisplayManager.DisplayListener displayListener;
 
@@ -881,11 +884,25 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         } else {
             contactBubbleNumTxt.setVisibility(View.VISIBLE);
             contactBubbleNumTxt.setText(call.getNumber());
+            getUsername(call);
         }
 
         mPulseAnimation.startRippleAnimation();
 
         updateContactBubble();
+    }
+
+    private void getUsername(SipCall call) {
+        Log.d(TAG, "blockchain with " + call.getNumber());
+
+        if (mBlockchainInputHandler == null || !mBlockchainInputHandler.isAlive()) {
+            mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mCallbacks.getService()), this);
+        }
+
+        String[] split = call.getNumber().split(":");
+        if (split.length > 0) {
+            mBlockchainInputHandler.enqueueNextLookup(split[1]);
+        }
     }
 
     private void initNormalStateDisplay() {
@@ -1034,6 +1051,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         } else {
             contactBubbleNumTxt.setVisibility(View.VISIBLE);
             contactBubbleNumTxt.setText(participant.getNumber());
+            getUsername(participant);
         }
     }
 
@@ -1127,5 +1145,21 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
             ab.setTitle(formattedName);
         }
+    }
+
+    @Override
+    public void onFound(String name, String address) {
+        Log.d(TAG, "on Found with name " + name + ", address " + address);
+        contactBubbleNumTxt.setText(name);
+    }
+
+    @Override
+    public void onInvalidName(String name) {
+        Log.d(TAG, "onInvalidName with name " + name);
+    }
+
+    @Override
+    public void onError(String name, String address) {
+        Log.d(TAG, "onError with name " + name + ", address " + address);
     }
 }
