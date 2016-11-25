@@ -19,7 +19,6 @@
  */
 package cx.ring.services;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +47,7 @@ import cx.ring.utils.SwigNativeConverter;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 
-public abstract class DaemonService {
+public class DaemonService {
 
     private static final String TAG = DaemonService.class.getName();
 
@@ -61,13 +60,10 @@ public abstract class DaemonService {
     @Inject
     ScheduledExecutorService mScheduledExecutor;
 
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
+
     private boolean mDaemonStarted = false;
-
-    public abstract void loadNativeLibrary();
-
-    public abstract File provideFilesDir();
-
-    public abstract String provideDefaultVCardName();
 
     public DaemonService() {
     }
@@ -194,7 +190,11 @@ public abstract class DaemonService {
             public void run() {
                 final String ringProfileVCardMime = "x-ring/ring.profile.vcard";
 
-                VCard vcard = VCardUtils.loadLocalProfileFromDisk(provideFilesDir(), accountId, provideDefaultVCardName());
+                VCard vcard = VCardUtils.loadLocalProfileFromDisk(
+                        mDeviceRuntimeService.provideFilesDir(),
+                        accountId,
+                        mDeviceRuntimeService.provideDefaultVCardName());
+
                 String stringVCard = VCardUtils.vcardToString(vcard);
 
                 int nbTotal = stringVCard.length() / VCARD_CHUNK_SIZE + (stringVCard.length() % VCARD_CHUNK_SIZE != 0 ? 1 : 0);

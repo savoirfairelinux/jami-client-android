@@ -31,7 +31,8 @@ import cx.ring.service.BootReceiver;
 import cx.ring.service.DRingService;
 import cx.ring.service.LocalService;
 import cx.ring.service.VideoManagerCallback;
-import cx.ring.services.DaemonServiceImpl;
+import cx.ring.services.DaemonService;
+import cx.ring.services.DeviceRuntimeServiceImpl;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.SettingsServiceImpl;
 import cx.ring.settings.SettingsFragment;
@@ -63,7 +64,9 @@ public interface RingInjectionComponent {
 
     void inject(VideoManagerCallback callback);
 
-    void inject(DaemonServiceImpl service);
+    void inject(DeviceRuntimeServiceImpl service);
+
+    void inject(DaemonService service);
 
     void inject(SettingsServiceImpl service);
 
