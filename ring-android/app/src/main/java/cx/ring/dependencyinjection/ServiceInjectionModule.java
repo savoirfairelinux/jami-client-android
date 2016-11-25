@@ -27,7 +27,8 @@ import javax.inject.Singleton;
 
 import cx.ring.application.RingApplication;
 import cx.ring.services.DaemonService;
-import cx.ring.services.DaemonServiceImpl;
+import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.DeviceRuntimeServiceImpl;
 import cx.ring.services.HistoryService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.LogService;
@@ -78,22 +79,30 @@ public class ServiceInjectionModule {
 
     @Provides
     @Singleton
-    DaemonService provideDaemonService() {
-        DaemonServiceImpl daemonService = new DaemonServiceImpl();
+    DeviceRuntimeService provideDeviceRuntimeService() {
+        DeviceRuntimeServiceImpl runtimeService = new DeviceRuntimeServiceImpl();
+        mRingApplication.getRingInjectionComponent().inject(runtimeService);
+        runtimeService.loadNativeLibrary();
+        return runtimeService;
+    }
+
+    @Provides
+    @Singleton
+    DaemonService provideDaemonService(DeviceRuntimeService deviceRuntimeService) {
+        DaemonService daemonService = new DaemonService();
         mRingApplication.getRingInjectionComponent().inject(daemonService);
-        daemonService.loadNativeLibrary();
         return daemonService;
     }
 
     @Provides
     @Singleton
-    public ExecutorService provideExecutorService() {
+    ExecutorService provideExecutorService() {
         return Executors.newSingleThreadExecutor();
     }
 
     @Provides
     @Singleton
-    public ScheduledExecutorService provideScheduledExecutorService() {
+    ScheduledExecutorService provideScheduledExecutorService() {
         return Executors.newSingleThreadScheduledExecutor();
     }
 }

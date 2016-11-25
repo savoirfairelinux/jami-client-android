@@ -23,6 +23,7 @@ import android.content.Context;
 
 import java.io.File;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import javax.inject.Inject;
@@ -30,9 +31,12 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.utils.Log;
 
-public class DaemonServiceImpl extends DaemonService {
+public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
-    private static final String TAG = DaemonServiceImpl.class.getName();
+    private static final String TAG = DeviceRuntimeServiceImpl.class.getName();
+
+    @Inject
+    ExecutorService mExecutor;
 
     @Inject
     Context mContext;
