@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_4fee718d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-25T15:33:58Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 12,
+        "startChar": 25,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "aa19ba6da28600df260e6f61d2ae94cb8c8b0d24",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_efd71dbe",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/CallService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-25T15:33:58Z",
+      "side": 1,
+      "message": "You don\u0027t use it anywhere, you can remove it",
+      "range": {
+        "startLine": 48,
+        "startChar": 23,
+        "endLine": 48,
+        "endChar": 50
+      },
+      "revId": "aa19ba6da28600df260e6f61d2ae94cb8c8b0d24",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_afe1159c",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/CallService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-11-25T15:33:58Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 204,
+        "startChar": 19,
+        "endLine": 210,
+        "endChar": 44
+      },
+      "revId": "aa19ba6da28600df260e6f61d2ae94cb8c8b0d24",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
