@@ -44,9 +44,26 @@ public class RingApplication extends Application {
     @Inject
     LogService mLogService;
 
+    private void setDefaultUncaughtExceptionHandler() {
+        try {
+            Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+                @Override
+                public void uncaughtException(Thread t, Throwable e) {
+                    android.util.Log.e(TAG, "Uncaught Exception detected in thread ", e);
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    System.exit(2);
+                }
+            });
+        } catch (SecurityException e) {
+            android.util.Log.e(TAG, "Could not set the Default Uncaught Exception Handler", e);
+        }
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        setDefaultUncaughtExceptionHandler();
 
         mPermissionsBeingAsked = new HashMap<>();
 
@@ -70,11 +87,11 @@ public class RingApplication extends Application {
         return mRingInjectionComponent;
     }
 
-    public boolean canAskForPermission (String permission) {
+    public boolean canAskForPermission(String permission) {
 
         Boolean isBeingAsked = mPermissionsBeingAsked.get(permission);
 
-        if (isBeingAsked!=null && isBeingAsked) {
+        if (isBeingAsked != null && isBeingAsked) {
             return false;
         }
 
@@ -83,7 +100,7 @@ public class RingApplication extends Application {
         return true;
     }
 
-    public void permissionHasBeenAsked (String permission) {
+    public void permissionHasBeenAsked(String permission) {
         mPermissionsBeingAsked.remove(permission);
     }
 }
