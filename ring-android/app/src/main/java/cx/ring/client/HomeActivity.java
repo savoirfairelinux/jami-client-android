@@ -20,9 +20,11 @@
 package cx.ring.client;
 
 import android.Manifest;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -130,21 +132,25 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private float mToolbarSize;
     protected android.app.Fragment fContent;
     protected RingNavigationFragment fNavigation;
+    private PendingIntent restartIntent;
 
     public interface Refreshable {
         void refresh();
     }
 
-    private static void setDefaultUncaughtExceptionHandler() {
+    private void setDefaultUncaughtExceptionHandler() {
         try {
             Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
                 @Override
                 public void uncaughtException(Thread t, Throwable e) {
                     Log.e(TAG, "Uncaught Exception detected in thread ", e);
+                    AlarmManager mgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 2000, restartIntent);
+                    System.exit(2);
                 }
             });
         } catch (SecurityException e) {
-            Log.e(TAG, "Could not set the Default Uncaught Exception Handler");
+            Log.e(TAG, "Could not set the Default Uncaught Exception Handler", e);
         }
     }
 
@@ -156,6 +162,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        restartIntent = PendingIntent.getActivity(getApplication().getBaseContext(), 0,
+                new Intent(getIntent()), getIntent().getFlags());
         setDefaultUncaughtExceptionHandler();
 
         mToolbarSize = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
@@ -199,8 +208,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         String[] toRequest = LocalService.checkRequiredPermissions(this);
         ArrayList<String> permissionsWeCanAsk = new ArrayList<>();
 
-        for (String permission: toRequest) {
-            if (((RingApplication)getApplication()).canAskForPermission(permission)) {
+        for (String permission : toRequest) {
+            if (((RingApplication) getApplication()).canAskForPermission(permission)) {
                 permissionsWeCanAsk.add(permission);
             }
         }
@@ -319,7 +328,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
                 for (int i = 0, n = permissions.length; i < n; i++) {
                     String permission = permissions[i];
-                    ((RingApplication)getApplication()).permissionHasBeenAsked(permission);
+                    ((RingApplication) getApplication()).permissionHasBeenAsked(permission);
                     switch (permission) {
                         case Manifest.permission.RECORD_AUDIO:
                             if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
@@ -507,13 +516,13 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     // TODO: Remove this when low level services are ready
     public void onNavigationViewReady() {
-            if (fNavigation != null) {
-                if (service != null) {
-                    fNavigation.updateAccounts(service.getAccounts());
-                }
-                fNavigation.setCallback(service);
-                fNavigation.setNavigationSectionSelectedListener(HomeActivity.this);
+        if (fNavigation != null) {
+            if (service != null) {
+                fNavigation.updateAccounts(service.getAccounts());
             }
+            fNavigation.setCallback(service);
+            fNavigation.setNavigationSectionSelectedListener(HomeActivity.this);
+        }
     }
 
     @Override
