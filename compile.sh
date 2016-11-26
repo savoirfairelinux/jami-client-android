@@ -10,11 +10,20 @@ pushd ring-android
 ./make-swig.sh
 popd
 
+# Flags:
+
+  # --release: build in release mode
+  # --daemon: Only build the daemon for the selected archs
+
 RELEASE=0
+DAEMON_ONLY=0
 for i in ${@}; do
     case "$i" in
         release|--release)
         RELEASE=1
+        ;;
+        daemon|--daemon)
+        DAEMON_ONLY=1
         ;;
         *)
         ;;
@@ -31,5 +40,8 @@ for i in ${ANDROID_ABI_LIST}; do
        ./build-daemon.sh $* || { echo "$i build KO"; exit 1; }
     echo "$i build OK"
 done
-export ANDROID_ABIS
-make -b -j1 RELEASE=$RELEASE apk
+
+if [[ $DAEMON_ONLY -eq 0 ]]; then
+    export ANDROID_ABIS
+    make -b -j1 RELEASE=$RELEASE apk
+fi
