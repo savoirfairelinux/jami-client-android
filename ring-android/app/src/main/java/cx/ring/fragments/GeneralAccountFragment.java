@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.support.v14.preference.PreferenceFragment;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.Preference;
+import android.support.v7.preference.SwitchPreferenceCompat;
 import android.support.v7.preference.TwoStatePreference;
 import android.util.Log;
 import android.view.inputmethod.EditorInfo;
@@ -69,9 +70,34 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
     }
 
     @Override
-    public void accountChanged(Account acc) {
-        setPreferenceDetails(acc.getConfig());
-        setPreferenceListener(acc.getConfig(), changeBasicPreferenceListener);
+    public void accountChanged(Account account) {
+        setPreferenceDetails(account.getConfig());
+        setPreferenceListener(account.getConfig(), changeBasicPreferenceListener);
+        SwitchPreferenceCompat pref = (SwitchPreferenceCompat) findPreference("Account.status");
+        if (account.isSip() && pref != null) {
+            String status;
+            pref.setTitle(account.getAlias());
+            pref.setOnPreferenceChangeListener(changeAccountStatusListener);
+            if (account.isEnabled()) {
+                if (account.isTrying()) {
+                    status = getString(R.string.account_status_connecting);
+                } else if (account.needsMigration()) {
+                    status = getString(R.string.account_update_needed);
+                } else if (account.isInError()) {
+                    status = getString(R.string.account_status_connection_error);
+                } else if (account.isRegistered()) {
+                    status = getString(R.string.account_status_online);
+                } else {
+                    status = getString(R.string.account_status_unknown);
+                }
+            } else {
+                status = getString(R.string.account_status_offline);
+            }
+            pref.setSummary(status);
+            pref.setChecked(account.isEnabled());
+
+            pref.setEnabled(!account.isIP2IP());
+        }
     }
 
     @Override
@@ -131,22 +157,23 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
     private void setPreferenceDetails(AccountConfig details) {
         for (ConfigKey confKey : details.getKeys()) {
             Preference pref = findPreference(confKey.key());
-            if (pref != null) {
-                if (!confKey.isTwoState()) {
-                    String val = details.get(confKey);
-                    ((EditTextPreference) pref).setText(val);
-                    if (pref instanceof PasswordPreference) {
-                        String tmp = "";
-                        for (int i = 0; i < val.length(); ++i) {
-                            tmp += "*";
-                        }
-                        pref.setSummary(tmp);
-                    } else {
-                        pref.setSummary(val);
+            if (pref == null) {
+                continue;
+            }
+            if (!confKey.isTwoState()) {
+                String val = details.get(confKey);
+                ((EditTextPreference) pref).setText(val);
+                if (pref instanceof PasswordPreference) {
+                    String tmp = "";
+                    for (int i = 0; i < val.length(); ++i) {
+                        tmp += "*";
                     }
+                    pref.setSummary(tmp);
                 } else {
-                    ((TwoStatePreference) pref).setChecked(details.getBool(confKey));
+                    pref.setSummary(val);
                 }
+            } else {
+                ((TwoStatePreference) pref).setChecked(details.getBool(confKey));
             }
         }
     }
@@ -159,6 +186,19 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
             }
         }
     }
+
+    private final Preference.OnPreferenceChangeListener changeAccountStatusListener = new Preference.OnPreferenceChangeListener() {
+
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            final Account account = mCallbacks.getAccount();
+            if (account != null) {
+                account.setEnabled((Boolean) newValue);
+                mCallbacks.saveAccount();
+            }
+            return false;
+        }
+    };
 
     private final Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
