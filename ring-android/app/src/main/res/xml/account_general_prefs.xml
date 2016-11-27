@@ -22,6 +22,11 @@ along with this program; if not, write to the Free Software
 -->
 <android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <android.support.v7.preference.SwitchPreferenceCompat
+        android:id="@+id/account_status"
+        android:key="Account.status"
+        android:persistent="false" />
+
     <android.support.v7.preference.PreferenceCategory
         android:id="@+id/account_basic_category"
         android:title="@string/account_basic_category" >
