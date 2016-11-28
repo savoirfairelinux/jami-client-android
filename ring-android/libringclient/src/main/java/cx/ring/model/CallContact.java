@@ -211,6 +211,10 @@ public class CallContact {
         return mDisplayName == null || mDisplayName.contentEquals(mPhones.get(0).getNumber().getRawUriString());
     }
 
+    public void resetDisplayName () {
+        mDisplayName = null;
+    }
+
     //region Equals
     @Override
     public boolean equals(Object o) {
