@@ -42,6 +42,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
@@ -82,6 +83,7 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
+import cx.ring.interfaces.NameLookupCallback;
 import cx.ring.loaders.AccountsLoader;
 import cx.ring.loaders.ContactsLoader;
 import cx.ring.model.Account;
@@ -106,7 +108,7 @@ import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaManager;
 import cx.ring.utils.Tuple;
 
-public class LocalService extends Service implements Observer {
+public class LocalService extends Service implements Observer, NameLookupCallback {
     static final String TAG = LocalService.class.getSimpleName();
 
     // Emitting events
@@ -165,16 +167,8 @@ public class LocalService extends Service implements Observer {
 
     private boolean mAreConversationsLoaded = false;
     private NotificationCompat.Builder mMessageNotificationBuilder;
+    private int mNotificationID;
 
-    public interface NameLookupCallback {
-        void onFound(String name, String address);
-
-        void onInvalidName(String name);
-
-        void onError(String name, String address);
-    }
-
-    ;
     final private Map<String, ArrayList<NameLookupCallback>> currentNameLookup = new HashMap<>();
     final private Map<String, ArrayList<NameLookupCallback>> currentAddressLookup = new HashMap<>();
 
@@ -1325,6 +1319,10 @@ public class LocalService extends Service implements Observer {
                         .setDefaults(NotificationCompat.DEFAULT_ALL)
                         .setSmallIcon(R.drawable.ic_ring_logo_white)
                         .setContentTitle(contact.getDisplayName());
+                String[] split = contact.getDisplayName().split(":");
+                if (split.length > 0) {
+                    lookupAddress("", split[1], this);
+                }
             }
             Intent c_intent = new Intent(Intent.ACTION_VIEW)
                     .setClass(this, ConversationActivity.class)
@@ -1361,7 +1359,8 @@ public class LocalService extends Service implements Observer {
                 mMessageNotificationBuilder.setStyle(inboxStyle);
                 mMessageNotificationBuilder.setWhen(texts.lastEntry().getValue().getTimestamp());
             }
-            notificationManager.notify(c.getUuid(), mMessageNotificationBuilder.build());
+            mNotificationID = c.getUuid();
+            notificationManager.notify(mNotificationID, mMessageNotificationBuilder.build());
         }
     }
 
@@ -1647,7 +1646,15 @@ public class LocalService extends Service implements Observer {
                     }
 
                     conversation.addConference(toAdd);
-                    ActionHelper.showCallNotification(LocalService.this, toAdd);
+                    Pair<NotificationCompat.Builder, Integer> notificationResult = ActionHelper.showCallNotification(LocalService.this, toAdd);
+                    mMessageNotificationBuilder = notificationResult.first;
+                    mNotificationID = notificationResult.second;
+
+                    String[] split = contact.getDisplayName().split(":");
+                    if (split.length > 0) {
+                        lookupAddress("", split[1], LocalService.this);
+                    }
+
                     updateAudioState();
 
                     try {
@@ -1826,5 +1833,32 @@ public class LocalService extends Service implements Observer {
             refreshContacts();
             updateConnectivityState();
         }
+    }
+
+    @Override
+    public void onFound(String name, String address) {
+        if (mMessageNotificationBuilder != null && mNotificationID != -1) {
+            Bundle extras = mMessageNotificationBuilder.getExtras();
+            if (extras != null) {
+                if (extras.getBoolean(CallManagerCallBack.INCOMING_CALL, false)) {
+                    mMessageNotificationBuilder.setContentTitle(getApplicationContext().getString(R.string.notif_incoming_call_title, name));
+                } else {
+                    mMessageNotificationBuilder.setContentTitle(name);
+                }
+            } else {
+                mMessageNotificationBuilder.setContentTitle(name);
+            }
+            notificationManager.notify(mNotificationID, mMessageNotificationBuilder.build());
+        }
+    }
+
+    @Override
+    public void onInvalidName(String name) {
+
+    }
+
+    @Override
+    public void onError(String name, String address) {
+
     }
 }

@@ -78,6 +78,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.interfaces.CallInterface;
+import cx.ring.interfaces.NameLookupCallback;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SecureSipCall;
@@ -94,7 +95,7 @@ import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.property.Photo;
 
-public class CallFragment extends Fragment implements CallInterface, ContactDetailsTask.DetailsLoadedCallback, LocalService.NameLookupCallback {
+public class CallFragment extends Fragment implements CallInterface, ContactDetailsTask.DetailsLoadedCallback, NameLookupCallback {
 
     static final private String TAG = CallFragment.class.getSimpleName();
 

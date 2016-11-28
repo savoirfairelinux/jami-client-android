@@ -74,6 +74,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeScannerActivity;
+import cx.ring.interfaces.NameLookupCallback;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -93,7 +94,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         SmartListAdapter.SmartListAdapterCallback,
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
-        LocalService.NameLookupCallback {
+        NameLookupCallback {
     private static final String TAG = SmartListFragment.class.getSimpleName();
 
     private static final int USER_INPUT_DELAY = 300;
@@ -153,7 +154,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public static final int REQUEST_TRANSFER = 10;
     public static final int REQUEST_CONF = 20;
 
-    private LocalService.NameLookupCallback mRinguifyCallback = new LocalService.NameLookupCallback() {
+    private NameLookupCallback mRinguifyCallback = new NameLookupCallback() {
 
         private void updateContactRingId(String name, String address) {
 
