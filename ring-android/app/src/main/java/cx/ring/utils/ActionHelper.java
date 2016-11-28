@@ -26,10 +26,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -43,6 +45,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
+import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.LocalService;
 
 public class ActionHelper {
@@ -203,13 +206,14 @@ public class ActionHelper {
         }
     }
 
-    public static void showCallNotification(Context ctx, Conference conference) {
+    public static Pair<NotificationCompat.Builder, Integer> showCallNotification(Context ctx, Conference conference) {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(ctx);
         notificationManager.cancel(conference.getUuid());
 
         if (conference.getParticipants().isEmpty()) {
-            return;
+            return new Pair<>(null, -1);
         }
+
         SipCall call = conference.getParticipants().get(0);
         CallContact contact = call.getContact();
         final android.net.Uri callUri = android.net.Uri.withAppendedPath(ContentUriHandler.CALL_CONTENT_URI, call.getCallId());
@@ -229,6 +233,8 @@ public class ActionHelper {
                                     PendingIntent.FLAG_ONE_SHOT));
         } else if (conference.isRinging()) {
             if (conference.isIncoming()) {
+                Bundle extras = new Bundle();
+                extras.putBoolean(CallManagerCallBack.INCOMING_CALL, true);
                 notificationBuilder.setContentTitle(ctx.getString(R.string.notif_incoming_call_title, contact.getDisplayName()))
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setContentText(ctx.getText(R.string.notif_incoming_call))
@@ -245,7 +251,8 @@ public class ActionHelper {
                                         new Intent(LocalService.ACTION_CALL_REFUSE)
                                                 .setClass(ctx, LocalService.class)
                                                 .setData(callUri),
-                                        PendingIntent.FLAG_ONE_SHOT));
+                                        PendingIntent.FLAG_ONE_SHOT))
+                .addExtras(extras);
             } else {
                 notificationBuilder.setContentTitle(ctx.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
                         .setContentText(ctx.getText(R.string.notif_outgoing_call))
@@ -260,7 +267,7 @@ public class ActionHelper {
 
         } else {
             notificationManager.cancel(conference.getUuid());
-            return;
+            return new Pair<>(null, -1);
         }
 
         notificationBuilder.setOngoing(true).setCategory(NotificationCompat.CATEGORY_CALL).setSmallIcon(R.drawable.ic_ring_logo_white);
@@ -274,7 +281,11 @@ public class ActionHelper {
                 notificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
             }
         }
-        notificationManager.notify(conference.getUuid(), notificationBuilder.build());
+
+        int notificationId = conference.getUuid();
+        notificationManager.notify(notificationId, notificationBuilder.build());
+
+        return new Pair<>(notificationBuilder, notificationId);
     }
 
     public static Intent getViewIntent(Context context, Conference conference) {

@@ -23,6 +23,7 @@ import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
+import cx.ring.interfaces.NameLookupCallback;
 import cx.ring.service.LocalService;
 
 public class BlockchainInputHandler extends Thread {
@@ -30,17 +31,17 @@ public class BlockchainInputHandler extends Thread {
     private static final String TAG = BlockchainInputHandler.class.getName();
 
     private static final String RINGID_PATTERN = "^[a-f0-9]{40}$";
-    private static final int WAIT_DELAY= 2000;
+    private static final int WAIT_DELAY = 2000;
     private static final int KILL_DELAY = 6000;
 
     private WeakReference<LocalService> mLocalService;
     private String mTextToLookup;
-    private LocalService.NameLookupCallback mLookupCallback;
+    private NameLookupCallback mLookupCallback;
 
     private boolean mIsWaitingForInputs = false;
     private long mLastEnqueuedInputTimeStamp = -1;
 
-    public BlockchainInputHandler(@NonNull WeakReference<LocalService> localService, @NonNull LocalService.NameLookupCallback lookupCallback) {
+    public BlockchainInputHandler(@NonNull WeakReference<LocalService> localService, @NonNull NameLookupCallback lookupCallback) {
         mLocalService = localService;
         mLookupCallback = lookupCallback;
     }
