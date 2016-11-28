@@ -61,6 +61,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -179,6 +180,38 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             }
         } else {
             this.presentNetworkErrorPanel(service);
+        }
+
+        // If conversation has been created based on a blockchained discovered username
+        // we update the contact with its RingId
+        searchForRingIdInBlockchain();
+    }
+
+    private void searchForRingIdInBlockchain() {
+        LocalService service = mCallbacks.getService();
+        if (service == null || !service.isConnected() || !service.areConversationsLoaded()) {
+            return;
+        }
+        List<Conversation> conversations = service.getConversations();
+        for (Conversation conversation : conversations) {
+            CallContact contact = conversation.getContact();
+            if (contact == null) {
+                continue;
+            }
+
+            Uri contactUri = new Uri(contact.getIds().get(0));
+            if (contactUri.isRingId()) {
+                return;
+            }
+
+            if (contact.getPhones().isEmpty()) {
+                service.lookupName("", contact.getDisplayName(), this);
+            } else {
+                Phone phone = contact.getPhones().get(0);
+                if (!phone.getNumber().isRingId()) {
+                    service.lookupName("", contact.getDisplayName(), this);
+                }
+            }
         }
     }
 
@@ -381,6 +414,10 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             bindService(inflater.getContext(), service);
             if (service.areConversationsLoaded()) {
                 setLoading(false);
+
+                // If conversation has been created based on a blockchained discovered username
+                // we update the contact with its RingId
+                searchForRingIdInBlockchain();
             }
         }
 
@@ -720,7 +757,38 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void onFound(String name, String address) {
-        displayNewContactRowWithName(name, address);
+        // update the contact's ringId if needed
+        if (isContactAlreadyInConversation(name)) {
+            updateContactRingId(name, address);
+        } else {
+            displayNewContactRowWithName(name, address);
+        }
+    }
+
+    private boolean isContactAlreadyInConversation (String name) {
+
+        if (TextUtils.isEmpty(name)) {
+            return false;
+        }
+
+        LocalService service = mCallbacks.getService();
+        for (Conversation conversation: service.getConversations()) {
+            if (name.equals(conversation.getContact().getDisplayName())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void updateContactRingId(String name, String address) {
+
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(address)) {
+            return;
+        }
+
+        LocalService service = mCallbacks.getService();
+        service.updateConversationContactWithRingId(name, address);
     }
 
     private void displayNewContactRowWithName(String name, String address) {
