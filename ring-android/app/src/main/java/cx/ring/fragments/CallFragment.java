@@ -77,6 +77,7 @@ import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.interfaces.CallInterface;
+import cx.ring.interfaces.NameLookupCallback;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SecureSipCall;

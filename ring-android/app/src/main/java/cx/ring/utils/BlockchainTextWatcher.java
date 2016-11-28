@@ -28,9 +28,10 @@ import android.widget.EditText;
 import java.lang.ref.WeakReference;
 
 import cx.ring.R;
+import cx.ring.interfaces.NameLookupCallback;
 import cx.ring.service.LocalService;
 
-public class BlockchainTextWatcher implements TextWatcher, LocalService.NameLookupCallback {
+public class BlockchainTextWatcher implements TextWatcher, NameLookupCallback {
 
     private static final String TAG = BlockchainTextWatcher.class.getName();
 
