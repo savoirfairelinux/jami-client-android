@@ -54,6 +54,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.LongSparseArray;
@@ -784,6 +785,49 @@ public class LocalService extends Service implements Observer {
         return conversation;
     }
 
+    public boolean updateConversationContactWithRingId (String oldId, String ringId) {
+
+        if (TextUtils.isEmpty(oldId)) {
+            return false;
+        }
+
+        Uri uri = new Uri(oldId);
+        if (uri.isRingId()) {
+            return true;
+        }
+
+        Conversation conversation = conversations.get(oldId);
+        if (conversation == null) {
+            return false;
+        }
+
+        CallContact contact = conversation.getContact();
+
+        if (contact == null) {
+            return false;
+        }
+
+        Uri ringIdUri = new Uri(ringId);
+        contact.getPhones().clear();
+        contact.getPhones().add(new cx.ring.model.Phone(ringIdUri, 0));
+
+        conversations.remove(oldId);
+        conversations.put(contact.getIds().get(0), conversation);
+
+        for (Map.Entry<String, HistoryEntry> entry: conversation.getHistory().entrySet()) {
+            HistoryEntry historyEntry = entry.getValue();
+            historyEntry.setContact(contact);
+            NavigableMap<Long, TextMessage> messages = historyEntry.getTextMessages();
+            for (TextMessage textMessage: messages.values()) {
+                textMessage.setNumber(ringIdUri);
+                textMessage.setContact(contact);
+                ((HistoryServiceImpl)mHistoryService).updateTextMessage(new HistoryText(textMessage));
+            }
+        }
+
+        return true;
+    }
+
     public CallContact findContactByNumber(Uri number) {
         for (Conversation conversation : conversations.values()) {
             if (conversation.getContact().hasNumber(number)) {
@@ -1088,6 +1132,7 @@ public class LocalService extends Service implements Observer {
                         Log.w(TAG, "Can't find contact with id " + contactId);
                         contact = getByNumber(localNumberCache, number);
                     }
+
                     localContactCache.put(contact.getId(), contact);
                 }
             }
