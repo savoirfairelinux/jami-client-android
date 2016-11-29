@@ -19,6 +19,7 @@
  */
 package cx.ring.services;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.concurrent.Callable;
@@ -31,7 +32,9 @@ import cx.ring.daemon.Blob;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
+import cx.ring.model.CallContact;
 import cx.ring.model.DaemonEvent;
+import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 
@@ -42,14 +45,30 @@ public class CallService extends Observable {
     @Inject
     ExecutorService mExecutor;
 
+    private Map<String, CallContact> mContacts;
     private CallbackHandler mCallbackHandler;
 
     public CallService() {
         mCallbackHandler = new CallbackHandler();
+        mContacts = new HashMap<>();
     }
 
     public CallbackHandler getCallbackHandler() {
         return mCallbackHandler;
+    }
+
+    public void addContact(CallContact contact) {
+        if (contact == null
+                || contact.getPhones().isEmpty()
+                || contact.getPhones().get(0) == null
+                || contact.getPhones().get(0).getNumber() == null) {
+            return;
+        }
+        mContacts.put(contact.getPhones().get(0).getNumber().toString(), contact);
+    }
+
+    public CallContact getContact(Uri uri) {
+        return mContacts.get(uri.toString());
     }
 
     public String placeCall(final String account, final String number, final boolean video) {
