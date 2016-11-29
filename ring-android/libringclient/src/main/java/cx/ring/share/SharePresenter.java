@@ -27,17 +27,17 @@ import javax.inject.Inject;
 import cx.ring.model.Account;
 import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
-import cx.ring.services.StateService;
+import cx.ring.services.AccountService;
 
 public class SharePresenter extends RootPresenter<GenericView<ShareViewModel>> implements Observer {
 
     @Inject
-    StateService mStateService;
+    AccountService mAccountService;
 
     @Override
     public void afterInjection() {
         // We observe the application state changes
-        mStateService.addObserver(this);
+        mAccountService.addObserver(this);
     }
 
     public void loadContactInformation() {
@@ -45,8 +45,8 @@ public class SharePresenter extends RootPresenter<GenericView<ShareViewModel>> i
             return;
         }
 
-        // ask for the current app state
-        Account currentAccount = mStateService.getCurrentAccount();
+        // ask for the current account
+        Account currentAccount = mAccountService.getCurrentAccount();
 
         // let the view display the ViewModel
         getView().showViewModel(new ShareViewModel(currentAccount));
