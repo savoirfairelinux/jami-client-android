@@ -37,6 +37,7 @@ import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.UintVect;
+import cx.ring.model.Account;
 import cx.ring.model.Codec;
 import cx.ring.model.DaemonEvent;
 import cx.ring.utils.FutureUtils;
@@ -57,6 +58,7 @@ public class AccountService extends Observable {
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
+    private Account mCurrentAccount;
     private ConfigurationCallback mCallbackHandler;
 
     public AccountService() {
@@ -65,6 +67,16 @@ public class AccountService extends Observable {
 
     public ConfigurationCallback getCallbackHandler() {
         return mCallbackHandler;
+    }
+
+    public Account getCurrentAccount() {
+        return mCurrentAccount;
+    }
+
+    public void setCurrentAccount(Account currentAccount) {
+        this.mCurrentAccount = currentAccount;
+        setChanged();
+        notifyObservers();
     }
 
     public void sendProfile(final String callId, final String accountId) {
