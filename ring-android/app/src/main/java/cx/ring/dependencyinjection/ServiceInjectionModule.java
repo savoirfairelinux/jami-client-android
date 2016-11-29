@@ -39,7 +39,6 @@ import cx.ring.services.LogService;
 import cx.ring.services.LogServiceImpl;
 import cx.ring.services.SettingsService;
 import cx.ring.services.SettingsServiceImpl;
-import cx.ring.services.StateService;
 import dagger.Module;
 import dagger.Provides;
 
@@ -50,12 +49,6 @@ public class ServiceInjectionModule {
 
     public ServiceInjectionModule(RingApplication app) {
         mRingApplication = app;
-    }
-
-    @Provides
-    @Singleton
-    StateService provideStateService() {
-        return new StateService();
     }
 
     @Provides

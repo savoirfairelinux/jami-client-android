@@ -66,7 +66,7 @@ import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
 import cx.ring.service.LocalService;
-import cx.ring.services.StateService;
+import cx.ring.services.AccountService;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -82,7 +82,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     private AccountAdapter mAccountAdapter;
 
     @Inject
-    StateService mStateService;
+    AccountService mAccountService;
 
     /***************
      * Header views
@@ -133,7 +133,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         toggleAccountList();
         // modify the state of the app
         // State observers will be notified
-        mStateService.setCurrentAccount(selectedAccount);
+        mAccountService.setCurrentAccount(selectedAccount);
 
         //TODO: remove this when low level services are ready
         List<String> orderedAccountIdList = new ArrayList<>();
@@ -191,7 +191,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     @Override
     public void onResume() {
         super.onResume();
-        mStateService.addObserver(this);
+        mAccountService.addObserver(this);
         updateUserView();
         updateSelectedAccountView();
     }
@@ -199,7 +199,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     @Override
     public void onPause() {
         super.onPause();
-        mStateService.deleteObserver(this);
+        mAccountService.deleteObserver(this);
     }
 
     /**
@@ -314,7 +314,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
     public void updateUserView() {
         Log.d(TAG, "updateUserView");
-        String accountID = mStateService.getCurrentAccount() != null ? mStateService.getCurrentAccount().getAccountID() : null;
+        String accountID = mAccountService.getCurrentAccount() != null ? mAccountService.getCurrentAccount().getAccountID() : null;
         mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), accountID, getString(R.string.unknown));
         if (!mVCardProfile.getPhotos().isEmpty()) {
             Photo tmp = mVCardProfile.getPhotos().get(0);
@@ -436,7 +436,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
                 }
 
                 mVCardProfile.removeProperties(RawProperty.class);
-                VCardUtils.saveLocalProfileToDisk(mVCardProfile, mStateService.getCurrentAccount().getAccountID(), getActivity().getFilesDir());
+                VCardUtils.saveLocalProfileToDisk(mVCardProfile, mAccountService.getCurrentAccount().getAccountID(), getActivity().getFilesDir());
                 updateUserView();
                 updateAccounts(mLocalService.getAccounts());
             }
@@ -453,17 +453,17 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
             // modify the state of the app
             // State observers will be notified
-            mStateService.setCurrentAccount(null);
+            mAccountService.setCurrentAccount(null);
         } else {
             mNewAccountBtn.setVisibility(View.GONE);
             mSelectedAccountLayout.setVisibility(View.VISIBLE);
             Account selected = accounts.get(0);
-            mStateService.setCurrentAccount(selected);
+            mAccountService.setCurrentAccount(selected);
         }
     }
 
     private void updateSelectedAccountView() {
-        Account selectedAccount = mStateService.getCurrentAccount();
+        Account selectedAccount = mAccountService.getCurrentAccount();
         if (selectedAccount == null) {
             return;
         }

@@ -81,7 +81,8 @@ import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
 import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
-import cx.ring.services.StateService;
+import cx.ring.services.AccountService;
+import cx.ring.services.CallService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ClipboardHelper;
@@ -133,7 +134,10 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private Handler mUserInputHandler;
 
     @Inject
-    StateService mStateService;
+    AccountService mAccountService;
+
+    @Inject
+    CallService mCallService;
 
     final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -370,7 +374,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         if (TextUtils.isEmpty(query)) {
             mNewContact.setVisibility(View.GONE);
         } else {
-            Account currentAccount = mStateService.getCurrentAccount();
+            Account currentAccount = mAccountService.getCurrentAccount();
             if (currentAccount == null) {
                 Log.w(TAG, "No account selected");
                 return false;
@@ -495,7 +499,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
         // We add the contact to the current State so that we can
         // get it from whatever part of the app as "an already used contact"
-        mStateService.addContact(c);
+        mCallService.addContact(c);
 
         Intent intent = new Intent()
                 .setClass(getActivity(), ConversationActivity.class)

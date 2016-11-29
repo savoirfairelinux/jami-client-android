@@ -69,7 +69,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
 import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
-import cx.ring.services.StateService;
+import cx.ring.services.CallService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
@@ -80,7 +80,7 @@ public class ConversationActivity extends AppCompatActivity implements
         ContactDetailsTask.DetailsLoadedCallback {
 
     @Inject
-    StateService mStateService;
+    CallService mCallService;
 
     private static final String TAG = ConversationActivity.class.getSimpleName();
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
@@ -172,7 +172,7 @@ public class ConversationActivity extends AppCompatActivity implements
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
             if (!mConversation.getContact().getPhones().isEmpty()) {
-                CallContact contact = mStateService.getContact(mConversation.getContact().getPhones().get(0).getNumber());
+                CallContact contact = mCallService.getContact(mConversation.getContact().getPhones().get(0).getNumber());
                 if (contact != null) {
                     mConversation.setContact(contact);
                 }
