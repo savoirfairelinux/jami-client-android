@@ -154,7 +154,15 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:text="@string/wizard_back" />
+            android:text="@string/last" />
+
+        <Button
+            android:id="@+id/next_create_account"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:text="@string/next" />
 
     </RelativeLayout>
 

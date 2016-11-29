@@ -75,6 +75,9 @@ public class RingAccountCreationFragment extends Fragment {
     @BindView(R.id.ring_password_repeat_txt_box)
     TextInputLayout mPasswordRepeatTxtBox;
 
+    @BindView(R.id.next_create_account)
+    Button mNextButton;
+
     @BindView(R.id.last_create_account)
     Button mLastButton;
 
@@ -145,6 +148,13 @@ public class RingAccountCreationFragment extends Fragment {
             mUsernameTextWatcher = BlockchainUtils.attachUsernameTextWatcher((LocalService.Callbacks) getActivity(), mUsernameTxtBox, mUsernameTxt);
         }
 
+        AccountWizard accountWizard = (AccountWizard) getActivity();
+        if (accountWizard.isFirstAccount()) {
+            mCreateAccountButton.setVisibility(View.GONE);
+        } else {
+            mNextButton.setVisibility(View.GONE);
+        }
+
         return view;
     }
 
@@ -186,6 +196,11 @@ public class RingAccountCreationFragment extends Fragment {
 
     private boolean isValidUsername() {
         return mUsernameTxtBox.getError() == null;
+    }
+
+    @OnClick(R.id.next_create_account)
+    public void onNextButtonClick() {
+        nextAccount(false);
     }
 
     @OnClick(R.id.create_account)

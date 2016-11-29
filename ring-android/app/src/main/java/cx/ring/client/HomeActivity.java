@@ -183,7 +183,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         mNavigationDrawer.addDrawerListener(mDrawerToggle);
 
         // Bind to LocalService
-        String[] toRequest = LocalService.checkRequiredPermissions(this);
+        /*String[] toRequest = LocalService.checkRequiredPermissions(HomeActivity.this);
         ArrayList<String> permissionsWeCanAsk = new ArrayList<>();
 
         for (String permission : toRequest) {
@@ -193,8 +193,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
 
         if (!permissionsWeCanAsk.isEmpty()) {
-            ActivityCompat.requestPermissions(this, permissionsWeCanAsk.toArray(new String[permissionsWeCanAsk.size()]), LocalService.PERMISSIONS_REQUEST);
-        } else if (!mBound) {
+            ActivityCompat.requestPermissions(HomeActivity.this, permissionsWeCanAsk.toArray(new String[permissionsWeCanAsk.size()]), LocalService.PERMISSIONS_REQUEST);
+        } else */
+        if (!mBound) {
             Log.d(TAG, "onCreate: Binding service...");
             Intent intent = new Intent(this, LocalService.class);
             startService(intent);

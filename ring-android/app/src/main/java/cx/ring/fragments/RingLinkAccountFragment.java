@@ -47,6 +47,9 @@ public class RingLinkAccountFragment extends Fragment {
     @BindView(R.id.link_button)
     Button mLinkAccountBtn;
 
+    @BindView(R.id.next_create_account)
+    Button mNextButton;
+
     @BindView(R.id.last_create_account)
     Button mLastButton;
 
@@ -61,13 +64,23 @@ public class RingLinkAccountFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
+        if (((AccountWizard) getActivity()).isFirstAccount()) {
+            mLinkAccountBtn.setVisibility(View.GONE);
+        } else {
+            mNextButton.setVisibility(View.GONE);
+        }
         checkNextState();
         return view;
     }
 
     @OnClick(R.id.link_button)
-    public void onLinkClick() {
+    public void onLinkClick(View view) {
         ((AccountWizard) getActivity()).createAccount(null, mPinTxt.getText().toString(), mPasswordTxt.getText().toString());
+    }
+
+    @OnClick(R.id.next_create_account)
+    public void onNextClick() {
+        ((AccountWizard) getActivity()).accountNext(null, mPinTxt.getText().toString(), mPasswordTxt.getText().toString());
     }
 
     @OnClick(R.id.last_create_account)

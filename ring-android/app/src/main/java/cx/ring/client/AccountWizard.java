@@ -40,6 +40,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -60,6 +61,7 @@ import cx.ring.fragments.AccountCreationFragment;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.HomeAccountCreationFragment;
 import cx.ring.fragments.ProfileCreationFragment;
+import cx.ring.fragments.PermissionsAccountCreationFragment;
 import cx.ring.fragments.RingAccountCreationFragment;
 import cx.ring.fragments.RingLinkAccountFragment;
 import cx.ring.model.Account;
@@ -82,7 +84,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     private boolean mCreatingAccount = false;
     private ProfileCreationFragment mProfileFragment;
     private HomeAccountCreationFragment mHomeFragment;
-
+    private PermissionsAccountCreationFragment mPermissionsFragment;
     private boolean mLinkAccount = false;
     private boolean mIsNew = false;
     private boolean createdAccount = false;
@@ -141,7 +143,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         } else {
             mViewPager.setOffscreenPageLimit(4);
             mIsNew = !(mBound && !mService.getAccounts().isEmpty());
-            Log.d(TAG, "is first account " + mIsNew);
+            mViewPager.getAdapter().notifyDataSetChanged();
             mAccountType = getIntent().getAction() != null ? getIntent().getAction() : AccountConfig.ACCOUNT_TYPE_RING;
         }
     }
@@ -560,6 +562,29 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        Boolean permission = false;
+        if (grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                permission = true;
+            }
+        } else {
+            return;
+        }
+        switch (requestCode) {
+            case PermissionsAccountCreationFragment.REQUEST_PERMISSION_MICROPHONE:
+                mPermissionsFragment.changePermissionMicrophone(permission);
+                break;
+            case PermissionsAccountCreationFragment.REQUEST_PERMISSION_CAMERA:
+                mPermissionsFragment.changePermissionCamera(permission);
+                break;
+            case PermissionsAccountCreationFragment.REQUEST_PERMISSION_CONTACTS:
+                mPermissionsFragment.changePermissionContacts(permission);
+                break;
+        }
+    }
+
+    @Override
     public IDRingService getRemoteService() {
         return mService.getRemoteService();
     }
@@ -579,7 +604,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
 
         @Override
         public int getCount() {
-            return 3;
+            return isFirstAccount() ? 4 : 3;
         }
 
         @Override
@@ -600,6 +625,8 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
                     } else {
                         return new RingAccountCreationFragment();
                     }
+                case 3:
+                    return mPermissionsFragment = new PermissionsAccountCreationFragment();
                 default:
                     return null;
             }

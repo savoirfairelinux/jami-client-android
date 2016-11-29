@@ -169,8 +169,8 @@ along with this program; if not, write to the Free Software
     <string name="help_password_choose">Choose a strong password you will remember to protect your Ring account.</string>
     <string name="help_password_enter">Enter your main Ring account password</string>
     <string name="help_pin_enter">Enter the PIN from another configured Ring account. Use the \"export account on Ring\" feature to obtain a PIN.</string>
-    <string name="wizard_next">Next</string>
-    <string name="wizard_back">Back</string>
+    <string name="next">Next</string>
+    <string name="last">Last</string>
 
     <string name="account_device_updated_message">You have successfully updated your Ring account.</string>
 

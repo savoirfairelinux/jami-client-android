@@ -209,7 +209,14 @@ along with this program; if not, write to the Free Software
     <string name="account_creation_home">Welcome to Ring</string>
     <string name="account_creation_profile">Create your profile</string>
     <string name="account_creation_ring">Create your Ring account</string>
+    <string name="account_creation_permissions">Permissions</string>
     <string name="account_link_title">Link this device</string>
     <string name="account_sip_cannot_be_registered">Can\'t register account</string>
+    <string name="permission_microphone">Give access to the microphone</string>
+    <string name="permission_microphone_help">Allows audio and video calls (mandatory)</string>
+    <string name="permission_camera">Give access to the camera</string>
+    <string name="permission_camera_help">Allows video calls (optional)</string>
+    <string name="permission_contacts">Give access to your contacts list</string>
+    <string name="permission_contacts_help">Allows Ring to use your device contacts (optional)</string>
 
 </resources>
