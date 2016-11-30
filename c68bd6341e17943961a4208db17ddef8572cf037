@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_e00baa29",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ProfileCreationFragment.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-30T15:20:26Z",
+      "side": 1,
+      "message": "Does not work\nIt throws an exception. We should comment this for now",
+      "range": {
+        "startLine": 112,
+        "startChar": 20,
+        "endLine": 121,
+        "endChar": 21
+      },
+      "revId": "c68bd6341e17943961a4208db17ddef8572cf037",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
