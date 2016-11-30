@@ -30,7 +30,6 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -122,12 +121,6 @@ public class AccountMigrationFragment extends Fragment {
         if (getArguments() != null) {
             mAccountId = getArguments().getString(ACCOUNT_ID);
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.update_account);
     }
 
     @Override

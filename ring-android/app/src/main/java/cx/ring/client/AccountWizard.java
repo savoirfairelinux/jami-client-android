@@ -46,6 +46,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -56,6 +57,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.fragments.AccountCreationFragment;
+import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.HomeAccountCreationFragment;
 import cx.ring.fragments.ProfileCreationFragment;
 import cx.ring.fragments.RingAccountCreationFragment;
@@ -122,13 +124,30 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
             Intent intent = new Intent(this, LocalService.class);
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
-
-        mViewPager.setOffscreenPageLimit(4);
-        mIsNew = !(mBound && !mService.getAccounts().isEmpty());
-        Log.d(TAG, "is first account " + mIsNew);
         mViewPager.setAdapter(new WizardPagerAdapter(getFragmentManager()));
 
-        mAccountType = getIntent().getAction() != null ? getIntent().getAction() : AccountConfig.ACCOUNT_TYPE_RING;
+        if (shouldPresentMigrationScreen()) {
+            mViewPager.setVisibility(View.GONE);
+            Bundle args = new Bundle();
+            Fragment fragment;
+            args.putString(AccountMigrationFragment.ACCOUNT_ID, getIntent().getData().getLastPathSegment());
+            fragment = new AccountMigrationFragment();
+            fragment.setArguments(args);
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager
+                    .beginTransaction()
+                    .replace(R.id.migration_container, fragment)
+                    .commit();
+        } else {
+            mViewPager.setOffscreenPageLimit(4);
+            mIsNew = !(mBound && !mService.getAccounts().isEmpty());
+            Log.d(TAG, "is first account " + mIsNew);
+            mAccountType = getIntent().getAction() != null ? getIntent().getAction() : AccountConfig.ACCOUNT_TYPE_RING;
+        }
+    }
+
+    public boolean shouldPresentMigrationScreen() {
+        return getIntent().getData() != null && !TextUtils.isEmpty(getIntent().getData().getLastPathSegment());
     }
 
     @Override
