@@ -30,7 +30,7 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.HistoryService;
 import cx.ring.services.SettingsService;
 
-public class SettingsPresenter extends RootPresenter<GenericView<SettingsViewModel>> implements Observer {
+public class  SettingsPresenter extends RootPresenter<GenericView<SettingsViewModel>> implements Observer {
 
     @Inject
     SettingsService mSettingsService;
