@@ -36,7 +36,7 @@ import java.util.Random;
 
 import cx.ring.R;
 import cx.ring.adapters.NumberAdapter;
-import cx.ring.client.CallActivity;
+import cx.ring.call.CallActivity;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;

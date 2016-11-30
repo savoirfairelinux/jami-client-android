@@ -24,6 +24,10 @@ import javax.inject.Singleton;
 import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
 import cx.ring.application.RingApplication;
+import cx.ring.call.CallActivity;
+import cx.ring.call.CallFragment;
+import cx.ring.call.CallPresenter;
+import cx.ring.call.ConferencePresenter;
 import cx.ring.client.ConversationActivity;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.navigation.RingNavigationFragment;
@@ -52,6 +56,8 @@ public interface RingInjectionComponent {
 
     void inject(RingNavigationFragment view);
 
+    void inject(CallActivity activity);
+
     void inject(ConversationActivity activity);
 
     void inject(AboutFragment fragment);
@@ -61,6 +67,8 @@ public interface RingInjectionComponent {
     void inject(ShareFragment fragment);
 
     void inject(SettingsFragment fragment);
+
+    void inject(CallFragment fragment);
 
     void inject(LocalService service);
 
@@ -91,4 +99,8 @@ public interface RingInjectionComponent {
     void inject(SharePresenter presenter);
 
     void inject(SettingsPresenter presenter);
+
+    void inject(ConferencePresenter presenter);
+
+    void inject(CallPresenter presenter);
 }
