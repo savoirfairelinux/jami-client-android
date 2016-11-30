@@ -58,7 +58,7 @@ public class SettingsPresenter extends RootPresenter<GenericView<SettingsViewMod
         getView().showViewModel(new SettingsViewModel(settings));
     }
 
-    public void saveSettings (Settings settings) {
+    public void saveSettings(Settings settings) {
         mSettingsService.saveSettings(settings);
     }
 
