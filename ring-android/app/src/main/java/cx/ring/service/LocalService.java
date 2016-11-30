@@ -82,10 +82,6 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
-import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryEntry;
-import cx.ring.model.HistoryText;
-import cx.ring.utils.Tuple;
 import cx.ring.loaders.AccountsLoader;
 import cx.ring.loaders.ContactsLoader;
 import cx.ring.model.Account;
@@ -94,18 +90,21 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.Conversation;
+import cx.ring.model.HistoryCall;
+import cx.ring.model.HistoryEntry;
+import cx.ring.model.HistoryText;
 import cx.ring.model.SecureSipCall;
 import cx.ring.model.Settings;
 import cx.ring.model.SipCall;
-import cx.ring.model.Uri;
 import cx.ring.model.TextMessage;
+import cx.ring.model.Uri;
 import cx.ring.services.HistoryService;
-import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.SettingsService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaManager;
+import cx.ring.utils.Tuple;
 
 public class LocalService extends Service implements Observer {
     static final String TAG = LocalService.class.getSimpleName();
@@ -275,9 +274,7 @@ public class LocalService extends Service implements Observer {
             TextMessage message = new TextMessage(false, txt, to, null, account);
             message.setID(id);
             message.read();
-            // todo as soon as the HistoryService interface will propose this method we
-            // wont have to cast it anymore
-            ((HistoryServiceImpl) mHistoryService).insertNewTextMessage(message);
+            mHistoryService.insertNewTextMessage(message);
             messages.put(id, message);
             textMessageSent(message);
         } catch (RemoteException e) {
@@ -339,9 +336,7 @@ public class LocalService extends Service implements Observer {
             SipCall call = conf.getParticipants().get(0);
             TextMessage message = new TextMessage(false, txt, call.getNumberUri(), conf.getId(), call.getAccount());
             message.read();
-            // todo as soon as the HistoryService interface will propose this method we
-            // wont have to cast it anymore
-            ((HistoryServiceImpl) mHistoryService).insertNewTextMessage(message);
+            mHistoryService.insertNewTextMessage(message);
             textMessageSent(message);
         } catch (RemoteException e) {
             Log.e(TAG, "sendTextMessage", e);
@@ -351,9 +346,7 @@ public class LocalService extends Service implements Observer {
     private void readTextMessage(TextMessage message) {
         message.read();
         HistoryText ht = new HistoryText(message);
-        // todo as soon as the HistoryService interface will propose this method we
-        // wont have to cast it anymore
-        ((HistoryServiceImpl) mHistoryService).updateTextMessage(ht);
+        mHistoryService.updateTextMessage(ht);
     }
 
     public void readConversation(Conversation conv) {
@@ -785,7 +778,7 @@ public class LocalService extends Service implements Observer {
         return conversation;
     }
 
-    public void updateConversationContactWithRingId (String oldId, String ringId) {
+    public void updateConversationContactWithRingId(String oldId, String ringId) {
 
         if (TextUtils.isEmpty(oldId)) {
             return;
@@ -815,14 +808,14 @@ public class LocalService extends Service implements Observer {
         conversations.remove(oldId);
         conversations.put(contact.getIds().get(0), conversation);
 
-        for (Map.Entry<String, HistoryEntry> entry: conversation.getHistory().entrySet()) {
+        for (Map.Entry<String, HistoryEntry> entry : conversation.getHistory().entrySet()) {
             HistoryEntry historyEntry = entry.getValue();
             historyEntry.setContact(contact);
             NavigableMap<Long, TextMessage> messages = historyEntry.getTextMessages();
-            for (TextMessage textMessage: messages.values()) {
+            for (TextMessage textMessage : messages.values()) {
                 textMessage.setNumber(ringIdUri);
                 textMessage.setContact(contact);
-                ((HistoryServiceImpl)mHistoryService).updateTextMessage(new HistoryText(textMessage));
+                mHistoryService.updateTextMessage(new HistoryText(textMessage));
             }
         }
 
@@ -1144,10 +1137,8 @@ public class LocalService extends Service implements Observer {
         protected Map<String, Conversation> doInBackground(Void... params) {
             final Map<String, Conversation> ret = new HashMap<>();
             try {
-                // todo as soon as the HistoryService interface will propose this method we
-                // wont have to cast it anymore
-                final List<HistoryCall> history = ((HistoryServiceImpl) mHistoryService).getAll();
-                final List<HistoryText> historyTexts = ((HistoryServiceImpl) mHistoryService).getAllTextMessages();
+                final List<HistoryCall> history = mHistoryService.getAll();
+                final List<HistoryText> historyTexts = mHistoryService.getAllTextMessages();
                 final Map<String, ArrayList<String>> confs = mService.getConferenceList();
 
                 for (HistoryCall call : history) {
@@ -1526,9 +1517,7 @@ public class LocalService extends Service implements Observer {
                         txt.read();
                     }
 
-                    // todo as soon as the HistoryService interface will propose this method we
-                    // wont have to cast it anymore
-                    ((HistoryServiceImpl) mHistoryService).insertNewTextMessage(txt);
+                    mHistoryService.insertNewTextMessage(txt);
 
                     conversation.addTextMessage(txt);
                     if (!conversation.isVisible()) {
@@ -1722,9 +1711,7 @@ public class LocalService extends Service implements Observer {
                                 call.setTimestampEnd(System.currentTimeMillis());
                             }
 
-                            // todo as soon as the HistoryService interface will propose this method
-                            // we wont have to cast it anymore
-                            ((HistoryServiceImpl) mHistoryService).insertNewEntry(found);
+                            mHistoryService.insertNewEntry(found);
                             conversation.addHistoryCall(new HistoryCall(call));
                             notificationManager.cancel(found.getUuid());
                             found.removeParticipant(call);
@@ -1813,8 +1800,7 @@ public class LocalService extends Service implements Observer {
     }
 
     public void deleteConversation(Conversation conversation) {
-        // todo as soon as the HistoryService interface will propose this method we wont have to cast it anymore
-        ((HistoryServiceImpl) mHistoryService).clearHistoryForConversation(conversation);
+        mHistoryService.clearHistoryForConversation(conversation);
         refreshConversations();
     }
 
