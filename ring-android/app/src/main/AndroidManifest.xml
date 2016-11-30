@@ -166,7 +166,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </receiver>
 
         <activity
-            android:name=".client.CallActivity"
+            android:name=".call.CallActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:label="@string/app_name"
             android:screenOrientation="fullUser"

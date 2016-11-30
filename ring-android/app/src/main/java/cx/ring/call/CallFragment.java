@@ -19,7 +19,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.fragments;
+package cx.ring.call;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -69,13 +69,18 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
+import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.fragments.TransferDFragment;
 import cx.ring.interfaces.CallInterface;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -93,7 +98,7 @@ import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.property.Photo;
 
-public class CallFragment extends Fragment implements CallInterface, ContactDetailsTask.DetailsLoadedCallback {
+public class CallFragment extends Fragment implements CallView, CallInterface, ContactDetailsTask.DetailsLoadedCallback {
 
     static final private String TAG = CallFragment.class.getSimpleName();
 
@@ -104,6 +109,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
     // Screen wake lock for incoming call
     private WakeLock mScreenWakeLock;
+
+    @Inject
+    CallPresenter mCallPresenter;
 
     @BindView(R.id.contact_bubble_layout)
     View contactBubbleLayout;
@@ -165,6 +173,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     private boolean ongoingCall = false;
 
     private DisplayManager.DisplayListener displayListener;
+    private Unbinder mUnbinder;
 
     @Override
     public void onAttach(Activity activity) {
@@ -243,7 +252,13 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "onDestroy");
+
+        // Butterknife unbinding
+        mUnbinder.unbind();
+
+        // view unbinding
+        mCallPresenter.unbindView();
+
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
         }
@@ -513,7 +528,10 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume()");
+
+        // view binding
+        mCallPresenter.bindView(this);
+
         Conference conference = getConference();
 
         confUpdate();
@@ -746,7 +764,11 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         Log.i(TAG, "onCreateView");
         View rootView = inflater.inflate(R.layout.frag_call, container, false);
 
-        ButterKnife.bind(this, rootView);
+        // views injection
+        mUnbinder = ButterKnife.bind(this, rootView);
+
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         mNumeralDialEditText.requestFocus();
         mNumeralDialEditText.addTextChangedListener(new TextWatcher() {

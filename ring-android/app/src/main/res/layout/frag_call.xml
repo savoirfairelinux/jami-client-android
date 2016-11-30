@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".client.CallActivity">
+    tools:context=".call.CallActivity">
 
     <SurfaceView
         android:id="@+id/video_preview_surface"

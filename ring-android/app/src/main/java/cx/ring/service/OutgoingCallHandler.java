@@ -27,7 +27,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import cx.ring.R;
-import cx.ring.client.CallActivity;
+import cx.ring.call.CallActivity;
 import cx.ring.model.Uri;
 
 public class OutgoingCallHandler extends BroadcastReceiver

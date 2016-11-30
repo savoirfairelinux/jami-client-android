@@ -20,7 +20,7 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.client;
+package cx.ring.call;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -44,7 +44,6 @@ import android.view.WindowManager;
 
 import cx.ring.BuildConfig;
 import cx.ring.R;
-import cx.ring.fragments.CallFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;

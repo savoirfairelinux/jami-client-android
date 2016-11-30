@@ -62,6 +62,7 @@ import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.adapters.NumberAdapter;
 import cx.ring.application.RingApplication;
+import cx.ring.call.CallActivity;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;

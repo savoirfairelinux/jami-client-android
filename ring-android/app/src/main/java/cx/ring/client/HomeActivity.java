@@ -65,6 +65,7 @@ import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
 import cx.ring.application.RingApplication;
+import cx.ring.call.CallActivity;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
