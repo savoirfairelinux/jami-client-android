@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_5ba14fa8",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/VideoManagerCallback.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-30T17:42:40Z",
+      "side": 1,
+      "message": "you should use an explicit variable name",
+      "range": {
+        "startLine": 52,
+        "startChar": 34,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "93b0f6c8d53a538b8ecdd3ff1e480abf5dcc3616",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_3bb003f4",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/VideoManagerCallback.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-11-30T17:42:40Z",
+      "side": 1,
+      "message": "you should use an explicit variable name",
+      "range": {
+        "startLine": 158,
+        "startChar": 20,
+        "endLine": 158,
+        "endChar": 22
+      },
+      "revId": "93b0f6c8d53a538b8ecdd3ff1e480abf5dcc3616",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
