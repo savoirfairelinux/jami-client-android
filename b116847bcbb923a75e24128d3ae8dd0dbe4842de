@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_9bbd7705",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountWizard.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-30T16:31:11Z",
+      "side": 1,
+      "message": "we usually never use \"this\"",
+      "range": {
+        "startLine": 348,
+        "startChar": 12,
+        "endLine": 348,
+        "endChar": 16
+      },
+      "revId": "b116847bcbb923a75e24128d3ae8dd0dbe4842de",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_bbbab308",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountCreationFragment.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-11-30T16:31:11Z",
+      "side": 1,
+      "message": "use {}",
+      "revId": "b116847bcbb923a75e24128d3ae8dd0dbe4842de",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
