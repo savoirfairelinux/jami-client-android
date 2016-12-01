@@ -34,20 +34,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnEditorAction;
 import cx.ring.R;
-import cx.ring.service.LocalService;
+import cx.ring.application.RingApplication;
+import cx.ring.model.DaemonEvent;
+import cx.ring.services.AccountService;
 import cx.ring.utils.BlockchainUtils;
+import cx.ring.utils.Log;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
-public class RegisterNameDialog extends DialogFragment {
+public class RegisterNameDialog extends DialogFragment implements Observer<DaemonEvent> {
     static final String TAG = RegisterNameDialog.class.getSimpleName();
 
     public interface RegisterNameDialogListener {
         void onRegisterName(String name, String password);
     }
+
+    @Inject
+    AccountService mAccountService;
+
+    @BindString(R.string.username_already_taken)
+    String mUserNameAlreadyTaken;
+
+    @BindString(R.string.invalid_username)
+    String mInvalidUsername;
 
     @BindView(R.id.ring_username_txt_box)
     public TextInputLayout mUsernameTxtBox;
@@ -82,6 +98,53 @@ public class RegisterNameDialog extends DialogFragment {
     }
 
     @Override
+    public void update(Observable observable, DaemonEvent event) {
+        if (event == null) {
+            return;
+        }
+
+        switch (event.getEventType()) {
+            case REGISTERED_NAME_FOUND:
+                int state = event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class);
+                String name = event.getEventInput(DaemonEvent.EventInput.NAME, String.class);
+                handleBlockchainResult(state, name);
+                break;
+            default:
+                Log.d(TAG, "This event " + event.getEventType() + " is not handled here");
+                break;
+        }
+    }
+
+    private void handleBlockchainResult(int state, String name) {
+        String actualName = mUsernameTxt.getText().toString();
+        if (actualName.isEmpty()) {
+            mUsernameTxtBox.setErrorEnabled(false);
+            mUsernameTxtBox.setError(null);
+            return;
+        }
+
+        if (actualName.equals(name)) {
+            switch (state) {
+                case 0:
+                    // on found
+                    mUsernameTxtBox.setErrorEnabled(true);
+                    mUsernameTxtBox.setError(mUserNameAlreadyTaken);
+                    break;
+                case 1:
+                    // invalid name
+                    mUsernameTxtBox.setErrorEnabled(true);
+                    mUsernameTxtBox.setError(mInvalidUsername);
+                    break;
+                default:
+                    // on error
+                    mUsernameTxtBox.setErrorEnabled(false);
+                    mUsernameTxtBox.setError(null);
+                    break;
+            }
+        }
+    }
+
+    @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -90,8 +153,13 @@ public class RegisterNameDialog extends DialogFragment {
 
         ButterKnife.bind(this, view);
 
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
+        mAccountService.addObserver(this);
+
         BlockchainUtils.attachUsernameTextFilter(mUsernameTxt);
-        mUsernameTextWatcher = BlockchainUtils.attachUsernameTextWatcher((LocalService.Callbacks) getActivity(), mUsernameTxtBox, mUsernameTxt);
+        mUsernameTextWatcher = BlockchainUtils.attachUsernameTextWatcher(getActivity(), mAccountService, mUsernameTxtBox, mUsernameTxt);
 
         AlertDialog dialog = (AlertDialog) getDialog();
         if (dialog != null) {
@@ -139,7 +207,7 @@ public class RegisterNameDialog extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (mUsernameTxt != null) {
-            mUsernameTextWatcher = BlockchainUtils.attachUsernameTextWatcher((LocalService.Callbacks) getActivity(), mUsernameTxtBox, mUsernameTxt);
+            mUsernameTextWatcher = BlockchainUtils.attachUsernameTextWatcher(getActivity(), mAccountService, mUsernameTxtBox, mUsernameTxt);
         }
     }
 

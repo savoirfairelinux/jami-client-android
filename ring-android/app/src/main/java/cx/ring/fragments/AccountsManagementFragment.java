@@ -22,16 +22,12 @@
 
 package cx.ring.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,25 +43,34 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.client.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
-import cx.ring.service.LocalService;
+import cx.ring.model.DaemonEvent;
+import cx.ring.services.AccountService;
 import cx.ring.utils.ContentUriHandler;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 import cx.ring.views.dragsortlv.DragSortListView;
 
-public class AccountsManagementFragment extends Fragment implements HomeActivity.Refreshable {
+public class AccountsManagementFragment extends Fragment implements HomeActivity.Refreshable, Observer<DaemonEvent> {
     static final String TAG = AccountsManagementFragment.class.getSimpleName();
 
     public static final int ACCOUNT_CREATE_REQUEST = 1;
     public static final int ACCOUNT_EDIT_REQUEST = 2;
     private AccountsAdapter mAccountsAdapter;
+
+    @Inject
+    AccountService mAccountService;
 
     @BindView(R.id.accounts_list)
     DragSortListView mDnDListView;
@@ -80,47 +85,27 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
                 Account item = mAccountsAdapter.getItem(from);
                 mAccountsAdapter.remove(item);
                 mAccountsAdapter.insert(item, to);
-                mCallbacks.getService().setAccountOrder(mAccountsAdapter.getAccountOrder());
+                mAccountService.setAccountOrder(mAccountsAdapter.getAccountOrder());
             }
         }
     };
-
-    private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof LocalService.Callbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
-        }
-        mCallbacks = (LocalService.Callbacks) activity;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mCallbacks = LocalService.DUMMY_CALLBACKS;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "Create Account Management Fragment");
+
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        mAccountService.addObserver(this);
+
         mAccountsAdapter = new AccountsAdapter(getActivity());
-
-        getActivity().registerReceiver(mReceiver, new IntentFilter(LocalService.ACTION_ACCOUNT_UPDATE));
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        getActivity().unregisterReceiver(mReceiver);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View inflatedView = inflater.inflate(R.layout.frag_accounts_list, parent, false);
-        ButterKnife.bind(this,inflatedView);
+        ButterKnife.bind(this, inflatedView);
         mDnDListView.setAdapter(mAccountsAdapter);
         return inflatedView;
     }
@@ -179,6 +164,13 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         refresh();
+    }
+
+    @Override
+    public void update(Observable observable, DaemonEvent argument) {
+        if (argument!= null && argument.getEventType()== DaemonEvent.EventType.ACCOUNTS_CHANGED) {
+            refresh();
+        }
     }
 
     /**
@@ -268,11 +260,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
                 @Override
                 public void onClick(View v) {
                     item.setEnabled(!item.isEnabled());
-                    try {
-                        mCallbacks.getService().getRemoteService().setAccountDetails(item.getAccountID(), item.getDetails());
-                    } catch (RemoteException e) {
-                        Log.e(TAG, "Error while getting Account details", e);
-                    }
+                    mAccountService.setAccountDetails(item.getAccountID(), item.getDetails());
                 }
             });
             entryView.handle.setVisibility(View.VISIBLE);
@@ -337,26 +325,11 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
             }
             return order;
         }
-
     }
-
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().contentEquals(LocalService.ACTION_ACCOUNT_UPDATE)) {
-            refresh();
-        }
-        }
-    };
 
     @Override
     public void refresh() {
-        LocalService service = mCallbacks.getService();
-        View v = getView();
-        if (service == null || v == null) {
-            return;
-        }
-        mAccountsAdapter.replaceAll(service.getAccounts());
+        mAccountsAdapter.replaceAll(mAccountService.getAccounts());
         if (mAccountsAdapter.isEmpty()) {
             mDnDListView.setEmptyView(mEmptyView);
         }

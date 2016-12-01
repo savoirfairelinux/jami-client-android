@@ -1,24 +1,25 @@
 package cx.ring.service;
 
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
 import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
 
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.DaemonEvent;
 import cx.ring.model.SipCall;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 import cx.ring.utils.ProfileChunk;
 import cx.ring.utils.VCardUtils;
 
-public class CallManagerCallBack implements Observer {
+public class CallManagerCallBack implements Observer<DaemonEvent> {
 
     private static final String TAG = CallManagerCallBack.class.getName();
 
-    private DRingService mService;
+    private Context mContext;
     private ProfileChunk mProfileChunk;
 
     static public final String CALL_STATE_CHANGED = "call-State-changed";
@@ -32,13 +33,13 @@ public class CallManagerCallBack implements Observer {
     static public final String RTCP_REPORT_RECEIVED = "on_rtcp_report_received";
 
 
-    public CallManagerCallBack(DRingService context) {
+    public CallManagerCallBack(Context context) {
         super();
-        mService = context;
+        mContext = context;
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, DaemonEvent arg) {
         if (!(arg instanceof DaemonEvent)) {
             return;
         }
@@ -101,7 +102,7 @@ public class CallManagerCallBack implements Observer {
         intent.putExtra("call", callId);
         intent.putExtra("state", newState);
         intent.putExtra("detail_code", detailCode);
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     private void incomingCall(String accountId, String callId, String from) {
@@ -110,13 +111,13 @@ public class CallManagerCallBack implements Observer {
         toSend.putExtra("account", accountId);
         toSend.putExtra("from", from);
         toSend.putExtra("resuming", false);
-        mService.sendBroadcast(toSend);
+        mContext.sendBroadcast(toSend);
     }
 
     private void conferenceCreated(final String confId) {
         Intent intent = new Intent(CONF_CREATED);
         intent.putExtra("conference", confId);
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     private void incomingMessage(String callId, String from, StringMap messages) {
@@ -153,11 +154,11 @@ public class CallManagerCallBack implements Observer {
                         String filename = splitFrom[0] + ".vcf";
                         VCardUtils.savePeerProfileToDisk(mProfileChunk.getCompleteProfile(),
                                 filename,
-                                mService.getApplicationContext().getFilesDir());
+                                mContext.getApplicationContext().getFilesDir());
 
                         Intent intent = new Intent(VCARD_COMPLETED);
                         intent.putExtra("filename", filename);
-                        mService.sendBroadcast(intent);
+                        mContext.sendBroadcast(intent);
                     }
                 }
             } else if (messages.has_key(textPlainMime)) {
@@ -173,31 +174,31 @@ public class CallManagerCallBack implements Observer {
         intent.putExtra("txt", msg);
         intent.putExtra("from", from);
         intent.putExtra("call", callId);
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     private void conferenceRemoved(String confId) {
         Intent intent = new Intent(CONF_REMOVED);
         intent.putExtra("conference", confId);
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     private void conferenceChanged(String confId, String state) {
         Intent intent = new Intent(CONF_CHANGED);
         intent.putExtra("conference", confId);
         intent.putExtra("state", state);
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     private void recordPlaybackFilepath(String id, String filename) {
         Intent intent = new Intent();
         intent.putExtra("call", id);
         intent.putExtra("file", filename);
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     private void onRtcpReportReceived(String callId, IntegerMap stats) {
         Intent intent = new Intent(RTCP_REPORT_RECEIVED);
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 }
