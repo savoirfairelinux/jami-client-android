@@ -143,7 +143,7 @@ public class LocalService extends Service implements Observer {
     private Map<String, Conversation> conversations = new HashMap<>();
     private LongSparseArray<TextMessage> messages = new LongSparseArray<>();
 
-    private List<Account> accounts = new ArrayList<>();
+    //private List<Account> accounts = new ArrayList<>();
 
     private final LongSparseArray<CallContact> systemContactCache = new LongSparseArray<>();
     private ContactsLoader.Result lastContactLoaderResult = new ContactsLoader.Result();
@@ -250,21 +250,6 @@ public class LocalService extends Service implements Observer {
             Log.e(TAG, "placeCall", e);
         }
         return conf;
-    }
-
-    public Account createAccount(HashMap<String, String> conf) {
-        Account account = null;
-        try {
-            final String accountId = mService.addAccount(conf);
-            account = getAccount(accountId);
-            if (account == null) {
-                account = new Account(accountId);
-                accounts.add(account);
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error while creating account", e);
-        }
-        return account;
     }
 
     public void sendTextMessage(String account, Uri to, String txt) {
@@ -672,18 +657,6 @@ public class LocalService extends Service implements Observer {
 
     public List<Account> getAccounts() {
         return accounts;
-    }
-
-    public Account getAccount(String accountId) {
-        if (accountId == null || accountId.isEmpty()) {
-            return null;
-        }
-        for (Account account : accounts) {
-            if (account.getAccountID().equals(accountId)) {
-                return account;
-            }
-        }
-        return null;
     }
 
     public void setAccountOrder(List<String> accountOrder) {
