@@ -42,15 +42,20 @@ import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
-import cx.ring.model.Codec;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
+import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
 import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 import cx.ring.utils.FileUtils;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
@@ -59,6 +64,9 @@ import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 public class MediaPreferenceFragment extends PreferenceFragment
         implements FragmentCompat.OnRequestPermissionsResultCallback, AccountChangedListener {
     static final String TAG = MediaPreferenceFragment.class.getSimpleName();
+
+    @Inject
+    AccountService mAccountService;
 
     private CodecPreference audioCodecsPref = null;
     private CodecPreference videoCodecsPref = null;
@@ -105,7 +113,7 @@ public class MediaPreferenceFragment extends PreferenceFragment
         final ArrayList<Codec> audioCodec = new ArrayList<>();
         final ArrayList<Codec> videoCodec = new ArrayList<>();
         try {
-            final ArrayList<Codec> codecList = ((ArrayList<Codec>) mCallbacks.getRemoteService().getCodecList(account.getAccountID()));
+            final List<Codec> codecList = mAccountService.getCodecList(account.getAccountID());
             for (Codec codec : codecList) {
                 if (codec.getType() == Codec.Type.AUDIO) {
                     audioCodec.add(codec);
@@ -173,6 +181,9 @@ public class MediaPreferenceFragment extends PreferenceFragment
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
         Log.d(TAG, "onCreatePreferences");
         addPreferencesFromResource(R.xml.account_media_prefs);
         audioCodecsPref = (CodecPreference) findPreference("Account.audioCodecs");
@@ -334,7 +345,6 @@ public class MediaPreferenceFragment extends PreferenceFragment
         final Account account = mCallbacks.getAccount();
         if (account != null) {
             setPreferenceDetails(account.getConfig());
-            account.notifyObservers();
         }
         if (null != getListView() && null != getListView().getAdapter()) {
             getListView().getAdapter().notifyDataSetChanged();
