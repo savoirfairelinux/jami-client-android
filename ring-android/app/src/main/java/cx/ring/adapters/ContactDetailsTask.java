@@ -67,7 +67,7 @@ public class ContactDetailsTask implements Runnable {
     private final static String MIME_TYPE_PNG = "image/png";
     private final static int ORIENTATION_LEFT = 270;
     private final static int ORIENTATION_RIGHT = 90;
-    private final static int MAX_IMAGE_DIMENSION = 70;
+    private final static int MAX_IMAGE_DIMENSION = 200;
 
     public void addCallback(DetailsLoadedCallback cb) {
         synchronized (mCallbacks) {
