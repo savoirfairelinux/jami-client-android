@@ -28,7 +28,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
@@ -55,27 +54,37 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
-import cx.ring.service.LocalService;
+import cx.ring.model.DaemonEvent;
+import cx.ring.services.AccountService;
 import cx.ring.utils.KeyboardVisibilityManager;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 import cx.ring.views.LinkNewDeviceLayout;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
 public class DeviceAccountFragment extends Fragment implements AccountChangedListener,
         BackHandlerInterface,
-        RegisterNameDialog.RegisterNameDialogListener {
+        RegisterNameDialog.RegisterNameDialogListener,
+        Observer<DaemonEvent> {
 
     private static final String TAG = DeviceAccountFragment.class.getSimpleName();
+
+    @Inject
+    AccountService mAccountService;
 
     /*
     UI Bindings
@@ -177,7 +186,6 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
 
         int color = ContextCompat.getColor(getActivity(), R.color.holo_red_light);
         String status;
-
 
         if (account.isEnabled()) {
             if (account.isTrying()) {
@@ -332,19 +340,25 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     public void onRegisterName(String name, String password) {
         final Account account = mCallbacks.getAccount();
         account.setDetail(ConfigKey.ACCOUNT_REGISTERED_NAME, name);
-        mCallbacks.getService().registerName(account, password, name, new LocalService.NameRegistrationCallback() {
-            @Override
-            public void onRegistered(String name) {
-                Log.w(TAG, "Account wizard, onRegistered " + name);
-                mCallbacks.saveAccount();
-            }
 
-            @Override
-            public void onError(String name, CharSequence err) {
-                Log.w(TAG, "Account wizard, onError " + name);
-            }
-        });
+        mAccountService.registerName(account, password, name);
+
         accountChanged(account);
+    }
+
+    @Override
+    public void update(Observable observable, DaemonEvent event) {
+        if (event == null) {
+            return;
+        }
+
+        switch (event.getEventType()) {
+            case NAME_REGISTRATION_ENDED:
+                mCallbacks.saveAccount();
+                break;
+            default:
+                break;
+        }
     }
 
     class DeviceAdapter extends BaseAdapter {
@@ -444,13 +458,7 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
 
         @Override
         protected String doInBackground(String... params) {
-            String pin = null;
-            try {
-                pin = mCallbacks.getRemoteService().exportOnRing(account.getAccountID(), params[0]);
-            } catch (RemoteException e) {
-                Log.e(TAG, "Error while exporting in background", e);
-            }
-            return pin;
+            return mAccountService.exportOnRing(account.getAccountID(), params[0]);
         }
     }
 
@@ -463,6 +471,9 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
         ViewGroup devLayout = (ViewGroup) inflater.inflate(R.layout.frag_device_list, container, false);
 
         ButterKnife.bind(this, devLayout);
+
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         Account account = mCallbacks.getAccount();
         if (account != null) {
