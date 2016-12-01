@@ -39,6 +39,9 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
@@ -47,13 +50,26 @@ import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
-import cx.ring.service.LocalService;
+import cx.ring.model.DaemonEvent;
+import cx.ring.services.AccountService;
 import cx.ring.utils.BlockchainUtils;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
-public class RingAccountCreationFragment extends Fragment {
+public class RingAccountCreationFragment extends Fragment implements Observer<DaemonEvent> {
     static final String TAG = RingAccountCreationFragment.class.getSimpleName();
     private static final int PASSWORD_MIN_LENGTH = 6;
+
+    @Inject
+    AccountService mAccountService;
+
+    @BindString(R.string.username_already_taken)
+    String mUserNameAlreadyTaken;
+
+    @BindString(R.string.invalid_username)
+    String mInvalidUsername;
 
     @BindView(R.id.switch_ring_username)
     Switch mUsernameSwitch;
@@ -93,6 +109,7 @@ public class RingAccountCreationFragment extends Fragment {
 
     /**
      * Checks the validity of the given password.
+     *
      * @return false if there is no error, true otherwise.
      */
     private boolean validateForm() {
@@ -139,13 +156,28 @@ public class RingAccountCreationFragment extends Fragment {
         final View view = inflater.inflate(R.layout.frag_acc_ring_create, parent, false);
         ButterKnife.bind(this, view);
 
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
         BlockchainUtils.attachUsernameTextFilter(mUsernameTxt);
 
         if (isAdded()) {
-            mUsernameTextWatcher = BlockchainUtils.attachUsernameTextWatcher((LocalService.Callbacks) getActivity(), mUsernameTxtBox, mUsernameTxt);
+            mUsernameTextWatcher = BlockchainUtils.attachUsernameTextWatcher(getActivity(), mAccountService, mUsernameTxtBox, mUsernameTxt);
         }
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAccountService.addObserver(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mAccountService.removeObserver(this);
     }
 
     @OnCheckedChanged(R.id.switch_ring_username)
@@ -232,7 +264,7 @@ public class RingAccountCreationFragment extends Fragment {
             ab.setTitle(R.string.account_create_title);
         }
         if (mUsernameTxt != null) {
-            mUsernameTextWatcher = BlockchainUtils.attachUsernameTextWatcher((LocalService.Callbacks) getActivity(), mUsernameTxtBox, mUsernameTxt);
+            mUsernameTextWatcher = BlockchainUtils.attachUsernameTextWatcher(getActivity(), mAccountService, mUsernameTxtBox, mUsernameTxt);
         }
     }
 
@@ -242,5 +274,62 @@ public class RingAccountCreationFragment extends Fragment {
             mUsernameTxt.removeTextChangedListener(mUsernameTextWatcher);
         }
         super.onDetach();
+    }
+
+    @Override
+    public void update(Observable observable, final DaemonEvent event) {
+        if (event == null) {
+            return;
+        }
+
+        RingApplication.uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                switch (event.getEventType()) {
+                    case REGISTERED_NAME_FOUND:
+                        int state = event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class);
+                        String name = event.getEventInput(DaemonEvent.EventInput.NAME, String.class);
+                        handleBlockchainResult(state, name);
+                        break;
+                    case ACCOUNTS_CHANGED:
+                        String accountId = event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class);
+                        if (!TextUtils.isEmpty(accountId)) {
+
+                        }
+                    default:
+                        cx.ring.utils.Log.d(TAG, "This event " + event.getEventType() + " is not handled here");
+                        break;
+                }
+            }
+        });
+    }
+
+    private void handleBlockchainResult(int state, String name) {
+        String actualName = mUsernameTxt.getText().toString();
+        if (actualName.isEmpty()) {
+            mUsernameTxtBox.setErrorEnabled(false);
+            mUsernameTxtBox.setError(null);
+            return;
+        }
+
+        if (actualName.equals(name)) {
+            switch (state) {
+                case 0:
+                    // on found
+                    mUsernameTxtBox.setErrorEnabled(true);
+                    mUsernameTxtBox.setError(mUserNameAlreadyTaken);
+                    break;
+                case 1:
+                    // invalid name
+                    mUsernameTxtBox.setErrorEnabled(true);
+                    mUsernameTxtBox.setError(mInvalidUsername);
+                    break;
+                default:
+                    // on error
+                    mUsernameTxtBox.setErrorEnabled(false);
+                    mUsernameTxtBox.setError(null);
+                    break;
+            }
+        }
     }
 }

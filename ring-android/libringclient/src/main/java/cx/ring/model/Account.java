@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Account extends java.util.Observable {
-    private static final String TAG = Account.class.getName();
 
     private String accountID;
 
@@ -34,10 +33,6 @@ public class Account extends java.util.Observable {
     private AccountConfig mDetails;
     private ArrayList<AccountCredentials> credentialsDetails = new ArrayList<>();
     private Map<String, String> devices = new HashMap<>();
-
-    public OnDevicesChangedListener devicesListener = null;
-    public OnExportEndedListener exportListener = null;
-    public OnStateChangedListener stateListener = null;
 
     public boolean registeringUsername = false;
 
@@ -48,7 +43,7 @@ public class Account extends java.util.Observable {
     }
 
     public Account(String bAccountID, final Map<String, String> details,
-                   final ArrayList<Map<String, String>> credentials,
+                   final List<Map<String, String>> credentials,
                    final Map<String, String> volDetails) {
         accountID = bAccountID;
         mDetails = new AccountConfig(details);
@@ -57,22 +52,17 @@ public class Account extends java.util.Observable {
     }
 
     public void update(Account account) {
-        String old = getRegistrationState();
         mDetails = account.mDetails;
         mVolatileDetails = account.mVolatileDetails;
         credentialsDetails = account.credentialsDetails;
         devices = account.devices;
-        String newRegState = getRegistrationState();
-        if (old != null && !old.contentEquals(newRegState) && stateListener != null) {
-            stateListener.stateChanged(newRegState, getRegistrationStateCode());
-        }
     }
 
     public Map<String, String> getDevices() {
         return devices;
     }
 
-    public void setCredentials(ArrayList<Map<String, String>> credentials) {
+    public void setCredentials(List<Map<String, String>> credentials) {
         credentialsDetails.clear();
         if (credentials != null) {
             credentialsDetails.ensureCapacity(credentials.size());
@@ -98,22 +88,8 @@ public class Account extends java.util.Observable {
         return mDetails;
     }
 
-    public interface OnDevicesChangedListener {
-        void devicesChanged(Map<String, String> devices);
-    }
-
-    public interface OnExportEndedListener {
-        void exportEnded(int code, String pin);
-    }
-
-    public interface OnStateChangedListener {
-        void stateChanged(String state, int code);
-    }
-
     public void setDevices(Map<String, String> devs) {
         devices = devs;
-        if (devicesListener != null)
-            devicesListener.devicesChanged(devs);
     }
 
     public String getAccountID() {
@@ -153,21 +129,12 @@ public class Account extends java.util.Observable {
     }
 
     public void setRegistrationState(String registeredState, int code) {
-        String old = getRegistrationState();
         mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATUS, registeredState);
         mVolatileDetails.put(ConfigKey.ACCOUNT_REGISTRATION_STATE_CODE, Integer.toString(code));
-        if (old != null && !old.contentEquals(registeredState) && stateListener != null) {
-            stateListener.stateChanged(registeredState, code);
-        }
     }
 
     public void setVolatileDetails(Map<String, String> volatileDetails) {
-        String stateOld = getRegistrationState();
         this.mVolatileDetails = new AccountConfig(volatileDetails);
-        String stateNew = getRegistrationState();
-        if (!stateOld.contentEquals(stateNew) && stateListener != null) {
-            stateListener.stateChanged(stateNew, getRegistrationStateCode());
-        }
     }
 
     public String getRegisteredName() {
