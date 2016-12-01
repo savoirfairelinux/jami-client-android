@@ -441,6 +441,7 @@ public class ConversationActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                startActivity(new Intent(this, HomeActivity.class));
                 finish();
                 return true;
             case R.id.conv_action_audiocall:
@@ -563,5 +564,11 @@ public class ConversationActivity extends AppCompatActivity implements
         if (ab != null && formattedName != null) {
             ab.setTitle(formattedName);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
 }

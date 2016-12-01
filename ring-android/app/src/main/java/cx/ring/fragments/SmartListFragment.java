@@ -310,18 +310,20 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         mSearchView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT));
         mSearchView.setImeOptions(EditorInfo.IME_ACTION_GO);
 
-        Intent i = getActivity().getIntent();
-        switch (i.getAction()) {
-            case Intent.ACTION_VIEW:
-            case Intent.ACTION_CALL:
-                mSearchView.setQuery(i.getDataString(), true);
-                break;
-            case Intent.ACTION_DIAL:
-                mSearchMenuItem.expandActionView();
-                mSearchView.setQuery(i.getDataString(), false);
-                break;
-            default:
-                break;
+        Intent intent = getActivity().getIntent();
+        if (intent != null && intent.getAction() != null) {
+            switch (intent.getAction()) {
+                case Intent.ACTION_VIEW:
+                case Intent.ACTION_CALL:
+                    mSearchView.setQuery(intent.getDataString(), true);
+                    break;
+                case Intent.ACTION_DIAL:
+                    mSearchMenuItem.expandActionView();
+                    mSearchView.setQuery(intent.getDataString(), false);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
