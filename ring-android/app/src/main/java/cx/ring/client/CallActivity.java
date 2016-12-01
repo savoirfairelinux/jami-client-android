@@ -54,6 +54,7 @@ import cx.ring.model.Account;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.utils.CallProximityManager;
+import cx.ring.utils.ContentUriHandler;
 
 import static cx.ring.service.LocalService.Callbacks;
 
@@ -362,5 +363,11 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
     @Override
     public void onProximityTrackingChanged(boolean acquired) {
+    }
+
+    @Override
+    public void onBackPressed() {
+        mCurrentCallFragment.onBackPressed();
+        super.onBackPressed();
     }
 }
