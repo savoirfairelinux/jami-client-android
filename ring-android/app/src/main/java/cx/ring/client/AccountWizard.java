@@ -53,9 +53,12 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.fragments.AccountCreationFragment;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.HomeAccountCreationFragment;
@@ -67,6 +70,7 @@ import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 import cx.ring.utils.VCardUtils;
 import cx.ring.views.WizardViewPager;
 import ezvcard.VCard;
@@ -94,6 +98,9 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
     private String mAccountType;
     private Account mAccount;
 
+    @Inject
+    AccountService mAccountService;
+
     @BindView(R.id.pager)
     WizardViewPager mViewPager;
 
@@ -103,7 +110,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         public void onServiceConnected(ComponentName className, IBinder binder) {
             mService = ((LocalService.LocalBinder) binder).getService();
             mBound = true;
-            mIsNew = mService.getAccounts().isEmpty();
+            mIsNew = mAccountService.getAccounts().isEmpty();
             mViewPager.getAdapter().notifyDataSetChanged();
         }
 
@@ -118,6 +125,9 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizard);
         ButterKnife.bind(this);
+
+        // dependency injection
+        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
 
         if (!mBound) {
             Log.i(TAG, "onCreate: Binding service...");
@@ -140,7 +150,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
                     .commit();
         } else {
             mViewPager.setOffscreenPageLimit(4);
-            mIsNew = !(mBound && !mService.getAccounts().isEmpty());
+            mIsNew = !(mBound && !mAccountService.getAccounts().isEmpty());
             Log.d(TAG, "is first account " + mIsNew);
             mAccountType = getIntent().getAction() != null ? getIntent().getAction() : AccountConfig.ACCOUNT_TYPE_RING;
         }
@@ -182,7 +192,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
      * If not, exit the app
      */
     private void checkAccountPresence() {
-        if (mBound && !mService.getAccounts().isEmpty()) {
+        if (mBound && !mAccountService.getAccounts().isEmpty()) {
             FragmentManager fm = getFragmentManager();
             if (fm.getBackStackEntryCount() >= 1) {
                 fm.popBackStack();
@@ -382,7 +392,7 @@ public class AccountWizard extends AppCompatActivity implements LocalService.Cal
         @Override
         protected final String doInBackground(HashMap<String, String>... accs) {
             if (mAccountType.equals(AccountConfig.ACCOUNT_TYPE_RING) || mAccount == null) {
-                mAccount = mService.createAccount(accs[0]);
+                mAccount = mAccountService.addAccount(accs[0]);
             } else {
                 mAccount.setDetail(ConfigKey.ACCOUNT_ALIAS, accs[0].get(ConfigKey.ACCOUNT_ALIAS.key()));
                 if (accs[0].containsKey(ConfigKey.ACCOUNT_HOSTNAME.key())) {

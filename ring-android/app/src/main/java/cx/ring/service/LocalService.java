@@ -61,7 +61,6 @@ import android.util.LongSparseArray;
 import android.util.LruCache;
 import android.util.Pair;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -98,6 +97,7 @@ import cx.ring.model.Settings;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
+import cx.ring.services.AccountService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.SettingsService;
 import cx.ring.utils.ActionHelper;
@@ -132,6 +132,9 @@ public class LocalService extends Service implements Observer {
     @Inject
     SettingsService mSettingsService;
 
+    @Inject
+    AccountService mAccountService;
+
     private IDRingService mService = null;
     private boolean dringStarted = false;
 
@@ -143,7 +146,7 @@ public class LocalService extends Service implements Observer {
     private Map<String, Conversation> conversations = new HashMap<>();
     private LongSparseArray<TextMessage> messages = new LongSparseArray<>();
 
-    private List<Account> accounts = new ArrayList<>();
+    //private List<Account> accounts = new ArrayList<>();
 
     private final LongSparseArray<CallContact> systemContactCache = new LongSparseArray<>();
     private ContactsLoader.Result lastContactLoaderResult = new ContactsLoader.Result();
@@ -184,7 +187,6 @@ public class LocalService extends Service implements Observer {
         void onError(String name, CharSequence err);
     }
 
-    ;
     final private Map<String, ArrayList<NameRegistrationCallback>> currentNameRegistrations = new HashMap<>();
 
     public ContactsLoader.Result getSortedContacts() {
@@ -234,7 +236,7 @@ public class LocalService extends Service implements Observer {
                 return null;
             }
             call.setCallID(callId);
-            Account account = getAccount(call.getAccount());
+            Account account = mAccountService.getAccount(call.getAccount());
             if (account.isRing()
                     || account.getDetailBoolean(ConfigKey.SRTP_ENABLE)
                     || account.getDetailBoolean(ConfigKey.TLS_ENABLE)) {
@@ -250,21 +252,6 @@ public class LocalService extends Service implements Observer {
             Log.e(TAG, "placeCall", e);
         }
         return conf;
-    }
-
-    public Account createAccount(HashMap<String, String> conf) {
-        Account account = null;
-        try {
-            final String accountId = mService.addAccount(conf);
-            account = getAccount(accountId);
-            if (account == null) {
-                account = new Account(accountId);
-                accounts.add(account);
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error while creating account", e);
-        }
-        return account;
     }
 
     public void sendTextMessage(String account, Uri to, String txt) {
@@ -399,7 +386,7 @@ public class LocalService extends Service implements Observer {
 
     public void reloadAccounts() {
         if (mService != null) {
-            initAccountLoader();
+            //initAccountLoader();
         } else {
             // start DRing service, reload account is part of onServiceConnected
             startDRingService();
@@ -495,7 +482,7 @@ public class LocalService extends Service implements Observer {
         mAccountLoader = null;
     }
 
-    private final Loader.OnLoadCompleteListener<ArrayList<Account>> onAccountsLoaded = new Loader.OnLoadCompleteListener<ArrayList<Account>>() {
+   /* private final Loader.OnLoadCompleteListener<ArrayList<Account>> onAccountsLoaded = new Loader.OnLoadCompleteListener<ArrayList<Account>>() {
         @Override
         public void onLoadComplete(Loader<ArrayList<Account>> loader, ArrayList<Account> data) {
             Log.w(TAG, "AccountsLoader Loader.OnLoadCompleteListener " + data.size());
@@ -539,7 +526,8 @@ public class LocalService extends Service implements Observer {
             mSystemContactLoader.startLoading();
             mSystemContactLoader.forceLoad();
         }
-    };
+    };*/
+
     private final Loader.OnLoadCompleteListener<ContactsLoader.Result> onSystemContactsLoaded = new Loader.OnLoadCompleteListener<ContactsLoader.Result>() {
         @Override
         public void onLoadComplete(Loader<ContactsLoader.Result> loader, ContactsLoader.Result data) {
@@ -561,7 +549,7 @@ public class LocalService extends Service implements Observer {
             Log.w(TAG, "onServiceConnected " + className.getClassName());
             mService = IDRingService.Stub.asInterface(service);
 
-            initAccountLoader();
+            //initAccountLoader();
 
             mSystemContactLoader = new ContactsLoader(LocalService.this);
             mSystemContactLoader.setSystemContactPermission(canUseContacts);
@@ -571,12 +559,12 @@ public class LocalService extends Service implements Observer {
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
             Log.d(TAG, "onServiceDisconnected " + arg0.getClassName());
-            if (mAccountLoader != null) {
+            /*if (mAccountLoader != null) {
                 mAccountLoader.unregisterListener(onAccountsLoaded);
                 mAccountLoader.cancelLoad();
                 mAccountLoader.stopLoading();
                 mAccountLoader = null;
-            }
+            }*/
             if (mSystemContactLoader != null) {
                 mSystemContactLoader.unregisterListener(onSystemContactsLoaded);
                 mSystemContactLoader.cancelLoad();
@@ -588,7 +576,7 @@ public class LocalService extends Service implements Observer {
         }
     };
 
-    private void initAccountLoader() {
+    /*private void initAccountLoader() {
         mAccountLoader = new AccountsLoader(LocalService.this, mService);
         mAccountLoader.registerListener(1, onAccountsLoaded);
         try {
@@ -599,7 +587,7 @@ public class LocalService extends Service implements Observer {
         } catch (RemoteException e) {
             Log.e(TAG, "onServiceConnected", e);
         }
-    }
+    }*/
 
     /**
      * Class used for the client Binder.  Because we know this service always
@@ -669,42 +657,6 @@ public class LocalService extends Service implements Observer {
     public IDRingService getRemoteService() {
         return mService;
     }
-
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public Account getAccount(String accountId) {
-        if (accountId == null || accountId.isEmpty()) {
-            return null;
-        }
-        for (Account account : accounts) {
-            if (account.getAccountID().equals(accountId)) {
-                return account;
-            }
-        }
-        return null;
-    }
-
-    public void setAccountOrder(List<String> accountOrder) {
-        ArrayList<Account> newlist = new ArrayList<>(accounts.size());
-        String order = "";
-        for (String accountId : accountOrder) {
-            Account account = getAccount(accountId);
-            if (account != null) {
-                newlist.add(account);
-            }
-            order += accountId + File.separator;
-        }
-        accounts = newlist;
-        try {
-            mService.setAccountOrder(order);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Set Account Order", e);
-        }
-        sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
-    }
-
 
     public ArrayList<Conversation> getConversations() {
         ArrayList<Conversation> convs = new ArrayList<>(conversations.values());
@@ -854,31 +806,6 @@ public class LocalService extends Service implements Observer {
             systemContactCache.put(id, contact);
         }
         return contact;
-    }
-
-    public Account guessAccount(Uri uri) {
-        if (uri.isRingId()) {
-            for (Account a : accounts) {
-                if (a.isRing()) {
-                    return a;
-                }
-            }
-            // ring ids must be called with ring accounts
-            return null;
-        }
-        for (Account account : accounts) {
-            if (account.isSip() && account.getHost().equals(uri.getHost())) {
-                return account;
-            }
-        }
-        if (uri.isSingleIp()) {
-            for (Account account : accounts) {
-                if (account.isIP2IP()) {
-                    return account;
-                }
-            }
-        }
-        return accounts.get(0);
     }
 
     public void clearHistory() {
@@ -1210,7 +1137,7 @@ public class LocalService extends Service implements Observer {
                         if (call == null) {
                             call = new SipCall(call_id, mService.getCallDetails(call_id));
                         }
-                        Account acc = getAccount(call.getAccount());
+                        Account acc = mAccountService.getAccount(call.getAccount());
                         if (acc.isRing()
                                 || acc.getDetailBoolean(ConfigKey.SRTP_ENABLE)
                                 || acc.getDetailBoolean(ConfigKey.TLS_ENABLE)) {
@@ -1457,7 +1384,7 @@ public class LocalService extends Service implements Observer {
                         mAccountLoader.startLoading();
                         mAccountLoader.onContentChanged();
                     } else {
-                        Account account = getAccount(intent.getStringExtra("account"));
+                        Account account = mAccountService.getAccount(intent.getStringExtra("account"));
                         if (account == null) {
                             return;
                         }
@@ -1486,12 +1413,12 @@ public class LocalService extends Service implements Observer {
                     }
                     break;
                 case ConfigurationManagerCallback.ACCOUNTS_DEVICES_CHANGED: {
-                    Account account = getAccount(intent.getStringExtra("account"));
+                    Account account = mAccountService.getAccount(intent.getStringExtra("account"));
                     account.setDevices((Map<String, String>) intent.getSerializableExtra("devices"));
                     break;
                 }
                 case ConfigurationManagerCallback.ACCOUNTS_EXPORT_ENDED: {
-                    Account account = getAccount(intent.getStringExtra("account"));
+                    Account account = mAccountService.getAccount(intent.getStringExtra("account"));
                     if (account != null && account.exportListener != null) {
                         account.exportListener.exportEnded(intent.getIntExtra("code", -1), intent.getStringExtra("pin"));
                     }
@@ -1574,7 +1501,7 @@ public class LocalService extends Service implements Observer {
                     break;
                 }
                 case ConfigurationManagerCallback.NAME_REGISTRATION_ENDED: {
-                    Account acc = getAccount(intent.getStringExtra("account"));
+                    Account acc = mAccountService.getAccount(intent.getStringExtra("account"));
                     if (acc == null) {
                         Log.w(TAG, "Can't find account for name registration callback");
                         break;
@@ -1626,7 +1553,7 @@ public class LocalService extends Service implements Observer {
                     SipCall call = new SipCall(callId, accountId, number, SipCall.Direction.INCOMING);
                     call.setContact(contact);
 
-                    Account account = getAccount(accountId);
+                    Account account = mAccountService.getAccount(accountId);
 
                     Conference toAdd;
                     if (account.useSecureLayer()) {

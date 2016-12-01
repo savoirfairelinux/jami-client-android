@@ -42,8 +42,11 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import javax.inject.Inject;
+
 import cx.ring.BuildConfig;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.fragments.CallFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -53,6 +56,7 @@ import cx.ring.model.Uri;
 import cx.ring.model.Account;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 import cx.ring.utils.CallProximityManager;
 
 import static cx.ring.service.LocalService.Callbacks;
@@ -61,6 +65,9 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
     static final String TAG = CallActivity.class.getSimpleName();
 
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
+
+    @Inject
+    AccountService mAccountService;
 
     private boolean init = false;
     private View mMainView;
@@ -84,6 +91,9 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
         if (savedInstanceState != null)
             mSavedConferenceId = savedInstanceState.getString("conference", null);
         Log.d(TAG, "CallActivity onCreate " + mSavedConferenceId);
+
+        // Dependency injection
+        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
 
         int flags = WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
         Window w = getWindow();
@@ -265,12 +275,12 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
     };
 
     private Pair<Account, Uri> guess(Uri number, String account_id) {
-        Account a = service.getAccount(account_id);
+        Account a = mAccountService.getAccount(account_id);
         Conversation conv = service.findConversationByNumber(number);
 
         // Guess account from number
         if (a == null && number != null)
-            a = service.guessAccount(number);
+            a = mAccountService.guessAccount(number);
 
         // Guess number from account/call history
         if (a != null && (number == null || number.isEmpty()))
@@ -278,7 +288,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
         // If no account found, use first active
         if (a == null)
-            a = service.getAccounts().get(0);
+            a = mAccountService.getAccounts().get(0);
 
         // If no number found, use first from contact
         if (number == null || number.isEmpty())
