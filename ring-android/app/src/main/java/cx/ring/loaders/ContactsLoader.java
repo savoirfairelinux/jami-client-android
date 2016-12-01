@@ -116,6 +116,8 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
     @Override
     public Result loadInBackground()
     {
+        cx.ring.utils.Log.d(TAG, "-----------------------> CONTACT LOADER IS STARTING");
+
         final Result res = new Result();
         if (!mCanUseSystemContact || !LocalService.checkPermission(getContext(), Manifest.permission.READ_CONTACTS))
             return res;

@@ -19,7 +19,7 @@
  */
 package cx.ring.services;
 
-import java.util.Observable;
+import cx.ring.utils.Observable;
 
 public abstract class HistoryService extends Observable {
 

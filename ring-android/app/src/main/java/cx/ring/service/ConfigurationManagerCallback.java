@@ -26,16 +26,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import cx.ring.BuildConfig;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.model.DaemonEvent;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
-class ConfigurationManagerCallback implements Observer {
+public class ConfigurationManagerCallback implements Observer<DaemonEvent> {
 
     private static final String TAG = ConfigurationManagerCallback.class.getSimpleName();
 
@@ -51,15 +50,15 @@ class ConfigurationManagerCallback implements Observer {
     static public final String MESSAGE_STATE_CHANGED_EXTRA_ID = "id";
     static public final String MESSAGE_STATE_CHANGED_EXTRA_STATUS = "status";
 
-    private final DRingService mService;
+    private final Context mContext;
 
-    public ConfigurationManagerCallback(DRingService context) {
+    public ConfigurationManagerCallback(Context context) {
         super();
-        mService = context;
+        mContext = context;
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable o, DaemonEvent arg) {
         if (!(arg instanceof DaemonEvent)) {
             return;
         }
@@ -153,7 +152,7 @@ class ConfigurationManagerCallback implements Observer {
 
     private void accountsChanged() {
         Intent intent = new Intent(ACCOUNTS_CHANGED);
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     private void stunStatusFailure(String accountId) {
@@ -165,7 +164,7 @@ class ConfigurationManagerCallback implements Observer {
         intent.putExtra("account", accountId);
         intent.putExtra("state", state);
         intent.putExtra("code", detailCode);
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     private void incomingAccountMessage(String accountId, String from, String msg) {
@@ -173,14 +172,14 @@ class ConfigurationManagerCallback implements Observer {
         intent.putExtra("txt", msg);
         intent.putExtra("from", from);
         intent.putExtra("account", accountId);
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     private void accountMessageStatusChanged(String id, long messageId, String to, int status) {
         Intent intent = new Intent(MESSAGE_STATE_CHANGED);
         intent.putExtra(MESSAGE_STATE_CHANGED_EXTRA_ID, messageId);
         intent.putExtra(MESSAGE_STATE_CHANGED_EXTRA_STATUS, status);
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     private void errorAlert(int alert) {
@@ -188,7 +187,7 @@ class ConfigurationManagerCallback implements Observer {
     }
 
     private void getHardwareAudioFormat(IntVect ret) {
-        OpenSlParams audioParams = OpenSlParams.createInstance(mService);
+        OpenSlParams audioParams = OpenSlParams.createInstance(mContext);
         ret.add(audioParams.getSampleRate());
         ret.add(audioParams.getBufferSize());
         Log.d(TAG, "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
@@ -201,13 +200,13 @@ class ConfigurationManagerCallback implements Observer {
 
         switch (name) {
             case "files":
-                ret.add(mService.getFilesDir().getAbsolutePath());
+                ret.add(mContext.getFilesDir().getAbsolutePath());
                 break;
             case "cache":
-                ret.add(mService.getCacheDir().getAbsolutePath());
+                ret.add(mContext.getCacheDir().getAbsolutePath());
                 break;
             default:
-                ret.add(mService.getDir(name, Context.MODE_PRIVATE).getAbsolutePath());
+                ret.add(mContext.getDir(name, Context.MODE_PRIVATE).getAbsolutePath());
                 break;
         }
     }
@@ -216,7 +215,7 @@ class ConfigurationManagerCallback implements Observer {
         Intent intent = new Intent(ACCOUNTS_DEVICES_CHANGED);
         intent.putExtra("account", accountId);
         intent.putExtra("devices", devices.toNative());
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     private void exportOnRingEnded(String accountId, int code, String pin) {
@@ -224,7 +223,7 @@ class ConfigurationManagerCallback implements Observer {
         intent.putExtra("account", accountId);
         intent.putExtra("code", code);
         intent.putExtra("pin", pin);
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     private void nameRegistrationEnded(String accountId, int state, String name) {
@@ -232,7 +231,7 @@ class ConfigurationManagerCallback implements Observer {
         intent.putExtra("account", accountId);
         intent.putExtra("state", state);
         intent.putExtra("name", name);
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 
     private void registeredNameFound(String accountId, int state, String address, String name) {
@@ -241,6 +240,6 @@ class ConfigurationManagerCallback implements Observer {
         intent.putExtra("state", state);
         intent.putExtra("name", name);
         intent.putExtra("address", address);
-        mService.sendBroadcast(intent);
+        mContext.sendBroadcast(intent);
     }
 }

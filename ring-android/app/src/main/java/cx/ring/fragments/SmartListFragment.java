@@ -142,6 +142,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            cx.ring.utils.Log.d(TAG, "-----------------------> SMARTLIST FRAGMENT WILL REFRESH THE CONVERSATIONS");
             Log.d(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
             if (LocalService.ACTION_CONF_LOADED.equals(intent.getAction())) {
                 setLoading(false);

@@ -26,12 +26,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -54,7 +52,10 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.DeviceAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
@@ -64,10 +65,18 @@ import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
+import cx.ring.model.DaemonEvent;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
-public class AccountEditionActivity extends AppCompatActivity implements AccountCallbacks {
+public class AccountEditionActivity extends AppCompatActivity implements AccountCallbacks, Observer<DaemonEvent> {
+
+    @Inject
+    AccountService mAccountService;
+
     public static final AccountCallbacks DUMMY_CALLBACKS = new AccountCallbacks() {
         @Override
         public IDRingService getRemoteService() {
@@ -110,7 +119,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     private ViewPager mViewPager = null;
     private PagerSlidingTabStrip mSlidingTabLayout = null;
 
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+   /* private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().contentEquals(LocalService.ACTION_ACCOUNT_UPDATE)) {
@@ -119,7 +128,25 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                 }
             }
         }
-    };
+    };*/
+
+    @Override
+    public void update(Observable o, DaemonEvent arg) {
+        if (arg == null) {
+            return;
+        }
+
+        switch (arg.getEventType()) {
+            case ACCOUNTS_CHANGED:
+                for (AccountChangedListener l : listeners) {
+                    l.accountChanged(mAccSelected);
+                }
+                break;
+            default:
+                Log.d (TAG, "Event "+arg.getEventType()+" is not handled here");
+                break;
+        }
+    }
 
     private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
@@ -131,12 +158,12 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             String accountId = getIntent().getData().getLastPathSegment();
             Log.i(TAG, "Service connected " + className.getClassName() + " " + getIntent().getData().toString());
 
-            mAccSelected = mService.getAccount(accountId);
+            mAccSelected = mAccountService.getAccount(accountId);
             if (mAccSelected == null) {
                 finish();
             }
 
-            registerReceiver(mReceiver, new IntentFilter(LocalService.ACTION_ACCOUNT_UPDATE));
+            //registerReceiver(mReceiver, new IntentFilter(LocalService.ACTION_ACCOUNT_UPDATE));
 
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
@@ -190,7 +217,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
             // Called in case of service crashing or getting killed
-            unregisterReceiver(mReceiver);
+            //unregisterReceiver(mReceiver);
             mBound = false;
         }
     };
@@ -207,6 +234,11 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        // dependency injection
+        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+
+        mAccountService.addObserver(this);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
@@ -236,7 +268,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mReceiver);
+        //unregisterReceiver(mReceiver);
         if (mBound) {
             unbindService(mConnection);
             mBound = false;
