@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_a1f044ca",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/HistoryService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-12-01T21:00:02Z",
+      "side": 1,
+      "message": "you should use a more explicit variable name",
+      "range": {
+        "startLine": 92,
+        "startChar": 20,
+        "endLine": 92,
+        "endChar": 24
+      },
+      "revId": "726f4aae462ef4260a5f21ba4b81da8d229f95f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_c1ed50f1",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/HistoryService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-12-01T21:00:02Z",
+      "side": 1,
+      "message": "you should use a more explicit name variable",
+      "range": {
+        "startLine": 130,
+        "startChar": 43,
+        "endLine": 130,
+        "endChar": 45
+      },
+      "revId": "726f4aae462ef4260a5f21ba4b81da8d229f95f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_61ba5ce3",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/HistoryService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-12-01T21:00:02Z",
+      "side": 1,
+      "message": "you should use a more explicit name variable",
+      "range": {
+        "startLine": 136,
+        "startChar": 43,
+        "endLine": 136,
+        "endChar": 45
+      },
+      "revId": "726f4aae462ef4260a5f21ba4b81da8d229f95f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_21b454f1",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/settings/SettingsPresenter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-12-01T21:00:02Z",
+      "side": 1,
+      "message": "this space is useless",
+      "range": {
+        "startLine": 33,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 14
+      },
+      "revId": "726f4aae462ef4260a5f21ba4b81da8d229f95f5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
