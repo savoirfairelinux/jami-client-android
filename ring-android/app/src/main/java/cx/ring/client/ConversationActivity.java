@@ -69,6 +69,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
 import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
@@ -81,6 +82,9 @@ public class ConversationActivity extends AppCompatActivity implements
 
     @Inject
     CallService mCallService;
+
+    @Inject
+    AccountService mAccountService;
 
     private static final String TAG = ConversationActivity.class.getSimpleName();
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
@@ -471,11 +475,11 @@ public class ConversationActivity extends AppCompatActivity implements
     private Pair<Account, Uri> guess() {
         Uri number = mNumberAdapter == null ?
                 mPreferredNumber : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-        Account a = mService.getAccount(mConversation.getLastAccountUsed());
+        Account a = mAccountService.getAccount(mConversation.getLastAccountUsed());
 
         // Guess account from number
         if (a == null && number != null)
-            a = mService.guessAccount(number);
+            a = mAccountService.guessAccount(number);
 
         // Guess number from account/call history
         if (a != null && (number == null/* || number.isEmpty()*/))
@@ -483,7 +487,7 @@ public class ConversationActivity extends AppCompatActivity implements
 
         // If no account found, use first active
         if (a == null) {
-            List<Account> accs = mService.getAccounts();
+            List<Account> accs = mAccountService.getAccounts();
             if (accs.isEmpty()) {
                 finish();
                 return null;

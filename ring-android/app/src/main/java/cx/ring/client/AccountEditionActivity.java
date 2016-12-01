@@ -54,7 +54,10 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.DeviceAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
@@ -66,8 +69,13 @@ import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 
 public class AccountEditionActivity extends AppCompatActivity implements AccountCallbacks {
+
+    @Inject
+    AccountService mAccountService;
+
     public static final AccountCallbacks DUMMY_CALLBACKS = new AccountCallbacks() {
         @Override
         public IDRingService getRemoteService() {
@@ -131,7 +139,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             String accountId = getIntent().getData().getLastPathSegment();
             Log.i(TAG, "Service connected " + className.getClassName() + " " + getIntent().getData().toString());
 
-            mAccSelected = mService.getAccount(accountId);
+            mAccSelected = mAccountService.getAccount(accountId);
             if (mAccSelected == null) {
                 finish();
             }
@@ -207,6 +215,9 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        // dependency injection
+        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);

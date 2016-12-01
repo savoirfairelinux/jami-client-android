@@ -24,6 +24,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.Callback;
 import cx.ring.daemon.ConfigurationCallback;
@@ -40,6 +41,7 @@ public class DaemonService {
     private static final int POLLING_TIMEOUT = 50;
 
     @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
 
     @Inject
