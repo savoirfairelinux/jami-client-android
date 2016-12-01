@@ -26,8 +26,6 @@ import android.util.Log;
 import android.util.LongSparseArray;
 
 import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.inject.Inject;
 
@@ -37,24 +35,25 @@ import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.model.DaemonEvent;
 import cx.ring.services.HardwareService;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
-public class VideoManagerCallback implements Observer {
+public class VideoManagerCallback implements Observer<DaemonEvent> {
     private static final String TAG = VideoManagerCallback.class.getSimpleName();
 
     @Inject
     HardwareService mHardwareService;
 
-    private final DRingService mService;
+    private final RingApplication mRingApplication;
     private final LongSparseArray<DeviceParams> mNativeParams = new LongSparseArray<>();
-    private final HashMap<String, DRingService.VideoParams> mParams = new HashMap<>();
+    private final HashMap<String, RingApplication.VideoParams> mParams = new HashMap<>();
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (!(arg instanceof DaemonEvent)) {
+    public void update(Observable o, DaemonEvent event) {
+        if (event == null) {
             return;
         }
 
-        DaemonEvent event = (DaemonEvent) arg;
         switch (event.getEventType()) {
             case DECODING_STARTED:
                 decodingStarted(
@@ -120,9 +119,9 @@ public class VideoManagerCallback implements Observer {
     public int cameraFront = 0;
     public int cameraBack = 0;
 
-    VideoManagerCallback(DRingService s) {
-        mService = s;
-        ((RingApplication) mService.getApplication()).getRingInjectionComponent().inject(this);
+    public VideoManagerCallback(RingApplication app) {
+        mRingApplication = app;
+        mRingApplication.getRingInjectionComponent().inject(this);
     }
 
     public void init() {
@@ -146,34 +145,34 @@ public class VideoManagerCallback implements Observer {
     }
 
     private void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
-        mService.decodingStarted(id, shmPath, width, height, isMixer);
+        mRingApplication.decodingStarted(id, shmPath, width, height, isMixer);
     }
 
     private void decodingStopped(String id, String shmPath, boolean isMixer) {
-        mService.decodingStopped(id);
+        mRingApplication.decodingStopped(id);
     }
 
     private void setParameters(String camId, int format, int width, int height, int rate) {
         int id = Integer.valueOf(camId);
         DeviceParams p = mNativeParams.get(id);
-        DRingService.VideoParams newParams = new DRingService.VideoParams(id, format, p.size.x, p.size.y, rate);
+        RingApplication.VideoParams newParams = new RingApplication.VideoParams(id, format, p.size.x, p.size.y, rate);
         newParams.rotWidth = width;
         newParams.rotHeight = height;
-        mService.setVideoRotation(newParams, p.infos);
+        mRingApplication.setVideoRotation(newParams, p.infos);
         mParams.put(camId, newParams);
     }
 
     private void startCapture(String camId) {
-        DRingService.VideoParams params = mParams.get(camId);
+        RingApplication.VideoParams params = mParams.get(camId);
         if (params == null) {
             return;
         }
 
-        mService.startCapture(params);
+        mRingApplication.startCapture(params);
     }
 
     private void stopCapture() {
-        mService.stopCapture();
+        mRingApplication.stopCapture();
     }
 
     private void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates) {

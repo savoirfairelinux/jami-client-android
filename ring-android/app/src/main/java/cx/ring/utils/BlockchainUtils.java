@@ -18,6 +18,7 @@
  */
 package cx.ring.utils;
 
+import android.content.Context;
 import android.support.design.widget.TextInputLayout;
 import android.text.InputFilter;
 import android.text.SpannableString;
@@ -25,12 +26,12 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 
 public class BlockchainUtils {
 
-    public static TextWatcher attachUsernameTextWatcher(final LocalService.Callbacks callbacks, final TextInputLayout inputLayout, final EditText inputText) {
-        TextWatcher textWatcher = new BlockchainTextWatcher(callbacks, inputLayout, inputText);
+    public static TextWatcher attachUsernameTextWatcher(Context context, final AccountService accountService, final TextInputLayout inputLayout, final EditText inputText) {
+        TextWatcher textWatcher = new BlockchainTextWatcher(context, accountService, inputLayout, inputText);
         inputText.addTextChangedListener(textWatcher);
         return textWatcher;
     }

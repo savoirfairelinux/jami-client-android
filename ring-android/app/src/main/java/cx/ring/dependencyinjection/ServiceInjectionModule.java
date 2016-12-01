@@ -22,7 +22,9 @@ package cx.ring.dependencyinjection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cx.ring.application.RingApplication;
@@ -39,6 +41,7 @@ import cx.ring.services.LogService;
 import cx.ring.services.LogServiceImpl;
 import cx.ring.services.SettingsService;
 import cx.ring.services.SettingsServiceImpl;
+import cx.ring.utils.Log;
 import dagger.Module;
 import dagger.Provides;
 
@@ -71,12 +74,14 @@ public class ServiceInjectionModule {
     @Provides
     @Singleton
     LogService provideLogService() {
-        return new LogServiceImpl();
+        LogService service = new LogServiceImpl();
+        Log.injectLogService(service);
+        return service;
     }
 
     @Provides
     @Singleton
-    DeviceRuntimeService provideDeviceRuntimeService() {
+    DeviceRuntimeService provideDeviceRuntimeService(LogService logService) {
         DeviceRuntimeServiceImpl runtimeService = new DeviceRuntimeServiceImpl();
         mRingApplication.getRingInjectionComponent().inject(runtimeService);
         runtimeService.loadNativeLibrary();
@@ -124,9 +129,29 @@ public class ServiceInjectionModule {
     }
 
     @Provides
+    @Named("DaemonExecutor")
     @Singleton
-    ExecutorService provideExecutorService() {
+    ExecutorService provideDaemonExecutorService() {
         return Executors.newSingleThreadExecutor();
+    }
+
+    @Provides
+    @Named("ApplicationExecutor")
+    @Singleton
+    ExecutorService provideApplicationExecutorService() {
+        return Executors.newFixedThreadPool(5);
+    }
+
+    @Provides
+    @Named("UIExecutor")
+    @Singleton
+    ExecutorService provideUIExecutorService() {
+        return Executors.newSingleThreadExecutor(new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable r) {
+                return mRingApplication.getMainLooper().getThread();
+            }
+        });
     }
 
     @Provides

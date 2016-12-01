@@ -19,17 +19,18 @@
  */
 package cx.ring.services;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.IntVect;
@@ -38,10 +39,14 @@ import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.UintVect;
 import cx.ring.model.Account;
+import cx.ring.model.AccountConfig;
 import cx.ring.model.Codec;
+import cx.ring.model.ConfigKey;
 import cx.ring.model.DaemonEvent;
+import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
+import cx.ring.utils.Observable;
 import cx.ring.utils.SwigNativeConverter;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -53,20 +58,76 @@ public class AccountService extends Observable {
     private static final int VCARD_CHUNK_SIZE = 1000;
 
     @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
+
+    @Inject
+    @Named("ApplicationExecutor")
+    ExecutorService mApplicationExecutor;
+
+    @Inject
+    @Named("UIExecutor")
+    ExecutorService mUIExecutor;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
     private Account mCurrentAccount;
+    private List<Account> mAccountList;
     private ConfigurationCallback mCallbackHandler;
+    private boolean mHasSipAccount;
+    private boolean mHasRingAccount;
+
 
     public AccountService() {
         mCallbackHandler = new ConfigurationCallbackHandler();
+        mAccountList = new ArrayList<>();
     }
 
     public ConfigurationCallback getCallbackHandler() {
         return mCallbackHandler;
+    }
+
+    public boolean hasSipAccount() {
+        return mHasSipAccount;
+    }
+
+    public boolean hasRingAccount() {
+        return mHasRingAccount;
+    }
+
+    public void loadAccountsFromDaemon(final boolean isConnected) {
+        mApplicationExecutor.submit(new Runnable() {
+            @Override
+            public void run() {
+                // get accounts ids from daemon
+                List<String> accountIds = getAccountList();
+                for (String accountId : accountIds) {
+                    Map<String, String> details = getAccountDetails(accountId);
+                    List<Map<String, String>> credentials = getCredentials(accountId);
+                    Map<String, String> volatileAccountDetails = getVolatileAccountDetails(accountId);
+                    Account account = new Account(accountId, details, credentials, volatileAccountDetails);
+                    account.setDevices(getKnownRingDevices(accountId));
+
+                    if (account.isSip()) {
+                        mHasSipAccount = true;
+                    }
+
+                    if (account.isRing()) {
+                        mHasRingAccount = true;
+                    }
+
+                    mAccountList.add(account);
+                }
+
+                setChanged();
+                DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNTS_CHANGED);
+                notifyObservers(event, mUIExecutor);
+
+                setAccountsActive(isConnected);
+                Ringservice.connectivityChanged();
+            }
+        });
     }
 
     public Account getCurrentAccount() {
@@ -74,9 +135,22 @@ public class AccountService extends Observable {
     }
 
     public void setCurrentAccount(Account currentAccount) {
-        this.mCurrentAccount = currentAccount;
+        mCurrentAccount = currentAccount;
         setChanged();
-        notifyObservers();
+        notifyObservers(mUIExecutor);
+    }
+
+    public Account getAccount(String accountId) {
+        for (Account account : mAccountList) {
+            if (account.getAccountID().equals(accountId)) {
+                return account;
+            }
+        }
+        return null;
+    }
+
+    public List<Account> getAccounts() {
+        return mAccountList;
     }
 
     public void sendProfile(final String callId, final String accountId) {
@@ -127,14 +201,57 @@ public class AccountService extends Observable {
         return FutureUtils.getFutureResult(result);
     }
 
-    public void setAccountOrder(final String order) {
+    public void setAccountOrder(final List<String> accountOrder) {
+
+        ArrayList<Account> newlist = new ArrayList<>(mAccountList.size());
+        String order = "";
+        for (String accountId : accountOrder) {
+            Account account = getAccount(accountId);
+            if (account != null) {
+                newlist.add(account);
+            }
+            order += accountId + File.separator;
+        }
+
+        mAccountList = newlist;
+        final String orderForDaemon = order;
+
         mExecutor.submit(new Runnable() {
             @Override
             public void run() {
-                Log.i(TAG, "setAccountsOrder() " + order + " thread running...");
-                Ringservice.setAccountsOrder(order);
+                Log.i(TAG, "setAccountsOrder() " + orderForDaemon + " thread running...");
+                Ringservice.setAccountsOrder(orderForDaemon);
             }
         });
+
+        setChanged();
+        DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNTS_CHANGED);
+        notifyObservers(event, mUIExecutor);
+    }
+
+    public Account guessAccount(Uri uri) {
+        if (uri.isRingId()) {
+            for (Account account : mAccountList) {
+                if (account.isRing()) {
+                    return account;
+                }
+            }
+            // ring ids must be called with ring accounts
+            return null;
+        }
+        for (Account account : mAccountList) {
+            if (account.isSip() && account.getHost().equals(uri.getHost())) {
+                return account;
+            }
+        }
+        if (uri.isSingleIp()) {
+            for (Account account : mAccountList) {
+                if (account.isIP2IP()) {
+                    return account;
+                }
+            }
+        }
+        return mAccountList.get(0);
     }
 
     public Map<String, String> getAccountDetails(final String accountId) {
@@ -189,6 +306,16 @@ public class AccountService extends Observable {
         });
     }
 
+    public void setAccountsVideoEnabled (boolean isEnabled) {
+        for (Account account: mAccountList) {
+            account.setDetail(ConfigKey.VIDEO_ENABLED, isEnabled);
+        }
+
+        setChanged();
+        DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNTS_CHANGED);
+        notifyObservers(event, mUIExecutor);
+    }
+
     public Map<String, String> getVolatileAccountDetails(final String accountId) {
 
         Future<Map<String, String>> result = mExecutor.submit(new Callable<Map<String, String>>() {
@@ -209,7 +336,7 @@ public class AccountService extends Observable {
 
     @SuppressWarnings("unchecked")
     // Hashmap runtime cast
-    public String addAccount(final Map map) {
+    public Account addAccount(final Map map) {
 
         Future<String> result = mExecutor.submit(new Callable<String>() {
             @Override
@@ -219,7 +346,31 @@ public class AccountService extends Observable {
             }
         });
 
-        return FutureUtils.getFutureResult(result);
+        String accountId = FutureUtils.getFutureResult(result);
+
+        if (accountId == null) {
+            return null;
+        }
+
+        Map<String, String> accountDetails = getAccountDetails(accountId);
+        Map<String, String> accountVolatileDetails = getVolatileAccountDetails(accountId);
+        List<Map<String, String>> accountCredentials = getCredentials(accountId);
+        Map<String, String> accountDevices = getKnownRingDevices(accountId);
+
+        Account account = getAccount(accountId);
+
+        if (account == null) {
+            account = new Account(accountId, accountDetails, accountCredentials, accountVolatileDetails);
+            account.setDevices(accountDevices);
+            mAccountList.add(account);
+        }
+
+        setChanged();
+        DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNTS_CHANGED);
+        event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
+        notifyObservers(event, mUIExecutor);
+
+        return account;
     }
 
     public void removeAccount(final String accountId) {
@@ -439,6 +590,16 @@ public class AccountService extends Observable {
         });
     }
 
+
+    public void registerName(final Account account, final String password, final String name) {
+        if (account.registeringUsername) {
+            Log.w(TAG, "Already trying to register username");
+            return;
+        }
+
+        registerName(account.getAccountID(), password, name);
+    }
+
     public void registerName(final String account, final String password, final String name) {
         mExecutor.submit(new Runnable() {
             @Override
@@ -460,7 +621,7 @@ public class AccountService extends Observable {
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.VOLUME_CHANGED);
             event.addEventInput(DaemonEvent.EventInput.DEVICE, device);
             event.addEventInput(DaemonEvent.EventInput.VALUE, value);
-            notifyObservers(event);
+            notifyObservers(event, mUIExecutor);
         }
 
         @Override
@@ -470,7 +631,7 @@ public class AccountService extends Observable {
 
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNTS_CHANGED);
-            notifyObservers(event);
+            notifyObservers(event, mUIExecutor);
         }
 
         @Override
@@ -480,20 +641,37 @@ public class AccountService extends Observable {
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.STUN_STATUS_FAILURE);
             event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
-            notifyObservers(event);
+            notifyObservers(event, mUIExecutor);
         }
 
         @Override
-        public void registrationStateChanged(String accountId, String state, int code, String detailString) {
-            Log.d(TAG, "stun status registrationStateChanged: " + accountId + ", " + state + ", " + code + ", " + detailString);
+        public void registrationStateChanged(String accountId, String newState, int code, String detailString) {
+            Log.d(TAG, "stun status registrationStateChanged: " + accountId + ", " + newState + ", " + code + ", " + detailString);
 
-            setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.REGISTRATION_STATE_CHANGED);
-            event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(DaemonEvent.EventInput.STATE, state);
-            event.addEventInput(DaemonEvent.EventInput.DETAIL_CODE, code);
-            event.addEventInput(DaemonEvent.EventInput.DETAIL_STRING, detailString);
-            notifyObservers(event);
+            Account account = getAccount(accountId);
+            if (account == null) {
+                return;
+            }
+            String oldState = account.getRegistrationState();
+            if (oldState.contentEquals(AccountConfig.STATE_INITIALIZING) &&
+                    !newState.contentEquals(AccountConfig.STATE_INITIALIZING)) {
+                account.setDetails(getAccountDetails(account.getAccountID()));
+                account.setCredentials(getCredentials(account.getAccountID()));
+                account.setDevices(getKnownRingDevices(account.getAccountID()));
+                account.setVolatileDetails(getVolatileAccountDetails(account.getAccountID()));
+            } else {
+                account.setRegistrationState(newState, code);
+            }
+
+            if (!oldState.equals(newState)) {
+                setChanged();
+                DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.REGISTRATION_STATE_CHANGED);
+                event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
+                event.addEventInput(DaemonEvent.EventInput.STATE, newState);
+                event.addEventInput(DaemonEvent.EventInput.DETAIL_CODE, code);
+                event.addEventInput(DaemonEvent.EventInput.DETAIL_STRING, detailString);
+                notifyObservers(event, mUIExecutor);
+            }
         }
 
         @Override
@@ -515,7 +693,7 @@ public class AccountService extends Observable {
             event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
             event.addEventInput(DaemonEvent.EventInput.FROM, from);
             event.addEventInput(DaemonEvent.EventInput.MESSAGES, msg);
-            notifyObservers(event);
+            notifyObservers(event, mUIExecutor);
         }
 
         @Override
@@ -528,7 +706,7 @@ public class AccountService extends Observable {
             event.addEventInput(DaemonEvent.EventInput.MESSAGE_ID, messageId);
             event.addEventInput(DaemonEvent.EventInput.TO, to);
             event.addEventInput(DaemonEvent.EventInput.STATE, status);
-            notifyObservers(event);
+            notifyObservers(event, mUIExecutor);
         }
 
         @Override
@@ -538,7 +716,7 @@ public class AccountService extends Observable {
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ERROR_ALERT);
             event.addEventInput(DaemonEvent.EventInput.ALERT, alert);
-            notifyObservers(event);
+            notifyObservers(event, mUIExecutor);
         }
 
         @Override
@@ -548,7 +726,7 @@ public class AccountService extends Observable {
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.GET_HARDWARE_AUDIO_FORMAT);
             event.addEventInput(DaemonEvent.EventInput.FORMATS, ret);
-            notifyObservers(event);
+            notifyObservers(event, mUIExecutor);
         }
 
         @Override
@@ -559,18 +737,21 @@ public class AccountService extends Observable {
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.GET_APP_DATA_PATH);
             event.addEventInput(DaemonEvent.EventInput.NAME, name);
             event.addEventInput(DaemonEvent.EventInput.PATHS, ret);
-            notifyObservers(event);
+            notifyObservers(event, mUIExecutor);
         }
 
         @Override
         public void knownDevicesChanged(String accountId, StringMap devices) {
             Log.d(TAG, "knownDevicesChanged: " + accountId + ", " + devices);
 
+            Account accountChanged = getAccount(accountId);
+            accountChanged.setDevices(devices.toNative());
+
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.KNOWN_DEVICES_CHANGED);
             event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
             event.addEventInput(DaemonEvent.EventInput.DEVICES, devices);
-            notifyObservers(event);
+            notifyObservers(event, mUIExecutor);
         }
 
         @Override
@@ -582,19 +763,29 @@ public class AccountService extends Observable {
             event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
             event.addEventInput(DaemonEvent.EventInput.CODE, code);
             event.addEventInput(DaemonEvent.EventInput.PIN, pin);
-            notifyObservers(event);
+            notifyObservers(event, mUIExecutor);
         }
 
         @Override
         public void nameRegistrationEnded(String accountId, int state, String name) {
             Log.d(TAG, "nameRegistrationEnded: " + accountId + ", " + state + ", " + name);
 
+            Account acc = getAccount(accountId);
+            if (acc == null) {
+                Log.w(TAG, "Can't find account for name registration callback");
+                return;
+            }
+
+            acc.registeringUsername = false;
+            acc.setVolatileDetails(getVolatileAccountDetails(acc.getAccountID()));
+            acc.setDetail(ConfigKey.ACCOUNT_REGISTERED_NAME, name);
+
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.NAME_REGISTRATION_ENDED);
             event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
             event.addEventInput(DaemonEvent.EventInput.STATE, state);
             event.addEventInput(DaemonEvent.EventInput.NAME, name);
-            notifyObservers(event);
+            notifyObservers(event, mUIExecutor);
         }
 
         @Override
@@ -607,7 +798,7 @@ public class AccountService extends Observable {
             event.addEventInput(DaemonEvent.EventInput.STATE, state);
             event.addEventInput(DaemonEvent.EventInput.ADDRESS, address);
             event.addEventInput(DaemonEvent.EventInput.NAME, name);
-            notifyObservers(event);
+            notifyObservers(event, mUIExecutor);
         }
     }
 }

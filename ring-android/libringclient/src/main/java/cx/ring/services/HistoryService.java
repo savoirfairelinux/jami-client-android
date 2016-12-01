@@ -29,7 +29,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
@@ -39,6 +38,7 @@ import cx.ring.model.HistoryText;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.utils.Log;
+import cx.ring.utils.Observable;
 
 /**
  * A service managing all history related tasks.
