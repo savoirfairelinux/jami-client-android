@@ -61,7 +61,6 @@ import android.util.LongSparseArray;
 import android.util.LruCache;
 import android.util.Pair;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -82,11 +81,6 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
-import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryEntry;
-import cx.ring.model.HistoryText;
-import cx.ring.utils.Tuple;
-import cx.ring.loaders.AccountsLoader;
 import cx.ring.loaders.ContactsLoader;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
@@ -94,11 +88,16 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.Conversation;
+import cx.ring.model.DaemonEvent;
+import cx.ring.model.HistoryCall;
+import cx.ring.model.HistoryEntry;
+import cx.ring.model.HistoryText;
 import cx.ring.model.SecureSipCall;
 import cx.ring.model.Settings;
 import cx.ring.model.SipCall;
-import cx.ring.model.Uri;
 import cx.ring.model.TextMessage;
+import cx.ring.model.Uri;
+import cx.ring.services.AccountService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.SettingsService;
@@ -106,6 +105,7 @@ import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaManager;
+import cx.ring.utils.Tuple;
 
 public class LocalService extends Service implements Observer {
     static final String TAG = LocalService.class.getSimpleName();
@@ -133,6 +133,9 @@ public class LocalService extends Service implements Observer {
     @Inject
     SettingsService mSettingsService;
 
+    @Inject
+    AccountService mAccountService;
+
     private IDRingService mService = null;
     private boolean dringStarted = false;
 
@@ -144,13 +147,12 @@ public class LocalService extends Service implements Observer {
     private Map<String, Conversation> conversations = new HashMap<>();
     private LongSparseArray<TextMessage> messages = new LongSparseArray<>();
 
-    private List<Account> accounts = new ArrayList<>();
+    //private List<Account> accounts = new ArrayList<>();
 
     private final LongSparseArray<CallContact> systemContactCache = new LongSparseArray<>();
     private ContactsLoader.Result lastContactLoaderResult = new ContactsLoader.Result();
 
     private ContactsLoader mSystemContactLoader = null;
-    private AccountsLoader mAccountLoader = null;
 
     private LruCache<Long, Bitmap> mMemoryCache = null;
     private final ExecutorService mPool = Executors.newCachedThreadPool();
@@ -185,7 +187,6 @@ public class LocalService extends Service implements Observer {
         void onError(String name, CharSequence err);
     }
 
-    ;
     final private Map<String, ArrayList<NameRegistrationCallback>> currentNameRegistrations = new HashMap<>();
 
     public ContactsLoader.Result getSortedContacts() {
@@ -235,7 +236,7 @@ public class LocalService extends Service implements Observer {
                 return null;
             }
             call.setCallID(callId);
-            Account account = getAccount(call.getAccount());
+            Account account = mAccountService.getAccount(call.getAccount());
             if (account.isRing()
                     || account.getDetailBoolean(ConfigKey.SRTP_ENABLE)
                     || account.getDetailBoolean(ConfigKey.TLS_ENABLE)) {
@@ -251,21 +252,6 @@ public class LocalService extends Service implements Observer {
             Log.e(TAG, "placeCall", e);
         }
         return conf;
-    }
-
-    public Account createAccount(HashMap<String, String> conf) {
-        Account account = null;
-        try {
-            final String accountId = mService.addAccount(conf);
-            account = getAccount(accountId);
-            if (account == null) {
-                account = new Account(accountId);
-                accounts.add(account);
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error while creating account", e);
-        }
-        return account;
     }
 
     public void sendTextMessage(String account, Uri to, String txt) {
@@ -406,7 +392,7 @@ public class LocalService extends Service implements Observer {
 
     public void reloadAccounts() {
         if (mService != null) {
-            initAccountLoader();
+            //initAccountLoader();
         } else {
             // start DRing service, reload account is part of onServiceConnected
             startDRingService();
@@ -462,6 +448,8 @@ public class LocalService extends Service implements Observer {
         // for model modifications
         mHistoryService.addObserver(this);
         mSettingsService.addObserver(this);
+        mAccountService.addObserver(this);
+
         Settings settings = mSettingsService.loadSettings();
         canUseContacts = settings.isAllowSystemContacts();
         canUseMobile = settings.isAllowMobileData();
@@ -498,11 +486,9 @@ public class LocalService extends Service implements Observer {
         mPool.shutdown();
         systemContactCache.clear();
         lastContactLoaderResult = null;
-        mAccountLoader.abandon();
-        mAccountLoader = null;
     }
 
-    private final Loader.OnLoadCompleteListener<ArrayList<Account>> onAccountsLoaded = new Loader.OnLoadCompleteListener<ArrayList<Account>>() {
+   /* private final Loader.OnLoadCompleteListener<ArrayList<Account>> onAccountsLoaded = new Loader.OnLoadCompleteListener<ArrayList<Account>>() {
         @Override
         public void onLoadComplete(Loader<ArrayList<Account>> loader, ArrayList<Account> data) {
             Log.w(TAG, "AccountsLoader Loader.OnLoadCompleteListener " + data.size());
@@ -546,7 +532,8 @@ public class LocalService extends Service implements Observer {
             mSystemContactLoader.startLoading();
             mSystemContactLoader.forceLoad();
         }
-    };
+    };*/
+
     private final Loader.OnLoadCompleteListener<ContactsLoader.Result> onSystemContactsLoaded = new Loader.OnLoadCompleteListener<ContactsLoader.Result>() {
         @Override
         public void onLoadComplete(Loader<ContactsLoader.Result> loader, ContactsLoader.Result data) {
@@ -568,7 +555,7 @@ public class LocalService extends Service implements Observer {
             Log.w(TAG, "onServiceConnected " + className.getClassName());
             mService = IDRingService.Stub.asInterface(service);
 
-            initAccountLoader();
+            //initAccountLoader();
 
             mSystemContactLoader = new ContactsLoader(LocalService.this);
             mSystemContactLoader.setSystemContactPermission(canUseContacts);
@@ -578,12 +565,12 @@ public class LocalService extends Service implements Observer {
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
             Log.d(TAG, "onServiceDisconnected " + arg0.getClassName());
-            if (mAccountLoader != null) {
+            /*if (mAccountLoader != null) {
                 mAccountLoader.unregisterListener(onAccountsLoaded);
                 mAccountLoader.cancelLoad();
                 mAccountLoader.stopLoading();
                 mAccountLoader = null;
-            }
+            }*/
             if (mSystemContactLoader != null) {
                 mSystemContactLoader.unregisterListener(onSystemContactsLoaded);
                 mSystemContactLoader.cancelLoad();
@@ -595,7 +582,7 @@ public class LocalService extends Service implements Observer {
         }
     };
 
-    private void initAccountLoader() {
+    /*private void initAccountLoader() {
         mAccountLoader = new AccountsLoader(LocalService.this, mService);
         mAccountLoader.registerListener(1, onAccountsLoaded);
         try {
@@ -606,7 +593,7 @@ public class LocalService extends Service implements Observer {
         } catch (RemoteException e) {
             Log.e(TAG, "onServiceConnected", e);
         }
-    }
+    }*/
 
     /**
      * Class used for the client Binder.  Because we know this service always
@@ -676,42 +663,6 @@ public class LocalService extends Service implements Observer {
     public IDRingService getRemoteService() {
         return mService;
     }
-
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public Account getAccount(String accountId) {
-        if (accountId == null || accountId.isEmpty()) {
-            return null;
-        }
-        for (Account account : accounts) {
-            if (account.getAccountID().equals(accountId)) {
-                return account;
-            }
-        }
-        return null;
-    }
-
-    public void setAccountOrder(List<String> accountOrder) {
-        ArrayList<Account> newlist = new ArrayList<>(accounts.size());
-        String order = "";
-        for (String accountId : accountOrder) {
-            Account account = getAccount(accountId);
-            if (account != null) {
-                newlist.add(account);
-            }
-            order += accountId + File.separator;
-        }
-        accounts = newlist;
-        try {
-            mService.setAccountOrder(order);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Set Account Order", e);
-        }
-        sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
-    }
-
 
     public ArrayList<Conversation> getConversations() {
         ArrayList<Conversation> convs = new ArrayList<>(conversations.values());
@@ -861,31 +812,6 @@ public class LocalService extends Service implements Observer {
             systemContactCache.put(id, contact);
         }
         return contact;
-    }
-
-    public Account guessAccount(Uri uri) {
-        if (uri.isRingId()) {
-            for (Account a : accounts) {
-                if (a.isRing()) {
-                    return a;
-                }
-            }
-            // ring ids must be called with ring accounts
-            return null;
-        }
-        for (Account account : accounts) {
-            if (account.isSip() && account.getHost().equals(uri.getHost())) {
-                return account;
-            }
-        }
-        if (uri.isSingleIp()) {
-            for (Account account : accounts) {
-                if (account.isIP2IP()) {
-                    return account;
-                }
-            }
-        }
-        return accounts.get(0);
     }
 
     public void clearHistory() {
@@ -1219,7 +1145,7 @@ public class LocalService extends Service implements Observer {
                         if (call == null) {
                             call = new SipCall(call_id, mService.getCallDetails(call_id));
                         }
-                        Account acc = getAccount(call.getAccount());
+                        Account acc = mAccountService.getAccount(call.getAccount());
                         if (acc.isRing()
                                 || acc.getDetailBoolean(ConfigKey.SRTP_ENABLE)
                                 || acc.getDetailBoolean(ConfigKey.TLS_ENABLE)) {
@@ -1395,14 +1321,14 @@ public class LocalService extends Service implements Observer {
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "BroadcastReceiver onReceive " + intent.getAction());
             switch (intent.getAction()) {
-                case DRingService.DRING_CONNECTION_CHANGED: {
+                case RingApplication.DRING_CONNECTION_CHANGED: {
                     boolean connected = intent.getBooleanExtra("connected", false);
                     if (connected) {
                         dringStarted = true;
-                        if (mService != null && mAccountLoader != null) {
+                       /* if (mService != null && mAccountLoader != null) {
                             mAccountLoader.startLoading();
                             mAccountLoader.onContentChanged();
-                        }
+                        }*/
                     } else {
                         Log.w(TAG, "DRing connection lost ");
                         dringStarted = false;
@@ -1460,49 +1386,49 @@ public class LocalService extends Service implements Observer {
                     break;
                 case ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED:
                     Log.w(TAG, "Received " + intent.getAction() + " " + intent.getStringExtra("account") + " " + intent.getStringExtra("state") + " " + intent.getIntExtra("code", 0));
-                    if (mAccountLoader != null && mAccountLoader.isStarted()) {
+                   /* if (mAccountLoader != null && mAccountLoader.isStarted()) {
                         mAccountLoader.cancelLoad();
                         mAccountLoader.stopLoading();
                         mAccountLoader.startLoading();
                         mAccountLoader.onContentChanged();
-                    } else {
-                        Account account = getAccount(intent.getStringExtra("account"));
-                        if (account == null) {
-                            return;
-                        }
-                        String stateOld = account.getRegistrationState();
-                        String stateNew = intent.getStringExtra("state");
-                        if (stateOld.contentEquals(AccountConfig.STATE_INITIALIZING) &&
-                                !stateNew.contentEquals(AccountConfig.STATE_INITIALIZING)) {
-                            try {
-                                account.setDetails((Map<String, String>) mService.getAccountDetails(account.getAccountID()));
-                                account.setCredentials((ArrayList<Map<String, String>>) mService.getCredentials(account.getAccountID()));
-                                account.setDevices((Map<String, String>) mService.getKnownRingDevices(account.getAccountID()));
-                                account.setVolatileDetails((Map<String, String>) mService.getVolatileAccountDetails(account.getAccountID()));
-                            } catch (RemoteException e) {
-                                Log.e(TAG, "Error while setting accound details", e);
-                            }
-                        } else {
-                            account.setRegistrationState(stateNew, intent.getIntExtra("code", 0));
-                        }
-                        sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
+                    } else {*/
+                    Account account = mAccountService.getAccount(intent.getStringExtra("account"));
+                    if (account == null) {
+                        return;
                     }
+                    String stateOld = account.getRegistrationState();
+                    String stateNew = intent.getStringExtra("state");
+                    if (stateOld.contentEquals(AccountConfig.STATE_INITIALIZING) &&
+                            !stateNew.contentEquals(AccountConfig.STATE_INITIALIZING)) {
+                        try {
+                            account.setDetails((Map<String, String>) mService.getAccountDetails(account.getAccountID()));
+                            account.setCredentials((ArrayList<Map<String, String>>) mService.getCredentials(account.getAccountID()));
+                            account.setDevices((Map<String, String>) mService.getKnownRingDevices(account.getAccountID()));
+                            account.setVolatileDetails((Map<String, String>) mService.getVolatileAccountDetails(account.getAccountID()));
+                        } catch (RemoteException e) {
+                            Log.e(TAG, "Error while setting accound details", e);
+                        }
+                    } else {
+                        account.setRegistrationState(stateNew, intent.getIntExtra("code", 0));
+                    }
+                    sendBroadcast(new Intent(ACTION_ACCOUNT_UPDATE));
+                   /* }*/
                     break;
                 case ConfigurationManagerCallback.ACCOUNTS_CHANGED:
-                    if (mAccountLoader != null) {
+                   /* if (mAccountLoader != null) {
                         mAccountLoader.startLoading();
                         mAccountLoader.onContentChanged();
-                    }
+                    }*/
                     break;
                 case ConfigurationManagerCallback.ACCOUNTS_DEVICES_CHANGED: {
-                    Account account = getAccount(intent.getStringExtra("account"));
-                    account.setDevices((Map<String, String>) intent.getSerializableExtra("devices"));
+                    Account accountChanged = mAccountService.getAccount(intent.getStringExtra("account"));
+                    accountChanged.setDevices((Map<String, String>) intent.getSerializableExtra("devices"));
                     break;
                 }
                 case ConfigurationManagerCallback.ACCOUNTS_EXPORT_ENDED: {
-                    Account account = getAccount(intent.getStringExtra("account"));
-                    if (account != null && account.exportListener != null) {
-                        account.exportListener.exportEnded(intent.getIntExtra("code", -1), intent.getStringExtra("pin"));
+                    Account accountExport = mAccountService.getAccount(intent.getStringExtra("account"));
+                    if (accountExport != null && accountExport.exportListener != null) {
+                        accountExport.exportListener.exportEnded(intent.getIntExtra("code", -1), intent.getStringExtra("pin"));
                     }
                     break;
                 }
@@ -1511,8 +1437,8 @@ public class LocalService extends Service implements Observer {
                     String message = intent.getStringExtra("txt");
                     String number = intent.getStringExtra("from");
                     String call = intent.getStringExtra("call");
-                    String account = intent.getStringExtra("account");
-                    TextMessage txt = new TextMessage(true, message, new Uri(number), call, account);
+                    String accountIncoming = intent.getStringExtra("account");
+                    TextMessage txt = new TextMessage(true, message, new Uri(number), call, accountIncoming);
                     Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
 
                     Conversation conversation;
@@ -1585,7 +1511,7 @@ public class LocalService extends Service implements Observer {
                     break;
                 }
                 case ConfigurationManagerCallback.NAME_REGISTRATION_ENDED: {
-                    Account acc = getAccount(intent.getStringExtra("account"));
+                    Account acc = mAccountService.getAccount(intent.getStringExtra("account"));
                     if (acc == null) {
                         Log.w(TAG, "Can't find account for name registration callback");
                         break;
@@ -1637,11 +1563,11 @@ public class LocalService extends Service implements Observer {
                     SipCall call = new SipCall(callId, accountId, number, SipCall.Direction.INCOMING);
                     call.setContact(contact);
 
-                    Account account = getAccount(accountId);
+                    Account accountCall = mAccountService.getAccount(accountId);
 
                     Conference toAdd;
-                    if (account.useSecureLayer()) {
-                        SecureSipCall secureCall = new SecureSipCall(call, account.getDetail(ConfigKey.SRTP_KEY_EXCHANGE));
+                    if (accountCall.useSecureLayer()) {
+                        SecureSipCall secureCall = new SecureSipCall(call, accountCall.getDetail(ConfigKey.SRTP_KEY_EXCHANGE));
                         toAdd = new Conference(secureCall);
                     } else {
                         toAdd = new Conference(call);
@@ -1757,7 +1683,7 @@ public class LocalService extends Service implements Observer {
 
         intentFilter.addAction(ACTION_CONV_READ);
 
-        intentFilter.addAction(DRingService.DRING_CONNECTION_CHANGED);
+        intentFilter.addAction(RingApplication.DRING_CONNECTION_CHANGED);
 
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
@@ -1829,6 +1755,18 @@ public class LocalService extends Service implements Observer {
             canUseMobile = mSettingsService.loadSettings().isAllowMobileData();
             refreshContacts();
             updateConnectivityState();
+        }
+
+        if (observable instanceof AccountService && arg instanceof DaemonEvent) {
+            DaemonEvent event = (DaemonEvent)arg;
+            switch (event.getEventType()) {
+                case ACCOUNTS_CHANGED:
+                    mSystemContactLoader.loadRingContacts = mAccountService.hasRingAccount();
+                    mSystemContactLoader.loadSipContacts = mAccountService.hasSipAccount();
+                    mSystemContactLoader.startLoading();
+                    mSystemContactLoader.forceLoad();
+                    break;
+            }
         }
     }
 }

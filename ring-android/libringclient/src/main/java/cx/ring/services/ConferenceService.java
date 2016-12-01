@@ -29,6 +29,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringVect;
@@ -41,6 +42,7 @@ public class ConferenceService extends Observable {
     private final static String TAG = ConferenceService.class.getName();
 
     @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
 
     private ConferenceCallbackHandler mCallbackHandler;

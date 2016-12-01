@@ -48,7 +48,7 @@ public class Account extends java.util.Observable {
     }
 
     public Account(String bAccountID, final Map<String, String> details,
-                   final ArrayList<Map<String, String>> credentials,
+                   final List<Map<String, String>> credentials,
                    final Map<String, String> volDetails) {
         accountID = bAccountID;
         mDetails = new AccountConfig(details);
@@ -72,7 +72,7 @@ public class Account extends java.util.Observable {
         return devices;
     }
 
-    public void setCredentials(ArrayList<Map<String, String>> credentials) {
+    public void setCredentials(List<Map<String, String>> credentials) {
         credentialsDetails.clear();
         if (credentials != null) {
             credentialsDetails.ensureCapacity(credentials.size());

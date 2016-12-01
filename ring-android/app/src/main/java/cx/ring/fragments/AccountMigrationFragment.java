@@ -41,17 +41,21 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 
 public class AccountMigrationFragment extends Fragment {
     static final String TAG = AccountMigrationFragment.class.getSimpleName();
@@ -59,6 +63,9 @@ public class AccountMigrationFragment extends Fragment {
     public static final String ACCOUNT_ID = "ACCOUNT_ID";
 
     private String mAccountId;
+
+    @Inject
+    AccountService mAccountService;
 
     // UI references.
     @BindView(R.id.ring_password)
@@ -79,6 +86,9 @@ public class AccountMigrationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(R.layout.frag_account_migration, parent, false);
         ButterKnife.bind(this,inflatedView);
+
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         return inflatedView;
     }
@@ -193,7 +203,7 @@ public class AccountMigrationFragment extends Fragment {
         @Override
         protected final String doInBackground(HashMap<String, String>... accs) {
 
-            final Account account = mCallbacks.getService().getAccount(mAccountId);
+            final Account account = mAccountService.getAccount(mAccountId);
             final IDRingService remote = mCallbacks.getService().getRemoteService();
             if (account == null || remote == null) {
                 getActivity().runOnUiThread(new Runnable() {

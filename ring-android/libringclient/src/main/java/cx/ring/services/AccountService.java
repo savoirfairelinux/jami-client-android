@@ -19,6 +19,7 @@
  */
 package cx.ring.services;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.IntVect;
@@ -40,6 +42,7 @@ import cx.ring.daemon.UintVect;
 import cx.ring.model.Account;
 import cx.ring.model.Codec;
 import cx.ring.model.DaemonEvent;
+import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.SwigNativeConverter;
@@ -53,20 +56,72 @@ public class AccountService extends Observable {
     private static final int VCARD_CHUNK_SIZE = 1000;
 
     @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
+
+    @Inject
+    @Named("ApplicationExecutor")
+    ExecutorService mApplicationExecutor;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
     private Account mCurrentAccount;
+    private List<Account> mAccountList;
     private ConfigurationCallback mCallbackHandler;
+    private boolean mHasSipAccount;
+    private boolean mHasRingAccount;
+
 
     public AccountService() {
         mCallbackHandler = new ConfigurationCallbackHandler();
+        mAccountList = new ArrayList<>();
     }
 
     public ConfigurationCallback getCallbackHandler() {
         return mCallbackHandler;
+    }
+
+    public boolean hasSipAccount() {
+        return mHasSipAccount;
+    }
+
+    public boolean hasRingAccount() {
+        return mHasRingAccount;
+    }
+
+    public void loadAccountsFromDaemon(final boolean isConnected) {
+        mApplicationExecutor.submit(new Runnable() {
+            @Override
+            public void run() {
+                // get accounts ids from daemon
+                List<String> accountIds = getAccountList();
+                for (String accountId : accountIds) {
+                    Map<String, String> details = getAccountDetails(accountId);
+                    List<Map<String, String>> credentials = getCredentials(accountId);
+                    Map<String, String> volatileAccountDetails = getVolatileAccountDetails(accountId);
+                    Account account = new Account(accountId, details, credentials, volatileAccountDetails);
+                    account.setDevices(getKnownRingDevices(accountId));
+
+                    if (account.isSip()) {
+                        mHasSipAccount = true;
+                    }
+
+                    if (account.isRing()) {
+                        mHasRingAccount = true;
+                    }
+
+                    mAccountList.add(account);
+                }
+
+                setAccountsActive(isConnected);
+                Ringservice.connectivityChanged();
+
+                setChanged();
+                DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNTS_CHANGED);
+                notifyObservers(event);
+            }
+        });
     }
 
     public Account getCurrentAccount() {
@@ -74,9 +129,22 @@ public class AccountService extends Observable {
     }
 
     public void setCurrentAccount(Account currentAccount) {
-        this.mCurrentAccount = currentAccount;
+        mCurrentAccount = currentAccount;
         setChanged();
         notifyObservers();
+    }
+
+    public Account getAccount(String accountId) {
+        for (Account account : mAccountList) {
+            if (account.getAccountID().equals(accountId)) {
+                return account;
+            }
+        }
+        return null;
+    }
+
+    public List<Account> getAccounts() {
+        return mAccountList;
     }
 
     public void sendProfile(final String callId, final String accountId) {
@@ -127,14 +195,57 @@ public class AccountService extends Observable {
         return FutureUtils.getFutureResult(result);
     }
 
-    public void setAccountOrder(final String order) {
+    public void setAccountOrder(final List<String> accountOrder) {
+
+        ArrayList<Account> newlist = new ArrayList<>(mAccountList.size());
+        String order = "";
+        for (String accountId : accountOrder) {
+            Account account = getAccount(accountId);
+            if (account != null) {
+                newlist.add(account);
+            }
+            order += accountId + File.separator;
+        }
+
+        mAccountList = newlist;
+        final String orderForDaemon = order;
+
         mExecutor.submit(new Runnable() {
             @Override
             public void run() {
-                Log.i(TAG, "setAccountsOrder() " + order + " thread running...");
-                Ringservice.setAccountsOrder(order);
+                Log.i(TAG, "setAccountsOrder() " + orderForDaemon + " thread running...");
+                Ringservice.setAccountsOrder(orderForDaemon);
             }
         });
+
+        setChanged();
+        DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNTS_CHANGED);
+        notifyObservers(event);
+    }
+
+    public Account guessAccount(Uri uri) {
+        if (uri.isRingId()) {
+            for (Account account : mAccountList) {
+                if (account.isRing()) {
+                    return account;
+                }
+            }
+            // ring ids must be called with ring accounts
+            return null;
+        }
+        for (Account account : mAccountList) {
+            if (account.isSip() && account.getHost().equals(uri.getHost())) {
+                return account;
+            }
+        }
+        if (uri.isSingleIp()) {
+            for (Account account : mAccountList) {
+                if (account.isIP2IP()) {
+                    return account;
+                }
+            }
+        }
+        return mAccountList.get(0);
     }
 
     public Map<String, String> getAccountDetails(final String accountId) {
@@ -209,7 +320,7 @@ public class AccountService extends Observable {
 
     @SuppressWarnings("unchecked")
     // Hashmap runtime cast
-    public String addAccount(final Map map) {
+    public Account addAccount(final Map map) {
 
         Future<String> result = mExecutor.submit(new Callable<String>() {
             @Override
@@ -219,7 +330,25 @@ public class AccountService extends Observable {
             }
         });
 
-        return FutureUtils.getFutureResult(result);
+        String accountId = FutureUtils.getFutureResult(result);
+
+        if (accountId == null) {
+            return null;
+        }
+
+        Account account = getAccount(accountId);
+
+        if (account == null) {
+            account = new Account(accountId);
+            mAccountList.add(account);
+        }
+
+        setChanged();
+        DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNTS_CHANGED);
+        event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
+        notifyObservers(event);
+
+        return account;
     }
 
     public void removeAccount(final String accountId) {

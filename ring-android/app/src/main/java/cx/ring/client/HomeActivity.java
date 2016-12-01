@@ -59,6 +59,10 @@ import android.widget.TextView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,10 +75,12 @@ import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.CallContact;
 import cx.ring.model.ConfigKey;
+import cx.ring.model.DaemonEvent;
 import cx.ring.model.Phone;
 import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
 import cx.ring.utils.ContentUriHandler;
@@ -82,7 +88,8 @@ import cx.ring.utils.FileUtils;
 
 public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks,
         RingNavigationFragment.OnNavigationSectionSelected,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        Observer{
 
     static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -102,13 +109,15 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private static final String SETTINGS_TAG = "Prefs";
     private static final String SHARE_TAG = "Share";
 
-
     private LocalService service;
     private boolean mBound = false;
     private boolean mNoAccountOpened = false;
     private boolean mIsMigrationDialogAlreadyShowed;
 
     private ActionBarDrawerToggle mDrawerToggle;
+
+    @Inject
+    AccountService mAccountService;
 
     @BindView(R.id.left_drawer)
     NavigationView mNavigationView;
@@ -132,6 +141,40 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     protected android.app.Fragment fContent;
     protected RingNavigationFragment fNavigation;
 
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg == null || !(arg instanceof DaemonEvent)) {
+            return;
+        }
+
+        DaemonEvent event = (DaemonEvent)arg;
+        switch (event.getEventType()) {
+            case ACCOUNTS_CHANGED:
+                loadAccounts();
+                break;
+            default:
+                Log.d (TAG, "Event "+event.getEventType()+" is not handled here");
+                break;
+        }
+
+    }
+
+    private void loadAccounts () {
+        for (Account account : mAccountService.getAccounts()) {
+            if (account.needsMigration()) {
+                showMigrationDialog();
+            }
+        }
+
+        if (!mNoAccountOpened && mAccountService.getAccounts().isEmpty()) {
+            mNoAccountOpened = true;
+            startActivityForResult(new Intent(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
+        } else {
+            if (fNavigation!=null) {fNavigation.updateAccounts(mAccountService.getAccounts());
+            }
+        }
+    }
+
     public interface Refreshable {
         void refresh();
     }
@@ -151,6 +194,11 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         setContentView(R.layout.activity_home);
 
         ButterKnife.bind(this);
+
+        // dependency injection
+        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+
+        mAccountService.addObserver(this);
 
         setSupportActionBar(mToolbar);
 
@@ -209,18 +257,18 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             switch (intent.getAction()) {
                 case LocalService.ACTION_ACCOUNT_UPDATE:
 
-                    for (Account account : service.getAccounts()) {
+                    /*for (Account account : mAccountService.getAccounts()) {
                         if (account.needsMigration()) {
                             showMigrationDialog();
                         }
                     }
 
-                    if (!mNoAccountOpened && service.getAccounts().isEmpty()) {
+                    if (!mNoAccountOpened && mAccountService.getAccounts().isEmpty()) {
                         mNoAccountOpened = true;
                         startActivityForResult(new Intent(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
                     } else {
-                        fNavigation.updateAccounts(service.getAccounts());
-                    }
+                        fNavigation.updateAccounts(mAccountService.getAccounts());
+                    }*/
                     break;
             }
         }
@@ -407,6 +455,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     protected void onResume() {
         super.onResume();
         setVideoEnabledFromPermission();
+        //loadAccounts();
     }
 
     @Override
@@ -496,7 +545,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     public void onNavigationViewReady() {
         if (fNavigation != null) {
             if (service != null) {
-                fNavigation.updateAccounts(service.getAccounts());
+                fNavigation.updateAccounts(mAccountService.getAccounts());
             }
             fNavigation.setCallback(service);
             fNavigation.setNavigationSectionSelectedListener(HomeActivity.this);
@@ -518,7 +567,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             case REQUEST_CODE_PREFERENCES:
             case AccountsManagementFragment.ACCOUNT_EDIT_REQUEST:
                 if (fNavigation != null) {
-                    fNavigation.updateAccounts(service.getAccounts());
+                    fNavigation.updateAccounts(mAccountService.getAccounts());
                 }
                 break;
             case REQUEST_CODE_CALL:
@@ -708,7 +757,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         //~ permission. It can handle the case where the user decides to remove a permission from
         //~ the Android general settings.
         if (!LocalService.checkPermission(this, Manifest.permission.CAMERA) && service != null) {
-            List<Account> accounts = service.getAccounts();
+            List<Account> accounts = mAccountService.getAccounts();
             if (accounts != null) {
                 for (Account account : accounts) {
                     account.setDetail(ConfigKey.VIDEO_ENABLED, false);

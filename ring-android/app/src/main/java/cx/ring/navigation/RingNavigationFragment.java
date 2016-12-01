@@ -146,7 +146,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
             orderedAccountIdList.add(account.getAccountID());
         }
 
-        mLocalService.setAccountOrder(orderedAccountIdList);
+        mAccountService.setAccountOrder(orderedAccountIdList);
 
         if (mSectionListener != null) {
             mSectionListener.onAccountSelected();
@@ -438,7 +438,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
                 mVCardProfile.removeProperties(RawProperty.class);
                 VCardUtils.saveLocalProfileToDisk(mVCardProfile, mAccountService.getCurrentAccount().getAccountID(), getActivity().getFilesDir());
                 updateUserView();
-                updateAccounts(mLocalService.getAccounts());
+                updateAccounts(mAccountService.getAccounts());
             }
         });
 

@@ -24,6 +24,7 @@ import java.util.Observable;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.Ringservice;
@@ -39,6 +40,7 @@ public class HardwareService extends Observable {
     private static final String TAG = DaemonService.class.getName();
 
     @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
 
     private VideoCallback mVideoCallback;
