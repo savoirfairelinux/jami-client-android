@@ -78,6 +78,7 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.DaemonEvent;
 import cx.ring.model.Phone;
 import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
@@ -87,13 +88,15 @@ import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
 public class SmartListFragment extends Fragment implements SearchView.OnQueryTextListener,
         HomeActivity.Refreshable,
         SmartListAdapter.SmartListAdapterCallback,
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
-        LocalService.NameLookupCallback {
+        Observer<DaemonEvent> {
     private static final String TAG = SmartListFragment.class.getSimpleName();
 
     private static final int USER_INPUT_DELAY = 300;
@@ -142,6 +145,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            cx.ring.utils.Log.d(TAG, "-----------------------> SMARTLIST FRAGMENT WILL REFRESH THE CONVERSATIONS");
             Log.d(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
             if (LocalService.ACTION_CONF_LOADED.equals(intent.getAction())) {
                 setLoading(false);
@@ -153,7 +157,8 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public static final int REQUEST_TRANSFER = 10;
     public static final int REQUEST_CONF = 20;
 
-    private LocalService.NameLookupCallback mRinguifyCallback = new LocalService.NameLookupCallback() {
+
+    private Observer<DaemonEvent> mRinguifyObserver = new Observer<DaemonEvent>() {
 
         private void updateContactRingId(String name, String address) {
 
@@ -167,20 +172,19 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         }
 
         @Override
-        public void onFound(String name, String address) {
-            updateContactRingId(name, address);
-        }
+        public void update(Observable observable, DaemonEvent event) {
+            if (event == null) {
+                return;
+            }
 
-        @Override
-        public void onInvalidName(String name) {
-            // nothing yo be done here
-            cx.ring.utils.Log.d(TAG, "Invalid name lookup: " + name);
-        }
-
-        @Override
-        public void onError(String name, String address) {
-            // nothing yo be done here
-            cx.ring.utils.Log.d(TAG, "Invalid name lookup: " + name + ", " + address);
+            if (event.getEventType() == DaemonEvent.EventType.REGISTERED_NAME_FOUND) {
+                String name = event.getEventInput(DaemonEvent.EventInput.NAME, String.class);
+                String address = event.getEventInput(DaemonEvent.EventInput.ADDRESS, String.class);
+                int state = event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class);
+                if (state == 0) {
+                    updateContactRingId(name, address);
+                }
+            }
         }
     };
 
@@ -197,11 +201,14 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     }
 
     public void refresh() {
+
         LocalService service = mCallbacks.getService();
         if (service == null) {
             Log.e(TAG, "refresh: null service");
             return;
         }
+
+        Log.d(TAG, "-----------------------> SMARTLIST FRAGMENT REFRESH NB CONVERSATIONS " + service.getConversations().size());
 
         if (mSmartListAdapter == null) {
             bindService(getActivity(), service);
@@ -240,11 +247,11 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             }
 
             if (contact.getPhones().isEmpty()) {
-                service.lookupName("", contact.getDisplayName(), mRinguifyCallback);
+                mAccountService.lookupName("", "", contact.getDisplayName());
             } else {
                 Phone phone = contact.getPhones().get(0);
                 if (!phone.getNumber().isRingId()) {
-                    service.lookupName("", contact.getDisplayName(), mRinguifyCallback);
+                    mAccountService.lookupName("", "", contact.getDisplayName());
                 }
             }
         }
@@ -394,12 +401,12 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
                 // Ring search
                 if (mBlockchainInputHandler == null) {
-                    mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mCallbacks.getService()), this);
+                    mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mAccountService));
                 }
 
                 // searching for a ringId or a blockchained username
                 if (!mBlockchainInputHandler.isAlive()) {
-                    mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mCallbacks.getService()), this);
+                    mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mAccountService));
                 }
 
                 mBlockchainInputHandler.enqueueNextLookup(query);
@@ -434,6 +441,8 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
+        mAccountService.addObserver(this);
 
         mUserInputHandler = new Handler();
 
@@ -788,11 +797,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         }
     }
 
-    @Override
-    public void onFound(String name, String address) {
-        displayNewContactRowWithName(name, address);
-    }
-
     private void displayNewContactRowWithName(String name, String address) {
         ((TextView) mNewContact.findViewById(R.id.display_name)).setText(name);
         CallContact contact = CallContact.buildUnknown(name, address);
@@ -801,22 +805,39 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     }
 
     @Override
-    public void onInvalidName(String name) {
-        Uri uri = new Uri(name);
-        if (uri.isRingId()) {
-            displayNewContactRowWithName(name, null);
-        } else {
-            mNewContact.setVisibility(View.GONE);
+    public void update(Observable observable, DaemonEvent event) {
+        if (event == null) {
+            return;
         }
-    }
 
-    @Override
-    public void onError(String name, String address) {
-        Uri uri = new Uri(address);
-        if (uri.isRingId()) {
-            displayNewContactRowWithName(name, address);
-        } else {
-            mNewContact.setVisibility(View.GONE);
+        if (event.getEventType() == DaemonEvent.EventType.REGISTERED_NAME_FOUND) {
+            String name = event.getEventInput(DaemonEvent.EventInput.NAME, String.class);
+            String address = event.getEventInput(DaemonEvent.EventInput.ADDRESS, String.class);
+            int state = event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class);
+            switch (state) {
+                case 0:
+                    // on found
+                    displayNewContactRowWithName(name, address);
+                    break;
+                case 1:
+                    // invalid name
+                    Uri uriName = new Uri(name);
+                    if (uriName.isRingId()) {
+                        displayNewContactRowWithName(name, null);
+                    } else {
+                        mNewContact.setVisibility(View.GONE);
+                    }
+                    break;
+                default:
+                    // on error
+                    Uri uriAddress = new Uri(address);
+                    if (uriAddress.isRingId()) {
+                        displayNewContactRowWithName(name, address);
+                    } else {
+                        mNewContact.setVisibility(View.GONE);
+                    }
+                    break;
+            }
         }
     }
 }

@@ -24,7 +24,18 @@ import javax.inject.Singleton;
 import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
 import cx.ring.application.RingApplication;
+import cx.ring.client.AccountEditionActivity;
+import cx.ring.client.AccountWizard;
+import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
+import cx.ring.client.HomeActivity;
+import cx.ring.fragments.AccountCreationFragment;
+import cx.ring.fragments.AccountMigrationFragment;
+import cx.ring.fragments.AccountsManagementFragment;
+import cx.ring.fragments.CallFragment;
+import cx.ring.fragments.DeviceAccountFragment;
+import cx.ring.fragments.RegisterNameDialog;
+import cx.ring.fragments.RingAccountCreationFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.BootReceiver;
@@ -52,15 +63,37 @@ public interface RingInjectionComponent {
 
     void inject(RingNavigationFragment view);
 
+    void inject(CallActivity activity);
+
     void inject(ConversationActivity activity);
+
+    void inject(HomeActivity activity);
+
+    void inject(AccountWizard activity);
+
+    void inject(AccountEditionActivity activity);
+
+    void inject(AccountMigrationFragment fragment);
+
+    void inject(AccountCreationFragment fragment);
+
+    void inject(AccountsManagementFragment fragment);
+
+    void inject(DeviceAccountFragment fragment);
+
+    void inject(CallFragment fragment);
 
     void inject(AboutFragment fragment);
 
     void inject(SmartListFragment fragment);
 
+    void inject(RingAccountCreationFragment fragment);
+
     void inject(ShareFragment fragment);
 
     void inject(SettingsFragment fragment);
+
+    void inject(RegisterNameDialog dialog);
 
     void inject(LocalService service);
 
