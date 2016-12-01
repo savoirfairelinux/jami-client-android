@@ -47,16 +47,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.client.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
 import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.views.dragsortlv.DragSortListView;
 
@@ -66,6 +70,9 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
     public static final int ACCOUNT_CREATE_REQUEST = 1;
     public static final int ACCOUNT_EDIT_REQUEST = 2;
     private AccountsAdapter mAccountsAdapter;
+
+    @Inject
+    AccountService mAccountService;
 
     @BindView(R.id.accounts_list)
     DragSortListView mDnDListView;
@@ -80,7 +87,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
                 Account item = mAccountsAdapter.getItem(from);
                 mAccountsAdapter.remove(item);
                 mAccountsAdapter.insert(item, to);
-                mCallbacks.getService().setAccountOrder(mAccountsAdapter.getAccountOrder());
+                mAccountService.setAccountOrder(mAccountsAdapter.getAccountOrder());
             }
         }
     };
@@ -106,6 +113,10 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "Create Account Management Fragment");
+
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
         mAccountsAdapter = new AccountsAdapter(getActivity());
 
         getActivity().registerReceiver(mReceiver, new IntentFilter(LocalService.ACTION_ACCOUNT_UPDATE));
@@ -356,7 +367,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
         if (service == null || v == null) {
             return;
         }
-        mAccountsAdapter.replaceAll(service.getAccounts());
+        mAccountsAdapter.replaceAll(mAccountService.getAccounts());
         if (mAccountsAdapter.isEmpty()) {
             mDnDListView.setEmptyView(mEmptyView);
         }

@@ -27,6 +27,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.Blob;
 import cx.ring.daemon.IntegerMap;
@@ -43,6 +44,7 @@ public class CallService extends Observable {
     private final static String TAG = CallService.class.getName();
 
     @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
 
     private Map<String, CallContact> mContacts;
