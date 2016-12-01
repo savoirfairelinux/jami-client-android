@@ -51,8 +51,6 @@ import android.widget.TextView;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.inject.Inject;
 
@@ -65,9 +63,11 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
-import cx.ring.service.LocalService;
+import cx.ring.model.DaemonEvent;
 import cx.ring.services.AccountService;
 import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
@@ -76,7 +76,7 @@ import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 
 public class RingNavigationFragment extends Fragment implements NavigationAdapter.OnNavigationItemClicked,
-        AccountAdapter.OnAccountActionClicked, Observer {
+        AccountAdapter.OnAccountActionClicked, Observer<DaemonEvent> {
     private static final String TAG = RingNavigationFragment.class.getSimpleName();
 
     private AccountAdapter mAccountAdapter;
@@ -125,8 +125,6 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     private NavigationAdapter mMenuAdapter;
     private OnNavigationSectionSelected mSectionListener;
 
-    private LocalService mLocalService;
-
     @Override
     public void onAccountSelected(Account selectedAccount) {
 
@@ -146,7 +144,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
             orderedAccountIdList.add(account.getAccountID());
         }
 
-        mLocalService.setAccountOrder(orderedAccountIdList);
+        mAccountService.setAccountOrder(orderedAccountIdList);
 
         if (mSectionListener != null) {
             mSectionListener.onAccountSelected();
@@ -170,13 +168,19 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        updateUserView();
-        updateSelectedAccountView();
-    }
+    public void update(Observable o, DaemonEvent arg) {
 
-    public void setCallback(LocalService callback) {
-        mLocalService = callback;
+        if (o instanceof AccountService && arg != null && arg.getEventType() == DaemonEvent.EventType.ACCOUNTS_CHANGED) {
+
+            RingApplication.uiHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    updateAccounts(mAccountService.getAccounts());
+                    updateUserView();
+                    updateSelectedAccountView();
+                }
+            });
+        }
     }
 
     public interface OnNavigationSectionSelected {
@@ -185,6 +189,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         void onAccountSelected();
 
         void onAddRingAccountSelected();
+
         void onAddSipAccountSelected();
     }
 
@@ -199,7 +204,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     @Override
     public void onPause() {
         super.onPause();
-        mAccountService.deleteObserver(this);
+        mAccountService.removeObserver(this);
     }
 
     /**
@@ -438,7 +443,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
                 mVCardProfile.removeProperties(RawProperty.class);
                 VCardUtils.saveLocalProfileToDisk(mVCardProfile, mAccountService.getCurrentAccount().getAccountID(), getActivity().getFilesDir());
                 updateUserView();
-                updateAccounts(mLocalService.getAccounts());
+                updateAccounts(mAccountService.getAccounts());
             }
         });
 
