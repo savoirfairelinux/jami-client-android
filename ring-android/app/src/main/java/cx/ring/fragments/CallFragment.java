@@ -42,6 +42,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
+import android.telecom.Call;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -418,7 +419,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         SipCall firstParticipant = getFirstParticipant();
         switch (item.getItemId()) {
             case android.R.id.home:
-                mCallbacks.terminateCall();
+                if (firstParticipant != null) {
+                    startConversationActivity(firstParticipant.getContact());
+                }
                 break;
             case R.id.menuitem_chat:
                 if (firstParticipant == null
@@ -427,15 +430,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                         || firstParticipant.getContact().getIds().isEmpty()) {
                     break;
                 }
-
-                Intent intent = new Intent()
-                        .setClass(getActivity(), ConversationActivity.class)
-                        .setAction(Intent.ACTION_VIEW)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                        .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, firstParticipant.getContact().getIds().get(0)));
-                intent.putExtra("resuming", true);
-                startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
-
+                startConversationActivity(firstParticipant.getContact());
                 break;
             case R.id.menuitem_addcontact:
                 if (firstParticipant == null || firstParticipant.getContact() == null) {
@@ -1046,6 +1041,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                 return;
             }
             final String callId = call.getCallId();
+            startConversationActivity(call.getContact());
             mCallbacks.getRemoteService().hangUp(callId);
             mCallbacks.terminateCall();
         } catch (RemoteException e) {
@@ -1077,6 +1073,26 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             return null;
         }
         return getConference().getParticipants().get(0);
+    }
+
+    public void onBackPressed() {
+        SipCall call = getFirstParticipant();
+        if (call != null) {
+            startConversationActivity(call.getContact());
+        }
+    }
+
+    private void startConversationActivity(CallContact contact) {
+        if (contact == null || contact.getIds().isEmpty()) {
+            return;
+        }
+        Intent intent = new Intent()
+                .setClass(getActivity(), ConversationActivity.class)
+                .setAction(Intent.ACTION_VIEW)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
+        intent.putExtra("resuming", true);
+        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
     }
 
     private void setDefaultPhoto() {
