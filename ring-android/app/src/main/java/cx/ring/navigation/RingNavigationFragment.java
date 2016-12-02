@@ -26,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -36,7 +37,6 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +50,6 @@ import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -63,26 +62,20 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
-import cx.ring.model.DaemonEvent;
-import cx.ring.services.AccountService;
+import cx.ring.mvp.GenericView;
 import cx.ring.utils.BitmapUtils;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
-import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
-import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
-import ezvcard.property.RawProperty;
 
 public class RingNavigationFragment extends Fragment implements NavigationAdapter.OnNavigationItemClicked,
-        AccountAdapter.OnAccountActionClicked, Observer<DaemonEvent> {
+        AccountAdapter.OnAccountActionClicked, GenericView<RingNavigationViewModel> {
     private static final String TAG = RingNavigationFragment.class.getSimpleName();
 
     private AccountAdapter mAccountAdapter;
 
     @Inject
-    AccountService mAccountService;
+    RingNavigationPresenter mRingNavigationPresenter;
 
     /***************
      * Header views
@@ -98,7 +91,6 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     ImageView mUserImage;
     private Bitmap mSourcePhoto;
     private ImageView mProfilePhoto;
-    private VCard mVCardProfile;
 
     @BindView(R.id.account_alias)
     TextView mSelectedAccountAlias;
@@ -130,7 +122,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
         toggleAccountList();
 
-        mAccountService.setCurrentAccount(selectedAccount);
+        mRingNavigationPresenter.setAccountOrder(selectedAccount);
 
         if (mSectionListener != null) {
             mSectionListener.onAccountSelected();
@@ -153,26 +145,6 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         }
     }
 
-    @Override
-    public void update(Observable o, DaemonEvent event) {
-
-        if (event == null) {
-            return;
-        }
-
-        if (event.getEventType() == DaemonEvent.EventType.ACCOUNTS_CHANGED) {
-
-            RingApplication.uiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    updateAccounts(mAccountService.getAccounts());
-                    updateUserView();
-                    updateSelectedAccountView();
-                }
-            });
-        }
-    }
-
     public interface OnNavigationSectionSelected {
         void onNavigationSectionSelected(Section position);
 
@@ -186,16 +158,14 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     @Override
     public void onResume() {
         super.onResume();
-        mAccountService.addObserver(this);
-        updateAccounts(mAccountService.getAccounts());
-        updateUserView();
-        updateSelectedAccountView();
+        mRingNavigationPresenter.bindView(this);
+        mRingNavigationPresenter.updateUser();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mAccountService.removeObserver(this);
+        mRingNavigationPresenter.unbindView();
     }
 
     /**
@@ -249,7 +219,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        updateUserView();
+        mRingNavigationPresenter.initializePresenter(getString(R.string.unknown));
 
         setupNavigationMenu();
         setupAccountList();
@@ -318,22 +288,20 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         }
     }
 
-    public void updateUserView() {
+    public void updateUserView(VCard vcard) {
         Log.d(TAG, "updateUserView");
 
         if (getActivity() == null) {
             return;
         }
 
-        String accountID = mAccountService.getCurrentAccount() != null ? mAccountService.getCurrentAccount().getAccountID() : null;
-        mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), accountID, getString(R.string.unknown));
-        if (!mVCardProfile.getPhotos().isEmpty()) {
-            Photo tmp = mVCardProfile.getPhotos().get(0);
+        if (!vcard.getPhotos().isEmpty()) {
+            Photo tmp = vcard.getPhotos().get(0);
             mUserImage.setImageBitmap(BitmapUtils.cropImageToCircle(tmp.getData()));
         } else {
             mUserImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null));
         }
-        mSelectedAccountAlias.setText(mVCardProfile.getFormattedName().getValue());
+        mSelectedAccountAlias.setText(vcard.getFormattedName().getValue());
         Log.d(TAG, "User did change, updating user view.");
     }
 
@@ -432,60 +400,50 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String username = editText.getText().toString().trim();
-                if (username.isEmpty()) {
-                    username = getActivity().getString(R.string.unknown);
-                }
-                mVCardProfile.setFormattedName(new FormattedName(username));
 
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null)) {
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
-                    mVCardProfile.removeProperties(Photo.class);
-                    mVCardProfile.addPhoto(photo);
-                }
 
-                mVCardProfile.removeProperties(RawProperty.class);
-                VCardUtils.saveLocalProfileToDisk(mVCardProfile, mAccountService.getCurrentAccount().getAccountID(), getActivity().getFilesDir());
-                updateUserView();
-                updateAccounts(mAccountService.getAccounts());
+                } else {
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_contact_picture);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                }
+                Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
+
+                mRingNavigationPresenter.saveVCard(editText.getText().toString().trim(), photo);
             }
         });
 
         builder.show();
     }
 
-    public void updateAccounts(List<Account> accounts) {
-        mAccountAdapter.replaceAll(accounts);
-        if (accounts.isEmpty()) {
-            mNewAccountBtn.setVisibility(View.VISIBLE);
-            mSelectedAccountLayout.setVisibility(View.GONE);
-        } else {
-            mNewAccountBtn.setVisibility(View.GONE);
-            mSelectedAccountLayout.setVisibility(View.VISIBLE);
-        }
-    }
-
-
-    private void updateSelectedAccountView() {
-        Account selectedAccount = mAccountService.getCurrentAccount();
+    private void updateSelectedAccountView(Account selectedAccount) {
         if (selectedAccount == null) {
             return;
         }
-        mSelectedAccountAlias.setText(mVCardProfile.getFormattedName().getValue());
-        if (selectedAccount.isRing()) {
-            String username = selectedAccount.getRegisteredName();
-            if (!selectedAccount.registeringUsername && !TextUtils.isEmpty(username)) {
-                mSelectedAccountHost.setText(username);
-            } else {
-                mSelectedAccountHost.setText(selectedAccount.getUsername());
-            }
-        } else if (selectedAccount.isSip() && !selectedAccount.isIP2IP()) {
-            mSelectedAccountHost.setText(selectedAccount.getUsername() + "@" + selectedAccount.getHost());
-        } else {
-            mSelectedAccountHost.setText(R.string.account_type_ip2ip);
-        }
+        mSelectedAccountAlias.setText(mRingNavigationPresenter.getAlias(selectedAccount));
+        mSelectedAccountHost.setText(mRingNavigationPresenter.getHost(selectedAccount, getString(R.string.account_type_ip2ip)));
         mSelectedAccountError.setVisibility(selectedAccount.isRegistered() ? View.GONE : View.VISIBLE);
+    }
+
+    @Override
+    public void showViewModel(final RingNavigationViewModel viewModel) {
+        RingApplication.uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mAccountAdapter.replaceAll(viewModel.getAccounts());
+                updateUserView(viewModel.getVcard(getActivity().getFilesDir(), getString(R.string.unknown)));
+                updateSelectedAccountView(viewModel.getAccount());
+
+                if (viewModel.getAccounts().isEmpty()) {
+                    mNewAccountBtn.setVisibility(View.VISIBLE);
+                    mSelectedAccountLayout.setVisibility(View.GONE);
+                } else {
+                    mNewAccountBtn.setVisibility(View.GONE);
+                    mSelectedAccountLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 }

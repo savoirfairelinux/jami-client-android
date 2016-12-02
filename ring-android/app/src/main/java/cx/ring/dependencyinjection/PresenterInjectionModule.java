@@ -23,6 +23,7 @@ import javax.inject.Singleton;
 
 import cx.ring.about.AboutPresenter;
 import cx.ring.application.RingApplication;
+import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.SharePresenter;
 import dagger.Module;
@@ -59,6 +60,15 @@ public class PresenterInjectionModule {
     @Singleton
     SettingsPresenter provideSettingsPresenter() {
         SettingsPresenter presenter = new SettingsPresenter();
+        mRingApplication.getRingInjectionComponent().inject(presenter);
+        presenter.afterInjection();
+        return presenter;
+    }
+
+    @Provides
+    @Singleton
+    RingNavigationPresenter provideRingNavigationPresenter(){
+        RingNavigationPresenter presenter = new RingNavigationPresenter();
         mRingApplication.getRingInjectionComponent().inject(presenter);
         presenter.afterInjection();
         return presenter;
