@@ -27,6 +27,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.navigation.RingNavigationFragment;
+import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.service.BootReceiver;
 import cx.ring.service.DRingService;
 import cx.ring.service.LocalService;
@@ -87,6 +88,8 @@ public interface RingInjectionComponent {
     void inject(BootReceiver receiver);
 
     void inject(AboutPresenter presenter);
+
+    void inject(RingNavigationPresenter presenter);
 
     void inject(SharePresenter presenter);
 
