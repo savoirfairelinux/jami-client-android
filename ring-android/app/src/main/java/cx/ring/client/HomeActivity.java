@@ -175,7 +175,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             public void onDrawerOpened(View drawerView) {
                 invalidateOptionsMenu();
                 if (mNavigationView != null) {
-                    fNavigation.updateUserView();
+                    fNavigation.update();
                 }
             }
         };
@@ -595,7 +595,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 break;
         }
     }
-    
+
     public void onAccountSelected() {
         mNavigationDrawer.closeDrawers();
     }
