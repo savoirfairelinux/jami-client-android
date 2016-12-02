@@ -220,9 +220,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             @Override
             public void onDrawerOpened(View drawerView) {
                 invalidateOptionsMenu();
-                if (mNavigationView != null) {
-                    fNavigation.updateUserView();
-                }
             }
         };
 
@@ -537,9 +534,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     // TODO: Remove this when low level services are ready
     public void onNavigationViewReady() {
         if (fNavigation != null) {
-            if (service != null) {
-                fNavigation.updateAccounts(mAccountService.getAccounts());
-            }
             fNavigation.setNavigationSectionSelectedListener(HomeActivity.this);
         }
     }
@@ -556,11 +550,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         switch (requestCode) {
             case REQUEST_CODE_CREATE_ACCOUNT:
                 mNoAccountOpened = false;
-            case REQUEST_CODE_PREFERENCES:
-            case AccountsManagementFragment.ACCOUNT_EDIT_REQUEST:
-                if (fNavigation != null) {
-                    fNavigation.updateAccounts(mAccountService.getAccounts());
-                }
                 break;
             case REQUEST_CODE_CALL:
                 if (resultCode == CallActivity.RESULT_FAILURE) {
