@@ -175,7 +175,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             public void onDrawerOpened(View drawerView) {
                 invalidateOptionsMenu();
                 if (mNavigationView != null) {
-                    fNavigation.updateUserView();
+                    //fNavigation.updateUserView();
                 }
             }
         };
