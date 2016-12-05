@@ -23,14 +23,14 @@ dependencies {
 
     // Parsing, formatting, and validating international phone numbers
     compile 'com.googlecode.libphonenumber:libphonenumber:7.0.11'
-    
+
     // Library for listview headers
     compile 'se.emilsjolander:stickylistheaders:2.7.0'
 
     // Barcode scanning
     compile 'com.google.zxing:core:3.2.1'
     compile 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
-    
+
     // Butterknife
     compile 'com.jakewharton:butterknife:8.1.0'
     compile 'com.skyfishjy.ripplebackground:library:1.0.1'
@@ -39,7 +39,21 @@ dependencies {
     // Dagger dependency injection
     apt 'com.google.dagger:dagger-compiler:2.7'
     compile 'com.google.dagger:dagger:2.7'
+
     provided 'javax.annotation:jsr250-api:1.0'
+
+    androidTestCompile 'com.google.dagger:dagger:2.7'
+    androidTestApt 'com.google.dagger:dagger-compiler:2.7'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    // Set this dependency to use JUnit 4 rules
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    // Set this dependency to build and run Espresso tests
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    // Set this dependency to build and run UI Automator tests
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
+    androidTestCompile 'com.android.support:support-annotations:24.2.1'
+
+
 }
 
 android {
@@ -49,6 +63,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 24
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
 
     sourceSets {
@@ -57,9 +72,6 @@ android {
             jniLibs.srcDir 'src/main/libs'
             jni.srcDirs = []
         }
-
-        // Move the tests to tests/java, tests/res, etc...
-        instrumentTest.setRoot('tests')
 
         // Move the build types to build-types/<type>
         // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
