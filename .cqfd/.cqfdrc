@@ -1,0 +1,16 @@
+[project]
+org='savoirfairelinux'
+name='ring'
+
+[build]
+command=./compile.sh'
+
+[release]
+command=./compile.sh --release'
+
+[daemon]
+command=./compile.sh --daemon'
+
+[release]
+files=''
+
