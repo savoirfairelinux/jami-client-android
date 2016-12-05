@@ -1,0 +1,10 @@
+[project]
+org='savoirfairelinux'
+name='ring'
+
+[build]
+command='ANDROID_ABI=\"x86\" ./make-ring.py --install --distribution=Android'
+
+[release]
+files=''
+
