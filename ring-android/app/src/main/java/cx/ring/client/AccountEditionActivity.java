@@ -72,6 +72,9 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     @Inject
     AccountService mAccountService;
 
+    private static final String TAG = AccountEditionActivity.class.getSimpleName();
+
+    public static final int ACCOUNT_EDIT_REQUEST = 2;
     public static final AccountCallbacks DUMMY_CALLBACKS = new AccountCallbacks() {
         @Override
         public IDRingService getRemoteService() {
@@ -104,7 +107,6 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         }
     };
 
-    private static final String TAG = AccountEditionActivity.class.getSimpleName();
     private final ArrayList<AccountChangedListener> listeners = new ArrayList<>();
     private Account mAccSelected = null;
 
