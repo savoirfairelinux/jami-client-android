@@ -66,7 +66,6 @@ import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
 import cx.ring.application.RingApplication;
-import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
@@ -166,7 +165,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
         if (!mNoAccountOpened && mAccountService.getAccounts().isEmpty() && !mIsAskingForPermissions) {
             mNoAccountOpened = true;
-            startActivityForResult(new Intent(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
+            startActivityForResult(new Intent(HomeActivity.this, AccountWizard.class), AccountWizard.ACCOUNT_CREATE_REQUEST);
         }
     }
 
@@ -554,7 +553,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             case REQUEST_CODE_CREATE_ACCOUNT:
                 mNoAccountOpened = false;
             case REQUEST_CODE_PREFERENCES:
-            case AccountsManagementFragment.ACCOUNT_EDIT_REQUEST:
+            case AccountEditionActivity.ACCOUNT_EDIT_REQUEST:
                 if (fNavigation != null) {
                     fNavigation.updateAccounts(mAccountService.getAccounts());
                 }
@@ -587,6 +586,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         return service;
     }
 
+    /**
+     * @param section
+     */
     @Override
     public void onNavigationSectionSelected(RingNavigationFragment.Section section) {
         mNavigationDrawer.closeDrawers();
@@ -604,14 +606,11 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 fContent = getFragmentManager().findFragmentByTag(HOME_TAG);
                 break;
             case MANAGE:
-                if (fContent instanceof AccountsManagementFragment) {
-                    break;
+                if (mAccountService.getCurrentAccount().needsMigration()) {
+                    launchAccountMigrationActivity(mAccountService.getCurrentAccount());
+                } else {
+                    launchAccountEditActivity(mAccountService.getCurrentAccount());
                 }
-                fContent = new AccountsManagementFragment();
-                getFragmentManager().beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.main_frame, fContent, ACCOUNTS_TAG)
-                        .addToBackStack(ACCOUNTS_TAG).commit();
                 break;
             case ABOUT:
                 if (fContent instanceof AboutFragment) {
@@ -633,7 +632,26 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 break;
         }
     }
-    
+
+    private void launchAccountEditActivity(Account acc) {
+        Log.d(TAG, "Launch account edit activity");
+
+        Intent intent = new Intent(this, AccountEditionActivity.class)
+                .setAction(Intent.ACTION_EDIT)
+                .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, acc.getAccountID()));
+        startActivityForResult(intent, AccountEditionActivity.ACCOUNT_EDIT_REQUEST);
+    }
+
+    private void launchAccountMigrationActivity(Account acc) {
+        Log.d(TAG, "Launch account migration activity");
+
+        Intent intent = new Intent()
+                .setClass(this, AccountWizard.class)
+                .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, acc.getAccountID()));
+        startActivityForResult(intent, AccountEditionActivity.ACCOUNT_EDIT_REQUEST);
+    }
+
+
     public void onAccountSelected() {
         mNavigationDrawer.closeDrawers();
     }
@@ -643,7 +661,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         mNavigationDrawer.closeDrawers();
         Intent intent = new Intent(HomeActivity.this, AccountWizard.class);
         intent.setAction(AccountConfig.ACCOUNT_TYPE_SIP);
-        startActivityForResult(intent, AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
+        startActivityForResult(intent, AccountWizard.ACCOUNT_CREATE_REQUEST);
     }
 
     @Override
@@ -651,7 +669,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         mNavigationDrawer.closeDrawers();
         Intent intent = new Intent(HomeActivity.this, AccountWizard.class);
         intent.setAction(AccountConfig.ACCOUNT_TYPE_RING);
-        startActivityForResult(intent, AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
+        startActivityForResult(intent, AccountWizard.ACCOUNT_CREATE_REQUEST);
     }
 
     private void goToShare() {

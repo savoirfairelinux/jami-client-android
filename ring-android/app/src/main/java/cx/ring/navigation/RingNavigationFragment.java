@@ -60,12 +60,14 @@ import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.application.RingApplication;
+import cx.ring.client.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
 import cx.ring.model.DaemonEvent;
 import cx.ring.services.AccountService;
 import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.VCardUtils;
@@ -138,6 +140,19 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     }
 
     @Override
+    public void onAccountLongPressed(Account account) {
+        toggleAccountList();
+        if (mSectionListener != null) {
+            mSectionListener.onAccountSelected();
+        }
+        if (account.needsMigration()) {
+            launchAccountMigrationActivity(account);
+        } else {
+            launchAccountEditActivity(account);
+        }
+    }
+
+    @Override
     public void onAddRINGAccountSelected() {
         toggleAccountList();
         if (mSectionListener != null) {
@@ -181,6 +196,24 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         void onAddRingAccountSelected();
 
         void onAddSipAccountSelected();
+    }
+
+    private void launchAccountEditActivity(Account acc) {
+        Log.d(TAG, "Launch account edit activity");
+
+        Intent intent = new Intent(getActivity(), AccountEditionActivity.class)
+                .setAction(Intent.ACTION_EDIT)
+                .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, acc.getAccountID()));
+        startActivityForResult(intent, AccountEditionActivity.ACCOUNT_EDIT_REQUEST);
+    }
+
+    private void launchAccountMigrationActivity(Account acc) {
+        Log.d(TAG, "Launch account migration activity");
+
+        Intent intent = new Intent()
+                .setClass(getActivity(), AccountWizard.class)
+                .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, acc.getAccountID()));
+        startActivityForResult(intent, AccountEditionActivity.ACCOUNT_EDIT_REQUEST);
     }
 
     @Override
@@ -348,7 +381,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
         ArrayList<NavigationItem> menu = new ArrayList<>();
         menu.add(0, new NavigationItem(R.string.menu_item_home, R.drawable.ic_home_black));
-        menu.add(1, new NavigationItem(R.string.menu_item_accounts, R.drawable.ic_group_black));
+        menu.add(1, new NavigationItem(R.string.menu_item_account, R.drawable.ic_group_black));
         menu.add(2, new NavigationItem(R.string.menu_item_settings, R.drawable.ic_settings_black));
         menu.add(3, new NavigationItem(R.string.menu_item_share, R.drawable.ic_share_black));
         menu.add(4, new NavigationItem(R.string.menu_item_about, R.drawable.ic_info_black));

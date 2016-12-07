@@ -137,28 +137,33 @@ public class ShareFragment extends Fragment implements GenericView<ShareViewMode
 
     //region View Methods Implementation
     @Override
-    public void showViewModel(ShareViewModel viewModel) {
-        QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData();
+    public void showViewModel(final ShareViewModel viewModel) {
+        RingApplication.uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData();
 
-        if (qrCodeData == null || mQRCodeSize <= 0) {
-            mQrImage.setVisibility(View.INVISIBLE);
-            mShareInstruction.setText(mShareMessageNoAccount);
-        } else {
-            Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
-            bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
-            mQrImage.setImageBitmap(bitmap);
-            mShareInstruction.setText(mShareMessage);
-            mQrImage.setVisibility(View.VISIBLE);
-        }
+                if (qrCodeData == null || mQRCodeSize <= 0) {
+                    mQrImage.setVisibility(View.INVISIBLE);
+                    mShareInstruction.setText(mShareMessageNoAccount);
+                } else {
+                    Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
+                    bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
+                    mQrImage.setImageBitmap(bitmap);
+                    mShareInstruction.setText(mShareMessage);
+                    mQrImage.setVisibility(View.VISIBLE);
+                }
 
-        mUriToShow = viewModel.getAccountShareUri();
-        mBlockchainUsername = viewModel.getAccountRegisteredUsername();
+                mUriToShow = viewModel.getAccountShareUri();
+                mBlockchainUsername = viewModel.getAccountRegisteredUsername();
 
-        if (TextUtils.isEmpty(mUriToShow)) {
-            mShareButton.setEnabled(false);
-        } else {
-            mShareButton.setEnabled(true);
-        }
+                if (TextUtils.isEmpty(mUriToShow)) {
+                    mShareButton.setEnabled(false);
+                } else {
+                    mShareButton.setEnabled(true);
+                }
+            }
+        });
     }
     //endregion
 }
