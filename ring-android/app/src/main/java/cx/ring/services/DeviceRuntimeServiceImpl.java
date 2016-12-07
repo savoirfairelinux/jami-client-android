@@ -120,4 +120,8 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     private boolean checkPermission(String permission) {
         return ContextCompat.checkSelfPermission(mContext, permission) == PackageManager.PERMISSION_GRANTED;
     }
+
+    private static boolean checkPermission(Context context, String permission) {
+        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
+    }
 }
