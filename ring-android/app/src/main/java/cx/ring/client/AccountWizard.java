@@ -54,12 +54,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.fragments.AccountCreationFragment;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.HomeAccountCreationFragment;
 import cx.ring.fragments.ProfileCreationFragment;
 import cx.ring.fragments.RingAccountCreationFragment;
 import cx.ring.fragments.RingLinkAccountFragment;
+import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
@@ -84,7 +84,6 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
     private ProgressDialog mProgress = null;
 
     private boolean mLinkAccount = false;
-    private boolean mIsNew = false;
     private boolean createdAccount = false;
     private Bitmap mPhotoProfile;
     private String mFullname;
@@ -110,8 +109,6 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
         // dependency injection
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
 
-        mIsNew = mAccountService.getAccounts().isEmpty();
-
         mViewPager.setAdapter(new WizardPagerAdapter(getFragmentManager()));
         mViewPager.getAdapter().notifyDataSetChanged();
 
@@ -129,8 +126,6 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
                     .commit();
         } else {
             mViewPager.setOffscreenPageLimit(4);
-            mIsNew = mAccountService.getAccounts().isEmpty();
-            Log.d(TAG, "is first account " + mIsNew);
             mAccountType = getIntent().getAction() != null ? getIntent().getAction() : AccountConfig.ACCOUNT_TYPE_RING;
         }
     }
@@ -257,21 +252,6 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
             }
             if (!TextUtils.isEmpty(pin)) {
                 accountDetails.put(ConfigKey.ARCHIVE_PIN.key(), pin);
-            }
-            createNewAccount(accountDetails);
-        }
-    }
-
-    public void initSipAccountCreation(String alias, String username, String password, String host) {
-        HashMap<String, String> accountDetails = initAccountDetails();
-
-        if (accountDetails != null) {
-            mFullname = alias;
-            accountDetails.put(ConfigKey.ACCOUNT_ALIAS.key(), alias);
-            if (!TextUtils.isEmpty(host)) {
-                accountDetails.put(ConfigKey.ACCOUNT_HOSTNAME.key(), host);
-                accountDetails.put(ConfigKey.ACCOUNT_USERNAME.key(), username);
-                accountDetails.put(ConfigKey.ACCOUNT_PASSWORD.key(), password);
             }
             createNewAccount(accountDetails);
         }
@@ -406,41 +386,7 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
     }
 
     private AlertDialog createAlertDialog(Context context, String state) {
-        if (mAccount.isRing()) {
-            return createRingAlertDialog(context, state);
-        } else {
-            return createSIPAlertDialog(context, state);
-        }
-    }
-
-    private AlertDialog createSIPAlertDialog(Context context, String state) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-        dialogBuilder.setPositiveButton(android.R.string.ok, null);
-        switch (state) {
-            case AccountConfig.STATE_ERROR_GENERIC:
-            case AccountConfig.STATE_UNREGISTERED:
-                dialogBuilder.setTitle(R.string.account_sip_cannot_be_registered)
-                        .setMessage(R.string.account_sip_cannot_be_registered_message);
-                break;
-            case AccountConfig.STATE_ERROR_NETWORK:
-                dialogBuilder.setTitle(R.string.account_no_network_title)
-                        .setMessage(R.string.account_no_network_message);
-                break;
-            default:
-                dialogBuilder.setTitle(R.string.account_sip_success_title)
-                        .setMessage(R.string.account_sip_success_message);
-                break;
-        }
-        AlertDialog result = dialogBuilder.show();
-        // SIP account are always created, dismiss wizard no matter the state
-        result.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                setResult(Activity.RESULT_OK, new Intent());
-                finish();
-            }
-        });
-        return result;
+        return createRingAlertDialog(context, state);
     }
 
     private AlertDialog createRingAlertDialog(Context context, String state) {
@@ -564,7 +510,7 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
             switch (position) {
                 case 0:
                     if (AccountConfig.ACCOUNT_TYPE_SIP.equals(mAccountType)) {
-                        return new AccountCreationFragment();
+                        return new SIPAccountCreationFragment();
                     } else {
                         return mHomeFragment;
                     }

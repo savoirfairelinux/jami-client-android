@@ -25,6 +25,7 @@ import cx.ring.about.AboutPresenter;
 import cx.ring.application.RingApplication;
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.SharePresenter;
+import cx.ring.wizard.SIPCreationPresenter;
 import dagger.Module;
 import dagger.Provides;
 
@@ -59,6 +60,15 @@ public class PresenterInjectionModule {
     @Singleton
     SettingsPresenter provideSettingsPresenter() {
         SettingsPresenter presenter = new SettingsPresenter();
+        mRingApplication.getRingInjectionComponent().inject(presenter);
+        presenter.afterInjection();
+        return presenter;
+    }
+
+    @Provides
+    @Singleton
+    SIPCreationPresenter provideSIPCreationPresenter() {
+        SIPCreationPresenter presenter = new SIPCreationPresenter();
         mRingApplication.getRingInjectionComponent().inject(presenter);
         presenter.afterInjection();
         return presenter;

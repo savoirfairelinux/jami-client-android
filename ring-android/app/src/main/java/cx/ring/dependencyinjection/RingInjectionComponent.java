@@ -29,7 +29,6 @@ import cx.ring.client.AccountWizard;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.fragments.AccountCreationFragment;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.CallFragment;
@@ -37,6 +36,7 @@ import cx.ring.fragments.DeviceAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.RegisterNameDialog;
 import cx.ring.fragments.RingAccountCreationFragment;
+import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.navigation.RingNavigationFragment;
@@ -56,6 +56,7 @@ import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.ShareFragment;
 import cx.ring.share.SharePresenter;
+import cx.ring.wizard.SIPCreationPresenter;
 import dagger.Component;
 
 @Singleton
@@ -77,7 +78,7 @@ public interface RingInjectionComponent {
 
     void inject(AccountMigrationFragment fragment);
 
-    void inject(AccountCreationFragment fragment);
+    void inject(SIPAccountCreationFragment fragment);
 
     void inject(AccountsManagementFragment fragment);
 
@@ -130,4 +131,6 @@ public interface RingInjectionComponent {
     void inject(SharePresenter presenter);
 
     void inject(SettingsPresenter presenter);
+
+    void inject(SIPCreationPresenter presenter);
 }

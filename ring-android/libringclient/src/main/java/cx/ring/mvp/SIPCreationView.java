@@ -17,20 +17,25 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.services;
+package cx.ring.mvp;
 
-import java.io.File;
+public interface SIPCreationView {
 
-public abstract class DeviceRuntimeService {
+    void showUsernameError();
 
-    public abstract void loadNativeLibrary();
+    void showLoading();
 
-    public abstract File provideFilesDir();
+    void resetErrors();
 
-    public abstract String provideDefaultVCardName();
+    void showAliasError();
 
-    public abstract Thread provideUIThread();
+    void showPasswordError();
 
-    public abstract boolean hasVideoPermission();
+    void showIP2IPWarning();
 
+    void showRegistrationNetworkError();
+
+    void showRegistrationError();
+
+    void showRegistrationSuccess();
 }
