@@ -72,7 +72,9 @@ import cx.ring.services.AccountService;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.VCardUtils;
 import cx.ring.views.LinkNewDeviceLayout;
+import ezvcard.VCard;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
@@ -191,8 +193,9 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
                 mDeviceAdapter = new DeviceAdapter(getActivity(), account.getDevices());
                 mDeviceList.setAdapter(mDeviceAdapter);
 
+                VCard vcardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), account.getAccountID(), getString(R.string.unknown));
                 mAccountSwitch.setChecked(account.isEnabled());
-                mAccountNameTxt.setText(account.getAlias());
+                mAccountNameTxt.setText(vcardProfile.getFormattedName().getValue());
                 mAccountIdTxt.setText(account.getUsername());
                 String username = account.getRegisteredName();
                 boolean currentRegisteredName = account.registeringUsername;

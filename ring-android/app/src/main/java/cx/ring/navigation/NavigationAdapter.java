@@ -73,9 +73,7 @@ class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Navigatio
         @Override
         public void onClick(View v) {
             if (mListener != null) {
-                mItemSelected = getAdapterPosition();
-                setSelection(mItemSelected);
-                mListener.onNavigationItemClicked(mItemSelected);
+                mListener.onNavigationItemClicked(getAdapterPosition());
             }
         }
     }

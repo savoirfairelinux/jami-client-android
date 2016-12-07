@@ -30,7 +30,6 @@ import cx.ring.client.CallActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.fragments.AccountCreationFragment;
 import cx.ring.fragments.AccountMigrationFragment;
-import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.DeviceAccountFragment;
@@ -78,8 +77,6 @@ public interface RingInjectionComponent {
     void inject(AccountMigrationFragment fragment);
 
     void inject(AccountCreationFragment fragment);
-
-    void inject(AccountsManagementFragment fragment);
 
     void inject(DeviceAccountFragment fragment);
 
