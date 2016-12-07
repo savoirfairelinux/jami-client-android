@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_ec3960d9",
+        "filename": ".cqfd/.cqfdrc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 113
+      },
+      "writtenOn": "2016-12-07T20:57:16Z",
+      "side": 1,
+      "message": "not really needed, this is the default value",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 13
+      },
+      "revId": "6d96f6119f08f5ff2810ce5b65d8a0eb1fc34efb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
