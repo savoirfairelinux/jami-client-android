@@ -20,6 +20,8 @@
 package cx.ring.application;
 
 import android.app.Application;
+import android.os.Handler;
+import android.os.Looper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +42,11 @@ public class RingApplication extends Application {
 
     private RingInjectionComponent mRingInjectionComponent;
     private Map<String, Boolean> mPermissionsBeingAsked;
+
+    /**
+     * Handler to run tasks that needs to be on main thread (UI updates)
+     */
+    public static final Handler uiHandler = new Handler(Looper.getMainLooper());
 
     @Inject
     LogService mLogService;

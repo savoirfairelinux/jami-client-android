@@ -171,8 +171,13 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
     @Override
     public void update(Observable o, Object arg) {
-        updateUserView();
-        updateSelectedAccountView();
+        RingApplication.uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                updateUserView();
+                updateSelectedAccountView();
+            }
+        });
     }
 
     public void setCallback(LocalService callback) {
