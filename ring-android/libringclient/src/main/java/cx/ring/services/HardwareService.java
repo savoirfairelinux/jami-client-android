@@ -20,10 +20,10 @@
 package cx.ring.services;
 
 import java.util.Map;
-import java.util.Observable;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.Ringservice;
@@ -33,12 +33,14 @@ import cx.ring.daemon.UintVect;
 import cx.ring.daemon.VideoCallback;
 import cx.ring.model.DaemonEvent;
 import cx.ring.utils.Log;
+import cx.ring.utils.Observable;
 
 public class HardwareService extends Observable {
 
     private static final String TAG = DaemonService.class.getName();
 
     @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
 
     private VideoCallback mVideoCallback;
