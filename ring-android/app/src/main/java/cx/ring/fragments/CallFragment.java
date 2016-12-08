@@ -69,6 +69,8 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -78,24 +80,27 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.interfaces.CallInterface;
-import cx.ring.interfaces.NameLookupCallback;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
+import cx.ring.model.DaemonEvent;
 import cx.ring.model.SecureSipCall;
 import cx.ring.model.SipCall;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.KeyboardVisibilityManager;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.property.Photo;
 
-public class CallFragment extends Fragment implements CallInterface, ContactDetailsTask.DetailsLoadedCallback, NameLookupCallback {
+public class CallFragment extends Fragment implements CallInterface, ContactDetailsTask.DetailsLoadedCallback, Observer<DaemonEvent> {
 
     static final private String TAG = CallFragment.class.getSimpleName();
 
@@ -106,6 +111,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
     // Screen wake lock for incoming call
     private WakeLock mScreenWakeLock;
+
+    @Inject
+    AccountService mAccountService;
 
     @BindView(R.id.contact_bubble_layout)
     View contactBubbleLayout;
@@ -205,6 +213,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     public void onCreate(Bundle savedBundle) {
         Log.i(TAG, "onCreate");
         super.onCreate(savedBundle);
+
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
@@ -516,6 +527,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     public void onResume() {
         super.onResume();
         Log.i(TAG, "onResume()");
+
+        mAccountService.addObserver(this);
+
         Conference conference = getConference();
 
         confUpdate();
@@ -545,6 +559,8 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     public void onPause() {
         Log.w(TAG, "onPause() haveVideo=" + haveVideo);
         super.onPause();
+
+        mAccountService.removeObserver(this);
 
         Conference c = getConference();
         if (c != null) {
@@ -900,7 +916,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         Log.d(TAG, "blockchain with " + call.getNumber());
 
         if (mBlockchainInputHandler == null || !mBlockchainInputHandler.isAlive()) {
-            mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mCallbacks.getService()), this);
+            mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mAccountService));
         }
 
         String[] split = call.getNumber().split(":");
@@ -969,7 +985,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     private void initIncomingCallDisplay() {
         Log.i(TAG, "Start incoming display");
         final SipCall call = getFirstParticipant();
-        if (mCallbacks.getService().getAccount(call.getAccount()).isAutoanswerEnabled()) {
+        if (mAccountService.getAccount(call.getAccount()).isAutoanswerEnabled()) {
             try {
                 mCallbacks.getRemoteService().accept(call.getCallId());
             } catch (Exception e) {
@@ -1152,18 +1168,24 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     }
 
     @Override
-    public void onFound(String name, String address) {
-        Log.d(TAG, "on Found with name " + name + ", address " + address);
-        contactBubbleNumTxt.setText(name);
-    }
+    public void update(Observable observable, DaemonEvent event) {
+        if (event == null) {
+            return;
+        }
 
-    @Override
-    public void onInvalidName(String name) {
-        Log.d(TAG, "onInvalidName with name " + name);
-    }
-
-    @Override
-    public void onError(String name, String address) {
-        Log.d(TAG, "onError with name " + name + ", address " + address);
+        switch (event.getEventType()) {
+            case REGISTERED_NAME_FOUND:
+                final String name = event.getEventInput(DaemonEvent.EventInput.NAME, String.class);
+                RingApplication.uiHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        contactBubbleNumTxt.setText(name);
+                    }
+                });
+                break;
+            default:
+                Log.d (TAG, "This event type is not handled here "+event.getEventType());
+                break;
+        }
     }
 }

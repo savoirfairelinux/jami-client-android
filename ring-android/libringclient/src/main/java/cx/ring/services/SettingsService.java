@@ -19,9 +19,8 @@
  */
 package cx.ring.services;
 
-import java.util.Observable;
-
 import cx.ring.model.Settings;
+import cx.ring.utils.Observable;
 
 public abstract class SettingsService extends Observable {
 

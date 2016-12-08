@@ -36,7 +36,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.RemoteException;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
@@ -58,19 +57,25 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
-import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 
 public class AccountCreationFragment extends Fragment {
     static final String TAG = AccountCreationFragment.class.getSimpleName();
 
     private static final int FILE_SELECT_CODE = 2;
     private static final int REQUEST_READ_STORAGE = 113;
+
+    @Inject
+    AccountService mAccountService;
 
     // Values for email and password at the time of the login attempt.
     private String mAlias;
@@ -79,7 +84,6 @@ public class AccountCreationFragment extends Fragment {
     private String mPassword;
 
     private String mDataPath;
-    private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
 
     @BindView(R.id.alias)
     EditText mAliasView;
@@ -101,6 +105,9 @@ public class AccountCreationFragment extends Fragment {
         final View inflatedView = inflater.inflate(R.layout.frag_acc_sip_create, parent, false);
 
         ButterKnife.bind(this, inflatedView);
+
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         return inflatedView;
     }
@@ -407,13 +414,7 @@ public class AccountCreationFragment extends Fragment {
         }
 
         protected Integer doInBackground(String... args) {
-            int ret = 1;
-            try {
-                ret = mCallbacks.getRemoteService().restoreAccounts(args[0], args[1]);
-            } catch (RemoteException e) {
-                Log.e(TAG, "Error while restoring account", e);
-            }
-            return ret;
+            return mAccountService.restoreAccounts(args[0], args[1]);
         }
 
         protected void onPostExecute(Integer ret) {
@@ -428,16 +429,6 @@ public class AccountCreationFragment extends Fragment {
                         .setPositiveButton(android.R.string.ok, null).show();
             }
         }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof LocalService.Callbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
-        }
-
-        mCallbacks = (LocalService.Callbacks) activity;
     }
 
     /**

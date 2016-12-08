@@ -5,17 +5,17 @@ import android.content.Intent;
 import android.util.Log;
 
 import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
 
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.DaemonEvent;
 import cx.ring.model.SipCall;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 import cx.ring.utils.ProfileChunk;
 import cx.ring.utils.VCardUtils;
 
-public class CallManagerCallBack implements Observer {
+public class CallManagerCallBack implements Observer<DaemonEvent> {
 
     private static final String TAG = CallManagerCallBack.class.getName();
 
@@ -39,12 +39,11 @@ public class CallManagerCallBack implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (!(arg instanceof DaemonEvent)) {
+    public void update(Observable o, DaemonEvent event) {
+        if (event == null) {
             return;
         }
 
-        DaemonEvent event = (DaemonEvent) arg;
         switch (event.getEventType()) {
             case CALL_STATE_CHANGED:
                 callStateChanged(
