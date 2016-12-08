@@ -26,30 +26,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import cx.ring.BuildConfig;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.model.DaemonEvent;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
-public class ConfigurationManagerCallback implements Observer {
+public class ConfigurationManagerCallback implements Observer<DaemonEvent> {
 
     private static final String TAG = ConfigurationManagerCallback.class.getSimpleName();
 
-    static public final String ACCOUNTS_CHANGED = BuildConfig.APPLICATION_ID + "accounts.changed";
-    static public final String ACCOUNTS_DEVICES_CHANGED = BuildConfig.APPLICATION_ID + "accounts.devicesChanged";
-    static public final String ACCOUNTS_EXPORT_ENDED = BuildConfig.APPLICATION_ID + "accounts.exportEnded";
-    static public final String ACCOUNT_STATE_CHANGED = BuildConfig.APPLICATION_ID + "account.stateChanged";
-    static public final String INCOMING_TEXT = BuildConfig.APPLICATION_ID + ".message.incomingTxt";
-    static public final String MESSAGE_STATE_CHANGED = BuildConfig.APPLICATION_ID + ".message.stateChanged";
-    static public final String NAME_LOOKUP_ENDED = BuildConfig.APPLICATION_ID + ".name.lookupEnded";
-    static public final String NAME_REGISTRATION_ENDED = BuildConfig.APPLICATION_ID + ".name.registrationEnded";
+    static final String ACCOUNTS_CHANGED = BuildConfig.APPLICATION_ID + "accounts.changed";
+    static final String ACCOUNTS_DEVICES_CHANGED = BuildConfig.APPLICATION_ID + "accounts.devicesChanged";
+    static final String ACCOUNTS_EXPORT_ENDED = BuildConfig.APPLICATION_ID + "accounts.exportEnded";
+    static final String ACCOUNT_STATE_CHANGED = BuildConfig.APPLICATION_ID + "account.stateChanged";
+    static final String INCOMING_TEXT = BuildConfig.APPLICATION_ID + ".message.incomingTxt";
+    static final String MESSAGE_STATE_CHANGED = BuildConfig.APPLICATION_ID + ".message.stateChanged";
+    static final String NAME_LOOKUP_ENDED = BuildConfig.APPLICATION_ID + ".name.lookupEnded";
+    static final String NAME_REGISTRATION_ENDED = BuildConfig.APPLICATION_ID + ".name.registrationEnded";
 
-    static public final String MESSAGE_STATE_CHANGED_EXTRA_ID = "id";
-    static public final String MESSAGE_STATE_CHANGED_EXTRA_STATUS = "status";
+    static final String MESSAGE_STATE_CHANGED_EXTRA_ID = "id";
+    static final String MESSAGE_STATE_CHANGED_EXTRA_STATUS = "status";
 
     private final Context mContext;
 
@@ -59,12 +58,11 @@ public class ConfigurationManagerCallback implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (!(arg instanceof DaemonEvent)) {
+    public void update(Observable o, DaemonEvent event) {
+        if (event == null) {
             return;
         }
 
-        DaemonEvent event = (DaemonEvent) arg;
         switch (event.getEventType()) {
             case VOLUME_CHANGED:
                 volumeChanged(
