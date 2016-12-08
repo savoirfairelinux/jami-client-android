@@ -19,9 +19,8 @@
 package cx.ring.interfaces;
 
 import cx.ring.model.Account;
-import cx.ring.service.LocalService;
 
-public interface AccountCallbacks extends LocalService.Callbacks {
+public interface AccountCallbacks {
     Account getAccount();
     void addOnAccountChanged(AccountChangedListener list);
     void removeOnAccountChanged(AccountChangedListener list);
