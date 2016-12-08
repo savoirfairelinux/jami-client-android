@@ -26,16 +26,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import cx.ring.BuildConfig;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.model.DaemonEvent;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
-public class ConfigurationManagerCallback implements Observer {
+
+public class ConfigurationManagerCallback implements Observer<DaemonEvent> {
 
     private static final String TAG = ConfigurationManagerCallback.class.getSimpleName();
 
@@ -59,12 +59,11 @@ public class ConfigurationManagerCallback implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (!(arg instanceof DaemonEvent)) {
+    public void update(Observable o, DaemonEvent event) {
+        if (event == null) {
             return;
         }
 
-        DaemonEvent event = (DaemonEvent) arg;
         switch (event.getEventType()) {
             case VOLUME_CHANGED:
                 volumeChanged(
