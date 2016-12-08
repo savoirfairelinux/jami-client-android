@@ -19,7 +19,10 @@
  */
 package cx.ring.services;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
 
 import java.io.File;
 import java.util.concurrent.Callable;
@@ -27,6 +30,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.R;
 import cx.ring.utils.Log;
@@ -36,10 +40,13 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     private static final String TAG = DeviceRuntimeServiceImpl.class.getName();
 
     @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
 
     @Inject
     Context mContext;
+
+    private long mDaemonThreadId = -1;
 
     @Override
     public void loadNativeLibrary() {
@@ -47,6 +54,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
             @Override
             public Boolean call() throws Exception {
                 try {
+                    mDaemonThreadId = Thread.currentThread().getId();
                     System.loadLibrary("ring");
                     return true;
                 } catch (Exception e) {
@@ -57,7 +65,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
         });
 
         try {
-            result.get();
+            boolean loaded = result.get();
             Log.i(TAG, "Ring library has been successfully loaded");
         } catch (Exception e) {
             Log.e(TAG, "Could not load Ring library", e);
@@ -72,5 +80,39 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     @Override
     public String provideDefaultVCardName() {
         return mContext.getString(R.string.unknown);
+    }
+
+    @Override
+    public long provideDaemonThreadId() {
+        return mDaemonThreadId;
+    }
+
+    @Override
+    public boolean hasVideoPermission() {
+        return checkPermission(Manifest.permission.CAMERA);
+    }
+
+    @Override
+    public boolean hasAudioPermission() {
+        return false;
+    }
+
+    @Override
+    public boolean hasContactPermission() {
+        return false;
+    }
+
+    @Override
+    public boolean hasPhotoPermission() {
+        return false;
+    }
+
+    @Override
+    public boolean hasGalleryPermission() {
+        return false;
+    }
+    
+    private boolean checkPermission(String permission) {
+        return ContextCompat.checkSelfPermission(mContext, permission) == PackageManager.PERMISSION_GRANTED;
     }
 }

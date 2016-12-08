@@ -28,6 +28,8 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.hardware.Camera;
 import android.media.AudioManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -45,6 +47,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.BuildConfig;
 import cx.ring.daemon.Callback;
@@ -55,6 +58,7 @@ import cx.ring.dependencyinjection.PresenterInjectionModule;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionModule;
 import cx.ring.dependencyinjection.ServiceInjectionModule;
+import cx.ring.model.Settings;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.ConfigurationManagerCallback;
 import cx.ring.service.LocalService;
@@ -64,7 +68,7 @@ import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.HardwareService;
-import cx.ring.services.LogService;
+import cx.ring.services.SettingsService;
 import cx.ring.utils.Log;
 
 public class RingApplication extends Application {
@@ -98,9 +102,7 @@ public class RingApplication extends Application {
     public static final Handler uiHandler = new Handler(Looper.getMainLooper());
 
     @Inject
-    LogService mLogService;
-
-    @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
 
     @Inject
@@ -117,6 +119,9 @@ public class RingApplication extends Application {
 
     @Inject
     HardwareService mHardwareService;
+
+    @Inject
+    SettingsService mSettingsService;
 
     static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
     private final BroadcastReceiver ringerModeListener = new BroadcastReceiver() {
@@ -198,6 +203,9 @@ public class RingApplication extends Application {
             Intent intent = new Intent(DRING_CONNECTION_CHANGED);
             intent.putExtra("connected", mDaemonService.isStarted());
             sendBroadcast(intent);
+
+            // load accounts from Daemon
+            mAccountService.loadAccountsFromDaemon(isConnected());
         }
 
         @Override
@@ -264,6 +272,22 @@ public class RingApplication extends Application {
 
     public RingInjectionComponent getRingInjectionComponent() {
         return mRingInjectionComponent;
+    }
+
+    public boolean isConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo ni = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        Log.d(TAG, "ActiveNetworkInfo (Wifi): " + (ni == null ? "null" : ni.toString()));
+        boolean isWifiConn = ni != null && ni.isConnected();
+
+        ni = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        Log.d(TAG, "ActiveNetworkInfo (mobile): " + (ni == null ? "null" : ni.toString()));
+        boolean isMobileConn = ni != null && ni.isConnected();
+
+        Settings settings = mSettingsService.loadSettings();
+
+        return isWifiConn || (settings.isAllowMobileData() && isMobileConn);
     }
 
     public boolean canAskForPermission(String permission) {

@@ -19,17 +19,17 @@
  */
 package cx.ring.services;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.IntVect;
@@ -38,14 +38,38 @@ import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.UintVect;
 import cx.ring.model.Account;
+import cx.ring.model.AccountConfig;
 import cx.ring.model.Codec;
+import cx.ring.model.ConfigKey;
 import cx.ring.model.DaemonEvent;
+import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
+import cx.ring.utils.Observable;
 import cx.ring.utils.SwigNativeConverter;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 
+/**
+ * This service handles the accounts (Ring and SIP)
+ * - Load and manage the accounts stored in the daemon
+ * - Keep a local cache of the accounts
+ * - handle the callbacks that are send by the daemon
+ * <p>
+ * Events are broadcasted by the daemon's callbacks:
+ * - ACCOUNTS_CHANGED
+ * - ACCOUNT_ADDED
+ * - VOLUME_CHANGED
+ * - STUN_STATUS_FAILURE
+ * - REGISTRATION_STATE_CHANGED
+ * - INCOMING_ACCOUNT_MESSAGE
+ * - ACCOUNT_MESSAGE_STATUS_CHANGED
+ * - ERROR_ALERT
+ * - GET_APP_DATA_PATH
+ * - EXPORT_ON_RING_ENDED
+ * - NAME_REGISTRATION_ENDED
+ * - REGISTERED_NAME_FOUND
+ */
 public class AccountService extends Observable {
 
     private final static String TAG = AccountService.class.getName();
@@ -53,32 +77,203 @@ public class AccountService extends Observable {
     private static final int VCARD_CHUNK_SIZE = 1000;
 
     @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
+
+    @Inject
+    @Named("ApplicationExecutor")
+    ExecutorService mApplicationExecutor;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
     private Account mCurrentAccount;
+    private List<Account> mAccountList;
     private ConfigurationCallback mCallbackHandler;
+    private boolean mHasSipAccount;
+    private boolean mHasRingAccount;
 
     public AccountService() {
         mCallbackHandler = new ConfigurationCallbackHandler();
+        mAccountList = new ArrayList<>();
     }
 
     public ConfigurationCallback getCallbackHandler() {
         return mCallbackHandler;
     }
 
+    /**
+     * @return true if at least one of the loaded accounts is a SIP one
+     */
+    public boolean hasSipAccount() {
+        return mHasSipAccount;
+    }
+
+    /**
+     * @return true if at least one of the loaded accounts is a Ring one
+     */
+    public boolean hasRingAccount() {
+        return mHasRingAccount;
+    }
+
+    /**
+     * Loads the accounts from the daemon and then builds the local cache (also sends ACCOUNTS_CHANGED event)
+     *
+     * @param isConnected sets the initial connection  state of the accounts
+     */
+    public void loadAccountsFromDaemon(final boolean isConnected) {
+
+        mApplicationExecutor.submit(new Runnable() {
+            @Override
+            public void run() {
+                refreshAccountsCacheFromDaemon();
+
+                if (!mAccountList.isEmpty()) {
+                    setCurrentAccount(mAccountList.get(0));
+                }
+
+                setChanged();
+                DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNTS_CHANGED);
+                notifyObservers(event);
+
+                setAccountsActive(isConnected);
+                Ringservice.connectivityChanged();
+            }
+        });
+    }
+
+    private void refreshAccountsCacheFromDaemon() {
+        mAccountList.clear();
+        List<String> accountIds = getAccountList();
+        for (String accountId : accountIds) {
+            Map<String, String> details = getAccountDetails(accountId);
+            List<Map<String, String>> credentials = getCredentials(accountId);
+            Map<String, String> volatileAccountDetails = getVolatileAccountDetails(accountId);
+            Account account = new Account(accountId, details, credentials, volatileAccountDetails);
+            account.setDevices(getKnownRingDevices(accountId));
+
+            if (account.isSip()) {
+                mHasSipAccount = true;
+            }
+
+            if (account.isRing()) {
+                mHasRingAccount = true;
+            }
+
+            mAccountList.add(account);
+        }
+    }
+
+    /**
+     * Adds a new Account in the Daemon (also sends an ACCOUNT_ADDED event)
+     * Sets the new account as the current one
+     *
+     * @param map the account details
+     * @return the created Account
+     */
+    @SuppressWarnings("unchecked")
+    // Hashmap runtime cast
+    public Account addAccount(final Map map) {
+
+        String accountId = FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<String>() {
+                    @Override
+                    public String call() throws Exception {
+                        Log.i(TAG, "addAccount() thread running...");
+                        return Ringservice.addAccount(StringMap.toSwig(map));
+                    }
+                }
+        );
+
+        if (accountId == null) {
+            return null;
+        }
+
+        Map<String, String> accountDetails = getAccountDetails(accountId);
+        Map<String, String> accountVolatileDetails = getVolatileAccountDetails(accountId);
+        List<Map<String, String>> accountCredentials = getCredentials(accountId);
+        Map<String, String> accountDevices = getKnownRingDevices(accountId);
+
+        Account account = getAccount(accountId);
+
+        if (account == null) {
+            account = new Account(accountId, accountDetails, accountCredentials, accountVolatileDetails);
+            account.setDevices(accountDevices);
+            if (account.isSip()) {
+                account.setRegistrationState(AccountConfig.STATE_READY, -1);
+            }
+        }
+
+        setChanged();
+        DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNT_ADDED);
+        event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
+        event.addEventInput(DaemonEvent.EventInput.STATE, account.getRegistrationState());
+        notifyObservers(event);
+
+        setCurrentAccount(account);
+
+        return account;
+    }
+
+    /**
+     * @return the current Account from the local cache
+     */
     public Account getCurrentAccount() {
         return mCurrentAccount;
     }
 
+    /**
+     * Sets the current Account in the local cache (also sends a ACCOUNTS_CHANGED event)
+     *
+     * @param currentAccount
+     */
     public void setCurrentAccount(Account currentAccount) {
-        this.mCurrentAccount = currentAccount;
-        setChanged();
-        notifyObservers();
+        mCurrentAccount = currentAccount;
+
+        // the account order is changed
+        // the current Account is now on the top of the list
+        List<String> orderedAccountIdList = new ArrayList<>();
+        String selectedID = mCurrentAccount.getAccountID();
+        orderedAccountIdList.add(selectedID);
+        for (Account account : getAccounts()) {
+            if (account.getAccountID().contentEquals(selectedID)) {
+                continue;
+            }
+            orderedAccountIdList.add(account.getAccountID());
+        }
+
+        setAccountOrder(orderedAccountIdList);
     }
 
+    /**
+     * @param accountId
+     * @return the Account from the local cache that matches the accountId
+     */
+    public Account getAccount(String accountId) {
+        for (Account account : mAccountList) {
+            if (account.getAccountID().equals(accountId)) {
+                return account;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @return Accounts list from the local cache
+     */
+    public List<Account> getAccounts() {
+        return mAccountList;
+    }
+
+    /**
+     * put VCard on the DHT
+     *
+     * @param callId
+     * @param accountId
+     */
     public void sendProfile(final String callId, final String accountId) {
         mExecutor.submit(new Runnable() {
             @Override
@@ -114,339 +309,658 @@ public class AccountService extends Observable {
         });
     }
 
+    /**
+     * @return Account Ids list from Daemon
+     */
     public List<String> getAccountList() {
 
-        Future<List<String>> result = mExecutor.submit(new Callable<List<String>>() {
-            @Override
-            public List<String> call() throws Exception {
-                Log.i(TAG, "getAccountList() thread running...");
-                return new ArrayList<>(Ringservice.getAccountList());
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<List<String>>() {
+                    @Override
+                    public List<String> call() throws Exception {
+                        Log.i(TAG, "getAccountList() thread running...");
+                        return new ArrayList<>(Ringservice.getAccountList());
+                    }
+                }
+        );
     }
 
-    public void setAccountOrder(final String order) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "setAccountsOrder() " + order + " thread running...");
-                Ringservice.setAccountsOrder(order);
+    /**
+     * Sets the order of the accounts in the Daemon
+     *
+     * @param accountOrder The ordered list of account ids
+     */
+    public void setAccountOrder(final List<String> accountOrder) {
+
+        ArrayList<Account> newlist = new ArrayList<>(mAccountList.size());
+        String order = "";
+        for (String accountId : accountOrder) {
+            Account account = getAccount(accountId);
+            if (account != null) {
+                newlist.add(account);
             }
-        });
+            order += accountId + File.separator;
+        }
+
+        final String orderForDaemon = order;
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "setAccountsOrder() " + orderForDaemon + " thread running...");
+                        Ringservice.setAccountsOrder(orderForDaemon);
+                        return true;
+                    }
+                }
+        );
     }
 
+    /**
+     * @param uri
+     * @return an Account from the local cache that corresponds to the uri
+     */
+    public Account guessAccount(Uri uri) {
+        if (uri.isRingId()) {
+            for (Account account : mAccountList) {
+                if (account.isRing()) {
+                    return account;
+                }
+            }
+            // ring ids must be called with ring accounts
+            return null;
+        }
+        for (Account account : mAccountList) {
+            if (account.isSip() && account.getHost().equals(uri.getHost())) {
+                return account;
+            }
+        }
+        if (uri.isSingleIp()) {
+            for (Account account : mAccountList) {
+                if (account.isIP2IP()) {
+                    return account;
+                }
+            }
+        }
+        return mAccountList.get(0);
+    }
+
+    /**
+     * @param accountId
+     * @return the account details from the Daemon
+     */
     public Map<String, String> getAccountDetails(final String accountId) {
 
-        Future<Map<String, String>> result = mExecutor.submit(new Callable<Map<String, String>>() {
-            @Override
-            public Map<String, String> call() throws Exception {
-                Log.i(TAG, "getAccountDetails() thread running...");
-                return Ringservice.getAccountDetails(accountId).toNative();
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Map<String, String>>() {
+                    @Override
+                    public Map<String, String> call() throws Exception {
+                        Log.i(TAG, "getAccountDetails() thread running...");
+                        return Ringservice.getAccountDetails(accountId).toNative();
+                    }
+                }
+        );
     }
 
+    /**
+     * Sets the account details in the Daemon
+     *
+     * @param accountId
+     * @param map
+     */
     @SuppressWarnings("unchecked")
     // Hashmap runtime cast
     public void setAccountDetails(final String accountId, final Map map) {
         Log.i(TAG, "setAccountDetails() " + map.get("Account.hostname"));
         final StringMap swigmap = StringMap.toSwig(map);
 
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Ringservice.setAccountDetails(accountId, swigmap);
-                Log.i(TAG, "setAccountDetails() thread running... " + swigmap.get("Account.hostname"));
-            }
-
-        });
-    }
-
-    public void setAccountActive(final String accountId, final boolean active) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "setAccountActive() thread running... " + accountId + " -> " + active);
-                Ringservice.setAccountActive(accountId, active);
-            }
-        });
-    }
-
-    public void setAccountsActive(final boolean active) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "setAccountsActive() thread running... " + active);
-                StringVect list = Ringservice.getAccountList();
-                for (int i = 0, n = list.size(); i < n; i++) {
-                    Ringservice.setAccountActive(list.get(i), active);
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Ringservice.setAccountDetails(accountId, swigmap);
+                        Log.i(TAG, "setAccountDetails() thread running... " + swigmap.get("Account.hostname"));
+                        return true;
+                    }
                 }
-            }
-        });
+        );
+
     }
 
+    /**
+     * Sets the activation state of the account in the Daemon
+     *
+     * @param accountId
+     * @param active
+     */
+    public void setAccountActive(final String accountId, final boolean active) {
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "setAccountActive() thread running... " + accountId + " -> " + active);
+                        Ringservice.setAccountActive(accountId, active);
+                        return true;
+                    }
+                }
+        );
+    }
+
+    /**
+     * Sets the activation state of all the accounts in the Daemon
+     *
+     * @param active
+     */
+    public void setAccountsActive(final boolean active) {
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "setAccountsActive() thread running... " + active);
+                        StringVect list = Ringservice.getAccountList();
+                        for (int i = 0, n = list.size(); i < n; i++) {
+                            Ringservice.setAccountActive(list.get(i), active);
+                        }
+                        return true;
+                    }
+                }
+        );
+    }
+
+    /**
+     * Sets the video activation state of all the accounts in the local cache
+     *
+     * @param isEnabled
+     */
+    public void setAccountsVideoEnabled(boolean isEnabled) {
+        for (Account account : mAccountList) {
+            account.setDetail(ConfigKey.VIDEO_ENABLED, isEnabled);
+        }
+
+        setChanged();
+        DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNTS_CHANGED);
+        notifyObservers(event);
+    }
+
+    /**
+     * @param accountId
+     * @return the account volatile details from the Daemon
+     */
     public Map<String, String> getVolatileAccountDetails(final String accountId) {
 
-        Future<Map<String, String>> result = mExecutor.submit(new Callable<Map<String, String>>() {
-            @Override
-            public Map<String, String> call() throws Exception {
-                Log.i(TAG, "getVolatileAccountDetails() thread running...");
-                return Ringservice.getVolatileAccountDetails(accountId).toNative();
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Map<String, String>>() {
+                    @Override
+                    public Map<String, String> call() throws Exception {
+                        Log.i(TAG, "getVolatileAccountDetails() thread running...");
+                        return Ringservice.getVolatileAccountDetails(accountId).toNative();
+                    }
+                }
+        );
     }
 
+    /**
+     * @param accountType
+     * @return the default template (account details) for a type of account
+     */
     public Map<String, String> getAccountTemplate(final String accountType) {
         Log.i(TAG, "getAccountTemplate() " + accountType);
         return Ringservice.getAccountTemplate(accountType).toNative();
     }
 
-    @SuppressWarnings("unchecked")
-    // Hashmap runtime cast
-    public String addAccount(final Map map) {
-
-        Future<String> result = mExecutor.submit(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                Log.i(TAG, "addAccount() thread running...");
-                return Ringservice.addAccount(StringMap.toSwig(map));
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
-    }
-
+    /**
+     * Removes the account in the Daemon
+     *
+     * @param accountId
+     */
     public void removeAccount(final String accountId) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "removeAccount() thread running...");
-                Ringservice.removeAccount(accountId);
-            }
-        });
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "removeAccount() thread running...");
+                        Ringservice.removeAccount(accountId);
+                        return true;
+                    }
+                }
+        );
     }
 
+    /**
+     * Exports the account on the DHT (used for multidevices feature)
+     *
+     * @param accountId
+     * @param password
+     * @return the generated pin
+     */
     public String exportOnRing(final String accountId, final String password) {
 
-        Future<String> result = mExecutor.submit(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                Log.i(TAG, "addRingDevice() thread running...");
-                return Ringservice.exportOnRing(accountId, password);
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<String>() {
+                    @Override
+                    public String call() throws Exception {
+                        Log.i(TAG, "addRingDevice() thread running...");
+                        return Ringservice.exportOnRing(accountId, password);
+                    }
+                }
+        );
     }
 
+    /**
+     * @param accountId
+     * @return the list of the account's devices from the Daemon
+     */
     public Map<String, String> getKnownRingDevices(final String accountId) {
-        Future<Map<String, String>> result = mExecutor.submit(new Callable<Map<String, String>>() {
-            @Override
-            public Map<String, String> call() throws Exception {
-                Log.i(TAG, "getKnownRingDevices() thread running...");
-                return Ringservice.getKnownRingDevices(accountId).toNative();
-            }
-        });
 
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Map<String, String>>() {
+                    @Override
+                    public Map<String, String> call() throws Exception {
+                        Log.i(TAG, "getKnownRingDevices() thread running...");
+                        return Ringservice.getKnownRingDevices(accountId).toNative();
+                    }
+                }
+        );
     }
 
+    /**
+     * Sets the active codecs list of the account in the Daemon
+     *
+     * @param codecs
+     * @param accountId
+     */
     public void setActiveCodecList(final List codecs, final String accountId) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "setActiveCodecList() thread running...");
-                UintVect list = new UintVect(codecs.size());
-                for (Object codec : codecs) {
-                    list.add((Long) codec);
-                }
-                Ringservice.setActiveCodecList(accountId, list);
-            }
-        });
-    }
 
-    public List<Codec> getCodecList(final String accountId) {
-        Future<List<Codec>> result = mExecutor.submit(new Callable<List<Codec>>() {
-            @Override
-            public List<Codec> call() throws Exception {
-                Log.i(TAG, "getCodecList() thread running...");
-                ArrayList<Codec> results = new ArrayList<>();
-
-                UintVect activePayloads = Ringservice.getActiveCodecList(accountId);
-                for (int i = 0; i < activePayloads.size(); ++i) {
-                    Log.i(TAG, "getCodecDetails(" + accountId + ", " + activePayloads.get(i) + ")");
-                    StringMap codecsDetails = Ringservice.getCodecDetails(accountId, activePayloads.get(i));
-                    results.add(new Codec(activePayloads.get(i), codecsDetails.toNative(), true));
-                }
-                UintVect payloads = Ringservice.getCodecList();
-
-                cl:
-                for (int i = 0; i < payloads.size(); ++i) {
-                    for (Codec co : results) {
-                        if (co.getPayload() == payloads.get(i)) {
-                            continue cl;
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "setActiveCodecList() thread running...");
+                        UintVect list = new UintVect(codecs.size());
+                        for (Object codec : codecs) {
+                            list.add((Long) codec);
                         }
-                    }
-                    StringMap details = Ringservice.getCodecDetails(accountId, payloads.get(i));
-                    if (details.size() > 1) {
-                        results.add(new Codec(payloads.get(i), details.toNative(), false));
-                    } else {
-                        Log.i(TAG, "Error loading codec " + i);
+                        Ringservice.setActiveCodecList(accountId, list);
+
+                        return true;
                     }
                 }
-                return results;
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        );
     }
 
+    /**
+     * @param accountId
+     * @return The account's codecs list from the Daemon
+     */
+    public List<Codec> getCodecList(final String accountId) {
+
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<List<Codec>>() {
+                    @Override
+                    public List<Codec> call() throws Exception {
+                        Log.i(TAG, "getCodecList() thread running...");
+                        ArrayList<Codec> results = new ArrayList<>();
+
+                        UintVect activePayloads = Ringservice.getActiveCodecList(accountId);
+                        for (int i = 0; i < activePayloads.size(); ++i) {
+                            Log.i(TAG, "getCodecDetails(" + accountId + ", " + activePayloads.get(i) + ")");
+                            StringMap codecsDetails = Ringservice.getCodecDetails(accountId, activePayloads.get(i));
+                            results.add(new Codec(activePayloads.get(i), codecsDetails.toNative(), true));
+                        }
+                        UintVect payloads = Ringservice.getCodecList();
+
+                        cl:
+                        for (int i = 0; i < payloads.size(); ++i) {
+                            for (Codec co : results) {
+                                if (co.getPayload() == payloads.get(i)) {
+                                    continue cl;
+                                }
+                            }
+                            StringMap details = Ringservice.getCodecDetails(accountId, payloads.get(i));
+                            if (details.size() > 1) {
+                                results.add(new Codec(payloads.get(i), details.toNative(), false));
+                            } else {
+                                Log.i(TAG, "Error loading codec " + i);
+                            }
+                        }
+                        return results;
+                    }
+                }
+        );
+    }
+
+    /**
+     * @param accountID
+     * @param certificatePath
+     * @param privateKeyPath
+     * @param privateKeyPass
+     * @return
+     */
     public Map<String, String> validateCertificatePath(final String accountID, final String certificatePath, final String privateKeyPath, final String privateKeyPass) {
-        Future<Map<String, String>> result = mExecutor.submit(new Callable<Map<String, String>>() {
-            @Override
-            public Map<String, String> call() throws Exception {
-                Log.i(TAG, "validateCertificatePath() thread running...");
-                return Ringservice.validateCertificatePath(accountID, certificatePath, privateKeyPath, "", "").toNative();
-            }
-        });
 
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Map<String, String>>() {
+                    @Override
+                    public Map<String, String> call() throws Exception {
+                        Log.i(TAG, "validateCertificatePath() thread running...");
+                        return Ringservice.validateCertificatePath(accountID, certificatePath, privateKeyPath, "", "").toNative();
+                    }
+                }
+        );
     }
 
+    /**
+     * @param accountId
+     * @param certificate
+     * @return
+     */
     public Map<String, String> validateCertificate(final String accountId, final String certificate) {
-        Future<Map<String, String>> result = mExecutor.submit(new Callable<Map<String, String>>() {
-            @Override
-            public Map<String, String> call() throws Exception {
-                Log.i(TAG, "validateCertificate() thread running...");
-                return Ringservice.validateCertificate(accountId, certificate).toNative();
-            }
-        });
 
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Map<String, String>>() {
+                    @Override
+                    public Map<String, String> call() throws Exception {
+                        Log.i(TAG, "validateCertificate() thread running...");
+                        return Ringservice.validateCertificate(accountId, certificate).toNative();
+                    }
+                }
+        );
     }
 
+    /**
+     * @param certificatePath
+     * @return
+     */
     public Map<String, String> getCertificateDetailsPath(final String certificatePath) {
-        Future<Map<String, String>> result = mExecutor.submit(new Callable<Map<String, String>>() {
-            @Override
-            public Map<String, String> call() throws Exception {
-                Log.i(TAG, "getCertificateDetailsPath() thread running...");
-                return Ringservice.getCertificateDetails(certificatePath).toNative();
-            }
-        });
 
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Map<String, String>>() {
+                    @Override
+                    public Map<String, String> call() throws Exception {
+                        Log.i(TAG, "getCertificateDetailsPath() thread running...");
+                        return Ringservice.getCertificateDetails(certificatePath).toNative();
+                    }
+                }
+        );
     }
 
+    /**
+     * @param certificateRaw
+     * @return
+     */
     public Map<String, String> getCertificateDetails(final String certificateRaw) {
-        Future<Map<String, String>> result = mExecutor.submit(new Callable<Map<String, String>>() {
-            @Override
-            public Map<String, String> call() throws Exception {
-                Log.i(TAG, "getCertificateDetails() thread running...");
-                return Ringservice.getCertificateDetails(certificateRaw).toNative();
-            }
-        });
 
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Map<String, String>>() {
+                    @Override
+                    public Map<String, String> call() throws Exception {
+                        Log.i(TAG, "getCertificateDetails() thread running...");
+                        return Ringservice.getCertificateDetails(certificateRaw).toNative();
+                    }
+                }
+        );
     }
 
+    /**
+     * @return the supported TLS methods from the Daemon
+     */
     public List<String> getTlsSupportedMethods() {
         Log.i(TAG, "getTlsSupportedMethods()");
         return SwigNativeConverter.convertSwigToNative(Ringservice.getSupportedTlsMethod());
     }
 
+    /**
+     * @param accountId
+     * @return the account's credentials from the Daemon
+     */
     public List<Map<String, String>> getCredentials(final String accountId) {
 
-        Future<List<Map<String, String>>> result = mExecutor.submit(new Callable<List<Map<String, String>>>() {
-            @Override
-            public List<Map<String, String>> call() throws Exception {
-                Log.i(TAG, "getCredentials() thread running...");
-                return Ringservice.getCredentials(accountId).toNative();
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
-    }
-
-    public void setCredentials(final String accountId, final List creds) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "setCredentials() thread running...");
-                Ringservice.setCredentials(accountId, SwigNativeConverter.convertFromNativeToSwig(creds));
-            }
-        });
-    }
-
-    public void registerAllAccounts() {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "registerAllAccounts() thread running...");
-                Ringservice.registerAllAccounts();
-            }
-        });
-    }
-
-    public int backupAccounts(final List accountIds, final String toDir, final String password) {
-        Future<Integer> result = mExecutor.submit(new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                StringVect ids = new StringVect();
-                for (Object s : accountIds) {
-                    ids.add((String) s);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<List<Map<String, String>>>() {
+                    @Override
+                    public List<Map<String, String>> call() throws Exception {
+                        Log.i(TAG, "getCredentials() thread running...");
+                        return Ringservice.getCredentials(accountId).toNative();
+                    }
                 }
-                return Ringservice.exportAccounts(ids, toDir, password);
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        );
     }
 
+    /**
+     * Sets the account's credentials in the Daemon
+     *
+     * @param accountId
+     * @param creds
+     */
+    public void setCredentials(final String accountId, final List creds) {
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "setCredentials() thread running...");
+                        Ringservice.setCredentials(accountId, SwigNativeConverter.convertFromNativeToSwig(creds));
+                        return true;
+                    }
+                }
+        );
+    }
+
+    /**
+     * Sets the registration state to true for all the accounts in the Daemon
+     */
+    public void registerAllAccounts() {
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "registerAllAccounts() thread running...");
+                        Ringservice.registerAllAccounts();
+                        return true;
+                    }
+                }
+        );
+    }
+
+    /**
+     * Backs  up all the accounts into to an archive in the path
+     *
+     * @param accountIds
+     * @param toDir
+     * @param password
+     * @return
+     */
+    public int backupAccounts(final List accountIds, final String toDir, final String password) {
+
+        //noinspection ConstantConditions
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Integer>() {
+                    @Override
+                    public Integer call() throws Exception {
+                        StringVect ids = new StringVect();
+                        for (Object s : accountIds) {
+                            ids.add((String) s);
+                        }
+                        return Ringservice.exportAccounts(ids, toDir, password);
+                    }
+                }
+        );
+    }
+
+    /**
+     * Restores the saved accounts from a path
+     *
+     * @param archivePath
+     * @param password
+     * @return
+     */
     public int restoreAccounts(final String archivePath, final String password) {
-        Future<Integer> result = mExecutor.submit(new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                return Ringservice.importAccounts(archivePath, password);
-            }
-        });
 
-        return FutureUtils.getFutureResult(result);
+        //noinspection ConstantConditions
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Integer>() {
+                    @Override
+                    public Integer call() throws Exception {
+                        return Ringservice.importAccounts(archivePath, password);
+                    }
+                }
+        );
     }
 
+    /**
+     * Looks up for the availibility of the name on the blockchain
+     *
+     * @param account
+     * @param nameserver
+     * @param name
+     */
     public void lookupName(final String account, final String nameserver, final String name) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "lookupName() thread running...");
-                Ringservice.lookupName(account, nameserver, name);
-            }
-        });
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "lookupName() thread running...");
+                        Ringservice.lookupName(account, nameserver, name);
+                        return true;
+                    }
+                }
+        );
     }
 
+    /**
+     * Reverse looks up the address in the blockchain to find the name
+     *
+     * @param account
+     * @param nameserver
+     * @param address
+     */
     public void lookupAddress(final String account, final String nameserver, final String address) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "lookupAddress() thread running...");
-                Ringservice.lookupAddress(account, nameserver, address);
-            }
-        });
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "lookupAddress() thread running...");
+                        Ringservice.lookupAddress(account, nameserver, address);
+                        return true;
+                    }
+                }
+        );
     }
 
+    /**
+     * Registers a new name on the blockchain for the account
+     *
+     * @param account
+     * @param password
+     * @param name
+     */
+    public void registerName(final Account account, final String password, final String name) {
+
+        if (account.registeringUsername) {
+            Log.w(TAG, "Already trying to register username");
+            return;
+        }
+
+        registerName(account.getAccountID(), password, name);
+    }
+
+    /**
+     * Register a new name on the blockchain for the account Id
+     *
+     * @param account
+     * @param password
+     * @param name
+     */
     public void registerName(final String account, final String password, final String name) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "registerName() thread running...");
-                Ringservice.registerName(account, password, name);
-            }
-        });
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "registerName() thread running...");
+                        Ringservice.registerName(account, password, name);
+                        return true;
+                    }
+                }
+        );
     }
 
     private class ConfigurationCallbackHandler extends ConfigurationCallback {
@@ -467,6 +981,22 @@ public class AccountService extends Observable {
         public void accountsChanged() {
             super.accountsChanged();
             Log.d(TAG, "accounts changed");
+            String currentAccountId = null;
+
+            if (mCurrentAccount != null) {
+                currentAccountId = mCurrentAccount.getAccountID();
+            }
+
+            // Accounts have changed in Daemon, we have to update our local cache
+            refreshAccountsCacheFromDaemon();
+
+            // if there was a current account we restore it according to the new list
+            if (currentAccountId != null) {
+                Account currentAccount = getAccount(currentAccountId);
+                if (currentAccount != null) {
+                    mCurrentAccount = currentAccount;
+                }
+            }
 
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNTS_CHANGED);
@@ -484,16 +1014,33 @@ public class AccountService extends Observable {
         }
 
         @Override
-        public void registrationStateChanged(String accountId, String state, int code, String detailString) {
-            Log.d(TAG, "stun status registrationStateChanged: " + accountId + ", " + state + ", " + code + ", " + detailString);
+        public void registrationStateChanged(String accountId, String newState, int code, String detailString) {
+            Log.d(TAG, "stun status registrationStateChanged: " + accountId + ", " + newState + ", " + code + ", " + detailString);
 
-            setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.REGISTRATION_STATE_CHANGED);
-            event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(DaemonEvent.EventInput.STATE, state);
-            event.addEventInput(DaemonEvent.EventInput.DETAIL_CODE, code);
-            event.addEventInput(DaemonEvent.EventInput.DETAIL_STRING, detailString);
-            notifyObservers(event);
+            Account account = getAccount(accountId);
+            if (account == null) {
+                return;
+            }
+            String oldState = account.getRegistrationState();
+            if (oldState.contentEquals(AccountConfig.STATE_INITIALIZING) &&
+                    !newState.contentEquals(AccountConfig.STATE_INITIALIZING)) {
+                account.setDetails(getAccountDetails(account.getAccountID()));
+                account.setCredentials(getCredentials(account.getAccountID()));
+                account.setDevices(getKnownRingDevices(account.getAccountID()));
+                account.setVolatileDetails(getVolatileAccountDetails(account.getAccountID()));
+            } else {
+                account.setRegistrationState(newState, code);
+            }
+
+            if (!oldState.equals(newState)) {
+                setChanged();
+                DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.REGISTRATION_STATE_CHANGED);
+                event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
+                event.addEventInput(DaemonEvent.EventInput.STATE, newState);
+                event.addEventInput(DaemonEvent.EventInput.DETAIL_CODE, code);
+                event.addEventInput(DaemonEvent.EventInput.DETAIL_STRING, detailString);
+                notifyObservers(event);
+            }
         }
 
         @Override
@@ -566,6 +1113,9 @@ public class AccountService extends Observable {
         public void knownDevicesChanged(String accountId, StringMap devices) {
             Log.d(TAG, "knownDevicesChanged: " + accountId + ", " + devices);
 
+            Account accountChanged = getAccount(accountId);
+            accountChanged.setDevices(devices.toNative());
+
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.KNOWN_DEVICES_CHANGED);
             event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
@@ -588,6 +1138,16 @@ public class AccountService extends Observable {
         @Override
         public void nameRegistrationEnded(String accountId, int state, String name) {
             Log.d(TAG, "nameRegistrationEnded: " + accountId + ", " + state + ", " + name);
+
+            Account acc = getAccount(accountId);
+            if (acc == null) {
+                Log.w(TAG, "Can't find account for name registration callback");
+                return;
+            }
+
+            acc.registeringUsername = false;
+            acc.setVolatileDetails(getVolatileAccountDetails(acc.getAccountID()));
+            acc.setDetail(ConfigKey.ACCOUNT_REGISTERED_NAME, name);
 
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.NAME_REGISTRATION_ENDED);

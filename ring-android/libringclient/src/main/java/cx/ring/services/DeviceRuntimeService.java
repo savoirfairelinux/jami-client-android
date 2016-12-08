@@ -29,4 +29,16 @@ public abstract class DeviceRuntimeService {
 
     public abstract String provideDefaultVCardName();
 
+    public abstract long provideDaemonThreadId();
+
+    public abstract boolean hasVideoPermission();
+
+    public abstract boolean hasAudioPermission();
+
+    public abstract boolean hasContactPermission();
+
+    public abstract boolean hasPhotoPermission();
+
+    public abstract boolean hasGalleryPermission();
+
 }
