@@ -21,12 +21,12 @@ package cx.ring.services;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observable;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.Blob;
 import cx.ring.daemon.IntegerMap;
@@ -37,12 +37,14 @@ import cx.ring.model.DaemonEvent;
 import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
+import cx.ring.utils.Observable;
 
 public class CallService extends Observable {
 
     private final static String TAG = CallService.class.getName();
 
     @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
 
     private Map<String, CallContact> mContacts;
