@@ -1399,7 +1399,7 @@ public class LocalService extends Service implements Observer {
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "BroadcastReceiver onReceive " + intent.getAction());
             switch (intent.getAction()) {
-                case DRingService.DRING_CONNECTION_CHANGED: {
+                case RingApplication.DRING_CONNECTION_CHANGED: {
                     boolean connected = intent.getBooleanExtra("connected", false);
                     if (connected) {
                         dringStarted = true;
@@ -1754,7 +1754,7 @@ public class LocalService extends Service implements Observer {
 
         intentFilter.addAction(ACTION_CONV_READ);
 
-        intentFilter.addAction(DRingService.DRING_CONNECTION_CHANGED);
+        intentFilter.addAction(RingApplication.DRING_CONNECTION_CHANGED);
 
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
