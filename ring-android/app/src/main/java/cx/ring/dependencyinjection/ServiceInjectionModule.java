@@ -23,6 +23,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cx.ring.application.RingApplication;
@@ -127,9 +128,17 @@ public class ServiceInjectionModule {
     }
 
     @Provides
+    @Named("DaemonExecutor")
     @Singleton
-    ExecutorService provideExecutorService() {
+    ExecutorService provideDaemonExecutorService() {
         return Executors.newSingleThreadExecutor();
+    }
+
+    @Provides
+    @Named("ApplicationExecutor")
+    @Singleton
+    ExecutorService provideApplicationExecutorService() {
+        return Executors.newFixedThreadPool(5);
     }
 
     @Provides

@@ -27,6 +27,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.R;
 import cx.ring.utils.Log;
@@ -36,10 +37,13 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     private static final String TAG = DeviceRuntimeServiceImpl.class.getName();
 
     @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
 
     @Inject
     Context mContext;
+
+    private long mDaemonThreadId = -1;
 
     @Override
     public void loadNativeLibrary() {
@@ -47,6 +51,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
             @Override
             public Boolean call() throws Exception {
                 try {
+                    mDaemonThreadId = Thread.currentThread().getId();
                     System.loadLibrary("ring");
                     return true;
                 } catch (Exception e) {
@@ -57,7 +62,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
         });
 
         try {
-            result.get();
+            boolean loaded = result.get();
             Log.i(TAG, "Ring library has been successfully loaded");
         } catch (Exception e) {
             Log.e(TAG, "Could not load Ring library", e);
@@ -73,4 +78,10 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     public String provideDefaultVCardName() {
         return mContext.getString(R.string.unknown);
     }
+
+    @Override
+    public long provideDaemonThreadId() {
+        return mDaemonThreadId;
+    }
+
 }
