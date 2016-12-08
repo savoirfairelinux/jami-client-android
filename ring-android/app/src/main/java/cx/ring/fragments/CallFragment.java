@@ -69,11 +69,14 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
+import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.interfaces.CallInterface;
@@ -82,12 +85,12 @@ import cx.ring.model.Conference;
 import cx.ring.model.SecureSipCall;
 import cx.ring.model.SipCall;
 import cx.ring.service.CallManagerCallBack;
-import cx.ring.service.DRingService;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 import cx.ring.utils.ActionHelper;
-import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -202,6 +205,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         Log.i(TAG, "onCreate");
         super.onCreate(savedBundle);
 
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
         audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
         setHasOptionsMenu(true);
@@ -313,7 +319,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             String action = intent.getAction();
             if (action.contentEquals(LocalService.ACTION_CONF_UPDATE)) {
                 confUpdate();
-            } else if (action.contentEquals(DRingService.VIDEO_EVENT)) {
+            } else if (action.contentEquals(RingApplication.VIDEO_EVENT)) {
                 if (mVideoSurface == null)
                     return;
                 Conference conf = getConference();
@@ -478,8 +484,10 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             displayManager.unregisterDisplayListener(displayListener);
         }
 
-        DRingService.videoSurfaces.remove(c.getId());
-        DRingService.mCameraPreviewSurface.clear();
+        RingApplication application = (RingApplication) getActivity().getApplication();
+
+        application.videoSurfaces.remove(c.getId());
+        application.mCameraPreviewSurface.clear();
         try {
             IDRingService service = mCallbacks.getRemoteService();
             if (service != null) {
@@ -780,9 +788,10 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         mVideoSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
+                RingApplication application = (RingApplication) getActivity().getApplication();
                 contactBubbleLayout.setVisibility(View.GONE);
                 Conference c = getConference();
-                DRingService.videoSurfaces.put(c.getId(), new WeakReference<>(holder));
+                application.videoSurfaces.put(c.getId(), new WeakReference<>(holder));
                 try {
                     mCallbacks.getRemoteService().videoSurfaceAdded(c.getId());
                 } catch (RemoteException e) {
@@ -798,7 +807,8 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
                 Conference c = getConference();
-                DRingService.videoSurfaces.remove(c.getId());
+                RingApplication application = (RingApplication) getActivity().getApplication();
+                application.videoSurfaces.remove(c.getId());
                 try {
                     IDRingService service = mCallbacks.getRemoteService();
                     if (service != null)
@@ -829,7 +839,8 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         videoPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                DRingService.mCameraPreviewSurface = new WeakReference<>(holder);
+                RingApplication application = (RingApplication) getActivity().getApplication();
+                application.mCameraPreviewSurface = new WeakReference<>(holder);
                 try {
                     mCallbacks.getRemoteService().videoPreviewSurfaceAdded();
                 } catch (RemoteException e) {
@@ -844,8 +855,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                if (videoPreview != null && DRingService.mCameraPreviewSurface.get() == holder) {
-                    DRingService.mCameraPreviewSurface.clear();
+                RingApplication application = (RingApplication) getActivity().getApplication();
+                if (videoPreview != null && application.mCameraPreviewSurface.get() == holder) {
+                    application.mCameraPreviewSurface.clear();
                 }
                 try {
                     IDRingService service = mCallbacks.getRemoteService();
