@@ -26,8 +26,6 @@ import android.util.Log;
 import android.util.LongSparseArray;
 
 import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.inject.Inject;
 
@@ -37,9 +35,11 @@ import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.model.DaemonEvent;
 import cx.ring.services.HardwareService;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
 
-public class VideoManagerCallback implements Observer {
+public class VideoManagerCallback implements Observer<DaemonEvent> {
     private static final String TAG = VideoManagerCallback.class.getSimpleName();
 
     @Inject
@@ -50,12 +50,10 @@ public class VideoManagerCallback implements Observer {
     private final HashMap<String, RingApplication.VideoParams> mParams = new HashMap<>();
 
     @Override
-    public void update(Observable o, Object arg) {
-        if (!(arg instanceof DaemonEvent)) {
+    public void update(Observable o, DaemonEvent event) {
+        if (event == null) {
             return;
         }
-
-        DaemonEvent event = (DaemonEvent) arg;
 
         switch (event.getEventType()) {
             case DECODING_STARTED:
