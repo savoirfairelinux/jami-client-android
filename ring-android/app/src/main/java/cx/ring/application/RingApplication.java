@@ -47,6 +47,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.BuildConfig;
 import cx.ring.daemon.Callback;
@@ -67,7 +68,6 @@ import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.HardwareService;
-import cx.ring.services.LogService;
 import cx.ring.services.SettingsService;
 
 public class RingApplication extends Application {
@@ -101,9 +101,7 @@ public class RingApplication extends Application {
     public static final Handler uiHandler = new Handler(Looper.getMainLooper());
 
     @Inject
-    LogService mLogService;
-
-    @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
 
     @Inject
@@ -204,6 +202,9 @@ public class RingApplication extends Application {
             Intent intent = new Intent(DRING_CONNECTION_CHANGED);
             intent.putExtra("connected", mDaemonService.isStarted());
             sendBroadcast(intent);
+
+            // load accounts from Daemon
+            mAccountService.loadAccountsFromDaemon(isConnected());
         }
 
         @Override
