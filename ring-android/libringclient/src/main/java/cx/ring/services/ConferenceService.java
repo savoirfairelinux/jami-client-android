@@ -23,24 +23,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringVect;
 import cx.ring.model.DaemonEvent;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
+import cx.ring.utils.Observable;
 
 public class ConferenceService extends Observable {
 
     private final static String TAG = ConferenceService.class.getName();
 
     @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
 
     private ConferenceCallbackHandler mCallbackHandler;

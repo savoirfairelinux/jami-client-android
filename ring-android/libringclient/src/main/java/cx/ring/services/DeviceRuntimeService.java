@@ -29,4 +29,6 @@ public abstract class DeviceRuntimeService {
 
     public abstract String provideDefaultVCardName();
 
+    public abstract Thread provideUIThread();
+
 }
