@@ -319,6 +319,11 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
     public void updateUserView() {
         Log.d(TAG, "updateUserView");
+
+        if (getActivity()==null) {
+            return;
+        }
+
         String accountID = mAccountService.getCurrentAccount() != null ? mAccountService.getCurrentAccount().getAccountID() : null;
         mVCardProfile = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), accountID, getString(R.string.unknown));
         if (!mVCardProfile.getPhotos().isEmpty()) {

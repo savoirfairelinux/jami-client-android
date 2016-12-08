@@ -39,6 +39,7 @@ import cx.ring.services.LogService;
 import cx.ring.services.LogServiceImpl;
 import cx.ring.services.SettingsService;
 import cx.ring.services.SettingsServiceImpl;
+import cx.ring.utils.Log;
 import dagger.Module;
 import dagger.Provides;
 
@@ -71,12 +72,14 @@ public class ServiceInjectionModule {
     @Provides
     @Singleton
     LogService provideLogService() {
-        return new LogServiceImpl();
+        LogService service = new LogServiceImpl();
+        Log.injectLogService(service);
+        return service;
     }
 
     @Provides
     @Singleton
-    DeviceRuntimeService provideDeviceRuntimeService() {
+    DeviceRuntimeService provideDeviceRuntimeService(LogService logService) {
         DeviceRuntimeServiceImpl runtimeService = new DeviceRuntimeServiceImpl();
         mRingApplication.getRingInjectionComponent().inject(runtimeService);
         runtimeService.loadNativeLibrary();
