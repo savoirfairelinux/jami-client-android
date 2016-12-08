@@ -33,13 +33,16 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.application.RingApplication;
 import cx.ring.daemon.StringMap;
@@ -69,6 +72,7 @@ public class DRingService extends Service {
     HardwareService mHardwareService;
 
     @Inject
+    @Named("DaemonExecutor")
     ExecutorService mExecutor;
 
     static final String TAG = DRingService.class.getName();
@@ -164,7 +168,8 @@ public class DRingService extends Service {
 
         @Override
         public void setAccountOrder(final String order) {
-            mAccountService.setAccountOrder(order);
+            String[] accountIds = order.split(File.separator);
+            mAccountService.setAccountOrder(Arrays.asList(accountIds));
         }
 
         @Override
@@ -203,7 +208,7 @@ public class DRingService extends Service {
         // Hashmap runtime cast
         @Override
         public String addAccount(final Map map) {
-            return mAccountService.addAccount(map);
+            return mAccountService.addAccount(map).getAccountID();
         }
 
         @Override

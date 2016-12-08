@@ -23,7 +23,6 @@ package cx.ring.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.support.v14.preference.PreferenceFragment;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.ListPreference;
@@ -35,14 +34,19 @@ import android.util.Pair;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.AccountCredentials;
 import cx.ring.model.ConfigKey;
+import cx.ring.services.AccountService;
 import cx.ring.views.CredentialPreferenceDialog;
 import cx.ring.views.CredentialsPreference;
 
@@ -55,6 +59,9 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
     private static final int SELECT_CERTIFICATE_RC = 44;
 
     private static String[] TLS_METHODS = null;
+
+    @Inject
+    AccountService mAccountService;
 
     @SuppressWarnings("unused")
     private static final String TAG = SecurityAccountFragment.class.getSimpleName();
@@ -94,6 +101,9 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
         addPreferencesFromResource(R.xml.account_security_prefs);
         credentialsCategory = (PreferenceCategory) findPreference("Account.credentials");
         credentialsCategory.findPreference("Add.credentials").setOnPreferenceChangeListener(addCredentialListener);
@@ -132,10 +142,10 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
             toAdd.setKey("credential" + i);
             toAdd.setPersistent(false);
             toAdd.setCreds(cred);
-            toAdd.setOnPreferenceChangeListener(editCredentialListener);
             toAdd.setIcon(null);
             credentialsCategory.addPreference(toAdd);
             i++;
+            toAdd.setOnPreferenceChangeListener(editCredentialListener);
         }
     }
 
@@ -205,7 +215,7 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
             Account account = mCallbacks.getAccount();
             Log.i("TLS", "Setting " + preference.getKey() + " to " + newValue);
             if (preference.getKey().contentEquals(ConfigKey.TLS_ENABLE.key())) {
-                if((Boolean)newValue){
+                if ((Boolean) newValue) {
                     account.setDetail(ConfigKey.STUN_ENABLE, false);
                 }
             }
@@ -223,12 +233,8 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
 
     public String[] getTlsMethods() {
         if (TLS_METHODS == null) {
-            try {
-                ArrayList<String> methods = (ArrayList<String>) mCallbacks.getRemoteService().getTlsSupportedMethods();
-                TLS_METHODS = methods.toArray(new String[methods.size()]);
-            } catch (RemoteException e) {
-                Log.e(TAG, "Exception getting TLS methods", e);
-            }
+            List<String> methods = mAccountService.getTlsSupportedMethods();
+            TLS_METHODS = methods.toArray(new String[methods.size()]);
         }
         return TLS_METHODS;
     }
@@ -246,20 +252,20 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
                 if (key == ConfigKey.TLS_CA_LIST_FILE) {
                     File crt = new File(details.get(ConfigKey.TLS_CA_LIST_FILE));
                     current.setSummary(crt.getName());
-                    current.setOnPreferenceClickListener(filePickerListener);
                     setFeedbackIcon(current, crt.getAbsolutePath());
+                    current.setOnPreferenceClickListener(filePickerListener);
                 } else if (key == ConfigKey.TLS_PRIVATE_KEY_FILE) {
                     current.setSummary(new File(details.get(ConfigKey.TLS_PRIVATE_KEY_FILE)).getName());
                     current.setOnPreferenceClickListener(filePickerListener);
                 } else if (key == ConfigKey.TLS_CERTIFICATE_FILE) {
                     File pem = new File(details.get(ConfigKey.TLS_CERTIFICATE_FILE));
                     current.setSummary(pem.getName());
-                    current.setOnPreferenceClickListener(filePickerListener);
                     setFeedbackIcon(current, pem.getAbsolutePath());
                     checkForRSAKey(pem.getAbsolutePath());
+                    current.setOnPreferenceClickListener(filePickerListener);
                 } else if (key == ConfigKey.TLS_METHOD) {
                     String[] values = getTlsMethods();
-                    ListPreference listPref = (ListPreference)current;
+                    ListPreference listPref = (ListPreference) current;
                     String curVal = details.get(key);
                     listPref.setEntries(values);
                     listPref.setEntryValues(values);
@@ -289,9 +295,9 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
     }
 
     private void checkForRSAKey(String path) {
-        if(findRSAKey(path)){
+        if (findRSAKey(path)) {
             tlsCategory.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key()).setEnabled(false);
-        }else {
+        } else {
             tlsCategory.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key()).setEnabled(true);
         }
     }

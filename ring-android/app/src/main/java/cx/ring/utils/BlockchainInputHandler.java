@@ -23,7 +23,7 @@ import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
-import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 
 public class BlockchainInputHandler extends Thread {
 
@@ -33,21 +33,19 @@ public class BlockchainInputHandler extends Thread {
     private static final int WAIT_DELAY= 2000;
     private static final int KILL_DELAY = 6000;
 
-    private WeakReference<LocalService> mLocalService;
+    private WeakReference<AccountService> mAccountService;
     private String mTextToLookup;
-    private LocalService.NameLookupCallback mLookupCallback;
 
     private boolean mIsWaitingForInputs = false;
     private long mLastEnqueuedInputTimeStamp = -1;
 
-    public BlockchainInputHandler(@NonNull WeakReference<LocalService> localService, @NonNull LocalService.NameLookupCallback lookupCallback) {
-        mLocalService = localService;
-        mLookupCallback = lookupCallback;
+    public BlockchainInputHandler(@NonNull WeakReference<AccountService> accountService) {
+        mAccountService = accountService;
     }
 
     public void enqueueNextLookup(String text) {
 
-        if (mLocalService.get() == null) {
+        if (mAccountService.get() == null) {
             return;
         }
 
@@ -77,11 +75,11 @@ public class BlockchainInputHandler extends Thread {
                     mIsWaitingForInputs = false;
                 } else if (timeFromLastEnqueuedInput >= WAIT_DELAY) {
                     // trigger the blockchain lookup
-                    final LocalService localService = mLocalService.get();
+                    final AccountService accountService = mAccountService.get();
                     if (isRingId(mTextToLookup)) {
-                        localService.lookupAddress("", mTextToLookup, mLookupCallback);
+                        accountService.lookupAddress("", "", mTextToLookup);
                     } else {
-                        localService.lookupName("", mTextToLookup, mLookupCallback);
+                        accountService.lookupName("", "", mTextToLookup);
                     }
                     // stop the wait
                     mIsWaitingForInputs = false;

@@ -72,12 +72,11 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
     @Override
     public void accountChanged(Account account) {
         setPreferenceDetails(account.getConfig());
-        setPreferenceListener(account.getConfig(), changeBasicPreferenceListener);
+
         SwitchPreferenceCompat pref = (SwitchPreferenceCompat) findPreference("Account.status");
         if (account.isSip() && pref != null) {
             String status;
             pref.setTitle(account.getAlias());
-            pref.setOnPreferenceChangeListener(changeAccountStatusListener);
             if (account.isEnabled()) {
                 if (account.isTrying()) {
                     status = getString(R.string.account_status_connecting);
@@ -98,7 +97,11 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
 
             // An ip2ip account is always ready
             pref.setEnabled(!account.isIP2IP());
+
+            pref.setOnPreferenceChangeListener(changeAccountStatusListener);
         }
+
+        setPreferenceListener(account.getConfig(), changeBasicPreferenceListener);
     }
 
     @Override
