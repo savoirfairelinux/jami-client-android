@@ -18,87 +18,34 @@
  */
 package cx.ring.utils;
 
+import android.content.Context;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.EditText;
 
 import java.lang.ref.WeakReference;
 
 import cx.ring.R;
-import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 
-public class BlockchainTextWatcher implements TextWatcher, LocalService.NameLookupCallback {
+public class BlockchainTextWatcher implements TextWatcher {
 
     private static final String TAG = BlockchainTextWatcher.class.getName();
 
     private WeakReference<TextInputLayout> mInputLayout;
     private WeakReference<EditText> mInputText;
-    private WeakReference<LocalService> mLocalService;
+    private WeakReference<AccountService> mAccountService;
     private BlockchainInputHandler mBlockchainInputHandler;
-    private String mUserNameAlreadyTaken;
-    private String mInvalidUsername;
-    private String mLookinForAvailability;
+    private String mLookingForAvailability;
 
-    public BlockchainTextWatcher(final LocalService.Callbacks callbacks, final TextInputLayout inputLayout, final EditText inputText) {
+    public BlockchainTextWatcher(Context context, final AccountService accountService, final TextInputLayout inputLayout, final EditText inputText) {
         mInputLayout = new WeakReference<>(inputLayout);
         mInputText = new WeakReference<>(inputText);
-
-        if (callbacks != null && callbacks.getService() != null) {
-            mLocalService = new WeakReference<>(callbacks.getService());
-            LocalService localService = callbacks.getService();
-            mUserNameAlreadyTaken = localService.getString(R.string.username_already_taken);
-            mInvalidUsername = localService.getString(R.string.invalid_username);
-            mLookinForAvailability = localService.getString(R.string.looking_for_username_availability);
-            mBlockchainInputHandler = new BlockchainInputHandler(mLocalService, this);
-        } else {
-            mLocalService = new WeakReference<>(null);
-            mBlockchainInputHandler = new BlockchainInputHandler(mLocalService, this);
-        }
-    }
-
-    @Override
-    public void onFound(String name, String address) {
-        if (mInputText.get() != null) {
-            String searchedText = mInputText.get().getText().toString();
-            Log.w(TAG, "Name lookup UI : onFound " + name + " " + address + " (current " + searchedText + ")");
-            if (name.equals(searchedText)) {
-                mInputLayout.get().setErrorEnabled(true);
-                mInputLayout.get().setError(mUserNameAlreadyTaken);
-            }
-        }
-    }
-
-    @Override
-    public void onInvalidName(String name) {
-        if (mInputText.get() != null) {
-            String searchedText = mInputText.get().getText().toString();
-            Log.w(TAG, "Name lookup UI : onInvalidName " + name + " (current " + searchedText + ")");
-            if (name.equals(searchedText)) {
-
-                if (TextUtils.isEmpty(name)) {
-                    mInputLayout.get().setErrorEnabled(false);
-                    mInputLayout.get().setError(null);
-                } else {
-                    mInputLayout.get().setErrorEnabled(true);
-                    mInputLayout.get().setError(mInvalidUsername);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onError(String name, String address) {
-        if (mInputText.get() != null) {
-            String searchedText = mInputText.get().getText().toString();
-            Log.w(TAG, "Name lookup UI : onError " + name + " " + address + " (current " + searchedText + ")");
-            if (name.equals(searchedText)) {
-                mInputLayout.get().setErrorEnabled(false);
-                mInputLayout.get().setError(null);
-            }
-        }
+        mAccountService = new WeakReference<>(accountService);
+        mLookingForAvailability = context.getString(R.string.looking_for_username_availability);
+        mBlockchainInputHandler = new BlockchainInputHandler(mAccountService);
     }
 
     @Override
@@ -126,13 +73,15 @@ public class BlockchainTextWatcher implements TextWatcher, LocalService.NameLook
             mInputLayout.get().setError(null);
         } else {
             mInputLayout.get().setErrorEnabled(true);
-            mInputLayout.get().setError(mLookinForAvailability);
+            mInputLayout.get().setError(mLookingForAvailability);
         }
 
         if (!mBlockchainInputHandler.isAlive()) {
-            mBlockchainInputHandler = new BlockchainInputHandler(mLocalService, this);
+            mBlockchainInputHandler = new BlockchainInputHandler(mAccountService);
         }
 
-        mBlockchainInputHandler.enqueueNextLookup(name);
+        if (!TextUtils.isEmpty(name)) {
+            mBlockchainInputHandler.enqueueNextLookup(name);
+        }
     }
 }

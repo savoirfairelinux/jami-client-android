@@ -69,6 +69,8 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -85,6 +87,7 @@ import cx.ring.model.SipCall;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.services.AccountService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
@@ -104,6 +107,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
     // Screen wake lock for incoming call
     private WakeLock mScreenWakeLock;
+
+    @Inject
+    AccountService mAccountService;
 
     @BindView(R.id.contact_bubble_layout)
     View contactBubbleLayout;
@@ -948,7 +954,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     private void initIncomingCallDisplay() {
         Log.i(TAG, "Start incoming display");
         final SipCall call = getFirstParticipant();
-        if (mCallbacks.getService().getAccount(call.getAccount()).isAutoanswerEnabled()) {
+        if (mAccountService.getAccount(call.getAccount()).isAutoanswerEnabled()) {
             try {
                 mCallbacks.getRemoteService().accept(call.getCallId());
             } catch (Exception e) {

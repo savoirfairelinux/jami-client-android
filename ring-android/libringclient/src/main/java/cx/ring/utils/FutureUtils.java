@@ -19,11 +19,39 @@
  */
 package cx.ring.utils;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 public class FutureUtils {
 
     private final static String TAG = FutureUtils.class.getName();
+
+    public static <T> T executeDaemonThreadCallable (ExecutorService executor,
+                                                     long daemonThreadId,
+                                                     boolean isSynchronous,
+                                                     Callable<T> callable
+                                                     ) {
+        long currentThreadId = Thread.currentThread().getId();
+        if (currentThreadId == daemonThreadId) {
+            // we already are in the daemon thread
+            try {
+                return callable.call();
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        // we are not in the Daemon Thread
+        // the dedicated daemon executor is required
+        Future<T> result = executor.submit(callable);
+
+        if (isSynchronous) {
+            return getFutureResult(result);
+        }
+
+        return null;
+    }
 
     public static <T> T getFutureResult(Future<T> future) {
 
