@@ -27,9 +27,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -41,24 +41,32 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
-import cx.ring.service.IDRingService;
-import cx.ring.service.LocalService;
+import cx.ring.model.DaemonEvent;
+import cx.ring.services.AccountService;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
-public class AccountMigrationFragment extends Fragment {
+public class AccountMigrationFragment extends Fragment implements Observer<DaemonEvent> {
     static final String TAG = AccountMigrationFragment.class.getSimpleName();
 
     public static final String ACCOUNT_ID = "ACCOUNT_ID";
 
     private String mAccountId;
+
+    @Inject
+    AccountService mAccountService;
 
     // UI references.
     @BindView(R.id.ring_password)
@@ -67,7 +75,8 @@ public class AccountMigrationFragment extends Fragment {
     @BindView(R.id.ring_password_repeat)
     EditText mRingPasswordRepeat;
 
-    private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
+    private ProgressDialog mProgress = null;
+
     private boolean migratingAccount = false;
 
     @Override
@@ -78,7 +87,10 @@ public class AccountMigrationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View inflatedView = inflater.inflate(R.layout.frag_account_migration, parent, false);
-        ButterKnife.bind(this,inflatedView);
+        ButterKnife.bind(this, inflatedView);
+
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         return inflatedView;
     }
@@ -95,6 +107,7 @@ public class AccountMigrationFragment extends Fragment {
             checkPassword((TextView) v, null);
         }
     }
+
     @OnEditorAction(R.id.ring_password_repeat)
     public boolean onPasswordRepeatEditorAction(TextView v, int actionId, KeyEvent event) {
         Log.d(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
@@ -118,19 +131,16 @@ public class AccountMigrationFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        mAccountService.addObserver(this);
         if (getArguments() != null) {
             mAccountId = getArguments().getString(ACCOUNT_ID);
         }
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof LocalService.Callbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
-        }
-
-        mCallbacks = (LocalService.Callbacks) activity;
+    public void onPause() {
+        super.onPause();
+        mAccountService.removeObserver(this);
     }
 
     @SuppressWarnings("unchecked")
@@ -168,8 +178,79 @@ public class AccountMigrationFragment extends Fragment {
         return error;
     }
 
+    @Override
+    public void update(Observable observable, final DaemonEvent event) {
+        if (event == null) {
+            return;
+        }
+
+        switch (event.getEventType()) {
+            case REGISTRATION_STATE_CHANGED:
+                handleMigrationState(event);
+                break;
+            default:
+                Log.d(TAG, "This event " + event.getEventType() + " is not handled here");
+                break;
+        }
+    }
+
+    private void handleMigrationState(final DaemonEvent event) {
+        RingApplication.uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                String newState = event.getEventInput(DaemonEvent.EventInput.STATE, String.class);
+                if (TextUtils.isEmpty(newState)) {
+                    if (mProgress != null) {
+                        mProgress.dismiss();
+                        mProgress = null;
+                    }
+                    return;
+                }
+
+                if (!AccountConfig.STATE_INITIALIZING.contentEquals(newState)) {
+                    if (mProgress != null) {
+                        mProgress.dismiss();
+                        mProgress = null;
+                    }
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                    dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //do things
+                        }
+                    });
+                    boolean success = false;
+                    switch (newState) {
+                        case AccountConfig.STATE_ERROR_GENERIC:
+                            dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
+                                    .setMessage(R.string.account_cannot_be_found_message);
+                            break;
+                        case AccountConfig.STATE_ERROR_NETWORK:
+                            dialogBuilder.setTitle(R.string.account_no_network_title)
+                                    .setMessage(R.string.account_no_network_message);
+                            break;
+                        default:
+                            dialogBuilder.setTitle(R.string.account_device_updated_title)
+                                    .setMessage(R.string.account_device_updated_message);
+                            success = true;
+                            break;
+                    }
+                    AlertDialog dialogSuccess = dialogBuilder.show();
+                    if (success) {
+                        dialogSuccess.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                getActivity().setResult(Activity.RESULT_OK, new Intent());
+                                getActivity().finish();
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+
     private class MigrateAccountTask extends AsyncTask<HashMap<String, String>, Void, String> {
-        private ProgressDialog progress = null;
         private final String mAccountId;
         private final String mPassword;
 
@@ -181,27 +262,26 @@ public class AccountMigrationFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            progress = new ProgressDialog(getActivity());
-            progress.setTitle(R.string.dialog_wait_update);
-            progress.setMessage(getString(R.string.dialog_wait_update_details));
-            progress.setCancelable(false);
-            progress.setCanceledOnTouchOutside(false);
-            progress.show();
+            mProgress = new ProgressDialog(getActivity());
+            mProgress.setTitle(R.string.dialog_wait_update);
+            mProgress.setMessage(getString(R.string.dialog_wait_update_details));
+            mProgress.setCancelable(false);
+            mProgress.setCanceledOnTouchOutside(false);
+            mProgress.show();
         }
 
         @SafeVarargs
         @Override
         protected final String doInBackground(HashMap<String, String>... accs) {
 
-            final Account account = mCallbacks.getService().getAccount(mAccountId);
-            final IDRingService remote = mCallbacks.getService().getRemoteService();
-            if (account == null || remote == null) {
+            final Account account = mAccountService.getAccount(mAccountId);
+            if (account == null) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (progress != null) {
-                            progress.dismiss();
-                            progress = null;
+                        if (mProgress != null) {
+                            mProgress.dismiss();
+                            mProgress = null;
                         }
                         Log.e(TAG, "Error updating account, no account or remote service");
                         AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
@@ -214,60 +294,10 @@ public class AccountMigrationFragment extends Fragment {
                 return null;
             }
 
-            account.stateListener = new Account.OnStateChangedListener() {
-                @Override
-                public void stateChanged(String state, int code) {
-                    Log.d(TAG, "stateListener -> stateChanged " + state + " " + code);
-                    if (!AccountConfig.STATE_INITIALIZING.contentEquals(state)) {
-                        if (progress != null) {
-                            progress.dismiss();
-                            progress = null;
-                        }
-                        AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
-                        dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //do things
-                            }
-                        });
-                        boolean success = false;
-                        switch (state) {
-                            case AccountConfig.STATE_ERROR_GENERIC:
-                                dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
-                                        .setMessage(R.string.account_cannot_be_found_message);
-                                break;
-                            case AccountConfig.STATE_ERROR_NETWORK:
-                                dialogBuilder.setTitle(R.string.account_no_network_title)
-                                        .setMessage(R.string.account_no_network_message);
-                                break;
-                            default:
-                                dialogBuilder.setTitle(R.string.account_device_updated_title)
-                                        .setMessage(R.string.account_device_updated_message);
-                                success = true;
-                                account.stateListener = null;
-                                break;
-                        }
-                        AlertDialog dialogSuccess = dialogBuilder.show();
-                        if (success) {
-                            dialogSuccess.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialogInterface) {
-                                    getActivity().setResult(Activity.RESULT_OK, new Intent());
-                                    getActivity().finish();
-                                }
-                            });
-                        }
-                    }
-                }
-            };
-
             HashMap<String, String> details = account.getDetails();
             details.put(ConfigKey.ARCHIVE_PASSWORD.key(), mPassword);
 
-            try {
-                remote.setAccountDetails(account.getAccountID(), details);
-            } catch (RemoteException e) {
-                Log.e(TAG, "Error while setting ARCHIVE_PASSWORD", e);
-            }
+            mAccountService.setAccountDetails(account.getAccountID(), details);
 
             return account.getAccountID();
         }
