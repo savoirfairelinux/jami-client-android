@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_2c5a0884",
+        "filename": "ring-android/app/src/main/java/cx/ring/application/RingApplication.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-12-09T16:16:01Z",
+      "side": 1,
+      "message": "USe cx.ring.Log everywhere",
+      "range": {
+        "startLine": 159,
+        "startChar": 12,
+        "endLine": 159,
+        "endChar": 30
+      },
+      "revId": "950993d334d714cfacf6fcc734db86732b8fab81",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_6c601036",
+        "filename": "ring-android/app/src/main/java/cx/ring/application/RingApplication.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-12-09T16:16:01Z",
+      "side": 1,
+      "message": "USe cx.ring.Log everywhere",
+      "range": {
+        "startLine": 201,
+        "startChar": 16,
+        "endLine": 201,
+        "endChar": 34
+      },
+      "revId": "950993d334d714cfacf6fcc734db86732b8fab81",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_cc734414",
+        "filename": "ring-android/app/src/main/java/cx/ring/application/RingApplication.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-12-09T16:16:01Z",
+      "side": 1,
+      "message": "Comment?",
+      "range": {
+        "startLine": 209,
+        "startChar": 12,
+        "endLine": 209,
+        "endChar": 68
+      },
+      "revId": "950993d334d714cfacf6fcc734db86732b8fab81",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_8c653c47",
+        "filename": "ring-android/app/src/main/java/cx/ring/application/RingApplication.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-12-09T16:16:01Z",
+      "side": 1,
+      "message": "USe cx.ring.Log everywhere",
+      "range": {
+        "startLine": 214,
+        "startChar": 12,
+        "endLine": 214,
+        "endChar": 30
+      },
+      "revId": "950993d334d714cfacf6fcc734db86732b8fab81",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_4c5f5473",
+        "filename": "ring-android/app/src/main/java/cx/ring/application/RingApplication.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-12-09T16:16:01Z",
+      "side": 1,
+      "message": "This was called when DRingService was stopped. When did this happened?",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 267,
+        "endChar": 11
+      },
+      "revId": "950993d334d714cfacf6fcc734db86732b8fab81",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_ec53a06a",
+        "filename": "ring-android/app/src/main/java/cx/ring/dependencyinjection/ServiceInjectionModule.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-12-09T16:16:01Z",
+      "side": 1,
+      "message": "I don\u0027t see in this patch why you need that",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 23
+      },
+      "revId": "950993d334d714cfacf6fcc734db86732b8fab81",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_0c514c62",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/RingNavigationFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-12-09T16:16:01Z",
+      "side": 1,
+      "message": "spaces",
+      "range": {
+        "startLine": 323,
+        "startChar": 19,
+        "endLine": 323,
+        "endChar": 31
+      },
+      "revId": "950993d334d714cfacf6fcc734db86732b8fab81",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
