@@ -102,10 +102,6 @@ public abstract class HistoryService extends Observable {
         }
         txt.setID(historyTxt.id);
 
-        // notify the observers
-        setChanged();
-        notifyObservers();
-
         return true;
     }
 

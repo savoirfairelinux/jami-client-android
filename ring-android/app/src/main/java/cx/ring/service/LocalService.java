@@ -1263,6 +1263,13 @@ public class LocalService extends Service implements Observer {
             for (Conference conference : conversation.getCurrentCalls()) {
                 notificationManager.cancel(conference.getUuid());
             }
+
+            boolean isConversationVisible = conversation.isVisible();
+            String conversationKey = conversation.getContact().getIds().get(0);
+            Conversation newConversation = res.get(conversationKey);
+            if (newConversation != null) {
+                newConversation.setVisible(isConversationVisible);
+            }
         }
         conversations = res;
         updateAudioState();
@@ -1297,6 +1304,12 @@ public class LocalService extends Service implements Observer {
         Log.d(TAG, "updateTextNotifications()");
 
         for (Conversation c : conversations.values()) {
+
+            if (c.isVisible()) {
+                notificationManager.cancel(c.getUuid());
+                continue;
+            }
+
             TreeMap<Long, TextMessage> texts = c.getUnreadTextMessages();
             if (texts.isEmpty() || texts.lastEntry().getValue().isNotified()) {
                 continue;
@@ -1520,9 +1533,6 @@ public class LocalService extends Service implements Observer {
                     mHistoryService.insertNewTextMessage(txt);
 
                     conversation.addTextMessage(txt);
-                    if (!conversation.isVisible()) {
-                        updateTextNotifications();
-                    }
 
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE));
                     break;
