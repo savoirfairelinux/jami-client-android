@@ -21,7 +21,6 @@
 
 package cx.ring.client;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -30,13 +29,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -65,6 +62,7 @@ import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.DaemonEvent;
 import cx.ring.services.AccountService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.VCardUtils;
@@ -98,6 +96,9 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
 
     @Inject
     AccountService mAccountService;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
 
     @BindView(R.id.pager)
     WizardViewPager mViewPager;
@@ -213,7 +214,7 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
                 Log.d(TAG, "Default account detail: " + e.getKey() + " -> " + e.getValue());
             }
 
-            boolean hasCameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+            boolean hasCameraPermission = mDeviceRuntimeService.hasVideoPermission();
             accountDetails.put(ConfigKey.VIDEO_ENABLED.key(), Boolean.toString(hasCameraPermission));
 
             //~ Sipinfo is forced for any sipaccount since overrtp is not supported yet.

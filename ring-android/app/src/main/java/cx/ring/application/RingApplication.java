@@ -19,7 +19,6 @@
  */
 package cx.ring.application;
 
-import android.Manifest;
 import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -68,6 +67,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.DaemonService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.SettingsService;
 import cx.ring.utils.FutureUtils;
@@ -78,6 +78,7 @@ public class RingApplication extends Application {
     private final static String TAG = RingApplication.class.getName();
     public final static String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
     public final static String VIDEO_EVENT = BuildConfig.APPLICATION_ID + ".event.VIDEO_EVENT";
+    public static final int PERMISSIONS_REQUEST = 57;
 
     private RingInjectionComponent mRingInjectionComponent;
     private Map<String, Boolean> mPermissionsBeingAsked;
@@ -124,6 +125,9 @@ public class RingApplication extends Application {
 
     @Inject
     SettingsService mSettingsService;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
 
     static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
     private final BroadcastReceiver ringerModeListener = new BroadcastReceiver() {
@@ -175,7 +179,7 @@ public class RingApplication extends Application {
             return;
         }
 
-        final boolean isVideoAllowed = LocalService.checkPermission(this, Manifest.permission.CAMERA);
+        final boolean isVideoAllowed = mDeviceRuntimeService.hasVideoPermission();
 
         Future<Boolean> startResult = mExecutor.submit(new Callable<Boolean>() {
             @Override
@@ -231,7 +235,7 @@ public class RingApplication extends Application {
 
     public void restartVideo() {
 
-        final boolean isVideoAllowed = LocalService.checkPermission(this, Manifest.permission.CAMERA);
+        final boolean isVideoAllowed = mDeviceRuntimeService.hasVideoPermission();
 
         Future<Boolean> result = mExecutor.submit(new Callable<Boolean>() {
             @Override

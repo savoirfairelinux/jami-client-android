@@ -35,6 +35,7 @@ import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.DeviceAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
+import cx.ring.fragments.ProfileCreationFragment;
 import cx.ring.fragments.RegisterNameDialog;
 import cx.ring.fragments.RingAccountCreationFragment;
 import cx.ring.fragments.SecurityAccountFragment;
@@ -98,6 +99,8 @@ public interface RingInjectionComponent {
     void inject(ShareFragment fragment);
 
     void inject(SettingsFragment fragment);
+
+    void inject(ProfileCreationFragment fragment);
 
     void inject(RegisterNameDialog dialog);
 
