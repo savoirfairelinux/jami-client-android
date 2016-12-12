@@ -8,14 +8,14 @@ import java.util.HashMap;
 
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.StringMap;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.ProfileChunk;
 import cx.ring.utils.VCardUtils;
 
-public class CallManagerCallBack implements Observer<DaemonEvent> {
+public class CallManagerCallBack implements Observer<ServiceEvent> {
 
     private static final String TAG = CallManagerCallBack.class.getName();
 
@@ -39,7 +39,7 @@ public class CallManagerCallBack implements Observer<DaemonEvent> {
     }
 
     @Override
-    public void update(Observable o, DaemonEvent event) {
+    public void update(Observable o, ServiceEvent event) {
         if (event == null) {
             return;
         }
@@ -47,44 +47,44 @@ public class CallManagerCallBack implements Observer<DaemonEvent> {
         switch (event.getEventType()) {
             case CALL_STATE_CHANGED:
                 callStateChanged(
-                        event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.STATE, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.DETAIL_CODE, Integer.class)
+                        event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.STATE, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.DETAIL_CODE, Integer.class)
                 );
                 break;
             case INCOMING_CALL:
                 incomingCall(
-                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.FROM, String.class)
+                        event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.FROM, String.class)
                 );
                 break;
             case INCOMING_MESSAGE:
                 incomingMessage(
-                        event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.FROM, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.MESSAGES, StringMap.class)
+                        event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.FROM, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.MESSAGES, StringMap.class)
                 );
                 break;
             case CONFERENCE_CREATED:
-                conferenceCreated(event.getEventInput(DaemonEvent.EventInput.CONF_ID, String.class));
+                conferenceCreated(event.getEventInput(ServiceEvent.EventInput.CONF_ID, String.class));
                 break;
             case CONFERENCE_CHANGED:
                 conferenceChanged(
-                        event.getEventInput(DaemonEvent.EventInput.CONF_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.STATE, String.class)
+                        event.getEventInput(ServiceEvent.EventInput.CONF_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.STATE, String.class)
                 );
                 break;
             case CONFERENCE_REMOVED:
-                conferenceRemoved(event.getEventInput(DaemonEvent.EventInput.CONF_ID, String.class));
+                conferenceRemoved(event.getEventInput(ServiceEvent.EventInput.CONF_ID, String.class));
                 break;
             case RECORD_PLAYBACK_FILEPATH:
                 // todo
                 break;
             case RTCP_REPORT_RECEIVED:
                 onRtcpReportReceived(
-                        event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.STATS, IntegerMap.class));
+                        event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.STATS, IntegerMap.class));
                 break;
             default:
                 Log.i(TAG, "Unkown daemon event");

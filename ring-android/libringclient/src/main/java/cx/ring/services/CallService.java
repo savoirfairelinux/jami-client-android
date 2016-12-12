@@ -33,7 +33,7 @@ import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.CallContact;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
@@ -329,30 +329,30 @@ public class CallService extends Observable {
         void callStateChanged(String callId, String newState, int detailCode) {
             Log.d(TAG, "call state changed: " + callId + ", " + newState + ", " + detailCode);
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.CALL_STATE_CHANGED);
-            event.addEventInput(DaemonEvent.EventInput.CALL_ID, callId);
-            event.addEventInput(DaemonEvent.EventInput.STATE, newState);
-            event.addEventInput(DaemonEvent.EventInput.DETAIL_CODE, detailCode);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CALL_STATE_CHANGED);
+            event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
+            event.addEventInput(ServiceEvent.EventInput.STATE, newState);
+            event.addEventInput(ServiceEvent.EventInput.DETAIL_CODE, detailCode);
             notifyObservers(event);
         }
 
         void incomingCall(String accountId, String callId, String from) {
             Log.d(TAG, "incoming call: " + accountId + ", " + callId + ", " + from);
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.INCOMING_CALL);
-            event.addEventInput(DaemonEvent.EventInput.CALL_ID, callId);
-            event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(DaemonEvent.EventInput.FROM, from);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
+            event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.FROM, from);
             notifyObservers(event);
         }
 
         void incomingMessage(String callId, String from, StringMap messages) {
             Log.d(TAG, "incoming message: " + callId + ", " + from);
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.INCOMING_MESSAGE);
-            event.addEventInput(DaemonEvent.EventInput.CALL_ID, callId);
-            event.addEventInput(DaemonEvent.EventInput.FROM, from);
-            event.addEventInput(DaemonEvent.EventInput.MESSAGES, messages);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_MESSAGE);
+            event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
+            event.addEventInput(ServiceEvent.EventInput.FROM, from);
+            event.addEventInput(ServiceEvent.EventInput.MESSAGES, messages);
             notifyObservers(event);
         }
 
@@ -364,9 +364,9 @@ public class CallService extends Observable {
         void onRtcpReportReceived(String callId, IntegerMap stats) {
             Log.i(TAG, "on RTCP report received: " + callId);
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.CONFERENCE_CHANGED);
-            event.addEventInput(DaemonEvent.EventInput.CALL_ID, callId);
-            event.addEventInput(DaemonEvent.EventInput.STATS, stats);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_CHANGED);
+            event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
+            event.addEventInput(ServiceEvent.EventInput.STATS, stats);
             notifyObservers(event);
         }
     }

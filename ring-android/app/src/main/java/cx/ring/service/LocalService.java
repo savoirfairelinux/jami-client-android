@@ -82,7 +82,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.Conversation;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryEntry;
 import cx.ring.model.HistoryText;
@@ -103,7 +103,7 @@ import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.Tuple;
 
-public class LocalService extends Service implements Observer<DaemonEvent> {
+public class LocalService extends Service implements Observer<ServiceEvent> {
     static final String TAG = LocalService.class.getSimpleName();
 
     // Emitting events
@@ -161,11 +161,6 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
 
     private boolean mAreConversationsLoaded = false;
     private NotificationCompat.Builder mMessageNotificationBuilder;
-
-    public ContactsLoader.Result getSortedContacts() {
-        Log.w(TAG, "getSortedContacts " + lastContactLoaderResult.contacts.size() + " contacts, " + lastContactLoaderResult.starred.size() + " starred.");
-        return lastContactLoaderResult;
-    }
 
     public LruCache<Long, Bitmap> get40dpContactCache() {
         return mMemoryCache;
@@ -1452,7 +1447,7 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
     }
 
     @Override
-    public void update(Observable observable, DaemonEvent arg) {
+    public void update(Observable observable, ServiceEvent arg) {
 
         if (observable instanceof HistoryService) {
             refreshConversations();

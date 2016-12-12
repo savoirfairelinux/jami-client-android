@@ -22,7 +22,7 @@ package cx.ring.model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DaemonEvent {
+public class ServiceEvent {
 
     public enum EventType {
         CALL_STATE_CHANGED,
@@ -52,7 +52,8 @@ public class DaemonEvent {
         GET_CAMERA_INFO,
         START_CAPTURE,
         STOP_CAPTURE,
-        SET_PARAMETERS
+        SET_PARAMETERS,
+        CONTACTS_CHANGED
     }
 
     public enum EventInput {
@@ -89,7 +90,7 @@ public class DaemonEvent {
     private EventType mType;
     private Map<EventInput, Object> mInputs = new HashMap<>();
 
-    public DaemonEvent(EventType type) {
+    public ServiceEvent(EventType type) {
         mType = type;
     }
 
