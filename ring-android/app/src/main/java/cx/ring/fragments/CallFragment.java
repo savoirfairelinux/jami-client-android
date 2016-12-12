@@ -82,8 +82,8 @@ import cx.ring.client.HomeActivity;
 import cx.ring.interfaces.CallInterface;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
-import cx.ring.model.DaemonEvent;
 import cx.ring.model.SecureSipCall;
+import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.IDRingService;
@@ -100,7 +100,7 @@ import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.property.Photo;
 
-public class CallFragment extends Fragment implements CallInterface, ContactDetailsTask.DetailsLoadedCallback, Observer<DaemonEvent> {
+public class CallFragment extends Fragment implements CallInterface, ContactDetailsTask.DetailsLoadedCallback, Observer<ServiceEvent> {
 
     static final private String TAG = CallFragment.class.getSimpleName();
 
@@ -1168,14 +1168,14 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     }
 
     @Override
-    public void update(Observable observable, DaemonEvent event) {
+    public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
             return;
         }
 
         switch (event.getEventType()) {
             case REGISTERED_NAME_FOUND:
-                final String name = event.getEventInput(DaemonEvent.EventInput.NAME, String.class);
+                final String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
                 RingApplication.uiHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -1184,7 +1184,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                 });
                 break;
             default:
-                Log.d (TAG, "This event type is not handled here "+event.getEventType());
+                Log.d(TAG, "This event type is not handled here " + event.getEventType());
                 break;
         }
     }
