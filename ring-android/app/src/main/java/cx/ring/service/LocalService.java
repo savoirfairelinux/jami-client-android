@@ -19,7 +19,6 @@
 
 package cx.ring.service;
 
-import android.Manifest;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -32,7 +31,6 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -53,7 +51,6 @@ import android.provider.ContactsContract.CommonDataKinds.SipAddress;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -96,6 +93,7 @@ import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.SettingsService;
 import cx.ring.utils.ActionHelper;
@@ -123,10 +121,6 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
     static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
     static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
 
-    public static final int PERMISSIONS_REQUEST = 57;
-
-    public final static String[] REQUIRED_RUNTIME_PERMISSIONS = {Manifest.permission.RECORD_AUDIO};
-
     @Inject
     HistoryService mHistoryService;
 
@@ -135,6 +129,9 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
 
     @Inject
     AccountService mAccountService;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
 
     private IDRingService mService = null;
     private boolean dringStarted = false;
@@ -381,7 +378,7 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
         canUseMobile = settings.isAllowMobileData();
 
         mSystemContactLoader = new ContactsLoader(LocalService.this);
-        mSystemContactLoader.setSystemContactPermission(canUseContacts);
+        mSystemContactLoader.setSystemContactPermission(canUseContacts && mDeviceRuntimeService.hasContactPermission());
         mSystemContactLoader.registerListener(1, onSystemContactsLoaded);
 
         startDRingService();
@@ -493,37 +490,6 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
             receiver.onReceive(this, intent);
         }
         return super.onStartCommand(intent, flags, startId);
-    }
-
-    public static boolean checkPermission(Context c, String permission) {
-        return ContextCompat.checkSelfPermission(c, permission) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    @NonNull
-    public static String[] checkRequiredPermissions(Context c) {
-        ArrayList<String> perms = new ArrayList<>();
-        for (String permissionString : REQUIRED_RUNTIME_PERMISSIONS) {
-            if (!checkPermission(c, permissionString)) {
-                perms.add(permissionString);
-            }
-        }
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(c);
-        boolean contactPerm = sharedPref.getBoolean(c.getString(R.string.pref_systemContacts_key), true);
-        if (contactPerm && !checkPermission(c, Manifest.permission.READ_CONTACTS)) {
-            perms.add(Manifest.permission.READ_CONTACTS);
-        }
-
-        boolean cameraPerm = sharedPref.getBoolean(c.getString(R.string.pref_systemCamera_key), true);
-        if (cameraPerm && !checkPermission(c, Manifest.permission.CAMERA)) {
-            perms.add(Manifest.permission.CAMERA);
-        }
-
-        boolean sysDialer = sharedPref.getBoolean(c.getString(R.string.pref_systemDialer_key), false);
-        if (sysDialer && !checkPermission(c, Manifest.permission.WRITE_CALL_LOG)) {
-            perms.add(Manifest.permission.WRITE_CALL_LOG);
-        }
-
-        return perms.toArray(new String[perms.size()]);
     }
 
     public IDRingService getRemoteService() {
@@ -1496,7 +1462,7 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
 
     public void refreshContacts() {
         Log.d(TAG, "refreshContacts");
-        mSystemContactLoader.setSystemContactPermission(canUseContacts);
+        mSystemContactLoader.setSystemContactPermission(canUseContacts && mDeviceRuntimeService.hasContactPermission());
         mSystemContactLoader.onContentChanged();
         mSystemContactLoader.startLoading();
     }
@@ -1531,7 +1497,7 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
 
                     mSystemContactLoader.loadRingContacts = mAccountService.hasRingAccount();
                     mSystemContactLoader.loadSipContacts = mAccountService.hasSipAccount();
-
+                    mSystemContactLoader.setSystemContactPermission(canUseContacts && mDeviceRuntimeService.hasContactPermission());
                     mSystemContactLoader.startLoading();
                     mSystemContactLoader.forceLoad();
                     break;
