@@ -41,7 +41,7 @@ import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
@@ -131,7 +131,7 @@ public class AccountService extends Observable {
                 if (!mAccountList.isEmpty()) {
                     setCurrentAccount(mAccountList.get(0));
                 }
-
+                
                 setAccountsActive(isConnected);
                 Ringservice.connectivityChanged();
             }
@@ -204,9 +204,9 @@ public class AccountService extends Observable {
         }
 
         setChanged();
-        DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNT_ADDED);
-        event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(DaemonEvent.EventInput.STATE, account.getRegistrationState());
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNT_ADDED);
+        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+        event.addEventInput(ServiceEvent.EventInput.STATE, account.getRegistrationState());
         notifyObservers(event);
 
         setCurrentAccount(account);
@@ -494,7 +494,7 @@ public class AccountService extends Observable {
         }
 
         setChanged();
-        DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNTS_CHANGED);
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNTS_CHANGED);
         notifyObservers(event);
     }
 
@@ -967,9 +967,9 @@ public class AccountService extends Observable {
             super.volumeChanged(device, value);
 
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.VOLUME_CHANGED);
-            event.addEventInput(DaemonEvent.EventInput.DEVICE, device);
-            event.addEventInput(DaemonEvent.EventInput.VALUE, value);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VOLUME_CHANGED);
+            event.addEventInput(ServiceEvent.EventInput.DEVICE, device);
+            event.addEventInput(ServiceEvent.EventInput.VALUE, value);
             notifyObservers(event);
         }
 
@@ -990,7 +990,7 @@ public class AccountService extends Observable {
             Account currentAccount = getAccount(currentAccountId);
             if (currentAccount != null) {
                 mCurrentAccount = currentAccount;
-            } else if (!mAccountList.isEmpty()){
+            } else if (!mAccountList.isEmpty()) {
                 // no current account, by default it will be the first one
                 mCurrentAccount = mAccountList.get(0);
             } else {
@@ -998,7 +998,7 @@ public class AccountService extends Observable {
             }
 
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNTS_CHANGED);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNTS_CHANGED);
             notifyObservers(event);
         }
 
@@ -1007,8 +1007,8 @@ public class AccountService extends Observable {
             Log.d(TAG, "stun status failure: " + accountId);
 
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.STUN_STATUS_FAILURE);
-            event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.STUN_STATUS_FAILURE);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
             notifyObservers(event);
         }
 
@@ -1033,11 +1033,11 @@ public class AccountService extends Observable {
 
             if (!oldState.equals(newState)) {
                 setChanged();
-                DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.REGISTRATION_STATE_CHANGED);
-                event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
-                event.addEventInput(DaemonEvent.EventInput.STATE, newState);
-                event.addEventInput(DaemonEvent.EventInput.DETAIL_CODE, code);
-                event.addEventInput(DaemonEvent.EventInput.DETAIL_STRING, detailString);
+                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTRATION_STATE_CHANGED);
+                event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+                event.addEventInput(ServiceEvent.EventInput.STATE, newState);
+                event.addEventInput(ServiceEvent.EventInput.DETAIL_CODE, code);
+                event.addEventInput(ServiceEvent.EventInput.DETAIL_STRING, detailString);
                 notifyObservers(event);
             }
         }
@@ -1057,10 +1057,10 @@ public class AccountService extends Observable {
             Log.d(TAG, "incomingAccountMessage: " + accountId + ", " + from + ", " + msg);
 
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.INCOMING_ACCOUNT_MESSAGE);
-            event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(DaemonEvent.EventInput.FROM, from);
-            event.addEventInput(DaemonEvent.EventInput.MESSAGES, msg);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_ACCOUNT_MESSAGE);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.FROM, from);
+            event.addEventInput(ServiceEvent.EventInput.MESSAGES, msg);
             notifyObservers(event);
         }
 
@@ -1069,11 +1069,11 @@ public class AccountService extends Observable {
             Log.d(TAG, "accountMessageStatusChanged: " + accountId + ", " + messageId + ", " + to + ", " + status);
 
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ACCOUNT_MESSAGE_STATUS_CHANGED);
-            event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(DaemonEvent.EventInput.MESSAGE_ID, messageId);
-            event.addEventInput(DaemonEvent.EventInput.TO, to);
-            event.addEventInput(DaemonEvent.EventInput.STATE, status);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNT_MESSAGE_STATUS_CHANGED);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.MESSAGE_ID, messageId);
+            event.addEventInput(ServiceEvent.EventInput.TO, to);
+            event.addEventInput(ServiceEvent.EventInput.STATE, status);
             notifyObservers(event);
         }
 
@@ -1082,8 +1082,8 @@ public class AccountService extends Observable {
             Log.d(TAG, "errorAlert : " + alert);
 
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.ERROR_ALERT);
-            event.addEventInput(DaemonEvent.EventInput.ALERT, alert);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ERROR_ALERT);
+            event.addEventInput(ServiceEvent.EventInput.ALERT, alert);
             notifyObservers(event);
         }
 
@@ -1092,8 +1092,8 @@ public class AccountService extends Observable {
             Log.d(TAG, "getHardwareAudioFormat: " + ret.toString());
 
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.GET_HARDWARE_AUDIO_FORMAT);
-            event.addEventInput(DaemonEvent.EventInput.FORMATS, ret);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.GET_HARDWARE_AUDIO_FORMAT);
+            event.addEventInput(ServiceEvent.EventInput.FORMATS, ret);
             notifyObservers(event);
         }
 
@@ -1102,9 +1102,9 @@ public class AccountService extends Observable {
             Log.d(TAG, "getAppDataPath: " + name + ", " + ret);
 
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.GET_APP_DATA_PATH);
-            event.addEventInput(DaemonEvent.EventInput.NAME, name);
-            event.addEventInput(DaemonEvent.EventInput.PATHS, ret);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.GET_APP_DATA_PATH);
+            event.addEventInput(ServiceEvent.EventInput.NAME, name);
+            event.addEventInput(ServiceEvent.EventInput.PATHS, ret);
             notifyObservers(event);
         }
 
@@ -1116,9 +1116,9 @@ public class AccountService extends Observable {
             accountChanged.setDevices(devices.toNative());
 
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.KNOWN_DEVICES_CHANGED);
-            event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(DaemonEvent.EventInput.DEVICES, devices);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.KNOWN_DEVICES_CHANGED);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.DEVICES, devices);
             notifyObservers(event);
         }
 
@@ -1127,10 +1127,10 @@ public class AccountService extends Observable {
             Log.d(TAG, "exportOnRingEnded: " + accountId + ", " + code + ", " + pin);
 
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.EXPORT_ON_RING_ENDED);
-            event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(DaemonEvent.EventInput.CODE, code);
-            event.addEventInput(DaemonEvent.EventInput.PIN, pin);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.EXPORT_ON_RING_ENDED);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.CODE, code);
+            event.addEventInput(ServiceEvent.EventInput.PIN, pin);
             notifyObservers(event);
         }
 
@@ -1149,10 +1149,10 @@ public class AccountService extends Observable {
             acc.setDetail(ConfigKey.ACCOUNT_REGISTERED_NAME, name);
 
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.NAME_REGISTRATION_ENDED);
-            event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(DaemonEvent.EventInput.STATE, state);
-            event.addEventInput(DaemonEvent.EventInput.NAME, name);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.NAME_REGISTRATION_ENDED);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.STATE, state);
+            event.addEventInput(ServiceEvent.EventInput.NAME, name);
             notifyObservers(event);
         }
 
@@ -1161,11 +1161,11 @@ public class AccountService extends Observable {
             Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
 
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.REGISTERED_NAME_FOUND);
-            event.addEventInput(DaemonEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(DaemonEvent.EventInput.STATE, state);
-            event.addEventInput(DaemonEvent.EventInput.ADDRESS, address);
-            event.addEventInput(DaemonEvent.EventInput.NAME, name);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTERED_NAME_FOUND);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.STATE, state);
+            event.addEventInput(ServiceEvent.EventInput.ADDRESS, address);
+            event.addEventInput(ServiceEvent.EventInput.NAME, name);
             notifyObservers(event);
         }
     }
