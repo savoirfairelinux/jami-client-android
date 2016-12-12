@@ -51,7 +51,6 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Settings;
 import cx.ring.mvp.GenericView;
-import cx.ring.service.LocalService;
 
 /**
  * TODO: improvements : handle multiples permissions for feature.
@@ -147,7 +146,7 @@ public class SettingsFragment extends Fragment implements GenericView<SettingsVi
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     //~ Ask permission to use the contacts of the device
                     if (((RingApplication) getActivity().getApplication()).canAskForPermission(neededPermission)) {
-                        requestPermissions(new String[]{neededPermission}, LocalService.PERMISSIONS_REQUEST);
+                        requestPermissions(new String[]{neededPermission}, RingApplication.PERMISSIONS_REQUEST);
                     }
                 }
             } else if (!mIsRefreshingViewFromPresenter){
