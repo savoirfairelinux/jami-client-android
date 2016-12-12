@@ -19,7 +19,6 @@
  */
 package cx.ring.application;
 
-import android.Manifest;
 import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -68,6 +67,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.DaemonService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.SettingsService;
 import cx.ring.utils.FutureUtils;
@@ -126,6 +126,9 @@ public class RingApplication extends Application {
     @Inject
     SettingsService mSettingsService;
 
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
+
     static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
     private final BroadcastReceiver ringerModeListener = new BroadcastReceiver() {
         @Override
@@ -176,7 +179,7 @@ public class RingApplication extends Application {
             return;
         }
 
-        final boolean isVideoAllowed = LocalService.checkPermission(this, Manifest.permission.CAMERA);
+        final boolean isVideoAllowed = mDeviceRuntimeService.hasVideoPermission();
 
         Future<Boolean> startResult = mExecutor.submit(new Callable<Boolean>() {
             @Override
@@ -232,7 +235,7 @@ public class RingApplication extends Application {
 
     public void restartVideo() {
 
-        final boolean isVideoAllowed = LocalService.checkPermission(this, Manifest.permission.CAMERA);
+        final boolean isVideoAllowed = mDeviceRuntimeService.hasVideoPermission();
 
         Future<Boolean> result = mExecutor.submit(new Callable<Boolean>() {
             @Override
