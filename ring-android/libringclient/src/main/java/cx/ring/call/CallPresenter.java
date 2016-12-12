@@ -214,6 +214,9 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     }
 
     public void videoSurfaceCreated(Object holder) {
+        if (mSipCall == null) {
+            return;
+        }
         mHardwareService.addVideoSurface(mSipCall.getCallId(), holder);
         getView().displayContactBubble(false);
     }
@@ -249,6 +252,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
 
     private void finish() {
         if (mSipCall != null) {
+            mCallService.hangUp(mSipCall.getCallId());
             mNotificationService.cancelCallNotification(mSipCall.getCallId().hashCode());
         }
         if (executor != null && !executor.isShutdown()) {
