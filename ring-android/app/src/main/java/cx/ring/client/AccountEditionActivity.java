@@ -60,12 +60,12 @@ import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
-public class AccountEditionActivity extends AppCompatActivity implements AccountCallbacks, Observer<DaemonEvent> {
+public class AccountEditionActivity extends AppCompatActivity implements AccountCallbacks, Observer<ServiceEvent> {
 
     @Inject
     AccountService mAccountService;
@@ -102,7 +102,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     private PagerSlidingTabStrip mSlidingTabLayout = null;
 
     @Override
-    public void update(Observable o, DaemonEvent event) {
+    public void update(Observable o, ServiceEvent event) {
         if (event == null) {
             return;
         }

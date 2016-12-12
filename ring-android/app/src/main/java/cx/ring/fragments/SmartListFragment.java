@@ -78,12 +78,13 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.model.DaemonEvent;
 import cx.ring.model.Phone;
+import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
+import cx.ring.services.ContactService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ClipboardHelper;
@@ -96,7 +97,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         SmartListAdapter.SmartListAdapterCallback,
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
-        Observer<DaemonEvent> {
+        Observer<ServiceEvent> {
     private static final String TAG = SmartListFragment.class.getSimpleName();
 
     private static final int USER_INPUT_DELAY = 300;
@@ -141,7 +142,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     AccountService mAccountService;
 
     @Inject
-    CallService mCallService;
+    ContactService mContactService;
 
     final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -157,7 +158,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public static final int REQUEST_TRANSFER = 10;
     public static final int REQUEST_CONF = 20;
 
-    private Observer<DaemonEvent> mRinguifyObserver = new Observer<DaemonEvent>() {
+    private Observer<ServiceEvent> mRinguifyObserver = new Observer<ServiceEvent>() {
 
         private void updateContactRingId(String name, String address) {
 
@@ -176,15 +177,15 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         }
 
         @Override
-        public void update(Observable observable, DaemonEvent event) {
+        public void update(Observable observable, ServiceEvent event) {
             if (event == null) {
                 return;
             }
 
-            if (event.getEventType() == DaemonEvent.EventType.REGISTERED_NAME_FOUND) {
-                String name = event.getEventInput(DaemonEvent.EventInput.NAME, String.class);
-                String address = event.getEventInput(DaemonEvent.EventInput.ADDRESS, String.class);
-                int state = event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class);
+            if (event.getEventType() == ServiceEvent.EventType.REGISTERED_NAME_FOUND) {
+                String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
+                int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
                 if (state == 0) {
                     updateContactRingId(name, address);
                 }
@@ -517,7 +518,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
         // We add the contact to the current State so that we can
         // get it from whatever part of the app as "an already used contact"
-        mCallService.addContact(c);
+        mContactService.addContact(c);
 
         Intent intent = new Intent()
                 .setClass(getActivity(), ConversationActivity.class)
@@ -814,19 +815,19 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     }
 
     @Override
-    public void update(Observable observable, final DaemonEvent event) {
+    public void update(Observable observable, final ServiceEvent event) {
         if (event == null) {
             return;
         }
 
-        if (event.getEventType() == DaemonEvent.EventType.REGISTERED_NAME_FOUND) {
+        if (event.getEventType() == ServiceEvent.EventType.REGISTERED_NAME_FOUND) {
             RingApplication.uiHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    String name = event.getEventInput(DaemonEvent.EventInput.NAME, String.class);
-                    String address = event.getEventInput(DaemonEvent.EventInput.ADDRESS, String.class);
+                    String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                    String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
 
-                    int state = event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class);
+                    int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
                     switch (state) {
                         case 0:
                             // on found

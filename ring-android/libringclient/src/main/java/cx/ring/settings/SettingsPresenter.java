@@ -21,7 +21,7 @@ package cx.ring.settings;
 
 import javax.inject.Inject;
 
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
 import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
@@ -30,7 +30,7 @@ import cx.ring.services.SettingsService;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
-public class SettingsPresenter extends RootPresenter<GenericView<SettingsViewModel>> implements Observer<DaemonEvent> {
+public class SettingsPresenter extends RootPresenter<GenericView<SettingsViewModel>> implements Observer<ServiceEvent> {
 
     @Inject
     SettingsService mSettingsService;
@@ -67,7 +67,7 @@ public class SettingsPresenter extends RootPresenter<GenericView<SettingsViewMod
     }
 
     @Override
-    public void update(Observable observable, DaemonEvent o) {
+    public void update(Observable observable, ServiceEvent o) {
         if (observable instanceof SettingsService) {
             loadSettings();
         }

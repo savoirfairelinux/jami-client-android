@@ -31,7 +31,7 @@ import javax.inject.Named;
 
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringVect;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
@@ -302,25 +302,25 @@ public class ConferenceService extends Observable {
         void conferenceCreated(final String confId) {
             Log.d(TAG, "conference created: " + confId);
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.CONFERENCE_CREATED);
-            event.addEventInput(DaemonEvent.EventInput.CONF_ID, confId);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_CREATED);
+            event.addEventInput(ServiceEvent.EventInput.CONF_ID, confId);
             notifyObservers(event);
         }
 
         void conferenceRemoved(String confId) {
             Log.d(TAG, "conference removed: " + confId);
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.CONFERENCE_REMOVED);
-            event.addEventInput(DaemonEvent.EventInput.CONF_ID, confId);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_REMOVED);
+            event.addEventInput(ServiceEvent.EventInput.CONF_ID, confId);
             notifyObservers(event);
         }
 
         void conferenceChanged(String confId, String state) {
             Log.d(TAG, "conference changed: " + confId + ", " + state);
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.CONFERENCE_CHANGED);
-            event.addEventInput(DaemonEvent.EventInput.CONF_ID, confId);
-            event.addEventInput(DaemonEvent.EventInput.STATE, state);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_CHANGED);
+            event.addEventInput(ServiceEvent.EventInput.CONF_ID, confId);
+            event.addEventInput(ServiceEvent.EventInput.STATE, state);
             notifyObservers(event);
         }
     }
