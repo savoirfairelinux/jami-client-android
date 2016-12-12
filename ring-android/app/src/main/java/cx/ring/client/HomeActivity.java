@@ -75,10 +75,13 @@ import cx.ring.model.AccountConfig;
 import cx.ring.model.CallContact;
 import cx.ring.model.DaemonEvent;
 import cx.ring.model.Phone;
+import cx.ring.model.Settings;
 import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
+import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.SettingsService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
 import cx.ring.utils.ContentUriHandler;
@@ -118,6 +121,12 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     private ActionBarDrawerToggle mDrawerToggle;
     private Boolean isDrawerLocked = false;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
+
+    @Inject
+    SettingsService mSettingsService;
 
     @Inject
     AccountService mAccountService;
@@ -249,7 +258,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
 
         // Bind to LocalService
-        String[] toRequest = LocalService.checkRequiredPermissions(this);
+        String[] toRequest = buildPermissionsToAsk();
         ArrayList<String> permissionsWeCanAsk = new ArrayList<>();
 
         for (String permission : toRequest) {
@@ -260,13 +269,37 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
         if (!permissionsWeCanAsk.isEmpty()) {
             mIsAskingForPermissions = true;
-            ActivityCompat.requestPermissions(this, permissionsWeCanAsk.toArray(new String[permissionsWeCanAsk.size()]), LocalService.PERMISSIONS_REQUEST);
+            ActivityCompat.requestPermissions(this, permissionsWeCanAsk.toArray(new String[permissionsWeCanAsk.size()]), RingApplication.PERMISSIONS_REQUEST);
         } else if (!mBound) {
             Log.d(TAG, "onCreate: Binding service...");
             Intent intent = new Intent(this, LocalService.class);
             startService(intent);
             bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
         }
+    }
+
+    private String[] buildPermissionsToAsk () {
+        ArrayList<String> perms = new ArrayList<>();
+
+        if (!mDeviceRuntimeService.hasAudioPermission()) {
+            perms.add(Manifest.permission.RECORD_AUDIO);
+        }
+
+        Settings settings = mSettingsService.loadSettings();
+
+        if (settings.isAllowSystemContacts() && !mDeviceRuntimeService.hasContactPermission()) {
+            perms.add(Manifest.permission.READ_CONTACTS);
+        }
+
+        if (!mDeviceRuntimeService.hasVideoPermission()) {
+            perms.add(Manifest.permission.CAMERA);
+        }
+
+        if (settings.isAllowPlaceSystemCalls() && !mDeviceRuntimeService.hasCallLogPermission()) {
+            perms.add(Manifest.permission.WRITE_CALL_LOG);
+        }
+
+        return perms.toArray(new String[perms.size()]);
     }
 
     final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -353,7 +386,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         Log.d(TAG, "onRequestPermissionsResult");
 
         switch (requestCode) {
-            case LocalService.PERMISSIONS_REQUEST: {
+            case RingApplication.PERMISSIONS_REQUEST: {
                 if (grantResults.length == 0) {
                     return;
                 }
@@ -775,7 +808,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         //~ Setting correct VIDEO_ENABLED value based on the state of the
         //~ permission. It can handle the case where the user decides to remove a permission from
         //~ the Android general settings.
-        if (!LocalService.checkPermission(this, Manifest.permission.CAMERA) && service != null) {
+        if (!mDeviceRuntimeService.hasVideoPermission() && service != null) {
             mAccountService.setAccountsVideoEnabled(false);
         }
     }
