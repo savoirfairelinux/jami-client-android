@@ -53,12 +53,12 @@ import cx.ring.application.RingApplication;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
-public class AccountMigrationFragment extends Fragment implements Observer<DaemonEvent> {
+public class AccountMigrationFragment extends Fragment implements Observer<ServiceEvent> {
     static final String TAG = AccountMigrationFragment.class.getSimpleName();
 
     public static final String ACCOUNT_ID = "ACCOUNT_ID";
@@ -179,7 +179,7 @@ public class AccountMigrationFragment extends Fragment implements Observer<Daemo
     }
 
     @Override
-    public void update(Observable observable, final DaemonEvent event) {
+    public void update(Observable observable, final ServiceEvent event) {
         if (event == null) {
             return;
         }
@@ -194,12 +194,12 @@ public class AccountMigrationFragment extends Fragment implements Observer<Daemo
         }
     }
 
-    private void handleMigrationState(final DaemonEvent event) {
+    private void handleMigrationState(final ServiceEvent event) {
         RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
 
-                String newState = event.getEventInput(DaemonEvent.EventInput.STATE, String.class);
+                String newState = event.getEventInput(ServiceEvent.EventInput.STATE, String.class);
                 if (TextUtils.isEmpty(newState)) {
                     if (mProgress != null) {
                         mProgress.dismiss();

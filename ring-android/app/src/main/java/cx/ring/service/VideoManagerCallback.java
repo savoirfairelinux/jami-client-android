@@ -33,13 +33,13 @@ import cx.ring.application.RingApplication;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.services.HardwareService;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
 
-public class VideoManagerCallback implements Observer<DaemonEvent> {
+public class VideoManagerCallback implements Observer<ServiceEvent> {
     private static final String TAG = VideoManagerCallback.class.getSimpleName();
 
     @Inject
@@ -50,7 +50,7 @@ public class VideoManagerCallback implements Observer<DaemonEvent> {
     private final HashMap<String, RingApplication.VideoParams> mParams = new HashMap<>();
 
     @Override
-    public void update(Observable o, DaemonEvent event) {
+    public void update(Observable o, ServiceEvent event) {
         if (event == null) {
             return;
         }
@@ -58,40 +58,40 @@ public class VideoManagerCallback implements Observer<DaemonEvent> {
         switch (event.getEventType()) {
             case DECODING_STARTED:
                 decodingStarted(
-                        event.getEventInput(DaemonEvent.EventInput.ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.PATHS, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.WIDTH, Integer.class),
-                        event.getEventInput(DaemonEvent.EventInput.HEIGHT, Integer.class),
-                        event.getEventInput(DaemonEvent.EventInput.IS_MIXER, Boolean.class)
+                        event.getEventInput(ServiceEvent.EventInput.ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.PATHS, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.WIDTH, Integer.class),
+                        event.getEventInput(ServiceEvent.EventInput.HEIGHT, Integer.class),
+                        event.getEventInput(ServiceEvent.EventInput.IS_MIXER, Boolean.class)
                 );
                 break;
             case DECODING_STOPPED:
                 decodingStopped(
-                        event.getEventInput(DaemonEvent.EventInput.ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.PATHS, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.IS_MIXER, Boolean.class)
+                        event.getEventInput(ServiceEvent.EventInput.ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.PATHS, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.IS_MIXER, Boolean.class)
                 );
                 break;
             case GET_CAMERA_INFO:
                 getCameraInfo(
-                        event.getEventInput(DaemonEvent.EventInput.CAMERA_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.FORMATS, IntVect.class),
-                        event.getEventInput(DaemonEvent.EventInput.SIZES, UintVect.class),
-                        event.getEventInput(DaemonEvent.EventInput.RATES, UintVect.class)
+                        event.getEventInput(ServiceEvent.EventInput.CAMERA_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.FORMATS, IntVect.class),
+                        event.getEventInput(ServiceEvent.EventInput.SIZES, UintVect.class),
+                        event.getEventInput(ServiceEvent.EventInput.RATES, UintVect.class)
                 );
                 break;
             case SET_PARAMETERS:
                 setParameters(
-                        event.getEventInput(DaemonEvent.EventInput.CAMERA_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.FORMATS, Integer.class),
-                        event.getEventInput(DaemonEvent.EventInput.WIDTH, Integer.class),
-                        event.getEventInput(DaemonEvent.EventInput.HEIGHT, Integer.class),
-                        event.getEventInput(DaemonEvent.EventInput.RATES, Integer.class)
+                        event.getEventInput(ServiceEvent.EventInput.CAMERA_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.FORMATS, Integer.class),
+                        event.getEventInput(ServiceEvent.EventInput.WIDTH, Integer.class),
+                        event.getEventInput(ServiceEvent.EventInput.HEIGHT, Integer.class),
+                        event.getEventInput(ServiceEvent.EventInput.RATES, Integer.class)
                 );
                 break;
             case START_CAPTURE:
                 startCapture(
-                        event.getEventInput(DaemonEvent.EventInput.CAMERA_ID, String.class)
+                        event.getEventInput(ServiceEvent.EventInput.CAMERA_ID, String.class)
                 );
                 break;
             case STOP_CAPTURE:

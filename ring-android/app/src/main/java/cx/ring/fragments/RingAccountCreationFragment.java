@@ -52,13 +52,13 @@ import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
 import cx.ring.utils.BlockchainUtils;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
-public class RingAccountCreationFragment extends Fragment implements Observer<DaemonEvent> {
+public class RingAccountCreationFragment extends Fragment implements Observer<ServiceEvent> {
     static final String TAG = RingAccountCreationFragment.class.getSimpleName();
     private static final int PASSWORD_MIN_LENGTH = 6;
 
@@ -277,7 +277,7 @@ public class RingAccountCreationFragment extends Fragment implements Observer<Da
     }
 
     @Override
-    public void update(Observable observable, final DaemonEvent event) {
+    public void update(Observable observable, final ServiceEvent event) {
         if (event == null) {
             return;
         }
@@ -287,8 +287,8 @@ public class RingAccountCreationFragment extends Fragment implements Observer<Da
             public void run() {
                 switch (event.getEventType()) {
                     case REGISTERED_NAME_FOUND:
-                        int state = event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class);
-                        String name = event.getEventInput(DaemonEvent.EventInput.NAME, String.class);
+                        int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
+                        String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
                         handleBlockchainResult(state, name);
                         break;
                     default:
