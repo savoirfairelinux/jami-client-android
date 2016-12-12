@@ -25,6 +25,7 @@ import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
 import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
+import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.BootReceiver;
@@ -61,6 +62,8 @@ public interface RingInjectionComponent {
     void inject(ShareFragment fragment);
 
     void inject(SettingsFragment fragment);
+
+    void inject(CallFragment fragment);
 
     void inject(LocalService service);
 

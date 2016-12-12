@@ -63,15 +63,13 @@ public class Ringer {
         if (ringerMode == AudioManager.RINGER_MODE_SILENT) {
             //No ring no vibrate
             Log.d(TAG, "skipping ring and vibrate because profile is Silent");
-        }
-        else if (ringerMode == AudioManager.RINGER_MODE_VIBRATE || ringerMode == AudioManager.RINGER_MODE_NORMAL) {
+        } else if (ringerMode == AudioManager.RINGER_MODE_VIBRATE || ringerMode == AudioManager.RINGER_MODE_NORMAL) {
             // Vibrate
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 vibrator.vibrate(VIBRATE_PATTERN, 0, VIBRATE_ATTRIBUTES);
             } else {
                 vibrator.vibrate(VIBRATE_PATTERN, 0);
             }
-            audioManager.setMode(AudioManager.MODE_RINGTONE);
         }
     }
 

@@ -20,6 +20,7 @@
 package cx.ring.services;
 
 import android.content.Context;
+import android.media.AudioManager;
 
 import java.io.File;
 import java.util.concurrent.Callable;
@@ -29,9 +30,12 @@ import java.util.concurrent.Future;
 import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.utils.Compatibility;
 import cx.ring.utils.Log;
+import cx.ring.utils.Ringer;
+import cx.ring.utils.BluetoothWrapper;
 
-public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
+public class DeviceRuntimeServiceImpl extends DeviceRuntimeService implements AudioManager.OnAudioFocusChangeListener {
 
     private static final String TAG = DeviceRuntimeServiceImpl.class.getName();
 
@@ -41,8 +45,15 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     @Inject
     Context mContext;
 
+    private Ringer mRinger;
+    private AudioManager mAudioManager;
+    private BluetoothWrapper mBluetoothWrapper;
+
     @Override
     public void loadNativeLibrary() {
+        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        mRinger = new Ringer(mContext);
+
         Future<Boolean> result = mExecutor.submit(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
@@ -62,6 +73,11 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
         } catch (Exception e) {
             Log.e(TAG, "Could not load Ring library", e);
         }
+
+        if (mBluetoothWrapper == null) {
+            mBluetoothWrapper = new BluetoothWrapper(mContext);
+            mBluetoothWrapper.register();
+        }
     }
 
     @Override
@@ -72,5 +88,80 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     @Override
     public String provideDefaultVCardName() {
         return mContext.getString(R.string.unknown);
+    }
+
+    @Override
+    public void startRinging() {
+        mRinger.ring();
+    }
+
+    @Override
+    public boolean isSpeakerOn() {
+        return mAudioManager.isSpeakerphoneOn();
+    }
+
+    @Override
+    public void stopRinging() {
+        mRinger.stopRing();
+        abandonAudioFocus();
+    }
+
+    @Override
+    public void onAudioFocusChange(int arg0) {
+        Log.i(TAG, "onAudioFocusChange " + arg0);
+    }
+
+    @Override
+    public void abandonAudioFocus() {
+        mAudioManager.abandonAudioFocus(this);
+        if (mAudioManager.isSpeakerphoneOn()) {
+            mAudioManager.setSpeakerphoneOn(false);
+        }
+        mAudioManager.setMode(AudioManager.MODE_NORMAL);
+    }
+
+    @Override
+    public void obtainAudioFocus(boolean requestSpeakerOn) {
+
+        mAudioManager.requestAudioFocus(this, Compatibility.getInCallStream(mAudioManager.isBluetoothA2dpOn()), AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+
+        if (mBluetoothWrapper != null && mBluetoothWrapper.canBluetooth()) {
+            Log.d(TAG, "Try to enable bluetooth");
+            mBluetoothWrapper.setBluetoothOn(true);
+        } else if (!mAudioManager.isWiredHeadsetOn()) {
+            mAudioManager.setSpeakerphoneOn(requestSpeakerOn);
+        }
+    }
+
+    @Override
+    public void switchAudioToCurrentMode() {
+        mRinger.stopRing();
+        if (mBluetoothWrapper != null && mBluetoothWrapper.canBluetooth()) {
+            routeToBTHeadset();
+        } else {
+            mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+        }
+    }
+
+    private void routeToBTHeadset() {
+        Log.d(TAG, "Try to enable bluetooth");
+        mAudioManager.setSpeakerphoneOn(false);
+        mAudioManager.setMode(AudioManager.MODE_NORMAL);
+        mAudioManager.setBluetoothScoOn(true);
+        mAudioManager.startBluetoothSco();
+        mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+    }
+
+    @Override
+    public void toogleSpeakerphone() {
+        if(mAudioManager.isSpeakerphoneOn()) {
+            mAudioManager.setSpeakerphoneOn(!mAudioManager.isSpeakerphoneOn());
+            if (mBluetoothWrapper != null && mBluetoothWrapper.canBluetooth()) {
+                routeToBTHeadset();
+            }
+        } else {
+            mAudioManager.setSpeakerphoneOn(true);
+        }
+
     }
 }

@@ -29,4 +29,17 @@ public abstract class DeviceRuntimeService {
 
     public abstract String provideDefaultVCardName();
 
+    public abstract void startRinging();
+
+    public abstract boolean isSpeakerOn();
+
+    public abstract void stopRinging();
+
+    public abstract void abandonAudioFocus();
+
+    public abstract void obtainAudioFocus(boolean requesSpeakerOn);
+
+    public abstract void switchAudioToCurrentMode();
+
+    public abstract void toogleSpeakerphone();
 }
