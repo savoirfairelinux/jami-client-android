@@ -33,7 +33,6 @@ import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentCompat;
 import android.support.v14.preference.PreferenceFragment;
 import android.support.v14.preference.SwitchPreference;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.TwoStatePreference;
@@ -53,8 +52,8 @@ import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
-import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.FileUtils;
 
 import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
@@ -66,6 +65,9 @@ public class MediaPreferenceFragment extends PreferenceFragment
 
     @Inject
     AccountService mAccountService;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
 
     private CodecPreference audioCodecsPref = null;
     private CodecPreference videoCodecsPref = null;
@@ -265,7 +267,7 @@ public class MediaPreferenceFragment extends PreferenceFragment
             final ConfigKey key = ConfigKey.fromString(preference.getKey());
             if (null != account && newValue instanceof Boolean) {
                 if (newValue.equals(true)) {
-                    boolean hasCameraPermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+                    boolean hasCameraPermission = mDeviceRuntimeService.hasVideoPermission();
                     if (hasCameraPermission) {
                         if (preference instanceof TwoStatePreference) {
                             account.setDetail(key, newValue.toString());
@@ -273,7 +275,7 @@ public class MediaPreferenceFragment extends PreferenceFragment
                         }
                     } else {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            requestPermissions(new String[]{Manifest.permission.CAMERA}, LocalService.PERMISSIONS_REQUEST);
+                            requestPermissions(new String[]{Manifest.permission.CAMERA}, RingApplication.PERMISSIONS_REQUEST);
                         } else if (preference instanceof TwoStatePreference) {
                             account.setDetail(key, newValue.toString());
                             mCallbacks.saveAccount();

@@ -23,7 +23,6 @@ package cx.ring.fragments;
 import android.Manifest;
 import android.app.Fragment;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,7 +31,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,12 +41,16 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
+import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.BitmapUtils;
 
 public class ProfileCreationFragment extends Fragment {
@@ -58,6 +60,9 @@ public class ProfileCreationFragment extends Fragment {
     public static final int REQUEST_CODE_GALLERY = 2;
     public static final int REQUEST_PERMISSION_CAMERA = 3;
     public static final int REQUEST_PERMISSION_READ_STORAGE = 4;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
 
     @BindView(R.id.profile_photo)
     ImageView mPhotoView;
@@ -84,6 +89,9 @@ public class ProfileCreationFragment extends Fragment {
         final View view = inflater.inflate(R.layout.frag_acc_profile_create, parent, false);
         ButterKnife.bind(this, view);
 
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
         initProfile();
         if (mPhotoView.getDrawable() == null) {
             if (mSourcePhoto == null) {
@@ -99,8 +107,7 @@ public class ProfileCreationFragment extends Fragment {
 
     private void initProfile() {
         //~ Checking the state of the READ_CONTACTS permission
-        boolean hasReadContactsPermission = ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
+        boolean hasReadContactsPermission = mDeviceRuntimeService.hasContactPermission();
         if (hasReadContactsPermission) {
             Cursor mProfileCursor = getActivity().getContentResolver().query(ContactsContract.Profile.CONTENT_URI, PROFILE_PROJECTION, null, null, null);
             if (mProfileCursor != null) {
@@ -129,7 +136,7 @@ public class ProfileCreationFragment extends Fragment {
 
     @OnClick(R.id.gallery)
     public void galleryClicked() {
-        boolean hasPermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        boolean hasPermission = mDeviceRuntimeService.hasGalleryPermission();
         if (hasPermission) {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             getActivity().startActivityForResult(intent, REQUEST_CODE_GALLERY);
@@ -142,8 +149,8 @@ public class ProfileCreationFragment extends Fragment {
 
     @OnClick(R.id.camera)
     public void cameraClicked() {
-        boolean hasPermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+        boolean hasPermission = mDeviceRuntimeService.hasVideoPermission() &&
+                mDeviceRuntimeService.hasPhotoPermission();
         if (hasPermission) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             getActivity().startActivityForResult(intent, REQUEST_CODE_PHOTO);
