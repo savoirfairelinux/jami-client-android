@@ -70,7 +70,7 @@ import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.CallContact;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.model.Phone;
 import cx.ring.model.Settings;
 import cx.ring.navigation.RingNavigationFragment;
@@ -89,7 +89,7 @@ import cx.ring.utils.Observer;
 public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks,
         RingNavigationFragment.OnNavigationSectionSelected,
         ActivityCompat.OnRequestPermissionsResultCallback,
-        Observer<DaemonEvent> {
+        Observer<ServiceEvent> {
 
     static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -154,7 +154,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     protected RingNavigationFragment fNavigation;
 
     @Override
-    public void update(Observable o, DaemonEvent event) {
+    public void update(Observable o, ServiceEvent event) {
         if (event == null) {
             return;
         }
@@ -272,7 +272,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
     }
 
-    private String[] buildPermissionsToAsk () {
+    private String[] buildPermissionsToAsk() {
         ArrayList<String> perms = new ArrayList<>();
 
         if (!mDeviceRuntimeService.hasAudioPermission()) {
