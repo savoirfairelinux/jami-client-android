@@ -31,7 +31,6 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.hardware.display.DisplayManager;
-import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -69,6 +68,8 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -85,6 +86,7 @@ import cx.ring.model.SipCall;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
@@ -95,7 +97,7 @@ import ezvcard.property.Photo;
 
 public class CallFragment extends Fragment implements CallInterface, ContactDetailsTask.DetailsLoadedCallback {
 
-    static final private String TAG = CallFragment.class.getSimpleName();
+    private static final String TAG = CallFragment.class.getSimpleName();
 
     public static final int REQUEST_TRANSFER = 10;
 
@@ -154,7 +156,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
     public ConversationCallbacks mCallbacks = sDummyCallbacks;
 
-    private AudioManager audioManager;
+    @Inject
+    DeviceRuntimeService mDeviceService;
+
     private boolean haveVideo = false;
     private int videoWidth = -1, videoHeight = -1;
     private int previewWidth = -1, previewHeight = -1;
@@ -199,10 +203,10 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
     @Override
     public void onCreate(Bundle savedBundle) {
-        Log.i(TAG, "onCreate");
         super.onCreate(savedBundle);
+        Log.i(TAG, "onCreate");
 
-        audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         setHasOptionsMenu(true);
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
@@ -395,7 +399,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
         if (speakerPhoneBtn != null) {
-            boolean speakerPhone = audioManager.isSpeakerphoneOn();
+            boolean speakerPhone = mDeviceService.isSpeakerOn();
             if (speakerPhoneBtn.getIcon() != null)
                 speakerPhoneBtn.getIcon().setAlpha(speakerPhone ? 255 : 128);
             speakerPhoneBtn.setChecked(speakerPhone);
@@ -439,7 +443,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                         ConversationActivity.REQ_ADD_CONTACT);
                 break;
             case R.id.menuitem_speaker:
-                audioManager.setSpeakerphoneOn(!audioManager.isSpeakerphoneOn());
+                mDeviceService.toogleSpeakerphone();
                 getActivity().invalidateOptionsMenu();
                 break;
             case R.id.menuitem_camera_flip:
@@ -770,7 +774,6 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                 //~ Empty
             }
         });
-
 
         mVideoSurface.getHolder().setFormat(PixelFormat.RGBA_8888);
         mVideoSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
