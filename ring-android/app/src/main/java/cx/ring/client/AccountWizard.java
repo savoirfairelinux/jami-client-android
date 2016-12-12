@@ -58,7 +58,7 @@ import cx.ring.fragments.RingLinkAccountFragment;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.Log;
@@ -72,7 +72,7 @@ import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 
-public class AccountWizard extends AppCompatActivity implements Observer<DaemonEvent> {
+public class AccountWizard extends AppCompatActivity implements Observer<ServiceEvent> {
     static final String TAG = AccountWizard.class.getName();
 
     private boolean mCreatingAccount = false;
@@ -317,14 +317,14 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
     }
 
     @Override
-    public void update(Observable observable, DaemonEvent event) {
+    public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
             return;
         }
 
         switch (event.getEventType()) {
             case ACCOUNT_ADDED:
-                mCreatedAccountId = event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class);
+                mCreatedAccountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
                 handleCreationState(event);
                 break;
             case REGISTRATION_STATE_CHANGED:
@@ -336,15 +336,15 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
         }
     }
 
-    private void handleCreationState(final DaemonEvent event) {
+    private void handleCreationState(final ServiceEvent event) {
         RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
 
-                String stateAccountId = event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class);
+                String stateAccountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
 
                 if (!TextUtils.isEmpty(stateAccountId) && stateAccountId.equals(mCreatedAccountId)) {
-                    String newState = event.getEventInput(DaemonEvent.EventInput.STATE, String.class);
+                    String newState = event.getEventInput(ServiceEvent.EventInput.STATE, String.class);
 
                     mAccount = mAccountService.getAccount(mCreatedAccountId);
 
