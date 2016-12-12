@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_22220fba",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountWizard.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-12-12T22:40:42Z",
+      "side": 0,
+      "message": "you removed this button when moving the method",
+      "range": {
+        "startLine": 488,
+        "startChar": 46,
+        "endLine": 488,
+        "endChar": 85
+      },
+      "revId": "e1112d7ba2c99863f2151d8b58a31b94480e9df9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
