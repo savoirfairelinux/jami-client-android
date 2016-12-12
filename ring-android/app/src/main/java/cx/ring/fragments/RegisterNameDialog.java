@@ -42,14 +42,14 @@ import butterknife.ButterKnife;
 import butterknife.OnEditorAction;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
 import cx.ring.utils.BlockchainUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
-public class RegisterNameDialog extends DialogFragment implements Observer<DaemonEvent> {
+public class RegisterNameDialog extends DialogFragment implements Observer<ServiceEvent> {
     static final String TAG = RegisterNameDialog.class.getSimpleName();
 
     public interface RegisterNameDialogListener {
@@ -98,15 +98,15 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Daemo
     }
 
     @Override
-    public void update(Observable observable, DaemonEvent event) {
+    public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
             return;
         }
 
         switch (event.getEventType()) {
             case REGISTERED_NAME_FOUND:
-                int state = event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class);
-                String name = event.getEventInput(DaemonEvent.EventInput.NAME, String.class);
+                int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
+                String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
                 handleBlockchainResult(state, name);
                 break;
             default:

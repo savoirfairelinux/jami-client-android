@@ -70,7 +70,7 @@ import cx.ring.model.Phone;
 import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
-import cx.ring.services.CallService;
+import cx.ring.services.ContactService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
@@ -81,10 +81,10 @@ public class ConversationActivity extends AppCompatActivity implements
         ContactDetailsTask.DetailsLoadedCallback {
 
     @Inject
-    CallService mCallService;
+    AccountService mAccountService;
 
     @Inject
-    AccountService mAccountService;
+    ContactService mContactService;
 
     private static final String TAG = ConversationActivity.class.getSimpleName();
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
@@ -112,7 +112,7 @@ public class ConversationActivity extends AppCompatActivity implements
 
     private final Handler mRefreshTaskHandler = new Handler();
 
-    static private Pair<Conversation, Uri> getConversation(LocalService s, Intent i) {
+    private Pair<Conversation, Uri> getConversation(LocalService s, Intent i) {
         if (s == null || i == null || i.getData() == null)
             return new Pair<>(null, null);
 
@@ -126,15 +126,15 @@ public class ConversationActivity extends AppCompatActivity implements
             Log.d(TAG, "no conversation found, contact_id " + contact_id);
             CallContact contact = null;
             if (contact_id >= 0)
-                contact = s.findContactById(contact_id);
+                contact = mContactService.findContactById(contact_id);
             if (contact == null) {
                 Uri conv_uri = new Uri(conv_id);
                 if (!number.isEmpty()) {
-                    contact = s.findContactByNumber(number);
+                    contact = mContactService.findContactByNumber(number.getRawUriString());
                     if (contact == null)
                         contact = CallContact.buildUnknown(conv_uri);
                 } else {
-                    contact = s.findContactByNumber(conv_uri);
+                    contact = mContactService.findContactByNumber(conv_uri.getRawUriString());
                     if (contact == null) {
                         contact = CallContact.buildUnknown(conv_uri);
                         number = contact.getPhones().get(0).getNumber();
@@ -176,7 +176,7 @@ public class ConversationActivity extends AppCompatActivity implements
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
             if (!mConversation.getContact().getPhones().isEmpty()) {
-                CallContact contact = mCallService.getContact(mConversation.getContact().getPhones().get(0).getNumber());
+                CallContact contact = mContactService.getContact(mConversation.getContact().getPhones().get(0).getNumber());
                 if (contact != null) {
                     mConversation.setContact(contact);
                 }

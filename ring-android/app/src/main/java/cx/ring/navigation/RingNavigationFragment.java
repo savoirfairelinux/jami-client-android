@@ -61,7 +61,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.BitmapUtils;
@@ -75,7 +75,7 @@ import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 
 public class RingNavigationFragment extends Fragment implements NavigationAdapter.OnNavigationItemClicked,
-        AccountAdapter.OnAccountActionClicked, Observer<DaemonEvent> {
+        AccountAdapter.OnAccountActionClicked, Observer<ServiceEvent> {
     private static final String TAG = RingNavigationFragment.class.getSimpleName();
 
     private AccountAdapter mAccountAdapter;
@@ -156,13 +156,13 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     }
 
     @Override
-    public void update(Observable o, DaemonEvent event) {
+    public void update(Observable o, ServiceEvent event) {
 
         if (event == null) {
             return;
         }
 
-        if (event.getEventType() == DaemonEvent.EventType.ACCOUNTS_CHANGED) {
+        if (event.getEventType() == ServiceEvent.EventType.ACCOUNTS_CHANGED) {
 
             RingApplication.uiHandler.post(new Runnable() {
                 @Override
