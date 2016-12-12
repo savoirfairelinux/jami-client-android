@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ace114c_e2bac709",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-12-12T16:50:49Z",
+      "side": 1,
+      "message": "I\u0027ve removed updateAccounts but the services are not ready for remove the whole function.",
+      "parentUuid": "3ace114c_8c30dc57",
+      "range": {
+        "startLine": 534,
+        "startChar": 0,
+        "endLine": 542,
+        "endChar": 5
+      },
+      "revId": "38068d1f17940caab0e22f027963962ad58b2943",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ace114c_2c352846",
         "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2016-12-09T15:01:29Z",
       "side": 1,
       "message": "Remove this, the presenter of the RingNavigationFragment will handle the refresh",
+      "range": {
+        "startLine": 558,
+        "startChar": 0,
+        "endLine": 561,
+        "endChar": 22
+      },
+      "revId": "38068d1f17940caab0e22f027963962ad58b2943",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_e719797a",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-12-12T16:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ace114c_2c352846",
       "range": {
         "startLine": 558,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3ace114c_a7bff1cf",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/RingNavigationFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-12-12T16:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ace114c_ecf7208b",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 5
+      },
+      "revId": "38068d1f17940caab0e22f027963962ad58b2943",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ace114c_4c03d473",
         "filename": "ring-android/app/src/main/java/cx/ring/navigation/RingNavigationFragment.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2016-12-09T15:01:29Z",
       "side": 1,
       "message": "This should not be there. It is called by the HomeActivity when the RingNavigationFragment is ready, to load the account list.\n\nThe presenter can be notified when the accounts are loaded directly, this method can be removed.",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 5
+      },
+      "revId": "38068d1f17940caab0e22f027963962ad58b2943",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_47b40df2",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/RingNavigationFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-12-12T16:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ace114c_4c03d473",
       "range": {
         "startLine": 170,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3ace114c_c7c79d63",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/RingNavigationFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-12-12T16:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ace114c_0cf5cc82",
+      "range": {
+        "startLine": 247,
+        "startChar": 53,
+        "endLine": 247,
+        "endChar": 80
+      },
+      "revId": "38068d1f17940caab0e22f027963962ad58b2943",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ace114c_2cfe886c",
         "filename": "ring-android/app/src/main/java/cx/ring/navigation/RingNavigationFragment.java",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "3ace114c_e79bb970",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/RingNavigationFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-12-12T16:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ace114c_2cfe886c",
+      "range": {
+        "startLine": 437,
+        "startChar": 16,
+        "endLine": 437,
+        "endChar": 30
+      },
+      "revId": "38068d1f17940caab0e22f027963962ad58b2943",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ace114c_6c2b30ec",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/navigation/RingNavigationPresenter.java",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2016-12-09T15:01:29Z",
       "side": 1,
       "message": "Override, bind and unbind methods from the root presenter to call addObserver and removeObserver from there.",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 36
+      },
+      "revId": "38068d1f17940caab0e22f027963962ad58b2943",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_ac9278f4",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/navigation/RingNavigationPresenter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2016-12-12T16:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ace114c_6c2b30ec",
       "range": {
         "startLine": 41,
         "startChar": 13,
