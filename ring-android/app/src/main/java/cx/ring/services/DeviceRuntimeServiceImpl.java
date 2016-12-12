@@ -19,7 +19,10 @@
  */
 package cx.ring.services;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.support.v4.content.ContextCompat;
 
 import java.io.File;
 import java.util.concurrent.Callable;
@@ -84,4 +87,32 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
         return mDaemonThreadId;
     }
 
+    @Override
+    public boolean hasVideoPermission() {
+        return checkPermission(Manifest.permission.CAMERA);
+    }
+
+    @Override
+    public boolean hasAudioPermission() {
+        return false;
+    }
+
+    @Override
+    public boolean hasContactPermission() {
+        return false;
+    }
+
+    @Override
+    public boolean hasPhotoPermission() {
+        return false;
+    }
+
+    @Override
+    public boolean hasGalleryPermission() {
+        return false;
+    }
+    
+    private boolean checkPermission(String permission) {
+        return ContextCompat.checkSelfPermission(mContext, permission) == PackageManager.PERMISSION_GRANTED;
+    }
 }
