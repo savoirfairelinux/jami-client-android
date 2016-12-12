@@ -48,8 +48,8 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.model.DaemonEvent;
 import cx.ring.model.Phone;
+import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
@@ -59,12 +59,16 @@ import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.services.ContactService;
 
 public class ConversationFragment extends Fragment implements
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
         ContactDetailsTask.DetailsLoadedCallback,
-        Observer<DaemonEvent> {
+        Observer<ServiceEvent>{
+
+    @Inject
+    ContactService mContactService;
 
     @Inject
     CallService mCallService;
@@ -103,7 +107,7 @@ public class ConversationFragment extends Fragment implements
     private ConversationAdapter mAdapter = null;
     private NumberAdapter mNumberAdapter = null;
 
-    private static Pair<Conversation, Uri> getConversation(LocalService service, Bundle bundle) {
+    private Pair<Conversation, Uri> getConversation(LocalService service, Bundle bundle) {
         if (service == null || bundle == null) {
             return new Pair<>(null, null);
         }
@@ -118,17 +122,17 @@ public class ConversationFragment extends Fragment implements
             Log.d(TAG, "no conversation found, contact_id " + contactId);
             CallContact contact = null;
             if (contactId >= 0) {
-                contact = service.findContactById(contactId);
+                contact = mContactService.findContactById(contactId);
             }
             if (contact == null) {
                 Uri convUri = new Uri(conversationId);
                 if (!number.isEmpty()) {
-                    contact = service.findContactByNumber(number);
+                    contact = mContactService.findContactByNumber(number.getRawUriString());
                     if (contact == null) {
                         contact = CallContact.buildUnknown(convUri);
                     }
                 } else {
-                    contact = service.findContactByNumber(convUri);
+                    contact = mContactService.findContactByNumber(convUri.getRawUriString());
                     if (contact == null) {
                         contact = CallContact.buildUnknown(convUri);
                         number = contact.getPhones().get(0).getNumber();
@@ -144,7 +148,7 @@ public class ConversationFragment extends Fragment implements
         return new Pair<>(conversation, number);
     }
 
-    private static int getIndex(Spinner spinner, Uri myString) {
+    static private int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
             if (((Phone) spinner.getItemAtPosition(i)).getNumber().equals(myString)) {
                 return i;
@@ -165,7 +169,7 @@ public class ConversationFragment extends Fragment implements
         }
 
         if (!mConversation.getContact().getPhones().isEmpty()) {
-            CallContact contact = mCallService.getContact(mConversation.getContact().getPhones().get(0).getNumber());
+            CallContact contact = mContactService.getContact(mConversation.getContact().getPhones().get(0).getNumber());
             if (contact != null) {
                 mConversation.setContact(contact);
             }
@@ -531,12 +535,12 @@ public class ConversationFragment extends Fragment implements
     }
 
     @Override
-    public void update(Observable observable, DaemonEvent arg) {
+    public void update(Observable observable, ServiceEvent arg) {
         if (observable instanceof AccountService && arg != null) {
-            if (arg.getEventType() == DaemonEvent.EventType.REGISTERED_NAME_FOUND) {
-                final String name = arg.getEventInput(DaemonEvent.EventInput.NAME, String.class);
-                final String address = arg.getEventInput(DaemonEvent.EventInput.ADDRESS, String.class);
-                final int state = arg.getEventInput(DaemonEvent.EventInput.STATE, Integer.class);
+            if (arg.getEventType() == ServiceEvent.EventType.REGISTERED_NAME_FOUND) {
+                final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
+                final int state = arg.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
 
                 if (state != 0 || mNumberAdapter == null || mNumberAdapter.isEmpty()) {
                     return;
