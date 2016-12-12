@@ -37,7 +37,6 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -98,12 +97,12 @@ import cx.ring.model.Settings;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.SettingsService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
-import cx.ring.utils.MediaManager;
 import cx.ring.utils.Tuple;
 
 public class LocalService extends Service implements Observer {
@@ -132,6 +131,9 @@ public class LocalService extends Service implements Observer {
     @Inject
     SettingsService mSettingsService;
 
+    @Inject
+    DeviceRuntimeService mDeviceService;
+
     private IDRingService mService = null;
     private boolean dringStarted = false;
 
@@ -155,7 +157,6 @@ public class LocalService extends Service implements Observer {
     private final ExecutorService mPool = Executors.newCachedThreadPool();
 
     private NotificationManagerCompat notificationManager;
-    private MediaManager mediaManager;
 
     private boolean isWifiConn = false;
     private boolean isMobileConn = false;
@@ -430,8 +431,6 @@ public class LocalService extends Service implements Observer {
     public void onCreate() {
         Log.d(TAG, "onCreate");
         super.onCreate();
-
-        mediaManager = new MediaManager(this);
 
         notificationManager = NotificationManagerCompat.from(this);
         // Clear any notifications from a previous app instance
@@ -1365,6 +1364,7 @@ public class LocalService extends Service implements Observer {
         }
     }
 
+    //TODO: this logic will be handled in the DeviceRuntimeService when the CallService will handle the call list
     private void updateAudioState() {
         boolean current = false;
         Conference ringing = null;
@@ -1379,18 +1379,15 @@ public class LocalService extends Service implements Observer {
             }
         }
         if (current) {
-            mediaManager.obtainAudioFocus(ringing != null);
+            mDeviceService.obtainAudioFocus(ringing != null);
         }
 
         if (ringing != null) {
-            mediaManager.audioManager.setMode(AudioManager.MODE_RINGTONE);
-            mediaManager.startRing(null);
+            mDeviceService.startRinging();
         } else if (current) {
-            mediaManager.stopRing();
-            mediaManager.audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+            mDeviceService.switchAudioToCurrentMode();
         } else {
-            mediaManager.stopRing();
-            mediaManager.abandonAudioFocus();
+            mDeviceService.stopRinging();
         }
     }
 
