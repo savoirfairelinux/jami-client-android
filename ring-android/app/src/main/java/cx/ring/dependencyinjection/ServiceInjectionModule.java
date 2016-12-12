@@ -30,6 +30,8 @@ import cx.ring.application.RingApplication;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
+import cx.ring.services.ContactService;
+import cx.ring.services.ContactServiceImpl;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.DeviceRuntimeServiceImpl;
@@ -125,6 +127,14 @@ public class ServiceInjectionModule {
         HardwareService hardwareService = new HardwareService();
         mRingApplication.getRingInjectionComponent().inject(hardwareService);
         return hardwareService;
+    }
+
+    @Provides
+    @Singleton
+    ContactService provideContactService() {
+        ContactServiceImpl contactService = new ContactServiceImpl();
+        mRingApplication.getRingInjectionComponent().inject(contactService);
+        return contactService;
     }
 
     @Provides
