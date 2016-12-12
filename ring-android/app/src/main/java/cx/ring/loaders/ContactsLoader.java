@@ -21,7 +21,6 @@
 
 package cx.ring.loaders;
 
-import android.Manifest;
 import android.content.AsyncTaskLoader;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -39,7 +38,6 @@ import java.util.ArrayList;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
-import cx.ring.service.LocalService;
 
 public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
 {
@@ -117,7 +115,7 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
     public Result loadInBackground()
     {
         final Result res = new Result();
-        if (!mCanUseSystemContact || !LocalService.checkPermission(getContext(), Manifest.permission.READ_CONTACTS))
+        if (!mCanUseSystemContact)
             return res;
 
         long startTime = System.nanoTime();

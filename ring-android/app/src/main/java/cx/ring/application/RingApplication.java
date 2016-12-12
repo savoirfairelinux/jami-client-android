@@ -78,6 +78,7 @@ public class RingApplication extends Application {
     private final static String TAG = RingApplication.class.getName();
     public final static String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
     public final static String VIDEO_EVENT = BuildConfig.APPLICATION_ID + ".event.VIDEO_EVENT";
+    public static final int PERMISSIONS_REQUEST = 57;
 
     private RingInjectionComponent mRingInjectionComponent;
     private Map<String, Boolean> mPermissionsBeingAsked;
