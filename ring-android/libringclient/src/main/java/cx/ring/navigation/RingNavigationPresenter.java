@@ -21,13 +21,11 @@
 package cx.ring.navigation;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import cx.ring.model.Account;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
@@ -39,7 +37,7 @@ import ezvcard.VCard;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 
-public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavigationViewModel>> implements Observer<DaemonEvent> {
+public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavigationViewModel>> implements Observer<ServiceEvent> {
 
     @Inject
     AccountService mAccountService;
@@ -127,12 +125,12 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
     }
 
     @Override
-    public void update(Observable observable, DaemonEvent event) {
+    public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
             return;
         }
 
-        if (event.getEventType() == DaemonEvent.EventType.ACCOUNTS_CHANGED) {
+        if (event.getEventType() == ServiceEvent.EventType.ACCOUNTS_CHANGED) {
             updateUser();
         }
     }
