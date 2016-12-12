@@ -67,7 +67,7 @@ import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.Observable;
@@ -79,7 +79,7 @@ import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 public class DeviceAccountFragment extends Fragment implements AccountChangedListener,
         BackHandlerInterface,
         RegisterNameDialog.RegisterNameDialogListener,
-        Observer<DaemonEvent> {
+        Observer<ServiceEvent> {
 
     private static final String TAG = DeviceAccountFragment.class.getSimpleName();
     private static final int PIN_GENERATION_SUCCESS = 0;
@@ -354,7 +354,7 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     }
 
     @Override
-    public void update(Observable observable, DaemonEvent event) {
+    public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
             return;
         }
@@ -376,13 +376,13 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
         }
     }
 
-    private void handleExportEnded(DaemonEvent event) {
+    private void handleExportEnded(ServiceEvent event) {
 
-        String accountId = event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class);
+        String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
         Account currentAccount = mCallbacks.getAccount();
         if (currentAccount != null && currentAccount.getAccountID().equals(accountId)) {
-            final int code = event.getEventInput(DaemonEvent.EventInput.CODE, Integer.class);
-            final String pin = event.getEventInput(DaemonEvent.EventInput.PIN, String.class);
+            final int code = event.getEventInput(ServiceEvent.EventInput.CODE, Integer.class);
+            final String pin = event.getEventInput(ServiceEvent.EventInput.PIN, String.class);
             if (mDeviceAdapter != null) {
                 RingApplication.uiHandler.post(new Runnable() {
                     @Override
@@ -416,11 +416,11 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
         }
     }
 
-    private void handleKnownDevices(DaemonEvent event) {
-        String accountId = event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class);
+    private void handleKnownDevices(ServiceEvent event) {
+        String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
         Account currentAccount = mCallbacks.getAccount();
         if (currentAccount != null && currentAccount.getAccountID().equals(accountId)) {
-            final StringMap devices = event.getEventInput(DaemonEvent.EventInput.DEVICES, StringMap.class);
+            final StringMap devices = event.getEventInput(ServiceEvent.EventInput.DEVICES, StringMap.class);
             if (mDeviceAdapter != null) {
                 RingApplication.uiHandler.post(new Runnable() {
                     @Override

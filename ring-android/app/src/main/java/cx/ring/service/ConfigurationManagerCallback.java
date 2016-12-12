@@ -30,12 +30,12 @@ import cx.ring.BuildConfig;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
 
-public class ConfigurationManagerCallback implements Observer<DaemonEvent> {
+public class ConfigurationManagerCallback implements Observer<ServiceEvent> {
 
     private static final String TAG = ConfigurationManagerCallback.class.getSimpleName();
 
@@ -59,7 +59,7 @@ public class ConfigurationManagerCallback implements Observer<DaemonEvent> {
     }
 
     @Override
-    public void update(Observable o, DaemonEvent event) {
+    public void update(Observable o, ServiceEvent event) {
         if (event == null) {
             return;
         }
@@ -67,8 +67,8 @@ public class ConfigurationManagerCallback implements Observer<DaemonEvent> {
         switch (event.getEventType()) {
             case VOLUME_CHANGED:
                 volumeChanged(
-                        event.getEventInput(DaemonEvent.EventInput.DEVICE, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.VALUE, Integer.class)
+                        event.getEventInput(ServiceEvent.EventInput.DEVICE, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.VALUE, Integer.class)
                 );
                 break;
             case ACCOUNTS_CHANGED:
@@ -76,68 +76,68 @@ public class ConfigurationManagerCallback implements Observer<DaemonEvent> {
                 break;
             case REGISTRATION_STATE_CHANGED:
                 registrationStateChanged(
-                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.STATE, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.DETAIL_CODE, Integer.class),
-                        event.getEventInput(DaemonEvent.EventInput.DETAIL_STRING, String.class)
+                        event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.STATE, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.DETAIL_CODE, Integer.class),
+                        event.getEventInput(ServiceEvent.EventInput.DETAIL_STRING, String.class)
                 );
                 break;
             case STUN_STATUS_FAILURE:
-                stunStatusFailure(event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class));
+                stunStatusFailure(event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class));
                 break;
             case INCOMING_ACCOUNT_MESSAGE:
                 incomingAccountMessage(
-                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.FROM, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.MESSAGES, String.class)
+                        event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.FROM, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.MESSAGES, String.class)
                 );
                 break;
             case ACCOUNT_MESSAGE_STATUS_CHANGED:
                 accountMessageStatusChanged(
-                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.MESSAGE_ID, Long.class),
-                        event.getEventInput(DaemonEvent.EventInput.TO, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class)
+                        event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.MESSAGE_ID, Long.class),
+                        event.getEventInput(ServiceEvent.EventInput.TO, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class)
                 );
                 break;
             case ERROR_ALERT:
-                errorAlert(event.getEventInput(DaemonEvent.EventInput.ALERT, Integer.class));
+                errorAlert(event.getEventInput(ServiceEvent.EventInput.ALERT, Integer.class));
                 break;
             case GET_HARDWARE_AUDIO_FORMAT:
-                getHardwareAudioFormat(event.getEventInput(DaemonEvent.EventInput.FORMATS, IntVect.class));
+                getHardwareAudioFormat(event.getEventInput(ServiceEvent.EventInput.FORMATS, IntVect.class));
                 break;
             case GET_APP_DATA_PATH:
                 getAppDataPath(
-                        event.getEventInput(DaemonEvent.EventInput.NAME, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.PATHS, StringVect.class)
+                        event.getEventInput(ServiceEvent.EventInput.NAME, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.PATHS, StringVect.class)
                 );
                 break;
             case KNOWN_DEVICES_CHANGED:
                 knownDevicesChanged(
-                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.DEVICES, StringMap.class)
+                        event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.DEVICES, StringMap.class)
                 );
                 break;
             case EXPORT_ON_RING_ENDED:
                 exportOnRingEnded(
-                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.CODE, Integer.class),
-                        event.getEventInput(DaemonEvent.EventInput.PIN, String.class)
+                        event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.CODE, Integer.class),
+                        event.getEventInput(ServiceEvent.EventInput.PIN, String.class)
                 );
                 break;
             case NAME_REGISTRATION_ENDED:
                 nameRegistrationEnded(
-                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class),
-                        event.getEventInput(DaemonEvent.EventInput.NAME, String.class)
+                        event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class),
+                        event.getEventInput(ServiceEvent.EventInput.NAME, String.class)
                 );
                 break;
             case REGISTERED_NAME_FOUND:
                 registeredNameFound(
-                        event.getEventInput(DaemonEvent.EventInput.ACCOUNT_ID, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class),
-                        event.getEventInput(DaemonEvent.EventInput.ADDRESS, String.class),
-                        event.getEventInput(DaemonEvent.EventInput.NAME, String.class)
+                        event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class),
+                        event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.NAME, String.class)
                 );
                 break;
             default:

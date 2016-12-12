@@ -22,14 +22,14 @@ package cx.ring.share;
 import javax.inject.Inject;
 
 import cx.ring.model.Account;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
-public class SharePresenter extends RootPresenter<GenericView<ShareViewModel>> implements Observer<DaemonEvent> {
+public class SharePresenter extends RootPresenter<GenericView<ShareViewModel>> implements Observer<ServiceEvent> {
 
     @Inject
     AccountService mAccountService;
@@ -53,7 +53,7 @@ public class SharePresenter extends RootPresenter<GenericView<ShareViewModel>> i
     }
 
     @Override
-    public void update(Observable observable, DaemonEvent o) {
+    public void update(Observable observable, ServiceEvent o) {
         if (observable instanceof AccountService) {
             loadContactInformation();
         }
