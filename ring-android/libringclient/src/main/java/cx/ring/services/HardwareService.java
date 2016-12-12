@@ -31,7 +31,7 @@ import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.daemon.VideoCallback;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 
@@ -128,12 +128,12 @@ public class HardwareService extends Observable {
         public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
             Log.d(TAG, "decodingStarted: " + id + ", " + shmPath + ", " + width + ", " + height + ", " + isMixer);
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.DECODING_STARTED);
-            event.addEventInput(DaemonEvent.EventInput.ID, id);
-            event.addEventInput(DaemonEvent.EventInput.PATHS, shmPath);
-            event.addEventInput(DaemonEvent.EventInput.WIDTH, width);
-            event.addEventInput(DaemonEvent.EventInput.HEIGHT, height);
-            event.addEventInput(DaemonEvent.EventInput.IS_MIXER, isMixer);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DECODING_STARTED);
+            event.addEventInput(ServiceEvent.EventInput.ID, id);
+            event.addEventInput(ServiceEvent.EventInput.PATHS, shmPath);
+            event.addEventInput(ServiceEvent.EventInput.WIDTH, width);
+            event.addEventInput(ServiceEvent.EventInput.HEIGHT, height);
+            event.addEventInput(ServiceEvent.EventInput.IS_MIXER, isMixer);
             notifyObservers(event);
         }
 
@@ -141,10 +141,10 @@ public class HardwareService extends Observable {
         public void decodingStopped(String id, String shmPath, boolean isMixer) {
             Log.d(TAG, "decodingStopped: " + id + ", " + shmPath + ", " + isMixer);
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.DECODING_STOPPED);
-            event.addEventInput(DaemonEvent.EventInput.ID, id);
-            event.addEventInput(DaemonEvent.EventInput.PATHS, shmPath);
-            event.addEventInput(DaemonEvent.EventInput.IS_MIXER, isMixer);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DECODING_STOPPED);
+            event.addEventInput(ServiceEvent.EventInput.ID, id);
+            event.addEventInput(ServiceEvent.EventInput.PATHS, shmPath);
+            event.addEventInput(ServiceEvent.EventInput.IS_MIXER, isMixer);
             notifyObservers(event);
         }
 
@@ -152,11 +152,11 @@ public class HardwareService extends Observable {
         public void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates) {
             Log.d(TAG, "getCameraInfo: " + camId + ", " + formats + ", " + sizes + ", " + rates);
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.GET_CAMERA_INFO);
-            event.addEventInput(DaemonEvent.EventInput.CAMERA_ID, camId);
-            event.addEventInput(DaemonEvent.EventInput.FORMATS, formats);
-            event.addEventInput(DaemonEvent.EventInput.SIZES, sizes);
-            event.addEventInput(DaemonEvent.EventInput.RATES, rates);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.GET_CAMERA_INFO);
+            event.addEventInput(ServiceEvent.EventInput.CAMERA_ID, camId);
+            event.addEventInput(ServiceEvent.EventInput.FORMATS, formats);
+            event.addEventInput(ServiceEvent.EventInput.SIZES, sizes);
+            event.addEventInput(ServiceEvent.EventInput.RATES, rates);
             notifyObservers(event);
         }
 
@@ -164,12 +164,12 @@ public class HardwareService extends Observable {
         public void setParameters(String camId, int format, int width, int height, int rate) {
             Log.d(TAG, "setParameters: " + camId + ", " + format + ", " + width + ", " + height + ", " + rate);
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.SET_PARAMETERS);
-            event.addEventInput(DaemonEvent.EventInput.CAMERA_ID, camId);
-            event.addEventInput(DaemonEvent.EventInput.FORMATS, format);
-            event.addEventInput(DaemonEvent.EventInput.WIDTH, width);
-            event.addEventInput(DaemonEvent.EventInput.HEIGHT, height);
-            event.addEventInput(DaemonEvent.EventInput.RATES, rate);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.SET_PARAMETERS);
+            event.addEventInput(ServiceEvent.EventInput.CAMERA_ID, camId);
+            event.addEventInput(ServiceEvent.EventInput.FORMATS, format);
+            event.addEventInput(ServiceEvent.EventInput.WIDTH, width);
+            event.addEventInput(ServiceEvent.EventInput.HEIGHT, height);
+            event.addEventInput(ServiceEvent.EventInput.RATES, rate);
             notifyObservers(event);
         }
 
@@ -177,8 +177,8 @@ public class HardwareService extends Observable {
         public void startCapture(String camId) {
             Log.d(TAG, "startCapture: " + camId);
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.START_CAPTURE);
-            event.addEventInput(DaemonEvent.EventInput.CAMERA_ID, camId);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.START_CAPTURE);
+            event.addEventInput(ServiceEvent.EventInput.CAMERA_ID, camId);
             notifyObservers(event);
         }
 
@@ -186,7 +186,7 @@ public class HardwareService extends Observable {
         public void stopCapture() {
             Log.d(TAG, "stopCapture");
             setChanged();
-            DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.STOP_CAPTURE);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.STOP_CAPTURE);
             notifyObservers(event);
         }
     }

@@ -55,14 +55,14 @@ import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
-import cx.ring.model.DaemonEvent;
+import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.views.dragsortlv.DragSortListView;
 
-public class AccountsManagementFragment extends Fragment implements HomeActivity.Refreshable, Observer<DaemonEvent> {
+public class AccountsManagementFragment extends Fragment implements HomeActivity.Refreshable, Observer<ServiceEvent> {
     static final String TAG = AccountsManagementFragment.class.getSimpleName();
 
     public static final int ACCOUNT_CREATE_REQUEST = 1;
@@ -174,7 +174,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
     }
 
     @Override
-    public void update(Observable observable, DaemonEvent event) {
+    public void update(Observable observable, ServiceEvent event) {
 
         if (event == null) {
             return;
