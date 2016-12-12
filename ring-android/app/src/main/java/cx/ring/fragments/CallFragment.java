@@ -124,7 +124,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     private MenuItem dialPadBtn = null;
     private MenuItem changeScreenOrientationBtn = null;
 
-    // Screen wake lock for incoming call
     private PowerManager.WakeLock mScreenWakeLock;
     private DisplayManager.DisplayListener displayListener;
 
