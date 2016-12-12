@@ -24,7 +24,6 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -32,7 +31,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -63,6 +61,7 @@ import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
 import cx.ring.mvp.GenericView;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.BitmapUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
@@ -76,6 +75,9 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
     @Inject
     RingNavigationPresenter mRingNavigationPresenter;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
 
     /***************
      * Header views
@@ -358,8 +360,8 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         cameraView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean hasPermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
-                        ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+                boolean hasPermission = mDeviceRuntimeService.hasVideoPermission() &&
+                        mDeviceRuntimeService.hasPhotoPermission();
                 if (hasPermission) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     getActivity().startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);
@@ -375,7 +377,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean hasPermission = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+                boolean hasPermission = mDeviceRuntimeService.hasGalleryPermission();
                 if (hasPermission) {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     getActivity().startActivityForResult(intent, HomeActivity.REQUEST_CODE_GALLERY);
