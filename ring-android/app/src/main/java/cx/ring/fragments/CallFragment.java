@@ -69,6 +69,7 @@ import cx.ring.utils.CircleTransform;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.KeyboardVisibilityManager;
 
+
 public class CallFragment extends BaseFragment<CallPresenter> implements CallView {
 
     public static final String TAG = CallFragment.class.getSimpleName();
@@ -124,9 +125,10 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     private MenuItem dialPadBtn = null;
     private MenuItem changeScreenOrientationBtn = null;
 
-    // Screen wake lock for incoming call
+
     private PowerManager.WakeLock mScreenWakeLock;
     private DisplayManager.DisplayListener displayListener;
+
 
     public static CallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable Uri number, boolean hasVideo) {
         Bundle bundle = new Bundle();

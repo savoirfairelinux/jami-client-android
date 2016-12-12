@@ -50,7 +50,6 @@ import cx.ring.services.PreferencesService;
 import cx.ring.services.PresenceService;
 import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.utils.Log;
-import cx.ring.utils.MediaManager;
 import dagger.Module;
 import dagger.Provides;
 
@@ -191,11 +190,5 @@ public class ServiceInjectionModule {
     @Singleton
     ScheduledExecutorService provideScheduledExecutorService() {
         return Executors.newSingleThreadScheduledExecutor();
-    }
-
-    @Provides
-    @Singleton
-    MediaManager provideMediaManager(Context context) {
-        return new MediaManager(context);
     }
 }

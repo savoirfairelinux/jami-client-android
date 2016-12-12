@@ -33,17 +33,29 @@
 
 package cx.ring.utils;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.media.AudioManager;
 
-@SuppressWarnings("deprecation")
+import java.lang.reflect.Field;
+
 public final class Compatibility {
 
     private Compatibility() {
     }
 
+    public static int getApiLevel() {
+        return android.os.Build.VERSION.SDK_INT;
+    }
+
+    public static boolean isCompatible(int apiLevel) {
+        return android.os.Build.VERSION.SDK_INT >= apiLevel;
+    }
+
+
     /**
      * Get the stream id for in call track. Can differ on some devices. Current device for which it's different :
-     * 
+     *
      * @return
      */
     public static int getInCallStream(boolean requestBluetooth) {
@@ -59,15 +71,27 @@ public final class Compatibility {
             return 6; /* STREAM_BLUETOOTH_SCO -- Thx @Stefan for the contrib */
         }
 
-        // return AudioManager.STREAM_MUSIC;
         return AudioManager.STREAM_VOICE_CALL;
     }
 
-// --Commented out by Inspection START (17-05-08 17:51):
-//    private static boolean needToneWorkaround() {
-//        return android.os.Build.PRODUCT.toLowerCase().startsWith("gt-i5800") || android.os.Build.PRODUCT.toLowerCase().startsWith("gt-i5801")
-//                || android.os.Build.PRODUCT.toLowerCase().startsWith("gt-i9003");
-//    }
-// --Commented out by Inspection STOP (17-05-08 17:51)
+    public static boolean isTabletScreen(Context ctxt) {
+        boolean isTablet = false;
+        Configuration cfg = ctxt.getResources().getConfiguration();
+        int screenLayoutVal = 0;
+        try {
+            Field f = Configuration.class.getDeclaredField("screenLayout");
+            screenLayoutVal = (Integer) f.get(cfg);
+        } catch (Exception e) {
+            return false;
+        }
+        int screenLayout = (screenLayoutVal & 0xF);
+        // 0xF = SCREENLAYOUT_SIZE_MASK but avoid 1.5 incompat doing that
+        if (screenLayout == 0x3 || screenLayout == 0x4) {
+            // 0x3 = SCREENLAYOUT_SIZE_LARGE but avoid 1.5 incompat doing that
+            // 0x4 = SCREENLAYOUT_SIZE_XLARGE but avoid 1.5 incompat doing that
+            isTablet = true;
+        }
 
+        return isTablet;
+    }
 }
