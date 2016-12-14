@@ -73,7 +73,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:supportsRtl="true">
         <activity
             android:name=".client.HomeActivity"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:label="@string/title_activity_sflphone_home"
             android:launchMode="singleTask"
             android:screenOrientation="fullUser"
