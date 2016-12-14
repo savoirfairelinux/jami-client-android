@@ -34,6 +34,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,6 +55,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -109,6 +111,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private boolean mIsMigrationDialogAlreadyShowed;
 
     private ActionBarDrawerToggle mDrawerToggle;
+    private Boolean isDrawerLocked = false;
 
     @BindView(R.id.left_drawer)
     NavigationView mNavigationView;
@@ -128,6 +131,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @BindView(R.id.action_button)
     FloatingActionButton actionButton;
 
+    @BindView(R.id.content_frame)
+    RelativeLayout mFrameLayout;
+
     private float mToolbarSize;
     protected android.app.Fragment fContent;
     protected RingNavigationFragment fNavigation;
@@ -145,6 +151,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
+        Log.d(TAG, "onCreate");
         mToolbarSize = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
 
         super.onCreate(savedInstanceState);
@@ -153,9 +160,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
                 mNavigationDrawer, /* DrawerLayout object */
@@ -181,6 +185,18 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         };
 
         mNavigationDrawer.addDrawerListener(mDrawerToggle);
+
+        Log.d(TAG, "dimension padding " + getResources().getDimension(R.dimen.drawer_content_padding));
+        if(mFrameLayout.getPaddingLeft() == (int) getResources().getDimension(R.dimen.drawer_size)){
+            mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+            mNavigationDrawer.setScrimColor(Color.TRANSPARENT);
+            isDrawerLocked = true;
+        }
+
+        if(!isDrawerLocked){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
 
         // Bind to LocalService
         String[] toRequest = LocalService.checkRequiredPermissions(this);
@@ -406,12 +422,15 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @Override
     protected void onResume() {
         super.onResume();
+        if(isDrawerLocked){
+            mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+        }
         setVideoEnabledFromPermission();
     }
 
     @Override
     public void onBackPressed() {
-        if (mNavigationDrawer.isDrawerVisible(GravityCompat.START)) {
+        if (mNavigationDrawer.isDrawerVisible(GravityCompat.START) && !isDrawerLocked) {
             mNavigationDrawer.closeDrawer(GravityCompat.START);
             return;
         }
@@ -551,7 +570,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Override
     public void onNavigationSectionSelected(RingNavigationFragment.Section section) {
-        mNavigationDrawer.closeDrawers();
+        if(!isDrawerLocked) {
+            mNavigationDrawer.closeDrawers();
+        }
 
         switch (section) {
             case HOME:
@@ -597,7 +618,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
     
     public void onAccountSelected() {
-        mNavigationDrawer.closeDrawers();
+        if(!isDrawerLocked) {
+            mNavigationDrawer.closeDrawers();
+        }
     }
 
     @Override
@@ -629,7 +652,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     public void goToSettings() {
-        if (mNavigationDrawer != null) {
+        if (mNavigationDrawer != null && !isDrawerLocked) {
             mNavigationDrawer.closeDrawers();
         }
         if (fContent instanceof SettingsFragment) {

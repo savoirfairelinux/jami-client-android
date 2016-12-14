@@ -29,8 +29,10 @@ along with this program; if not, write to the Free Software
     tools:context=".client.HomeActivity">
 
     <RelativeLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/drawer_content_padding" >
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/main_toolbar"
