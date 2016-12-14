@@ -50,6 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <uses-feature
         android:name="android.hardware.wifi"
@@ -258,6 +259,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <action android:name=".service.DRingService" />
             </intent-filter>
         </service>
+        <service android:name=".service.ChatHeadService" />
     </application>
 
 </manifest>

@@ -114,6 +114,7 @@ public class LocalService extends Service implements Observer {
     static public final String ACTION_CONF_LOADED = BuildConfig.APPLICATION_ID + ".action.CONF_LOADED";
     static public final String ACTION_ACCOUNT_UPDATE = BuildConfig.APPLICATION_ID + ".action.ACCOUNT_UPDATE";
     static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
+    static public final String ACTION_INCOMING_MESSAGE = BuildConfig.APPLICATION_ID + ".action.INCOMING_MESSAGE";
 
     static public final String ACTION_CONF_UPDATE_EXTRA_MSG = ACTION_CONF_UPDATE + ".extra.message";
 
@@ -1362,7 +1363,12 @@ public class LocalService extends Service implements Observer {
                 mMessageNotificationBuilder.setWhen(texts.lastEntry().getValue().getTimestamp());
             }
             notificationManager.notify(c.getUuid(), mMessageNotificationBuilder.build());
+            openBubble();
         }
+    }
+
+    private void openBubble() {
+
     }
 
     private void updateAudioState() {
@@ -1534,6 +1540,7 @@ public class LocalService extends Service implements Observer {
 
                     conversation.addTextMessage(txt);
 
+                    sendBroadcast(new Intent(ACTION_INCOMING_MESSAGE).putExtra("account", account));
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE));
                     break;
                 }

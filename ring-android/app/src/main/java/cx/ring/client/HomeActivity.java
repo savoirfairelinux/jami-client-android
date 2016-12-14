@@ -73,6 +73,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.Phone;
 import cx.ring.navigation.RingNavigationFragment;
+import cx.ring.service.ChatHeadService;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.settings.SettingsFragment;
@@ -199,6 +200,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             Intent intent = new Intent(this, LocalService.class);
             startService(intent);
             bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
+            intent = new Intent(this, ChatHeadService.class);
+            startService(intent);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         }
     }
 
@@ -452,34 +456,40 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         @Override
         public void onServiceConnected(ComponentName className, IBinder s) {
             Log.d(TAG, "onServiceConnected " + className.getClassName());
-            LocalService.LocalBinder binder = (LocalService.LocalBinder) s;
-            service = binder.getService();
+            if (s instanceof LocalService.LocalBinder) {
+                LocalService.LocalBinder binder = (LocalService.LocalBinder) s;
+                service = binder.getService();
 
-            setVideoEnabledFromPermission();
+                setVideoEnabledFromPermission();
 
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
-            intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
-            registerReceiver(receiver, intentFilter);
-            mBound = true;
+                IntentFilter intentFilter = new IntentFilter();
+                intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
+                intentFilter.addAction(LocalService.ACTION_ACCOUNT_UPDATE);
+                registerReceiver(receiver, intentFilter);
+                mBound = true;
 
-            if (fNavigation == null) {
-                fNavigation = new RingNavigationFragment();
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.navigation_container, fNavigation, null)
-                        .commit();
+                if (fNavigation == null) {
+                    fNavigation = new RingNavigationFragment();
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.navigation_container, fNavigation, null)
+                            .commit();
+                }
+
+                FragmentManager fragmentManager = getFragmentManager();
+                fContent = fragmentManager.findFragmentById(R.id.main_frame);
+                if (fContent == null) {
+                    fContent = new SmartListFragment();
+                    fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commit();
+                } else if (fContent instanceof Refreshable) {
+                    fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commit();
+                    ((Refreshable) fContent).refresh();
+                }
+                service.reloadAccounts();
+            } else if (s instanceof ChatHeadService.LocalBinder) {
+                ChatHeadService.LocalBinder binderChatHead = (ChatHeadService.LocalBinder) s;
+                ChatHeadService chatHeadService = binderChatHead.getService();
+                chatHeadService.removeChatHead(String.valueOf(1));
             }
-
-            FragmentManager fragmentManager = getFragmentManager();
-            fContent = fragmentManager.findFragmentById(R.id.main_frame);
-            if (fContent == null) {
-                fContent = new SmartListFragment();
-                fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commit();
-            } else if (fContent instanceof Refreshable) {
-                fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commit();
-                ((Refreshable) fContent).refresh();
-            }
-            service.reloadAccounts();
         }
 
         @Override
@@ -595,7 +605,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 break;
         }
     }
-    
+
     public void onAccountSelected() {
         mNavigationDrawer.closeDrawers();
     }
