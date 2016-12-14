@@ -263,6 +263,23 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
         setupNavigationMenu();
         setupAccountList();
+        if (savedInstanceState != null) {
+            if (getFragmentManager().findFragmentByTag(HomeActivity.ACCOUNTS_TAG) != null &&
+                    getFragmentManager().findFragmentByTag(HomeActivity.ACCOUNTS_TAG).isAdded()) {
+                selectSection(RingNavigationFragment.Section.MANAGE);
+            } else if (getFragmentManager().findFragmentByTag(HomeActivity.SETTINGS_TAG) != null &&
+                    getFragmentManager().findFragmentByTag(HomeActivity.SETTINGS_TAG).isAdded()) {
+                selectSection(RingNavigationFragment.Section.SETTINGS);
+            } else if (getFragmentManager().findFragmentByTag(HomeActivity.SHARE_TAG) != null &&
+                    getFragmentManager().findFragmentByTag(HomeActivity.SHARE_TAG).isAdded()) {
+                selectSection(RingNavigationFragment.Section.SHARE);
+            } else if (getFragmentManager().findFragmentByTag(HomeActivity.ABOUT_TAG) != null &&
+                    getFragmentManager().findFragmentByTag(HomeActivity.ABOUT_TAG).isAdded()) {
+                selectSection(RingNavigationFragment.Section.ABOUT);
+            } else {
+                selectSection(RingNavigationFragment.Section.HOME);
+            }
+        }
 
         return inflatedView;
     }
@@ -472,6 +489,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
             mAccountService.setCurrentAccount(selected);
         }
     }
+
 
     private void updateSelectedAccountView() {
         Account selectedAccount = mAccountService.getCurrentAccount();
