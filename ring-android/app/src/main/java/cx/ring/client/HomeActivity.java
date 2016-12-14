@@ -34,6 +34,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,6 +55,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -101,11 +103,11 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     public static final int REQUEST_PERMISSION_CAMERA = 113;
     public static final int REQUEST_PERMISSION_READ_STORAGE = 114;
 
-    private static final String HOME_TAG = "Home";
-    private static final String ACCOUNTS_TAG = "Accounts";
-    private static final String ABOUT_TAG = "About";
-    private static final String SETTINGS_TAG = "Prefs";
-    private static final String SHARE_TAG = "Share";
+    public static final String HOME_TAG = "Home";
+    public static final String ACCOUNTS_TAG = "Accounts";
+    public static final String ABOUT_TAG = "About";
+    public static final String SETTINGS_TAG = "Prefs";
+    public static final String SHARE_TAG = "Share";
 
     private LocalService service;
     private boolean mBound = false;
@@ -114,6 +116,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private boolean mIsAskingForPermissions = false;
 
     private ActionBarDrawerToggle mDrawerToggle;
+    private Boolean isDrawerLocked = false;
 
     @Inject
     AccountService mAccountService;
@@ -135,6 +138,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @BindView(R.id.action_button)
     FloatingActionButton actionButton;
+
+    @BindView(R.id.content_frame)
+    RelativeLayout mFrameLayout;
 
     private float mToolbarSize;
     protected android.app.Fragment fContent;
@@ -183,9 +189,13 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
+        Log.d(TAG, "onCreate");
         mToolbarSize = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
 
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            fNavigation = (RingNavigationFragment) getFragmentManager().findFragmentByTag("NAVIGATION");
+        }
         setContentView(R.layout.activity_home);
 
         ButterKnife.bind(this);
@@ -194,9 +204,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
 
         setSupportActionBar(mToolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
                 mNavigationDrawer, /* DrawerLayout object */
@@ -218,7 +225,24 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             }
         };
 
-        mNavigationDrawer.addDrawerListener(mDrawerToggle);
+        if (mFrameLayout.getPaddingLeft() == (int) getResources().getDimension(R.dimen.drawer_size)) {
+            mNavigationDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+            mNavigationDrawer.setScrimColor(Color.TRANSPARENT);
+            isDrawerLocked = true;
+        }
+
+        if (!isDrawerLocked) {
+            mNavigationDrawer.addDrawerListener(mDrawerToggle);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
+
+        if (fNavigation == null && savedInstanceState == null) {
+            fNavigation = new RingNavigationFragment();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.navigation_container, fNavigation, "NAVIGATION")
+                    .commit();
+        }
 
         // Bind to LocalService
         String[] toRequest = LocalService.checkRequiredPermissions(this);
@@ -447,7 +471,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Override
     public void onBackPressed() {
-        if (mNavigationDrawer.isDrawerVisible(GravityCompat.START)) {
+        if (mNavigationDrawer.isDrawerVisible(GravityCompat.START) && !isDrawerLocked) {
             mNavigationDrawer.closeDrawer(GravityCompat.START);
             return;
         }
@@ -499,13 +523,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             registerReceiver(receiver, intentFilter);
             mBound = true;
 
-            if (fNavigation == null) {
-                fNavigation = new RingNavigationFragment();
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.navigation_container, fNavigation, null)
-                        .commit();
-            }
-
             FragmentManager fragmentManager = getFragmentManager();
             fContent = fragmentManager.findFragmentById(R.id.main_frame);
             if (fContent == null) {
@@ -521,9 +538,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         @Override
         public void onServiceDisconnected(ComponentName className) {
             Log.d(TAG, "onServiceDisconnected " + className.getClassName());
-            if (fNavigation != null) {
+            /*if (fNavigation != null) {
                 fNavigation = null;
-            }
+            }*/
             mBound = false;
         }
     };
@@ -578,7 +595,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Override
     public void onNavigationSectionSelected(RingNavigationFragment.Section section) {
-        mNavigationDrawer.closeDrawers();
+        if (!isDrawerLocked) {
+            mNavigationDrawer.closeDrawers();
+        }
 
         switch (section) {
             case HOME:
@@ -624,7 +643,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     public void onAccountSelected() {
-        mNavigationDrawer.closeDrawers();
+        if (!isDrawerLocked) {
+            mNavigationDrawer.closeDrawers();
+        }
     }
 
     @Override
@@ -656,7 +677,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     public void goToSettings() {
-        if (mNavigationDrawer != null) {
+        if (mNavigationDrawer != null && !isDrawerLocked) {
             mNavigationDrawer.closeDrawers();
         }
         if (fContent instanceof SettingsFragment) {

@@ -226,6 +226,17 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
         setupNavigationMenu();
         setupAccountList();
+        if (getFragmentManager().findFragmentByTag(HomeActivity.ACCOUNTS_TAG) != null) {
+            selectSection(RingNavigationFragment.Section.MANAGE);
+        } else if (getFragmentManager().findFragmentByTag(HomeActivity.SETTINGS_TAG) != null) {
+            selectSection(RingNavigationFragment.Section.SETTINGS);
+        } else if (getFragmentManager().findFragmentByTag(HomeActivity.SHARE_TAG) != null) {
+            selectSection(RingNavigationFragment.Section.SHARE);
+        } else if (getFragmentManager().findFragmentByTag(HomeActivity.ABOUT_TAG) != null) {
+            selectSection(RingNavigationFragment.Section.ABOUT);
+        } else {
+            selectSection(RingNavigationFragment.Section.HOME);
+        }
 
         return inflatedView;
     }
@@ -426,8 +437,10 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
             @Override
             public void run() {
                 mAccountAdapter.replaceAll(viewModel.getAccounts());
-                updateUserView(viewModel.getVcard(getActivity().getFilesDir(), getString(R.string.unknown)));
-                updateSelectedAccountView(viewModel.getAccount());
+                if (getActivity() != null) {
+                    updateUserView(viewModel.getVcard(getActivity().getFilesDir(), getString(R.string.unknown)));
+                    updateSelectedAccountView(viewModel.getAccount());
+                }
 
                 if (viewModel.getAccounts().isEmpty()) {
                     mNewAccountBtn.setVisibility(View.VISIBLE);
