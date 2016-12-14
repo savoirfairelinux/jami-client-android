@@ -40,4 +40,7 @@ along with this program; if not, write to the Free Software
     <dimen name="toolbar_content_inset">72dp</dimen>
     <dimen name="toolbar_elevation">4dp</dimen>
 
+    <dimen name="drawer_content_padding">0dp</dimen>
+    <dimen name="drawer_size">320dp</dimen>
+
 </resources>
