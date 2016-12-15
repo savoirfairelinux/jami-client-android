@@ -195,7 +195,7 @@ export RING_EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${SYSROOT}/usr/${LIBDIR}"
 make list
 make fetch
 export PATH="$PATH:$PWD/../$TARGET_TUPLE/bin"
-make
+make $MAKEFLAGS
 popd
 
 ############
