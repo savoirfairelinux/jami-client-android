@@ -50,6 +50,7 @@ public class CallManagerCallBack implements Observer {
                 callStateChanged(
                         event.getEventInput(DaemonEvent.EventInput.CALL_ID, String.class),
                         event.getEventInput(DaemonEvent.EventInput.STATE, String.class),
+                        event.getEventInput(DaemonEvent.EventInput.DETAILS, HashMap.class),
                         event.getEventInput(DaemonEvent.EventInput.DETAIL_CODE, Integer.class)
                 );
                 break;
@@ -93,7 +94,7 @@ public class CallManagerCallBack implements Observer {
         }
     }
 
-    private void callStateChanged(String callId, String newState, int detailCode) {
+    private void callStateChanged(String callId, String newState, HashMap callDetails, int detailCode) {
         if (newState.equals(SipCall.stateToString(SipCall.State.INCOMING)) ||
                 newState.equals(SipCall.stateToString(SipCall.State.OVER))) {
             this.mProfileChunk = null;
@@ -101,6 +102,7 @@ public class CallManagerCallBack implements Observer {
         Intent intent = new Intent(CALL_STATE_CHANGED);
         intent.putExtra("call", callId);
         intent.putExtra("state", newState);
+        intent.putExtra("details", callDetails);
         intent.putExtra("detail_code", detailCode);
         mContext.sendBroadcast(intent);
     }
