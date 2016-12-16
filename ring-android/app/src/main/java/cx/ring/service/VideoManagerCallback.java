@@ -128,6 +128,7 @@ public class VideoManagerCallback implements Observer {
     }
 
     public void init() {
+        mNativeParams.clear();
         int number_cameras = getNumberOfCameras();
         Camera.CameraInfo camInfo = new Camera.CameraInfo();
         for (int i = 0; i < number_cameras; i++) {
@@ -179,6 +180,7 @@ public class VideoManagerCallback implements Observer {
     }
 
     private void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates) {
+
         int id = Integer.valueOf(camId);
 
         if (id < 0 || id >= getNumberOfCameras()) {

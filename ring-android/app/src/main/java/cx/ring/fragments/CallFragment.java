@@ -329,6 +329,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                         if (haveVideo) {
                             mVideoSurface.setVisibility(View.VISIBLE);
                             videoPreview.setVisibility(View.VISIBLE);
+
                             videoWidth = intent.getIntExtra("width", 0);
                             videoHeight = intent.getIntExtra("height", 0);
                         } else {
@@ -502,6 +503,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             haveVideo = true;
             mVideoSurface.setVisibility(View.VISIBLE);
             videoPreview.setVisibility(View.VISIBLE);
+
             c.setResumeVideo(false);
         }
     }
@@ -527,6 +529,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                 haveVideo = true;
                 mVideoSurface.setVisibility(View.VISIBLE);
                 videoPreview.setVisibility(View.VISIBLE);
+
                 conference.setResumeVideo(false);
             }
         }
