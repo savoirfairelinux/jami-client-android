@@ -344,9 +344,12 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                             break;
                         case Manifest.permission.CAMERA:
                             sharedPref.edit().putBoolean(getString(R.string.pref_systemCamera_key), grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
+                            // permissions have changed, video params should be reset
+                            ((RingApplication)getApplication()).restartVideo();
                             break;
                     }
                 }
+
                 if (!mBound) {
                     Intent intent = new Intent(this, LocalService.class);
                     startService(intent);
@@ -452,6 +455,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         @Override
         public void onServiceConnected(ComponentName className, IBinder s) {
             Log.d(TAG, "onServiceConnected " + className.getClassName());
+
             LocalService.LocalBinder binder = (LocalService.LocalBinder) s;
             service = binder.getService();
 
