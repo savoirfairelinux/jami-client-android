@@ -119,7 +119,6 @@ public class HardwareService extends Observable {
     private class VideoCallbackHandler extends VideoCallback {
 
         public VideoCallbackHandler() {
-            //super();
         }
 
         @Override

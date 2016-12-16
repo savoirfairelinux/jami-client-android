@@ -19,6 +19,7 @@
  */
 package cx.ring.application;
 
+import android.Manifest;
 import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -65,6 +66,7 @@ import cx.ring.services.ConferenceService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.LogService;
+import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 
 public class RingApplication extends Application {
@@ -153,51 +155,8 @@ public class RingApplication extends Application {
             Log.d(TAG, "onServiceConnected " + className.getClassName());
 
             // bootstrap Daemon
-            Future<Boolean> startResult = mExecutor.submit(new Callable<Boolean>() {
-                @Override
-                public Boolean call() throws Exception {
-                    // Android specific callbacks handlers (rely on pure Java low level Services callbacks handlers as they
-                    // observe them)
-                    mConfigurationCallback = new ConfigurationManagerCallback(getApplicationContext());
-                    mCallManagerCallBack = new CallManagerCallBack(getApplicationContext());
-                    mVideoManagerCallback = new VideoManagerCallback(RingApplication.this);
+            bootstrapDaemon();
 
-                    // mCallAndConferenceCallbackHandler is a wrapper to handle CallCallbacks and ConferenceCallbacks
-                    mCallAndConferenceCallbackHandler = mDaemonService.getDaemonCallbackHandler(
-                            mCallService.getCallbackHandler(),
-                            mConferenceService.getCallbackHandler());
-                    mAccountCallbackHandler = mAccountService.getCallbackHandler();
-                    mHardwareCallbackHandler = mHardwareService.getCallbackHandler();
-
-                    // Android specific Low level Services observers
-                    mCallService.addObserver(mCallManagerCallBack);
-                    mConferenceService.addObserver(mCallManagerCallBack);
-                    mAccountService.addObserver(mConfigurationCallback);
-                    mHardwareService.addObserver(mVideoManagerCallback);
-
-                    mDaemonService.startDaemon(
-                            mCallAndConferenceCallbackHandler,
-                            mAccountCallbackHandler,
-                            mHardwareCallbackHandler);
-
-                    ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
-                    registerReceiver(ringerModeListener, RINGER_FILTER);
-
-                    mVideoManagerCallback.init();
-
-                    return true;
-                }
-            });
-
-            try {
-                startResult.get();
-            } catch (Exception e) {
-                Log.e(TAG, "DRingService start failed", e);
-            }
-
-            Intent intent = new Intent(DRING_CONNECTION_CHANGED);
-            intent.putExtra("connected", mDaemonService.isStarted());
-            sendBroadcast(intent);
         }
 
         @Override
@@ -205,6 +164,104 @@ public class RingApplication extends Application {
             Log.d(TAG, "onServiceDisconnected " + className.getClassName());
         }
     };
+
+    public void bootstrapDaemon() {
+
+        if (mDaemonService.isStarted()) {
+            return;
+        }
+
+        final boolean isVideoAllowed = LocalService.checkPermission(this, Manifest.permission.CAMERA);
+
+        Future<Boolean> startResult = mExecutor.submit(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                // Android specific callbacks handlers (rely on pure Java low level Services callbacks handlers as they
+                // observe them)
+                mConfigurationCallback = new ConfigurationManagerCallback(getApplicationContext());
+                mCallManagerCallBack = new CallManagerCallBack(getApplicationContext());
+                mVideoManagerCallback = new VideoManagerCallback(RingApplication.this);
+
+                // mCallAndConferenceCallbackHandler is a wrapper to handle CallCallbacks and ConferenceCallbacks
+                mCallAndConferenceCallbackHandler = mDaemonService.getDaemonCallbackHandler(
+                        mCallService.getCallbackHandler(),
+                        mConferenceService.getCallbackHandler());
+                mAccountCallbackHandler = mAccountService.getCallbackHandler();
+                mHardwareCallbackHandler = mHardwareService.getCallbackHandler();
+
+                // Android specific Low level Services observers
+                mCallService.addObserver(mCallManagerCallBack);
+                mConferenceService.addObserver(mCallManagerCallBack);
+                mAccountService.addObserver(mConfigurationCallback);
+                mHardwareService.addObserver(mVideoManagerCallback);
+
+                mDaemonService.startDaemon(
+                        mCallAndConferenceCallbackHandler,
+                        mAccountCallbackHandler,
+                        mHardwareCallbackHandler);
+
+                ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
+                registerReceiver(ringerModeListener, RINGER_FILTER);
+
+                if (isVideoAllowed) {
+                    mVideoManagerCallback.init();
+                }
+
+                return true;
+            }
+        });
+
+        try {
+            startResult.get();
+        } catch (Exception e) {
+            Log.e(TAG, "DRingService start failed", e);
+        }
+
+        Intent intent = new Intent(DRING_CONNECTION_CHANGED);
+        intent.putExtra("connected", mDaemonService.isStarted());
+        sendBroadcast(intent);
+    }
+
+    public void restartVideo () {
+
+        final boolean isVideoAllowed = LocalService.checkPermission(this, Manifest.permission.CAMERA);
+
+        Future<Boolean> result = mExecutor.submit(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                if (isVideoAllowed) {
+                    mVideoManagerCallback.init();
+                }
+                return true;
+            }
+        });
+
+        FutureUtils.getFutureResult(result);
+    }
+
+    public void terminateDaemon() {
+        Future<Boolean> stopResult = mExecutor.submit(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                unregisterReceiver(ringerModeListener);
+                mDaemonService.stopDaemon();
+                mConfigurationCallback = null;
+                mCallManagerCallBack = null;
+                mVideoManagerCallback = null;
+                Intent intent = new Intent(DRING_CONNECTION_CHANGED);
+                intent.putExtra("connected", mDaemonService.isStarted());
+                sendBroadcast(intent);
+
+                return true;
+            }
+        });
+
+        try {
+            stopResult.get();
+        } catch (Exception e) {
+            Log.e(TAG, "DRingService stop failed", e);
+        }
+    }
 
     @Override
     public void onCreate() {
@@ -236,30 +293,6 @@ public class RingApplication extends Application {
 
         // todo decide when to stop the daemon
         terminateDaemon();
-    }
-
-    public void terminateDaemon() {
-        Future<Boolean> stopResult = mExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                unregisterReceiver(ringerModeListener);
-                mDaemonService.stopDaemon();
-                mConfigurationCallback = null;
-                mCallManagerCallBack = null;
-                mVideoManagerCallback = null;
-                Intent intent = new Intent(DRING_CONNECTION_CHANGED);
-                intent.putExtra("connected", mDaemonService.isStarted());
-                sendBroadcast(intent);
-
-                return true;
-            }
-        });
-
-        try {
-            stopResult.get();
-        } catch (Exception e) {
-            Log.e(TAG, "DRingService stop failed", e);
-        }
     }
 
     public RingInjectionComponent getRingInjectionComponent() {
