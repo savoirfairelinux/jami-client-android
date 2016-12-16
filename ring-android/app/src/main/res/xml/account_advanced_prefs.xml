@@ -104,14 +104,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <cx.ring.views.EditTextIntegerPreference
             android:id="@+id/account_published_port"
             android:defaultValue="5060"
-            android:dependency="Account.publishedSameAsLocal"
             android:key="Account.publishedPort"
             android:persistent="false"
             android:title="@string/account_published_port_label" />
 
         <android.support.v7.preference.EditTextPreference
             android:id="@+id/account_published_address"
-            android:dependency="Account.publishedSameAsLocal"
             android:key="Account.publishedAddress"
             android:persistent="false"
             android:title="@string/account_published_address_label" />

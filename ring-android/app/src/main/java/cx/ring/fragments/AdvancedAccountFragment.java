@@ -78,6 +78,11 @@ public class AdvancedAccountFragment extends PreferenceFragment {
         if (account != null) {
             setPreferenceDetails(account.getConfig());
             setPreferenceListener(account.getConfig(), changeAdvancedPreferenceListener);
+
+
+            Boolean isPublishedEnabled = Boolean.valueOf(account.getDetail(ConfigKey.PUBLISHED_SAMEAS_LOCAL));
+            findPreference(ConfigKey.PUBLISHED_PORT.key()).setEnabled(!isPublishedEnabled);
+            findPreference(ConfigKey.PUBLISHED_ADDRESS.key()).setEnabled(!isPublishedEnabled);
         }
     }
 
@@ -160,6 +165,10 @@ public class AdvancedAccountFragment extends PreferenceFragment {
 
             if (preference instanceof TwoStatePreference) {
                 account.setDetail(key, newValue.toString());
+                if (key == ConfigKey.PUBLISHED_SAMEAS_LOCAL) {
+                    findPreference(ConfigKey.PUBLISHED_PORT.key()).setEnabled(!(Boolean) newValue);
+                    findPreference(ConfigKey.PUBLISHED_ADDRESS.key()).setEnabled(!(Boolean) newValue);
+                }
             } else if (preference instanceof PasswordPreference) {
                 account.setDetail(key, newValue.toString());
                 preference.setSummary(TextUtils.isEmpty(newValue.toString()) ? "" : "******");
