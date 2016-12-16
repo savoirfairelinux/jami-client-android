@@ -326,10 +326,15 @@ public class CallService extends Observable {
 
         void callStateChanged(String callId, String newState, int detailCode) {
             Log.d(TAG, "call state changed: " + callId + ", " + newState + ", " + detailCode);
+
+            // it is thread safe: executed in the same daemon thread than the callback
+            Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
+
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.CALL_STATE_CHANGED);
             event.addEventInput(DaemonEvent.EventInput.CALL_ID, callId);
             event.addEventInput(DaemonEvent.EventInput.STATE, newState);
+            event.addEventInput(DaemonEvent.EventInput.DETAILS, callDetails);
             event.addEventInput(DaemonEvent.EventInput.DETAIL_CODE, detailCode);
             notifyObservers(event);
         }
