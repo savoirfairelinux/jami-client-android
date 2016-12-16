@@ -206,6 +206,22 @@ public class RingApplication extends Application {
         }
     };
 
+    public void reinitVideo () {
+        Future<Boolean> reinitResult = mExecutor.submit(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                mVideoManagerCallback.init();
+                return true;
+            }
+        });
+
+        try {
+            reinitResult.get();
+        } catch (Exception e) {
+            Log.e(TAG, "Video start failed", e);
+        }
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

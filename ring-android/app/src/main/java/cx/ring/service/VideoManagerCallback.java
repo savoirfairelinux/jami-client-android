@@ -179,6 +179,7 @@ public class VideoManagerCallback implements Observer {
     }
 
     private void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates) {
+
         int id = Integer.valueOf(camId);
 
         if (id < 0 || id >= getNumberOfCameras()) {

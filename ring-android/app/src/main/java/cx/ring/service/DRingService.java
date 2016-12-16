@@ -460,7 +460,11 @@ public class DRingService extends Service {
             RingApplication application = (RingApplication) getApplication();
             Map<String, StringMap> camSettings = new HashMap<>();
             for (int i = 0; i < Camera.getNumberOfCameras(); i++) {
-                camSettings.put(Integer.toString(i), application.mVideoManagerCallback.getNativeParams(i).toMap(getResources().getConfiguration().orientation));
+                if (application.mVideoManagerCallback.getNativeParams(i) != null) {
+                    camSettings.put(Integer.toString(i), application.mVideoManagerCallback.getNativeParams(i).toMap(getResources().getConfiguration().orientation));
+                } else {
+                    Log.d(TAG, "--------------------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>< NULLS");
+                }
             }
 
             mHardwareService.setPreviewSettings(camSettings);

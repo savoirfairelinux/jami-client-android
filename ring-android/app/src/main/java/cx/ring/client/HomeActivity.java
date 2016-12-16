@@ -344,6 +344,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                             break;
                         case Manifest.permission.CAMERA:
                             sharedPref.edit().putBoolean(getString(R.string.pref_systemCamera_key), grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
+                            // if permissions have been granted, camera infos must be refreshed
+                            ((RingApplication) getApplication()).reinitVideo();
                             break;
                     }
                 }
