@@ -63,6 +63,7 @@ public class DaemonEvent {
         CAMERA_ID,
         FROM,
         TO,
+        DETAILS,
         DETAIL_CODE,
         DETAIL_STRING,
         STATE,

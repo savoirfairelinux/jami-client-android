@@ -99,7 +99,7 @@ public class SipCall {
         return mCallState;
     }
 
-    public void setDetails(Map<String, String> details) {
+    public void  setDetails(Map<String, String> details) {
         isPeerHolding = "true".equals(details.get("PEER_HOLDING"));
         isAudioMuted = "true".equals(details.get("AUDIO_MUTED"));
         isVideoMuted = "true".equals(details.get("VIDEO_MUTED"));

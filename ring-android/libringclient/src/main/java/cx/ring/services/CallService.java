@@ -326,10 +326,14 @@ public class CallService extends Observable {
 
         void callStateChanged(String callId, String newState, int detailCode) {
             Log.d(TAG, "call state changed: " + callId + ", " + newState + ", " + detailCode);
+
+            Map<String, String> callDetails = getCallDetails(callId);
+
             setChanged();
             DaemonEvent event = new DaemonEvent(DaemonEvent.EventType.CALL_STATE_CHANGED);
             event.addEventInput(DaemonEvent.EventInput.CALL_ID, callId);
             event.addEventInput(DaemonEvent.EventInput.STATE, newState);
+            event.addEventInput(DaemonEvent.EventInput.DETAILS, callDetails);
             event.addEventInput(DaemonEvent.EventInput.DETAIL_CODE, detailCode);
             notifyObservers(event);
         }
