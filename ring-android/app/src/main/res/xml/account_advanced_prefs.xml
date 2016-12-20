@@ -98,6 +98,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <android.support.v7.preference.CheckBoxPreference
             android:id="@+id/account_published_sameas_local"
             android:key="Account.publishedSameAsLocal"
+            android:disableDependentsState="true"
             android:persistent="false"
             android:title="@string/account_published_same_as_local_label" />
 
