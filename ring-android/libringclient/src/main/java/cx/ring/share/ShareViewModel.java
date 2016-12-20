@@ -41,6 +41,12 @@ public class ShareViewModel {
             return null;
         }
 
+        String accountShareUri = getAccountShareUri();
+
+        if (accountShareUri == null || accountShareUri.isEmpty()) {
+            return null;
+        }
+
         return QRCodeUtils.encodeStringAsQRCodeData(mAccount.get().getShareURI());
     }
 
