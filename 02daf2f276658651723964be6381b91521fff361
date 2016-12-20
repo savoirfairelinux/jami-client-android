@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_9e79dbfe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2016-12-20T15:05:59Z",
+      "side": 1,
+      "message": "your layout says 500dp ... Either the commit message or the layout is wrong, it\u0027s up to you !",
+      "range": {
+        "startLine": 9,
+        "startChar": 45,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "02daf2f276658651723964be6381b91521fff361",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
