@@ -93,6 +93,8 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
     private Account mAccount;
     private String mCreatedAccountId;
 
+    public static final String PROFILE_TAG = "Profile";
+
     @Inject
     AccountService mAccountService;
 
@@ -106,6 +108,9 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mProfileFragment = (ProfileCreationFragment) getFragmentManager().getFragment(savedInstanceState, PROFILE_TAG);
+        }
         setContentView(R.layout.activity_wizard);
         ButterKnife.bind(this);
 
@@ -131,6 +136,12 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
             mViewPager.setOffscreenPageLimit(4);
             mAccountType = getIntent().getAction() != null ? getIntent().getAction() : AccountConfig.ACCOUNT_TYPE_RING;
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        getFragmentManager().putFragment(outState, PROFILE_TAG, mProfileFragment);
     }
 
     @Override
@@ -539,7 +550,9 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
         WizardPagerAdapter(FragmentManager fm) {
             super(fm);
             mHomeFragment = new HomeAccountCreationFragment();
-            mProfileFragment = new ProfileCreationFragment();
+            if (mProfileFragment == null) {
+                mProfileFragment = new ProfileCreationFragment();
+            }
         }
 
         @Override
