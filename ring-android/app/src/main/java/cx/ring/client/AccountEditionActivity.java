@@ -147,7 +147,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             mViewPager.setOffscreenPageLimit(4);
             mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), AccountEditionActivity.this, mAccSelected.isRing()));
 
-            final PagerSlidingTabStrip mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
+            mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
             mSlidingTabLayout.setViewPager(mViewPager);
 
             for (AccountChangedListener listener : listeners) {
@@ -265,6 +265,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             case R.id.menuitem_advanced:
                 mSlidingTabLayout.setVisibility(View.VISIBLE);
                 mViewPager.setVisibility(View.VISIBLE);
+                getFragmentManager().beginTransaction().remove(mCurrentlyDisplayed).commit();
                 break;
             default:
                 break;
