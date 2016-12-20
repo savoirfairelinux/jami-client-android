@@ -21,25 +21,38 @@
 package cx.ring.utils;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+
+import java.util.HashMap;
 
 public class QRCodeUtils {
 
     private final static String TAG = QRCodeUtils.class.getName();
 
     private final static int QRCODE_IMAGE_SIZE = 300;
+    private final static int QRCODE_IMAGE_PADDING = 0;
 
     /**
-     * @param input          uri to be displayed
+     * @param input uri to be displayed
      * @return the resulting data
      */
     public static QRCodeData encodeStringAsQRCodeData(String input) {
+
+        if (input == null || input.isEmpty()) {
+            return null;
+        }
+
         QRCodeWriter qrWriter = new QRCodeWriter();
         BitMatrix qrImageMatrix;
         try {
-            qrImageMatrix = qrWriter.encode(input, BarcodeFormat.QR_CODE, QRCODE_IMAGE_SIZE, QRCODE_IMAGE_SIZE);
+
+            HashMap<EncodeHintType, Integer> hints = new HashMap<>();
+            hints.put(EncodeHintType.MARGIN, QRCODE_IMAGE_PADDING);
+
+            qrImageMatrix = qrWriter.encode(input, BarcodeFormat.QR_CODE, QRCODE_IMAGE_SIZE, QRCODE_IMAGE_SIZE, hints);
         } catch (WriterException e) {
             Log.e(TAG, "Error while encoding QR", e);
             return null;
@@ -49,7 +62,7 @@ public class QRCodeUtils {
         int qrImageHeight = qrImageMatrix.getHeight();
         int[] pixels = new int[qrImageWidth * qrImageHeight];
 
-        final int BLACK = 0x00FFFFFF;
+        final int BLACK = 0xFF000000;
         final int WHITE = 0xFFFFFFFF;
 
         for (int row = 0; row < qrImageHeight; row++) {
@@ -67,7 +80,7 @@ public class QRCodeUtils {
         private int mWidth;
         private int mHeight;
 
-        public QRCodeData (int[] data, int width, int height) {
+        public QRCodeData(int[] data, int width, int height) {
             mData = data;
             mWidth = width;
             mHeight = height;

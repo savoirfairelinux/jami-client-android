@@ -140,6 +140,10 @@ public class ShareFragment extends Fragment implements GenericView<ShareViewMode
     public void showViewModel(final ShareViewModel viewModel) {
         final QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData();
 
+        if (mQrImage == null || mShareInstruction == null) {
+            return;
+        }
+
         RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
