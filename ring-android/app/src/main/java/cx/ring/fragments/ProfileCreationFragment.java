@@ -61,6 +61,8 @@ public class ProfileCreationFragment extends Fragment {
     public static final int REQUEST_PERMISSION_CAMERA = 3;
     public static final int REQUEST_PERMISSION_READ_STORAGE = 4;
 
+    public static final String PHOTO_TAG = "Photo";
+
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
@@ -86,6 +88,11 @@ public class ProfileCreationFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+
+        if (savedInstanceState != null) {
+            mSourcePhoto = savedInstanceState.getParcelable(PHOTO_TAG);
+        }
+
         final View view = inflater.inflate(R.layout.frag_acc_profile_create, parent, false);
         ButterKnife.bind(this, view);
 
@@ -103,6 +110,12 @@ public class ProfileCreationFragment extends Fragment {
             mFullnameView.setText(R.string.unknown);
         }
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(PHOTO_TAG, mSourcePhoto);
     }
 
     private void initProfile() {
