@@ -159,8 +159,11 @@ public class RingAccountCreationFragment extends Fragment implements Observer<Se
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        BlockchainUtils.attachUsernameTextFilter(mUsernameTxt);
+        if (savedInstanceState != null) {
+            checkNextState();
+        }
 
+        BlockchainUtils.attachUsernameTextFilter(mUsernameTxt);
         if (isAdded()) {
             mUsernameTextWatcher = BlockchainUtils.attachUsernameTextWatcher(getActivity(), mAccountService, mUsernameTxtBox, mUsernameTxt);
         }
@@ -214,6 +217,11 @@ public class RingAccountCreationFragment extends Fragment implements Observer<Se
             }
         }
         return false;
+    }
+
+    @OnTextChanged(R.id.ring_username)
+    public void onUsernameTextChanged(CharSequence s, int start, int before, int count) {
+        mCreateAccountButton.setEnabled(false);
     }
 
     private boolean isValidUsername() {
@@ -304,6 +312,7 @@ public class RingAccountCreationFragment extends Fragment implements Observer<Se
         if (actualName.isEmpty()) {
             mUsernameTxtBox.setErrorEnabled(false);
             mUsernameTxtBox.setError(null);
+            checkNextState();
             return;
         }
 
@@ -325,6 +334,7 @@ public class RingAccountCreationFragment extends Fragment implements Observer<Se
                     mUsernameTxtBox.setError(null);
                     break;
             }
+            checkNextState();
         }
     }
 }

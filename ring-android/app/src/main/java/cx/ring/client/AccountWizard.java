@@ -29,6 +29,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -93,6 +94,8 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
     private Account mAccount;
     private String mCreatedAccountId;
 
+    public static final String PROFILE_TAG = "Profile";
+
     @Inject
     AccountService mAccountService;
 
@@ -106,6 +109,12 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mProfileFragment = (ProfileCreationFragment) getFragmentManager().getFragment(savedInstanceState, PROFILE_TAG);
+            mFullname = savedInstanceState.getString("mFullname");
+            mPhotoProfile = savedInstanceState.getParcelable("mPhotoProfile");
+            mLinkAccount = savedInstanceState.getBoolean("mLinkAccount");
+        }
         setContentView(R.layout.activity_wizard);
         ButterKnife.bind(this);
 
@@ -131,6 +140,15 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
             mViewPager.setOffscreenPageLimit(4);
             mAccountType = getIntent().getAction() != null ? getIntent().getAction() : AccountConfig.ACCOUNT_TYPE_RING;
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        getFragmentManager().putFragment(outState, PROFILE_TAG, mProfileFragment);
+        outState.putString("mFullname", mFullname);
+        outState.putParcelable("mPhotoProfile", mPhotoProfile);
+        outState.putBoolean("mLinkAccount", mLinkAccount);
     }
 
     @Override
@@ -370,6 +388,8 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
                                 @Override
                                 public void onDismiss(DialogInterface dialogInterface) {
                                     setResult(Activity.RESULT_OK, new Intent());
+                                    //unlock the screen orientation
+                                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
                                     finish();
                                 }
                             });
@@ -510,6 +530,8 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
         mCreatingAccount = true;
         mCreationError = false;
 
+        //orientation is locked during the create of account to avoid the destruction of the thread
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         //noinspection unchecked
         new CreateAccountTask(this).execute(accountDetails);
     }
@@ -539,7 +561,9 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
         WizardPagerAdapter(FragmentManager fm) {
             super(fm);
             mHomeFragment = new HomeAccountCreationFragment();
-            mProfileFragment = new ProfileCreationFragment();
+            if (mProfileFragment == null) {
+                mProfileFragment = new ProfileCreationFragment();
+            }
         }
 
         @Override
