@@ -21,15 +21,19 @@
 package cx.ring.utils;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+
+import java.util.HashMap;
 
 public class QRCodeUtils {
 
     private final static String TAG = QRCodeUtils.class.getName();
 
     private final static int QRCODE_IMAGE_SIZE = 300;
+    private final static int QRCODE_IMAGE_PADDING = 0;
 
     /**
      * @param input          uri to be displayed
@@ -39,7 +43,11 @@ public class QRCodeUtils {
         QRCodeWriter qrWriter = new QRCodeWriter();
         BitMatrix qrImageMatrix;
         try {
-            qrImageMatrix = qrWriter.encode(input, BarcodeFormat.QR_CODE, QRCODE_IMAGE_SIZE, QRCODE_IMAGE_SIZE);
+
+            HashMap<EncodeHintType,Integer> hints = new HashMap<>();
+            hints.put(EncodeHintType.MARGIN, QRCODE_IMAGE_PADDING);
+
+            qrImageMatrix = qrWriter.encode(input, BarcodeFormat.QR_CODE, QRCODE_IMAGE_SIZE, QRCODE_IMAGE_SIZE, hints);
         } catch (WriterException e) {
             Log.e(TAG, "Error while encoding QR", e);
             return null;
@@ -55,7 +63,7 @@ public class QRCodeUtils {
         for (int row = 0; row < qrImageHeight; row++) {
             int offset = row * qrImageWidth;
             for (int column = 0; column < qrImageWidth; column++) {
-                pixels[offset + column] = qrImageMatrix.get(column, row) ? BLACK : WHITE;
+                pixels[offset + column] = qrImageMatrix.get(column, row) ? WHITE : BLACK;
             }
         }
 

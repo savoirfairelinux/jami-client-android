@@ -140,6 +140,10 @@ public class ShareFragment extends Fragment implements GenericView<ShareViewMode
     public void showViewModel(final ShareViewModel viewModel) {
         final QRCodeUtils.QRCodeData qrCodeData = viewModel.getAccountQRCodeData();
 
+        if (mQrImage == null || mShareInstruction == null) {
+            return;
+        }
+
         RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -147,7 +151,7 @@ public class ShareFragment extends Fragment implements GenericView<ShareViewMode
                     mQrImage.setVisibility(View.INVISIBLE);
                     mShareInstruction.setText(mShareMessageNoAccount);
                 } else {
-                    Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
+                    Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ALPHA_8);
                     bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
                     mQrImage.setImageBitmap(bitmap);
                     mShareInstruction.setText(mShareMessage);
