@@ -106,6 +106,9 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState != null){
+            mProfileFragment = (ProfileCreationFragment) getFragmentManager().findFragmentByTag("");
+        }
         setContentView(R.layout.activity_wizard);
         ButterKnife.bind(this);
 
@@ -539,7 +542,9 @@ public class AccountWizard extends AppCompatActivity implements Observer<DaemonE
         WizardPagerAdapter(FragmentManager fm) {
             super(fm);
             mHomeFragment = new HomeAccountCreationFragment();
-            mProfileFragment = new ProfileCreationFragment();
+            if(mProfileFragment == null) {
+                mProfileFragment = new ProfileCreationFragment();
+            }
         }
 
         @Override
