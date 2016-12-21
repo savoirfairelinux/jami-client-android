@@ -27,279 +27,38 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.Pair;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.OnEditorAction;
 import cx.ring.R;
-import cx.ring.adapters.ContactDetailsTask;
-import cx.ring.adapters.ConversationAdapter;
-import cx.ring.adapters.NumberAdapter;
-import cx.ring.application.RingApplication;
-import cx.ring.model.Account;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conference;
-import cx.ring.model.Conversation;
-import cx.ring.model.Phone;
-import cx.ring.model.Uri;
+import cx.ring.fragments.ConversationFragment;
 import cx.ring.service.LocalService;
-import cx.ring.services.CallService;
-import cx.ring.utils.ActionHelper;
-import cx.ring.utils.ClipboardHelper;
-import cx.ring.utils.ContentUriHandler;
 
-public class ConversationActivity extends AppCompatActivity implements
-        Conversation.ConversationActionCallback,
-        ClipboardHelper.ClipboardHelperCallback,
-        ContactDetailsTask.DetailsLoadedCallback {
-
-    @Inject
-    CallService mCallService;
+public class ConversationActivity extends AppCompatActivity {
 
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.msg_input_txt)
-    EditText mMsgEditTxt;
-
-    @BindView(R.id.msg_send)
-    View mMsgSendBtn;
-
-    @BindView(R.id.ongoingcall_pane)
-    ViewGroup mBottomPane;
-
-    @BindView(R.id.hist_list)
-    RecyclerView mHistList;
-
-    @BindView(R.id.number_selector)
-    Spinner mNumberSpinner;
-
     private static final String TAG = ConversationActivity.class.getSimpleName();
-    private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
-
-    public static final int REQ_ADD_CONTACT = 42;
     static final long REFRESH_INTERVAL_MS = 30 * 1000;
 
     private boolean mBound = false;
-    private boolean mVisible = false;
-    private AlertDialog mDeleteDialog;
-    private boolean mDeleteConversation = false;
-
     private LocalService mService = null;
-    private Conversation mConversation = null;
-    private Uri mPreferredNumber = null;
-
-    private MenuItem mAddContactBtn = null;
-
-    private ConversationAdapter mAdapter = null;
-    private NumberAdapter mNumberAdapter = null;
-
     private final Handler mRefreshTaskHandler = new Handler();
-
-    static private Pair<Conversation, Uri> getConversation(LocalService s, Intent i) {
-        if (s == null || i == null || i.getData() == null)
-            return new Pair<>(null, null);
-
-        String conv_id = i.getData().getLastPathSegment();
-        Uri number = new Uri(i.getStringExtra("number"));
-
-        Log.d(TAG, "getConversation " + conv_id + " " + number);
-        Conversation conv = s.getConversation(conv_id);
-        if (conv == null) {
-            long contact_id = CallContact.contactIdFromId(conv_id);
-            Log.d(TAG, "no conversation found, contact_id " + contact_id);
-            CallContact contact = null;
-            if (contact_id >= 0)
-                contact = s.findContactById(contact_id);
-            if (contact == null) {
-                Uri conv_uri = new Uri(conv_id);
-                if (!number.isEmpty()) {
-                    contact = s.findContactByNumber(number);
-                    if (contact == null)
-                        contact = CallContact.buildUnknown(conv_uri);
-                } else {
-                    contact = s.findContactByNumber(conv_uri);
-                    if (contact == null) {
-                        contact = CallContact.buildUnknown(conv_uri);
-                        number = contact.getPhones().get(0).getNumber();
-                    } else {
-                        number = conv_uri;
-                    }
-                }
-            }
-            conv = s.startConversation(contact);
-        }
-
-        Log.d(TAG, "returning " + conv.getContact().getDisplayName() + " " + number);
-        return new Pair<>(conv, number);
-    }
-
-    static private int getIndex(Spinner spinner, Uri myString) {
-        for (int i = 0, n = spinner.getCount(); i < n; i++)
-            if (((Phone) spinner.getItemAtPosition(i)).getNumber().equals(myString))
-                return i;
-        return 0;
-    }
+    private ConversationFragment mConversationFragment;
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        refreshView(0);
+        mConversationFragment.refreshView(0);
     }
-
-    private void refreshView(long refreshed) {
-        Pair<Conversation, Uri> conv = getConversation(mService, getIntent());
-        mConversation = conv.first;
-        mPreferredNumber = conv.second;
-
-        if (mConversation == null) {
-            finish();
-            return;
-        }
-
-        ActionBar ab = getSupportActionBar();
-        if (ab != null) {
-            if (!mConversation.getContact().getPhones().isEmpty()) {
-                CallContact contact = mCallService.getContact(mConversation.getContact().getPhones().get(0).getNumber());
-                if (contact != null) {
-                    mConversation.setContact(contact);
-                }
-            }
-
-            ab.setTitle(mConversation.getContact().getDisplayName());
-        }
-
-        final CallContact contact = mConversation.getContact();
-        if (contact != null) {
-            new ContactDetailsTask(this, contact, this).run();
-        }
-
-        Conference conf = mConversation.getCurrentCall();
-        mBottomPane.setVisibility(conf == null ? View.GONE : View.VISIBLE);
-        if (conf != null) {
-            Log.d(TAG, "ConversationActivity refreshView " + conf.getId() + " "
-                    + mConversation.getCurrentCall());
-        }
-
-        mAdapter.updateDataset(mConversation.getAggregateHistory(), refreshed);
-
-        if (mConversation.getContact().getPhones().size() > 1) {
-            mNumberSpinner.setVisibility(View.VISIBLE);
-            mNumberAdapter = new NumberAdapter(ConversationActivity.this,
-                    mConversation.getContact(),
-                    false);
-            mNumberSpinner.setAdapter(mNumberAdapter);
-            if (mPreferredNumber == null || mPreferredNumber.isEmpty()) {
-                mPreferredNumber = new Uri(
-                        mConversation.getLastNumberUsed(mConversation.getLastAccountUsed())
-                );
-            }
-            mNumberSpinner.setSelection(getIndex(mNumberSpinner, mPreferredNumber));
-        } else {
-            mNumberSpinner.setVisibility(View.GONE);
-            mPreferredNumber = mConversation.getContact().getPhones().get(0).getNumber();
-        }
-
-        invalidateOptionsMenu();
-    }
-
-    private ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder binder) {
-            Log.d(TAG, "ConversationActivity onServiceConnected " + className.getClassName());
-            mService = ((LocalService.LocalBinder) binder).getService();
-
-            mAdapter = new ConversationAdapter(ConversationActivity.this,
-                    mService.get40dpContactCache(),
-                    mService.getThreadPool());
-
-            if (mHistList != null) {
-                mHistList.setAdapter(mAdapter);
-            }
-
-            refreshView(0);
-
-            IntentFilter filter = new IntentFilter(LocalService.ACTION_CONF_UPDATE);
-            registerReceiver(receiver, filter);
-
-            mBound = true;
-            if (mVisible && mConversation != null && !mConversation.isVisible()) {
-                mConversation.setVisible(true);
-                mService.readConversation(mConversation);
-            }
-
-            if (mDeleteConversation) {
-                mDeleteDialog = ActionHelper.launchDeleteAction(ConversationActivity.this, mConversation, ConversationActivity.this);
-            }
-
-            mRefreshTaskHandler.postDelayed(refreshTask, REFRESH_INTERVAL_MS);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            Log.d(TAG, "ConversationActivity onServiceDisconnected " + arg0.getClassName());
-            mBound = false;
-            mRefreshTaskHandler.removeCallbacks(refreshTask);
-            if (mConversation != null) {
-                mConversation.setVisible(false);
-            }
-        }
-    };
-
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
-            refreshView(intent.getLongExtra(LocalService.ACTION_CONF_UPDATE_EXTRA_MSG, 0));
-            if (mAdapter.getItemCount() > 0)
-                mHistList.smoothScrollToPosition(mAdapter.getItemCount() - 1);
-        }
-    };
-
-    private final Runnable refreshTask = new Runnable() {
-        private long lastRefresh = 0;
-
-        public void run() {
-            if (lastRefresh == 0)
-                lastRefresh = SystemClock.uptimeMillis();
-            else
-                lastRefresh += REFRESH_INTERVAL_MS;
-
-            mAdapter.notifyDataSetChanged();
-
-            mRefreshTaskHandler.postAtTime(this, lastRefresh + REFRESH_INTERVAL_MS);
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -311,24 +70,12 @@ public class ConversationActivity extends AppCompatActivity implements
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
-
-        if (mBottomPane != null) {
-            mBottomPane.setVisibility(View.GONE);
+        if (mConversationFragment == null) {
+            mConversationFragment = new ConversationFragment();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.main_frame, mConversationFragment, null)
+                    .commit();
         }
-
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mLayoutManager.setStackFromEnd(true);
-
-        if (mHistList != null) {
-            mHistList.setLayoutManager(mLayoutManager);
-            mHistList.setAdapter(mAdapter);
-            mHistList.setItemAnimator(new DefaultItemAnimator());
-        }
-
-        // reload delete conversation state (before rotation)
-        mDeleteConversation = savedInstanceState != null && savedInstanceState.getBoolean(CONVERSATION_DELETE);
 
         if (!mBound) {
             Log.d(TAG, "onCreate: Binding service...");
@@ -338,237 +85,64 @@ public class ConversationActivity extends AppCompatActivity implements
         }
     }
 
-    @OnClick(R.id.msg_send)
-    public void sendMessageText(View sender){
-        CharSequence txt = mMsgEditTxt.getText();
-        if (txt.length() > 0) {
-            onSendTextMessage(txt.toString());
-            mMsgEditTxt.setText("");
-        }
-    }
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder binder) {
+            Log.d(TAG, "ConversationActivity onServiceConnected " + className.getClassName());
+            mService = ((LocalService.LocalBinder) binder).getService();
 
-    @OnEditorAction(R.id.msg_input_txt)
-    public boolean actionSendMsgText(TextView view, int actionId, KeyEvent event){
-        switch (actionId) {
-            case EditorInfo.IME_ACTION_SEND:
-                CharSequence txt = mMsgEditTxt.getText();
-                if (txt.length() > 0) {
-                    onSendTextMessage(mMsgEditTxt.getText().toString());
-                    mMsgEditTxt.setText("");
-                }
-                return true;
-        }
-        return false;
-    }
+            IntentFilter filter = new IntentFilter(LocalService.ACTION_CONF_UPDATE);
+            registerReceiver(receiver, filter);
 
-    @OnClick(R.id.ongoingcall_pane)
-    public void onClick(View v) {
-        startActivity(new Intent(Intent.ACTION_VIEW)
-                .setClass(getApplicationContext(), CallActivity.class)
-                .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI,
-                        mConversation.getCurrentCall().getId())));
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause");
-        mVisible = false;
-        if (mConversation != null) {
-            mService.readConversation(mConversation);
-            mConversation.setVisible(false);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume " + mConversation);
-        mVisible = true;
-        if (mConversation != null) {
-            mConversation.setVisible(true);
-            if (mBound && mService != null) {
-                mService.readConversation(mConversation);
+            if (mConversationFragment != null) {
+                mConversationFragment.setCallback(mService);
+                mConversationFragment.refreshView(0);
             }
+
+            mBound = true;
+
+            mRefreshTaskHandler.postDelayed(refreshTask, REFRESH_INTERVAL_MS);
         }
-    }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            Log.d(TAG, "ConversationActivity onServiceDisconnected " + arg0.getClassName());
+            mBound = false;
+            mRefreshTaskHandler.removeCallbacks(refreshTask);
+        }
+    };
+
+    private final Runnable refreshTask = new Runnable() {
+        private long lastRefresh = 0;
+
+        public void run() {
+            if (lastRefresh == 0) {
+                lastRefresh = SystemClock.uptimeMillis();
+            } else {
+                lastRefresh += REFRESH_INTERVAL_MS;
+            }
+
+            mRefreshTaskHandler.postAtTime(this, lastRefresh + REFRESH_INTERVAL_MS);
+        }
+    };
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
+            mConversationFragment.refreshView(intent.getLongExtra(LocalService.ACTION_CONF_UPDATE_EXTRA_MSG, 0));
+        }
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case REQ_ADD_CONTACT:
-                if (mService != null) mService.refreshConversations();
+            case ConversationFragment.REQ_ADD_CONTACT:
+                if (mService != null) {
+                    mService.refreshConversations();
+                }
                 break;
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (mBound) {
-            unregisterReceiver(receiver);
-            unbindService(mConnection);
-            mBound = false;
-        }
-
-        if (mDeleteConversation) {
-            mDeleteDialog.dismiss();
-        }
-
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        // persist the delete popup state in case of Activity rotation
-        mDeleteConversation = mDeleteDialog != null && mDeleteDialog.isShowing();
-        outState.putBoolean(CONVERSATION_DELETE, mDeleteConversation);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        if (mAddContactBtn != null) {
-            mAddContactBtn.setVisible(mConversation != null && mConversation.getContact().getId() < 0);
-        }
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.conversation_actions, menu);
-        mAddContactBtn = menu.findItem(R.id.menuitem_addcontact);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                startActivity(new Intent(this, HomeActivity.class));
-                finish();
-                return true;
-            case R.id.conv_action_audiocall:
-                onCallWithVideo(false);
-                return true;
-            case R.id.conv_action_videocall:
-                onCallWithVideo(true);
-                return true;
-            case R.id.menuitem_addcontact:
-                startActivityForResult(ActionHelper.getAddNumberIntentForContact(mConversation.getContact()), REQ_ADD_CONTACT);
-                return true;
-            case R.id.menuitem_delete:
-                mDeleteDialog = ActionHelper.launchDeleteAction(this, this.mConversation, this);
-                return true;
-            case R.id.menuitem_copy_content:
-                ActionHelper.launchCopyNumberToClipboardFromContact(this,
-                        this.mConversation.getContact(), this);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    /**
-     * Guess account and number to use to initiate a call
-     */
-    private Pair<Account, Uri> guess() {
-        Uri number = mNumberAdapter == null ?
-                mPreferredNumber : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-        Account a = mService.getAccount(mConversation.getLastAccountUsed());
-
-        // Guess account from number
-        if (a == null && number != null)
-            a = mService.guessAccount(number);
-
-        // Guess number from account/call history
-        if (a != null && (number == null/* || number.isEmpty()*/))
-            number = new Uri(mConversation.getLastNumberUsed(a.getAccountID()));
-
-        // If no account found, use first active
-        if (a == null) {
-            List<Account> accs = mService.getAccounts();
-            if (accs.isEmpty()) {
-                finish();
-                return null;
-            } else
-                a = accs.get(0);
-        }
-
-        // If no number found, use first from contact
-        if (number == null || number.isEmpty())
-            number = mConversation.getContact().getPhones().get(0).getNumber();
-
-        return new Pair<>(a, number);
-    }
-
-    private void onSendTextMessage(String txt) {
-        Conference conf = mConversation == null ? null : mConversation.getCurrentCall();
-        if (conf == null || !conf.isOnGoing()) {
-            Pair<Account, Uri> g = guess();
-            if (g == null || g.first == null)
-                return;
-            mService.sendTextMessage(g.first.getAccountID(), g.second, txt);
-        } else {
-            mService.sendTextMessage(conf, txt);
-        }
-    }
-
-    private void onCallWithVideo(boolean has_video) {
-        Conference conf = mConversation.getCurrentCall();
-        if (conf != null) {
-            startActivity(new Intent(Intent.ACTION_VIEW)
-                    .setClass(getApplicationContext(), CallActivity.class)
-                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI, conf.getId())));
-            return;
-        }
-        Pair<Account, Uri> g = guess();
-        if (g == null || g.first == null)
-            return;
-
-        try {
-            Intent intent = new Intent(CallActivity.ACTION_CALL)
-                    .setClass(getApplicationContext(), CallActivity.class)
-                    .putExtra("account", g.first.getAccountID())
-                    .putExtra("video", has_video)
-                    .setData(android.net.Uri.parse(g.second.getRawUriString()));
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(TAG, e.toString());
-        }
-    }
-
-    @Override
-    public void deleteConversation(Conversation conversation) {
-        if (mService != null) {
-            mService.deleteConversation(conversation);
-        }
-        finish();
-    }
-
-    @Override
-    public void copyContactNumberToClipboard(String contactNumber) {
-        ClipboardHelper.copyNumberToClipboard(this, contactNumber, this);
-    }
-
-    @Override
-    public void clipBoardDidCopyNumber(String copiedNumber) {
-        View view = this.findViewById(android.R.id.content);
-        if (view != null) {
-            String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
-                    Phone.getShortenedNumber(copiedNumber));
-            Snackbar.make(view, snackbarText, Snackbar.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    public void onDetailsLoaded(Bitmap bmp, String formattedName) {
-        ActionBar ab = getSupportActionBar();
-        if (ab != null && formattedName != null) {
-            ab.setTitle(formattedName);
         }
     }
 
@@ -576,5 +150,15 @@ public class ConversationActivity extends AppCompatActivity implements
     public void onBackPressed() {
         startActivity(new Intent(this, HomeActivity.class));
         finish();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mBound) {
+            unregisterReceiver(receiver);
+            unbindService(mConnection);
+            mBound = false;
+        }
     }
 }
