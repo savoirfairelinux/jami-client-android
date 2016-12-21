@@ -27,12 +27,12 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.CallActivity;
-import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.fragments.AccountCreationFragment;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.CallFragment;
+import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.DeviceAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.ProfileCreationFragment;
@@ -69,8 +69,6 @@ public interface RingInjectionComponent {
 
     void inject(CallActivity activity);
 
-    void inject(ConversationActivity activity);
-
     void inject(HomeActivity activity);
 
     void inject(AccountWizard activity);
@@ -104,6 +102,8 @@ public interface RingInjectionComponent {
     void inject(ProfileCreationFragment fragment);
 
     void inject(RegisterNameDialog dialog);
+
+    void inject(ConversationFragment fragment);
 
     void inject(LocalService service);
 
