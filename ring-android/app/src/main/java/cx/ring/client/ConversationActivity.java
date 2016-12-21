@@ -57,6 +57,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.adapters.ConversationAdapter;
@@ -82,6 +86,24 @@ public class ConversationActivity extends AppCompatActivity implements
     @Inject
     CallService mCallService;
 
+    @BindView(R.id.main_toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.msg_input_txt)
+    EditText mMsgEditTxt;
+
+    @BindView(R.id.msg_send)
+    View mMsgSendBtn;
+
+    @BindView(R.id.ongoingcall_pane)
+    ViewGroup mBottomPane;
+
+    @BindView(R.id.hist_list)
+    RecyclerView mHistList;
+
+    @BindView(R.id.number_selector)
+    Spinner mNumberSpinner;
+
     private static final String TAG = ConversationActivity.class.getSimpleName();
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
 
@@ -97,10 +119,6 @@ public class ConversationActivity extends AppCompatActivity implements
     private Conversation mConversation = null;
     private Uri mPreferredNumber = null;
 
-    private RecyclerView mHistList = null;
-    private EditText mMsgEditTxt = null;
-    private ViewGroup mBottomPane = null;
-    private Spinner mNumberSpinner = null;
     private MenuItem mAddContactBtn = null;
 
     private ConversationAdapter mAdapter = null;
@@ -191,16 +209,6 @@ public class ConversationActivity extends AppCompatActivity implements
         if (conf != null) {
             Log.d(TAG, "ConversationActivity refreshView " + conf.getId() + " "
                     + mConversation.getCurrentCall());
-
-            mBottomPane.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(Intent.ACTION_VIEW)
-                            .setClass(getApplicationContext(), CallActivity.class)
-                            .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI,
-                                    mConversation.getCurrentCall().getId())));
-                }
-            });
         }
 
         mAdapter.updateDataset(mConversation.getAggregateHistory(), refreshed);
@@ -297,45 +305,15 @@ public class ConversationActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
+
+        ButterKnife.bind(this);
+        setSupportActionBar(mToolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Dependency injection
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
 
-        mMsgEditTxt = (EditText) findViewById(R.id.msg_input_txt);
-        mMsgEditTxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                switch (actionId) {
-                    case EditorInfo.IME_ACTION_SEND:
-                        CharSequence txt = mMsgEditTxt.getText();
-                        if (txt.length() > 0) {
-                            onSendTextMessage(mMsgEditTxt.getText().toString());
-                            mMsgEditTxt.setText("");
-                        }
-                        return true;
-                }
-                return false;
-            }
-        });
-        View msgSendBtn = findViewById(R.id.msg_send);
-        if (msgSendBtn != null) {
-            msgSendBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CharSequence txt = mMsgEditTxt.getText();
-                    if (txt.length() > 0) {
-                        onSendTextMessage(txt.toString());
-                        mMsgEditTxt.setText("");
-                    }
-                }
-            });
-        }
-
-        mBottomPane = (ViewGroup) findViewById(R.id.ongoingcall_pane);
         if (mBottomPane != null) {
             mBottomPane.setVisibility(View.GONE);
         }
@@ -343,14 +321,11 @@ public class ConversationActivity extends AppCompatActivity implements
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setStackFromEnd(true);
 
-        mHistList = (RecyclerView) findViewById(R.id.hist_list);
         if (mHistList != null) {
             mHistList.setLayoutManager(mLayoutManager);
             mHistList.setAdapter(mAdapter);
             mHistList.setItemAnimator(new DefaultItemAnimator());
         }
-
-        mNumberSpinner = (Spinner) findViewById(R.id.number_selector);
 
         // reload delete conversation state (before rotation)
         mDeleteConversation = savedInstanceState != null && savedInstanceState.getBoolean(CONVERSATION_DELETE);
@@ -361,6 +336,37 @@ public class ConversationActivity extends AppCompatActivity implements
             bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
             mService = null;
         }
+    }
+
+    @OnClick(R.id.msg_send)
+    public void sendMessageText(View sender){
+        CharSequence txt = mMsgEditTxt.getText();
+        if (txt.length() > 0) {
+            onSendTextMessage(txt.toString());
+            mMsgEditTxt.setText("");
+        }
+    }
+
+    @OnEditorAction(R.id.msg_input_txt)
+    public boolean actionSendMsgText(TextView view, int actionId, KeyEvent event){
+        switch (actionId) {
+            case EditorInfo.IME_ACTION_SEND:
+                CharSequence txt = mMsgEditTxt.getText();
+                if (txt.length() > 0) {
+                    onSendTextMessage(mMsgEditTxt.getText().toString());
+                    mMsgEditTxt.setText("");
+                }
+                return true;
+        }
+        return false;
+    }
+
+    @OnClick(R.id.ongoingcall_pane)
+    public void onClick(View v) {
+        startActivity(new Intent(Intent.ACTION_VIEW)
+                .setClass(getApplicationContext(), CallActivity.class)
+                .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI,
+                        mConversation.getCurrentCall().getId())));
     }
 
     @Override
