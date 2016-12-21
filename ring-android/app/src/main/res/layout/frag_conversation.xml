@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/hist_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:clipToPadding="false"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:paddingBottom="60dp"
+        android:paddingTop="8dp"
+        tools:listitem="@layout/item_conv_msg_peer" />
+
+    <RelativeLayout
+        android:id="@+id/ongoingcall_pane"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/main_toolbar"
+        android:background="#e3c1c1">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:text="@string/ongoing_call"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/text_color_primary" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/userInputMessageCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        card_view:cardCornerRadius="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/number_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                tools:listitem="@layout/item_number_selected" />
+
+            <EditText
+                android:id="@+id/msg_input_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/write_a_message"
+                android:imeOptions="actionSend|flagNoExtractUi"
+                android:inputType="textShortMessage|textImeMultiLine|text|textMultiLine|textCapSentences"
+                android:maxLines="5"
+                android:padding="8dp" />
+
+            <ImageButton
+                android:id="@+id/msg_send"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/send_message"
+                android:padding="8dp"
+                android:src="@drawable/ic_send_black"
+                android:tint="@android:color/darker_gray" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
