@@ -452,7 +452,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                     break;
                 }
                 startActivityForResult(ActionHelper.getAddNumberIntentForContact(firstParticipant.getContact()),
-                        ConversationActivity.REQ_ADD_CONTACT);
+                        ConversationFragment.REQ_ADD_CONTACT);
                 break;
             case R.id.menuitem_speaker:
                 audioManager.setSpeakerphoneOn(!audioManager.isSpeakerphoneOn());

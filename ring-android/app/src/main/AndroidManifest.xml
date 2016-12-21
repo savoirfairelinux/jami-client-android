@@ -231,7 +231,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </activity>
         <activity
             android:name=".client.ConversationActivity"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:label="@string/app_name"
             android:parentActivityName=".client.HomeActivity"
             android:screenOrientation="fullUser"
