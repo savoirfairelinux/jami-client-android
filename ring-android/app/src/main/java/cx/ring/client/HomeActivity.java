@@ -370,7 +370,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                         case Manifest.permission.CAMERA:
                             sharedPref.edit().putBoolean(getString(R.string.pref_systemCamera_key), grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
                             // permissions have changed, video params should be reset
-                            ((RingApplication)getApplication()).restartVideo();
+                            ((RingApplication) getApplication()).restartVideo();
                             break;
                     }
                 }
@@ -494,6 +494,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
             FragmentManager fragmentManager = getFragmentManager();
             fContent = fragmentManager.findFragmentById(R.id.main_frame);
+            if (fNavigation != null) {
+                onNavigationViewReady();
+            }
             if (fContent == null) {
                 fContent = new SmartListFragment();
                 fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commit();
@@ -616,7 +619,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 break;
         }
     }
-    
+
     public void onAccountSelected() {
         if (!isDrawerLocked) {
             mNavigationDrawer.closeDrawers();

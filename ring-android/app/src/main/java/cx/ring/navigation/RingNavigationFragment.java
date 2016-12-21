@@ -294,13 +294,6 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         mAccountsView.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        // TODO: Remove this when low level services are ready
-        ((HomeActivity) getActivity()).onNavigationViewReady();
-    }
-
     /**
      * Can be called to reset the UI to the initial state, displaying the navigation items
      */
