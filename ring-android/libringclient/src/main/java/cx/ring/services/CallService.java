@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -46,6 +45,9 @@ public class CallService extends Observable {
     @Inject
     @Named("DaemonExecutor")
     ExecutorService mExecutor;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
 
     private Map<String, CallContact> mContacts;
     private CallbackHandler mCallbackHandler;
@@ -74,85 +76,118 @@ public class CallService extends Observable {
     }
 
     public String placeCall(final String account, final String number, final boolean video) {
-
-        Future<String> result = mExecutor.submit(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                Log.i(TAG, "placeCall() thread running... " + number + " video: " + video);
-                String callId = Ringservice.placeCall(account, number);
-                if (!video) {
-                    Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<String>() {
+                    @Override
+                    public String call() throws Exception {
+                        Log.i(TAG, "placeCall() thread running... " + number + " video: " + video);
+                        String callId = Ringservice.placeCall(account, number);
+                        if (!video) {
+                            Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
+                        }
+                        return callId;
+                    }
                 }
-                return callId;
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        );
     }
 
     public void refuse(final String callID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "refuse() thread running...");
-                Ringservice.refuse(callID);
-                Ringservice.hangUp(callID);
-            }
-        });
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "refuse() thread running...");
+                        Ringservice.refuse(callID);
+                        Ringservice.hangUp(callID);
+                        return true;
+                    }
+                }
+        );
     }
 
     public void accept(final String callID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "accept() thread running...");
-                Ringservice.accept(callID);
-            }
-        });
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "accept() thread running...");
+                        Ringservice.accept(callID);
+                        return true;
+                    }
+                }
+        );
     }
 
     public void hangUp(final String callID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "hangUp() thread running...");
-                Ringservice.hangUp(callID);
-            }
-        });
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "hangUp() thread running...");
+                        Ringservice.hangUp(callID);
+                        return true;
+                    }
+                }
+        );
     }
 
     public void hold(final String callID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "hold() thread running...");
-                Ringservice.hold(callID);
-            }
-        });
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "hold() thread running...");
+                        Ringservice.hold(callID);
+                        return true;
+                    }
+                }
+        );
     }
 
     public void unhold(final String callID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "unhold() thread running...");
-                Ringservice.unhold(callID);
-            }
-        });
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "unhold() thread running...");
+                        Ringservice.unhold(callID);
+                        return true;
+                    }
+                }
+        );
     }
 
-
     public Map<String, String> getCallDetails(final String callID) {
-
-        Future<Map<String, String>> result = mExecutor.submit(new Callable<Map<String, String>>() {
-            @Override
-            public Map<String, String> call() throws Exception {
-                Log.i(TAG, "getCallDetails() thread running...");
-                return Ringservice.getCallDetails(callID).toNative();
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Map<String, String>>() {
+                    @Override
+                    public Map<String, String> call() throws Exception {
+                        Log.i(TAG, "getCallDetails() thread running...");
+                        return Ringservice.getCallDetails(callID).toNative();
+                    }
+                }
+        );
     }
 
     public void muteRingTone(boolean mute) {
@@ -161,167 +196,238 @@ public class CallService extends Observable {
     }
 
     public void setAudioPlugin(final String audioPlugin) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "setAudioPlugin() thread running...");
-                Ringservice.setAudioPlugin(audioPlugin);
-            }
-        });
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "setAudioPlugin() thread running...");
+                        Ringservice.setAudioPlugin(audioPlugin);
+                        return true;
+                    }
+                }
+        );
     }
 
     public String getCurrentAudioOutputPlugin() {
-
-        Future<String> result = mExecutor.submit(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                Log.i(TAG, "getCurrentAudioOutputPlugin() thread running...");
-                return Ringservice.getCurrentAudioOutputPlugin();
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<String>() {
+                    @Override
+                    public String call() throws Exception {
+                        Log.i(TAG, "getCurrentAudioOutputPlugin() thread running...");
+                        return Ringservice.getCurrentAudioOutputPlugin();
+                    }
+                }
+        );
     }
 
     public void playDtmf(final String key) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "playDtmf() thread running...");
-                Ringservice.playDTMF(key);
-            }
-        });
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "playDtmf() thread running...");
+                        Ringservice.playDTMF(key);
+                        return true;
+                    }
+                }
+        );
     }
 
     public void setMuted(final boolean mute) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "setMuted() thread running...");
-                Ringservice.muteCapture(mute);
-            }
-        });
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "setMuted() thread running...");
+                        Ringservice.muteCapture(mute);
+                        return true;
+                    }
+                }
+        );
     }
 
+    @SuppressWarnings("ConstantConditions")
     public boolean isCaptureMuted() {
-        Future<Boolean> result = mExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                Log.i(TAG, "isCaptureMuted() thread running...");
-                return Ringservice.isCaptureMuted();
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "isCaptureMuted() thread running...");
+                        return Ringservice.isCaptureMuted();
+                    }
+                }
+        );
     }
 
     public void transfer(final String callID, final String to) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "transfer() thread running...");
-                if (Ringservice.transfer(callID, to)) {
-                } else {
-                    Log.i(TAG, "NOT OK");
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "transfer() thread running...");
+                        if (Ringservice.transfer(callID, to)) {
+                            Log.i(TAG, "OK");
+                        } else {
+                            Log.i(TAG, "NOT OK");
+                        }
+                        return true;
+                    }
                 }
-            }
-        });
+        );
     }
 
     public void attendedTransfer(final String transferID, final String targetID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "attendedTransfer() thread running...");
-                if (Ringservice.attendedTransfer(transferID, targetID)) {
-                    Log.i(TAG, "OK");
-                } else {
-                    Log.i(TAG, "NOT OK");
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "attendedTransfer() thread running...");
+                        if (Ringservice.attendedTransfer(transferID, targetID)) {
+                            Log.i(TAG, "OK");
+                        } else {
+                            Log.i(TAG, "NOT OK");
+                        }
+                        return true;
+                    }
                 }
-            }
-        });
+        );
     }
 
     public String getRecordPath() {
-        Future<String> result = mExecutor.submit(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                Log.i(TAG, "getRecordPath() thread running...");
-                return Ringservice.getRecordPath();
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<String>() {
+                    @Override
+                    public String call() throws Exception {
+                        Log.i(TAG, "getRecordPath() thread running...");
+                        return Ringservice.getRecordPath();
+                    }
+                }
+        );
     }
 
+    @SuppressWarnings("ConstantConditions")
     public boolean toggleRecordingCall(final String id) {
-
-        Future<Boolean> result = mExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                Log.i(TAG, "toggleRecordingCall() thread running...");
-                return Ringservice.toggleRecording(id);
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "toggleRecordingCall() thread running...");
+                        return Ringservice.toggleRecording(id);
+                    }
+                }
+        );
     }
 
     public boolean startRecordedFilePlayback(final String filepath) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "setRecordingCall() thread running...");
-                Ringservice.startRecordedFilePlayback(filepath);
-            }
-        });
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "setRecordingCall() thread running...");
+                        Ringservice.startRecordedFilePlayback(filepath);
+                        return true;
+                    }
+                }
+        );
         return false;
     }
 
     public void stopRecordedFilePlayback(final String filepath) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "stopRecordedFilePlayback() thread running...");
-                Ringservice.stopRecordedFilePlayback(filepath);
-            }
-        });
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "stopRecordedFilePlayback() thread running...");
+                        Ringservice.stopRecordedFilePlayback(filepath);
+                        return true;
+                    }
+                }
+        );
     }
 
     public void setRecordPath(final String path) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "setRecordPath() " + path + " thread running...");
-                Ringservice.setRecordPath(path);
-            }
-        });
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "setRecordPath() " + path + " thread running...");
+                        Ringservice.setRecordPath(path);
+                        return true;
+                    }
+                }
+        );
     }
 
     public void sendTextMessage(final String callID, final String msg) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "DsendTextMessage() thread running...");
-                StringMap messages = new StringMap();
-                messages.setRaw("text/plain", Blob.fromString(msg));
-                Ringservice.sendTextMessage(callID, messages, "", false);
-            }
-        });
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "DsendTextMessage() thread running...");
+                        StringMap messages = new StringMap();
+                        messages.setRaw("text/plain", Blob.fromString(msg));
+                        Ringservice.sendTextMessage(callID, messages, "", false);
+                        return true;
+                    }
+                }
+        );
     }
 
+    @SuppressWarnings("ConstantConditions")
     public long sendAccountTextMessage(final String accountID, final String to, final String msg) {
-        Future<Long> result = mExecutor.submit(new Callable<Long>() {
-            @Override
-            public Long call() throws Exception {
-                Log.i(TAG, "sendAccountTextMessage() thread running... " + accountID + " " + to + " " + msg);
-                StringMap msgs = new StringMap();
-                msgs.setRaw("text/plain", Blob.fromString(msg));
-                return Ringservice.sendAccountTextMessage(accountID, to, msgs);
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Long>() {
+                    @Override
+                    public Long call() throws Exception {
+                        Log.i(TAG, "sendAccountTextMessage() thread running... " + accountID + " " + to + " " + msg);
+                        StringMap msgs = new StringMap();
+                        msgs.setRaw("text/plain", Blob.fromString(msg));
+                        return Ringservice.sendAccountTextMessage(accountID, to, msgs);
+                    }
+                }
+        );
     }
 
     class CallbackHandler {
