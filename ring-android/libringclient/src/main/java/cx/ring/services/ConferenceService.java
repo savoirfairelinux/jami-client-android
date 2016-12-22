@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -45,6 +44,9 @@ public class ConferenceService extends Observable {
     @Named("DaemonExecutor")
     ExecutorService mExecutor;
 
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
+
     private ConferenceCallbackHandler mCallbackHandler;
 
     public ConferenceService() {
@@ -55,178 +57,244 @@ public class ConferenceService extends Observable {
         return mCallbackHandler;
     }
 
-    public void removeConference(final String confID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "createConference() thread running...");
-                Ringservice.removeConference(confID);
-            }
-        });
+    public void removeConference(final String confId) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "removeConference() thread running...");
+                        Ringservice.removeConference(confId);
+                        return true;
+                    }
+                }
+        );
     }
 
-    public void joinParticipant(final String selCallID, final String dragCallID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "joinParticipant() thread running...");
-                Ringservice.joinParticipant(selCallID, dragCallID);
-                // Generate a CONF_CREATED callback
-            }
-        });
+    public void joinParticipant(final String selCallId, final String dragCallId) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "joinParticipant() thread running...");
+                        Ringservice.joinParticipant(selCallId, dragCallId);
+                        // Generate a CONF_CREATED callback
+                        return true;
+                    }
+                }
+        );
     }
 
-    public void addParticipant(final String callID, final String confID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "addParticipant() thread running...");
-                Ringservice.addParticipant(callID, confID);
-            }
-        });
+    public void addParticipant(final String callId, final String confId) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "addParticipant() thread running...");
+                        Ringservice.addParticipant(callId, confId);
+                        return true;
+                    }
+                }
+        );
     }
 
-    public void addMainParticipant(final String confID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "addMainParticipant() thread running...");
-                Ringservice.addMainParticipant(confID);
-            }
-        });
-
+    public void addMainParticipant(final String confId) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "addMainParticipant() thread running...");
+                        Ringservice.addMainParticipant(confId);
+                        return true;
+                    }
+                }
+        );
     }
 
-    public void detachParticipant(final String callID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "detachParticipant() thread running... " + callID);
-                Ringservice.detachParticipant(callID);
-            }
-        });
+    public void detachParticipant(final String callId) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "detachParticipant() thread running... " + callId);
+                        Ringservice.detachParticipant(callId);
+                        return true;
+                    }
+                }
+        );
     }
 
-    public void joinConference(final String selConfID, final String dragConfID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "joinConference() thread running...");
-                Ringservice.joinConference(selConfID, dragConfID);
-            }
-        });
+    public void joinConference(final String selConfId, final String dragConfId) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "joinConference() thread running...");
+                        Ringservice.joinConference(selConfId, dragConfId);
+                        return true;
+                    }
+                }
+        );
     }
 
-    public void hangUpConference(final String confID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "hangUpConference() thread running...");
-                Ringservice.hangUpConference(confID);
-            }
-        });
+    public void hangUpConference(final String confId) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "hangUpConference() thread running...");
+                        Ringservice.hangUpConference(confId);
+                        return true;
+                    }
+                }
+        );
     }
 
-    public void holdConference(final String confID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "holdConference() thread running...");
-                Ringservice.holdConference(confID);
-            }
-        });
+    public void holdConference(final String confId) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "holdConference() thread running...");
+                        Ringservice.holdConference(confId);
+                        return true;
+                    }
+                }
+        );
     }
 
-    public void unholdConference(final String confID) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "unholdConference() thread running...");
-                Ringservice.unholdConference(confID);
-            }
-        });
+    public void unholdConference(final String confId) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "unholdConference() thread running...");
+                        Ringservice.unholdConference(confId);
+                        return true;
+                    }
+                }
+        );
     }
 
-    public boolean isConferenceParticipant(final String callID) {
-        Future<Boolean> result = mExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                Log.i(TAG, "isConferenceParticipant() thread running...");
-                return Ringservice.isConferenceParticipant(callID);
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+    @SuppressWarnings("ConstantConditions")
+    public boolean isConferenceParticipant(final String callId) {
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "isConferenceParticipant() thread running...");
+                        return Ringservice.isConferenceParticipant(callId);
+                    }
+                }
+        );
     }
 
     public Map<String, ArrayList<String>> getConferenceList() {
-
-        Future<Map<String, ArrayList<String>>> result = mExecutor.submit(new Callable<Map<String, ArrayList<String>>>() {
-            @Override
-            public Map<String, ArrayList<String>> call() throws Exception {
-                Log.i(TAG, "DRingService.getConferenceList() thread running...");
-                StringVect callIds = Ringservice.getCallList();
-                HashMap<String, ArrayList<String>> confs = new HashMap<>(callIds.size());
-                for (int i = 0; i < callIds.size(); i++) {
-                    String callId = callIds.get(i);
-                    String confId = Ringservice.getConferenceId(callId);
-                    if (confId == null || confId.isEmpty()) {
-                        confId = callId;
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Map<String, ArrayList<String>>>() {
+                    @Override
+                    public Map<String, ArrayList<String>> call() throws Exception {
+                        Log.i(TAG, "getConferenceList() thread running...");
+                        StringVect callIds = Ringservice.getCallList();
+                        HashMap<String, ArrayList<String>> confs = new HashMap<>(callIds.size());
+                        for (int i = 0; i < callIds.size(); i++) {
+                            String callId = callIds.get(i);
+                            String confId = Ringservice.getConferenceId(callId);
+                            if (confId == null || confId.isEmpty()) {
+                                confId = callId;
+                            }
+                            ArrayList<String> calls = confs.get(confId);
+                            if (calls == null) {
+                                calls = new ArrayList<>();
+                                confs.put(confId, calls);
+                            }
+                            calls.add(callId);
+                        }
+                        return confs;
                     }
-                    ArrayList<String> calls = confs.get(confId);
-                    if (calls == null) {
-                        calls = new ArrayList<>();
-                        confs.put(confId, calls);
-                    }
-                    calls.add(callId);
                 }
-                return confs;
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        );
     }
 
-    public List<String> getParticipantList(final String confID) {
-
-        Future<List<String>> result = mExecutor.submit(new Callable<List<String>>() {
-            @Override
-            public List<String> call() throws Exception {
-                Log.i(TAG, "getParticipantList() thread running...");
-                return new ArrayList<>(Ringservice.getParticipantList(confID));
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+    public List<String> getParticipantList(final String confId) {
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<List<String>>() {
+                    @Override
+                    public List<String> call() throws Exception {
+                        Log.i(TAG, "getParticipantList() thread running...");
+                        return new ArrayList<>(Ringservice.getParticipantList(confId));
+                    }
+                }
+        );
     }
 
-    public String getConferenceId(String callID) {
-        return Ringservice.getConferenceId(callID);
+    public String getConferenceId(String callId) {
+        return Ringservice.getConferenceId(callId);
     }
 
-    public String getConferenceDetails(final String callID) {
-
-        Future<String> result = mExecutor.submit(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                Log.i(TAG, "getConferenceDetails() thread running...");
-                return Ringservice.getConferenceDetails(callID).get("CONF_STATE");
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+    public String getConferenceDetails(final String callId) {
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<String>() {
+                    @Override
+                    public String call() throws Exception {
+                        Log.i(TAG, "getConferenceDetails() thread running...");
+                        return Ringservice.getConferenceDetails(callId).get("CONF_STATE");
+                    }
+                }
+        );
     }
 
     public Map<String, String> getConference(final String id) {
-        Future<Map<String, String>> result = mExecutor.submit(new Callable<Map<String, String>>() {
-            @Override
-            public Map<String, String> call() throws Exception {
-                Log.i(TAG, "getCredentials() thread running...");
-                return Ringservice.getConferenceDetails(id).toNative();
-            }
-        });
-
-        return FutureUtils.getFutureResult(result);
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Map<String, String>>() {
+                    @Override
+                    public Map<String, String> call() throws Exception {
+                        Log.i(TAG, "getCredentials() thread running...");
+                        return Ringservice.getConferenceDetails(id).toNative();
+                    }
+                }
+        );
     }
 
     class ConferenceCallbackHandler {
