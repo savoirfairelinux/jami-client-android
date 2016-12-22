@@ -20,6 +20,7 @@
 package cx.ring.services;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
@@ -32,6 +33,7 @@ import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.daemon.VideoCallback;
 import cx.ring.model.DaemonEvent;
+import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 
@@ -42,6 +44,9 @@ public class HardwareService extends Observable {
     @Inject
     @Named("DaemonExecutor")
     ExecutorService mExecutor;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
 
     private VideoCallback mVideoCallback;
 
@@ -54,35 +59,54 @@ public class HardwareService extends Observable {
     }
 
     public void connectivityChanged() {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Ringservice.connectivityChanged();
-            }
-        });
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "connectivityChange() thread running...");
+                        Ringservice.connectivityChanged();
+                        return true;
+                    }
+                }
+        );
     }
 
     public void switchInput(final String id, final String uri, final StringMap map) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "switchInput() thread running..." + uri);
-                Ringservice.applySettings(id, map);
-                Ringservice.switchInput(id, uri);
-            }
-        });
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "switchInput() thread running..." + uri);
+                        Ringservice.applySettings(id, map);
+                        Ringservice.switchInput(id, uri);
+                        return true;
+                    }
+                }
+        );
     }
 
     public void setPreviewSettings(final Map<String, StringMap> cameraMaps) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Log.i(TAG, "applySettings() thread running...");
-                for (Map.Entry<String, StringMap> entry : cameraMaps.entrySet()) {
-                    Ringservice.applySettings(entry.getKey(), entry.getValue());
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "applySettings() thread running...");
+                        for (Map.Entry<String, StringMap> entry : cameraMaps.entrySet()) {
+                            Ringservice.applySettings(entry.getKey(), entry.getValue());
+                        }
+                        return true;
+                    }
                 }
-            }
-        });
+        );
     }
 
     public long startVideo(final String inputId, Object surface, int width, int height) {
