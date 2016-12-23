@@ -80,6 +80,7 @@ import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.interfaces.CallInterface;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -116,6 +117,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
     @Inject
     AccountService mAccountService;
+
+    @Inject
+    ConversationFacade mConversationFacade;
 
     @Inject
     NotificationService mNotificationService;
@@ -590,7 +594,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         if (service == null)
             return;
 
-        Conference c = service.getConference(getConference().getId());
+        Conference c = mConversationFacade.getConference(getConference().getId());
         mCallbacks.updateDisplayedConference(c);
         if (c == null || c.getParticipants().isEmpty()) {
             mCallbacks.terminateCall();

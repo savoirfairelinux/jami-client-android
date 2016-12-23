@@ -26,7 +26,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
@@ -163,19 +165,26 @@ public class Conversation {
         return d;
     }
 
-    public void addHistoryCall(HistoryCall c) {
-        String accountId = c.getAccountID();
-        if (mHistory.containsKey(accountId))
-            mHistory.get(accountId).addHistoryCall(c, getContact());
-        else {
-            HistoryEntry e = new HistoryEntry(accountId, getContact());
-            e.addHistoryCall(c, getContact());
-            mHistory.put(accountId, e);
+    public void addHistoryCall(HistoryCall call) {
+        if(getHistoryCalls().contains(call)){
+            return;
         }
-        mAggregateHistory.add(new ConversationElement(c));
+        String accountId = call.getAccountID();
+        if (mHistory.containsKey(accountId)) {
+            mHistory.get(accountId).addHistoryCall(call, getContact());
+        }
+        else {
+            HistoryEntry entry = new HistoryEntry(accountId, getContact());
+            entry.addHistoryCall(call, getContact());
+            mHistory.put(accountId, entry);
+        }
+        mAggregateHistory.add(new ConversationElement(call));
     }
 
     public void addTextMessage(TextMessage txt) {
+        if(getTextMessages().contains(txt)){
+            return;
+        }
         if (txt.getContact() == null) {
             txt.setContact(getContact());
         }
@@ -238,16 +247,23 @@ public class Conversation {
 
     public Collection<TextMessage> getTextMessages(Date since) {
         TreeMap<Long, TextMessage> texts = new TreeMap<>();
+
         for (HistoryEntry h : mHistory.values()) {
-            texts.putAll(since == null ? h.getTextMessages() : h.getTextMessages(since.getTime()));
+            Map<Long, TextMessage> textMessages = since == null ? h.getTextMessages() : h.getTextMessages(since.getTime());
+            for (Map.Entry<Long, TextMessage> entry : textMessages.entrySet()) {
+                texts.put(entry.getKey(), entry.getValue());
+            }
         }
         return texts.values();
     }
 
     public Collection<HistoryCall> getHistoryCalls() {
         TreeMap<Long, HistoryCall> calls = new TreeMap<>();
+
         for (HistoryEntry historyEntry : mHistory.values()) {
-            calls.putAll(historyEntry.getCalls());
+            for (Map.Entry<Long, HistoryCall> entry : historyEntry.getCalls().descendingMap().entrySet()) {
+                calls.put(entry.getKey(), entry.getValue());
+            }
         }
         return calls.values();
     }
