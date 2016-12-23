@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ace114c_4493a4a3",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-12-23T12:06:14Z",
+      "side": 1,
+      "message": "I have fixed that by checking if the account is null when received in the listeners. This is a rapid fix, other problem may occur elsewhere",
+      "parentUuid": "3ace114c_a4828850",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 19
+      },
+      "revId": "ed577045cf24ddcbf0f5268d37ff0bd342bf23e1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ace114c_04b6fc3d",
         "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
         "patchSetId": 33
@@ -36,6 +60,30 @@
       "writtenOn": "2016-12-23T12:03:59Z",
       "side": 1,
       "message": "crash here, since mAccSelected is initialized below",
+      "range": {
+        "startLine": 141,
+        "startChar": 12,
+        "endLine": 141,
+        "endChar": 56
+      },
+      "revId": "ed577045cf24ddcbf0f5268d37ff0bd342bf23e1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_24969895",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-12-23T12:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ace114c_04b6fc3d",
       "range": {
         "startLine": 141,
         "startChar": 12,
