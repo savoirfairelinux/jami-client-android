@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_a4828850",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-12-23T12:03:59Z",
+      "side": 1,
+      "message": "Here we have a concurrency problem when deleting an account.\n\n- First a REGISTRATION_STATE_CHANGED is received\n- The Runnable is scheduled on the uiHandler\n- We receive the ACCOUNTS_CHANGED that sets the mAccSelected to null (it has been deleted) signal _BEFORE_ the execution of the Runnable\n- So we call the accountChanged listener with a null account.",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 19
+      },
+      "revId": "ed577045cf24ddcbf0f5268d37ff0bd342bf23e1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_04b6fc3d",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 33
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-12-23T12:03:59Z",
+      "side": 1,
+      "message": "crash here, since mAccSelected is initialized below",
+      "range": {
+        "startLine": 141,
+        "startChar": 12,
+        "endLine": 141,
+        "endChar": 56
+      },
+      "revId": "ed577045cf24ddcbf0f5268d37ff0bd342bf23e1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
