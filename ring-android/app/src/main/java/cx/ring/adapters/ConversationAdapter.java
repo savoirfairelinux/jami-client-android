@@ -94,17 +94,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             }
             return;
         }
-        int lastPos = mTexts.size();
-        int newItems = list.size() - lastPos;
-        if (lastPos == 0 || newItems < 0) {
-            mTexts.clear();
-            mTexts.addAll(list);
-            notifyDataSetChanged();
-        } else {
-            for (int i = lastPos; i < list.size(); i++)
-                mTexts.add(list.get(i));
-            notifyItemRangeInserted(lastPos, newItems);
-        }
+        mTexts.clear();
+        mTexts.addAll(list);
+        notifyDataSetChanged();
     }
 
     @Override
