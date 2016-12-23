@@ -62,6 +62,7 @@ import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.adapters.NumberAdapter;
 import cx.ring.application.RingApplication;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -85,6 +86,9 @@ public class ConversationActivity extends AppCompatActivity implements
 
     @Inject
     ContactService mContactService;
+
+    @Inject
+    ConversationFacade mConversationFacade;
 
     private static final String TAG = ConversationActivity.class.getSimpleName();
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
@@ -116,19 +120,19 @@ public class ConversationActivity extends AppCompatActivity implements
         if (s == null || i == null || i.getData() == null)
             return new Pair<>(null, null);
 
-        String conv_id = i.getData().getLastPathSegment();
+        String convId = i.getData().getLastPathSegment();
         Uri number = new Uri(i.getStringExtra("number"));
 
-        Log.d(TAG, "getConversation " + conv_id + " " + number);
-        Conversation conv = s.getConversation(conv_id);
+        Log.d(TAG, "getConversation " + convId + " " + number);
+        Conversation conv = mConversationFacade.getConversationById(convId);
         if (conv == null) {
-            long contact_id = CallContact.contactIdFromId(conv_id);
+            long contact_id = CallContact.contactIdFromId(convId);
             Log.d(TAG, "no conversation found, contact_id " + contact_id);
             CallContact contact = null;
             if (contact_id >= 0)
                 contact = mContactService.findContactById(contact_id);
             if (contact == null) {
-                Uri conv_uri = new Uri(conv_id);
+                Uri conv_uri = new Uri(convId);
                 if (!number.isEmpty()) {
                     contact = mContactService.findContactByNumber(number.getRawUriString());
                     if (contact == null)
@@ -143,7 +147,7 @@ public class ConversationActivity extends AppCompatActivity implements
                     }
                 }
             }
-            conv = s.startConversation(contact);
+            conv = mConversationFacade.startConversation(contact);
         }
 
         Log.d(TAG, "returning " + conv.getContact().getDisplayName() + " " + number);

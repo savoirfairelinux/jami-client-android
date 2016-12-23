@@ -74,6 +74,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeScannerActivity;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -144,6 +145,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     @Inject
     ContactService mContactService;
 
+    @Inject
+    ConversationFacade mConversationFacade;
+
     final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -166,8 +170,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 return;
             }
 
-            LocalService service = mCallbacks.getService();
-            service.updateConversationContactWithRingId(name, address);
+            mConversationFacade.updateConversationContactWithRingId(name, address);
             RingApplication.uiHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -216,7 +219,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         if (mSmartListAdapter == null) {
             bindService(getActivity(), service);
         } else {
-            mSmartListAdapter.updateDataset(service.getConversations(), null);
+            mSmartListAdapter.updateDataset(mConversationFacade.getConversationsList(), null);
         }
 
         if (service.isConnected()) {
@@ -237,7 +240,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         if (service == null || !service.isConnected() || !service.areConversationsLoaded()) {
             return;
         }
-        List<Conversation> conversations = service.getConversations();
+        List<Conversation> conversations = mConversationFacade.getConversationsList();
         for (Conversation conversation : conversations) {
             CallContact contact = conversation.getContact();
             if (contact == null) {
@@ -290,6 +293,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         super.onResume();
         mAccountService.addObserver(this);
         mAccountService.addObserver(mRinguifyObserver);
+        mConversationFacade.addObserver(this);
         Log.d(TAG, "onResume");
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
         refresh();
@@ -427,7 +431,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                     Log.d(TAG, "onQueryTextChange: null service");
                 } else {
                     mSmartListAdapter.updateDataset(
-                            mCallbacks.getService().getConversations(),
+                            mConversationFacade.getConversationsList(),
                             query
                     );
                 }
@@ -475,6 +479,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         super.onPause();
         mAccountService.removeObserver(this);
         mAccountService.removeObserver(mRinguifyObserver);
+        mConversationFacade.removeObserver(this);
     }
 
     @OnClick(R.id.newcontact_element)
@@ -505,7 +510,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 service.get40dpContactCache(),
                 service.getThreadPool());
 
-        mSmartListAdapter.updateDataset(service.getConversations(), null);
+        mSmartListAdapter.updateDataset(mConversationFacade.getConversationsList(), null);
         mSmartListAdapter.setCallback(this);
         if (mList != null) {
             mList.setAdapter(mSmartListAdapter);
@@ -815,51 +820,63 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         mNewContact.setVisibility(View.VISIBLE);
     }
 
+    private void handleRegisterNameFound (final String name, final String address, final int state) {
+        RingApplication.uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                switch (state) {
+                    case 0:
+                        // on found
+                        if (!TextUtils.isEmpty(mLastBlockchainQuery) && mLastBlockchainQuery.equals(name)) {
+                            displayNewContactRowWithName(name, address);
+                            mLastBlockchainQuery = null;
+                        } else {
+                            mNewContact.setVisibility(View.GONE);
+                        }
+                        break;
+                    case 1:
+                        // invalid name
+                        Uri uriName = new Uri(name);
+                        if (uriName.isRingId()) {
+                            displayNewContactRowWithName(name, null);
+                        } else {
+                            mNewContact.setVisibility(View.GONE);
+                        }
+                        break;
+                    default:
+                        // on error
+                        Uri uriAddress = new Uri(address);
+                        if (uriAddress.isRingId()) {
+                            displayNewContactRowWithName(name, address);
+                        } else {
+                            mNewContact.setVisibility(View.GONE);
+                        }
+                        break;
+                }
+            }
+        });
+    }
+
+    private void handleConversationsChanged () {
+        mSmartListAdapter.updateDataset(mConversationFacade.getConversationsList(), null);
+    }
+
     @Override
     public void update(Observable observable, final ServiceEvent event) {
         if (event == null) {
             return;
         }
 
-        if (event.getEventType() == ServiceEvent.EventType.REGISTERED_NAME_FOUND) {
-            RingApplication.uiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                    String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-
-                    int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
-                    switch (state) {
-                        case 0:
-                            // on found
-                            if (!TextUtils.isEmpty(mLastBlockchainQuery) && mLastBlockchainQuery.equals(name)) {
-                                displayNewContactRowWithName(name, address);
-                                mLastBlockchainQuery = null;
-                            } else {
-                                mNewContact.setVisibility(View.GONE);
-                            }
-                            break;
-                        case 1:
-                            // invalid name
-                            Uri uriName = new Uri(name);
-                            if (uriName.isRingId()) {
-                                displayNewContactRowWithName(name, null);
-                            } else {
-                                mNewContact.setVisibility(View.GONE);
-                            }
-                            break;
-                        default:
-                            // on error
-                            Uri uriAddress = new Uri(address);
-                            if (uriAddress.isRingId()) {
-                                displayNewContactRowWithName(name, address);
-                            } else {
-                                mNewContact.setVisibility(View.GONE);
-                            }
-                            break;
-                    }
-                }
-            });
+        switch (event.getEventType()) {
+            case REGISTERED_NAME_FOUND:
+                String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
+                int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
+                handleRegisterNameFound(name, address, state);
+                break;
+            case CONVERSATIONS_CHANGED:
+                handleConversationsChanged();
+                break;
         }
     }
 }
