@@ -57,7 +57,9 @@ public class ServiceEvent {
         MIGRATION_ENDED,
         INCOMING_TRUST_REQUEST,
         CONTACT_ADDED,
-        CONTACT_REMOVED
+        CONTACT_REMOVED,
+        CONVERSATIONS_CHANGED,
+        HISTORY_LOADED
     }
 
     public enum EventInput {
@@ -93,7 +95,9 @@ public class ServiceEvent {
         TIME,
         MESSAGE,
         CONFIRMED,
-        BANNED
+        BANNED,
+        HISTORY_CALLS,
+        HISTORY_TEXTS
     }
 
     private EventType mType;
