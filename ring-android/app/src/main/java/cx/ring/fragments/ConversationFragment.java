@@ -46,6 +46,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -56,18 +57,18 @@ import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
+import cx.ring.services.ContactService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
-import cx.ring.services.ContactService;
 
 public class ConversationFragment extends Fragment implements
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
         ContactDetailsTask.DetailsLoadedCallback,
-        Observer<ServiceEvent>{
+        Observer<ServiceEvent> {
 
     @Inject
     ContactService mContactService;
@@ -77,6 +78,9 @@ public class ConversationFragment extends Fragment implements
 
     @Inject
     AccountService mAccountService;
+
+    @Inject
+    ConversationFacade mConversationFacade;
 
     @BindView(R.id.msg_input_txt)
     EditText mMsgEditTxt;
@@ -110,7 +114,6 @@ public class ConversationFragment extends Fragment implements
     private ConversationAdapter mAdapter = null;
     private NumberAdapter mNumberAdapter = null;
 
-
     public static Boolean isTabletMode(Context context) {
         return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
                 && context.getResources().getConfiguration().screenWidthDp >= MIN_SIZE_TABLET;
@@ -125,7 +128,7 @@ public class ConversationFragment extends Fragment implements
         Uri number = new Uri(bundle.getString("number"));
 
         Log.d(TAG, "getConversation " + conversationId + " " + number);
-        Conversation conversation = service.getConversation(conversationId);
+        Conversation conversation = mConversationFacade.getConversationById(conversationId);
         if (conversation == null) {
             long contactId = CallContact.contactIdFromId(conversationId);
             Log.d(TAG, "no conversation found, contact_id " + contactId);
@@ -150,7 +153,7 @@ public class ConversationFragment extends Fragment implements
                     }
                 }
             }
-            conversation = service.startConversation(contact);
+            conversation = mConversationFacade.startConversation(contact);
         }
 
         Log.d(TAG, "returning " + conversation.getContact().getDisplayName() + " " + number);
@@ -307,7 +310,7 @@ public class ConversationFragment extends Fragment implements
 
         if (mVisible && mConversation != null && !mConversation.isVisible()) {
             mConversation.setVisible(true);
-            service.readConversation(mConversation);
+            mConversationFacade.readConversation(mConversation);
         }
 
         if (mDeleteConversation) {
@@ -351,8 +354,8 @@ public class ConversationFragment extends Fragment implements
         super.onPause();
         Log.d(TAG, "onPause");
         mVisible = false;
-        if (mConversation != null && mCallbacks.getService() != null) {
-            mCallbacks.getService().readConversation(mConversation);
+        if (mConversation != null ) {
+            mConversationFacade.readConversation(mConversation);
             mConversation.setVisible(false);
         }
 
@@ -367,9 +370,7 @@ public class ConversationFragment extends Fragment implements
         mVisible = true;
         if (mConversation != null) {
             mConversation.setVisible(true);
-            if (mCallbacks.getService() != null) {
-                mCallbacks.getService().readConversation(mConversation);
-            }
+            mConversationFacade.readConversation(mConversation);
         }
 
         IntentFilter filter = new IntentFilter(LocalService.ACTION_CONF_UPDATE);
@@ -508,9 +509,9 @@ public class ConversationFragment extends Fragment implements
             if (guess == null || guess.first == null) {
                 return;
             }
-            mCallbacks.getService().sendTextMessage(guess.first.getAccountID(), guess.second, txt);
+            mConversationFacade.sendTextMessage(guess.first.getAccountID(), guess.second, txt);
         } else {
-            mCallbacks.getService().sendTextMessage(conference, txt);
+            mConversationFacade.sendTextMessage(conference, txt);
         }
     }
 

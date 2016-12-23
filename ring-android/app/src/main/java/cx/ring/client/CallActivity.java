@@ -47,6 +47,7 @@ import javax.inject.Inject;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.CallFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -68,6 +69,9 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
     @Inject
     AccountService mAccountService;
+
+    @Inject
+    ConversationFacade mConversationFacade;
 
     private boolean init = false;
     private View mMainView;
@@ -276,7 +280,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
 
     private Pair<Account, Uri> guess(Uri number, String account_id) {
         Account a = mAccountService.getAccount(account_id);
-        Conversation conv = service.findConversationByNumber(number);
+        Conversation conv = mConversationFacade.findOrStartConversationByNumber(number);
 
         // Guess account from number
         if (a == null && number != null)
@@ -324,7 +328,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
             SipCall call = new SipCall(null, g.first.getAccountID(), g.second, SipCall.Direction.OUTGOING);
             call.muteVideo(!hasVideo);
 
-            mDisplayedConference = service.placeCall(call);
+            mDisplayedConference = mConversationFacade.placeCall(call);
         } else if (Intent.ACTION_VIEW.equals(action)) {
             String conf_id = u.getLastPathSegment();
             Log.d(TAG, "conf " + conf_id);
