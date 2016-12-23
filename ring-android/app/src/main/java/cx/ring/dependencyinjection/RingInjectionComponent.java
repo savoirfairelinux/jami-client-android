@@ -51,6 +51,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.ContactServiceImpl;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeServiceImpl;
 import cx.ring.services.HardwareService;
@@ -130,6 +131,8 @@ public interface RingInjectionComponent {
     void inject(HistoryServiceImpl service);
 
     void inject(ContactServiceImpl service);
+
+    void inject(ConversationFacade service);
 
     void inject(BootReceiver receiver);
 
