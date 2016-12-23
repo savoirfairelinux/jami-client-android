@@ -54,7 +54,8 @@ public class ServiceEvent {
         STOP_CAPTURE,
         SET_PARAMETERS,
         CONTACTS_CHANGED,
-        MIGRATION_ENDED
+        MIGRATION_ENDED,
+        CONVERSATIONS_CHANGED
     }
 
     public enum EventInput {
