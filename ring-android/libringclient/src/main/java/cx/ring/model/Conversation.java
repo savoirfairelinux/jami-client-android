@@ -163,19 +163,26 @@ public class Conversation {
         return d;
     }
 
-    public void addHistoryCall(HistoryCall c) {
-        String accountId = c.getAccountID();
-        if (mHistory.containsKey(accountId))
-            mHistory.get(accountId).addHistoryCall(c, getContact());
-        else {
-            HistoryEntry e = new HistoryEntry(accountId, getContact());
-            e.addHistoryCall(c, getContact());
-            mHistory.put(accountId, e);
+    public void addHistoryCall(HistoryCall call) {
+        if(getHistoryCalls().contains(call)){
+            return;
         }
-        mAggregateHistory.add(new ConversationElement(c));
+        String accountId = call.getAccountID();
+        if (mHistory.containsKey(accountId)) {
+            mHistory.get(accountId).addHistoryCall(call, getContact());
+        }
+        else {
+            HistoryEntry entry = new HistoryEntry(accountId, getContact());
+            entry.addHistoryCall(call, getContact());
+            mHistory.put(accountId, entry);
+        }
+        mAggregateHistory.add(new ConversationElement(call));
     }
 
     public void addTextMessage(TextMessage txt) {
+        if(getTextMessages().contains(txt)){
+            return;
+        }
         if (txt.getContact() == null) {
             txt.setContact(getContact());
         }

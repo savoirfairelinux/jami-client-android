@@ -33,11 +33,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.model.Uri;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
@@ -46,12 +48,16 @@ public class ConversationActivity extends AppCompatActivity implements LocalServ
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
 
+    @Inject
+    ConversationFacade mConversationFacade;
+
     private static final String TAG = ConversationActivity.class.getSimpleName();
     static final long REFRESH_INTERVAL_MS = 30 * 1000;
 
     private boolean mBound = false;
     private LocalService mService = null;
     private final Handler mRefreshTaskHandler = new Handler();
+
     private ConversationFragment mConversationFragment;
 
     @Override
@@ -137,7 +143,7 @@ public class ConversationActivity extends AppCompatActivity implements LocalServ
         switch (requestCode) {
             case ConversationFragment.REQ_ADD_CONTACT:
                 if (mService != null) {
-                    mService.refreshConversations();
+                    mConversationFacade.refreshConversations();
                 }
                 break;
         }
