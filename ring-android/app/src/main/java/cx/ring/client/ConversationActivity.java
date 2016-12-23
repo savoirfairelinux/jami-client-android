@@ -37,7 +37,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.model.Uri;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
@@ -52,6 +51,7 @@ public class ConversationActivity extends AppCompatActivity implements LocalServ
     private boolean mBound = false;
     private LocalService mService = null;
     private final Handler mRefreshTaskHandler = new Handler();
+
     private ConversationFragment mConversationFragment;
 
     @Override
