@@ -32,6 +32,7 @@ import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.ContactService;
 import cx.ring.services.ContactServiceImpl;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.DeviceRuntimeServiceImpl;
@@ -146,6 +147,19 @@ public class ServiceInjectionModule {
         ContactServiceImpl contactService = new ContactServiceImpl();
         mRingApplication.getRingInjectionComponent().inject(contactService);
         return contactService;
+    }
+
+    @Provides
+    @Singleton
+    ConversationFacade provideConversationtFacade(
+            AccountService accountService,
+            ContactService contactService,
+            ConferenceService conferenceService,
+            HistoryService historyService
+    ) {
+        ConversationFacade conversationFacade = new ConversationFacade();
+        mRingApplication.getRingInjectionComponent().inject(conversationFacade);
+        return conversationFacade;
     }
 
     @Provides

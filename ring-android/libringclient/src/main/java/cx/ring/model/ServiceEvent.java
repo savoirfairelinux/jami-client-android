@@ -57,7 +57,8 @@ public class ServiceEvent {
         MIGRATION_ENDED,
         INCOMING_TRUST_REQUEST,
         CONTACT_ADDED,
-        CONTACT_REMOVED
+        CONTACT_REMOVED,
+        CONVERSATIONS_CHANGED
     }
 
     public enum EventInput {
