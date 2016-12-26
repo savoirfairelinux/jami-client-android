@@ -1,8 +1,12 @@
 package cx.ring.fragments;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -79,11 +83,12 @@ public class ConversationFragment extends Fragment implements
 
     public static final int REQ_ADD_CONTACT = 42;
 
+    private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
+
     private boolean mVisible = false;
     private AlertDialog mDeleteDialog;
     private boolean mDeleteConversation = false;
 
-    private LocalService mService = null;
     private Conversation mConversation = null;
     private Uri mPreferredNumber = null;
 
@@ -142,10 +147,10 @@ public class ConversationFragment extends Fragment implements
     }
 
     public void refreshView(long refreshed) {
-        if (mService == null) {
+        if (mCallbacks == null || mCallbacks.getService() == null) {
             return;
         }
-        Pair<Conversation, Uri> conversation = getConversation(mService, getActivity().getIntent());
+        Pair<Conversation, Uri> conversation = getConversation(mCallbacks.getService(), getActivity().getIntent());
         mConversation = conversation.first;
         mPreferredNumber = conversation.second;
 
@@ -201,25 +206,38 @@ public class ConversationFragment extends Fragment implements
         getActivity().invalidateOptionsMenu();
     }
 
-    public void setCallback(LocalService callback) {
-        mService = callback;
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
+            refreshView(intent.getLongExtra(LocalService.ACTION_CONF_UPDATE_EXTRA_MSG, 0));
+        }
+    };
 
-        mAdapter = new ConversationAdapter(getActivity(),
-                mService.get40dpContactCache(),
-                mService.getThreadPool());
+    @Override
+    public void onAttach(Activity activity) {
+        Log.d(TAG, "onAttach");
+        super.onAttach(activity);
 
-        if (mHistList != null) {
-            mHistList.setAdapter(mAdapter);
+        if (!(activity instanceof LocalService.Callbacks)) {
+            throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        if (mVisible && mConversation != null && !mConversation.isVisible()) {
-            mConversation.setVisible(true);
-            mService.readConversation(mConversation);
-        }
+        mCallbacks = (LocalService.Callbacks) activity;
+    }
 
-        if (mDeleteConversation) {
-            mDeleteDialog = ActionHelper.launchDeleteAction(getActivity(), mConversation, this);
-        }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(TAG, "onDetach");
+        mCallbacks = LocalService.DUMMY_CALLBACKS;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        IntentFilter filter = new IntentFilter(LocalService.ACTION_CONF_UPDATE);
+        getActivity().registerReceiver(receiver, filter);
     }
 
     @Override
@@ -251,7 +269,33 @@ public class ConversationFragment extends Fragment implements
         mDeleteConversation = savedInstanceState != null && savedInstanceState.getBoolean(CONVERSATION_DELETE);
 
         setHasOptionsMenu(true);
+
+        LocalService service = mCallbacks.getService();
+        if (service != null) {
+            bindService(inflater.getContext(), service);
+            refreshView(0);
+        }
+
         return inflatedView;
+    }
+
+    public void bindService(final Context ctx, final LocalService service) {
+        mAdapter = new ConversationAdapter(getActivity(),
+                service.get40dpContactCache(),
+                service.getThreadPool());
+
+        if (mHistList != null) {
+            mHistList.setAdapter(mAdapter);
+        }
+
+        if (mVisible && mConversation != null && !mConversation.isVisible()) {
+            mConversation.setVisible(true);
+            service.readConversation(mConversation);
+        }
+
+        if (mDeleteConversation) {
+            mDeleteDialog = ActionHelper.launchDeleteAction(getActivity(), mConversation, this);
+        }
     }
 
     @OnClick(R.id.msg_send)
@@ -290,8 +334,8 @@ public class ConversationFragment extends Fragment implements
         super.onPause();
         Log.d(TAG, "onPause");
         mVisible = false;
-        if (mConversation != null) {
-            mService.readConversation(mConversation);
+        if (mConversation != null && mCallbacks.getService() != null) {
+            mCallbacks.getService().readConversation(mConversation);
             mConversation.setVisible(false);
         }
     }
@@ -303,8 +347,8 @@ public class ConversationFragment extends Fragment implements
         mVisible = true;
         if (mConversation != null) {
             mConversation.setVisible(true);
-            if (mService != null) {
-                mService.readConversation(mConversation);
+            if (mCallbacks.getService() != null) {
+                mCallbacks.getService().readConversation(mConversation);
             }
         }
     }
@@ -314,6 +358,7 @@ public class ConversationFragment extends Fragment implements
         if (mDeleteConversation) {
             mDeleteDialog.dismiss();
         }
+        getActivity().unregisterReceiver(receiver);
 
         super.onDestroy();
     }
@@ -377,11 +422,12 @@ public class ConversationFragment extends Fragment implements
     private Pair<Account, Uri> guess() {
         Uri number = mNumberAdapter == null ?
                 mPreferredNumber : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-        Account account = mService.getAccount(mConversation.getLastAccountUsed());
+        LocalService service = mCallbacks.getService();
+        Account account = service.getAccount(mConversation.getLastAccountUsed());
 
         // Guess account from number
         if (account == null && number != null) {
-            account = mService.guessAccount(number);
+            account = service.guessAccount(number);
         }
 
         // Guess number from account/call history
@@ -391,7 +437,7 @@ public class ConversationFragment extends Fragment implements
 
         // If no account found, use first active
         if (account == null) {
-            List<Account> accounts = mService.getAccounts();
+            List<Account> accounts = service.getAccounts();
             if (accounts.isEmpty()) {
                 return null;
             } else
@@ -438,16 +484,16 @@ public class ConversationFragment extends Fragment implements
             if (guess == null || guess.first == null) {
                 return;
             }
-            mService.sendTextMessage(guess.first.getAccountID(), guess.second, txt);
+            mCallbacks.getService().sendTextMessage(guess.first.getAccountID(), guess.second, txt);
         } else {
-            mService.sendTextMessage(conference, txt);
+            mCallbacks.getService().sendTextMessage(conference, txt);
         }
     }
 
     @Override
     public void deleteConversation(Conversation conversation) {
-        if (mService != null) {
-            mService.deleteConversation(conversation);
+        if (mCallbacks.getService() != null) {
+            mCallbacks.getService().deleteConversation(conversation);
             getActivity().finish();
         }
     }
