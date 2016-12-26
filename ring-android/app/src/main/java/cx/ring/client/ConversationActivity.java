@@ -21,11 +21,9 @@
 
 package cx.ring.client;
 
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -39,9 +37,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
-public class ConversationActivity extends AppCompatActivity {
+public class ConversationActivity extends AppCompatActivity implements LocalService.Callbacks {
 
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
@@ -57,7 +56,6 @@ public class ConversationActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mConversationFragment.refreshView(0);
     }
 
     @Override
@@ -69,13 +67,6 @@ public class ConversationActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        if (mConversationFragment == null) {
-            mConversationFragment = new ConversationFragment();
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.main_frame, mConversationFragment, null)
-                    .commit();
-        }
 
         if (!mBound) {
             Log.d(TAG, "onCreate: Binding service...");
@@ -91,15 +82,14 @@ public class ConversationActivity extends AppCompatActivity {
             Log.d(TAG, "ConversationActivity onServiceConnected " + className.getClassName());
             mService = ((LocalService.LocalBinder) binder).getService();
 
-            IntentFilter filter = new IntentFilter(LocalService.ACTION_CONF_UPDATE);
-            registerReceiver(receiver, filter);
-
-            if (mConversationFragment != null) {
-                mConversationFragment.setCallback(mService);
-                mConversationFragment.refreshView(0);
-            }
-
             mBound = true;
+
+            if (mConversationFragment == null) {
+                mConversationFragment = new ConversationFragment();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.main_frame, mConversationFragment, null)
+                        .commit();
+            }
 
             mRefreshTaskHandler.postDelayed(refreshTask, REFRESH_INTERVAL_MS);
         }
@@ -126,14 +116,6 @@ public class ConversationActivity extends AppCompatActivity {
         }
     };
 
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
-            mConversationFragment.refreshView(intent.getLongExtra(LocalService.ACTION_CONF_UPDATE_EXTRA_MSG, 0));
-        }
-    };
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -156,9 +138,18 @@ public class ConversationActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         if (mBound) {
-            unregisterReceiver(receiver);
             unbindService(mConnection);
             mBound = false;
         }
+    }
+
+    @Override
+    public IDRingService getRemoteService() {
+        return mService.getRemoteService();
+    }
+
+    @Override
+    public LocalService getService() {
+        return mService;
     }
 }
