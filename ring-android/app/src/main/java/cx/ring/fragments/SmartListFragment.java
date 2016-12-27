@@ -115,6 +115,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private String mLastBlockchainQuery = null;
     private Boolean isSearching = false;
 
+    private Boolean isTabletMode = false;
+    private ConversationFragment mConversationFragment;
+
     @BindView(R.id.confs_list)
     ListView mList;
 
@@ -148,8 +151,11 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
-            if (LocalService.ACTION_CONF_LOADED.equals(intent.getAction())) {
-                setLoading(false);
+            switch (intent.getAction()) {
+                case LocalService.ACTION_CONF_LOADED: {
+                    setLoading(false);
+                    break;
+                }
             }
             refresh();
         }
@@ -287,6 +293,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         intentFilter.addAction(LocalService.ACTION_CONF_LOADED);
         getActivity().registerReceiver(receiver, intentFilter);
 
+        if (mConversationFragment != null && ConversationFragment.isTabletMode(getActivity())) {
+            startConversationTablet(mConversationFragment.getArguments());
+        }
         mAccountService.addObserver(this);
         mAccountService.addObserver(mRinguifyObserver);
         Log.d(TAG, "onResume");
@@ -468,6 +477,10 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             }
         }
 
+        if (ConversationFragment.isTabletMode(getActivity())) {
+            isTabletMode = true;
+        }
+
         return inflatedView;
     }
 
@@ -523,11 +536,26 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         // get it from whatever part of the app as "an already used contact"
         mCallService.addContact(c);
 
-        Intent intent = new Intent()
-                .setClass(getActivity(), ConversationActivity.class)
-                .setAction(Intent.ACTION_VIEW)
-                .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)));
-        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+        if (!isTabletMode) {
+            Intent intent = new Intent()
+                    .setClass(getActivity(), ConversationActivity.class)
+                    .setAction(Intent.ACTION_VIEW)
+                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)));
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("conversationID", c.getIds().get(0));
+            startConversationTablet(bundle);
+        }
+    }
+
+    public void startConversationTablet(Bundle bundle) {
+        mConversationFragment = new ConversationFragment();
+        mConversationFragment.setArguments(bundle);
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.conversation_container, mConversationFragment, null)
+                .commit();
     }
 
     private final OnItemClickListener conversationClickListener = new OnItemClickListener() {

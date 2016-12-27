@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -43,6 +44,7 @@ import cx.ring.adapters.ConversationAdapter;
 import cx.ring.adapters.NumberAdapter;
 import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
+import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
@@ -86,6 +88,7 @@ public class ConversationFragment extends Fragment implements
 
     private static final String TAG = ConversationFragment.class.getSimpleName();
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
+    private static final int MIN_SIZE_TABLET = 960;
 
     public static final int REQ_ADD_CONTACT = 42;
 
@@ -102,6 +105,11 @@ public class ConversationFragment extends Fragment implements
 
     private ConversationAdapter mAdapter = null;
     private NumberAdapter mNumberAdapter = null;
+
+    public static Boolean isTabletMode(Context context) {
+        return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
+                && context.getResources().getConfiguration().screenWidthDp >= MIN_SIZE_TABLET;
+    }
 
     private static Pair<Conversation, Uri> getConversation(LocalService service, Bundle bundle) {
         if (service == null || bundle == null) {
@@ -160,7 +168,7 @@ public class ConversationFragment extends Fragment implements
         mConversation = conversation.first;
         mPreferredNumber = conversation.second;
 
-        if (mConversation == null) {
+        if (mConversation == null || mAdapter == null) {
             return;
         }
 
@@ -503,7 +511,9 @@ public class ConversationFragment extends Fragment implements
     public void deleteConversation(Conversation conversation) {
         if (mCallbacks.getService() != null) {
             mCallbacks.getService().deleteConversation(conversation);
-            getActivity().finish();
+            if (getActivity() instanceof ConversationActivity) {
+                getActivity().finish();
+            }
         }
     }
 
