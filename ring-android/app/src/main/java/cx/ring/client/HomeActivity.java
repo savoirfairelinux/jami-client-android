@@ -66,6 +66,7 @@ import cx.ring.R;
 import cx.ring.about.AboutFragment;
 import cx.ring.application.RingApplication;
 import cx.ring.fragments.AccountsManagementFragment;
+import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
@@ -269,6 +270,25 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             Intent intent = new Intent(this, LocalService.class);
             startService(intent);
             bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.d(TAG, "onNewIntent " + intent);
+        if (!ConversationFragment.isTabletMode(this) || !LocalService.ACTION_CONV_ACCEPT.equals(intent.getAction())) {
+            return;
+        }
+
+        if (!getFragmentManager().findFragmentByTag(HOME_TAG).isVisible()) {
+            fNavigation.selectSection(RingNavigationFragment.Section.HOME);
+            onNavigationSectionSelected(RingNavigationFragment.Section.HOME);
+        }
+        if (fContent instanceof SmartListFragment) {
+            Bundle bundle = new Bundle();
+            bundle.putString("conversationID", intent.getStringExtra("conversationID"));
+            ((SmartListFragment) fContent).startConversationTablet(bundle);
         }
     }
 

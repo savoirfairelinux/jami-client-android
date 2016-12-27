@@ -70,6 +70,8 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
+import cx.ring.client.HomeActivity;
+import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -113,6 +115,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     static public final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
     static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
     static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
+    static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
 
     @Inject
     HistoryService mHistoryService;
@@ -790,14 +793,22 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                 mLastBlockchainQuery = split[1];
                 mAccountService.lookupAddress("", "", mLastBlockchainQuery);
             }
-            Intent c_intent = new Intent(Intent.ACTION_VIEW)
-                    .setClass(this, ConversationActivity.class)
-                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
-            Intent d_intent = new Intent(ACTION_CONV_READ)
+            Intent intentConversation;
+            if (ConversationFragment.isTabletMode(this)) {
+                intentConversation = new Intent(ACTION_CONV_ACCEPT)
+                        .setClass(this, HomeActivity.class)
+                        .putExtra("conversationID", contact.getIds().get(0));
+            } else {
+                intentConversation = new Intent(Intent.ACTION_VIEW)
+                        .setClass(this, ConversationActivity.class)
+                        .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
+            }
+
+            Intent intentDelete = new Intent(ACTION_CONV_READ)
                     .setClass(this, LocalService.class)
                     .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
-            mMessageNotificationBuilder.setContentIntent(PendingIntent.getActivity(this, new Random().nextInt(), c_intent, 0))
-                    .setDeleteIntent(PendingIntent.getService(this, new Random().nextInt(), d_intent, 0));
+            mMessageNotificationBuilder.setContentIntent(PendingIntent.getActivity(this, new Random().nextInt(), intentConversation, 0))
+                    .setDeleteIntent(PendingIntent.getService(this, new Random().nextInt(), intentDelete, 0));
 
             if (contact.getPhoto() != null) {
                 Resources res = getResources();

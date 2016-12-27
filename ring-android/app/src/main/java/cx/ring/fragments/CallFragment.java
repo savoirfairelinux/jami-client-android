@@ -1129,13 +1129,20 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         if (contact == null || contact.getIds().isEmpty()) {
             return;
         }
-        Intent intent = new Intent()
-                .setClass(getActivity(), ConversationActivity.class)
-                .setAction(Intent.ACTION_VIEW)
-                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
-        intent.putExtra("resuming", true);
-        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+        Intent intent = new Intent();
+        if (ConversationFragment.isTabletMode(getActivity())) {
+            intent.setClass(getActivity(), HomeActivity.class)
+                    .setAction(LocalService.ACTION_CONV_ACCEPT)
+                    .putExtra("conversationID", contact.getIds().get(0));
+            startActivity(intent);
+        } else {
+            intent.setClass(getActivity(), ConversationActivity.class)
+                    .setAction(Intent.ACTION_VIEW)
+                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)))
+                    .putExtra("resuming", true);
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+        }
     }
 
     private void setDefaultPhoto() {
