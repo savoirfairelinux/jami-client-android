@@ -37,6 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.model.Uri;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 
@@ -82,10 +83,19 @@ public class ConversationActivity extends AppCompatActivity implements LocalServ
             Log.d(TAG, "ConversationActivity onServiceConnected " + className.getClassName());
             mService = ((LocalService.LocalBinder) binder).getService();
 
+            if (getIntent() == null || getIntent().getData() == null) {
+                return;
+            }
+
             mBound = true;
 
             if (mConversationFragment == null) {
+                Bundle bundle = new Bundle();
+                bundle.putString("conversationID", getIntent().getData().getLastPathSegment());
+                bundle.putString("number", getIntent().getStringExtra("number"));
+
                 mConversationFragment = new ConversationFragment();
+                mConversationFragment.setArguments(bundle);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.main_frame, mConversationFragment, null)
                         .commit();
