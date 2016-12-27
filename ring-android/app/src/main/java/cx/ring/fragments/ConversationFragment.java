@@ -98,13 +98,13 @@ public class ConversationFragment extends Fragment implements
     private ConversationAdapter mAdapter = null;
     private NumberAdapter mNumberAdapter = null;
 
-    static private Pair<Conversation, Uri> getConversation(LocalService service, Intent intent) {
-        if (service == null || intent == null || intent.getData() == null) {
+    static private Pair<Conversation, Uri> getConversation(LocalService service, Bundle bundle) {
+        if (service == null || bundle == null) {
             return new Pair<>(null, null);
         }
 
-        String conversationId = intent.getData().getLastPathSegment();
-        Uri number = new Uri(intent.getStringExtra("number"));
+        String conversationId = bundle.getString("conversationID");
+        Uri number = new Uri(bundle.getString("number"));
 
         Log.d(TAG, "getConversation " + conversationId + " " + number);
         Conversation conversation = service.getConversation(conversationId);
@@ -151,7 +151,7 @@ public class ConversationFragment extends Fragment implements
         if (mCallbacks == null || mCallbacks.getService() == null) {
             return;
         }
-        Pair<Conversation, Uri> conversation = getConversation(mCallbacks.getService(), getActivity().getIntent());
+        Pair<Conversation, Uri> conversation = getConversation(mCallbacks.getService(), getArguments());
         mConversation = conversation.first;
         mPreferredNumber = conversation.second;
 
