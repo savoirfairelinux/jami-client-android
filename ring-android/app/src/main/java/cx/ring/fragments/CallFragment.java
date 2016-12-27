@@ -1129,9 +1129,14 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         if (contact == null || contact.getIds().isEmpty()) {
             return;
         }
-        Intent intent = new Intent()
-                .setClass(getActivity(), ConversationActivity.class)
-                .setAction(Intent.ACTION_VIEW)
+        Intent intent = new Intent();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
+                && getResources().getConfiguration().screenWidthDp >= 960) {
+            intent.setClass(getActivity(), HomeActivity.class);
+        } else {
+            intent.setClass(getActivity(), ConversationActivity.class);
+        }
+        intent.setAction(Intent.ACTION_VIEW)
                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
                 .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
         intent.putExtra("resuming", true);
