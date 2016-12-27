@@ -28,6 +28,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
@@ -110,6 +111,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private SearchView mSearchView = null;
     private MenuItem mSearchMenuItem = null;
     private MenuItem mDialpadMenuItem = null;
+
+    private Boolean isTabletMode = false;
+    private ConversationFragment mConversationFragment;
 
     @BindView(R.id.confs_list)
     ListView mList;
@@ -455,6 +459,11 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             }
         }
 
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
+                && getResources().getConfiguration().screenWidthDp >= 960) {
+            isTabletMode = true;
+        }
+
         return inflatedView;
     }
 
@@ -502,11 +511,22 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         // get it from whatever part of the app as "an already used contact"
         mCallService.addContact(c);
 
-        Intent intent = new Intent()
-                .setClass(getActivity(), ConversationActivity.class)
-                .setAction(Intent.ACTION_VIEW)
-                .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)));
-        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+        if (!isTabletMode) {
+            Intent intent = new Intent()
+                    .setClass(getActivity(), ConversationActivity.class)
+                    .setAction(Intent.ACTION_VIEW)
+                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)));
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("conversationID", c.getIds().get(0));
+            mConversationFragment = new ConversationFragment();
+            mConversationFragment.setArguments(bundle);
+
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.conversation_container, mConversationFragment, null)
+                    .commit();
+        }
     }
 
     private final OnItemClickListener conversationClickListener = new OnItemClickListener() {
@@ -819,5 +839,14 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         } else {
             mNewContact.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mConversationFragment != null) {
+            getFragmentManager().beginTransaction().remove(mConversationFragment).commit();
+        }
+        Log.d(TAG, "onPause");
     }
 }

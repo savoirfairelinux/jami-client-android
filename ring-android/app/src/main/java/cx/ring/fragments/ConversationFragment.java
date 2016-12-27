@@ -43,6 +43,7 @@ import cx.ring.adapters.ConversationAdapter;
 import cx.ring.adapters.NumberAdapter;
 import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
+import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
@@ -155,7 +156,7 @@ public class ConversationFragment extends Fragment implements
         mConversation = conversation.first;
         mPreferredNumber = conversation.second;
 
-        if (mConversation == null) {
+        if (mConversation == null || mAdapter == null) {
             return;
         }
 
@@ -495,7 +496,9 @@ public class ConversationFragment extends Fragment implements
     public void deleteConversation(Conversation conversation) {
         if (mCallbacks.getService() != null) {
             mCallbacks.getService().deleteConversation(conversation);
-            getActivity().finish();
+            if (getActivity() instanceof ConversationActivity) {
+                getActivity().finish();
+            }
         }
     }
 
