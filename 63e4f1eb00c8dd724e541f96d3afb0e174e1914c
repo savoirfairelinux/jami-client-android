@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_670ca295",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/RingNavigationFragment.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2016-12-29T19:30:46Z",
+      "side": 1,
+      "message": "Call unbindView here on the presenter",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 24
+      },
+      "revId": "63e4f1eb00c8dd724e541f96d3afb0e174e1914c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
