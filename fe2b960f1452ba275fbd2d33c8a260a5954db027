@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ace114c_93122cb3",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-01-04T21:40:26Z",
+      "side": 1,
+      "message": "Yes, it is the environnement used in the android docker image currently managed by Jenkins and used for our CI and packaging. It will be bumped in a later patch when needed",
+      "parentUuid": "3ace114c_586dc303",
+      "range": {
+        "startLine": 49,
+        "startChar": 62,
+        "endLine": 49,
+        "endChar": 91
+      },
+      "revId": "fe2b960f1452ba275fbd2d33c8a260a5954db027",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ace114c_18b09b8a",
         "filename": "docker/Dockerfile",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-04T17:44:45Z",
       "side": 1,
       "message": "Same.",
+      "range": {
+        "startLine": 56,
+        "startChar": 85,
+        "endLine": 56,
+        "endChar": 89
+      },
+      "revId": "fe2b960f1452ba275fbd2d33c8a260a5954db027",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_b31728a3",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-01-04T21:40:26Z",
+      "side": 1,
+      "message": "Same",
+      "parentUuid": "3ace114c_18b09b8a",
       "range": {
         "startLine": 56,
         "startChar": 85,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3ace114c_530cc494",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-01-04T21:40:26Z",
+      "side": 1,
+      "message": "Same",
+      "parentUuid": "3ace114c_d8a9b325",
+      "range": {
+        "startLine": 59,
+        "startChar": 37,
+        "endLine": 59,
+        "endChar": 41
+      },
+      "revId": "fe2b960f1452ba275fbd2d33c8a260a5954db027",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ace114c_98632b1a",
         "filename": "docker/Dockerfile",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-01-04T17:44:45Z",
       "side": 1,
       "message": "Same.",
+      "range": {
+        "startLine": 64,
+        "startChar": 33,
+        "endLine": 64,
+        "endChar": 37
+      },
+      "revId": "fe2b960f1452ba275fbd2d33c8a260a5954db027",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_7311c0ab",
+        "filename": "docker/Dockerfile",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-01-04T21:40:26Z",
+      "side": 1,
+      "message": "Same",
+      "parentUuid": "3ace114c_98632b1a",
       "range": {
         "startLine": 64,
         "startChar": 33,
