@@ -141,7 +141,6 @@ public class MediaPreferenceFragment extends PreferenceFragment
         audioCodecsPref.setOnPreferenceChangeListener(changeCodecListener);
         videoCodecsPref.setOnPreferenceChangeListener(changeCodecListener);
         mRingtoneCustom.setOnPreferenceChangeListener(changeAudioPreferenceListener);
-
     }
 
     @Override
@@ -216,15 +215,16 @@ public class MediaPreferenceFragment extends PreferenceFragment
     private final Preference.OnPreferenceChangeListener changeCodecListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object o) {
-            final Account acc = mCallbacks.getAccount();
+            final Account account = mCallbacks.getAccount();
             ArrayList<Long> audio = audioCodecsPref.getActiveCodecList();
             ArrayList<Long> video = videoCodecsPref.getActiveCodecList();
             ArrayList<Long> newOrder = new ArrayList<>(audio.size() + video.size());
             newOrder.addAll(audio);
             newOrder.addAll(video);
-            mAccountService.setActiveCodecList(newOrder, acc.getAccountID());
+            mAccountService.setActiveCodecList(newOrder, account.getAccountID());
 
             mCallbacks.saveAccount();
+            accountChanged(account);
             return true;
         }
     };
