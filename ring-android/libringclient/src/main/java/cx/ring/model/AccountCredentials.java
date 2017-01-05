@@ -28,18 +28,14 @@ public class AccountCredentials implements Serializable {
     @SuppressWarnings("unused")
     private static final String TAG = AccountCredentials.class.getSimpleName();
 
-    private static final String CONFIG_ACCOUNT_USERNAME = "Account.mUsername";
-    private static final String CONFIG_ACCOUNT_PASSWORD = "Account.mPassword";
-    private static final String CONFIG_ACCOUNT_REALM = "Account.mRealm";
-
     private String mUsername;
     private String mPassword;
     private String mRealm;
 
     public AccountCredentials(Map<String, String> pref) {
-        mUsername = pref.get(CONFIG_ACCOUNT_USERNAME);
-        mPassword = pref.get(CONFIG_ACCOUNT_PASSWORD);
-        mRealm = pref.get(CONFIG_ACCOUNT_REALM);
+        mUsername = pref.get(ConfigKey.ACCOUNT_USERNAME.key());
+        mPassword = pref.get(ConfigKey.ACCOUNT_PASSWORD.key());
+        mRealm = pref.get(ConfigKey.ACCOUNT_REALM.key());
     }
 
     public AccountCredentials(String username, String password, String realm) {
