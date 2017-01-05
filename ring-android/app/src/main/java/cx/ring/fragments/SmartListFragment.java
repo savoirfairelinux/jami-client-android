@@ -113,6 +113,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private MenuItem mSearchMenuItem = null;
     private MenuItem mDialpadMenuItem = null;
     private String mLastBlockchainQuery = null;
+    private Boolean isSearching = false;
 
     @BindView(R.id.confs_list)
     ListView mList;
@@ -305,6 +306,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 displayFloatingActionButtonWithDelay(true, 50);
                 setOverflowMenuVisible(menu, true);
                 setLoading(false);
+                isSearching = false;
                 return true;
             }
 
@@ -314,6 +316,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 displayFloatingActionButtonWithDelay(false, 0);
                 setOverflowMenuVisible(menu, false);
                 setLoading(false);
+                isSearching = true;
                 return true;
             }
         });
@@ -820,6 +823,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         }
 
         if (event.getEventType() == DaemonEvent.EventType.REGISTERED_NAME_FOUND) {
+            if (!isSearching) {
+                return;
+            }
             RingApplication.uiHandler.post(new Runnable() {
                 @Override
                 public void run() {
