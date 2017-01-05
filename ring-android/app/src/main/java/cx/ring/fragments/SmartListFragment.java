@@ -113,6 +113,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     private MenuItem mSearchMenuItem = null;
     private MenuItem mDialpadMenuItem = null;
     private String mLastBlockchainQuery = null;
+    private Boolean isSearch = false;
 
     @BindView(R.id.confs_list)
     ListView mList;
@@ -305,6 +306,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 displayFloatingActionButtonWithDelay(true, 50);
                 setOverflowMenuVisible(menu, true);
                 setLoading(false);
+                isSearch = false;
                 return true;
             }
 
@@ -314,6 +316,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 displayFloatingActionButtonWithDelay(false, 0);
                 setOverflowMenuVisible(menu, false);
                 setLoading(false);
+                isSearch = true;
                 return true;
             }
         });
@@ -820,44 +823,46 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         }
 
         if (event.getEventType() == DaemonEvent.EventType.REGISTERED_NAME_FOUND) {
-            RingApplication.uiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    String name = event.getEventInput(DaemonEvent.EventInput.NAME, String.class);
-                    String address = event.getEventInput(DaemonEvent.EventInput.ADDRESS, String.class);
+            if (isSearch) {
+                RingApplication.uiHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String name = event.getEventInput(DaemonEvent.EventInput.NAME, String.class);
+                        String address = event.getEventInput(DaemonEvent.EventInput.ADDRESS, String.class);
 
-                    int state = event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class);
-                    switch (state) {
-                        case 0:
-                            // on found
-                            if (!TextUtils.isEmpty(mLastBlockchainQuery) && mLastBlockchainQuery.equals(name)) {
-                                displayNewContactRowWithName(name, address);
-                                mLastBlockchainQuery = null;
-                            } else {
-                                mNewContact.setVisibility(View.GONE);
-                            }
-                            break;
-                        case 1:
-                            // invalid name
-                            Uri uriName = new Uri(name);
-                            if (uriName.isRingId()) {
-                                displayNewContactRowWithName(name, null);
-                            } else {
-                                mNewContact.setVisibility(View.GONE);
-                            }
-                            break;
-                        default:
-                            // on error
-                            Uri uriAddress = new Uri(address);
-                            if (uriAddress.isRingId()) {
-                                displayNewContactRowWithName(name, address);
-                            } else {
-                                mNewContact.setVisibility(View.GONE);
-                            }
-                            break;
+                        int state = event.getEventInput(DaemonEvent.EventInput.STATE, Integer.class);
+                        switch (state) {
+                            case 0:
+                                // on found
+                                if (!TextUtils.isEmpty(mLastBlockchainQuery) && mLastBlockchainQuery.equals(name)) {
+                                    displayNewContactRowWithName(name, address);
+                                    mLastBlockchainQuery = null;
+                                } else {
+                                    mNewContact.setVisibility(View.GONE);
+                                }
+                                break;
+                            case 1:
+                                // invalid name
+                                Uri uriName = new Uri(name);
+                                if (uriName.isRingId()) {
+                                    displayNewContactRowWithName(name, null);
+                                } else {
+                                    mNewContact.setVisibility(View.GONE);
+                                }
+                                break;
+                            default:
+                                // on error
+                                Uri uriAddress = new Uri(address);
+                                if (uriAddress.isRingId()) {
+                                    displayNewContactRowWithName(name, address);
+                                } else {
+                                    mNewContact.setVisibility(View.GONE);
+                                }
+                                break;
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 }
