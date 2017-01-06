@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_a517df50",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-01-06T14:44:09Z",
+      "side": 1,
+      "message": "isSearching",
+      "range": {
+        "startLine": 116,
+        "startChar": 20,
+        "endLine": 116,
+        "endChar": 28
+      },
+      "revId": "725d25bdc6019517fe4540f0f687b9485bdb7756",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_c518eb86",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-01-06T14:44:09Z",
+      "side": 1,
+      "message": "inverse the condition to minimize indentation:\n\nif (!isSearching) {\n   return;\n}",
+      "range": {
+        "startLine": 826,
+        "startChar": 12,
+        "endLine": 826,
+        "endChar": 27
+      },
+      "revId": "725d25bdc6019517fe4540f0f687b9485bdb7756",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
