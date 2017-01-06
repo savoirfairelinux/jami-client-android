@@ -165,6 +165,7 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
     private NotificationCompat.Builder mMessageNotificationBuilder;
     private int mNotificationID;
     private String mLastBlockchainQuery = null;
+    private Map<String, Conversation> mConversationsMap = new HashMap<>();
 
     public ContactsLoader.Result getSortedContacts() {
         Log.w(TAG, "getSortedContacts " + lastContactLoaderResult.contacts.size() + " contacts, " + lastContactLoaderResult.starred.size() + " starred.");
@@ -900,7 +901,6 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
 
         @Override
         protected Map<String, Conversation> doInBackground(Void... params) {
-            final Map<String, Conversation> ret = new HashMap<>();
             try {
                 final List<HistoryCall> history = mHistoryService.getAll();
                 final List<HistoryText> historyTexts = mHistoryService.getAllTextMessages();
@@ -911,7 +911,7 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
                     CallContact contact = getCreateContact(call.getContactID(), call.getContactKey(), call.getNumber());
 
                     Map.Entry<String, Conversation> merge = null;
-                    for (Map.Entry<String, Conversation> ce : ret.entrySet()) {
+                    for (Map.Entry<String, Conversation> ce : mConversationsMap.entrySet()) {
                         Conversation conversation = ce.getValue();
                         if ((contact.getId() > 0 && contact.getId() == conversation.getContact().getId()) || conversation.getContact().hasNumber(call.getNumber())) {
                             merge = ce;
@@ -922,25 +922,25 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
                         Conversation conversation = merge.getValue();
                         if (conversation.getContact().getId() <= 0 && contact.getId() > 0) {
                             conversation.setContact(contact);
-                            ret.remove(merge.getKey());
-                            ret.put(contact.getIds().get(0), conversation);
+                            mConversationsMap.remove(merge.getKey());
+                            mConversationsMap.put(contact.getIds().get(0), conversation);
                         }
                         conversation.addHistoryCall(call);
                         continue;
                     }
                     String key = contact.getIds().get(0);
-                    if (ret.containsKey(key)) {
-                        ret.get(key).addHistoryCall(call);
+                    if (mConversationsMap.containsKey(key)) {
+                        mConversationsMap.get(key).addHistoryCall(call);
                     } else {
                         Conversation conversation = new Conversation(contact);
                         conversation.addHistoryCall(call);
-                        ret.put(key, conversation);
+                        mConversationsMap.put(key, conversation);
                     }
                 }
 
                 for (HistoryText htext : historyTexts) {
                     CallContact contact = getCreateContact(htext.getContactID(), htext.getContactKey(), htext.getNumber());
-                    Tuple<HistoryEntry, HistoryCall> p = findHistoryByCallId(ret, htext.getCallId());
+                    Tuple<HistoryEntry, HistoryCall> p = findHistoryByCallId(mConversationsMap, htext.getCallId());
 
                     if (contact == null && p != null) {
                         contact = p.first.getContact();
@@ -960,12 +960,12 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
                     }
 
                     String key = contact.getIds().get(0);
-                    if (ret.containsKey(key)) {
-                        ret.get(key).addTextMessage(msg);
+                    if (mConversationsMap.containsKey(key)) {
+                        mConversationsMap.get(key).addTextMessage(msg);
                     } else {
                         Conversation c = new Conversation(contact);
                         c.addTextMessage(msg);
-                        ret.put(key, c);
+                        mConversationsMap.put(key, c);
                     }
                 }
 
@@ -993,7 +993,7 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
                         Conversation conv = null;
                         ArrayList<String> ids = contact.getIds();
                         for (String id : ids) {
-                            conv = ret.get(id);
+                            conv = mConversationsMap.get(id);
                             if (conv != null) {
                                 break;
                             }
@@ -1003,24 +1003,24 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
                         } else {
                             conv = new Conversation(contact);
                             conv.addConference(conf);
-                            ret.put(ids.get(0), conv);
+                            mConversationsMap.put(ids.get(0), conv);
                         }
                     }
                 }
-                for (Conversation c : ret.values()) {
+                for (Conversation c : mConversationsMap.values()) {
                     Log.w(TAG, "Conversation : " + c.getContact().getId() + " " + c.getContact().getDisplayName() + " " + c.getLastNumberUsed(c.getLastAccountUsed()) + " " + c.getLastInteraction().toString());
                 }
                 for (int i = 0; i < localContactCache.size(); i++) {
                     CallContact contact = localContactCache.valueAt(i);
                     String key = contact.getIds().get(0);
-                    if (!ret.containsKey(key)) {
-                        ret.put(key, new Conversation(contact));
+                    if (!mConversationsMap.containsKey(key)) {
+                        mConversationsMap.put(key, new Conversation(contact));
                     }
                 }
             } catch (Exception e) {
                 Log.e(TAG, "ConversationLoader doInBackground", e);
             }
-            return ret;
+            return mConversationsMap;
         }
     }
 
@@ -1089,13 +1089,13 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
                 mMessageNotificationBuilder.setCategory(NotificationCompat.CATEGORY_MESSAGE)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setDefaults(NotificationCompat.DEFAULT_ALL)
-                        .setSmallIcon(R.drawable.ic_ring_logo_white)
-                        .setContentTitle(contact.getDisplayName());
-                String[] split = contact.getDisplayName().split(":");
-                if (split.length > 0) {
-                    mLastBlockchainQuery = split[1];
-                    mAccountService.lookupAddress("", "", mLastBlockchainQuery);
-                }
+                        .setSmallIcon(R.drawable.ic_ring_logo_white);
+            }
+            mMessageNotificationBuilder.setContentTitle(contact.getDisplayName());
+            String[] split = contact.getDisplayName().split(":");
+            if (split.length > 0) {
+                mLastBlockchainQuery = split[1];
+                mAccountService.lookupAddress("", "", mLastBlockchainQuery);
             }
             Intent c_intent = new Intent(Intent.ACTION_VIEW)
                     .setClass(this, ConversationActivity.class)
