@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ace114c_2503ef10",
+        "filename": "ring-android/app/src/main/res/layout/activity_conversation.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-01-06T14:57:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ace114c_c52c6b4d",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "89ede08a0ca7847008d0d8a8237666c5ac6c44fd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ace114c_e53167a3",
         "filename": "ring-android/app/src/main/res/layout/frag_conversation.xml",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-05T18:28:46Z",
       "side": 1,
       "message": "I think some of this attributes are not working now. the RecyclerView content is wrapped and does not take the full screen size",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "89ede08a0ca7847008d0d8a8237666c5ac6c44fd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_283186ec",
+        "filename": "ring-android/app/src/main/res/layout/frag_conversation.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-01-06T14:57:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ace114c_e53167a3",
       "range": {
         "startLine": 9,
         "startChar": 8,
