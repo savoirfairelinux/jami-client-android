@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ace114c_4872d27d",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-01-06T21:00:49Z",
+      "side": 1,
+      "message": "The difference with the existing \u0027conversations\u0027 field (if any) should probably be explained.",
+      "range": {
+        "startLine": 168,
+        "startChar": 38,
+        "endLine": 168,
+        "endChar": 55
+      },
+      "revId": "fa19333a078ceac9fdfea62544b599d05b33c78c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
