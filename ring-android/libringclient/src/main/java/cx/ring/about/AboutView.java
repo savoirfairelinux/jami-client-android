@@ -31,7 +31,7 @@ public interface AboutView {
 
     void showCopyright(String copyright);
 
-    void showLicence(String licence);
+    void showLicense(String license);
 
     void showFeedback(String feedback);
 

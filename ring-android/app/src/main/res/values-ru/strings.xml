@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_licence">Лицензия</string>
+  <string name="section_license">Лицензия</string>
   <string name="version_section">Версия</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>

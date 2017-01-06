@@ -60,8 +60,8 @@ public class AboutFragment extends Fragment implements AboutView {
     @BindView(R.id.copyright)
     TextView mTextViewCopyright;
 
-    @BindView(R.id.licence)
-    TextView mTextViewLicence;
+    @BindView(R.id.license)
+    TextView mTextViewLicense;
 
     @BindView(R.id.email_report)
     TextView mTextViewEmailReport;
@@ -110,7 +110,7 @@ public class AboutFragment extends Fragment implements AboutView {
         mAboutPresenter.unbindView();
     }
 
-    @OnClick({R.id.contribute_container, R.id.licence_container})
+    @OnClick({R.id.contribute_container, R.id.license_container})
     public void webSiteToView(View view) {
 
         Uri uriToView = null;
@@ -119,8 +119,8 @@ public class AboutFragment extends Fragment implements AboutView {
             case R.id.contribute_container:
                 uriToView = Uri.parse(getString(R.string.ring_contribute_website));
                 break;
-            case R.id.licence_container:
-                uriToView = Uri.parse(getString(R.string.gnu_licence_website));
+            case R.id.license_container:
+                uriToView = Uri.parse(getString(R.string.gnu_license_website));
                 break;
         }
 
@@ -184,8 +184,8 @@ public class AboutFragment extends Fragment implements AboutView {
     }
 
     @Override
-    public void showLicence(String licence) {
-        mTextViewLicence.setText(Html.fromHtml(getString(R.string.licence)));
+    public void showLicense(String license) {
+        mTextViewLicense.setText(Html.fromHtml(getString(R.string.license)));
     }
 
     @Override

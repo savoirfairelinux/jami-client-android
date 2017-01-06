@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_licence">Licencija</string>
+  <string name="section_license">Licencija</string>
   <string name="sponsor_section">Ring yra laisva programinė įranga, kurią kuria ir palaiko</string>
   <string name="copyright_section">Autorių Teisės</string>
   <string name="contribute_section">Talkinti</string>

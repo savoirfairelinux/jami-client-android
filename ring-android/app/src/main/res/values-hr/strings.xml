@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_licence">Licenca</string>
+  <string name="section_license">Licenca</string>
   <string name="sponsor_section">Ring je slobodi software koji razvijaju i podržavaju</string>
   <string name="copyright_section">Autorska prava</string>
   <string name="contribute_section">Doprinesite</string>

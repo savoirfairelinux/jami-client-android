@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_licence">الترخيص</string>
+  <string name="section_license">الترخيص</string>
   <string name="sponsor_section">Ring برمجية حرّة طوّرت ودعمت بواسطة</string>
   <string name="copyright_section">الحقوق محفوظة</string>
   <string name="contribute_section">مساهمة</string>

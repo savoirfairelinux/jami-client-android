@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_licence">Lizenz</string>
+  <string name="section_license">Lizenz</string>
   <string name="sponsor_section">Ring ist eine freie Software entwickelt und unterstützt von</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Mitwirken</string>
