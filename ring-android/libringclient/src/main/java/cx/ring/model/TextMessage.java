@@ -212,4 +212,28 @@ public class TextMessage {
         mNotified = noti;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        TextMessage that = (TextMessage) o;
+
+        if (mTimestamp != that.mTimestamp) {
+            return false;
+        }
+        return mMessage.equals(that.mMessage);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (mTimestamp ^ (mTimestamp >>> 32));
+        result = 31 * result + mMessage.hashCode();
+        return result;
+    }
 }
