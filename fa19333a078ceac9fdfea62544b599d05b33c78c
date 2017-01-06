@@ -22,6 +22,30 @@
       "revId": "fa19333a078ceac9fdfea62544b599d05b33c78c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ace114c_e8d85e55",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-01-06T21:23:34Z",
+      "side": 1,
+      "message": "There is not difference between conversations and mConversationsMap variables. I remove mConversationsMap variable.",
+      "parentUuid": "3ace114c_4872d27d",
+      "range": {
+        "startLine": 168,
+        "startChar": 38,
+        "endLine": 168,
+        "endChar": 55
+      },
+      "revId": "fa19333a078ceac9fdfea62544b599d05b33c78c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
