@@ -122,7 +122,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:background="@color/darker_gray" />
 
         <LinearLayout
-            android:id="@+id/licence_container"
+            android:id="@+id/license_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -134,12 +134,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/section_licence"
+                android:text="@string/section_license"
                 android:textColor="@color/color_primary_dark"
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/licence"
+                android:id="@+id/license"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="false" />

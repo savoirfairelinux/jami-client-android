@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_licence">Лиценз</string>
+  <string name="section_license">Лиценз</string>
   <string name="sponsor_section">Ring е безплатен софтуер, разработван и поддържан от</string>
   <string name="copyright_section">Авторски права</string>
   <string name="contribute_section">Принос</string>

@@ -24,13 +24,13 @@ along with this program; if not, write to the Free Software
     <string name="app_author" translatable="false">Savoir-faire Linux Inc.</string>
     <string name="app_release" translatable="false">Gaston Miron Beta 2 - %1$s</string>
     <string name="app_website_contribute" translatable="false">&lt;u>https://ring.cx/contribute&lt;/u></string>
-    <string name="gnu_licence_website" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
+    <string name="gnu_license_website" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="ring_contribute_website" translatable="false">https://ring.cx/contribute</string>
 
     <string name="copyright" translatable="false">2004&#8211;2016 Savoir-faire Linux Inc.</string>
     <string name="feedback_section">Feedback</string>
     <string name="report">&lt;u>Send us an email&lt;/u></string>
-    <string name="section_licence">Licence</string>
+    <string name="section_license">License</string>
     <string name="sponsor_section">Ring is a free software developed and supported by</string>
     <string name="copyright_section">Copyright</string>
     <string name="contribute_section">Contribute</string>
@@ -39,7 +39,7 @@ along with this program; if not, write to the Free Software
     <string name="no_browser_app_installed">No web browser app found, install one to view this page</string>
     <string name="email_chooser_title">Send mail using…</string>
     <string name="website_chooser_title">View website using…</string>
-    <string name="licence">This software is provided \"as is\", without warranty of any kind. For details, see
+    <string name="license">This software is provided \"as is\", without warranty of any kind. For details, see
 &lt;u>GNU General Public License version 3 or later&lt;/u></string>
 
     <!-- RingActivity -->

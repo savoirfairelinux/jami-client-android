@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_licence">Lisans</string>
+  <string name="section_license">Lisans</string>
   <string name="sponsor_section">Ring bir özgür yazılımdır ve şunun tarafından desteklenir</string>
   <string name="copyright_section">Telif Hakkı</string>
   <string name="contribute_section">Katkı Yap</string>

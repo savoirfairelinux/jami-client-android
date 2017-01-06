@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_licence">Licensz</string>
+  <string name="section_license">Licensz</string>
   <string name="sponsor_section">A Ring egy szabad szoftver, amelynek fejlesztője és támogatója:</string>
   <string name="copyright_section">Jogvédelem</string>
   <string name="contribute_section">Hozzájárulás</string>

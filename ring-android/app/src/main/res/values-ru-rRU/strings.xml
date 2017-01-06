@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_licence">Лицензия</string>
+  <string name="section_license">Лицензия</string>
   <string name="sponsor_section">Ring является свободным ПО, которое разрабатывается и поддерживается</string>
   <string name="copyright_section">Авторское право</string>
   <string name="contribute_section">Помочь проекту</string>

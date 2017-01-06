@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_licence">Licens</string>
+  <string name="section_license">Licens</string>
   <string name="sponsor_section">Ring er fri software, udviklet og støttet af</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Bidrag</string>

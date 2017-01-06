@@ -35,7 +35,7 @@ public class AboutPresenter extends RootPresenter<AboutView> {
             getView().showContribute("");
             getView().showCopyright("");
             getView().showFeedback("");
-            getView().showLicence("");
+            getView().showLicense("");
             getView().showSupport("");
             getView().showRelease("");
         }

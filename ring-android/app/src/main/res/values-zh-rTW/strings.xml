@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_licence">許可證</string>
+  <string name="section_license">許可證</string>
   <string name="sponsor_section">Ring 是一個自由軟體開發並支援由</string>
   <string name="copyright_section">版權</string>
   <string name="contribute_section">貢獻</string>

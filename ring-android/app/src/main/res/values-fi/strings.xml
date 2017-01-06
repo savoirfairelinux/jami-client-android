@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_licence">Lisenssi</string>
+  <string name="section_license">Lisenssi</string>
   <string name="sponsor_section">Ring on vapaa ohjelma jonka on kehittänyt ja jota tukee</string>
   <string name="copyright_section">Tekijänoikeus</string>
   <string name="contribute_section">Tuo panoksesi</string>
