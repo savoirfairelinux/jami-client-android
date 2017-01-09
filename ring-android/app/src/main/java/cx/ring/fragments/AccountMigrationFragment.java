@@ -72,9 +72,6 @@ public class AccountMigrationFragment extends Fragment implements Observer<Daemo
     @BindView(R.id.ring_password)
     EditText mRingPassword;
 
-    @BindView(R.id.ring_password_repeat)
-    EditText mRingPasswordRepeat;
-
     private ProgressDialog mProgress = null;
 
     private boolean migratingAccount = false;
@@ -123,9 +120,7 @@ public class AccountMigrationFragment extends Fragment implements Observer<Daemo
     @OnClick(R.id.ring_migrate_btn)
     @SuppressWarnings("unused")
     void onMigrateButtonClick(View view) {
-        if (!checkPassword(mRingPassword, mRingPasswordRepeat)) {
-            initAccountMigration(mRingPassword.getText().toString());
-        }
+        initAccountMigration(mRingPassword.getText().toString());
     }
 
     @Override
