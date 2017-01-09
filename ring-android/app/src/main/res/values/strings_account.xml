@@ -155,11 +155,11 @@ along with this program; if not, write to the Free Software
     <string name="account_share_body_with_username">Contact me using \'%1$s\' or my public username \'%2$s\' on the Ring distributed communication platform: http://ring.cx</string>
     <string name="account_contact_me">Contact me on Ring !</string>
     <string name="update_account">Update account</string>
-    <string name="account_migration">Your Ring account can now be shared between all your devices. All you need to do is provide a password.</string>
+    <string name="account_migration">Your Ring account can be updated.\nPlease enter your password.</string>
     <string name="ring_account">Ring account</string>
     <string name="ring_account_identity">Identity</string>
     <string name="account_migration_title_dialog">Account migration</string>
-    <string name="account_migration_message_dialog">In order to be usable on multiple devices, your accounts need to be updated. Do you want to go the Account management screen to perform this operation ?</string>
+    <string name="account_migration_message_dialog">Your accounts need to be updated. Do you want to go the Account management screen to perform this operation ?</string>
     <string name="account_update_needed">Update needed</string>
     <string name="account_creation_file_too_big">File is too big</string>
     <string name="account_cannot_read">Can\'t read %1$s</string>
