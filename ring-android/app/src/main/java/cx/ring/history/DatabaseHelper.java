@@ -50,7 +50,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
     private static final String DATABASE_NAME = "history.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
 
     private Dao<HistoryCall, Integer> historyDao = null;
     private Dao<HistoryText, Integer> historyTextDao = null;
@@ -133,6 +133,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                     case 6:
                         updateDatabaseFrom6(db);
                         break;
+                    case 7:
+                        updateDatabaseFrom7(db);
+                        break;
                 }
                 fromDatabaseVersion++;
             }
@@ -200,6 +203,22 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 Log.d(TAG, "Migration from database version 6 to next, done.");
             } catch (SQLiteException exception) {
                 Log.e(TAG, "Migration from database version 6 to next, failed.");
+                throw exception;
+            }
+        }
+    }
+
+    private void updateDatabaseFrom7(SQLiteDatabase db) throws SQLiteException {
+        if (db != null && db.isOpen()) {
+            try {
+                Log.d(TAG, "Will begin migration from database version 7 to next.");
+                db.beginTransaction();
+                db.execSQL("ALTER TABLE historytext ADD COLUMN state VARCHAR DEFAULT ``");
+                db.setTransactionSuccessful();
+                db.endTransaction();
+                Log.d(TAG, "Migration from database version 7 to next, done.");
+            } catch (SQLiteException exception) {
+                Log.e(TAG, "Migration from database version 7 to next, failed.");
                 throw exception;
             }
         }
