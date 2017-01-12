@@ -41,6 +41,7 @@ public class HistoryText
     public static final String COLUMN_CALL_ID_NAME = "callID";
     public static final String COLUMN_MESSAGE_NAME = "message";
     public static final String COLUMN_READ_NAME = "read";
+    public static final String COLUMN_STATE_NAME = "state";
 
     @DatabaseField(index = true, columnName=COLUMN_ID_NAME, id = true)
     public long id;
@@ -62,6 +63,8 @@ public class HistoryText
     String message;
     @DatabaseField(columnName=COLUMN_READ_NAME)
     boolean read;
+    @DatabaseField(columnName=COLUMN_STATE_NAME)
+    String state;
 
     static private final Random R = new Random();
 
@@ -80,6 +83,7 @@ public class HistoryText
             contactKey = txt.getContact().getKey();
         }
         read = txt.isRead();
+        state = txt.getStatus().toString();
     }
 
     public String getAccountID() {
@@ -132,5 +136,9 @@ public class HistoryText
 
     public boolean isRead() {
         return read;
+    }
+
+    public TextMessage.Status getStatus(){
+        return TextMessage.Status.fromString(state);
     }
 }
