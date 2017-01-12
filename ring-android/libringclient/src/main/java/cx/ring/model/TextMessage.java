@@ -74,6 +74,22 @@ public class TextMessage {
         static Status fromInt(int n) {
             return values[n];
         }
+
+        public String toString() {
+            switch (s){
+                case 0:
+                    return "SENDING";
+                case 1:
+                    return "SENT";
+                case 2:
+                    return "READ";
+                case 3:
+                    return "FAILURE";
+                case 4:
+                default:
+                    return "UNKNOWN";
+            }
+        }
     }
 
     public TextMessage(boolean in, String message, Uri number, String callid, String account) {
@@ -94,6 +110,7 @@ public class TextMessage {
         mMessage = h.getMessage();
         mCallID = h.getCallId();
         mRead = h.isRead();
+        mState = h.getStatus();
     }
 
     public String getRecordPath() {
