@@ -254,6 +254,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         for (HistoryEntry h : conv.getRawHistory().values()) {
             NavigableMap<Long, TextMessage> messages = h.getTextMessages();
             for (TextMessage msg : messages.descendingMap().values()) {
+                this.messages.put(msg.getId(), msg);
                 if (msg.isRead()) {
                     break;
                 }
@@ -370,6 +371,17 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         isWifiConn = ni != null && ni.isConnected();
         ni = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         isMobileConn = ni != null && ni.isConnected();
+
+        try {
+            List<HistoryText> historyTexts = mHistoryService.getAllTextMessages();
+            for (HistoryText message : historyTexts) {
+                TextMessage textMessage = new TextMessage(message);
+                messages.put(textMessage.getId(), textMessage);
+            }
+        }
+        catch (Exception e){
+            Log.e(TAG, "Error while downloading history");
+        }
     }
 
     private void startDRingService() {
@@ -967,10 +979,12 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                             ConfigurationManagerCallback.MESSAGE_STATE_CHANGED_EXTRA_STATUS,
                             TextMessage.Status.UNKNOWN.toInt()
                     );
+
                     TextMessage msg = messages.get(id);
                     if (msg != null) {
                         Log.d(TAG, "Message status changed " + id + " " + status);
                         msg.setStatus(status);
+                        mHistoryService.updateTextMessage(msg);
                         sendBroadcast(new Intent(ACTION_CONF_UPDATE).
                                 putExtra(ACTION_CONF_UPDATE_EXTRA_MSG, id)
                         );
