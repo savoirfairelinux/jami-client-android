@@ -1268,6 +1268,7 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
                     if (msg != null) {
                         Log.d(TAG, "Message status changed " + id + " " + status);
                         msg.setStatus(status);
+                        mHistoryService.updateTextMessage(msg);
                         sendBroadcast(new Intent(ACTION_CONF_UPDATE).
                                 putExtra(ACTION_CONF_UPDATE_EXTRA_MSG, id)
                         );

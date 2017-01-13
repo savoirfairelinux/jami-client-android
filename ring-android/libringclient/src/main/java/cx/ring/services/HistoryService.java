@@ -122,6 +122,17 @@ public abstract class HistoryService extends Observable {
         return true;
     }
 
+    public boolean updateTextMessage(TextMessage text){
+        Log.d(TAG, "updateTextMessage " + text.getMessage());
+        HistoryText historyText = new HistoryText(text);
+        if(!updateTextMessage(historyText)){
+            return false;
+        }
+        text.setID(historyText.id);
+
+        return true;
+    }
+
     public List<HistoryCall> getAll() throws SQLException {
         QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
         queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, true);
