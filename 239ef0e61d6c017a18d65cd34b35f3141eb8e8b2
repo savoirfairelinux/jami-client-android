@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_94546acb",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/ConversationActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-01-14T16:06:02Z",
+      "side": 1,
+      "message": "Can either of this calls be null?",
+      "range": {
+        "startLine": 90,
+        "startChar": 51,
+        "endLine": 90,
+        "endChar": 93
+      },
+      "revId": "239ef0e61d6c017a18d65cd34b35f3141eb8e8b2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
