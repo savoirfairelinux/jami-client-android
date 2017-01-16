@@ -271,22 +271,22 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
-        intentFilter.addAction(LocalService.ACTION_CONF_LOADED);
-        getActivity().registerReceiver(receiver, intentFilter);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
-        getActivity().unregisterReceiver(receiver);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
+        intentFilter.addAction(LocalService.ACTION_CONF_LOADED);
+        getActivity().registerReceiver(receiver, intentFilter);
+
         mAccountService.addObserver(this);
         mAccountService.addObserver(mRinguifyObserver);
         Log.d(TAG, "onResume");
@@ -474,6 +474,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     @Override
     public void onPause() {
         super.onPause();
+        getActivity().unregisterReceiver(receiver);
         mAccountService.removeObserver(this);
         mAccountService.removeObserver(mRinguifyObserver);
     }
