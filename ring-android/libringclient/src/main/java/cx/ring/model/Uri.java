@@ -49,10 +49,12 @@ public class Uri implements Serializable {
     }
 
     public String getRawUriString() {
-        if (getHost() != null && RING_ID_PATTERN.matcher(getHost()).find()) {
-            return "ring:" + getHost();
-        } else if (getUsername() != null && RING_ID_PATTERN.matcher(getUsername()).find()) {
-            return "ring:" + getUsername();
+        if (isRingId()) {
+            if (getUsername() != null) {
+                return "ring:" + getUsername();
+            } else {
+                return "ring:" + getHost();
+            }
         }
 
         StringBuilder builder = new StringBuilder(64);
@@ -85,8 +87,8 @@ public class Uri implements Serializable {
     }
 
     public boolean isRingId() {
-        return getHost() != null && RING_ID_PATTERN.matcher(getHost()).find()
-                || getUsername() != null && RING_ID_PATTERN.matcher(getUsername()).find();
+        return (getHost() != null && RING_ID_PATTERN.matcher(getHost()).find())
+                || (getUsername() != null && RING_ID_PATTERN.matcher(getUsername()).find());
     }
 
     private void parseUri(String uri) {
