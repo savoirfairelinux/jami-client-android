@@ -191,6 +191,18 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
                 mDeviceAdapter = new DeviceAdapter(getActivity(), account.getDevices());
                 mDeviceList.setAdapter(mDeviceAdapter);
 
+                int totalHeight = 0;
+                for (int i = 0; i < mDeviceAdapter.getCount(); i++) {
+                    View listItem = mDeviceAdapter.getView(i, null, mDeviceList);
+                    listItem.measure(0, 0);
+                    totalHeight += listItem.getMeasuredHeight();
+                }
+
+                ViewGroup.LayoutParams par = mDeviceList.getLayoutParams();
+                par.height = totalHeight + (mDeviceList.getDividerHeight() * (mDeviceAdapter.getCount() - 1));
+                mDeviceList.setLayoutParams(par);
+                mDeviceList.requestLayout();
+
                 mAccountSwitch.setChecked(account.isEnabled());
                 mAccountNameTxt.setText(account.getAlias());
                 mAccountIdTxt.setText(account.getUsername());
