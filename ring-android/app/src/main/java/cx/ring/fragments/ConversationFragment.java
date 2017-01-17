@@ -44,6 +44,7 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.DaemonEvent;
 import cx.ring.model.Phone;
 import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
@@ -52,11 +53,14 @@ import cx.ring.services.CallService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
 public class ConversationFragment extends Fragment implements
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
-        ContactDetailsTask.DetailsLoadedCallback {
+        ContactDetailsTask.DetailsLoadedCallback,
+        Observer<DaemonEvent> {
 
     @Inject
     CallService mCallService;
@@ -180,6 +184,13 @@ public class ConversationFragment extends Fragment implements
         mAdapter.updateDataset(mConversation.getAggregateHistory(), refreshed);
 
         if (mConversation.getContact().getPhones().size() > 1) {
+            for (Phone phone : mConversation.getContact().getPhones()) {
+                if (phone.getNumber().isRingId()) {
+                    mAccountService.lookupAddress("", "", phone.getNumber().getRawUriString());
+                }
+            }
+
+
             mNumberSpinner.setVisibility(View.VISIBLE);
             mNumberAdapter = new NumberAdapter(getActivity(),
                     mConversation.getContact(),
@@ -295,6 +306,8 @@ public class ConversationFragment extends Fragment implements
             mService.readConversation(mConversation);
             mConversation.setVisible(false);
         }
+
+        mAccountService.removeObserver(this);
     }
 
     @Override
@@ -308,6 +321,8 @@ public class ConversationFragment extends Fragment implements
                 mService.readConversation(mConversation);
             }
         }
+
+        mAccountService.addObserver(this);
     }
 
     @Override
@@ -473,6 +488,28 @@ public class ConversationFragment extends Fragment implements
         ActionBar actionBar = ((ConversationActivity) getActivity()).getSupportActionBar();
         if (actionBar != null && formattedName != null) {
             actionBar.setTitle(formattedName);
+        }
+    }
+
+    @Override
+    public void update(Observable observable, DaemonEvent arg) {
+        if (observable instanceof AccountService && arg != null) {
+            if (arg.getEventType() == DaemonEvent.EventType.REGISTERED_NAME_FOUND) {
+                final String name = arg.getEventInput(DaemonEvent.EventInput.NAME, String.class);
+                final String address = arg.getEventInput(DaemonEvent.EventInput.ADDRESS, String.class);
+                final int state = arg.getEventInput(DaemonEvent.EventInput.STATE, Integer.class);
+
+                if (state != 0 || mNumberAdapter == null || mNumberAdapter.isEmpty()) {
+                    return;
+                }
+
+                for (int i = 0; i < mNumberAdapter.getCount(); i++) {
+                    String ringID = ((Phone) mNumberAdapter.getItem(i)).getNumber().getRawUriString();
+                    if (address.equals(ringID)) {
+                        ((Phone) mNumberAdapter.getItem(i)).setNumber(name);
+                    }
+                }
+            }
         }
     }
 }
