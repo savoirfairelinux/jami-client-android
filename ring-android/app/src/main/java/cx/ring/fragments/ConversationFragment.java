@@ -506,7 +506,7 @@ public class ConversationFragment extends Fragment implements
                 for (int i = 0; i < mNumberAdapter.getCount(); i++) {
                     String ringID = ((Phone) mNumberAdapter.getItem(i)).getNumber().getRawUriString();
                     if (address.equals(ringID)) {
-                        ((Phone) mNumberAdapter.getItem(i)).setNumber(name);
+                        ((Phone) mNumberAdapter.getItem(i)).getNumber().setUsername(name);
                     }
                 }
             }
