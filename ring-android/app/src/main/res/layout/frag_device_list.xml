@@ -20,219 +20,224 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <cx.ring.views.BoundedRelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="50dp">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/ring_account_status_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:paddingEnd="16dp"
-            android:paddingStart="16dp"
-            android:paddingTop="24dp">
-
-            <TextView
-                android:id="@+id/account_alias_txt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/account_switch"
-                android:layout_toStartOf="@+id/account_switch"
-                android:paddingBottom="8dp"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                tools:text="@string/ring_account" />
-
-            <TextView
-                android:id="@+id/account_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/account_alias_txt"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                tools:text="Registered" />
-
-
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/account_switch"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true" />
-
-        </RelativeLayout>
-
-        <LinearLayout
+        <cx.ring.views.BoundedRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/ring_account_status_container"
-            android:orientation="vertical"
-            android:paddingBottom="8dp"
-            android:paddingEnd="16dp"
-            android:paddingStart="16dp"
-            android:paddingTop="24dp">
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="50dp">
 
-            <TextView
-                android:id="@+id/account_identity_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ring_account_identity"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
-
-            <TextView
-                android:id="@+id/account_id_txt"
-                style="@style/Subheader"
+            <RelativeLayout
+                android:id="@+id/ring_account_status_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:lines="1"
                 android:paddingBottom="8dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="8dp"
-                android:textIsSelectable="false"
-                android:textStyle="bold"
-                tools:text="ring:8F29045378ACA68F2ACA2346078ACA68F2ACA290" />
-
-            <LinearLayout
-                android:id="@+id/group_register_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="24dp">
 
                 <TextView
-                    android:id="@+id/register_name_help_txt"
+                    android:id="@+id/account_alias_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/account_switch"
+                    android:layout_toStartOf="@+id/account_switch"
+                    android:paddingBottom="8dp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    tools:text="@string/ring_account" />
+
+                <TextView
+                    android:id="@+id/account_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/account_alias_txt"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    tools:text="Registered" />
+
+
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/account_switch"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/ring_account_status_container"
+                android:orientation="vertical"
+                android:paddingBottom="8dp"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="24dp">
+
+                <TextView
+                    android:id="@+id/account_identity_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ring_account_identity"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+                <TextView
+                    android:id="@+id/account_id_txt"
+                    style="@style/Subheader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:lines="1"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="8dp"
+                    android:textIsSelectable="false"
+                    android:textStyle="bold"
+                    tools:text="ring:8F29045378ACA68F2ACA2346078ACA68F2ACA290" />
+
+                <LinearLayout
+                    android:id="@+id/group_register_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/register_name_help_txt"
+                        style="@style/Subheader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="8dp"
+                        android:paddingTop="8dp"
+                        android:text="@string/no_registered_name_for_account"
+                        android:textAlignment="center" />
+
+                    <Button
+                        android:id="@+id/register_name_btn"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="16dp"
+                        android:paddingStart="16dp"
+                        android:text="@string/register_name" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/group_registering_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="16dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/trying_to_register_name" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/group_registered_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/registred_name_help_txt"
+                        style="@style/Subheader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingTop="4dp"
+                        android:text="@string/registered_username" />
+
+                    <TextView
+                        android:id="@+id/registered_name_txt"
+                        style="@style/Base.TextAppearance.AppCompat.Title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:paddingBottom="16dp"
+                        android:paddingEnd="8dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="8dp"
+                        android:paddingStart="16dp"
+                        android:paddingTop="4dp"
+                        android:textAlignment="viewStart"
+                        tools:text="blockchain_name" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/headerText"
                     style="@style/Subheader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:paddingBottom="8dp"
+                    android:paddingEnd="16dp"
+                    android:paddingStart="16dp"
                     android:paddingTop="8dp"
-                    android:text="@string/no_registered_name_for_account"
-                    android:textAlignment="center" />
+                    android:text="@string/normal_devices_titles" />
 
-                <Button
-                    android:id="@+id/register_name_btn"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingEnd="16dp"
-                    android:paddingStart="16dp"
-                    android:text="@string/register_name" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/group_registering_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/trying_to_register_name" />
-
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    style="?android:attr/progressBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/group_registered_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/registred_name_help_txt"
-                    style="@style/Subheader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="16dp"
-                    android:paddingEnd="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingTop="4dp"
-                    android:text="@string/registered_username" />
-
-                <TextView
-                    android:id="@+id/registered_name_txt"
-                    style="@style/Base.TextAppearance.AppCompat.Title"
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:paddingBottom="16dp"
-                    android:paddingEnd="8dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="8dp"
-                    android:paddingStart="16dp"
-                    android:paddingTop="4dp"
-                    android:textAlignment="viewStart"
-                    tools:text="blockchain_name" />
+                    android:layout_height="1dip"
+                    android:background="?android:attr/listDivider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ListView
+                        android:id="@+id/device_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:divider="#CCCCCC"
+                        android:dividerHeight="1dp"
+                        android:footerDividersEnabled="true"
+                        android:headerDividersEnabled="true" />
+
+                    <TextView
+                        android:id="@+id/empty_account_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/empty_account_list"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/text_color_secondary"
+                        android:visibility="gone" />
+
+                </FrameLayout>
 
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/headerText"
-                style="@style/Subheader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingBottom="8dp"
-                android:paddingEnd="16dp"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
-                android:text="@string/normal_devices_titles" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="?android:attr/listDivider" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ListView
-                    android:id="@+id/device_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="#CCCCCC"
-                    android:dividerHeight="1dp"
-                    android:footerDividersEnabled="true"
-                    android:headerDividersEnabled="true" />
-
-                <TextView
-                    android:id="@+id/empty_account_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/empty_account_list"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/text_color_secondary"
-                    android:visibility="gone" />
-
-            </FrameLayout>
-
-        </LinearLayout>
-    </cx.ring.views.BoundedRelativeLayout>
+        </cx.ring.views.BoundedRelativeLayout>
+    </ScrollView>
 
     <include
         layout="@layout/add_new_device_layout"
