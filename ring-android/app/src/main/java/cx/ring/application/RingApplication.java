@@ -496,12 +496,18 @@ public class RingApplication extends Application {
             Log.e(TAG, "Error while settings preview parameters", e);
         }
 
-        preview.setPreviewCallback(new Camera.PreviewCallback() {
+        preview.setPreviewCallbackWithBuffer(new Camera.PreviewCallback() {
             @Override
             public void onPreviewFrame(byte[] data, Camera camera) {
                 mHardwareService.setVideoFrame(data, videoParams.width, videoParams.height, videoParams.rotation);
+                preview.addCallbackBuffer(data);
             }
         });
+
+        // enqueue first buffer
+        int bufferSize = parameters.getPreviewSize().width * parameters.getPreviewSize().height * ImageFormat.getBitsPerPixel(parameters.getPreviewFormat()) / 8;
+        preview.addCallbackBuffer(new byte[bufferSize]);
+
         preview.setErrorCallback(new Camera.ErrorCallback() {
             @Override
             public void onError(int error, Camera cam) {
