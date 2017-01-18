@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_df120b58",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-01-18T16:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_7468def5",
+      "range": {
+        "startLine": 509,
+        "startChar": 60,
+        "endLine": 509,
+        "endChar": 71
+      },
+      "revId": "8f458e3a8712e9eeed064fbee5498bb2b8a5bb05",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_5463621a",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Uri.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-01-18T13:39:39Z",
       "side": 1,
       "message": "Are you sure that this is what you want to do?\nThere may be parenthesis issues here.\nShouldn\u0027t it be if host is nonnull and matches the pattern, or if username is nonnull and matches the pattern?\nIt is the the case you could then change a little bit the content of the conditionnal.\n\nFurthermore, if we follow this, isn\u0027t the same algorithm than isRingId() ?",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 98
+      },
+      "revId": "8f458e3a8712e9eeed064fbee5498bb2b8a5bb05",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_3f0eaf35",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Uri.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-01-18T16:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_5463621a",
       "range": {
         "startLine": 52,
         "startChar": 8,
