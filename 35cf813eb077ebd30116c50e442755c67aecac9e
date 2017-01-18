@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_1f20939a",
+        "filename": "ring-android/app/src/main/java/cx/ring/history/DatabaseHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-01-18T17:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_347256e6",
+      "range": {
+        "startLine": 215,
+        "startChar": 16,
+        "endLine": 215,
+        "endChar": 66
+      },
+      "revId": "35cf813eb077ebd30116c50e442755c67aecac9e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_d47672d8",
         "filename": "ring-android/app/src/main/java/cx/ring/history/DatabaseHelper.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_bf305fe9",
+        "filename": "ring-android/app/src/main/java/cx/ring/history/DatabaseHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-01-18T17:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_d47672d8",
+      "range": {
+        "startLine": 218,
+        "startChar": 19,
+        "endLine": 218,
+        "endChar": 33
+      },
+      "revId": "35cf813eb077ebd30116c50e442755c67aecac9e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_f4736ee5",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/model/TextMessage.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-01-18T13:55:20Z",
       "side": 1,
       "message": "Using the switch forces to do that, but in a future improvement we could use something else to use the enum.\nNot blocking this patch for this.",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "35cf813eb077ebd30116c50e442755c67aecac9e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_5f4dbb71",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/TextMessage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-01-18T17:03:35Z",
+      "side": 1,
+      "message": "It\u0027s true.",
+      "parentUuid": "1acb0d3e_f4736ee5",
       "range": {
         "startLine": 80,
         "startChar": 16,
