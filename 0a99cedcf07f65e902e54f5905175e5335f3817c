@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_74c1bee3",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2017-01-18T13:30:24Z",
+      "side": 1,
+      "message": "Can this be null?",
+      "range": {
+        "startLine": 188,
+        "startChar": 26,
+        "endLine": 188,
+        "endChar": 37
+      },
+      "revId": "0a99cedcf07f65e902e54f5905175e5335f3817c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_b48f26cc",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2017-01-18T13:30:24Z",
+      "side": 1,
+      "message": "Are you sure that these items will be provided (ie. nonnull)?",
+      "range": {
+        "startLine": 498,
+        "startChar": 16,
+        "endLine": 500,
+        "endChar": 97
+      },
+      "revId": "0a99cedcf07f65e902e54f5905175e5335f3817c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_54bcc26c",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 96
+      },
+      "writtenOn": "2017-01-18T13:30:24Z",
+      "side": 1,
+      "message": "Is it normal to set the name as a number in the Phone object? Does this mean that the name, because it comes from the nameserver, is considered as a user number?",
+      "range": {
+        "startLine": 509,
+        "startChar": 60,
+        "endLine": 509,
+        "endChar": 69
+      },
+      "revId": "0a99cedcf07f65e902e54f5905175e5335f3817c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
