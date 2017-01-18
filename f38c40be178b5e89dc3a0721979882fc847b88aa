@@ -22,6 +22,30 @@
       "revId": "f38c40be178b5e89dc3a0721979882fc847b88aa",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_7f799792",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/HistoryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-01-18T17:13:10Z",
+      "side": 1,
+      "message": "It\u0027s a error. Done.",
+      "parentUuid": "1acb0d3e_744f7e93",
+      "range": {
+        "startLine": 131,
+        "startChar": 8,
+        "endLine": 131,
+        "endChar": 35
+      },
+      "revId": "f38c40be178b5e89dc3a0721979882fc847b88aa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
