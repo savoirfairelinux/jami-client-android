@@ -238,6 +238,14 @@ public class Conversation {
         return texts.values();
     }
 
+    public Collection<HistoryCall> getHistoryCalls() {
+        TreeMap<Long, HistoryCall> calls = new TreeMap<>();
+        for (HistoryEntry historyEntry : mHistory.values()) {
+            calls.putAll(historyEntry.getCalls());
+        }
+        return calls.values();
+    }
+
     public TreeMap<Long, TextMessage> getUnreadTextMessages() {
         TreeMap<Long, TextMessage> texts = new TreeMap<>();
         for (HistoryEntry h : mHistory.values()) {
