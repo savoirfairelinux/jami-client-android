@@ -21,5 +21,24 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_incoming">Squilla</string>
+    <string name="call_human_state_connecting">Collegamento</string>
     <string name="call_human_state_ringing">Sta chiamando</string>
-    </resources>
+    <string name="call_human_state_current">Parla</string>
+    <string name="call_human_state_hungup">Riaggancia</string>
+    <string name="call_human_state_busy">Occupato</string>
+    <string name="call_human_state_failure">Errore</string>
+    <string name="call_human_state_hold">Pausa</string>
+    <string name="call_human_state_unhold">Riprendi</string>
+    <string name="call_human_state_over">Over</string>
+    <string name="call_human_state_none">Nessuno</string>
+    <!-- Conferences -->
+    <string name="conference_human_state_active_attached">Collegati</string>
+    <string name="conference_human_state_active_detached">Scollegati</string>
+    <string name="conference_human_state_active_attached_rec">Collegati con reg.</string>
+    <string name="conference_human_state_active_detached_rec">Scollegati con reg.</string>
+    <string name="conference_human_state_hold">Pausa</string>
+    <string name="conference_human_state_hold_rec">Pausa reg</string>
+    <string name="conference_human_state_default">Nessuno</string>
+</resources>

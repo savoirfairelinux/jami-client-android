@@ -28,6 +28,7 @@
   <!--Conversation-->
   <string name="conversation_action_copy_peer_number">複製號碼</string>
   <!--Contacts-->
+  <string name="wizard_next">下一步</string>
   <!--MenuHeaderView-->
   <string name="unknown">未知</string>
   <!--Share fragment-->

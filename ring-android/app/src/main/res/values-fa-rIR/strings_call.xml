@@ -21,6 +21,16 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_incoming">در حال زنگ خوردن</string>
+    <string name="call_human_state_connecting">در حال اتّصال</string>
+    <string name="call_human_state_ringing">در حال تماس</string>
+    <string name="call_human_state_current">در حال صحبت</string>
+    <string name="call_human_state_busy">مشغول</string>
+    <string name="call_human_state_failure">شکست خورد</string>
     <string name="call_human_state_hold">نگه داشتن</string>
+    <string name="call_human_state_unhold">در حال انتظار</string>
+    <string name="call_human_state_none">هیچ‌کدام</string>
     <string name="conference_human_state_hold">نگه داشتن</string>
-    </resources>
+    <string name="conference_human_state_default">هیچ‌کدام</string>
+</resources>

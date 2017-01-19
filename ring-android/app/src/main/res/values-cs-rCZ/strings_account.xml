@@ -1,54 +1,62 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Odstranit</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">Přezdívka</string>
   <string name="prompt_hostname">Hostitelské jméno</string>
   <string name="prompt_username">Uživatelské jméno</string>
   <string name="prompt_password">Heslo</string>
+  <string name="action_create">Vytvořit účet</string>
   <string name="action_create_short">Zaregistrovat</string>
   <string name="error_field_required">Toto pole je vyžadováno</string>
   <string name="dialog_wait_create">Přidávám účet</string>
   <string name="dialog_wait_create_details">Prosím vyčkejte, než bude váš účet přidán…</string>
+  <string name="dialog_wait_update">Aktualizuje se účet</string>
+  <string name="dialog_wait_update_details">Počkejte prosím, než bude váš účet aktualizován…</string>
   <string name="dialog_warn_ip2ip_account_title">Vytvořit prázdný účet SIP ?</string>
   <string name="dialog_warn_ip2ip_account_message">Vytváříte prázdný účet SIP bez platného hostitelského jména.
-        Budete moci pouze vytvářet a přijímat přímé ip hovory.
-        Svůj účet můžete upravit později</string>
+Budete moci pouze vytvářet a přijímat přímé ip hovory.
+Svůj účet můžete upravit později</string>
   <string name="help_ring">Účet Ring vám umožňuje spojit se s lidmi bezpečně, uživatel s uživatelem, skrze plně decentralizovanou síť.</string>
-  <string name="help_sip_title">Přidat váš účet SIP.</string>
+  <string name="help_sip_title">Přidat váš účet SIP</string>
   <string name="help_sip">Nastavit existující účet SIP.</string>
   <string name="create_sip_account">Přidat</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Odstranit účet ?</string>
+  <string name="account_delete_dialog_title">Odstranit účet?</string>
   <string name="account_delete_dialog_message">Tuto činnost nelze vrátit zpět.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Žádný registrovaný účet</string>
   <string name="normal_accounts_titles">Účty</string>
+  <string name="normal_devices_titles">Známá zařízení připojená k tomuto účtu Ring</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Obecné</string>
-  <string name="account_basic_category">Základní Nastavení</string>
-  <string name="account_alias_label">Název účtu</string>
+  <string name="account_basic_category">Základní nastavení</string>
+  <string name="account_alias_label">Jméno účtu</string>
   <string name="account_hostname_label">Hostitelské jméno</string>
-  <string name="account_bootstrap_label">Zavaděč</string>
+  <string name="account_bootstrap_label">Bootstrap</string>
   <string name="account_username_label">Uživatelské jméno</string>
   <string name="account_password_label">Heslo</string>
-  <string name="account_optionnal_category">Doplňková Nastavení</string>
-  <string name="account_useragent_label">Klientská Aplikace</string>
-  <string name="account_autoanswer_label">Automatická Odpověď</string>
+  <string name="account_optionnal_category">Doplňková nastavení</string>
+  <string name="account_useragent_label">Identifikace klienta</string>
+  <string name="account_autoanswer_label">Automatická odpověď</string>
+  <string name="account_upnp_label">Povolit UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
   <string name="account_audio_label">Zvuk</string>
-  <string name="account_preferences_media_tab">Multimédia</string>
+  <string name="account_preferences_media_tab">Média</string>
   <string name="account_ringtone_label">Vyzvánění</string>
   <string name="account_ringtone_enabled_label">Zapnout vyzvánění</string>
   <string name="account_ringtone_path_label">Cesta vyzvánění</string>
+  <string name="account_ringtone_custom_label">Použít vlastní vyzvánění</string>
   <!--Video Details-->
-  <string name="account_video_label">Obraz</string>
-  <string name="account_video_enable">Povolit Obraz</string>
+  <string name="account_video_label">Video</string>
+  <string name="account_video_enable">Povolit video</string>
   <!--Advanced Details-->
-  <string name="account_preferences_advanced_tab">Pokročilá</string>
-  <string name="account_registration_exp_label">Vypršení Registrace</string>
-  <string name="account_local_interface_label">Místní Rozhraní</string>
-  <string name="account_local_port_label">Místní Port</string>
+  <string name="account_preferences_advanced_tab">Pokročilé</string>
+  <string name="account_registration_exp_label">Vypršení registrace</string>
+  <string name="account_local_interface_label">Místní rozhraní</string>
+  <string name="account_local_port_label">Místní port</string>
   <string name="account_stun_enable_label">Použít Stun</string>
   <string name="account_stun_server_label">Server Stun</string>
   <string name="account_turn_enable_label">Použít TURN</string>
@@ -56,39 +64,91 @@
   <string name="account_turn_username_label">Uživatelské jméno TURN</string>
   <string name="account_turn_password_label">Heslo TURN</string>
   <string name="account_published_same_as_local_label">Zveřejněné stejně jako místní</string>
-  <string name="account_published_port_label">Zveřejněný Port</string>
-  <string name="account_published_address_label">Zveřejněná Adresa</string>
+  <string name="account_published_port_label">Zveřejněný port</string>
+  <string name="account_published_address_label">Zveřejněná adresa</string>
   <!--Security Details-->
-  <string name="account_credentials_label">Ověřovací Údaje</string>
+  <string name="account_credentials_label">Ověřovací údaje</string>
   <string name="account_credentials_edit">Upravit ověřovací údaje</string>
   <string name="account_credentials_add">Přidat ověřovací údaje</string>
   <!--SRTP Details-->
-  <string name="account_preferences_security_tab">Bezpečnost</string>
+  <string name="account_preferences_security_tab">Zabezpečení</string>
   <!--SIP-->
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Použít Transport TLS</string>
-  <string name="account_tls_port_label">Naslouchací Port TLS</string>
-  <string name="account_tls_certificate_list_label">Autority Certifikátů</string>
-  <string name="account_tls_certificate_file_label">Soubor Certifikátu</string>
-  <string name="account_tls_private_key_file_label">Soubor Osobního Klíče</string>
-  <string name="account_tls_password_label">Heslo Osobního Klíče</string>
+  <string name="account_tls_port_label">Naslouchací port TLS</string>
+  <string name="account_tls_certificate_list_label">Autority certifikátů</string>
+  <string name="account_tls_certificate_file_label">Soubor certifikátu</string>
+  <string name="account_tls_private_key_file_label">Soubor soukromého klíče</string>
+  <string name="account_tls_password_label">Heslo soukromého klíče</string>
   <string name="account_tls_method_label">Metoda TLS</string>
   <string name="account_tls_ciphers_label">Šifry TLS</string>
-  <string name="account_tls_server_name_label">Jméno Serveru</string>
-  <string name="account_tls_verify_server_label">Ověřit Server</string>
-  <string name="account_tls_verify_client_label">Ověrit Klient</string>
-  <string name="account_tls_negotiation_timeout_sec">Vypršení Vyjednávání (sek)</string>
+  <string name="account_tls_server_name_label">Jméno serveru</string>
+  <string name="account_tls_verify_server_label">Ověřit server</string>
+  <string name="account_tls_verify_client_label">Ověřit klient</string>
+  <string name="account_tls_negotiation_timeout_sec">Limit vyjednávání (sekundy)</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
-  <string name="account_rtp_port_range">Rozsah Portů Zvukového RTP</string>
+  <string name="account_rtp_port_range">Rozsah portů zvukového RTP</string>
   <!--restore/backup-->
+  <string name="account_restore_account">Obnovit účet</string>
   <string name="account_restore_message">Vložte heslo pro dešifrování souboru.</string>
-  <string name="account_restore_decryption_password">Heslo dešifrování</string>
-  <string name="restore_backup_wait">Please vyčkejte…</string>
-  <string name="error_password_char_count">Minimálně 6 znaků</string>
+  <string name="account_restore_decryption_password">Dešifrovací heslo</string>
+  <string name="account_new_device_password">Pro odemčení účtu zadejte hlavní heslo</string>
+  <string name="restore_dialog_title">Obnovuje se</string>
+  <string name="restore_backup_wait">Počkejte prosím…</string>
+  <string name="error_password_char_count">Nejméně 6 znaků</string>
   <string name="error_passwords_not_equals">Hesla se neshodují</string>
+  <string name="restore_failed_dialog_title">Obnova selhala</string>
   <string name="restore_failed_dialog_msg">Nastala chyba</string>
+  <string name="export_account_wait_title">Počkejte prosím…</string>
+  <string name="export_account_wait_message">Zveřejňují se informace o novém účtu</string>
+  <string name="account_export_end_decryption_message">Zadaným heslem nebylo možné váš účet odemknout.</string>
+  <string name="account_export_end_network_title">Chyba sítě</string>
+  <string name="account_export_end_network_message">Nebylo možné exportovat účet do sítě. Zkontrolujte si připojení.</string>
   <string name="account_export_end_error_title">Chyba</string>
+  <string name="account_export_end_error_message">Nebylo možné účet exportovat. Nastala neznámá chyba.</string>
+  <string name="account_enter_password">Zadejte heslo</string>
+  <string name="account_contact_me">Kontaktujte mě na Ring!</string>
+  <string name="update_account">Aktualizovat účet</string>
+  <string name="ring_account">Účet Ring</string>
+  <string name="account_migration_title_dialog">Převod účtu</string>
+  <string name="account_update_needed">Nutná aktualizace</string>
+  <string name="account_creation_file_too_big">Soubor je příliš velký</string>
+  <string name="account_cannot_read">Nelze přečíst %1$s</string>
+  <string name="account_cannot_be_found_title">Nelze nalézt účet</string>
+  <string name="account_cannot_be_found_message">Na síti Ring nebyl účet nalezen.\nUjistěte se, že byl exportován na Ring z existujícího zařízení a že jsou přihlašovací údaje správné.</string>
+  <string name="account_no_network_title">Nelze se připojit k síti</string>
+  <string name="account_no_network_message">Nebylo možno přidat účet, protože se Ring nedokázal připojit k distribuované síti. Zkontrolujte si síťové připojení.</string>
+  <string name="account_device_added_title">Přístroj přidán k účtu</string>
+  <string name="account_device_added_message">Úspěšně jste si na tomto zařízení nastavili svůj účet Ring.</string>
+  <string name="account_device_updated_title">Aktualizován přístroj v účtu</string>
+  <string name="account_link_button">Připojit toto zařízení k účtu</string>
+  <string name="account_import_title">Připojit k už existujícímu účtu</string>
+  <string name="account_link_prompt_pin">Zadejte PIN</string>
+  <string name="account_wizard_title">Vítejte v</string>
   <string name="account_new_button">Vytvořit účet Ring</string>
+  <string name="account_link_export_button">Připojit k tomuto účtu další zařízení</string>
+  <string name="account_link_export_info">Pro použití tohoto účtu na dalších zařízeních jej musíte nejdříve vystavit na Ring. Tím se vygeneruje kód PIN, který musíte zadat na novém zařízení, kde nastavujete účet. PIN zůstává platný 10 minut. \n\nPro začátek prosím poskytněte své heslo:</string>
+  <string name="account_start_export_button">Vygenerovat PIN</string>
+  <string name="account_end_export_button">zavřít</string>
+  <string name="account_end_export_infos">Váš PIN je:\n\n%%\n\nK dokončení tohoto procesu otevřete na novém zařízení Ring. Přihlaste se k účtu pomocí „Připojit toto zařízení k účtu“. Váš PIN zůstává platný 10 minut.</string>
   <!--Name registration-->
+  <string name="register_name_wrong_password">Jméno nelze zaregistrovat: chybné heslo k účtu.</string>
+  <string name="register_name_invalid">Jméno nelze zaregistrovat: neplatné jméno.</string>
+  <string name="register_name_already_taken">Jméno nelze zaregistrovat: jméno je již zabrané.</string>
+  <string name="register_name_network_error">Jméno nelze zaregistrovat: chyba sítě nebo serveru.</string>
+  <string name="error_username_empty">Zadejte uživatelské jméno</string>
+  <string name="no_registered_name_for_account">Pro tento účet nenalezeno žádné registrované jméno</string>
+  <string name="register_name">Zaregistrovat jméno</string>
+  <string name="trying_to_register_name">Pokus o registraci jména</string>
+  <string name="registered_username">Registrované uživatelské jméno</string>
+  <string name="register_username">Zaregistrovat jméno veřejně (experimentální)</string>
+  <string name="username_already_taken">Uživatelské jméno je již obsazené</string>
+  <string name="invalid_username">Neplatné uživatelské jméno</string>
+  <string name="looking_for_username_availability">Zjišťuje se dostupnost uživatelského jména…</string>
+  <string name="account_status_connecting">Spojování</string>
+  <string name="account_status_unknown">Neznámé</string>
+  <!--Create account-->
+  <string name="account_creation_home">Vítejte v Ringu</string>
+  <string name="account_creation_profile">Vytvořit vlastní profil</string>
 </resources>

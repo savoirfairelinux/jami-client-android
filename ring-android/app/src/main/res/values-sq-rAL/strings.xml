@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="sponsor_section">Ring-u është software i lirë i zhvilluar dhe i mbuluar nga</string>
+  <string name="copyright_section">Të drejta kopjimi</string>
+  <string name="contribute_section">Kontribuoni</string>
+  <string name="version_section">Version</string>
+  <string name="no_email_app_installed">S’u gjet aplikacion email-esh, instaloni një të tillë që të na dërgoni një raport</string>
+  <string name="email_chooser_title">Dërgojeni mesazhi duke përdorur…</string>
+  <!--RingActivity-->
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">Pa lidhje në rrjet</string>
+  <string name="error_mobile_network_available_but_disabled">Ju lutemi, akordojini hyrje rrjetit celular te skena e rregullimeve.</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Llogari e re</string>
+  <string name="ab_action_chat">Shkëmbim mesazhesh tekst</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Hap sirtarin e lëvizjes</string>
+  <string name="drawer_close">Mbylle sirtarin e lëvizjes</string>
+  <!--Sections-->
+  <string name="menu_item_home">Kreu</string>
+  <string name="menu_item_accounts">Administroni llogari</string>
+  <string name="menu_item_settings">Rregullime</string>
+  <string name="menu_item_share">Ndaji kontaktet e mia me të tjerët</string>
+  <string name="menu_item_about">Mbi Ring-un</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Thirrni një numër</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button_stop">Ndale</string>
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Bisedë</item>
+    <item quantity="other">%d Biseda</item>
+  </plurals>
+  <string name="home_transfering">Po shpërngulet %1$s te %1$s</string>
+  <string name="home_transfer_complet">Shpërngulje e plotësuar</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">S’u gjet kontakt</string>
+  <string name="starred_contacts_title">Të parapëlqyer</string>
+  <string name="searchbar_hint">Jepni një emër ose një numër telefoni…</string>
+  <string name="choose_number">Zgjidhni një numër</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <string name="transfer_no_other_call">S’ka thirrje të tjera pezull</string>
+  <string name="transfer_type_number">Shtypni numrin te i cili të shpërngulet:</string>
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">Thirrje e humbur nga %1$s</string>
+  <string name="notif_missed_outgoing_call">Thirrje për %1$s e humbur</string>
+  <string name="notif_incoming_call_title">Thirrje ardhëse nga %1$s</string>
+  <string name="notif_incoming_call">Thirrje ardhëse</string>
+  <string name="notif_outgoing_call_title">Thirrje për %1$s</string>
+  <string name="notif_outgoing_call">Thirrje për</string>
+  <string name="notif_current_call_title">Thirrje e tanishme me %1$s</string>
+  <string name="notif_current_call">Thirrja e tanishme</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Ju:</string>
+  <string name="action_call_conference">Konferencë</string>
+  <string name="ongoing_call">Thirrje në kryerje e sipër</string>
+  <string name="hist_in_call">Thirrje nga %1$s</string>
+  <string name="hist_out_call">Thirrje për %1$s</string>
+  <string name="start_error_title">S’niset dot Ring-u!</string>
+  <string name="start_error_mic_required">Që të funksionojë, Ring-u lyp leje për mikrofonin</string>
+  <string name="action_call_accept">Pranoje thirrjen</string>
+  <string name="action_call_decline">Hidhe tej</string>
+  <string name="ab_action_speakerphone">Aktivizoni altoparlantin</string>
+  <string name="ab_action_contact_add">Shtoje te kontaktet</string>
+  <string name="ab_action_contact_add_question">Të shtohet te kontaktet?</string>
+  <string name="ab_action_audio_call">Thirrje audio</string>
+  <string name="ab_action_video_call">Thirrje video</string>
+  <string name="share_via">Ndajeni përmes</string>
+  <string name="write_a_message">Shkruani një mesazh</string>
+  <string name="scan_qr">Skanoni Kodin QR</string>
+  <string name="ab_action_flipcamera">Rrotulloni kamerën</string>
+  <!--Text messages-->
+  <string name="send_message">Dërgoje mesazhin</string>
+  <string name="message_sending">Po dërgohet mesazhi…</string>
+  <string name="time_just_now">Mu tani</string>
+  <string name="permission_read_denied">Aplikacioni s’u lejua të lexonte te depozita juaj. Ndaj, s’mund të funksionojë si duhet. Ju lutemi, shihni mundësinë e akordimit për të kësaj lejeje</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Leje për kamerën</string>
+  <string name="permission_dialog_camera_message">Që të funksionojnë, bisedat me video lypin doemos leje për kamerën Ju lutemi, shihni mundësinë e akordimit të saj.</string>
+  <string name="ringtone_error_title">Gabim</string>
+  <string name="ringtone_error_format_not_supported">Ky format nuk mbulohet.</string>
+  <string name="ringtone_error_size_too_big">Kjo kartelë është shumë e madhe. Madhësia maksimum është %1$ikB.</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring-ut i duhet leja \"Lexo në kontakte\" që të aktivizojë këtë veçori. Ju lutemi, akordojani.</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring-ut i duhet leja \"Shkruaj në regjistër thirrjesh\" që të aktivizojë këtë veçori. Ju lutemi, akordojani.</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Skanoni kodin QR të llogarisë që doni të shtoni.</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Të pastrohet historiku?</string>
+  <string name="clear_history_dialog_message">Ky veprim s’mund të zhbëhet.</string>
+  <string name="clear_history_completed">Historiku u pastrua.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Fshije këtë bisedë</string>
+  <string name="conversation_action_delete_this_title">Të fshihet kjo bisedë?</string>
+  <string name="conversation_action_delete_this_message">Ky veprim s’mund të zhbëhet.</string>
+  <string name="conversation_action_copy_peer_number">Kopjoje numrin</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s u kopjua te e papastra</string>
+  <string name="conversation_action_select_peer_number">Përzgjidhni një numër</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Të shtohet %1$s ?</string>
+  <string name="prompt_new_password">Fjalëkalim i ri</string>
+  <string name="prompt_new_password_repeat">Përsëriteni fjalëkalimin e ri</string>
+  <string name="account_create_title">Krijoni një llogari Ring</string>
+  <string name="prompt_new_username">Jepni emër përdoruesi të ri</string>
+  <string name="help_password_enter">Jepni fjalëkalimin e llogarisë suaj kryesore Ring</string>
+  <!--MenuHeaderView-->
+  <string name="profile">Profili im</string>
+  <string name="profile_message_warning">Kjo u tregohet kontakteve tuaja</string>
+  <string name="open_the_gallery">Hape galerinë</string>
+  <string name="take_a_photo">Bëni një foto</string>
+  <string name="unknowm_if_empty">E panjohur, në u lëntë e zbrazët</string>
+  <string name="unknown">E panjohur</string>
+  <!--Share fragment-->
+  <string name="share_your_account_information">Ndaji me të tjerët të dhënat e mia të kontaktit</string>
+  <string name="generic_error_migration">Gabim</string>
+</resources>

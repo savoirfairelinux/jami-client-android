@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">网络</string>
+  <string name="pref_category_contacts">通讯录</string>
+  <string name="pref_category_system">系统</string>
+  <string name="pref_category_privacy">隐私</string>
+  <string name="pref_mobileData_title">移动数据</string>
+  <string name="pref_mobileData_summary">允许Ring使用3G/LTE网络</string>
+  <string name="pref_systemContacts_title">使用系统通讯录</string>
+  <string name="pref_systemContacts_summary">使用系统通讯录显示呼叫者信息。</string>
+  <string name="pref_systemDialer_title">使用Ring拨打系统通话</string>
+  <string name="pref_systemDialer_summary">使用Ring作为拨打系统通话的首选方式。</string>
+  <string name="pref_startOnBoot_title">启动时运行Ring</string>
+  <string name="pref_startOnBoot_summary">系统启动时在后台启动Ring</string>
+  <string name="pref_clearHistory_title">清除历史记录</string>
+  <string name="pref_clearHistory_summary">清除所有会话历史记录。该操作无法撤销。</string>
+</resources>

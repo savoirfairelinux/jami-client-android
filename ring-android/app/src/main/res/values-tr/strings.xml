@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">Lisans</string>
   <string name="sponsor_section">Ring bir özgür yazılımdır ve şunun tarafından desteklenir</string>
   <string name="copyright_section">Telif Hakkı</string>
   <string name="contribute_section">Katkı Yap</string>
@@ -13,7 +12,7 @@
   <string name="error_mobile_network_available_but_disabled">Lütfen ayarlar ekranında hücre ağına erişim verin.</string>
   <!--AB menus-->
   <string name="ab_account_creation">Yeni hesap</string>
-  <string name="ab_action_chat">Metin mesajlaşma</string>
+  <string name="ab_action_chat">Metin ileti</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <string name="drawer_open">Gezinti çekmecesini aç</string>
@@ -22,6 +21,7 @@
   <string name="menu_item_home">Ev</string>
   <string name="menu_item_accounts">Hesapları yönet</string>
   <string name="menu_item_settings">Ayarlar</string>
+  <string name="menu_item_share">Bilgimi paylaş</string>
   <string name="menu_item_about">Ring Hakkında</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Bir numara çevir</string>
@@ -39,7 +39,7 @@
   <!--ContactList Fragment-->
   <string name="no_contact_found">Kişi bulunamadı</string>
   <string name="starred_contacts_title">Sık Kullanılanlar</string>
-  <string name="searchbar_hint">İsim ya da telefon numarası girin...</string>
+  <string name="searchbar_hint">Ad ya da telefon numarası girin...</string>
   <string name="choose_number">Numara seçin</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -47,17 +47,17 @@
   <string name="transfer_no_other_call">Bekleyen başka arama yok</string>
   <string name="transfer_type_number">Aktarılacak numarayı girin:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">%1$s\'dan cevapsız arama</string>
-  <string name="notif_missed_outgoing_call">%1$s\'a cevapsız arama</string>
+  <string name="notif_missed_incoming_call">%1$s\'den yanıtsız arama</string>
+  <string name="notif_missed_outgoing_call">%1$s\'e yanıtsız arama</string>
   <string name="notif_incoming_call_title">%1$s\'dan gelen arama</string>
   <string name="notif_incoming_call">Gelen arama</string>
   <string name="notif_outgoing_call_title">%1$s\'a giden arama</string>
   <string name="notif_outgoing_call">Giden arama</string>
   <string name="notif_current_call_title">%1$s ile şimdiki arama</string>
-  <string name="notif_current_call">Şimdiki Arama</string>
+  <string name="notif_current_call">Şimdiki arama</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sen:</string>
-  <string name="action_call_attended_transfer">katılınmış aktarma</string>
+  <string name="action_call_attended_transfer">Katılınmış Aktarma</string>
   <string name="action_call_conference">Toplantı</string>
   <string name="action_call_hangup">Kapat</string>
   <string name="ongoing_call">Giden arama</string>
@@ -65,7 +65,7 @@
   <string name="hist_out_call">%1$s giden arama</string>
   <string name="start_error_title">Ring başlatılamıyor !</string>
   <string name="start_error_mic_required">Ring çalışmak için mikrofon iznine ihtiyaç duyuyor.</string>
-  <string name="action_call_accept">Aramayı cevapla</string>
+  <string name="action_call_accept">Aramayı yanıtla</string>
   <string name="action_call_decline">Reddet</string>
   <string name="ab_action_speakerphone">Hoparlörü etkinleştir</string>
   <string name="ab_action_contact_add">Kişilere ekle</string>
@@ -83,8 +83,10 @@
   <string name="permission_read_denied">Uygulamaya deponuzu okuma izni verilmedi. Bu yüzden düzgün işleyemez. Lütfen bu izni vermeyi göz ardı etmeyin.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera izni</string>
-  <string name="permission_dialog_camera_message">Görüntülü görüşme için kamera çalıştırma izni gereklidir.Lütfen etkinleştirmeyi gözden kaçırmayın.</string>
+  <string name="permission_dialog_camera_message">Görüntülü görüşmelerin çalışması için kamera izni gerekir. Lütfen etkinleştirmeyi göz ardı etmeyin.</string>
   <string name="ringtone_error_title">Hata</string>
+  <string name="ringtone_error_format_not_supported">Bu biçim desteklenmiyor.</string>
+  <string name="ringtone_error_size_too_big">Bu dosya çok büyük. En büyük boyut %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring bu özelliği etkinleştirmek için \"Kişileri okuma\" iznine gereksiniyor. Lütfen verin.</string>
   <!--Write call log permission-->
@@ -94,7 +96,7 @@
   <!--Settings-->
   <string name="clear_history_dialog_title">Geçmişi temizle ?</string>
   <string name="clear_history_dialog_message">Bu eylem geri alınamaz.</string>
-  <string name="clear_history_completed">Geçmiş temizlenmiş</string>
+  <string name="clear_history_completed">Geçmiş temizlenmiş.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Bu konuşmayı sil</string>
   <string name="conversation_action_delete_this_title">Bu konuşmayı sil ?</string>
@@ -107,13 +109,21 @@
   <string name="prompt_new_password">Yeni parola</string>
   <string name="prompt_new_password_repeat">Yeni parola tekrar</string>
   <string name="account_create_title">Bir Ring hesabı oluştur</string>
+  <string name="prompt_new_username">Yeni kullanıcı adı gir</string>
+  <string name="help_password_choose">Ring hesabınızı korumak için anımsayacağınız güçlü bir parola seçin.</string>
+  <string name="help_password_enter">Ana Ring hesap parolanızı girin</string>
+  <string name="help_pin_enter">Başka yapılandırılmış Ring hesabından PIN\'i gir. PIN edinmek için \"Ring\'de hesabı dışa aktarma\" özelliğini kullan.</string>
+  <string name="wizard_next">İleri</string>
   <string name="account_device_updated_message">Ring hesabınızı başarıyla güncellediniz.</string>
   <!--MenuHeaderView-->
   <string name="profile">Profilim</string>
   <string name="profile_message_warning">Bu, kişileriniz ile paylaşıldı</string>
   <string name="open_the_gallery">Galeriyi aç</string>
-  <string name="take_a_photo">Fotograf çek</string>
+  <string name="take_a_photo">Fotoğraf çek</string>
   <string name="unknowm_if_empty">Boş ise bilinmiyor</string>
   <string name="unknown">Bilinmeyen</string>
   <!--Share fragment-->
+  <string name="share_message">Sizinle iletişime geçmek isteyenin Ring uygulamasının gömülü tarayıcısıyla bu QR kodu tarayın.</string>
+  <string name="share_your_account_information">İletişim bilgimi paylaş</string>
+  <string name="generic_error_migration">Hata</string>
 </resources>

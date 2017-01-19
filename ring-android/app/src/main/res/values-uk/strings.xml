@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">Ліцензія</string>
   <string name="sponsor_section">Ring є безкоштовним програмним забезпеченням, що розроблене та пдітримується</string>
   <string name="copyright_section">Авторське право</string>
   <string name="contribute_section">Співробітничати</string>
@@ -107,7 +106,9 @@
   <string name="add_call_contact_number_to_contacts">Додати %1$s ?</string>
   <string name="prompt_new_password">Новий пароль</string>
   <string name="account_create_title">Створити обліковий запис Ring</string>
+  <string name="wizard_next">Наступний</string>
   <!--MenuHeaderView-->
   <string name="unknown">Невідомий</string>
   <!--Share fragment-->
+  <string name="generic_error_migration">Помилка</string>
 </resources>

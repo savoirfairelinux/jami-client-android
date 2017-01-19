@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <!--Strings related to account creation-->
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <!--Basic Details-->
+  <!--Audio Details-->
+  <string name="account_audio_label">Audio</string>
+  <string name="account_ringtone_label">Ringtones</string>
+  <!--Video Details-->
+  <string name="account_video_label">Video</string>
+  <!--Advanced Details-->
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <!--SIP-->
+  <!--TLS Details-->
+  <!--restore/backup-->
+  <!--Name registration-->
+  <!--Create account-->
+</resources>

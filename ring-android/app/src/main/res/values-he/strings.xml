@@ -44,6 +44,8 @@
   <!--Conversation-->
   <string name="conversation_action_copy_peer_number">העתק מספר</string>
   <!--Contacts-->
+  <string name="wizard_next">קדימה</string>
   <!--MenuHeaderView-->
   <!--Share fragment-->
+  <string name="generic_error_migration">שגיאה</string>
 </resources>

@@ -1,11 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">Licens</string>
   <string name="sponsor_section">Ring er fri software, udviklet og støttet af</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Bidrag</string>
   <string name="version_section">Version</string>
-  <string name="no_email_app_installed">Ingen email-app fundet, installerer en for at sende os en rapport</string>
+  <string name="no_email_app_installed">Ingen email-app fundet, installér en for at sende os en rapport</string>
   <string name="email_chooser_title">Send mail ved brug af...</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
@@ -20,8 +19,9 @@
   <string name="drawer_close">Luk navigationsskuffen</string>
   <!--Sections-->
   <string name="menu_item_home">Hjem</string>
-  <string name="menu_item_accounts">Håndter konti</string>
+  <string name="menu_item_accounts">Håndtér konti</string>
   <string name="menu_item_settings">Indstillinger</string>
+  <string name="menu_item_share">Del min kontakt</string>
   <string name="menu_item_about">Om Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Indtast et nummer</string>
@@ -31,8 +31,8 @@
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
-    <item quantity="one">%d Samtale</item>
-    <item quantity="other">%d Samtaler</item>
+    <item quantity="one">%d samtale</item>
+    <item quantity="other">%d samtaler</item>
   </plurals>
   <string name="home_transfering">Overfører %1$s til %1$s</string>
   <string name="home_transfer_complet">Overførsel afsluttet</string>
@@ -57,7 +57,7 @@
   <string name="notif_current_call">Nuværende opkald</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Dig:</string>
-  <string name="action_call_attended_transfer">Overvåget Overførsel</string>
+  <string name="action_call_attended_transfer">Overvåget overførsel</string>
   <string name="action_call_conference">Konference</string>
   <string name="action_call_hangup">Læg på</string>
   <string name="ongoing_call">Aktivt opkald</string>
@@ -85,6 +85,8 @@
   <string name="permission_dialog_camera_title">Kamera-tilladelse</string>
   <string name="permission_dialog_camera_message">Video-samtaler kræver kamera-tilladelse for at fungere. Overvej venligst at give denne tilladelse.</string>
   <string name="ringtone_error_title">Fejl</string>
+  <string name="ringtone_error_format_not_supported">Dette format understøttes ikke.</string>
+  <string name="ringtone_error_size_too_big">Denne fil er for stor. Maksimalt tilladte størrelse er %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring har brug for \"Læs kontakter\"-tilladelse for at kunne udføre denne funktion. Vær venlig at tillade den.</string>
   <!--Write call log permission-->
@@ -99,14 +101,29 @@
   <string name="conversation_action_delete_this">Slet denne samtale</string>
   <string name="conversation_action_delete_this_title">Slet denne samtale?</string>
   <string name="conversation_action_delete_this_message">Denne handling kan ikke fortrydes.</string>
-  <string name="conversation_action_copy_peer_number">Kopier nummer</string>
+  <string name="conversation_action_copy_peer_number">Kopiér nummer</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopieret til udklipsholder</string>
   <string name="conversation_action_select_peer_number">Vælg et nummer</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Tilføj %1$s ?</string>
   <string name="prompt_new_password">Nyt kodeord</string>
+  <string name="prompt_new_password_repeat">Gentag nyt kodeord</string>
   <string name="account_create_title">Opret en Ring-konto</string>
+  <string name="prompt_new_username">Indtast nyt brugernavn</string>
+  <string name="help_password_choose">Vælg et stærkt kodeord, som du kan huske, til at beskytte din Ring-konto.</string>
+  <string name="help_password_enter">Indtast dit primære Ring-konto kodeord</string>
+  <string name="help_pin_enter">Indtast PIN-koden fra en anden konfigureret Ring-konto. Brug eksporter-konto-funktionaliteten for at få adgang til en PIN-kode. </string>
+  <string name="wizard_next">Næste</string>
+  <string name="account_device_updated_message">Du har opdateret din Ring-konto.</string>
   <!--MenuHeaderView-->
+  <string name="profile">Min profil</string>
+  <string name="profile_message_warning">Dette deles med dine kontakter</string>
+  <string name="open_the_gallery">Åben galleriet</string>
+  <string name="take_a_photo">Tag et billede</string>
+  <string name="unknowm_if_empty">Ukendt hvis tom</string>
   <string name="unknown">Ukendt</string>
   <!--Share fragment-->
+  <string name="share_message">Skan denne QRCode med den indbyggede scanner i Ring-applikationen.</string>
+  <string name="share_your_account_information">Del min kontaktinformation</string>
+  <string name="generic_error_migration">Fejl</string>
 </resources>

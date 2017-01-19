@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Rrjet</string>
+  <string name="pref_category_contacts">Kontakte</string>
+  <string name="pref_category_system">Sistem</string>
+  <string name="pref_category_privacy">Privatësi</string>
+  <string name="pref_mobileData_title">Të dhëna celulare</string>
+  <string name="pref_mobileData_summary">Lejojeni Ring-un edhe në rrjete 3G/LTE, përveç se te Wi-Fi</string>
+  <string name="pref_systemContacts_title">Përdor kontakte sistemi</string>
+  <string name="pref_systemContacts_summary">Për shfaqjen e hollësive të thirrësit përdor kontakte sistemi.</string>
+  <string name="pref_systemDialer_title">Kryej thirrje sistemi duke përdoru Ring-un</string>
+  <string name="pref_systemDialer_summary">Kur është e mundur, përdor Ring-un për të kryer thirrje sistemi.</string>
+  <string name="pref_startOnBoot_title">Nise Ring-un kur niset sistemi</string>
+  <string name="pref_startOnBoot_summary">Xhirojeni Ring-un në prapaskenë kur niset sistemi.</string>
+  <string name="pref_clearHistory_title">Pastroje historikun</string>
+  <string name="pref_clearHistory_summary">Pastroni krejt historikun e bisedave, Ky veprim nuk mund të zhbëhet.</string>
+</resources>
