@@ -1,4 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">Δίκτυο</string>
   <string name="pref_category_contacts">Επαφές</string>
+  <string name="pref_category_system">Σύστημα</string>
 </resources>

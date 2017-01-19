@@ -1,27 +1,27 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">Lizenz</string>
-  <string name="sponsor_section">Ring ist freie Software, entwickelt und unterstützt durch</string>
+  <string name="sponsor_section">Ring ist eine freie Software, entwickelt und unterstützt durch</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Beitragen</string>
   <string name="version_section">Version</string>
-  <string name="no_email_app_installed">Es konnte keine Email-Anwendung gefunden werden, installieren sie eine um uns einen Bericht zu senden</string>
+  <string name="no_email_app_installed">Es konnte keine Email-Anwendung gefunden werden, installieren Sie eine um uns einen Bericht zu senden</string>
   <string name="email_chooser_title">Mail wird gesendet mit...</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Keine Netzwerkverbindung</string>
-  <string name="error_mobile_network_available_but_disabled">Bitte erlaube den Zugang zum Mobilfunknetz in den Einstellungen</string>
+  <string name="error_mobile_network_available_but_disabled">Bitte erlauben Sie den Zugang zum Mobilfunknetz in den Einstellungen</string>
   <!--AB menus-->
   <string name="ab_account_creation">Neues Konto</string>
   <string name="ab_action_chat">Textnachrichten</string>
   <!--Left Drawer-->
   <!--Accessibility-->
-  <string name="drawer_open">Navigationsschublade öffnen</string>
-  <string name="drawer_close">Navigationsschublade schließen</string>
+  <string name="drawer_open">Navigationsleiste öffnen</string>
+  <string name="drawer_close">Navigationsleiste schließen</string>
   <!--Sections-->
   <string name="menu_item_home">Start</string>
   <string name="menu_item_accounts">Konten verwalten</string>
   <string name="menu_item_settings">Einstellungen</string>
+  <string name="menu_item_share">Meinen Kontakt teilen</string>
   <string name="menu_item_about">über Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Nummer wählen</string>
@@ -44,7 +44,7 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <string name="transfer_to_another_call">Auf einen anderen aktuellen Anruf weiterleiten</string>
-  <string name="transfer_no_other_call">Keine anderen Anrufe wartend</string>
+  <string name="transfer_no_other_call">Kein anderer Anrufe wartend</string>
   <string name="transfer_type_number">Nummer für Übertragung eingeben:</string>
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Verpasster Anruf von %1$s</string>
@@ -60,7 +60,7 @@
   <string name="action_call_attended_transfer">Überwachter Transfer</string>
   <string name="action_call_conference">Konferenz</string>
   <string name="action_call_hangup">Auflegen</string>
-  <string name="ongoing_call">Fortlaufender Anruf</string>
+  <string name="ongoing_call">Derzeitiger Anruf</string>
   <string name="hist_in_call">Eingehender Anruf von %1$s</string>
   <string name="hist_out_call">Ausgehender Anruf von %1$s</string>
   <string name="start_error_title">Ring konnte nicht gestartet werden!</string>
@@ -75,20 +75,22 @@
   <string name="share_via">Teilen mit</string>
   <string name="write_a_message">Sende eine Nachricht</string>
   <string name="scan_qr">QR-Code scannen</string>
-  <string name="ab_action_flipcamera">Flipkamera</string>
+  <string name="ab_action_flipcamera">Kamerabild kippen</string>
   <!--Text messages-->
   <string name="send_message">Nachricht senden</string>
   <string name="message_sending">Nachricht wird gesendet…</string>
   <string name="time_just_now">Gerade eben</string>
-  <string name="permission_read_denied">Die Anwendung hat keine Berechtigung den Speicher zu lesen und funktioniert deswegen nicht richtig. Bitte geben Sie diese Berechtigung frei.</string>
+  <string name="permission_read_denied">Die Anwendung hat keine Berechtigung den Speicher zu lesen und funktioniert deswegen nicht richtig. Bitte erteilen Sie diese Berechtigung.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera Berechtigung</string>
-  <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die Anwendung Zugriff auf die Kamera. Bitte geben Sie diese Berechtigung frei.</string>
+  <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die Anwendung Zugriff auf die Kamera. Bitte erteilen Sie diese Berechtigung.</string>
   <string name="ringtone_error_title">Fehler</string>
+  <string name="ringtone_error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
+  <string name="ringtone_error_size_too_big">Die Datei ist zu groß. Die maximale Größe ist %1$ikB.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring benötigt die Berechtigung \"Kontaktdaten lesen\" für diese Funktion. Bitte geben Sie sie frei.</string>
+  <string name="permission_dialog_read_contacts_message">Ring benötigt die Berechtigung \"Kontaktdaten lesen\" für diese Funktion. Bitte erteilen Sie diese.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring benötigt die Berechtigung \"Anruflisten schreiben\" für diese Funktion. Bitte geben Sie sie frei.</string>
+  <string name="permission_dialog_write_call_log_message">Ring benötigt die Berechtigung \"Anruflisten schreiben\" für diese Funktion. Bitte erteilen Sie diese.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scanne den QR-Code des Kontos, das du hinzufügen möchtest.</string>
   <!--Settings-->
@@ -107,7 +109,12 @@
   <string name="prompt_new_password">Neues Passwort</string>
   <string name="prompt_new_password_repeat">Neues Passwort wiederholen</string>
   <string name="account_create_title">Ein Ring-Konto erstellen</string>
-  <string name="account_device_updated_message">Sie haben erfolgreich ihr Ring-Konto aktualisiert</string>
+  <string name="prompt_new_username">Neuen Benutzernamen eingeben</string>
+  <string name="help_password_choose">Wähle ein sicheres Passwort, an das du dich erinnern kannst, um deinen Ringaccount zu schützen.</string>
+  <string name="help_password_enter">Geben Sie Ihr Haupt-Ring-Kontopasswort ein</string>
+  <string name="help_pin_enter">Gebe die PIN eines anderen konfigurierten Ringaccounts ein. Benutzen Sie die Funktion \"Exportiere Account auf Ring\" um die PIN zu erhalten.</string>
+  <string name="wizard_next">Weiter</string>
+  <string name="account_device_updated_message">Sie haben erfolgreich Ihr Ring-Konto aktualisiert</string>
   <!--MenuHeaderView-->
   <string name="profile">Mein Profil</string>
   <string name="profile_message_warning">Dies wird mit ihren Kontakten geteilt</string>
@@ -116,4 +123,7 @@
   <string name="unknowm_if_empty">\'Unbekannt\' falls leer...</string>
   <string name="unknown">Unbekannt</string>
   <!--Share fragment-->
+  <string name="share_message">Scannen Sie diesen QR-Code mit dem eingebauten Scanner der Ringanwendung, die mit Ihnen kommunizieren will.</string>
+  <string name="share_your_account_information">Teile meine Kontaktinformationen</string>
+  <string name="generic_error_migration">Fehler</string>
 </resources>

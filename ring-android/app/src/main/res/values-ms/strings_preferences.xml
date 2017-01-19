@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Rangkaian</string>
+  <string name="pref_category_contacts">Kenalan</string>
+  <string name="pref_category_system">Sistem</string>
+  <string name="pref_category_privacy">Privasi</string>
+  <string name="pref_mobileData_title">Jaringan data</string>
+  <string name="pref_mobileData_summary">Benarkan Ring pada jaringan 3G/LTE selain dari WI-Fi</string>
+  <string name="pref_systemContacts_title">Gunakan buku kenalan sistem</string>
+  <string name="pref_systemContacts_summary">Gunakan buku kenalan sistem untuk memaparkan maklumat pemanggil</string>
+  <string name="pref_systemDialer_title">Gunakan Ring untuk membuat panggilan dari sistem</string>
+  <string name="pref_systemDialer_summary">Gunakan Ring untuk membuat panggilan dari sistem apabila sesuai</string>
+  <string name="pref_startOnBoot_title">Jalankan Ring selepas perangkat dihidupkan</string>
+  <string name="pref_startOnBoot_summary">Jalankan Ring dibelakang secara automatik selepas perangkat dihidupkan</string>
+  <string name="pref_clearHistory_title">Padamkan sejarah</string>
+  <string name="pref_clearHistory_summary">Padamkan semua sejarah perbualan. Aksi ini tidak akan dapat dibuat ulang.</string>
+</resources>

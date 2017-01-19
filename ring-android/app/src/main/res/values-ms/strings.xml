@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="sponsor_section">Ring adalah aplikasi percuma yang dibangunkan dan disokong oleh</string>
+  <string name="copyright_section">Hakcipta</string>
+  <string name="contribute_section">Sumbangkan</string>
+  <string name="version_section">Versi</string>
+  <string name="no_email_app_installed">Tiada aplikasi emel ditemui, pasangkan satu untuk menghantar laporan kepada kami</string>
+  <string name="email_chooser_title">Hantar email menggunakan…</string>
+  <!--RingActivity-->
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">Tiada sambungan rangkaian</string>
+  <string name="error_mobile_network_available_but_disabled">Sila berikan akses kepada rangkaian selular didalam skrin tetapan.</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Akaun baharu</string>
+  <string name="ab_action_chat">Pesanan teks</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Buka laci navigasi</string>
+  <string name="drawer_close">Tutup laci navigasi</string>
+  <!--Sections-->
+  <string name="menu_item_home">Utama</string>
+  <string name="menu_item_accounts">Urus akaun</string>
+  <string name="menu_item_settings">Tetapan</string>
+  <string name="menu_item_share">Kongsikan profil saya</string>
+  <string name="menu_item_about">Mengenai Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Dail nombor</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">Main ulang</string>
+  <string name="hist_replay_button_stop">Berhenti</string>
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="other">%d Perbualan</item>
+  </plurals>
+  <string name="home_transfering">Memindahkan %1$s ke %1$s</string>
+  <string name="home_transfer_complet">Pemindahan berjaya</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Tiada kenalan ditemui</string>
+  <string name="starred_contacts_title">Kegemaran</string>
+  <string name="searchbar_hint">Masukkan nama atau nombor telefon</string>
+  <string name="choose_number">Pilih nombor</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Pindahkan ke panggilan lain yang sedang berlangsung:</string>
+  <string name="transfer_no_other_call">Tiada panggilan lain yang belum selesai</string>
+  <string name="transfer_type_number">Taipkan nombor untuk memindahkan:</string>
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">Panggilan tidak terjawab daripada %1$s</string>
+  <string name="notif_missed_outgoing_call">Panggilan tidak terjawab kepada %1$s</string>
+  <string name="notif_incoming_call_title">Panggilan masuk daripada %1$s</string>
+  <string name="notif_incoming_call">Panggilan masuk</string>
+  <string name="notif_outgoing_call_title">Panggilan keluar kepada %1$s</string>
+  <string name="notif_outgoing_call">Panggilan keluar</string>
+  <string name="notif_current_call_title">Panggilan sedang berlangsung dengan %1$s</string>
+  <string name="notif_current_call">Panggilan sedang berlangsung</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Anda</string>
+  <string name="action_call_attended_transfer">Pemindahan panggilan yang disertai</string>
+  <string name="action_call_conference">Mesyuarat</string>
+  <string name="action_call_hangup">Putuskan</string>
+  <string name="ongoing_call">Panggilan sedang berlangsung</string>
+  <string name="hist_in_call">Panggilan masuk sebanyak %1$s</string>
+  <string name="hist_out_call">Panggilan keluar sebanyak %1$s</string>
+  <string name="start_error_title">Tidak dapat memulakan Ring !</string>
+  <string name="start_error_mic_required">Ring memerlukan kebenaran mengakses mikrofon untuk bekerja dengan sempurna</string>
+  <string name="action_call_accept">Terima panggilan</string>
+  <string name="action_call_decline">Bantah panggilan</string>
+  <string name="ab_action_speakerphone">Aktifkan pembesar suara</string>
+  <string name="ab_action_contact_add">Tambahkan sebagai kenalan</string>
+  <string name="ab_action_contact_add_question">Tambah sebagai kenalan ?</string>
+  <string name="ab_action_audio_call">Panggilan suara</string>
+  <string name="ab_action_video_call">Panggilan video</string>
+  <string name="share_via">Kongsikan melalui</string>
+  <string name="write_a_message">Tulis pesan</string>
+  <string name="scan_qr">Imbas kod QR</string>
+  <string name="ab_action_flipcamera">Tukar kamera</string>
+  <!--Text messages-->
+  <string name="send_message">Hantar pesan</string>
+  <string name="message_sending">Sedang menghantar pesan…</string>
+  <string name="time_just_now">Seketika yang lalu</string>
+  <string name="permission_read_denied">Aplikasi ini tidak dibenarkan untuk membaca memori dalaman anda. Oleh begitu, ia tidak dapat bekerja dengan sempurna. Sila pertimbangkan untuk membenarkan akses tersebut</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Akses kamera</string>
+  <string name="permission_dialog_camera_message">Perbualan video memerlukan akses kepada kamera untuk bekerja dengan sempurna. Sila pertimbangkan untuk membenarkan akses tersebut.</string>
+  <string name="ringtone_error_title">Gagal</string>
+  <string name="ringtone_error_format_not_supported">Format ini tidak disokong.</string>
+  <string name="ringtone_error_size_too_big">Saiz fail ini adalah terlalu besar. Had maksimum untuk saiz fail adalah %1$ikB.</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring memerlukan keizinan akses kepada kenalan untuk mengaktifkan fungsi ini. Sila pertimbangkan untuk membenarkan akses tersebut.</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring memerlukan keizinan akses kepada kenalan untuk mengaktifkan fungsi ini. Sila pertimbangkan untuk membenarkan akses tersebut.</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Imbas kod QR akaun yang ingin anda tambah.</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Padam sejarah ?</string>
+  <string name="clear_history_dialog_message">Aksi ini tidak akan dapat dibuat ulang.</string>
+  <string name="clear_history_completed">Sejarah telah dipadam.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Padamkan perbualan ini</string>
+  <string name="conversation_action_delete_this_title">Padamkan perbualan ini ?</string>
+  <string name="conversation_action_delete_this_message">Aksi ini tidak akan dapat dibuat ulang.</string>
+  <string name="conversation_action_copy_peer_number">Salin nombor</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s telah disalin</string>
+  <string name="conversation_action_select_peer_number">Pilih nombor</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Tambah %1$s ?</string>
+  <string name="prompt_new_password">Kata laluan baharu</string>
+  <string name="prompt_new_password_repeat">Ulang kata laluan baharu</string>
+  <string name="account_create_title">Cipta akaun Ring</string>
+  <string name="prompt_new_username">Masukkan nama pengguna baharu</string>
+  <string name="help_password_choose">Pilih kata laluan kukuh yang perlu anda ingat untuk menjaga akaun Ring anda.</string>
+  <string name="help_password_enter">Masukkan kata laluan akaun Ring anda</string>
+  <string name="help_pin_enter">Masukkan PIN daripada akaun Ring lain yang telah dijalankan. Gunakan fungsi \"eksport akaun ke Ring\" untuk mendapatkan PIN.</string>
+  <string name="account_device_updated_message">Anda telah berjaya mengemaskini akaun Ring anda.</string>
+  <!--MenuHeaderView-->
+  <string name="profile">Profil saya</string>
+  <string name="profile_message_warning">Ini akan dikongsikan dengan kenalan anda</string>
+  <string name="open_the_gallery">Buka galeri</string>
+  <string name="take_a_photo">Ambil gambar</string>
+  <string name="unknowm_if_empty">Tidak diketahui jika kosong</string>
+  <string name="unknown">Tidak diketahui</string>
+  <!--Share fragment-->
+  <string name="share_message">Imbas kod QR ini dengan pemgibas terbina dalam dari aplikasi Ring lain yang ingin berkomunikasi dengan anda.</string>
+  <string name="share_your_account_information">Sila pilih akaun untuk dikongsi</string>
+  <string name="generic_error_migration">Gagal</string>
+</resources>

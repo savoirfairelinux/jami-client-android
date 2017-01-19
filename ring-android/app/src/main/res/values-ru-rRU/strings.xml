@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">Лицензия</string>
   <string name="sponsor_section">Ring является свободным ПО, которое разрабатывается и поддерживается</string>
   <string name="copyright_section">Авторское право</string>
   <string name="contribute_section">Помочь проекту</string>
@@ -108,7 +107,9 @@
   <string name="add_call_contact_number_to_contacts">Добавить %1$s ?</string>
   <string name="prompt_new_password">Новый пароль</string>
   <string name="account_create_title">Создать Ring аккаунт</string>
+  <string name="wizard_next">Далее</string>
   <!--MenuHeaderView-->
   <string name="unknown">Неизвестно</string>
   <!--Share fragment-->
+  <string name="generic_error_migration">Ошибка</string>
 </resources>

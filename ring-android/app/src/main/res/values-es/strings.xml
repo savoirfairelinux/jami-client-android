@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">Licencia</string>
   <string name="sponsor_section">Ring es un software libre desarrollado y mantenido por</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuir</string>
@@ -22,6 +21,7 @@
   <string name="menu_item_home">Inicio</string>
   <string name="menu_item_accounts">Administrar cuentas</string>
   <string name="menu_item_settings">Configuración</string>
+  <string name="menu_item_share">Compartir mi contacto</string>
   <string name="menu_item_about">Acerca de Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marcar un Número</string>
@@ -85,6 +85,8 @@
   <string name="permission_dialog_camera_title">Permiso de cámara</string>
   <string name="permission_dialog_camera_message">Las conversaciones con vídeo requieren utilizar la cámara. Considera conceder este permiso.</string>
   <string name="ringtone_error_title">Error</string>
+  <string name="ringtone_error_format_not_supported">Este formato no está soportado.</string>
+  <string name="ringtone_error_size_too_big">El archivo es demasiado grande. El tamaño máximo es %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring necesita permiso para leer los contactos. Por favor, concede este permiso.</string>
   <!--Write call log permission-->
@@ -105,8 +107,23 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">¿Añadir %1$s ?</string>
   <string name="prompt_new_password">Contraseña nueva</string>
+  <string name="prompt_new_password_repeat">Repite la nueva contraseña</string>
   <string name="account_create_title">Crear una cuenta en Ring</string>
+  <string name="prompt_new_username">Ingresa un nuevo nombre de usuario</string>
+  <string name="help_password_choose">Elige una contraseña robusta que podrás recordar para proteger tu cuenta de Ring.</string>
+  <string name="help_password_enter">Ingresa la contraseña de tu cuenta principal de Ring</string>
+  <string name="help_pin_enter">Ingresa el PIN de otra cuenta de Ring configurada. Utiliza la opción \"Exportar cuenta en Ring\" para obtener un PIN.</string>
+  <string name="wizard_next">Siguiente</string>
+  <string name="account_device_updated_message">Has actualizado tu cuenta de Ring exitosamente</string>
   <!--MenuHeaderView-->
+  <string name="profile">Mi perfil</string>
+  <string name="profile_message_warning">Esto se comparte con tus contactos</string>
+  <string name="open_the_gallery">Abrir la galería</string>
+  <string name="take_a_photo">Tomar una foto</string>
+  <string name="unknowm_if_empty">Desconocido si está vacío</string>
   <string name="unknown">Desconocido</string>
   <!--Share fragment-->
+  <string name="share_message">Escanea este QRCode con el escáner integrado de la aplicación Ring que desea comunicarse contigo.</string>
+  <string name="share_your_account_information">Compartir mi información de contacto</string>
+  <string name="generic_error_migration">Error</string>
 </resources>

@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Fshije</string>
+  <!--Strings related to account creation-->
+  <string name="prompt_alias">Alias</string>
+  <string name="prompt_hostname">Strehëemër</string>
+  <string name="prompt_username">Emër përdoruesi</string>
+  <string name="prompt_password">Fjalëkalim</string>
+  <string name="action_create">Krijoni llogari</string>
+  <string name="action_create_short">Regjistrohuni</string>
+  <string name="error_field_required">Kjo fushë është e domosdoshme</string>
+  <string name="dialog_wait_create">Po shtohet llogaria</string>
+  <string name="dialog_wait_create_details">Ju lutemi, pritni teksa shtohet llogaria juaj e re…</string>
+  <string name="dialog_wait_update">Po përditësohet llogaria</string>
+  <string name="dialog_wait_update_details">Ju lutemi, pritni teksa përditësohet llogaria juaj e re…</string>
+  <string name="dialog_warn_ip2ip_account_title">Të krijohet llogari SIP e zbrazët?</string>
+  <string name="dialog_warn_ip2ip_account_message">Ju ndan një hap nga krijimi i një llogarie SIP pa strehëemër të vlefshëm.
+        Do të jeni në gjendje vetëm të bëni dhe të merrni thirrje ip të drejtpërdrejta.
+        Llogarinë tuaj mund ta përpunoni më vonë</string>
+  <string name="help_ring">Një llogari Ring ju lejon të lidheni në mënyrë të sigurt me njerëz, sipas modelit tek për te, përmes një rrjeti tërësisht të shpërndarë.</string>
+  <string name="help_sip_title">Shtoni llogarinë tuaj SIP</string>
+  <string name="help_sip">Formësoni një llogari SIP ekzistuese.</string>
+  <string name="create_sip_account">Shtoje</string>
+  <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Të fshihet llogaria?</string>
+  <string name="account_delete_dialog_message">Ky veprim s’mund të zhbëhet.</string>
+  <!--AccountManagementFragment-->
+  <string name="empty_account_list">S’ka llogari të regjistruar</string>
+  <string name="normal_accounts_titles">Llogari</string>
+  <string name="normal_devices_titles">Pajisje të njohura që lidhen te kjo llogari Ring</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Të përgjithshme</string>
+  <string name="account_basic_category">Rregullime Bazë</string>
+  <string name="account_alias_label">Emër llogarie</string>
+  <string name="account_hostname_label">Strehëemër</string>
+  <string name="account_username_label">Emër përdoruesi</string>
+  <string name="account_password_label">Fjalëkalim</string>
+  <string name="account_optionnal_category">Rregullime Opsionale</string>
+  <string name="account_useragent_label">Agjent Përdoruesi</string>
+  <string name="account_upnp_label">Aktivizo UPnP</string>
+  <string name="account_proxy_field">Ndërmjetës</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">Audio</string>
+  <string name="account_preferences_media_tab">Media</string>
+  <string name="account_ringtone_label">Zile</string>
+  <string name="account_ringtone_enabled_label">Aktivizo zilen</string>
+  <string name="account_ringtone_path_label">Shteg zileje</string>
+  <string name="account_ringtone_custom_label">Përdor zile vetjake</string>
+  <!--Video Details-->
+  <string name="account_video_label">Video</string>
+  <string name="account_video_enable">Aktivizo Video</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Të mëtejshme</string>
+  <string name="account_registration_exp_label">Skadim Regjistrimi</string>
+  <string name="account_local_interface_label">Ndërfaqe Vendore</string>
+  <string name="account_local_port_label">Portë Vendore</string>
+  <string name="account_stun_enable_label">Përdor Stun</string>
+  <string name="account_stun_server_label">Shërbyes Stun</string>
+  <string name="account_turn_enable_label">Përdor TURN</string>
+  <string name="account_turn_server_label">Shërbyes TURN</string>
+  <string name="account_turn_username_label">Emër përdoruesi TURN</string>
+  <string name="account_turn_password_label">Fjalëkalim TURN</string>
+  <string name="account_published_address_label">Adresë e Publikuar</string>
+  <!--Security Details-->
+  <string name="account_credentials_label">Kredenciale</string>
+  <string name="account_credentials_edit">Përpunoni kredenciale</string>
+  <string name="account_credentials_add">Shtoni kredenciale</string>
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Siguri</string>
+  <!--SIP-->
+  <!--TLS Details-->
+  <string name="account_tls_transport_switch_label">Përdor Bartje TLS</string>
+  <string name="account_tls_port_label">Portë Përgjuesi TLS</string>
+  <string name="account_tls_certificate_list_label">Autoritete Dëshmish</string>
+  <string name="account_tls_certificate_file_label">Kartelë Dëshmie</string>
+  <string name="account_tls_private_key_file_label">Kartelë Kyçi Privat</string>
+  <string name="account_tls_password_label">Fjalëkalim Kyçi Privat</string>
+  <string name="account_tls_method_label">Metodë TLS</string>
+  <string name="account_tls_ciphers_label">Shifra TLS</string>
+  <string name="account_tls_server_name_label">Emër Shërbyesi</string>
+  <string name="account_tls_verify_server_label">Veirifkoni Shërbyes</string>
+  <string name="account_tls_verify_client_label">Verifikoni Klient</string>
+  <string name="account_tls_negotiation_timeout_sec">Skadim Tratative (s)</string>
+  <string name="account_rtp_max_port">Maksimum</string>
+  <string name="account_rtp_min_port">Minimum</string>
+  <!--restore/backup-->
+  <string name="account_restore_account">Riktheni një llogari</string>
+  <string name="account_restore_message">Jepni fjalëkalimin për çfshehtëzim kartele.</string>
+  <string name="account_restore_decryption_password">Fjalëkalim çfeshhtëzimesh</string>
+  <string name="restore_backup_wait">Ju lutemi, pritni…</string>
+  <string name="error_password_char_count">Minimumi 6 shenja</string>
+  <string name="error_passwords_not_equals">Fjalëkalimet nuk përputhen</string>
+  <string name="restore_failed_dialog_title">Rikthimi dështoi</string>
+  <string name="restore_failed_dialog_msg">Ndodhi një gabim</string>
+  <string name="export_account_wait_title">Ju lutemi, pritni…</string>
+  <string name="account_export_end_decryption_message">S’u zhbllokua dot llogaria juaj duke përdorur fjalëkalimin e dhënë.</string>
+  <string name="account_export_end_network_title">Gabim rrjeti</string>
+  <string name="account_export_end_network_message">S’u eksportua dot llogari te rrjeti. Kontrolloni lidhjen tuaj në rrjet.</string>
+  <string name="account_export_end_error_title">Gabim</string>
+  <string name="account_export_end_error_message">S’u eksportua dot llogaria. Ndodhi një gabim i panjohur.</string>
+  <string name="account_enter_password">Jepni fjalëkalimin</string>
+  <string name="account_contact_me">Lidhuni me mua në Ring!</string>
+  <string name="update_account">Përditësoje llogarinë</string>
+  <string name="ring_account">Llogari Ring</string>
+  <string name="account_migration_title_dialog">Migrim llogarie</string>
+  <string name="account_update_needed">Lypset përditësim</string>
+  <string name="account_creation_file_too_big">Kartela është shumë e madhe</string>
+  <string name="account_cannot_read">S’lexohet dot %1$s</string>
+  <string name="account_cannot_be_found_title">S’gjendet dot llogari</string>
+  <string name="account_no_network_title">S’lidhet dot te rrjeti</string>
+  <string name="account_device_added_message">E keni rregulluar me sukses llogarinë tuaj Ring në këtë pajisje.</string>
+  <string name="account_link_button">Lidheni këtë pajisje me një llogari</string>
+  <string name="account_import_title">Lidheni me një llogari ekzistuese</string>
+  <string name="account_link_prompt_pin">Jepni PIN-in</string>
+  <string name="account_new_button">Krijoni një llogari Ring</string>
+  <string name="account_link_export_button">Lidhni te kjo llogari një pajisje tjetër</string>
+  <string name="account_end_export_button">mbylle</string>
+  <!--Name registration-->
+  <string name="register_name_wrong_password">S’regjistrohet dot emri: fjalëkalim llogarie i gabuar.</string>
+  <string name="register_name_invalid">S’regjistrohet dot emri: emër i pavlefshëm.</string>
+  <string name="register_name_already_taken">S’regjistrohet dot emri: emër tashmë i zënë.</string>
+  <string name="register_name_network_error">S’regjistrohet dot emri: gabim rrjeti ose shërbyesi.</string>
+  <string name="error_username_empty">Jepni një emër përdoruesi</string>
+  <string name="no_registered_name_for_account">S’u gjet emër i regjistruar për këtë llogari</string>
+  <string name="register_name">Regjistroni emër</string>
+  <string name="trying_to_register_name">Po provohet të regjistrohet emri</string>
+  <string name="registered_username">Emër përdoruesi i regjistruar</string>
+  <string name="username_already_taken">Emër përdoruesi tashmë i zënë</string>
+  <string name="invalid_username">Emër përdoruesi i pavlefshëm</string>
+  <string name="account_status_unknown">E panjohur</string>
+  <!--Create account-->
+  <string name="account_creation_home">Mirë se vini te Ring</string>
+  <string name="account_creation_profile">Krijoni profilin tuaj</string>
+</resources>

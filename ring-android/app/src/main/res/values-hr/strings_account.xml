@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Izbriši</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Ime poslužitelja</string>
@@ -76,4 +78,8 @@ Moćete urediti vaš račun kasnije</string>
   <string name="account_export_end_error_title">Greška</string>
   <string name="account_new_button">Napravite Ring račun</string>
   <!--Name registration-->
+  <string name="account_status_connecting">Spajanje</string>
+  <string name="account_status_unknown">Nepoznato</string>
+  <!--Create account-->
+  <string name="account_creation_home">Dobrodošli u Ring</string>
 </resources>
