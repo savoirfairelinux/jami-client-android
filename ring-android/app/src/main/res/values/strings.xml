@@ -162,6 +162,8 @@ along with this program; if not, write to the Free Software
 
     <!-- Contacts -->
     <string name="add_call_contact_number_to_contacts">Add %1$s ?</string>
+    <string name="prompt_new_password">New password</string>
+    <string name="prompt_new_password_repeat">Repeat new password</string>
     <string name="account_create_title">Create a Ring account</string>
     <string name="prompt_new_username">Enter new username</string>
     <string name="help_password_choose">Choose a strong password you will remember to protect your Ring account.</string>
