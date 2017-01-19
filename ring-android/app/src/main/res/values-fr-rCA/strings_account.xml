@@ -1,7 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Supprimer</string>
   <!--Strings related to account creation-->
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_message">Cette action ne peut être annulée</string>
   <!--AccountManagementFragment-->
   <!--Basic Details-->
   <!--Audio Details-->
@@ -15,4 +18,10 @@
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
+  <string name="account_export_end_error_title">Erreur</string>
+  <string name="account_new_button">Créer un compte Ring</string>
+  <!--Name registration-->
+  <string name="account_status_connecting">connexion en cours</string>
+  <string name="account_status_unknown">Inconnu</string>
+  <!--Create account-->
 </resources>

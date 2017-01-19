@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">Licenca</string>
   <string name="sponsor_section">Ring je slobodi software koji razvijaju i podržavaju</string>
   <string name="copyright_section">Autorska prava</string>
   <string name="contribute_section">Doprinesite</string>
@@ -101,7 +100,9 @@
   <string name="add_call_contact_number_to_contacts">Dodaj %1$s ?</string>
   <string name="prompt_new_password">Nova lozinka</string>
   <string name="account_create_title">Napravite Ring račun</string>
+  <string name="wizard_next">Slijedeće</string>
   <!--MenuHeaderView-->
   <string name="unknown">Nepoznato</string>
   <!--Share fragment-->
+  <string name="generic_error_migration">Greška</string>
 </resources>

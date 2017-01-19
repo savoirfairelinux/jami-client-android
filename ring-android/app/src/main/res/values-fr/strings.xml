@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">Licence</string>
   <string name="sponsor_section">Ring est un logiciel libre développé et soutenu par</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuer</string>
@@ -114,6 +113,7 @@
   <string name="help_password_choose">Choisissez un mot de passe sécurisé dont vous vous rappellerez pour protéger votre compte Ring.</string>
   <string name="help_password_enter">Entrez le mot de passe de votre compte Ring</string>
   <string name="help_pin_enter">Entrez le code PIN obtenu en configurant un autre compte Ring . Utilisez la fonction \"exportez un compte sur Ring\" pour obtenir un code PIN.</string>
+  <string name="wizard_next">Suivant</string>
   <string name="account_device_updated_message">Mise à jour de votre compte Ring réalisée avec succès. </string>
   <!--MenuHeaderView-->
   <string name="profile">Mon profil</string>
@@ -125,4 +125,5 @@
   <!--Share fragment-->
   <string name="share_message">Scannez ce QRCode avec le scanner intégré de l\'application Ring qui souhaite communiquer avec vous.</string>
   <string name="share_your_account_information">Partagez mes coordonnées</string>
+  <string name="generic_error_migration">Erreur</string>
 </resources>

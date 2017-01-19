@@ -5,6 +5,7 @@
   <string name="pref_category_system">系統</string>
   <string name="pref_category_privacy">隱私</string>
   <string name="pref_mobileData_title">行動數據</string>
+  <string name="pref_mobileData_summary">除了 Wi-Fi 之外，允許 Ring 在 3G/LTE 網路上使用</string>
   <string name="pref_systemContacts_title">使用系統聯絡人</string>
   <string name="pref_startOnBoot_title">開機時啟動 Ring</string>
   <string name="pref_startOnBoot_summary">開機時在背景啟動 Ring</string>

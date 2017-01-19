@@ -1,9 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">Licenza</string>
-  <string name="sponsor_section">Ring è un free software sviluppato e supportato da</string>
-  <string name="copyright_section">Diritti d\'autore</string>
-  <string name="contribute_section">Contributi</string>
+  <string name="sponsor_section">Ring è un software libero sviluppato e supportato da</string>
+  <string name="copyright_section">Copyright</string>
+  <string name="contribute_section">Contribuisci</string>
   <string name="version_section">Versione</string>
   <string name="no_email_app_installed">Applicazione email non trovata, installane una per inviarci un rapporto</string>
   <string name="email_chooser_title">Mandaci un\'email usando...</string>
@@ -22,6 +21,7 @@
   <string name="menu_item_home">Home</string>
   <string name="menu_item_accounts">Gestisci profili</string>
   <string name="menu_item_settings">Impostazioni</string>
+  <string name="menu_item_share">Condividi il mio contatto</string>
   <string name="menu_item_about">Info su Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Chiama un numero</string>
@@ -85,6 +85,8 @@
   <string name="permission_dialog_camera_title">Attivare videocamera</string>
   <string name="permission_dialog_camera_message">La videochiamata richiede l\'attivazione della videocamera. Concedi il permesso.</string>
   <string name="ringtone_error_title">Errore</string>
+  <string name="ringtone_error_format_not_supported">Questo formato non è supportato.</string>
+  <string name="ringtone_error_size_too_big">Il file è troppo grande. La dimensione massima è %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring richiede permesso di \"Lettura dei contatti\" per abilitare questa funzione. Concedi il permesso.</string>
   <!--Write call log permission-->
@@ -105,8 +107,23 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Aggiungi %1$s ?</string>
   <string name="prompt_new_password">Nuovo password</string>
+  <string name="prompt_new_password_repeat">Ripeti la nuova password</string>
   <string name="account_create_title">Creare un account Ring</string>
+  <string name="prompt_new_username">Inserisci il nuovo nome utente</string>
+  <string name="help_password_choose">Scegli una password robusta che tu possa ricordare per proteggere il tuo account Ring.</string>
+  <string name="help_password_enter">Inserisci la password del tuo account principale di Ring</string>
+  <string name="help_pin_enter">Inserisci il PIN da un altro account Ring già configurato. Usa l\'opzione \"esporta account su Ring\" per ottenere un PIN.</string>
+  <string name="wizard_next">Seguente</string>
+  <string name="account_device_updated_message">Hai aggiornato con successo il tuo account Ring.</string>
   <!--MenuHeaderView-->
+  <string name="profile">Il mio profilo</string>
+  <string name="profile_message_warning">Questo è condiviso con i tuoi contatti</string>
+  <string name="open_the_gallery">Apri la galleria</string>
+  <string name="take_a_photo">Scatta una foto</string>
+  <string name="unknowm_if_empty">Sconosciuto se vuoto</string>
   <string name="unknown">Sconosciuto</string>
   <!--Share fragment-->
+  <string name="share_message">Scansiona questo QRCode con il scanner integrato nell\'applicazione Ring che vuole comunicare con te.</string>
+  <string name="share_your_account_information">Condividi le mie informazioni di contatto</string>
+  <string name="generic_error_migration">Errore</string>
 </resources>

@@ -1,20 +1,34 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">حذف</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">نام مستعار</string>
   <string name="prompt_hostname">نام میزبان</string>
   <string name="prompt_username">نام کاربری</string>
   <string name="prompt_password">گذرواژه</string>
+  <string name="action_create">ایجاد حساب</string>
   <string name="action_create_short">ثبت‌نام</string>
   <string name="error_field_required">این زمینه مورد نیاز است</string>
   <string name="dialog_wait_create">در حال افزودن حساب</string>
   <string name="dialog_wait_create_details">لطفاً صبر کنید تا حساب جدیدتان افزوده شود…</string>
+  <string name="dialog_wait_update">در حال به‌روز رسانی حساب</string>
+  <string name="dialog_wait_update_details">لطفاً صبر کنید تا حساب جدیدتان به‌روز شود…</string>
+  <string name="dialog_warn_ip2ip_account_title">ایجاد حساب سیپ خالی؟</string>
+  <string name="dialog_warn_ip2ip_account_message">در حال ایجاد یک حساب سیپ بدون هیچ نام دامنهٔ معتبری هستید.
+تنها خواهید توانست تماس‌های ip مستقیم ساخته و بگیرید.
+می‌توانید بعدها حسابتان را ویرایش کنید</string>
+  <string name="help_ring">حساب رینگ اجازه می‌دهد از درون یک شبکهٔ کاملاً توزیع‌شده، به صورت امن با افراد در تماس باشید.</string>
+  <string name="help_sip_title">افزودن حساب سیپتان</string>
   <string name="help_sip">پیکربندی یک حساب سیپ موجود.</string>
   <string name="create_sip_account">افزودن</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">حذف حساب؟</string>
+  <string name="account_delete_dialog_message">این کار قابل بازگشت نیست.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">هیچ حسابی ثبت نشده</string>
   <string name="normal_accounts_titles">حساب‌ها</string>
+  <string name="normal_devices_titles">افزاره‌های شناخته شدهٔ پیوسته به این حساب رینگ</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">عمومی</string>
   <string name="account_basic_category">تنظیمات پایه</string>
@@ -26,6 +40,7 @@
   <string name="account_optionnal_category">تنظیمات انتخابی</string>
   <string name="account_useragent_label">عامل کاربر</string>
   <string name="account_autoanswer_label">پاسخ خودکار</string>
+  <string name="account_upnp_label">فعّال‌کردن UPnP</string>
   <string name="account_proxy_field">پیشکار</string>
   <!--Audio Details-->
   <string name="account_audio_label">صدا</string>
@@ -33,6 +48,7 @@
   <string name="account_ringtone_label">صداهای زنگ</string>
   <string name="account_ringtone_enabled_label">فعّال کردن صداهای زنگ</string>
   <string name="account_ringtone_path_label">مسیر صدای زنگ</string>
+  <string name="account_ringtone_custom_label">استفاده از صدای زنگ سفارشی</string>
   <!--Video Details-->
   <string name="account_video_label">ویدیو</string>
   <string name="account_video_enable">فعّال کردن ویدیو</string>
@@ -74,6 +90,65 @@
   <string name="account_rtp_min_port">کمینه</string>
   <string name="account_rtp_port_range">دامنهٔ درگاه RTP صدا</string>
   <!--restore/backup-->
+  <string name="account_restore_account">بازگردانی یک حساب</string>
+  <string name="account_restore_message">برای رمزگشایی پرونده، گذرواژه را وارد کنید.</string>
+  <string name="account_restore_decryption_password">گذرواژهٔ رمزگشایی</string>
+  <string name="account_new_device_password">برای قفل‌گشایی حساب، گذرواژهٔ اصلی را وارد کنید</string>
+  <string name="restore_dialog_title">در حال بازگردانی</string>
+  <string name="restore_backup_wait">لطفاً صبر کنید…</string>
+  <string name="error_password_char_count">کمینه ۶ نویسه</string>
+  <string name="error_passwords_not_equals">گذرواژه‌ها همتا نیستند</string>
+  <string name="restore_failed_dialog_title">بارگردانی شکست خورد</string>
+  <string name="restore_failed_dialog_msg">خطایی رخ داد</string>
+  <string name="export_account_wait_title">لطفاً صبر کنید</string>
+  <string name="export_account_wait_message">در حال انتشار اطّلاعات حساب نو</string>
+  <string name="account_export_end_decryption_message">نمی‌توان قفل حسابتان را با گذواژهٔ فراهم شده گشود.</string>
+  <string name="account_export_end_network_title">خطای شبکه</string>
+  <string name="account_export_end_network_message">نمی‌توان حساب را روی شبکه برون‌ریخت. اتّصالتان را بررسی کنید.</string>
   <string name="account_export_end_error_title">خطا</string>
+  <string name="account_export_end_error_message">نمی‌توان حساب را برون‌ریخت. خطایی ناشناخته رخ داد.</string>
+  <string name="account_enter_password">گذرواژه را وارد کنید</string>
+  <string name="account_contact_me">با من روی رینگ در تماس باشید!</string>
+  <string name="update_account">به‌روز رسانی حساب</string>
+  <string name="ring_account">حساب رینگ</string>
+  <string name="account_migration_title_dialog">مهاجرت حساب</string>
+  <string name="account_update_needed">نیاز به به‌روز رسانی است</string>
+  <string name="account_creation_file_too_big">پرونده خیلی بزرگ است</string>
+  <string name="account_cannot_read">نمی‌توان %1$s را خواند</string>
+  <string name="account_cannot_be_found_title">نمی‌تواند حساب را یافت</string>
+  <string name="account_cannot_be_found_message">حساب نتوانست روی شبکهٔ رینگ پیدا شود.\nمطمئن شوید از یک افزارهٔ موجود، روی رینگ برون‌ریزی شده است و اعتبارنامه‌های فراهم شده درست هستند.</string>
+  <string name="account_no_network_title">نمی‌توان به شبکه وصل شد</string>
+  <string name="account_no_network_message">نمی‌توان حساب را افزود، زیرا رینگ نتوانست به شبکهٔ توزیع شده وصل شود. اتّصال شبکه‌تان را بررسی کنید.</string>
+  <string name="account_device_added_title">افزاره به حساب افزوده شد</string>
+  <string name="account_device_added_message">حساب رینگتان را موفقّیت روی این افزاره برپا کردید.</string>
+  <string name="account_device_updated_title">حساب افزاره به‌روز شد</string>
+  <string name="account_link_button">پیوند این افزاره به یک حساب</string>
+  <string name="account_import_title">پیوند به یک حساب موجود</string>
+  <string name="account_link_prompt_pin">پین را وارد کنید</string>
+  <string name="account_wizard_title">خوش آمدید به</string>
+  <string name="account_new_button">ساخت یک حساب رینگ</string>
+  <string name="account_link_export_button">پیوند افزاره‌ای دیگر به این حساب</string>
+  <string name="account_link_export_info">برای استفاده از این حساب روی افزاره‌های دیگر، باید نخست آن را روی رینگ آشکار کنید. این کار یک رمز پین تولید خواهد کرد که باید برای برپایی حساب، روی افزارهٔ نو وارد کنید. پین تا ۱۰ دقیقه معتبر است. \n\nلطفاً برای شروع، گذرواژه‌تان را وارد کنید.</string>
+  <string name="account_start_export_button">تولید پین</string>
+  <string name="account_end_export_button">بستن</string>
+  <string name="account_end_export_infos">پین شما:\n\n%%\n\nبرای کامل کردن فرایند، باید رینگ را روی افزارهٔ نو گشوده و حساب جدیدی را با انتخاب «پیوند این افزاره به یک حساب» ایجاد کنید. پینتان برای ۱۰ دقیقه معتبر است.</string>
   <!--Name registration-->
+  <string name="register_name_wrong_password">نمی‌تواند نام را ثبت کرد: گذرواژهٔ حساب اشتباه</string>
+  <string name="register_name_invalid">نمی‌تواند نام را ثبت کرد: نام نامعتبر</string>
+  <string name="register_name_already_taken">نمی‌تواند نام را ثبت کرد: نام فبلاً برداشته شده</string>
+  <string name="register_name_network_error">نمی‌تواند نام را ثبت کرد: خطای شبکه یا کارساز</string>
+  <string name="error_username_empty">یک نام کاربری وارد کنید</string>
+  <string name="no_registered_name_for_account">هیچ نام ثبت‌شده‌ای برای این حساب پیدا نشد</string>
+  <string name="register_name">ثبت نام</string>
+  <string name="trying_to_register_name">در حال تلاش برای ثبت نام</string>
+  <string name="registered_username">نام کاربری ثبت شد</string>
+  <string name="register_username">ثبت نام کاربری عمومی (آزمایشی)</string>
+  <string name="username_already_taken">نام کاربری قبلاً برداشته شده</string>
+  <string name="invalid_username">نام کاربری نامعتبر</string>
+  <string name="looking_for_username_availability">جست‌وجو برای موجود بودن نام کاربری…</string>
+  <string name="account_status_connecting">در حال اتّصال</string>
+  <string name="account_status_unknown">ناشناخته</string>
+  <!--Create account-->
+  <string name="account_creation_home">به رینگ خوش آمدید</string>
+  <string name="account_creation_profile">نمایه خود را بسازید</string>
 </resources>

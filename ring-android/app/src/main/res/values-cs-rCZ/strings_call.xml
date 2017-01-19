@@ -23,13 +23,22 @@ along with this program; if not, write to the Free Software
 <resources>
     <!-- SipCalls -->
     <string name="call_human_state_incoming">Vyzvánění</string>
+    <string name="call_human_state_connecting">Spojování</string>
     <string name="call_human_state_ringing">Volání</string>
     <string name="call_human_state_current">Probíhá hovor</string>
     <string name="call_human_state_hungup">Hovor skončil</string>
     <string name="call_human_state_busy">Zaneprázdněn</string>
     <string name="call_human_state_failure">Hovor selhal</string>
-    <string name="call_human_state_hold">Hovor pozastaven</string>
+    <string name="call_human_state_hold">Pozastavit</string>
     <string name="call_human_state_unhold">Pokračovat v hovoru</string>
     <string name="call_human_state_over">Hovor skončil</string>
-    <string name="conference_human_state_hold">Hovor pozastaven</string>
-    </resources>
+    <string name="call_human_state_none">Nic</string>
+    <!-- Conferences -->
+    <string name="conference_human_state_active_attached">Aktivní připojen</string>
+    <string name="conference_human_state_active_detached">Aktivní odpojen</string>
+    <string name="conference_human_state_active_attached_rec">Aktivní připoji záznam</string>
+    <string name="conference_human_state_active_detached_rec">Aktivní odpojil záznam</string>
+    <string name="conference_human_state_hold">Pozastavit</string>
+    <string name="conference_human_state_hold_rec">Pozastavit nahrávání</string>
+    <string name="conference_human_state_default">Nic</string>
+</resources>

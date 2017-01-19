@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Poista</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">Lempinimi</string>
   <string name="prompt_hostname">Yhteysosoite</string>
@@ -78,4 +80,8 @@
   <string name="account_export_end_error_title">Virhe</string>
   <string name="account_new_button">Luo Ring tunnus</string>
   <!--Name registration-->
+  <string name="account_status_connecting">Yhdistää</string>
+  <string name="account_status_unknown">Tuntematon</string>
+  <!--Create account-->
+  <string name="account_creation_home">Tervetuloa Ringiin</string>
 </resources>

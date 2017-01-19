@@ -1,30 +1,128 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="sponsor_section">Ring是一个自由软件，开发者与维护者是</string>
+  <string name="copyright_section">版权所有</string>
+  <string name="contribute_section">贡献</string>
+  <string name="version_section">版本</string>
+  <string name="no_email_app_installed">未找到电子邮件客户端，请安装后再重试发送报告。</string>
+  <string name="email_chooser_title">使用…发送邮件</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">响铃</string>
+  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">无网络连接</string>
+  <string name="error_mobile_network_available_but_disabled">请前往“设置”界面开启移动数据使用权限。</string>
   <!--AB menus-->
   <string name="ab_account_creation">新账户</string>
+  <string name="ab_action_chat">文字消息</string>
   <!--Left Drawer-->
   <!--Accessibility-->
+  <string name="drawer_open">打开导航</string>
+  <string name="drawer_close">收起导航</string>
   <!--Sections-->
+  <string name="menu_item_home">主页</string>
+  <string name="menu_item_accounts">管理帐户</string>
+  <string name="menu_item_settings">设置</string>
+  <string name="menu_item_share">共享我的通讯录</string>
+  <string name="menu_item_about">关于Ring</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">拨号</string>
   <!--History Fragment-->
+  <string name="hist_replay_button">重放</string>
+  <string name="hist_replay_button_stop">停止</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="other">%d个会话</item>
+  </plurals>
+  <string name="home_transfering">将%1$s传输至%1$s</string>
+  <string name="home_transfer_complet">传输完成</string>
   <!--ContactList Fragment-->
+  <string name="no_contact_found">未找到联系人</string>
+  <string name="starred_contacts_title">收藏夹</string>
+  <string name="searchbar_hint">输入姓名或电话号码…</string>
+  <string name="choose_number">选择一个数字</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
+  <string name="transfer_to_another_call">切换至另一个当前通话</string>
+  <string name="transfer_no_other_call">无通话</string>
+  <string name="transfer_type_number">输入要切换至的号码：</string>
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">未接来电：%1$s</string>
+  <string name="notif_missed_outgoing_call">未接去电：%1$s</string>
+  <string name="notif_incoming_call_title">来电：%1$s</string>
+  <string name="notif_incoming_call">来电</string>
+  <string name="notif_outgoing_call_title">去电：%1$s</string>
+  <string name="notif_outgoing_call">去电</string>
+  <string name="notif_current_call_title">当前通话：%1$s</string>
+  <string name="notif_current_call">当前通话</string>
   <!--Call Fragment-->
+  <string name="you_txt_prefix">你：</string>
+  <string name="action_call_attended_transfer">转接</string>
+  <string name="action_call_conference">会议</string>
+  <string name="action_call_hangup">挂断</string>
+  <string name="ongoing_call">正在通话</string>
+  <string name="hist_in_call">来电：%1$s</string>
+  <string name="hist_out_call">去电：%1$s</string>
+  <string name="start_error_title">无法启动Ring！</string>
+  <string name="start_error_mic_required">Ring需要开启麦克风使用权限。</string>
+  <string name="action_call_accept">接听</string>
+  <string name="action_call_decline">拒接</string>
+  <string name="ab_action_speakerphone">开启扬声器</string>
+  <string name="ab_action_contact_add">加入通讯录</string>
+  <string name="ab_action_contact_add_question">添加至通讯录吗？</string>
+  <string name="ab_action_audio_call">语音通话</string>
+  <string name="ab_action_video_call">视频通话</string>
+  <string name="share_via">通过…共享</string>
+  <string name="write_a_message">写消息</string>
+  <string name="scan_qr">扫描二维码</string>
+  <string name="ab_action_flipcamera">翻转摄像头</string>
   <!--Text messages-->
+  <string name="send_message">发消息</string>
+  <string name="message_sending">正在发送消息…</string>
+  <string name="time_just_now">刚才</string>
+  <string name="permission_read_denied">该应用程序无法读取您的手机存储，无法正常工作。请设置相应权限。</string>
   <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">摄像头使用权限</string>
+  <string name="permission_dialog_camera_message">视频会话需要使用摄像头，请设置相应权限。</string>
+  <string name="ringtone_error_title">错误</string>
+  <string name="ringtone_error_format_not_supported">不支持的文件格式。</string>
+  <string name="ringtone_error_size_too_big">文件过大：上限为%1$ikB</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">要开启此功能，Ring需要能够读取您的通讯录，请设置相应权限。</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">要开启此功能，Ring需要能够写入您的通话记录，请设置相应权限。</string>
   <!--QRCode Scan-->
+  <string name="scan_qr_account_message">扫描您想添加帐户的二维码。</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">清除历史记录吗？</string>
+  <string name="clear_history_dialog_message">该操作不可撤销。</string>
+  <string name="clear_history_completed">已清除历史记录。</string>
   <!--Conversation-->
+  <string name="conversation_action_delete_this">删除该会话</string>
+  <string name="conversation_action_delete_this_title">删除该会话吗？</string>
+  <string name="conversation_action_delete_this_message">该操作不可撤销。</string>
+  <string name="conversation_action_copy_peer_number">复制号码</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s已复制至剪贴板</string>
+  <string name="conversation_action_select_peer_number">选择一个数字</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">添加%1$s吗？</string>
+  <string name="prompt_new_password">新密码</string>
+  <string name="prompt_new_password_repeat">确认新密码</string>
+  <string name="account_create_title">创建Ring帐户</string>
+  <string name="prompt_new_username">输入新用户名</string>
+  <string name="help_password_choose">为了保护您的Ring帐户，请使用一个强密码并牢记</string>
+  <string name="help_password_enter">输入您的Ring主帐户密码</string>
+  <string name="help_pin_enter">输入另一个Ring帐户的PIN（使用“导出Ring帐户”功能获取）。</string>
+  <string name="wizard_next">下一步</string>
+  <string name="account_device_updated_message">您的Ring帐户已更新。</string>
   <!--MenuHeaderView-->
+  <string name="profile">我的帐户资料</string>
+  <string name="profile_message_warning">已与您的通讯录共享</string>
+  <string name="open_the_gallery">打开照片库</string>
+  <string name="take_a_photo">拍照</string>
+  <string name="unknowm_if_empty">未知若为空</string>
+  <string name="unknown">未知</string>
   <!--Share fragment-->
+  <string name="share_message">使用Ring扫描此二维码以建立连接。</string>
+  <string name="share_your_account_information">共享我的通讯信息</string>
+  <string name="generic_error_migration">错误</string>
 </resources>

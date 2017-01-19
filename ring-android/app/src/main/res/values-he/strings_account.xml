@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">מחק</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">כינוי</string>
   <string name="prompt_hostname">שם מארח</string>
@@ -61,4 +63,5 @@
   <!--restore/backup-->
   <string name="account_export_end_error_title">שגיאה</string>
   <!--Name registration-->
+  <!--Create account-->
 </resources>

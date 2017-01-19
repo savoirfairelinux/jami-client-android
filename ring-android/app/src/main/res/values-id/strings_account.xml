@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <!--Strings related to account creation-->
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <!--Basic Details-->
+  <!--Audio Details-->
+  <!--Video Details-->
+  <!--Advanced Details-->
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <!--SIP-->
+  <!--TLS Details-->
+  <!--restore/backup-->
+  <string name="account_export_end_error_title">Eror</string>
+  <!--Name registration-->
+  <string name="account_status_unknown">Tidak diketahui</string>
+  <!--Create account-->
+</resources>

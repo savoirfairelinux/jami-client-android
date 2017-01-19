@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Изтриване</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">Псевдоним</string>
   <string name="prompt_hostname">Име на сървъра</string>
@@ -77,11 +79,60 @@
   <!--restore/backup-->
   <string name="account_restore_message">Въведете парола за дешифриране на файла.</string>
   <string name="account_restore_decryption_password">Парола за дешифриране</string>
+  <string name="account_new_device_password">Въведете основната парола, за да отключите акаунта</string>
+  <string name="restore_dialog_title">Възстановяване</string>
   <string name="restore_backup_wait">Моля, изчакайте…</string>
   <string name="error_password_char_count">Най-малко 6 знака</string>
   <string name="error_passwords_not_equals">Паролите не съвпадат</string>
+  <string name="restore_failed_dialog_title">Неуспешно възстановяване</string>
   <string name="restore_failed_dialog_msg">Възникна грешка</string>
+  <string name="export_account_wait_title">Моля, изчакайте…</string>
+  <string name="export_account_wait_message">Публикуване на новата информация за акаунта</string>
+  <string name="account_export_end_decryption_message">Отключването на акаунта Ви с предоставената парола не беше успешно.</string>
+  <string name="account_export_end_network_title">Мрежова грешка</string>
+  <string name="account_export_end_network_message">Акаунтът не може да бъде изнесен през мрежата. Проверете връзката си.</string>
   <string name="account_export_end_error_title">Грешка</string>
+  <string name="account_export_end_error_message">Акаунтът не може да бъде изнесен. Възникна непозната грешка.</string>
+  <string name="account_enter_password">Въведете парола</string>
+  <string name="account_contact_me">Свържете се с мен в Ring !</string>
+  <string name="update_account">Обновяване на акаунта</string>
+  <string name="ring_account">Акаунт</string>
+  <string name="account_migration_title_dialog">Пренасяне на акаунта</string>
+  <string name="account_update_needed">Нужно е обновяване</string>
+  <string name="account_creation_file_too_big">Файлът е твърде голям</string>
+  <string name="account_cannot_read">Неуспешен прочит на: %1$s</string>
+  <string name="account_cannot_be_found_title">Акаунтът не може да бъде открит</string>
+  <string name="account_cannot_be_found_message">Акаунтът не може да бъде открит в мрежата на Ring.\nУверете се, че е бил изнесен от Ring чрез съществуващо устройство, както и че данните за идентификация са правилни</string>
+  <string name="account_no_network_title">Неуспешна връзка с мрежата</string>
+  <string name="account_no_network_message">Акаунтът не може да бъде добавен, тъй като Ring не може да се свърже с разпределената мрежа. Проверете връзката на устройството си.</string>
+  <string name="account_device_added_title">Акаунтът е добавен на устройството</string>
+  <string name="account_device_added_message">Настройката на акаунта Ви на това устройство беше успешна.</string>
+  <string name="account_device_updated_title">Акаунтът на устройството е обновен</string>
+  <string name="account_link_button">Свързване на това устройство с акаунт</string>
+  <string name="account_import_title">Свързване с съществуващ акаунт</string>
+  <string name="account_link_prompt_pin">Въведете ПИН</string>
+  <string name="account_wizard_title">Добре дошли в</string>
   <string name="account_new_button">Създаване на акаунт за Ring</string>
+  <string name="account_link_export_button">Свързване на друго устройство с този акаунт</string>
+  <string name="account_link_export_info">За да използвате този акаунт на други устройства, трябва първо да го направите видим в Ring. Това ще създаде ПИН код , който трябва да въведете на новото устройство, за да настроите акаунта. Кодът има давност 10 минути\n\nМоля, въведете паролата си, за да започнем:</string>
+  <string name="account_start_export_button">Създаване на ПИН код</string>
+  <string name="account_end_export_button">затваряне</string>
+  <string name="account_end_export_infos">Вашият ПИН код е:\n\n%%\n\nЗа да завършите процеса, трябва да пуснете Ring на новото устройство. Създайте нов профил чрез „Свързване на това устройство с акаунт“. Кодът има давност 10 минути.</string>
   <!--Name registration-->
+  <string name="register_name_wrong_password">Името не може да бъде регистрирано: грешна парола.</string>
+  <string name="register_name_invalid">Името не може да бъде регистрирано: несъществуващо име.</string>
+  <string name="register_name_already_taken">Името не може да бъде регистрирано: името е заето.</string>
+  <string name="register_name_network_error">Името не може да бъде регистрирано: грешка в мрежата или сървъра.</string>
+  <string name="error_username_empty">Въведете потребителско име</string>
+  <string name="no_registered_name_for_account">Няма открито регистрирано име за този акаунт</string>
+  <string name="register_name">Регистриране на име</string>
+  <string name="trying_to_register_name">Протича опит за регистриране на името</string>
+  <string name="registered_username">Регистрирано потребителско име</string>
+  <string name="username_already_taken">Потребителското име е вече заето</string>
+  <string name="invalid_username">Грешно потребителско име</string>
+  <string name="looking_for_username_availability">Проверка дали потребителското име е свободно…</string>
+  <string name="account_status_connecting">Свързване</string>
+  <string name="account_status_unknown">Неизвестно</string>
+  <!--Create account-->
+  <string name="account_creation_home">Добре дошли в Ring</string>
 </resources>

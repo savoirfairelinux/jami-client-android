@@ -22,15 +22,23 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
     <!-- SipCalls -->
-    <string name="call_human_state_incoming">Звоним</string>
+    <string name="call_human_state_incoming">Звонок</string>
     <string name="call_human_state_connecting">Подключение</string>
     <string name="call_human_state_ringing">Вызов</string>
-    <string name="call_human_state_current">Говорить</string>
+    <string name="call_human_state_current">Разговор</string>
     <string name="call_human_state_hungup">Окончен</string>
-    <string name="call_human_state_busy">Занят</string>
+    <string name="call_human_state_busy">Занято</string>
     <string name="call_human_state_failure">Сбой</string>
     <string name="call_human_state_hold">Удержать</string>
-    <string name="call_human_state_unhold">Удержать</string>
+    <string name="call_human_state_unhold">Отменить удержание</string>
     <string name="call_human_state_over">Окончен</string>
+    <string name="call_human_state_none">Нет</string>
+    <!-- Conferences -->
+    <string name="conference_human_state_active_attached">Активный прикреплен</string>
+    <string name="conference_human_state_active_detached">Активный откреплен</string>
+    <string name="conference_human_state_active_attached_rec">Активный прикреплен запись</string>
+    <string name="conference_human_state_active_detached_rec">Активный откреплен запись</string>
     <string name="conference_human_state_hold">Удержать</string>
-    </resources>
+    <string name="conference_human_state_hold_rec">Удержать запись</string>
+    <string name="conference_human_state_default">Нет</string>
+</resources>
