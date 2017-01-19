@@ -169,4 +169,30 @@ public class HistoryCall implements Serializable {
         return callID;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        HistoryCall that = (HistoryCall) o;
+
+        if (call_start != that.call_start || call_end != that.call_end || contactID != that.contactID) {
+            return false;
+        }
+        return callID != null ? callID.equals(that.callID) : that.callID == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (call_start ^ (call_start >>> 32));
+        result = 31 * result + (int) (call_end ^ (call_end >>> 32));
+        result = 31 * result + (int) (contactID ^ (contactID >>> 32));
+        result = 31 * result + (callID != null ? callID.hashCode() : 0);
+        return result;
+    }
 }
