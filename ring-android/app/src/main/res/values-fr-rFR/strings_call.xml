@@ -22,5 +22,7 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
     <string name="call_human_state_hungup">Terminé</string>
+    <string name="call_human_state_hold">Patienter</string>
     <string name="call_human_state_over">Terminé</string>
+    <string name="conference_human_state_hold">Patienter</string>
     </resources>

@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">Licensz</string>
   <string name="sponsor_section">A Ring egy szabad szoftver, amelynek fejlesztője és támogatója:</string>
   <string name="copyright_section">Jogvédelem</string>
   <string name="contribute_section">Hozzájárulás</string>
@@ -83,16 +82,44 @@
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameraengedély</string>
   <string name="permission_dialog_camera_message">A videóhívások igénylik a kameraengedély jelenlétét. Kérem, fontolja meg ennek az engedélynek a bekapcsolását!</string>
+  <string name="ringtone_error_title">Hiba</string>
+  <string name="ringtone_error_format_not_supported">Ez a formátum nem támogatott</string>
+  <string name="ringtone_error_size_too_big">Ez a fájl túl nagy. A maximum méret %1$ikB</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">A Ringnek engedélyre van szüksége a névjegyek olvasásához. Kérem, engedélyezze!</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">A Ringnek engedélyre van szüksége a névjegyek olvasásához. Kérem, engedélyezze!</string>
   <!--QRCode Scan-->
   <!--Settings-->
+  <string name="clear_history_dialog_title">Napló törlése ?</string>
+  <string name="clear_history_dialog_message">Ez a művelet nem vonható vissza.</string>
+  <string name="clear_history_completed">A napló törölve.</string>
   <!--Conversation-->
+  <string name="conversation_action_delete_this">A beszélgetés törlése.</string>
+  <string name="conversation_action_delete_this_title">A beszélgetés törlése ?</string>
+  <string name="conversation_action_delete_this_message">Ez a művelet nem vonható vissza.</string>
   <string name="conversation_action_copy_peer_number">Szám másolása</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s a vágólapra másolva</string>
+  <string name="conversation_action_select_peer_number">Válasszon egy számot</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">%1$s hozzáadása?</string>
+  <string name="prompt_new_password">Új jelszó</string>
+  <string name="prompt_new_password_repeat">Új jelszó még egyszer</string>
+  <string name="account_create_title">Egy Ringfiók létrehozása</string>
+  <string name="prompt_new_username">Új felhasználónév megadása</string>
+  <string name="help_password_choose">Válasszon egy erős jelszavat, amelyre emlékezni fog a Ringfiókja védelme érdekében</string>
+  <string name="help_password_enter">Adja meg a Ringfiók jelszavát</string>
+  <string name="help_pin_enter">Adja meg egy másik beállított Ringfiók PIN-jét! Használja a „fiók exportálása a Ringen” funkciót a PIN eléréséhez!</string>
+  <string name="wizard_next">Következő</string>
+  <string name="account_device_updated_message">Sikeresen frissítette a Ringfiókját.</string>
   <!--MenuHeaderView-->
+  <string name="profile">Profilom</string>
+  <string name="profile_message_warning">Ez meg van osztva a partnereivel</string>
+  <string name="open_the_gallery">Galéria megnyitása</string>
+  <string name="take_a_photo">Fotó készítése</string>
+  <string name="unknowm_if_empty">Ismeretlen, ha üres</string>
   <string name="unknown">Ismeretlen</string>
   <!--Share fragment-->
+  <string name="share_your_account_information">Elérési adataim megosztása</string>
+  <string name="generic_error_migration">Hiba</string>
 </resources>

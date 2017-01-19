@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">Licencja</string>
   <string name="sponsor_section">Ring jest wolnym oprogramowaniem stworzonym przez</string>
   <string name="copyright_section">Prawa autorskie</string>
   <string name="contribute_section">Współpracuj</string>
@@ -107,7 +106,9 @@
   <string name="add_call_contact_number_to_contacts">Dodać %1$s ?</string>
   <string name="prompt_new_password">Nowe hasło</string>
   <string name="account_create_title">Stwórz konto Ring</string>
+  <string name="wizard_next">Następne</string>
   <!--MenuHeaderView-->
   <string name="unknown">Nieznane</string>
   <!--Share fragment-->
+  <string name="generic_error_migration">Błąd</string>
 </resources>

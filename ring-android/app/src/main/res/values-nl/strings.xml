@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">Licentie</string>
   <string name="sponsor_section">Ring is vrije software ontwikkeld en ondersteund door</string>
   <string name="copyright_section">Auteursrecht</string>
   <string name="contribute_section">Bijdragen</string>
@@ -81,7 +80,7 @@
   <string name="send_message">Bericht versturen</string>
   <string name="message_sending">Bericht wordt verstuurd...</string>
   <string name="time_just_now">Zojuist</string>
-  <string name="permission_read_denied">De applicatie heeft geen machtiging om je opslag te lezen en kan daardoor niet correct functioneren. Gelieve te overwegen deze machtiging alsnog toe te kennen</string>
+  <string name="permission_read_denied">De applicatie heeft geen machtiging om je opslag te lezen en kan daardoor niet correct functioneren. Gelieve te overwegen deze machtiging toch toe te kennen</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Cameramachtiging</string>
   <string name="permission_dialog_camera_message">Videogesprekken vereisen machtiging voor gebruik van de camera. Gelieve te overwegen deze machtiging alsnog toe te kennen.</string>
@@ -114,6 +113,7 @@
   <string name="help_password_choose">Kies een sterk wachtwoord om je Ring-account te beschermen.</string>
   <string name="help_password_enter">Voer hoofdwachtwoord van je Ring-account in</string>
   <string name="help_pin_enter">Voer de PIN-code van een andere geconfigureerde Ring-account in. Gebruik de \"account exporteren op Ring\"-functie om een PIN-code te verkrijgen.</string>
+  <string name="wizard_next">Volgende</string>
   <string name="account_device_updated_message">Je Ring-account is met succes bijgewerkt.</string>
   <!--MenuHeaderView-->
   <string name="profile">Mijn profiel</string>
@@ -125,4 +125,5 @@
   <!--Share fragment-->
   <string name="share_message">Scan deze QR-code met de ingebouwde scanner van de Ring-toepassing die met je wil communiceren.</string>
   <string name="share_your_account_information">Deel mijn contactinformatie</string>
+  <string name="generic_error_migration">Fout</string>
 </resources>

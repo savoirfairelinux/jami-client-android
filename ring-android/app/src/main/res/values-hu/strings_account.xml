@@ -1,11 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Törlés</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">Álnév</string>
   <string name="prompt_hostname">Kiszolgálónév</string>
   <string name="prompt_username">Felhasználónév</string>
   <string name="prompt_password">Jelszó</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_message">Ez a művelet nem vonható vissza.</string>
   <!--AccountManagementFragment-->
   <string name="normal_accounts_titles">Fiókok</string>
   <!--Basic Details-->
@@ -17,6 +20,7 @@
   <!--Audio Details-->
   <string name="account_audio_label">Hang</string>
   <string name="account_preferences_media_tab">Média</string>
+  <string name="account_ringtone_label">Csengőhang</string>
   <!--Video Details-->
   <string name="account_video_label">Videó</string>
   <string name="account_video_enable">Videó engedélyezése</string>
@@ -31,5 +35,9 @@
   <!--TLS Details-->
   <string name="account_rtp_port_range">Hang RTP port korlát</string>
   <!--restore/backup-->
+  <string name="account_export_end_error_title">Hiba</string>
+  <string name="account_new_button">Egy Ringfiók létrehozása</string>
   <!--Name registration-->
+  <string name="account_status_unknown">Ismeretlen</string>
+  <!--Create account-->
 </resources>

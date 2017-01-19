@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Удалить</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">Псевдоним</string>
   <string name="prompt_hostname">Узел</string>
@@ -87,6 +89,11 @@
   <string name="error_passwords_not_equals">Пароли не совпадают</string>
   <string name="restore_failed_dialog_msg">Произошла ошибка</string>
   <string name="account_export_end_error_title">Ошибка</string>
+  <string name="account_wizard_title">Добро пожаловать в</string>
   <string name="account_new_button">Создать Ring аккаунт</string>
   <!--Name registration-->
+  <string name="account_status_connecting">Подключение</string>
+  <string name="account_status_unknown">Неизвестно</string>
+  <!--Create account-->
+  <string name="account_creation_home">Добро пожаловать в Ring</string>
 </resources>

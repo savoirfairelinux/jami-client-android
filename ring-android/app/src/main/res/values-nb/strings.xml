@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">Lisens</string>
   <string name="sponsor_section">Ring er fri programvare utviklet og støttet av</string>
   <string name="copyright_section">Opphavsrett</string>
   <string name="contribute_section">Bidra</string>
@@ -101,7 +100,9 @@
   <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
   <string name="prompt_new_password">Nytt passord</string>
   <string name="account_create_title">Opprett en Ring-konto</string>
+  <string name="wizard_next">Neste</string>
   <!--MenuHeaderView-->
   <string name="unknown">Ukjent</string>
   <!--Share fragment-->
+  <string name="generic_error_migration">Feil</string>
 </resources>

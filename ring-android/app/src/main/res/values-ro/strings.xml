@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="sponsor_section">Ring este un program tip freeware, dezvoltat si sustinut de catre</string>
+  <string name="copyright_section">Copyright</string>
+  <string name="contribute_section">Contribuie</string>
+  <string name="version_section">Versiune</string>
+  <string name="no_email_app_installed">Nu a fost gasita o aplicatie de email. Va rugam sa o instalati pentru a ne putea trimite un raport.</string>
+  <string name="email_chooser_title">Trimite email folosind...</string>
+  <!--RingActivity-->
+  <string name="title_activity_sflphone_home">Suna</string>
+  <string name="error_no_network">Nu exista conectivitate la retea</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Cont nou</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <string name="menu_item_home">Acasă</string>
+  <string name="menu_item_accounts">Gestionează conturile</string>
+  <string name="menu_item_settings">Setari</string>
+  <string name="menu_item_about">Despre Ring</string>
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <string name="hist_replay_button_stop">Stop</string>
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <string name="home_transfer_complet">Transfer Complet</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Nici un  contact găsit</string>
+  <string name="starred_contacts_title">Favoriți</string>
+  <string name="searchbar_hint">Introdu numele sau numărul de telefon</string>
+  <string name="choose_number">Alege un număr</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">Apel pierdut de la %1$s</string>
+  <string name="notif_incoming_call_title">Apel pierdut de la %1$s</string>
+  <string name="notif_incoming_call">Apel de intrare</string>
+  <string name="notif_current_call_title">Apelul curent cu %1$s</string>
+  <string name="notif_current_call">Apelul curent</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Tu:</string>
+  <string name="action_call_conference">Conferință</string>
+  <string name="action_call_hangup">Închide</string>
+  <string name="start_error_title">Ring nu a putut starta!</string>
+  <string name="action_call_decline">Refuză</string>
+  <string name="ab_action_contact_add">Adaugă la contacte</string>
+  <string name="ab_action_contact_add_question">Adaugă la contacte ?</string>
+  <string name="ab_action_audio_call">Apel audio</string>
+  <string name="ab_action_video_call">Apel video</string>
+  <string name="share_via">Distribuie prin</string>
+  <string name="write_a_message">Scrie un mesaj</string>
+  <string name="scan_qr">Scanați Codul QR</string>
+  <string name="ab_action_flipcamera">Întoarce camera</string>
+  <!--Text messages-->
+  <string name="send_message">Trimite messajul</string>
+  <string name="message_sending">Se transmite mesajul...</string>
+  <!--MediaPreferenceFragment-->
+  <string name="ringtone_error_title">Eroare</string>
+  <string name="ringtone_error_format_not_supported">Formatul acesta nu este suportat</string>
+  <string name="ringtone_error_size_too_big">Acest fișier este prea mare. Marimea maxima este %1$ikB.</string>
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Ștergeți istoria ?</string>
+  <string name="clear_history_completed">Istoria a fost ștearsă</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Ștergeți aceasta istorie</string>
+  <!--Contacts-->
+  <string name="prompt_new_password">Parolă nouă</string>
+  <string name="account_create_title">Creați un cont Ring</string>
+  <string name="prompt_new_username">Introdu un nume de utilizator</string>
+  <!--MenuHeaderView-->
+  <string name="profile">Profilul meu</string>
+  <string name="open_the_gallery">Deschide galeria</string>
+  <string name="unknown">Necunoscut</string>
+  <!--Share fragment-->
+  <string name="generic_error_migration">Eroare</string>
+</resources>

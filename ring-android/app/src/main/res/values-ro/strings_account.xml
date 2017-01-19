@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Șterge</string>
+  <!--Strings related to account creation-->
+  <string name="prompt_username">Nume de utilizator</string>
+  <string name="prompt_password">Parola</string>
+  <string name="action_create_short">Registrare</string>
+  <string name="dialog_wait_create_details">Vă rugăm așteptați în timp ce contul dumneavoastră este adăugat...</string>
+  <string name="dialog_wait_update">Actualizând contul</string>
+  <string name="dialog_wait_update_details">Vă rugăm așteptați în timp ce contul dumneavoastră este actualizat...</string>
+  <string name="create_sip_account">Adaugă</string>
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <string name="normal_accounts_titles">Conturi</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">General</string>
+  <string name="account_alias_label">Nnumele contului</string>
+  <string name="account_username_label">Nume de utilizator</string>
+  <string name="account_password_label">Parola</string>
+  <string name="account_optionnal_category">Setari opționale</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">Audio</string>
+  <string name="account_ringtone_label">Tonuri de apel</string>
+  <!--Video Details-->
+  <string name="account_video_label">Video</string>
+  <string name="account_video_enable">Activează video</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Avansat</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Seuritate</string>
+  <!--SIP-->
+  <!--TLS Details-->
+  <string name="account_rtp_max_port">Maximal</string>
+  <string name="account_rtp_min_port">Minimal</string>
+  <!--restore/backup-->
+  <string name="account_restore_account">Restabiliți contul</string>
+  <string name="restore_backup_wait">Așteptați vă rog...</string>
+  <string name="account_export_end_error_title">Eroare</string>
+  <string name="account_new_button">Creați un cont Ring</string>
+  <!--Name registration-->
+  <string name="account_status_unknown">Necunoscut</string>
+  <!--Create account-->
+</resources>

@@ -1,4 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="pref_category_network">Rete</string>
   <string name="pref_category_contacts">Contatti</string>
+  <string name="pref_category_system">Sistema</string>
+  <string name="pref_category_privacy">Privacy</string>
+  <string name="pref_mobileData_title">Dati mobili</string>
+  <string name="pref_mobileData_summary">Consenti Ring su reti 3G/LTE oltre al Wi-Fi</string>
+  <string name="pref_systemContacts_title">Usa la rubrica</string>
+  <string name="pref_systemContacts_summary">Usa i contatti della rubrica per mostrare i dettagli del chiamante</string>
+  <string name="pref_systemDialer_title">Usa Ring per le chiamate</string>
+  <string name="pref_systemDialer_summary">Usa Ring per le chiamate quando possibile.</string>
+  <string name="pref_startOnBoot_title">Esegui Ring all\'avvio</string>
+  <string name="pref_startOnBoot_summary">Esegui Ring in background quando si avvia il sistema.</string>
+  <string name="pref_clearHistory_title">Elimina cronologia</string>
+  <string name="pref_clearHistory_summary">Elimina la cronologia delle conversazioni. Questa operazione non può essere annullata.</string>
 </resources>

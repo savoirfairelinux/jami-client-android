@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">إحذف</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">الاسم المستعار</string>
   <string name="prompt_hostname">اسم المضيف</string>
@@ -70,4 +72,7 @@
   <!--restore/backup-->
   <string name="account_export_end_error_title">خطأ</string>
   <!--Name registration-->
+  <string name="account_status_unknown">مجهول</string>
+  <!--Create account-->
+  <string name="account_creation_home">مرحبا بك في Ring</string>
 </resources>

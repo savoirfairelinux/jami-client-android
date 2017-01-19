@@ -99,7 +99,9 @@
   <string name="add_call_contact_number_to_contacts">Ĉu aldoni %1$s ?</string>
   <string name="prompt_new_password">Nova pasvorto</string>
   <string name="account_create_title">Krei Ring konton</string>
+  <string name="wizard_next">Sekva</string>
   <!--MenuHeaderView-->
   <string name="unknown">Nekonata</string>
   <!--Share fragment-->
+  <string name="generic_error_migration">Eraro</string>
 </resources>

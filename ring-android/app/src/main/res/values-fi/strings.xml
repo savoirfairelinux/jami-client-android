@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">Lisenssi</string>
   <string name="sponsor_section">Ring on vapaa ohjelma jonka on kehittänyt ja jota tukee</string>
   <string name="copyright_section">Tekijänoikeus</string>
   <string name="contribute_section">Tuo panoksesi</string>
@@ -106,7 +105,9 @@
   <string name="add_call_contact_number_to_contacts">Lisätäänkö %1$s?</string>
   <string name="prompt_new_password">Uusi salasana</string>
   <string name="account_create_title">Luo Ring tunnus</string>
+  <string name="wizard_next">Seuraava</string>
   <!--MenuHeaderView-->
   <string name="unknown">Tuntematon</string>
   <!--Share fragment-->
+  <string name="generic_error_migration">Virhe</string>
 </resources>
