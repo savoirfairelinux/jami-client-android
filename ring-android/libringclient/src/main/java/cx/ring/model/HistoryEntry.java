@@ -80,7 +80,7 @@ public class HistoryEntry {
      * @param linkedTo    The associated CallContact
      */
     public void addHistoryCall(HistoryCall historyCall, CallContact linkedTo) {
-        mCalls.put(historyCall.call_start, historyCall);
+        mCalls.put(historyCall.call_end, historyCall);
         if (historyCall.isIncoming()) {
             ++mIncomingCount;
         } else {

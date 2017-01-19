@@ -909,27 +909,11 @@ public class LocalService extends Service implements Observer<DaemonEvent> {
                 for (HistoryCall call : history) {
                     CallContact contact = getCreateContact(call.getContactID(), call.getContactKey(), call.getNumber());
 
-                    Map.Entry<String, Conversation> merge = null;
-                    for (Map.Entry<String, Conversation> ce : conversations.entrySet()) {
-                        Conversation conversation = ce.getValue();
-                        if ((contact.getId() > 0 && contact.getId() == conversation.getContact().getId()) || conversation.getContact().hasNumber(call.getNumber())) {
-                            merge = ce;
-                            break;
-                        }
-                    }
-                    if (merge != null) {
-                        Conversation conversation = merge.getValue();
-                        if (conversation.getContact().getId() <= 0 && contact.getId() > 0) {
-                            conversation.setContact(contact);
-                            conversations.remove(merge.getKey());
-                            conversations.put(contact.getIds().get(0), conversation);
-                        }
-                        conversation.addHistoryCall(call);
-                        continue;
-                    }
                     String key = contact.getIds().get(0);
                     if (conversations.containsKey(key)) {
-                        conversations.get(key).addHistoryCall(call);
+                        if (!conversations.get(key).getHistoryCalls().contains(call)) {
+                            conversations.get(key).addHistoryCall(call);
+                        }
                     } else {
                         Conversation conversation = new Conversation(contact);
                         conversation.addHistoryCall(call);
