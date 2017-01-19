@@ -1,29 +1,129 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="sponsor_section">Ring és software lliure desenvolupat i mantingut per</string>
+  <string name="copyright_section">Copyright</string>
+  <string name="contribute_section">Contribueix</string>
+  <string name="version_section">Versió</string>
+  <string name="no_email_app_installed">No s\'ha trobat cap aplicació de correu, instal·leu una per enviar-nos un informe </string>
+  <string name="email_chooser_title">Enviar correu fent servir...</string>
   <!--RingActivity-->
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">No hi ha connexió a la xarxa</string>
+  <string name="error_mobile_network_available_but_disabled">Per favor doneu accés a la xarxa mòbil en la pantalla d\'ajustaments.</string>
   <!--AB menus-->
+  <string name="ab_account_creation">Nou compte</string>
+  <string name="ab_action_chat">Missatge de text</string>
   <!--Left Drawer-->
   <!--Accessibility-->
+  <string name="drawer_open">Obrir el calaix de navegació</string>
+  <string name="drawer_close">Tancar el calaix de navegació</string>
   <!--Sections-->
+  <string name="menu_item_home">Inici</string>
+  <string name="menu_item_accounts">Gestionar els comptes</string>
   <string name="menu_item_settings">Opcions</string>
+  <string name="menu_item_share">Comparteix el meu contacte</string>
+  <string name="menu_item_about">Sobre Ring</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Marca un número</string>
   <!--History Fragment-->
+  <string name="hist_replay_button">Repetir</string>
+  <string name="hist_replay_button_stop">Para</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Conversa</item>
+    <item quantity="other">%d Converses</item>
+  </plurals>
+  <string name="home_transfering">Transferint %1$s a %1$s</string>
+  <string name="home_transfer_complet">Transferència completada</string>
   <!--ContactList Fragment-->
+  <string name="no_contact_found">Contacte no trobat</string>
+  <string name="starred_contacts_title">Favorits</string>
+  <string name="searchbar_hint">Fiqueu un nom o número de telèfon</string>
+  <string name="choose_number">Escolliu un número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Transferir a altra trucada actual:</string>
+  <string name="transfer_no_other_call">No hi ha altres trucades pendents</string>
+  <string name="transfer_type_number">Escriure un número per transferir a:</string>
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Trucada perduda de %1$s</string>
+  <string name="notif_missed_outgoing_call">Trucada perduda a %1$s</string>
+  <string name="notif_incoming_call_title">Trucada entrant de %1$s</string>
   <string name="notif_incoming_call">Trucada entrant</string>
+  <string name="notif_outgoing_call_title">Trucada sortint de %1$s</string>
+  <string name="notif_outgoing_call">Trucada sortint</string>
+  <string name="notif_current_call_title">Trucada actual amb %1$s</string>
+  <string name="notif_current_call">Trucada actual</string>
   <!--Call Fragment-->
+  <string name="you_txt_prefix">Tu:</string>
+  <string name="action_call_attended_transfer">Transferència Atesa</string>
+  <string name="action_call_conference">Conferència</string>
+  <string name="action_call_hangup">Penjar</string>
+  <string name="ongoing_call">Trucada en marxa</string>
+  <string name="hist_in_call">Trucada entrant de %1$s</string>
+  <string name="hist_out_call">Trucada en marxa de %1$s</string>
+  <string name="start_error_title">No es pot iniciar Ring !</string>
+  <string name="start_error_mic_required">Ring necessita el permís del micròfon per funcionar.</string>
+  <string name="action_call_accept">Agafar trucada</string>
+  <string name="action_call_decline">Rebutjar</string>
+  <string name="ab_action_speakerphone">Habilitar l\'altaveu</string>
+  <string name="ab_action_contact_add">Afegir als contactes</string>
+  <string name="ab_action_contact_add_question">Afegir als contactes ?</string>
+  <string name="ab_action_audio_call">Trucada de veu</string>
+  <string name="ab_action_video_call">Videotrucada </string>
+  <string name="share_via">Comparteix via</string>
+  <string name="write_a_message">Escriu un missatge</string>
+  <string name="scan_qr">Escanejar un codi QR</string>
+  <string name="ab_action_flipcamera">Canviar de càmera</string>
   <!--Text messages-->
+  <string name="send_message">Enviar el missatge</string>
+  <string name="message_sending">Enviant missatge</string>
+  <string name="time_just_now">Ara mateix</string>
+  <string name="permission_read_denied">L\'aplicació no té permís per llegir al seu emmagatzematge. Per tant, no pot funcionar. Si us plau, considereu la concessió d\'aquest permís</string>
   <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Permís de la càmera</string>
+  <string name="permission_dialog_camera_message">Les videotrucades necessiten el permís de la càmera per feuncionar. Si us plau, considereu habilitar-lo.</string>
+  <string name="ringtone_error_title">Error</string>
+  <string name="ringtone_error_format_not_supported">Aquest format no és compatible.</string>
+  <string name="ringtone_error_size_too_big">L\'arxiu és massa gran. La mida màxim és de %1$ikB.</string>
   <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring necessita el permís de llegir contactes per a habilitar aquesta funcionalitat. Si us plau, concediu-lo.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring necessita el permís d\'escriure al registre de trucades per a habilitar aquesta funcionalitat. Si us plau, concediu-lo.</string>
   <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Escanejar el codi QR del compte que vulgueu afegir.</string>
   <!--Settings-->
+  <string name="clear_history_dialog_title">Netejar l\'historial ?</string>
+  <string name="clear_history_dialog_message">Aquesta acció no pot ser desfeta.</string>
+  <string name="clear_history_completed">L\'historial s\'ha netejat.</string>
   <!--Conversation-->
+  <string name="conversation_action_delete_this">Esborra aquesta conversa</string>
+  <string name="conversation_action_delete_this_title">Esborrar aquesta conversa ?</string>
+  <string name="conversation_action_delete_this_message">Aquesta acció no pot ser desfeta.</string>
+  <string name="conversation_action_copy_peer_number">Copia el número</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s copiat al porta-retalls</string>
+  <string name="conversation_action_select_peer_number">Seleccia un número</string>
   <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Afegir %1$s ?</string>
+  <string name="prompt_new_password">Nova contrasenya</string>
+  <string name="prompt_new_password_repeat">Repetir la nova contrasenya</string>
+  <string name="account_create_title">Crear un compte de Ring</string>
+  <string name="prompt_new_username">Escriu un nou nom d\'usuari</string>
+  <string name="help_password_choose">Escollir una contrasenya forta que haureu de recordar per protegir el vostre compte de Ring.</string>
+  <string name="help_password_enter">Escriure la contrasenya del vostre compte principal de Ring</string>
+  <string name="help_pin_enter">Ficar el PIN d\'altre compte configurat de Ring. Feu servir la funció \"exportar compte a Ring\" per obtenir el PIN.</string>
+  <string name="wizard_next">Següent</string>
+  <string name="account_device_updated_message">S\'ha actualitzat correctament el vostre compte de Ring.</string>
   <!--MenuHeaderView-->
+  <string name="profile">El meu perfil</string>
+  <string name="profile_message_warning">Aquesta és compartida amb el vostres contactes</string>
+  <string name="open_the_gallery">Obrir la galeria</string>
+  <string name="take_a_photo">Fer una foto</string>
+  <string name="unknowm_if_empty">Es desconeix si està buit</string>
+  <string name="unknown">Desconegut</string>
   <!--Share fragment-->
+  <string name="share_message">Escaneja aquest codi QR amb l\'escàner de l\'aplicació Ring que vulga comunicar-se amb tu.</string>
+  <string name="share_your_account_information">Compartir la meua informació de contacte</string>
+  <string name="generic_error_migration">Error</string>
 </resources>

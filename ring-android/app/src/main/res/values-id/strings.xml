@@ -26,4 +26,5 @@
   <!--MenuHeaderView-->
   <string name="unknown">Tidak diketahui</string>
   <!--Share fragment-->
+  <string name="generic_error_migration">Eror</string>
 </resources>

@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Cancella</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nome Host</string>
@@ -90,6 +92,10 @@ Si potra modificare questo account più tardi.</string>
   <string name="error_passwords_not_equals">Le password no corrispondono</string>
   <string name="restore_failed_dialog_msg">C\'è stato un errore</string>
   <string name="account_export_end_error_title">Errore</string>
+  <string name="account_wizard_title">Benvenuto a</string>
   <string name="account_new_button">Creare un account Ring</string>
   <!--Name registration-->
+  <string name="account_status_connecting">Connessione in corso </string>
+  <string name="account_status_unknown">Sconosciuto</string>
+  <!--Create account-->
 </resources>

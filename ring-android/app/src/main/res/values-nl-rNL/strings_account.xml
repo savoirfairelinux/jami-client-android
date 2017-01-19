@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Verwijderen</string>
   <!--Strings related to account creation-->
   <string name="prompt_username">Gebruikersnaam</string>
   <string name="prompt_password">Wachtwoord</string>
@@ -33,4 +35,5 @@
   <!--TLS Details-->
   <!--restore/backup-->
   <!--Name registration-->
+  <!--Create account-->
 </resources>

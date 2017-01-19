@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Usuń</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">Nazwa konta</string>
   <string name="prompt_hostname">Nazwa hosta</string>
@@ -92,4 +94,8 @@ Możesz edytować swoje konto później</string>
   <string name="account_export_end_error_title">Błąd</string>
   <string name="account_new_button">Stwórz konto Ring</string>
   <!--Name registration-->
+  <string name="account_status_connecting">Łączenie</string>
+  <string name="account_status_unknown">Nieznane</string>
+  <!--Create account-->
+  <string name="account_creation_home">Witamy w Ring</string>
 </resources>

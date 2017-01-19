@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="version_section">Verzia</string>
+  <string name="no_email_app_installed">Nainštaluj emailovú aplikáciu, aby si nám poslal správu.</string>
+  <string name="email_chooser_title">Email </string>
+  <!--RingActivity-->
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">Žiadne sieťové pripojenie</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Nový účet</string>
+  <string name="ab_action_chat">Textová správa</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <string name="menu_item_home">Domov</string>
+  <string name="menu_item_accounts">Nastavenie účtov</string>
+  <string name="menu_item_settings">Nastavenie</string>
+  <string name="menu_item_share">Zdieľaj moje kontakty</string>
+  <string name="menu_item_about">O programe Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Vytoč číslo</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button_stop">Stop</string>
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <string name="starred_contacts_title">Obľubené</string>
+  <string name="choose_number">Vyberte číslo</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <string name="action_call_hangup">Zlož</string>
+  <string name="action_call_accept">Zdvihni hovor</string>
+  <string name="ab_action_flipcamera">Otoč kameru</string>
+  <!--Text messages-->
+  <string name="send_message">Vyšli správu</string>
+  <!--MediaPreferenceFragment-->
+  <string name="ringtone_error_title">Chyba</string>
+  <string name="ringtone_error_format_not_supported">Tento formát nie je podporovaný.</string>
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <!--Conversation-->
+  <!--Contacts-->
+  <string name="wizard_next">Ďalej</string>
+  <!--MenuHeaderView-->
+  <string name="profile">Môj profil</string>
+  <string name="open_the_gallery">Otvor galériu</string>
+  <string name="take_a_photo">Sprav fotografiu</string>
+  <string name="unknown">Neznámy</string>
+  <!--Share fragment-->
+  <string name="share_your_account_information">Zdielaj </string>
+  <string name="generic_error_migration">Chyba</string>
+</resources>

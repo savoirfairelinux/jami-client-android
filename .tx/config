@@ -1,6 +1,6 @@
 [main]
 host = https://www.transifex.com
-lang_map = pl_PL:pl-rPL, pt_BR:pt-rBR, zh_CN:zh-rCN, fa_IR:fa-rIR, ru_RU:ru-rRU, da_DK:da-rDK, cs_CZ:cs-rCZ, it_IT:it-rIT, fr_CA:fr-rCA, fr_FR:fr-rFR, nl_NL:nl-rNL, zh_TW:zh-rTW, de_DE:de-rDE
+lang_map = pl_PL:pl-rPL, pt_BR:pt-rBR, zh_CN:zh-rCN, fa_IR:fa-rIR, ru_RU:ru-rRU, da_DK:da-rDK, cs_CZ:cs-rCZ, it_IT:it-rIT, fr_CA:fr-rCA, fr_FR:fr-rFR, nl_NL:nl-rNL, zh_TW:zh-rTW, de_DE:de-rDE, sq_AL:sq-rAL, en_GB:en-rGB, sk_SK:sk-rSK
 
 [ring.android]
 file_filter = ring-android/app/src/main/res/values-<lang>/strings.xml

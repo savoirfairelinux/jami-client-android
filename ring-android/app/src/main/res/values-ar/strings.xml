@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="section_license">الترخيص</string>
   <string name="sponsor_section">Ring برمجية حرّة طوّرت ودعمت بواسطة</string>
   <string name="copyright_section">الحقوق محفوظة</string>
   <string name="contribute_section">مساهمة</string>
@@ -81,7 +80,9 @@
   <!--Conversation-->
   <string name="conversation_action_copy_peer_number">نسخ الرقم</string>
   <!--Contacts-->
+  <string name="wizard_next">التالي</string>
   <!--MenuHeaderView-->
   <string name="unknown">مجهول</string>
   <!--Share fragment-->
+  <string name="generic_error_migration">خطأ</string>
 </resources>

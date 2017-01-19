@@ -1,9 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="sponsor_section">Ring je svobodný software, jejž vyvíjí a podporuje</string>
+  <string name="copyright_section">Copyright</string>
+  <string name="contribute_section">Přispět</string>
   <string name="version_section">Verze</string>
+  <string name="no_email_app_installed">Nenalezena mailová aplikace, nějakou si nainstalujte, abyste nám poslali hlášení</string>
+  <string name="email_chooser_title">Poslat zprávu pomocí…</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Chybí připojení</string>
+  <string name="error_mobile_network_available_but_disabled">Povolte prosím v nastavení přístup k mobilním datům</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nový účet</string>
   <string name="ab_action_chat">Textové zprávy</string>
@@ -15,18 +21,19 @@
   <string name="menu_item_home">Domov</string>
   <string name="menu_item_accounts">Spravovat účty</string>
   <string name="menu_item_settings">Nastavení</string>
+  <string name="menu_item_share">Sdílet můj kontakt</string>
   <string name="menu_item_about">O Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Vytočit číslo</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Znovu přehrát</string>
-  <string name="hist_replay_button_stop">Stop</string>
+  <string name="hist_replay_button_stop">Zastavit</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Konverzace</item>
     <item quantity="few">%d Konverzace</item>
-    <item quantity="other">%d Konverzací</item>
+    <item quantity="other">%d konverzací</item>
   </plurals>
   <string name="home_transfering">Přesměrování %1$s na %1$s</string>
   <string name="home_transfer_complet">Přesměrování hotovo</string>
@@ -39,36 +46,36 @@
   <!--TransferDFragment-->
   <string name="transfer_to_another_call">Přesměrovat na čekající hovor:</string>
   <string name="transfer_no_other_call">Žádné čekající hovory</string>
-  <string name="transfer_type_number">Vložte číslo na které chcete hovor přesměrovat:</string>
+  <string name="transfer_type_number">Vložte číslo, na něž chcete hovor přesměrovat:</string>
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Zmeškaný hovor od %1$s</string>
   <string name="notif_missed_outgoing_call">Zmeškaný hovor pro %1$s</string>
   <string name="notif_incoming_call_title">Příchozí hovor od %1$s</string>
   <string name="notif_incoming_call">Příchozí hovor</string>
-  <string name="notif_outgoing_call_title">Odchozí hovor to %1$s</string>
+  <string name="notif_outgoing_call_title">Odchozí hovor k %1$s</string>
   <string name="notif_outgoing_call">Odchozí hovor</string>
   <string name="notif_current_call_title">Současný hovor s %1$s</string>
   <string name="notif_current_call">Současný hovor</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vy:</string>
-  <string name="action_call_attended_transfer">Přesměrování na Čekající Hovor</string>
+  <string name="action_call_attended_transfer">Přesměrování na čekající hovor</string>
   <string name="action_call_conference">Konference</string>
   <string name="action_call_hangup">Zavěsit</string>
   <string name="ongoing_call">Probíhající hovor</string>
   <string name="hist_in_call">Příchozí hovor %1$s</string>
   <string name="hist_out_call">Odchozí hovor %1$s</string>
-  <string name="start_error_title">Nelze spustit Ring !</string>
-  <string name="start_error_mic_required">Ring ke své funkci vyžaduje povolení k mikrofonu.</string>
+  <string name="start_error_title">Nelze spustit Ring!</string>
+  <string name="start_error_mic_required">Aby Ring správně pracoval, vyžaduje přístup k mikrofonu.</string>
   <string name="action_call_accept">Přijmout</string>
   <string name="action_call_decline">Odmítnout</string>
   <string name="ab_action_speakerphone">Zapnout reproduktor</string>
   <string name="ab_action_contact_add">Přidat do kontaktů</string>
-  <string name="ab_action_contact_add_question">Přidat do kontaktů ?</string>
+  <string name="ab_action_contact_add_question">Přidat do kontaktů?</string>
   <string name="ab_action_audio_call">Audio hovor</string>
   <string name="ab_action_video_call">Video hovor</string>
   <string name="share_via">Sdílet přes</string>
   <string name="write_a_message">Napsat zprávu</string>
-  <string name="scan_qr">Skenovat QR Kód</string>
+  <string name="scan_qr">Skenovat QR kód</string>
   <string name="ab_action_flipcamera">Otočit kameru</string>
   <!--Text messages-->
   <string name="send_message">Odeslat zprávu</string>
@@ -79,28 +86,45 @@
   <string name="permission_dialog_camera_title">Povolení ke kameře</string>
   <string name="permission_dialog_camera_message">Video konverzace vyžadují povolení ke kameře. Prosím zvažte jeho povolení.</string>
   <string name="ringtone_error_title">Chyba</string>
+  <string name="ringtone_error_format_not_supported">Tento formát je nepodporovaný.</string>
+  <string name="ringtone_error_size_too_big">Soubor je příliš velký. Maximální velikost je %1$ikB.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring potřebuje povolení číst kontakty pro umožnění této vlastnosti. Prosím povolte jej.</string>
+  <string name="permission_dialog_read_contacts_message">Pro tuto funkci Ring vyžaduje povolení „Číst kontakty“. Povolte jej prosím.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring potřebuje povolení zapisovat do záznamu hovorů pro umožnění této vlastnosti. Prosím povolte jej.</string>
+  <string name="permission_dialog_write_call_log_message">Pro tuto funkci Ring vyžaduje povolení „Zapisovat záznam hovorů“. Povolte jej prosím.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">Oskenujte QR Kód účtu, který chcete přidat.</string>
+  <string name="scan_qr_account_message">Oskenujte QR kód účtu, který chcete přidat.</string>
   <!--Settings-->
-  <string name="clear_history_dialog_title">Vymazat historii ?</string>
+  <string name="clear_history_dialog_title">Vymazat historii?</string>
   <string name="clear_history_dialog_message">Tuto činnost nelze vrátit zpět.</string>
   <string name="clear_history_completed">Historie byla vymazána.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Odstranit tuto konverzaci</string>
-  <string name="conversation_action_delete_this_title">Odstranit tuto konverzaci ?</string>
+  <string name="conversation_action_delete_this_title">Odstranit tuto konverzaci?</string>
   <string name="conversation_action_delete_this_message">Tuto činnost nelze vrátit zpět.</string>
   <string name="conversation_action_copy_peer_number">Kopírovat číslo</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s zkopírováno do schránky</string>
   <string name="conversation_action_select_peer_number">Vyberte číslo</string>
   <!--Contacts-->
-  <string name="add_call_contact_number_to_contacts">Přidat %1$s ?</string>
+  <string name="add_call_contact_number_to_contacts">Přidat %1$s?</string>
   <string name="prompt_new_password">Nové heslo</string>
+  <string name="prompt_new_password_repeat">Zopakujte nové heslo</string>
   <string name="account_create_title">Vytvořit účet Ring</string>
+  <string name="prompt_new_username">Zadejte nové uživatelské jméno</string>
+  <string name="help_password_choose">K ochraně účtu Ring si zvolte silné heslo, které si dovedete zapamatovat.</string>
+  <string name="help_password_enter">Zadejte hlavní heslo ke svému účtu Ring</string>
+  <string name="help_pin_enter">Zadejte PIN z jiného nastaveného účtu Ring. Abyste PIN získali, použijte volbu „exportovat účet na Ring“.</string>
+  <string name="wizard_next">Další</string>
+  <string name="account_device_updated_message">Úspěšně jste si aktualizovali účet Ring.</string>
   <!--MenuHeaderView-->
-  <string name="unknown">Neznámý</string>
+  <string name="profile">Můj profil</string>
+  <string name="profile_message_warning">Toto je sdíleno s vašimi kontakty</string>
+  <string name="open_the_gallery">Otevřít galerii</string>
+  <string name="take_a_photo">Pořídit fotku</string>
+  <string name="unknowm_if_empty">Neznámé, pokud prázdné</string>
+  <string name="unknown">Neznámé</string>
   <!--Share fragment-->
+  <string name="share_message">Naskenujte QR kód zabudovaným skenerem aplikace Ring, která s vámi chce komunikovat.</string>
+  <string name="share_your_account_information">Sdílet mé kontaktní informace</string>
+  <string name="generic_error_migration">Chyba</string>
 </resources>
