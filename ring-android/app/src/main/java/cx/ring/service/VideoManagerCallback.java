@@ -103,15 +103,15 @@ public class VideoManagerCallback implements Observer<DaemonEvent> {
         }
     }
 
-    class DeviceParams {
-        Point size;
+    static public class DeviceParams {
+        Camera.Size size;
         long rate;
         Camera.CameraInfo infos;
 
         public StringMap toMap(int orientation) {
             StringMap map = new StringMap();
-            boolean rotated = (size.x > size.y) == (orientation == Configuration.ORIENTATION_PORTRAIT);
-            map.set("size", Integer.toString(rotated ? size.y : size.x) + "x" + Integer.toString(rotated ? size.x : size.y));
+            boolean rotated = (size.width > size.height) == (orientation == Configuration.ORIENTATION_PORTRAIT);
+            map.set("size", Integer.toString(rotated ? size.height : size.width) + "x" + Integer.toString(rotated ? size.width : size.height));
             map.set("rate", Long.toString(rate));
             return map;
         }
@@ -157,7 +157,7 @@ public class VideoManagerCallback implements Observer<DaemonEvent> {
     private void setParameters(String camId, int format, int width, int height, int rate) {
         int id = Integer.valueOf(camId);
         DeviceParams p = mNativeParams.get(id);
-        RingApplication.VideoParams newParams = new RingApplication.VideoParams(id, format, p.size.x, p.size.y, rate);
+        RingApplication.VideoParams newParams = new RingApplication.VideoParams(id, format, p.size.width, p.size.height, rate);
         newParams.rotWidth = width;
         newParams.rotHeight = height;
         mRingApplication.setVideoRotation(newParams, p.infos);
@@ -200,10 +200,10 @@ public class VideoManagerCallback implements Observer<DaemonEvent> {
 
         DeviceParams p = new DeviceParams();
         p.size = getSizeToUse(param);
-        sizes.add(p.size.x);
-        sizes.add(p.size.y);
-        sizes.add(p.size.y);
-        sizes.add(p.size.x);
+        sizes.add(p.size.width);
+        sizes.add(p.size.height);
+        sizes.add(p.size.height);
+        sizes.add(p.size.width);
 
         getRates(param, rates);
         p.rate = rates.get(0);
@@ -224,16 +224,18 @@ public class VideoManagerCallback implements Observer<DaemonEvent> {
         }
     }
 
-    private Point getSizeToUse(Camera.Parameters param) {
-        int sw = 1280, sh = 720;
+    private Camera.Size getSizeToUse(Camera.Parameters param) {
+        final int MIN_W = 320;
+        Camera.Size sz = null;
+        /** {@link Camera.Parameters#getSupportedPreviewSizes} :
+         * "This method will always return a list with at least one element." */
         for (Camera.Size s : param.getSupportedPreviewSizes()) {
-            if (s.width < sw) {
-                sw = s.width;
-                sh = s.height;
+            if (sz == null || (s.width < sz.width && s.width >= MIN_W)) {
+                sz = s;
             }
         }
-        Log.d(TAG, "Supported size: " + sw + " x " + sh);
-        return new Point(sw, sh);
+        Log.d(TAG, "Supported size: " + sz.width + " x " + sz.height);
+        return sz;
     }
 
     private void getRates(Camera.Parameters param, UintVect rates) {

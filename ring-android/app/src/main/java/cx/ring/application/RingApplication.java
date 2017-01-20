@@ -428,7 +428,7 @@ public class RingApplication extends Application {
         }
     }
 
-    public void setCameraDisplayOrientation(int camId, android.hardware.Camera camera) {
+    private void setCameraDisplayOrientation(int camId, android.hardware.Camera camera) {
         android.hardware.Camera.CameraInfo info =
                 new android.hardware.Camera.CameraInfo();
         android.hardware.Camera.getCameraInfo(camId, info);
@@ -461,7 +461,7 @@ public class RingApplication extends Application {
             Log.w(TAG, "startCapture: no video parameters ");
             return;
         }
-        Log.d(TAG, "startCapture " + videoParams.id);
+        Log.d(TAG, "startCapture " + videoParams.id + " " + videoParams.width + "x" + videoParams.height + " rot" + videoParams.rotation);
 
         final Camera preview;
         try {
@@ -483,6 +483,8 @@ public class RingApplication extends Application {
         Camera.Parameters parameters = preview.getParameters();
         parameters.setPreviewFormat(videoParams.format);
         parameters.setPreviewSize(videoParams.width, videoParams.height);
+        parameters.setRotation(0);
+
         for (int[] fps : parameters.getSupportedPreviewFpsRange()) {
             if (videoParams.rate >= fps[Camera.Parameters.PREVIEW_FPS_MIN_INDEX] &&
                     videoParams.rate <= fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]) {

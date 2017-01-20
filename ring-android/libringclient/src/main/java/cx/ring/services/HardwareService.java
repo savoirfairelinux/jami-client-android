@@ -39,7 +39,7 @@ import cx.ring.utils.Observable;
 
 public class HardwareService extends Observable {
 
-    private static final String TAG = DaemonService.class.getName();
+    private static final String TAG = HardwareService.class.getName();
 
     @Inject
     @Named("DaemonExecutor")
