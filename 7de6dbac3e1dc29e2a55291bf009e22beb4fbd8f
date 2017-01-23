@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_1a7c2172",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/VideoManagerCallback.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-01-23T16:29:31Z",
+      "side": 1,
+      "message": "You should use more explicit variable names.",
+      "range": {
+        "startLine": 227,
+        "startChar": 4,
+        "endLine": 239,
+        "endChar": 5
+      },
+      "revId": "7de6dbac3e1dc29e2a55291bf009e22beb4fbd8f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
