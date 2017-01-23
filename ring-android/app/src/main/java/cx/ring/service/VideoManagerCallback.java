@@ -103,7 +103,7 @@ public class VideoManagerCallback implements Observer<DaemonEvent> {
         }
     }
 
-    class DeviceParams {
+    static public class DeviceParams {
         Point size;
         long rate;
         Camera.CameraInfo infos;
@@ -225,15 +225,21 @@ public class VideoManagerCallback implements Observer<DaemonEvent> {
     }
 
     private Point getSizeToUse(Camera.Parameters param) {
-        int sw = 1280, sh = 720;
+        final int MIN_WIDTH = 320;
+        final Point size = new Point(0, 0);
+        /** {@link Camera.Parameters#getSupportedPreviewSizes} :
+         * "This method will always return a list with at least one element."
+         * Attempt to find the size with width closest (but above) MIN_WIDTH. */
         for (Camera.Size s : param.getSupportedPreviewSizes()) {
-            if (s.width < sw) {
-                sw = s.width;
-                sh = s.height;
+            if (s.width < s.height)
+                continue;
+            if (size.x < MIN_WIDTH ? s.width > size.x : (s.width >= MIN_WIDTH && s.width < size.x)) {
+                size.x = s.width;
+                size.y = s.height;
             }
         }
-        Log.d(TAG, "Supported size: " + sw + " x " + sh);
-        return new Point(sw, sh);
+        Log.d(TAG, "Size to use: " + size.x + " x " + size.y);
+        return size;
     }
 
     private void getRates(Camera.Parameters param, UintVect rates) {
