@@ -22,6 +22,30 @@
       "revId": "606c41410067e1784e9d73d03b0ff98c8eca305a",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_5a04e97d",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/VideoManagerCallback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-01-23T21:16:07Z",
+      "side": 1,
+      "message": "Indeed. Updated the algorithm. Also skip (currently unsupported) mirrored sizes.",
+      "parentUuid": "1acb0d3e_5a8f0924",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 9
+      },
+      "revId": "606c41410067e1784e9d73d03b0ff98c8eca305a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
