@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_5a8f0924",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/VideoManagerCallback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2017-01-23T20:15:53Z",
+      "side": 1,
+      "message": "It seems that you will always pick the first resolution (less thant 320 of width) even if the \"getSupportedPreviewSizes()\" returns multiple size width \u003e MIN_WIDTH",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 9
+      },
+      "revId": "606c41410067e1784e9d73d03b0ff98c8eca305a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
