@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 import butterknife.BindView;
@@ -91,6 +92,11 @@ public class SmartListAdapter extends BaseAdapter {
         return Normalizer.normalize(query.toLowerCase(), Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "");
     }
 
+    public void emptyDataset () {
+        mConversations.clear();
+        notifyDataSetChanged();
+    }
+
     public void updateDataset(final Collection<Conversation> list, String query) {
         Log.d(TAG, "updateDataset " + list.size() + " with query: " + query);
 
@@ -98,18 +104,19 @@ public class SmartListAdapter extends BaseAdapter {
             return;
         }
 
-        mConversations.clear();
+        List<Conversation> newConversations = new ArrayList<>();
+
         for (Conversation c : list) {
             if (!c.getContact().isUnknown()
                     || !c.getAccountsUsed().isEmpty()
                     || c.getCurrentCall() != null) {
                 if (TextUtils.isEmpty(query) || c.getCurrentCall() != null) {
-                    mConversations.add(c);
+                    newConversations.add(c);
                 } else if (c.getContact() != null) {
                     CallContact contact = c.getContact();
                     if (!TextUtils.isEmpty(contact.getDisplayName()) &&
                             stringFormatting(contact.getDisplayName()).contains(stringFormatting(query))) {
-                        mConversations.add(c);
+                        newConversations.add(c);
                     } else if (contact.getPhones() != null && !contact.getPhones().isEmpty()) {
                         ArrayList<Phone> phones = contact.getPhones();
                         for (Phone phone : phones) {
@@ -117,7 +124,7 @@ public class SmartListAdapter extends BaseAdapter {
                                 String rawUriString = phone.getNumber().getRawUriString();
                                 if (!TextUtils.isEmpty(rawUriString) &&
                                         stringFormatting(rawUriString.toLowerCase()).contains(stringFormatting(query))) {
-                                    mConversations.add(c);
+                                    newConversations.add(c);
                                 }
                             }
                         }
@@ -126,7 +133,47 @@ public class SmartListAdapter extends BaseAdapter {
             }
         }
 
-        notifyDataSetChanged();
+        // only refresh display if there is new data to display
+        if (compareConversationLists(mConversations, newConversations)) {
+            mConversations.clear();
+            mConversations.addAll(newConversations);
+            notifyDataSetChanged();
+        }
+
+    }
+
+    /**
+     *
+     * @return true if list are different
+     */
+    private boolean compareConversationLists (List<Conversation> leftList, List<Conversation> rightList) {
+        if (leftList == null || rightList == null) {
+            return true;
+        }
+
+        if (leftList.size() != rightList.size()) {
+            return true;
+        }
+
+        for (Conversation rightConversation: rightList) {
+            int rightId = rightConversation.getUuid();
+            CallContact rightContact = rightConversation.getContact();
+            boolean found = false;
+            for (Conversation leftConversation: leftList) {
+                int leftId = leftConversation.getUuid();
+                CallContact leftContact = leftConversation.getContact();
+                if (leftId == rightId && leftContact!=null && leftContact.equals(rightContact)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
