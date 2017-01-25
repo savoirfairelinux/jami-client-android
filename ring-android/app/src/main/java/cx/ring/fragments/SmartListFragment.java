@@ -158,6 +158,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                     break;
                 }
             }
+
             refresh();
         }
     };
@@ -239,7 +240,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         searchForRingIdInBlockchain();
     }
 
-    private void searchForRingIdInBlockchain() {
+    private void  searchForRingIdInBlockchain() {
         LocalService service = mCallbacks.getService();
         if (service == null || !service.isConnected() || !service.areConversationsLoaded()) {
             return;
@@ -301,6 +302,11 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         mAccountService.addObserver(mRinguifyObserver);
         Log.d(TAG, "onResume");
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
+        if (mSmartListAdapter != null) {
+            // force refresh each time this screen is shown
+            // useful if a contact changes his avatar or his display name
+            mSmartListAdapter.emptyDataset();
+        }
         refresh();
     }
 
