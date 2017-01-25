@@ -27,7 +27,7 @@ along with this program; if not, write to the Free Software
     <string name="gnu_license_website" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="ring_contribute_website" translatable="false">https://ring.cx/contribute</string>
 
-    <string name="copyright" translatable="false">2004&#8211;2016 Savoir-faire Linux Inc.</string>
+    <string name="copyright" translatable="false">2004&#8211;2017 Savoir-faire Linux Inc.</string>
     <string name="feedback_section">Feedback</string>
     <string name="report">&lt;u>Send us an email&lt;/u></string>
     <string name="section_license">License</string>
