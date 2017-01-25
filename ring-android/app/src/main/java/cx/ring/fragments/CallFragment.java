@@ -1077,7 +1077,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
 
     @OnClick({R.id.call_hangup_btn, R.id.call_refuse_btn})
-    public void hangUpClicked() {
+    public void hangUpClicked(View view) {
         try {
             final SipCall call = getFirstParticipant();
             if (call == null) {
@@ -1085,7 +1085,11 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             }
             final String callId = call.getCallId();
             startConversationActivity(call.getContact());
-            mCallbacks.getRemoteService().hangUp(callId);
+            if (view.getId() == R.id.call_hangup_btn) {
+                mCallbacks.getRemoteService().hangUp(callId);
+            } else {
+                mCallbacks.getRemoteService().refuse(callId);
+            }
             mCallbacks.terminateCall();
         } catch (RemoteException e) {
             e.printStackTrace();
