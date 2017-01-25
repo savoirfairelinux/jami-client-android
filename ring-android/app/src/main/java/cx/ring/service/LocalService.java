@@ -1087,7 +1087,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                         } else {
                             ActionHelper.showCallNotification(LocalService.this, found);
                         }
-                        if (newState == SipCall.State.FAILURE || newState == SipCall.State.BUSY) {
+                        if (newState == SipCall.State.FAILURE || newState == SipCall.State.BUSY || newState == SipCall.State.HUNGUP) {
                             try {
                                 mService.hangUp(callId);
                             } catch (RemoteException e) {
