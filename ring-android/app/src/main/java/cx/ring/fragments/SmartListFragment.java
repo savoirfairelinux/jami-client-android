@@ -240,7 +240,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         searchForRingIdInBlockchain();
     }
 
-    private void  searchForRingIdInBlockchain() {
+    private void searchForRingIdInBlockchain() {
         LocalService service = mCallbacks.getService();
         if (service == null || !service.isConnected() || !service.areConversationsLoaded()) {
             return;
@@ -295,9 +295,18 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         intentFilter.addAction(LocalService.ACTION_CONF_LOADED);
         getActivity().registerReceiver(receiver, intentFilter);
 
+        if (mConversationFragment == null) {
+            // is there an old persistent fragment to clean ?
+            Fragment fragment = getFragmentManager().findFragmentByTag(ConversationFragment.class.getName());
+            if (fragment != null) {
+                getFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        }
+
         if (mConversationFragment != null && ConversationFragment.isTabletMode(getActivity())) {
             startConversationTablet(mConversationFragment.getArguments());
         }
+
         mAccountService.addObserver(this);
         mAccountService.addObserver(mRinguifyObserver);
         Log.d(TAG, "onResume");
@@ -563,7 +572,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         mConversationFragment.setArguments(bundle);
 
         getFragmentManager().beginTransaction()
-                .replace(R.id.conversation_container, mConversationFragment, null)
+                .replace(R.id.conversation_container, mConversationFragment, mConversationFragment.getClass().getName())
                 .commit();
     }
 
