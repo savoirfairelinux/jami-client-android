@@ -27,6 +27,8 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -79,6 +81,8 @@ public class ShareFragment extends Fragment implements GenericView<ShareViewMode
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+
         final View inflatedView = inflater.inflate(R.layout.frag_share, parent, false);
 
         // views injection
@@ -118,6 +122,16 @@ public class ShareFragment extends Fragment implements GenericView<ShareViewMode
 
         // view unbinding
         mSharePresenter.unbindView();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
     }
 
     @OnClick(R.id.share_button)

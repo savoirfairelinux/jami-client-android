@@ -31,6 +31,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -111,6 +113,8 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+
         super.onViewCreated(view, savedInstanceState);
         mDnDListView.setDropListener(onDrop);
     }
@@ -147,6 +151,16 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
                 startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
     }
 
     private void launchAccountEditActivity(Account acc) {
