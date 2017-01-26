@@ -312,6 +312,8 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
+        menu.clear();
+
         inflater.inflate(R.menu.smartlist_menu, menu);
         mSearchMenuItem = menu.findItem(R.id.menu_contact_search);
         mDialpadMenuItem = menu.findItem(R.id.menu_contact_dial);

@@ -405,8 +405,10 @@ public class ConversationFragment extends Fragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.conversation_actions, menu);
-        mAddContactBtn = menu.findItem(R.id.menuitem_addcontact);
+        if (mConversation != null) {
+            inflater.inflate(R.menu.conversation_actions, menu);
+            mAddContactBtn = menu.findItem(R.id.menuitem_addcontact);
+        }
     }
 
     @Override

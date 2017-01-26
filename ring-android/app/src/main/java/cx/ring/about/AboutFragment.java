@@ -27,6 +27,9 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -76,6 +79,8 @@ public class AboutFragment extends Fragment implements AboutView {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+
         final View inflatedView = inflater.inflate(R.layout.frag_about, parent, false);
 
         // views injection
@@ -108,6 +113,16 @@ public class AboutFragment extends Fragment implements AboutView {
 
         // view unbinding
         mAboutPresenter.unbindView();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
     }
 
     @OnClick({R.id.contribute_container, R.id.license_container})

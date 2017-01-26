@@ -33,6 +33,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -81,6 +83,8 @@ public class SettingsFragment extends Fragment implements GenericView<SettingsVi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+
         final View inflatedView = inflater.inflate(R.layout.frag_settings, parent, false);
 
         // views injection
@@ -113,6 +117,16 @@ public class SettingsFragment extends Fragment implements GenericView<SettingsVi
 
         // view unbinding
         mSettingsPresenter.unbindView();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
     }
 
     @OnCheckedChanged({R.id.settings_mobile_data, R.id.settings_contacts, R.id.settings_place_call, R.id.settings_startup})
