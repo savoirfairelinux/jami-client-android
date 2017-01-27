@@ -27,7 +27,7 @@
     <item quantity="one">%d Konversacio</item>
     <item quantity="other">%d Konversacioj</item>
   </plurals>
-  <string name="home_transfering">Transiganta %1$s al %1$s</string>
+  <string name="home_transfering">Transiganta %1$s al %2$s</string>
   <string name="home_transfer_complet">Transigo finita</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Neniu kontakto trovita</string>

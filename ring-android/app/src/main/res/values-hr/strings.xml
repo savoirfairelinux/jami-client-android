@@ -32,7 +32,7 @@
     <item quantity="few">%d razgovora</item>
     <item quantity="other">%d razgovora</item>
   </plurals>
-  <string name="home_transfering">Prenosim  %1$s u %1$s</string>
+  <string name="home_transfering">Prenosim  %1$s u %2$s</string>
   <string name="home_transfer_complet">Prijenos dovršen</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Nijedan kontakt nije nađen</string>

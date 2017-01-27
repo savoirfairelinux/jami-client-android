@@ -33,7 +33,7 @@
     <item quantity="one">%d Bisedë</item>
     <item quantity="other">%d Biseda</item>
   </plurals>
-  <string name="home_transfering">Po shpërngulet %1$s te %1$s</string>
+  <string name="home_transfering">Po shpërngulet %1$s te %2$s</string>
   <string name="home_transfer_complet">Shpërngulje e plotësuar</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">S’u gjet kontakt</string>

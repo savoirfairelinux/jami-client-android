@@ -33,7 +33,7 @@
     <item quantity="one">%d beszélgetés</item>
     <item quantity="other">%d beszélgetés</item>
   </plurals>
-  <string name="home_transfering">%1$s átirányítása erre: %1$s</string>
+  <string name="home_transfering">%1$s átirányítása erre: %2$s</string>
   <string name="home_transfer_complet">Átirányítás kész.</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Nem találtam partnereket</string>

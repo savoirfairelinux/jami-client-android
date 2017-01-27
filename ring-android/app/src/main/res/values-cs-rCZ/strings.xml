@@ -35,7 +35,7 @@
     <item quantity="few">%d Konverzace</item>
     <item quantity="other">%d konverzací</item>
   </plurals>
-  <string name="home_transfering">Přesměrování %1$s na %1$s</string>
+  <string name="home_transfering">Přesměrování %1$s na %2$s</string>
   <string name="home_transfer_complet">Přesměrování hotovo</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Nenalezen žádný kontakt</string>

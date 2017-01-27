@@ -34,7 +34,7 @@
     <item quantity="few">%d групових чатів</item>
     <item quantity="other">%d групові чати</item>
   </plurals>
-  <string name="home_transfering">Відправлення %1$s до %1$s</string>
+  <string name="home_transfering">Відправлення %1$s до %2$s</string>
   <string name="home_transfer_complet">Відправлення закінчено</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Контакт не знайдено</string>

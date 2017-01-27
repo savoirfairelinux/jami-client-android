@@ -34,7 +34,7 @@
     <item quantity="one">%d Unterhaltung</item>
     <item quantity="other">%d Unterhaltungen</item>
   </plurals>
-  <string name="home_transfering">Übertrage %1$s zu %1$s</string>
+  <string name="home_transfering">Übertrage %1$s zu %2$s</string>
   <string name="home_transfer_complet">Übertragung abgeschlossen</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Kein Kontakt gefunden</string>

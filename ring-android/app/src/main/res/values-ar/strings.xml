@@ -35,7 +35,7 @@
     <item quantity="many">%d مكالمة</item>
     <item quantity="other">%d مكالمة</item>
   </plurals>
-  <string name="home_transfering">نقل %1$s إلى %1$s</string>
+  <string name="home_transfering">نقل %1$s إلى %2$s</string>
   <string name="home_transfer_complet">نقل مكتمل</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">لا إتصال موجود</string>

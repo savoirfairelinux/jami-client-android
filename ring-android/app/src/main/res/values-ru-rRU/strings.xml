@@ -35,7 +35,7 @@
     <item quantity="many">%d Бесед</item>
     <item quantity="other">%d беседы</item>
   </plurals>
-  <string name="home_transfering">Перевод от %1$s на %1$s</string>
+  <string name="home_transfering">Перевод от %1$s на %2$s</string>
   <string name="home_transfer_complet">Перевод завершен</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Контакт не обнаружен</string>
