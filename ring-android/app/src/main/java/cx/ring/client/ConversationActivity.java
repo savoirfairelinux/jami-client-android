@@ -57,6 +57,11 @@ public class ConversationActivity extends AppCompatActivity implements LocalServ
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        if (intent.getBooleanExtra("resuming", false)) {
+            if (mConversationFragment != null) {
+                mConversationFragment.refreshView(0);
+            }
+        }
     }
 
     @Override
