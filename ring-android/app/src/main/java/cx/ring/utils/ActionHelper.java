@@ -240,19 +240,19 @@ public class ActionHelper {
                         .setContentText(ctx.getText(R.string.notif_incoming_call))
                         .setContentIntent(gotoIntent)
                         .setFullScreenIntent(gotoIntent, true)
-                        .addAction(R.drawable.ic_action_accept, ctx.getText(R.string.action_call_accept),
-                                PendingIntent.getService(ctx, new Random().nextInt(),
-                                        new Intent(LocalService.ACTION_CALL_ACCEPT)
-                                                .setClass(ctx, LocalService.class)
-                                                .setData(callUri),
-                                        PendingIntent.FLAG_ONE_SHOT))
                         .addAction(R.drawable.ic_call_end_white, ctx.getText(R.string.action_call_decline),
                                 PendingIntent.getService(ctx, new Random().nextInt(),
                                         new Intent(LocalService.ACTION_CALL_REFUSE)
                                                 .setClass(ctx, LocalService.class)
                                                 .setData(callUri),
                                         PendingIntent.FLAG_ONE_SHOT))
-                .addExtras(extras);
+                        .addAction(R.drawable.ic_action_accept, ctx.getText(R.string.action_call_accept),
+                                PendingIntent.getService(ctx, new Random().nextInt(),
+                                        new Intent(LocalService.ACTION_CALL_ACCEPT)
+                                                .setClass(ctx, LocalService.class)
+                                                .setData(callUri),
+                                        PendingIntent.FLAG_ONE_SHOT))
+                        .addExtras(extras);
             } else {
                 notificationBuilder.setContentTitle(ctx.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
                         .setContentText(ctx.getText(R.string.notif_outgoing_call))
