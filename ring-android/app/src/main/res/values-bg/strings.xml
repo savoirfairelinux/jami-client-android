@@ -32,7 +32,7 @@
     <item quantity="one">%d разговор</item>
     <item quantity="other">%d разговора</item>
   </plurals>
-  <string name="home_transfering">Прехвърляне на %1$s към %1$s</string>
+  <string name="home_transfering">Прехвърляне на %1$s към %2$s</string>
   <string name="home_transfer_complet">Прехвърлянето е завършено</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Няма намерен контакт</string>

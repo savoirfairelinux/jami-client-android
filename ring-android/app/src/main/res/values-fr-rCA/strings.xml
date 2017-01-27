@@ -34,7 +34,7 @@
     <item quantity="one">Conversations %d</item>
     <item quantity="other">Conversations %d</item>
   </plurals>
-  <string name="home_transfering">Transfert en cours de %1$s à %1$s</string>
+  <string name="home_transfering">Transfert en cours de %1$s à %2$s</string>
   <string name="home_transfer_complet">Transfert complété</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Aucun contact trouvé</string>

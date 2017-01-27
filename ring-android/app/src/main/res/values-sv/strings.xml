@@ -34,7 +34,7 @@
     <item quantity="one">%d konversation</item>
     <item quantity="other">%d konversationer</item>
   </plurals>
-  <string name="home_transfering">Överför %1$s till %1$s</string>
+  <string name="home_transfering">Överför %1$s till %2$s</string>
   <string name="home_transfer_complet">Överföring slutförd</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Ingen kontakt hittades</string>

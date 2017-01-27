@@ -33,7 +33,7 @@
   <plurals name="home_conferences_title">
     <item quantity="other">%d Perbualan</item>
   </plurals>
-  <string name="home_transfering">Memindahkan %1$s ke %1$s</string>
+  <string name="home_transfering">Memindahkan %1$s ke %2$s</string>
   <string name="home_transfer_complet">Pemindahan berjaya</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Tiada kenalan ditemui</string>

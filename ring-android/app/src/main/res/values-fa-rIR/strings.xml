@@ -33,7 +33,7 @@
   <plurals name="home_conferences_title">
     <item quantity="other">%d گفتگو</item>
   </plurals>
-  <string name="home_transfering">ارسال %1$s به %1$s</string>
+  <string name="home_transfering">ارسال %1$s به %2$s</string>
   <string name="home_transfer_complet">ارسال انجام شد</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">مخاطبی پیدا نشد</string>

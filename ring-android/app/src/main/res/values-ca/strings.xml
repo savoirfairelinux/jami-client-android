@@ -34,7 +34,7 @@
     <item quantity="one">%d Conversa</item>
     <item quantity="other">%d Converses</item>
   </plurals>
-  <string name="home_transfering">Transferint %1$s a %1$s</string>
+  <string name="home_transfering">Transferint %1$s a %2$s</string>
   <string name="home_transfer_complet">Transferència completada</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Contacte no trobat</string>

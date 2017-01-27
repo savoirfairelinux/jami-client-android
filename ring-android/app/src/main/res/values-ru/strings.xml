@@ -36,7 +36,7 @@
     <item quantity="many">%d Диалогов</item>
     <item quantity="other">%d Диалогов</item>
   </plurals>
-  <string name="home_transfering">Передача %1$s в %1$s</string>
+  <string name="home_transfering">Передача %1$s в %2$s</string>
   <string name="home_transfer_complet">Передача завершена</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Контактов не найдено</string>

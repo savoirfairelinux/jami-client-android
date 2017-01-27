@@ -33,7 +33,7 @@
   <plurals name="home_conferences_title">
     <item quantity="other">%d个会话</item>
   </plurals>
-  <string name="home_transfering">将%1$s传输至%1$s</string>
+  <string name="home_transfering">将%1$s传输至%2$s</string>
   <string name="home_transfer_complet">传输完成</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">未找到联系人</string>

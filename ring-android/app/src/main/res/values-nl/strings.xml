@@ -34,7 +34,7 @@
     <item quantity="one">%d gesprek</item>
     <item quantity="other">%d gesprekken</item>
   </plurals>
-  <string name="home_transfering">%1$s wordt verstuurd naar %1$s</string>
+  <string name="home_transfering">%1$s wordt verstuurd naar %2$s</string>
   <string name="home_transfer_complet">Overdracht compleet</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Geen contacten gevonden</string>

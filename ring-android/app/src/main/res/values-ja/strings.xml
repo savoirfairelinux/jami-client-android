@@ -33,7 +33,7 @@
   <plurals name="home_conferences_title">
     <item quantity="other">%d 会話</item>
   </plurals>
-  <string name="home_transfering">%1$s から %1$s へ転送</string>
+  <string name="home_transfering">%2$s から %1$s へ転送</string>
   <string name="home_transfer_complet">転送完了</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">連作先が見つかりません</string>
