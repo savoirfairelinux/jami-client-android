@@ -789,7 +789,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
             }
             mMessageNotificationBuilder.setContentTitle(contact.getDisplayName());
             String[] split = contact.getDisplayName().split(":");
-            if (split.length > 0) {
+            if (split.length > 1) {
                 mLastBlockchainQuery = split[1];
                 mAccountService.lookupAddress("", "", mLastBlockchainQuery);
             }
