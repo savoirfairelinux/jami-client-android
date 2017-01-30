@@ -534,7 +534,7 @@ public class ConversationFragment extends Fragment implements
         View view = getActivity().findViewById(android.R.id.content);
         if (view != null) {
             String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
-                    Phone.getShortenedNumber(copiedNumber));
+                    ActionHelper.getShortenedNumber(copiedNumber));
             Snackbar.make(view, snackbarText, Snackbar.LENGTH_LONG).show();
         }
     }

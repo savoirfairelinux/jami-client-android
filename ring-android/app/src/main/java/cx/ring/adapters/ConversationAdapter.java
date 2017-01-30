@@ -42,8 +42,8 @@ import java.util.concurrent.ExecutorService;
 
 import cx.ring.R;
 import cx.ring.model.Conversation;
-import cx.ring.model.Phone;
 import cx.ring.model.TextMessage;
+import cx.ring.utils.ActionHelper;
 import cx.ring.views.ConversationViewHolder;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
@@ -209,7 +209,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         int pictureResID;
         String histTxt;
-        String callNumber = Phone.getShortenedNumber(convElement.call.number);
+        String callNumber = ActionHelper.getShortenedNumber(convElement.call.number);
         convViewHolder.mPhoto.setScaleY(1);
         if (convElement.call.isMissed()) {
             if (convElement.call.isIncoming()) {
