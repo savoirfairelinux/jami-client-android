@@ -292,4 +292,11 @@ public class ActionHelper {
         final android.net.Uri confUri = android.net.Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI, conference.getId());
         return new Intent(Intent.ACTION_VIEW).setData(confUri).setClass(context, CallActivity.class);
     }
+
+    public static String getShortenedNumber(String number) {
+        if (number != null && !number.isEmpty() && number.length() > 18) {
+            return number.substring(0, 18).concat("\u2026");
+        }
+        return number;
+    }
 }

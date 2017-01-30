@@ -68,13 +68,6 @@ public class Phone {
         setNumber(new Uri(number));
     }
 
-    public static String getShortenedNumber(String number) {
-        if (number != null && !number.isEmpty() && number.length() > 18) {
-            return number.substring(0, 18).concat("…");
-        }
-        return number;
-    }
-
     public NumberType getNumbertype() {
         return mNumberType;
     }
