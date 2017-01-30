@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_20ca10a2",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/ActionHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-01-30T14:28:25Z",
+      "side": 1,
+      "message": "For consistency and ease of comparison, RingIDs should be cut in the middle.\nSide note: ideally, to better support multiple screen sizes, Android TextView can automatically ellipsize the text.",
+      "range": {
+        "startLine": 298,
+        "startChar": 19,
+        "endLine": 298,
+        "endChar": 42
+      },
+      "revId": "bff38a71da1beff41bafd86489378f3dcc73930d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
