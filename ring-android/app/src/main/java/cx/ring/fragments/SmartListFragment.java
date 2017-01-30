@@ -813,7 +813,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     public void clipBoardDidCopyNumber(String copiedNumber) {
         if (getView() != null) {
             String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
-                    Phone.getShortenedNumber(copiedNumber));
+                    ActionHelper.getShortenedNumber(copiedNumber));
             Snackbar.make(getView(), snackbarText, Snackbar.LENGTH_LONG).show();
         }
     }
