@@ -27,6 +27,8 @@ public interface RingSummaryView {
 
     void showExportingProgressDialog();
 
+    void showRevokingProgressDialog();
+
     void accountChanged(final Account account);
 
     void showNetworkError();
@@ -37,6 +39,6 @@ public interface RingSummaryView {
 
     void showPIN(String pin);
 
-    void updateDeviceList(Map<String, String> devices);
+    void updateDeviceList(Map<String, String> devices, String currentDeviceId);
 
 }

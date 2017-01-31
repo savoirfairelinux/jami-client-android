@@ -24,6 +24,7 @@ import javax.inject.Singleton;
 import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
 import cx.ring.account.RingSummaryPresenter;
+import cx.ring.account.ConfirmRevocationDialog;
 import cx.ring.application.RingApplication;
 import cx.ring.client.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
@@ -142,4 +143,6 @@ public interface RingInjectionComponent {
     void inject(SettingsPresenter presenter);
 
     void inject(RingSummaryPresenter presenter);
+
+    void inject(ConfirmRevocationDialog dialog);
 }
