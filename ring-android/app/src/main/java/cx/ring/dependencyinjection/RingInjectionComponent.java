@@ -23,6 +23,7 @@ import javax.inject.Singleton;
 
 import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
+import cx.ring.account.RingSummaryPresenter;
 import cx.ring.application.RingApplication;
 import cx.ring.client.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
@@ -33,10 +34,10 @@ import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.fragments.DeviceAccountFragment;
+import cx.ring.account.RingSummaryAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.ProfileCreationFragment;
-import cx.ring.fragments.RegisterNameDialog;
+import cx.ring.account.RegisterNameDialog;
 import cx.ring.fragments.RingAccountCreationFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.fragments.SmartListFragment;
@@ -82,7 +83,7 @@ public interface RingInjectionComponent {
 
     void inject(AccountsManagementFragment fragment);
 
-    void inject(DeviceAccountFragment fragment);
+    void inject(RingSummaryAccountFragment fragment);
 
     void inject(CallFragment fragment);
 
@@ -139,4 +140,6 @@ public interface RingInjectionComponent {
     void inject(SharePresenter presenter);
 
     void inject(SettingsPresenter presenter);
+
+    void inject(RingSummaryPresenter presenter);
 }

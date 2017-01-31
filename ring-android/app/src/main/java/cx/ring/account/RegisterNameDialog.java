@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package cx.ring.fragments;
+package cx.ring.account;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -93,7 +93,7 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
 
     private RegisterNameDialogListener mListener = null;
 
-    void setListener(RegisterNameDialogListener l) {
+    public void setListener(RegisterNameDialogListener l) {
         mListener = l;
     }
 
