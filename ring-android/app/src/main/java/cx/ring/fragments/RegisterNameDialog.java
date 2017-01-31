@@ -93,7 +93,7 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
 
     private RegisterNameDialogListener mListener = null;
 
-    void setListener(RegisterNameDialogListener l) {
+    public void setListener(RegisterNameDialogListener l) {
         mListener = l;
     }
 
