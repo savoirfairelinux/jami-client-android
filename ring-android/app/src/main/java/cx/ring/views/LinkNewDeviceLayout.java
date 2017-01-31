@@ -23,11 +23,12 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.widget.LinearLayout;
 
-import cx.ring.fragments.DeviceAccountFragment;
+import cx.ring.account.RingAccountSummaryFragment;
 
 public class LinkNewDeviceLayout extends LinearLayout {
 
-    DeviceAccountFragment container;
+    RingAccountSummaryFragment container;
+
     public LinkNewDeviceLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -35,6 +36,7 @@ public class LinkNewDeviceLayout extends LinearLayout {
     public LinkNewDeviceLayout(Context context) {
         super(context);
     }
+
     /**
      * Overrides the handling of the back key to move back to
      * dismiss the view, instead of only dismissing the input method.
@@ -60,7 +62,7 @@ public class LinkNewDeviceLayout extends LinearLayout {
         return super.dispatchKeyEventPreIme(event);
     }
 
-    public void setContainer(DeviceAccountFragment container) {
+    public void setContainer(RingAccountSummaryFragment container) {
         this.container = container;
     }
 }

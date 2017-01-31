@@ -50,9 +50,9 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.application.RingApplication;
 import cx.ring.fragments.AdvancedAccountFragment;
-import cx.ring.fragments.DeviceAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SecurityAccountFragment;
@@ -69,6 +69,8 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @Inject
     AccountService mAccountService;
+
+    public static final String ACCOUNTID_KEY = AccountEditionActivity.class.getCanonicalName() + "accountid";
 
     public static final AccountCallbacks DUMMY_CALLBACKS = new AccountCallbacks() {
 
@@ -173,8 +175,8 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
             @Override
             public void onPageSelected(int position) {
-                if (mCurrentlyDisplayed instanceof DeviceAccountFragment) {
-                    DeviceAccountFragment deviceAccountFragment = (DeviceAccountFragment) mCurrentlyDisplayed;
+                if (mCurrentlyDisplayed instanceof RingAccountSummaryFragment) {
+                    RingAccountSummaryFragment deviceAccountFragment = (RingAccountSummaryFragment) mCurrentlyDisplayed;
                     if (deviceAccountFragment.isDisplayingWizard()) {
                         deviceAccountFragment.hideWizard();
                     }
@@ -192,7 +194,10 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         if (mAccSelected.isRing()) {
             mSlidingTabLayout.setVisibility(View.GONE);
             mViewPager.setVisibility(View.GONE);
-            mCurrentlyDisplayed = new DeviceAccountFragment();
+            mCurrentlyDisplayed = new RingAccountSummaryFragment();
+            Bundle args = new Bundle();
+            args.putString(ACCOUNTID_KEY, mAccSelected.getAccountID());
+            mCurrentlyDisplayed.setArguments(args);
             getFragmentManager().beginTransaction().add(R.id.fragment_container, mCurrentlyDisplayed).commit();
         }
     }
