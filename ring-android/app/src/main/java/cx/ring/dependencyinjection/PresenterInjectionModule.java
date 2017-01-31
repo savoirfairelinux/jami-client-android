@@ -22,6 +22,7 @@ package cx.ring.dependencyinjection;
 import javax.inject.Singleton;
 
 import cx.ring.about.AboutPresenter;
+import cx.ring.account.RingAccountPresenter;
 import cx.ring.application.RingApplication;
 import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.settings.SettingsPresenter;
@@ -69,6 +70,15 @@ public class PresenterInjectionModule {
     @Singleton
     RingNavigationPresenter provideRingNavigationPresenter(){
         RingNavigationPresenter presenter = new RingNavigationPresenter();
+        mRingApplication.getRingInjectionComponent().inject(presenter);
+        presenter.afterInjection();
+        return presenter;
+    }
+
+    @Provides
+    @Singleton
+    RingAccountPresenter provideRingAccountPresenter(){
+        RingAccountPresenter presenter = new RingAccountPresenter();
         mRingApplication.getRingInjectionComponent().inject(presenter);
         presenter.afterInjection();
         return presenter;
