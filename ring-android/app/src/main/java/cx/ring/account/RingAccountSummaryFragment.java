@@ -17,16 +17,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package cx.ring.fragments;
+package cx.ring.account;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -45,13 +42,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -62,32 +57,20 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.daemon.StringMap;
-import cx.ring.interfaces.AccountCallbacks;
-import cx.ring.interfaces.AccountChangedListener;
+import cx.ring.client.AccountEditionActivity;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
-import cx.ring.model.ServiceEvent;
-import cx.ring.services.AccountService;
 import cx.ring.utils.KeyboardVisibilityManager;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 import cx.ring.views.LinkNewDeviceLayout;
 
-import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
-
-public class DeviceAccountFragment extends Fragment implements AccountChangedListener,
-        BackHandlerInterface,
+public class RingAccountSummaryFragment extends Fragment implements BackHandlerInterface,
         RegisterNameDialog.RegisterNameDialogListener,
-        Observer<ServiceEvent> {
+        RingAccountSummaryView {
 
-    private static final String TAG = DeviceAccountFragment.class.getSimpleName();
-    private static final int PIN_GENERATION_SUCCESS = 0;
-    private static final int PIN_GENERATION_WRONG_PASSWORD = 1;
-    private static final int PIN_GENERATION_NETWORK_ERROR = 2;
+    private static final String TAG = RingAccountSummaryFragment.class.getSimpleName();
 
     @Inject
-    AccountService mAccountService;
+    RingAccountSummaryPresenter mRingAccountSummaryPresenter;
 
     /*
     UI Bindings
@@ -143,49 +126,34 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     /*
     Declarations
     */
-    private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
     private DeviceAdapter mDeviceAdapter;
     private ProgressDialog mWaitDialog;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof AccountCallbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
-        }
-
-        mCallbacks = (AccountCallbacks) activity;
-        mCallbacks.addOnAccountChanged(this);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        if (mCallbacks != null) {
-            mCallbacks.removeOnAccountChanged(this);
-        }
-        mCallbacks = DUMMY_CALLBACKS;
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-        mAccountService.addObserver(this);
+        mRingAccountSummaryPresenter.bindView(this);
+
+        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNTID_KEY) == null) {
+            return;
+        }
+        mRingAccountSummaryPresenter.setAccountId(getArguments().getString(AccountEditionActivity.ACCOUNTID_KEY));
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        mAccountService.removeObserver(this);
+    public void onDestroyView() {
+        super.onDestroyView();
+        // view unbinding
+        mRingAccountSummaryPresenter.unbindView();
     }
 
     @Override
     public void accountChanged(final Account account) {
-
         RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (account == null) {
+                    Log.w(TAG, "No account to display!");
                     return;
                 }
                 mDeviceAdapter = new DeviceAdapter(getActivity(), account.getDevices());
@@ -251,12 +219,10 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
     */
     @Override
     public boolean onBackPressed() {
-
         if (isDisplayingWizard()) {
             hideWizard();
             return true;
         }
-
         return false;
     }
 
@@ -293,27 +259,50 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
         KeyboardVisibilityManager.hideKeyboard(getActivity(), 0);
     }
 
-    public boolean isDisplayingWizard() {
-        return mLinkAccountView.getVisibility() == View.VISIBLE;
+    @Override
+    public void showNetworkError() {
+        RingApplication.uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mWaitDialog.dismiss();
+                AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
+                errorDialog.setTitle(R.string.account_export_end_network_title)
+                        .setMessage(R.string.account_export_end_network_message);
+                errorDialog.setPositiveButton(android.R.string.ok, null);
+                errorDialog.show();
+            }
+        });
     }
 
-    private void showGeneratingResult(String pin) {
-        hideWizard();
-        mLinkAccountView.setVisibility(View.VISIBLE);
-        mPasswordLayout.setVisibility(View.GONE);
-        mEndBtn.setVisibility(View.VISIBLE);
-        mStartBtn.setVisibility(View.GONE);
+    @Override
+    public void showPasswordError() {
+        RingApplication.uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mWaitDialog.dismiss();
+                mRingPassword.setError(getString(R.string.account_export_end_decryption_message));
+                mRingPassword.setText("");
+            }
+        });
+    }
 
-        String pined = getString(R.string.account_end_export_infos).replace("%%", pin);
-        final SpannableString styledResultText = new SpannableString(pined);
-        int pos = pined.lastIndexOf(pin);
-        styledResultText.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        styledResultText.setSpan(new StyleSpan(Typeface.BOLD), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        styledResultText.setSpan(new RelativeSizeSpan(2.8f), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mExportInfos.setText(styledResultText);
-        mExportInfos.requestFocus();
+    @Override
+    public void showGenericError() {
+        RingApplication.uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mWaitDialog.dismiss();
+                AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
+                errorDialog.setTitle(R.string.account_export_end_error_title)
+                        .setMessage(R.string.account_export_end_error_message);
+                errorDialog.setPositiveButton(android.R.string.ok, null);
+                errorDialog.show();
+            }
+        });
+    }
 
-        KeyboardVisibilityManager.hideKeyboard(getActivity(), 0);
+    public boolean isDisplayingWizard() {
+        return mLinkAccountView.getVisibility() == View.VISIBLE;
     }
 
     @OnEditorAction(R.id.ring_password)
@@ -340,18 +329,13 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
         } else if (mRingPassword.getText().length() < 6) {
             mRingPassword.setError(getString(R.string.error_password_char_count));
         } else {
-            new ExportOnRingTask().execute(mRingPassword.getText().toString());
+            mRingAccountSummaryPresenter.startAccountExport(mRingPassword.getText().toString());
         }
     }
 
     @OnClick(R.id.account_switch)
     public void onToggleAccount() {
-        if (mCallbacks == null) {
-            Log.w(TAG, "Can't toggle account state, callback is null");
-            return;
-        }
-        mCallbacks.getAccount().setEnabled(mAccountSwitch.isChecked());
-        mCallbacks.saveAccount();
+        mRingAccountSummaryPresenter.enableAccount(mAccountSwitch.isChecked());
     }
 
     @OnClick(R.id.register_name_btn)
@@ -363,156 +347,14 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
 
     @Override
     public void onRegisterName(String name, String password) {
-        final Account account = mCallbacks.getAccount();
-        mAccountService.registerName(account, password, name);
-        accountChanged(account);
+        mRingAccountSummaryPresenter.registerName(name, password);
     }
 
     @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case KNOWN_DEVICES_CHANGED:
-                handleKnownDevices(event);
-                break;
-            case REGISTRATION_STATE_CHANGED:
-            case NAME_REGISTRATION_ENDED:
-                accountChanged(mCallbacks.getAccount());
-                break;
-            case EXPORT_ON_RING_ENDED:
-                handleExportEnded(event);
-                break;
-            default:
-                Log.d(TAG, "This event " + event.getEventType() + " is not handled here");
-                break;
-        }
-    }
-
-    private void handleExportEnded(ServiceEvent event) {
-
-        String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
-        Account currentAccount = mCallbacks.getAccount();
-        if (currentAccount != null && currentAccount.getAccountID().equals(accountId)) {
-            final int code = event.getEventInput(ServiceEvent.EventInput.CODE, Integer.class);
-            final String pin = event.getEventInput(ServiceEvent.EventInput.PIN, String.class);
-            if (mDeviceAdapter != null) {
-                RingApplication.uiHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mWaitDialog.dismiss();
-                        if (code == PIN_GENERATION_SUCCESS) {
-                            showGeneratingResult(pin);
-                            return;
-                        }
-                        AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
-                        switch (code) {
-                            case PIN_GENERATION_WRONG_PASSWORD:
-                                mRingPassword.setError(getString(R.string.account_export_end_decryption_message));
-                                mRingPassword.setText("");
-                                return;
-                            case PIN_GENERATION_NETWORK_ERROR:
-                                errorDialog.setTitle(R.string.account_export_end_network_title)
-                                        .setMessage(R.string.account_export_end_network_message);
-                                errorDialog.setPositiveButton(android.R.string.ok, null);
-                                break;
-                            default:
-                                errorDialog.setTitle(R.string.account_export_end_error_title)
-                                        .setMessage(R.string.account_export_end_error_message);
-                                errorDialog.setPositiveButton(android.R.string.ok, null);
-                                break;
-                        }
-                        errorDialog.show();
-                    }
-                });
-            }
-        }
-    }
-
-    private void handleKnownDevices(ServiceEvent event) {
-        String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
-        Account currentAccount = mCallbacks.getAccount();
-        if (currentAccount != null && currentAccount.getAccountID().equals(accountId)) {
-            final StringMap devices = event.getEventInput(ServiceEvent.EventInput.DEVICES, StringMap.class);
-            if (mDeviceAdapter != null) {
-                RingApplication.uiHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mDeviceAdapter.setData(devices.toNative());
-                    }
-                });
-            }
-        }
-    }
-
-    class DeviceAdapter extends BaseAdapter {
-        private final Context mCtx;
-        private final ArrayList<Map.Entry<String, String>> devices = new ArrayList<>();
-
-        DeviceAdapter(Context c, Map<String, String> devs) {
-            mCtx = c;
-            setData(devs);
-        }
-
-        void setData(Map<String, String> devs) {
-            devices.clear();
-            if (devs != null && !devs.isEmpty()) {
-                devices.ensureCapacity(devs.size());
-                for (Map.Entry<String, String> e : devs.entrySet()) {
-                    devices.add(e);
-                }
-            }
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getCount() {
-            return devices.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return devices.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup parent) {
-            if (view == null) {
-                view = LayoutInflater.from(mCtx).inflate(R.layout.item_device, parent, false);
-            }
-
-            TextView devId = (TextView) view.findViewById(R.id.txt_device_id);
-            devId.setText(devices.get(i).getKey());
-
-            TextView devName = (TextView) view.findViewById(R.id.txt_device_label);
-            devName.setText(devices.get(i).getValue());
-
-            return view;
-        }
-    }
-
-    private class ExportOnRingTask extends AsyncTask<String, Void, String> {
-        private final Account account = mCallbacks.getAccount();
-
-        @Override
-        protected void onPreExecute() {
-            mWaitDialog = ProgressDialog.show(getActivity(),
-                    getString(R.string.export_account_wait_title),
-                    getString(R.string.export_account_wait_message));
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            return mAccountService.exportOnRing(account.getAccountID(), params[0]);
-        }
+    public void showExportingProgressDialog() {
+        mWaitDialog = ProgressDialog.show(getActivity(),
+                getString(R.string.export_account_wait_title),
+                getString(R.string.export_account_wait_message));
     }
 
     @Nullable
@@ -528,14 +370,48 @@ public class DeviceAccountFragment extends Fragment implements AccountChangedLis
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        Account account = mCallbacks.getAccount();
-        if (account != null) {
-            accountChanged(account);
-        }
-
         mLinkAccountView.setContainer(this);
         hidePopWizard();
 
         return devLayout;
+    }
+
+    @Override
+    public void showPIN(final String pin) {
+        RingApplication.uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                hideWizard();
+                mWaitDialog.dismiss();
+                mLinkAccountView.setVisibility(View.VISIBLE);
+                mPasswordLayout.setVisibility(View.GONE);
+                mEndBtn.setVisibility(View.VISIBLE);
+                mStartBtn.setVisibility(View.GONE);
+
+                String pined = getString(R.string.account_end_export_infos).replace("%%", pin);
+                final SpannableString styledResultText = new SpannableString(pined);
+                int pos = pined.lastIndexOf(pin);
+                styledResultText.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                styledResultText.setSpan(new StyleSpan(Typeface.BOLD), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                styledResultText.setSpan(new RelativeSizeSpan(2.8f), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                mExportInfos.setText(styledResultText);
+                mExportInfos.requestFocus();
+
+                KeyboardVisibilityManager.hideKeyboard(getActivity(), 0);
+            }
+        });
+    }
+
+    @Override
+    public void updateDeviceList(final Map<String, String> devices) {
+        if (mDeviceAdapter == null) {
+            return;
+        }
+        RingApplication.uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mDeviceAdapter.setData(devices);
+            }
+        });
     }
 }
