@@ -83,7 +83,9 @@ std::map<std::string, std::string> getCodecDetails(const std::string& accountID,
 bool setCodecDetails(const std::string& accountID, const unsigned& codecId, const std::map<std::string, std::string>& details);
 std::vector<unsigned> getActiveCodecList(const std::string& accountID);
 std::string exportOnRing(const std::string& accountID, const std::string& password);
+
 std::map<std::string, std::string> getKnownRingDevices(const std::string& accountID);
+bool revokeDevice(const std::string& accountID, const std::string& password, const std::string& deviceID);
 
 void setActiveCodecList(const std::string& accountID, const std::vector<unsigned>& list);
 
