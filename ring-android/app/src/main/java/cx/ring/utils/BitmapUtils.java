@@ -31,12 +31,15 @@ import android.graphics.Shader;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 
 /**
  * Helper calls to manipulates Bitmaps
  */
 public class BitmapUtils {
+
+    private static final String TAG = BitmapUtils.class.getName();
 
     private BitmapUtils() {
     }
@@ -89,5 +92,19 @@ public class BitmapUtils {
             return BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
         }
         return null;
+    }
+
+    public static Bitmap reduceBitmap(Bitmap bmp, int size) {
+        Log.d(TAG, "bitmap size before reduce " + bmp.getByteCount());
+        int height = bmp.getHeight();
+        int width = bmp.getWidth();
+        while (bmp.getByteCount() > size) {
+            height /= 2;
+            width /= 2;
+            bmp = Bitmap.createScaledBitmap(bmp, width, height, false);
+        }
+
+        Log.d(TAG, "bitmap size after reduce " + bmp.getByteCount());
+        return bmp;
     }
 }
