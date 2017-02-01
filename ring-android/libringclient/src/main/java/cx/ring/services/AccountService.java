@@ -31,9 +31,11 @@ import java.util.concurrent.ExecutorService;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.daemon.Blob;
 import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.Ringservice;
+import cx.ring.daemon.SWIGTYPE_p_time_t;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.UintVect;
@@ -69,6 +71,7 @@ import ezvcard.VCard;
  * - EXPORT_ON_RING_ENDED
  * - NAME_REGISTRATION_ENDED
  * - REGISTERED_NAME_FOUND
+ * - INCOMING_TRUST_REQUEST
  */
 public class AccountService extends Observable {
 
@@ -959,6 +962,97 @@ public class AccountService extends Observable {
         );
     }
 
+    /* contact requests */
+    /**
+     * @param accountId
+     * @return all trust requests from the daemon for the account Id
+     */
+    public StringMap getTrustRequests(final String accountId) {
+
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<StringMap>() {
+                    @Override
+                    public StringMap call() throws Exception {
+                        Log.i(TAG, "getTrustRequests() thread running...");
+                        return Ringservice.getTrustRequests(accountId);
+                    }
+                }
+        );
+    }
+
+    /**
+     * Accepts a pending trust request
+     *
+     * @param accountId
+     * @param from
+     * @return
+     */
+    public Boolean acceptTrustRequest(final String accountId, final String from) {
+
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "acceptTrustRequest() thread running...");
+                        return Ringservice.acceptTrustRequest(accountId, from);
+                    }
+                }
+        );
+    }
+
+    /**
+     * Refuses and blocks a pending trust request
+     *
+     * @param accountId
+     * @param from
+     * @return
+     */
+    public Boolean discardTrustRequest(final String accountId, final String from) {
+
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "discardTrustRequest() thread running...");
+                        return Ringservice.discardTrustRequest(accountId, from);
+                    }
+                }
+        );
+    }
+
+    /**
+     * Sends a new trust request 
+     *
+     * @param accountId
+     * @param to
+     * @param message
+     */
+    public void sendTrustRequest(final String accountId, final String to, final Blob message) {
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "sendTrustRequest() thread running...");
+                        Ringservice.sendTrustRequest(accountId, to, message);
+                        return true;
+                    }
+                }
+        );
+    }
+
     private class ConfigurationCallbackHandler extends ConfigurationCallback {
 
         @Override
@@ -1166,6 +1260,19 @@ public class AccountService extends Observable {
             event.addEventInput(ServiceEvent.EventInput.STATE, state);
             event.addEventInput(ServiceEvent.EventInput.ADDRESS, address);
             event.addEventInput(ServiceEvent.EventInput.NAME, name);
+            notifyObservers(event);
+        }
+
+        @Override
+        public void incomingTrustRequest(String accountId, String from, Blob message, SWIGTYPE_p_time_t received) {
+            Log.d(TAG, "incomingTrustRequest: " + accountId + ", " + from + ", " + message + ", " + received);
+
+            setChanged();
+            ServiceEvent event= new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.FROM, from);
+            event.addEventInput(ServiceEvent.EventInput.MESSAGE, message);
+            event.addEventInput(ServiceEvent.EventInput.TIME, received);
             notifyObservers(event);
         }
     }

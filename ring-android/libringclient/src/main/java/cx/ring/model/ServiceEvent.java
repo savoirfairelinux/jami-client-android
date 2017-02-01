@@ -53,7 +53,10 @@ public class ServiceEvent {
         START_CAPTURE,
         STOP_CAPTURE,
         SET_PARAMETERS,
-        CONTACTS_CHANGED
+        CONTACTS_CHANGED,
+        INCOMING_TRUST_REQUEST,
+        CONTACT_ADDED,
+        CONTACT_REMOVED
     }
 
     public enum EventInput {
@@ -85,7 +88,11 @@ public class ServiceEvent {
         HEIGHT,
         IS_MIXER,
         SIZES,
-        RATES
+        RATES,
+        TIME,
+        MESSAGE,
+        CONFIRMED,
+        BANNED
     }
 
     private EventType mType;

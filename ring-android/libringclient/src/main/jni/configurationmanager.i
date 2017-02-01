@@ -38,6 +38,8 @@ public:
     virtual void exportOnRingEnded(const std::string& /*account_id*/, int /*state*/, const std::string& /*pin*/){}
 
     virtual void incomingTrustRequest(const std::string& /*account_id*/, const std::string& /*from*/, const std::vector<uint8_t>& /*payload*/, time_t received){}
+    virtual void contactAdded(const std::string& /*account_id*/, const std::string& /*uri*/, bool confirmed){}
+    virtual void contactRemoved(const std::string& /*account_id*/, const std::string& /*uri*/, bool banned){}
 
     virtual void certificatePinned(const std::string& /*certId*/){}
     virtual void certificatePathPinned(const std::string& /*path*/, const std::vector<std::string>& /*certId*/){}
@@ -174,8 +176,13 @@ std::vector<std::string> getCertificatesByStatus(const std::string& account, con
 std::map<std::string, std::string> getTrustRequests(const std::string& accountId);
 bool acceptTrustRequest(const std::string& accountId, const std::string& from);
 bool discardTrustRequest(const std::string& accountId, const std::string& from);
-
 void sendTrustRequest(const std::string& accountId, const std::string& to, const std::vector<uint8_t>& payload);
+
+/* Contacts */
+
+void addContact(const std::string& accountId, const std::string& uri);
+void removeContact(const std::string& accountId, const std::string& uri);
+std::vector<std::map<std::string, std::string>> getContacts(const std::string& accountId);
 
 int exportAccounts(std::vector<std::string> accountIDs, std::string toDir, std::string password);
 int importAccounts(std::string archivePath, std::string password);
@@ -198,6 +205,8 @@ public:
     virtual void exportOnRingEnded(const std::string& /*account_id*/, int /*state*/, const std::string& /*pin*/){}
 
     virtual void incomingTrustRequest(const std::string& /*account_id*/, const std::string& /*from*/, const std::vector<uint8_t>& /*payload*/, time_t received){}
+    virtual void contactAdded(const std::string& /*account_id*/, const std::string& /*uri*/, bool confirmed){}
+    virtual void contactRemoved(const std::string& /*account_id*/, const std::string& /*uri*/, bool banned){}
 
     virtual void certificatePinned(const std::string& /*certId*/){}
     virtual void certificatePathPinned(const std::string& /*path*/, const std::vector<std::string>& /*certId*/){}
