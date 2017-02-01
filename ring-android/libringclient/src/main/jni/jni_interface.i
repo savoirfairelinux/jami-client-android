@@ -232,6 +232,8 @@ void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) 
         exportable_callback<ConfigurationSignal::IncomingAccountMessage>(bind(&ConfigurationCallback::incomingAccountMessage, confM, _1, _2, _3 )),
         exportable_callback<ConfigurationSignal::AccountMessageStatusChanged>(bind(&ConfigurationCallback::accountMessageStatusChanged, confM, _1, _2, _3, _4 )),
         exportable_callback<ConfigurationSignal::IncomingTrustRequest>(bind(&ConfigurationCallback::incomingTrustRequest, confM, _1, _2, _3, _4 )),
+        exportable_callback<ConfigurationSignal::ContactAdded>(bind(&ConfigurationCallback::contactAdded, confM, _1, _2, _3 )),
+        exportable_callback<ConfigurationSignal::ContactRemoved>(bind(&ConfigurationCallback::contactRemoved, confM, _1, _2, _3 )),
         exportable_callback<ConfigurationSignal::CertificatePinned>(bind(&ConfigurationCallback::certificatePinned, confM, _1 )),
         exportable_callback<ConfigurationSignal::CertificatePathPinned>(bind(&ConfigurationCallback::certificatePathPinned, confM, _1, _2 )),
         exportable_callback<ConfigurationSignal::CertificateExpired>(bind(&ConfigurationCallback::certificateExpired, confM, _1 )),
