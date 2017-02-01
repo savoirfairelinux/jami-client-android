@@ -22,15 +22,19 @@ package cx.ring.services;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.daemon.ConfigurationCallback;
+import cx.ring.daemon.Ringservice;
 import cx.ring.model.CallContact;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
 import cx.ring.model.Uri;
+import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 
@@ -42,6 +46,8 @@ import cx.ring.utils.Observable;
  * * <p>
  * Events are broadcasted:
  * - CONTACTS_CHANGED
+ * - CONTACT_ADDED
+ * - CONTACT_REMOVED
  */
 public abstract class ContactService extends Observable {
 
@@ -57,7 +63,12 @@ public abstract class ContactService extends Observable {
     @Named("ApplicationExecutor")
     ExecutorService mApplicationExecutor;
 
+    @Inject
+    @Named("DaemonExecutor")
+    ExecutorService mExecutor;
+
     private Map<Long, CallContact> mContactList;
+    private ConfigurationCallbackHandler mCallbackHandler;
 
     protected abstract Map<Long, CallContact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
 
@@ -69,6 +80,11 @@ public abstract class ContactService extends Observable {
 
     public ContactService() {
         mContactList = new HashMap<>();
+        mCallbackHandler = new ConfigurationCallbackHandler();
+    }
+
+    public ConfigurationCallbackHandler getCallbackHandler() {
+        return mCallbackHandler;
     }
 
     /**
@@ -96,6 +112,7 @@ public abstract class ContactService extends Observable {
 
     /**
      * Add a contact to the local cache
+     *
      * @param contact
      */
     public void addContact(CallContact contact) {
@@ -108,6 +125,7 @@ public abstract class ContactService extends Observable {
 
     /**
      * Get a contact from the local cache
+     *
      * @param uri
      * @return null if contact does not exist in the cache
      */
@@ -125,7 +143,7 @@ public abstract class ContactService extends Observable {
         return null;
     }
 
-    public Collection<CallContact> getContacts () {
+    public Collection<CallContact> getContacts() {
         return mContactList.values();
     }
 
@@ -216,7 +234,7 @@ public abstract class ContactService extends Observable {
      * @param contactNumber
      * @return The found/created contact
      */
-    public CallContact findContact (long contactId, String contactKey, String contactNumber) {
+    public CallContact findContact(long contactId, String contactKey, String contactNumber) {
         CallContact contact;
 
         if (contactId <= CallContact.DEFAULT_ID) {
@@ -234,4 +252,74 @@ public abstract class ContactService extends Observable {
         return contact;
     }
 
+    /**
+     * Add a new contact for the account Id on the Daemon
+     *
+     * @param accountId
+     * @param uri
+     */
+    public void addContact(final String accountId, final String uri) {
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "addContact() thread running...");
+                        Ringservice.addContact(accountId, uri);
+                        return true;
+                    }
+                }
+        );
+    }
+
+    /**
+     * Remove an existing contact for the account Id on the Daemon
+     *
+     * @param accountId
+     * @param uri
+     */
+    public void removeContact(final String accountId, final String uri) {
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "removeContact() thread running...");
+                        Ringservice.removeContact(accountId, uri);
+                        return true;
+                    }
+                }
+        );
+    }
+
+    class ConfigurationCallbackHandler extends ConfigurationCallback {
+
+        @Override
+        public void contactAdded(String accountId, String uri, boolean confirmed) {
+            Log.d(TAG, "contactAdded: " + accountId + ", " + uri + ", " + confirmed);
+
+            setChanged();
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_ADDED);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.CONFIRMED, confirmed);
+            notifyObservers(event);
+        }
+
+        @Override
+        public void contactRemoved(String accountId, String uri, boolean banned) {
+            Log.d(TAG, "contactRemoved: " + accountId + ", " + uri + ", " + banned);
+
+            setChanged();
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_REMOVED);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.BANNED, banned);
+            notifyObservers(event);
+        }
+    }
 }

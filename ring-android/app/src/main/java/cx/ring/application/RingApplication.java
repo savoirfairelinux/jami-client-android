@@ -67,6 +67,7 @@ import cx.ring.service.VideoManagerCallback;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
+import cx.ring.services.ContactService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
@@ -91,7 +92,7 @@ public class RingApplication extends Application {
 
     // true Daemon callbacks handlers. The notify the Android ones
     private Callback mCallAndConferenceCallbackHandler;
-    private ConfigurationCallback mAccountCallbackHandler;
+    private ConfigurationCallback mAccountAndContactCallbackHandler;
     private VideoCallback mHardwareCallbackHandler;
 
     public final Map<String, RingApplication.Shm> videoInputs = new HashMap<>();
@@ -129,6 +130,9 @@ public class RingApplication extends Application {
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
+
+    @Inject
+    ContactService mContactService;
 
     static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
     private final BroadcastReceiver ringerModeListener = new BroadcastReceiver() {
@@ -195,18 +199,21 @@ public class RingApplication extends Application {
                 mCallAndConferenceCallbackHandler = mDaemonService.getDaemonCallbackHandler(
                         mCallService.getCallbackHandler(),
                         mConferenceService.getCallbackHandler());
-                mAccountCallbackHandler = mAccountService.getCallbackHandler();
+                mAccountAndContactCallbackHandler = mDaemonService.getDaemonConfigurationCallbackHandler(
+                        mAccountService.getCallbackHandler(),
+                        mContactService.getCallbackHandler());
                 mHardwareCallbackHandler = mHardwareService.getCallbackHandler();
 
                 // Android specific Low level Services observers
                 mCallService.addObserver(mCallManagerCallBack);
                 mConferenceService.addObserver(mCallManagerCallBack);
                 mAccountService.addObserver(mConfigurationCallback);
+                mContactService.addObserver(mConfigurationCallback);
                 mHardwareService.addObserver(mVideoManagerCallback);
 
                 mDaemonService.startDaemon(
                         mCallAndConferenceCallbackHandler,
-                        mAccountCallbackHandler,
+                        mAccountAndContactCallbackHandler,
                         mHardwareCallbackHandler);
 
                 ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());

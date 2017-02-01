@@ -26,11 +26,15 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.daemon.Blob;
 import cx.ring.daemon.Callback;
 import cx.ring.daemon.ConfigurationCallback;
+import cx.ring.daemon.IntVect;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
+import cx.ring.daemon.SWIGTYPE_p_time_t;
 import cx.ring.daemon.StringMap;
+import cx.ring.daemon.StringVect;
 import cx.ring.daemon.VideoCallback;
 import cx.ring.utils.Log;
 
@@ -57,6 +61,14 @@ public class DaemonService {
         DaemonCallback callbackHandler = new DaemonCallback();
         callbackHandler.setCallbackHandler(callCallbackHandler);
         callbackHandler.setConferenceCallbackHandler(confCallbackHandler);
+        return callbackHandler;
+    }
+
+    public ConfigurationCallback getDaemonConfigurationCallbackHandler(AccountService.ConfigurationCallbackHandler accountCallbackHandler,
+                                                                       ContactService.ConfigurationCallbackHandler contactCallbackHandler) {
+        DaemonConfigurationCallback callbackHandler = new DaemonConfigurationCallback();
+        callbackHandler.setAccountCallbackHandler(accountCallbackHandler);
+        callbackHandler.setContactCallbackHandler(contactCallbackHandler);
         return callbackHandler;
     }
 
@@ -99,6 +111,104 @@ public class DaemonService {
             Ringservice.fini();
             mDaemonStarted = false;
             Log.i(TAG, "DaemonService stopped");
+        }
+    }
+
+    class DaemonConfigurationCallback extends ConfigurationCallback {
+        private AccountService.ConfigurationCallbackHandler mAccountCallbackHandler;
+        private ContactService.ConfigurationCallbackHandler mContactCallbackHandler;
+
+        void setAccountCallbackHandler(AccountService.ConfigurationCallbackHandler callbackHandler) {
+            mAccountCallbackHandler = callbackHandler;
+        }
+
+        void setContactCallbackHandler(ContactService.ConfigurationCallbackHandler callbackHandler) {
+            mContactCallbackHandler = callbackHandler;
+        }
+
+        @Override
+        public void volumeChanged(String device, int value) {
+            mAccountCallbackHandler.volumeChanged(device, value);
+        }
+
+        @Override
+        public void accountsChanged() {
+            mAccountCallbackHandler.accountsChanged();
+        }
+
+        @Override
+        public void stunStatusFailure(String accountId) {
+            mAccountCallbackHandler.stunStatusFailure(accountId);
+        }
+
+        @Override
+        public void registrationStateChanged(String accountId, String newState, int code, String detailString) {
+            mAccountCallbackHandler.registrationStateChanged(accountId, newState, code, detailString);
+        }
+
+        @Override
+        public void incomingAccountMessage(String accountId, String from, StringMap messages) {
+            mAccountCallbackHandler.incomingAccountMessage(accountId, from, messages);
+        }
+
+        @Override
+        public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
+            mAccountCallbackHandler.accountMessageStatusChanged(accountId, messageId, to, status);
+        }
+
+        @Override
+        public void errorAlert(int alert) {
+            mAccountCallbackHandler.errorAlert(alert);
+        }
+
+        @Override
+        public void getHardwareAudioFormat(IntVect ret) {
+            mAccountCallbackHandler.getHardwareAudioFormat(ret);
+        }
+
+        @Override
+        public void getAppDataPath(String name, StringVect ret) {
+            mAccountCallbackHandler.getAppDataPath(name, ret);
+        }
+
+        @Override
+        public void knownDevicesChanged(String accountId, StringMap devices) {
+            mAccountCallbackHandler.knownDevicesChanged(accountId, devices);
+        }
+
+        @Override
+        public void exportOnRingEnded(String accountId, int code, String pin) {
+            mAccountCallbackHandler.exportOnRingEnded(accountId, code, pin);
+        }
+
+        @Override
+        public void nameRegistrationEnded(String accountId, int state, String name) {
+            mAccountCallbackHandler.nameRegistrationEnded(accountId, state, name);
+        }
+
+        @Override
+        public void registeredNameFound(String accountId, int state, String address, String name) {
+            mAccountCallbackHandler.registeredNameFound(accountId, state, address, name);
+        }
+
+        @Override
+        public void migrationEnded(String accountId, String state) {
+            mAccountCallbackHandler.migrationEnded(accountId, state);
+        }
+
+        @Override
+        public void incomingTrustRequest(String accountId, String from, Blob message, SWIGTYPE_p_time_t received) {
+            mAccountCallbackHandler.incomingTrustRequest(accountId, from, message, received);
+        }
+
+        @Override
+        public void contactAdded(String accountId, String uri, boolean confirmed) {
+            mContactCallbackHandler.contactAdded(accountId, uri, confirmed);
+        }
+
+        @Override
+        public void contactRemoved(String accountId, String uri, boolean banned) {
+            mContactCallbackHandler.contactRemoved(accountId, uri, banned);
         }
     }
 
