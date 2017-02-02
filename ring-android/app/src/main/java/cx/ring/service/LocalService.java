@@ -19,7 +19,6 @@
 
 package cx.ring.service;
 
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -29,7 +28,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
@@ -37,16 +35,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.text.Html;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.LruCache;
@@ -59,7 +52,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
-import java.util.Random;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -67,11 +59,7 @@ import java.util.concurrent.Executors;
 import javax.inject.Inject;
 
 import cx.ring.BuildConfig;
-import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.client.ConversationActivity;
-import cx.ring.client.HomeActivity;
-import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -90,9 +78,9 @@ import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HistoryService;
+import cx.ring.services.NotificationService;
 import cx.ring.services.SettingsService;
 import cx.ring.utils.ActionHelper;
-import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaManager;
 import cx.ring.utils.Observable;
@@ -132,6 +120,9 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
+    @Inject
+    NotificationService mNotificationService;
+
     private IDRingService mService = null;
     private boolean dringStarted = false;
 
@@ -146,7 +137,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     private LruCache<Long, Bitmap> mMemoryCache = null;
     private final ExecutorService mPool = Executors.newCachedThreadPool();
 
-    private NotificationManagerCompat notificationManager;
     private MediaManager mediaManager;
 
     private boolean isWifiConn = false;
@@ -156,9 +146,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     private boolean canUseMobile = false;
 
     private boolean mAreConversationsLoaded = false;
-    private NotificationCompat.Builder mMessageNotificationBuilder;
-    private int mNotificationID;
-    private String mLastBlockchainQuery = null;
 
     public LruCache<Long, Bitmap> get40dpContactCache() {
         return mMemoryCache;
@@ -260,7 +247,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                 readTextMessage(msg);
             }
         }
-        notificationManager.cancel(conv.getUuid());
+        mNotificationService.cancelTextNotification(conv.getContact());
         updateTextNotifications();
     }
 
@@ -334,10 +321,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
         mediaManager = new MediaManager(this);
 
-        notificationManager = NotificationManagerCompat.from(this);
-        // Clear any notifications from a previous app instance
-        notificationManager.cancelAll();
-
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         final int cacheSize = maxMemory / 8;
         mMemoryCache = new LruCache<Long, Bitmap>(cacheSize) {
@@ -358,6 +341,9 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         mSettingsService.addObserver(this);
         mAccountService.addObserver(this);
         mContactService.addObserver(this);
+
+        // Clear any notifications from a previous app instance
+        mNotificationService.cancelAll();
 
         Settings settings = mSettingsService.loadSettings();
         canUseContacts = settings.isAllowSystemContacts();
@@ -722,10 +708,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
     private void updated(Map<String, Conversation> res) {
         for (Conversation conversation : conversations.values()) {
-            for (Conference conference : conversation.getCurrentCalls()) {
-                notificationManager.cancel(conference.getUuid());
-            }
-
             boolean isConversationVisible = conversation.isVisible();
             String conversationKey = conversation.getContact().getIds().get(0);
             Conversation newConversation = res.get(conversationKey);
@@ -738,7 +720,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         updateTextNotifications();
         sendBroadcast(new Intent(ACTION_CONF_UPDATE));
         sendBroadcast(new Intent(ACTION_CONF_LOADED));
-        this.mAreConversationsLoaded = true;
+        mAreConversationsLoaded = true;
     }
 
     private void updateConnectivityState() {
@@ -765,79 +747,22 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     public void updateTextNotifications() {
         Log.d(TAG, "updateTextNotifications()");
 
-        for (Conversation c : conversations.values()) {
+        for (Conversation conversation : conversations.values()) {
 
-            if (c.isVisible()) {
-                notificationManager.cancel(c.getUuid());
+            if (conversation.isVisible()) {
+                mNotificationService.cancelTextNotification(conversation.getContact());
                 continue;
             }
 
-            TreeMap<Long, TextMessage> texts = c.getUnreadTextMessages();
+            TreeMap<Long, TextMessage> texts = conversation.getUnreadTextMessages();
             if (texts.isEmpty() || texts.lastEntry().getValue().isNotified()) {
                 continue;
             } else {
-                notificationManager.cancel(c.getUuid());
+                mNotificationService.cancelTextNotification(conversation.getContact());
             }
 
-            CallContact contact = c.getContact();
-            if (mMessageNotificationBuilder == null) {
-                mMessageNotificationBuilder = new NotificationCompat.Builder(getApplicationContext());
-                mMessageNotificationBuilder.setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setDefaults(NotificationCompat.DEFAULT_ALL)
-                        .setSmallIcon(R.drawable.ic_ring_logo_white);
-            }
-            mMessageNotificationBuilder.setContentTitle(contact.getDisplayName());
-            String[] split = contact.getDisplayName().split(":");
-            if (split.length > 1) {
-                mLastBlockchainQuery = split[1];
-                mAccountService.lookupAddress("", "", mLastBlockchainQuery);
-            }
-            Intent intentConversation;
-            if (ConversationFragment.isTabletMode(this)) {
-                intentConversation = new Intent(ACTION_CONV_ACCEPT)
-                        .setClass(this, HomeActivity.class)
-                        .putExtra("conversationID", contact.getIds().get(0));
-            } else {
-                intentConversation = new Intent(Intent.ACTION_VIEW)
-                        .setClass(this, ConversationActivity.class)
-                        .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
-            }
-
-            Intent intentDelete = new Intent(ACTION_CONV_READ)
-                    .setClass(this, LocalService.class)
-                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
-            mMessageNotificationBuilder.setContentIntent(PendingIntent.getActivity(this, new Random().nextInt(), intentConversation, 0))
-                    .setDeleteIntent(PendingIntent.getService(this, new Random().nextInt(), intentDelete, 0));
-
-            if (contact.getPhoto() != null) {
-                Resources res = getResources();
-                int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
-                int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
-
-                Bitmap bmp = BitmapUtils.bytesToBitmap(contact.getPhoto());
-                if (bmp != null) {
-                    mMessageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
-                }
-            }
-            if (texts.size() == 1) {
-                TextMessage txt = texts.firstEntry().getValue();
-                txt.setNotified(true);
-                mMessageNotificationBuilder.setContentText(txt.getMessage());
-                mMessageNotificationBuilder.setStyle(null);
-                mMessageNotificationBuilder.setWhen(txt.getTimestamp());
-            } else {
-                NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-                for (TextMessage s : texts.values()) {
-                    inboxStyle.addLine(Html.fromHtml("<b>" + DateUtils.formatDateTime(this, s.getTimestamp(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL) + "</b> " + s.getMessage()));
-                    s.setNotified(true);
-                }
-                mMessageNotificationBuilder.setContentText(texts.lastEntry().getValue().getMessage());
-                mMessageNotificationBuilder.setStyle(inboxStyle);
-                mMessageNotificationBuilder.setWhen(texts.lastEntry().getValue().getTimestamp());
-            }
-            mNotificationID = c.getUuid();
-            notificationManager.notify(mNotificationID, mMessageNotificationBuilder.build());
+            CallContact contact = conversation.getContact();
+            mNotificationService.showTextNotification(contact, conversation, texts);
         }
     }
 
@@ -998,14 +923,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                     }
 
                     conversation.addConference(toAdd);
-                    Pair<NotificationCompat.Builder, Integer> notificationResult = ActionHelper.showCallNotification(LocalService.this, toAdd);
-                    mMessageNotificationBuilder = notificationResult.first;
-                    mNotificationID = notificationResult.second;
-
-                    String[] split = contact.getDisplayName().split(":");
-                    if (split.length > 0) {
-                        mAccountService.lookupAddress("", "", split[1]);
-                    }
+                    mNotificationService.showCallNotification(toAdd);
 
                     updateAudioState();
 
@@ -1082,10 +1000,10 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
                             mHistoryService.insertNewEntry(found);
                             conversation.addHistoryCall(new HistoryCall(call));
-                            notificationManager.cancel(found.getUuid());
+                            mNotificationService.cancelCallNotification(call);
                             found.removeParticipant(call);
                         } else {
-                            ActionHelper.showCallNotification(LocalService.this, found);
+                            mNotificationService.showCallNotification(found);
                         }
                         if (newState == SipCall.State.FAILURE || newState == SipCall.State.BUSY || newState == SipCall.State.HUNGUP) {
                             try {
@@ -1198,30 +1116,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                             .putBoolean(OutgoingCallHandler.KEY_CACHE_HAVE_SIPACCOUNT, mAccountService.hasSipAccount()).apply();
 
                     refreshContacts();
-                    break;
-                case REGISTERED_NAME_FOUND:
-                    final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                    final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-                    final int state = arg.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
-                    if (mLastBlockchainQuery == null || !mLastBlockchainQuery.equals(address)) {
-                        return;
-                    }
-
-                    //state 0: name found
-                    if (mMessageNotificationBuilder != null && state == 0) {
-                        Bundle extras = mMessageNotificationBuilder.getExtras();
-                        if (extras != null) {
-                            if (extras.getBoolean(CallManagerCallBack.INCOMING_CALL, false)) {
-                                mMessageNotificationBuilder.setContentTitle(getApplicationContext().getString(R.string.notif_incoming_call_title, name));
-                            } else {
-                                mMessageNotificationBuilder.setContentTitle(name);
-                            }
-                        } else {
-                            mMessageNotificationBuilder.setContentTitle(name);
-                        }
-                        notificationManager.notify(mNotificationID, mMessageNotificationBuilder.build());
-                        mLastBlockchainQuery = null;
-                    }
                     break;
             }
         }
