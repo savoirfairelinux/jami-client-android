@@ -40,6 +40,8 @@ import cx.ring.services.HistoryService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.LogService;
 import cx.ring.services.LogServiceImpl;
+import cx.ring.services.NotificationService;
+import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.SettingsService;
 import cx.ring.services.SettingsServiceImpl;
 import cx.ring.utils.Log;
@@ -77,6 +79,15 @@ public class ServiceInjectionModule {
     LogService provideLogService() {
         LogService service = new LogServiceImpl();
         Log.injectLogService(service);
+        return service;
+    }
+
+    @Provides
+    @Singleton
+    NotificationService provideNotificationService() {
+        NotificationServiceImpl service = new NotificationServiceImpl();
+        mRingApplication.getRingInjectionComponent().inject(service);
+        service.initHelper();
         return service;
     }
 

@@ -89,6 +89,7 @@ import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
+import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.BlockchainInputHandler;
@@ -114,6 +115,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
     @Inject
     AccountService mAccountService;
+
+    @Inject
+    NotificationService mNotificationService;
 
     @BindView(R.id.contact_bubble_layout)
     View contactBubbleLayout;
@@ -562,11 +566,11 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
         mAccountService.removeObserver(this);
 
-        Conference c = getConference();
-        if (c != null) {
-            c.setVisible(false);
-            c.setResumeVideo(haveVideo);
-            ActionHelper.showCallNotification(getActivity(), c);
+        Conference conference = getConference();
+        if (conference != null) {
+            conference.setVisible(false);
+            conference.setResumeVideo(haveVideo);
+            mNotificationService.showCallNotification(conference);
         }
     }
 
