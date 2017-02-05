@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_eacdc287",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-02-05T23:27:54Z",
+      "side": 1,
+      "message": "When sharing vcard information over the network and openDHT we don\u0027t have any size limitation. This can cause issues, since a vCard photo can be too large to fit in a single openDHT packet.\nThe reduceBitmap function will scale down large images and will be used to control shared data size",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 69
+      },
+      "revId": "40e8756604dc458fd00601c020a953b4a2bbb1dc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
