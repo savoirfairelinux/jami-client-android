@@ -2,7 +2,7 @@
 # Build Ring daemon and client APK for Android
 
 if [ -z "$ANDROID_ABI" ]; then
-    ANDROID_ABI="armeabi-v7a x86 x86_64"
+    ANDROID_ABI="armeabi-v7a arm64-v8a x86 x86_64"
     echo "ANDROID_ABI not provided, building for ${ANDROID_ABI}"
 fi
 
