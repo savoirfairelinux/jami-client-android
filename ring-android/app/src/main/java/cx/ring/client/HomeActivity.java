@@ -569,9 +569,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             }
             if (fContent == null) {
                 fContent = new SmartListFragment();
-                fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commit();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commitAllowingStateLoss();
             } else if (fContent instanceof Refreshable) {
-                fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commit();
+                fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commitAllowingStateLoss();
                 ((Refreshable) fContent).refresh();
             }
             service.reloadAccounts();
