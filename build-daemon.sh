@@ -49,7 +49,7 @@ elif [ ${ANDROID_ABI} = "mips" ] ; then
     PLATFORM_SHORT_ARCH="mips"
 elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
     TARGET_TUPLE="aarch64-linux-android"
-    PJ_TARGET_TUPLE="arm64-unknown-linux-androideabi"
+    PJ_TARGET_TUPLE="aarch64-unknown-linux-android"
     PATH_HOST=$TARGET_TUPLE
     HAVE_ARM=1
     HAVE_64=1
@@ -122,9 +122,11 @@ if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
     EXTRA_LDFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mcpu=cortex-a8 -lm_hard -D_NDK_MATH_NO_SOFTFP=1"
 elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
     EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16"
-    EXTRA_LDFLAGS="-march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16 -lm -Wl,--fix-cortex-a8"
+    EXTRA_LDFLAGS="-march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16"
+elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
+    EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/sysroot/usr/lib -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/lib"
 fi
-EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR} -lm -landroid_support"
+EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR} -lm -latomic -landroid_support"
 
 EXTRA_CXXFLAGS="${EXTRA_CFLAGS}"
 EXTRA_CFLAGS="-std=c11 ${EXTRA_CFLAGS}"
