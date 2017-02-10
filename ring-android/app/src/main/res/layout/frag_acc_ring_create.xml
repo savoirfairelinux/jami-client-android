@@ -23,6 +23,7 @@
                 android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -59,9 +60,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:textColorHint="@color/text_color_secondary_dark"
-                        app:hintTextAppearance="@color/text_color_primary_dark">
+                        android:layout_marginRight="12dp">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/ring_username"
@@ -69,7 +68,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/prompt_new_username"
                             android:imeOptions="actionNext"
-                            android:inputType="textVisiblePassword"
+                            android:inputType="text"
                             android:lines="1"
                             android:maxLines="1" />
                     </android.support.design.widget.TextInputLayout>
@@ -85,7 +84,7 @@
                     android:paddingStart="16dp"
                     android:paddingTop="16dp"
                     android:text="@string/help_password_choose"
-                    android:textSize="14sp" />
+                    android:textColor="@color/text_color_primary_dark" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/ring_password_txt_box"
@@ -93,9 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
-                    android:textColorHint="@color/text_color_secondary_dark"
-                    app:hintTextAppearance="@color/text_color_primary_dark"
-                    app:passwordToggleTint="@color/text_color_primary_dark">
+                    app:passwordToggleEnabled="true">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/ring_password"
@@ -112,9 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
-                    android:textColorHint="@color/text_color_secondary_dark"
-                    app:hintTextAppearance="@color/text_color_primary_dark"
-                    app:passwordToggleTint="@color/text_color_primary_dark">
+                    app:passwordToggleEnabled="true">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/ring_password_repeat"
@@ -128,12 +123,12 @@
 
                 <Button
                     android:id="@+id/create_account"
-                    android:theme="@style/ButtonColoredInverse"
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
-                    android:text="@string/account_new_button" />
+                    android:text="@string/account_new_button"
+                    android:theme="@style/ButtonColoredInverse" />
 
             </LinearLayout>
 
@@ -150,10 +145,11 @@
 
         <Button
             android:id="@+id/last_create_account"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="100dp"
+            style="@style/WizardNavButton"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/wizard_back" />
 
     </RelativeLayout>

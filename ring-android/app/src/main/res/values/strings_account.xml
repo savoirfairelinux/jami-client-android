@@ -49,7 +49,7 @@ along with this program; if not, write to the Free Software
 
     <string name="help_sip_title">Add your SIP account</string>
     <string name="help_sip">Configure an existing SIP account.</string>
-    <string name="create_sip_account">Add</string>
+    <string name="create_sip_account">Add SIP account</string>
 
     <!-- Strings related to account deletion -->
     <string name="account_delete_dialog_title">Delete account ?</string>

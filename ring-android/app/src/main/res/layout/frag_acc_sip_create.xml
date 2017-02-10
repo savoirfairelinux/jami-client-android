@@ -24,7 +24,7 @@ along with this program; if not, write to the Free Software
     android:id="@+id/login_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/WizardHome">
+    android:theme="@style/Wizard">
 
     <cx.ring.views.BoundedScrollView
         android:layout_width="match_parent"
@@ -63,10 +63,7 @@ along with this program; if not, write to the Free Software
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:passwordToggleEnabled="true"
-                android:textColorHint="@color/text_color_secondary_dark"
-                app:hintTextAppearance="@color/text_color_primary_dark">
+                android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/alias"
@@ -78,15 +75,12 @@ along with this program; if not, write to the Free Software
                     android:hint="@string/prompt_alias"
                     android:imeOptions="flagNoExtractUi"
                     android:maxLines="1"
-                    android:singleLine="true"/>
+                    android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:passwordToggleEnabled="true"
-                android:textColorHint="@color/text_color_secondary_dark"
-                app:hintTextAppearance="@color/text_color_primary_dark">
+                android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/hostname"
@@ -104,10 +98,7 @@ along with this program; if not, write to the Free Software
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:passwordToggleEnabled="true"
-                android:textColorHint="@color/text_color_secondary_dark"
-                app:hintTextAppearance="@color/text_color_primary_dark">
+                android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/username"
@@ -127,10 +118,7 @@ along with this program; if not, write to the Free Software
                 android:id="@+id/etSipPasswordLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:passwordToggleEnabled="true"
-                android:textColorHint="@color/text_color_secondary_dark"
-                app:hintTextAppearance="@color/text_color_primary_dark"
-                app:passwordToggleTint="@color/text_color_primary_dark">
+                app:passwordToggleEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/password"
@@ -151,11 +139,11 @@ along with this program; if not, write to the Free Software
 
             <Button
                 android:id="@+id/create_sip_button"
-                android:theme="@style/ButtonColored"
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/create_sip_account"/>
+                android:text="@string/create_sip_account"
+                android:theme="@style/ButtonColoredInverse" />
 
         </LinearLayout>
 
