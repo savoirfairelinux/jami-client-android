@@ -1,0 +1,7 @@
+Verified+1: Jenkins CI <jenkins@ring-packaging.cx>
+Code-Review+2: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+Submitted-by: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Submitted-at: Fri, 10 Feb 2017 16:22:47 -0500
+Reviewed-on: https://gerrit-ring.savoirfairelinux.com/6089
+Project: ring-client-android
+Branch: refs/heads/master
