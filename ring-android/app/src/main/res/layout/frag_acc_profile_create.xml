@@ -34,7 +34,8 @@
                     android:layout_marginTop="24dp"
                     android:gravity="center"
                     android:text="@string/account_creation_profile"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    android:textColor="@color/text_color_primary_dark" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -126,18 +127,20 @@
 
         <Button
             android:id="@+id/last_create_account"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="100dp"
+            style="@style/WizardNavButton"
             android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:text="@string/wizard_back" />
 
         <Button
             android:id="@+id/next_create_account"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="100dp"
+            style="@style/WizardNavButton"
             android:layout_height="match_parent"
+            android:layout_width="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:text="@string/wizard_next" />
 
     </RelativeLayout>

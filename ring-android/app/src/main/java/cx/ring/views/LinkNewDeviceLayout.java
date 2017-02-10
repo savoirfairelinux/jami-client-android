@@ -27,7 +27,7 @@ import cx.ring.account.RingAccountSummaryFragment;
 
 public class LinkNewDeviceLayout extends LinearLayout {
 
-    RingAccountSummaryFragment container;
+    private RingAccountSummaryFragment container = null;
 
     public LinkNewDeviceLayout(Context context, AttributeSet attrs) {
         super(context, attrs);

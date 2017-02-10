@@ -33,6 +33,7 @@
                     android:layout_margin="24dp"
                     android:gravity="center"
                     android:text="@string/account_link_title"
+                    android:textColor="@color/text_color_primary_dark"
                     android:textSize="24sp" />
 
                 <TextView
@@ -43,7 +44,7 @@
                     android:paddingStart="16dp"
                     android:paddingTop="16dp"
                     android:text="@string/help_password_enter"
-                    android:textColor="@color/text_color_secondary_dark"
+                    android:textColor="@color/text_color_primary_dark"
                     android:textSize="14sp" />
 
                 <android.support.design.widget.TextInputLayout
@@ -52,9 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
-                    android:textColorHint="@color/text_color_secondary_dark"
-                    app:hintTextAppearance="@color/text_color_primary_dark"
-                    app:passwordToggleTint="@color/text_color_primary_dark">
+                    app:passwordToggleEnabled="true">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/ring_existing_password"
@@ -73,7 +72,7 @@
                     android:paddingStart="16dp"
                     android:paddingTop="16dp"
                     android:text="@string/help_pin_enter"
-                    android:textColor="@color/text_color_secondary_dark"
+                    android:textColor="@color/text_color_primary_dark"
                     android:textSize="14sp" />
 
                 <android.support.design.widget.TextInputLayout
@@ -82,8 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
-                    android:textColorHint="@color/text_color_secondary_dark"
-                    app:hintTextAppearance="@color/text_color_primary_dark">
+                    app:passwordToggleEnabled="true">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/ring_add_pin"
@@ -99,12 +97,12 @@
 
                 <Button
                     android:id="@+id/link_button"
-                    android:theme="@style/ButtonColoredInverse"
-                    android:layout_width="300dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp"
-                    android:text="@string/account_link_button" />
+                    android:text="@string/account_link_button"
+                    android:theme="@style/ButtonColoredInverse" />
 
             </LinearLayout>
 
@@ -121,10 +119,11 @@
 
         <Button
             android:id="@+id/last_create_account"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="100dp"
+            style="@style/WizardNavButton"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/wizard_back" />
 
     </RelativeLayout>
