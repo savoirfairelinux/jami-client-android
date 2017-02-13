@@ -50,6 +50,8 @@ public:
 
     virtual void nameRegistrationEnded(const std::string& /*account_id*/, int state, const std::string& /*name*/){}
     virtual void registeredNameFound(const std::string& /*account_id*/, int state, const std::string& /*address*/, const std::string& /*name*/){}
+
+    virtual void migrationEnded(const std::string& /*accountId*/, const std::string& /*state*/){}
 };
 %}
 
@@ -210,4 +212,6 @@ public:
 
     virtual void nameRegistrationEnded(const std::string& /*account_id*/, int state, const std::string& /*name*/){}
     virtual void registeredNameFound(const std::string& /*account_id*/, int state, const std::string& /*address*/, const std::string& /*name*/){}
+
+    virtual void migrationEnded(const std::string& /*accountId*/, const std::string& /*state*/){}
 };

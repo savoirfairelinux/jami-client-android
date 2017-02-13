@@ -172,8 +172,6 @@ along with this program; if not, write to the Free Software
     <string name="wizard_next">Next</string>
     <string name="wizard_back">Back</string>
 
-    <string name="account_device_updated_message">You have successfully updated your Ring account.</string>
-
     <!-- MenuHeaderView -->
     <string name="profile">My profile</string>
     <string name="profile_message_warning">This is shared with your contacts</string>

@@ -25,6 +25,7 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -134,6 +135,8 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
 
         migratingAccount = true;
 
+        //orientation is locked during the migration of account to avoid the destruction of the thread
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         new MigrateAccountTask(mAccountId, password).execute();
     }
 
@@ -168,7 +171,7 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
         }
 
         switch (event.getEventType()) {
-            case REGISTRATION_STATE_CHANGED:
+            case MIGRATION_ENDED:
                 handleMigrationState(event);
                 break;
             default:
@@ -176,6 +179,7 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
                 break;
         }
     }
+
 
     private void handleMigrationState(final ServiceEvent event) {
         RingApplication.uiHandler.post(new Runnable() {
@@ -191,43 +195,39 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
                     return;
                 }
 
-                if (!AccountConfig.STATE_INITIALIZING.contentEquals(newState)) {
-                    if (mProgress != null) {
-                        mProgress.dismiss();
-                        mProgress = null;
+                if (mProgress != null) {
+                    mProgress.dismiss();
+                    mProgress = null;
+                }
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //do things
                     }
-                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-                    dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            //do things
+                });
+                boolean success = false;
+                switch (newState) {
+                    case AccountConfig.STATE_INVALID:
+                        dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
+                                .setMessage(R.string.account_cannot_be_updated_message);
+                        break;
+                    default:
+                        dialogBuilder.setTitle(R.string.account_device_updated_title)
+                                .setMessage(R.string.account_device_updated_message);
+                        success = true;
+                        break;
+                }
+                AlertDialog dialogSuccess = dialogBuilder.show();
+                if (success) {
+                    dialogSuccess.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialogInterface) {
+                            getActivity().setResult(Activity.RESULT_OK, new Intent());
+                            //unlock the screen orientation
+                            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                            getActivity().finish();
                         }
                     });
-                    boolean success = false;
-                    switch (newState) {
-                        case AccountConfig.STATE_ERROR_GENERIC:
-                            dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
-                                    .setMessage(R.string.account_cannot_be_found_message);
-                            break;
-                        case AccountConfig.STATE_ERROR_NETWORK:
-                            dialogBuilder.setTitle(R.string.account_no_network_title)
-                                    .setMessage(R.string.account_no_network_message);
-                            break;
-                        default:
-                            dialogBuilder.setTitle(R.string.account_device_updated_title)
-                                    .setMessage(R.string.account_device_updated_message);
-                            success = true;
-                            break;
-                    }
-                    AlertDialog dialogSuccess = dialogBuilder.show();
-                    if (success) {
-                        dialogSuccess.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialogInterface) {
-                                getActivity().setResult(Activity.RESULT_OK, new Intent());
-                                getActivity().finish();
-                            }
-                        });
-                    }
                 }
             }
         });

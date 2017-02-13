@@ -47,6 +47,8 @@ public class AccountConfig {
     public static final String STATE_REQUEST_TIMEOUT = "Request Timeout";
     public static final String STATE_INITIALIZING = "INITIALIZING";
     public static final String STATE_NEED_MIGRATION = "ERROR_NEED_MIGRATION";
+    public static final String STATE_SUCCESS = "SUCCESS";
+    public static final String STATE_INVALID = "INVALID";
 
     private final Map<ConfigKey, String> mValues;
 

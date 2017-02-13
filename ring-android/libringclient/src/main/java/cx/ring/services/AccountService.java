@@ -69,6 +69,7 @@ import ezvcard.VCard;
  * - EXPORT_ON_RING_ENDED
  * - NAME_REGISTRATION_ENDED
  * - REGISTERED_NAME_FOUND
+ * - MIGRATION_ENDED
  */
 public class AccountService extends Observable {
 
@@ -1166,6 +1167,17 @@ public class AccountService extends Observable {
             event.addEventInput(ServiceEvent.EventInput.STATE, state);
             event.addEventInput(ServiceEvent.EventInput.ADDRESS, address);
             event.addEventInput(ServiceEvent.EventInput.NAME, name);
+            notifyObservers(event);
+        }
+
+        @Override
+        public void migrationEnded(String accountId, String state) {
+            Log.d(TAG, "migrationEnded: " + accountId + ", " + state);
+
+            setChanged();
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.MIGRATION_ENDED);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.STATE, state);
             notifyObservers(event);
         }
     }

@@ -145,7 +145,9 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        getFragmentManager().putFragment(outState, PROFILE_TAG, mProfileFragment);
+        if (mProfileFragment.isAdded()) {
+            getFragmentManager().putFragment(outState, PROFILE_TAG, mProfileFragment);
+        }
         outState.putString("mFullname", mFullname);
         outState.putParcelable("mPhotoProfile", mPhotoProfile);
         outState.putBoolean("mLinkAccount", mLinkAccount);

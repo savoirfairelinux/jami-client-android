@@ -53,7 +53,8 @@ public class ServiceEvent {
         START_CAPTURE,
         STOP_CAPTURE,
         SET_PARAMETERS,
-        CONTACTS_CHANGED
+        CONTACTS_CHANGED,
+        MIGRATION_ENDED
     }
 
     public enum EventInput {
