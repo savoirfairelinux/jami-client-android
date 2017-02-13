@@ -171,6 +171,8 @@ along with this program; if not, write to the Free Software
     <string name="account_device_added_title">Account device added</string>
     <string name="account_device_added_message">You have successfully setup your Ring account on this device.</string>
     <string name="account_device_updated_title">Account device updated</string>
+    <string name="account_device_updated_message">You have successfully updated your Ring account.</string>
+    <string name="account_cannot_be_updated_message">Account device couldn\'t be update. Please check your password.</string>
     <string name="account_sip_success_title">Sip account registered</string>
     <string name="account_sip_success_message">You have successfully registered your Sip account.</string>
     <string name="account_sip_register_anyway">Register anyway</string>
