@@ -158,7 +158,7 @@ public class VCardUtils {
         return loadFromDisk(path);
     }
 
-    public static VCard loadLocalProfileFromDisk(File filesDir, String accountId, String defaultName) {
+    public static VCard loadLocalProfileFromDisk(File filesDir, String accountId) {
         VCard vcard = null;
         String path = localProfilePath(filesDir);
         if (!"".equals(path)) {
@@ -170,7 +170,7 @@ public class VCardUtils {
 
         if (vcard == null) {
             Log.d(TAG, "load default profile");
-            vcard = setupDefaultProfile(filesDir, accountId, defaultName);
+            vcard = setupDefaultProfile(filesDir, accountId);
         }
 
         return vcard;
@@ -229,9 +229,8 @@ public class VCardUtils {
         return filesDir.getAbsolutePath() + File.separator + "profiles";
     }
 
-    private static VCard setupDefaultProfile(File filesDir, String accountId, String defaultMame) {
+    private static VCard setupDefaultProfile(File filesDir, String accountId) {
         VCard vcard = new VCard();
-        vcard.setFormattedName(new FormattedName(defaultMame));
         vcard.setUid(new Uid(String.valueOf(System.currentTimeMillis())));
         saveLocalProfileToDisk(vcard, accountId, filesDir);
         return vcard;
