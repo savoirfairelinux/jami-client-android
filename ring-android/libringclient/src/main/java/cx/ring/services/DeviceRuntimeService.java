@@ -20,6 +20,9 @@
 package cx.ring.services;
 
 import java.io.File;
+import java.util.Map;
+
+import cx.ring.daemon.StringMap;
 
 public abstract class DeviceRuntimeService {
 
@@ -42,5 +45,7 @@ public abstract class DeviceRuntimeService {
     public abstract boolean hasPhotoPermission();
 
     public abstract boolean hasGalleryPermission();
+
+    public abstract Map<String, StringMap> retrieveAvailablePreviewSettings();
 
 }

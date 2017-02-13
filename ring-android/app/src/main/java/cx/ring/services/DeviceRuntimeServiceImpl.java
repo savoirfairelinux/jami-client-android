@@ -22,9 +22,12 @@ package cx.ring.services;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.support.v4.content.ContextCompat;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -33,6 +36,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.R;
+import cx.ring.application.RingApplication;
+import cx.ring.daemon.StringMap;
 import cx.ring.utils.Log;
 
 public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
@@ -115,6 +120,18 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     @Override
     public boolean hasGalleryPermission() {
         return checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+    }
+
+    @Override
+    public Map<String, StringMap> retrieveAvailablePreviewSettings() {
+        RingApplication application = (RingApplication) mContext.getApplicationContext();
+        Map<String, StringMap> camSettings = new HashMap<>();
+        for (int i = 0; i < Camera.getNumberOfCameras(); i++) {
+            if (application.mVideoManagerCallback.getNativeParams(i) != null) {
+                camSettings.put(Integer.toString(i), application.mVideoManagerCallback.getNativeParams(i).toMap(mContext.getResources().getConfiguration().orientation));
+            }
+        }
+        return camSettings;
     }
 
     private boolean checkPermission(String permission) {

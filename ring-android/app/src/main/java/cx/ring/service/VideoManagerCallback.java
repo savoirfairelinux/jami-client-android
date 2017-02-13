@@ -142,7 +142,7 @@ public class VideoManagerCallback implements Observer<ServiceEvent> {
         mHardwareService.setDefaultVideoDevice(Integer.toString(cameraFront));
     }
 
-    DeviceParams getNativeParams(int i) {
+    public DeviceParams getNativeParams(int i) {
         return mNativeParams.get(i);
     }
 
