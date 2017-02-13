@@ -180,7 +180,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         SHARE(3),
         ABOUT(4);
 
-        int position;
+        final int position;
 
         Section(int pos) {
             position = pos;
@@ -221,7 +221,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        mRingNavigationPresenter.initializePresenter(getString(R.string.unknown));
+        mRingNavigationPresenter.updateUser();
 
         setupNavigationMenu();
         setupAccountList();
@@ -327,12 +327,12 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         LinearLayoutManager mLayoutManager2 = new LinearLayoutManager(getActivity());
         mMenuView.setLayoutManager(mLayoutManager2);
 
-        ArrayList<NavigationItem> menu = new ArrayList<>();
-        menu.add(0, new NavigationItem(R.string.menu_item_home, R.drawable.ic_home_black));
-        menu.add(1, new NavigationItem(R.string.menu_item_accounts, R.drawable.ic_group_black));
-        menu.add(2, new NavigationItem(R.string.menu_item_settings, R.drawable.ic_settings_black));
-        menu.add(3, new NavigationItem(R.string.menu_item_share, R.drawable.ic_share_black));
-        menu.add(4, new NavigationItem(R.string.menu_item_about, R.drawable.ic_info_black));
+        final ArrayList<NavigationItem> menu = new ArrayList<>(5);
+        menu.add(new NavigationItem(R.string.menu_item_home, R.drawable.ic_home_black));
+        menu.add(new NavigationItem(R.string.menu_item_accounts, R.drawable.ic_group_black));
+        menu.add(new NavigationItem(R.string.menu_item_settings, R.drawable.ic_settings_black));
+        menu.add(new NavigationItem(R.string.menu_item_share, R.drawable.ic_share_black));
+        menu.add(new NavigationItem(R.string.menu_item_about, R.drawable.ic_info_black));
 
         mMenuAdapter = new NavigationAdapter(menu);
         mMenuView.setAdapter(mMenuAdapter);
@@ -435,7 +435,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
             @Override
             public void run() {
                 mAccountAdapter.replaceAll(viewModel.getAccounts());
-                updateUserView(viewModel.getVcard(getActivity().getFilesDir(), getString(R.string.unknown)));
+                updateUserView(viewModel.getVcard(getActivity().getFilesDir()));
                 updateSelectedAccountView(viewModel.getAccount());
 
                 if (viewModel.getAccounts().isEmpty()) {

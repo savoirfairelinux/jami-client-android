@@ -45,8 +45,6 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
-    private String mDefaultName;
-
     @Override
     public void afterInjection() {
         // We observe the application state changes
@@ -63,11 +61,6 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
     public void unbindView() {
         mAccountService.removeObserver(this);
         super.unbindView();
-    }
-
-    public void initializePresenter(String defaultName) {
-        mDefaultName = defaultName;
-        updateUser();
     }
 
     public void updateUser() {
@@ -88,13 +81,9 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
 
     public void saveVCard(String username, Photo photo) {
         String accountId = mAccountService.getCurrentAccount().getAccountID();
-
-        if (username.isEmpty()) {
-            username = mDefaultName;
-        }
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
-        VCard vcard = VCardUtils.loadLocalProfileFromDisk(filesDir, accountId, mDefaultName);
+        VCard vcard = VCardUtils.loadLocalProfileFromDisk(filesDir, accountId);
         vcard.setFormattedName(username);
         vcard.removeProperties(Photo.class);
         vcard.addPhoto(photo);
@@ -105,8 +94,12 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
     }
 
     public String getAlias(Account account) {
-        VCard vcard = VCardUtils.loadLocalProfileFromDisk(mDeviceRuntimeService.provideFilesDir(), account.getAccountID(), mDefaultName);
-        return vcard.getFormattedName().getValue();
+        VCard vcard = VCardUtils.loadLocalProfileFromDisk(mDeviceRuntimeService.provideFilesDir(), account.getAccountID());
+        String alias = vcard.getFormattedName().getValue();
+        if (alias == null || alias.isEmpty()) {
+            alias = account.getAlias();
+        }
+        return alias;
     }
 
     public String getHost(Account account, String defaultNameSip) {

@@ -182,7 +182,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (getItemViewType(position)) {
             case TYPE_ACCOUNT:
                 Account account = mDataset.get(position);
-                VCard vcard = VCardUtils.loadLocalProfileFromDisk(mContext.getFilesDir(), account.getAccountID(), mContext.getString(R.string.unknown));
+                VCard vcard = VCardUtils.loadLocalProfileFromDisk(mContext.getFilesDir(), account.getAccountID());
                 if (!vcard.getPhotos().isEmpty()) {
                     Bitmap photo = BitmapUtils.cropImageToCircle(vcard.getPhotos().get(0).getData());
                     ((AccountView) holder).photo.setImageBitmap(photo);
@@ -190,7 +190,11 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     Drawable photo = ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.ic_contact_picture, null);
                     ((AccountView) holder).photo.setImageDrawable(photo);
                 }
-                ((AccountView) holder).alias.setText(vcard.getFormattedName().getValue());
+                String alias = vcard.getFormattedName().getValue();
+                if (TextUtils.isEmpty(alias)) {
+                    alias = account.getAlias();
+                }
+                ((AccountView) holder).alias.setText(alias);
                 if (account.isRing()) {
                     String username = account.getRegisteredName();
                     if (!account.registeringUsername && !TextUtils.isEmpty(username)) {

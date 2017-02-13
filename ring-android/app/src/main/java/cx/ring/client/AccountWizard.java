@@ -304,7 +304,6 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
     public void profileNext(String fullname, Bitmap photo) {
         mPhotoProfile = photo;
         mFullname = fullname;
-
         mViewPager.setCurrentItem(2);
     }
 
