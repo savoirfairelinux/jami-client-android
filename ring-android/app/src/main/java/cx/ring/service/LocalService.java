@@ -77,6 +77,7 @@ import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.SettingsService;
@@ -122,6 +123,9 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
     @Inject
     NotificationService mNotificationService;
+
+    @Inject
+    HardwareService mHardwareService;
 
     private IDRingService mService = null;
     private boolean dringStarted = false;
@@ -175,7 +179,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         }
         Conversation conv = startConversation(contact);
         try {
-            mService.setPreviewSettings();
+            mHardwareService.setPreviewSettings(mDeviceRuntimeService.retrieveAvailablePreviewSettings());
             Uri number = call.getNumberUri();
             if (number == null || number.isEmpty()) {
                 number = contact.getPhones().get(0).getNumber();

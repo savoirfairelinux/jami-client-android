@@ -51,6 +51,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.DaemonService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 
 
@@ -70,6 +71,9 @@ public class DRingService extends Service {
 
     @Inject
     HardwareService mHardwareService;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
 
     @Inject
     @Named("DaemonExecutor")
@@ -462,14 +466,7 @@ public class DRingService extends Service {
 
         @Override
         public void setPreviewSettings() {
-            RingApplication application = (RingApplication) getApplication();
-            Map<String, StringMap> camSettings = new HashMap<>();
-            for (int i = 0; i < Camera.getNumberOfCameras(); i++) {
-                if (application.mVideoManagerCallback.getNativeParams(i) != null) {
-                    camSettings.put(Integer.toString(i), application.mVideoManagerCallback.getNativeParams(i).toMap(getResources().getConfiguration().orientation));
-                }
-            }
-
+            Map<String, StringMap> camSettings = mDeviceRuntimeService.retrieveAvailablePreviewSettings();
             mHardwareService.setPreviewSettings(camSettings);
         }
 
