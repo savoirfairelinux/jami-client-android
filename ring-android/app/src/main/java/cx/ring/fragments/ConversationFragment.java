@@ -47,6 +47,7 @@ import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.facades.ConversationFacade;
+import cx.ring.daemon.Blob;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -436,6 +437,14 @@ public class ConversationFragment extends Fragment implements
                 ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(),
                         this.mConversation.getContact(),
                         this);
+                return true;
+            case R.id.menuitem_send_trustrequest:
+                String to = guess().second.getRawUriString();
+                String[] split = to.split(":");
+                if (split.length > 1) {
+                    to = split[1];
+                }
+                mAccountService.sendTrustRequest(mAccountService.getCurrentAccount().getAccountID(), to, Blob.fromString(""));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
