@@ -160,6 +160,7 @@ along with this program; if not, write to the Free Software
     <string name="conversation_action_copy_peer_number">Copy number</string>
     <string name="conversation_action_copied_peer_number_clipboard">%1$s copied to clipboard</string>
     <string name="conversation_action_select_peer_number">Select a number</string>
+    <string name="conversation_action_send_trustrequest">Send a trust request</string>
 
     <!-- Contacts -->
     <string name="add_call_contact_number_to_contacts">Add %1$s ?</string>
