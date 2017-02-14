@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_8804467f",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_profile_create.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-02-14T20:01:11Z",
+      "side": 0,
+      "message": "In this specific case, removing the text allows to see the placeholder text, and the text is not needed to clearly see the UI.",
+      "parentUuid": "1acb0d3e_28c75247",
+      "range": {
+        "startLine": 114,
+        "startChar": 20,
+        "endLine": 114,
+        "endChar": 41
+      },
+      "revId": "24c9834726f8b46c621146d26e4bac78b9e23119",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_e8c06a2c",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/navigation/RingNavigationPresenter.java",
         "patchSetId": 1
@@ -53,6 +77,30 @@
       "writtenOn": "2017-02-14T14:51:00Z",
       "side": 0,
       "message": "if you do not use mDefaultName anymore, remove it from call fields",
+      "range": {
+        "startLine": 93,
+        "startChar": 12,
+        "endLine": 93,
+        "endChar": 35
+      },
+      "revId": "24c9834726f8b46c621146d26e4bac78b9e23119",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_4835fe44",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/navigation/RingNavigationPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-02-14T20:01:11Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_e8c06a2c",
       "range": {
         "startLine": 93,
         "startChar": 12,

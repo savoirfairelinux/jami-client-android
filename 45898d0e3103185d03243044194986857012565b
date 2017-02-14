@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_083ff626",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/AccountAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-02-14T20:01:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_48b09edd",
+      "revId": "45898d0e3103185d03243044194986857012565b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_08ca964f",
         "filename": "ring-android/app/src/main/java/cx/ring/navigation/RingNavigationFragment.java",
         "patchSetId": 1
@@ -76,6 +94,30 @@
       "writtenOn": "2017-02-14T14:51:00Z",
       "side": 1,
       "message": "- add {}\n- You can use TextUtils.isEmpty, it checks both for nullity and emptyness",
+      "range": {
+        "startLine": 106,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 39
+      },
+      "revId": "45898d0e3103185d03243044194986857012565b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_683a3a38",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/navigation/RingNavigationPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-02-14T20:01:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_c8c32e37",
       "range": {
         "startLine": 106,
         "startChar": 8,
