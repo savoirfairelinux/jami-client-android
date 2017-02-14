@@ -1038,6 +1038,7 @@ public class AccountService extends Observable {
      * @param message
      */
     public void sendTrustRequest(final String accountId, final String to, final Blob message) {
+        Log.d(TAG, "sendTrustRequest: "  + accountId + ", " + to + ", " + message);
 
         FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
