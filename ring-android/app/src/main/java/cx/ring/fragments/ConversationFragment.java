@@ -30,6 +30,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -47,6 +48,7 @@ import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.facades.ConversationFacade;
+import cx.ring.daemon.Blob;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -59,10 +61,16 @@ import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
 import cx.ring.utils.ActionHelper;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.VCardUtils;
+import ezvcard.VCard;
+import ezvcard.parameter.ImageType;
+import ezvcard.property.Photo;
+import ezvcard.property.RawProperty;
 
 public class ConversationFragment extends Fragment implements
         Conversation.ConversationActionCallback,
@@ -436,6 +444,24 @@ public class ConversationFragment extends Fragment implements
                 ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(),
                         this.mConversation.getContact(),
                         this);
+                return true;
+            case R.id.menuitem_send_trustrequest:
+                String to = guess().second.getRawUriString();
+                String[] split = to.split(":");
+                if (split.length > 1) {
+                    to = split[1];
+                }
+
+                VCard vcard = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), mAccountService.getCurrentAccount().getAccountID());
+                Bitmap photo = BitmapUtils.bytesToBitmap(vcard.getPhotos().get(0).getData());
+                photo = BitmapUtils.reduceBitmap(photo, 30);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                vcard.removeProperties(Photo.class);
+                vcard.addPhoto(new Photo(stream.toByteArray(), ImageType.PNG));
+                vcard.removeProperties(RawProperty.class);
+
+                mAccountService.sendTrustRequest(mAccountService.getCurrentAccount().getAccountID(), to, Blob.fromString(VCardUtils.vcardToString(vcard)));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
