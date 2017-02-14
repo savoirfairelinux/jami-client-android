@@ -436,6 +436,9 @@ public class ConversationFragment extends Fragment implements
                         this.mConversation.getContact(),
                         this);
                 return true;
+            case R.id.menuitem_send_trustrequest:
+                mAccountService.sendTrustRequest(mAccountService.getCurrentAccount().getAccountID(), guess().second.getRawUriString(), null);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
