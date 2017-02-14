@@ -32,4 +32,10 @@
         android:title="@string/conversation_action_delete_this"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/menuitem_send_trustrequest"
+        android:icon="@drawable/ic_add_white"
+        android:title="@string/conversation_action_send_trustrequest"
+        app:showAsAction="ifRoom" />
+
 </menu>
