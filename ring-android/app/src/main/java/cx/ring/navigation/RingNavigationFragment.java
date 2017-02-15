@@ -178,10 +178,11 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
      */
     public enum Section {
         HOME(0),
-        MANAGE(1),
-        SETTINGS(2),
-        SHARE(3),
-        ABOUT(4);
+        TRUST_REQUEST(1),
+        MANAGE(2),
+        SETTINGS(3),
+        SHARE(4),
+        ABOUT(5);
 
         final int position;
 
@@ -229,7 +230,10 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         setupNavigationMenu();
         setupAccountList();
         if (savedInstanceState != null) {
-            if (getFragmentManager().findFragmentByTag(HomeActivity.ACCOUNTS_TAG) != null &&
+            if (getFragmentManager().findFragmentByTag(HomeActivity.TRUST_REQUEST_TAG) != null &&
+                    getFragmentManager().findFragmentByTag(HomeActivity.TRUST_REQUEST_TAG).isAdded()) {
+                selectSection(Section.TRUST_REQUEST);
+            } else if (getFragmentManager().findFragmentByTag(HomeActivity.ACCOUNTS_TAG) != null &&
                     getFragmentManager().findFragmentByTag(HomeActivity.ACCOUNTS_TAG).isAdded()) {
                 selectSection(RingNavigationFragment.Section.MANAGE);
             } else if (getFragmentManager().findFragmentByTag(HomeActivity.SETTINGS_TAG) != null &&
@@ -341,10 +345,11 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
         ArrayList<NavigationItem> menu = new ArrayList<>();
         menu.add(0, new NavigationItem(R.string.menu_item_home, R.drawable.ic_home_black));
-        menu.add(1, new NavigationItem(R.string.menu_item_accounts, R.drawable.ic_group_black));
-        menu.add(2, new NavigationItem(R.string.menu_item_settings, R.drawable.ic_settings_black));
-        menu.add(3, new NavigationItem(R.string.menu_item_share, R.drawable.ic_share_black));
-        menu.add(4, new NavigationItem(R.string.menu_item_about, R.drawable.ic_info_black));
+        menu.add(1, new NavigationItem(R.string.menu_item_trust_request, R.drawable.ic_drafts_black));
+        menu.add(2, new NavigationItem(R.string.menu_item_accounts, R.drawable.ic_group_black));
+        menu.add(3, new NavigationItem(R.string.menu_item_settings, R.drawable.ic_settings_black));
+        menu.add(4, new NavigationItem(R.string.menu_item_share, R.drawable.ic_share_black));
+        menu.add(5, new NavigationItem(R.string.menu_item_about, R.drawable.ic_info_black));
 
         mMenuAdapter = new NavigationAdapter(menu);
         mMenuView.setAdapter(mMenuAdapter);
