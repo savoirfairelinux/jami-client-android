@@ -27,7 +27,6 @@ import cx.ring.application.RingApplication;
 import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.SharePresenter;
-import cx.ring.wizard.SIPCreationPresenter;
 import dagger.Module;
 import dagger.Provides;
 
