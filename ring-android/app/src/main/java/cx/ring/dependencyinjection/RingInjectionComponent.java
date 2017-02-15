@@ -61,6 +61,8 @@ import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.ShareFragment;
 import cx.ring.share.SharePresenter;
+import cx.ring.trustrequests.PendingTrustRequestsFragment;
+import cx.ring.trustrequests.PendingTrustRequestsPresenter;
 import dagger.Component;
 
 @Singleton
@@ -108,6 +110,8 @@ public interface RingInjectionComponent {
 
     void inject(ConversationFragment fragment);
 
+    void inject(PendingTrustRequestsFragment fragment);
+
     void inject(LocalService service);
 
     void inject(DRingService service);
@@ -145,4 +149,6 @@ public interface RingInjectionComponent {
     void inject(SettingsPresenter presenter);
 
     void inject(RingAccountSummaryPresenter presenter);
+
+    void inject(PendingTrustRequestsPresenter presenter);
 }

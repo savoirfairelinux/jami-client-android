@@ -27,6 +27,8 @@ import cx.ring.application.RingApplication;
 import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.SharePresenter;
+import cx.ring.trustrequests.PendingTrustRequestsFragment;
+import cx.ring.trustrequests.PendingTrustRequestsPresenter;
 import dagger.Module;
 import dagger.Provides;
 
@@ -79,6 +81,14 @@ public class PresenterInjectionModule {
     @Singleton
     RingAccountSummaryPresenter provideRingAccountPresenter(){
         RingAccountSummaryPresenter presenter = new RingAccountSummaryPresenter();
+        mRingApplication.getRingInjectionComponent().inject(presenter);
+        presenter.afterInjection();
+        return presenter;
+    }
+
+    @Provides
+    PendingTrustRequestsPresenter provideTrustRequestsPresenter(){
+        PendingTrustRequestsPresenter presenter = new PendingTrustRequestsPresenter();
         mRingApplication.getRingInjectionComponent().inject(presenter);
         presenter.afterInjection();
         return presenter;
