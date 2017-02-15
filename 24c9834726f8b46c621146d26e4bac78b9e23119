@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_8374299d",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-15T15:41:08Z",
+      "side": 0,
+      "message": "unnecessary change",
+      "revId": "24c9834726f8b46c621146d26e4bac78b9e23119",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_28c75247",
         "filename": "ring-android/app/src/main/res/layout/frag_acc_profile_create.xml",
         "patchSetId": 1
