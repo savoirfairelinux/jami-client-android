@@ -67,6 +67,7 @@ import cx.ring.views.LinkNewDeviceLayout;
 
 public class RingAccountSummaryFragment extends Fragment implements BackHandlerInterface,
         RegisterNameDialog.RegisterNameDialogListener,
+        RenameDeviceDialog.RenameDeviceListener,
         DeviceAdapter.DeviceRevocationListener,
         ConfirmRevocationDialog.ConfirmRevocationListener,
         RingAccountSummaryView {
@@ -439,5 +440,23 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
         dialog.setArguments(args);
         dialog.setListener(this);
         dialog.show(getFragmentManager(), TAG);
+    }
+
+    @Override
+    public void onDeviceRename() {
+        final String dev_name = mRingAccountSummaryPresenter.getDeviceName();
+        Log.w(TAG, "onDeviceRename " + dev_name);
+        RenameDeviceDialog dialog = new RenameDeviceDialog();
+        Bundle args = new Bundle();
+        args.putString(RenameDeviceDialog.DEVICENAME_KEY, dev_name);
+        dialog.setArguments(args);
+        dialog.setListener(this);
+        dialog.show(getFragmentManager(), TAG);
+    }
+
+    @Override
+    public void onDeviceRename(String newName) {
+        Log.w(TAG, "onDeviceRename " + mRingAccountSummaryPresenter.getDeviceName() + " -> " + newName);
+        mRingAccountSummaryPresenter.renameDevice(newName);
     }
 }
