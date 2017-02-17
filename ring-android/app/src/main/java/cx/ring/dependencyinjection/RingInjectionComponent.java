@@ -23,6 +23,7 @@ import javax.inject.Singleton;
 
 import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
+import cx.ring.account.RenameDeviceDialog;
 import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.account.ConfirmRevocationDialog;
@@ -148,4 +149,6 @@ public interface RingInjectionComponent {
     void inject(RingAccountSummaryPresenter presenter);
 
     void inject(ConfirmRevocationDialog dialog);
+
+    void inject(RenameDeviceDialog dialog);
 }
