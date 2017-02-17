@@ -42,7 +42,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_marginLeft="56dp"
         android:layout_marginStart="56dp"
         android:textAppearance="@style/ListPrimary"
-        tools:text="8E24CCF4" />
+        tools:text="My device" />
 
     <TextView
         android:id="@+id/txt_device_id"
@@ -51,23 +51,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_alignLeft="@id/txt_device_label"
         android:layout_alignStart="@+id/txt_device_label"
         android:layout_below="@id/txt_device_label"
-        android:layout_toLeftOf="@+id/revoke_button"
-        android:layout_toStartOf="@+id/revoke_button"
+        android:layout_toLeftOf="@+id/rename_button"
+        android:layout_toStartOf="@+id/rename_button"
         android:ellipsize="middle"
         android:maxLines="1"
-        android:maxWidth="150dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        tools:text="e3806a4963993ed1e8adc5c0ed9809c354dfc872" />
+        tools:text="ring:b982672502b9f1236a68353d74734cb82f9d1fab" />
+    <ImageButton
+        android:background="?selectableItemBackgroundBorderless"
+        android:id="@+id/rename_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/revoke_button"
+        android:layout_toStartOf="@+id/revoke_button"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_action_edit"
+        android:contentDescription="@string/account_device_revoke"
+        android:padding="8dp"
+        android:tint="@color/black" />
 
-    <android.support.v7.widget.AppCompatImageButton
+    <ImageButton
+        android:background="?selectableItemBackgroundBorderless"
         android:id="@+id/revoke_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_cancel_black_24dp"
-        app:backgroundTint="@color/white"
-        app:rippleColor="@android:color/darker_gray" />
+        app:srcCompat="@drawable/ic_cancel_black_24dp"
+        android:contentDescription="@string/account_device_revoke"
+        android:padding="8dp" />
 
 </RelativeLayout>
