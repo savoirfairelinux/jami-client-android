@@ -684,9 +684,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                                 break;
                             }
                         }
-                        if (conv != null) {
-                            conv.addConference(conf);
-                        } else {
+                        if (conv == null) {
                             conv = new Conversation(contact);
                             conv.addConference(conf);
                             conversations.put(ids.get(0), conv);
