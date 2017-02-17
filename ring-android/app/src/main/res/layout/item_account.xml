@@ -41,7 +41,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_toRightOf="@+id/account_photo"
         android:layout_toStartOf="@+id/error_indicator"
         android:ellipsize="end"
-        android:textAppearance="@style/ListPrimary" />
+        android:textAppearance="@style/ListPrimary"
+        tools:text="Ring account" />
 
     <TextView
         android:id="@+id/account_host"
@@ -56,14 +57,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_toStartOf="@+id/error_indicator"
         android:ellipsize="middle"
         android:maxLines="1"
-        android:textAppearance="@style/ListSecondary" />
+        android:textAppearance="@style/ListSecondary"
+        tools:text="ring:b982672502b9f1236a68353d74734cb82f9d1fab" />
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/error_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="false"
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
@@ -71,6 +72,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:src="@drawable/ic_error_white"
-        android:tint="@color/error_red" />
+        android:tint="@color/error_red"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

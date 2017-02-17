@@ -613,6 +613,30 @@ public class AccountService extends Observable {
     }
 
     /**
+     * @param accountId id of the account used with the device
+     * @param newName new device name
+     */
+    public void renameDevice(final String accountId, final String newName) {
+        final Account acc = getAccount(accountId);
+        acc.setDevices(FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Map<String, String>>() {
+                    @Override
+                    public Map<String, String> call() throws Exception {
+                        Log.i(TAG, "renameDevice() thread running... " + newName);
+                        StringMap details = Ringservice.getAccountDetails(accountId);
+                        details.set(ConfigKey.ACCOUNT_DEVICE_NAME.key(), newName);
+                        Ringservice.setAccountDetails(accountId, details);
+                        Map<String, String> devs = Ringservice.getKnownRingDevices(accountId).toNative();
+                        return devs;
+                    }
+                }
+        ));
+    }
+
+    /**
      * Sets the active codecs list of the account in the Daemon
      *
      * @param codecs

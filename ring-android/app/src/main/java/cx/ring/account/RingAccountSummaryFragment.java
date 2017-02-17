@@ -440,4 +440,25 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
         dialog.setListener(this);
         dialog.show(getFragmentManager(), TAG);
     }
+
+    @Override
+    public void onDeviceRename() {
+        final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        alert.setTitle("Rename device");
+        alert.setMessage("Enter new device name");
+        final EditText edittext = new EditText(alert.getContext());
+        alert.setView(edittext);
+
+        alert.setPositiveButton("Rename", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                mRingAccountSummaryPresenter.renameDevice(edittext.getText().toString());
+            }
+        });
+
+        alert.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {}
+        });
+
+        alert.show();
+    }
 }
