@@ -30,7 +30,6 @@ public class Conference {
     private int mConfState;
     private ArrayList<SipCall> mParticipants;
     private boolean mRecording;
-    private ArrayList<TextMessage> mMessages;
     private int uuid;
     // true if this conference is currently presented to the user.
     private boolean mVisible = false;
@@ -49,7 +48,6 @@ public class Conference {
         mParticipants = new ArrayList<>();
         mRecording = false;
         uuid = new Random().nextInt();
-        mMessages = new ArrayList<>();
     }
 
     public Conference(Conference c) {
@@ -58,7 +56,6 @@ public class Conference {
         mParticipants = new ArrayList<>(c.mParticipants);
         mRecording = c.mRecording;
         uuid = c.getUuid();
-        mMessages = new ArrayList<>();
     }
 
     public boolean isRinging() {
@@ -242,14 +239,6 @@ public class Conference {
 
     public boolean isOnGoing() {
         return mParticipants.size() == 1 && mParticipants.get(0).isOngoing() || mParticipants.size() > 1;
-    }
-
-    public ArrayList<TextMessage> getMessages() {
-        return mMessages;
-    }
-
-    public void addSipMessage(TextMessage sipMessage) {
-        mMessages.add(sipMessage);
     }
 
 }

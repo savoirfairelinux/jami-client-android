@@ -163,13 +163,6 @@ public class Conversation {
     }
 
     public void addTextMessage(TextMessage txt) {
-        if (txt.getCallId() != null && !txt.getCallId().isEmpty()) {
-            Conference conf = getConference(txt.getCallId());
-            if (conf == null) {
-                return;
-            }
-            conf.addSipMessage(txt);
-        }
         if (txt.getContact() == null) {
             txt.setContact(getContact());
         }
