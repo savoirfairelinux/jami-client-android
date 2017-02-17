@@ -180,7 +180,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         SHARE(3),
         ABOUT(4);
 
-        int position;
+        final int position;
 
         Section(int pos) {
             position = pos;
@@ -221,7 +221,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        mRingNavigationPresenter.initializePresenter(getString(R.string.unknown));
+        mRingNavigationPresenter.updateUser();
 
         setupNavigationMenu();
         setupAccountList();
@@ -435,7 +435,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
             @Override
             public void run() {
                 mAccountAdapter.replaceAll(viewModel.getAccounts());
-                updateUserView(viewModel.getVcard(getActivity().getFilesDir(), getString(R.string.unknown)));
+                updateUserView(viewModel.getVcard(getActivity().getFilesDir()));
                 updateSelectedAccountView(viewModel.getAccount());
 
                 if (viewModel.getAccounts().isEmpty()) {
