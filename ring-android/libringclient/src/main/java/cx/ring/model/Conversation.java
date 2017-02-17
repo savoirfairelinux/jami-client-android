@@ -93,8 +93,20 @@ public class Conversation {
         return null;
     }
 
-    public void addConference(Conference c) {
-        mCurrentCalls.add(c);
+    public void addConference(final Conference conference) {
+        if (conference == null) {
+            return;
+        }
+        for (int i = 0; i < mCurrentCalls.size(); i++) {
+            final Conference currentConference = mCurrentCalls.get(i);
+            if (currentConference == conference)
+                return;
+            if (currentConference.getId().equals(conference.getId())) {
+                mCurrentCalls.set(i, conference);
+                return;
+            }
+        }
+        mCurrentCalls.add(conference);
     }
 
     public void removeConference(Conference c) {
