@@ -27,6 +27,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
@@ -162,6 +163,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     private MenuItem addContactBtn = null;
     private MenuItem flipCameraBtn = null;
     private MenuItem dialPadBtn = null;
+    private MenuItem changeScreenOrientationBtn = null;
 
     @BindView(R.id.camera_preview_surface)
     SurfaceView videoPreview = null;
@@ -409,6 +411,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         addContactBtn = m.findItem(R.id.menuitem_addcontact);
         flipCameraBtn = m.findItem(R.id.menuitem_camera_flip);
         dialPadBtn = m.findItem(R.id.menuitem_dialpad);
+        changeScreenOrientationBtn = m.findItem(R.id.menuitem_change_screen_orientation);
     }
 
     @Override
@@ -429,6 +432,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
         if (dialPadBtn != null) {
             dialPadBtn.setVisible(ongoingCall && getConference() != null && !getConference().isIncoming());
+        }
+        if (changeScreenOrientationBtn != null) {
+            changeScreenOrientationBtn.setVisible(mVideoSurface.getVisibility() == View.VISIBLE);
         }
     }
 
@@ -475,6 +481,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                 KeyboardVisibilityManager.showKeyboard(getActivity(),
                         mNumeralDialEditText,
                         InputMethodManager.SHOW_IMPLICIT);
+                break;
+            case R.id.menuitem_change_screen_orientation:
+                changeScreenOrientation();
                 break;
         }
         return true;
@@ -807,6 +816,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                 contactBubbleLayout.setVisibility(View.GONE);
                 Conference c = getConference();
                 application.videoSurfaces.put(c.getId(), new WeakReference<>(holder));
+                blockSensorScreenRotation();
                 try {
                     mCallbacks.getRemoteService().videoSurfaceAdded(c.getId());
                 } catch (RemoteException e) {
@@ -1110,6 +1120,29 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             mCallbacks.getRemoteService().accept(call.getCallId());
         } catch (RemoteException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void changeScreenOrientation() {
+        int currentOrientation = getResources().getConfiguration().orientation;
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+    }
+
+    private void blockSensorScreenRotation() {
+        changeScreenOrientationBtn.setVisible(true);
+        int currentOrientation = getResources().getConfiguration().orientation;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+            return;
+        }
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
 
