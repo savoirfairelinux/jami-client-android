@@ -3,6 +3,7 @@
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *          Loïc Siret <loic.siret@savoirfairelinux.com>
+ *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -66,6 +67,8 @@ import cx.ring.views.LinkNewDeviceLayout;
 
 public class RingAccountSummaryFragment extends Fragment implements BackHandlerInterface,
         RegisterNameDialog.RegisterNameDialogListener,
+        DeviceAdapter.DeviceRevocationListener,
+        ConfirmRevocationDialog.ConfirmRevocationListener,
         RingAccountSummaryView {
 
     private static final String TAG = RingAccountSummaryFragment.class.getSimpleName();
@@ -157,7 +160,8 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
                     Log.w(TAG, "No account to display!");
                     return;
                 }
-                mDeviceAdapter = new DeviceAdapter(getActivity(), account.getDevices());
+                mDeviceAdapter = new DeviceAdapter(getActivity(), account.getDevices(), account.getDeviceId(),
+                        RingAccountSummaryFragment.this);
                 mDeviceList.setAdapter(mDeviceAdapter);
 
                 int totalHeight = 0;
@@ -357,6 +361,13 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
                 getString(R.string.export_account_wait_message));
     }
 
+    @Override
+    public void showRevokingProgressDialog() {
+        mWaitDialog = ProgressDialog.show(getActivity(),
+                getString(R.string.revoke_device_wait_title),
+                getString(R.string.revoke_device_wait_message));
+    }
+
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -403,15 +414,30 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
     }
 
     @Override
-    public void updateDeviceList(final Map<String, String> devices) {
+    public void updateDeviceList(final Map<String, String> devices, final String currentDeviceId) {
         if (mDeviceAdapter == null) {
             return;
         }
         RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
-                mDeviceAdapter.setData(devices);
+                mDeviceAdapter.setData(devices, currentDeviceId);
             }
         });
+    }
+
+    @Override
+    public void onConfirmRevocation(String deviceId, String password) {
+        mRingAccountSummaryPresenter.revokeDevice(deviceId, password);
+    }
+
+    @Override
+    public void onDeviceRevocationAsked(String deviceId) {
+        ConfirmRevocationDialog dialog = new ConfirmRevocationDialog();
+        Bundle args = new Bundle();
+        args.putString(ConfirmRevocationDialog.DEVICEID_KEY, deviceId);
+        dialog.setArguments(args);
+        dialog.setListener(this);
+        dialog.show(getFragmentManager(), TAG);
     }
 }

@@ -59,6 +59,7 @@ along with this program; if not, write to the Free Software
     <string name="empty_account_list">No account registered</string>
     <string name="normal_accounts_titles">Accounts</string>
     <string name="normal_devices_titles">Known devices linked to this Ring account</string>
+    <string name="account_device_revoke">Revoke device</string>
 
     <!-- Basic Details -->
     <string name="account_preferences_basic_tab">General</string>
@@ -143,7 +144,7 @@ along with this program; if not, write to the Free Software
     <string name="error_passwords_not_equals">Passwords do not match</string>
     <string name="restore_failed_dialog_title">Restore failed</string>
     <string name="restore_failed_dialog_msg">An error occurred</string>
-    <string name="export_account_wait_title">Please wait...</string>
+    <string name="export_account_wait_title">Please wait…</string>
     <string name="export_account_wait_message">Publishing new account information</string>
     <string name="account_export_end_decryption_message">Couldn\'t unlock your account using the provided password.</string>
     <string name="account_export_end_network_title">Network error</string>
@@ -201,7 +202,7 @@ along with this program; if not, write to the Free Software
     <string name="register_username">Register public username (experimental)</string>
     <string name="username_already_taken">Username already taken</string>
     <string name="invalid_username">Invalid username</string>
-    <string name="looking_for_username_availability">Looking for username availability ...</string>
+    <string name="looking_for_username_availability">Looking for username availability…</string>
     <string name="account_status_connecting">Connecting</string>
     <string name="account_status_connection_error">Connection error</string>
     <string name="account_status_online">Online</string>
@@ -214,5 +215,13 @@ along with this program; if not, write to the Free Software
     <string name="account_creation_ring">Create your Ring account</string>
     <string name="account_link_title">Link this device</string>
     <string name="account_sip_cannot_be_registered">Can\'t register account</string>
+
+    <!-- Devices -->
+    <string name="account_revoke_device_hint">Enter password to confirm</string>
+    <string name="enter_password">Enter password</string>
+    <string name="revoke_device_title">Revoke device</string>
+    <string name="revoke_device_message">Are you sure you want to revoke %1$s ?</string>
+    <string name="revoke_device_wait_title">Please wait…</string>
+    <string name="revoke_device_wait_message">Revoking device</string>
 
 </resources>
