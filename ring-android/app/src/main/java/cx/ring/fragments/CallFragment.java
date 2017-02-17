@@ -27,6 +27,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
@@ -40,6 +41,7 @@ import android.os.PowerManager.WakeLock;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBar;
 import android.text.Editable;
@@ -134,6 +136,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     @BindView(R.id.call_accept_btn)
     View acceptButton;
 
+    @BindView(R.id.rotate_screen_btn)
+    View rotateScreenButton;
+
     @BindView(R.id.call_refuse_btn)
     View refuseButton;
 
@@ -177,6 +182,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     private Conference mCachedConference = null;
 
     private boolean ongoingCall = false;
+    private boolean screenRotationBlocked = false;
 
     private BlockchainInputHandler mBlockchainInputHandler;
 
@@ -348,7 +354,6 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                         if (haveVideo) {
                             mVideoSurface.setVisibility(View.VISIBLE);
                             videoPreview.setVisibility(View.VISIBLE);
-
                             videoWidth = intent.getIntExtra("width", 0);
                             videoHeight = intent.getIntExtra("height", 0);
                         } else {
@@ -525,6 +530,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
             c.setResumeVideo(false);
         }
+
     }
 
     @Override
@@ -549,6 +555,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             if (conference.shouldResumeVideo()) {
                 Log.w(TAG, "Resuming video");
                 haveVideo = true;
+               // blockSensorScreenRotation();
                 mVideoSurface.setVisibility(View.VISIBLE);
                 videoPreview.setVisibility(View.VISIBLE);
 
@@ -807,6 +814,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                 contactBubbleLayout.setVisibility(View.GONE);
                 Conference c = getConference();
                 application.videoSurfaces.put(c.getId(), new WeakReference<>(holder));
+                blockSensorScreenRotation();
                 try {
                     mCallbacks.getRemoteService().videoSurfaceAdded(c.getId());
                 } catch (RemoteException e) {
@@ -824,6 +832,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                 Conference c = getConference();
                 RingApplication application = (RingApplication) getActivity().getApplication();
                 application.videoSurfaces.remove(c.getId());
+               // unlockScreenLocation();
                 try {
                     IDRingService service = mCallbacks.getRemoteService();
                     if (service != null)
@@ -846,6 +855,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                 boolean ui = (visibility & (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN)) == 0;
                 if (ongoingCall) {
                     hangupButton.setVisibility(ui ? View.VISIBLE : View.GONE);
+                    if(screenRotationBlocked) {
+                        rotateScreenButton.setVisibility(ui ? View.VISIBLE : View.GONE);
+                    }
                 }
             }
         });
@@ -887,6 +899,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
         return rootView;
     }
+
 
     public Conference getConference() {
         Conference c = mCallbacks.getDisplayedConference();
@@ -935,7 +948,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         acceptButton.setVisibility(View.GONE);
         refuseButton.setVisibility(View.GONE);
         hangupButton.setVisibility(View.VISIBLE);
-
+        if(screenRotationBlocked) {
+            rotateScreenButton.setVisibility(View.VISIBLE);
+        }
         final SipCall call = getFirstParticipant();
         initContactDisplay(call);
 
@@ -945,7 +960,6 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
         contactBubbleLayout.setVisibility(haveVideo ? View.GONE : View.VISIBLE);
         updateSecurityDisplay();
-
         updatePreview();
     }
 
@@ -1111,6 +1125,41 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    @OnClick(R.id.rotate_screen_btn)
+    public void rotateScreenClicked() {
+        int currentOrientation = getResources().getConfiguration().orientation;
+        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        }
+        else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        }
+    }
+
+    private void blockSensorScreenRotation(){
+        screenRotationBlocked = true;
+        rotateScreenButton.setVisibility(View.VISIBLE);
+            int currentOrientation = getResources().getConfiguration().orientation;
+            if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+            } else {
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            }
+    }
+
+    private void unlockScreenLocation() {
+        screenRotationBlocked = false;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_USER);
+        }
+
+        else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+        }
+        rotateScreenButton.setVisibility(View.GONE);
     }
 
     /**

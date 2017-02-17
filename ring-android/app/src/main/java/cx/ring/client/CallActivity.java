@@ -28,6 +28,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Build;
@@ -38,6 +39,8 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Display;
+import android.view.Surface;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -168,6 +171,8 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
                             | View.SYSTEM_UI_FLAG_IMMERSIVE);
         }
     }
+
+
 
     // This snippet shows the system bars. It does this by removing all the flags
 // except for the ones that make the content appear under the system bars.
@@ -379,4 +384,5 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
         mCurrentCallFragment.onBackPressed();
         super.onBackPressed();
     }
+
 }

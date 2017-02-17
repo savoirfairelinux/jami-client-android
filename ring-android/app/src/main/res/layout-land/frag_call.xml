@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     android:layout_height="match_parent"
     tools:context=".client.CallActivity">
 
+
     <SurfaceView
         android:id="@+id/video_preview_surface"
         android:layout_width="match_parent"
@@ -197,6 +198,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             app:elevation="6dp"
             app:pressedTranslationZ="12dp"
             app:rippleColor="@android:color/white" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/rotate_screen_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:tint="@color/white"
+                android:src="@drawable/ic_screen_rotation_black"
+                android:scaleType="fitXY"
+                android:visibility="gone"
+                android:backgroundTint="@color/transparent_grey"
+                android:contentDescription="@string/action_screen_rotation" />
+        </LinearLayout>
 
         <EditText
             android:id="@+id/dialpad_edit_text"
