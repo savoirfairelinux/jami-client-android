@@ -19,7 +19,10 @@
 
 package cx.ring.account;
 
+import java.util.concurrent.ExecutorService;
+
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.StringMap;
 import cx.ring.model.Account;
@@ -40,6 +43,11 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
 
     @Inject
     AccountService mAccountService;
+
+    @Inject
+    @Named("ApplicationExecutor")
+    ExecutorService mApplicationExecutor;
+
 
     private String mAccountID;
 
@@ -116,7 +124,7 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
             return;
         }
         final StringMap devices = event.getEventInput(ServiceEvent.EventInput.DEVICES, StringMap.class);
-        getView().updateDeviceList(devices.toNative());
+        getView().updateDeviceList(devices.toNative(), currentAccount.getDeviceId());
     }
 
     public void registerName(String name, String password) {
@@ -158,4 +166,10 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
         mAccountService.setAccountDetails(account.getAccountID(), account.getDetails());
     }
 
+    public void revokeDevice(String deviceId, String password) {
+        if (getView() != null) {
+            getView().showRevokingProgressDialog();
+        }
+        mAccountService.revokeDevice(mAccountID, password, deviceId);
+    }
 }

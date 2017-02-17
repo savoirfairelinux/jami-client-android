@@ -25,6 +25,7 @@ import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
 import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.account.RingAccountSummaryPresenter;
+import cx.ring.account.ConfirmRevocationDialog;
 import cx.ring.application.RingApplication;
 import cx.ring.client.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
@@ -145,4 +146,6 @@ public interface RingInjectionComponent {
     void inject(SettingsPresenter presenter);
 
     void inject(RingAccountSummaryPresenter presenter);
+
+    void inject(ConfirmRevocationDialog dialog);
 }
