@@ -65,6 +65,7 @@ public class SipCall {
         isAudioMuted = call.isAudioMuted;
         isVideoMuted = call.isVideoMuted;
         isRecording = call.isRecording;
+        missed = call.missed;
         timestampStart = call.timestampStart;
         timestampEnd = call.timestampEnd;
         mCallType = call.mCallType;
