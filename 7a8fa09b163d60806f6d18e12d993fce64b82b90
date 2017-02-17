@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_c39231f6",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-17T14:34:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_e3e16d9b",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 49
+      },
+      "revId": "7a8fa09b163d60806f6d18e12d993fce64b82b90",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_83ee698a",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-17T00:42:24Z",
       "side": 1,
       "message": "space",
+      "range": {
+        "startLine": 1037,
+        "startChar": 32,
+        "endLine": 1037,
+        "endChar": 33
+      },
+      "revId": "7a8fa09b163d60806f6d18e12d993fce64b82b90",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_e38f2dcb",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-17T14:34:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_83ee698a",
       "range": {
         "startLine": 1037,
         "startChar": 32,
