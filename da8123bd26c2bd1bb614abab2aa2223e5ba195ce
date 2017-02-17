@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_fe958088",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/RingNavigationFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-02-17T19:09:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_a3792595",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 27
+      },
+      "revId": "da8123bd26c2bd1bb614abab2aa2223e5ba195ce",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_436e41cb",
         "filename": "ring-android/app/src/main/java/cx/ring/navigation/RingNavigationFragment.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-15T15:41:08Z",
       "side": 1,
       "message": "not related to commit message",
+      "range": {
+        "startLine": 330,
+        "startChar": 8,
+        "endLine": 335,
+        "endChar": 89
+      },
+      "revId": "da8123bd26c2bd1bb614abab2aa2223e5ba195ce",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_1e93aca4",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/RingNavigationFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-02-17T19:09:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_436e41cb",
       "range": {
         "startLine": 330,
         "startChar": 8,
