@@ -565,7 +565,7 @@ public class AccountService extends Observable {
                 new Callable<String>() {
                     @Override
                     public String call() throws Exception {
-                        Log.i(TAG, "addRingDevice() thread running...");
+                        Log.i(TAG, "exportOnRing() thread running...");
                         return Ringservice.exportOnRing(accountId, password);
                     }
                 }
@@ -587,6 +587,26 @@ public class AccountService extends Observable {
                     public Map<String, String> call() throws Exception {
                         Log.i(TAG, "getKnownRingDevices() thread running...");
                         return Ringservice.getKnownRingDevices(accountId).toNative();
+                    }
+                }
+        );
+    }
+
+    /**
+     * @param accountId id of the account used with the device
+     * @param deviceId id of the device to revoke
+     * @param password password of the account
+     */
+    public void revokeDevice(final String accountId, final String password, final String deviceId) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "revokeDevice() thread running...");
+                        return Ringservice.revokeDevice(accountId, password, deviceId);
                     }
                 }
         );
