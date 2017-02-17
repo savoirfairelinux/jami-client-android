@@ -18,12 +18,17 @@
  */
 package cx.ring.account;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.AppCompatImageButton;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -40,6 +45,7 @@ public class DeviceAdapter extends BaseAdapter {
 
     public interface DeviceRevocationListener {
         void onDeviceRevocationAsked(String deviceId);
+        void onDeviceRename();
     }
 
     public DeviceAdapter(Context c, Map<String, String> devices, String currentDeviceId,
@@ -81,17 +87,28 @@ public class DeviceAdapter extends BaseAdapter {
         if (view == null) {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_device, parent, false);
         }
+        boolean isCurrentDevice = mDevices.get(i).getKey().contentEquals(mCurrentDeviceId);
 
         TextView devId = (TextView) view.findViewById(R.id.txt_device_id);
         devId.setText(mDevices.get(i).getKey());
 
         TextView devName = (TextView) view.findViewById(R.id.txt_device_label);
         devName.setText(mDevices.get(i).getValue());
-
-        AppCompatImageButton revokeButton = (AppCompatImageButton) view.findViewById(R.id.revoke_button);
-
-        boolean isCurrentDevice = mDevices.get(i).getKey().contentEquals(mCurrentDeviceId);
-        revokeButton.setVisibility(isCurrentDevice ? View.INVISIBLE : View.VISIBLE);
+        ImageButton revokeButton = (ImageButton) view.findViewById(R.id.revoke_button);
+        ImageButton editButton = (ImageButton) view.findViewById(R.id.rename_button);
+        editButton.setVisibility(isCurrentDevice ? View.VISIBLE : View.GONE);
+        TextView thisDeviceText = (TextView) view.findViewById(R.id.txt_device_thisflag);
+        thisDeviceText.setVisibility(isCurrentDevice ? View.VISIBLE : View.GONE);
+        if (isCurrentDevice) {
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mListener != null) {
+                        mListener.onDeviceRename();
+                    }
+                }
+            });
+        }
 
         revokeButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -227,5 +227,10 @@ along with this program; if not, write to the Free Software
     <string name="revoke_device_message">Are you sure you want to revoke %1$s ?</string>
     <string name="revoke_device_wait_title">Please wait…</string>
     <string name="revoke_device_wait_message">Revoking device</string>
+    <string name="rename_device_title">Rename this device</string>
+    <string name="rename_device_message">Choose a new name to identify this device in your Ring account</string>
+    <string name="rename_device_button">Rename device</string>
+    <string name="account_rename_device_hint">Choose new device name</string>
+    <string name="account_device_this_indicator">this device</string>
 
 </resources>
