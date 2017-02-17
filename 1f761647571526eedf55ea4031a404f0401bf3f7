@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_bebdb804",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-02-17T22:00:32Z",
+      "side": 0,
+      "message": "This might cause other bugs by preventing to see a conference already there when building the model. The issue is that the same conversation might be added multiple times to a conference when the model is rebuilt. A cleaner solution is to prevent having conference duplication in the conversation model (see suggested patch set 2).",
+      "range": {
+        "startLine": 688,
+        "startChar": 28,
+        "endLine": 688,
+        "endChar": 53
+      },
+      "revId": "1f761647571526eedf55ea4031a404f0401bf3f7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
