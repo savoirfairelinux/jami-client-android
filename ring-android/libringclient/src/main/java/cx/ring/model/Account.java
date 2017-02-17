@@ -239,4 +239,8 @@ public class Account {
     public boolean needsMigration() {
         return AccountConfig.STATE_NEED_MIGRATION.equals(getRegistrationState());
     }
+
+    public String getDeviceId() {
+        return getDetail(ConfigKey.ACCOUNT_DEVICE_ID);
+    }
 }
