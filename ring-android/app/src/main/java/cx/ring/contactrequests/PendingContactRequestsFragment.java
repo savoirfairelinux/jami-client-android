@@ -46,6 +46,7 @@ import cx.ring.utils.Log;
 public class PendingContactRequestsFragment extends Fragment implements GenericView<PendingContactRequestsViewModel> {
 
     static final String TAG = PendingContactRequestsFragment.class.getSimpleName();
+    public static final String ACCOUNT_ID = TAG + "accountID";
 
     @Inject
     protected PendingContactRequestsPresenter mPendingContactRequestsPresenter;
@@ -77,11 +78,23 @@ public class PendingContactRequestsFragment extends Fragment implements GenericV
         return inflatedView;
     }
 
+    public void presentForAccount(Bundle bundle) {
+        if (bundle != null && bundle.containsKey(ACCOUNT_ID)) {
+            boolean shouldUpdateList = (bundle.getString(ACCOUNT_ID) == null);
+            mPendingContactRequestsPresenter.updateAccount(bundle.getString(ACCOUNT_ID), shouldUpdateList);
+            getArguments().putString(ACCOUNT_ID, bundle.getString(ACCOUNT_ID));
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_contact_request);
 
+        Bundle arguments = getArguments();
+        if (arguments != null && arguments.containsKey(ACCOUNT_ID)) {
+            mPendingContactRequestsPresenter.updateAccount(getArguments().getString(ACCOUNT_ID), false);
+        }
         // view binding
         mPendingContactRequestsPresenter.bindView(this);
     }
