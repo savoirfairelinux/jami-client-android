@@ -39,4 +39,9 @@ public abstract class NotificationService {
     public abstract void cancelTextNotification(CallContact contact);
 
     public abstract void cancelAll();
+
+    public abstract void showIncomingTrustRequestNotification(String accountID, String from);
+
+    public abstract void cancelTrustRequestNotification(String accountID);
+
 }
