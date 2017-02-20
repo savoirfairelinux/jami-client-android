@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_9ea6bcc0",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountSummaryFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T19:44:29Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 39
+      },
+      "revId": "1b4eb7d6b135c55e424d62d0cea8522d80d75297",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_3eab088b",
+        "filename": "ring-android/app/src/main/res/layout/frag_device_list.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T19:44:29Z",
+      "side": 1,
+      "message": "why have you add a bottom padding?",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "1b4eb7d6b135c55e424d62d0cea8522d80d75297",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
