@@ -32,6 +32,7 @@ import cx.ring.model.TrustRequest;
 import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -41,10 +42,13 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
     static final String TAG = PendingTrustRequestsPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
+    private String mAccountID;
+    private NotificationService mNotificationService;
 
     @Inject
-    public PendingTrustRequestsPresenter(AccountService mAccountService) {
+    public PendingTrustRequestsPresenter(AccountService mAccountService, NotificationService mNotificationService) {
         this.mAccountService = mAccountService;
+        this.mNotificationService = mNotificationService;
     }
 
     final private List<TrustRequest> mTrustRequests = new ArrayList<>();
@@ -62,6 +66,16 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         updateList(true);
     }
 
+    public void updateAccount(String accountId) {
+        String currentAccountID = mAccountService.getCurrentAccount().getAccountID();
+        if (accountId.equals(currentAccountID)) {
+            mAccountID = null;
+            updateList(true);
+            return;
+        }
+        mAccountID = accountId;
+    }
+
     @Override
     public void unbindView() {
         mAccountService.removeObserver(this);
@@ -74,7 +88,7 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         }
 
         Log.d(TAG, "updateList");
-        Account currentAccount = mAccountService.getCurrentAccount();
+        Account currentAccount = ((mAccountID == null) ? mAccountService.getCurrentAccount() : mAccountService.getAccount(mAccountID));
         if (currentAccount == null) {
             return;
         }
@@ -94,6 +108,7 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         }
 
         getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, mTrustRequests));
+        mNotificationService.cancelTrustRequestNotification(currentAccount.getAccountID());
     }
 
     @Override
