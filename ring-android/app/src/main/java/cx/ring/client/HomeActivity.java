@@ -79,6 +79,7 @@ import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.NotificationService;
 import cx.ring.services.SettingsService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
@@ -130,6 +131,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Inject
     AccountService mAccountService;
+
+    @Inject
+    NotificationService mNotificationService;
 
     @BindView(R.id.left_drawer)
     NavigationView mNavigationView;
@@ -279,6 +283,23 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log.d(TAG, "onNewIntent " + intent);
+        if (LocalService.ACTION_SHOW_TRUST_REQUEST.equals(intent.getAction())) {
+            Bundle bundle = new Bundle();
+            bundle.putString(PendingTrustRequestsFragment.ACCOUNT_ID, intent.getStringExtra(PendingTrustRequestsFragment.ACCOUNT_ID));
+            mNotificationService.cancelTrustRequestNotification(intent.getStringExtra(PendingTrustRequestsFragment.ACCOUNT_ID));
+            if (fContent instanceof PendingTrustRequestsFragment) {
+                ((PendingTrustRequestsFragment) fContent).presentForAccount(bundle);
+                return;
+            }
+            fContent = new PendingTrustRequestsFragment();
+            fContent.setArguments(bundle);
+            fNavigation.selectSection(RingNavigationFragment.Section.TRUST_REQUEST);
+            getFragmentManager().beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .replace(R.id.main_frame, fContent, TRUST_REQUEST_TAG)
+                    .addToBackStack(TRUST_REQUEST_TAG).commit();
+            return;
+        }
         if (!ConversationFragment.isTabletMode(this) || !LocalService.ACTION_CONV_ACCEPT.equals(intent.getAction())) {
             return;
         }
@@ -654,6 +675,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 break;
             case TRUST_REQUEST:
                 if (fContent instanceof PendingTrustRequestsFragment) {
+                    ((PendingTrustRequestsFragment) fContent).refresh();
                     break;
                 }
                 fContent = new PendingTrustRequestsFragment();
