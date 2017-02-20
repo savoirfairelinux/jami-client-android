@@ -1,0 +1,290 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_de68c489",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/CallActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_7e0510c1",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/CallActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_be6b7884",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/CallActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 1,
+      "message": "this line feeds are useless",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 0
+      },
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_9e0a3cd1",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/CallActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 1,
+      "message": "this line feed is useless",
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_1e1dec0f",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 1,
+      "message": "you can remove this because it not used",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 48
+      },
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_3edd4843",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 1,
+      "message": "this line feed is useless",
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_bef058ca",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 1,
+      "message": "you can remove this",
+      "range": {
+        "startLine": 558,
+        "startChar": 15,
+        "endLine": 558,
+        "endChar": 46
+      },
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_deed24f1",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 1,
+      "message": "you can remove this",
+      "range": {
+        "startLine": 835,
+        "startChar": 16,
+        "endLine": 835,
+        "endChar": 41
+      },
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_7ebaf0e2",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 1,
+      "message": "this line feed is useless",
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_bec7f863",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 1,
+      "message": "you don\u0027t need to have this function to lock or unlock the screen. The screen must be always lock. \n\nThe screenRotationlocked variable is still useless.",
+      "range": {
+        "startLine": 1141,
+        "startChar": 4,
+        "endLine": 1163,
+        "endChar": 5
+      },
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_dec44461",
+        "filename": "ring-android/app/src/main/res/drawable/ic_screen_rotation_black.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 1,
+      "message": "The icon is white. You should modify the filename.",
+      "range": {
+        "startLine": 8,
+        "startChar": 27,
+        "endLine": 8,
+        "endChar": 34
+      },
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_1e6f2c94",
+        "filename": "ring-android/app/src/main/res/layout-land/frag_call.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 1,
+      "message": "This line feed is useless",
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_5e2b7430",
+        "filename": "ring-android/app/src/main/res/layout/frag_call.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 1,
+      "message": "this line feed is useless",
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_fe1fc007",
+        "filename": "ring-android/app/src/main/res/layout/frag_call.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 1,
+      "message": "this line feed is useless",
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}

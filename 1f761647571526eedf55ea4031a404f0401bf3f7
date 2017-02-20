@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_be193824",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-20T18:56:42Z",
+      "side": 0,
+      "message": "why have you remove this line feed ?",
+      "revId": "1f761647571526eedf55ea4031a404f0401bf3f7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
