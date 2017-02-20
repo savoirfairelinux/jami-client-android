@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -50,6 +51,7 @@ import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.LocalService;
+import cx.ring.trustrequests.PendingTrustRequestsFragment;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
@@ -63,6 +65,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     private static final String NOTIF_CALL = "CALL";
     private static final String NOTIF_MSG = "MESSAGE";
+    private static final String NOTIF_TRUST_REQUEST = "TRUST REQUEST";
+    private static final String NUMBER_OF_TRUST_REQUEST_NOTIF_KEY = "nimberOfTrustRequestNotificationsKey";
 
     @Inject
     Context mContext;
@@ -233,11 +237,66 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     }
 
     @Override
+    public void showIncomingTrustRequestNotification(String accountID, String from) {
+
+        int notificationId = getIncomingTrustNotificationId(accountID);
+        NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
+        int numberOfNotifications = 1;
+        if (messageNotificationBuilder != null) {
+            Bundle extras = messageNotificationBuilder.getExtras();
+            if (extras != null) {
+                numberOfNotifications = extras.getInt(NUMBER_OF_TRUST_REQUEST_NOTIF_KEY);
+                numberOfNotifications++;
+                cancelTrustRequestNotification(accountID);
+                messageNotificationBuilder.setContentText(Integer.toString(numberOfNotifications));
+                messageNotificationBuilder.setLargeIcon(null);
+            }
+        } else {
+            messageNotificationBuilder = new NotificationCompat.Builder(mContext);
+            messageNotificationBuilder.setContentText(from);
+            Resources res = mContext.getResources();
+            int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
+            int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
+            Bitmap bmp;
+            bmp = BitmapFactory.decodeResource(res, R.drawable.ic_contact_picture);
+            if (bmp != null) {
+                messageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
+            }
+        }
+
+        Bundle extras = new Bundle();
+        extras.putInt(NUMBER_OF_TRUST_REQUEST_NOTIF_KEY, numberOfNotifications);
+        messageNotificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_ring_logo_white)
+                .setContentTitle(mContext.getString(R.string.trust_request_msg));
+        Intent intentOpenTrustRequestFragment = new Intent(LocalService.ACTION_SHOW_TRUST_REQUEST)
+                .setClass(mContext, HomeActivity.class)
+                .putExtra(PendingTrustRequestsFragment.ACCOUNT_ID, accountID);
+        messageNotificationBuilder.setContentIntent(PendingIntent.getActivity(mContext,
+                new Random().nextInt(), intentOpenTrustRequestFragment, 0));
+        messageNotificationBuilder.addExtras(extras);
+        notificationManager.notify(notificationId, messageNotificationBuilder.build());
+        mNotificationBuilders.put(notificationId, messageNotificationBuilder);
+    }
+
+    @Override
     public void cancelTextNotification(CallContact contact) {
         if (contact == null) {
             return;
         }
         int notificationId = getTextNotificationId(contact);
+        notificationManager.cancel(notificationId);
+        mNotificationBuilders.remove(notificationId);
+    }
+
+    @Override
+    public void cancelTrustRequestNotification(String accountID) {
+        if (accountID == null) {
+            return;
+        }
+        int notificationId = getIncomingTrustNotificationId(accountID);
         notificationManager.cancel(notificationId);
         mNotificationBuilders.remove(notificationId);
     }
@@ -256,6 +315,11 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     public void cancelAll() {
         notificationManager.cancelAll();
         mNotificationBuilders.clear();
+    }
+
+    private int getIncomingTrustNotificationId(String accountID) {
+        cx.ring.model.Uri uri = new cx.ring.model.Uri(accountID);
+        return (NOTIF_TRUST_REQUEST + uri.getRawUriString()).hashCode();
     }
 
     private int getCallNotificationId(SipCall call) {
@@ -281,30 +345,41 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     @Override
     public void update(Observable observable, ServiceEvent arg) {
         if (observable instanceof AccountService && arg != null) {
-            if (ServiceEvent.EventType.REGISTERED_NAME_FOUND.equals(arg.getEventType())) {
-                final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-                final int state = arg.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
+            switch (arg.getEventType()) {
+                case REGISTERED_NAME_FOUND: {
+                    final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                    final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
+                    final String account = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
+                    final int state = arg.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
 
-                Log.i(TAG, "Updating name " + name + " for address " + address);
+                    Log.i(TAG, "Updating name " + name + " for address " + address);
 
-                //state 0: name found
-                if (state != 0) {
-                    return;
+                    //state 0: name found
+                    if (state != 0) {
+                        return;
+                    }
+
+                    // Try to update existing Call notification
+                    int notificationId = getCallNotificationId(address);
+                    NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
+                    if (messageNotificationBuilder != null) {
+                        updateNotification(messageNotificationBuilder, notificationId, name);
+                    }
+
+                    // Try to update existing Text notification
+                    notificationId = getTextNotificationId(address);
+                    messageNotificationBuilder = mNotificationBuilders.get(notificationId);
+                    if (messageNotificationBuilder != null) {
+                        updateNotification(messageNotificationBuilder, notificationId, name);
+                    }
+                    break;
                 }
-
-                // Try to update existing Call notification
-                int notificationId = getCallNotificationId(address);
-                NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
-                if (messageNotificationBuilder != null) {
-                    updateNotification(messageNotificationBuilder, notificationId, name);
-                }
-
-                // Try to update existing Text notification
-                notificationId = getTextNotificationId(address);
-                messageNotificationBuilder = mNotificationBuilders.get(notificationId);
-                if (messageNotificationBuilder != null) {
-                    updateNotification(messageNotificationBuilder, notificationId, name);
+                case INCOMING_TRUST_REQUEST: {
+                    final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
+                    final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);
+                    if (accountID != null && from != null) {
+                        showIncomingTrustRequestNotification(accountID, from);
+                    }
                 }
             }
         }
