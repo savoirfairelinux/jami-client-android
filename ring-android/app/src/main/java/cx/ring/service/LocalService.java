@@ -948,6 +948,13 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(android.net.Uri.withAppendedPath(ContentUriHandler.CALL_CONTENT_URI, callId)));
                     break;
                 }
+
+                case ConfigurationManagerCallback.INCOMING_TRUST_REQUEST: {
+                    String accountId = intent.getStringExtra("account");
+                    mNotificationService.showIncomingTrustRequestNotification(accountId);
+                    break;
+                }
+
                 case CallManagerCallBack.CALL_STATE_CHANGED: {
                     String callId = intent.getStringExtra("call");
                     Conversation conversation = null;
@@ -1048,6 +1055,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         intentFilter.addAction(ConfigurationManagerCallback.MESSAGE_STATE_CHANGED);
         intentFilter.addAction(ConfigurationManagerCallback.NAME_LOOKUP_ENDED);
         intentFilter.addAction(ConfigurationManagerCallback.NAME_REGISTRATION_ENDED);
+        intentFilter.addAction(ConfigurationManagerCallback.INCOMING_TRUST_REQUEST);
 
         intentFilter.addAction(CallManagerCallBack.INCOMING_CALL);
         intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);

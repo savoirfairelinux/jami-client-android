@@ -131,6 +131,11 @@ along with this program; if not, write to the Free Software
     <string name="time_just_now">Just now</string>
     <string name="permission_read_denied">The app was not allowed to read to your storage. Hence, it cannot function properly. Please consider granting it this permission</string>
 
+    <!-- Trust request -->
+    <string name="action_accept_request">Accept request</string>
+    <string name="action_decline_request">Decline request</string>
+    <string name="trust_request_msg">A trust request received from %1$s</string>
+
     <!-- MediaPreferenceFragment -->
     <string name="permission_dialog_camera_title">Camera permission</string>
     <string name="permission_dialog_camera_message">Video conversations require the camera permission to work. Please consider enabling it.</string>

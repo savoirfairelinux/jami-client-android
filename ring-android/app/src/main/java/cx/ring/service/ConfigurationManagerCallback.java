@@ -43,6 +43,7 @@ public class ConfigurationManagerCallback implements Observer<ServiceEvent> {
     static final String ACCOUNTS_EXPORT_ENDED = BuildConfig.APPLICATION_ID + "accounts.exportEnded";
     static final String ACCOUNT_STATE_CHANGED = BuildConfig.APPLICATION_ID + "account.stateChanged";
     static final String INCOMING_TEXT = BuildConfig.APPLICATION_ID + ".message.incomingTxt";
+    static final String INCOMING_TRUST_REQUEST = BuildConfig.APPLICATION_ID +".incoming-trust-request";
     static final String MESSAGE_STATE_CHANGED = BuildConfig.APPLICATION_ID + ".message.stateChanged";
     static final String NAME_LOOKUP_ENDED = BuildConfig.APPLICATION_ID + ".name.lookupEnded";
     static final String NAME_REGISTRATION_ENDED = BuildConfig.APPLICATION_ID + ".name.registrationEnded";
@@ -97,6 +98,12 @@ public class ConfigurationManagerCallback implements Observer<ServiceEvent> {
                         event.getEventInput(ServiceEvent.EventInput.MESSAGE_ID, Long.class),
                         event.getEventInput(ServiceEvent.EventInput.TO, String.class),
                         event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class)
+                );
+                break;
+            case INCOMING_TRUST_REQUEST:
+                incomingTrustedRequest(
+                        event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class),
+                        event.getEventInput(ServiceEvent.EventInput.FROM, String.class)
                 );
                 break;
             case ERROR_ALERT:
@@ -239,6 +246,13 @@ public class ConfigurationManagerCallback implements Observer<ServiceEvent> {
         intent.putExtra("state", state);
         intent.putExtra("name", name);
         intent.putExtra("address", address);
+        mContext.sendBroadcast(intent);
+    }
+
+    private void incomingTrustedRequest(String accountId, String from) {
+        Intent intent = new Intent(INCOMING_TRUST_REQUEST);
+        intent.putExtra("account", accountId);
+        intent.putExtra("from", from);
         mContext.sendBroadcast(intent);
     }
 }

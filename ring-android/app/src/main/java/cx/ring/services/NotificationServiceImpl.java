@@ -63,6 +63,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     private static final String NOTIF_CALL = "CALL";
     private static final String NOTIF_MSG = "MESSAGE";
+    private static final String NOTIF_TRUST_REQUEST = "TRUST REQUEST";
 
     @Inject
     Context mContext;
@@ -233,6 +234,22 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     }
 
     @Override
+    public void showIncomingTrustRequestNotification(String accountID) {
+        NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext);
+
+        messageNotificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setSmallIcon(R.drawable.ic_ring_logo_white);
+        messageNotificationBuilder.setContentTitle(String.format(mContext.getString(R.string.trust_request_msg),accountID));
+        messageNotificationBuilder.addAction(R.drawable.ic_action_accept, mContext.getText(R.string.action_decline_request),
+                null)
+                .addAction(R.drawable.ic_action_accept, mContext.getText(R.string.action_accept_request),null);
+        int notificationId = getIncomingTrustNotificationId(accountID);
+        notificationManager.notify(notificationId, messageNotificationBuilder.build());
+        mNotificationBuilders.put(notificationId, messageNotificationBuilder);
+    }
+
+    @Override
     public void cancelTextNotification(CallContact contact) {
         if (contact == null) {
             return;
@@ -256,6 +273,11 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     public void cancelAll() {
         notificationManager.cancelAll();
         mNotificationBuilders.clear();
+    }
+
+    private int getIncomingTrustNotificationId(String accountID) {
+        cx.ring.model.Uri uri = new cx.ring.model.Uri(accountID);
+        return (NOTIF_TRUST_REQUEST + uri.getRawUriString()).hashCode();
     }
 
     private int getCallNotificationId(SipCall call) {
