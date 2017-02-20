@@ -279,6 +279,21 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log.d(TAG, "onNewIntent " + intent);
+        if(LocalService.ACTION_SHOW_TRUST_REQUEST.equals(intent.getAction())) {
+            Bundle bundle = new Bundle();
+            bundle.putString("accountID", intent.getStringExtra("accountID"));
+            if (fContent instanceof PendingTrustRequestsFragment) {
+                ((PendingTrustRequestsFragment) fContent).upDateAccount(bundle);
+                return;
+            }
+            fContent = new PendingTrustRequestsFragment();
+            fContent.setArguments(bundle);
+            getFragmentManager().beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .replace(R.id.main_frame, fContent, TRUST_REQUEST_TAG)
+                    .addToBackStack(TRUST_REQUEST_TAG).commit();
+            return;
+        }
         if (!ConversationFragment.isTabletMode(this) || !LocalService.ACTION_CONV_ACCEPT.equals(intent.getAction())) {
             return;
         }
