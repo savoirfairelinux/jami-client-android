@@ -279,6 +279,11 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log.d(TAG, "onNewIntent " + intent);
+        if(LocalService.ACTION_SHOW_TRUST_REQUEST.equals(intent.getAction())) {
+            fNavigation.selectSection(RingNavigationFragment.Section.TRUST_REQUEST);
+            onNavigationSectionSelected(RingNavigationFragment.Section.TRUST_REQUEST);
+            return;
+        }
         if (!ConversationFragment.isTabletMode(this) || !LocalService.ACTION_CONV_ACCEPT.equals(intent.getAction())) {
             return;
         }
