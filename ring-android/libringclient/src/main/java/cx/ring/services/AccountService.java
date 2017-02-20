@@ -74,6 +74,7 @@ import ezvcard.VCard;
  * - MIGRATION_ENDED
  * - INCOMING_TRUST_REQUEST
  */
+
 public class AccountService extends Observable {
 
     private static final String TAG = AccountService.class.getName();
