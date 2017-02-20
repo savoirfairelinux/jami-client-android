@@ -32,6 +32,7 @@ import cx.ring.model.TrustRequest;
 import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -41,10 +42,13 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
     static private final String TAG = PendingContactRequestsPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
+    private String mAccountID;
+    private NotificationService mNotificationService;
 
     @Inject
-    public PendingContactRequestsPresenter(AccountService mAccountService) {
+    public PendingContactRequestsPresenter(AccountService mAccountService, NotificationService mNotificationService) {
         this.mAccountService = mAccountService;
+        this.mNotificationService = mNotificationService;
     }
 
     final private List<TrustRequest> mTrustRequests = new ArrayList<>();
@@ -62,6 +66,14 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
         updateList(true);
     }
 
+    public void updateAccount(String accountId, boolean shouldUpdateList) {
+        mAccountID = accountId;
+        if (shouldUpdateList) {
+            updateList(true);
+        }
+
+    }
+
     @Override
     public void unbindView() {
         mAccountService.removeObserver(this);
@@ -74,7 +86,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
         }
 
         Log.d(TAG, "updateList");
-        Account currentAccount = mAccountService.getCurrentAccount();
+        Account currentAccount = ((mAccountID == null) ? mAccountService.getCurrentAccount() : mAccountService.getAccount(mAccountID));
         if (currentAccount == null) {
             return;
         }
@@ -94,6 +106,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
         }
 
         getView().showViewModel(new PendingContactRequestsViewModel(currentAccount, mTrustRequests));
+        mNotificationService.cancelTrustRequestNotification(currentAccount.getAccountID());
     }
 
     @Override
