@@ -40,6 +40,8 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
 
     static final String TAG = PendingTrustRequestsPresenter.class.getSimpleName();
 
+    private String accountID;
+
     @Inject
     AccountService mAccountService;
 
@@ -55,6 +57,10 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         updateList();
     }
 
+    public void updateAccount(String accountId) {
+        accountID = accountId;
+    }
+
     @Override
     public void unbindView() {
         mAccountService.removeObserver(this);
@@ -68,7 +74,7 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         }
 
         Log.d(TAG, "updateList");
-        Account currentAccount = mAccountService.getCurrentAccount();
+        Account currentAccount = ((accountID == null)? mAccountService.getCurrentAccount() : mAccountService.getAccount(accountID));
         HashMap<String, String> map = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
         List<TrustRequest> trustRequests = new ArrayList<>();
 
@@ -79,8 +85,8 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
             trustRequests.add(new TrustRequest(value, key));
         }
 
-
         getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, trustRequests));
+        accountID = null;
     }
 
     @Override

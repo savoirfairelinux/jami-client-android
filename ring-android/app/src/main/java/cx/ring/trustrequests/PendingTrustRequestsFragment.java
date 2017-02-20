@@ -85,11 +85,25 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
         return inflatedView;
     }
 
+    public void showForAccount(Bundle bundle) {
+        if(bundle.containsKey("accountID") && bundle.getString("accountID") != null) {
+            mPendingTrustRequestsPresenter.updateAccount(bundle.getString("accountID"));
+        }
+    }
+
+    public void refresh() {
+        mPendingTrustRequestsPresenter.updateList();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_trust_request);
 
+        Bundle arguments = getArguments();
+        if(arguments != null && arguments.containsKey("accountID") && getArguments().getString("accountID") != null){
+                mPendingTrustRequestsPresenter.updateAccount(getArguments().getString("accountID"));
+        }
         // view binding
         mPendingTrustRequestsPresenter.bindView(this);
     }
