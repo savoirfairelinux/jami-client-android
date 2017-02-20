@@ -32,6 +32,7 @@ import cx.ring.model.TrustRequest;
 import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -41,6 +42,10 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
     static final String TAG = PendingTrustRequestsPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
+    private String mAccountID;
+
+    @Inject
+    NotificationService mNotificationService;
 
     @Inject
     public PendingTrustRequestsPresenter(AccountService mAccountService) {
@@ -59,6 +64,10 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         updateList();
     }
 
+    public void updateAccount(String accountId) {
+        mAccountID = accountId;
+    }
+
     @Override
     public void unbindView() {
         mAccountService.removeObserver(this);
@@ -71,11 +80,10 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         }
 
         Log.d(TAG, "updateList");
-        Account currentAccount = mAccountService.getCurrentAccount();
+        Account currentAccount = ((mAccountID == null) ? mAccountService.getCurrentAccount() : mAccountService.getAccount(mAccountID));
         if (currentAccount == null) {
             return;
         }
-
         HashMap<String, String> map = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
         List<TrustRequest> trustRequests = new ArrayList<>();
 
@@ -88,6 +96,8 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
 
 
         getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, trustRequests));
+        mNotificationService.cancelTrustRequestNotification(currentAccount.getAccountID());
+        mAccountID = null;
     }
 
     @Override
