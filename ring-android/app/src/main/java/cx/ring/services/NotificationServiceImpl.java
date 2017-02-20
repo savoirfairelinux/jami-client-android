@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -50,6 +51,7 @@ import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.LocalService;
+import cx.ring.trustrequests.PendingTrustRequestsFragment;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
@@ -63,6 +65,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     private static final String NOTIF_CALL = "CALL";
     private static final String NOTIF_MSG = "MESSAGE";
+    private static final String NOTIF_TRUST_REQUEST = "TRUST REQUEST";
 
     @Inject
     Context mContext;
@@ -233,6 +236,34 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     }
 
     @Override
+    public void showIncomingTrustRequestNotification(String accountID, String from) {
+        NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext);
+
+        messageNotificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_ring_logo_white)
+                .setContentTitle(from)
+                .setContentText(mContext.getString(R.string.trust_request_msg));
+        Intent intentOpenTrustRequestFragment = new Intent(LocalService.ACTION_SHOW_TRUST_REQUEST)
+                .setClass(mContext, HomeActivity.class)
+                .putExtra(PendingTrustRequestsFragment.ACCOUNT_ID, accountID);
+        messageNotificationBuilder.setContentIntent(PendingIntent.getActivity(mContext,
+                new Random().nextInt(), intentOpenTrustRequestFragment, 0));
+        Resources res = mContext.getResources();
+        int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
+        int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
+        Bitmap bmp;
+        bmp = BitmapFactory.decodeResource(res,R.drawable.ic_contact_picture);
+        if (bmp != null) {
+            messageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
+        }
+        int notificationId = getIncomingTrustNotificationId(accountID);
+        notificationManager.notify(notificationId, messageNotificationBuilder.build());
+        mNotificationBuilders.put(notificationId, messageNotificationBuilder);
+    }
+
+    @Override
     public void cancelTextNotification(CallContact contact) {
         if (contact == null) {
             return;
@@ -256,6 +287,11 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     public void cancelAll() {
         notificationManager.cancelAll();
         mNotificationBuilders.clear();
+    }
+
+    private int getIncomingTrustNotificationId(String accountID) {
+        cx.ring.model.Uri uri = new cx.ring.model.Uri(accountID);
+        return (NOTIF_TRUST_REQUEST + uri.getRawUriString()).hashCode();
     }
 
     private int getCallNotificationId(SipCall call) {
@@ -305,6 +341,13 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 messageNotificationBuilder = mNotificationBuilders.get(notificationId);
                 if (messageNotificationBuilder != null) {
                     updateNotification(messageNotificationBuilder, notificationId, name);
+                }
+            }
+            if (ServiceEvent.EventType.INCOMING_TRUST_REQUEST.equals(arg.getEventType())) {
+                final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
+                final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);
+                if(accountID != null && from !=null) {
+                    showIncomingTrustRequestNotification(accountID, from);
                 }
             }
         }

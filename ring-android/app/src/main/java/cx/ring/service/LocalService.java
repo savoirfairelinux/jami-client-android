@@ -105,6 +105,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
     static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
     static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
+    static public final String ACTION_SHOW_TRUST_REQUEST = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST";
 
     @Inject
     HistoryService mHistoryService;
@@ -948,6 +949,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(android.net.Uri.withAppendedPath(ContentUriHandler.CALL_CONTENT_URI, callId)));
                     break;
                 }
+
                 case CallManagerCallBack.CALL_STATE_CHANGED: {
                     String callId = intent.getStringExtra("call");
                     Conversation conversation = null;
