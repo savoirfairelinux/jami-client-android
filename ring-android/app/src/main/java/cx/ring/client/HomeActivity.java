@@ -62,6 +62,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
 import cx.ring.application.RingApplication;
@@ -79,6 +80,7 @@ import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.NotificationService;
 import cx.ring.services.SettingsService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
@@ -112,6 +114,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     public static final String SETTINGS_TAG = "Prefs";
     public static final String SHARE_TAG = "Share";
     private static final String NAVIGATION_TAG = "Navigation";
+    static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
 
     private LocalService service;
     private boolean mBound = false;
@@ -121,6 +124,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     private ActionBarDrawerToggle mDrawerToggle;
     private Boolean isDrawerLocked = false;
+    private String mAccountWithPendingrequests = null;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -130,6 +134,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Inject
     AccountService mAccountService;
+
+    @Inject
+    NotificationService mNotificationService;
 
     @BindView(R.id.left_drawer)
     NavigationView mNavigationView;
@@ -273,12 +280,29 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             startService(intent);
             bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
         }
+        // if app opened from notification display trust request fragment when mService will connected
+        Intent intent = getIntent();
+        Bundle extra = intent.getExtras();
+        if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(intent.getAction())) {
+            if (extra == null || extra.getString(PendingTrustRequestsFragment.ACCOUNT_ID) == null) {
+                return;
+            }
+            mAccountWithPendingrequests = extra.getString(PendingTrustRequestsFragment.ACCOUNT_ID);
+        }
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log.d(TAG, "onNewIntent " + intent);
+        if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(intent.getAction())) {
+            Bundle extra = intent.getExtras();
+            if (extra == null || extra.getString(PendingTrustRequestsFragment.ACCOUNT_ID) == null) {
+                return;
+            }
+            presentTrustRequestFragment(extra.getString(PendingTrustRequestsFragment.ACCOUNT_ID));
+            return;
+        }
         if (!ConversationFragment.isTabletMode(this) || !LocalService.ACTION_CONV_ACCEPT.equals(intent.getAction())) {
             return;
         }
@@ -508,6 +532,23 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         setVideoEnabledFromPermission();
     }
 
+    private void presentTrustRequestFragment(String accountID) {
+        Bundle bundle = new Bundle();
+        bundle.putString(PendingTrustRequestsFragment.ACCOUNT_ID, accountID);
+        mNotificationService.cancelTrustRequestNotification(accountID);
+        if (fContent instanceof PendingTrustRequestsFragment) {
+            ((PendingTrustRequestsFragment) fContent).presentForAccount(bundle);
+            return;
+        }
+        fContent = new PendingTrustRequestsFragment();
+        fContent.setArguments(bundle);
+        fNavigation.selectSection(RingNavigationFragment.Section.TRUST_REQUEST);
+        getFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .replace(R.id.main_frame, fContent, TRUST_REQUEST_TAG)
+                .addToBackStack(TRUST_REQUEST_TAG).commit();
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -575,6 +616,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             } else if (fContent instanceof Refreshable) {
                 fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commitAllowingStateLoss();
                 ((Refreshable) fContent).refresh();
+            }
+            if (mAccountWithPendingrequests != null) {
+                presentTrustRequestFragment(mAccountWithPendingrequests);
+                mAccountWithPendingrequests = null;
             }
             service.reloadAccounts();
         }
@@ -653,14 +698,19 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 fContent = getFragmentManager().findFragmentByTag(HOME_TAG);
                 break;
             case TRUST_REQUEST:
+                Bundle bundle = new Bundle();
+                bundle.putString(PendingTrustRequestsFragment.ACCOUNT_ID, null);
                 if (fContent instanceof PendingTrustRequestsFragment) {
+                    ((PendingTrustRequestsFragment) fContent).presentForAccount(bundle);
                     break;
                 }
                 fContent = new PendingTrustRequestsFragment();
+                fContent.setArguments(bundle);
                 getFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .replace(R.id.main_frame, fContent, TRUST_REQUEST_TAG)
                         .addToBackStack(TRUST_REQUEST_TAG).commit();
+
                 break;
             case MANAGE:
                 if (fContent instanceof AccountsManagementFragment) {

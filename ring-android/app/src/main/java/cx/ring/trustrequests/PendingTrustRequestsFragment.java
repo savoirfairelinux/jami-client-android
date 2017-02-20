@@ -48,6 +48,7 @@ import cx.ring.utils.Log;
 public class PendingTrustRequestsFragment extends Fragment implements GenericView<PendingTrustRequestsViewModel> {
 
     static final String TAG = PendingTrustRequestsFragment.class.getSimpleName();
+    public static final String ACCOUNT_ID = TAG + "accountID";
 
     @Inject
     protected PendingTrustRequestsPresenter mPendingTrustRequestsPresenter;
@@ -79,11 +80,23 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
         return inflatedView;
     }
 
+    public void presentForAccount(Bundle bundle) {
+        if (bundle != null && bundle.containsKey(ACCOUNT_ID)) {
+            boolean shouldUpdateList = (bundle.getString(ACCOUNT_ID) == null);
+            mPendingTrustRequestsPresenter.updateAccount(bundle.getString(ACCOUNT_ID), shouldUpdateList);
+            getArguments().putString(ACCOUNT_ID, bundle.getString(ACCOUNT_ID));
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_trust_request);
 
+        Bundle arguments = getArguments();
+        if (arguments != null && arguments.containsKey(ACCOUNT_ID)) {
+            mPendingTrustRequestsPresenter.updateAccount(getArguments().getString(ACCOUNT_ID), false);
+        }
         // view binding
         mPendingTrustRequestsPresenter.bindView(this);
     }
