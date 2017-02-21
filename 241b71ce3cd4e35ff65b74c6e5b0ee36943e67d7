@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1acb0d3e_7ebc306d",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-21T18:55:21Z",
+      "side": 1,
+      "message": "this line feeds are useless",
+      "range": {
+        "startLine": 354,
+        "startChar": 0,
+        "endLine": 354,
+        "endChar": 0
+      },
+      "revId": "241b71ce3cd4e35ff65b74c6e5b0ee36943e67d7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_1eadec31",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-21T18:55:21Z",
+      "side": 1,
+      "message": "you don\u0027t need to change the line feeds in this function",
+      "range": {
+        "startLine": 942,
+        "startChar": 4,
+        "endLine": 958,
+        "endChar": 5
+      },
+      "revId": "241b71ce3cd4e35ff65b74c6e5b0ee36943e67d7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1acb0d3e_feafc029",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-21T18:55:21Z",
+      "side": 1,
+      "message": "It exists a Android method to block the orientation screen. See the setRequestedOrientation method.",
+      "range": {
+        "startLine": 1134,
+        "startChar": 4,
+        "endLine": 1142,
+        "endChar": 5
+      },
+      "revId": "241b71ce3cd4e35ff65b74c6e5b0ee36943e67d7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
