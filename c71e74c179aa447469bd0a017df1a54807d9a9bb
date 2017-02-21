@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "1acb0d3e_fec9005b",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1163,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-02-21T15:46:55Z",
+      "side": 1,
+      "message": "Function blockSensorScreenRotation is used to lock screen when video starts, otherwise screen does not need to be locked.\n\nthe screenRotationlocked variable is used to handle the apperance of rotate screen button. When screen is not locked button is hidden. When screen is locked apperance of button depens of screen mode (full screen or navigation)",
+      "parentUuid": "1acb0d3e_bec7f863",
+      "range": {
+        "startLine": 1141,
+        "startChar": 4,
+        "endLine": 1163,
+        "endChar": 5
+      },
+      "revId": "c71e74c179aa447469bd0a017df1a54807d9a9bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1acb0d3e_dec44461",
         "filename": "ring-android/app/src/main/res/drawable/ic_screen_rotation_black.xml",
         "patchSetId": 1
