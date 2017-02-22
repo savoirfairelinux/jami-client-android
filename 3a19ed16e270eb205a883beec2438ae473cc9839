@@ -16,6 +16,24 @@
       "revId": "3a19ed16e270eb205a883beec2438ae473cc9839",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab9d9a7_0a093b2c",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Conversation.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-22T14:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1acb0d3e_79e9aa19",
+      "revId": "3a19ed16e270eb205a883beec2438ae473cc9839",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
