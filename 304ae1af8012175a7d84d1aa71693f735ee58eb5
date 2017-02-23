@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab9d9a7_ca948346",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1133,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2017-02-23T16:19:34Z",
+      "side": 1,
+      "message": "bad indentation. Should be:\nif (...) {\n    ...\n} else {\n    ...\n}",
+      "range": {
+        "startLine": 1128,
+        "startChar": 8,
+        "endLine": 1133,
+        "endChar": 9
+      },
+      "revId": "304ae1af8012175a7d84d1aa71693f735ee58eb5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab9d9a7_ea914753",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1147,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2017-02-23T16:19:34Z",
+      "side": 1,
+      "message": "bad indentation.",
+      "range": {
+        "startLine": 1143,
+        "startChar": 0,
+        "endLine": 1147,
+        "endChar": 9
+      },
+      "revId": "304ae1af8012175a7d84d1aa71693f735ee58eb5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
