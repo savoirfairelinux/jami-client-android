@@ -9,7 +9,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/add_action_panel">
+        android:layout_above="@+id/add_action_panel"
+        tools:background="@color/color_primary_dark">
 
         <cx.ring.views.BoundedScrollView
             android:layout_width="match_parent"
@@ -34,8 +35,8 @@
                     android:layout_marginTop="24dp"
                     android:gravity="center"
                     android:text="@string/account_creation_profile"
-                    android:textSize="24sp"
-                    android:textColor="@color/text_color_primary_dark" />
+                    android:textColor="@color/text_color_primary_dark"
+                    android:textSize="24sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -128,20 +129,22 @@
         <Button
             android:id="@+id/last_create_account"
             style="@style/WizardNavButton"
-            android:layout_height="match_parent"
             android:layout_width="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:text="@string/wizard_back" />
+            android:layout_alignParentStart="true"
+            android:text="@string/wizard_back"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/next_create_account"
             style="@style/WizardNavButton"
-            android:layout_height="match_parent"
             android:layout_width="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:text="@string/wizard_next" />
+            android:layout_alignParentRight="true"
+            android:text="@string/wizard_next"
+            android:textColor="@android:color/white" />
 
     </RelativeLayout>
 
