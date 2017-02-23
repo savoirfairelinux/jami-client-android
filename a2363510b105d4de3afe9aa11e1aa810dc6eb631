@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fab9d9a7_aac02f2b",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-02-23T18:38:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_aa9b4f71",
+      "range": {
+        "startLine": 284,
+        "startChar": 30,
+        "endLine": 284,
+        "endChar": 39
+      },
+      "revId": "a2363510b105d4de3afe9aa11e1aa810dc6eb631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab9d9a7_4a889322",
         "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fab9d9a7_4addf313",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-02-23T18:38:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_4a889322",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 9
+      },
+      "revId": "a2363510b105d4de3afe9aa11e1aa810dc6eb631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab9d9a7_2a875f11",
         "filename": "ring-android/app/src/main/java/cx/ring/trustrequests/PendingTrustRequestsFragment.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-02-23T16:42:33Z",
       "side": 1,
       "message": "see my comment on the constant",
+      "range": {
+        "startLine": 89,
+        "startChar": 31,
+        "endLine": 89,
+        "endChar": 40
+      },
+      "revId": "a2363510b105d4de3afe9aa11e1aa810dc6eb631",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab9d9a7_6ae237d7",
+        "filename": "ring-android/app/src/main/java/cx/ring/trustrequests/PendingTrustRequestsFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-02-23T18:38:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_2a875f11",
       "range": {
         "startLine": 89,
         "startChar": 31,
