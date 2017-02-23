@@ -140,6 +140,30 @@
       "revId": "241b71ce3cd4e35ff65b74c6e5b0ee36943e67d7",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab9d9a7_8af0cbca",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-23T14:44:51Z",
+      "side": 1,
+      "message": "You can use this function by adding a condition on the API. If the API is upper than 18, you use this function, else you use your code. A function is more optimized than a code.",
+      "parentUuid": "fab9d9a7_0aca9ba1",
+      "range": {
+        "startLine": 1134,
+        "startChar": 4,
+        "endLine": 1142,
+        "endChar": 5
+      },
+      "revId": "241b71ce3cd4e35ff65b74c6e5b0ee36943e67d7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
