@@ -11,7 +11,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/add_action_panel">
+        android:layout_above="@+id/add_action_panel"
+        tools:background="@color/color_primary_dark">
 
         <cx.ring.views.BoundedScrollView
             android:layout_width="match_parent"
