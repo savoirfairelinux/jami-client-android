@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab9d9a7_4a8f3324",
+        "filename": "ring-android/app/src/main/java/cx/ring/dependencyinjection/PresenterInjectionModule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2017-02-23T16:55:50Z",
+      "side": 1,
+      "message": "We should remove this annotation for all presenters. Check first if there nos persistent state in the presenter",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 14
+      },
+      "revId": "15c5dbd83a00c43423c7db713b71cb2e6aaef581",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab9d9a7_6a947737",
+        "filename": "ring-android/app/src/main/java/cx/ring/trustrequests/TrustRequestsAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2017-02-23T16:55:50Z",
+      "side": 1,
+      "message": "empty methods ?",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 9
+      },
+      "revId": "15c5dbd83a00c43423c7db713b71cb2e6aaef581",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
