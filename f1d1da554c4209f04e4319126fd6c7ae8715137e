@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab9d9a7_6a655744",
+        "filename": "ring-android/app/src/main/res/layout-land/frag_acc_profile_create.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-23T21:14:29Z",
+      "side": 1,
+      "message": "with the new style, you can use \"wrap_content\"",
+      "range": {
+        "startLine": 152,
+        "startChar": 12,
+        "endLine": 152,
+        "endChar": 40
+      },
+      "revId": "f1d1da554c4209f04e4319126fd6c7ae8715137e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab9d9a7_0a5a9b83",
+        "filename": "ring-android/app/src/main/res/layout-land/frag_acc_profile_create.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-23T21:14:29Z",
+      "side": 1,
+      "message": "with the new style, you can use \"wrap_content\"",
+      "range": {
+        "startLine": 161,
+        "startChar": 12,
+        "endLine": 161,
+        "endChar": 40
+      },
+      "revId": "f1d1da554c4209f04e4319126fd6c7ae8715137e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
