@@ -9,7 +9,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/add_action_panel">
+        android:layout_above="@+id/add_action_panel"
+        tools:background="@color/color_primary_dark">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -147,17 +148,19 @@
 
         <Button
             android:id="@+id/last_create_account"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            style="@style/WizardNavButton"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:text="@string/wizard_back" />
 
         <Button
             android:id="@+id/next_create_account"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            style="@style/WizardNavButton"
             android:layout_width="100dp"
             android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="@string/wizard_next" />
 
