@@ -15,18 +15,19 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="45dp">
 
-        <cx.ring.views.BoundedRelativeLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="50dp">
 
@@ -236,12 +237,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </FrameLayout>
 
             </LinearLayout>
-        </cx.ring.views.BoundedRelativeLayout>
+        </RelativeLayout>
     </ScrollView>
 
     <include
         layout="@layout/add_new_device_layout"
+        android:id="@+id/add_new_device"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
-</FrameLayout>
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>
