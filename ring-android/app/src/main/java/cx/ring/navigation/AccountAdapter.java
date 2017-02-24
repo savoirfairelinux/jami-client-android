@@ -20,6 +20,7 @@ package cx.ring.navigation;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
@@ -28,6 +29,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.File;
@@ -40,6 +42,7 @@ import cx.ring.model.Account;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import ezvcard.property.FormattedName;
 
 class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Account> mDataset;
@@ -96,6 +99,9 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @BindView(R.id.error_indicator)
         ImageView error;
 
+        @BindView(R.id.loading_indicator)
+        ProgressBar loading;
+
         AccountView(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -122,7 +128,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return TYPE_ACCOUNT;
     }
 
-    public class AddAccountView extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class AddAccountView extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final int viewtype;
 
         @BindView(R.id.navigation_item_title)
@@ -180,36 +186,69 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         switch (getItemViewType(position)) {
-            case TYPE_ACCOUNT:
+            case TYPE_ACCOUNT: {
+                AccountView entryView = (AccountView) holder;
                 Account account = mDataset.get(position);
                 VCard vcard = VCardUtils.loadLocalProfileFromDisk(mContext.getFilesDir(), account.getAccountID());
                 if (!vcard.getPhotos().isEmpty()) {
                     Bitmap photo = BitmapUtils.cropImageToCircle(vcard.getPhotos().get(0).getData());
-                    ((AccountView) holder).photo.setImageBitmap(photo);
+                    entryView.photo.setImageBitmap(photo);
                 } else {
                     Drawable photo = ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.ic_contact_picture, null);
-                    ((AccountView) holder).photo.setImageDrawable(photo);
+                    entryView.photo.setImageDrawable(photo);
                 }
-                String alias = vcard.getFormattedName().getValue();
-                if (TextUtils.isEmpty(alias)) {
-                    alias = account.getAlias();
+                String alias = account.getAlias();
+                FormattedName name = vcard.getFormattedName();
+                if (name != null) {
+                    String a = name.getValue();
+                    if (!TextUtils.isEmpty(a)) {
+                        alias = a;
+                    }
                 }
-                ((AccountView) holder).alias.setText(alias);
+                entryView.alias.setText(alias);
                 if (account.isRing()) {
                     String username = account.getRegisteredName();
                     if (!account.registeringUsername && !TextUtils.isEmpty(username)) {
-                        ((AccountView) holder).host.setText(username);
+                        entryView.host.setText(username);
                     } else {
-                        ((AccountView) holder).host.setText(account.getUsername());
+                        entryView.host.setText(account.getUsername());
                     }
                 } else if (account.isSip() && !account.isIP2IP()) {
-                    ((AccountView) holder).host.setText(account.getUsername() + "@" + account.getHost());
+                    entryView.host.setText(account.getUsername() + "@" + account.getHost());
                 } else {
-                    ((AccountView) holder).host.setText(R.string.account_type_ip2ip);
+                    entryView.host.setText(R.string.account_type_ip2ip);
                 }
 
-                ((AccountView) holder).error.setVisibility(account.isRegistered() ? View.GONE : View.VISIBLE);
+                if (account.isEnabled()) {
+                    if (account.isTrying()) {
+                        entryView.error.setVisibility(View.GONE);
+                        entryView.loading.setVisibility(View.VISIBLE);
+                    } else if (account.needsMigration()) {
+                        entryView.host.setText(R.string.account_update_needed);
+                        entryView.host.setTextColor(Color.RED);
+                        entryView.error.setImageResource(R.drawable.ic_warning);
+                        entryView.error.setColorFilter(Color.RED);
+                        entryView.error.setVisibility(View.VISIBLE);
+                    } else if (account.isInError()) {
+                        entryView.error.setImageResource(R.drawable.ic_error_white);
+                        entryView.error.setColorFilter(Color.RED);
+                        entryView.error.setVisibility(View.VISIBLE);
+                        entryView.loading.setVisibility(View.GONE);
+                    } else if (!account.isRegistered()) {
+                        entryView.error.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
+                        entryView.error.setColorFilter(Color.BLACK);
+                        entryView.error.setVisibility(View.VISIBLE);
+                        entryView.loading.setVisibility(View.GONE);
+                    } else {
+                        entryView.error.setVisibility(View.GONE);
+                        entryView.loading.setVisibility(View.GONE);
+                    }
+                } else {
+                    entryView.error.setVisibility(View.GONE);
+                    entryView.loading.setVisibility(View.GONE);
+                }
                 break;
+            }
             case TYPE_ADD_SIP_ACCOUNT:
                 ((AddAccountView) holder).icon.setImageResource(R.drawable.ic_add_black_24dp);
                 ((AddAccountView) holder).title.setText(R.string.add_sip_account_title);

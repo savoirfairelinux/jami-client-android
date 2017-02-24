@@ -6,42 +6,57 @@
     android:minHeight="72dp"
     android:padding="16dp">
 
-    <android.support.v7.widget.AppCompatTextView
+    <TextView
         android:id="@+id/account_alias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/account_selected_error_indicator"
-        android:layout_toStartOf="@+id/account_selected_error_indicator"
+        android:layout_toLeftOf="@+id/account_selected_loading_indicator"
+        android:layout_toStartOf="@+id/account_selected_loading_indicator"
         android:fontFamily="sans-serif-medium"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/white"
         tools:text="Alias" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <TextView
         android:id="@+id/account_host"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/account_alias"
-        android:layout_toLeftOf="@+id/account_selected_arrow"
-        android:layout_toStartOf="@+id/account_selected_arrow"
-        android:ellipsize="end"
+        android:layout_toLeftOf="@+id/account_selected_loading_indicator"
+        android:layout_toStartOf="@+id/account_selected_loading_indicator"
+        android:ellipsize="middle"
         android:maxLines="1"
-        android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/white"
         tools:text="ring:762db5e2ff4c8fc8d2316b38f1c6d1a2a923620b" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <ProgressBar
+        android:id="@+id/account_selected_loading_indicator"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_toStartOf="@+id/account_selected_error_indicator"
+        android:layout_toLeftOf="@+id/account_selected_error_indicator"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:visibility="gone" />
+
+    <ImageView
         android:id="@+id/account_selected_error_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_toStartOf="@+id/account_selected_arrow"
+        android:layout_toLeftOf="@+id/account_selected_arrow"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
@@ -49,7 +64,7 @@
         android:focusable="false"
         android:src="@drawable/ic_error_white" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/account_selected_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

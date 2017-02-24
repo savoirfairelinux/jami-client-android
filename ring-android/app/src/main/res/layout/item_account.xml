@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     android:background="?android:attr/selectableItemBackground"
     android:padding="16dp">
 
-    <android.support.v7.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/account_photo"
         android:layout_width="36dp"
         android:layout_height="36dp"
@@ -37,9 +37,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/account_photo"
-        android:layout_toLeftOf="@+id/error_indicator"
+        android:layout_toLeftOf="@+id/loading_indicator"
         android:layout_toRightOf="@+id/account_photo"
-        android:layout_toStartOf="@+id/error_indicator"
+        android:layout_toStartOf="@+id/loading_indicator"
         android:ellipsize="end"
         android:textAppearance="@style/ListPrimary"
         tools:text="Ring account" />
@@ -52,15 +52,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_alignParentStart="false"
         android:layout_below="@+id/account_alias"
         android:layout_toEndOf="@+id/account_photo"
-        android:layout_toLeftOf="@+id/error_indicator"
+        android:layout_toLeftOf="@+id/loading_indicator"
         android:layout_toRightOf="@+id/account_photo"
-        android:layout_toStartOf="@+id/error_indicator"
+        android:layout_toStartOf="@+id/loading_indicator"
         android:ellipsize="middle"
         android:maxLines="1"
         android:textAppearance="@style/ListSecondary"
-        tools:text="ring:b982672502b9f1236a68353d74734cb82f9d1fab" />
+        tools:text="ring:b982672502b9f1236a68353d74734cb82f9d1fab"
+        android:layout_marginRight="8dp" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <ProgressBar
+        android:id="@+id/loading_indicator"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_toStartOf="@+id/error_indicator"
+        android:layout_toLeftOf="@+id/error_indicator"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:visibility="gone" />
+
+    <ImageView
         android:id="@+id/error_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,6 +90,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:focusableInTouchMode="false"
         android:src="@drawable/ic_error_white"
         android:tint="@color/error_red"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:visibility="gone" />
 
 </RelativeLayout>
