@@ -18,9 +18,7 @@
 package cx.ring.navigation;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -28,9 +26,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,8 +41,8 @@ import ezvcard.VCard;
 import ezvcard.property.FormattedName;
 
 class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Account> mDataset;
-    private Context mContext;
+    private final List<Account> mDataset;
+    private final Context mContext;
 
     private static final int TYPE_ACCOUNT = 0;
     private static final int TYPE_ADD_RING_ACCOUNT = 1;
@@ -91,11 +89,17 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @BindView(R.id.account_alias)
         TextView alias;
 
+        @BindView(R.id.account_disabled)
+        TextView disabled_flag;
+
         @BindView(R.id.account_host)
         TextView host;
 
         @BindView(R.id.error_indicator)
         ImageView error;
+
+        @BindView(R.id.loading_indicator)
+        ProgressBar loading;
 
         AccountView(View view) {
             super(view);
@@ -108,6 +112,70 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (mListener != null) {
                 mListener.onAccountSelected(mDataset.get(getAdapterPosition()));
             }
+        }
+
+        public void update(final Account account) {
+            VCard vcard = VCardUtils.loadLocalProfileFromDisk(mContext.getFilesDir(), account.getAccountID());
+            if (!vcard.getPhotos().isEmpty()) {
+                photo.setImageBitmap(BitmapUtils.cropImageToCircle(vcard.getPhotos().get(0).getData()));
+            } else {
+                photo.setImageDrawable(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.ic_contact_picture, null));
+            }
+            String alias = account.getAlias();
+            FormattedName name = vcard.getFormattedName();
+            if (name != null) {
+                String name_value = name.getValue();
+                if (!TextUtils.isEmpty(name_value)) {
+                    alias = name_value;
+                }
+            }
+            this.alias.setText(alias);
+            if (account.isRing()) {
+                String username = account.getRegisteredName();
+                if (!account.registeringUsername && !TextUtils.isEmpty(username)) {
+                    host.setText(username);
+                } else {
+                    host.setText(account.getUsername());
+                }
+            } else if (account.isSip() && !account.isIP2IP()) {
+                host.setText(account.getUsername() + "@" + account.getHost());
+            } else {
+                host.setText(R.string.account_type_ip2ip);
+            }
+
+            itemView.setEnabled(account.isEnabled());
+            disabled_flag.setVisibility(account.isEnabled() ? View.GONE : View.VISIBLE);
+            if (account.isEnabled()) {
+                this.alias.setTextColor(mContext.getResources().getColor(R.color.text_color_primary));
+                if (account.isTrying()) {
+                    error.setVisibility(View.GONE);
+                    loading.setVisibility(View.VISIBLE);
+                } else if (account.needsMigration()) {
+                    host.setText(R.string.account_update_needed);
+                    host.setTextColor(Color.RED);
+                    error.setImageResource(R.drawable.ic_warning);
+                    error.setColorFilter(Color.RED);
+                    error.setVisibility(View.VISIBLE);
+                } else if (account.isInError()) {
+                    error.setImageResource(R.drawable.ic_error_white);
+                    error.setColorFilter(Color.RED);
+                    error.setVisibility(View.VISIBLE);
+                    loading.setVisibility(View.GONE);
+                } else if (!account.isRegistered()) {
+                    error.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
+                    error.setColorFilter(Color.BLACK);
+                    error.setVisibility(View.VISIBLE);
+                    loading.setVisibility(View.GONE);
+                } else {
+                    error.setVisibility(View.GONE);
+                    loading.setVisibility(View.GONE);
+                }
+            } else {
+                this.alias.setTextColor(mContext.getResources().getColor(R.color.text_color_secondary));
+                error.setVisibility(View.GONE);
+                loading.setVisibility(View.GONE);
+            }
+
         }
 
     }
@@ -123,7 +191,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return TYPE_ACCOUNT;
     }
 
-    public class AddAccountView extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class AddAccountView extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final int viewtype;
 
         @BindView(R.id.navigation_item_title)
@@ -181,40 +249,10 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         switch (getItemViewType(position)) {
-            case TYPE_ACCOUNT:
-                Account account = mDataset.get(position);
-                VCard vcard = VCardUtils.loadLocalProfileFromDisk(mContext.getFilesDir(), account.getAccountID());
-                if (!vcard.getPhotos().isEmpty()) {
-                    Bitmap photo = BitmapUtils.cropImageToCircle(vcard.getPhotos().get(0).getData());
-                    ((AccountView) holder).photo.setImageBitmap(photo);
-                } else {
-                    Drawable photo = ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.ic_contact_picture, null);
-                    ((AccountView) holder).photo.setImageDrawable(photo);
-                }
-                String alias = account.getAlias();
-                FormattedName name = vcard.getFormattedName();
-                if (name != null) {
-                    String name_value = name.getValue();
-                    if (!TextUtils.isEmpty(name_value)) {
-                        alias = name_value;
-                    }
-                }
-                ((AccountView) holder).alias.setText(alias);
-                if (account.isRing()) {
-                    String username = account.getRegisteredName();
-                    if (!account.registeringUsername && !TextUtils.isEmpty(username)) {
-                        ((AccountView) holder).host.setText(username);
-                    } else {
-                        ((AccountView) holder).host.setText(account.getUsername());
-                    }
-                } else if (account.isSip() && !account.isIP2IP()) {
-                    ((AccountView) holder).host.setText(account.getUsername() + "@" + account.getHost());
-                } else {
-                    ((AccountView) holder).host.setText(R.string.account_type_ip2ip);
-                }
-
-                ((AccountView) holder).error.setVisibility(account.isRegistered() ? View.GONE : View.VISIBLE);
+            case TYPE_ACCOUNT: {
+                ((AccountView) holder).update(mDataset.get(position));
                 break;
+            }
             case TYPE_ADD_SIP_ACCOUNT:
                 ((AddAccountView) holder).icon.setImageResource(R.drawable.ic_add_black_24dp);
                 ((AddAccountView) holder).title.setText(R.string.add_sip_account_title);
