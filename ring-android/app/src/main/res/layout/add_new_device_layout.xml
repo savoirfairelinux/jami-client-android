@@ -5,97 +5,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="2dp"
+    android:layout_gravity="bottom"
+    android:clipToPadding="false"
     android:orientation="vertical"
+    android:paddingTop="20dp"
+    android:theme="@style/Wizard"
     tools:showIn="@layout/frag_device_list">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/color_primary_dark">
+        android:background="@color/color_primary_dark"
+        android:elevation="4dp"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.AppCompatButton
+        <Button
             android:id="@+id/btn_add_device"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Base.TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
             android:background="?attr/selectableItemBackground"
             android:paddingBottom="5dp"
             android:paddingTop="5dp"
             android:text="@string/account_link_export_button"
             android:textColor="@color/white" />
 
-    </LinearLayout>
-
-    <cx.ring.views.LinkNewDeviceLayout
-        android:id="@+id/linkaccount_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_primary_dark"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ScrollView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/fields_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/account_link_info"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:paddingBottom="0dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:paddingTop="5dp"
-                        android:text="@string/account_link_export_info"
-                        android:textColor="@color/text_color_primary_dark"
-                        android:textIsSelectable="true"
-                        android:textSize="14sp" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/password_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:passwordToggleEnabled="true">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/ring_password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/account_link_info"
-                            android:layout_marginBottom="0dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:hint="@string/account_enter_password"
-                            android:imeOptions="actionDone"
-                            android:inputType="textPassword"
-                            android:textColor="@color/text_color_primary_dark"
-                            android:textColorHint="@color/text_color_primary_dark"
-                            android:theme="@style/ActionEditText"
-                            app:passwordToggleEnabled="true" />
-                    </android.support.design.widget.TextInputLayout>
-                </LinearLayout>
-            </ScrollView>
-        </RelativeLayout>
-
-        <LinearLayout
+        <cx.ring.views.LinkNewDeviceLayout
+            android:id="@+id/linkaccount_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/color_primary_dark">
+            android:orientation="vertical">
 
-            <android.support.v7.widget.AppCompatButton
+            <TextView
+                android:id="@+id/account_link_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:paddingBottom="0dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="5dp"
+                android:text="@string/account_link_export_info"
+                android:textColor="@color/text_color_primary_dark"
+                android:textIsSelectable="true"
+                android:textSize="14sp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/password_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/ring_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/account_link_info"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:hint="@string/account_enter_password"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
                 android:id="@+id/btn_start_export"
                 style="?attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
@@ -105,15 +79,8 @@
                 android:paddingTop="5dp"
                 android:text="@string/account_start_export_button"
                 android:textColor="@color/white" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/color_primary_dark">
-
-            <android.support.v7.widget.AppCompatButton
+            <Button
                 android:id="@+id/btn_end_export"
                 style="?attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
@@ -125,7 +92,6 @@
                 android:textColor="@color/white"
                 android:visibility="gone" />
 
-        </LinearLayout>
-
-    </cx.ring.views.LinkNewDeviceLayout>
+        </cx.ring.views.LinkNewDeviceLayout>
+    </LinearLayout>
 </LinearLayout>
