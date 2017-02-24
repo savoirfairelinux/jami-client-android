@@ -96,14 +96,22 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
 
     public String getAlias(Account account) {
         VCard vcard = VCardUtils.loadLocalProfileFromDisk(mDeviceRuntimeService.provideFilesDir(), account.getAccountID());
-        FormattedName fname = vcard.getFormattedName();
-        if (fname != null) {
-            return fname.getValue();
+        FormattedName name = vcard.getFormattedName();
+        if (name != null) {
+            String name_value = name.getValue();
+            if (name_value != null && !name_value.isEmpty()) {
+                return name_value;
+            }
         }
         return null;
     }
 
-    public String getHost(Account account, String defaultNameSip) {
+    public String getAccountAlias(Account account) {
+        String alias = getAlias(account);
+        return (alias == null) ? account.getAlias() : alias;
+    }
+
+    public String getHost(Account account, CharSequence defaultNameSip) {
         String username;
         if (account.isRing()) {
             username = account.getRegisteredName();
@@ -113,7 +121,7 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
         } else if (account.isSip() && !account.isIP2IP()) {
             username = account.getUsername() + "@" + account.getHost();
         } else {
-            username = defaultNameSip;
+            username = defaultNameSip.toString();
         }
         return username;
     }
@@ -124,8 +132,11 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
             return;
         }
 
-        if (event.getEventType() == ServiceEvent.EventType.ACCOUNTS_CHANGED) {
-            updateUser();
+        switch (event.getEventType()) {
+            case ACCOUNTS_CHANGED:
+            case REGISTRATION_STATE_CHANGED:
+                updateUser();
+                break;
         }
     }
 }
