@@ -18,17 +18,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="60dp"
     android:background="?android:attr/selectableItemBackground"
-    android:padding="16dp">
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="8dp">
 
-    <android.support.v7.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/account_photo"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         tools:src="@drawable/ic_contact_picture" />
 
     <TextView
@@ -37,12 +39,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/account_photo"
-        android:layout_toLeftOf="@+id/error_indicator"
+        android:layout_toLeftOf="@+id/account_disabled"
         android:layout_toRightOf="@+id/account_photo"
-        android:layout_toStartOf="@+id/error_indicator"
+        android:layout_toStartOf="@+id/account_disabled"
         android:ellipsize="end"
+        android:lines="1"
         android:textAppearance="@style/ListPrimary"
         tools:text="Ring account" />
+
+    <TextView
+        android:id="@+id/account_disabled"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/account_alias"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_toLeftOf="@+id/loading_indicator"
+        android:layout_toStartOf="@+id/loading_indicator"
+        android:text="@string/account_disabled_indicator"
+        android:textStyle="italic" />
 
     <TextView
         android:id="@+id/account_host"
@@ -52,20 +69,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_alignParentStart="false"
         android:layout_below="@+id/account_alias"
         android:layout_toEndOf="@+id/account_photo"
-        android:layout_toLeftOf="@+id/error_indicator"
+        android:layout_toLeftOf="@+id/loading_indicator"
         android:layout_toRightOf="@+id/account_photo"
-        android:layout_toStartOf="@+id/error_indicator"
-        android:ellipsize="end"
+        android:layout_toStartOf="@+id/loading_indicator"
+        android:ellipsize="middle"
         android:maxLines="1"
         android:singleLine="true"
         android:textAppearance="@style/ListSecondary"
         tools:text="ring:b982672502b9f1236a68353d74734cb82f9d1fab" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <ProgressBar
+        android:id="@+id/loading_indicator"
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_toLeftOf="@+id/error_indicator"
+        android:layout_toStartOf="@+id/error_indicator"
+        android:visibility="gone" />
+
+    <ImageView
         android:id="@+id/error_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
@@ -73,7 +104,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:src="@drawable/ic_error_white"
-        android:tint="@android:color/holo_red_light"
-        android:layout_alignParentRight="true" />
+        android:tint="@color/error_red"
+        android:visibility="gone" />
 
 </RelativeLayout>
