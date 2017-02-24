@@ -32,6 +32,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
@@ -124,21 +125,32 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
         mViewPager.setAdapter(new WizardPagerAdapter(getFragmentManager()));
         mViewPager.getAdapter().notifyDataSetChanged();
 
-        if (shouldPresentMigrationScreen()) {
-            mViewPager.setVisibility(View.GONE);
-            Bundle args = new Bundle();
-            Fragment fragment;
-            args.putString(AccountMigrationFragment.ACCOUNT_ID, getIntent().getData().getLastPathSegment());
-            fragment = new AccountMigrationFragment();
-            fragment.setArguments(args);
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager
-                    .beginTransaction()
-                    .replace(R.id.migration_container, fragment)
-                    .commit();
-        } else {
-            mViewPager.setOffscreenPageLimit(4);
-            mAccountType = getIntent().getAction() != null ? getIntent().getAction() : AccountConfig.ACCOUNT_TYPE_RING;
+        String account_to_migrate = null;
+        Intent intent = getIntent();
+        if (intent != null) {
+            mAccountType = intent.getAction();
+            Uri path = intent.getData();
+            if (path != null)
+                account_to_migrate = path.getLastPathSegment();
+        }
+        if (mAccountType == null)
+            mAccountType = AccountConfig.ACCOUNT_TYPE_RING;
+
+        if (savedInstanceState == null) {
+            if (account_to_migrate != null) {
+                mViewPager.setVisibility(View.GONE);
+                Bundle args = new Bundle();
+                args.putString(AccountMigrationFragment.ACCOUNT_ID, getIntent().getData().getLastPathSegment());
+                Fragment fragment = new AccountMigrationFragment();
+                fragment.setArguments(args);
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.migration_container, fragment)
+                        .commit();
+            } else {
+                mViewPager.setOffscreenPageLimit(4);
+            }
         }
     }
 
@@ -165,8 +177,13 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
         mAccountService.removeObserver(this);
     }
 
-    public boolean shouldPresentMigrationScreen() {
-        return getIntent().getData() != null && !TextUtils.isEmpty(getIntent().getData().getLastPathSegment());
+    @Override
+    protected void onDestroy() {
+        if (mProgress != null) {
+            mProgress.dismiss();
+            mProgress = null;
+        }
+        super.onDestroy();
     }
 
     @Override
