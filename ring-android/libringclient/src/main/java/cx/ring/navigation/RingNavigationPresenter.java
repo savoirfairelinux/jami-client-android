@@ -30,6 +30,7 @@ import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.VCardUtils;
@@ -39,6 +40,7 @@ import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 
 public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavigationViewModel>> implements Observer<ServiceEvent> {
+    static final String TAG = RingNavigationPresenter.class.getSimpleName();
 
     @Inject
     AccountService mAccountService;
@@ -124,8 +126,11 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
             return;
         }
 
-        if (event.getEventType() == ServiceEvent.EventType.ACCOUNTS_CHANGED) {
-            updateUser();
+        switch (event.getEventType()) {
+            case ACCOUNTS_CHANGED:
+            case REGISTRATION_STATE_CHANGED:
+                updateUser();
+                break;
         }
     }
 }

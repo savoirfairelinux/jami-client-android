@@ -26,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -44,6 +45,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -103,11 +105,14 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     @BindView(R.id.account_host)
     TextView mSelectedAccountHost;
 
+    @BindView(R.id.account_selected_loading_indicator)
+    ProgressBar mSelectedAccountLoading;
+
     @BindView(R.id.account_selected_error_indicator)
-    AppCompatImageView mSelectedAccountError;
+    ImageView mSelectedAccountError;
 
     @BindView(R.id.account_selected_arrow)
-    AppCompatImageView mSelectedAccountArrow;
+    ImageView mSelectedAccountArrow;
 
     /**************
      * Menu views
@@ -441,6 +446,34 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         mSelectedAccountAlias.setText(alias);
         mSelectedAccountHost.setText(mRingNavigationPresenter.getHost(selectedAccount, getString(R.string.account_type_ip2ip)));
         mSelectedAccountError.setVisibility(selectedAccount.isRegistered() ? View.GONE : View.VISIBLE);
+        if (selectedAccount.isEnabled()) {
+            if (selectedAccount.isTrying()) {
+                mSelectedAccountError.setVisibility(View.GONE);
+                mSelectedAccountLoading.setVisibility(View.VISIBLE);
+            } else if (selectedAccount.needsMigration()) {
+                mSelectedAccountHost.setText(R.string.account_update_needed);
+                mSelectedAccountHost.setTextColor(Color.RED);
+                mSelectedAccountError.setImageResource(R.drawable.ic_warning);
+                mSelectedAccountError.setColorFilter(Color.RED);
+                mSelectedAccountError.setVisibility(View.VISIBLE);
+            } else if (selectedAccount.isInError()) {
+                mSelectedAccountError.setImageResource(R.drawable.ic_error_white);
+                mSelectedAccountError.setColorFilter(Color.RED);
+                mSelectedAccountError.setVisibility(View.VISIBLE);
+                mSelectedAccountLoading.setVisibility(View.GONE);
+            } else if (!selectedAccount.isRegistered()) {
+                mSelectedAccountError.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
+                mSelectedAccountError.setColorFilter(Color.WHITE);
+                mSelectedAccountError.setVisibility(View.VISIBLE);
+                mSelectedAccountLoading.setVisibility(View.GONE);
+            } else {
+                mSelectedAccountError.setVisibility(View.GONE);
+                mSelectedAccountLoading.setVisibility(View.GONE);
+            }
+        } else {
+            mSelectedAccountError.setVisibility(View.GONE);
+            mSelectedAccountLoading.setVisibility(View.GONE);
+        }
     }
 
     @Override
