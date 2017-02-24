@@ -18,7 +18,6 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin">
@@ -31,6 +30,7 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:gravity="center"
                 android:text="@string/account_creation_profile"
+                android:textColor="@color/text_color_primary_dark"
                 android:textSize="24sp" />
 
             <TextView
@@ -49,89 +49,74 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:layout_width="0dp"
+                    android:id="@+id/profile_container"
+                    android:layout_width="150dp"
+                    android:layout_height="160dp"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:id="@+id/profile_photo"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="10dp"
+                        android:scaleType="fitCenter"
+                        tools:src="@drawable/ic_contact_picture" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/camera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/anchor"
+                        android:layout_toRightOf="@+id/anchor"
+                        android:contentDescription="@string/take_a_photo"
+                        android:src="@drawable/ic_photo_camera"
+                        android:text="@string/take_a_photo"
+                        app:backgroundTint="@color/light"
+                        app:rippleColor="@android:color/white" />
+
+                    <Space
+                        android:id="@+id/anchor"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignBottom="@+id/profile_photo"
+                        android:layout_centerHorizontal="true" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/gallery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/anchor"
+                        android:layout_toLeftOf="@+id/anchor"
+                        android:contentDescription="@string/open_the_gallery"
+                        android:src="@drawable/ic_insert_photo"
+                        android:text="@string/open_the_gallery"
+                        app:backgroundTint="@color/light"
+                        app:rippleColor="@android:color/white" />
+
+                </RelativeLayout>
+
+                <cx.ring.views.BoundedRelativeLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:gravity="center">
+                    app:bounded_width="300dp">
 
-                    <RelativeLayout
-                        android:id="@+id/profile_container"
-                        android:layout_width="150dp"
-                        android:layout_height="180dp"
-                        android:layout_gravity="center">
-
-                        <ImageView
-                            android:id="@+id/profile_photo"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_margin="10dp"
-                            android:scaleType="fitCenter"
-                            tools:src="@drawable/ic_contact_picture" />
-
-                        <android.support.design.widget.FloatingActionButton
-                            android:id="@+id/camera"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignTop="@+id/anchor"
-                            android:layout_toRightOf="@+id/anchor"
-                            android:contentDescription="@string/take_a_photo"
-                            android:src="@drawable/ic_photo_camera"
-                            android:text="@string/take_a_photo"
-                            app:backgroundTint="@color/light"
-                            app:rippleColor="@android:color/white" />
-
-                        <View
-                            android:id="@+id/anchor"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_alignBottom="@+id/profile_photo"
-                            android:layout_centerHorizontal="true"
-                            android:background="@color/zxing_transparent" />
-
-                        <android.support.design.widget.FloatingActionButton
-                            android:id="@+id/gallery"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignTop="@+id/anchor"
-                            android:layout_toLeftOf="@+id/anchor"
-                            android:contentDescription="@string/open_the_gallery"
-                            android:src="@drawable/ic_insert_photo"
-                            android:text="@string/open_the_gallery"
-                            app:backgroundTint="@color/light"
-                            app:rippleColor="@android:color/white" />
-
-                    </RelativeLayout>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5">
-
-                    <cx.ring.views.BoundedRelativeLayout
+                    <EditText
+                        android:id="@+id/user_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:bounded_width="500dp">
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:hint="@string/profile_name_hint"
+                        android:inputType="textCapWords"
+                        android:maxLines="1"
+                        android:textAlignment="center"
+                        android:textColor="@color/text_color_primary_dark"
+                        android:textColorHint="@color/text_color_secondary_dark" />
 
-                        <EditText
-                            android:id="@+id/user_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="24dp"
-                            android:layout_marginRight="24dp"
-                            android:hint="@string/unknowm_if_empty"
-                            android:inputType="textCapWords"
-                            android:maxLines="1"
-                            android:textAlignment="center"
-                            android:textColor="@color/text_color_primary_dark"
-                            android:textColorHint="@color/text_color_secondary_dark"
-                            tools:text="Username" />
-
-                    </cx.ring.views.BoundedRelativeLayout>
-
-                </RelativeLayout>
+                </cx.ring.views.BoundedRelativeLayout>
 
             </LinearLayout>
 
