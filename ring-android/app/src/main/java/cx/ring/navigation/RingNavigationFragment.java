@@ -35,6 +35,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +66,7 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.BitmapUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
+import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 
 public class RingNavigationFragment extends Fragment implements NavigationAdapter.OnNavigationItemClicked,
@@ -72,6 +74,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     private static final String TAG = RingNavigationFragment.class.getSimpleName();
 
     private AccountAdapter mAccountAdapter;
+    private Account mSelectedAccount;
 
     @Inject
     RingNavigationPresenter mRingNavigationPresenter;
@@ -180,7 +183,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         SHARE(3),
         ABOUT(4);
 
-        int position;
+        final int position;
 
         Section(int pos) {
             position = pos;
@@ -221,7 +224,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        mRingNavigationPresenter.initializePresenter(getString(R.string.unknown));
+        mRingNavigationPresenter.updateUser();
 
         setupNavigationMenu();
         setupAccountList();
@@ -303,7 +306,13 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         } else {
             mUserImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null));
         }
-        mSelectedAccountAlias.setText(vcard.getFormattedName().getValue());
+        FormattedName name = vcard.getFormattedName();
+        if (name != null) {
+            String name_value = name.getValue();
+            if (!TextUtils.isEmpty(name_value)) {
+                mSelectedAccountAlias.setText(name_value);
+            }
+        }
         Log.d(TAG, "User did change, updating user view.");
     }
 
@@ -353,7 +362,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.dialog_profile, null);
 
         final EditText editText = (EditText) view.findViewById(R.id.user_name);
-        editText.setText(mSelectedAccountAlias.getText());
+        editText.setText(mRingNavigationPresenter.getAlias(mSelectedAccount));
         mProfilePhoto = (ImageView) view.findViewById(R.id.profile_photo);
         mProfilePhoto.setImageDrawable(mUserImage.getDrawable());
 
@@ -424,7 +433,12 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         if (selectedAccount == null) {
             return;
         }
-        mSelectedAccountAlias.setText(mRingNavigationPresenter.getAlias(selectedAccount));
+        mSelectedAccount = selectedAccount;
+        String alias = mRingNavigationPresenter.getAlias(selectedAccount);
+        if (TextUtils.isEmpty(alias)) {
+            alias = selectedAccount.getAlias();
+        }
+        mSelectedAccountAlias.setText(alias);
         mSelectedAccountHost.setText(mRingNavigationPresenter.getHost(selectedAccount, getString(R.string.account_type_ip2ip)));
         mSelectedAccountError.setVisibility(selectedAccount.isRegistered() ? View.GONE : View.VISIBLE);
     }
@@ -435,7 +449,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
             @Override
             public void run() {
                 mAccountAdapter.replaceAll(viewModel.getAccounts());
-                updateUserView(viewModel.getVcard(getActivity().getFilesDir(), getString(R.string.unknown)));
+                updateUserView(viewModel.getVcard(getActivity().getFilesDir()));
                 updateSelectedAccountView(viewModel.getAccount());
 
                 if (viewModel.getAccounts().isEmpty()) {

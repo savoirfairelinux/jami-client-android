@@ -34,6 +34,7 @@ import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 
@@ -44,8 +45,6 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
-
-    private String mDefaultName;
 
     @Override
     public void afterInjection() {
@@ -63,11 +62,6 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
     public void unbindView() {
         mAccountService.removeObserver(this);
         super.unbindView();
-    }
-
-    public void initializePresenter(String defaultName) {
-        mDefaultName = defaultName;
-        updateUser();
     }
 
     public void updateUser() {
@@ -88,13 +82,9 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
 
     public void saveVCard(String username, Photo photo) {
         String accountId = mAccountService.getCurrentAccount().getAccountID();
-
-        if (username.isEmpty()) {
-            username = mDefaultName;
-        }
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
-        VCard vcard = VCardUtils.loadLocalProfileFromDisk(filesDir, accountId, mDefaultName);
+        VCard vcard = VCardUtils.loadLocalProfileFromDisk(filesDir, accountId);
         vcard.setFormattedName(username);
         vcard.removeProperties(Photo.class);
         vcard.addPhoto(photo);
@@ -105,8 +95,12 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
     }
 
     public String getAlias(Account account) {
-        VCard vcard = VCardUtils.loadLocalProfileFromDisk(mDeviceRuntimeService.provideFilesDir(), account.getAccountID(), mDefaultName);
-        return vcard.getFormattedName().getValue();
+        VCard vcard = VCardUtils.loadLocalProfileFromDisk(mDeviceRuntimeService.provideFilesDir(), account.getAccountID());
+        FormattedName fname = vcard.getFormattedName();
+        if (fname != null) {
+            return fname.getValue();
+        }
+        return null;
     }
 
     public String getHost(Account account, String defaultNameSip) {

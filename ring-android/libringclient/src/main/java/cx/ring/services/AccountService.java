@@ -282,8 +282,7 @@ public class AccountService extends Observable {
 
                 VCard vcard = VCardUtils.loadLocalProfileFromDisk(
                         mDeviceRuntimeService.provideFilesDir(),
-                        accountId,
-                        mDeviceRuntimeService.provideDefaultVCardName());
+                        accountId);
                 String stringVCard = VCardUtils.vcardToString(vcard);
 
                 int nbTotal = stringVCard.length() / VCARD_CHUNK_SIZE + (stringVCard.length() % VCARD_CHUNK_SIZE != 0 ? 1 : 0);

@@ -175,10 +175,10 @@ along with this program; if not, write to the Free Software
 
     <!-- MenuHeaderView -->
     <string name="profile">My profile</string>
-    <string name="profile_message_warning">This is shared with your contacts</string>
+    <string name="profile_message_warning">Your profile is only shared with your contacts</string>
     <string name="open_the_gallery">Open the gallery</string>
     <string name="take_a_photo">Take a photo</string>
-    <string name="unknowm_if_empty">Unknown if empty</string>
+    <string name="profile_name_hint">Enter your name (optional)</string>
     <string name="unknown">Unknown</string>
 
     <!-- Share fragment -->

@@ -40,6 +40,7 @@ import cx.ring.model.Account;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import ezvcard.property.FormattedName;
 
 class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Account> mDataset;
@@ -182,7 +183,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (getItemViewType(position)) {
             case TYPE_ACCOUNT:
                 Account account = mDataset.get(position);
-                VCard vcard = VCardUtils.loadLocalProfileFromDisk(mContext.getFilesDir(), account.getAccountID(), mContext.getString(R.string.unknown));
+                VCard vcard = VCardUtils.loadLocalProfileFromDisk(mContext.getFilesDir(), account.getAccountID());
                 if (!vcard.getPhotos().isEmpty()) {
                     Bitmap photo = BitmapUtils.cropImageToCircle(vcard.getPhotos().get(0).getData());
                     ((AccountView) holder).photo.setImageBitmap(photo);
@@ -190,7 +191,15 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     Drawable photo = ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.ic_contact_picture, null);
                     ((AccountView) holder).photo.setImageDrawable(photo);
                 }
-                ((AccountView) holder).alias.setText(vcard.getFormattedName().getValue());
+                String alias = account.getAlias();
+                FormattedName name = vcard.getFormattedName();
+                if (name != null) {
+                    String name_value = name.getValue();
+                    if (!TextUtils.isEmpty(name_value)) {
+                        alias = name_value;
+                    }
+                }
+                ((AccountView) holder).alias.setText(alias);
                 if (account.isRing()) {
                     String username = account.getRegisteredName();
                     if (!account.registeringUsername && !TextUtils.isEmpty(username)) {
