@@ -70,7 +70,6 @@
         android:inputType="textCapWords"
         android:maxLines="1"
         android:textAlignment="center"
-        android:hint="@string/unknowm_if_empty"
-        tools:text="Username" />
+        android:hint="@string/profile_name_hint" />
 
 </LinearLayout>

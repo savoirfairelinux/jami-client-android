@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) 2016 Savoir-faire Linux Inc.
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (c) 2016 Savoir-faire Linux Inc.
 
 Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
 
@@ -32,18 +31,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_marginRight="8dp"
         tools:src="@drawable/ic_contact_picture" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <TextView
         android:id="@+id/account_alias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="false"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/account_photo"
+        android:layout_toLeftOf="@+id/error_indicator"
         android:layout_toRightOf="@+id/account_photo"
+        android:layout_toStartOf="@+id/error_indicator"
+        android:ellipsize="end"
         android:textAppearance="@style/ListPrimary" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <TextView
         android:id="@+id/account_host"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

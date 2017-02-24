@@ -106,9 +106,6 @@ public class ProfileCreationFragment extends Fragment {
             }
             mPhotoView.setImageBitmap(BitmapUtils.cropImageToCircle(mSourcePhoto));
         }
-        if (TextUtils.isEmpty(mFullnameView.getText().toString())) {
-            mFullnameView.setText(R.string.unknown);
-        }
         return view;
     }
 
@@ -120,15 +117,11 @@ public class ProfileCreationFragment extends Fragment {
 
     private void initProfile() {
         //~ Checking the state of the READ_CONTACTS permission
-        boolean hasReadContactsPermission = mDeviceRuntimeService.hasContactPermission();
-        if (hasReadContactsPermission) {
+        if (mDeviceRuntimeService.hasContactPermission()) {
             Cursor mProfileCursor = getActivity().getContentResolver().query(ContactsContract.Profile.CONTENT_URI, PROFILE_PROJECTION, null, null, null);
             if (mProfileCursor != null) {
                 if (mProfileCursor.moveToFirst()) {
                     String displayName = mProfileCursor.getString(mProfileCursor.getColumnIndex(ContactsContract.Profile.DISPLAY_NAME_PRIMARY));
-                    if (TextUtils.isEmpty(displayName)) {
-                        displayName = getActivity().getResources().getString(R.string.unknown);
-                    }
                     mFullnameView.setText(displayName);
                 }
                 mProfileCursor.close();
@@ -176,7 +169,7 @@ public class ProfileCreationFragment extends Fragment {
 
     @OnClick(R.id.next_create_account)
     public void nextClicked() {
-        String fullname = TextUtils.isEmpty(mFullnameView.getText().toString()) ? getString(R.string.unknown) : mFullnameView.getText().toString().trim();
+        String fullname = mFullnameView.getText().toString().trim();
         ((AccountWizard) getActivity()).profileNext(fullname, mSourcePhoto);
     }
 
