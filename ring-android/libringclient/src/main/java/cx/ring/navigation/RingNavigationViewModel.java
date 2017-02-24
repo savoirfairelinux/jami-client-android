@@ -30,8 +30,8 @@ import ezvcard.VCard;
 
 public class RingNavigationViewModel {
 
-    private WeakReference<Account> mAccount;
-    private List<Account> mAccounts;
+    final private WeakReference<Account> mAccount;
+    final private List<Account> mAccounts;
 
     public RingNavigationViewModel(Account account, List<Account> accounts) {
         mAccount = new WeakReference<>(account);
@@ -39,7 +39,7 @@ public class RingNavigationViewModel {
     }
 
     private boolean isAccountValid() {
-        return mAccount != null && mAccount.get() != null && mAccount.get().isEnabled();
+        return mAccount.get() != null && mAccount.get().isEnabled();
     }
 
     public VCard getVcard(File filesDir) {
