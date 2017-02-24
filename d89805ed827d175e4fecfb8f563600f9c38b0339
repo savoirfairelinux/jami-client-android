@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fab9d9a7_cddc9d77",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/DeviceAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-02-24T23:21:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_cacd6388",
+      "revId": "d89805ed827d175e4fecfb8f563600f9c38b0339",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab9d9a7_aac4af5f",
         "filename": "ring-android/app/src/main/java/cx/ring/account/RenameDeviceDialog.java",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-02-23T16:15:04Z",
       "side": 1,
       "message": "remove if not used",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 13
+      },
+      "revId": "d89805ed827d175e4fecfb8f563600f9c38b0339",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab9d9a7_ca2483c8",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RenameDeviceDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-02-24T23:21:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_aac4af5f",
       "range": {
         "startLine": 126,
         "startChar": 0,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fab9d9a7_ea2147b5",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RenameDeviceDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-02-24T23:21:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_8ac76b64",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 169,
+        "endChar": 11
+      },
+      "revId": "d89805ed827d175e4fecfb8f563600f9c38b0339",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab9d9a7_4aa173a8",
         "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountSummaryFragment.java",
         "patchSetId": 3
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "fab9d9a7_edd96184",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountSummaryFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-02-24T23:21:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_4aa173a8",
+      "range": {
+        "startLine": 448,
+        "startChar": 8,
+        "endLine": 448,
+        "endChar": 49
+      },
+      "revId": "d89805ed827d175e4fecfb8f563600f9c38b0339",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab9d9a7_6aa6b7c3",
         "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountSummaryFragment.java",
         "patchSetId": 3
@@ -99,6 +189,30 @@
       "writtenOn": "2017-02-23T16:15:04Z",
       "side": 1,
       "message": "should be Log.d",
+      "range": {
+        "startLine": 459,
+        "startChar": 8,
+        "endLine": 459,
+        "endChar": 104
+      },
+      "revId": "d89805ed827d175e4fecfb8f563600f9c38b0339",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab9d9a7_8de6a543",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountSummaryFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-02-24T23:21:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_6aa6b7c3",
       "range": {
         "startLine": 459,
         "startChar": 8,
