@@ -239,5 +239,6 @@ along with this program; if not, write to the Free Software
     <string name="account_rename_device_hint">Choose new device name</string>
     <string name="account_device_name_empty">Device name can\'t be empty</string>
     <string name="account_device_this_indicator">this device</string>
+    <string name="account_disabled_indicator">disabled</string>
 
 </resources>

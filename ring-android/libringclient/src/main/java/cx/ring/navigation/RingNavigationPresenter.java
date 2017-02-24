@@ -39,6 +39,7 @@ import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 
 public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavigationViewModel>> implements Observer<ServiceEvent> {
+    static final String TAG = RingNavigationPresenter.class.getSimpleName();
 
     @Inject
     AccountService mAccountService;
@@ -124,8 +125,11 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
             return;
         }
 
-        if (event.getEventType() == ServiceEvent.EventType.ACCOUNTS_CHANGED) {
-            updateUser();
+        switch (event.getEventType()) {
+            case ACCOUNTS_CHANGED:
+            case REGISTRATION_STATE_CHANGED:
+                updateUser();
+                break;
         }
     }
 }
