@@ -280,7 +280,7 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
             @Override
             public void run() {
                 mWaitDialog.dismiss();
-                mRingPassword.setError(getString(R.string.account_export_end_decryption_message));
+                mPasswordLayout.setError(getString(R.string.account_export_end_decryption_message));
                 mRingPassword.setText("");
             }
         });
@@ -320,14 +320,13 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
         return false;
     }
 
-
     @OnClick(R.id.btn_start_export)
     public void onClickStart() {
-        mRingPassword.setError(null);
+        mPasswordLayout.setError(null);
         if (mRingPassword.getText().length() == 0) {
-            mRingPassword.setError(getString(R.string.account_enter_password));
+            mPasswordLayout.setError(getString(R.string.account_enter_password));
         } else if (mRingPassword.getText().length() < 6) {
-            mRingPassword.setError(getString(R.string.error_password_char_count));
+            mPasswordLayout.setError(getString(R.string.error_password_char_count));
         } else {
             mRingAccountSummaryPresenter.startAccountExport(mRingPassword.getText().toString());
         }

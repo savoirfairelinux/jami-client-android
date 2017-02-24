@@ -1,22 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (c) 2017 Savoir-faire Linux Inc.
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+Authors: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
+         Adrien Beraud <adrien.beraud@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="2dp"
-    android:orientation="vertical"
+    android:layout_gravity="bottom"
+    android:clipToPadding="false"
+    android:paddingTop="20dp"
+    android:theme="@style/Wizard"
     tools:showIn="@layout/frag_device_list">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/color_primary_dark">
+        android:background="@color/color_primary_dark"
+        android:elevation="4dp"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.AppCompatButton
+        <Button
             android:id="@+id/btn_add_device"
+            style="@style/Base.TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -25,19 +45,11 @@
             android:text="@string/account_link_export_button"
             android:textColor="@color/white" />
 
-    </LinearLayout>
-
-    <cx.ring.views.LinkNewDeviceLayout
-        android:id="@+id/linkaccount_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_primary_dark"
-        android:orientation="vertical">
-
-        <RelativeLayout
+        <cx.ring.views.LinkNewDeviceLayout
+            android:id="@+id/linkaccount_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <ScrollView
                 android:layout_width="wrap_content"
@@ -79,53 +91,35 @@
                             android:layout_marginRight="12dp"
                             android:hint="@string/account_enter_password"
                             android:imeOptions="actionDone"
-                            android:inputType="textPassword"
-                            android:textColor="@color/text_color_primary_dark"
-                            android:textColorHint="@color/text_color_primary_dark"
-                            android:theme="@style/ActionEditText"
-                            app:passwordToggleEnabled="true" />
+                            android:inputType="textPassword" />
                     </android.support.design.widget.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/btn_start_export"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/account_start_export_button"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btn_end_export"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/account_end_export_button"
+                        android:textColor="@color/white"
+                        android:visibility="gone" />
+
                 </LinearLayout>
             </ScrollView>
-        </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/color_primary_dark">
-
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_start_export"
-                style="?attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:text="@string/account_start_export_button"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/color_primary_dark">
-
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_end_export"
-                style="?attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:text="@string/account_end_export_button"
-                android:textColor="@color/white"
-                android:visibility="gone" />
-
-        </LinearLayout>
-
-    </cx.ring.views.LinkNewDeviceLayout>
-</LinearLayout>
+        </cx.ring.views.LinkNewDeviceLayout>
+    </LinearLayout>
+</FrameLayout>
