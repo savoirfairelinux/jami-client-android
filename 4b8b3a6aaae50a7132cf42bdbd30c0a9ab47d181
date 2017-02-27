@@ -1,0 +1,7 @@
+Code-Review+2: Andreas Traczyk <andreas.traczyk@savoirfairelinux.com>
+Verified+1: Jenkins CI <jenkins@ring-packaging.cx>
+Submitted-by: Andreas Traczyk <andreas.traczyk@savoirfairelinux.com>
+Submitted-at: Mon, 27 Feb 2017 18:41:25 -0500
+Reviewed-on: https://gerrit-ring.savoirfairelinux.com/6101
+Project: ring-client-android
+Branch: refs/heads/master
