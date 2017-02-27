@@ -26,8 +26,12 @@
 package cx.ring.service;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.Camera;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
@@ -44,42 +48,56 @@ import java.util.concurrent.ExecutorService;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.Codec;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
+import cx.ring.services.ContactService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
+import cx.ring.services.NotificationService;
+import cx.ring.services.NotificationServiceImpl;
 
 
 public class DRingService extends Service {
 
-    @Inject
-    DaemonService mDaemonService;
+    public static final String ACTION_TRUST_REQUEST_ACCEPT = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_ACCEPT";
+    public static final String ACTION_TRUST_REQUEST_REFUSE = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_REFUSE";
+    public static final String ACTION_TRUST_REQUEST_BLOCK = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_BLOCK";
+
+    private static final String TAG = DRingService.class.getName();
 
     @Inject
-    CallService mCallService;
+    protected DaemonService mDaemonService;
 
     @Inject
-    ConferenceService mConferenceService;
+    protected CallService mCallService;
 
     @Inject
-    AccountService mAccountService;
+    protected ConferenceService mConferenceService;
 
     @Inject
-    HardwareService mHardwareService;
+    protected AccountService mAccountService;
 
     @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
+    protected HardwareService mHardwareService;
+
+    @Inject
+    protected DeviceRuntimeService mDeviceRuntimeService;
+
+    @Inject
+    protected NotificationService mNotificationService;
+
+    @Inject
+    protected ContactService mContactService;
 
     @Inject
     @Named("DaemonExecutor")
-    ExecutorService mExecutor;
-
-    static final String TAG = DRingService.class.getName();
+    protected ExecutorService mExecutor;
 
     @Override
     public void onCreate() {
@@ -93,6 +111,11 @@ public class DRingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
+
+        if (intent != null && intent.getAction() != null) {
+            parseIntent(intent);
+        }
+
         return START_STICKY; /* started and stopped explicitly */
     }
 
@@ -500,4 +523,43 @@ public class DRingService extends Service {
             mAccountService.registerName(account, password, name);
         }
     };
+
+    private void parseIntent(Intent intent) {
+        switch (intent.getAction()) {
+            case ACTION_TRUST_REQUEST_ACCEPT:
+            case ACTION_TRUST_REQUEST_REFUSE:
+            case ACTION_TRUST_REQUEST_BLOCK: {
+                Bundle extras = intent.getExtras();
+                if (extras != null) {
+                    handleTrustRequestAction(intent.getAction(), extras);
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    private void handleTrustRequestAction(String action, Bundle extras) {
+        String account = extras.getString(NotificationServiceImpl.TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID);
+        String from = extras.getString(NotificationServiceImpl.TRUST_REQUEST_NOTIFICATION_FROM);
+        if (account != null && from != null) {
+            mNotificationService.cancelTrustRequestNotification(account);
+            switch (action) {
+                case ACTION_TRUST_REQUEST_ACCEPT: {
+                    mAccountService.acceptTrustRequest(account, from);
+                    break;
+                }
+                case ACTION_TRUST_REQUEST_REFUSE: {
+                    mAccountService.discardTrustRequest(account, from);
+                    break;
+                }
+                case ACTION_TRUST_REQUEST_BLOCK: {
+                    mAccountService.discardTrustRequest(account, from);
+                    mContactService.removeContact(account, from);
+                    break;
+                }
+            }
+        }
+    }
 }
