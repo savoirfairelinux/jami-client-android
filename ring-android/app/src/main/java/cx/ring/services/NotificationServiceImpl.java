@@ -66,6 +66,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     private static final String NOTIF_CALL = "CALL";
     private static final String NOTIF_MSG = "MESSAGE";
     private static final String NOTIF_TRUST_REQUEST = "TRUST REQUEST";
+    public static final String TRUST_REQUEST_NOTIFICATION_ACCOINTID = "trust_request_notification_account_id";
+    public static final String TRUST_REQUEST_NOTIFICATION_FROM = "trust_request_notification_from";
 
     @Inject
     Context mContext;
@@ -238,23 +240,44 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     @Override
     public void showIncomingTrustRequestNotification(String accountID, String from) {
         NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext);
+        Bundle extras = new Bundle();
+        extras.putString(TRUST_REQUEST_NOTIFICATION_ACCOINTID, accountID);
+        extras.putString(TRUST_REQUEST_NOTIFICATION_FROM, from);
+        Intent intentOpenTrustRequestFragment = new Intent(LocalService.ACTION_SHOW_TRUST_REQUEST)
+                .setClass(mContext, HomeActivity.class)
+                .putExtra(PendingTrustRequestsFragment.ACCOUNT_ID, accountID);
 
         messageNotificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setContentTitle(from)
-                .setContentText(mContext.getString(R.string.trust_request_msg));
-        Intent intentOpenTrustRequestFragment = new Intent(LocalService.ACTION_SHOW_TRUST_REQUEST)
-                .setClass(mContext, HomeActivity.class)
-                .putExtra(PendingTrustRequestsFragment.ACCOUNT_ID, accountID);
-        messageNotificationBuilder.setContentIntent(PendingIntent.getActivity(mContext,
-                new Random().nextInt(), intentOpenTrustRequestFragment, 0));
+                .setContentText(mContext.getString(R.string.trust_request_msg))
+                .setContentIntent(PendingIntent.getActivity(mContext,
+                        new Random().nextInt(), intentOpenTrustRequestFragment, 0))
+                .addAction(R.drawable.ic_action_accept, mContext.getText(R.string.accept),
+                        PendingIntent.getService(mContext, new Random().nextInt(),
+                                new Intent(LocalService.ACTION_TRUST_REQUEST_ACCEPT)
+                                        .setClass(mContext, LocalService.class)
+                                        .putExtras(extras),
+                                PendingIntent.FLAG_ONE_SHOT))
+                .addAction(R.drawable.ic_delete_white, mContext.getText(R.string.refuse),
+                        PendingIntent.getService(mContext, new Random().nextInt(),
+                                new Intent(LocalService.ACTION_TRUST_REQUEST_REFUSE)
+                                        .setClass(mContext, LocalService.class)
+                                        .putExtras(extras),
+                                PendingIntent.FLAG_ONE_SHOT))
+                .addAction(R.drawable.ic_close_white, mContext.getText(R.string.block),
+                        PendingIntent.getService(mContext, new Random().nextInt(),
+                                new Intent(LocalService.ACTION_TRUST_REQUEST_BLOCK)
+                                        .setClass(mContext, LocalService.class)
+                                        .putExtras(extras),
+                                PendingIntent.FLAG_ONE_SHOT));
         Resources res = mContext.getResources();
         int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
         int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
         Bitmap bmp;
-        bmp = BitmapFactory.decodeResource(res,R.drawable.ic_contact_picture);
+        bmp = BitmapFactory.decodeResource(res, R.drawable.ic_contact_picture);
         if (bmp != null) {
             messageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
         }
@@ -346,7 +369,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             if (ServiceEvent.EventType.INCOMING_TRUST_REQUEST.equals(arg.getEventType())) {
                 final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
                 final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);
-                if(accountID != null && from !=null) {
+                if (accountID != null && from != null) {
                     showIncomingTrustRequestNotification(accountID, from);
                 }
             }
