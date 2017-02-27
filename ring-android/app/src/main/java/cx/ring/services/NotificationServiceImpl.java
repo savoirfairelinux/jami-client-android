@@ -21,8 +21,10 @@
 package cx.ring.services;
 
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -43,6 +45,7 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.contactrequests.PendingContactRequestsFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -52,7 +55,6 @@ import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.LocalService;
-import cx.ring.contactrequests.PendingContactRequestsFragment;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
@@ -67,18 +69,31 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     private static final String NOTIF_CALL = "CALL";
     private static final String NOTIF_MSG = "MESSAGE";
     private static final String NOTIF_TRUST_REQUEST = "TRUST REQUEST";
-    private final String EXTRAS_NUMBER_TRUST_REQUEST_KEY = BuildConfig.APPLICATION_ID + "numberOfTrustRequestssKey";
-    private final String EXTRAS_TRUST_REQUEST_FROM_KEY = BuildConfig.APPLICATION_ID + "trustREquestFrom";
+
+    private static final String EXTRAS_NUMBER_TRUST_REQUEST_KEY = BuildConfig.APPLICATION_ID + "numberOfTrustRequestKey";
+    private static final String EXTRAS_TRUST_REQUEST_FROM_KEY = BuildConfig.APPLICATION_ID + "trustRequestFrom";
+
+    private static final String TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID = "trustRequestNotificationAccountId";
+    private static final String TRUST_REQUEST_NOTIFICATION_FROM = "trustRequestNotificationFgit diffrom";
+
+    private static final String ACTION_TRUST_REQUEST_ACCEPT = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_ACCEPT";
+    private static final String ACTION_TRUST_REQUEST_REFUSE = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_REFUSE";
+    private static final String ACTION_TRUST_REQUEST_BLOCK = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_BLOCK";
+
 
     @Inject
-    Context mContext;
+    protected Context mContext;
 
     @Inject
-    AccountService mAccountService;
+    protected AccountService mAccountService;
+
+    @Inject
+    protected ContactService mContactService;
 
     private NotificationManagerCompat notificationManager;
 
     private HashMap<Integer, NotificationCompat.Builder> mNotificationBuilders;
+    private final TrustRequestActionsReceiver mReceiver = new TrustRequestActionsReceiver();
 
     public void initHelper() {
         mNotificationBuilders = new HashMap<>();
@@ -240,7 +255,6 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     @Override
     public void showIncomingTrustRequestNotification(String accountID, String from) {
-
         int notificationId = getIncomingTrustNotificationId(accountID);
         NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
         //count number of notifications to update notification's text
@@ -255,14 +269,39 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 }
                 numberOfNotifications = notificationInfo.getInt(EXTRAS_NUMBER_TRUST_REQUEST_KEY);
                 numberOfNotifications++;
+
                 if (numberOfNotifications > 1) {
+                    cancelTrustRequestNotification(accountID);
+                    stopListener();
                     messageNotificationBuilder.setContentText(String.format(mContext.getString(R.string.contact_request_msg), Integer.toString(numberOfNotifications)));
                     messageNotificationBuilder.setLargeIcon(null);
+                    messageNotificationBuilder.mActions.clear();
+                    numberOfNotifications--;
                 }
             }
         } else {
             messageNotificationBuilder = new NotificationCompat.Builder(mContext);
-            messageNotificationBuilder.setContentText(from);
+            Bundle info = new Bundle();
+            info.putString(TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID, accountID);
+            info.putString(TRUST_REQUEST_NOTIFICATION_FROM, from);
+            messageNotificationBuilder.setContentText(from)
+
+                    .addAction(R.drawable.ic_action_accept, mContext.getText(R.string.accept),
+                            PendingIntent.getBroadcast(mContext, new Random().nextInt(),
+                                    new Intent(ACTION_TRUST_REQUEST_ACCEPT)
+                                            .putExtras(info),
+                                    PendingIntent.FLAG_ONE_SHOT))
+                    .addAction(R.drawable.ic_delete_white, mContext.getText(R.string.refuse),
+                            PendingIntent.getBroadcast(mContext, new Random().nextInt(),
+                                    new Intent(ACTION_TRUST_REQUEST_REFUSE)
+                                            .putExtras(info),
+                                    PendingIntent.FLAG_ONE_SHOT))
+                    .addAction(R.drawable.ic_close_white, mContext.getText(R.string.block),
+                            PendingIntent.getBroadcast(mContext, new Random().nextInt(),
+                                    new Intent(ACTION_TRUST_REQUEST_BLOCK)
+                                            .putExtras(info),
+                                    PendingIntent.FLAG_ONE_SHOT));
+            startListener();
             Resources res = mContext.getResources();
             int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
             int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
@@ -276,6 +315,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         Bundle extras = new Bundle();
         extras.putInt(EXTRAS_NUMBER_TRUST_REQUEST_KEY, numberOfNotifications);
         extras.putString(EXTRAS_TRUST_REQUEST_FROM_KEY, from);
+
         messageNotificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setAutoCancel(true)
@@ -287,6 +327,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         messageNotificationBuilder.setContentIntent(PendingIntent.getActivity(mContext,
                 new Random().nextInt(), intentOpenTrustRequestFragment, PendingIntent.FLAG_ONE_SHOT))
                 .addExtras(extras);
+
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
         if (numberOfNotifications == 1) {
             mNotificationBuilders.put(notificationId, messageNotificationBuilder);
@@ -311,6 +352,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         int notificationId = getIncomingTrustNotificationId(accountID);
         notificationManager.cancel(notificationId);
         mNotificationBuilders.remove(notificationId);
+        stopListener();
     }
 
     @Override
@@ -385,6 +427,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                     }
                     break;
                 }
+
                 case INCOMING_TRUST_REQUEST: {
                     final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
                     final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);
@@ -413,5 +456,76 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         }
 
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
+    }
+
+    public class TrustRequestActionsReceiver extends BroadcastReceiver {
+        private boolean isRegistered = false;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()) {
+                case ACTION_TRUST_REQUEST_ACCEPT:
+                case ACTION_TRUST_REQUEST_REFUSE:
+                case ACTION_TRUST_REQUEST_BLOCK: {
+                    Bundle extras = intent.getExtras();
+                    if (extras != null) {
+                        handleTrustRequestAction(intent.getAction(), extras);
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+
+        public boolean isRegistered() {
+            return isRegistered;
+        }
+
+        public void registered(boolean registered) {
+            isRegistered = registered;
+        }
+    }
+
+    private void handleTrustRequestAction(String action, Bundle extras) {
+        String account = extras.getString(TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID);
+        String from = extras.getString(TRUST_REQUEST_NOTIFICATION_FROM);
+        if (account != null && from != null) {
+            cancelTrustRequestNotification(account);
+            switch (action) {
+                case ACTION_TRUST_REQUEST_ACCEPT: {
+                    mAccountService.acceptTrustRequest(account, from);
+                    break;
+                }
+                case ACTION_TRUST_REQUEST_REFUSE: {
+                    mAccountService.discardTrustRequest(account, from);
+                    break;
+                }
+                case ACTION_TRUST_REQUEST_BLOCK: {
+                    mAccountService.discardTrustRequest(account, from);
+                    mContactService.removeContact(account, from);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void startListener() {
+        if (mReceiver.isRegistered()) {
+            return;
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ACTION_TRUST_REQUEST_ACCEPT);
+        intentFilter.addAction(ACTION_TRUST_REQUEST_REFUSE);
+        intentFilter.addAction(ACTION_TRUST_REQUEST_BLOCK);
+        mContext.registerReceiver(mReceiver, intentFilter);
+        mReceiver.registered(true);
+    }
+
+    private void stopListener() {
+        if (mReceiver.isRegistered() && mNotificationBuilders.size() == 0) {
+            mContext.unregisterReceiver(mReceiver);
+            mReceiver.registered(false);
+        }
     }
 }
