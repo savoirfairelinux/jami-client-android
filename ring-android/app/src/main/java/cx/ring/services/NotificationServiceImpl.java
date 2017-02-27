@@ -67,6 +67,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     private static final String NOTIF_MSG = "MESSAGE";
     private static final String NOTIF_TRUST_REQUEST = "TRUST REQUEST";
     private static final String NUMBER_OF_TRUST_REQUEST_NOTIF_KEY = "nimberOfTrustRequestNotificationsKey";
+    public static final String TRUST_REQUEST_NOTIFICATION_ACCOINTID = "trust_request_notification_account_id";
+    public static final String TRUST_REQUEST_NOTIFICATION_FROM = "trust_request_notification_from";
 
     @Inject
     Context mContext;
@@ -238,7 +240,6 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     @Override
     public void showIncomingTrustRequestNotification(String accountID, String from) {
-
         int notificationId = getIncomingTrustNotificationId(accountID);
         NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
         int numberOfNotifications = 1;
@@ -253,12 +254,34 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 numberOfNotifications = extras.getInt(NUMBER_OF_TRUST_REQUEST_NOTIF_KEY);
                 numberOfNotifications++;
                 cancelTrustRequestNotification(accountID);
-                messageNotificationBuilder.setContentText(Integer.toString(numberOfNotifications));
-                messageNotificationBuilder.setLargeIcon(null);
+                messageNotificationBuilder.setContentText(Integer.toString(numberOfNotifications))
+                        .setLargeIcon(null)
+                        .mActions.clear();
             }
         } else {
             messageNotificationBuilder = new NotificationCompat.Builder(mContext);
-            messageNotificationBuilder.setContentText(from);
+            Bundle info = new Bundle();
+            info.putString(TRUST_REQUEST_NOTIFICATION_ACCOINTID, accountID);
+            info.putString(TRUST_REQUEST_NOTIFICATION_FROM, from);
+            messageNotificationBuilder.setContentText(from)
+                    .addAction(R.drawable.ic_action_accept, mContext.getText(R.string.accept),
+                            PendingIntent.getService(mContext, new Random().nextInt(),
+                                    new Intent(LocalService.ACTION_TRUST_REQUEST_ACCEPT)
+                                            .setClass(mContext, LocalService.class)
+                                            .putExtras(info),
+                                    PendingIntent.FLAG_ONE_SHOT))
+                    .addAction(R.drawable.ic_delete_white, mContext.getText(R.string.refuse),
+                            PendingIntent.getService(mContext, new Random().nextInt(),
+                                    new Intent(LocalService.ACTION_TRUST_REQUEST_REFUSE)
+                                            .setClass(mContext, LocalService.class)
+                                            .putExtras(info),
+                                    PendingIntent.FLAG_ONE_SHOT))
+                    .addAction(R.drawable.ic_close_white, mContext.getText(R.string.block),
+                            PendingIntent.getService(mContext, new Random().nextInt(),
+                                    new Intent(LocalService.ACTION_TRUST_REQUEST_BLOCK)
+                                            .setClass(mContext, LocalService.class)
+                                            .putExtras(info),
+                                    PendingIntent.FLAG_ONE_SHOT));
             Resources res = mContext.getResources();
             int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
             int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
@@ -269,20 +292,19 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             }
         }
 
-        Bundle extras = new Bundle();
-        extras.putInt(NUMBER_OF_TRUST_REQUEST_NOTIF_KEY, numberOfNotifications);
-        extras.putString("from", from);
+        Intent intentOpenTrustRequestFragment = new Intent(LocalService.ACTION_SHOW_TRUST_REQUEST)
+                .setClass(mContext, HomeActivity.class)
+                .putExtra(PendingTrustRequestsFragment.ACCOUNT_ID, accountID);
+        Bundle extrasNotificationsNumber = new Bundle();
+        extrasNotificationsNumber.putInt(NUMBER_OF_TRUST_REQUEST_NOTIF_KEY, numberOfNotifications);
         messageNotificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
-                .setContentTitle(mContext.getString(R.string.trust_request_msg));
-        Intent intentOpenTrustRequestFragment = new Intent(LocalService.ACTION_SHOW_TRUST_REQUEST)
-                .setClass(mContext, HomeActivity.class)
-                .putExtra(PendingTrustRequestsFragment.ACCOUNT_ID, accountID);
-        messageNotificationBuilder.setContentIntent(PendingIntent.getActivity(mContext,
-                new Random().nextInt(), intentOpenTrustRequestFragment, 0));
-        messageNotificationBuilder.addExtras(extras);
+                .setContentTitle(mContext.getString(R.string.trust_request_msg))
+                .setContentIntent(PendingIntent.getActivity(mContext,
+                        new Random().nextInt(), intentOpenTrustRequestFragment, 0))
+                .addExtras(extrasNotificationsNumber);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
     }
@@ -355,7 +377,6 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 case REGISTERED_NAME_FOUND: {
                     final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
                     final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-                    final String account = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
                     final int state = arg.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
 
                     Log.i(TAG, "Updating name " + name + " for address " + address);
@@ -380,6 +401,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                     }
                     break;
                 }
+
                 case INCOMING_TRUST_REQUEST: {
                     final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
                     final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);

@@ -33,6 +33,7 @@ import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
@@ -69,6 +70,7 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
+import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.SettingsService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
@@ -93,6 +95,9 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
     static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
     static public final String ACTION_SHOW_TRUST_REQUEST = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST";
+    static public final String ACTION_TRUST_REQUEST_ACCEPT = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_ACCEPT";
+    static public final String ACTION_TRUST_REQUEST_REFUSE = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_REFUSE";
+    static public final String ACTION_TRUST_REQUEST_BLOCK = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_BLOCK";
 
     @Inject
     HistoryService mHistoryService;
@@ -584,6 +589,15 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE));
                     break;
                 }
+                case ACTION_TRUST_REQUEST_ACCEPT:
+                case ACTION_TRUST_REQUEST_REFUSE:
+                case ACTION_TRUST_REQUEST_BLOCK: {
+                    Bundle extras = intent.getExtras();
+                    if (extras != null) {
+                        handleTrustRequestAction(intent.getAction(), extras);
+                    }
+                    break;
+                }
                 case ConfigurationManagerCallback.NAME_LOOKUP_ENDED:
                     // no refresh here
                     break;
@@ -592,6 +606,28 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
             }
         }
     };
+
+    private void handleTrustRequestAction(String action, Bundle extras) {
+        String account = extras.getString(NotificationServiceImpl.TRUST_REQUEST_NOTIFICATION_ACCOINTID);
+        String from = extras.getString(NotificationServiceImpl.TRUST_REQUEST_NOTIFICATION_FROM);
+        if (account != null && from != null) {
+            switch (action) {
+                case ACTION_TRUST_REQUEST_ACCEPT: {
+                    mAccountService.acceptTrustRequest(account, from);
+                    break;
+                }
+                case ACTION_TRUST_REQUEST_REFUSE: {
+                    mAccountService.discardTrustRequest(account, from);
+                    break;
+                }
+                case ACTION_TRUST_REQUEST_BLOCK: {
+                    mAccountService.discardTrustRequest(account, from);
+                    mContactService.removeContact(account, from);
+                    break;
+                }
+            }
+        }
+    }
 
     public void startListener() {
         IntentFilter intentFilter = new IntentFilter();
