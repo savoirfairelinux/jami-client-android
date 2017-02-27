@@ -698,7 +698,18 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     public void update(Observable observable, ServiceEvent arg) {
 
         if (observable instanceof HistoryService) {
-            mConversationFacade.refreshConversations();
+
+            if(arg != null) {
+                switch (arg.getEventType()) {
+                    case HISTORY_LOADED:
+                        break;
+                    default:
+                        mConversationFacade.refreshConversations();
+                        break;
+                }
+            } else {
+                mConversationFacade.refreshConversations();
+            }
         }
 
         if (observable instanceof SettingsService) {

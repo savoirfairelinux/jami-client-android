@@ -29,12 +29,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryEntry;
 import cx.ring.model.HistoryText;
+import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.utils.Log;
@@ -50,6 +55,10 @@ import cx.ring.utils.Observable;
 public abstract class HistoryService extends Observable {
 
     private static final String TAG = HistoryService.class.getSimpleName();
+
+    @Inject
+    @Named("ApplicationExecutor")
+    ExecutorService mApplicationExecutor;
 
     protected abstract ConnectionSource getConnectionSource();
 
@@ -122,13 +131,34 @@ public abstract class HistoryService extends Observable {
         return true;
     }
 
-    public List<HistoryCall> getAll() throws SQLException {
+    public void getCallAndTextAsync() throws SQLException {
+
+        mApplicationExecutor.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    List<HistoryCall> historyCalls = getAll();
+                    List<HistoryText> historyTexts = getAllTextMessages();
+
+                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.HISTORY_LOADED);
+                    event.addEventInput(ServiceEvent.EventInput.HISTORY_CALLS, historyCalls);
+                    event.addEventInput(ServiceEvent.EventInput.HISTORY_TEXTS, historyTexts);
+                    setChanged();
+                    notifyObservers(event);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private List<HistoryCall> getAll() throws SQLException {
         QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
         queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, true);
         return getCallHistoryDao().query(queryBuilder.prepare());
     }
 
-    public List<HistoryText> getAllTextMessages() throws SQLException {
+    private List<HistoryText> getAllTextMessages() throws SQLException {
         QueryBuilder<HistoryText, Integer> queryBuilder = getTextHistoryDao().queryBuilder();
         queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, true);
         return getTextHistoryDao().query(queryBuilder.prepare());
