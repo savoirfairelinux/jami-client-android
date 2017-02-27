@@ -133,13 +133,9 @@ public class SmartListAdapter extends BaseAdapter {
             }
         }
 
-        // only refresh display if there is new data to display
-        if (areConversationListDifferent(mConversations, newConversations)) {
-            mConversations.clear();
-            mConversations.addAll(newConversations);
-            notifyDataSetChanged();
-        }
-
+        mConversations.clear();
+        mConversations.addAll(newConversations);
+        notifyDataSetChanged();
     }
 
     /**

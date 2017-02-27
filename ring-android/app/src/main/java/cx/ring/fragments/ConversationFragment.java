@@ -18,7 +18,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,7 +27,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -58,6 +56,7 @@ import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
+import cx.ring.services.HistoryService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
@@ -81,6 +80,9 @@ public class ConversationFragment extends Fragment implements
 
     @Inject
     ConversationFacade mConversationFacade;
+
+    @Inject
+    HistoryService mHistoryService;
 
     @BindView(R.id.msg_input_txt)
     EditText mMsgEditTxt;
@@ -292,14 +294,14 @@ public class ConversationFragment extends Fragment implements
 
         LocalService service = mCallbacks.getService();
         if (service != null) {
-            bindService(inflater.getContext(), service);
+            bindService(service);
             refreshView(0);
         }
 
         return inflatedView;
     }
 
-    public void bindService(final Context ctx, final LocalService service) {
+    public void bindService(final LocalService service) {
         mAdapter = new ConversationAdapter(getActivity(),
                 service.get40dpContactCache(),
                 service.getThreadPool());
@@ -319,7 +321,7 @@ public class ConversationFragment extends Fragment implements
     }
 
     @OnClick(R.id.msg_send)
-    public void sendMessageText(View sender) {
+    public void sendMessageText() {
         CharSequence txt = mMsgEditTxt.getText();
         if (txt.length() > 0) {
             onSendTextMessage(txt.toString());
@@ -328,7 +330,7 @@ public class ConversationFragment extends Fragment implements
     }
 
     @OnEditorAction(R.id.msg_input_txt)
-    public boolean actionSendMsgText(TextView view, int actionId, KeyEvent event) {
+    public boolean actionSendMsgText(int actionId) {
         switch (actionId) {
             case EditorInfo.IME_ACTION_SEND:
                 CharSequence txt = mMsgEditTxt.getText();
@@ -342,7 +344,7 @@ public class ConversationFragment extends Fragment implements
     }
 
     @OnClick(R.id.ongoingcall_pane)
-    public void onClick(View view) {
+    public void onClick() {
         startActivity(new Intent(Intent.ACTION_VIEW)
                 .setClass(getActivity().getApplicationContext(), CallActivity.class)
                 .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI,
@@ -354,13 +356,14 @@ public class ConversationFragment extends Fragment implements
         super.onPause();
         Log.d(TAG, "onPause");
         mVisible = false;
-        if (mConversation != null ) {
+        if (mConversation != null) {
             mConversationFacade.readConversation(mConversation);
             mConversation.setVisible(false);
         }
 
         getActivity().unregisterReceiver(receiver);
         mAccountService.removeObserver(this);
+        mConversationFacade.removeObserver(this);
     }
 
     @Override
@@ -376,6 +379,7 @@ public class ConversationFragment extends Fragment implements
         IntentFilter filter = new IntentFilter(LocalService.ACTION_CONF_UPDATE);
         getActivity().registerReceiver(receiver, filter);
         mAccountService.addObserver(this);
+        mConversationFacade.addObserver(this);
     }
 
     @Override
@@ -517,11 +521,9 @@ public class ConversationFragment extends Fragment implements
 
     @Override
     public void deleteConversation(Conversation conversation) {
-        if (mCallbacks.getService() != null) {
-            mCallbacks.getService().deleteConversation(conversation);
-            if (getActivity() instanceof ConversationActivity) {
-                getActivity().finish();
-            }
+        mHistoryService.clearHistoryForConversation(conversation);
+        if (getActivity() instanceof ConversationActivity) {
+            getActivity().finish();
         }
     }
 
@@ -570,6 +572,19 @@ public class ConversationFragment extends Fragment implements
                         }
                     }
                 }
+            }
+        } else if (observable instanceof ConversationFacade && arg != null) {
+            switch (arg.getEventType()) {
+                case INCOMING_MESSAGE:
+                case HISTORY_LOADED:
+                case CALL_STATE_CHANGED:
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            refreshView(0);
+                        }
+                    });
+                    break;
             }
         }
     }
