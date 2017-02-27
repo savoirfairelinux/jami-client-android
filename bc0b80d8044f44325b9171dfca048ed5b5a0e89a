@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fab9d9a7_703c6894",
+        "filename": "ring-android/app/src/main/java/cx/ring/dependencyinjection/PresenterInjectionModule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-27T21:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_edac0138",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 58
+      },
+      "revId": "bc0b80d8044f44325b9171dfca048ed5b5a0e89a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab9d9a7_30cfd0b2",
         "filename": "ring-android/app/src/main/res/values/strings.xml",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-02-27T21:37:07Z",
       "side": 1,
       "message": "contact instead of trust",
+      "range": {
+        "startLine": 60,
+        "startChar": 51,
+        "endLine": 60,
+        "endChar": 56
+      },
+      "revId": "bc0b80d8044f44325b9171dfca048ed5b5a0e89a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab9d9a7_10416c0b",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-27T21:52:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_30cfd0b2",
       "range": {
         "startLine": 60,
         "startChar": 51,
