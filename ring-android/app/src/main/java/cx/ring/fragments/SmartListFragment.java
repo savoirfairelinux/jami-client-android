@@ -85,6 +85,7 @@ import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
+import cx.ring.services.HistoryService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ClipboardHelper;
@@ -147,6 +148,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Inject
     ContactService mContactService;
+
+    @Inject
+    HistoryService mHistoryService;
 
     @Inject
     ConversationFacade mConversationFacade;
@@ -803,9 +807,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void deleteConversation(Conversation conversation) {
-        if (mCallbacks.getService() != null) {
-            mCallbacks.getService().deleteConversation(conversation);
-        }
+        mHistoryService.clearHistoryForConversation(conversation);
     }
 
     @Override

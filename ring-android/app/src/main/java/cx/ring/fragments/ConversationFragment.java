@@ -58,6 +58,7 @@ import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
+import cx.ring.services.HistoryService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
@@ -81,6 +82,9 @@ public class ConversationFragment extends Fragment implements
 
     @Inject
     ConversationFacade mConversationFacade;
+
+    @Inject
+    HistoryService mHistoryService;
 
     @BindView(R.id.msg_input_txt)
     EditText mMsgEditTxt;
@@ -517,11 +521,9 @@ public class ConversationFragment extends Fragment implements
 
     @Override
     public void deleteConversation(Conversation conversation) {
-        if (mCallbacks.getService() != null) {
-            mCallbacks.getService().deleteConversation(conversation);
-            if (getActivity() instanceof ConversationActivity) {
-                getActivity().finish();
-            }
+        mHistoryService.clearHistoryForConversation(conversation);
+        if (getActivity() instanceof ConversationActivity) {
+            getActivity().finish();
         }
     }
 

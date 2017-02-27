@@ -650,10 +650,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount());
     }
 
-    public void deleteConversation(Conversation conversation) {
-        mHistoryService.clearHistoryForConversation(conversation);
-    }
-
     @Override
     public void update(Observable observable, ServiceEvent arg) {
 
