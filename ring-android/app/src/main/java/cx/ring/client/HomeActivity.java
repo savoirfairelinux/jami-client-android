@@ -80,6 +80,7 @@ import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.NotificationService;
+import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.SettingsService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
@@ -283,7 +284,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log.d(TAG, "onNewIntent " + intent);
-        if (LocalService.ACTION_SHOW_TRUST_REQUEST.equals(intent.getAction())) {
+        if (NotificationServiceImpl.ACTION_SHOW_TRUST_REQUEST.equals(intent.getAction())) {
             Bundle bundle = new Bundle();
             bundle.putString(PendingTrustRequestsFragment.ACCOUNT_ID, intent.getStringExtra(PendingTrustRequestsFragment.ACCOUNT_ID));
             mNotificationService.cancelTrustRequestNotification(intent.getStringExtra(PendingTrustRequestsFragment.ACCOUNT_ID));
