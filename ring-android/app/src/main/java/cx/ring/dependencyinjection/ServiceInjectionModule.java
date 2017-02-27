@@ -155,9 +155,10 @@ public class ServiceInjectionModule {
             AccountService accountService,
             ContactService contactService,
             ConferenceService conferenceService,
-            HistoryService historyService
+            HistoryService historyService,
+            CallService callService
     ) {
-        ConversationFacade conversationFacade = new ConversationFacade(historyService);
+        ConversationFacade conversationFacade = new ConversationFacade(historyService, callService);
         mRingApplication.getRingInjectionComponent().inject(conversationFacade);
         return conversationFacade;
     }
