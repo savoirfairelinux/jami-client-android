@@ -59,7 +59,8 @@ public class ServiceEvent {
         CONTACT_ADDED,
         CONTACT_REMOVED,
         CONVERSATIONS_CHANGED,
-        HISTORY_LOADED
+        HISTORY_LOADED,
+        HISTORY_MODIFIED
     }
 
     public enum EventInput {
