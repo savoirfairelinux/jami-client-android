@@ -20,10 +20,6 @@
 
 package cx.ring.utils;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
-
 import cx.ring.daemon.StringVect;
 
 public class ProfileChunk {
@@ -51,7 +47,7 @@ public class ProfileChunk {
      * @param part  the part to insert
      * @param index the given position to insert the part
      */
-    public void addPartAtIndex(@NonNull String part, int index) {
+    public void addPartAtIndex(String part, int index) {
         mParts.set(index, part);
         mInsertedParts++;
         Log.d(TAG, "Inserting part " + part + " at index " + index);
@@ -71,7 +67,6 @@ public class ProfileChunk {
      *
      * @return the complete profile as a String
      */
-    @Nullable
     public String getCompleteProfile() {
         if (this.isProfileComplete()) {
             StringBuilder stringBuilder = new StringBuilder();
