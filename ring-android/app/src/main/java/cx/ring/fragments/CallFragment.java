@@ -546,6 +546,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         Log.i(TAG, "onResume()");
 
         mAccountService.addObserver(this);
+        mConversationFacade.addObserver(this);
 
         Conference conference = getConference();
 
@@ -578,6 +579,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         super.onPause();
 
         mAccountService.removeObserver(this);
+        mConversationFacade.removeObserver(this);
 
         Conference conference = getConference();
         if (conference != null) {
@@ -588,8 +590,6 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     }
 
     public void confUpdate() {
-        Log.w(TAG, "confUpdate()");
-
         LocalService service = mCallbacks.getService();
         if (service == null)
             return;
@@ -602,6 +602,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         }
 
         int newState = getHumanState(c);
+
+        Log.w(TAG, "confUpdate() " + getString(newState));
+
         String newStateString = (newState == R.string.call_human_state_none ||
                 newState == R.string.conference_human_state_default)
                 ? "" :
@@ -1053,10 +1056,12 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             return;
         }
 
-        VCard vcard;
+        VCard vcard = null;
         String username = participant.getNumberUri().getUsername();
-        Log.d(TAG, "username " + username);
-        vcard = VCardUtils.loadPeerProfileFromDisk(context.getFilesDir(), username + ".vcf");
+        if (username != null) {
+            Log.d(TAG, "username " + username);
+            vcard = VCardUtils.loadPeerProfileFromDisk(context.getFilesDir(), username + ".vcf");
+        }
         if (vcard == null) {
             Log.d(TAG, "No vcard.");
             setDefaultPhoto();
@@ -1225,19 +1230,37 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             return;
         }
 
-        switch (event.getEventType()) {
-            case REGISTERED_NAME_FOUND:
-                final String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                RingApplication.uiHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        contactBubbleNumTxt.setText(name);
-                    }
-                });
-                break;
-            default:
-                Log.d(TAG, "This event type is not handled here " + event.getEventType());
-                break;
+        if (observable instanceof ConversationFacade) {
+            switch (event.getEventType()) {
+                case HISTORY_LOADED:
+                case CALL_STATE_CHANGED:
+                    RingApplication.uiHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            confUpdate();
+                        }
+                    });
+                    break;
+                default:
+                    Log.d(TAG, "This event type is not handled here " + event.getEventType());
+                    break;
+            }
+        } else {
+            switch (event.getEventType()) {
+                case REGISTERED_NAME_FOUND:
+                    final String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                    RingApplication.uiHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            contactBubbleNumTxt.setText(name);
+                        }
+                    });
+                    break;
+                default:
+                    Log.d(TAG, "This event type is not handled here " + event.getEventType());
+                    break;
+            }
         }
+
     }
 }
