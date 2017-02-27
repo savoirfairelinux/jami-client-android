@@ -85,6 +85,7 @@ import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
+import cx.ring.services.HistoryService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ClipboardHelper;
@@ -147,6 +148,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Inject
     ContactService mContactService;
+
+    @Inject
+    HistoryService mHistoryService;
 
     @Inject
     ConversationFacade mConversationFacade;
@@ -223,10 +227,10 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             return;
         }
 
+        mConversationFacade.refreshConversations();
+
         if (mSmartListAdapter == null) {
             bindService(getActivity(), service);
-        } else {
-            mSmartListAdapter.updateDataset(mConversationFacade.getConversationsList(), null);
         }
 
         if (service.isConnected()) {
@@ -314,11 +318,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         mConversationFacade.addObserver(this);
         Log.d(TAG, "onResume");
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
-        if (mSmartListAdapter != null) {
-            // force refresh each time this screen is shown
-            // useful if a contact changes his avatar or his display name
-            mSmartListAdapter.emptyDataset();
-        }
         refresh();
     }
 
@@ -803,9 +802,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public void deleteConversation(Conversation conversation) {
-        if (mCallbacks.getService() != null) {
-            mCallbacks.getService().deleteConversation(conversation);
-        }
+        mHistoryService.clearHistoryForConversation(conversation);
     }
 
     @Override
@@ -919,6 +916,16 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
                 int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
                 handleRegisterNameFound(name, address, state);
+                break;
+            case INCOMING_MESSAGE:
+            case HISTORY_LOADED:
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSmartListAdapter.updateDataset(mConversationFacade.getConversationsList(), null);
+                        setLoading(false);
+                    }
+                });
                 break;
         }
     }

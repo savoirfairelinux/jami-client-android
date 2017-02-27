@@ -232,15 +232,21 @@ public class ConferenceService extends Observable {
                         for (int i = 0; i < callIds.size(); i++) {
                             String callId = callIds.get(i);
                             String confId = Ringservice.getConferenceId(callId);
-                            if (confId == null || confId.isEmpty()) {
-                                confId = callId;
+
+                            Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
+
+                            //todo remove condition when callDetails does not contains sips ids anymore
+                            if(!callDetails.get("PEER_NUMBER").contains("sips")) {
+                                if (confId == null || confId.isEmpty()) {
+                                    confId = callId;
+                                }
+                                ArrayList<String> calls = confs.get(confId);
+                                if (calls == null) {
+                                    calls = new ArrayList<>();
+                                    confs.put(confId, calls);
+                                }
+                                calls.add(callId);
                             }
-                            ArrayList<String> calls = confs.get(confId);
-                            if (calls == null) {
-                                calls = new ArrayList<>();
-                                confs.put(confId, calls);
-                            }
-                            calls.add(callId);
                         }
                         return confs;
                     }

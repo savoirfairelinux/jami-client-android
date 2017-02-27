@@ -439,16 +439,6 @@ public class CallService extends Observable {
             notifyObservers(event);
         }
 
-        void incomingMessage(String callId, String from, StringMap messages) {
-            Log.d(TAG, "incoming message: " + callId + ", " + from);
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_MESSAGE);
-            event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
-            event.addEventInput(ServiceEvent.EventInput.FROM, from);
-            event.addEventInput(ServiceEvent.EventInput.MESSAGES, messages);
-            notifyObservers(event);
-        }
-
         void recordPlaybackFilepath(String id, String filename) {
             Log.d(TAG, "record playback filepath: " + id + ", " + filename);
             // todo needs more explainations on that
