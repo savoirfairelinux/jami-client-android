@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab9d9a7_edac0138",
+        "filename": "ring-android/app/src/main/java/cx/ring/dependencyinjection/PresenterInjectionModule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 111
+      },
+      "writtenOn": "2017-02-27T21:27:41Z",
+      "side": 1,
+      "message": "never used",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 58
+      },
+      "revId": "bc0b80d8044f44325b9171dfca048ed5b5a0e89a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
