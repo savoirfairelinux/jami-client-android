@@ -58,6 +58,7 @@ import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
+import cx.ring.services.HistoryService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
@@ -81,6 +82,9 @@ public class ConversationFragment extends Fragment implements
 
     @Inject
     ConversationFacade mConversationFacade;
+
+    @Inject
+    HistoryService mHistoryService;
 
     @BindView(R.id.msg_input_txt)
     EditText mMsgEditTxt;
@@ -354,13 +358,14 @@ public class ConversationFragment extends Fragment implements
         super.onPause();
         Log.d(TAG, "onPause");
         mVisible = false;
-        if (mConversation != null ) {
+        if (mConversation != null) {
             mConversationFacade.readConversation(mConversation);
             mConversation.setVisible(false);
         }
 
         getActivity().unregisterReceiver(receiver);
         mAccountService.removeObserver(this);
+        mConversationFacade.removeObserver(this);
     }
 
     @Override
@@ -376,6 +381,7 @@ public class ConversationFragment extends Fragment implements
         IntentFilter filter = new IntentFilter(LocalService.ACTION_CONF_UPDATE);
         getActivity().registerReceiver(receiver, filter);
         mAccountService.addObserver(this);
+        mConversationFacade.addObserver(this);
     }
 
     @Override
@@ -517,11 +523,9 @@ public class ConversationFragment extends Fragment implements
 
     @Override
     public void deleteConversation(Conversation conversation) {
-        if (mCallbacks.getService() != null) {
-            mCallbacks.getService().deleteConversation(conversation);
-            if (getActivity() instanceof ConversationActivity) {
-                getActivity().finish();
-            }
+        mHistoryService.clearHistoryForConversation(conversation);
+        if (getActivity() instanceof ConversationActivity) {
+            getActivity().finish();
         }
     }
 
@@ -570,6 +574,18 @@ public class ConversationFragment extends Fragment implements
                         }
                     }
                 }
+            }
+        } else if (observable instanceof ConversationFacade && arg != null) {
+            switch (arg.getEventType()) {
+                case INCOMING_MESSAGE:
+                case HISTORY_LOADED:
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            refreshView(0);
+                        }
+                    });
+                    break;
             }
         }
     }

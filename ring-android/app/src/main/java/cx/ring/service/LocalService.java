@@ -38,7 +38,6 @@ import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.util.Log;
-import android.util.LongSparseArray;
 import android.util.LruCache;
 
 import java.util.HashMap;
@@ -61,7 +60,6 @@ import cx.ring.model.SecureSipCall;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
 import cx.ring.model.SipCall;
-import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
@@ -94,9 +92,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
 
     @Inject
-    HistoryService mHistoryService;
-
-    @Inject
     SettingsService mSettingsService;
 
     @Inject
@@ -116,6 +111,9 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
     @Inject
     ConversationFacade mConversationFacade;
+
+    @Inject
+    HistoryService mHistoryService;
 
     private IDRingService mService = null;
     private boolean dringStarted = false;
@@ -205,7 +203,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         // temporary listen for history modifications
         // When MVP/DI injection will be done, only the concerned presenters should listen
         // for model modifications
-        mHistoryService.addObserver(this);
         mSettingsService.addObserver(this);
         mAccountService.addObserver(this);
         mContactService.addObserver(this);
@@ -244,7 +241,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     public void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy");
-        mHistoryService.removeObserver(this);
         mSettingsService.removeObserver(this);
         mAccountService.removeObserver(this);
         mContactService.removeObserver(this);
@@ -318,7 +314,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
             }
         }
         updateAudioState();
-        mConversationFacade.updateTextNotifications();
         sendBroadcast(new Intent(ACTION_CONF_UPDATE));
         sendBroadcast(new Intent(ACTION_CONF_LOADED));
         mAreConversationsLoaded = true;
@@ -438,33 +433,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                     Log.w(TAG, "ConnectivityManager.CONNECTIVITY_ACTION " + " " + intent.getStringExtra(ConnectivityManager.EXTRA_EXTRA_INFO) + " " + intent.getStringExtra(ConnectivityManager.EXTRA_EXTRA_INFO));
                     updateConnectivityState();
                     break;
-                case CallManagerCallBack.INCOMING_TEXT:
-                case ConfigurationManagerCallback.INCOMING_TEXT: {
-                    String message = intent.getStringExtra("txt");
-                    String number = intent.getStringExtra("from");
-                    String call = intent.getStringExtra("call");
-                    String accountIncoming = intent.getStringExtra("account");
-                    TextMessage txt = new TextMessage(true, message, new Uri(number), call, accountIncoming);
-                    Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
-
-                    Conversation conversation;
-                    if (call != null && !call.isEmpty()) {
-                        conversation = mConversationFacade.getConversationByCallId(call);
-                    } else {
-                        conversation = mConversationFacade.startConversation(mContactService.findContactByNumber(txt.getNumberUri().getRawUriString()));
-                        txt.setContact(conversation.getContact());
-                    }
-                    if (conversation.isVisible()) {
-                        txt.read();
-                    }
-
-                    mHistoryService.insertNewTextMessage(txt);
-
-                    conversation.addTextMessage(txt);
-
-                    sendBroadcast(new Intent(ACTION_CONF_UPDATE));
-                    break;
-                }
                 case CallManagerCallBack.INCOMING_CALL: {
                     String callId = intent.getStringExtra("call");
                     String accountId = intent.getStringExtra("account");
@@ -587,7 +555,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                     // no refresh here
                     break;
                 default:
-                    mConversationFacade.refreshConversations();
+                    break;
             }
         }
     };
@@ -603,13 +571,11 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_EXPORT_ENDED);
         intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_DEVICES_CHANGED);
-        intentFilter.addAction(ConfigurationManagerCallback.INCOMING_TEXT);
         intentFilter.addAction(ConfigurationManagerCallback.MESSAGE_STATE_CHANGED);
         intentFilter.addAction(ConfigurationManagerCallback.NAME_LOOKUP_ENDED);
         intentFilter.addAction(ConfigurationManagerCallback.NAME_REGISTRATION_ENDED);
 
         intentFilter.addAction(CallManagerCallBack.INCOMING_CALL);
-        intentFilter.addAction(CallManagerCallBack.INCOMING_TEXT);
         intentFilter.addAction(CallManagerCallBack.CALL_STATE_CHANGED);
         intentFilter.addAction(CallManagerCallBack.CONF_CREATED);
         intentFilter.addAction(CallManagerCallBack.CONF_CHANGED);
@@ -650,28 +616,8 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount());
     }
 
-    public void deleteConversation(Conversation conversation) {
-        mHistoryService.clearHistoryForConversation(conversation);
-    }
-
     @Override
     public void update(Observable observable, ServiceEvent arg) {
-
-        if (observable instanceof HistoryService) {
-
-            if(arg != null) {
-                switch (arg.getEventType()) {
-                    case HISTORY_LOADED:
-                        break;
-                    default:
-                        mConversationFacade.refreshConversations();
-                        break;
-                }
-            } else {
-                mConversationFacade.refreshConversations();
-            }
-        }
-
         if (observable instanceof SettingsService) {
             canUseMobile = mSettingsService.loadSettings().isAllowMobileData();
             refreshContacts();

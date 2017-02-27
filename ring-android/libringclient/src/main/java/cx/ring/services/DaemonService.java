@@ -51,6 +51,9 @@ public class DaemonService {
     @Inject
     ScheduledExecutorService mScheduledExecutor;
 
+    @Inject
+    HistoryService mHistoryService;
+
     private boolean mDaemonStarted = false;
 
     public DaemonService() {
@@ -148,7 +151,7 @@ public class DaemonService {
 
         @Override
         public void incomingAccountMessage(String accountId, String from, StringMap messages) {
-            mAccountCallbackHandler.incomingAccountMessage(accountId, from, messages);
+            mHistoryService.incomingMessage(accountId, null, from, messages);
         }
 
         @Override
@@ -237,7 +240,7 @@ public class DaemonService {
 
         @Override
         public void incomingMessage(String callId, String from, StringMap messages) {
-            mCallbackHandler.incomingMessage(callId, from, messages);
+            mHistoryService.incomingMessage(null, callId, from, messages);
         }
 
         @Override
