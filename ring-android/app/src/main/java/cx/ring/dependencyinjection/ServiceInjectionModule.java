@@ -157,7 +157,7 @@ public class ServiceInjectionModule {
             ConferenceService conferenceService,
             HistoryService historyService
     ) {
-        ConversationFacade conversationFacade = new ConversationFacade();
+        ConversationFacade conversationFacade = new ConversationFacade(historyService);
         mRingApplication.getRingInjectionComponent().inject(conversationFacade);
         return conversationFacade;
     }

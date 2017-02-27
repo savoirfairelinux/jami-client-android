@@ -54,6 +54,7 @@ import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 import cx.ring.utils.Tuple;
 
 /**
@@ -64,7 +65,7 @@ import cx.ring.utils.Tuple;
  * Events are broadcasted:
  * - CONVERSATIONS_CHANGED
  */
-public class ConversationFacade extends Observable {
+public class ConversationFacade extends Observable implements Observer<ServiceEvent> {
 
     private final static String TAG = ConversationFacade.class.getName();
 
@@ -77,8 +78,7 @@ public class ConversationFacade extends Observable {
     @Inject
     ConferenceService mConferenceService;
 
-    @Inject
-    HistoryService mHistoryService;
+    private HistoryService mHistoryService;
 
     @Inject
     CallService mCallService;
@@ -94,124 +94,23 @@ public class ConversationFacade extends Observable {
 
     private Map<String, Conversation> mConversationMap;
 
-    public ConversationFacade() {
+    public ConversationFacade(HistoryService historyService) {
         mConversationMap = new HashMap<>();
+        mHistoryService = historyService;
+        mHistoryService.addObserver(this);
     }
 
     /**
      * Loads conversations from history calls and texts (also sends CONVERSATIONS_CHANGED event)
      */
     public void loadConversationsFromHistory() {
-
-        List<HistoryCall> historyCalls;
-        List<HistoryText> historyTexts;
-
         try {
-            historyCalls = mHistoryService.getAll();
-            historyTexts = mHistoryService.getAllTextMessages();
+            mHistoryService.getCallAndTextAsync();
         } catch (SQLException e) {
             Log.e(TAG, "unable to retrieve history calls and texts", e);
             return;
         }
 
-        for (HistoryCall call : historyCalls) {
-            CallContact contact = mContactService.findContact(call.getContactID(), call.getContactKey(), call.getNumber());
-
-            String key = contact.getIds().get(0);
-            if (mConversationMap.containsKey(key)) {
-                mConversationMap.get(key).addHistoryCall(call);
-            } else {
-                Conversation conversation = new Conversation(contact);
-                conversation.addHistoryCall(call);
-                mConversationMap.put(key, conversation);
-            }
-        }
-
-        for (HistoryText htext : historyTexts) {
-            CallContact contact = mContactService.findContact(htext.getContactID(), htext.getContactKey(), htext.getNumber());
-            Tuple<HistoryEntry, HistoryCall> p = findHistoryByCallId(mConversationMap, htext.getCallId());
-
-            if (contact == null && p != null) {
-                contact = p.first.getContact();
-            }
-            if (contact == null) {
-                continue;
-            }
-
-            TextMessage msg = new TextMessage(htext);
-            msg.setContact(contact);
-
-            if (p != null) {
-                if (msg.getNumberUri() == null) {
-                    msg.setNumber(new Uri(p.second.getNumber()));
-                }
-                p.first.addTextMessage(msg);
-            }
-
-            String key = contact.getIds().get(0);
-            if (mConversationMap.containsKey(key)) {
-                mConversationMap.get(key).addTextMessage(msg);
-            } else {
-                Conversation c = new Conversation(contact);
-                c.addTextMessage(msg);
-                mConversationMap.put(key, c);
-            }
-        }
-
-        Map<String, ArrayList<String>> conferences = mConferenceService.getConferenceList();
-
-        for (Map.Entry<String, ArrayList<String>> conferenceEntry : conferences.entrySet()) {
-            Conference conference = new Conference(conferenceEntry.getKey());
-            for (String callId : conferenceEntry.getValue()) {
-                SipCall call = getCall(callId).second;
-                if (call == null) {
-                    call = new SipCall(callId, mCallService.getCallDetails(callId));
-                }
-                Account acc = mAccountService.getAccount(call.getAccount());
-                if (acc.isRing()
-                        || acc.getDetailBoolean(ConfigKey.SRTP_ENABLE)
-                        || acc.getDetailBoolean(ConfigKey.TLS_ENABLE)) {
-                    call = new SecureSipCall(call, acc.getDetail(ConfigKey.SRTP_KEY_EXCHANGE));
-                }
-                conference.addParticipant(call);
-            }
-            List<SipCall> calls = conference.getParticipants();
-            if (calls.size() == 1) {
-                SipCall call = calls.get(0);
-                CallContact contact = mContactService.findContact(-1, null, call.getNumber());
-                call.setContact(contact);
-
-                Conversation conv = null;
-                ArrayList<String> ids = contact.getIds();
-                for (String id : ids) {
-                    conv = mConversationMap.get(id);
-                    if (conv != null) {
-                        break;
-                    }
-                }
-                if (conv != null) {
-                    conv.addConference(conference);
-                } else {
-                    conv = new Conversation(contact);
-                    conv.addConference(conference);
-                    mConversationMap.put(ids.get(0), conv);
-                }
-            }
-        }
-        for (Conversation conversation : mConversationMap.values()) {
-            Log.d(TAG, "Conversation : " + conversation.getContact().getId() + " " + conversation.getContact().getDisplayName() + " " + conversation.getLastNumberUsed(conversation.getLastAccountUsed()) + " " + conversation.getLastInteraction().toString());
-        }
-
-        for (CallContact contact : mContactService.getContacts()) {
-            String key = contact.getIds().get(0);
-            if (!mConversationMap.containsKey(key)) {
-                mConversationMap.put(key, new Conversation(contact));
-            }
-        }
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONVERSATIONS_CHANGED);
-        notifyObservers(event);
     }
 
     private Tuple<HistoryEntry, HistoryCall> findHistoryByCallId(final Map<String, Conversation> conversations, String id) {
@@ -491,4 +390,112 @@ public class ConversationFacade extends Observable {
         }
     }
 
+    @Override
+    public void update(Observable observable, ServiceEvent event) {
+
+        if (observable instanceof HistoryService && event != null) {
+            List<HistoryCall> historyCalls = (List<HistoryCall>) event.getEventInput(ServiceEvent.EventInput.HISTORY_CALLS, ArrayList.class);
+
+            for (HistoryCall call : historyCalls) {
+                CallContact contact = mContactService.findContact(call.getContactID(), call.getContactKey(), call.getNumber());
+
+                String key = contact.getIds().get(0);
+                if (mConversationMap.containsKey(key)) {
+                    mConversationMap.get(key).addHistoryCall(call);
+                } else {
+                    Conversation conversation = new Conversation(contact);
+                    conversation.addHistoryCall(call);
+                    mConversationMap.put(key, conversation);
+                }
+            }
+
+            List<HistoryText> historyTexts = (List<HistoryText>) event.getEventInput(ServiceEvent.EventInput.HISTORY_TEXTS, ArrayList.class);
+
+            for (HistoryText htext : historyTexts) {
+                CallContact contact = mContactService.findContact(htext.getContactID(), htext.getContactKey(), htext.getNumber());
+                Tuple<HistoryEntry, HistoryCall> p = findHistoryByCallId(mConversationMap, htext.getCallId());
+
+                if (contact == null && p != null) {
+                    contact = p.first.getContact();
+                }
+                if (contact == null) {
+                    continue;
+                }
+
+                TextMessage msg = new TextMessage(htext);
+                msg.setContact(contact);
+
+                if (p != null) {
+                    if (msg.getNumberUri() == null) {
+                        msg.setNumber(new Uri(p.second.getNumber()));
+                    }
+                    p.first.addTextMessage(msg);
+                }
+
+                String key = contact.getIds().get(0);
+                if (mConversationMap.containsKey(key)) {
+                    mConversationMap.get(key).addTextMessage(msg);
+                } else {
+                    Conversation c = new Conversation(contact);
+                    c.addTextMessage(msg);
+                    mConversationMap.put(key, c);
+                }
+            }
+
+            Map<String, ArrayList<String>> conferences = mConferenceService.getConferenceList();
+
+            for (Map.Entry<String, ArrayList<String>> conferenceEntry : conferences.entrySet()) {
+                Conference conference = new Conference(conferenceEntry.getKey());
+                for (String callId : conferenceEntry.getValue()) {
+                    SipCall call = getCall(callId).second;
+                    if (call == null) {
+                        call = new SipCall(callId, mCallService.getCallDetails(callId));
+                    }
+                    Account acc = mAccountService.getAccount(call.getAccount());
+                    if (acc.isRing()
+                            || acc.getDetailBoolean(ConfigKey.SRTP_ENABLE)
+                            || acc.getDetailBoolean(ConfigKey.TLS_ENABLE)) {
+                        call = new SecureSipCall(call, acc.getDetail(ConfigKey.SRTP_KEY_EXCHANGE));
+                    }
+                    conference.addParticipant(call);
+                }
+                List<SipCall> calls = conference.getParticipants();
+                if (calls.size() == 1) {
+                    SipCall call = calls.get(0);
+                    CallContact contact = mContactService.findContact(-1, null, call.getNumber());
+                    call.setContact(contact);
+
+                    Conversation conv = null;
+                    ArrayList<String> ids = contact.getIds();
+                    for (String id : ids) {
+                        conv = mConversationMap.get(id);
+                        if (conv != null) {
+                            break;
+                        }
+                    }
+                    if (conv != null) {
+                        conv.addConference(conference);
+                    } else {
+                        conv = new Conversation(contact);
+                        conv.addConference(conference);
+                        mConversationMap.put(ids.get(0), conv);
+                    }
+                }
+            }
+            for (Conversation conversation : mConversationMap.values()) {
+                Log.d(TAG, "Conversation : " + conversation.getContact().getId() + " " + conversation.getContact().getDisplayName() + " " + conversation.getLastNumberUsed(conversation.getLastAccountUsed()) + " " + conversation.getLastInteraction().toString());
+            }
+
+            for (CallContact contact : mContactService.getContacts()) {
+                String key = contact.getIds().get(0);
+                if (!mConversationMap.containsKey(key)) {
+                    mConversationMap.put(key, new Conversation(contact));
+                }
+            }
+
+            setChanged();
+            ServiceEvent e = new ServiceEvent(ServiceEvent.EventType.CONVERSATIONS_CHANGED);
+            notifyObservers(e);
+        }
+    }
 }

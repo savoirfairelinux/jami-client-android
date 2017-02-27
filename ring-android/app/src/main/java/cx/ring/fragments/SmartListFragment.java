@@ -925,6 +925,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 handleRegisterNameFound(name, address, state);
                 break;
             case CONVERSATIONS_CHANGED:
+                //handleConversationsChanged();
+                break;
+            case HISTORY_LOADED:
                 handleConversationsChanged();
                 break;
         }

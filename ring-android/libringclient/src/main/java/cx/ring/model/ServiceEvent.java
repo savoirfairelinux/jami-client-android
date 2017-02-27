@@ -58,7 +58,8 @@ public class ServiceEvent {
         INCOMING_TRUST_REQUEST,
         CONTACT_ADDED,
         CONTACT_REMOVED,
-        CONVERSATIONS_CHANGED
+        CONVERSATIONS_CHANGED,
+        HISTORY_LOADED
     }
 
     public enum EventInput {
@@ -91,10 +92,15 @@ public class ServiceEvent {
         IS_MIXER,
         SIZES,
         RATES,
+<<<<<<< HEAD
         TIME,
         MESSAGE,
         CONFIRMED,
         BANNED
+=======
+        HISTORY_CALLS,
+        HISTORY_TEXTS
+>>>>>>> 91dd89e... mvp/injection: Fix ConversationFacade
     }
 
     private EventType mType;
