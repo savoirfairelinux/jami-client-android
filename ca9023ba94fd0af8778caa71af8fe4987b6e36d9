@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab9d9a7_0db4f5f0",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/ContactService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-02-27T00:40:50Z",
+      "side": 1,
+      "message": "There is something missing here for this callback to be registered by the daemon. Look how the callback is used in AccountService",
+      "range": {
+        "startLine": 71,
+        "startChar": 34,
+        "endLine": 71,
+        "endChar": 50
+      },
+      "revId": "ca9023ba94fd0af8778caa71af8fe4987b6e36d9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
