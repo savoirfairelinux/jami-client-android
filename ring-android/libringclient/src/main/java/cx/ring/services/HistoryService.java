@@ -34,6 +34,7 @@ import java.util.concurrent.ExecutorService;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.daemon.StringMap;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.HistoryCall;
@@ -42,6 +43,7 @@ import cx.ring.model.HistoryText;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
+import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 
@@ -58,7 +60,7 @@ public abstract class HistoryService extends Observable {
 
     @Inject
     @Named("ApplicationExecutor")
-    ExecutorService mApplicationExecutor;
+    protected ExecutorService mApplicationExecutor;
 
     protected abstract ConnectionSource getConnectionSource();
 
@@ -99,7 +101,8 @@ public abstract class HistoryService extends Observable {
 
         // notify the observers
         setChanged();
-        notifyObservers();
+        ServiceEvent e = new ServiceEvent(ServiceEvent.EventType.HISTORY_MODIFIED);
+        notifyObservers(e);
 
         return true;
     }
@@ -169,40 +172,48 @@ public abstract class HistoryService extends Observable {
      *
      * @param conversation The conversation containing the elements to delete.
      */
-    public void clearHistoryForConversation(Conversation conversation) {
+    public void clearHistoryForConversation(final Conversation conversation) {
         if (conversation == null) {
             Log.d(TAG, "clearHistoryForConversation: conversation is null");
             return;
         }
-        try {
-            Map<String, HistoryEntry> history = conversation.getRawHistory();
-            for (Map.Entry<String, HistoryEntry> entry : history.entrySet()) {
-                //~ Deleting messages
-                ArrayList<Long> textMessagesIds = new ArrayList<>(entry.getValue().getTextMessages().size());
-                for (TextMessage textMessage : entry.getValue().getTextMessages().values()) {
-                    textMessagesIds.add(textMessage.getId());
-                }
-                DeleteBuilder<HistoryText, Integer> deleteTextHistoryBuilder = getTextHistoryDao()
-                        .deleteBuilder();
-                deleteTextHistoryBuilder.where().in(HistoryText.COLUMN_ID_NAME, textMessagesIds);
-                deleteTextHistoryBuilder.delete();
-                //~ Deleting calls
-                ArrayList<String> callIds = new ArrayList<>(entry.getValue().getCalls().size());
-                for (HistoryCall historyCall : entry.getValue().getCalls().values()) {
-                    callIds.add(historyCall.getCallId().toString());
-                }
-                DeleteBuilder<HistoryCall, Integer> deleteCallsHistoryBuilder = getCallHistoryDao()
-                        .deleteBuilder();
-                deleteCallsHistoryBuilder.where().in(HistoryCall.COLUMN_CALL_ID_NAME, callIds);
-                deleteCallsHistoryBuilder.delete();
-            }
 
-            // notify the observers
-            setChanged();
-            notifyObservers();
-        } catch (SQLException e) {
-            Log.e(TAG, "Error while clearing history for conversation", e);
-        }
+        mApplicationExecutor.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Map<String, HistoryEntry> history = conversation.getRawHistory();
+                    for (Map.Entry<String, HistoryEntry> entry : history.entrySet()) {
+                        //~ Deleting messages
+                        ArrayList<Long> textMessagesIds = new ArrayList<>(entry.getValue().getTextMessages().size());
+                        for (TextMessage textMessage : entry.getValue().getTextMessages().values()) {
+                            textMessagesIds.add(textMessage.getId());
+                        }
+                        DeleteBuilder<HistoryText, Integer> deleteTextHistoryBuilder = getTextHistoryDao()
+                                .deleteBuilder();
+                        deleteTextHistoryBuilder.where().in(HistoryText.COLUMN_ID_NAME, textMessagesIds);
+                        deleteTextHistoryBuilder.delete();
+                        //~ Deleting calls
+                        ArrayList<String> callIds = new ArrayList<>(entry.getValue().getCalls().size());
+                        for (HistoryCall historyCall : entry.getValue().getCalls().values()) {
+                            callIds.add(historyCall.getCallId().toString());
+                        }
+                        DeleteBuilder<HistoryCall, Integer> deleteCallsHistoryBuilder = getCallHistoryDao()
+                                .deleteBuilder();
+                        deleteCallsHistoryBuilder.where().in(HistoryCall.COLUMN_CALL_ID_NAME, callIds);
+                        deleteCallsHistoryBuilder.delete();
+                    }
+
+                    // notify the observers
+                    setChanged();
+                    ServiceEvent e = new ServiceEvent(ServiceEvent.EventType.HISTORY_MODIFIED);
+                    notifyObservers(e);
+                } catch (SQLException e) {
+                    Log.e(TAG, "Error while clearing history for conversation", e);
+                }
+            }
+        });
+
     }
 
     public void clearHistory() {
@@ -218,4 +229,35 @@ public abstract class HistoryService extends Observable {
         }
     }
 
+    public void saveVCard(String from, StringMap messages) {
+
+    }
+
+    public void updateVCard() {
+
+    }
+
+    public void incomingMessage(String accountId, String callId, String from, StringMap messages) {
+
+        String msg = null;
+        final String textPlainMime = "text/plain";
+        if (null != messages && messages.has_key(textPlainMime)) {
+            msg = messages.getRaw(textPlainMime).toJavaString();
+        }
+        if (msg == null) {
+            return;
+        }
+
+        TextMessage txt = new TextMessage(true, msg, new Uri(from), null, accountId);
+        Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
+
+        insertNewTextMessage(txt);
+        saveVCard(from, messages);
+
+        ServiceEvent e = new ServiceEvent(ServiceEvent.EventType.INCOMING_MESSAGE);
+        e.addEventInput(ServiceEvent.EventInput.MESSAGE, txt);
+        e.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
+        setChanged();
+        notifyObservers(e);
+    }
 }

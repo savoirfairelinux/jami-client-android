@@ -209,6 +209,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
 
         getActivity().registerReceiver(mReceiver, intentFilter);
+
     }
 
     @Override
@@ -226,6 +227,8 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
+        mConversationFacade.addObserver(this);
 
         audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
@@ -272,6 +275,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
         }
+        mConversationFacade.removeObserver(this);
     }
 
     /**
@@ -1225,19 +1229,31 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             return;
         }
 
-        switch (event.getEventType()) {
-            case REGISTERED_NAME_FOUND:
-                final String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                RingApplication.uiHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        contactBubbleNumTxt.setText(name);
-                    }
-                });
-                break;
-            default:
-                Log.d(TAG, "This event type is not handled here " + event.getEventType());
-                break;
+        if(observable instanceof ConversationFacade) {
+            switch (event.getEventType()) {
+                case HISTORY_LOADED:
+                    confUpdate();
+                    break;
+                default:
+                    Log.d(TAG, "This event type is not handled here " + event.getEventType());
+                    break;
+            }
+        } else {
+            switch (event.getEventType()) {
+                case REGISTERED_NAME_FOUND:
+                    final String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                    RingApplication.uiHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            contactBubbleNumTxt.setText(name);
+                        }
+                    });
+                    break;
+                default:
+                    Log.d(TAG, "This event type is not handled here " + event.getEventType());
+                    break;
+            }
         }
+
     }
 }
