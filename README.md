@@ -77,3 +77,7 @@ Retrieve client log from device (client must be running before executing this)
 * When building the apk error in build-tools
     error while loading shared libraries: libstdc++.so.6
     **Solution**:   Install lib32stdc++6 lib32z1-dev
+
+* When compiling on Fedora
+    error while loading shared libraries: libtinfo.so.5: cannot open shared object file: No such file or directory
+    **Solution***: sudo dnf install ncurses-compat-libs
