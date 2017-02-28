@@ -28,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -62,6 +63,12 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
     @BindView(R.id.requests_list)
     RecyclerView mRequestsList;
 
+    @BindView(R.id.account_pane)
+    ViewGroup mPane;
+
+    @BindView(R.id.pane_ringID)
+    TextView mPaneTextView;
+
     Unbinder mUnbinder;
     private TrustRequestsAdapter mAdapter;
 
@@ -87,7 +94,7 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
     }
 
     public void presentForAccount(Bundle bundle) {
-        if(bundle.containsKey(ACCOUNT_ID)) {
+        if (bundle.containsKey(ACCOUNT_ID)) {
             mPendingTrustRequestsPresenter.updateAccount(bundle.getString(ACCOUNT_ID));
         }
     }
@@ -102,7 +109,7 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_trust_request);
 
         Bundle arguments = getArguments();
-        if(arguments != null && arguments.containsKey(ACCOUNT_ID)){
+        if (arguments != null && arguments.containsKey(ACCOUNT_ID)) {
             mPendingTrustRequestsPresenter.updateAccount(getArguments().getString(ACCOUNT_ID));
         }
         // view binding
@@ -135,6 +142,10 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
         RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
+                if (viewModel.hasPane()) {
+                    mPaneTextView.setText(getString(R.string.trust_request_account, viewModel.getAccountUsername()));
+                }
+                mPane.setVisibility(viewModel.hasPane() ? View.VISIBLE : View.GONE);
                 mAdapter.replaceAll(viewModel.getTrustRequests());
             }
         });

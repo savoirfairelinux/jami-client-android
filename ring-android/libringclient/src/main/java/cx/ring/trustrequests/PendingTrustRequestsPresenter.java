@@ -74,7 +74,7 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         }
 
         Log.d(TAG, "updateList");
-        Account currentAccount = ((accountID == null)? mAccountService.getCurrentAccount() : mAccountService.getAccount(accountID));
+        Account currentAccount = ((accountID == null) ? mAccountService.getCurrentAccount() : mAccountService.getAccount(accountID));
         HashMap<String, String> map = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
         List<TrustRequest> trustRequests = new ArrayList<>();
 
@@ -85,8 +85,8 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
             trustRequests.add(new TrustRequest(value, key));
         }
 
-
-        getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, trustRequests));
+        Boolean hasPane = accountID != null;
+        getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, trustRequests, hasPane));
         accountID = null;
     }
 

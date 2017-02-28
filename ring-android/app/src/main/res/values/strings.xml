@@ -195,5 +195,6 @@ along with this program; if not, write to the Free Software
     <string name="refuse">Refuse</string>
     <string name="block">Block</string>
     <string name="trust_request_msg">Pending trust request</string>
+    <string name="trust_request_account">For %1$s</string>
 
 </resources>
