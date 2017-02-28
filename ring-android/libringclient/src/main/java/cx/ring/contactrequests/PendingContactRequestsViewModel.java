@@ -29,17 +29,23 @@ public class PendingContactRequestsViewModel {
 
     private WeakReference<Account> mAccount;
     private List<TrustRequest> mTrustRequests;
+    private boolean hasPane;
 
-    public PendingContactRequestsViewModel(Account account, List<TrustRequest> trustRequests) {
+    public PendingContactRequestsViewModel(Account account, List<TrustRequest> trustRequests, boolean pane) {
         mAccount = new WeakReference<>(account);
         mTrustRequests = trustRequests;
+        hasPane = pane;
     }
 
-    public String getAccountId() {
-        return mAccount.get().getAccountID();
+    public String getAccountUsername() {
+        return mAccount.get().getUsername();
     }
 
     public List<TrustRequest> getTrustRequests() {
         return mTrustRequests;
+    }
+
+    public boolean hasPane() {
+        return hasPane;
     }
 }
