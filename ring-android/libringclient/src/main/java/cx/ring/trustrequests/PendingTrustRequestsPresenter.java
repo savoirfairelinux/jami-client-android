@@ -47,6 +47,9 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         this.mAccountService = mAccountService;
     }
 
+    final private List<TrustRequest> mTrustRequests = new ArrayList<>();
+    final private List<TrustRequest> mTrustRequestsTmp = new ArrayList<>();
+
     @Override
     public void afterInjection() {
 
@@ -56,7 +59,7 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
     public void bindView(GenericView<PendingTrustRequestsViewModel> view) {
         mAccountService.addObserver(this);
         super.bindView(view);
-        updateList();
+        updateList(true);
     }
 
     @Override
@@ -65,7 +68,7 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         super.unbindView();
     }
 
-    public void updateList() {
+    public void updateList(Boolean clear) {
         if (getView() == null) {
             return;
         }
@@ -76,18 +79,21 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
             return;
         }
 
-        HashMap<String, String> map = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
-        List<TrustRequest> trustRequests = new ArrayList<>();
+        if (clear) {
+            mTrustRequests.clear();
+            mTrustRequestsTmp.clear();
+            HashMap<String, String> map = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
 
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            Log.d(TAG, "trust request: " + value + ", " + key);
-            trustRequests.add(new TrustRequest(value, key));
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                Log.d(TAG, "trust request: " + value + ", " + key);
+                mTrustRequestsTmp.add(new TrustRequest(value, key));
+                mAccountService.lookupAddress("", "", key);
+            }
         }
 
-
-        getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, trustRequests));
+        getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, mTrustRequests));
     }
 
     @Override
@@ -100,7 +106,36 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         switch (event.getEventType()) {
             case ACCOUNTS_CHANGED:
             case INCOMING_TRUST_REQUEST:
-                updateList();
+                updateList(true);
+                break;
+            case REGISTERED_NAME_FOUND:
+                Log.d(TAG, "update, accountID: " + mAccountService.getCurrentAccount().getAccountID());
+                final String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                final String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
+                final int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
+                switch (state) {
+                    case 0: //name found
+                        for (TrustRequest trustRequest : mTrustRequestsTmp) {
+                            if (trustRequest.getContactId().equals(address)) {
+                                trustRequest.setUsername(name);
+                                mTrustRequestsTmp.remove(trustRequest);
+                                mTrustRequests.add(trustRequest);
+                                updateList(false);
+                                break;
+                            }
+                        }
+                        break;
+                    default:
+                        for (TrustRequest trustRequest : mTrustRequestsTmp) {
+                            if (trustRequest.getContactId().equals(address)) {
+                                mTrustRequestsTmp.remove(trustRequest);
+                                mTrustRequests.add(trustRequest);
+                                updateList(false);
+                                break;
+                            }
+                        }
+                        break;
+                }
                 break;
             default:
                 Log.d(TAG, "Event " + event.getEventType() + " is not handled here");
