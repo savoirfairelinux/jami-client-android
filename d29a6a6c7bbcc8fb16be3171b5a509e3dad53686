@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fab9d9a7_d0943446",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-02-28T22:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_cd533d6b",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 282,
+        "endChar": 77
+      },
+      "revId": "d29a6a6c7bbcc8fb16be3171b5a509e3dad53686",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab9d9a7_cd01fd3a",
         "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
         "patchSetId": 9
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "fab9d9a7_f0913853",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-02-28T22:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_cd01fd3a",
+      "revId": "d29a6a6c7bbcc8fb16be3171b5a509e3dad53686",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab9d9a7_cd881dc9",
         "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
         "patchSetId": 9
@@ -53,6 +95,30 @@
       "writtenOn": "2017-02-27T19:48:02Z",
       "side": 1,
       "message": "there has to be a space after the comma",
+      "range": {
+        "startLine": 257,
+        "startChar": 43,
+        "endLine": 257,
+        "endChar": 76
+      },
+      "revId": "d29a6a6c7bbcc8fb16be3171b5a509e3dad53686",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab9d9a7_50884422",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-02-28T22:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_cd881dc9",
       "range": {
         "startLine": 257,
         "startChar": 43,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "fab9d9a7_b09bc071",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-02-28T22:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_6d9a5116",
+      "range": {
+        "startLine": 346,
+        "startChar": 11,
+        "endLine": 346,
+        "endChar": 91
+      },
+      "revId": "d29a6a6c7bbcc8fb16be3171b5a509e3dad53686",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab9d9a7_0d9f1505",
         "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
         "patchSetId": 9
@@ -99,6 +189,30 @@
       "writtenOn": "2017-02-27T19:48:02Z",
       "side": 1,
       "message": "there has to be a space after the if",
+      "range": {
+        "startLine": 349,
+        "startChar": 16,
+        "endLine": 349,
+        "endChar": 54
+      },
+      "revId": "d29a6a6c7bbcc8fb16be3171b5a509e3dad53686",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab9d9a7_708d4831",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-02-28T22:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_0d9f1505",
       "range": {
         "startLine": 349,
         "startChar": 16,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "fab9d9a7_1082cc00",
+        "filename": "ring-android/app/src/main/java/cx/ring/trustrequests/PendingTrustRequestsFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-02-28T22:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_ada60952",
+      "range": {
+        "startLine": 90,
+        "startChar": 8,
+        "endLine": 90,
+        "endChar": 41
+      },
+      "revId": "d29a6a6c7bbcc8fb16be3171b5a509e3dad53686",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab9d9a7_4d63cd1a",
         "filename": "ring-android/app/src/main/res/values/strings.xml",
         "patchSetId": 9
@@ -145,6 +283,30 @@
       "writtenOn": "2017-02-27T19:48:02Z",
       "side": 1,
       "message": "\"contact\" instead of \"trust\"",
+      "range": {
+        "startLine": 196,
+        "startChar": 45,
+        "endLine": 196,
+        "endChar": 50
+      },
+      "revId": "d29a6a6c7bbcc8fb16be3171b5a509e3dad53686",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab9d9a7_3087d011",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-02-28T22:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_4d63cd1a",
       "range": {
         "startLine": 196,
         "startChar": 45,
