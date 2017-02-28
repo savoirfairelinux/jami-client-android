@@ -28,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -41,8 +42,6 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.TrustRequest;
 import cx.ring.mvp.GenericView;
-import cx.ring.services.AccountService;
-import cx.ring.services.ContactService;
 import cx.ring.utils.Log;
 
 public class PendingTrustRequestsFragment extends Fragment implements GenericView<PendingTrustRequestsViewModel> {
@@ -56,8 +55,11 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
     @BindView(R.id.requests_list)
     protected RecyclerView mRequestsList;
 
-    private Unbinder mUnbinder;
+    @BindView(R.id.pane_ringID)
+    TextView mPaneTextView;
+
     private TrustRequestsAdapter mAdapter;
+    private Unbinder mUnbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -130,6 +132,10 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
         RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
+                if (viewModel.hasPane()) {
+                    mPaneTextView.setText(getString(R.string.trust_request_account, viewModel.getAccountUsername()));
+                }
+                mPaneTextView.setVisibility(viewModel.hasPane() ? View.VISIBLE : View.GONE);
                 mAdapter.replaceAll(viewModel.getTrustRequests());
             }
         });
