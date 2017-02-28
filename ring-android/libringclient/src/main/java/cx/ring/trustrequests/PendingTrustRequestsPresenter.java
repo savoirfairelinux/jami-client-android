@@ -105,7 +105,8 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
             }
         }
 
-        getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, mTrustRequests));
+        boolean hasPane = mAccountID != null;
+        getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, mTrustRequests, hasPane));
         mNotificationService.cancelTrustRequestNotification(currentAccount.getAccountID());
     }
 
