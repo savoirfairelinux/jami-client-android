@@ -41,10 +41,12 @@ import cx.ring.model.TrustRequest;
 public class TrustRequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<TrustRequest> mTrustRequests;
     private Context mContext;
+    private PendingTrustRequestsPresenter mPresenter;
 
-    public TrustRequestsAdapter(Context context, List<TrustRequest> trustRequests) {
+    public TrustRequestsAdapter(Context context, List<TrustRequest> trustRequests, PendingTrustRequestsPresenter presenter) {
         mContext = context;
         mTrustRequests = trustRequests;
+        mPresenter = presenter;
     }
 
     public void replaceAll(List<TrustRequest> trustRequests) {
@@ -68,24 +70,30 @@ public class TrustRequestsAdapter extends RecyclerView.Adapter<RecyclerView.View
         @BindView(R.id.display_name)
         TextView mDisplayname;
 
+        private String mContactId;
+
         TrustRequestView(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
 
+        public void setContactId(String contactId) {
+            mContactId = contactId;
+        }
+
         @OnClick(R.id.button_accept)
         public void acceptClicked() {
-
+            mPresenter.acceptTrustRequest(mContactId);
         }
 
         @OnClick(R.id.button_refuse)
         public void refuseClicked() {
-
+            mPresenter.refuseTrustRequest(mContactId);
         }
 
         @OnClick(R.id.button_block)
         public void blockClicked() {
-
+            mPresenter.blockTrustRequest(mContactId);
         }
     }
 
@@ -110,6 +118,8 @@ public class TrustRequestsAdapter extends RecyclerView.Adapter<RecyclerView.View
         ((TrustRequestView) holder).mPhoto.setImageDrawable(photo);
 
         ((TrustRequestView) holder).mDisplayname.setText(trustRequest.getDisplayname());
+
+        ((TrustRequestView) holder).setContactId(trustRequest.getContactId());
     }
 
     @Override
