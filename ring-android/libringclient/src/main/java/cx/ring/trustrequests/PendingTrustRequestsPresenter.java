@@ -43,6 +43,8 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
     @Inject
     AccountService mAccountService;
 
+    private List<TrustRequest> mTrustRequests = new ArrayList<>();
+
     @Override
     public void afterInjection() {
         mAccountService.addObserver(this);
@@ -52,7 +54,7 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
     public void bindView(GenericView<PendingTrustRequestsViewModel> view) {
         mAccountService.addObserver(this);
         super.bindView(view);
-        updateList();
+        updateList(true);
     }
 
     @Override
@@ -61,26 +63,27 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         super.unbindView();
     }
 
-    public void updateList() {
+    public void updateList(Boolean clear) {
         if (getView() == null) {
-            Log.d(TAG, "updateList. GetView() is null");
             return;
         }
 
         Log.d(TAG, "updateList");
         Account currentAccount = mAccountService.getCurrentAccount();
-        HashMap<String, String> map = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
-        List<TrustRequest> trustRequests = new ArrayList<>();
+        if (clear) {
+            mTrustRequests.clear();
+            HashMap<String, String> map = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
 
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            Log.d(TAG, "trust request: " + value + ", " + key);
-            trustRequests.add(new TrustRequest(value, key));
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                Log.d(TAG, "trust request: " + value + ", " + key);
+                mAccountService.lookupAddress("", "", key);
+                mTrustRequests.add(new TrustRequest(value, key));
+            }
         }
 
-
-        getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, trustRequests));
+        getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, mTrustRequests));
     }
 
     @Override
@@ -93,7 +96,21 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         switch (event.getEventType()) {
             case ACCOUNTS_CHANGED:
             case INCOMING_TRUST_REQUEST:
-                updateList();
+                updateList(true);
+                break;
+            case REGISTERED_NAME_FOUND:
+                final String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                final String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
+                final int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
+                if (state == 0 && name != null && address != null) {
+                    for (TrustRequest trustRequest : mTrustRequests) {
+                        if (trustRequest.getContactId().equals(address)) {
+                            trustRequest.setUsername(name);
+                            updateList(false);
+                            break;
+                        }
+                    }
+                }
                 break;
             default:
                 Log.d(TAG, "Event " + event.getEventType() + " is not handled here");
