@@ -78,7 +78,7 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        mAdapter = new TrustRequestsAdapter(getActivity(), new ArrayList<TrustRequest>());
+        mAdapter = new TrustRequestsAdapter(getActivity(), new ArrayList<TrustRequest>(), mPendingTrustRequestsPresenter);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRequestsList.setLayoutManager(mLayoutManager);
         mRequestsList.setAdapter(mAdapter);
@@ -87,7 +87,7 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
     }
 
     public void presentForAccount(Bundle bundle) {
-        if(bundle.containsKey(ACCOUNT_ID)) {
+        if (bundle.containsKey(ACCOUNT_ID)) {
             mPendingTrustRequestsPresenter.updateAccount(bundle.getString(ACCOUNT_ID));
         }
     }
@@ -102,7 +102,7 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_trust_request);
 
         Bundle arguments = getArguments();
-        if(arguments != null && arguments.containsKey(ACCOUNT_ID)){
+        if (arguments != null && arguments.containsKey(ACCOUNT_ID)) {
             mPendingTrustRequestsPresenter.updateAccount(getArguments().getString(ACCOUNT_ID));
         }
         // view binding

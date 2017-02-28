@@ -32,6 +32,7 @@ import cx.ring.model.TrustRequest;
 import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.ContactService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -44,6 +45,9 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
 
     @Inject
     AccountService mAccountService;
+
+    @Inject
+    ContactService mContactService;
 
     @Override
     public void afterInjection() {
@@ -74,7 +78,7 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         }
 
         Log.d(TAG, "updateList");
-        Account currentAccount = ((accountID == null)? mAccountService.getCurrentAccount() : mAccountService.getAccount(accountID));
+        Account currentAccount = ((accountID == null) ? mAccountService.getCurrentAccount() : mAccountService.getAccount(accountID));
         HashMap<String, String> map = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
         List<TrustRequest> trustRequests = new ArrayList<>();
 
@@ -88,6 +92,25 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
 
         getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, trustRequests));
         accountID = null;
+    }
+
+    public void acceptTrustRequest(String contactId) {
+        String accountId = accountID == null ? mAccountService.getCurrentAccount().getAccountID() : accountID;
+        mAccountService.acceptTrustRequest(accountId, contactId);
+        updateList();
+    }
+
+    public void refuseTrustRequest(String contactId) {
+        String accountId = accountID == null ? mAccountService.getCurrentAccount().getAccountID() : accountID;
+        mAccountService.discardTrustRequest(accountId, contactId);
+        updateList();
+    }
+
+    public void blockTrustRequest(String contactId) {
+        String accountId = accountID == null ? mAccountService.getCurrentAccount().getAccountID() : accountID;
+        mAccountService.discardTrustRequest(accountId, contactId);
+        mContactService.removeContact(accountId, contactId);
+        updateList();
     }
 
     @Override
