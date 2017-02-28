@@ -80,6 +80,7 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         if (currentAccount == null) {
             return;
         }
+
         HashMap<String, String> map = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
         List<TrustRequest> trustRequests = new ArrayList<>();
 
@@ -90,8 +91,8 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
             trustRequests.add(new TrustRequest(value, key));
         }
 
-
-        getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, trustRequests));
+        Boolean hasPane = mAccountID != null;
+        getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, trustRequests, hasPane));
         mAccountID = null;
     }
 
