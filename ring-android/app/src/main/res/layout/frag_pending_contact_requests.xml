@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
+    android:orientation="vertical"
     tools:context=".client.HomeActivity">
+
+    <TextView
+        android:id="@+id/pane_ringID"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:background="#e3c1c1"
+        android:ellipsize="middle"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="@string/trust_request_account"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/text_color_primary"
+        android:visibility="gone"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/requests_list"
@@ -18,4 +33,4 @@
         android:paddingBottom="8dp"
         tools:listitem="@layout/item_contact_request" />
 
-</RelativeLayout>
+</LinearLayout>

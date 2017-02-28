@@ -28,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -53,6 +54,9 @@ public class PendingContactRequestsFragment extends Fragment implements GenericV
 
     @BindView(R.id.requests_list)
     protected RecyclerView mRequestsList;
+
+    @BindView(R.id.pane_ringID)
+    TextView mPaneTextView;
 
     private Unbinder mUnbinder;
     private ContactRequestsAdapter mAdapter;
@@ -125,6 +129,10 @@ public class PendingContactRequestsFragment extends Fragment implements GenericV
         RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
+                if (viewModel.hasPane()) {
+                    mPaneTextView.setText(getString(R.string.trust_request_account, viewModel.getAccountUsername()));
+                }
+                mPaneTextView.setVisibility(viewModel.hasPane() ? View.VISIBLE : View.GONE);
                 mAdapter.replaceAll(viewModel.getTrustRequests());
             }
         });
