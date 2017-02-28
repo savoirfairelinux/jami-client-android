@@ -113,7 +113,8 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
             }
         }
 
-        getView().showViewModel(new PendingContactRequestsViewModel(currentAccount, mTrustRequests));
+        boolean hasPane = mAccountID != null;
+        getView().showViewModel(new PendingContactRequestsViewModel(currentAccount, mTrustRequests, hasPane));
         mNotificationService.cancelTrustRequestNotification(currentAccount.getAccountID());
     }
 
