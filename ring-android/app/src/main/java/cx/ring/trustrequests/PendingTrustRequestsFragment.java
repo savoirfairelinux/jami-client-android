@@ -72,7 +72,7 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        mAdapter = new TrustRequestsAdapter(getActivity(), new ArrayList<TrustRequest>());
+        mAdapter = new TrustRequestsAdapter(getActivity(), new ArrayList<TrustRequest>(), mPendingTrustRequestsPresenter);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRequestsList.setLayoutManager(mLayoutManager);
         mRequestsList.setAdapter(mAdapter);
