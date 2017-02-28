@@ -70,7 +70,7 @@ public class PendingContactRequestsFragment extends Fragment implements GenericV
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        mAdapter = new ContactRequestsAdapter(getActivity(), new ArrayList<TrustRequest>());
+        mAdapter = new ContactRequestsAdapter(getActivity(), new ArrayList<TrustRequest>(), mPendingContactRequestsPresenter);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRequestsList.setLayoutManager(mLayoutManager);
         mRequestsList.setAdapter(mAdapter);
