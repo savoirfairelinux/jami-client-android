@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_a9191d7b",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountWizard.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-28T22:25:56Z",
+      "side": 1,
+      "message": "This function is useless now. You can use createRingAlertDialog instead of it.",
+      "range": {
+        "startLine": 396,
+        "startChar": 4,
+        "endLine": 396,
+        "endChar": 74
+      },
+      "revId": "49935cb541032a7ce150fdfd004fd748d7d7a374",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_69524515",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SIPAccountCreationFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-28T22:25:56Z",
+      "side": 1,
+      "message": "This lines are use many times. You can factorize them.",
+      "range": {
+        "startLine": 198,
+        "startChar": 16,
+        "endLine": 209,
+        "endChar": 19
+      },
+      "revId": "49935cb541032a7ce150fdfd004fd748d7d7a374",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_891c596c",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/DeviceRuntimeServiceImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-28T22:25:56Z",
+      "side": 1,
+      "message": "this function is never use",
+      "range": {
+        "startLine": 141,
+        "startChar": 4,
+        "endLine": 143,
+        "endChar": 5
+      },
+      "revId": "49935cb541032a7ce150fdfd004fd748d7d7a374",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_e90f152d",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_sip_create.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-02-28T22:25:56Z",
+      "side": 1,
+      "message": "no change. Remove this file from the commit",
+      "revId": "49935cb541032a7ce150fdfd004fd748d7d7a374",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
