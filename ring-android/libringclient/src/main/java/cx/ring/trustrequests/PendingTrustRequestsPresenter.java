@@ -33,6 +33,7 @@ import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
+import cx.ring.services.ContactService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -42,13 +43,17 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
     static final String TAG = PendingTrustRequestsPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
-    private String mAccountID;
     private NotificationService mNotificationService;
+    private ContactService mContactService;
+    private String mAccountID;
 
     @Inject
-    public PendingTrustRequestsPresenter(AccountService mAccountService, NotificationService mNotificationService) {
-        this.mAccountService = mAccountService;
-        this.mNotificationService = mNotificationService;
+    public PendingTrustRequestsPresenter(AccountService accountService,
+                                         NotificationService notificationService,
+                                         ContactService contactService) {
+        mAccountService = accountService;
+        mNotificationService = notificationService;
+        mContactService = contactService;
     }
 
     final private List<TrustRequest> mTrustRequests = new ArrayList<>();
@@ -109,6 +114,25 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
 
         getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, mTrustRequests));
         mNotificationService.cancelTrustRequestNotification(currentAccount.getAccountID());
+    }
+
+    public void acceptTrustRequest(String contactId) {
+        String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
+        mAccountService.acceptTrustRequest(accountId, contactId);
+        updateList(true);
+    }
+
+    public void refuseTrustRequest(String contactId) {
+        String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
+        mAccountService.discardTrustRequest(accountId, contactId);
+        updateList(true);
+    }
+
+    public void blockTrustRequest(String contactId) {
+        String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
+        mAccountService.discardTrustRequest(accountId, contactId);
+        mContactService.removeContact(accountId, contactId);
+        updateList(true);
     }
 
     @Override
