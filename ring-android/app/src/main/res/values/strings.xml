@@ -195,5 +195,6 @@ along with this program; if not, write to the Free Software
     <string name="block">Block</string>
     <string name="trust_request_title">Pending contact request</string>
     <string name="trust_request_msg">You have %1$s pending requests</string>
+    <string name="trust_request_account">For %1$s</string>
 
 </resources>
