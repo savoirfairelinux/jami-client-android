@@ -200,6 +200,29 @@
       "revId": "0518e4c15389412afd711557465446dbe7c84617",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_29b9ade9",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/trustrequests/PendingTrustRequestsPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-03-01T17:12:25Z",
+      "side": 1,
+      "message": "Will cause crash if currentAccount is null.",
+      "range": {
+        "startLine": 72,
+        "startChar": 86,
+        "endLine": 72,
+        "endChar": 100
+      },
+      "revId": "0518e4c15389412afd711557465446dbe7c84617",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
