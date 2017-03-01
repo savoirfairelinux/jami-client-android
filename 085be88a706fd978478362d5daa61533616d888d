@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_2903ed74",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-01T21:33:51Z",
+      "side": 1,
+      "message": "you can remove this",
+      "range": {
+        "startLine": 927,
+        "startChar": 12,
+        "endLine": 929,
+        "endChar": 22
+      },
+      "revId": "085be88a706fd978478362d5daa61533616d888d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_e9f4f588",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/HistoryService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-01T21:33:51Z",
+      "side": 1,
+      "message": "you should use Log.e(TAG, \"error message\", e)",
+      "range": {
+        "startLine": 149,
+        "startChar": 20,
+        "endLine": 149,
+        "endChar": 40
+      },
+      "revId": "085be88a706fd978478362d5daa61533616d888d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
