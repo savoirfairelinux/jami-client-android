@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_6917a5a4",
+        "filename": "ring-android/app/src/main/res/layout/item_trust_request.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-01T21:41:28Z",
+      "side": 1,
+      "message": "Rearrange code",
+      "revId": "d57ec67aa1e81523e4c33b2f171a93065ee18f6e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_4912e1b5",
+        "filename": "ring-android/app/src/main/res/layout/item_trust_request.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-01T21:41:28Z",
+      "side": 1,
+      "message": "We should add a 8dp margin bottom for visibility purpose",
+      "revId": "d57ec67aa1e81523e4c33b2f171a93065ee18f6e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
