@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_88e69743",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-02T16:19:29Z",
+      "side": 1,
+      "message": "This commit doesn\u0027t use the username to facilitate the review. The username will be used in a next commit.",
+      "parentUuid": "bab3e1c7_6887a362",
+      "range": {
+        "startLine": 368,
+        "startChar": 20,
+        "endLine": 380,
+        "endChar": 21
+      },
+      "revId": "db13e4a001543d74b819e84b8a86f9a563312fd4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_087ce771",
         "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
         "patchSetId": 2
