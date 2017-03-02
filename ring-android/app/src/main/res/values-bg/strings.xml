@@ -32,7 +32,6 @@
     <item quantity="one">%d разговор</item>
     <item quantity="other">%d разговора</item>
   </plurals>
-  <string name="home_transfering">Прехвърляне на %1$s към %2$s</string>
   <string name="home_transfer_complet">Прехвърлянето е завършено</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Няма намерен контакт</string>
@@ -107,13 +106,10 @@
   <string name="help_password_choose">Изберете сигурна парола, която ще запомните, за да е защитен акаунтът Ви.</string>
   <string name="help_password_enter">Въведете основната си парола за Ring</string>
   <string name="wizard_next">Напред</string>
-  <string name="account_device_updated_message">Вие обновихте акаунта си успешно.</string>
   <!--MenuHeaderView-->
   <string name="profile">Моят профил</string>
-  <string name="profile_message_warning">Това се вижда от контактите Ви</string>
   <string name="open_the_gallery">Отваряне на галерията</string>
   <string name="take_a_photo">Снимане</string>
-  <string name="unknowm_if_empty">Неизвестно, ако е празно</string>
   <string name="unknown">Неизвестно</string>
   <!--Share fragment-->
   <string name="share_message">Сканирайте този QR-код с вградения скенер на приложението Ring, което иска да се свърже с Вас.</string>

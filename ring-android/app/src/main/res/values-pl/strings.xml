@@ -32,9 +32,9 @@
   <plurals name="home_conferences_title">
     <item quantity="one">%d Rozmowa</item>
     <item quantity="few">%d Rozmowy</item>
+    <item quantity="many">%d Rozmowy</item>
     <item quantity="other">%d Rozmowy</item>
   </plurals>
-  <string name="home_transfering">Przełaczenie %1$s do %2$s</string>
   <string name="home_transfer_complet">Przełaczanie skończone</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Brak kontaktu</string>

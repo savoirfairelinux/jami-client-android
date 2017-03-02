@@ -34,7 +34,6 @@
     <item quantity="one">%d Conversazione</item>
     <item quantity="other">%d Conversazione</item>
   </plurals>
-  <string name="home_transfering">Transferendo da %1$s a %2$s</string>
   <string name="home_transfer_complet">Trasferimento completato</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Nessun contatto trovato</string>
@@ -114,13 +113,10 @@
   <string name="help_password_enter">Inserisci la password del tuo account principale di Ring</string>
   <string name="help_pin_enter">Inserisci il PIN da un altro account Ring già configurato. Usa l\'opzione \"esporta account su Ring\" per ottenere un PIN.</string>
   <string name="wizard_next">Seguente</string>
-  <string name="account_device_updated_message">Hai aggiornato con successo il tuo account Ring.</string>
   <!--MenuHeaderView-->
   <string name="profile">Il mio profilo</string>
-  <string name="profile_message_warning">Questo è condiviso con i tuoi contatti</string>
   <string name="open_the_gallery">Apri la galleria</string>
   <string name="take_a_photo">Scatta una foto</string>
-  <string name="unknowm_if_empty">Sconosciuto se vuoto</string>
   <string name="unknown">Sconosciuto</string>
   <!--Share fragment-->
   <string name="share_message">Scansiona questo QRCode con il scanner integrato nell\'applicazione Ring che vuole comunicare con te.</string>

@@ -31,7 +31,6 @@
     <item quantity="one">%d Conversa</item>
     <item quantity="other">%d Conversas</item>
   </plurals>
-  <string name="home_transfering">Transferindo %1$s para %2$s</string>
   <string name="home_transfer_complet">Transferência completa</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Contacto não encontrado</string>
@@ -106,10 +105,8 @@
   <string name="help_password_choose">Escolha uma password forte para proteger a sua conta Ring.</string>
   <string name="help_password_enter">Introduza a sua password principal do Ring</string>
   <string name="wizard_next">Próximo</string>
-  <string name="account_device_updated_message">Conta Ring atualizada com sucesso.</string>
   <!--MenuHeaderView-->
   <string name="profile">O meu perfil</string>
-  <string name="profile_message_warning">Isto é partilhado com os seus contactos</string>
   <string name="open_the_gallery">Abrir galeria</string>
   <string name="take_a_photo">Capturar fotografia</string>
   <string name="unknown">Desconhecido</string>

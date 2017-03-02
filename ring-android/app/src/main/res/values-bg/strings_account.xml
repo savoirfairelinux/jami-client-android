@@ -14,7 +14,6 @@
   <string name="help_ring">Акаунтът за Ring Ви позволява да се свързвате безопасно с хора чрез директна връзка през изцяло разпределена мрежа.</string>
   <string name="help_sip_title">Добавяне на акаунт за SIP</string>
   <string name="help_sip">Настройка на съществуващ акаунт за SIP</string>
-  <string name="create_sip_account">Добавяне</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Изтриване на акаунта?</string>
   <string name="account_delete_dialog_message">Това действие е необратимо.</string>
@@ -108,6 +107,7 @@
   <string name="account_device_added_title">Акаунтът е добавен на устройството</string>
   <string name="account_device_added_message">Настройката на акаунта Ви на това устройство беше успешна.</string>
   <string name="account_device_updated_title">Акаунтът на устройството е обновен</string>
+  <string name="account_device_updated_message">Вие обновихте акаунта си успешно.</string>
   <string name="account_link_button">Свързване на това устройство с акаунт</string>
   <string name="account_import_title">Свързване с съществуващ акаунт</string>
   <string name="account_link_prompt_pin">Въведете ПИН</string>

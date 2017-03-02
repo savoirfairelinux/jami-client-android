@@ -36,6 +36,7 @@
   <string name="account_rtp_port_range">Hang RTP port korlát</string>
   <!--restore/backup-->
   <string name="account_export_end_error_title">Hiba</string>
+  <string name="account_device_updated_message">Sikeresen frissítette a Ringfiókját.</string>
   <string name="account_new_button">Egy Ringfiók létrehozása</string>
   <!--Name registration-->
   <string name="account_status_unknown">Ismeretlen</string>

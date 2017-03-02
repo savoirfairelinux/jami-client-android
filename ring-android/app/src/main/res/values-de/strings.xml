@@ -1,11 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="feedback_section">Feedback</string>
+  <string name="report">&lt;u&gt;Sende uns eine E-Mail an&lt;/u&gt;</string>
+  <string name="section_license">Lizenz</string>
   <string name="sponsor_section">Ring ist eine freie Software, entwickelt und unterstützt durch</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Beitragen</string>
   <string name="version_section">Version</string>
-  <string name="no_email_app_installed">Es konnte keine Email-Anwendung gefunden werden, installieren Sie eine um uns einen Bericht zu senden</string>
-  <string name="email_chooser_title">Mail wird gesendet mit...</string>
+  <string name="no_email_app_installed">Es konnte keine E-Mail-Anwendung gefunden werden, installieren Sie eine, um uns einen Bericht zu senden</string>
+  <string name="no_browser_app_installed">Es konnte keine Browser-Anwendung gefunden werden, installieren Sie einen, um die Webseite anzusehen</string>
+  <string name="email_chooser_title">E-Mail wird gesendet mit...</string>
+  <string name="website_chooser_title">Webseite anzeigen mit...</string>
+  <string name="license">Diese Software wird ohne jegliche Gewährleistung zur Verfügung gestellt. Für Details
+&lt;u&gt;GNU General Public License Version 3 oder höher&lt;/u&gt;</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Keine Netzwerkverbindung</string>
@@ -22,7 +29,7 @@
   <string name="menu_item_accounts">Konten verwalten</string>
   <string name="menu_item_settings">Einstellungen</string>
   <string name="menu_item_share">Meinen Kontakt teilen</string>
-  <string name="menu_item_about">über Ring</string>
+  <string name="menu_item_about">Über Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Nummer wählen</string>
   <!--History Fragment-->
@@ -34,7 +41,6 @@
     <item quantity="one">%d Unterhaltung</item>
     <item quantity="other">%d Unterhaltungen</item>
   </plurals>
-  <string name="home_transfering">Übertrage %1$s zu %2$s</string>
   <string name="home_transfer_complet">Übertragung abgeschlossen</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Kein Kontakt gefunden</string>
@@ -110,20 +116,20 @@
   <string name="prompt_new_password_repeat">Neues Passwort wiederholen</string>
   <string name="account_create_title">Ein Ring-Konto erstellen</string>
   <string name="prompt_new_username">Neuen Benutzernamen eingeben</string>
-  <string name="help_password_choose">Wähle ein sicheres Passwort, an das du dich erinnern kannst, um deinen Ringaccount zu schützen.</string>
+  <string name="help_password_choose">Wähle ein sicheres Passwort, an das du dich erinnern kannst, um deinen Ring-Konto zu schützen.</string>
   <string name="help_password_enter">Geben Sie Ihr Haupt-Ring-Kontopasswort ein</string>
-  <string name="help_pin_enter">Gebe die PIN eines anderen konfigurierten Ringaccounts ein. Benutzen Sie die Funktion \"Exportiere Account auf Ring\" um die PIN zu erhalten.</string>
+  <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Ring-Kontos ein. Benutzen Sie die Funktion \"Exportiere Konto auf Ring\", um die PIN zu erhalten.</string>
   <string name="wizard_next">Weiter</string>
-  <string name="account_device_updated_message">Sie haben erfolgreich Ihr Ring-Konto aktualisiert</string>
+  <string name="wizard_back">Zurück</string>
   <!--MenuHeaderView-->
   <string name="profile">Mein Profil</string>
-  <string name="profile_message_warning">Dies wird mit ihren Kontakten geteilt</string>
-  <string name="open_the_gallery">Gallerie öffnen</string>
+  <string name="open_the_gallery">Galerie öffnen</string>
   <string name="take_a_photo">Foto machen</string>
-  <string name="unknowm_if_empty">\'Unbekannt\' falls leer...</string>
   <string name="unknown">Unbekannt</string>
   <!--Share fragment-->
   <string name="share_message">Scannen Sie diesen QR-Code mit dem eingebauten Scanner der Ringanwendung, die mit Ihnen kommunizieren will.</string>
+  <string name="share_message_no_account">Bitte wählen Sie ein Konto aus.</string>
   <string name="share_your_account_information">Teile meine Kontaktinformationen</string>
   <string name="generic_error_migration">Fehler</string>
+  <string name="generic_error_migration_message">Während der Migration ist ein Fehler aufgetreten</string>
 </resources>

@@ -21,7 +21,6 @@ Du kan rette din konto senere</string>
   <string name="help_ring">En Ring-konto gør dig i stand til at kontakte andre sikkert og direkte uden mellemmand gennem et fuldt distribueret netværk.</string>
   <string name="help_sip_title">Tilføj din SIP-konto</string>
   <string name="help_sip">Konfigurer en eksisterende SIP-konto.</string>
-  <string name="create_sip_account">Tilføj</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Slet konto ?</string>
   <string name="account_delete_dialog_message">Denne handling kan ikke fortrydes.</string>
@@ -122,6 +121,7 @@ Du kan rette din konto senere</string>
   <string name="account_device_added_title">Enheds-konto tilføjet</string>
   <string name="account_device_added_message">Du har nu konfigureret din Ring-konto på denne enhed.</string>
   <string name="account_device_updated_title">Enheds-konto opdateret</string>
+  <string name="account_device_updated_message">Du har opdateret din Ring-konto.</string>
   <string name="account_link_button">Tilknyt denne enhed til en konto</string>
   <string name="account_import_title">Tilnyt til en eksisterende konto</string>
   <string name="account_link_prompt_pin">Indtast PIN-kode</string>

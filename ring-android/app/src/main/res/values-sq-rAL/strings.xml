@@ -1,11 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="feedback_section">Përshtypje</string>
+  <string name="report">&lt;u&gt;Dërgonani një email&lt;/u&gt;</string>
+  <string name="section_license">Licencë</string>
   <string name="sponsor_section">Ring-u është software i lirë i zhvilluar dhe i mbuluar nga</string>
   <string name="copyright_section">Të drejta kopjimi</string>
   <string name="contribute_section">Kontribuoni</string>
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">S’u gjet aplikacion email-esh, instaloni një të tillë që të na dërgoni një raport</string>
+  <string name="no_browser_app_installed">S’u gjet aplikacion shfletuesi web, që të shihni këtë faqe, instaloni një të tillë </string>
   <string name="email_chooser_title">Dërgojeni mesazhi duke përdorur…</string>
+  <string name="website_chooser_title">Shiheni sajtin duke përdorur…</string>
+  <string name="license">Ky software jepet \"siç është\", pa asnjë garanci të çfaërdo lloji. Për hollësi, shihni &lt;u&gt;GNU General Public License, version 3 ose më të re&lt;/u&gt;</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Pa lidhje në rrjet</string>
@@ -26,6 +32,7 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Thirrni një numër</string>
   <!--History Fragment-->
+  <string name="hist_replay_button">Riluaje</string>
   <string name="hist_replay_button_stop">Ndale</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
@@ -33,7 +40,6 @@
     <item quantity="one">%d Bisedë</item>
     <item quantity="other">%d Biseda</item>
   </plurals>
-  <string name="home_transfering">Po shpërngulet %1$s te %2$s</string>
   <string name="home_transfer_complet">Shpërngulje e plotësuar</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">S’u gjet kontakt</string>
@@ -42,6 +48,7 @@
   <string name="choose_number">Zgjidhni një numër</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Shpërngule te një tjetër thirrje e tanishme:</string>
   <string name="transfer_no_other_call">S’ka thirrje të tjera pezull</string>
   <string name="transfer_type_number">Shtypni numrin te i cili të shpërngulet:</string>
   <!--Notifications-->
@@ -56,6 +63,7 @@
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ju:</string>
   <string name="action_call_conference">Konferencë</string>
+  <string name="action_call_hangup">Mbylle thirrjen</string>
   <string name="ongoing_call">Thirrje në kryerje e sipër</string>
   <string name="hist_in_call">Thirrje nga %1$s</string>
   <string name="hist_out_call">Thirrje për %1$s</string>
@@ -106,15 +114,19 @@
   <string name="prompt_new_password_repeat">Përsëriteni fjalëkalimin e ri</string>
   <string name="account_create_title">Krijoni një llogari Ring</string>
   <string name="prompt_new_username">Jepni emër përdoruesi të ri</string>
+  <string name="help_password_choose">Zgjidhni një fjalëkalim të fuqishëm që do ta mbani mend për të mbrojtur llogarinë tuaj Ring.</string>
   <string name="help_password_enter">Jepni fjalëkalimin e llogarisë suaj kryesore Ring</string>
+  <string name="help_pin_enter">Jepni PIN-in prej një llogarie tjetër Ring të formësuar. Përdorni veçorinë \"eksportoje llogarinë në Ring\" që të merrni një PIN.</string>
+  <string name="wizard_next">Pasuesi</string>
+  <string name="wizard_back">Mbrapsht</string>
   <!--MenuHeaderView-->
   <string name="profile">Profili im</string>
-  <string name="profile_message_warning">Kjo u tregohet kontakteve tuaja</string>
   <string name="open_the_gallery">Hape galerinë</string>
   <string name="take_a_photo">Bëni një foto</string>
-  <string name="unknowm_if_empty">E panjohur, në u lëntë e zbrazët</string>
   <string name="unknown">E panjohur</string>
   <!--Share fragment-->
+  <string name="share_message_no_account">Ju lutemi, përzgjidhni një llogari për ndarje me të.</string>
   <string name="share_your_account_information">Ndaji me të tjerët të dhënat e mia të kontaktit</string>
   <string name="generic_error_migration">Gabim</string>
+  <string name="generic_error_migration_message">Ndodhi një gabim gjatë migrimit</string>
 </resources>

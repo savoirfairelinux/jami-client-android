@@ -1,11 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="feedback_section">フィードバック</string>
+  <string name="report">&lt;u&gt;私たちにメールを送る&lt;/u&gt;</string>
+  <string name="section_license">ライセンス</string>
   <string name="sponsor_section">Ring はフリーソフトウェアです。開発およびサポートは</string>
   <string name="copyright_section">著作権表示</string>
   <string name="contribute_section">貢献</string>
   <string name="version_section">バージョン</string>
   <string name="no_email_app_installed">メールアプリが見つかりませんでした。報告するにはメールアプリをインストールしてください</string>
+  <string name="no_browser_app_installed">Webブラウザーアプリが見つかりませんでした。このページを表示するためにインストールしてください</string>
   <string name="email_chooser_title">メール送信に使用するアプリ...</string>
+  <string name="website_chooser_title">Webサイトを表示…</string>
+  <string name="license">このソフトウェアは、現状のまま提供され、いかなる種類の保証もありません。 詳細は以下を参照してください。
+&lt;u&gt;GNU General Public License version 3 以降&lt;/u&gt;</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">ネットワーク接続がありません</string>
@@ -33,7 +40,6 @@
   <plurals name="home_conferences_title">
     <item quantity="other">%d 会話</item>
   </plurals>
-  <string name="home_transfering">%2$s から %1$s へ転送</string>
   <string name="home_transfer_complet">転送完了</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">連作先が見つかりません</string>
@@ -112,16 +118,17 @@
   <string name="help_password_choose">Ring のアカウントを保護するために覚えておく強力なパスワードを選択してください。</string>
   <string name="help_password_enter">メインの Ring アカウントパスワードを入力してください</string>
   <string name="help_pin_enter">設定済みの別のRingアカウントからPINを入力してください。 PINを取得するには、\"Ringのアカウントをエクスポート\" 機能を使用します。</string>
-  <string name="account_device_updated_message">Ringアカウントを正常に更新しました。</string>
+  <string name="wizard_next">次へ</string>
+  <string name="wizard_back">戻る</string>
   <!--MenuHeaderView-->
   <string name="profile">マイ プロフィール</string>
-  <string name="profile_message_warning">これは連絡先と共有されています</string>
   <string name="open_the_gallery">ギャラリーを開く</string>
   <string name="take_a_photo">写真を撮る</string>
-  <string name="unknowm_if_empty">空の場合は不明</string>
   <string name="unknown">不明</string>
   <!--Share fragment-->
   <string name="share_message">あなたと通信したいRingアプリケーションの組み込みスキャナで、このQRコードをスキャンします。</string>
+  <string name="share_message_no_account">共有するアカウントを選択してください。</string>
   <string name="share_your_account_information">連絡先情報を共有</string>
   <string name="generic_error_migration">エラー</string>
+  <string name="generic_error_migration_message">移行中にエラーが発生しました。</string>
 </resources>

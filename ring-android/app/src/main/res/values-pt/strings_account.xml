@@ -34,6 +34,7 @@
   <!--TLS Details-->
   <!--restore/backup-->
   <string name="account_export_end_error_title">Erro</string>
+  <string name="account_device_updated_message">Conta Ring atualizada com sucesso.</string>
   <string name="account_new_button">Criar uma conta Ring</string>
   <!--Name registration-->
   <string name="account_status_unknown">Desconhecido</string>

@@ -21,7 +21,6 @@ Svůj účet můžete upravit později</string>
   <string name="help_ring">Účet Ring vám umožňuje spojit se s lidmi bezpečně, uživatel s uživatelem, skrze plně decentralizovanou síť.</string>
   <string name="help_sip_title">Přidat váš účet SIP</string>
   <string name="help_sip">Nastavit existující účet SIP.</string>
-  <string name="create_sip_account">Přidat</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Odstranit účet?</string>
   <string name="account_delete_dialog_message">Tuto činnost nelze vrátit zpět.</string>
@@ -122,6 +121,7 @@ Svůj účet můžete upravit později</string>
   <string name="account_device_added_title">Přístroj přidán k účtu</string>
   <string name="account_device_added_message">Úspěšně jste si na tomto zařízení nastavili svůj účet Ring.</string>
   <string name="account_device_updated_title">Aktualizován přístroj v účtu</string>
+  <string name="account_device_updated_message">Úspěšně jste si aktualizovali účet Ring.</string>
   <string name="account_link_button">Připojit toto zařízení k účtu</string>
   <string name="account_import_title">Připojit k už existujícímu účtu</string>
   <string name="account_link_prompt_pin">Zadejte PIN</string>
