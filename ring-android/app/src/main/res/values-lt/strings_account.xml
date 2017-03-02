@@ -2,6 +2,7 @@
 <resources>
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Ištrinti</string>
+  <string name="ic_advanced_menu">Išplėstiniai nustatymai</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">Slapyvardis</string>
   <string name="prompt_hostname">Kompiuterio vardas</string>
@@ -18,9 +19,9 @@
   <string name="dialog_warn_ip2ip_account_message">Jūs ruošiatės sukurti SIP paskyrą, nenurodę teisingo kompiuterio vardo.
 Jūs galėsite atlikti ir priimti tik tiesioginius ip skambučius. 
 Vėliau, galėsite pataisyti savo paskyros informaciją</string>
+  <string name="account_type_ip2ip">IP paskyra</string>
   <string name="help_sip_title">Pridėti savo SIP paskyrą</string>
   <string name="help_sip">Konfigūruokite esamą SIP paskyrą.</string>
-  <string name="create_sip_account">Pridėti</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Ištrinti paskyrą ?</string>
   <string name="account_delete_dialog_message">Šio veiksmo negalima bus atšaukti.</string>
@@ -92,6 +93,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_restore_account">Atkurti paskyrą</string>
   <string name="account_restore_message">Įrašykite slaptažodį, kad iššifruotumėte failą.</string>
   <string name="account_restore_decryption_password">Iššifravimo slaptažodis</string>
+  <string name="account_new_device_password">Norėdami atrakinti paskyrą, įveskite pagrindinį slaptažodį</string>
   <string name="restore_dialog_title">Atkuriama</string>
   <string name="restore_backup_wait">Prašome palaukti...</string>
   <string name="error_password_char_count">Mažiausiai 6 simboliai</string>
@@ -99,20 +101,26 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="restore_failed_dialog_title">Atkūrimas nepavyko</string>
   <string name="restore_failed_dialog_msg">Įvyko klaida</string>
   <string name="export_account_wait_title">Prašome palaukti...</string>
+  <string name="export_account_wait_message">Skelbiama naujos paskyros informacija</string>
   <string name="account_export_end_decryption_message">Naudojant pateiktą slaptažodį, nepavyko atrakinti jūsų paskyros.</string>
   <string name="account_export_end_network_title">Tinklo klaida</string>
   <string name="account_export_end_error_title">Klaida</string>
   <string name="account_export_end_error_message">Nepavyko eksportuoti paskyros. Įvyko nežinoma klaida.</string>
   <string name="account_contact_me">Susisiekite su manimi per Ring !</string>
+  <string name="update_account">Atnaujinti paskyrą</string>
+  <string name="account_migration">Jūsų Ring paskyra gali būti atnaujinta.\nPrašome įvesti savo slaptažodį.</string>
   <string name="ring_account">Ring paskyra</string>
+  <string name="ring_account_identity">Tapatybė</string>
   <string name="account_migration_title_dialog">Paskyros perkėlimas</string>
   <string name="account_update_needed">Reikalingas atnaujinimas</string>
   <string name="account_creation_file_too_big">Failas per didelis</string>
+  <string name="account_cannot_read">Nepavyksta perskaityti %1$s</string>
   <string name="account_cannot_be_found_title">Nepavyksta rasti paskyros</string>
   <string name="account_no_network_title">Nepavyksta prisijungti prie tinklo</string>
   <string name="account_device_added_title">Paskyros įrenginys pridėtas</string>
   <string name="account_device_added_message">Jūs sėkmingai nusistatėte savo Ring paskyrą šiame įrenginyje.</string>
   <string name="account_device_updated_title">Paskyros įrenginys atnaujintas</string>
+  <string name="account_device_updated_message">Jūs sėkmingai atnaujinote savo Ring paskyrą.</string>
   <string name="account_link_button">Susieti šį įrenginį su paskyra</string>
   <string name="account_import_title">Susieti su esama paskyra</string>
   <string name="account_link_prompt_pin">Įveskite PIN</string>
@@ -129,6 +137,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="invalid_username">Neteisingas naudotojo vardas</string>
   <string name="looking_for_username_availability">Tikrinamas naudotojo vardo prieinamumas...</string>
   <string name="account_status_connecting">Sujungiama</string>
+  <string name="account_status_connection_error">Ryšio klaida</string>
   <string name="account_status_unknown">Nežinomas</string>
   <!--Create account-->
   <string name="account_creation_home">Sveiki atvykę į Ring</string>

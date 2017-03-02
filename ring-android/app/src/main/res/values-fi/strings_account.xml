@@ -16,7 +16,6 @@
   <string name="help_ring">Ring tunnuksella tavoitat ihmiset turvalliseseti hajautetun verkon kautta.</string>
   <string name="help_sip_title">Lisää SIP tunnuksesi</string>
   <string name="help_sip">Määritä olemassa oleva SIP tunnus.</string>
-  <string name="create_sip_account">Lisää</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Poistetaanko tunnus?</string>
   <string name="account_delete_dialog_message">Tätä toimintoa ei voi perua.</string>

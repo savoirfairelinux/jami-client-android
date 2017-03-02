@@ -15,7 +15,6 @@
   <string name="help_ring">Ring аккаунт позволяет безопасно связываться между людьми через полностью распределенную сеть.</string>
   <string name="help_sip_title">Добавить SIP аккаунт</string>
   <string name="help_sip">Настройка существующего SIP аккаунта</string>
-  <string name="create_sip_account">Добавить</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Удалить аккаунт?</string>
   <string name="account_delete_dialog_message">Это действие не может быть отменено</string>

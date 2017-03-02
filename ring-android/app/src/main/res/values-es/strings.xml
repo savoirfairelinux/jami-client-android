@@ -1,10 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="section_license">Licencia</string>
   <string name="sponsor_section">Ring es un software libre desarrollado y mantenido por</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuir</string>
   <string name="version_section">Versión</string>
   <string name="no_email_app_installed">No se ha encontrado ninguna aplicación de correo. Instala una para enviarnos el informe</string>
+  <string name="no_browser_app_installed">No se ha encontrado un navegador, instale uno para poder ver esta página</string>
   <string name="email_chooser_title">Enviar correo usando...</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
@@ -34,7 +36,6 @@
     <item quantity="one">%d Conversacion</item>
     <item quantity="other">Conversaciones: %d</item>
   </plurals>
-  <string name="home_transfering">Transfiriendo %1$s a %2$s</string>
   <string name="home_transfer_complet">Transferencia completada</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">No se ha encontrado el contacto</string>
@@ -114,16 +115,16 @@
   <string name="help_password_enter">Ingresa la contraseña de tu cuenta principal de Ring</string>
   <string name="help_pin_enter">Ingresa el PIN de otra cuenta de Ring configurada. Utiliza la opción \"Exportar cuenta en Ring\" para obtener un PIN.</string>
   <string name="wizard_next">Siguiente</string>
-  <string name="account_device_updated_message">Has actualizado tu cuenta de Ring exitosamente</string>
+  <string name="wizard_back">Volver</string>
   <!--MenuHeaderView-->
   <string name="profile">Mi perfil</string>
-  <string name="profile_message_warning">Esto se comparte con tus contactos</string>
   <string name="open_the_gallery">Abrir la galería</string>
   <string name="take_a_photo">Tomar una foto</string>
-  <string name="unknowm_if_empty">Desconocido si está vacío</string>
   <string name="unknown">Desconocido</string>
   <!--Share fragment-->
   <string name="share_message">Escanea este QRCode con el escáner integrado de la aplicación Ring que desea comunicarse contigo.</string>
+  <string name="share_message_no_account">Seleccione una cuenta para compartir.</string>
   <string name="share_your_account_information">Compartir mi información de contacto</string>
   <string name="generic_error_migration">Error</string>
+  <string name="generic_error_migration_message">Ha ocurrido un error durante la migración</string>
 </resources>

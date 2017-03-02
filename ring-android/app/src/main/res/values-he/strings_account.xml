@@ -12,7 +12,6 @@
   <string name="dialog_wait_create">הוספת חשבון</string>
   <string name="dialog_wait_create_details">אנא המתן בעוד שחשבונך החדש מתווסף...</string>
   <string name="help_sip">הגדר חשבון SIP קיים.</string>
-  <string name="create_sip_account">הוסף</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="empty_account_list">אין חשבון רשום</string>

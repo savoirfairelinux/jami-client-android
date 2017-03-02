@@ -1,11 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="feedback_section">Feedback</string>
+  <string name="report">&lt;u&gt;Stuur ons een e-mail&lt;/u&gt;</string>
+  <string name="section_license">Licentie</string>
   <string name="sponsor_section">Ring is vrije software ontwikkeld en ondersteund door</string>
   <string name="copyright_section">Auteursrecht</string>
   <string name="contribute_section">Bijdragen</string>
   <string name="version_section">Versie</string>
   <string name="no_email_app_installed">Geen e-mailapplicatie gevonden, installeer er een om ons een rapport te kunnen sturen</string>
+  <string name="no_browser_app_installed">Geen webbrowsertoepassing gevonden, installeer er een om deze pagina te bekijken</string>
   <string name="email_chooser_title">E-mail versturen met...</string>
+  <string name="website_chooser_title">Website bekijken met...</string>
+  <string name="license">Deze software wordt \"als zodanig\" aangeboden zonder enige garantie. Bekijk voor meer informatie
+&lt;u&gt;GNU General Public License versie 3 of later&lt;/u&gt;</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Geen netwerkverbinding</string>
@@ -34,7 +41,6 @@
     <item quantity="one">%d gesprek</item>
     <item quantity="other">%d gesprekken</item>
   </plurals>
-  <string name="home_transfering">%1$s wordt verstuurd naar %2$s</string>
   <string name="home_transfer_complet">Overdracht compleet</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Geen contacten gevonden</string>
@@ -114,16 +120,16 @@
   <string name="help_password_enter">Voer hoofdwachtwoord van je Ring-account in</string>
   <string name="help_pin_enter">Voer de PIN-code van een andere geconfigureerde Ring-account in. Gebruik de \"account exporteren op Ring\"-functie om een PIN-code te verkrijgen.</string>
   <string name="wizard_next">Volgende</string>
-  <string name="account_device_updated_message">Je Ring-account is met succes bijgewerkt.</string>
+  <string name="wizard_back">Terug</string>
   <!--MenuHeaderView-->
   <string name="profile">Mijn profiel</string>
-  <string name="profile_message_warning">Dit wordt gedeeld met je contacten</string>
   <string name="open_the_gallery">Galerij openen</string>
   <string name="take_a_photo">Foto nemen</string>
-  <string name="unknowm_if_empty">Onbekend wanneer leeg</string>
   <string name="unknown">Onbekend</string>
   <!--Share fragment-->
   <string name="share_message">Scan deze QR-code met de ingebouwde scanner van de Ring-toepassing die met je wil communiceren.</string>
+  <string name="share_message_no_account">Selecteer een account om te delen.</string>
   <string name="share_your_account_information">Deel mijn contactinformatie</string>
   <string name="generic_error_migration">Fout</string>
+  <string name="generic_error_migration_message">Er is een fout opgetreden tijdens het migratieproces</string>
 </resources>

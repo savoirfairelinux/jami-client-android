@@ -35,7 +35,6 @@
     <item quantity="few">%d Konverzace</item>
     <item quantity="other">%d konverzací</item>
   </plurals>
-  <string name="home_transfering">Přesměrování %1$s na %2$s</string>
   <string name="home_transfer_complet">Přesměrování hotovo</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Nenalezen žádný kontakt</string>
@@ -115,13 +114,10 @@
   <string name="help_password_enter">Zadejte hlavní heslo ke svému účtu Ring</string>
   <string name="help_pin_enter">Zadejte PIN z jiného nastaveného účtu Ring. Abyste PIN získali, použijte volbu „exportovat účet na Ring“.</string>
   <string name="wizard_next">Další</string>
-  <string name="account_device_updated_message">Úspěšně jste si aktualizovali účet Ring.</string>
   <!--MenuHeaderView-->
   <string name="profile">Můj profil</string>
-  <string name="profile_message_warning">Toto je sdíleno s vašimi kontakty</string>
   <string name="open_the_gallery">Otevřít galerii</string>
   <string name="take_a_photo">Pořídit fotku</string>
-  <string name="unknowm_if_empty">Neznámé, pokud prázdné</string>
   <string name="unknown">Neznámé</string>
   <!--Share fragment-->
   <string name="share_message">Naskenujte QR kód zabudovaným skenerem aplikace Ring, která s vámi chce komunikovat.</string>

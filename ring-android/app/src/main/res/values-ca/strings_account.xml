@@ -35,6 +35,7 @@
   <!--TLS Details-->
   <!--restore/backup-->
   <string name="account_export_end_error_title">Error</string>
+  <string name="account_device_updated_message">S\'ha actualitzat correctament el vostre compte de Ring.</string>
   <string name="account_new_button">Crear un compte de Ring</string>
   <!--Name registration-->
   <string name="account_status_unknown">Desconegut</string>

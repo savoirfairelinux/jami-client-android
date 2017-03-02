@@ -34,7 +34,6 @@
     <item quantity="one">%d samtale</item>
     <item quantity="other">%d samtaler</item>
   </plurals>
-  <string name="home_transfering">Overfører %1$s til %2$s</string>
   <string name="home_transfer_complet">Overførsel afsluttet</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Ingen kontakt funder</string>
@@ -114,13 +113,10 @@
   <string name="help_password_enter">Indtast dit primære Ring-konto kodeord</string>
   <string name="help_pin_enter">Indtast PIN-koden fra en anden konfigureret Ring-konto. Brug eksporter-konto-funktionaliteten for at få adgang til en PIN-kode. </string>
   <string name="wizard_next">Næste</string>
-  <string name="account_device_updated_message">Du har opdateret din Ring-konto.</string>
   <!--MenuHeaderView-->
   <string name="profile">Min profil</string>
-  <string name="profile_message_warning">Dette deles med dine kontakter</string>
   <string name="open_the_gallery">Åben galleriet</string>
   <string name="take_a_photo">Tag et billede</string>
-  <string name="unknowm_if_empty">Ukendt hvis tom</string>
   <string name="unknown">Ukendt</string>
   <!--Share fragment-->
   <string name="share_message">Skan denne QRCode med den indbyggede scanner i Ring-applikationen.</string>
