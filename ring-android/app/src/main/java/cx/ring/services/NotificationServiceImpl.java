@@ -41,6 +41,7 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.daemon.Blob;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -281,36 +282,49 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     @Override
     public void update(Observable observable, ServiceEvent arg) {
         if (observable instanceof AccountService && arg != null) {
-            if (ServiceEvent.EventType.REGISTERED_NAME_FOUND.equals(arg.getEventType())) {
-                final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-                final int state = arg.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
+            switch (arg.getEventType()) {
+                case REGISTERED_NAME_FOUND:
+                    final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                    final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
+                    final int state = arg.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
 
-                Log.i(TAG, "Updating name " + name + " for address " + address);
+                    Log.i(TAG, "Updating name " + name + " for address " + address);
 
-                //state 0: name found
-                if (state != 0) {
-                    return;
-                }
+                    //state 0: name found
+                    if (state != 0) {
+                        return;
+                    }
 
-                // Try to update existing Call notification
-                int notificationId = getCallNotificationId(address);
-                NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
-                if (messageNotificationBuilder != null) {
-                    updateNotification(messageNotificationBuilder, notificationId, name);
-                }
+                    // Try to update existing Call notification
+                    int notificationId = getCallNotificationId(address);
+                    NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
+                    if (messageNotificationBuilder != null) {
+                        updateNotification(messageNotificationBuilder, notificationId, name);
+                    }
 
-                // Try to update existing Text notification
-                notificationId = getTextNotificationId(address);
-                messageNotificationBuilder = mNotificationBuilders.get(notificationId);
-                if (messageNotificationBuilder != null) {
-                    updateNotification(messageNotificationBuilder, notificationId, name);
-                }
+                    // Try to update existing Text notification
+                    notificationId = getTextNotificationId(address);
+                    messageNotificationBuilder = mNotificationBuilders.get(notificationId);
+                    if (messageNotificationBuilder != null) {
+                        updateNotification(messageNotificationBuilder, notificationId, name);
+                    }
+                    break;
+                case INCOMING_TRUST_REQUEST:
+                    final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
+                    final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);
+                    final String message = arg.getEventInput(ServiceEvent.EventInput.MESSAGE, Blob.class).toJavaString();
+                    if (message.equals("autoAccept")) {
+                        mAccountService.acceptTrustRequest(accountID, from);
+                    }
+                    break;
+                default:
+                    Log.d(TAG, "Event " + arg.getEventType() + " is not handled here");
+                    break;
             }
         }
     }
 
-    private void updateNotification(NotificationCompat.Builder messageNotificationBuilder,int notificationId,String name) {
+    private void updateNotification(NotificationCompat.Builder messageNotificationBuilder, int notificationId, String name) {
         Bundle extras = messageNotificationBuilder.getExtras();
         if (extras != null) {
             if (extras.getBoolean(CallManagerCallBack.INCOMING_CALL, false)) {
