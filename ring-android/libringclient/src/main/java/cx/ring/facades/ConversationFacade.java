@@ -72,15 +72,13 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     private final static String TAG = ConversationFacade.class.getName();
 
     @Inject
-    AccountService mAccountService;
-
-    @Inject
     ContactService mContactService;
 
     @Inject
     ConferenceService mConferenceService;
 
     private HistoryService mHistoryService;
+    private AccountService mAccountService;
 
     @Inject
     CallService mCallService;
@@ -96,10 +94,12 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     private Map<String, Conversation> mConversationMap;
 
-    public ConversationFacade(HistoryService historyService) {
+    public ConversationFacade(HistoryService historyService, AccountService accountService) {
         mConversationMap = new HashMap<>();
         mHistoryService = historyService;
         mHistoryService.addObserver(this);
+        mAccountService = accountService;
+        mAccountService.addObserver(this);
     }
 
     /**
@@ -520,6 +520,22 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             setChanged();
             ServiceEvent e = new ServiceEvent(ServiceEvent.EventType.CONVERSATIONS_CHANGED);
             notifyObservers(e);
+        } else if (observable instanceof AccountService && event != null) {
+            switch (event.getEventType()) {
+                case INCOMING_TRUST_REQUEST:
+                    final String accountID = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
+                    final String from = event.getEventInput(ServiceEvent.EventInput.FROM, String.class);
+                    final String message = event.getEventInput(ServiceEvent.EventInput.MESSAGE, Blob.class).toJavaString();
+                    Map<String, Conversation> conversations = getConversations();
+                    if (message.equals(TrustRequest.ACTION_AUTO_ACCEPT) && conversations.containsKey(from)) {
+                        mAccountService.acceptTrustRequest(accountID, from);
+                        mNotificationService.cancelTrustRequestNotification(accountID);
+                    }
+                    break;
+                default:
+                    Log.d(TAG, "Event " + event.getEventType() + " is not handled here");
+                    break;
+            }
         }
     }
 }

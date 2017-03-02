@@ -358,7 +358,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     public void update(Observable observable, ServiceEvent arg) {
         if (observable instanceof AccountService && arg != null) {
             switch (arg.getEventType()) {
-                case REGISTERED_NAME_FOUND: {
+                case REGISTERED_NAME_FOUND:
                     final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
                     final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
                     final int state = arg.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
@@ -384,7 +384,6 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                         updateNotification(messageNotificationBuilder, notificationId, name);
                     }
                     break;
-                }
                 case INCOMING_TRUST_REQUEST: {
                     final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
                     final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);
