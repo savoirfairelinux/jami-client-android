@@ -70,6 +70,30 @@
       "revId": "ea93c378851d0664569682ba89a9b3d5b544e5b6",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_686323b2",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/TrustRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-03-02T17:08:19Z",
+      "side": 1,
+      "message": "Ok I think I understand the issue here.\n\nWe want to show _BOTH_ vcard display name and username obtained on the blockchain. But if there is no vcard name, what do we display during querying the name server? Nothing? the RingID?",
+      "parentUuid": "bab3e1c7_c84a4f27",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 72
+      },
+      "revId": "ea93c378851d0664569682ba89a9b3d5b544e5b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
