@@ -19,7 +19,6 @@
  */
 package cx.ring.facades;
 
-import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,6 +32,7 @@ import java.util.TreeMap;
 import javax.inject.Inject;
 
 import cx.ring.daemon.StringMap;
+import cx.ring.daemon.Blob;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -45,6 +45,7 @@ import cx.ring.model.SecureSipCall;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
+import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
@@ -303,6 +304,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     }
 
     public void sendTextMessage(String account, Uri to, String txt) {
+        sendTrustRequestAuto(account, to);
         long id = mCallService.sendAccountTextMessage(account, to.getRawUriString(), txt);
         Log.i(TAG, "sendAccountTextMessage " + txt + " got id " + id);
         TextMessage message = new TextMessage(false, txt, to, null, account);
@@ -312,11 +314,37 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     }
 
     public void sendTextMessage(Conference conf, String txt) {
-        mCallService.sendTextMessage(conf.getId(), txt);
         SipCall call = conf.getParticipants().get(0);
+        sendTrustRequestAuto(call.getAccount(), call.getNumberUri());
+        mCallService.sendTextMessage(conf.getId(), txt);
         TextMessage message = new TextMessage(false, txt, call.getNumberUri(), conf.getId(), call.getAccount());
         message.read();
         mHistoryService.insertNewTextMessage(message);
+    }
+
+    public void sendTrustRequestAuto(String accountId, Uri contactUri) {
+        if (!contactUri.isRingId()) {
+            return;
+        }
+
+        String contactId = contactUri.getRawUriString();
+        if (!mConversationMap.containsKey(contactId) || mConversationMap.get(contactId).getHistory().isEmpty()) {
+            return;
+        }
+
+        String[] split = contactId.split(":");
+        if (split.length > 1) {
+            contactId = split[1];
+        }
+
+        List<Map<String, String>> contacts = mContactService.getContacts(accountId);
+        for (Map<String, String> contact : contacts) {
+            if (contact.get("id").equals(contactId)) {
+                return;
+            }
+        }
+
+        mAccountService.sendTrustRequest(accountId, contactId, Blob.fromString(TrustRequest.ACTION_AUTO_ACCEPT));
     }
 
     private void readTextMessage(TextMessage message) {
@@ -567,6 +595,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                             if (newState == SipCall.State.RINGING) {
                                 try {
                                     mAccountService.sendProfile(callId, call.getAccount());
+                                    sendTrustRequestAuto(call.getAccount(), call.getNumberUri());
                                     Log.d(TAG, "send vcard " + call.getAccount());
                                 } catch (Exception e) {
                                     Log.e(TAG, "Error while sending profile", e);
