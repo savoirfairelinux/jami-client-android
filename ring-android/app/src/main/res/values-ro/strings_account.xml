@@ -9,7 +9,6 @@
   <string name="dialog_wait_create_details">Vă rugăm așteptați în timp ce contul dumneavoastră este adăugat...</string>
   <string name="dialog_wait_update">Actualizând contul</string>
   <string name="dialog_wait_update_details">Vă rugăm așteptați în timp ce contul dumneavoastră este actualizat...</string>
-  <string name="create_sip_account">Adaugă</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="normal_accounts_titles">Conturi</string>

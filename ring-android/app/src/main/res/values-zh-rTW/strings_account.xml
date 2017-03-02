@@ -17,7 +17,6 @@
   <string name="dialog_warn_ip2ip_account_title">建立空的 SIP 帳號嗎？</string>
   <string name="help_sip_title">加入你的 SIP 帳號</string>
   <string name="help_sip">配製一個存在的 SIP 帳號。</string>
-  <string name="create_sip_account">加入</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">刪除帳號嗎？</string>
   <string name="account_delete_dialog_message">這個動作無法被復原。</string>

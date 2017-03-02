@@ -118,7 +118,6 @@
   <string name="profile_message_warning">این با مخاطبانتان هم‌رسانی شده است</string>
   <string name="open_the_gallery">گشودن جُنگ</string>
   <string name="take_a_photo">گرفتن عکس</string>
-  <string name="unknowm_if_empty">ناشناخته در صورت خالی بودن</string>
   <string name="unknown">ناشناخته</string>
   <!--Share fragment-->
   <string name="share_message">این رمز QR را با پویشگر تعبیه شده در کارهٔ رینگی که می‌خواهد با شما گفت‌وگو کند، بپویید.</string>

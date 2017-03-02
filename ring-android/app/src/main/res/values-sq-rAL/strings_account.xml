@@ -2,7 +2,10 @@
 <resources>
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Fshije</string>
+  <string name="ic_advanced_menu">Rregullime të mëtejshme</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Shtoni llogari Ring</string>
+  <string name="add_sip_account_title">Shtoni llogari SIP</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Strehëemër</string>
   <string name="prompt_username">Emër përdoruesi</string>
@@ -18,10 +21,11 @@
   <string name="dialog_warn_ip2ip_account_message">Ju ndan një hap nga krijimi i një llogarie SIP pa strehëemër të vlefshëm.
         Do të jeni në gjendje vetëm të bëni dhe të merrni thirrje ip të drejtpërdrejta.
         Llogarinë tuaj mund ta përpunoni më vonë</string>
+  <string name="account_type_ip2ip">Llogari IP</string>
   <string name="help_ring">Një llogari Ring ju lejon të lidheni në mënyrë të sigurt me njerëz, sipas modelit tek për te, përmes një rrjeti tërësisht të shpërndarë.</string>
   <string name="help_sip_title">Shtoni llogarinë tuaj SIP</string>
   <string name="help_sip">Formësoni një llogari SIP ekzistuese.</string>
-  <string name="create_sip_account">Shtoje</string>
+  <string name="create_sip_account">Shtoni llogari SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Të fshihet llogaria?</string>
   <string name="account_delete_dialog_message">Ky veprim s’mund të zhbëhet.</string>
@@ -38,6 +42,7 @@
   <string name="account_password_label">Fjalëkalim</string>
   <string name="account_optionnal_category">Rregullime Opsionale</string>
   <string name="account_useragent_label">Agjent Përdoruesi</string>
+  <string name="account_autoanswer_label">Vetëpërgjigje</string>
   <string name="account_upnp_label">Aktivizo UPnP</string>
   <string name="account_proxy_field">Ndërmjetës</string>
   <!--Audio Details-->
@@ -88,6 +93,7 @@
   <string name="account_restore_account">Riktheni një llogari</string>
   <string name="account_restore_message">Jepni fjalëkalimin për çfshehtëzim kartele.</string>
   <string name="account_restore_decryption_password">Fjalëkalim çfeshhtëzimesh</string>
+  <string name="account_new_device_password">Që të zhbllokohet llogaria, jepni fjalëkalimin e përgjithshëm</string>
   <string name="restore_backup_wait">Ju lutemi, pritni…</string>
   <string name="error_password_char_count">Minimumi 6 shenja</string>
   <string name="error_passwords_not_equals">Fjalëkalimet nuk përputhen</string>
@@ -100,16 +106,26 @@
   <string name="account_export_end_error_title">Gabim</string>
   <string name="account_export_end_error_message">S’u eksportua dot llogaria. Ndodhi një gabim i panjohur.</string>
   <string name="account_enter_password">Jepni fjalëkalimin</string>
+  <string name="account_share_body">Kontaktomëni duke përdorur \'%1$s\' në platformën Ring për komunikime të shpërndarë: http://ring.cx</string>
+  <string name="account_share_body_with_username">Kontaktomëni duke përdorur \'%1$s\' ose emrin tim publik \'%2$s\' në platformën Ring për komunikime të shpërndarë: http://ring.cx</string>
   <string name="account_contact_me">Lidhuni me mua në Ring!</string>
   <string name="update_account">Përditësoje llogarinë</string>
+  <string name="account_migration">Llogaria juaj Ring mund të përditësohet.\nJu lutemi, jepni fjalëkalimin tuaj.</string>
   <string name="ring_account">Llogari Ring</string>
+  <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Migrim llogarie</string>
+  <string name="account_migration_message_dialog">Llogaritë tuaja lypset të përditësohen. Doni të kalohet te skena e administrimit të Llogarive që të kryeni këtë veprim?</string>
   <string name="account_update_needed">Lypset përditësim</string>
   <string name="account_creation_file_too_big">Kartela është shumë e madhe</string>
   <string name="account_cannot_read">S’lexohet dot %1$s</string>
   <string name="account_cannot_be_found_title">S’gjendet dot llogari</string>
+  <string name="account_sip_cannot_be_registered_message">Mund të vazhdoni me procesin e krijimit të llogarisë ose të përpunoni këtu të dhënat tuaja. Përpunimi është i mundshëm edhe më vonë, që nga rregullimet llogarie.</string>
   <string name="account_no_network_title">S’lidhet dot te rrjeti</string>
   <string name="account_device_added_message">E keni rregulluar me sukses llogarinë tuaj Ring në këtë pajisje.</string>
+  <string name="account_device_updated_message">E përditësuat me sukses llogarinë tuaj Ring.</string>
+  <string name="account_sip_success_title">Llogaria SIP u regjistrua</string>
+  <string name="account_sip_success_message">E regjistruat me sukses llogarinë tuaj SIP</string>
+  <string name="account_sip_register_anyway">Regjistroje sido qoftë</string>
   <string name="account_link_button">Lidheni këtë pajisje me një llogari</string>
   <string name="account_import_title">Lidheni me një llogari ekzistuese</string>
   <string name="account_link_prompt_pin">Jepni PIN-in</string>
@@ -126,6 +142,7 @@
   <string name="register_name">Regjistroni emër</string>
   <string name="trying_to_register_name">Po provohet të regjistrohet emri</string>
   <string name="registered_username">Emër përdoruesi i regjistruar</string>
+  <string name="register_username">Regjistroni emër përdoruesi publik (eksperimentale)</string>
   <string name="username_already_taken">Emër përdoruesi tashmë i zënë</string>
   <string name="invalid_username">Emër përdoruesi i pavlefshëm</string>
   <string name="account_status_unknown">E panjohur</string>

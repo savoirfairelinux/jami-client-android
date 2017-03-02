@@ -34,7 +34,6 @@
     <item quantity="one">%d Conversa</item>
     <item quantity="other">%d Converses</item>
   </plurals>
-  <string name="home_transfering">Transferint %1$s a %2$s</string>
   <string name="home_transfer_complet">Transferència completada</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Contacte no trobat</string>
@@ -114,13 +113,10 @@
   <string name="help_password_enter">Escriure la contrasenya del vostre compte principal de Ring</string>
   <string name="help_pin_enter">Ficar el PIN d\'altre compte configurat de Ring. Feu servir la funció \"exportar compte a Ring\" per obtenir el PIN.</string>
   <string name="wizard_next">Següent</string>
-  <string name="account_device_updated_message">S\'ha actualitzat correctament el vostre compte de Ring.</string>
   <!--MenuHeaderView-->
   <string name="profile">El meu perfil</string>
-  <string name="profile_message_warning">Aquesta és compartida amb el vostres contactes</string>
   <string name="open_the_gallery">Obrir la galeria</string>
   <string name="take_a_photo">Fer una foto</string>
-  <string name="unknowm_if_empty">Es desconeix si està buit</string>
   <string name="unknown">Desconegut</string>
   <!--Share fragment-->
   <string name="share_message">Escaneja aquest codi QR amb l\'escàner de l\'aplicació Ring que vulga comunicar-se amb tu.</string>

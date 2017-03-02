@@ -3,11 +3,13 @@
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Διαγραφή</string>
   <!--Strings related to account creation-->
+  <string name="add_sip_account_title">Προσθήκη λογαριασμού SIP</string>
   <string name="prompt_alias">Ψευδώνυμο</string>
   <string name="prompt_hostname">Hostname</string>
   <string name="prompt_username">Όνομα χρήστη</string>
   <string name="prompt_password">Σύνθημα</string>
   <string name="action_create_short">Εγγραφή</string>
+  <string name="create_sip_account">Προσθήκη λογαριασμού SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Η ενέργεια αυτή δεν μπορεί να ανακληθεί.</string>
   <!--AccountManagementFragment-->
@@ -37,6 +39,7 @@
   <string name="account_rtp_port_range">Εύρος θυρών RTP ήχου</string>
   <!--restore/backup-->
   <string name="account_export_end_error_title">Σφάλμα</string>
+  <string name="account_device_updated_message">Ο Ring λογαριασμός σας αναβαθμίστηκε επιτυχώς.</string>
   <string name="account_wizard_title">Καλώς ήλθατε στο</string>
   <string name="account_new_button">Δημιουργία λογαριασμού Ring</string>
   <!--Name registration-->

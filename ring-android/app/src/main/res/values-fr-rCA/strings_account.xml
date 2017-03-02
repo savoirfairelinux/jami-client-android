@@ -2,26 +2,168 @@
 <resources>
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Supprimer</string>
+  <string name="ic_advanced_menu">Réglages avancés</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Ajouter une compte Ring</string>
+  <string name="add_sip_account_title">Ajouter un compte SIP</string>
+  <string name="prompt_alias">Alias</string>
+  <string name="prompt_hostname">Nom de domaine</string>
+  <string name="prompt_username">Nom d\'utilisateur</string>
+  <string name="prompt_password">Mot de passe</string>
+  <string name="action_create">Créer un compte</string>
+  <string name="action_create_short">Inscription</string>
+  <string name="error_field_required">Ce champ est requis</string>
+  <string name="dialog_wait_create">Ajouter un compte</string>
+  <string name="dialog_wait_create_details">S\'il vous plaît, patienter pendant la création de votre nouveau compte</string>
+  <string name="dialog_wait_update">Mise à jour du compte</string>
+  <string name="dialog_wait_update_details">S\'il vous plaît, patienter pendant la mise à jour de votre nouveau compte.</string>
+  <string name="dialog_warn_ip2ip_account_title">Créer un compte SIP vide?</string>
+  <string name="dialog_warn_ip2ip_account_message">Vous êtes sur le point de créer un compte SIP sans un nom de domaine valide.
+Vous ne pourrez qu\'émettre et recevoir des appels ip directs.
+Vous pouvez modifier votre compte plus tard.</string>
+  <string name="account_type_ip2ip">Compte IP</string>
+  <string name="help_ring">Un compte Ring vous permet de contacter des personnes de façon sécuritaire en pair à pair à travers un réseau pleinement distribué.</string>
+  <string name="help_sip_title">Ajouter un compte SIP</string>
+  <string name="help_sip">Configurer un compte SIP existant</string>
+  <string name="create_sip_account">Ajouter un compte SIP</string>
   <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Supprimer le compte?</string>
   <string name="account_delete_dialog_message">Cette action ne peut être annulée</string>
   <!--AccountManagementFragment-->
+  <string name="empty_account_list">Aucun compte enregistré</string>
+  <string name="normal_accounts_titles">Comptes</string>
+  <string name="normal_devices_titles">Appareils connus associés à ce compte Ring</string>
   <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Général</string>
+  <string name="account_basic_category">Réglages de base</string>
+  <string name="account_alias_label">Nom de compte</string>
+  <string name="account_hostname_label">Nom de domaine</string>
+  <string name="account_bootstrap_label">Amorcer</string>
+  <string name="account_username_label">Nom d\'utilisateur</string>
+  <string name="account_password_label">Mot de passe</string>
+  <string name="account_optionnal_category">Réglages optionnels</string>
+  <string name="account_useragent_label">Agent utilisateur</string>
+  <string name="account_autoanswer_label">Réponse automatique</string>
+  <string name="account_upnp_label">Activer UPnP</string>
+  <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
-  <string name="account_audio_label">audio</string>
+  <string name="account_audio_label">Audio</string>
+  <string name="account_preferences_media_tab">Média</string>
   <string name="account_ringtone_label">Sonneries</string>
+  <string name="account_ringtone_enabled_label">Activer les sonneries</string>
+  <string name="account_ringtone_path_label">Chemin d\'accès des sonneries</string>
+  <string name="account_ringtone_custom_label">Utiliser la sonnerie par défaut</string>
   <!--Video Details-->
   <string name="account_video_label">Vidéo</string>
+  <string name="account_video_enable">Activer le vidéo</string>
   <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Avancé</string>
+  <string name="account_registration_exp_label">Inscription expirée</string>
+  <string name="account_local_interface_label">Interface locale</string>
+  <string name="account_local_port_label">Port local</string>
+  <string name="account_stun_enable_label">Utiliser le Stun</string>
+  <string name="account_stun_server_label">Serveur Stun</string>
+  <string name="account_turn_enable_label">Utiliser le TURN</string>
+  <string name="account_turn_server_label">Serveur TURN</string>
+  <string name="account_turn_username_label">Nom d\'utilisateur TURN</string>
+  <string name="account_turn_password_label">Mot de passe TURN</string>
+  <string name="account_published_port_label">Port publié</string>
+  <string name="account_published_address_label">Adresse publiée</string>
   <!--Security Details-->
+  <string name="account_credentials_label">Informations de connexion</string>
+  <string name="account_credentials_edit">Modifier les informations de connexion</string>
+  <string name="account_credentials_add">Ajouter les informations de connexion</string>
   <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Sécurité</string>
   <!--SIP-->
   <!--TLS Details-->
+  <string name="account_tls_transport_switch_label">Utiliser le transport TLS</string>
+  <string name="account_tls_port_label">Port TLS auditeur</string>
+  <string name="account_tls_certificate_file_label">Fichier certifié</string>
+  <string name="account_tls_private_key_file_label">Fichier de clé privée</string>
+  <string name="account_tls_password_label">Mot de passe de la clé privée</string>
+  <string name="account_tls_method_label">Méthode TLS</string>
+  <string name="account_tls_server_name_label">Nom de serveur</string>
+  <string name="account_tls_verify_server_label">Vérifier le serveur</string>
+  <string name="account_tls_verify_client_label">Vérifier le client</string>
+  <string name="account_rtp_max_port">Maximum</string>
+  <string name="account_rtp_min_port">Minimum</string>
   <!--restore/backup-->
+  <string name="account_restore_account">Réactiver le compte</string>
+  <string name="account_restore_message">Entrer le mot de passe pour déchiffrer le fichier.</string>
+  <string name="account_restore_decryption_password">Mot de passe de décryptage</string>
+  <string name="account_new_device_password">Entrer le mot de passe principal pour déverrouiller le compte</string>
+  <string name="restore_dialog_title">Réactivation en cours</string>
+  <string name="restore_backup_wait">Patienter s\'il vous plaît</string>
+  <string name="error_password_char_count">Minimum de 6 caractères</string>
+  <string name="error_passwords_not_equals">Les mots de passe ne concordent pas</string>
+  <string name="restore_failed_dialog_title">La réactivation a échouée</string>
+  <string name="restore_failed_dialog_msg">Une erreur est survenue</string>
+  <string name="export_account_wait_title">Patienter s\'il vous plaît</string>
+  <string name="export_account_wait_message">Publication des informations du nouveau compte</string>
+  <string name="account_export_end_decryption_message">Votre compte n\'a pu être déverrouillé avec le mot de passe fourni.</string>
+  <string name="account_export_end_network_title">Erreur de réseau</string>
+  <string name="account_export_end_network_message">L\'exportation du compte sur le réseau a échouée. Vérifier votre connexion.</string>
   <string name="account_export_end_error_title">Erreur</string>
+  <string name="account_export_end_error_message">L\'exportation du compte a échouée. Une erreur inconnue est survenue.</string>
+  <string name="account_enter_password">Entrer le mot de passe</string>
+  <string name="account_share_body">Contactez-moi en utilisant \'%1$s\' sur la plateforme de communication distribuée de Ring : http://ring.cx</string>
+  <string name="account_share_body_with_username">Contactez-moi en utilisant \'%1$s\' ou mon nom d\'utilisateur public \'%2$s\' sur la plateforme de communication distribuée de Ring: http://ring.cx</string>
+  <string name="account_contact_me">Contactez-moi sur Ring!</string>
+  <string name="update_account">Mettre à jour le compte</string>
+  <string name="account_migration">Votre compte Ring peut être mis à jour.\nS\'il vous plaît, entrer votre mot de passe.</string>
+  <string name="ring_account">Compte Ring</string>
+  <string name="ring_account_identity">Identité</string>
+  <string name="account_migration_title_dialog">Migration du compte</string>
+  <string name="account_migration_message_dialog">Vos comptes doivent être mis à jour. Désirez-vous vous rendre à la fenêtre de Gestion de compte pour effectuer les modifications?</string>
+  <string name="account_update_needed">Mise à jour nécessaire</string>
+  <string name="account_creation_file_too_big">Fichier trop volumineux</string>
+  <string name="account_cannot_read">Lecture impossible de %1$s</string>
+  <string name="account_cannot_be_found_title">Impossible de trouver le compte</string>
+  <string name="account_cannot_be_found_message">Impossible de trouver le compte sur le réseau Ring. \nAssurez-vous que le compte ait été exporté sur Ring depuis un appareil existant et d\'avoir fourni les bonnes informations de connexions.</string>
+  <string name="account_sip_cannot_be_registered_message">Vous pouvez continuer avec le processus de création de compte ou modifier vos informations ici. Vous pouvez effectuer des modifications plus tard dans les paramètres du compte.</string>
+  <string name="account_no_network_title">Impossibilité de se connecter au réseau.</string>
+  <string name="account_no_network_message">Impossible d\'ajouter le compte car Ring n\'a pas pu se connecter au réseau distribué. Vérifier la connexion de votre appareil.</string>
+  <string name="account_device_added_title">Compte de l\'appareil ajouté</string>
+  <string name="account_device_added_message">Votre compte Ring a été configuré avec succès sur cet appareil.</string>
+  <string name="account_device_updated_title">Compte de l\'appareil mis à jour</string>
+  <string name="account_device_updated_message">Votre compte Ring a bien été mis à jour.</string>
+  <string name="account_sip_success_title">Compte Sip enregistré</string>
+  <string name="account_sip_success_message">Votre compte Sip a été enregistré avec succès.</string>
+  <string name="account_sip_register_anyway">S\'inscrire de toute façon</string>
+  <string name="account_link_button">Associer cet appareil à un compte</string>
+  <string name="account_import_title">Associer à un compte existant</string>
+  <string name="account_link_prompt_pin">Entrer le NIP</string>
+  <string name="account_wizard_title">Bienvenue à</string>
   <string name="account_new_button">Créer un compte Ring</string>
+  <string name="account_link_export_button">Associer un autre appareil à ce compte</string>
+  <string name="account_link_export_info">Pour utiliser ce compte sur d\'autres appareils, vous devez d\'abord l\'afficher sur Ring.  Ceci générera un code NIP que vous devez entrer sur le nouvel appareil pour configurer votre compte. Le NIP est valide pour une durée de 10 minutes. \n\nS\'il vous plaît, entrer votre mot de passe pour débuter:</string>
+  <string name="account_start_export_button">Générer le NIP</string>
+  <string name="account_end_export_button">fermer</string>
+  <string name="account_end_export_infos">Votre NIP est:\n\n%%\n\nPour compléter le processus, vous devez ouvrir Ring sur le nouvel appareil. Créer un nouveau compte avec \"Associer cet appareil à un compte\". Votre NIP est valide pour une durée de 10 minutes.</string>
   <!--Name registration-->
-  <string name="account_status_connecting">connexion en cours</string>
+  <string name="register_name_wrong_password">Impossible d\'enregistrer le nom: le mot de passe est incorrect.</string>
+  <string name="register_name_invalid">Impossible d\'enregistrer le nom: nom invalide.</string>
+  <string name="register_name_already_taken">Impossible d\'enregistrer le nom: nom indisponible</string>
+  <string name="register_name_network_error">Impossible d\'enregistrer le nom: erreur de réseau ou de serveur</string>
+  <string name="error_username_empty">Entrer le nom d\'utilisateur</string>
+  <string name="no_registered_name_for_account">Aucun nom enregistré trouvé pour ce compte</string>
+  <string name="register_name">Nom d\'enregistrement</string>
+  <string name="trying_to_register_name">Enregistrement du nom en cours</string>
+  <string name="registered_username">Nom d\'utilisateur enregistré</string>
+  <string name="register_username">Enregistrer un nom d\'utilisateur public (expérimental)</string>
+  <string name="username_already_taken">Nom d\'utilisateur non-disponible</string>
+  <string name="invalid_username">Nom d\'utilisateur invalide</string>
+  <string name="looking_for_username_availability">Vérification de la disponibilité du nom d\'utilisateur</string>
+  <string name="account_status_connecting">Connexion en cours</string>
+  <string name="account_status_connection_error">Erreur de connexion</string>
+  <string name="account_status_online">En ligne</string>
   <string name="account_status_unknown">Inconnu</string>
+  <string name="account_status_offline">Hors ligne</string>
   <!--Create account-->
+  <string name="account_creation_home">Bienvenue sur Ring</string>
+  <string name="account_creation_profile">Créer votre profil</string>
+  <string name="account_creation_ring">Créer votre compte Ring</string>
+  <string name="account_link_title">Associer cet appareil</string>
+  <string name="account_sip_cannot_be_registered">Impossible d\'enregistrer le compte</string>
 </resources>

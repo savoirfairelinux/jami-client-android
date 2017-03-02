@@ -21,7 +21,6 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="help_ring">Akaun Ring membolehkan anda untuk menghubungi orang lain secara selamat dan sembunyi, melalui rangkaian teragih.</string>
   <string name="help_sip_title">Tambah akaun SIP anda</string>
   <string name="help_sip">Tetapkan maklumat akaun SIP yang telah sedia ada.</string>
-  <string name="create_sip_account">Tambah</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Hapus akaun ?</string>
   <string name="account_delete_dialog_message">Aksi ini tidak akan dapat dibuat ulang.</string>
@@ -122,6 +121,7 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_device_added_title">Berjaya menambah perangkat akaun</string>
   <string name="account_device_added_message">Anda telah berjaya menyambungkan akaun Ring anda dengan perangkat ini.</string>
   <string name="account_device_updated_title">Akaun perangkat telah dikemaskinikan</string>
+  <string name="account_device_updated_message">Anda telah berjaya mengemaskini akaun Ring anda.</string>
   <string name="account_link_button">Sambungkan perangkat ini dengan akaun</string>
   <string name="account_import_title">Sambung dengan akaun yang telah sedia ada</string>
   <string name="account_link_prompt_pin">Masukkan PIN</string>

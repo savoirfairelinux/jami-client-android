@@ -31,7 +31,6 @@
     <item quantity="one">%d samtale</item>
     <item quantity="other">%d samtaler</item>
   </plurals>
-  <string name="home_transfering">Overfører %1$s til %2$s</string>
   <string name="home_transfer_complet">Overføring er ferdig</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Fant ingen kontakter</string>

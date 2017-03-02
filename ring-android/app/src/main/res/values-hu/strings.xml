@@ -33,7 +33,6 @@
     <item quantity="one">%d beszélgetés</item>
     <item quantity="other">%d beszélgetés</item>
   </plurals>
-  <string name="home_transfering">%1$s átirányítása erre: %2$s</string>
   <string name="home_transfer_complet">Átirányítás kész.</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Nem találtam partnereket</string>
@@ -111,13 +110,10 @@
   <string name="help_password_enter">Adja meg a Ringfiók jelszavát</string>
   <string name="help_pin_enter">Adja meg egy másik beállított Ringfiók PIN-jét! Használja a „fiók exportálása a Ringen” funkciót a PIN eléréséhez!</string>
   <string name="wizard_next">Következő</string>
-  <string name="account_device_updated_message">Sikeresen frissítette a Ringfiókját.</string>
   <!--MenuHeaderView-->
   <string name="profile">Profilom</string>
-  <string name="profile_message_warning">Ez meg van osztva a partnereivel</string>
   <string name="open_the_gallery">Galéria megnyitása</string>
   <string name="take_a_photo">Fotó készítése</string>
-  <string name="unknowm_if_empty">Ismeretlen, ha üres</string>
   <string name="unknown">Ismeretlen</string>
   <!--Share fragment-->
   <string name="share_your_account_information">Elérési adataim megosztása</string>
