@@ -36,6 +36,8 @@ public class TrustRequest {
     private String message;
     private int mUuid;
 
+    public static final String ACTION_AUTO_ACCEPT = "autoAccept";
+
     public TrustRequest(String accountId, String contact) {
         mAccountId = accountId;
         mContactId = contact;

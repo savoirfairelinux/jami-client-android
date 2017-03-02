@@ -538,6 +538,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                             if (newState == SipCall.State.RINGING) {
                                 try {
                                     getRemoteService().sendProfile(callId, call.getAccount());
+                                    mConversationFacade.sendTrustRequestAuto(call.getAccount(), call.getNumberUri());
                                     Log.d(TAG, "send vcard " + call.getAccount());
                                 } catch (Exception e) {
                                     Log.e(TAG, "Error while sending profile", e);
@@ -659,7 +660,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
         if (observable instanceof HistoryService) {
 
-            if(arg != null) {
+            if (arg != null) {
                 switch (arg.getEventType()) {
                     case HISTORY_LOADED:
                         break;
