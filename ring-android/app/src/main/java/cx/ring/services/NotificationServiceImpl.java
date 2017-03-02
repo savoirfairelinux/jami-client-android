@@ -43,6 +43,7 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.daemon.Blob;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -50,6 +51,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
+import cx.ring.model.TrustRequest;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.LocalService;
 import cx.ring.contactrequests.PendingContactRequestsFragment;
@@ -358,7 +360,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     public void update(Observable observable, ServiceEvent arg) {
         if (observable instanceof AccountService && arg != null) {
             switch (arg.getEventType()) {
-                case REGISTERED_NAME_FOUND: {
+                case REGISTERED_NAME_FOUND:
                     final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
                     final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
                     final int state = arg.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
@@ -384,11 +386,11 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                         updateNotification(messageNotificationBuilder, notificationId, name);
                     }
                     break;
-                }
                 case INCOMING_TRUST_REQUEST: {
                     final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
                     final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);
-                    if (accountID != null && from != null) {
+                    final String message = arg.getEventInput(ServiceEvent.EventInput.MESSAGE, Blob.class).toJavaString();
+                    if (accountID != null && from != null && !message.equals(TrustRequest.ACTION_AUTO_ACCEPT)) {
                         showIncomingTrustRequestNotification(accountID, from);
                     }
                     break;
