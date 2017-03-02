@@ -75,13 +75,11 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     @Inject
     AccountService mAccountService;
 
-    private ContactService mContactService;
-
     @Inject
     ConferenceService mConferenceService;
 
     private HistoryService mHistoryService;
-
+    private ContactService mContactService;
     private CallService mCallService;
 
     @Inject
@@ -678,6 +676,22 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             switch (event.getEventType()) {
                 case CONTACTS_CHANGED:
                     refreshConversations();
+                    break;
+            }
+        } else if (observable instanceof AccountService && event != null) {
+            switch (event.getEventType()) {
+                case INCOMING_TRUST_REQUEST:
+                    final String accountID = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
+                    final String from = event.getEventInput(ServiceEvent.EventInput.FROM, String.class);
+                    final String message = event.getEventInput(ServiceEvent.EventInput.MESSAGE, Blob.class).toJavaString();
+                    if (message.equals(TrustRequest.ACTION_AUTO_ACCEPT)
+                            && mConversationMap != null && !mConversationMap.isEmpty()
+                            && mConversationMap.containsKey("ring:" + from)) {
+                        mAccountService.acceptTrustRequest(accountID, from);
+                    }
+                    break;
+                default:
+                    Log.d(TAG, "Event " + event.getEventType() + " is not handled here");
                     break;
             }
         }
