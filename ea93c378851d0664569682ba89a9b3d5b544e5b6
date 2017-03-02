@@ -46,6 +46,30 @@
       "revId": "ea93c378851d0664569682ba89a9b3d5b544e5b6",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_c84a4f27",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/TrustRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-02T16:45:17Z",
+      "side": 1,
+      "message": "There is no way to retrieve the username if the profile name is set. So a component using this class to model trust requests would not be able to show the username (unless by performing another name request, but then, why having a username field).",
+      "parentUuid": "bab3e1c7_c8956f89",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 72
+      },
+      "revId": "ea93c378851d0664569682ba89a9b3d5b544e5b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
