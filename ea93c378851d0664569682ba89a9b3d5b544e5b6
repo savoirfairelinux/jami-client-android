@@ -118,6 +118,30 @@
       "revId": "ea93c378851d0664569682ba89a9b3d5b544e5b6",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_6831e3a1",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/TrustRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-02T17:39:06Z",
+      "side": 1,
+      "message": "We want to show the sender identity (username or ringid), especially during this initial phase where contacts add each other. For instance Twitter always shows the registered name next to the profile name.\nUsually there is a registered username, so we don\u0027t want to show the ringid unless we really can\u0027t get a username instead. An HTTP request is usually short, we might wait for the lookup to end to show the trust request. The daemon is responsible to make sure that the lookup always end shortly.",
+      "parentUuid": "bab3e1c7_686323b2",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 72
+      },
+      "revId": "ea93c378851d0664569682ba89a9b3d5b544e5b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
