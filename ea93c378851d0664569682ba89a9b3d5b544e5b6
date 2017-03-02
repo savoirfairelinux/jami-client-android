@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_88b8d72b",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/TrustRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-02T15:35:26Z",
+      "side": 1,
+      "message": "In this class, the only way to get the registered name is the absence of profile name. That\u0027s an issue, because the contact ID must always be presented, even is a profile name is provided. The contact ID is the registered name (if any) or the RingID otherwise.",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 72
+      },
+      "revId": "ea93c378851d0664569682ba89a9b3d5b544e5b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
