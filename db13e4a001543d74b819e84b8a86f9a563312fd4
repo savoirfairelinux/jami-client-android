@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_6887a362",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-02T15:43:22Z",
+      "side": 1,
+      "message": "This code is problematic because username must always be resolved before showing any contact ID, as it was discussed when implementing username resolution/registration. However this code is not part of this commit so it\u0027s not an issue for this commit.",
+      "range": {
+        "startLine": 368,
+        "startChar": 20,
+        "endLine": 380,
+        "endChar": 21
+      },
+      "revId": "db13e4a001543d74b819e84b8a86f9a563312fd4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_087ce771",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-02T15:43:22Z",
+      "side": 1,
+      "message": "Username must always be resolved before showing any notification.",
+      "range": {
+        "startLine": 387,
+        "startChar": 24,
+        "endLine": 387,
+        "endChar": 78
+      },
+      "revId": "db13e4a001543d74b819e84b8a86f9a563312fd4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
