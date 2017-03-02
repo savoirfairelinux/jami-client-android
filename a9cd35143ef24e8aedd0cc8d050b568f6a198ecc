@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_c871ef78",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/TrustRequest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-03-02T17:11:02Z",
+      "side": 1,
+      "message": "I think you should return a default value of an empty string. We won,t have to check nullity but only emptyness",
+      "range": {
+        "startLine": 60,
+        "startChar": 26,
+        "endLine": 60,
+        "endChar": 30
+      },
+      "revId": "a9cd35143ef24e8aedd0cc8d050b568f6a198ecc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
