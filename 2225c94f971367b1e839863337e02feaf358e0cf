@@ -22,6 +22,30 @@
       "revId": "2225c94f971367b1e839863337e02feaf358e0cf",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_48373fb1",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountWizard.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-02T16:38:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dabed58f_69a6c5c3",
+      "range": {
+        "startLine": 128,
+        "startChar": 15,
+        "endLine": 128,
+        "endChar": 34
+      },
+      "revId": "2225c94f971367b1e839863337e02feaf358e0cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
