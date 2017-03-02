@@ -31,6 +31,7 @@ import java.util.TreeMap;
 
 import javax.inject.Inject;
 
+import cx.ring.daemon.Blob;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -327,6 +328,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     }
 
     public void sendTextMessage(String account, Uri to, String txt) {
+        sendTrustRequestAuto(account, to);
         long id = mCallService.sendAccountTextMessage(account, to.getRawUriString(), txt);
         Log.i(TAG, "sendAccountTextMessage " + txt + " got id " + id);
         TextMessage message = new TextMessage(false, txt, to, null, account);
@@ -336,11 +338,37 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     }
 
     public void sendTextMessage(Conference conf, String txt) {
-        mCallService.sendTextMessage(conf.getId(), txt);
         SipCall call = conf.getParticipants().get(0);
+        sendTrustRequestAuto(call.getAccount(), call.getNumberUri());
+        mCallService.sendTextMessage(conf.getId(), txt);
         TextMessage message = new TextMessage(false, txt, call.getNumberUri(), conf.getId(), call.getAccount());
         message.read();
         mHistoryService.insertNewTextMessage(message);
+    }
+
+    public void sendTrustRequestAuto(String accountId, Uri contactUri) {
+        if (!contactUri.isRingId()) {
+            return;
+        }
+
+        String contactId = contactUri.getRawUriString();
+        if (!mConversationMap.containsKey(contactId) || mConversationMap.get(contactId).getHistory().isEmpty()) {
+            return;
+        }
+
+        String[] split = contactId.split(":");
+        if (split.length > 1) {
+            contactId = split[1];
+        }
+
+        List<Map<String, String>> contacts = mContactService.getContacts(accountId);
+        for (Map<String, String> contact : contacts) {
+            if (contact.get("id").equals(contactId)) {
+                return;
+            }
+        }
+
+        mAccountService.sendTrustRequest(accountId, contactId, Blob.fromString("autoAccept"));
     }
 
     private void readTextMessage(TextMessage message) {
