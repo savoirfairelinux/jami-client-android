@@ -22,6 +22,30 @@
       "revId": "ea93c378851d0664569682ba89a9b3d5b544e5b6",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_c8956f89",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/TrustRequest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-02T15:47:23Z",
+      "side": 1,
+      "message": "The contactId is the ringID. \nThe contactUsername is the username.\nThe profile name is stocked in the VCard.\nThis function allows to display the username instead of the ringID if it exists. There is not function to get or set the VCard because this will be set up later.",
+      "parentUuid": "bab3e1c7_88b8d72b",
+      "range": {
+        "startLine": 61,
+        "startChar": 8,
+        "endLine": 61,
+        "endChar": 72
+      },
+      "revId": "ea93c378851d0664569682ba89a9b3d5b544e5b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
