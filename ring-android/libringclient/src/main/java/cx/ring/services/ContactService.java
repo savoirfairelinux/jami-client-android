@@ -21,6 +21,7 @@ package cx.ring.services;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -293,6 +294,26 @@ public abstract class ContactService extends Observable {
                         Log.i(TAG, "removeContact() thread running...");
                         Ringservice.removeContact(accountId, uri);
                         return true;
+                    }
+                }
+        );
+    }
+
+    /**
+     * @param accountId
+     * @return the contacts list from the daemon
+     */
+    public List<Map<String, String>> getContacts(final String accountId) {
+
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<List<Map<String, String>>>() {
+                    @Override
+                    public List<Map<String, String>> call() throws Exception {
+                        Log.i(TAG, "getContacts() thread running...");
+                        return Ringservice.getContacts(accountId).toNative();
                     }
                 }
         );
