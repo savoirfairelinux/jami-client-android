@@ -1,10 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="feedback_section">反馈</string>
   <string name="sponsor_section">Ring是一个自由软件，开发者与维护者是</string>
   <string name="copyright_section">版权所有</string>
   <string name="contribute_section">贡献</string>
   <string name="version_section">版本</string>
   <string name="no_email_app_installed">未找到电子邮件客户端，请安装后再重试发送报告。</string>
+  <string name="no_browser_app_installed">未找到浏览器，请安装后再重试浏览该网页。</string>
   <string name="email_chooser_title">使用…发送邮件</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
@@ -33,7 +35,6 @@
   <plurals name="home_conferences_title">
     <item quantity="other">%d个会话</item>
   </plurals>
-  <string name="home_transfering">将%1$s传输至%2$s</string>
   <string name="home_transfer_complet">传输完成</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">未找到联系人</string>
@@ -113,13 +114,10 @@
   <string name="help_password_enter">输入您的Ring主帐户密码</string>
   <string name="help_pin_enter">输入另一个Ring帐户的PIN（使用“导出Ring帐户”功能获取）。</string>
   <string name="wizard_next">下一步</string>
-  <string name="account_device_updated_message">您的Ring帐户已更新。</string>
   <!--MenuHeaderView-->
   <string name="profile">我的帐户资料</string>
-  <string name="profile_message_warning">已与您的通讯录共享</string>
   <string name="open_the_gallery">打开照片库</string>
   <string name="take_a_photo">拍照</string>
-  <string name="unknowm_if_empty">未知若为空</string>
   <string name="unknown">未知</string>
   <!--Share fragment-->
   <string name="share_message">使用Ring扫描此二维码以建立连接。</string>

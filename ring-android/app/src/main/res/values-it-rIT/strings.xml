@@ -1,15 +1,22 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="feedback_section">Feedback</string>
+  <string name="report">&lt;u&gt;Mandaci un\'e-mail&lt;/u&gt;</string>
+  <string name="section_license">Licenza</string>
   <string name="sponsor_section">Ring è un software libero sviluppato e supportato da</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuisci</string>
   <string name="version_section">Versione</string>
-  <string name="no_email_app_installed">Nessuna app email trovata, installane una per inviarci il report</string>
+  <string name="no_email_app_installed">Nessuna applicazione email trovata, installane una per inviarci la tua opinione</string>
+  <string name="no_browser_app_installed">Nessuna applicazione browser trovata, installane una per visualizzare questa pagina</string>
   <string name="email_chooser_title">Invia email con...</string>
+  <string name="website_chooser_title">Visualizza sito web con...</string>
+  <string name="license">Questo software è fornito \"così com\'è\", senza alcun genere di garanzia. Per ulteriori dettagli, si veda
+&lt;u&gt;GNU General Public License versione 3 o successive&lt;/u&gt;</string>
   <!--RingActivity-->
-  <string name="title_activity_sflphone_home">Squilla</string>
+  <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Assenza di connessione di rete</string>
-  <string name="error_mobile_network_available_but_disabled">Per favore consenti l\'accesso alla rete dalla schermata delle impostazioni</string>
+  <string name="error_mobile_network_available_but_disabled">Per favore consenti l\'accesso alla rete mobile dalla schermata delle impostazioni</string>
   <!--AB menus-->
   <string name="ab_account_creation">Nuovo account</string>
   <string name="ab_action_chat">Messaggiare</string>
@@ -24,7 +31,7 @@
   <string name="menu_item_share">Condividi il mio contatto</string>
   <string name="menu_item_about">Informazioni su Ring</string>
   <!--Dialing Fragment-->
-  <string name="dial_number">Chiama un numero</string>
+  <string name="dial_number">Componi un numero</string>
   <!--History Fragment-->
   <string name="hist_replay_button">Replay</string>
   <string name="hist_replay_button_stop">Stop</string>
@@ -34,13 +41,12 @@
     <item quantity="one">%d Conversazione</item>
     <item quantity="other">%d Conversazioni</item>
   </plurals>
-  <string name="home_transfering">Trasferisco %1$s a %2$s</string>
   <string name="home_transfer_complet">Trasferimento completato</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Nessun contatto trovato</string>
   <string name="starred_contacts_title">Preferiti</string>
   <string name="searchbar_hint">Digita un nome o un numero di telefono</string>
-  <string name="choose_number">Scegli un numero</string>
+  <string name="choose_number">Seleziona un numero</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <string name="transfer_to_another_call">Trasferisci su un\'altra chiamata:</string>
@@ -50,7 +56,7 @@
   <string name="notif_missed_incoming_call">Chiamata persa da %1$s</string>
   <string name="notif_missed_outgoing_call">Chiamata persa a %1$s</string>
   <string name="notif_incoming_call_title">Chiamata in arrivo da %1$s</string>
-  <string name="notif_incoming_call">Chiamata in ingresso</string>
+  <string name="notif_incoming_call">Chiamata in arrivo</string>
   <string name="notif_outgoing_call_title">Sto chiamando %1$s</string>
   <string name="notif_outgoing_call">Chiamata in uscita</string>
   <string name="notif_current_call_title">Chiamata in corso con %1$s</string>
@@ -114,16 +120,16 @@
   <string name="help_password_enter">Inserisci la password del tuo account Ring principale</string>
   <string name="help_pin_enter">Inserire il PIN da un altro account Ring configurato. Usa la funzione \"esporta account su Ring\" per ottenere il PIN.</string>
   <string name="wizard_next">Prossimo</string>
-  <string name="account_device_updated_message">Hai aggiornato correttamente il tuo account Ring.</string>
+  <string name="wizard_back">Indietro</string>
   <!--MenuHeaderView-->
   <string name="profile">Il mio profilo</string>
-  <string name="profile_message_warning">Questo è condiviso con i tuoi contatti</string>
-  <string name="open_the_gallery">Apri la galleria</string>
+  <string name="open_the_gallery">Apri la galleria immagini</string>
   <string name="take_a_photo">Scatta una foto</string>
-  <string name="unknowm_if_empty">Sconosciuto se vuoto</string>
   <string name="unknown">Sconosciuto</string>
   <!--Share fragment-->
   <string name="share_message">Leggi questo codice QR con lo scanner integrato dell\'applicazione Ring che vuole comunicare con te.</string>
+  <string name="share_message_no_account">Seleziona un account per la condivisione.</string>
   <string name="share_your_account_information">Condividi le mie informazioni di contatto</string>
   <string name="generic_error_migration">Errore</string>
+  <string name="generic_error_migration_message">Si è verificato un errore durante la migrazione</string>
 </resources>

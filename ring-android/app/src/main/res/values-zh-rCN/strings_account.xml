@@ -21,7 +21,6 @@
   <string name="help_ring">Ring帐户使您在一个完全分布式的网络中，与他人进行安全的点对点通信。</string>
   <string name="help_sip_title">添加您的SIP帐户</string>
   <string name="help_sip">配置已有的SIP帐户。</string>
-  <string name="create_sip_account">添加</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">删除帐户吗？</string>
   <string name="account_delete_dialog_message">该操作不可撤销。</string>
@@ -122,6 +121,7 @@
   <string name="account_device_added_title">帐户设备已添加</string>
   <string name="account_device_added_message">已在这台设备成功设置了您的Ring帐户。</string>
   <string name="account_device_updated_title">帐户设备已更新</string>
+  <string name="account_device_updated_message">您的Ring帐户已更新。</string>
   <string name="account_link_button">将这台设备与一个帐户进行连接</string>
   <string name="account_import_title">与已有帐户进行连接</string>
   <string name="account_link_prompt_pin">输入PIN</string>

@@ -119,7 +119,6 @@
   <string name="profile_message_warning">Partage fait avec vos contacts</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre une photo</string>
-  <string name="unknowm_if_empty">État inconnu si le champ est vide</string>
   <string name="unknown">Inconnu</string>
   <!--Share fragment-->
   <string name="share_message">Scanner le code QR avec le scanner intégré du logiciel Ring pour pouvoir communiquer</string>

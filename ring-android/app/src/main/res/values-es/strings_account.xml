@@ -21,7 +21,6 @@ Puedes editar tu cuenta luego</string>
   <string name="help_ring">Una cuenta en Ring te permite comunicarte con gente de forma segura a través de una red P2P completamente distribuida.</string>
   <string name="help_sip_title">Añadir tu cuenta SIP</string>
   <string name="help_sip">Configurar una cuenta SIP existente</string>
-  <string name="create_sip_account">Agregar</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">¿Borrar cuenta?</string>
   <string name="account_delete_dialog_message">Esta acción no puede deshacerse.</string>
@@ -122,6 +121,7 @@ Puedes editar tu cuenta luego</string>
   <string name="account_device_added_title">El dispositivo de la cuenta ha sido agregado</string>
   <string name="account_device_added_message">Has configurado tu cuenta de Ring en este dispositivo exitosamente</string>
   <string name="account_device_updated_title">La cuenta del dispositivo ha sido actualizada</string>
+  <string name="account_device_updated_message">Has actualizado tu cuenta de Ring exitosamente</string>
   <string name="account_link_button">Conectar este dispositivo a una cuenta</string>
   <string name="account_import_title">Conectarse a una cuenta existente</string>
   <string name="account_link_prompt_pin">Ingresa tu PIN</string>

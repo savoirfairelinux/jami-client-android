@@ -34,7 +34,6 @@
     <item quantity="one">%d Gespräche</item>
     <item quantity="other">%d Gespräche</item>
   </plurals>
-  <string name="home_transfering">%1$s werden an %2$s übertragen</string>
   <string name="home_transfer_complet">Übertragung abgeschlossen</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Es wurde kein Kontakt gefunden</string>
@@ -113,13 +112,10 @@
   <string name="help_password_enter">Geben Sie Ring-Konto-Passwort ein.</string>
   <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Ring-Kontos ein.</string>
   <string name="wizard_next">Weiter</string>
-  <string name="account_device_updated_message">Sie haben ihr Ring-Konto erfolgreich aktualisiert.</string>
   <!--MenuHeaderView-->
   <string name="profile">Mein Profil</string>
-  <string name="profile_message_warning">Dies wird mit Ihren Kontakten geteilt.</string>
   <string name="open_the_gallery">Galerie öffnen</string>
   <string name="take_a_photo">Mache ein Foto</string>
-  <string name="unknowm_if_empty">Unbekannt, wenn leer</string>
   <string name="unknown">Unbekannt</string>
   <!--Share fragment-->
   <string name="share_message">Scanne diesen QR-Code mit dem Ring-QR-Code-Scanner des neuen Kommunikationspartners.</string>

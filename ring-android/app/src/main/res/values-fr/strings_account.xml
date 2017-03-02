@@ -21,7 +21,6 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="help_ring">Un compte Ring permet de se connecter sécuritairement avec un autre interlocuteur à travers un réseau distribué</string>
   <string name="help_sip_title">Ajouter votre compte SIP</string>
   <string name="help_sip">Configurez un compte SIP existant.</string>
-  <string name="create_sip_account">Ajouter</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Supprimer le compte ?</string>
   <string name="account_delete_dialog_message">Cette action est irréversible.</string>
@@ -122,6 +121,7 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_device_added_title">Appareil ajouté</string>
   <string name="account_device_added_message">Le compte Ring a été correctement configuré sur cet appareil.</string>
   <string name="account_device_updated_title">Appareil mis à jour</string>
+  <string name="account_device_updated_message">Mise à jour de votre compte Ring réalisée avec succès. </string>
   <string name="account_link_button">Lier cet appareil à un compte</string>
   <string name="account_import_title">Lier à un compte existant</string>
   <string name="account_link_prompt_pin">Entrer votre code PIN</string>

@@ -1,11 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="feedback_section">Geri bildirim</string>
+  <string name="report">&lt;u&gt;Bize e-posta gönder&lt;/u&gt;</string>
+  <string name="section_license">Lisans</string>
   <string name="sponsor_section">Ring bir özgür yazılımdır ve şunun tarafından desteklenir</string>
   <string name="copyright_section">Telif Hakkı</string>
   <string name="contribute_section">Katkı Yap</string>
   <string name="version_section">Sürüm</string>
   <string name="no_email_app_installed">E-posta uygulaması bulunamadı, bize rapor gönderebilmek için bir tane yükleyin</string>
+  <string name="no_browser_app_installed">Web tarayıcı uygulaması bulunmadı, bu sayfayı görmek için bir tane yükleyin</string>
   <string name="email_chooser_title">Şunu kullanarak posta gönder...</string>
+  <string name="website_chooser_title">Şunu kullanarak web sitesini gör...</string>
+  <string name="license">Bu program HERHANGİ BİR TEMİNAT OLMADAN sağlanmıştır. Ayrıntılar için şuna bakın
+&lt;u&gt;GNU Genel Kamu Lisansı sürüm 3 ya da sonrası&lt;/u&gt;</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ağ bağlantısı yok</string>
@@ -34,7 +41,6 @@
     <item quantity="one">%d Konuşma</item>
     <item quantity="other">%d Konuşma</item>
   </plurals>
-  <string name="home_transfering">%1$s\'dan %2$s\'a aktarılıyor</string>
   <string name="home_transfer_complet">Aktarım tamamlandı</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Kişi bulunamadı</string>
@@ -114,16 +120,16 @@
   <string name="help_password_enter">Ana Ring hesap parolanızı girin</string>
   <string name="help_pin_enter">Başka yapılandırılmış Ring hesabından PIN\'i gir. PIN edinmek için \"Ring\'de hesabı dışa aktarma\" özelliğini kullan.</string>
   <string name="wizard_next">İleri</string>
-  <string name="account_device_updated_message">Ring hesabınızı başarıyla güncellediniz.</string>
+  <string name="wizard_back">Geri</string>
   <!--MenuHeaderView-->
   <string name="profile">Profilim</string>
-  <string name="profile_message_warning">Bu, kişileriniz ile paylaşıldı</string>
   <string name="open_the_gallery">Galeriyi aç</string>
   <string name="take_a_photo">Fotoğraf çek</string>
-  <string name="unknowm_if_empty">Boş ise bilinmiyor</string>
   <string name="unknown">Bilinmeyen</string>
   <!--Share fragment-->
   <string name="share_message">Sizinle iletişime geçmek isteyenin Ring uygulamasının gömülü tarayıcısıyla bu QR kodu tarayın.</string>
+  <string name="share_message_no_account">Lütfen paylaşmak için bir hesap seçin.</string>
   <string name="share_your_account_information">İletişim bilgimi paylaş</string>
   <string name="generic_error_migration">Hata</string>
+  <string name="generic_error_migration_message">Göç sırasında bir hata oluştu</string>
 </resources>

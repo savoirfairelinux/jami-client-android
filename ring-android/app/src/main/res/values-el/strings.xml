@@ -30,7 +30,6 @@
   <string name="hist_replay_button_stop">Τερματισμός</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
-  <string name="home_transfering">Μεταφορά κλήσης από %1$s σε %2$s</string>
   <string name="home_transfer_complet">Η προώθηση ολοκληρώθηκε</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Δεν βρέθηκαν επαφές</string>
@@ -104,7 +103,6 @@
   <string name="account_create_title">Δημιουργία λογαριασμού Ring</string>
   <string name="help_password_enter">Εισαγωγή συνθηματικού του κύριου Ring λογαριασμού σας</string>
   <string name="wizard_next">Επόμενο</string>
-  <string name="account_device_updated_message">Ο Ring λογαριασμός σας αναβαθμίστηκε επιτυχώς.</string>
   <!--MenuHeaderView-->
   <string name="profile">Το προφίλ μου</string>
   <string name="take_a_photo">Λήψη φωτογραφίας</string>

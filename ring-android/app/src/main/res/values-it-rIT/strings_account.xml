@@ -2,7 +2,10 @@
 <resources>
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Cancella</string>
+  <string name="ic_advanced_menu">Impostazioni avanzate</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Aggiungi account Ring</string>
+  <string name="add_sip_account_title">Aggiungi SIP account</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Hostname</string>
   <string name="prompt_username">Utente</string>
@@ -18,10 +21,11 @@
   <string name="dialog_warn_ip2ip_account_message">Stai creando un account SIP senza un hostname valido.
 Potrai solo fare e ricevere chiamate dirette tramite indirizzo ip.
 Potrai modificare il tuo account successivamente</string>
+  <string name="account_type_ip2ip">Account IP</string>
   <string name="help_ring">Un accout Ring ti permette di raggiungere le persone in modalità peer to peer tramite una rete completamente distribuita.</string>
   <string name="help_sip_title">Aggiungi il tuo account SIP</string>
   <string name="help_sip">Configura un account SIP esistente</string>
-  <string name="create_sip_account">Aggiungi</string>
+  <string name="create_sip_account">Aggiungi SIP account</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Eliminare l\'account?</string>
   <string name="account_delete_dialog_message">Questa operazione non può essere annullata.</string>
@@ -108,20 +112,30 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_export_end_error_title">Errore</string>
   <string name="account_export_end_error_message">Impossibile esportare l\'account. C\'è stato un errore sconosciuto.</string>
   <string name="account_enter_password">Inserire password</string>
+  <string name="account_share_body">Contattami usando \"%1$s\" sulla piattaforma di comunicazione distribuita Ring: http://ring.cx</string>
+  <string name="account_share_body_with_username">Contattami usando \"%1$s\" oppure il mio nome utente pubblico \"%2$s\" sulla piattaforma di comunicazione distribuita Ring: http://ring.cx</string>
   <string name="account_contact_me">Contattami su Ring !</string>
   <string name="update_account">Aggiorna account</string>
+  <string name="account_migration">Il tuo account Ring può essere aggiornato.\nPer favore immetti la tua password. </string>
   <string name="ring_account">Account Ring</string>
+  <string name="ring_account_identity">Indentità</string>
   <string name="account_migration_title_dialog">Migrazione account</string>
+  <string name="account_migration_message_dialog">Il tuo account necessita di essere aggiornato. Vuoi andare alla schermata di gestione dell\'account per completare l\'operazione?</string>
   <string name="account_update_needed">Aggiornamento necessario</string>
   <string name="account_creation_file_too_big">Il file è troppo grande</string>
   <string name="account_cannot_read">Impossibile leggere %1$s</string>
   <string name="account_cannot_be_found_title">Impossibile trovare l\'account</string>
   <string name="account_cannot_be_found_message">Impossibile trovare l\'account nella rete Ring.\nAssicurati di averlo esportato da un account Ring esistente e di aver fornito le credenziali corrette.</string>
+  <string name="account_sip_cannot_be_registered_message">Puoi continuare con la creazione dell\'account oppure modificare le tue informazioni qui. La modifica sarà comunque possibile più tardi nelle impostazioni dell\'account.</string>
   <string name="account_no_network_title">Impossibile collegarsi alla rete</string>
   <string name="account_no_network_message">Impossibile aggiungere un account perchè Ring non riesce a collegarsi alla rete distribuita. Controllare la connettività.</string>
   <string name="account_device_added_title">Il dispositivo è stato aggiunto</string>
   <string name="account_device_added_message">Hai impostato correttamente il tuo account Ring su questo dispositivo.</string>
   <string name="account_device_updated_title">Il dispositivo è stato aggiunto</string>
+  <string name="account_device_updated_message">Hai aggiornato correttamente il tuo account Ring.</string>
+  <string name="account_sip_success_title">Account Sip registrato</string>
+  <string name="account_sip_success_message">Hai registrato il tuo account Sip con successo.</string>
+  <string name="account_sip_register_anyway">Registrati lo stesso</string>
   <string name="account_link_button">Collega questo dispositivo ad un account</string>
   <string name="account_import_title">Collega ad un account esistente</string>
   <string name="account_link_prompt_pin">Inserisci il PIN</string>
@@ -147,8 +161,14 @@ Potrai modificare il tuo account successivamente</string>
   <string name="invalid_username">Nome utente non valido</string>
   <string name="looking_for_username_availability">Controllo che il nome utente sia disponibile ...</string>
   <string name="account_status_connecting">Collegamento</string>
+  <string name="account_status_connection_error">Errore di connessione</string>
+  <string name="account_status_online">In linea</string>
   <string name="account_status_unknown">Sconosciuto</string>
+  <string name="account_status_offline">Disconnesso</string>
   <!--Create account-->
   <string name="account_creation_home">Benvenuto su Ring</string>
   <string name="account_creation_profile">Crea il tuo profilo</string>
+  <string name="account_creation_ring">Crea il tuo account Ring</string>
+  <string name="account_link_title">Collega il dispositivo</string>
+  <string name="account_sip_cannot_be_registered">Impossibile registrare l\'account</string>
 </resources>

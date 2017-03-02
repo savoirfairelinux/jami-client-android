@@ -122,7 +122,6 @@
   <string name="profile_message_warning">К этому имеют доступ ваши контакты</string>
   <string name="open_the_gallery">Открыть галерею</string>
   <string name="take_a_photo">Сделать фото</string>
-  <string name="unknowm_if_empty">Неизвестно если пусто</string>
   <string name="unknown">Неизвестно</string>
   <!--Share fragment-->
   <string name="share_message">Отсканируйте этот QR код встроенным сканером приложения Ring, которое хочет с вами связаться.</string>

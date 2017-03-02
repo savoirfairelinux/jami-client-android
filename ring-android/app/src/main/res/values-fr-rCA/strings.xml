@@ -1,11 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="feedback_section">Commentaires</string>
+  <string name="report">Contactez-nous par courriel</string>
+  <string name="section_license">Licence</string>
   <string name="sponsor_section">Ring est un logiciel développé et suporté par</string>
   <string name="copyright_section">Droits d\'auteurs</string>
   <string name="contribute_section">Contribuer</string>
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Aucune adresse courriel n\'a étée trouvée, ajoutez en une pour nous envoyer un rapport.</string>
+  <string name="no_browser_app_installed">Aucun navigateur trouvé, en installer un afin de voir cette page.</string>
   <string name="email_chooser_title">Envoyer un courriel en utilisant</string>
+  <string name="website_chooser_title">Visualiser le site web en utilisant...</string>
+  <string name="license">Ce logiciel est fourni \"tel quel\", sans garantie d\'aucune sorte. Pour les détails, consulter
+&lt;u&gt;GNU General Public License version 3 ou plus&lt;/u&gt;</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Aucune connectivité réseau</string>
@@ -34,7 +41,6 @@
     <item quantity="one">Conversations %d</item>
     <item quantity="other">Conversations %d</item>
   </plurals>
-  <string name="home_transfering">Transfert en cours de %1$s à %2$s</string>
   <string name="home_transfer_complet">Transfert complété</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Aucun contact trouvé</string>
@@ -113,16 +119,17 @@
   <string name="help_password_choose">Choisir un mot de passe fort dont vous vous souviendrez pour protéger votre compte Ring.</string>
   <string name="help_password_enter">Entrer votre mot de passe Ring principal</string>
   <string name="help_pin_enter">Entrer le NIP d\'un autre compte Ring déjà configuré. Utiliser la fonction \"exporter le compte dans Ring\" pour obtenir un PIN.</string>
-  <string name="account_device_updated_message">Votre compte Ring a bien été mis à jour.</string>
+  <string name="wizard_next">Suivant</string>
+  <string name="wizard_back">Précédent</string>
   <!--MenuHeaderView-->
   <string name="profile">Mon profil</string>
-  <string name="profile_message_warning">Ceci est partagé avec vos contacts.</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre un photo.</string>
-  <string name="unknowm_if_empty">Inconnu si vide</string>
   <string name="unknown">Inconnu</string>
   <!--Share fragment-->
   <string name="share_message">Numériser ce code QR à partir du scan intégré de l\'application Ring qui veut communiquer avec vous.</string>
+  <string name="share_message_no_account">S\'il vous plaît sélectionner un compte à partager.</string>
   <string name="share_your_account_information">Partager mes informations de contact</string>
   <string name="generic_error_migration">Erreur</string>
+  <string name="generic_error_migration_message">Une erreur s\'est produite durant la migration.</string>
 </resources>

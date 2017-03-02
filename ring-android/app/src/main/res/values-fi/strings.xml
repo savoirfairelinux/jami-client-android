@@ -33,7 +33,6 @@
     <item quantity="one">%d keskustelu</item>
     <item quantity="other">%d Keskustelut</item>
   </plurals>
-  <string name="home_transfering">Lähetetään %1$s - %2$s</string>
   <string name="home_transfer_complet">Lähetys valmis</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Yhteystietoa ei löytynyt</string>

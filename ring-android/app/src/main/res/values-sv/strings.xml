@@ -1,11 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="feedback_section">Återkoppling</string>
+  <string name="report">&lt;u&gt;Skicka e-post till oss&lt;/u&gt;</string>
+  <string name="section_license">Licens</string>
   <string name="sponsor_section">Ring är fri mjukvara, utvecklad och understödd av</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Bidra</string>
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Inget e-postprogram hittades, installera ett och skicka en rapport</string>
+  <string name="no_browser_app_installed">Ingen webbläsare hittades, installera en för att visa den här sidan</string>
   <string name="email_chooser_title">Skicka e-post med...</string>
+  <string name="website_chooser_title">Visa webbsidan med...</string>
+  <string name="license">Denna app tillhandahålles i \"befintligt skick\", utan några som helst garantier. För detaljerad info, se
+&lt;u&gt;GNU General Public License version 3 eller senare&lt;/u&gt;</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ingen nätverksanslutning</string>
@@ -34,7 +41,6 @@
     <item quantity="one">%d konversation</item>
     <item quantity="other">%d konversationer</item>
   </plurals>
-  <string name="home_transfering">Överför %1$s till %2$s</string>
   <string name="home_transfer_complet">Överföring slutförd</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Ingen kontakt hittades</string>
@@ -114,16 +120,16 @@
   <string name="help_password_enter">Ange ditt huvudsakliga Ring-kontos lösenord</string>
   <string name="help_pin_enter">Ange PIN-koden från ett annat konfigurerat Ring-konto. Använd \"Exportera konto på Ring\", för att få din PIN-kod.</string>
   <string name="wizard_next">Nästa</string>
-  <string name="account_device_updated_message">Du har lyckats uppdatera ditt Ring-konto.</string>
+  <string name="wizard_back">Tillbaka</string>
   <!--MenuHeaderView-->
   <string name="profile">Min profil</string>
-  <string name="profile_message_warning">Detta delas med dina kontakter</string>
   <string name="open_the_gallery">Öppna galleriet</string>
   <string name="take_a_photo">Ta ett foto</string>
-  <string name="unknowm_if_empty">Okänd om tom</string>
   <string name="unknown">Okänd</string>
   <!--Share fragment-->
   <string name="share_message">Skanna denna QR-kod med den inbyggda skanner som finns i det Ring-program som vill kommunicera med dig.</string>
+  <string name="share_message_no_account">Välj ett konto att dela.</string>
   <string name="share_your_account_information">Dela min kontaktinformation</string>
   <string name="generic_error_migration">Fel</string>
+  <string name="generic_error_migration_message">Ett fel inträffade vid migrering</string>
 </resources>

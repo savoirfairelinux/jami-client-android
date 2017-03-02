@@ -33,7 +33,6 @@
   <plurals name="home_conferences_title">
     <item quantity="other">%d Perbualan</item>
   </plurals>
-  <string name="home_transfering">Memindahkan %1$s ke %2$s</string>
   <string name="home_transfer_complet">Pemindahan berjaya</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Tiada kenalan ditemui</string>
@@ -112,13 +111,10 @@
   <string name="help_password_choose">Pilih kata laluan kukuh yang perlu anda ingat untuk menjaga akaun Ring anda.</string>
   <string name="help_password_enter">Masukkan kata laluan akaun Ring anda</string>
   <string name="help_pin_enter">Masukkan PIN daripada akaun Ring lain yang telah dijalankan. Gunakan fungsi \"eksport akaun ke Ring\" untuk mendapatkan PIN.</string>
-  <string name="account_device_updated_message">Anda telah berjaya mengemaskini akaun Ring anda.</string>
   <!--MenuHeaderView-->
   <string name="profile">Profil saya</string>
-  <string name="profile_message_warning">Ini akan dikongsikan dengan kenalan anda</string>
   <string name="open_the_gallery">Buka galeri</string>
   <string name="take_a_photo">Ambil gambar</string>
-  <string name="unknowm_if_empty">Tidak diketahui jika kosong</string>
   <string name="unknown">Tidak diketahui</string>
   <!--Share fragment-->
   <string name="share_message">Imbas kod QR ini dengan pemgibas terbina dalam dari aplikasi Ring lain yang ingin berkomunikasi dengan anda.</string>

@@ -11,7 +11,6 @@
   <string name="error_field_required">Dieses Feld ist erforderlich</string>
   <string name="dialog_wait_create">Konto wird hinzugefügt</string>
   <string name="help_sip_title">Fügen Sie Ihre SIP-Account</string>
-  <string name="create_sip_account">Hinzufügen</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Konto löschen?</string>
   <string name="account_delete_dialog_message">Diese Aktion kann nicht rückgängig gemacht werden.</string>
@@ -72,6 +71,7 @@
   <string name="error_passwords_not_equals">Kennwörter stimmen nicht überein</string>
   <string name="restore_failed_dialog_msg">Fehler aufgetreten</string>
   <string name="account_export_end_error_title">Fehler</string>
+  <string name="account_device_updated_message">Sie haben ihr Ring-Konto erfolgreich aktualisiert.</string>
   <string name="account_new_button">Erstellen einen Ring Konto</string>
   <!--Name registration-->
   <string name="account_status_connecting">Verbinden</string>
