@@ -164,6 +164,27 @@ public class AccountService extends Observable {
         }
     }
 
+    private Account getAccountByName(final String name) {
+        for (Account acc : mAccountList) {
+            if (acc.getAlias().equals(name))
+                return acc;
+        }
+        return null;
+    }
+
+    public String getNewAccountName(final String prefix) {
+        String name = String.format(prefix, "").trim();
+        if (getAccountByName(name) == null) {
+            return name;
+        }
+        int num = 1;
+        do {
+            num++;
+            name = String.format(prefix, num).trim();
+        } while (getAccountByName(name) != null);
+        return name;
+    }
+
     /**
      * Adds a new Account in the Daemon (also sends an ACCOUNT_ADDED event)
      * Sets the new account as the current one
