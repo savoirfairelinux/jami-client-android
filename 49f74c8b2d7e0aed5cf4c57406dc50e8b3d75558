@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_ebf5cdcb",
+        "filename": "ring-android/app/src/main/java/cx/ring/trustrequests/TrustRequestsAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-03T20:46:27Z",
+      "side": 1,
+      "message": "Sender identity is not presented to the user, just the profile name.",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 5
+      },
+      "revId": "49f74c8b2d7e0aed5cf4c57406dc50e8b3d75558",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
