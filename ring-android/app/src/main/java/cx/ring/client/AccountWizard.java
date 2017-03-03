@@ -231,7 +231,7 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
     private HashMap<String, String> initRingAccountDetails() {
         HashMap<String, String> accountDetails = initAccountDetails();
         if (accountDetails != null) {
-            accountDetails.put(ConfigKey.ACCOUNT_ALIAS.key(), "Ring");
+            accountDetails.put(ConfigKey.ACCOUNT_ALIAS.key(), mAccountService.getNewAccountName());
             accountDetails.put(ConfigKey.ACCOUNT_HOSTNAME.key(), "bootstrap.ring.cx");
             accountDetails.put(ConfigKey.ACCOUNT_UPNP_ENABLE.key(), AccountConfig.TRUE_STR);
         }
