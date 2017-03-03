@@ -19,7 +19,10 @@
 
 package cx.ring.account;
 
+import java.util.concurrent.ExecutorService;
+
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.StringMap;
 import cx.ring.model.Account;
@@ -40,6 +43,11 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
 
     @Inject
     AccountService mAccountService;
+
+    @Inject
+    @Named("ApplicationExecutor")
+    ExecutorService mApplicationExecutor;
+
 
     private String mAccountID;
 
@@ -67,6 +75,9 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
         }
 
         switch (event.getEventType()) {
+            case DEVICE_REVOCATION_ENDED:
+                handleRevocationEnded(event);
+                break;
             case KNOWN_DEVICES_CHANGED:
                 handleKnownDevices(event);
                 break;
@@ -83,10 +94,19 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
         }
     }
 
+    private void handleRevocationEnded(ServiceEvent event) {
+        String accountId = event.getString(ServiceEvent.EventInput.ACCOUNT_ID);
+        if (!mAccountID.equals(accountId)) {
+            return;
+        }
+        String device = event.getString(ServiceEvent.EventInput.DEVICE);
+        int code = event.getInt(ServiceEvent.EventInput.STATE);
+        getView().deviceRevocationEnded(device, code);
+    }
+
     private void handleExportEnded(ServiceEvent event) {
-        String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
-        Account currentAccount = mAccountService.getAccount(mAccountID);
-        if (currentAccount == null || !mAccountID.equals(accountId) || getView() == null) {
+        String accountId = event.getString(ServiceEvent.EventInput.ACCOUNT_ID);
+        if (!mAccountID.equals(accountId) || getView() == null || mAccountService.getAccount(mAccountID) == null) {
             return;
         }
 
@@ -116,7 +136,7 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
             return;
         }
         final StringMap devices = event.getEventInput(ServiceEvent.EventInput.DEVICES, StringMap.class);
-        getView().updateDeviceList(devices.toNative());
+        getView().updateDeviceList(devices.toNative(), currentAccount.getDeviceId());
     }
 
     public void registerName(String name, String password) {
@@ -158,4 +178,10 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
         mAccountService.setAccountDetails(account.getAccountID(), account.getDetails());
     }
 
+    public void revokeDevice(String deviceId, String password) {
+        if (getView() != null) {
+            getView().showRevokingProgressDialog();
+        }
+        mAccountService.revokeDevice(mAccountID, password, deviceId);
+    }
 }
