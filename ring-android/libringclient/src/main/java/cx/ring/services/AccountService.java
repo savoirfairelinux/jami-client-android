@@ -568,7 +568,7 @@ public class AccountService extends Observable {
                 new Callable<String>() {
                     @Override
                     public String call() throws Exception {
-                        Log.i(TAG, "addRingDevice() thread running...");
+                        Log.i(TAG, "exportOnRing() thread running...");
                         return Ringservice.exportOnRing(accountId, password);
                     }
                 }
@@ -590,6 +590,26 @@ public class AccountService extends Observable {
                     public Map<String, String> call() throws Exception {
                         Log.i(TAG, "getKnownRingDevices() thread running...");
                         return Ringservice.getKnownRingDevices(accountId).toNative();
+                    }
+                }
+        );
+    }
+
+    /**
+     * @param accountId id of the account used with the device
+     * @param deviceId id of the device to revoke
+     * @param password password of the account
+     */
+    public void revokeDevice(final String accountId, final String password, final String deviceId) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "revokeDevice() thread running...");
+                        return Ringservice.revokeDevice(accountId, password, deviceId);
                     }
                 }
         );
@@ -1271,6 +1291,18 @@ public class AccountService extends Observable {
             setChanged();
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.MIGRATION_ENDED);
             event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.STATE, state);
+            notifyObservers(event);
+        }
+
+        @Override
+        public void deviceRevocationEnded(String accountId, String device, int state) {
+            Log.d(TAG, "deviceRevocationEnded: " + accountId + ", " + device + ", " + state);
+
+            setChanged();
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DEVICE_REVOCATION_ENDED);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.DEVICE, device);
             event.addEventInput(ServiceEvent.EventInput.STATE, state);
             notifyObservers(event);
         }
