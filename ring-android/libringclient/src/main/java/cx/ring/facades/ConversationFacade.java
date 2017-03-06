@@ -19,6 +19,7 @@
  */
 package cx.ring.facades;
 
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,6 +32,7 @@ import java.util.TreeMap;
 
 import javax.inject.Inject;
 
+import cx.ring.daemon.StringMap;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -72,8 +74,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     @Inject
     AccountService mAccountService;
 
-    @Inject
-    ContactService mContactService;
+    private ContactService mContactService;
 
     @Inject
     ConferenceService mConferenceService;
@@ -93,12 +94,14 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     private Map<String, Conversation> mConversationMap;
 
-    public ConversationFacade(HistoryService historyService, CallService callService) {
+    public ConversationFacade(HistoryService historyService, CallService callService, ContactService contactService) {
         mConversationMap = new HashMap<>();
         mHistoryService = historyService;
         mHistoryService.addObserver(this);
         mCallService = callService;
         mCallService.addObserver(this);
+        mContactService = contactService;
+        mContactService.addObserver(this);
     }
 
     private Tuple<Conference, SipCall> getCall(String id) {
@@ -162,14 +165,15 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         if (conversation == null) {
             conversation = new Conversation(contact);
             mConversationMap.put(contact.getIds().get(0), conversation);
+
+            setConversationVisible();
+
+            setChanged();
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONVERSATIONS_CHANGED);
+            notifyObservers(event);
+
+            updateTextNotifications();
         }
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONVERSATIONS_CHANGED);
-        notifyObservers(event);
-
-        updateTextNotifications();
-
         return conversation;
     }
 
@@ -241,6 +245,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                 mHistoryService.updateTextMessage(new HistoryText(textMessage));
             }
         }
+
+        setConversationVisible();
 
         setChanged();
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONVERSATIONS_CHANGED);
@@ -374,6 +380,17 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         return null;
     }
 
+    public void setConversationVisible() {
+        for (Conversation conv : mConversationMap.values()) {
+            boolean isConversationVisible = conv.isVisible();
+            String conversationKey = conv.getContact().getIds().get(0);
+            Conversation newConversation = mConversationMap.get(conversationKey);
+            if (newConversation != null) {
+                newConversation.setVisible(isConversationVisible);
+            }
+        }
+    }
+
     private void parseNewMessage(TextMessage txt, String call) {
         Conversation conversation;
         if (call != null && !call.isEmpty()) {
@@ -422,7 +439,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
-    private void aggregateHistory() {
+    private synchronized void aggregateHistory() {
         Map<String, ArrayList<String>> conferences = mConferenceService.getConferenceList();
 
         for (Map.Entry<String, ArrayList<String>> conferenceEntry : conferences.entrySet()) {
@@ -584,6 +601,42 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                         }
                     }
 
+                    refreshConversations();
+                    break;
+                case INCOMING_CALL:
+                    String callid = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
+                    String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
+                    Uri number = new Uri(event.getEventInput(ServiceEvent.EventInput.FROM, String.class));
+                    CallContact contact = mContactService.findContactByNumber(number.getRawUriString());
+
+                    Conversation conv= startConversation(contact);
+
+                    SipCall call = new SipCall(callid, accountId, number, SipCall.Direction.INCOMING);
+                    call.setContact(contact);
+
+                    Account accountCall = mAccountService.getAccount(accountId);
+
+                    Conference toAdd;
+                    if (accountCall.useSecureLayer()) {
+                        SecureSipCall secureCall = new SecureSipCall(call, accountCall.getDetail(ConfigKey.SRTP_KEY_EXCHANGE));
+                        toAdd = new Conference(secureCall);
+                    } else {
+                        toAdd = new Conference(call);
+                    }
+
+                    conv.addConference(toAdd);
+                    mNotificationService.showCallNotification(toAdd);
+
+                    Map<String, StringMap> camSettings = mDeviceRuntimeService.retrieveAvailablePreviewSettings();
+                    mHardwareService.setPreviewSettings(camSettings);
+
+                    // Sending VCard when receiving a call
+                    mAccountService.sendProfile(callid, accountId);
+                    break;
+            }
+        } else if(observable instanceof ContactService && event != null) {
+            switch (event.getEventType()) {
+                case CONTACTS_CHANGED:
                     refreshConversations();
                     break;
             }

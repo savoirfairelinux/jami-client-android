@@ -40,7 +40,6 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.util.LruCache;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -50,22 +49,14 @@ import javax.inject.Inject;
 import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
 import cx.ring.facades.ConversationFacade;
-import cx.ring.model.Account;
-import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
-import cx.ring.model.ConfigKey;
 import cx.ring.model.Conversation;
-import cx.ring.model.HistoryCall;
-import cx.ring.model.SecureSipCall;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
-import cx.ring.model.SipCall;
-import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
-import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.SettingsService;
 import cx.ring.utils.ActionHelper;
@@ -129,8 +120,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     private boolean isMobileConn = false;
 
     private boolean canUseMobile = false;
-
-    private boolean mAreConversationsLoaded = false;
 
     public LruCache<Long, Bitmap> get40dpContactCache() {
         return mMemoryCache;
@@ -301,21 +290,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         return mService;
     }
 
-    private void updated(Map<String, Conversation> res) {
-        for (Conversation conversation : mConversationFacade.getConversations().values()) {
-            boolean isConversationVisible = conversation.isVisible();
-            String conversationKey = conversation.getContact().getIds().get(0);
-            Conversation newConversation = res.get(conversationKey);
-            if (newConversation != null) {
-                newConversation.setVisible(isConversationVisible);
-            }
-        }
-        updateAudioState();
-        sendBroadcast(new Intent(ACTION_CONF_UPDATE));
-        sendBroadcast(new Intent(ACTION_CONF_LOADED));
-        mAreConversationsLoaded = true;
-    }
-
     private void updateConnectivityState() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -430,48 +404,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                     Log.w(TAG, "ConnectivityManager.CONNECTIVITY_ACTION " + " " + intent.getStringExtra(ConnectivityManager.EXTRA_EXTRA_INFO) + " " + intent.getStringExtra(ConnectivityManager.EXTRA_EXTRA_INFO));
                     updateConnectivityState();
                     break;
-                case CallManagerCallBack.INCOMING_CALL: {
-                    String callId = intent.getStringExtra("call");
-                    String accountId = intent.getStringExtra("account");
-                    Uri number = new Uri(intent.getStringExtra("from"));
-                    CallContact contact = mContactService.findContactByNumber(number.getRawUriString());
-                    Conversation conversation = mConversationFacade.startConversation(contact);
-
-                    SipCall call = new SipCall(callId, accountId, number, SipCall.Direction.INCOMING);
-                    call.setContact(contact);
-
-                    Account accountCall = mAccountService.getAccount(accountId);
-
-                    Conference toAdd;
-                    if (accountCall.useSecureLayer()) {
-                        SecureSipCall secureCall = new SecureSipCall(call, accountCall.getDetail(ConfigKey.SRTP_KEY_EXCHANGE));
-                        toAdd = new Conference(secureCall);
-                    } else {
-                        toAdd = new Conference(call);
-                    }
-
-                    conversation.addConference(toAdd);
-                    mNotificationService.showCallNotification(toAdd);
-
-                    updateAudioState();
-
-                    try {
-                        mService.setPreviewSettings();
-                    } catch (RemoteException e) {
-                        Log.e(TAG, "INCOMING_CALL", e);
-                    }
-
-                    // Sending VCard when receiving a call
-                    try {
-                        getRemoteService().sendProfile(callId, accountId);
-                        Log.d(TAG, "send vcard");
-                    } catch (Exception e) {
-                        Log.e(TAG, "Error while sending profile", e);
-                    }
-
-                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(android.net.Uri.withAppendedPath(ContentUriHandler.CALL_CONTENT_URI, callId)));
-                    break;
-                }
                 case ConfigurationManagerCallback.NAME_LOOKUP_ENDED:
                     // no refresh here
                     break;
@@ -496,7 +428,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         intentFilter.addAction(ConfigurationManagerCallback.NAME_LOOKUP_ENDED);
         intentFilter.addAction(ConfigurationManagerCallback.NAME_REGISTRATION_ENDED);
 
-        intentFilter.addAction(CallManagerCallBack.INCOMING_CALL);
         intentFilter.addAction(CallManagerCallBack.CONF_CREATED);
         intentFilter.addAction(CallManagerCallBack.CONF_CHANGED);
         intentFilter.addAction(CallManagerCallBack.CONF_REMOVED);
@@ -527,10 +458,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         getContentResolver().unregisterContentObserver(contactContentObserver);
     }
 
-    public boolean areConversationsLoaded() {
-        return mAreConversationsLoaded;
-    }
-
     public void refreshContacts() {
         Log.d(TAG, "refreshContacts");
         mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount());
@@ -557,23 +484,5 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                     return;
             }
         }
-
-        if (observable instanceof ContactService && arg != null) {
-            switch (arg.getEventType()) {
-                case CONTACTS_CHANGED:
-                    mConversationFacade.refreshConversations();
-                    return;
-            }
-        }
-
-        if (observable instanceof ConversationFacade && arg != null) {
-            switch (arg.getEventType()) {
-                case CONVERSATIONS_CHANGED:
-                    Map<String, Conversation> conversations = mConversationFacade.getConversations();
-                    updated(conversations);
-                    return;
-            }
-        }
-
     }
 }
