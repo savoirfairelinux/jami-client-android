@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_0b6dc104",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-03-06T16:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_e8fe3338",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 112
+      },
+      "revId": "9c2a755254ba2b4a65d421495242758726ea5696",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_88fbf746",
         "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_2b7205e6",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-03-06T16:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_88fbf746",
+      "range": {
+        "startLine": 256,
+        "startChar": 16,
+        "endLine": 256,
+        "endChar": 99
+      },
+      "revId": "9c2a755254ba2b4a65d421495242758726ea5696",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_a8f83b4a",
         "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-03-03T14:57:59Z",
       "side": 1,
       "message": "this variable is never use",
+      "range": {
+        "startLine": 358,
+        "startChar": 20,
+        "endLine": 358,
+        "endChar": 111
+      },
+      "revId": "9c2a755254ba2b4a65d421495242758726ea5696",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_cb76c9d8",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-03-06T16:49:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_a8f83b4a",
       "range": {
         "startLine": 358,
         "startChar": 20,
