@@ -248,7 +248,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     private void searchForRingIdInBlockchain() {
         LocalService service = mCallbacks.getService();
-        if (service == null || !service.isConnected() || !service.areConversationsLoaded()) {
+        if (service == null || !service.isConnected()) {
             return;
         }
         List<Conversation> conversations = mConversationFacade.getConversationsList();
@@ -497,9 +497,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         LocalService service = mCallbacks.getService();
         if (service != null) {
             bindService(inflater.getContext(), service);
-            if (service.areConversationsLoaded()) {
-                setLoading(false);
-            }
         }
 
         if (ConversationFragment.isTabletMode(getActivity())) {
@@ -931,6 +928,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                         setLoading(false);
                     }
                 });
+                break;
+            case CONVERSATIONS_CHANGED:
+                refresh();
                 break;
         }
     }
