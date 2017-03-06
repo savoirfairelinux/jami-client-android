@@ -206,8 +206,6 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
         intentFilter.addAction(RingApplication.VIDEO_EVENT);
 
-        intentFilter.addAction(LocalService.ACTION_CONF_UPDATE);
-
         getActivity().registerReceiver(mReceiver, intentFilter);
     }
 
@@ -1233,6 +1231,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         if (observable instanceof ConversationFacade) {
             switch (event.getEventType()) {
                 case HISTORY_LOADED:
+                case CONVERSATIONS_CHANGED:
                 case CALL_STATE_CHANGED:
                     RingApplication.uiHandler.post(new Runnable() {
                         @Override

@@ -2,10 +2,8 @@ package cx.ring.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -54,7 +52,6 @@ import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
-import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HistoryService;
 import cx.ring.utils.ActionHelper;
@@ -71,9 +68,6 @@ public class ConversationFragment extends Fragment implements
 
     @Inject
     ContactService mContactService;
-
-    @Inject
-    CallService mCallService;
 
     @Inject
     AccountService mAccountService;
@@ -131,6 +125,7 @@ public class ConversationFragment extends Fragment implements
 
         Log.d(TAG, "getConversation " + conversationId + " " + number);
         Conversation conversation = mConversationFacade.getConversationById(conversationId);
+
         if (conversation == null) {
             long contactId = CallContact.contactIdFromId(conversationId);
             Log.d(TAG, "no conversation found, contact_id " + contactId);
@@ -235,14 +230,6 @@ public class ConversationFragment extends Fragment implements
 
         getActivity().invalidateOptionsMenu();
     }
-
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
-            refreshView(intent.getLongExtra(LocalService.ACTION_CONF_UPDATE_EXTRA_MSG, 0));
-        }
-    };
 
     @Override
     public void onAttach(Activity activity) {
@@ -360,8 +347,6 @@ public class ConversationFragment extends Fragment implements
             mConversationFacade.readConversation(mConversation);
             mConversation.setVisible(false);
         }
-
-        getActivity().unregisterReceiver(receiver);
         mAccountService.removeObserver(this);
         mConversationFacade.removeObserver(this);
     }
@@ -376,8 +361,6 @@ public class ConversationFragment extends Fragment implements
             mConversationFacade.readConversation(mConversation);
         }
 
-        IntentFilter filter = new IntentFilter(LocalService.ACTION_CONF_UPDATE);
-        getActivity().registerReceiver(receiver, filter);
         mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
 
@@ -579,6 +562,8 @@ public class ConversationFragment extends Fragment implements
             switch (arg.getEventType()) {
                 case INCOMING_MESSAGE:
                 case HISTORY_LOADED:
+                case CALL_STATE_CHANGED:
+                case CONVERSATIONS_CHANGED:
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
