@@ -131,33 +131,6 @@ public class ConversationFragment extends Fragment implements
 
         Log.d(TAG, "getConversation " + conversationId + " " + number);
         Conversation conversation = mConversationFacade.getConversationById(conversationId);
-        if (conversation == null) {
-            long contactId = CallContact.contactIdFromId(conversationId);
-            Log.d(TAG, "no conversation found, contact_id " + contactId);
-            CallContact contact = null;
-            if (contactId >= 0) {
-                contact = mContactService.findContactById(contactId);
-            }
-            if (contact == null) {
-                Uri convUri = new Uri(conversationId);
-                if (!number.isEmpty()) {
-                    contact = mContactService.findContactByNumber(number.getRawUriString());
-                    if (contact == null) {
-                        contact = CallContact.buildUnknown(convUri);
-                    }
-                } else {
-                    contact = mContactService.findContactByNumber(convUri.getRawUriString());
-                    if (contact == null) {
-                        contact = CallContact.buildUnknown(convUri);
-                        number = contact.getPhones().get(0).getNumber();
-                    } else {
-                        number = convUri;
-                    }
-                }
-            }
-            conversation = mConversationFacade.startConversation(contact);
-        }
-
         Log.d(TAG, "returning " + conversation.getContact().getDisplayName() + " " + number);
         return new Pair<>(conversation, number);
     }
@@ -235,14 +208,6 @@ public class ConversationFragment extends Fragment implements
 
         getActivity().invalidateOptionsMenu();
     }
-
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "onReceive " + intent.getAction() + " " + intent.getDataString());
-            refreshView(intent.getLongExtra(LocalService.ACTION_CONF_UPDATE_EXTRA_MSG, 0));
-        }
-    };
 
     @Override
     public void onAttach(Activity activity) {
@@ -360,8 +325,6 @@ public class ConversationFragment extends Fragment implements
             mConversationFacade.readConversation(mConversation);
             mConversation.setVisible(false);
         }
-
-        getActivity().unregisterReceiver(receiver);
         mAccountService.removeObserver(this);
         mConversationFacade.removeObserver(this);
     }
@@ -376,10 +339,10 @@ public class ConversationFragment extends Fragment implements
             mConversationFacade.readConversation(mConversation);
         }
 
-        IntentFilter filter = new IntentFilter(LocalService.ACTION_CONF_UPDATE);
-        getActivity().registerReceiver(receiver, filter);
         mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
+
+        refreshView(0);
     }
 
     @Override
@@ -577,6 +540,8 @@ public class ConversationFragment extends Fragment implements
             switch (arg.getEventType()) {
                 case INCOMING_MESSAGE:
                 case HISTORY_LOADED:
+                case CALL_STATE_CHANGED:
+                case CONVERSATIONS_CHANGED:
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
