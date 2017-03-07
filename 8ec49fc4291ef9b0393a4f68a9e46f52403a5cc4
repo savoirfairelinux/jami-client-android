@@ -22,6 +22,30 @@
       "revId": "8ec49fc4291ef9b0393a4f68a9e46f52403a5cc4",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_8ee69f43",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/trustrequests/PendingTrustRequestsPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-07T16:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_0e7cef71",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "8ec49fc4291ef9b0393a4f68a9e46f52403a5cc4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
