@@ -29,8 +29,6 @@ import android.content.ServiceConnection;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.media.AudioManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -59,7 +57,6 @@ import cx.ring.dependencyinjection.PresenterInjectionModule;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionModule;
 import cx.ring.dependencyinjection.ServiceInjectionModule;
-import cx.ring.model.Settings;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.ConfigurationManagerCallback;
 import cx.ring.service.LocalService;
@@ -238,7 +235,7 @@ public class RingApplication extends Application {
         sendBroadcast(intent);
 
         // load accounts from Daemon
-        mAccountService.loadAccountsFromDaemon(isConnected());
+        mAccountService.loadAccountsFromDaemon(mSettingsService.isConnectedWifiAndMobile());
     }
 
     public void restartVideo() {
@@ -316,22 +313,6 @@ public class RingApplication extends Application {
 
     public RingInjectionComponent getRingInjectionComponent() {
         return mRingInjectionComponent;
-    }
-
-    public boolean isConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo ni = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        Log.d(TAG, "ActiveNetworkInfo (Wifi): " + (ni == null ? "null" : ni.toString()));
-        boolean isWifiConn = ni != null && ni.isConnected();
-
-        ni = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        Log.d(TAG, "ActiveNetworkInfo (mobile): " + (ni == null ? "null" : ni.toString()));
-        boolean isMobileConn = ni != null && ni.isConnected();
-
-        Settings settings = mSettingsService.loadSettings();
-
-        return isWifiConn || (settings.isAllowMobileData() && isMobileConn);
     }
 
     public boolean canAskForPermission(String permission) {

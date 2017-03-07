@@ -25,6 +25,7 @@ import android.content.SharedPreferences;
 import javax.inject.Inject;
 
 import cx.ring.model.Settings;
+import cx.ring.utils.NetworkUtils;
 
 public class SettingsServiceImpl extends SettingsService {
 
@@ -36,7 +37,11 @@ public class SettingsServiceImpl extends SettingsService {
     public static final String RING_ON_STARTUP = "on_startup";
 
     @Inject
-    Context mContext;
+    protected Context mContext;
+
+    public SettingsServiceImpl() {
+        mUserSettings = null;
+    }
 
     @Override
     public void saveSettings(Settings settings) {
@@ -53,18 +58,36 @@ public class SettingsServiceImpl extends SettingsService {
         // notify the observers
         setChanged();
         notifyObservers();
+
+        loadSettings();
     }
 
     @Override
     public Settings loadSettings() {
-        Settings settings = new Settings();
         SharedPreferences appPrefs = mContext.getSharedPreferences(RING_SETTINGS, Context.MODE_PRIVATE);
 
-        settings.setAllowMobileData(appPrefs.getBoolean(RING_MOBILE_DATA, false));
-        settings.setAllowSystemContacts(appPrefs.getBoolean(RING_SYSTEM_CONTACTS, true));
-        settings.setAllowPlaceSystemCalls(appPrefs.getBoolean(RING_PLACE_CALLS, false));
-        settings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
+        if (null == mUserSettings) {
+            mUserSettings = new Settings();
+        }
 
-        return settings;
+        mUserSettings.setAllowMobileData(appPrefs.getBoolean(RING_MOBILE_DATA, false));
+        mUserSettings.setAllowSystemContacts(appPrefs.getBoolean(RING_SYSTEM_CONTACTS, true));
+        mUserSettings.setAllowPlaceSystemCalls(appPrefs.getBoolean(RING_PLACE_CALLS, false));
+        mUserSettings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
+
+        return mUserSettings;
+    }
+
+    @Override
+    public Settings getUserSettings() {
+        if (null == mUserSettings) {
+            mUserSettings = loadSettings();
+        }
+        return mUserSettings;
+    }
+
+    public boolean isConnectedWifiAndMobile() {
+        return NetworkUtils.isConnectedWifi(mContext)
+                || (NetworkUtils.isConnectedMobile(mContext) && mUserSettings.isAllowMobileData());
     }
 }
