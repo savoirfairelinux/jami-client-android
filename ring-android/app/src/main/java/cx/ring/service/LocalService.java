@@ -31,7 +31,6 @@ import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
@@ -52,7 +51,6 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
-import cx.ring.model.Settings;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
@@ -62,6 +60,7 @@ import cx.ring.services.SettingsService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaManager;
+import cx.ring.utils.NetworkUtils;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
@@ -116,25 +115,12 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
     private MediaManager mediaManager;
 
-    private boolean isWifiConn = false;
-    private boolean isMobileConn = false;
-
-    private boolean canUseMobile = false;
-
     public LruCache<Long, Bitmap> get40dpContactCache() {
         return mMemoryCache;
     }
 
     public ExecutorService getThreadPool() {
         return mPool;
-    }
-
-    public boolean isConnected() {
-        return isWifiConn || (canUseMobile && isMobileConn);
-    }
-
-    public boolean isMobileNetworkConnectedButNotGranted() {
-        return (!canUseMobile && isMobileConn);
     }
 
     public void reloadAccounts() {
@@ -197,16 +183,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         // Clear any notifications from a previous app instance
         mNotificationService.cancelAll();
 
-        Settings settings = mSettingsService.loadSettings();
-        canUseMobile = settings.isAllowMobileData();
-
         startDRingService();
-
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo ni = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        isWifiConn = ni != null && ni.isConnected();
-        ni = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        isMobileConn = ni != null && ni.isConnected();
     }
 
     private void startDRingService() {
@@ -291,19 +268,10 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     }
 
     private void updateConnectivityState() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo ni = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        Log.w(TAG, "ActiveNetworkInfo (Wifi): " + (ni == null ? "null" : ni.toString()));
-        isWifiConn = ni != null && ni.isConnected();
-
-        ni = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        Log.w(TAG, "ActiveNetworkInfo (mobile): " + (ni == null ? "null" : ni.toString()));
-        isMobileConn = ni != null && ni.isConnected();
-
         if (dringStarted) {
             try {
-                getRemoteService().setAccountsActive(isConnected());
+                getRemoteService().setAccountsActive(NetworkUtils.isConnectedWifi(this)
+                        || (NetworkUtils.isConnectedMobile(this) && mSettingsService.getUserSettings().isAllowMobileData()));
                 getRemoteService().connectivityChanged();
             } catch (RemoteException e) {
                 Log.e(TAG, "updateConnectivityState", e);
@@ -466,7 +434,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     @Override
     public void update(Observable observable, ServiceEvent arg) {
         if (observable instanceof SettingsService) {
-            canUseMobile = mSettingsService.loadSettings().isAllowMobileData();
             refreshContacts();
             updateConnectivityState();
         }
