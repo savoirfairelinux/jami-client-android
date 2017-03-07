@@ -21,7 +21,10 @@ package cx.ring.dependencyinjection;
 
 import android.content.Context;
 
+import javax.inject.Singleton;
+
 import cx.ring.application.RingApplication;
+import cx.ring.utils.MediaManager;
 import dagger.Module;
 import dagger.Provides;
 
@@ -44,4 +47,9 @@ public class RingInjectionModule {
         return mRingApplication;
     }
 
+    @Provides
+    @Singleton
+    MediaManager provideMediaManager(Context context) {
+        return new MediaManager(context);
+    }
 }

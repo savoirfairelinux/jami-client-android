@@ -23,6 +23,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.media.AudioManager;
 import android.support.v4.content.ContextCompat;
 
 import java.io.File;
@@ -38,7 +39,10 @@ import javax.inject.Named;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.daemon.StringMap;
+import cx.ring.model.Conference;
+import cx.ring.model.Conversation;
 import cx.ring.utils.Log;
+import cx.ring.utils.MediaManager;
 
 public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
@@ -49,7 +53,10 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     ExecutorService mExecutor;
 
     @Inject
-    Context mContext;
+    protected Context mContext;
+
+    @Inject
+    protected MediaManager mediaManager;
 
     private long mDaemonThreadId = -1;
 
@@ -74,6 +81,23 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
             Log.i(TAG, "Ring library has been successfully loaded");
         } catch (Exception e) {
             Log.e(TAG, "Could not load Ring library", e);
+        }
+    }
+
+    @Override
+    public void updateAudioState(Conference conf) {
+        if (conf != null) {
+            mediaManager.obtainAudioFocus(conf.isIncoming() && conf.isRinging());
+            if (conf.isIncoming() && conf.isRinging()) {
+                mediaManager.audioManager.setMode(AudioManager.MODE_RINGTONE);
+                mediaManager.startRing(null);
+            } else {
+                mediaManager.stopRing();
+                mediaManager.audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+            }
+        } else {
+            mediaManager.stopRing();
+            mediaManager.abandonAudioFocus();
         }
     }
 
