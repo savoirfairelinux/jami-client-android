@@ -23,6 +23,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.media.AudioManager;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 
 import java.io.File;
@@ -38,7 +40,10 @@ import javax.inject.Named;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.daemon.StringMap;
+import cx.ring.model.Conference;
+import cx.ring.model.Conversation;
 import cx.ring.utils.Log;
+import cx.ring.utils.MediaManager;
 
 public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
@@ -49,7 +54,10 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     ExecutorService mExecutor;
 
     @Inject
-    Context mContext;
+    protected Context mContext;
+
+    @Inject
+    protected MediaManager mediaManager;
 
     private long mDaemonThreadId = -1;
 
@@ -75,6 +83,31 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
         } catch (Exception e) {
             Log.e(TAG, "Could not load Ring library", e);
         }
+    }
+
+    @Override
+    public void updateAudioState(final Conference conf) {
+        Handler mainHandler = new Handler(mContext.getMainLooper());
+
+        mainHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (conf != null) {
+                    boolean incomingAndRinging = conf.isIncoming() && conf.isRinging();
+                    mediaManager.obtainAudioFocus(incomingAndRinging);
+                    if (incomingAndRinging) {
+                        mediaManager.audioManager.setMode(AudioManager.MODE_RINGTONE);
+                        mediaManager.startRing(null);
+                    } else {
+                        mediaManager.stopRing();
+                        mediaManager.audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+                    }
+                } else {
+                    mediaManager.stopRing();
+                    mediaManager.abandonAudioFocus();
+                }
+            }
+        });
     }
 
     @Override
