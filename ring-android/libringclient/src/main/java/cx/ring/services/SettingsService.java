@@ -24,8 +24,13 @@ import cx.ring.utils.Observable;
 
 public abstract class SettingsService extends Observable {
 
+    protected Settings userSettings;
+
     public abstract void saveSettings(Settings settings);
 
     public abstract Settings loadSettings();
 
+    public Settings getUserSettings() {
+        return userSettings;
+    }
 }
