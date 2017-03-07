@@ -380,6 +380,16 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         return null;
     }
 
+    public Conference getCurrentCallingConf() {
+        for (Conversation c : getConversations().values()) {
+            Conference conf = c.getCurrentCall();
+            if (conf != null) {
+                return conf;
+            }
+        }
+        return null;
+    }
+
     public void setConversationVisible() {
         for (Conversation conv : mConversationMap.values()) {
             boolean isConversationVisible = conv.isVisible();
@@ -492,6 +502,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
+
+
     @Override
     public void update(Observable observable, ServiceEvent event) {
 
@@ -601,6 +613,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                         }
                     }
 
+                    mDeviceRuntimeService.updateAudioState(getCurrentCallingConf());
+
                     setChanged();
                     ServiceEvent e = new ServiceEvent(ServiceEvent.EventType.CALL_STATE_CHANGED);
                     notifyObservers(e);
@@ -636,6 +650,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
                     // Sending VCard when receiving a call
                     mAccountService.sendProfile(callid, accountId);
+
+                    mDeviceRuntimeService.updateAudioState(getCurrentCallingConf());
 
                     setChanged();
                     ServiceEvent event1 = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);

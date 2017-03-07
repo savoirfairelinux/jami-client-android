@@ -23,10 +23,13 @@ import java.io.File;
 import java.util.Map;
 
 import cx.ring.daemon.StringMap;
+import cx.ring.model.Conference;
 
 public abstract class DeviceRuntimeService {
 
     public abstract void loadNativeLibrary();
+
+    public abstract void updateAudioState(Conference conf);
 
     public abstract File provideFilesDir();
 
