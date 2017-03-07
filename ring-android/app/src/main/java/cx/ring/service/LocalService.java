@@ -29,10 +29,8 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
-import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.os.Binder;
-import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
@@ -54,12 +52,10 @@ import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
-import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.SettingsService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
-import cx.ring.utils.MediaManager;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
@@ -71,8 +67,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     static public final String ACTION_CONF_LOADED = BuildConfig.APPLICATION_ID + ".action.CONF_LOADED";
 
     static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
-
-    static public final String ACTION_CONF_UPDATE_EXTRA_MSG = ACTION_CONF_UPDATE + ".extra.message";
 
     // Receiving commands
     static public final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
@@ -90,16 +84,13 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     ContactService mContactService;
 
     @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
-
-    @Inject
     NotificationService mNotificationService;
 
     @Inject
-    HardwareService mHardwareService;
+    ConversationFacade mConversationFacade;
 
     @Inject
-    ConversationFacade mConversationFacade;
+    DeviceRuntimeService mDeviceRuntimeService;
 
     private IDRingService mService = null;
     private boolean dringStarted = false;
@@ -111,8 +102,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
     private LruCache<Long, Bitmap> mMemoryCache = null;
     private final ExecutorService mPool = Executors.newCachedThreadPool();
-
-    private MediaManager mediaManager;
 
     public LruCache<Long, Bitmap> get40dpContactCache() {
         return mMemoryCache;
@@ -155,8 +144,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     public void onCreate() {
         Log.d(TAG, "onCreate");
         super.onCreate();
-
-        mediaManager = new MediaManager(this);
 
         final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         final int cacheSize = maxMemory / 8;
@@ -277,35 +264,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         }
     }
 
-    private void updateAudioState() {
-        boolean current = false;
-        Conference ringing = null;
-        for (Conversation c : mConversationFacade.getConversations().values()) {
-            Conference conf = c.getCurrentCall();
-            if (conf != null) {
-                current = true;
-                if (conf.isRinging() && conf.isIncoming()) {
-                    ringing = conf;
-                    break;
-                }
-            }
-        }
-        if (current) {
-            mediaManager.obtainAudioFocus(ringing != null);
-        }
-
-        if (ringing != null) {
-            mediaManager.audioManager.setMode(AudioManager.MODE_RINGTONE);
-            mediaManager.startRing(null);
-        } else if (current) {
-            mediaManager.stopRing();
-            mediaManager.audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
-        } else {
-            mediaManager.stopRing();
-            mediaManager.abandonAudioFocus();
-        }
-    }
-
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -338,7 +296,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                     } catch (RemoteException e) {
                         Log.e(TAG, "ACTION_CALL_ACCEPT", e);
                     }
-                    updateAudioState();
+                    mDeviceRuntimeService.updateAudioState(mConversationFacade.getCurrentCallingConf());
                     Conference conf = mConversationFacade.getConference(callId);
                     if (conf != null && !conf.isVisible()) {
                         startActivity(ActionHelper.getViewIntent(LocalService.this, conf).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
@@ -352,7 +310,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                     } catch (RemoteException e) {
                         Log.e(TAG, "ACTION_CALL_REFUSE", e);
                     }
-                    updateAudioState();
+                    mDeviceRuntimeService.updateAudioState(mConversationFacade.getCurrentCallingConf());
                     break;
                 }
                 case ACTION_CALL_END: {
@@ -363,7 +321,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                     } catch (RemoteException e) {
                         Log.e(TAG, "ACTION_CALL_END", e);
                     }
-                    updateAudioState();
+                    mDeviceRuntimeService.updateAudioState(mConversationFacade.getCurrentCallingConf());
                     break;
                 }
                 case ConnectivityManager.CONNECTIVITY_ACTION:
@@ -454,21 +412,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
             switch (arg.getEventType()) {
                 case CONTACTS_CHANGED:
                     mConversationFacade.refreshConversations();
-                    return;
-            }
-        }
-
-        if (observable instanceof ConversationFacade && arg != null) {
-            switch (arg.getEventType()) {
-                case CALL_STATE_CHANGED:
-                case INCOMING_CALL:
-                    Handler mainHandler = new Handler(getApplicationContext().getMainLooper());
-                    mainHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            updateAudioState();
-                        }
-                    });
                     return;
             }
         }
