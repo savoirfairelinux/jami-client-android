@@ -19,6 +19,8 @@
  */
 package cx.ring.dependencyinjection;
 
+import android.content.Context;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -27,12 +29,12 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import cx.ring.application.RingApplication;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.ContactService;
 import cx.ring.services.ContactServiceImpl;
-import cx.ring.facades.ConversationFacade;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.DeviceRuntimeServiceImpl;
@@ -46,6 +48,7 @@ import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.SettingsService;
 import cx.ring.services.SettingsServiceImpl;
 import cx.ring.utils.Log;
+import cx.ring.utils.MediaManager;
 import dagger.Module;
 import dagger.Provides;
 
@@ -181,5 +184,11 @@ public class ServiceInjectionModule {
     @Singleton
     ScheduledExecutorService provideScheduledExecutorService() {
         return Executors.newSingleThreadScheduledExecutor();
+    }
+
+    @Provides
+    @Singleton
+    MediaManager provideMediaManager(Context context) {
+        return new MediaManager(context);
     }
 }
