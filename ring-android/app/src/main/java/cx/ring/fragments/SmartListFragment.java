@@ -86,10 +86,12 @@ import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HistoryService;
+import cx.ring.services.SettingsService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
+import cx.ring.utils.NetworkUtils;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
@@ -154,6 +156,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     @Inject
     ConversationFacade mConversationFacade;
+
+    @Inject
+    SettingsService mSettingsService;
 
     final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -233,12 +238,13 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             bindService(getActivity(), service);
         }
 
-        if (service.isConnected()) {
+        if (NetworkUtils.isConnected(getActivity())
+                && mSettingsService.getUserSettings().isAllowMobileData()) {
             if (mErrorMessagePane != null) {
                 mErrorMessagePane.setVisibility(View.GONE);
             }
         } else {
-            this.presentNetworkErrorPanel(service);
+            this.presentNetworkErrorPanel();
         }
 
         // If conversation has been created based on a blockchained discovered username
@@ -248,7 +254,7 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
 
     private void searchForRingIdInBlockchain() {
         LocalService service = mCallbacks.getService();
-        if (service == null || !service.isConnected()) {
+        if (service == null || !NetworkUtils.isConnected(getActivity())) {
             return;
         }
         List<Conversation> conversations = mConversationFacade.getConversationsList();
@@ -821,8 +827,9 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
         }
     }
 
-    private void presentNetworkErrorPanel(@NonNull LocalService service) {
-        if (service.isMobileNetworkConnectedButNotGranted()) {
+    private void presentNetworkErrorPanel() {
+        if (NetworkUtils.isConnectedMobile(getActivity())
+                && !mSettingsService.getUserSettings().isAllowMobileData()) {
             this.showErrorPanel(R.string.error_mobile_network_available_but_disabled,
                     true,
                     R.drawable.ic_settings_white,
