@@ -36,7 +36,7 @@ public class SettingsServiceImpl extends SettingsService {
     public static final String RING_ON_STARTUP = "on_startup";
 
     @Inject
-    Context mContext;
+    protected Context mContext;
 
     @Override
     public void saveSettings(Settings settings) {
@@ -53,18 +53,31 @@ public class SettingsServiceImpl extends SettingsService {
         // notify the observers
         setChanged();
         notifyObservers();
+
+        loadSettings();
     }
 
     @Override
     public Settings loadSettings() {
-        Settings settings = new Settings();
         SharedPreferences appPrefs = mContext.getSharedPreferences(RING_SETTINGS, Context.MODE_PRIVATE);
 
-        settings.setAllowMobileData(appPrefs.getBoolean(RING_MOBILE_DATA, false));
-        settings.setAllowSystemContacts(appPrefs.getBoolean(RING_SYSTEM_CONTACTS, true));
-        settings.setAllowPlaceSystemCalls(appPrefs.getBoolean(RING_PLACE_CALLS, false));
-        settings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
+        if (null == userSettings) {
+            userSettings = new Settings();
+        }
 
-        return settings;
+        userSettings.setAllowMobileData(appPrefs.getBoolean(RING_MOBILE_DATA, false));
+        userSettings.setAllowSystemContacts(appPrefs.getBoolean(RING_SYSTEM_CONTACTS, true));
+        userSettings.setAllowPlaceSystemCalls(appPrefs.getBoolean(RING_PLACE_CALLS, false));
+        userSettings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
+
+        return userSettings;
+    }
+
+    @Override
+    public Settings getUserSettings() {
+        if (null == userSettings) {
+            userSettings = loadSettings();
+        }
+        return userSettings;
     }
 }
