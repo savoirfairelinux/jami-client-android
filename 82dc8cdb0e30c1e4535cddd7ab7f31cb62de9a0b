@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_aeba8308",
+        "filename": "ring-android/app/src/main/res/layout/frag_pending_trust_requests.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-07T16:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_ae8cc380",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 34
+      },
+      "revId": "82dc8cdb0e30c1e4535cddd7ab7f31cb62de9a0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_4ee98719",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/trustrequests/PendingTrustRequestsViewModel.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-07T16:06:47Z",
       "side": 1,
       "message": "primitive type should be used",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "82dc8cdb0e30c1e4535cddd7ab7f31cb62de9a0b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_2ecf73b2",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/trustrequests/PendingTrustRequestsViewModel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-07T16:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_4ee98719",
       "range": {
         "startLine": 32,
         "startChar": 0,
