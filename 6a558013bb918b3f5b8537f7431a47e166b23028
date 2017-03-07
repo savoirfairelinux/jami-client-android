@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_0e586ff9",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-07T18:13:50Z",
+      "side": 1,
+      "message": "This function is temporary (a few weeks). I think that is not necessary to make unit tests on it.",
+      "parentUuid": "bab3e1c7_4ed0a753",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 369,
+        "endChar": 9
+      },
+      "revId": "6a558013bb918b3f5b8537f7431a47e166b23028",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_6ed56b42",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-07T16:21:10Z",
       "side": 1,
       "message": "Should be a public constant",
+      "range": {
+        "startLine": 371,
+        "startChar": 79,
+        "endLine": 371,
+        "endChar": 91
+      },
+      "revId": "6a558013bb918b3f5b8537f7431a47e166b23028",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_4ed3c738",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-07T18:13:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_6ed56b42",
       "range": {
         "startLine": 371,
         "startChar": 79,
