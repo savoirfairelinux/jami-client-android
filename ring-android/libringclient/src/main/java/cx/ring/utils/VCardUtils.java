@@ -132,7 +132,7 @@ public class VCardUtils {
      * @param filename the filename of the vcf
      * @param path     the path of the vcf
      */
-    private static void saveToDisk(VCard vcard, String filename, String path) {
+    public static void saveToDisk(VCard vcard, String filename, String path) {
         if (vcard == null || filename == null || filename.equals("")) {
             return;
         }
@@ -182,7 +182,7 @@ public class VCardUtils {
      * @param path the filename of the vcard
      * @return the VCard or null
      */
-    private static VCard loadFromDisk(String path) {
+    public static VCard loadFromDisk(String path) {
         try {
             if (path == null || path.isEmpty()) {
                 Log.d(TAG, "Empty file or error with the context");
