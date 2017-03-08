@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_4e7987fb",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-08T16:36:36Z",
+      "side": 1,
+      "message": "this line is useless",
+      "revId": "900985c52d29921ce08b9ad9d59a10e01cb1c206",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_ae1cc3c2",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-08T16:36:36Z",
+      "side": 1,
+      "message": "not used now",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 33
+      },
+      "revId": "900985c52d29921ce08b9ad9d59a10e01cb1c206",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_8e1f7fb7",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-08T16:36:36Z",
+      "side": 1,
+      "message": "you should remove this line",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 39
+      },
+      "revId": "900985c52d29921ce08b9ad9d59a10e01cb1c206",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_6e7ecbe6",
+        "filename": "ring-android/build.gradle",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-08T16:36:36Z",
+      "side": 1,
+      "message": "it\u0027s necessary ? It\u0027s not the purpose of this commit.",
+      "range": {
+        "startLine": 7,
+        "startChar": 50,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "900985c52d29921ce08b9ad9d59a10e01cb1c206",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_0e838fcd",
+        "filename": "ring-android/gradle/wrapper/gradle-wrapper.properties",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-08T16:36:36Z",
+      "side": 1,
+      "message": "it\u0027s necessary ? It\u0027s not the purpose of this commit.",
+      "range": {
+        "startLine": 6,
+        "startChar": 60,
+        "endLine": 6,
+        "endChar": 77
+      },
+      "revId": "900985c52d29921ce08b9ad9d59a10e01cb1c206",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
