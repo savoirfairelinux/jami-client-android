@@ -26,14 +26,14 @@ import cx.ring.model.Settings;
 import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.HistoryService;
-import cx.ring.services.SettingsService;
+import cx.ring.services.SharedPreferencesService;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
 public class SettingsPresenter extends RootPresenter<GenericView<SettingsViewModel>> implements Observer<ServiceEvent> {
 
     @Inject
-    SettingsService mSettingsService;
+    SharedPreferencesService mSharedPreferencesService;
 
     @Inject
     HistoryService mHistoryService;
@@ -41,7 +41,7 @@ public class SettingsPresenter extends RootPresenter<GenericView<SettingsViewMod
     @Override
     public void afterInjection() {
         // We observe the application settings changes
-        mSettingsService.addObserver(this);
+        mSharedPreferencesService.addObserver(this);
         // no need to observe the history changes
         // only the smartlist should do so
     }
@@ -52,14 +52,14 @@ public class SettingsPresenter extends RootPresenter<GenericView<SettingsViewMod
         }
 
         // load the app settings
-        Settings settings = mSettingsService.loadSettings();
+        Settings settings = mSharedPreferencesService.loadSettings();
 
         // let the view display the associated ViewModel
         getView().showViewModel(new SettingsViewModel(settings));
     }
 
     public void saveSettings(Settings settings) {
-        mSettingsService.saveSettings(settings);
+        mSharedPreferencesService.saveSettings(settings);
     }
 
     public void clearHistory() {
@@ -68,7 +68,7 @@ public class SettingsPresenter extends RootPresenter<GenericView<SettingsViewMod
 
     @Override
     public void update(Observable observable, ServiceEvent o) {
-        if (observable instanceof SettingsService) {
+        if (observable instanceof SharedPreferencesService) {
             loadSettings();
         }
     }

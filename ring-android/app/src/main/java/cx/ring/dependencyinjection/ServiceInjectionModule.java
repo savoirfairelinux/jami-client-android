@@ -45,8 +45,8 @@ import cx.ring.services.LogService;
 import cx.ring.services.LogServiceImpl;
 import cx.ring.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
-import cx.ring.services.SettingsService;
-import cx.ring.services.SettingsServiceImpl;
+import cx.ring.services.SharedPreferencesService;
+import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.utils.Log;
 import cx.ring.utils.MediaManager;
 import dagger.Module;
@@ -63,8 +63,8 @@ public class ServiceInjectionModule {
 
     @Provides
     @Singleton
-    SettingsService provideSettingsService() {
-        SettingsServiceImpl settingsService = new SettingsServiceImpl();
+    SharedPreferencesService provideSettingsService() {
+        SharedPreferencesServiceImpl settingsService = new SharedPreferencesServiceImpl();
         mRingApplication.getRingInjectionComponent().inject(settingsService);
         return settingsService;
     }
@@ -146,7 +146,7 @@ public class ServiceInjectionModule {
 
     @Provides
     @Singleton
-    ContactService provideContactService(SettingsService settingsService) {
+    ContactService provideContactService(SharedPreferencesService sharedPreferencesService) {
         ContactServiceImpl contactService = new ContactServiceImpl();
         mRingApplication.getRingInjectionComponent().inject(contactService);
         return contactService;

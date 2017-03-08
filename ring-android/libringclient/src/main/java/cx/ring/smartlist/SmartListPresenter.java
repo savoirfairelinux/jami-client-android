@@ -38,7 +38,7 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HistoryService;
-import cx.ring.services.SettingsService;
+import cx.ring.services.SharedPreferencesService;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -52,7 +52,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     private HistoryService mHistoryService;
 
-    private SettingsService mSettingsService;
+    private SharedPreferencesService mSharedPreferencesService;
 
     private ConversationFacade mConversationFacade;
 
@@ -65,11 +65,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     @Inject
     public SmartListPresenter(AccountService accountService, ContactService contactService,
                               HistoryService historyService, ConversationFacade conversationFacade,
-                              SettingsService settingsService) {
+                              SharedPreferencesService sharedPreferencesService) {
         this.mAccountService = accountService;
         this.mContactService = contactService;
         this.mHistoryService = historyService;
-        this.mSettingsService = settingsService;
+        this.mSharedPreferencesService = sharedPreferencesService;
         this.mConversationFacade = conversationFacade;
     }
 
@@ -94,10 +94,10 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     public void refresh(boolean isConnectedWifi, boolean isConnectedMobile) {
         boolean isConnected = isConnectedWifi
-                || (isConnectedMobile && mSettingsService.getUserSettings().isAllowMobileData());
+                || (isConnectedMobile && mSharedPreferencesService.getUserSettings().isAllowMobileData());
 
         boolean isMobileAndNotAllowed = isConnectedMobile
-                && !mSettingsService.getUserSettings().isAllowMobileData();
+                && !mSharedPreferencesService.getUserSettings().isAllowMobileData();
 
         if (isConnected) {
             getView().hideErrorPanel();

@@ -53,7 +53,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.NotificationService;
-import cx.ring.services.SettingsService;
+import cx.ring.services.SharedPreferencesService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Observable;
@@ -75,7 +75,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
 
     @Inject
-    SettingsService mSettingsService;
+    SharedPreferencesService mSharedPreferencesService;
 
     @Inject
     AccountService mAccountService;
@@ -161,7 +161,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         // temporary listen for history modifications
         // When MVP/DI injection will be done, only the concerned presenters should listen
         // for model modifications
-        mSettingsService.addObserver(this);
+        mSharedPreferencesService.addObserver(this);
         mAccountService.addObserver(this);
         mContactService.addObserver(this);
         mConversationFacade.addObserver(this);
@@ -190,7 +190,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     public void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy");
-        mSettingsService.removeObserver(this);
+        mSharedPreferencesService.removeObserver(this);
         mAccountService.removeObserver(this);
         mContactService.removeObserver(this);
         mConversationFacade.removeObserver(this);
@@ -256,7 +256,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     private void updateConnectivityState() {
         if (dringStarted) {
             try {
-                getRemoteService().setAccountsActive(mSettingsService.isConnectedWifiAndMobile());
+                getRemoteService().setAccountsActive(mSharedPreferencesService.isConnectedWifiAndMobile());
                 getRemoteService().connectivityChanged();
             } catch (RemoteException e) {
                 Log.e(TAG, "updateConnectivityState", e);
@@ -389,7 +389,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
     @Override
     public void update(Observable observable, ServiceEvent arg) {
-        if (observable instanceof SettingsService) {
+        if (observable instanceof SharedPreferencesService) {
             refreshContacts();
             updateConnectivityState();
         }
