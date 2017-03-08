@@ -35,6 +35,7 @@ import android.text.format.DateUtils;
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.inject.Inject;
@@ -81,6 +82,12 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     @Inject
     protected AccountService mAccountService;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
+
+    @Inject
+    protected SharedPreferencesService mSharedPreferencesService;
 
     private NotificationManagerCompat notificationManager;
 
@@ -422,7 +429,12 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                     final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
                     final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);
                     if (accountID != null && from != null) {
-                        showIncomingTrustRequestNotification(accountID, from);
+                        Set<String> requests = mSharedPreferencesService.loadRequestsPreferences(accountID);
+                        if (requests == null || !requests.contains(from)) {
+                            showIncomingTrustRequestNotification(accountID, from);
+
+                            mSharedPreferencesService.saveRequestPreferences(accountID, from);
+                        }
                     }
                     break;
                 }
