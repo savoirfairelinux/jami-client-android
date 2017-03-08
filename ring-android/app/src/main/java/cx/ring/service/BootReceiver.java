@@ -8,13 +8,13 @@ import android.util.Log;
 import javax.inject.Inject;
 
 import cx.ring.application.RingApplication;
-import cx.ring.services.SettingsService;
+import cx.ring.services.SharedPreferencesService;
 
 public class BootReceiver extends BroadcastReceiver {
     private static final String TAG = BootReceiver.class.getSimpleName();
 
     @Inject
-    SettingsService mSettingsService;
+    SharedPreferencesService mSharedPreferencesService;
 
     public BootReceiver() {
     }
@@ -25,7 +25,7 @@ public class BootReceiver extends BroadcastReceiver {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
 
             ((RingApplication) context.getApplicationContext()).getRingInjectionComponent().inject(this);
-            boolean isAllowRingOnStartup = mSettingsService.loadSettings().isAllowRingOnStartup();
+            boolean isAllowRingOnStartup = mSharedPreferencesService.loadSettings().isAllowRingOnStartup();
 
             if (isAllowRingOnStartup) {
                 Log.w(TAG, "Starting Ring on boot");

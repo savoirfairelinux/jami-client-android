@@ -64,7 +64,7 @@ public abstract class ContactService extends Observable {
     private final static String TAG = ContactService.class.getName();
 
     @Inject
-    SettingsService mSettingsService;
+    SharedPreferencesService mSharedPreferencesService;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -132,7 +132,7 @@ public abstract class ContactService extends Observable {
         mApplicationExecutor.submit(new Runnable() {
             @Override
             public void run() {
-                Settings settings = mSettingsService.loadSettings();
+                Settings settings = mSharedPreferencesService.loadSettings();
                 if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
                     mContactList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
                 }
@@ -204,6 +204,7 @@ public abstract class ContactService extends Observable {
 
         return contacts;
     }
+
     public Collection<CallContact> getContactsConfirmed() {
         List<CallContact> contacts = new ArrayList<>(getContacts());
         Iterator<CallContact> it = contacts.iterator();
@@ -242,7 +243,7 @@ public abstract class ContactService extends Observable {
             return null;
         }
 
-        Settings settings = mSettingsService.loadSettings();
+        Settings settings = mSharedPreferencesService.loadSettings();
 
         CallContact contact = mContactList.get(id);
         if (contact == null && (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission())) {
@@ -266,7 +267,7 @@ public abstract class ContactService extends Observable {
             return null;
         }
 
-        Settings settings = mSettingsService.loadSettings();
+        Settings settings = mSharedPreferencesService.loadSettings();
 
         String searchedCanonicalNumber = CallContact.canonicalNumber(number);
 
