@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_ee087b2f",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-08T21:23:57Z",
+      "side": 1,
+      "message": "Pending",
+      "range": {
+        "startLine": 127,
+        "startChar": 31,
+        "endLine": 127,
+        "endChar": 38
+      },
+      "revId": "ac6f6e04fecbe09f8bc2d4492a628617bf29e9e0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_71046a15",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-08T21:23:57Z",
+      "side": 1,
+      "message": "you are stocked this value in the intent variable",
+      "range": {
+        "startLine": 286,
+        "startChar": 57,
+        "endLine": 286,
+        "endChar": 68
+      },
+      "revId": "ac6f6e04fecbe09f8bc2d4492a628617bf29e9e0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_d112f657",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-08T21:23:57Z",
+      "side": 1,
+      "message": "it must add the break keyword and the defaut case. See you an another file with the update function.",
+      "revId": "ac6f6e04fecbe09f8bc2d4492a628617bf29e9e0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_4e18a784",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/trustrequests/PendingTrustRequestsPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-08T21:23:57Z",
+      "side": 1,
+      "message": "There is not necessary to inject this service:\n- removes @Inject and adds private attribu\n- adds the notificationService in the parameters of the constructor\n\nSee you the accountService.",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "ac6f6e04fecbe09f8bc2d4492a628617bf29e9e0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
