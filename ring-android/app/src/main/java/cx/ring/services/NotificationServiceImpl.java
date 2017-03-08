@@ -33,6 +33,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.text.Html;
 import android.text.format.DateUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.TreeMap;
@@ -60,6 +61,7 @@ import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.TrustRequestUtils;
 
 public class NotificationServiceImpl extends NotificationService implements Observer<ServiceEvent> {
 
@@ -81,6 +83,9 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     @Inject
     protected AccountService mAccountService;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
 
     private NotificationManagerCompat notificationManager;
 
@@ -422,7 +427,11 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                     final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
                     final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);
                     if (accountID != null && from != null) {
-                        showIncomingTrustRequestNotification(accountID, from);
+                        ArrayList<String> requests = TrustRequestUtils.loadFromDisk(accountID, mDeviceRuntimeService.provideFilesDir());
+                        if (requests == null || !requests.contains(from)) {
+                            showIncomingTrustRequestNotification(accountID, from);
+                            TrustRequestUtils.saveToDisk(accountID, from, mDeviceRuntimeService.provideFilesDir());
+                        }
                     }
                     break;
                 }
