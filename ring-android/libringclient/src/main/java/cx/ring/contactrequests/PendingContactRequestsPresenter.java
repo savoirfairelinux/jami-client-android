@@ -20,12 +20,12 @@
 package cx.ring.contactrequests;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import cx.ring.daemon.Blob;
 import cx.ring.model.Account;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.TrustRequest;
@@ -34,9 +34,13 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.ContactService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.TrustRequestUtils;
+import cx.ring.utils.Tuple;
+import ezvcard.VCard;
 
 public class PendingContactRequestsPresenter extends RootPresenter<GenericView<PendingContactRequestsViewModel>> implements Observer<ServiceEvent> {
 
@@ -45,15 +49,19 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
     private AccountService mAccountService;
     private NotificationService mNotificationService;
     private ContactService mContactService;
+    private DeviceRuntimeService mDeviceRuntimeService;
+
     private String mAccountID;
 
     @Inject
     public PendingContactRequestsPresenter(AccountService accountService,
-                                         NotificationService notificationService,
-                                         ContactService contactService) {
+                                           NotificationService notificationService,
+                                           ContactService contactService,
+                                           DeviceRuntimeService deviceRuntimeService) {
         mAccountService = accountService;
         mNotificationService = notificationService;
         mContactService = contactService;
+        mDeviceRuntimeService = deviceRuntimeService;
     }
 
     final private List<TrustRequest> mTrustRequests = new ArrayList<>();
@@ -121,12 +129,14 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
     public void acceptTrustRequest(String contactId) {
         String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
         mAccountService.acceptTrustRequest(accountId, contactId);
+        TrustRequestUtils.removeRequestToDisk(accountId, contactId, mDeviceRuntimeService.provideFilesDir());
         updateList(true);
     }
 
     public void refuseTrustRequest(String contactId) {
         String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
         mAccountService.discardTrustRequest(accountId, contactId);
+        TrustRequestUtils.removeRequestToDisk(accountId, contactId, mDeviceRuntimeService.provideFilesDir());
         updateList(true);
     }
 
@@ -134,6 +144,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
         String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
         mAccountService.discardTrustRequest(accountId, contactId);
         mContactService.removeContact(accountId, contactId);
+        TrustRequestUtils.removeRequestToDisk(accountId, contactId, mDeviceRuntimeService.provideFilesDir());
         updateList(true);
     }
 
@@ -145,8 +156,21 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
         Log.d(TAG, "update " + event.getEventType());
 
         switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
             case INCOMING_TRUST_REQUEST:
+                final String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
+                final String from = event.getEventInput(ServiceEvent.EventInput.FROM, String.class);
+                final String payload = event.getEventInput(ServiceEvent.EventInput.MESSAGE, Blob.class).toJavaString();
+                TrustRequest request = new TrustRequest(accountId, from);
+                Tuple<VCard, String> tuple = TrustRequestUtils.parsePayload(payload);
+                request.setVCard(tuple.first);
+                request.setMessage(tuple.second);
+                if (!mTrustRequestsTmp.contains(request) && !mTrustRequests.contains(request)) {
+                    mTrustRequestsTmp.add(request);
+                    mAccountService.lookupAddress("", "", from);
+                    updateList(false);
+                }
+                break;
+            case ACCOUNTS_CHANGED:
                 updateList(true);
                 break;
             case REGISTERED_NAME_FOUND:

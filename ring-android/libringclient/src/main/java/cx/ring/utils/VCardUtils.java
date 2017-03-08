@@ -203,6 +203,10 @@ public class VCardUtils {
     }
 
     public static String vcardToString(VCard vcard) {
+        if(vcard == null){
+            return "";
+        }
+        
         StringWriter writer = new StringWriter();
         VCardWriter vcwriter = new VCardWriter(writer, VCardVersion.V2_1);
         vcwriter.getRawWriter().getFoldedLineWriter().setLineLength(null);
