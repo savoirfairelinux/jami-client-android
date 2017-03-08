@@ -43,6 +43,7 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.daemon.Blob;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -50,6 +51,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
+import cx.ring.model.TrustRequest;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.LocalService;
 import cx.ring.trustrequests.PendingTrustRequestsFragment;
@@ -59,6 +61,9 @@ import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.TrustRequestUtils;
+import cx.ring.utils.Tuple;
+import ezvcard.VCard;
 
 public class NotificationServiceImpl extends NotificationService implements Observer<ServiceEvent> {
 
@@ -75,6 +80,9 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     @Inject
     AccountService mAccountService;
+
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
 
     private NotificationManagerCompat notificationManager;
 
@@ -388,8 +396,19 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 case INCOMING_TRUST_REQUEST: {
                     final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
                     final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);
+                    final String payload = arg.getEventInput(ServiceEvent.EventInput.MESSAGE, Blob.class).toJavaString();
+
                     if (accountID != null && from != null) {
-                        showIncomingTrustRequestNotification(accountID, from);
+                        TrustRequest request = TrustRequestUtils.loadFromDisk(accountID, from, mDeviceRuntimeService.provideFilesDir());
+                        if (request == null) {
+                            showIncomingTrustRequestNotification(accountID, from);
+
+                            request = new TrustRequest(accountID, from);
+                            Tuple<VCard, String> tuple = TrustRequestUtils.parsePayload(payload);
+                            request.setVCard(tuple.first);
+                            request.setMessage(tuple.second);
+                            TrustRequestUtils.saveTrustRequestToDisk(request, mDeviceRuntimeService.provideFilesDir());
+                        }
                     }
                     break;
                 }
