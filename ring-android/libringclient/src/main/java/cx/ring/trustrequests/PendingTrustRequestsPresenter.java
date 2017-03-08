@@ -26,6 +26,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import cx.ring.daemon.Blob;
 import cx.ring.model.Account;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.TrustRequest;
@@ -98,8 +99,12 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         }
 
         switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
             case INCOMING_TRUST_REQUEST:
+                final String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
+                final String from = event.getEventInput(ServiceEvent.EventInput.FROM, String.class);
+                final String payload = event.getEventInput(ServiceEvent.EventInput.MESSAGE, Blob.class).toJavaString();
+
+            case ACCOUNTS_CHANGED:
                 updateList();
                 break;
             default:
