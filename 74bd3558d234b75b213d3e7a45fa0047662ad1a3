@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_51ffe601",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/trustrequests/PendingTrustRequestsPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-08T21:12:09Z",
+      "side": 1,
+      "message": "Log should be below the null check",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 9
+      },
+      "revId": "74bd3558d234b75b213d3e7a45fa0047662ad1a3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
