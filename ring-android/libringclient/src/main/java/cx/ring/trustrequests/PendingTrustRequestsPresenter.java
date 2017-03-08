@@ -19,6 +19,7 @@
 
 package cx.ring.trustrequests;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,25 +27,32 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import cx.ring.daemon.Blob;
 import cx.ring.model.Account;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.TrustRequest;
 import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.TrustRequestUtils;
+import cx.ring.utils.Tuple;
+import ezvcard.VCard;
 
 public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<PendingTrustRequestsViewModel>> implements Observer<ServiceEvent> {
 
     static final String TAG = PendingTrustRequestsPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
+    private DeviceRuntimeService mDeviceRuntimeService;
 
     @Inject
-    public PendingTrustRequestsPresenter(AccountService mAccountService) {
-        this.mAccountService = mAccountService;
+    public PendingTrustRequestsPresenter(AccountService accountService, DeviceRuntimeService deviceRuntimeService) {
+        mAccountService = accountService;
+        mDeviceRuntimeService = deviceRuntimeService;
     }
 
     final private List<TrustRequest> mTrustRequests = new ArrayList<>();
@@ -85,11 +93,15 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
             HashMap<String, String> map = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
 
             for (Map.Entry<String, String> entry : map.entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-                Log.d(TAG, "trust request: " + value + ", " + key);
-                mTrustRequestsTmp.add(new TrustRequest(value, key));
-                mAccountService.lookupAddress("", "", key);
+                String contactId = entry.getKey();
+                String accountId = entry.getValue();
+                TrustRequest trustRequest = TrustRequestUtils.loadFromDisk(accountId, contactId, mDeviceRuntimeService.provideFilesDir());
+                if (trustRequest == null) {
+                    trustRequest = new TrustRequest(accountId, contactId);
+                }
+                Log.d(TAG, "trust request: " + accountId + ", " + contactId);
+                mTrustRequestsTmp.add(trustRequest);
+                mAccountService.lookupAddress("", "", contactId);
             }
         }
 
@@ -104,8 +116,24 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         Log.d(TAG, "update " + event.getEventType());
 
         switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
             case INCOMING_TRUST_REQUEST:
+                final String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
+                final String from = event.getEventInput(ServiceEvent.EventInput.FROM, String.class);
+                final String payload = event.getEventInput(ServiceEvent.EventInput.MESSAGE, Blob.class).toJavaString();
+                TrustRequest request = TrustRequestUtils.loadFromDisk(accountId, from, mDeviceRuntimeService.provideFilesDir());
+                if (request == null) {
+                    request = new TrustRequest(accountId, from);
+                    Tuple<VCard, String> tuple = TrustRequestUtils.parsePayload(payload);
+                    request.setVCard(tuple.first);
+                    request.setMessage(tuple.second);
+                    TrustRequestUtils.saveTrustRequestToDisk(request, mDeviceRuntimeService.provideFilesDir());
+
+                    mTrustRequestsTmp.add(request);
+                    mAccountService.lookupAddress("", "", from);
+                    updateList(false);
+                }
+                break;
+            case ACCOUNTS_CHANGED:
                 updateList(true);
                 break;
             case REGISTERED_NAME_FOUND:
