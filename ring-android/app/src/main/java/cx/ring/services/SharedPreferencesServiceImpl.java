@@ -22,14 +22,18 @@ package cx.ring.services;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.inject.Inject;
 
 import cx.ring.model.Settings;
 import cx.ring.utils.NetworkUtils;
 
-public class SettingsServiceImpl extends SettingsService {
+public class SharedPreferencesServiceImpl extends SharedPreferencesService {
 
     public static final String RING_SETTINGS = "ring_settings";
+    public static final String RING_REQUESTS = "ring_requests";
 
     public static final String RING_MOBILE_DATA = "mobile_data";
     public static final String RING_SYSTEM_CONTACTS = "system_contacts";
@@ -39,7 +43,7 @@ public class SettingsServiceImpl extends SettingsService {
     @Inject
     protected Context mContext;
 
-    public SettingsServiceImpl() {
+    public SharedPreferencesServiceImpl() {
         mUserSettings = null;
     }
 
@@ -84,6 +88,42 @@ public class SettingsServiceImpl extends SettingsService {
             mUserSettings = loadSettings();
         }
         return mUserSettings;
+    }
+
+    private void saveRequests(String accountId, Set<String> requests) {
+        SharedPreferences preferences = mContext.getSharedPreferences(RING_REQUESTS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = preferences.edit();
+        edit.clear();
+        edit.putStringSet(accountId, requests);
+        edit.apply();
+    }
+
+    @Override
+    public void saveRequestPreferences(String accountId, String contactId) {
+        Set<String> requests = loadRequestsPreferences(accountId);
+        if (requests == null) {
+            requests = new HashSet<>();
+        }
+
+        requests.add(contactId);
+        saveRequests(accountId, requests);
+    }
+
+    @Override
+    public Set<String> loadRequestsPreferences(String accountId) {
+        SharedPreferences preferences = mContext.getSharedPreferences(RING_REQUESTS, Context.MODE_PRIVATE);
+        return preferences.getStringSet(accountId, null);
+    }
+
+    @Override
+    public void removeRequestPreferences(String accountId, String contactId) {
+        Set<String> requests = loadRequestsPreferences(accountId);
+        if (requests == null) {
+            return;
+        }
+
+        requests.remove(contactId);
+        saveRequests(accountId, requests);
     }
 
     public boolean isConnectedWifiAndMobile() {

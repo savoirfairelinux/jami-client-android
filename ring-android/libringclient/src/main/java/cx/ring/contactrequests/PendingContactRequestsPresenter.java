@@ -25,6 +25,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import cx.ring.daemon.Blob;
 import cx.ring.model.Account;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.TrustRequest;
@@ -33,6 +34,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.ContactService;
+import cx.ring.services.SharedPreferencesService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -49,6 +51,8 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
     private NotificationService mNotificationService;
     private ContactService mContactService;
     private DeviceRuntimeService mDeviceRuntimeService;
+    private SharedPreferencesService mSharedPreferencesService;
+
     private String mAccountID;
     private ArrayList<PendingContactRequestsViewModel> mContactRequestsViewModels;
 
@@ -56,11 +60,13 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
     public PendingContactRequestsPresenter(AccountService accountService,
                                            NotificationService notificationService,
                                            ContactService contactService,
-                                           DeviceRuntimeService deviceRuntimeService) {
+                                           DeviceRuntimeService deviceRuntimeService,
+                                           SharedPreferencesService sharedPreferencesService) {
         mAccountService = accountService;
         mNotificationService = notificationService;
         mContactService = contactService;
         mDeviceRuntimeService = deviceRuntimeService;
+        mSharedPreferencesService = sharedPreferencesService;
     }
 
     final private List<TrustRequest> mTrustRequests = new ArrayList<>();
@@ -153,12 +159,15 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
             }
         }
 
+        mSharedPreferencesService.removeRequestPreferences(accountId, contactId);
         updateList(false);
     }
 
     public void refuseTrustRequest(PendingContactRequestsViewModel viewModel) {
         String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
-        mAccountService.discardTrustRequest(accountId, viewModel.getContactId());
+        String contactId = viewModel.getContactId();
+        mAccountService.discardTrustRequest(accountId, contactId);
+        mSharedPreferencesService.removeRequestPreferences(accountId, contactId);
         updateList(true);
     }
 
@@ -167,6 +176,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
         String contactId = viewModel.getContactId();
         mAccountService.discardTrustRequest(accountId, contactId);
         mContactService.removeContact(accountId, contactId);
+        mSharedPreferencesService.removeRequestPreferences(accountId, contactId);
         updateList(true);
     }
 
@@ -178,8 +188,21 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
         Log.d(TAG, "update " + event.getEventType());
 
         switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
             case INCOMING_TRUST_REQUEST:
+                final String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
+                final String from = event.getEventInput(ServiceEvent.EventInput.FROM, String.class);
+                final String payload = event.getEventInput(ServiceEvent.EventInput.MESSAGE, Blob.class).toJavaString();
+                TrustRequest request = new TrustRequest(accountId, from);
+                Tuple<VCard, String> tuple = TrustRequestUtils.parsePayload(payload);
+                request.setVCard(tuple.first);
+                request.setMessage(tuple.second);
+                if (!mTrustRequestsTmp.contains(request) && !mTrustRequests.contains(request)) {
+                    mTrustRequestsTmp.add(request);
+                    mAccountService.lookupAddress("", "", from);
+                    updateList(false);
+                }
+                break;
+            case ACCOUNTS_CHANGED:
                 updateList(true);
                 break;
             case REGISTERED_NAME_FOUND:

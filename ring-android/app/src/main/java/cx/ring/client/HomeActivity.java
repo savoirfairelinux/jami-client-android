@@ -81,7 +81,7 @@ import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.NotificationService;
-import cx.ring.services.SettingsService;
+import cx.ring.services.SharedPreferencesService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
 import cx.ring.contactrequests.PendingContactRequestsFragment;
@@ -130,7 +130,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     DeviceRuntimeService mDeviceRuntimeService;
 
     @Inject
-    SettingsService mSettingsService;
+    SharedPreferencesService mSharedPreferencesService;
 
     @Inject
     AccountService mAccountService;
@@ -326,7 +326,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             perms.add(Manifest.permission.RECORD_AUDIO);
         }
 
-        Settings settings = mSettingsService.loadSettings();
+        Settings settings = mSharedPreferencesService.loadSettings();
 
         if (settings.isAllowSystemContacts() && !mDeviceRuntimeService.hasContactPermission()) {
             perms.add(Manifest.permission.READ_CONTACTS);

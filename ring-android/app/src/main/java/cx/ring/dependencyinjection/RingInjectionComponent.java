@@ -60,7 +60,7 @@ import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.PresenceService;
-import cx.ring.services.SettingsServiceImpl;
+import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.ShareFragment;
@@ -135,7 +135,7 @@ public interface RingInjectionComponent {
 
     void inject(HardwareService service);
 
-    void inject(SettingsServiceImpl service);
+    void inject(SharedPreferencesServiceImpl service);
 
     void inject(HistoryServiceImpl service);
 
