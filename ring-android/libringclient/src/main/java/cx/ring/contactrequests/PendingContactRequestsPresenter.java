@@ -36,6 +36,9 @@ import cx.ring.services.ContactService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.TrustRequestUtils;
+import cx.ring.utils.Tuple;
+import ezvcard.VCard;
 
 public class PendingContactRequestsPresenter extends RootPresenter<GenericView<PendingContactRequestsViewModel>> implements Observer<ServiceEvent> {
 
@@ -107,6 +110,9 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
                 String payload = request.get("payload");
                 TrustRequest trustRequest = new TrustRequest(accountId, contactId);
                 trustRequest.setTimestamp(timestamp);
+                Tuple<VCard, String> tuple = TrustRequestUtils.parsePayload(payload);
+                trustRequest.setVCard(tuple.first);
+                trustRequest.setMessage(tuple.second);
                 mTrustRequestsTmp.add(trustRequest);
                 mAccountService.lookupAddress("", "", contactId);
             }
