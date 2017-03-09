@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_11ddee42",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-03-09T19:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_71046a15",
+      "range": {
+        "startLine": 286,
+        "startChar": 57,
+        "endLine": 286,
+        "endChar": 68
+      },
+      "revId": "ac6f6e04fecbe09f8bc2d4492a628617bf29e9e0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_d112f657",
         "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
         "patchSetId": 6
@@ -65,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_91f0feca",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-03-09T19:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_d112f657",
+      "revId": "ac6f6e04fecbe09f8bc2d4492a628617bf29e9e0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_4e18a784",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/trustrequests/PendingTrustRequestsPresenter.java",
         "patchSetId": 6
@@ -76,6 +118,30 @@
       "writtenOn": "2017-03-08T21:23:57Z",
       "side": 1,
       "message": "There is not necessary to inject this service:\n- removes @Inject and adds private attribu\n- adds the notificationService in the parameters of the constructor\n\nSee you the accountService.",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "ac6f6e04fecbe09f8bc2d4492a628617bf29e9e0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_91c79e64",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/trustrequests/PendingTrustRequestsPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-03-09T19:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_4e18a784",
       "range": {
         "startLine": 47,
         "startChar": 4,
