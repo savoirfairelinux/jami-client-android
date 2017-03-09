@@ -100,11 +100,12 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
         if (clear) {
             mTrustRequests.clear();
             mTrustRequestsTmp.clear();
-            HashMap<String, String> map = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
+            String accountId = currentAccount.getAccountID();
+            HashMap<String, String> map = mAccountService.getTrustRequests(accountId).toNative();
 
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 String contactId = entry.getKey();
-                String accountId = entry.getValue();
+                String timestamp = entry.getValue();
                 TrustRequest trustRequest = TrustRequestUtils.loadFromDisk(accountId, contactId, mDeviceRuntimeService.provideFilesDir());
                 if (trustRequest == null) {
                     trustRequest = new TrustRequest(accountId, contactId);

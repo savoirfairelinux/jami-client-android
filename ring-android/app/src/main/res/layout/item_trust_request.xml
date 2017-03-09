@@ -31,6 +31,42 @@
         android:textSize="16sp"
         tools:text="display name" />
 
+    <LinearLayout
+        android:id="@+id/name_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_alignBaseline="@id/photo"
+        android:layout_toEndOf="@+id/photo"
+        android:layout_toRightOf="@+id/photo"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/fullname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/text_color_primary"
+            android:textIsSelectable="false"
+            android:textSize="16sp"
+            tools:text="fullname" />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/text_color_primary"
+            android:textIsSelectable="false"
+            android:textSize="12sp"
+            tools:text="username" />
+
+    </LinearLayout>
+
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/button_accept"
         style="@style/ButtonColored"
