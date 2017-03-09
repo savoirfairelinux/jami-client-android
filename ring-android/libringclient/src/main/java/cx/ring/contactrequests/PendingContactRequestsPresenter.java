@@ -116,6 +116,9 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
                 Log.d(TAG, "trust request: " + accountId + ", " + contactId + ", " + timestamp);
                 TrustRequest trustRequest = new TrustRequest(accountId, contactId);
                 trustRequest.setTimestamp(timestamp);
+                Tuple<VCard, String> tuple = TrustRequestUtils.parsePayload(payload);
+                trustRequest.setVCard(tuple.first);
+                trustRequest.setMessage(tuple.second);
                 mTrustRequestsTmp.add(trustRequest);
                 mAccountService.lookupAddress("", "", contactId);
             }

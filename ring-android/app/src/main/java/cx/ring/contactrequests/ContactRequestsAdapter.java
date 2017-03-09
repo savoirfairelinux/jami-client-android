@@ -20,14 +20,18 @@
 package cx.ring.contactrequests;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -37,8 +41,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.model.TrustRequest;
+import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.VCardUtils;
+import ezvcard.VCard;
 
 public class ContactRequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    static final String TAG = ContactRequestsAdapter.class.getSimpleName();
+
     private List<TrustRequest> mTrustRequests;
     private Context mContext;
     private PendingContactRequestsPresenter mPresenter;
@@ -69,6 +78,15 @@ public class ContactRequestsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         @BindView(R.id.display_name)
         TextView mDisplayname;
+
+        @BindView(R.id.fullname)
+        protected TextView mFullname;
+
+        @BindView(R.id.username)
+        protected TextView mUsername;
+
+        @BindView(R.id.name_layout)
+        protected LinearLayout mNamelayout;
 
         private String mContactId;
 
@@ -115,9 +133,33 @@ public class ContactRequestsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         //default photo
         Drawable photo = ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.ic_contact_picture, null);
-        ((ContactRequestView) holder).mPhoto.setImageDrawable(photo);
 
-        ((ContactRequestView) holder).mDisplayname.setText(trustRequest.getDisplayname());
+        VCard vcard = trustRequest.getVCard();
+        Log.d(TAG, "load vcard " + VCardUtils.vcardToString(vcard));
+        if (vcard != null) {
+            if (!vcard.getPhotos().isEmpty()) {
+                byte[] image = vcard.getPhotos().get(0).getData();
+                Bitmap photoBitmap = BitmapUtils.cropImageToCircle(image);
+                ((ContactRequestView) holder).mPhoto.setImageBitmap(photoBitmap);
+            } else {
+                ((ContactRequestView) holder).mPhoto.setImageDrawable(photo);
+            }
+        } else {
+            ((ContactRequestView) holder).mPhoto.setImageDrawable(photo);
+        }
+
+        String fullname = trustRequest.getFullname();
+        String username = trustRequest.getDisplayname();
+        if (!TextUtils.isEmpty(fullname)) {
+            ((ContactRequestView) holder).mDisplayname.setVisibility(View.GONE);
+            ((ContactRequestView) holder).mNamelayout.setVisibility(View.VISIBLE);
+            ((ContactRequestView) holder).mFullname.setText(fullname);
+            ((ContactRequestView) holder).mUsername.setText(username);
+        } else {
+            ((ContactRequestView) holder).mDisplayname.setVisibility(View.VISIBLE);
+            ((ContactRequestView) holder).mNamelayout.setVisibility(View.GONE);
+            ((ContactRequestView) holder).mDisplayname.setText(username);
+        }
 
         ((ContactRequestView) holder).setContactId(trustRequest.getContactId());
     }
