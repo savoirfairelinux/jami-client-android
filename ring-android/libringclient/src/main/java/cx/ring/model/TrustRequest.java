@@ -80,4 +80,20 @@ public class TrustRequest {
     public String getTimestamp() {
         return mTimestamp;
     }
+
+    public VCard getVCard() {
+        return mVcard;
+    }
+
+    public void setVCard(VCard vcard) {
+        mVcard = vcard;
+    }
+
+    public String getMessage() {
+        return mMessage;
+    }
+
+    public void setMessage(String message) {
+        mMessage = message;
+    }
 }
