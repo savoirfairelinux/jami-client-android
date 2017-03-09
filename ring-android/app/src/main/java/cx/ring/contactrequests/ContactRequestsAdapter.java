@@ -19,111 +19,84 @@
 
 package cx.ring.contactrequests;
 
-import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import java.util.List;
+import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.model.TrustRequest;
+import cx.ring.utils.BitmapUtils;
+import ezvcard.VCard;
 
-public class ContactRequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<TrustRequest> mTrustRequests;
-    private Context mContext;
-    private PendingContactRequestsPresenter mPresenter;
+public class ContactRequestsAdapter extends RecyclerView.Adapter<ContactRequestViewHolder> {
+    static final String TAG = ContactRequestsAdapter.class.getSimpleName();
 
-    public ContactRequestsAdapter(Context context, List<TrustRequest> trustRequests, PendingContactRequestsPresenter presenter) {
-        mContext = context;
-        mTrustRequests = trustRequests;
-        mPresenter = presenter;
+    private ArrayList<PendingContactRequestsViewModel> mContactRequestsViewModels;
+    private ContactRequestViewHolder.ContactRequestListeners mListener;
+
+    public ContactRequestsAdapter(ArrayList<PendingContactRequestsViewModel> viewModels, ContactRequestViewHolder.ContactRequestListeners listener) {
+        mContactRequestsViewModels = new ArrayList<>(viewModels);
+        mListener = listener;
     }
 
-    public void replaceAll(List<TrustRequest> trustRequests) {
-        mTrustRequests = trustRequests;
+    public void replaceAll(ArrayList<PendingContactRequestsViewModel> list) {
+        mContactRequestsViewModels.clear();
+        mContactRequestsViewModels.addAll(list);
         notifyDataSetChanged();
     }
 
-    class ContactRequestView extends RecyclerView.ViewHolder {
-        @BindView(R.id.button_accept)
-        AppCompatButton mButtonAccept;
-
-        @BindView(R.id.button_refuse)
-        AppCompatButton mButtonRefuse;
-
-        @BindView(R.id.button_block)
-        AppCompatButton mButtonBlock;
-
-        @BindView(R.id.photo)
-        AppCompatImageView mPhoto;
-
-        @BindView(R.id.display_name)
-        TextView mDisplayname;
-
-        private String mContactId;
-
-        ContactRequestView(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-
-        public void setContactId(String contactId) {
-            mContactId = contactId;
-        }
-
-        @OnClick(R.id.button_accept)
-        public void acceptClicked() {
-            mPresenter.acceptTrustRequest(mContactId);
-        }
-
-        @OnClick(R.id.button_refuse)
-        public void refuseClicked() {
-            mPresenter.refuseTrustRequest(mContactId);
-        }
-
-        @OnClick(R.id.button_block)
-        public void blockClicked() {
-            mPresenter.blockTrustRequest(mContactId);
-        }
-    }
-
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder viewHolder;
-        View holderView;
-
-        holderView = LayoutInflater.from(parent.getContext())
+    public ContactRequestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View holderView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_contact_request, parent, false);
-        viewHolder = new ContactRequestView(holderView);
 
-        return viewHolder;
+        return new ContactRequestViewHolder(holderView);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        TrustRequest trustRequest = mTrustRequests.get(position);
+    public void onBindViewHolder(ContactRequestViewHolder holder, int position) {
+        final PendingContactRequestsViewModel viewModel = mContactRequestsViewModels.get(position);
 
         //default photo
-        Drawable photo = ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.ic_contact_picture, null);
-        ((ContactRequestView) holder).mPhoto.setImageDrawable(photo);
+        Drawable photo = ResourcesCompat.getDrawable(holder.itemView.getResources(), R.drawable.ic_contact_picture, null);
 
-        ((ContactRequestView) holder).mDisplayname.setText(trustRequest.getDisplayname());
+        VCard vcard = viewModel.getVCard();
+        if (vcard != null) {
+            if (!vcard.getPhotos().isEmpty()) {
+                byte[] image = vcard.getPhotos().get(0).getData();
+                Bitmap photoBitmap = BitmapUtils.cropImageToCircle(image);
+                holder.mPhoto.setImageBitmap(photoBitmap);
+            } else {
+                holder.mPhoto.setImageDrawable(photo);
+            }
+        } else {
+            holder.mPhoto.setImageDrawable(photo);
+        }
 
-        ((ContactRequestView) holder).setContactId(trustRequest.getContactId());
+        String fullname = viewModel.getFullname();
+        String username = viewModel.getUsername();
+        if (!TextUtils.isEmpty(fullname)) {
+            holder.mDisplayname.setVisibility(View.GONE);
+            holder.mNamelayout.setVisibility(View.VISIBLE);
+            holder.mFullname.setText(fullname);
+            holder.mUsername.setText(username);
+        } else {
+            holder.mDisplayname.setVisibility(View.VISIBLE);
+            holder.mNamelayout.setVisibility(View.GONE);
+            holder.mDisplayname.setText(username);
+        }
+
+        holder.bind(mListener, viewModel);
     }
 
     @Override
     public int getItemCount() {
-        return mTrustRequests.size();
+        return mContactRequestsViewModels.size();
     }
 }

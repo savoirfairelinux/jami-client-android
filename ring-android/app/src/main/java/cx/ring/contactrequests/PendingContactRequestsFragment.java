@@ -40,11 +40,10 @@ import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
-import cx.ring.model.TrustRequest;
-import cx.ring.mvp.GenericView;
 import cx.ring.utils.Log;
 
-public class PendingContactRequestsFragment extends Fragment implements GenericView<PendingContactRequestsViewModel> {
+public class PendingContactRequestsFragment extends Fragment implements PendingContactRequestsView,
+        ContactRequestViewHolder.ContactRequestListeners {
 
     static final String TAG = PendingContactRequestsFragment.class.getSimpleName();
     public static final String ACCOUNT_ID = TAG + "accountID";
@@ -76,11 +75,6 @@ public class PendingContactRequestsFragment extends Fragment implements GenericV
 
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-
-        mAdapter = new ContactRequestsAdapter(getActivity(), new ArrayList<TrustRequest>(), mPendingContactRequestsPresenter);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mRequestsList.setLayoutManager(mLayoutManager);
-        mRequestsList.setAdapter(mAdapter);
 
         return inflatedView;
     }
@@ -128,22 +122,50 @@ public class PendingContactRequestsFragment extends Fragment implements GenericV
     }
 
     @Override
-    public void showViewModel(final PendingContactRequestsViewModel viewModel) {
+    public void onAcceptClick(PendingContactRequestsViewModel viewModel) {
+        mPendingContactRequestsPresenter.acceptTrustRequest(viewModel);
+    }
+
+    @Override
+    public void onRefuseClick(PendingContactRequestsViewModel viewModel) {
+        mPendingContactRequestsPresenter.refuseTrustRequest(viewModel);
+    }
+
+    @Override
+    public void onBlockClick(PendingContactRequestsViewModel viewModel) {
+        mPendingContactRequestsPresenter.blockTrustRequest(viewModel);
+    }
+
+    @Override
+    public void updateView(final ArrayList<PendingContactRequestsViewModel> list) {
         RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (mPaneTextView == null || mEmptyTextView == null || mAdapter == null) {
+                if (mPaneTextView == null || mEmptyTextView == null) {
                     return;
                 }
 
-                if (viewModel.hasPane()) {
-                    mPaneTextView.setText(getString(R.string.contact_request_account, viewModel.getAccountUsername()));
+                if (!list.isEmpty()) {
+                    PendingContactRequestsViewModel viewModel = list.get(0);
+                    if (viewModel.hasPane()) {
+                        mPaneTextView.setText(getString(R.string.contact_request_account, viewModel.getAccountUsername()));
+                    }
+                    mPaneTextView.setVisibility(viewModel.hasPane() ? View.VISIBLE : View.GONE);
                 }
-                mPaneTextView.setVisibility(viewModel.hasPane() ? View.VISIBLE : View.GONE);
-                mAdapter.replaceAll(viewModel.getTrustRequests());
 
-                mEmptyTextView.setVisibility(viewModel.getTrustRequests().isEmpty() ? View.VISIBLE : View.GONE);
+                mEmptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
+
+                if (mRequestsList.getAdapter() != null) {
+                    mAdapter.replaceAll(list);
+                } else {
+                    mAdapter = new ContactRequestsAdapter(list, PendingContactRequestsFragment.this);
+                    mRequestsList.setAdapter(mAdapter);
+                    LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                    mRequestsList.setLayoutManager(mLayoutManager);
+                }
             }
         });
     }
+
+
 }

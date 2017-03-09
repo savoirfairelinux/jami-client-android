@@ -19,26 +19,30 @@
 
 package cx.ring.contactrequests;
 
-import java.lang.ref.WeakReference;
-import java.util.List;
-
 import cx.ring.model.Account;
 import cx.ring.model.TrustRequest;
+import ezvcard.VCard;
 
 public class PendingContactRequestsViewModel {
 
-    private WeakReference<Account> mAccount;
-    private List<TrustRequest> mTrustRequests;
+    private VCard mVcard;
+    private String mFullname;
+    private String mUsername;
+    private String mAccountUsername;
     private boolean hasPane;
+    private String mContactId;
 
-    public PendingContactRequestsViewModel(Account account, List<TrustRequest> trustRequests, boolean pane) {
-        mAccount = new WeakReference<>(account);
-        mTrustRequests = trustRequests;
+
+    public PendingContactRequestsViewModel(Account account, TrustRequest trustRequest, boolean pane) {
+        mVcard = trustRequest.getVCard();
+        mFullname = trustRequest.getFullname();
+        mUsername = trustRequest.getDisplayname();
         hasPane = pane;
+        mAccountUsername = getAccountUsername(account);
+        mContactId = trustRequest.getContactId();
     }
 
-    public String getAccountUsername() {
-        Account account = mAccount.get();
+    private String getAccountUsername(Account account) {
         String username = account.getRegisteredName();
         if (account.registeringUsername || username == null || username.isEmpty()) {
             username = account.getUsername();
@@ -46,11 +50,27 @@ public class PendingContactRequestsViewModel {
         return username;
     }
 
-    public List<TrustRequest> getTrustRequests() {
-        return mTrustRequests;
+    public String getAccountUsername() {
+        return mAccountUsername;
+    }
+
+    public VCard getVCard() {
+        return mVcard;
+    }
+
+    public String getUsername() {
+        return mUsername;
+    }
+
+    public String getFullname() {
+        return mFullname;
     }
 
     public boolean hasPane() {
         return hasPane;
+    }
+
+    public String getContactId() {
+        return mContactId;
     }
 }
