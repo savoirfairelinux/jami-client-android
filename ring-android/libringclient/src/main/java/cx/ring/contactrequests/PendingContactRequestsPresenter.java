@@ -28,7 +28,6 @@ import javax.inject.Inject;
 import cx.ring.model.Account;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.TrustRequest;
-import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
@@ -36,8 +35,11 @@ import cx.ring.services.ContactService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.TrustRequestUtils;
+import cx.ring.utils.Tuple;
+import ezvcard.VCard;
 
-public class PendingContactRequestsPresenter extends RootPresenter<GenericView<PendingContactRequestsViewModel>> implements Observer<ServiceEvent> {
+public class PendingContactRequestsPresenter extends RootPresenter<PendingContactRequestsView> implements Observer<ServiceEvent> {
 
     static private final String TAG = PendingContactRequestsPresenter.class.getSimpleName();
 
@@ -45,6 +47,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
     private NotificationService mNotificationService;
     private ContactService mContactService;
     private String mAccountID;
+    private ArrayList<PendingContactRequestsViewModel> mContactRequestsViewModels;
 
     @Inject
     public PendingContactRequestsPresenter(AccountService accountService,
@@ -64,7 +67,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
     }
 
     @Override
-    public void bindView(GenericView<PendingContactRequestsViewModel> view) {
+    public void bindView(PendingContactRequestsView view) {
         mAccountService.addObserver(this);
         super.bindView(view);
         updateList(true);
@@ -94,6 +97,8 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
         if (currentAccount == null) {
             return;
         }
+        boolean hasPane = !currentAccount.equals(mAccountService.getCurrentAccount());
+
 
         if (clear) {
             mTrustRequests.clear();
@@ -107,30 +112,42 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
                 String payload = request.get("payload");
                 TrustRequest trustRequest = new TrustRequest(accountId, contactId);
                 trustRequest.setTimestamp(timestamp);
+                Tuple<VCard, String> tuple = TrustRequestUtils.parsePayload(payload);
+                trustRequest.setVCard(tuple.first);
+                trustRequest.setMessage(tuple.second);
                 mTrustRequestsTmp.add(trustRequest);
                 mAccountService.lookupAddress("", "", contactId);
             }
         }
 
-        boolean hasPane = mAccountID != null && !mAccountID.equals(mAccountService.getCurrentAccount().getAccountID());
-        getView().showViewModel(new PendingContactRequestsViewModel(currentAccount, mTrustRequests, hasPane));
+        if (mContactRequestsViewModels == null) {
+            mContactRequestsViewModels = new ArrayList<>();
+        } else {
+            mContactRequestsViewModels.clear();
+        }
+        for (TrustRequest request : mTrustRequests) {
+            mContactRequestsViewModels.add(new PendingContactRequestsViewModel(currentAccount, request, hasPane));
+        }
+
+        getView().updateView(mContactRequestsViewModels);
         mNotificationService.cancelTrustRequestNotification(currentAccount.getAccountID());
     }
 
-    public void acceptTrustRequest(String contactId) {
+    public void acceptTrustRequest(PendingContactRequestsViewModel viewModel) {
         String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
-        mAccountService.acceptTrustRequest(accountId, contactId);
+        mAccountService.acceptTrustRequest(accountId, viewModel.getContactId());
         updateList(true);
     }
 
-    public void refuseTrustRequest(String contactId) {
+    public void refuseTrustRequest(PendingContactRequestsViewModel viewModel) {
         String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
-        mAccountService.discardTrustRequest(accountId, contactId);
+        mAccountService.discardTrustRequest(accountId, viewModel.getContactId());
         updateList(true);
     }
 
-    public void blockTrustRequest(String contactId) {
+    public void blockTrustRequest(PendingContactRequestsViewModel viewModel) {
         String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
+        String contactId = viewModel.getContactId();
         mAccountService.discardTrustRequest(accountId, contactId);
         mContactService.removeContact(accountId, contactId);
         updateList(true);
