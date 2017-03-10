@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_1c266569",
+        "filename": "ring-android/app/src/main/java/cx/ring/application/RingApplication.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-10T19:23:24Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 239,
+        "startChar": 47,
+        "endLine": 240,
+        "endChar": 114
+      },
+      "revId": "038a3da73a0d944970453fd5301fab4afef3de14",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_bcff19aa",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/LocalService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-10T19:23:24Z",
+      "side": 1,
+      "message": "redundant, could be useful to have a single definition",
+      "range": {
+        "startLine": 273,
+        "startChar": 53,
+        "endLine": 274,
+        "endChar": 122
+      },
+      "revId": "038a3da73a0d944970453fd5301fab4afef3de14",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_7c31a1a1",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/SettingsServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-10T19:23:24Z",
+      "side": 1,
+      "message": "userSettings not initialized to null",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 64,
+        "endChar": 32
+      },
+      "revId": "038a3da73a0d944970453fd5301fab4afef3de14",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
