@@ -55,6 +55,7 @@ public class ServiceEvent {
         SET_PARAMETERS,
         CONTACTS_CHANGED,
         MIGRATION_ENDED,
+        DEVICE_REVOCATION_ENDED,
         INCOMING_TRUST_REQUEST,
         CONTACT_ADDED,
         CONTACT_REMOVED,
@@ -123,4 +124,12 @@ public class ServiceEvent {
 
         return null;
     }
+
+    public String getString(EventInput input) {
+        return getEventInput(input, String.class);
+    }
+    public int getInt(EventInput input) {
+        return getEventInput(input, Integer.class);
+    }
+
 }
