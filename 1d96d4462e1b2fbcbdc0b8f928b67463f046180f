@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_dc944d46",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountSummaryFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-10T21:34:15Z",
+      "side": 1,
+      "message": "you should use the variable name messageResultat",
+      "range": {
+        "startLine": 435,
+        "startChar": 20,
+        "endLine": 435,
+        "endChar": 31
+      },
+      "revId": "1d96d4462e1b2fbcbdc0b8f928b67463f046180f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
