@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_9ca9f526",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T17:54:56Z",
+      "side": 1,
+      "message": "Never used",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 5
+      },
+      "revId": "80136761efd042718ed08c654f81b2d4f7368578",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_fcacb137",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T17:54:56Z",
+      "side": 1,
+      "message": "Never used",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 35
+      },
+      "revId": "80136761efd042718ed08c654f81b2d4f7368578",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_bca63952",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T17:54:56Z",
+      "side": 1,
+      "message": "Never used",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 5
+      },
+      "revId": "80136761efd042718ed08c654f81b2d4f7368578",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_5c637d1a",
+        "filename": "ring-android/app/src/main/java/cx/ring/dependencyinjection/RingInjectionComponent.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T17:54:56Z",
+      "side": 1,
+      "message": "Not needed",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 48
+      },
+      "revId": "80136761efd042718ed08c654f81b2d4f7368578",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_1c6d0505",
+        "filename": "ring-android/app/src/main/res/layout/item_device.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T17:54:56Z",
+      "side": 1,
+      "message": "Should use srcCompat",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 52
+      },
+      "revId": "80136761efd042718ed08c654f81b2d4f7368578",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_3c7249e6",
+        "filename": "ring-android/app/src/main/res/layout/item_device.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T17:54:56Z",
+      "side": 1,
+      "message": "Should be removed as it add a white background around the button",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 53
+      },
+      "revId": "80136761efd042718ed08c654f81b2d4f7368578",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
