@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "bab3e1c7_3c9ec957",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T17:54:56Z",
+      "side": 1,
+      "message": "Never used",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 5
+      },
+      "revId": "1d96d4462e1b2fbcbdc0b8f928b67463f046180f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_1c99856e",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T17:54:56Z",
+      "side": 1,
+      "message": "Never used",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 35
+      },
+      "revId": "1d96d4462e1b2fbcbdc0b8f928b67463f046180f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_dca20d9a",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T17:54:56Z",
+      "side": 1,
+      "message": "Never used",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 5
+      },
+      "revId": "1d96d4462e1b2fbcbdc0b8f928b67463f046180f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_dc944d46",
         "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountSummaryFragment.java",
         "patchSetId": 10
