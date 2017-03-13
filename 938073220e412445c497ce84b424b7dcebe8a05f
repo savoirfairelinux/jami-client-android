@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_3ced698c",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-13T14:59:24Z",
+      "side": 1,
+      "message": "Adds the line log : Log.d(TAG, \"Event \" + arg.getEventType() + \" is not handled here\");",
+      "range": {
+        "startLine": 396,
+        "startChar": 16,
+        "endLine": 397,
+        "endChar": 26
+      },
+      "revId": "938073220e412445c497ce84b424b7dcebe8a05f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_dc01ad3a",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/trustrequests/PendingTrustRequestsPresenter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-13T14:59:24Z",
+      "side": 1,
+      "message": "you can put this lines in the last \"if (clear){}\"\n\nAre you sure this is the right condition ? It must not cancel all notifications for the currentAccount variable ?",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 9
+      },
+      "revId": "938073220e412445c497ce84b424b7dcebe8a05f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
