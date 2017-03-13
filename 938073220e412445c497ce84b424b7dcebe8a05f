@@ -45,6 +45,30 @@
       "revId": "938073220e412445c497ce84b424b7dcebe8a05f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_9c9255f5",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/trustrequests/PendingTrustRequestsPresenter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 225
+      },
+      "writtenOn": "2017-03-13T15:51:39Z",
+      "side": 1,
+      "message": "It will cancel notifications for the requests that were shown to user. Account for which requests is displayed and current account could be different after receiving REGISTERED_NAME_FOUND event.",
+      "parentUuid": "bab3e1c7_dc01ad3a",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 9
+      },
+      "revId": "938073220e412445c497ce84b424b7dcebe8a05f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
