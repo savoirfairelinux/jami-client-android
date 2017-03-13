@@ -69,6 +69,30 @@
       "revId": "938073220e412445c497ce84b424b7dcebe8a05f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_dc768dd8",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/trustrequests/PendingTrustRequestsPresenter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-13T17:53:03Z",
+      "side": 1,
+      "message": "It\u0027s always the trust requests for the currentAccount that are displayed (see to line 104).\n\nThe condition should be \"if (currentAccount.equals(currentAccount.getAccountID()){}\" but it is not necessary if you use the currentAccount variable.",
+      "parentUuid": "bab3e1c7_9c9255f5",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 9
+      },
+      "revId": "938073220e412445c497ce84b424b7dcebe8a05f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
