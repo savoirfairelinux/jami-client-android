@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_17571e04",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T21:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_17095e2c",
+      "range": {
+        "startLine": 230,
+        "startChar": 8,
+        "endLine": 230,
+        "endChar": 46
+      },
+      "revId": "32ae63fc3cff2453d741892f78571c74f3cf8f7e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_370ee235",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
         "patchSetId": 16
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-13T21:03:03Z",
       "side": 1,
       "message": "in onPause ?",
+      "range": {
+        "startLine": 277,
+        "startChar": 7,
+        "endLine": 277,
+        "endChar": 49
+      },
+      "revId": "32ae63fc3cff2453d741892f78571c74f3cf8f7e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_375ca225",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T21:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_370ee235",
       "range": {
         "startLine": 277,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_d740a637",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T21:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_17207e9a",
+      "range": {
+        "startLine": 418,
+        "startChar": 29,
+        "endLine": 418,
+        "endChar": 30
+      },
+      "revId": "32ae63fc3cff2453d741892f78571c74f3cf8f7e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_372582ab",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
         "patchSetId": 16
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-13T21:03:03Z",
       "side": 1,
       "message": "account",
+      "range": {
+        "startLine": 435,
+        "startChar": 24,
+        "endLine": 435,
+        "endChar": 27
+      },
+      "revId": "32ae63fc3cff2453d741892f78571c74f3cf8f7e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_f73daabc",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T21:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_372582ab",
       "range": {
         "startLine": 435,
         "startChar": 24,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_974a2e54",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/HistoryService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T21:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_b719727b",
+      "range": {
+        "startLine": 104,
+        "startChar": 21,
+        "endLine": 104,
+        "endChar": 22
+      },
+      "revId": "32ae63fc3cff2453d741892f78571c74f3cf8f7e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_5726f6bb",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/services/HistoryService.java",
         "patchSetId": 16
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_b747324b",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/HistoryService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T21:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_5726f6bb",
+      "range": {
+        "startLine": 209,
+        "startChar": 33,
+        "endLine": 209,
+        "endChar": 35
+      },
+      "revId": "32ae63fc3cff2453d741892f78571c74f3cf8f7e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_772bfa82",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/services/HistoryService.java",
         "patchSetId": 16
@@ -151,6 +295,30 @@
       "writtenOn": "2017-03-13T21:03:03Z",
       "side": 1,
       "message": "event",
+      "range": {
+        "startLine": 257,
+        "startChar": 21,
+        "endLine": 257,
+        "endChar": 22
+      },
+      "revId": "32ae63fc3cff2453d741892f78571c74f3cf8f7e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_5774b69b",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/HistoryService.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-13T21:26:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_772bfa82",
       "range": {
         "startLine": 257,
         "startChar": 21,
