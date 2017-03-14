@@ -16,6 +16,6 @@
         android:divider="@null"
         android:elevation="2dp"
         android:paddingBottom="8dp"
-        tools:listitem="@layout/item_trust_request" />
+        tools:listitem="@layout/item_contact_request" />
 
 </RelativeLayout>

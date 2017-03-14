@@ -342,7 +342,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
         ArrayList<NavigationItem> menu = new ArrayList<>();
         menu.add(0, new NavigationItem(R.string.menu_item_home, R.drawable.ic_home_black));
-        menu.add(1, new NavigationItem(R.string.menu_item_trust_request, R.drawable.ic_drafts_black));
+        menu.add(1, new NavigationItem(R.string.menu_item_contact_request, R.drawable.ic_drafts_black));
         menu.add(2, new NavigationItem(R.string.menu_item_accounts, R.drawable.ic_group_black));
         menu.add(3, new NavigationItem(R.string.menu_item_settings, R.drawable.ic_settings_black));
         menu.add(4, new NavigationItem(R.string.menu_item_share, R.drawable.ic_share_black));

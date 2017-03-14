@@ -82,7 +82,7 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.SettingsService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
-import cx.ring.trustrequests.PendingTrustRequestsFragment;
+import cx.ring.contactrequests.PendingContactRequestsFragment;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Observable;
@@ -653,10 +653,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 fContent = getFragmentManager().findFragmentByTag(HOME_TAG);
                 break;
             case TRUST_REQUEST:
-                if (fContent instanceof PendingTrustRequestsFragment) {
+                if (fContent instanceof PendingContactRequestsFragment) {
                     break;
                 }
-                fContent = new PendingTrustRequestsFragment();
+                fContent = new PendingContactRequestsFragment();
                 getFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .replace(R.id.main_frame, fContent, TRUST_REQUEST_TAG)
