@@ -144,8 +144,7 @@ public class VCardUtils {
         File file = new File(path + File.separator + filename);
         try {
             VCardWriter writer = new VCardWriter(file, VCardVersion.V2_1);
-            writer.getRawWriter().getFoldedLineWriter().setLineLength(null);
-            writer.getRawWriter().getFoldedLineWriter().setNewline("\n");
+            writer.getVObjectWriter().getFoldedLineWriter().setLineLength(null);
             writer.write(vcard);
             writer.close();
         } catch (Exception e) {
@@ -205,8 +204,7 @@ public class VCardUtils {
     public static String vcardToString(VCard vcard) {
         StringWriter writer = new StringWriter();
         VCardWriter vcwriter = new VCardWriter(writer, VCardVersion.V2_1);
-        vcwriter.getRawWriter().getFoldedLineWriter().setLineLength(null);
-        vcwriter.getRawWriter().getFoldedLineWriter().setNewline("\n");
+        vcwriter.getVObjectWriter().getFoldedLineWriter().setLineLength(null);
         String stringVCard;
         try {
             vcwriter.write(vcard);
