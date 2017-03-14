@@ -2,6 +2,7 @@
  *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *          Adrien Beraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -73,12 +74,6 @@ public class ConfirmRevocationDialog extends DialogFragment {
 
         mDeviceId = getArguments().getString(DEVICEID_KEY);
 
-        AlertDialog dialog = (AlertDialog) getDialog();
-        if (dialog != null) {
-            dialog.setView(view);
-            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        }
-
         final AlertDialog result = new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .setMessage(getString(R.string.revoke_device_message, mDeviceId))
@@ -106,7 +101,7 @@ public class ConfirmRevocationDialog extends DialogFragment {
                 });
             }
         });
-
+        result.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         return result;
     }
 
