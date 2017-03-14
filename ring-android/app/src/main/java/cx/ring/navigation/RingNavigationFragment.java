@@ -302,7 +302,9 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
         if (!vcard.getPhotos().isEmpty()) {
             Photo tmp = vcard.getPhotos().get(0);
-            mUserImage.setImageBitmap(BitmapUtils.cropImageToCircle(tmp.getData()));
+            Bitmap bitmap = BitmapUtils.cropImageToCircle(tmp.getData());
+            mUserImage.setImageBitmap(bitmap);
+            mSourcePhoto = bitmap;
         } else {
             mUserImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null));
         }
