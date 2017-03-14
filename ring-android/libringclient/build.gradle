@@ -5,7 +5,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // VCard parsing
-    compile('com.googlecode.ez-vcard:ez-vcard:0.9.10') {
+    compile('com.googlecode.ez-vcard:ez-vcard:0.10.2') {
         exclude module: 'freemarker'
         exclude module: 'jackson-core'
         exclude module: 'jsoup'
