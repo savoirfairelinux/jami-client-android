@@ -62,7 +62,6 @@ import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.ShareFragment;
 import cx.ring.share.SharePresenter;
-import cx.ring.wizard.SIPCreationPresenter;
 import dagger.Component;
 
 @Singleton
