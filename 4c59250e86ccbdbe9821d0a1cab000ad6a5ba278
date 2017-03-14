@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_17cabea1",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-14T14:29:44Z",
+      "side": 1,
+      "message": "not used now",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 41
+      },
+      "revId": "4c59250e86ccbdbe9821d0a1cab000ad6a5ba278",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_37cfc2b2",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-14T14:29:44Z",
+      "side": 1,
+      "message": "not used now",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 36
+      },
+      "revId": "4c59250e86ccbdbe9821d0a1cab000ad6a5ba278",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
