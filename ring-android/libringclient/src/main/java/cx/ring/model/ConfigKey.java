@@ -58,6 +58,7 @@ public enum ConfigKey {
     ACCOUNT_ENABLE("Account.enable"),
     ACCOUNT_ACTIVE("Account.active"),
     ACCOUNT_DEVICE_ID("Account.deviceID"),
+    ACCOUNT_DEVICE_NAME("Account.deviceName"),
     VIDEO_ENABLED("Account.videoEnabled"),
     VIDEO_PORT_MIN("Account.videoPortMin"),
     VIDEO_PORT_MAX("Account.videoPortMax"),

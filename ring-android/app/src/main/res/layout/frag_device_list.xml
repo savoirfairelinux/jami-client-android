@@ -92,14 +92,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     style="@style/Subheader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
+                    android:ellipsize="middle"
                     android:gravity="center_vertical"
                     android:lines="1"
                     android:paddingBottom="8dp"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:paddingTop="8dp"
-                    android:textIsSelectable="false"
                     android:textStyle="bold"
                     tools:text="ring:8F29045378ACA68F2ACA2346078ACA68F2ACA290" />
 
@@ -189,6 +188,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:paddingStart="16dp"
                         android:paddingTop="4dp"
                         android:textAlignment="viewStart"
+                        android:textIsSelectable="true"
                         tools:text="blockchain_name" />
 
                 </LinearLayout>
