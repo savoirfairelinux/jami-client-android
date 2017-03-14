@@ -17,7 +17,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cx.ring.trustrequests;
+package cx.ring.contactrequests;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -25,12 +25,12 @@ import java.util.List;
 import cx.ring.model.Account;
 import cx.ring.model.TrustRequest;
 
-public class PendingTrustRequestsViewModel {
+public class PendingContactRequestsViewModel {
 
     private WeakReference<Account> mAccount;
     private List<TrustRequest> mTrustRequests;
 
-    public PendingTrustRequestsViewModel(Account account, List<TrustRequest> trustRequests) {
+    public PendingContactRequestsViewModel(Account account, List<TrustRequest> trustRequests) {
         mAccount = new WeakReference<>(account);
         mTrustRequests = trustRequests;
     }

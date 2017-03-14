@@ -17,7 +17,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cx.ring.trustrequests;
+package cx.ring.contactrequests;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -38,11 +38,11 @@ import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.model.TrustRequest;
 
-public class TrustRequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ContactRequestsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<TrustRequest> mTrustRequests;
     private Context mContext;
 
-    public TrustRequestsAdapter(Context context, List<TrustRequest> trustRequests) {
+    public ContactRequestsAdapter(Context context, List<TrustRequest> trustRequests) {
         mContext = context;
         mTrustRequests = trustRequests;
     }
@@ -52,7 +52,7 @@ public class TrustRequestsAdapter extends RecyclerView.Adapter<RecyclerView.View
         notifyDataSetChanged();
     }
 
-    class TrustRequestView extends RecyclerView.ViewHolder {
+    class ContactRequestView extends RecyclerView.ViewHolder {
         @BindView(R.id.button_accept)
         AppCompatButton mButtonAccept;
 
@@ -68,7 +68,7 @@ public class TrustRequestsAdapter extends RecyclerView.Adapter<RecyclerView.View
         @BindView(R.id.display_name)
         TextView mDisplayname;
 
-        TrustRequestView(View view) {
+        ContactRequestView(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
@@ -95,8 +95,8 @@ public class TrustRequestsAdapter extends RecyclerView.Adapter<RecyclerView.View
         View holderView;
 
         holderView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_trust_request, parent, false);
-        viewHolder = new TrustRequestView(holderView);
+                .inflate(R.layout.item_contact_request, parent, false);
+        viewHolder = new ContactRequestView(holderView);
 
         return viewHolder;
     }
@@ -107,9 +107,9 @@ public class TrustRequestsAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         //default photo
         Drawable photo = ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.ic_contact_picture, null);
-        ((TrustRequestView) holder).mPhoto.setImageDrawable(photo);
+        ((ContactRequestView) holder).mPhoto.setImageDrawable(photo);
 
-        ((TrustRequestView) holder).mDisplayname.setText(trustRequest.getDisplayname());
+        ((ContactRequestView) holder).mDisplayname.setText(trustRequest.getDisplayname());
     }
 
     @Override
