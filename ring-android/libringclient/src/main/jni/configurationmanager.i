@@ -54,6 +54,7 @@ public:
     virtual void registeredNameFound(const std::string& /*account_id*/, int state, const std::string& /*address*/, const std::string& /*name*/){}
 
     virtual void migrationEnded(const std::string& /*accountId*/, const std::string& /*state*/){}
+    virtual void deviceRevocationEnded(const std::string& /*accountId*/, const std::string& /*device*/, int /*status*/){}
 };
 %}
 
@@ -87,7 +88,9 @@ std::map<std::string, std::string> getCodecDetails(const std::string& accountID,
 bool setCodecDetails(const std::string& accountID, const unsigned& codecId, const std::map<std::string, std::string>& details);
 std::vector<unsigned> getActiveCodecList(const std::string& accountID);
 std::string exportOnRing(const std::string& accountID, const std::string& password);
+
 std::map<std::string, std::string> getKnownRingDevices(const std::string& accountID);
+bool revokeDevice(const std::string& accountID, const std::string& password, const std::string& deviceID);
 
 void setActiveCodecList(const std::string& accountID, const std::vector<unsigned>& list);
 
@@ -223,4 +226,5 @@ public:
     virtual void registeredNameFound(const std::string& /*account_id*/, int state, const std::string& /*address*/, const std::string& /*name*/){}
 
     virtual void migrationEnded(const std::string& /*accountId*/, const std::string& /*state*/){}
+    virtual void deviceRevocationEnded(const std::string& /*accountId*/, const std::string& /*device*/, int /*status*/){}
 };

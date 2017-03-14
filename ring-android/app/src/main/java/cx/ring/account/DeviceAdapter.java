@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,13 +35,23 @@ public class DeviceAdapter extends BaseAdapter {
     private final Context mContext;
     private final ArrayList<Map.Entry<String, String>> mDevices = new ArrayList<>();
 
-    public DeviceAdapter(Context c, Map<String, String> devices) {
-        mContext = c;
-        setData(devices);
+    private String mCurrentDeviceId;
+    private DeviceRevocationListener mListener;
+
+    public interface DeviceRevocationListener {
+        void onDeviceRevocationAsked(String deviceId);
     }
 
-    public void setData(Map<String, String> devices) {
+    public DeviceAdapter(Context c, Map<String, String> devices, String currentDeviceId,
+                         DeviceRevocationListener listener) {
+        mContext = c;
+        setData(devices, currentDeviceId);
+        mListener = listener;
+    }
+
+    public void setData(Map<String, String> devices, String currentDeviceId) {
         mDevices.clear();
+        mCurrentDeviceId = currentDeviceId;
         if (devices != null && !devices.isEmpty()) {
             mDevices.ensureCapacity(devices.size());
             for (Map.Entry<String, String> e : devices.entrySet()) {
@@ -66,7 +77,7 @@ public class DeviceAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup parent) {
+    public View getView(final int i, View view, ViewGroup parent) {
         if (view == null) {
             view = LayoutInflater.from(mContext).inflate(R.layout.item_device, parent, false);
         }
@@ -76,6 +87,20 @@ public class DeviceAdapter extends BaseAdapter {
 
         TextView devName = (TextView) view.findViewById(R.id.txt_device_label);
         devName.setText(mDevices.get(i).getValue());
+
+        ImageButton revokeButton = (ImageButton) view.findViewById(R.id.revoke_button);
+
+        boolean isCurrentDevice = mDevices.get(i).getKey().contentEquals(mCurrentDeviceId);
+        revokeButton.setVisibility(isCurrentDevice ? View.INVISIBLE : View.VISIBLE);
+
+        revokeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onDeviceRevocationAsked(mDevices.get(i).getKey());
+                }
+            }
+        });
 
         return view;
     }
