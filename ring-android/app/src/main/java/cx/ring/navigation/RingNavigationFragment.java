@@ -178,7 +178,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
      */
     public enum Section {
         HOME(0),
-        TRUST_REQUEST(1),
+        CONTACT_REQUESTS(1),
         MANAGE(2),
         SETTINGS(3),
         SHARE(4),
@@ -230,9 +230,9 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         setupNavigationMenu();
         setupAccountList();
         if (savedInstanceState != null) {
-            if (getFragmentManager().findFragmentByTag(HomeActivity.TRUST_REQUEST_TAG) != null &&
-                    getFragmentManager().findFragmentByTag(HomeActivity.TRUST_REQUEST_TAG).isAdded()) {
-                selectSection(Section.TRUST_REQUEST);
+            if (getFragmentManager().findFragmentByTag(HomeActivity.CONTACT_REQUESTS_TAG) != null &&
+                    getFragmentManager().findFragmentByTag(HomeActivity.CONTACT_REQUESTS_TAG).isAdded()) {
+                selectSection(Section.CONTACT_REQUESTS);
             } else if (getFragmentManager().findFragmentByTag(HomeActivity.ACCOUNTS_TAG) != null &&
                     getFragmentManager().findFragmentByTag(HomeActivity.ACCOUNTS_TAG).isAdded()) {
                 selectSection(RingNavigationFragment.Section.MANAGE);
@@ -342,7 +342,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
         ArrayList<NavigationItem> menu = new ArrayList<>();
         menu.add(0, new NavigationItem(R.string.menu_item_home, R.drawable.ic_home_black));
-        menu.add(1, new NavigationItem(R.string.menu_item_trust_request, R.drawable.ic_drafts_black));
+        menu.add(1, new NavigationItem(R.string.menu_item_contact_request, R.drawable.ic_drafts_black));
         menu.add(2, new NavigationItem(R.string.menu_item_accounts, R.drawable.ic_group_black));
         menu.add(3, new NavigationItem(R.string.menu_item_settings, R.drawable.ic_settings_black));
         menu.add(4, new NavigationItem(R.string.menu_item_share, R.drawable.ic_share_black));

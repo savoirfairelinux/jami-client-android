@@ -17,7 +17,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cx.ring.trustrequests;
+package cx.ring.contactrequests;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -41,29 +41,27 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.TrustRequest;
 import cx.ring.mvp.GenericView;
-import cx.ring.services.AccountService;
-import cx.ring.services.ContactService;
 import cx.ring.utils.Log;
 
-public class PendingTrustRequestsFragment extends Fragment implements GenericView<PendingTrustRequestsViewModel> {
+public class PendingContactRequestsFragment extends Fragment implements GenericView<PendingContactRequestsViewModel> {
 
-    static final String TAG = PendingTrustRequestsFragment.class.getSimpleName();
+    static final String TAG = PendingContactRequestsFragment.class.getSimpleName();
 
     @Inject
-    protected PendingTrustRequestsPresenter mPendingTrustRequestsPresenter;
+    protected PendingContactRequestsPresenter mPendingContactRequestsPresenter;
 
     @BindView(R.id.requests_list)
     protected RecyclerView mRequestsList;
 
     private Unbinder mUnbinder;
-    private TrustRequestsAdapter mAdapter;
+    private ContactRequestsAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
         setHasOptionsMenu(true);
 
-        final View inflatedView = inflater.inflate(R.layout.frag_pending_trust_requests, parent, false);
+        final View inflatedView = inflater.inflate(R.layout.frag_pending_contact_requests, parent, false);
 
         // views injection
         mUnbinder = ButterKnife.bind(this, inflatedView);
@@ -71,7 +69,7 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        mAdapter = new TrustRequestsAdapter(getActivity(), new ArrayList<TrustRequest>());
+        mAdapter = new ContactRequestsAdapter(getActivity(), new ArrayList<TrustRequest>());
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRequestsList.setLayoutManager(mLayoutManager);
         mRequestsList.setAdapter(mAdapter);
@@ -82,10 +80,10 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
     @Override
     public void onResume() {
         super.onResume();
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_trust_request);
+        ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_contact_request);
 
         // view binding
-        mPendingTrustRequestsPresenter.bindView(this);
+        mPendingContactRequestsPresenter.bindView(this);
     }
 
     @Override
@@ -96,7 +94,7 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
         mUnbinder.unbind();
 
         // view unbinding
-        mPendingTrustRequestsPresenter.unbindView();
+        mPendingContactRequestsPresenter.unbindView();
     }
 
     @Override
@@ -110,7 +108,7 @@ public class PendingTrustRequestsFragment extends Fragment implements GenericVie
     }
 
     @Override
-    public void showViewModel(final PendingTrustRequestsViewModel viewModel) {
+    public void showViewModel(final PendingContactRequestsViewModel viewModel) {
         RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
