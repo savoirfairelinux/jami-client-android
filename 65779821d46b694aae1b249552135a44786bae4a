@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_b7e3b232",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-14T14:46:48Z",
+      "side": 1,
+      "message": "this line feed is useless",
+      "revId": "65779821d46b694aae1b249552135a44786bae4a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
