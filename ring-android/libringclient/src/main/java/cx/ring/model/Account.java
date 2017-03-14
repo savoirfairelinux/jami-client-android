@@ -243,4 +243,8 @@ public class Account {
     public String getDeviceId() {
         return getDetail(ConfigKey.ACCOUNT_DEVICE_ID);
     }
+
+    public String getDeviceName() {
+        return getDetail(ConfigKey.ACCOUNT_DEVICE_NAME);
+    }
 }
