@@ -176,4 +176,17 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
         }
         mAccountService.revokeDevice(mAccountID, password, deviceId);
     }
+
+    public void renameDevice(String new_name) {
+        mAccountService.renameDevice(mAccountID, new_name);
+    }
+
+    public String getDeviceName() {
+        Account account = mAccountService.getAccount(mAccountID);
+        if (account == null) {
+            Log.w(TAG, "account not found!");
+            return null;
+        }
+        return account.getDeviceName();
+    }
 }
