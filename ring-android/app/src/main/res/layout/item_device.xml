@@ -41,8 +41,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         android:layout_centerVertical="true"
         android:layout_marginLeft="56dp"
         android:layout_marginStart="56dp"
+        android:layout_toLeftOf="@+id/txt_device_thisflag"
+        android:layout_toStartOf="@+id/txt_device_thisflag"
+        android:ellipsize="end"
+        android:lines="1"
         android:textAppearance="@style/ListPrimary"
-        tools:text="8E24CCF4" />
+        tools:text="My device" />
 
     <TextView
         android:id="@+id/txt_device_id"
@@ -51,13 +55,39 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         android:layout_alignLeft="@id/txt_device_label"
         android:layout_alignStart="@+id/txt_device_label"
         android:layout_below="@id/txt_device_label"
-        android:layout_toLeftOf="@+id/revoke_button"
-        android:layout_toStartOf="@+id/revoke_button"
+        android:layout_toLeftOf="@+id/rename_button"
+        android:layout_toStartOf="@+id/rename_button"
         android:ellipsize="middle"
         android:maxLines="1"
-        android:maxWidth="150dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        tools:text="e3806a4963993ed1e8adc5c0ed9809c354dfc872" />
+        tools:text="b982672502b9f1236a68353d74734cb82f9d1fab" />
+
+    <TextView
+        android:id="@+id/txt_device_thisflag"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txt_device_label"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_toLeftOf="@+id/rename_button"
+        android:layout_toStartOf="@+id/rename_button"
+        android:text="@string/account_device_this_indicator"
+        android:textStyle="italic" />
+
+    <ImageButton
+        android:id="@+id/rename_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/revoke_button"
+        android:layout_toStartOf="@+id/revoke_button"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/account_device_revoke"
+        android:padding="8dp"
+        android:tint="@color/black"
+        app:srcCompat="@drawable/ic_action_edit" />
 
     <ImageButton
         android:id="@+id/revoke_button"
