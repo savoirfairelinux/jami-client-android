@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_f7784a2d",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-14T19:39:21Z",
+      "side": 1,
+      "message": "it\u0027s useless if you use android:src in the xml file. This change should prompt bugs in the other xml files (I have a bug with the frag_navigation.xml file for exemple).",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 52,
+        "endChar": 47
+      },
+      "revId": "9b18475a021c5f25764fae385df6fa7614a610f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_97754e34",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-14T19:39:21Z",
+      "side": 1,
+      "message": "protected",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 10
+      },
+      "revId": "9b18475a021c5f25764fae385df6fa7614a610f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_b772d247",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-14T19:39:21Z",
+      "side": 1,
+      "message": "protected",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 10
+      },
+      "revId": "9b18475a021c5f25764fae385df6fa7614a610f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_578fd623",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-14T19:39:21Z",
+      "side": 1,
+      "message": "protected",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 10
+      },
+      "revId": "9b18475a021c5f25764fae385df6fa7614a610f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_379ee257",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-14T19:39:21Z",
+      "side": 1,
+      "message": "protected",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 10
+      },
+      "revId": "9b18475a021c5f25764fae385df6fa7614a610f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_d7a2e699",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-14T19:39:21Z",
+      "side": 1,
+      "message": "you should use a variable name more explicit",
+      "range": {
+        "startLine": 65,
+        "startChar": 54,
+        "endLine": 65,
+        "endChar": 55
+      },
+      "revId": "9b18475a021c5f25764fae385df6fa7614a610f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_97ac6e8e",
+        "filename": "ring-android/app/src/main/res/layout/item_device.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-14T19:39:21Z",
+      "side": 1,
+      "message": "you should use src finally (see my annotation in the gradle file).",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 21
+      },
+      "revId": "9b18475a021c5f25764fae385df6fa7614a610f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
