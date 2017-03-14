@@ -17,7 +17,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cx.ring.trustrequests;
+package cx.ring.contactrequests;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,14 +36,14 @@ import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
-public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<PendingTrustRequestsViewModel>> implements Observer<ServiceEvent> {
+public class PendingContactRequestsPresenter extends RootPresenter<GenericView<PendingContactRequestsViewModel>> implements Observer<ServiceEvent> {
 
-    static final String TAG = PendingTrustRequestsPresenter.class.getSimpleName();
+    static private final String TAG = PendingContactRequestsPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
 
     @Inject
-    public PendingTrustRequestsPresenter(AccountService mAccountService) {
+    public PendingContactRequestsPresenter(AccountService mAccountService) {
         this.mAccountService = mAccountService;
     }
 
@@ -56,7 +56,7 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
     }
 
     @Override
-    public void bindView(GenericView<PendingTrustRequestsViewModel> view) {
+    public void bindView(GenericView<PendingContactRequestsViewModel> view) {
         mAccountService.addObserver(this);
         super.bindView(view);
         updateList(true);
@@ -93,7 +93,7 @@ public class PendingTrustRequestsPresenter extends RootPresenter<GenericView<Pen
             }
         }
 
-        getView().showViewModel(new PendingTrustRequestsViewModel(currentAccount, mTrustRequests));
+        getView().showViewModel(new PendingContactRequestsViewModel(currentAccount, mTrustRequests));
     }
 
     @Override

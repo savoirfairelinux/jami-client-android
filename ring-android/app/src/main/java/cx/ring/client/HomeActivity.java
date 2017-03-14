@@ -82,7 +82,7 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.SettingsService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
-import cx.ring.trustrequests.PendingTrustRequestsFragment;
+import cx.ring.contactrequests.PendingContactRequestsFragment;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Observable;
@@ -106,7 +106,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     public static final int REQUEST_PERMISSION_READ_STORAGE = 114;
 
     public static final String HOME_TAG = "Home";
-    public static final String TRUST_REQUEST_TAG = "Trust request";
+    public static final String CONTACT_REQUESTS_TAG = "Trust request";
     public static final String ACCOUNTS_TAG = "Accounts";
     public static final String ABOUT_TAG = "About";
     public static final String SETTINGS_TAG = "Prefs";
@@ -652,15 +652,15 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 popCustomBackStack();
                 fContent = getFragmentManager().findFragmentByTag(HOME_TAG);
                 break;
-            case TRUST_REQUEST:
-                if (fContent instanceof PendingTrustRequestsFragment) {
+            case CONTACT_REQUESTS:
+                if (fContent instanceof PendingContactRequestsFragment) {
                     break;
                 }
-                fContent = new PendingTrustRequestsFragment();
+                fContent = new PendingContactRequestsFragment();
                 getFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.main_frame, fContent, TRUST_REQUEST_TAG)
-                        .addToBackStack(TRUST_REQUEST_TAG).commit();
+                        .replace(R.id.main_frame, fContent, CONTACT_REQUESTS_TAG)
+                        .addToBackStack(CONTACT_REQUESTS_TAG).commit();
                 break;
             case MANAGE:
                 if (fContent instanceof AccountsManagementFragment) {
