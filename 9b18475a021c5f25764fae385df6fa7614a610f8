@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_f7228a00",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-15T14:02:47Z",
+      "side": 1,
+      "message": "According to https://developer.android.com/guide/topics/graphics/vector-drawable-resources.html, it should be set for backward compatibility if vector drawable are used.",
+      "parentUuid": "bab3e1c7_f7784a2d",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 52,
+        "endChar": 47
+      },
+      "revId": "9b18475a021c5f25764fae385df6fa7614a610f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_97754e34",
         "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
         "patchSetId": 16
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-14T19:39:21Z",
       "side": 1,
       "message": "protected",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 10
+      },
+      "revId": "9b18475a021c5f25764fae385df6fa7614a610f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_57603635",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-15T14:02:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_97754e34",
       "range": {
         "startLine": 52,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_77653a44",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-15T14:02:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_b772d247",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 10
+      },
+      "revId": "9b18475a021c5f25764fae385df6fa7614a610f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_578fd623",
         "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
         "patchSetId": 16
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-14T19:39:21Z",
       "side": 1,
       "message": "protected",
+      "range": {
+        "startLine": 58,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 10
+      },
+      "revId": "9b18475a021c5f25764fae385df6fa7614a610f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_175abe83",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-15T14:02:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_578fd623",
       "range": {
         "startLine": 58,
         "startChar": 4,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_375fc274",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-15T14:02:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_379ee257",
+      "range": {
+        "startLine": 61,
+        "startChar": 5,
+        "endLine": 61,
+        "endChar": 10
+      },
+      "revId": "9b18475a021c5f25764fae385df6fa7614a610f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_d7a2e699",
         "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
         "patchSetId": 16
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "bab3e1c7_d753c66a",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/ConfirmRevocationDialog.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-15T14:02:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab3e1c7_d7a2e699",
+      "range": {
+        "startLine": 65,
+        "startChar": 54,
+        "endLine": 65,
+        "endChar": 55
+      },
+      "revId": "9b18475a021c5f25764fae385df6fa7614a610f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab3e1c7_97ac6e8e",
         "filename": "ring-android/app/src/main/res/layout/item_device.xml",
         "patchSetId": 16
@@ -151,6 +295,30 @@
       "writtenOn": "2017-03-14T19:39:21Z",
       "side": 1,
       "message": "you should use src finally (see my annotation in the gradle file).",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 21
+      },
+      "revId": "9b18475a021c5f25764fae385df6fa7614a610f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_378822e7",
+        "filename": "ring-android/app/src/main/res/layout/item_device.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-03-15T14:02:47Z",
+      "side": 1,
+      "message": "According to https://developer.android.com/guide/topics/graphics/vector-drawable-resources.html , app;srcCompat should be used with vector drawables, and vectorDrawables.useSupportLibrary \u003d true be set.\nAnyway, using app;srcCompat is never an issue and this is rather insignificant.",
+      "parentUuid": "bab3e1c7_97ac6e8e",
       "range": {
         "startLine": 70,
         "startChar": 7,
