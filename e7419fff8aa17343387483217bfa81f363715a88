@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_779a1a16",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RenameDeviceDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-15T15:31:14Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 30
+      },
+      "revId": "e7419fff8aa17343387483217bfa81f363715a88",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_179f1e05",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RenameDeviceDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-15T15:31:14Z",
+      "side": 1,
+      "message": "useless",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 61,
+        "endChar": 35
+      },
+      "revId": "e7419fff8aa17343387483217bfa81f363715a88",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_f785aaad",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RenameDeviceDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-15T15:31:14Z",
+      "side": 1,
+      "message": "useless",
+      "range": {
+        "startLine": 85,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 100
+      },
+      "revId": "e7419fff8aa17343387483217bfa81f363715a88",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_37a4a256",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RenameDeviceDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-15T15:31:14Z",
+      "side": 1,
+      "message": "useless",
+      "range": {
+        "startLine": 123,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 42
+      },
+      "revId": "e7419fff8aa17343387483217bfa81f363715a88",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_d788a6c8",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RenameDeviceDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-15T15:31:14Z",
+      "side": 1,
+      "message": "useless",
+      "range": {
+        "startLine": 129,
+        "startChar": 7,
+        "endLine": 129,
+        "endChar": 45
+      },
+      "revId": "e7419fff8aa17343387483217bfa81f363715a88",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_97922ef5",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RenameDeviceDialog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-15T15:31:14Z",
+      "side": 1,
+      "message": "this condition is never true, even if I delete the device name",
+      "range": {
+        "startLine": 133,
+        "startChar": 8,
+        "endLine": 133,
+        "endChar": 60
+      },
+      "revId": "e7419fff8aa17343387483217bfa81f363715a88",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_57bcb66c",
+        "filename": "ring-android/app/src/main/java/cx/ring/dependencyinjection/RingInjectionComponent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-15T15:31:14Z",
+      "side": 1,
+      "message": "useless",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "e7419fff8aa17343387483217bfa81f363715a88",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_b78f32cc",
+        "filename": "ring-android/app/src/main/java/cx/ring/dependencyinjection/RingInjectionComponent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-15T15:31:14Z",
+      "side": 1,
+      "message": "useless",
+      "range": {
+        "startLine": 153,
+        "startChar": 1,
+        "endLine": 153,
+        "endChar": 43
+      },
+      "revId": "e7419fff8aa17343387483217bfa81f363715a88",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_77c1bae3",
+        "filename": "ring-android/app/src/main/res/layout/frag_device_list.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-15T15:31:14Z",
+      "side": 1,
+      "message": "if you change this attribu, you must add android:singleLine\u003d\"true\". It\u0027s a deprecated attribu but there is a bug with some ringID otherwise (the ringID is not displayed)",
+      "range": {
+        "startLine": 95,
+        "startChar": 36,
+        "endLine": 95,
+        "endChar": 46
+      },
+      "revId": "e7419fff8aa17343387483217bfa81f363715a88",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_17b63e8b",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/account/RingAccountSummaryPresenter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-15T15:31:14Z",
+      "side": 1,
+      "message": "newName",
+      "range": {
+        "startLine": 180,
+        "startChar": 36,
+        "endLine": 180,
+        "endChar": 44
+      },
+      "revId": "e7419fff8aa17343387483217bfa81f363715a88",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_37bb4274",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-15T15:31:14Z",
+      "side": 1,
+      "message": "account",
+      "range": {
+        "startLine": 644,
+        "startChar": 22,
+        "endLine": 644,
+        "endChar": 25
+      },
+      "revId": "e7419fff8aa17343387483217bfa81f363715a88",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
