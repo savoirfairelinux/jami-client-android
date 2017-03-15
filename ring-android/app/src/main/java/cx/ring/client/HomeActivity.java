@@ -734,36 +734,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 .addToBackStack(SETTINGS_TAG).commit();
     }
 
-    public void onCallContact(final CallContact c) {
-        Log.d(TAG, "onCallContact " + c.toString() + " " + c.getId() + " " + c.getKey());
-        if (c.getPhones().size() > 1) {
-            final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
-            int i = 0;
-            for (Phone p : c.getPhones()) {
-                numbers[i++] = p.getNumber().getRawUriString();
-            }
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.choose_number);
-            builder.setItems(numbers, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    CharSequence selected = numbers[which];
-                    Intent intent = new Intent(CallActivity.ACTION_CALL)
-                            .setClass(HomeActivity.this, CallActivity.class)
-                            .setData(Uri.parse(selected.toString()));
-                    startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
-                }
-            });
-            builder.show();
-        } else {
-            Intent intent = new Intent(CallActivity.ACTION_CALL)
-                    .setClass(this, CallActivity.class)
-                    .setData(Uri.parse(c.getPhones().get(0).getNumber().getRawUriString()));
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
-        }
-    }
-
     public void onTextContact(final CallContact c) {
         if (c.getPhones().size() > 1) {
             final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
