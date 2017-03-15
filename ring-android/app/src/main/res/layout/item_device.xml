@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Copyright (c) 2016 Savoir-faire Linux Inc.
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (c) 2017 Savoir-faire Linux Inc.
 
 Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
 
@@ -13,18 +13,20 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="72dp"
     android:padding="16dp">
 
     <ImageView
         android:id="@+id/icon_device"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         app:srcCompat="@drawable/ic_desktop_windows_black" />
@@ -33,23 +35,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:id="@+id/txt_device_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="56dp"
         android:layout_marginStart="56dp"
-        android:text="8E24CCF4"
-        android:textAppearance="@style/ListPrimary" />
+        android:textAppearance="@style/ListPrimary"
+        tools:text="8E24CCF4" />
 
     <TextView
         android:id="@+id/txt_device_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/txt_device_label"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="24dp"
-        android:layout_toEndOf="@+id/txt_device_label"
+        android:layout_alignLeft="@id/txt_device_label"
+        android:layout_alignStart="@+id/txt_device_label"
+        android:layout_below="@id/txt_device_label"
+        android:layout_toLeftOf="@+id/revoke_button"
+        android:layout_toStartOf="@+id/revoke_button"
         android:ellipsize="middle"
         android:maxLines="1"
-        android:text="e3806a4963993ed1e8adc5c0ed9809c354dfc872"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+        android:maxWidth="150dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        tools:text="e3806a4963993ed1e8adc5c0ed9809c354dfc872" />
+
+    <ImageButton
+        android:id="@+id/revoke_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/account_device_revoke"
+        android:padding="8dp"
+        app:srcCompat="@drawable/ic_cancel_black_24dp" />
 
 </RelativeLayout>
