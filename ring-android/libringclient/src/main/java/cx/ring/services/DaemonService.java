@@ -200,6 +200,11 @@ public class DaemonService {
         }
 
         @Override
+        public void deviceRevocationEnded(String accountId, String device, int state) {
+            mAccountCallbackHandler.deviceRevocationEnded(accountId, device, state);
+        }
+
+        @Override
         public void incomingTrustRequest(String accountId, String from, Blob message, SWIGTYPE_p_time_t received) {
             mAccountCallbackHandler.incomingTrustRequest(accountId, from, message, received);
         }
