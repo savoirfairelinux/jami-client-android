@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_82d8ae54",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/NetworkUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-15T21:02:10Z",
+      "side": 1,
+      "message": "you should use a variable name more explicit",
+      "range": {
+        "startLine": 20,
+        "startChar": 28,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "eaeb65172cc8490a7b59bc60ab14af8179212dbc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_e2cdea87",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/SettingsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-15T21:02:10Z",
+      "side": 1,
+      "message": "mUserSetting",
+      "range": {
+        "startLine": 27,
+        "startChar": 23,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "eaeb65172cc8490a7b59bc60ab14af8179212dbc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
