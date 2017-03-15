@@ -18,9 +18,6 @@
  */
 package cx.ring.utils;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
-
 import java.lang.ref.WeakReference;
 
 import cx.ring.services.AccountService;
@@ -39,7 +36,7 @@ public class BlockchainInputHandler extends Thread {
     private boolean mIsWaitingForInputs = false;
     private long mLastEnqueuedInputTimeStamp = -1;
 
-    public BlockchainInputHandler(@NonNull WeakReference<AccountService> accountService) {
+    public BlockchainInputHandler(WeakReference<AccountService> accountService) {
         mAccountService = accountService;
     }
 
