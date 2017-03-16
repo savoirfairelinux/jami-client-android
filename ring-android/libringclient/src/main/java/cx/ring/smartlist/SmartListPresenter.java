@@ -1,6 +1,7 @@
 package cx.ring.smartlist;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -40,6 +41,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     private BlockchainInputHandler mBlockchainInputHandler;
     private String mLastBlockchainQuery = null;
 
+    private ArrayList<Conversation> mConversations;
+
     @Inject
     public SmartListPresenter(AccountService accountService, ContactService contactService,
                               HistoryService historyService, ConversationFacade conversationFacade,
@@ -77,7 +80,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         if (isConnected) {
             getView().hideErrorPanel();
         } else {
-            if(isMobileAndNotAllowed) {
+            if (isMobileAndNotAllowed) {
                 getView().displayMobileDataPanel();
             } else {
                 getView().displayNetworkErrorPanel();
@@ -197,6 +200,16 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         }
     }
 
+    private void displayConversations() {
+        mConversations = mConversationFacade.getConversationsList();
+        if (mConversations != null && mConversations.size() > 0) {
+            getView().updateView(mConversations);
+            getView().hideNoConversationMessage();
+        } else {
+            getView().displayNoConversationMessage();
+        }
+    }
+
     private void parseEventState(String name, String address, int state) {
         switch (state) {
             case 0:
@@ -213,7 +226,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 }
 
                 mConversationFacade.updateConversationContactWithRingId(name, address);
-                getView().updateView(mConversationFacade.getConversationsList(), null);
+                displayConversations();
                 break;
             case 1:
                 // invalid name
@@ -237,7 +250,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     }
 
 
-
     @Override
     public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
@@ -256,10 +268,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 break;
             case INCOMING_MESSAGE:
             case HISTORY_LOADED:
-                getView().updateView(mConversationFacade.getConversationsList(), null);
-                break;
             case CONVERSATIONS_CHANGED:
-                getView().updateView(mConversationFacade.getConversationsList(), null);
+                displayConversations();
                 break;
         }
     }
