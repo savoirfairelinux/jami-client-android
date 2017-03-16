@@ -1,5 +1,6 @@
 package cx.ring.smartlist;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import cx.ring.model.CallContact;
@@ -20,15 +21,23 @@ public interface SmartListView extends GenericView {
 
     void displayChooseNumberDialog(CharSequence numbers[]);
 
+    void displayNoConversationMessage();
+
+    void displayConversationDialog(Conversation conversation);
+
     void hideSearchRow();
 
     void hideErrorPanel();
 
-    void updateView(final Collection<Conversation> list, String query);
+    void hideNoConversationMessage();
+
+    void updateView(ArrayList<SmartListViewModel> list);
 
     void goToConversation(CallContact callContact);
 
     void goToCallActivity(String rawUriNumber);
 
     void goToQRActivity();
+
+    void goToContact(CallContact callContact);
 }
