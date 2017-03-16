@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_a2f13297",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RenameDeviceDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-16T12:59:26Z",
+      "side": 1,
+      "message": "you should use the trim() function",
+      "range": {
+        "startLine": 97,
+        "startChar": 12,
+        "endLine": 97,
+        "endChar": 57
+      },
+      "revId": "e7f100bff2c2b9586de526dc43191f7d12676fa1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_c2eea6b4",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RenameDeviceDialog.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-16T12:59:26Z",
+      "side": 1,
+      "message": "you should use the trim() function",
+      "range": {
+        "startLine": 110,
+        "startChar": 37,
+        "endLine": 110,
+        "endChar": 72
+      },
+      "revId": "e7f100bff2c2b9586de526dc43191f7d12676fa1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_02f59e82",
+        "filename": "ring-android/app/src/main/java/cx/ring/dependencyinjection/RingInjectionComponent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-03-16T12:59:26Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "e7f100bff2c2b9586de526dc43191f7d12676fa1",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
