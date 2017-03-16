@@ -33,7 +33,8 @@ public class TrustRequest {
     private String mContactUsername = null;
     private String mContactId;
     private VCard mVcard;
-    private String message;
+    private String mMessage;
+    private String mTimestamp;
     private int mUuid;
 
     public static final String ACTION_AUTO_ACCEPT = "autoAccept";
@@ -42,7 +43,7 @@ public class TrustRequest {
         mAccountId = accountId;
         mContactId = contact;
         mVcard = new VCard();
-        message = null;
+        mMessage = null;
         mUuid = new Random().nextInt();
     }
 
@@ -72,5 +73,13 @@ public class TrustRequest {
 
     public void setUsername(String username) {
         mContactUsername = username;
+    }
+
+    public void setTimestamp(String timestamp) {
+        mTimestamp = timestamp;
+    }
+
+    public String getTimestamp() {
+        return mTimestamp;
     }
 }
