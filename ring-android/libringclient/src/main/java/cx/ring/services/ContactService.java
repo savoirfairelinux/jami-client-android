@@ -51,6 +51,9 @@ import cx.ring.utils.Observable;
  */
 public abstract class ContactService extends Observable {
 
+    public static final String CONTACT_NAME_KEY = "CONTACT_NAME";
+    public static final String CONTACT_PHOTO_KEY = "CONTACT_PHOTO";
+
     private final static String TAG = ContactService.class.getName();
 
     @Inject
@@ -77,6 +80,8 @@ public abstract class ContactService extends Observable {
     protected abstract CallContact findContactBySipNumberFromSystem(String number);
 
     protected abstract CallContact findContactByNumberFromSystem(String number);
+
+    public abstract Map<String, String> loadContactData(CallContact callContact);
 
     public ContactService() {
         mContactList = new HashMap<>();

@@ -87,7 +87,7 @@ along with this program; if not, write to the Free Software
         android:layout_height="match_parent"
         android:layout_below="@+id/newcontact_element">
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/confs_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -100,12 +100,14 @@ along with this program; if not, write to the Free Software
             tools:listitem="@layout/item_smartlist" />
 
         <TextView
-            android:id="@+id/emptyTextView"
+            android:id="@+id/empty_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="0 conversations"
             android:gravity="center"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible"/>
 
         <ProgressBar
             android:id="@+id/loading_indicator"
