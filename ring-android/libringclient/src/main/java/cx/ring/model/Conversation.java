@@ -48,12 +48,12 @@ public class Conversation {
 
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
-    private int uuid;
+    private String uuid;
 
-    public Conversation(CallContact c) {
-        setContact(c);
+    public Conversation(CallContact contact) {
+        setContact(contact);
+        this.uuid = contact.getIds().get(0);
         mCurrentCalls = new ArrayList<>();
-        setUuid(new Random().nextInt());
     }
 
     public class ConversationElement {
@@ -138,11 +138,11 @@ public class Conversation {
         this.mVisible = mVisible;
     }
 
-    public int getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(int uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
