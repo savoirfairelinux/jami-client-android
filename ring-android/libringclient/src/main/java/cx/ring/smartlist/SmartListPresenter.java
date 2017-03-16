@@ -20,6 +20,9 @@
 package cx.ring.smartlist;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,6 +42,7 @@ import cx.ring.services.SettingsService;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.Tuple;
 
 public class SmartListPresenter extends RootPresenter<SmartListView> implements Observer<ServiceEvent> {
 
@@ -54,6 +58,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     private BlockchainInputHandler mBlockchainInputHandler;
     private String mLastBlockchainQuery = null;
+
+    private ArrayList<Conversation> mConversations;
+    private ArrayList<SmartListViewModel> mSmartListViewModels;
 
     @Inject
     public SmartListPresenter(AccountService accountService, ContactService contactService,
@@ -89,7 +96,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         boolean isConnected = isConnectedWifi
                 || (isConnectedMobile && mSettingsService.getUserSettings().isAllowMobileData());
 
-        boolean isMobileAndNotAllowed = isConnectedMobile && !mSettingsService.getUserSettings().isAllowMobileData();
+        boolean isMobileAndNotAllowed = isConnectedMobile
+                && !mSettingsService.getUserSettings().isAllowMobileData();
 
         if (isConnected) {
             getView().hideErrorPanel();
@@ -103,6 +111,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
         mConversationFacade.refreshConversations();
         searchForRingIdInBlockchain();
+        getView().hideSearchRow();
     }
 
     public void queryTextChanged(String query) {
@@ -141,7 +150,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             }
         }
 
-        getView().updateViewWithQuery(mConversationFacade.getConversationsList(), query);
+        getView().updateView(filter(mSmartListViewModels, query));
+        getView().setLoading(false);
     }
 
     public void newContactClicked(CallContact callContact) {
@@ -151,11 +161,25 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         startConversation(callContact);
     }
 
-    public void conversationClicked(CallContact callContact) {
-        if (callContact == null) {
-            return;
+    public void conversationClicked(SmartListViewModel smartListViewModel) {
+        Conversation conversation = getConversationByUuid(mConversations, smartListViewModel.getUuid());
+        if (conversation != null && conversation.getContact() != null) {
+            startConversation(conversation.getContact());
         }
-        startConversation(callContact);
+    }
+
+    public void conversationLongClicked(SmartListViewModel smartListViewModel) {
+        Conversation conversation = getConversationByUuid(mConversations, smartListViewModel.getUuid());
+        if (conversation != null) {
+            getView().displayConversationDialog(conversation);
+        }
+    }
+
+    public void photoClicked(SmartListViewModel smartListViewModel) {
+        Conversation conversation = getConversationByUuid(mConversations, smartListViewModel.getUuid());
+        if (conversation != null && conversation.getContact() != null) {
+            getView().goToContact(conversation.getContact());
+        }
     }
 
     public void quickCallClicked(CallContact callContact) {
@@ -211,11 +235,94 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         }
     }
 
+    private synchronized void displayConversations() {
+        if (mConversations == null) {
+            mConversations = new ArrayList<>();
+        }
+        mConversations.clear();
+        mConversations.addAll(mConversationFacade.getConversationsList());
+        if (mConversations != null && mConversations.size() > 0) {
+            if (mSmartListViewModels == null) {
+                mSmartListViewModels = new ArrayList<>();
+            }
+            for (int i = 0; i < mConversations.size(); i++) {
+                Conversation conversation = mConversations.get(i);
+                SmartListViewModel smartListViewModel = getSmartListViewModelByUuid(mSmartListViewModels, conversation.getUuid());
+
+                if (smartListViewModel == null || i >= mSmartListViewModels.size()) {
+
+                    if(conversation.getContact().isFromSystem()) {
+                        Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(conversation.getContact());
+                        smartListViewModel = new SmartListViewModel(conversation, tuple.first, tuple.second, null);
+                    } else {
+                        Tuple<String, byte[]> tuple = mContactService.loadContactData(conversation.getContact());
+                        smartListViewModel = new SmartListViewModel(conversation, tuple.first, null, tuple.second);
+                    }
+
+                    mSmartListViewModels.add(smartListViewModel);
+                } else {
+                    if(conversation.getContact().isFromSystem()) {
+                        Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(conversation.getContact());
+                        smartListViewModel.update(conversation, tuple.first, tuple.second, null);
+                    } else {
+                        Tuple<String, byte[]> tuple = mContactService.loadContactData(conversation.getContact());
+                        smartListViewModel.update(conversation, tuple.first, null, tuple.second);
+                    }
+                }
+            }
+
+            Collections.sort(mSmartListViewModels, new Comparator<SmartListViewModel>() {
+                @Override
+                public int compare(SmartListViewModel lhs, SmartListViewModel rhs) {
+                    return (int) ((rhs.getLastInteractionTime() - lhs.getLastInteractionTime()) / 1000l);
+                }
+            });
+
+            getView().updateView(mSmartListViewModels);
+            getView().hideNoConversationMessage();
+            getView().setLoading(false);
+        } else {
+            getView().displayNoConversationMessage();
+            getView().setLoading(false);
+        }
+    }
+
+    private ArrayList<SmartListViewModel> filter(ArrayList<SmartListViewModel> list, String query) {
+        ArrayList<SmartListViewModel> filteredList = new ArrayList<>();
+        if(list == null || list.size() == 0) {
+            return filteredList;
+        }
+        for(SmartListViewModel smartListViewModel : list) {
+            if(smartListViewModel.getContactName().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(smartListViewModel);
+            }
+        }
+        return filteredList;
+    }
+
+    private Conversation getConversationByUuid(ArrayList<Conversation> conversations, String uuid) {
+        for (Conversation conversation : conversations) {
+            if (conversation.getUuid().equals(uuid)) {
+                return conversation;
+            }
+        }
+        return null;
+    }
+
+    private SmartListViewModel getSmartListViewModelByUuid(ArrayList<SmartListViewModel> smartListViewModels, String uuid) {
+        for (SmartListViewModel smartListViewModel : smartListViewModels) {
+            if (smartListViewModel.getUuid().equals(uuid)) {
+                return smartListViewModel;
+            }
+        }
+        return null;
+    }
+
     private void parseEventState(String name, String address, int state) {
         switch (state) {
             case 0:
                 // on found
-                if (mLastBlockchainQuery.equals(name)) {
+                if (mLastBlockchainQuery != null && mLastBlockchainQuery.equals(name)) {
                     getView().displayNewContactRowWithName(name, address);
                     mLastBlockchainQuery = null;
                 } else {
@@ -227,7 +334,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 }
 
                 mConversationFacade.updateConversationContactWithRingId(name, address);
-                getView().updateView(mConversationFacade.getConversationsList());
+                displayConversations();
                 break;
             case 1:
                 // invalid name
@@ -260,7 +367,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         switch (event.getEventType()) {
             case REGISTERED_NAME_FOUND:
                 String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                if (mLastBlockchainQuery.equals("") || !mLastBlockchainQuery.equals(name)) {
+                if (mLastBlockchainQuery != null
+                        && (mLastBlockchainQuery.equals("") || !mLastBlockchainQuery.equals(name))) {
                     return;
                 }
                 String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
@@ -269,10 +377,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 break;
             case INCOMING_MESSAGE:
             case HISTORY_LOADED:
-                getView().updateView(mConversationFacade.getConversationsList());
-                break;
             case CONVERSATIONS_CHANGED:
-                getView().updateView(mConversationFacade.getConversationsList());
+                displayConversations();
                 break;
         }
     }
