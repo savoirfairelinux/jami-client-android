@@ -38,7 +38,12 @@ public class PendingContactRequestsViewModel {
     }
 
     public String getAccountUsername() {
-        return mAccount.get().getUsername();
+        Account account = mAccount.get();
+        String username = account.getRegisteredName();
+        if (account.registeringUsername || username == null || username.isEmpty()) {
+            username = account.getUsername();
+        }
+        return username;
     }
 
     public List<TrustRequest> getTrustRequests() {
