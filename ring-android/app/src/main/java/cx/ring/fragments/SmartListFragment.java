@@ -30,8 +30,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.RemoteException;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -55,7 +53,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -77,7 +74,6 @@ import cx.ring.client.QRCodeScannerActivity;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
-import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
 import cx.ring.model.ServiceEvent;
@@ -174,9 +170,6 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
             refresh();
         }
     };
-
-    public static final int REQUEST_TRANSFER = 10;
-    public static final int REQUEST_CONF = 20;
 
     private Observer<ServiceEvent> mRinguifyObserver = new Observer<ServiceEvent>() {
 
@@ -636,96 +629,12 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Conference transfer;
-        if (requestCode == REQUEST_TRANSFER) {
-            switch (resultCode) {
-                case 0:
-                    Conference c = data.getParcelableExtra("target");
-                    transfer = data.getParcelableExtra("transfer");
-                    try {
-                        mCallbacks.getService().getRemoteService().attendedTransfer(transfer.getParticipants().get(0).getCallId(), c.getParticipants().get(0).getCallId());
-                        mSmartListAdapter.notifyDataSetChanged();
-                    } catch (RemoteException e) {
-                        Log.e(TAG, "Error on Transfer", e);
-                    }
-                    Toast.makeText(getActivity(), getString(cx.ring.R.string.home_transfer_complet), Toast.LENGTH_LONG).show();
-                    break;
-
-                case 1:
-                    String to = data.getStringExtra("to_number");
-                    transfer = data.getParcelableExtra("transfer");
-                    try {
-                        Toast.makeText(getActivity(), getString(cx.ring.R.string.home_transfering, transfer.getParticipants().get(0).getContact().getDisplayName(), to),
-                                Toast.LENGTH_SHORT).show();
-                        mCallbacks.getService().getRemoteService().transfer(transfer.getParticipants().get(0).getCallId(), to);
-                        mCallbacks.getService().getRemoteService().hangUp(transfer.getParticipants().get(0).getCallId());
-                    } catch (RemoteException e) {
-                        Log.e(TAG, "Error on Transfer", e);
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-        } else if (requestCode == REQUEST_CONF) {
-            switch (resultCode) {
-                case 0:
-                    Conference call_to_add = data.getParcelableExtra("transfer");
-                    Conference call_target = data.getParcelableExtra("target");
-
-                    bindCalls(call_to_add, call_target);
-                    break;
-
-                default:
-                    break;
-            }
-        } else {
+        if (requestCode == IntentIntegrator.REQUEST_CODE) {
             IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (scanResult != null && resultCode == Activity.RESULT_OK) {
                 String contact_uri = scanResult.getContents();
                 startConversation(CallContact.buildUnknown(contact_uri));
             }
-        }
-
-    }
-
-    private void bindCalls(Conference call_to_add, Conference call_target) {
-        try {
-            Log.i(TAG, "joining calls:" + call_to_add.getId() + " and " + call_target.getId());
-
-            if (call_target.hasMultipleParticipants() && !call_to_add.hasMultipleParticipants()) {
-                mCallbacks.getService()
-                        .getRemoteService()
-                        .addParticipant(
-                                call_to_add.getParticipants().get(0).getCallId(),
-                                call_target.getId()
-                        );
-            } else if (call_target.hasMultipleParticipants() && call_to_add.hasMultipleParticipants()) {
-                // We join two conferences
-                mCallbacks.getService()
-                        .getRemoteService()
-                        .joinConference(
-                                call_to_add.getId(),
-                                call_target.getId()
-                        );
-            } else if (!call_target.hasMultipleParticipants() && call_to_add.hasMultipleParticipants()) {
-                mCallbacks.getService()
-                        .getRemoteService()
-                        .addParticipant(
-                                call_target.getParticipants().get(0).getCallId(),
-                                call_to_add.getId()
-                        );
-            } else {
-                // We join two single calls to create a conf
-                mCallbacks.getService()
-                        .getRemoteService()
-                        .joinParticipant(
-                                call_to_add.getParticipants().get(0).getCallId(),
-                                call_target.getParticipants().get(0).getCallId()
-                        );
-            }
-        } catch (RemoteException e) {
-            Log.e(TAG, "Error on bindCalls", e);
         }
     }
 
