@@ -46,9 +46,9 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
     private NotificationService mNotificationService;
 
     @Inject
-    public PendingContactRequestsPresenter(AccountService mAccountService, NotificationService mNotificationService) {
-        this.mAccountService = mAccountService;
-        this.mNotificationService = mNotificationService;
+    public PendingContactRequestsPresenter(AccountService accountService, NotificationService notificationService) {
+        mAccountService = accountService;
+        mNotificationService = notificationService;
     }
 
     final private List<TrustRequest> mTrustRequests = new ArrayList<>();
@@ -95,13 +95,16 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
             mTrustRequests.clear();
             mTrustRequestsTmp.clear();
             HashMap<String, String> map = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
+            String accountId = currentAccount.getAccountID();
 
             for (Map.Entry<String, String> entry : map.entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-                Log.d(TAG, "trust request: " + value + ", " + key);
-                mTrustRequestsTmp.add(new TrustRequest(value, key));
-                mAccountService.lookupAddress("", "", key);
+                String contactId = entry.getKey();
+                String timestamp = entry.getValue();
+                Log.d(TAG, "trust request: " + accountId + ", " + contactId + ", " + timestamp);
+                TrustRequest trustRequest = new TrustRequest(accountId, contactId);
+                trustRequest.setTimestamp(timestamp);
+                mTrustRequestsTmp.add(trustRequest);
+                mAccountService.lookupAddress("", "", contactId);
             }
         }
 
@@ -122,7 +125,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
                 updateList(true);
                 break;
             case REGISTERED_NAME_FOUND:
-                Log.d(TAG, "update, accountID: " + mAccountService.getCurrentAccount().getAccountID());
+                Log.d(TAG, "update, accountId: " + mAccountService.getCurrentAccount().getAccountID());
                 final String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
                 final String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
                 final int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
