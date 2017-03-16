@@ -1,7 +1,10 @@
 package cx.ring.smartlist;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -9,6 +12,7 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.HistoryEntry;
 import cx.ring.model.Phone;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
@@ -20,6 +24,9 @@ import cx.ring.services.SettingsService;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.Tuple;
+import cx.ring.utils.VCardUtils;
+import ezvcard.VCard;
 
 /**
  * Created by hdsousa on 17-03-15.
@@ -39,6 +46,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     private BlockchainInputHandler mBlockchainInputHandler;
     private String mLastBlockchainQuery = null;
+
+    private ArrayList<Conversation> mConversations;
+    private ArrayList<SmartListViewModel> smartListViewModels;
 
     @Inject
     public SmartListPresenter(AccountService accountService, ContactService contactService,
@@ -66,6 +76,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     public void init() {
         mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
+
+        smartListViewModels = new ArrayList<>();
     }
 
     public void refresh(boolean isConnectedWifi, boolean isConnectedMobile) {
@@ -77,7 +89,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         if (isConnected) {
             getView().hideErrorPanel();
         } else {
-            if(isMobileAndNotAllowed) {
+            if (isMobileAndNotAllowed) {
                 getView().displayMobileDataPanel();
             } else {
                 getView().displayNetworkErrorPanel();
@@ -197,6 +209,16 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         }
     }
 
+    private void displayConversations() {
+        mConversations = mConversationFacade.getConversationsList();
+        if (mConversations != null && mConversations.size() > 0) {
+            getView().updateView(mConversations);
+            getView().hideNoConversationMessage();
+        } else {
+            getView().displayNoConversationMessage();
+        }
+    }
+
     private void parseEventState(String name, String address, int state) {
         switch (state) {
             case 0:
@@ -213,7 +235,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 }
 
                 mConversationFacade.updateConversationContactWithRingId(name, address);
-                getView().updateView(mConversationFacade.getConversationsList(), null);
+                displayConversations();
                 break;
             case 1:
                 // invalid name
@@ -237,7 +259,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     }
 
 
-
     @Override
     public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
@@ -256,10 +277,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 break;
             case INCOMING_MESSAGE:
             case HISTORY_LOADED:
-                getView().updateView(mConversationFacade.getConversationsList(), null);
-                break;
             case CONVERSATIONS_CHANGED:
-                getView().updateView(mConversationFacade.getConversationsList(), null);
+                displayConversations();
                 break;
         }
     }
