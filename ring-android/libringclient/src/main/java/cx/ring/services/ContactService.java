@@ -38,6 +38,7 @@ import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
+import cx.ring.utils.Tuple;
 
 /**
  * This service handles the contacts
@@ -51,6 +52,9 @@ import cx.ring.utils.Observable;
  * - CONTACT_REMOVED
  */
 public abstract class ContactService extends Observable {
+
+    public static final String CONTACT_NAME_KEY = "CONTACT_NAME";
+    public static final String CONTACT_PHOTO_KEY = "CONTACT_PHOTO";
 
     private final static String TAG = ContactService.class.getName();
 
@@ -78,6 +82,10 @@ public abstract class ContactService extends Observable {
     protected abstract CallContact findContactBySipNumberFromSystem(String number);
 
     protected abstract CallContact findContactByNumberFromSystem(String number);
+
+    public abstract Tuple<String, String> loadContactDataFromSystem(CallContact callContact);
+
+    public abstract Tuple<String, byte[]> loadContactData(CallContact callContact);
 
     public ContactService() {
         mContactList = new HashMap<>();
