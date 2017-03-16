@@ -23,7 +23,6 @@ package cx.ring.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -34,6 +33,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
@@ -45,17 +46,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -75,14 +73,16 @@ import cx.ring.mvp.BaseFragment;
 import cx.ring.service.LocalService;
 import cx.ring.smartlist.SmartListPresenter;
 import cx.ring.smartlist.SmartListView;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.NetworkUtils;
+import cx.ring.viewholders.SmartListViewHolder;
 
 public class SmartListFragment extends BaseFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
         HomeActivity.Refreshable,
-        SmartListAdapter.SmartListAdapterCallback,
+        SmartListViewHolder.SmartListListeners,
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
         SmartListView {
@@ -90,7 +90,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     private static final String TAG = SmartListFragment.class.getSimpleName();
     private static final String STATE_LOADING = TAG + ".STATE_LOADING";
-    private static final int USER_INPUT_DELAY = 300;
 
     @Inject
     protected SmartListPresenter mSmartListPresenter;
@@ -99,13 +98,13 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     protected FloatingActionButton mFloatingActionButton;
 
     @BindView(R.id.confs_list)
-    protected ListView mList;
+    protected RecyclerView mRecyclerView;
 
     @BindView(R.id.loading_indicator)
     protected ProgressBar mLoader;
 
-    @BindView(R.id.emptyTextView)
-    protected TextView mEmptyTextView = null;
+    @BindView(R.id.empty_text_view)
+    protected TextView mEmptyTextView;
 
     @BindView(R.id.newcontact_element)
     protected ViewGroup mNewContact;
@@ -119,7 +118,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     @BindView(R.id.error_image_view)
     protected ImageView mErrorImageView;
 
-    private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
     private SmartListAdapter mSmartListAdapter;
 
     private SearchView mSearchView = null;
@@ -138,30 +136,11 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 
-        mCallbacks = (LocalService.Callbacks) activity;
     }
 
     public void refresh() {
-
-        LocalService service = mCallbacks.getService();
-        if (service == null) {
-            Log.e(TAG, "refresh: null service");
-            return;
-        }
-
-        if (mSmartListAdapter == null) {
-            bindService(getActivity(), service);
-        }
-
         mSmartListPresenter.refresh(NetworkUtils.isConnectedWifi(getActivity()),
                 NetworkUtils.isConnectedMobile(getActivity()));
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.d(TAG, "onDetach");
-        mCallbacks = LocalService.DUMMY_CALLBACKS;
     }
 
     @Override
@@ -290,23 +269,17 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        mList.setOnItemClickListener(conversationClickListener);
-        mList.setOnItemLongClickListener(conversationLongClickListener);
-
         if (savedInstanceState != null) {
             this.setLoading(savedInstanceState.getBoolean(STATE_LOADING, false));
         }
 
         mNewContact.setVisibility(View.GONE);
 
-        LocalService service = mCallbacks.getService();
-        if (service != null) {
-            bindService(inflater.getContext(), service);
-        }
-
         if (ConversationFragment.isTabletMode(getActivity())) {
             isTabletMode = true;
         }
+
+
 
         return inflatedView;
     }
@@ -329,17 +302,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         }
     }
 
-    public void bindService(final Context ctx, final LocalService service) {
-        mSmartListAdapter = new SmartListAdapter(ctx,
-                service.get40dpContactCache(),
-                service.getThreadPool());
-
-        mSmartListAdapter.setCallback(this);
-        if (mList != null) {
-            mList.setAdapter(mSmartListAdapter);
-        }
-    }
-
     public void startConversationTablet(Bundle bundle) {
         mConversationFragment = new ConversationFragment();
         mConversationFragment.setArguments(bundle);
@@ -347,57 +309,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         getFragmentManager().beginTransaction()
                 .replace(R.id.conversation_container, mConversationFragment, mConversationFragment.getClass().getName())
                 .commit();
-    }
-
-    private final OnItemClickListener conversationClickListener = new OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> arg0, View v, int arg2, long arg3) {
-            presenter.conversationClicked(((SmartListAdapter.ViewHolder) v.getTag()).conv.getContact());
-        }
-    };
-
-    private final AdapterView.OnItemLongClickListener conversationLongClickListener =
-            new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
-                    presentActions(getActivity(),
-                            ((SmartListAdapter.ViewHolder) v.getTag()).conv,
-                            SmartListFragment.this);
-                    return true;
-                }
-            };
-
-    public static void presentActions(final Activity activity,
-                                      final Conversation conversation,
-                                      final Conversation.ConversationActionCallback callback) {
-        if (activity == null) {
-            cx.ring.utils.Log.d(TAG, "presentActions: activity is null");
-            return;
-        }
-
-        if (conversation == null) {
-            cx.ring.utils.Log.d(TAG, "presentActions: conversation is null");
-            return;
-        }
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setItems(R.array.conversation_actions, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        ActionHelper.launchCopyNumberToClipboardFromContact(activity,
-                                conversation.getContact(),
-                                callback);
-                        break;
-                    case 1:
-                        ActionHelper.launchDeleteAction(activity, conversation, callback);
-                        break;
-                }
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
     @Override
@@ -412,22 +323,17 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         }
     }
 
-    private void setLoading(boolean loading) {
-        if (this.mLoader == null) {
-            return;
-        }
-        int loaderVisibility = (loading) ? View.VISIBLE : View.GONE;
-        this.mLoader.setVisibility(loaderVisibility);
-        if (loading) {
-            this.mEmptyTextView.setText("");
-        } else {
-            String emptyText = getResources().getQuantityString(R.plurals.home_conferences_title, 0, 0);
-            this.mEmptyTextView.setText(emptyText);
-        }
-
-        if (mList != null) {
-            mList.setEmptyView(this.mEmptyTextView);
-        }
+    @Override
+    public void setLoading(final boolean loading) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mLoader == null) {
+                    return;
+                }
+                mLoader.setVisibility(loading ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     /**
@@ -461,20 +367,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                     mFloatingActionButton.setVisibility(visibility);
                 }
             }, delay);
-        }
-    }
-
-    @Override
-    public void pictureTapped(Conversation conversation) {
-        if (conversation == null) {
-            Log.d(TAG, "pictureTapped, conversation is null");
-            return;
-        }
-        if (conversation.getContact() != null) {
-            Activity activity = getActivity();
-            if (activity != null) {
-                ActionHelper.displayContact(getActivity(), conversation.getContact());
-            }
         }
     }
 
@@ -567,43 +459,84 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
+    public void displayNoConversationMessage() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                String emptyText = getResources().getQuantityString(R.plurals.home_conferences_title, 0, 0);
+                mEmptyTextView.setText(emptyText);
+                mEmptyTextView.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    @Override
+    public void displayConversationDialog(final Conversation conversation) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setItems(R.array.conversation_actions, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(),
+                                conversation.getContact(),
+                                SmartListFragment.this);
+                        break;
+                    case 1:
+                        ActionHelper.launchDeleteAction(getActivity(), conversation, SmartListFragment.this);
+                        break;
+                }
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
     public void hideSearchRow() {
-        mNewContact.setVisibility(View.GONE);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mNewContact.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
     public void hideErrorPanel() {
-        if (mErrorMessagePane != null) {
-            mErrorMessagePane.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void updateViewWithQuery(final Collection<Conversation> list, final String query) {
-        Handler mUserInputHandler = new Handler();
-        mUserInputHandler.removeCallbacksAndMessages(null);
-        mUserInputHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mCallbacks.getService() == null) {
-                    Log.d(TAG, "onQueryTextChange: null service");
-                } else {
-                    mSmartListAdapter.updateDataset(
-                            list,
-                            query
-                    );
-                }
-            }
-        }, USER_INPUT_DELAY);
-    }
-
-    @Override
-    public void updateView(final Collection<Conversation> list) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mSmartListAdapter.updateDataset(list, null);
-                setLoading(false);
+                mErrorMessagePane.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    public void hideNoConversationMessage() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mEmptyTextView.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    public void updateView(final ArrayList<SmartListViewModel> list) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mRecyclerView.getAdapter() != null) {
+                    mSmartListAdapter.replaceAll(list);
+                } else {
+                    mSmartListAdapter = new SmartListAdapter(list, SmartListFragment.this);
+                    mRecyclerView.setAdapter(mSmartListAdapter);
+                    mRecyclerView.setHasFixedSize(true);
+                    LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+                    llm.setOrientation(LinearLayoutManager.VERTICAL);
+                    mRecyclerView.setLayoutManager(llm);
+                }
             }
         });
     }
@@ -641,8 +574,30 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
+    public void goToContact(CallContact callContact) {
+        Activity activity = getActivity();
+        if (activity != null) {
+            ActionHelper.displayContact(getActivity(), callContact);
+        }
+    }
+
+    @Override
     protected SmartListPresenter createPresenter() {
         return mSmartListPresenter;
     }
 
+    @Override
+    public void onItemClick(SmartListViewModel smartListViewModel) {
+        presenter.conversationClicked(smartListViewModel);
+    }
+
+    @Override
+    public void onItemLongClick(SmartListViewModel smartListViewModel) {
+        presenter.conversationLongClicked(smartListViewModel);
+    }
+
+    @Override
+    public void onPhotoClick(SmartListViewModel smartListViewModel) {
+        presenter.photoClicked(smartListViewModel);
+    }
 }
