@@ -23,18 +23,26 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.LongSparseArray;
+import android.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import cx.ring.R;
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
+import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.VCardUtils;
+import ezvcard.VCard;
+import ezvcard.property.Photo;
 
 public class ContactServiceImpl extends ContactService {
 
@@ -377,5 +385,43 @@ public class ContactServiceImpl extends ContactService {
         }
 
         return callContact;
+    }
+
+    public Map<String, String> loadContactData(CallContact callContact) {
+
+        String contactName = null;
+        String photoURI;
+        VCard vcard = null;
+
+        if (!callContact.getPhones().isEmpty()) {
+            String username = callContact.getPhones().get(0).getNumber().getHost();
+            vcard = VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), username + ".vcf");
+
+            if (vcard != null && vcard.getFormattedName() != null) {
+                if (!TextUtils.isEmpty(vcard.getFormattedName().getValue())) {
+                    contactName = vcard.getFormattedName().getValue();
+                }
+            }
+        }
+        if (contactName == null) {
+            contactName = callContact.getDisplayName();
+        }
+
+        if (vcard != null && !vcard.getPhotos().isEmpty()) {
+            photoURI = vcard.getPhotos().get(0).getUrl();
+        } else {
+            try {
+                photoURI = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, callContact.getId()).toString();
+            } catch (IllegalArgumentException e) {
+                photoURI = null;
+            }
+        }
+
+        HashMap<String, String> map = new HashMap<>();
+
+        map.put(CONTACT_NAME_KEY, contactName);
+        map.put(CONTACT_PHOTO_KEY, photoURI);
+
+        return map;
     }
 }

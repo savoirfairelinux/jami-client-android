@@ -19,11 +19,14 @@ along with this program; if not, write to the Free Software
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/call_entry"
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:descendantFocusability="blocksDescendants"
-    android:padding="16dp">
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:background="?android:attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/photo"
@@ -35,7 +38,7 @@ along with this program; if not, write to the Free Software
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:background="@null"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_contact_picture" />
 
     <TextView
@@ -43,7 +46,7 @@ along with this program; if not, write to the Free Software
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="14dp"
         android:layout_toEndOf="@+id/photo"
         android:layout_toLeftOf="@+id/conv_last_time"
         android:layout_toRightOf="@+id/photo"
@@ -55,7 +58,8 @@ along with this program; if not, write to the Free Software
         android:singleLine="true"
         android:textAlignment="viewStart"
         android:textColor="@color/text_color_primary"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        tools:text="Test test"/>
 
     <TextView
         android:id="@+id/conv_last_item"
@@ -70,7 +74,8 @@ along with this program; if not, write to the Free Software
         android:maxLines="2"
         android:textAlignment="viewStart"
         android:textColor="@color/text_color_secondary"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        tools:text="Ongoing call of 56 secs"/>
 
     <TextView
         android:id="@+id/conv_last_time"
@@ -80,6 +85,7 @@ along with this program; if not, write to the Free Software
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:textColor="@color/text_color_secondary"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        tools:text="2days ago"/>
 
 </RelativeLayout>
