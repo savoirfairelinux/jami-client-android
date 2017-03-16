@@ -1,7 +1,9 @@
 package cx.ring.smartlist;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -9,6 +11,7 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.HistoryEntry;
 import cx.ring.model.Phone;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
@@ -39,6 +42,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     private BlockchainInputHandler mBlockchainInputHandler;
     private String mLastBlockchainQuery = null;
+
+    private ArrayList<Conversation> mConversations;
+    private ArrayList<SmartListViewModel> smartListViewModels;
 
     @Inject
     public SmartListPresenter(AccountService accountService, ContactService contactService,
@@ -77,7 +83,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         if (isConnected) {
             getView().hideErrorPanel();
         } else {
-            if(isMobileAndNotAllowed) {
+            if (isMobileAndNotAllowed) {
                 getView().displayMobileDataPanel();
             } else {
                 getView().displayNetworkErrorPanel();
@@ -86,10 +92,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
         mConversationFacade.refreshConversations();
         searchForRingIdInBlockchain();
-    }
-
-    public void checkIntent() {
-
     }
 
     public void queryTextChanged(String query) {
@@ -135,11 +137,19 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         startConversation(callContact);
     }
 
-    public void conversationClicked(CallContact callContact) {
-        if (callContact == null) {
-            return;
+    public void conversationClicked(int position) {
+        startConversation(mConversations.get(position).getContact());
+    }
+
+    public void conversationLongClicked(int position) {
+        getView().displayConversationDialog(mConversations.get(position));
+    }
+
+    public void photoClicked(int position) {
+        CallContact callContact = mConversations.get(position).getContact();
+        if (callContact != null) {
+            getView().goToContact(callContact);
         }
-        startConversation(callContact);
     }
 
     public void quickCallClicked(CallContact callContact) {
@@ -197,6 +207,56 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         }
     }
 
+    private SmartListViewModel createViewModel(Conversation conversation) {
+        SmartListViewModel smartListViewModel = new SmartListViewModel();
+
+        Map<String, String> contactDetails = mContactService.loadContactData(conversation.getContact());
+
+        smartListViewModel.setContactName(contactDetails.get(ContactService.CONTACT_NAME_KEY));
+        smartListViewModel.setPhotoUri(contactDetails.get(ContactService.CONTACT_PHOTO_KEY));
+
+        for (HistoryEntry historyEntry : conversation.getHistory().values()) {
+            long lastTextTimestamp = historyEntry.getTextMessages().isEmpty() ? 0 : historyEntry.getTextMessages().lastEntry().getKey();
+            long lastCallTimestamp = historyEntry.getCalls().isEmpty() ? 0 : historyEntry.getCalls().lastEntry().getKey();
+            if (lastTextTimestamp > 0 && lastTextTimestamp > lastCallTimestamp) {
+                smartListViewModel.setLastInteraction(historyEntry);
+                break;
+            }
+            if (lastCallTimestamp > 0) {
+                smartListViewModel.setLastInteraction(historyEntry);
+                break;
+            }
+        }
+
+        smartListViewModel.setLastInteractionTime(conversation.getLastInteraction().getTime());
+        smartListViewModel.setHasUnreadTextMessage(conversation.hasUnreadTextMessages());
+        smartListViewModel.setHasOngoingCall(conversation.hasCurrentCall());
+
+        return smartListViewModel;
+    }
+
+    private synchronized void displayConversations() {
+        if (mConversations == null) {
+            mConversations = new ArrayList<>();
+        }
+        mConversations.clear();
+        mConversations.addAll(mConversationFacade.getConversationsList());
+        if (mConversations != null && mConversations.size() > 0) {
+            if (smartListViewModels == null) {
+                smartListViewModels = new ArrayList<>();
+            }
+            smartListViewModels.clear();
+            for (Conversation conversation : mConversations) {
+                SmartListViewModel smartListViewModel = createViewModel(conversation);
+                smartListViewModels.add(smartListViewModel);
+            }
+            getView().updateView(smartListViewModels);
+            getView().hideNoConversationMessage();
+        } else {
+            getView().displayNoConversationMessage();
+        }
+    }
+
     private void parseEventState(String name, String address, int state) {
         switch (state) {
             case 0:
@@ -213,7 +273,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 }
 
                 mConversationFacade.updateConversationContactWithRingId(name, address);
-                getView().updateView(mConversationFacade.getConversationsList(), null);
+                displayConversations();
                 break;
             case 1:
                 // invalid name
@@ -237,7 +297,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     }
 
 
-
     @Override
     public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
@@ -256,10 +315,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 break;
             case INCOMING_MESSAGE:
             case HISTORY_LOADED:
-                getView().updateView(mConversationFacade.getConversationsList(), null);
-                break;
             case CONVERSATIONS_CHANGED:
-                getView().updateView(mConversationFacade.getConversationsList(), null);
+                displayConversations();
                 break;
         }
     }

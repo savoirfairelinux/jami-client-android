@@ -38,6 +38,7 @@ public class CallContact {
     private boolean isUser;
     private WeakReference<byte[]> mContactPhoto = new WeakReference<>(null);
     private boolean stared = false;
+    private boolean isFromSystem = false;
 
     public CallContact(long cID) {
         this(cID, null, null, UNKNOWN_ID);
@@ -200,6 +201,14 @@ public class CallContact {
 
     public void setPhoto(byte[] externalArray) {
         mContactPhoto = new WeakReference<>(externalArray);
+    }
+
+    public boolean isFromSystem() {
+        return isFromSystem;
+    }
+
+    public void setFromSystem(boolean fromSystem) {
+        isFromSystem = fromSystem;
     }
 
     /**
