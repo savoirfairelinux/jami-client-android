@@ -25,6 +25,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.LongSparseArray;
 
@@ -35,6 +36,9 @@ import javax.inject.Inject;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
+import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.VCardUtils;
+import ezvcard.VCard;
 
 public class ContactServiceImpl extends ContactService {
 
@@ -253,6 +257,8 @@ public class ContactServiceImpl extends ContactService {
 
         ContentResolver contentResolver = mContext.getContentResolver();
 
+        callContact.setFromSystem(true);
+
         try {
             Cursor cursorPhones = contentResolver.query(
                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -377,5 +383,45 @@ public class ContactServiceImpl extends ContactService {
         }
 
         return callContact;
+    }
+
+    public Map<String, String> loadContactData(CallContact callContact) {
+
+        String contactName = null;
+        String photoURI = null;
+        VCard vcard = null;
+
+        if (callContact.isFromSystem()) {
+            photoURI = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, callContact.getId()).toString();
+        } else {
+            if (!callContact.getPhones().isEmpty()) {
+                String username = callContact.getPhones().get(0).getNumber().getHost();
+                vcard = VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), username + ".vcf");
+
+                if (vcard != null && vcard.getFormattedName() != null) {
+                    if (!TextUtils.isEmpty(vcard.getFormattedName().getValue())) {
+                        contactName = vcard.getFormattedName().getValue();
+                    }
+                }
+            }
+            if (contactName == null) {
+                contactName = callContact.getDisplayName();
+            }
+
+            if (vcard != null && !vcard.getPhotos().isEmpty()) {
+                try {
+                    photoURI = BitmapUtils.getImageUri(mContext, BitmapUtils.bytesToBitmap(vcard.getPhotos().get(0).getData())).toString();
+                } catch (Exception e) {
+                    photoURI = null;
+                }
+            }
+        }
+
+        HashMap<String, String> map = new HashMap<>();
+
+        map.put(CONTACT_NAME_KEY, contactName);
+        map.put(CONTACT_PHOTO_KEY, photoURI);
+
+        return map;
     }
 }
