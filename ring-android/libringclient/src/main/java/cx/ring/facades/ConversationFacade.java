@@ -19,7 +19,6 @@
  */
 package cx.ring.facades;
 
-import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
