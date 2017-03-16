@@ -19,6 +19,7 @@
  */
 package cx.ring.smartlist;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import cx.ring.model.CallContact;
@@ -34,17 +35,23 @@ public interface SmartListView {
 
     void displayChooseNumberDialog(CharSequence numbers[]);
 
+    void displayNoConversationMessage();
+
+    void displayConversationDialog(Conversation conversation);
+
     void hideSearchRow();
 
     void hideErrorPanel();
 
-    void updateView(final Collection<Conversation> list);
+    void hideNoConversationMessage();
 
-    void updateViewWithQuery(final Collection<Conversation> list, String query);
+    void updateView(ArrayList<SmartListViewModel> list);
 
     void goToConversation(CallContact callContact);
 
     void goToCallActivity(String rawUriNumber);
 
     void goToQRActivity();
+
+    void goToContact(CallContact callContact);
 }
