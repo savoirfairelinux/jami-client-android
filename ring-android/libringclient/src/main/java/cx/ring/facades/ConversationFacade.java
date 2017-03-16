@@ -19,7 +19,6 @@
  */
 package cx.ring.facades;
 
-import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -512,6 +511,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     notifyObservers(mEvent);
                     break;
                 case HISTORY_LOADED:
+                    mConversationMap.clear();
                     List<HistoryCall> historyCalls = (List<HistoryCall>) event.getEventInput(ServiceEvent.EventInput.HISTORY_CALLS, ArrayList.class);
                     parseHistoryCalls(historyCalls);
 
