@@ -88,6 +88,6 @@ public class SettingsServiceImpl extends SettingsService {
 
     public boolean isConnectedWifiAndMobile() {
         return NetworkUtils.isConnectedWifi(mContext)
-                || (NetworkUtils.isConnectedMobile(mContext) && mUserSettings.isAllowMobileData());
+                || (NetworkUtils.isConnectedMobile(mContext) && getUserSettings().isAllowMobileData());
     }
 }
