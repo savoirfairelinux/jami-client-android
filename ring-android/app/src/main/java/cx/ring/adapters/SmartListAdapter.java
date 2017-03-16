@@ -1,8 +1,7 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
- *  Authors: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
- *           Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
+ *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,226 +15,63 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 package cx.ring.adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.text.TextUtils;
+import android.net.Uri;
+import android.provider.ContactsContract;
+import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
-import android.util.Log;
-import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import java.lang.ref.WeakReference;
-import java.text.Normalizer;
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryEntry;
-import cx.ring.utils.Tuple;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
-import cx.ring.model.Phone;
 import cx.ring.model.TextMessage;
+import cx.ring.smartlist.SmartListViewModel;
+import cx.ring.utils.CircleTransform;
+import cx.ring.viewholders.SmartListViewHolder;
 
-public class SmartListAdapter extends BaseAdapter {
+public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> {
 
-    private static String TAG = SmartListAdapter.class.getSimpleName();
+    private ArrayList<SmartListViewModel> mSmartListViewModels;
+    private SmartListViewHolder.SmartListListeners listener;
 
-    private final ArrayList<Conversation> mConversations = new ArrayList<>();
-    private final ExecutorService mInfosFetcher;
-    private final LruCache<Long, Bitmap> mMemoryCache;
-    private final HashMap<Long, WeakReference<ContactDetailsTask>> mRunningTasks = new HashMap<>();
-
-    private final Context mContext;
-
-    public interface SmartListAdapterCallback {
-        void pictureTapped(Conversation conversation);
-    }
-
-    private static SmartListAdapterCallback sDummyCallbacks = new SmartListAdapterCallback() {
-        @Override
-        public void pictureTapped(Conversation conversation) {
-            // Stub
-        }
-    };
-
-    private SmartListAdapterCallback mCallbacks = sDummyCallbacks;
-
-    public SmartListAdapter(Context act, LruCache<Long, Bitmap> cache, ExecutorService pool) {
-        super();
-        mContext = act;
-        mMemoryCache = cache;
-        mInfosFetcher = pool;
-    }
-
-    private String stringFormatting(String query) {
-        return Normalizer.normalize(query.toLowerCase(), Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "");
-    }
-
-    public void emptyDataset () {
-        mConversations.clear();
-        notifyDataSetChanged();
-    }
-
-    public void updateDataset(final Collection<Conversation> list, String query) {
-        Log.d(TAG, "updateDataset " + list.size() + " with query: " + query);
-
-        if (list.isEmpty() && mConversations.isEmpty()) {
-            return;
-        }
-
-        List<Conversation> newConversations = new ArrayList<>();
-
-        for (Conversation c : list) {
-            if (!c.getContact().isUnknown()
-                    || !c.getAccountsUsed().isEmpty()
-                    || c.getCurrentCall() != null) {
-                if (TextUtils.isEmpty(query) || c.getCurrentCall() != null) {
-                    newConversations.add(c);
-                } else if (c.getContact() != null) {
-                    CallContact contact = c.getContact();
-                    if (!TextUtils.isEmpty(contact.getDisplayName()) &&
-                            stringFormatting(contact.getDisplayName()).contains(stringFormatting(query))) {
-                        newConversations.add(c);
-                    } else if (contact.getPhones() != null && !contact.getPhones().isEmpty()) {
-                        ArrayList<Phone> phones = contact.getPhones();
-                        for (Phone phone : phones) {
-                            if (phone.getNumber() != null) {
-                                String rawUriString = phone.getNumber().getRawUriString();
-                                if (!TextUtils.isEmpty(rawUriString) &&
-                                        stringFormatting(rawUriString.toLowerCase()).contains(stringFormatting(query))) {
-                                    newConversations.add(c);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        mConversations.clear();
-        mConversations.addAll(newConversations);
-        notifyDataSetChanged();
-    }
-
-    /**
-     *
-     * @return true if list are different
-     */
-    private boolean areConversationListDifferent(List<Conversation> leftList, List<Conversation> rightList) {
-        if (leftList == null || rightList == null) {
-            return true;
-        }
-
-        if (leftList.size() != rightList.size()) {
-            return true;
-        }
-
-        for (Conversation rightConversation: rightList) {
-            if (rightConversation.hasCurrentCall() || rightConversation.hasUnreadTextMessages()) {
-                return true;
-            }
-
-            int rightId = rightConversation.getUuid();
-            CallContact rightContact = rightConversation.getContact();
-            boolean found = false;
-            for (Conversation leftConversation: leftList) {
-
-                if (leftConversation.hasCurrentCall() || leftConversation.hasUnreadTextMessages()) {
-                    return true;
-                }
-
-                int leftId = leftConversation.getUuid();
-                CallContact leftContact = leftConversation.getContact();
-                if (leftId == rightId
-                        && leftContact!=null
-                        && leftContact.equals(rightContact)) {
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found) {
-                return true;
-            }
-        }
-
-        return false;
+    public SmartListAdapter(ArrayList<SmartListViewModel> smartListViewModels, SmartListViewHolder.SmartListListeners listener) {
+        this.mSmartListViewModels = new ArrayList<>(smartListViewModels);
+        this.listener = listener;
     }
 
     @Override
-    public int getCount() {
-        return mConversations.size();
+    public SmartListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_smartlist, parent, false);
+
+        return new SmartListViewHolder(v);
     }
 
     @Override
-    public Conversation getItem(int position) {
-        return mConversations.get(position);
-    }
+    public void onBindViewHolder(SmartListViewHolder holder, int position) {
+        final SmartListViewModel smartListViewModel = mSmartListViewModels.get(position);
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    public class ViewHolder {
-        @BindView(R.id.conv_participant)
-        TextView convParticipants;
-        @BindView(R.id.conv_last_item)
-        TextView convStatus;
-        @BindView(R.id.conv_last_time)
-        TextView convTime;
-        @BindView(R.id.photo)
-        ImageView photo;
-        int position;
-        public Conversation conv;
-
-        public ViewHolder(View view) {
-            ButterKnife.bind(this, view);
-        }
-    }
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(cx.ring.R.layout.item_smartlist, null);
-        }
-
-        final ViewHolder holder = convertView.getTag() != null
-                ? (ViewHolder) convertView.getTag()
-                : new ViewHolder(convertView);
-
-        holder.position = -1;
-        convertView.setTag(holder);
-
-        holder.conv = mConversations.get(position);
-        holder.position = position;
-        holder.convParticipants.setText(holder.conv.getContact().getDisplayName());
-        long lastInteraction = holder.conv.getLastInteraction().getTime();
+        holder.convParticipants.setText(smartListViewModel.getContactName());
+        long lastInteraction = smartListViewModel.getLastInteractionTime();
         holder.convTime.setText(lastInteraction == 0 ? "" :
                 DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL));
-        holder.convStatus.setText(getLastInteractionSummary(holder.conv, mContext.getResources()));
-        if (holder.conv.hasUnreadTextMessages()) {
+        if (smartListViewModel.hasOngoingCall()) {
+            holder.convStatus.setText(holder.itemView.getContext().getString(R.string.ongoing_call));
+        } else if (smartListViewModel.getLastInteraction() != null) {
+            holder.convStatus.setText(getLastInteractionSummary(smartListViewModel.getLastInteraction(), holder.itemView.getContext()));
+        }
+        if (smartListViewModel.hasUnreadTextMessage()) {
             holder.convParticipants.setTypeface(null, Typeface.BOLD);
             holder.convTime.setTypeface(null, Typeface.BOLD);
             holder.convStatus.setTypeface(null, Typeface.BOLD);
@@ -245,93 +81,57 @@ public class SmartListAdapter extends BaseAdapter {
             holder.convStatus.setTypeface(null, Typeface.NORMAL);
         }
 
-        holder.photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallbacks.pictureTapped(holder.conv);
-            }
-        });
+        String photoUri = smartListViewModel.getPhotoUri();
 
-        final Long cid = holder.conv.getContact().getId();
-        final Bitmap bmp = mMemoryCache.get(cid);
-        if (bmp != null && cid != -1L) {
-            holder.photo.setImageBitmap(bmp);
-        } else {
-            final WeakReference<ViewHolder> holderWeakRef = new WeakReference<>(holder);
-            final ContactDetailsTask.DetailsLoadedCallback cb = new ContactDetailsTask.DetailsLoadedCallback() {
-                @Override
-                public void onDetailsLoaded(final Bitmap bmp, final String name) {
-                    final ViewHolder holder = holderWeakRef.get();
-                    if (holder == null || holder.photo.getParent() == null)
-                        return;
-                    if (holder.conv.getContact().getId() == cid) {
-                        holder.photo.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                holder.photo.setImageBitmap(bmp);
-                                holder.photo.startAnimation(AnimationUtils.loadAnimation(holder.photo.getContext(), R.anim.contact_fadein));
-                            }
-                        });
-
-                        holder.convParticipants.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                holder.convParticipants.setText(name);
-                                holder.photo.startAnimation(AnimationUtils.loadAnimation(holder.convParticipants.getContext(), R.anim.contact_fadein));
-                            }
-                        });
-                    }
-                }
-            };
-            WeakReference<ContactDetailsTask> wtask = mRunningTasks.get(cid);
-            ContactDetailsTask task = wtask == null ? null : wtask.get();
-            if (task != null && cid != -1L) {
-                task.addCallback(cb);
+        if (photoUri != null) {
+            if (isContentUri(photoUri)) {
+                Glide.with(holder.itemView.getContext())
+                        .load(Uri.withAppendedPath(Uri.parse(photoUri), ContactsContract.Contacts.Photo.DISPLAY_PHOTO))
+                        .placeholder(R.drawable.ic_contact_picture)
+                        .crossFade()
+                        .transform(new CircleTransform(holder.itemView.getContext()))
+                        .error(R.drawable.ic_contact_picture)
+                        .into(holder.photo);
             } else {
-                task = new ContactDetailsTask(mContext, holder.photo, holder.convParticipants, holder.conv.getContact(), new ContactDetailsTask.DetailsLoadedCallback() {
-                    @Override
-                    public void onDetailsLoaded(Bitmap bmp, final String name) {
-                        mMemoryCache.put(cid, bmp);
-                        mRunningTasks.remove(cid);
+                String[] byteValues = photoUri.substring(1, photoUri.length() - 1).split(",");
+                byte[] bytes = new byte[byteValues.length];
+
+                if (bytes.length > 0) {
+                    for (int i = 0, len = bytes.length; i < len; i++) {
+                        bytes[i] = Byte.parseByte(byteValues[i].trim());
                     }
-                });
-                task.addCallback(cb);
-                mRunningTasks.put(cid, new WeakReference<>(task));
-                mInfosFetcher.execute(task);
+                    Glide.with(holder.itemView.getContext())
+                            .load(bytes)
+                            .placeholder(R.drawable.ic_contact_picture)
+                            .crossFade()
+                            .transform(new CircleTransform(holder.itemView.getContext()))
+                            .error(R.drawable.ic_contact_picture)
+                            .into(holder.photo);
+                }
             }
+        } else {
+            holder.photo.setImageResource(R.drawable.ic_contact_picture);
         }
-        return convertView;
+
+        holder.bind(listener, smartListViewModel);
     }
 
-    public void setCallback(SmartListAdapterCallback callback) {
-        if (callback == null) {
-            this.mCallbacks = sDummyCallbacks;
-            return;
-        }
-        this.mCallbacks = callback;
+    @Override
+    public int getItemCount() {
+        return mSmartListViewModels.size();
     }
 
-    private String getLastInteractionSummary(Conversation conversation, Resources resources) {
-        if (conversation.hasCurrentCall()) {
-            return resources.getString(R.string.ongoing_call);
-        }
-        Tuple<Date, String> d = new Tuple<>(new Date(0), null);
-
-        for (HistoryEntry e : conversation.getHistory().values()) {
-            Date entryDate = e.getLastInteractionDate();
-            String entrySummary = getLastInteractionSummary(e, resources);
-            if (entryDate == null || entrySummary == null) {
-                continue;
-            }
-            Tuple<Date, String> tmp = new Tuple<>(entryDate, entrySummary);
-            if (d.first.compareTo(entryDate) < 0) {
-                d = tmp;
-            }
-        }
-        return d.second;
+    public void replaceAll(ArrayList<SmartListViewModel> list) {
+        mSmartListViewModels.clear();
+        mSmartListViewModels.addAll(list);
+        notifyDataSetChanged();
     }
 
-    private String getLastInteractionSummary(HistoryEntry e, Resources resources) {
+    private boolean isContentUri(String uri) {
+        return uri.contains("content://");
+    }
+
+    private String getLastInteractionSummary(HistoryEntry e, Context context) {
         long lastTextTimestamp = e.getTextMessages().isEmpty() ? 0 : e.getTextMessages().lastEntry().getKey();
         long lastCallTimestamp = e.getCalls().isEmpty() ? 0 : e.getCalls().lastEntry().getKey();
         if (lastTextTimestamp > 0 && lastTextTimestamp > lastCallTimestamp) {
@@ -343,11 +143,11 @@ public class SmartListAdapter extends BaseAdapter {
                     msgString = msgString.substring(msgString.lastIndexOf("\n") + 1);
                 }
             }
-            return (msg.isIncoming() ? "" : resources.getText(R.string.you_txt_prefix) + " ") + msgString;
+            return (msg.isIncoming() ? "" : context.getText(R.string.you_txt_prefix) + " ") + msgString;
         }
         if (lastCallTimestamp > 0) {
             HistoryCall lastCall = e.getCalls().lastEntry().getValue();
-            return String.format(resources.getString(lastCall.isIncoming()
+            return String.format(context.getString(lastCall.isIncoming()
                     ? R.string.hist_in_call
                     : R.string.hist_out_call), lastCall.getDurationString());
         }
