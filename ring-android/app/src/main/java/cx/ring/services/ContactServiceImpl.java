@@ -25,9 +25,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.LongSparseArray;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +37,9 @@ import javax.inject.Inject;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
+import cx.ring.utils.Tuple;
+import cx.ring.utils.VCardUtils;
+import ezvcard.VCard;
 
 public class ContactServiceImpl extends ContactService {
 
@@ -131,6 +136,7 @@ public class ContactServiceImpl extends ContactService {
                 if (contact == null) {
                     contact = new CallContact(contactId);
                     isNewContact = true;
+                    contact.setFromSystem(true);
                 }
 
                 String contactNumber = contactCursor.getString(indexNumber);
@@ -377,5 +383,46 @@ public class ContactServiceImpl extends ContactService {
         }
 
         return callContact;
+    }
+
+    @Override
+    public Tuple<String, String> loadContactDataFromSystem(CallContact callContact) {
+
+        String contactName = callContact.getDisplayName();
+        String photoURI = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, callContact.getId()).toString();
+
+        return new Tuple<>(contactName, photoURI);
+    }
+
+    @Override
+    public Tuple<String, byte[]> loadContactData(CallContact callContact) {
+
+        String contactName = null;
+        byte[] photoURI = null;
+        VCard vcard = null;
+
+        if (!callContact.getPhones().isEmpty()) {
+            String username = callContact.getPhones().get(0).getNumber().getHost();
+            vcard = VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), username + ".vcf");
+
+            if (vcard != null && vcard.getFormattedName() != null) {
+                if (!TextUtils.isEmpty(vcard.getFormattedName().getValue())) {
+                    contactName = vcard.getFormattedName().getValue();
+                }
+            }
+        }
+        if (contactName == null) {
+            contactName = callContact.getDisplayName();
+        }
+
+        if (vcard != null && !vcard.getPhotos().isEmpty()) {
+            try {
+                photoURI = vcard.getPhotos().get(0).getData();
+            } catch (Exception e) {
+                photoURI = null;
+            }
+        }
+
+        return new Tuple<>(contactName, photoURI);
     }
 }
