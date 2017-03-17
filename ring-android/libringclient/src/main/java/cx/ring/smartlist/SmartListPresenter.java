@@ -196,7 +196,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             }
 
             Uri contactUri = new Uri(contact.getIds().get(0));
-            if (contactUri.isRingId()) {
+            if (!contactUri.isRingId()) {
                 return;
             }
 
@@ -204,8 +204,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 mAccountService.lookupName("", "", contact.getDisplayName());
             } else {
                 Phone phone = contact.getPhones().get(0);
-                if (!phone.getNumber().isRingId()) {
-                    mAccountService.lookupName("", "", contact.getDisplayName());
+                if (phone.getNumber().isRingId()) {
+                    mAccountService.lookupAddress("", "", phone.getNumber().getHost());
                 }
             }
         }
@@ -215,7 +215,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         switch (state) {
             case 0:
                 // on found
-                if (mLastBlockchainQuery.equals(name)) {
+                if (mLastBlockchainQuery != null && mLastBlockchainQuery.equals(name)) {
                     getView().displayNewContactRowWithName(name, address);
                     mLastBlockchainQuery = null;
                 } else {
@@ -260,7 +260,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         switch (event.getEventType()) {
             case REGISTERED_NAME_FOUND:
                 String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                if (mLastBlockchainQuery.equals("") || !mLastBlockchainQuery.equals(name)) {
+                if (mLastBlockchainQuery != null && (mLastBlockchainQuery.equals("") || !mLastBlockchainQuery.equals(name))) {
                     return;
                 }
                 String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
