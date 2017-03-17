@@ -23,7 +23,6 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -120,7 +119,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         }
 
         mConversationFacade.refreshConversations();
-        searchForRingIdInBlockchain();
         getView().hideSearchRow();
     }
 
@@ -221,26 +219,22 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         getView().goToQRActivity();
     }
 
-    private void searchForRingIdInBlockchain() {
-        List<Conversation> conversations = mConversationFacade.getConversationsList();
-        for (Conversation conversation : conversations) {
-            CallContact contact = conversation.getContact();
-            if (contact == null) {
-                continue;
-            }
+    private void searchForRingIdInBlockchain(CallContact contact) {
+        if (contact == null) {
+            return;
+        }
 
-            Uri contactUri = new Uri(contact.getIds().get(0));
-            if (contactUri.isRingId()) {
-                return;
-            }
+        Uri contactUri = new Uri(contact.getIds().get(0));
+        if (!contactUri.isRingId()) {
+            return;
+        }
 
-            if (contact.getPhones().isEmpty()) {
-                mAccountService.lookupName("", "", contact.getDisplayName());
-            } else {
-                Phone phone = contact.getPhones().get(0);
-                if (!phone.getNumber().isRingId()) {
-                    mAccountService.lookupName("", "", contact.getDisplayName());
-                }
+        if (contact.getPhones().isEmpty()) {
+            mAccountService.lookupName("", "", contact.getDisplayName());
+        } else {
+            Phone phone = contact.getPhones().get(0);
+            if (phone.getNumber().isRingId()) {
+                mAccountService.lookupAddress("", "", phone.getNumber().getHost());
             }
         }
     }
@@ -260,30 +254,19 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             }
             for (int i = 0; i < mConversations.size(); i++) {
                 Conversation conversation = mConversations.get(i);
-                SmartListViewModel smartListViewModel = getSmartListViewModelByUuid(mSmartListViewModels, conversation.getUuid());
+                SmartListViewModel smartListViewModel;
                 CallContact contact = conversation.getContact();
 
-                if (smartListViewModel == null || i >= mSmartListViewModels.size()) {
-
-                    if (conversation.getContact().isFromSystem()) {
-                        Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(contact);
-                        smartListViewModel = new SmartListViewModel(conversation, tuple.first, tuple.second, null);
-                    } else {
-                        Tuple<String, byte[]> tuple = mContactService.loadContactData(contact);
-                        smartListViewModel = new SmartListViewModel(conversation, tuple.first, null, tuple.second);
-                    }
-                    smartListViewModel.setOnline(mPresenceService.isBuddyOnline(conversation.getContact().getIds().get(0)));
-                    mSmartListViewModels.add(smartListViewModel);
+                if (conversation.getContact().isFromSystem()) {
+                    Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(contact);
+                    smartListViewModel = new SmartListViewModel(conversation, tuple.first, tuple.second, null);
                 } else {
-                    smartListViewModel.setOnline(mPresenceService.isBuddyOnline(conversation.getContact().getIds().get(0)));
-                    if (conversation.getContact().isFromSystem()) {
-                        Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(conversation.getContact());
-                        smartListViewModel.update(conversation, tuple.first, tuple.second, null);
-                    } else {
-                        Tuple<String, byte[]> tuple = mContactService.loadContactData(contact);
-                        smartListViewModel.update(conversation, tuple.first, null, tuple.second);
-                    }
+                    Tuple<String, byte[]> tuple = mContactService.loadContactData(contact);
+                    smartListViewModel = new SmartListViewModel(conversation, tuple.first, null, tuple.second);
                 }
+                smartListViewModel.setOnline(mPresenceService.isBuddyOnline(conversation.getContact().getIds().get(0)));
+                mSmartListViewModels.add(smartListViewModel);
+                searchForRingIdInBlockchain(contact);
             }
 
             Collections.sort(mSmartListViewModels, new Comparator<SmartListViewModel>() {
@@ -300,6 +283,24 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             getView().displayNoConversationMessage();
             getView().setLoading(false);
         }
+    }
+
+    private void updateConversations() {
+        for (SmartListViewModel smartListViewModel : mSmartListViewModels) {
+            String uuid = smartListViewModel.getUuid();
+            Conversation conversation = mConversationFacade.getConversationById(uuid);
+            CallContact contact = conversation.getContact();
+
+            smartListViewModel.setOnline(mPresenceService.isBuddyOnline(conversation.getContact().getIds().get(0)));
+            if (conversation.getContact().isFromSystem()) {
+                Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(contact);
+                smartListViewModel.update(conversation, tuple.first, tuple.second, null);
+            } else {
+                Tuple<String, byte[]> tuple = mContactService.loadContactData(contact);
+                smartListViewModel.update(conversation, tuple.first, null, tuple.second);
+            }
+        }
+        getView().updateView(mSmartListViewModels);
     }
 
     private ArrayList<SmartListViewModel> filter(ArrayList<SmartListViewModel> list, String query) {
@@ -346,7 +347,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                     }
                     getView().hideSearchRow();
                     mConversationFacade.updateConversationContactWithRingId(name, address);
-                    displayConversations();
                 }
                 break;
             case 1:
@@ -416,12 +416,15 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             case CONVERSATIONS_CHANGED:
                 displayConversations();
                 break;
+            case USERNAME_CHANGED:
+                updateConversations();
+                break;
         }
 
         if (observable instanceof PresenceService) {
             switch (event.getEventType()) {
                 case NEW_BUDDY_NOTIFICATION:
-                    displayConversations();
+                    updateConversations();
                     break;
             }
         }
