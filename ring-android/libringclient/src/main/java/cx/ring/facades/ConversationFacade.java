@@ -203,27 +203,26 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     /**
      * (also sends CONVERSATIONS_CHANGED event)
      *
-     * @param oldId
+     * @param newDisplayName
      * @param ringId
      */
-    public void updateConversationContactWithRingId(String oldId, String ringId) {
+    public void updateConversationContactWithRingId(String newDisplayName, String ringId) {
 
-        if (oldId == null || oldId.isEmpty()) {
+        if (newDisplayName == null || newDisplayName.isEmpty()) {
             return;
         }
 
-        Uri uri = new Uri(oldId);
+        Uri uri = new Uri(newDisplayName);
         if (uri.isRingId()) {
             return;
         }
 
-        Conversation conversation = mConversationMap.get(oldId);
+        Conversation conversation = mConversationMap.get(CallContact.PREFIX_RING + ringId);
         if (conversation == null) {
             return;
         }
 
         CallContact contact = conversation.getContact();
-
         if (contact == null) {
             return;
         }
@@ -231,29 +230,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         Uri ringIdUri = new Uri(ringId);
         contact.getPhones().clear();
         contact.getPhones().add(new cx.ring.model.Phone(ringIdUri, 0));
-        contact.resetDisplayName();
-
-        mConversationMap.remove(oldId);
-        mConversationMap.put(contact.getIds().get(0), conversation);
-
-        for (Map.Entry<String, HistoryEntry> entry : conversation.getHistory().entrySet()) {
-            HistoryEntry historyEntry = entry.getValue();
-            historyEntry.setContact(contact);
-            NavigableMap<Long, TextMessage> messages = historyEntry.getTextMessages();
-            for (TextMessage textMessage : messages.values()) {
-                textMessage.setNumber(ringIdUri);
-                textMessage.setContact(contact);
-                mHistoryService.updateTextMessage(new HistoryText(textMessage));
-            }
-        }
-
-        setConversationVisible();
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONVERSATIONS_CHANGED);
-        notifyObservers(event);
-
-        updateTextNotifications();
+        contact.setDisplayName(newDisplayName);
     }
 
     public Conversation findOrStartConversationByNumber(Uri number) {
