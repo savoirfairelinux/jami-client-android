@@ -20,7 +20,6 @@
  */
 package cx.ring.model;
 
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
@@ -237,6 +236,10 @@ public class CallContact {
 
     public void resetDisplayName() {
         mDisplayName = null;
+    }
+
+    public void setDisplayName(String displayName) {
+        mDisplayName = displayName;
     }
 
     //region Equals

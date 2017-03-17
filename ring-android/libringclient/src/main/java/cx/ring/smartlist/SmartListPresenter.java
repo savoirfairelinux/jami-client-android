@@ -111,7 +111,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     public void refresh() {
         refreshConnectivity();
         mConversationFacade.refreshConversations();
-        searchForRingIdInBlockchain();
+        subscribePresence();
         getView().hideSearchRow();
     }
 
@@ -247,16 +247,16 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             }
 
             Uri contactUri = new Uri(contact.getIds().get(0));
-            if (contactUri.isRingId()) {
-                return;
+            if (!contactUri.isRingId()) {
+                continue;
             }
 
             if (contact.getPhones().isEmpty()) {
                 mAccountService.lookupName("", "", contact.getDisplayName());
             } else {
                 Phone phone = contact.getPhones().get(0);
-                if (!phone.getNumber().isRingId()) {
-                    mAccountService.lookupName("", "", contact.getDisplayName());
+                if (phone.getNumber().isRingId()) {
+                    mAccountService.lookupAddress("", "", phone.getNumber().getHost());
                 }
             }
         }
@@ -266,7 +266,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         if (mConversations == null) {
             mConversations = new ArrayList<>();
         }
-        subscribePresence();
         mSmartListViewModels = new ArrayList<>();
         mConversations.clear();
         mConversations.addAll(mConversationFacade.getConversationsList());
@@ -274,20 +273,25 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             for (int i = 0; i < mConversations.size(); i++) {
                 Conversation conversation = mConversations.get(i);
                 SmartListViewModel smartListViewModel;
+                CallContact contact = conversation.getContact();
+
                 long lastInteractionTime = conversation.getLastInteraction().getTime();
                 String lastInteraction = lastInteractionTime == new Date(0).getTime() ?
                         "" : mHistoryService.getRelativeTimeSpanString(lastInteractionTime);
-                Tuple<String, byte[]> tuple = mContactService.loadContactData(conversation.getContact());
+                Tuple<String, byte[]> tuple = mContactService.loadContactData(contact);
                 if (tuple != null) {
+                    String contactName = tuple.first;
+                    if (!contact.getDisplayName().equals(contact.getPhones().get(0).getNumber().getRawUriString())) {
+                        contactName = contact.getDisplayName();
+                    }
                     smartListViewModel = new SmartListViewModel(conversation,
-                            tuple.first,
+                            contactName,
                             tuple.second,
                             lastInteraction);
-                    smartListViewModel.setOnline(mPresenceService.isBuddyOnline(conversation.getContact().getIds().get(0)));
+                    smartListViewModel.setOnline(mPresenceService.isBuddyOnline(contact.getIds().get(0)));
                     mSmartListViewModels.add(smartListViewModel);
                 }
             }
-
             getView().updateList(mSmartListViewModels);
             getView().hideNoConversationMessage();
             getView().setLoading(false);
@@ -370,6 +374,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     }
 
     private void subscribePresence() {
+        if (mAccountService.getCurrentAccount() == null) {
+            return;
+        }
         String accountId = mAccountService.getCurrentAccount().getAccountID();
         Set<String> keys = mConversationFacade.getConversations().keySet();
         for (String key : keys) {
@@ -399,12 +406,17 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
                 parseEventState(name, address, state);
                 break;
-            case HISTORY_LOADED:
             case REGISTRATION_STATE_CHANGED:
                 refreshConnectivity();
+                break;
+            case HISTORY_LOADED:
             case CONVERSATIONS_CHANGED:
                 displayConversations();
+                searchForRingIdInBlockchain();
                 getView().scrollToTop();
+                break;
+            case USERNAME_CHANGED:
+                displayConversations();
                 break;
         }
 

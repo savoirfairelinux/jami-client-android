@@ -21,11 +21,9 @@ package cx.ring.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +34,6 @@ import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import cx.ring.R;
 import cx.ring.smartlist.SmartListViewModel;
@@ -142,11 +139,13 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
 
     public void update(ArrayList<SmartListViewModel> smartListViewModels) {
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new SmartListDiffUtil(this.mSmartListViewModels, smartListViewModels));
-        diffResult.dispatchUpdatesTo(this);
 
         this.mSmartListViewModels.clear();
         this.mSmartListViewModels.addAll(smartListViewModels);
+
+        diffResult.dispatchUpdatesTo(this);
     }
+
 
     private String getLastInteractionSummary(int type, String lastInteraction, Context context) {
         switch (type) {
