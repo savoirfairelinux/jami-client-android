@@ -201,27 +201,26 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     /**
      * (also sends CONVERSATIONS_CHANGED event)
      *
-     * @param oldId
+     * @param newDisplayName
      * @param ringId
      */
-    public void updateConversationContactWithRingId(String oldId, String ringId) {
+    public void updateConversationContactWithRingId(String newDisplayName, String ringId) {
 
-        if (oldId == null || oldId.isEmpty()) {
+        if (newDisplayName == null || newDisplayName.isEmpty()) {
             return;
         }
 
-        Uri uri = new Uri(oldId);
+        Uri uri = new Uri(newDisplayName);
         if (uri.isRingId()) {
             return;
         }
 
-        Conversation conversation = mConversationMap.get(oldId);
+        Conversation conversation = mConversationMap.get("ring:" + ringId);
         if (conversation == null) {
             return;
         }
 
         CallContact contact = conversation.getContact();
-
         if (contact == null) {
             return;
         }
@@ -229,10 +228,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         Uri ringIdUri = new Uri(ringId);
         contact.getPhones().clear();
         contact.getPhones().add(new cx.ring.model.Phone(ringIdUri, 0));
-        contact.resetDisplayName();
-
-        mConversationMap.remove(oldId);
-        mConversationMap.put(contact.getIds().get(0), conversation);
+        contact.setDisplayName(newDisplayName);
 
         for (Map.Entry<String, HistoryEntry> entry : conversation.getHistory().entrySet()) {
             HistoryEntry historyEntry = entry.getValue();

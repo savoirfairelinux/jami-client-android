@@ -220,7 +220,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             }
 
             Uri contactUri = new Uri(contact.getIds().get(0));
-            if (contactUri.isRingId()) {
+            if (!contactUri.isRingId()) {
                 return;
             }
 
@@ -228,8 +228,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 mAccountService.lookupName("", "", contact.getDisplayName());
             } else {
                 Phone phone = contact.getPhones().get(0);
-                if (!phone.getNumber().isRingId()) {
-                    mAccountService.lookupName("", "", contact.getDisplayName());
+                if (phone.getNumber().isRingId()) {
+                    mAccountService.lookupAddress("", "", phone.getNumber().getHost());
                 }
             }
         }
