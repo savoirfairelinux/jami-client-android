@@ -141,6 +141,10 @@ public class SmartListViewModel {
         isOnline = online;
     }
 
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
     public int getLastEntryType() {
         return lastEntryType;
     }

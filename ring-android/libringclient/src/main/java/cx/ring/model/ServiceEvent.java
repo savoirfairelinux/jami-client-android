@@ -65,7 +65,8 @@ public class ServiceEvent {
         NEW_SERVER_SUBSCRIPTION_REQUEST,
         SERVER_ERROR,
         NEW_BUDDY_NOTIFICATION,
-        SUBSCRIPTION_STATE_CHANGED
+        SUBSCRIPTION_STATE_CHANGED,
+        USERNAME_CHANGED
     }
 
     public enum EventInput {
