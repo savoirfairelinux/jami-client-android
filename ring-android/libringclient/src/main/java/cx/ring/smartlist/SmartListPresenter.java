@@ -133,6 +133,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 getView().displayNetworkErrorPanel();
             }
         }
+        mConversationFacade.refreshConversations();
+        getView().hideSearchRow();
     }
 
     public void queryTextChanged(String query) {
@@ -247,16 +249,16 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             }
 
             Uri contactUri = new Uri(contact.getIds().get(0));
-            if (contactUri.isRingId()) {
-                return;
+            if (!contactUri.isRingId()) {
+                continue;
             }
 
             if (contact.getPhones().isEmpty()) {
                 mAccountService.lookupName("", "", contact.getDisplayName());
             } else {
                 Phone phone = contact.getPhones().get(0);
-                if (!phone.getNumber().isRingId()) {
-                    mAccountService.lookupName("", "", contact.getDisplayName());
+                if (phone.getNumber().isRingId()) {
+                    mAccountService.lookupAddress("", "", phone.getNumber().getHost());
                 }
             }
         }
@@ -274,20 +276,23 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             for (int i = 0; i < mConversations.size(); i++) {
                 Conversation conversation = mConversations.get(i);
                 SmartListViewModel smartListViewModel;
+                CallContact contact = conversation.getContact();
+
                 long lastInteractionTime = conversation.getLastInteraction().getTime();
                 String lastInteraction = lastInteractionTime == new Date(0).getTime() ?
                         "" : mHistoryService.getRelativeTimeSpanString(lastInteractionTime);
-                Tuple<String, byte[]> tuple = mContactService.loadContactData(conversation.getContact());
+                Tuple<String, byte[]> tuple = mContactService.loadContactData(contact);
                 if (tuple != null) {
                     smartListViewModel = new SmartListViewModel(conversation,
                             tuple.first,
                             tuple.second,
                             lastInteraction);
-                    smartListViewModel.setOnline(mPresenceService.isBuddyOnline(conversation.getContact().getIds().get(0)));
+                    smartListViewModel.setOnline(mPresenceService.isBuddyOnline(contact.getIds().get(0)));
                     mSmartListViewModels.add(smartListViewModel);
                 }
             }
 
+            searchForRingIdInBlockchain();
             getView().updateList(mSmartListViewModels);
             getView().hideNoConversationMessage();
             getView().setLoading(false);
@@ -295,6 +300,21 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             getView().displayNoConversationMessage();
             getView().setLoading(false);
         }
+    }
+
+    private void updateConversations() {
+        for (SmartListViewModel smartListViewModel : mSmartListViewModels) {
+            String uuid = smartListViewModel.getUuid();
+            Conversation conversation = mConversationFacade.getConversationById(uuid);
+            CallContact contact = conversation.getContact();
+
+            smartListViewModel.setOnline(mPresenceService.isBuddyOnline(contact.getIds().get(0)));
+            Tuple<String, byte[]> tuple = mContactService.loadContactData(contact);
+            if (tuple != null) {
+                smartListViewModel.setContactName(tuple.first);
+            }
+        }
+        getView().updateList(mSmartListViewModels);
     }
 
     private ArrayList<SmartListViewModel> filter(ArrayList<SmartListViewModel> list, String query) {
@@ -406,12 +426,15 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 displayConversations();
                 getView().scrollToTop();
                 break;
+            case USERNAME_CHANGED:
+                updateConversations();
+                break;
         }
 
         if (observable instanceof PresenceService) {
             switch (event.getEventType()) {
                 case NEW_BUDDY_NOTIFICATION:
-                    displayConversations();
+                    updateConversations();
                     break;
             }
         }
