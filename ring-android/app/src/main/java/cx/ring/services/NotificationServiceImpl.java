@@ -256,7 +256,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 numberOfNotifications = notificationInfo.getInt(EXTRAS_NUMBER_TRUST_REQUEST_KEY);
                 numberOfNotifications++;
                 if (numberOfNotifications > 1) {
-                    messageNotificationBuilder.setContentText(String.format(mContext.getString(R.string.trust_request_msg), Integer.toString(numberOfNotifications)));
+                    messageNotificationBuilder.setContentText(String.format(mContext.getString(R.string.contact_request_msg), Integer.toString(numberOfNotifications)));
                     messageNotificationBuilder.setLargeIcon(null);
                 }
             }
@@ -280,7 +280,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
-                .setContentTitle(mContext.getString(R.string.trust_request_title));
+                .setContentTitle(mContext.getString(R.string.contact_request_title));
         Intent intentOpenTrustRequestFragment = new Intent(HomeActivity.ACTION_PRESENT_TRUST_REQUEST_FRAGMENT)
                 .setClass(mContext, HomeActivity.class)
                 .putExtra(PendingContactRequestsFragment.ACCOUNT_ID, accountID);
