@@ -215,6 +215,10 @@ public class CallContact {
         mDisplayName = null;
     }
 
+    public void setDisplayName(String mDisplayName) {
+        this.mDisplayName = mDisplayName;
+    }
+
     //region Equals
     @Override
     public boolean equals(Object o) {

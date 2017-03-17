@@ -215,7 +215,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         switch (state) {
             case 0:
                 // on found
-                if (mLastBlockchainQuery.equals(name)) {
+                if (mLastBlockchainQuery != null && mLastBlockchainQuery.equals(name)) {
                     getView().displayNewContactRowWithName(name, address);
                     mLastBlockchainQuery = null;
                 } else {
@@ -260,7 +260,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         switch (event.getEventType()) {
             case REGISTERED_NAME_FOUND:
                 String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                if (mLastBlockchainQuery.equals("") || !mLastBlockchainQuery.equals(name)) {
+                if (mLastBlockchainQuery != null && (mLastBlockchainQuery.equals("") || !mLastBlockchainQuery.equals(name))) {
                     return;
                 }
                 String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
