@@ -193,7 +193,12 @@ along with this program; if not, write to the Free Software
     <string name="accept">Accept</string>
     <string name="refuse">Refuse</string>
     <string name="block">Block</string>
-    <string name="trust_request_title">Pending contact request</string>
-    <string name="trust_request_msg">You have %1$s pending requests</string>
+    <string name="contact_request_title">Pending contact request</string>
+    <string name="contact_request_msg">You have %1$s pending requests</string>
+
+    <!-- Send contact requests -->
+    <string name="send_request_button">Send</string>
+    <string name="send_request_title">Send a contact request</string>
+    <string name="send_request_msg">You must send a contact request to can communicate with this user. As long as your contact did not accept the request, you can send messages but your contact can\'t read them.</string>
 
 </resources>
