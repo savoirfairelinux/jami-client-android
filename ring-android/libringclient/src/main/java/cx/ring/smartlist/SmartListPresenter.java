@@ -40,6 +40,7 @@ import cx.ring.services.ContactService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.SettingsService;
 import cx.ring.utils.BlockchainInputHandler;
+import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.Tuple;
@@ -110,7 +111,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         }
 
         mConversationFacade.refreshConversations();
-        searchForRingIdInBlockchain();
         getView().hideSearchRow();
     }
 
@@ -215,12 +215,12 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         List<Conversation> conversations = mConversationFacade.getConversationsList();
         for (Conversation conversation : conversations) {
             CallContact contact = conversation.getContact();
-            if (contact == null) {
+            if (contact == null || !Uri.RING_URI_PATTERN.matcher(contact.getDisplayName()).find()) {
                 continue;
             }
 
             Uri contactUri = new Uri(contact.getIds().get(0));
-            if (contactUri.isRingId()) {
+            if (!contactUri.isRingId()) {
                 return;
             }
 
@@ -228,8 +228,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 mAccountService.lookupName("", "", contact.getDisplayName());
             } else {
                 Phone phone = contact.getPhones().get(0);
-                if (!phone.getNumber().isRingId()) {
-                    mAccountService.lookupName("", "", contact.getDisplayName());
+                if (phone.getNumber().isRingId()) {
+                    mAccountService.lookupAddress("", "", phone.getNumber().getHost());
                 }
             }
         }
@@ -260,6 +260,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                     }
 
                     mSmartListViewModels.add(smartListViewModel);
+                    searchForRingIdInBlockchain();
                 } else {
                     if(conversation.getContact().isFromSystem()) {
                         Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(conversation.getContact());
@@ -331,7 +332,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                     }
                     getView().hideSearchRow();
                     mConversationFacade.updateConversationContactWithRingId(name, address);
-                    displayConversations();
                 }
                 break;
             case 1:
