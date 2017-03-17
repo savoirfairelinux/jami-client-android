@@ -3,14 +3,17 @@ package cx.ring.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +29,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -42,6 +48,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.daemon.Blob;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
@@ -55,10 +62,16 @@ import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HistoryService;
 import cx.ring.utils.ActionHelper;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.VCardUtils;
+import ezvcard.VCard;
+import ezvcard.parameter.ImageType;
+import ezvcard.property.Photo;
+import ezvcard.property.RawProperty;
 
 public class ConversationFragment extends Fragment implements
         Conversation.ConversationActionCallback,
@@ -283,9 +296,71 @@ public class ConversationFragment extends Fragment implements
         if (service != null) {
             bindService(service);
             refreshView(0);
+            checkContact();
         }
 
         return inflatedView;
+    }
+
+    private void checkContact() {
+        Pair<Account, Uri> guess = guess();
+        if(guess == null || guess.first == null || guess.second == null || !guess.first.isRing() || !guess.second.isRingId()) {
+            return;
+        }
+
+        //TODO: to delete when the automatically sending a trust request will be removed
+        if(mAdapter.getItemCount() != 0) {
+            return;
+        }
+
+        String accountId = guess.first.getAccountID();
+        Uri contactUri = guess.second;
+
+        String contactId = contactUri.getRawUriString();
+        String[] split = contactId.split(":");
+        if (split.length > 1) {
+            contactId = split[1];
+        }
+
+        List<Map<String, String>> contacts = mContactService.getContacts(accountId);
+        for (Map<String, String> contact : contacts) {
+            if (contact.get("id").equals(contactId)) {
+                return;
+            }
+        }
+
+        displaySendTrustRequest(accountId, contactId);
+    }
+
+    private void displaySendTrustRequest(final String accountId, final String contactId) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.send_request_title);
+        builder.setMessage(R.string.send_request_msg);
+
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+
+        builder.setPositiveButton(R.string.send_request_button, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                VCard vcard = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), mAccountService.getCurrentAccount().getAccountID());
+                Bitmap photo = BitmapUtils.bytesToBitmap(vcard.getPhotos().get(0).getData());
+                photo = BitmapUtils.reduceBitmap(photo, 30000);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                vcard.removeProperties(Photo.class);
+                vcard.addPhoto(new Photo(stream.toByteArray(), ImageType.PNG));
+                vcard.removeProperties(RawProperty.class);
+
+                mAccountService.sendTrustRequest(accountId, contactId, Blob.fromString(VCardUtils.vcardToString(vcard)));
+            }
+        });
+
+        builder.show();
     }
 
     public void bindService(final LocalService service) {
