@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_7d4f5b93",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-20T14:16:00Z",
+      "side": 1,
+      "message": "The autoAccept trust request is never accepted as \"from\" is a ring id  and keys in conversationsMap are in a different format : \"ring:ringId\"",
+      "range": {
+        "startLine": 530,
+        "startChar": 20,
+        "endLine": 530,
+        "endChar": 109
+      },
+      "revId": "116f8797cb43e8e2f52cfb738ddb963310e6c119",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
