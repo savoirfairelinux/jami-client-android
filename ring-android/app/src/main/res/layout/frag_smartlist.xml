@@ -68,7 +68,8 @@ along with this program; if not, write to the Free Software
         android:background="?android:attr/selectableItemBackground"
         android:orientation="vertical"
         android:layout_below="@+id/error_msg_pane"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <include
             layout="@layout/item_contact"
