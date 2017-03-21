@@ -1187,8 +1187,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             intent.setClass(getActivity(), ConversationActivity.class)
                     .setAction(Intent.ACTION_VIEW)
                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)))
-                    .putExtra("resuming", true);
+                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
         }
     }

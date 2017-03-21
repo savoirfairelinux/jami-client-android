@@ -1,7 +1,6 @@
 package cx.ring.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -15,7 +14,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,8 +23,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Spinner;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -42,53 +38,25 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.facades.ConversationFacade;
+import cx.ring.conversation.ConversationPresenter;
+import cx.ring.conversation.ConversationView;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
-import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
-import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
+import cx.ring.mvp.BaseFragment;
 import cx.ring.service.LocalService;
-import cx.ring.services.AccountService;
-import cx.ring.services.ContactService;
-import cx.ring.services.HistoryService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
+import cx.ring.utils.Tuple;
 
-public class ConversationFragment extends Fragment implements
+public class ConversationFragment extends BaseFragment<ConversationPresenter> implements
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
         ContactDetailsTask.DetailsLoadedCallback,
-        Observer<ServiceEvent> {
-
-    @Inject
-    ContactService mContactService;
-
-    @Inject
-    AccountService mAccountService;
-
-    @Inject
-    ConversationFacade mConversationFacade;
-
-    @Inject
-    HistoryService mHistoryService;
-
-    @BindView(R.id.msg_input_txt)
-    EditText mMsgEditTxt;
-
-    @BindView(R.id.ongoingcall_pane)
-    ViewGroup mBottomPane;
-
-    @BindView(R.id.hist_list)
-    RecyclerView mHistList;
-
-    @BindView(R.id.number_selector)
-    Spinner mNumberSpinner;
+        ConversationView {
 
     private static final String TAG = ConversationFragment.class.getSimpleName();
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
@@ -98,12 +66,23 @@ public class ConversationFragment extends Fragment implements
 
     private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
 
-    private boolean mVisible = false;
+    @Inject
+    protected ConversationPresenter conversationPresenter;
+
+    @BindView(R.id.msg_input_txt)
+    protected EditText mMsgEditTxt;
+
+    @BindView(R.id.ongoingcall_pane)
+    protected ViewGroup mBottomPane;
+
+    @BindView(R.id.hist_list)
+    protected RecyclerView mHistList;
+
+    @BindView(R.id.number_selector)
+    protected Spinner mNumberSpinner;
+
     private AlertDialog mDeleteDialog;
     private boolean mDeleteConversation = false;
-
-    private Conversation mConversation = null;
-    private Uri mPreferredNumber = null;
 
     private MenuItem mAddContactBtn = null;
 
@@ -115,48 +94,6 @@ public class ConversationFragment extends Fragment implements
                 && context.getResources().getConfiguration().screenWidthDp >= MIN_SIZE_TABLET;
     }
 
-    private Pair<Conversation, Uri> getConversation(LocalService service, Bundle bundle) {
-        if (service == null || bundle == null) {
-            return new Pair<>(null, null);
-        }
-
-        String conversationId = bundle.getString("conversationID");
-        Uri number = new Uri(bundle.getString("number"));
-
-        Log.d(TAG, "getConversation " + conversationId + " " + number);
-        Conversation conversation = mConversationFacade.getConversationById(conversationId);
-
-        if (conversation == null) {
-            long contactId = CallContact.contactIdFromId(conversationId);
-            Log.d(TAG, "no conversation found, contact_id " + contactId);
-            CallContact contact = null;
-            if (contactId >= 0) {
-                contact = mContactService.findContactById(contactId);
-            }
-            if (contact == null) {
-                Uri convUri = new Uri(conversationId);
-                if (!number.isEmpty()) {
-                    contact = mContactService.findContactByNumber(number.getRawUriString());
-                    if (contact == null) {
-                        contact = CallContact.buildUnknown(convUri);
-                    }
-                } else {
-                    contact = mContactService.findContactByNumber(convUri.getRawUriString());
-                    if (contact == null) {
-                        contact = CallContact.buildUnknown(convUri);
-                        number = contact.getPhones().get(0).getNumber();
-                    } else {
-                        number = convUri;
-                    }
-                }
-            }
-            conversation = mConversationFacade.startConversation(contact);
-        }
-
-        Log.d(TAG, "returning " + conversation.getContact().getDisplayName() + " " + number);
-        return new Pair<>(conversation, number);
-    }
-
     static private int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
             if (((Phone) spinner.getItemAtPosition(i)).getNumber().equals(myString)) {
@@ -165,70 +102,27 @@ public class ConversationFragment extends Fragment implements
         return 0;
     }
 
-    public void refreshView(long refreshed) {
-        if (mCallbacks == null || mCallbacks.getService() == null) {
-            return;
-        }
-        Pair<Conversation, Uri> conversation = getConversation(mCallbacks.getService(), getArguments());
-        mConversation = conversation.first;
-        mPreferredNumber = conversation.second;
-
-        if (mConversation == null || mAdapter == null) {
-            return;
-        }
-
-        if (!mConversation.getContact().getPhones().isEmpty()) {
-            CallContact contact = mContactService.getContact(mConversation.getContact().getPhones().get(0).getNumber());
-            if (contact != null) {
-                mConversation.setContact(contact);
-            }
-            if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
-                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(mConversation.getContact().getDisplayName());
-            }
-        }
-
-        final CallContact contact = mConversation.getContact();
-        if (contact != null) {
-            new ContactDetailsTask(getActivity(), contact, this).run();
-        }
-
-        Conference conference = mConversation.getCurrentCall();
-        mBottomPane.setVisibility(conference == null ? View.GONE : View.VISIBLE);
-        if (conference != null) {
-            Log.d(TAG, "ConversationFragment refreshView " + conference.getId() + " "
-                    + mConversation.getCurrentCall());
-        }
-
-        mAdapter.updateDataset(mConversation.getAggregateHistory(), refreshed);
-
-        if (mConversation.getContact().getPhones().size() > 1) {
-            for (Phone phone : mConversation.getContact().getPhones()) {
-                if (phone.getNumber() != null && phone.getNumber().isRingId()) {
-                    mAccountService.lookupAddress("", "", phone.getNumber().getRawUriString());
+    @Override
+    public void refreshView(final Conversation conversation, Uri number) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                final CallContact contact = conversation.getContact();
+                if (contact != null) {
+                    new ContactDetailsTask(getActivity(), contact, ConversationFragment.this).run();
                 }
+
+                if(mAdapter != null) {
+                    mAdapter.updateDataset(conversation.getAggregateHistory(), 0);
+
+                    if (mAdapter.getItemCount() > 0) {
+                        mHistList.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+                    }
+                }
+
+                getActivity().invalidateOptionsMenu();
             }
-
-            mNumberSpinner.setVisibility(View.VISIBLE);
-            mNumberAdapter = new NumberAdapter(getActivity(),
-                    mConversation.getContact(),
-                    false);
-            mNumberSpinner.setAdapter(mNumberAdapter);
-            if (mPreferredNumber == null || mPreferredNumber.isEmpty()) {
-                mPreferredNumber = new Uri(
-                        mConversation.getLastNumberUsed(mConversation.getLastAccountUsed())
-                );
-            }
-            mNumberSpinner.setSelection(getIndex(mNumberSpinner, mPreferredNumber));
-        } else {
-            mNumberSpinner.setVisibility(View.GONE);
-            mPreferredNumber = mConversation.getContact().getPhones().get(0).getNumber();
-        }
-
-        if (mAdapter.getItemCount() > 0) {
-            mHistList.smoothScrollToPosition(mAdapter.getItemCount() - 1);
-        }
-
-        getActivity().invalidateOptionsMenu();
+        });
     }
 
     @Override
@@ -282,7 +176,6 @@ public class ConversationFragment extends Fragment implements
         LocalService service = mCallbacks.getService();
         if (service != null) {
             bindService(service);
-            refreshView(0);
         }
 
         return inflatedView;
@@ -297,34 +190,25 @@ public class ConversationFragment extends Fragment implements
             mHistList.setAdapter(mAdapter);
         }
 
-        if (mVisible && mConversation != null && !mConversation.isVisible()) {
-            mConversation.setVisible(true);
-            mConversationFacade.readConversation(mConversation);
-        }
-
         if (mDeleteConversation) {
-            mDeleteDialog = ActionHelper.launchDeleteAction(getActivity(), mConversation, this);
+            presenter.deleteAction();
         }
     }
 
     @OnClick(R.id.msg_send)
     public void sendMessageText() {
-        CharSequence txt = mMsgEditTxt.getText();
-        if (txt.length() > 0) {
-            onSendTextMessage(txt.toString());
-            mMsgEditTxt.setText("");
-        }
+        Uri number = mNumberAdapter == null ?
+                null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
+        presenter.sendTextMessage(mMsgEditTxt.getText().toString(), number);
     }
 
     @OnEditorAction(R.id.msg_input_txt)
     public boolean actionSendMsgText(int actionId) {
         switch (actionId) {
             case EditorInfo.IME_ACTION_SEND:
-                CharSequence txt = mMsgEditTxt.getText();
-                if (txt.length() > 0) {
-                    onSendTextMessage(mMsgEditTxt.getText().toString());
-                    mMsgEditTxt.setText("");
-                }
+                Uri number = mNumberAdapter == null ?
+                        null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
+                presenter.sendTextMessage(mMsgEditTxt.getText().toString(), number);
                 return true;
         }
         return false;
@@ -332,39 +216,19 @@ public class ConversationFragment extends Fragment implements
 
     @OnClick(R.id.ongoingcall_pane)
     public void onClick() {
-        startActivity(new Intent(Intent.ACTION_VIEW)
-                .setClass(getActivity().getApplicationContext(), CallActivity.class)
-                .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI,
-                        mConversation.getCurrentCall().getId())));
+        presenter.clickOnGoingPane();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause");
-        mVisible = false;
-        if (mConversation != null) {
-            mConversationFacade.readConversation(mConversation);
-            mConversation.setVisible(false);
-        }
-        mAccountService.removeObserver(this);
-        mConversationFacade.removeObserver(this);
+        presenter.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume " + mConversation);
-        mVisible = true;
-        if (mConversation != null) {
-            mConversation.setVisible(true);
-            mConversationFacade.readConversation(mConversation);
-        }
-
-        mAccountService.addObserver(this);
-        mConversationFacade.addObserver(this);
-
-        refreshView(0);
+        presenter.resume();
     }
 
     @Override
@@ -388,128 +252,49 @@ public class ConversationFragment extends Fragment implements
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        if (mAddContactBtn != null) {
-            mAddContactBtn.setVisible(mConversation != null && mConversation.getContact().getId() < 0);
-        }
+        conversationPresenter.prepareMenu();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (mConversation != null) {
-            inflater.inflate(R.menu.conversation_actions, menu);
-            mAddContactBtn = menu.findItem(R.id.menuitem_addcontact);
-        }
+        inflater.inflate(R.menu.conversation_actions, menu);
+        mAddContactBtn = menu.findItem(R.id.menuitem_addcontact);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Uri number;
         switch (item.getItemId()) {
             case android.R.id.home:
                 startActivity(new Intent(getActivity(), HomeActivity.class));
                 return true;
             case R.id.conv_action_audiocall:
-                onCallWithVideo(false);
+                number = mNumberAdapter == null ?
+                        null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
+                conversationPresenter.callWithVideo(false, number);
                 return true;
             case R.id.conv_action_videocall:
-                onCallWithVideo(true);
+                number = mNumberAdapter == null ?
+                        null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
+                conversationPresenter.callWithVideo(true, number);
                 return true;
             case R.id.menuitem_addcontact:
-                startActivityForResult(ActionHelper.getAddNumberIntentForContact(mConversation.getContact()), REQ_ADD_CONTACT);
+                presenter.addContact();
                 return true;
             case R.id.menuitem_delete:
-                mDeleteDialog = ActionHelper.launchDeleteAction(getActivity(),
-                        this.mConversation,
-                        this);
+                presenter.deleteAction();
                 return true;
             case R.id.menuitem_copy_content:
-                ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(),
-                        this.mConversation.getContact(),
-                        this);
+                presenter.copyToClipboard();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    /**
-     * Guess account and number to use to initiate a call
-     */
-    private Pair<Account, Uri> guess() {
-        Uri number = mNumberAdapter == null ?
-                mPreferredNumber : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-        Account account = mAccountService.getAccount(mConversation.getLastAccountUsed());
-
-        // Guess account from number
-        if (account == null && number != null) {
-            account = mAccountService.guessAccount(number);
-        }
-
-        // Guess number from account/call history
-        if (account != null && number == null) {
-            number = new Uri(mConversation.getLastNumberUsed(account.getAccountID()));
-        }
-
-        // If no account found, use first active
-        if (account == null) {
-            List<Account> accounts = mAccountService.getAccounts();
-            if (accounts.isEmpty()) {
-                return null;
-            } else
-                account = accounts.get(0);
-        }
-
-        // If no number found, use first from contact
-        if (number == null || number.isEmpty()) {
-            number = mConversation.getContact().getPhones().get(0).getNumber();
-        }
-
-        return new Pair<>(account, number);
-    }
-
-    private void onCallWithVideo(boolean has_video) {
-        Conference conf = mConversation.getCurrentCall();
-        if (conf != null) {
-            startActivity(new Intent(Intent.ACTION_VIEW)
-                    .setClass(getActivity().getApplicationContext(), CallActivity.class)
-                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI, conf.getId())));
-            return;
-        }
-        Pair<Account, Uri> guess = guess();
-        if (guess == null || guess.first == null) {
-            return;
-        }
-
-        try {
-            Intent intent = new Intent(CallActivity.ACTION_CALL)
-                    .setClass(getActivity().getApplicationContext(), CallActivity.class)
-                    .putExtra("account", guess.first.getAccountID())
-                    .putExtra("video", has_video)
-                    .setData(android.net.Uri.parse(guess.second.getRawUriString()));
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
-        } catch (Exception e) {
-            Log.e(TAG, "Error during call", e);
-        }
-    }
-
-    private void onSendTextMessage(String txt) {
-        Conference conference = mConversation == null ? null : mConversation.getCurrentCall();
-        if (conference == null || !conference.isOnGoing()) {
-            Pair<Account, Uri> guess = guess();
-            if (guess == null || guess.first == null) {
-                return;
-            }
-            mConversationFacade.sendTextMessage(guess.first.getAccountID(), guess.second, txt);
-        } else {
-            mConversationFacade.sendTextMessage(conference, txt);
-        }
-    }
-
     @Override
     public void deleteConversation(Conversation conversation) {
-        mHistoryService.clearHistoryForConversation(conversation);
-        if (getActivity() instanceof ConversationActivity) {
-            getActivity().finish();
-        }
+        presenter.deleteConversation();
     }
 
     @Override
@@ -536,13 +321,28 @@ public class ConversationFragment extends Fragment implements
     }
 
     @Override
-    public void update(Observable observable, ServiceEvent arg) {
-        if (observable instanceof AccountService && arg != null) {
-            if (arg.getEventType() == ServiceEvent.EventType.REGISTERED_NAME_FOUND) {
-                final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-                final int state = arg.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
+    protected ConversationPresenter createPresenter() {
+        return conversationPresenter;
+    }
 
+    @Override
+    public void showViewModel(Object viewModel) {
+
+    }
+
+    @Override
+    protected void initPresenter(ConversationPresenter presenter) {
+        super.initPresenter(presenter);
+        String conversationId = getArguments().getString("conversationID");
+        Uri number = new Uri(getArguments().getString("number"));
+        conversationPresenter.init(conversationId, number);
+    }
+
+    @Override
+    public void updateView(final String address, final String name, final int state) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
                 if (state != 0 || mNumberAdapter == null || mNumberAdapter.isEmpty()) {
                     return;
                 }
@@ -558,20 +358,118 @@ public class ConversationFragment extends Fragment implements
                     }
                 }
             }
-        } else if (observable instanceof ConversationFacade && arg != null) {
-            switch (arg.getEventType()) {
-                case INCOMING_MESSAGE:
-                case HISTORY_LOADED:
-                case CALL_STATE_CHANGED:
-                case CONVERSATIONS_CHANGED:
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            refreshView(0);
-                        }
-                    });
-                    break;
+        });
+    }
+
+    @Override
+    public void displayContactName(final String contactName) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(contactName);
+                }
             }
+        });
+    }
+
+    @Override
+    public void displayOnGoingCallPane(final boolean display) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mBottomPane.setVisibility(display ? View.GONE : View.VISIBLE);
+            }
+        });
+    }
+
+    @Override
+    public void displayNumberSpinner(final Conversation conversation,final Uri number) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mNumberSpinner.setVisibility(View.VISIBLE);
+                mNumberAdapter = new NumberAdapter(getActivity(),
+                        conversation.getContact(),
+                        false);
+                mNumberSpinner.setAdapter(mNumberAdapter);
+                mNumberSpinner.setSelection(getIndex(mNumberSpinner, number));
+            }
+        });
+    }
+
+    @Override
+    public void displayAddContact(final boolean display) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mAddContactBtn != null) {
+                    mAddContactBtn.setVisible(display);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void displayDeleteDialog(final Conversation conversation) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mDeleteDialog = ActionHelper.launchDeleteAction(getActivity(),
+                        conversation,
+                        ConversationFragment.this);
+            }
+        });
+    }
+
+    @Override
+    public void displayCopyToClipboard(CallContact callContact) {
+        ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(),
+                callContact,
+                this);
+    }
+
+    @Override
+    public void hideNumberSpinner() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mNumberSpinner.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    public void clearMsgEdit() {
+        mMsgEditTxt.setText("");
+    }
+
+    @Override
+    public void goToHome() {
+        if (getActivity() instanceof ConversationActivity) {
+            getActivity().finish();
         }
+    }
+
+    @Override
+    public void goToAddContact(CallContact callContact) {
+        startActivityForResult(ActionHelper.getAddNumberIntentForContact(callContact), REQ_ADD_CONTACT);
+    }
+
+    @Override
+    public void goToCallActivity(String conferenceId) {
+        startActivity(new Intent(Intent.ACTION_VIEW)
+                .setClass(getActivity().getApplicationContext(), CallActivity.class)
+                .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI, conferenceId)));
+    }
+
+    @Override
+    public void goToCallActivityWithResult(Tuple<Account, Uri> guess, boolean hasVideo) {
+        Intent intent = new Intent(CallActivity.ACTION_CALL)
+                .setClass(getActivity().getApplicationContext(), CallActivity.class)
+                .putExtra("account", guess.first.getAccountID())
+                .putExtra("video", hasVideo)
+                .setData(android.net.Uri.parse(guess.second.getRawUriString()));
+        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
     }
 }
