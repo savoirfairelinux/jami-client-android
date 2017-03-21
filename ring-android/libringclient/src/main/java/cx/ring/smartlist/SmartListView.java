@@ -31,7 +31,7 @@ public interface SmartListView {
 
     void displayMobileDataPanel();
 
-    void displayNewContactRowWithName(String name, String address);
+    void displayNewContactRowWithName(String name);
 
     void displayChooseNumberDialog(CharSequence numbers[]);
 
@@ -40,6 +40,8 @@ public interface SmartListView {
     void displayConversationDialog(Conversation conversation);
 
     void setLoading(boolean display);
+
+    void displayMenuItem();
 
     void hideSearchRow();
 
