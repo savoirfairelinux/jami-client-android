@@ -538,6 +538,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     notifyObservers(mEvent);
                     break;
                 case HISTORY_LOADED:
+                    mConversationMap.clear();
                     List<HistoryCall> historyCalls = (List<HistoryCall>) event.getEventInput(ServiceEvent.EventInput.HISTORY_CALLS, ArrayList.class);
                     parseHistoryCalls(historyCalls);
 
@@ -550,7 +551,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     mEvent = new ServiceEvent(ServiceEvent.EventType.HISTORY_LOADED);
                     notifyObservers(mEvent);
                     break;
-                case HISTORY_MODIFIED :
+                case HISTORY_MODIFIED:
                     refreshConversations();
                     break;
             }
@@ -643,7 +644,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     Uri number = new Uri(event.getEventInput(ServiceEvent.EventInput.FROM, String.class));
                     CallContact contact = mContactService.findContactByNumber(number.getRawUriString());
 
-                    Conversation conv= startConversation(contact);
+                    Conversation conv = startConversation(contact);
 
                     SipCall call = new SipCall(callid, accountId, number, SipCall.Direction.INCOMING);
                     call.setContact(contact);
@@ -672,7 +673,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     notifyObservers(event1);
                     break;
             }
-        } else if(observable instanceof ContactService && event != null) {
+        } else if (observable instanceof ContactService && event != null) {
             switch (event.getEventType()) {
                 case CONTACTS_CHANGED:
                     refreshConversations();
