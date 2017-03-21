@@ -384,7 +384,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
     public void refreshContacts() {
         Log.d(TAG, "refreshContacts");
-        mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount());
+        mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount().getAccountID());
     }
 
     @Override
@@ -412,6 +412,10 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
             switch (arg.getEventType()) {
                 case CONTACTS_CHANGED:
                     mConversationFacade.refreshConversations();
+                    return;
+                case CONTACT_ADDED:
+                case CONTACT_REMOVED:
+                    refreshContacts();
                     return;
             }
         }

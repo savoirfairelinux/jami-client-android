@@ -244,6 +244,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         if (mConversations != null && mConversations.size() > 0) {
             if (mSmartListViewModels == null) {
                 mSmartListViewModels = new ArrayList<>();
+            } else {
+                mSmartListViewModels.clear();
             }
             for (int i = 0; i < mConversations.size(); i++) {
                 Conversation conversation = mConversations.get(i);

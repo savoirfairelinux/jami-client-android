@@ -29,6 +29,7 @@ public class CallContact {
 
     public static final int UNKNOWN_ID = -1;
     public static final int DEFAULT_ID = 0;
+    public static final String PREFIX_RING = "ring:";
 
     private long mId;
     private String mKey;
@@ -39,6 +40,7 @@ public class CallContact {
     private WeakReference<byte[]> mContactPhoto = new WeakReference<>(null);
     private boolean stared = false;
     private boolean isFromSystem = false;
+    private boolean isBanned = false;
 
     public CallContact(long cID) {
         this(cID, null, null, UNKNOWN_ID);
@@ -207,8 +209,16 @@ public class CallContact {
         return isFromSystem;
     }
 
+    public boolean isBanned() {
+        return isBanned;
+    }
+
     public void setFromSystem(boolean fromSystem) {
         isFromSystem = fromSystem;
+    }
+
+    public void setBanned(boolean banned) {
+        isBanned = banned;
     }
 
     /**
@@ -220,7 +230,7 @@ public class CallContact {
         return mDisplayName == null || mDisplayName.contentEquals(mPhones.get(0).getNumber().getRawUriString());
     }
 
-    public void resetDisplayName () {
+    public void resetDisplayName() {
         mDisplayName = null;
     }
 
