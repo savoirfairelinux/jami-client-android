@@ -87,7 +87,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         ClipboardHelper.ClipboardHelperCallback,
         SmartListView {
 
-
     private static final String TAG = SmartListFragment.class.getSimpleName();
     private static final String STATE_LOADING = TAG + ".STATE_LOADING";
 
@@ -126,22 +125,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     private Boolean isTabletMode = false;
     private ConversationFragment mConversationFragment;
-
-    @Override
-    public void onAttach(Activity activity) {
-        Log.d(TAG, "onAttach");
-        super.onAttach(activity);
-
-        if (!(activity instanceof LocalService.Callbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
-        }
-
-    }
-
-    public void refresh() {
-        smartListPresenter.refresh(NetworkUtils.isConnectedWifi(getActivity()),
-                NetworkUtils.isConnectedMobile(getActivity()));
-    }
 
     @Override
     public void onResume() {
@@ -238,7 +221,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        mNewContact.callOnClick();
+        smartListPresenter.newContactClicked();
         return true;
     }
 
@@ -287,22 +270,24 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         return inflatedView;
     }
 
+    public void refresh() {
+        smartListPresenter.refresh(NetworkUtils.isConnectedWifi(getActivity()),
+                NetworkUtils.isConnectedMobile(getActivity()));
+    }
+
     @OnClick(R.id.newcontact_element)
     void newContactClicked(View v) {
-        smartListPresenter.newContactClicked((CallContact) v.getTag());
+        smartListPresenter.newContactClicked();
     }
 
     @OnClick(R.id.quick_call)
     void quickCallClicked(View v) {
-        CallContact callContact = (CallContact) mNewContact.getTag();
-        smartListPresenter.quickCallClicked(callContact);
+        smartListPresenter.quickCallClicked();
     }
 
     @OnClick(R.id.newconv_fab)
     void fabButtonClicked(View v) {
-        if (mSearchMenuItem != null) {
-            mSearchMenuItem.expandActionView();
-        }
+        smartListPresenter.fabButtonClicked();
     }
 
     public void startConversationTablet(Bundle bundle) {
@@ -426,13 +411,12 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                 });
     }
 
-    public void displayNewContactRowWithName(final String name, final String address) {
+    @Override
+    public void displayNewContactRowWithName(final String name) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 ((TextView) mNewContact.findViewById(R.id.display_name)).setText(name);
-                CallContact contact = CallContact.buildUnknown(name, address);
-                mNewContact.setTag(contact);
                 mNewContact.setVisibility(View.VISIBLE);
             }
         });
@@ -460,6 +444,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         String emptyText = getResources().getQuantityString(R.plurals.home_conferences_title, 0, 0);
         mEmptyTextView.setText(emptyText);
         mEmptyTextView.setVisibility(View.VISIBLE);
+        setLoading(false);
     }
 
     @Override
@@ -482,6 +467,13 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    public void displayMenuItem() {
+        if (mSearchMenuItem != null) {
+            mSearchMenuItem.expandActionView();
+        }
     }
 
     @Override
