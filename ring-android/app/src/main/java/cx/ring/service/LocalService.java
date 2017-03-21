@@ -384,7 +384,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
     public void refreshContacts() {
         Log.d(TAG, "refreshContacts");
-        mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount());
+        mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount().getAccountID());
     }
 
     @Override

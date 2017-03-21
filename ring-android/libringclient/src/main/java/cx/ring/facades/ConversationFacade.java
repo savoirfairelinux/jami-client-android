@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
@@ -451,6 +452,14 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     private void aggregateHistory() {
         Map<String, ArrayList<String>> conferences = mConferenceService.getConferenceList();
 
+        Iterator<Map.Entry<String, Conversation>> it = mConversationMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Conversation> entry = it.next();
+            if (entry.getValue().getHistory().isEmpty()) {
+                it.remove();
+            }
+        }
+
         for (Map.Entry<String, ArrayList<String>> conferenceEntry : conferences.entrySet()) {
             Conference conference = new Conference(conferenceEntry.getKey());
             for (String callId : conferenceEntry.getValue()) {
@@ -521,7 +530,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     notifyObservers(mEvent);
                     break;
                 case HISTORY_LOADED:
-
                     List<HistoryCall> historyCalls = (List<HistoryCall>) event.getEventInput(ServiceEvent.EventInput.HISTORY_CALLS, ArrayList.class);
                     parseHistoryCalls(historyCalls);
 
@@ -534,7 +542,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     mEvent = new ServiceEvent(ServiceEvent.EventType.HISTORY_LOADED);
                     notifyObservers(mEvent);
                     break;
-                case HISTORY_MODIFIED :
+                case HISTORY_MODIFIED:
                     refreshConversations();
                     break;
             }
@@ -628,7 +636,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     Uri number = new Uri(event.getEventInput(ServiceEvent.EventInput.FROM, String.class));
                     CallContact contact = mContactService.findContactByNumber(number.getRawUriString());
 
-                    Conversation conv= startConversation(contact);
+                    Conversation conv = startConversation(contact);
 
                     SipCall call = new SipCall(callid, accountId, number, SipCall.Direction.INCOMING);
                     call.setContact(contact);
@@ -659,7 +667,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     notifyObservers(event1);
                     break;
             }
-        } else if(observable instanceof ContactService && event != null) {
+        } else if (observable instanceof ContactService && event != null) {
             switch (event.getEventType()) {
                 case CONTACTS_CHANGED:
                     refreshConversations();
