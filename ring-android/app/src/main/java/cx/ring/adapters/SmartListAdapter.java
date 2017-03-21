@@ -92,7 +92,7 @@ public class SmartListAdapter extends BaseAdapter {
         return Normalizer.normalize(query.toLowerCase(), Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "");
     }
 
-    public void emptyDataset () {
+    public void emptyDataset() {
         mConversations.clear();
         notifyDataSetChanged();
     }
@@ -107,7 +107,7 @@ public class SmartListAdapter extends BaseAdapter {
         List<Conversation> newConversations = new ArrayList<>();
 
         for (Conversation c : list) {
-            if (!c.getContact().isUnknown()
+            if (c.getContact() != null
                     || !c.getAccountsUsed().isEmpty()
                     || c.getCurrentCall() != null) {
                 if (TextUtils.isEmpty(query) || c.getCurrentCall() != null) {
@@ -143,7 +143,6 @@ public class SmartListAdapter extends BaseAdapter {
     }
 
     /**
-     *
      * @return true if list are different
      */
     private boolean areConversationListDifferent(List<Conversation> leftList, List<Conversation> rightList) {
@@ -155,7 +154,7 @@ public class SmartListAdapter extends BaseAdapter {
             return true;
         }
 
-        for (Conversation rightConversation: rightList) {
+        for (Conversation rightConversation : rightList) {
             if (rightConversation.hasCurrentCall() || rightConversation.hasUnreadTextMessages()) {
                 return true;
             }
@@ -163,7 +162,7 @@ public class SmartListAdapter extends BaseAdapter {
             int rightId = rightConversation.getUuid();
             CallContact rightContact = rightConversation.getContact();
             boolean found = false;
-            for (Conversation leftConversation: leftList) {
+            for (Conversation leftConversation : leftList) {
 
                 if (leftConversation.hasCurrentCall() || leftConversation.hasUnreadTextMessages()) {
                     return true;
@@ -172,7 +171,7 @@ public class SmartListAdapter extends BaseAdapter {
                 int leftId = leftConversation.getUuid();
                 CallContact leftContact = leftConversation.getContact();
                 if (leftId == rightId
-                        && leftContact!=null
+                        && leftContact != null
                         && leftContact.equals(rightContact)) {
                     found = true;
                     break;

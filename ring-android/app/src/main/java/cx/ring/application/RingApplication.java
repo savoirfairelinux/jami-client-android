@@ -239,6 +239,7 @@ public class RingApplication extends Application {
 
         // load accounts from Daemon
         mAccountService.loadAccountsFromDaemon(isConnected());
+
     }
 
     public void restartVideo() {

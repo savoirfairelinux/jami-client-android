@@ -434,6 +434,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
         if (observable instanceof HistoryService && event != null) {
             List<HistoryCall> historyCalls = (List<HistoryCall>) event.getEventInput(ServiceEvent.EventInput.HISTORY_CALLS, ArrayList.class);
+            mConversationMap.clear();
 
             for (HistoryCall call : historyCalls) {
                 CallContact contact = mContactService.findContact(call.getContactID(), call.getContactKey(), call.getNumber());
