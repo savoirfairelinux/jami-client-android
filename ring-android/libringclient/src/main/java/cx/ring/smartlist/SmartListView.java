@@ -17,13 +17,15 @@ public interface SmartListView extends GenericView {
 
     void displayMobileDataPanel();
 
-    void displayNewContactRowWithName(String name, String address);
+    void displayNewContactRowWithName(String name);
 
     void displayChooseNumberDialog(CharSequence numbers[]);
 
     void displayNoConversationMessage();
 
     void displayConversationDialog(Conversation conversation);
+
+    void displayMenuItem();
 
     void hideSearchRow();
 
