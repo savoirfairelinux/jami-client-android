@@ -19,6 +19,7 @@
  */
 package cx.ring.services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +56,8 @@ public abstract class ContactService extends Observable {
 
     public static final String CONTACT_NAME_KEY = "CONTACT_NAME";
     public static final String CONTACT_PHOTO_KEY = "CONTACT_PHOTO";
+    public static final String BANNED = "banned";
+    public static final String ID = "id";
 
     private final static String TAG = ContactService.class.getName();
 
@@ -73,6 +76,7 @@ public abstract class ContactService extends Observable {
     ExecutorService mExecutor;
 
     private Map<Long, CallContact> mContactList;
+    private Map<String, CallContact> mContactsRing;
     private ConfigurationCallbackHandler mCallbackHandler;
 
     protected abstract Map<Long, CallContact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
@@ -89,11 +93,26 @@ public abstract class ContactService extends Observable {
 
     public ContactService() {
         mContactList = new HashMap<>();
+        mContactsRing = new HashMap<>();
         mCallbackHandler = new ConfigurationCallbackHandler();
     }
 
     public ConfigurationCallbackHandler getCallbackHandler() {
         return mCallbackHandler;
+    }
+
+    public Map<String, CallContact> loadContactsFromDaemon(String accountId) {
+        Map<String, CallContact> contacts = new HashMap<>();
+        ArrayList<Map<String, String>> contactsDaemon = new ArrayList<>(getContacts(accountId));
+
+        for (Map<String, String> contact : contactsDaemon) {
+            if ((!contact.containsKey(BANNED) || contact.get(BANNED).equals("false")) && contact.containsKey(ID)) {
+                String contactId = contact.get(ID);
+                CallContact callContact = CallContact.buildUnknown(CallContact.PREFIX_RING + contactId);
+                contacts.put(contactId, callContact);
+            }
+        }
+        return contacts;
     }
 
     /**
@@ -102,21 +121,20 @@ public abstract class ContactService extends Observable {
      * @param loadRingContacts if true, ring contacts will be taken care of
      * @param loadSipContacts  if true, sip contacts will be taken care of
      */
-    public void loadContacts(final boolean loadRingContacts, final boolean loadSipContacts) {
-        Settings settings = mSettingsService.loadSettings();
-
-        if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
-            mApplicationExecutor.submit(new Runnable() {
-                @Override
-                public void run() {
+    public void loadContacts(final boolean loadRingContacts, final boolean loadSipContacts, final String accountId) {
+        mApplicationExecutor.submit(new Runnable() {
+            @Override
+            public void run() {
+                Settings settings = mSettingsService.loadSettings();
+                if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
                     mContactList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
-
-                    setChanged();
-                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACTS_CHANGED);
-                    notifyObservers(event);
                 }
-            });
-        }
+                mContactsRing = loadContactsFromDaemon(accountId);
+                setChanged();
+                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACTS_CHANGED);
+                notifyObservers(event);
+            }
+        });
     }
 
     /**
@@ -129,7 +147,11 @@ public abstract class ContactService extends Observable {
             return;
         }
 
-        mContactList.put(contact.getId(), contact);
+        if (contact.getId() == CallContact.UNKNOWN_ID) {
+            mContactsRing.put(contact.getDisplayName(), contact);
+        } else {
+            mContactList.put(contact.getId(), contact);
+        }
     }
 
     /**
@@ -153,7 +175,14 @@ public abstract class ContactService extends Observable {
     }
 
     public Collection<CallContact> getContacts() {
-        return mContactList.values();
+        List<CallContact> contacts = new ArrayList<>(mContactList.values());
+        List<CallContact> contactsRing = new ArrayList<>(mContactsRing.values());
+        for (CallContact contact : contactsRing) {
+            if (!contacts.contains(contact)) {
+                contacts.add(contact);
+            }
+        }
+        return contacts;
     }
 
     /**
@@ -223,13 +252,17 @@ public abstract class ContactService extends Observable {
                 contact = CallContact.buildUnknown(number);
             }
 
-            mContactList.put(contact.getId(), contact);
+            if (contact.getId() == CallContact.UNKNOWN_ID) {
+                mContactsRing.put(contact.getDisplayName(), contact);
+            } else {
+                mContactList.put(contact.getId(), contact);
+            }
 
             return contact;
         }
 
         CallContact contact = CallContact.buildUnknown(number);
-        mContactList.put(contact.getId(), contact);
+        mContactsRing.put(contact.getDisplayName(), contact);
 
         return contact;
     }

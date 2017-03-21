@@ -29,6 +29,7 @@ public class CallContact {
 
     public static final int UNKNOWN_ID = -1;
     public static final int DEFAULT_ID = 0;
+    public static final String PREFIX_RING = "ring:";
 
     private long mId;
     private String mKey;
@@ -220,7 +221,7 @@ public class CallContact {
         return mDisplayName == null || mDisplayName.contentEquals(mPhones.get(0).getNumber().getRawUriString());
     }
 
-    public void resetDisplayName () {
+    public void resetDisplayName() {
         mDisplayName = null;
     }
 
