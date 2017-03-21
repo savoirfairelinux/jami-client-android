@@ -244,6 +244,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         if (mConversations != null && mConversations.size() > 0) {
             if (mSmartListViewModels == null) {
                 mSmartListViewModels = new ArrayList<>();
+            } else {
+                mSmartListViewModels.clear();
             }
             for (int i = 0; i < mConversations.size(); i++) {
                 Conversation conversation = mConversations.get(i);
@@ -251,7 +253,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
                 if (smartListViewModel == null || i >= mSmartListViewModels.size()) {
 
-                    if(conversation.getContact().isFromSystem()) {
+                    if (conversation.getContact().isFromSystem()) {
                         Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(conversation.getContact());
                         smartListViewModel = new SmartListViewModel(conversation, tuple.first, tuple.second, null);
                     } else {
@@ -261,7 +263,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
                     mSmartListViewModels.add(smartListViewModel);
                 } else {
-                    if(conversation.getContact().isFromSystem()) {
+                    if (conversation.getContact().isFromSystem()) {
                         Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(conversation.getContact());
                         smartListViewModel.update(conversation, tuple.first, tuple.second, null);
                     } else {
@@ -289,11 +291,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     private ArrayList<SmartListViewModel> filter(ArrayList<SmartListViewModel> list, String query) {
         ArrayList<SmartListViewModel> filteredList = new ArrayList<>();
-        if(list == null || list.size() == 0) {
+        if (list == null || list.size() == 0) {
             return filteredList;
         }
-        for(SmartListViewModel smartListViewModel : list) {
-            if(smartListViewModel.getContactName().toLowerCase().contains(query.toLowerCase())) {
+        for (SmartListViewModel smartListViewModel : list) {
+            if (smartListViewModel.getContactName().toLowerCase().contains(query.toLowerCase())) {
                 filteredList.add(smartListViewModel);
             }
         }
