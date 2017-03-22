@@ -30,6 +30,7 @@ for i in ${@}; do
     esac
 done
 export RELEASE
+export DAEMON_ONLY
 
 ANDROID_ABIS=""
 ANDROID_ABI_LIST="${ANDROID_ABI}"
