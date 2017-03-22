@@ -20,7 +20,6 @@
 package cx.ring.contactrequests;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,8 +48,8 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
 
     @Inject
     public PendingContactRequestsPresenter(AccountService accountService,
-                                         NotificationService notificationService,
-                                         ContactService contactService) {
+                                           NotificationService notificationService,
+                                           ContactService contactService) {
         mAccountService = accountService;
         mNotificationService = notificationService;
         mContactService = contactService;
@@ -99,13 +98,13 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
         if (clear) {
             mTrustRequests.clear();
             mTrustRequestsTmp.clear();
-            HashMap<String, String> map = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
+            ArrayList<Map<String, String>> list = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
             String accountId = currentAccount.getAccountID();
 
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                String contactId = entry.getKey();
-                String timestamp = entry.getValue();
-                Log.d(TAG, "trust request: " + accountId + ", " + contactId + ", " + timestamp);
+            for (Map<String, String> request : list) {
+                String contactId = request.get("from");
+                String timestamp = request.get("received");
+                String payload = request.get("payload");
                 TrustRequest trustRequest = new TrustRequest(accountId, contactId);
                 trustRequest.setTimestamp(timestamp);
                 mTrustRequestsTmp.add(trustRequest);
