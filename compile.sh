@@ -36,7 +36,7 @@ ANDROID_ABI_LIST="${ANDROID_ABI}"
 echo "Building ABIs: ${ANDROID_ABI_LIST}"
 for i in ${ANDROID_ABI_LIST}; do
     echo "$i starts building"
-    ANDROID_NDK=$ANDROID_NDK ANDROID_SDK=$ANDROID_SDK ANDROID_ABI=$i \
+    ANDROID_NDK=$ANDROID_NDK ANDROID_SDK=$ANDROID_SDK ANDROID_ABI=$i DAEMON_ONLY=$DAEMON_ONLY \
        ./build-daemon.sh $* || { echo "$i build KO"; exit 1; }
     echo "$i build OK"
 done
