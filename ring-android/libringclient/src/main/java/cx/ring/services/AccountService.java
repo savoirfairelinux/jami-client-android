@@ -39,6 +39,7 @@ import cx.ring.daemon.SWIGTYPE_p_time_t;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.UintVect;
+import cx.ring.daemon.VectMap;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.Codec;
@@ -618,8 +619,8 @@ public class AccountService extends Observable {
 
     /**
      * @param accountId id of the account used with the device
-     * @param deviceId id of the device to revoke
-     * @param password password of the account
+     * @param deviceId  id of the device to revoke
+     * @param password  password of the account
      */
     public void revokeDevice(final String accountId, final String password, final String deviceId) {
         FutureUtils.executeDaemonThreadCallable(
@@ -1009,15 +1010,15 @@ public class AccountService extends Observable {
      * @param accountId
      * @return all trust requests from the daemon for the account Id
      */
-    public StringMap getTrustRequests(final String accountId) {
+    public VectMap getTrustRequests(final String accountId) {
 
         return FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<StringMap>() {
+                new Callable<VectMap>() {
                     @Override
-                    public StringMap call() throws Exception {
+                    public VectMap call() throws Exception {
                         Log.i(TAG, "getTrustRequests() thread running...");
                         return Ringservice.getTrustRequests(accountId);
                     }

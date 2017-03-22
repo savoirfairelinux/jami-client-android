@@ -178,7 +178,7 @@ bool setCertificateStatus(const std::string& account, const std::string& certId,
 std::vector<std::string> getCertificatesByStatus(const std::string& account, const std::string& status);
 
 /* contact requests */
-std::map<std::string, std::string> getTrustRequests(const std::string& accountId);
+std::vector<std::map<std::string, std::string>> getTrustRequests(const std::string& accountId);
 bool acceptTrustRequest(const std::string& accountId, const std::string& from);
 bool discardTrustRequest(const std::string& accountId, const std::string& from);
 void sendTrustRequest(const std::string& accountId, const std::string& to, const std::vector<uint8_t>& payload);
