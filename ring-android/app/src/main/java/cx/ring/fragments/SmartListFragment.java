@@ -70,7 +70,6 @@ import cx.ring.client.QRCodeScannerActivity;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.mvp.BaseFragment;
-import cx.ring.service.LocalService;
 import cx.ring.smartlist.SmartListPresenter;
 import cx.ring.smartlist.SmartListView;
 import cx.ring.smartlist.SmartListViewModel;
@@ -87,7 +86,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         ClipboardHelper.ClipboardHelperCallback,
         SmartListView {
 
-    private static final String TAG = SmartListFragment.class.getSimpleName();
+    public static final String TAG = SmartListFragment.class.getSimpleName();
     private static final String STATE_LOADING = TAG + ".STATE_LOADING";
 
     @Inject
@@ -492,16 +491,15 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void updateView(final ArrayList<SmartListViewModel> list) {
+    public void updateList(final ArrayList<SmartListViewModel> smartListViewModels) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (mRecyclerView.getAdapter() != null) {
-                    mSmartListAdapter.notifyDataSetChanged();
-                } else {
-                    mSmartListAdapter = new SmartListAdapter(list, SmartListFragment.this);
+                if (mRecyclerView.getAdapter() == null) {
+                    mSmartListAdapter = new SmartListAdapter(smartListViewModels, SmartListFragment.this);
                     mRecyclerView.setAdapter(mSmartListAdapter);
                 }
+                mSmartListAdapter.update(smartListViewModels);
                 setLoading(false);
             }
         });
