@@ -23,6 +23,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -32,11 +33,9 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cx.ring.R;
-import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryEntry;
-import cx.ring.model.TextMessage;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.CircleTransform;
 import cx.ring.viewholders.SmartListViewHolder;
@@ -47,8 +46,9 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     private SmartListViewHolder.SmartListListeners listener;
 
     public SmartListAdapter(ArrayList<SmartListViewModel> smartListViewModels, SmartListViewHolder.SmartListListeners listener) {
-        this.mSmartListViewModels = new ArrayList<>(smartListViewModels);
         this.listener = listener;
+        this.mSmartListViewModels = new ArrayList<>();
+        this.mSmartListViewModels.addAll(smartListViewModels);
     }
 
     @Override
@@ -65,11 +65,13 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         holder.convParticipants.setText(smartListViewModel.getContactName());
         long lastInteraction = smartListViewModel.getLastInteractionTime();
         holder.convTime.setText(lastInteraction == 0 ? "" :
-                DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL));
+                DateUtils.getRelativeTimeSpanString(System.currentTimeMillis() - lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL));
         if (smartListViewModel.hasOngoingCall()) {
             holder.convStatus.setText(holder.itemView.getContext().getString(R.string.ongoing_call));
         } else if (smartListViewModel.getLastInteraction() != null) {
-            holder.convStatus.setText(getLastInteractionSummary(smartListViewModel.getLastInteraction(), holder.itemView.getContext()));
+            holder.convStatus.setText(getLastInteractionSummary(smartListViewModel.getLastEntryType(),
+                    smartListViewModel.getLastInteraction(),
+                    holder.itemView.getContext()));
         } else {
             holder.convStatus.setText("");
         }
@@ -85,7 +87,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
 
         String photoUri = smartListViewModel.getPhotoUri();
 
-        if (photoUri != null) {
+        if (photoUri != null && !photoUri.equals("")) {
             if (isContentUri(photoUri)) {
                 Glide.with(holder.itemView.getContext())
                         .load(Uri.withAppendedPath(Uri.parse(photoUri), ContactsContract.Contacts.Photo.DISPLAY_PHOTO))
@@ -112,40 +114,40 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     }
 
     @Override
+    public void onBindViewHolder(SmartListViewHolder holder, int position, List<Object> payloads) {
+        super.onBindViewHolder(holder, position, payloads);
+    }
+
+    @Override
     public int getItemCount() {
         return mSmartListViewModels.size();
     }
 
-    public void replaceAll(ArrayList<SmartListViewModel> list) {
-        mSmartListViewModels.clear();
-        mSmartListViewModels.addAll(list);
-        notifyDataSetChanged();
+    public void update(ArrayList<SmartListViewModel> smartListViewModels) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new SmartListDiffUtil(this.mSmartListViewModels, smartListViewModels));
+
+        this.mSmartListViewModels.clear();
+        this.mSmartListViewModels.addAll(smartListViewModels);
+
+        diffResult.dispatchUpdatesTo(this);
     }
 
     private boolean isContentUri(String uri) {
         return uri.contains("content://");
     }
 
-    private String getLastInteractionSummary(HistoryEntry e, Context context) {
-        long lastTextTimestamp = e.getTextMessages().isEmpty() ? 0 : e.getTextMessages().lastEntry().getKey();
-        long lastCallTimestamp = e.getCalls().isEmpty() ? 0 : e.getCalls().lastEntry().getKey();
-        if (lastTextTimestamp > 0 && lastTextTimestamp > lastCallTimestamp) {
-            TextMessage msg = e.getTextMessages().lastEntry().getValue();
-            String msgString = msg.getMessage();
-            if (msgString != null && !msgString.isEmpty() && msgString.contains("\n")) {
-                int lastIndexOfChar = msgString.lastIndexOf("\n");
-                if (lastIndexOfChar + 1 < msgString.length()) {
-                    msgString = msgString.substring(msgString.lastIndexOf("\n") + 1);
-                }
-            }
-            return (msg.isIncoming() ? "" : context.getText(R.string.you_txt_prefix) + " ") + msgString;
+    private String getLastInteractionSummary(int type, String lastInteraction, Context context) {
+        switch (type) {
+            case SmartListViewModel.TYPE_INCOMING_CALL:
+                return String.format(context.getString(R.string.hist_in_call), lastInteraction);
+            case SmartListViewModel.TYPE_OUTGOING_CALL:
+                return String.format(context.getString(R.string.hist_out_call), lastInteraction);
+            case SmartListViewModel.TYPE_INCOMING_MESSAGE:
+                return lastInteraction;
+            case SmartListViewModel.TYPE_OUTGOING_MESSAGE:
+                return context.getText(R.string.you_txt_prefix) + " " + lastInteraction;
+            default:
+                return null;
         }
-        if (lastCallTimestamp > 0) {
-            HistoryCall lastCall = e.getCalls().lastEntry().getValue();
-            return String.format(context.getString(lastCall.isIncoming()
-                    ? R.string.hist_in_call
-                    : R.string.hist_out_call), lastCall.getDurationString());
-        }
-        return null;
     }
 }
