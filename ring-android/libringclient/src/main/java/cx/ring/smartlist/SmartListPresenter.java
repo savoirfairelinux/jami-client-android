@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -13,7 +12,6 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
-import cx.ring.model.HistoryEntry;
 import cx.ring.model.Phone;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
@@ -46,7 +44,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     private String mLastBlockchainQuery = null;
 
     private ArrayList<Conversation> mConversations;
-    private ArrayList<SmartListViewModel> smartListViewModels;
+    private ArrayList<SmartListViewModel> mSmartListViewModels;
 
     private CallContact mCallContact;
 
@@ -195,6 +193,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     public void deleteConversation(Conversation conversation) {
         mHistoryService.clearHistoryForConversation(conversation);
+        mConversationFacade.removeConversation(conversation.getContact().getIds().get(0));
+        mSmartListViewModels.remove(getSmartListViewModelByUuid(mSmartListViewModels, conversation.getUuid()));
+        getView().updateList(mSmartListViewModels);
     }
 
     public void clickQRSearch() {
@@ -229,33 +230,33 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         if (mConversations == null) {
             mConversations = new ArrayList<>();
         }
+        mSmartListViewModels = new ArrayList<>();
         mConversations.clear();
         mConversations.addAll(mConversationFacade.getConversationsList());
         if (mConversations != null && mConversations.size() > 0) {
-            if (smartListViewModels == null) {
-                smartListViewModels = new ArrayList<>();
-            }
             for (int i = 0; i < mConversations.size(); i++) {
                 Conversation conversation = mConversations.get(i);
-                SmartListViewModel smartListViewModel = getSmartListViewModelByUuid(smartListViewModels, conversation.getUuid());
 
-                if (smartListViewModel == null || i >= smartListViewModels.size()) {
-                    smartListViewModel = new SmartListViewModel(conversation,
+/*                SmartListViewModel smartListViewModel = getSmartListViewModelByUuid(mSmartListViewModels, conversation.getUuid());
+
+                if (smartListViewModel != null) {
+                    smartListViewModel.update(conversation,
                             mContactService.loadContactData(conversation.getContact()));
-                    smartListViewModels.add(smartListViewModel);
-                } else {
-                    smartListViewModel.update(conversation, mContactService.loadContactData(conversation.getContact()));
-                }
+                } else {*/
+                SmartListViewModel smartListViewModel = new SmartListViewModel(conversation,
+                            mContactService.loadContactData(conversation.getContact()));
+                //}
+                mSmartListViewModels.add(smartListViewModel);
             }
 
-            Collections.sort(smartListViewModels, new Comparator<SmartListViewModel>() {
+            Collections.sort(mSmartListViewModels, new Comparator<SmartListViewModel>() {
                 @Override
                 public int compare(SmartListViewModel lhs, SmartListViewModel rhs) {
                     return (int) ((rhs.getLastInteractionTime() - lhs.getLastInteractionTime()) / 1000l);
                 }
             });
 
-            getView().updateView(smartListViewModels);
+            getView().updateList(mSmartListViewModels);
             getView().hideNoConversationMessage();
         } else {
             getView().displayNoConversationMessage();

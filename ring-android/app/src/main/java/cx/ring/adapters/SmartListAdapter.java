@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -13,9 +14,6 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryEntry;
-import cx.ring.model.TextMessage;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.viewholders.SmartListViewHolder;
@@ -30,8 +28,9 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     private SmartListViewHolder.SmartListListeners listener;
 
     public SmartListAdapter(ArrayList<SmartListViewModel> smartListViewModels, SmartListViewHolder.SmartListListeners listener) {
-        this.mSmartListViewModels = smartListViewModels;
         this.listener = listener;
+        this.mSmartListViewModels = new ArrayList<>();
+        this.mSmartListViewModels.addAll(smartListViewModels);
     }
 
     @Override
@@ -53,7 +52,9 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         if (smartListViewModel.hasOngoingCall()) {
             holder.convStatus.setText(holder.itemView.getContext().getString(R.string.ongoing_call));
         } else if (smartListViewModel.getLastInteraction() != null) {
-            holder.convStatus.setText(getLastInteractionSummary(smartListViewModel.getLastInteraction(), holder.itemView.getContext()));
+            holder.convStatus.setText(getLastInteractionSummary(smartListViewModel.getLastEntryType(),
+                    smartListViewModel.getLastInteraction(),
+                    holder.itemView.getContext()));
         }
         if (smartListViewModel.hasUnreadTextMessage()) {
             holder.convParticipants.setTypeface(null, Typeface.BOLD);
@@ -65,15 +66,9 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
             holder.convStatus.setTypeface(null, Typeface.NORMAL);
         }
 
-        if (smartListViewModel.getPhotoUri() != null) {
-            String test = smartListViewModel.getPhotoUri();
-            String[] byteValues = test.substring(1, test.length() - 1).split(",");
-            byte[] bytes = new byte[byteValues.length];
-
-            for (int i = 0, len = bytes.length; i < len; i++) {
-                bytes[i] = Byte.parseByte(byteValues[i].trim());
-            }
-            holder.photo.setImageBitmap(BitmapUtils.cropImageToCircle(bytes));
+        if (smartListViewModel.getPhotoUri() != null
+                && !smartListViewModel.getPhotoUri().equals("")) {
+            holder.photo.setImageBitmap(BitmapUtils.cropImageToCircle(BitmapUtils.stringToBytes(smartListViewModel.getPhotoUri())));
         } else {
             holder.photo.setImageResource(R.drawable.ic_contact_picture);
         }
@@ -86,26 +81,27 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         return mSmartListViewModels.size();
     }
 
-    private String getLastInteractionSummary(HistoryEntry e, Context context) {
-        long lastTextTimestamp = e.getTextMessages().isEmpty() ? 0 : e.getTextMessages().lastEntry().getKey();
-        long lastCallTimestamp = e.getCalls().isEmpty() ? 0 : e.getCalls().lastEntry().getKey();
-        if (lastTextTimestamp > 0 && lastTextTimestamp > lastCallTimestamp) {
-            TextMessage msg = e.getTextMessages().lastEntry().getValue();
-            String msgString = msg.getMessage();
-            if (msgString != null && !msgString.isEmpty() && msgString.contains("\n")) {
-                int lastIndexOfChar = msgString.lastIndexOf("\n");
-                if (lastIndexOfChar + 1 < msgString.length()) {
-                    msgString = msgString.substring(msgString.lastIndexOf("\n") + 1);
-                }
-            }
-            return (msg.isIncoming() ? "" : context.getText(R.string.you_txt_prefix) + " ") + msgString;
+    public void update(ArrayList<SmartListViewModel> smartListViewModels) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new SmartListDiffUtil(this.mSmartListViewModels, smartListViewModels));
+
+        this.mSmartListViewModels.clear();
+        this.mSmartListViewModels.addAll(smartListViewModels);
+
+        diffResult.dispatchUpdatesTo(this);
+    }
+
+    private String getLastInteractionSummary(int type, String lastInteraction, Context context) {
+        switch (type) {
+            case SmartListViewModel.TYPE_INCOMING_CALL:
+                return String.format(context.getString(R.string.hist_in_call), lastInteraction);
+            case SmartListViewModel.TYPE_OUTGOING_CALL:
+                return String.format(context.getString(R.string.hist_out_call), lastInteraction);
+            case SmartListViewModel.TYPE_INCOMING_MESSAGE:
+                return lastInteraction;
+            case SmartListViewModel.TYPE_OUTGOING_MESSAGE:
+                return context.getText(R.string.you_txt_prefix) + " " + lastInteraction;
+            default:
+                return null;
         }
-        if (lastCallTimestamp > 0) {
-            HistoryCall lastCall = e.getCalls().lastEntry().getValue();
-            return String.format(context.getString(lastCall.isIncoming()
-                    ? R.string.hist_in_call
-                    : R.string.hist_out_call), lastCall.getDurationString());
-        }
-        return null;
     }
 }
