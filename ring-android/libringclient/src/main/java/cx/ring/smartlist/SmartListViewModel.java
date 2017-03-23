@@ -1,9 +1,12 @@
 package cx.ring.smartlist;
 
+import java.util.Date;
 import java.util.Map;
 
 import cx.ring.model.Conversation;
+import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryEntry;
+import cx.ring.model.TextMessage;
 import cx.ring.services.ContactService;
 
 /**
@@ -12,98 +15,106 @@ import cx.ring.services.ContactService;
 
 public class SmartListViewModel {
 
+    public static final int TYPE_INCOMING_MESSAGE = 0;
+    public static final int TYPE_OUTGOING_MESSAGE = 1;
+    public static final int TYPE_INCOMING_CALL = 2;
+    public static final int TYPE_OUTGOING_CALL = 3;
+
     private int uuid;
     private String contactName;
-    private HistoryEntry lastInteraction;
+    private String lastInteraction = "";
     private String photoUri;
     private long lastInteractionTime;
     private boolean hasUnreadTextMessage;
     private boolean hasOngoingCall;
+    private int lastEntryType;
 
     public SmartListViewModel(Conversation conversation, Map<String, String> contactDetails) {
         this.uuid = conversation.getUuid();
-        setData(conversation, contactDetails);
-    }
-
-    public void update(Conversation conversation, Map<String, String> contactDetails) {
-        setData(conversation, contactDetails);
-    }
-
-    private void setData(Conversation conversation, Map<String, String> contactDetails) {
         this.contactName = contactDetails.get(ContactService.CONTACT_NAME_KEY);
         this.photoUri = contactDetails.get(ContactService.CONTACT_PHOTO_KEY);
+        this.lastInteractionTime = new Date().getTime() - conversation.getLastInteraction().getTime();
+        this.hasUnreadTextMessage = conversation.hasUnreadTextMessages();
+        this.hasOngoingCall = conversation.hasCurrentCall();
 
         for (HistoryEntry historyEntry : conversation.getHistory().values()) {
             long lastTextTimestamp = historyEntry.getTextMessages().isEmpty() ? 0 : historyEntry.getTextMessages().lastEntry().getKey();
             long lastCallTimestamp = historyEntry.getCalls().isEmpty() ? 0 : historyEntry.getCalls().lastEntry().getKey();
             if (lastTextTimestamp > 0 && lastTextTimestamp > lastCallTimestamp) {
-                this.lastInteraction = historyEntry;
+                TextMessage msg = historyEntry.getTextMessages().lastEntry().getValue();
+                String msgString = msg.getMessage();
+                if (msgString != null && !msgString.isEmpty() && msgString.contains("\n")) {
+                    int lastIndexOfChar = msgString.lastIndexOf("\n");
+                    if (lastIndexOfChar + 1 < msgString.length()) {
+                        msgString = msgString.substring(msgString.lastIndexOf("\n") + 1);
+                    }
+                }
+                this.lastEntryType = msg.isIncoming() ? TYPE_INCOMING_MESSAGE : TYPE_OUTGOING_MESSAGE;
+                this.lastInteraction = msgString;
                 break;
             }
             if (lastCallTimestamp > 0) {
-                this.lastInteraction = historyEntry;
+                HistoryCall lastCall = historyEntry.getCalls().lastEntry().getValue();
+                this.lastEntryType = lastCall.isIncoming() ? TYPE_INCOMING_CALL : TYPE_OUTGOING_CALL;
+                this.lastInteraction = lastCall.getDurationString();
                 break;
             }
         }
+    }
 
-        this.lastInteractionTime = conversation.getLastInteraction().getTime();
-        this.hasUnreadTextMessage = conversation.hasUnreadTextMessages();
-        this.hasOngoingCall = conversation.hasCurrentCall();
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof SmartListViewModel) {
+            SmartListViewModel slvm = (SmartListViewModel) o;
+            return this.uuid == slvm.getUuid()
+                    && this.contactName.equals(slvm.getContactName())
+                    && this.lastInteraction.equals(slvm.lastInteraction)
+                    && this.photoUri.equals(slvm.getPhotoUri())
+                    && this.lastInteractionTime == slvm.getLastInteractionTime()
+                    && this.hasUnreadTextMessage == slvm.hasUnreadTextMessage()
+                    && this.hasOngoingCall == slvm.hasOngoingCall()
+                    && this.lastEntryType == slvm.getLastEntryType();
+        } else {
+            return false;
+        }
+    }
+
+
+    @Override
+    public int hashCode() {
+        byte result = 42;
+        return 37 * result + this.uuid;
     }
 
     public String getContactName() {
         return contactName;
     }
 
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
-    }
-
-    public HistoryEntry getLastInteraction() {
+    public String getLastInteraction() {
         return lastInteraction;
-    }
-
-    public void setLastInteraction(HistoryEntry lastInteraction) {
-        this.lastInteraction = lastInteraction;
     }
 
     public String getPhotoUri() {
         return photoUri;
     }
 
-    public void setPhotoUri(String photoUri) {
-        this.photoUri = photoUri;
-    }
-
     public long getLastInteractionTime() {
         return lastInteractionTime;
-    }
-
-    public void setLastInteractionTime(long lastInteractionTime) {
-        this.lastInteractionTime = lastInteractionTime;
     }
 
     public boolean hasUnreadTextMessage() {
         return hasUnreadTextMessage;
     }
 
-    public void setHasUnreadTextMessage(boolean hasUnreadTextMessage) {
-        this.hasUnreadTextMessage = hasUnreadTextMessage;
-    }
-
     public boolean hasOngoingCall() {
         return hasOngoingCall;
-    }
-
-    public void setHasOngoingCall(boolean hasOngoingCall) {
-        this.hasOngoingCall = hasOngoingCall;
     }
 
     public int getUuid() {
         return uuid;
     }
 
-    public void setUuid(int uuid) {
-        this.uuid = uuid;
+    public int getLastEntryType() {
+        return lastEntryType;
     }
 }
