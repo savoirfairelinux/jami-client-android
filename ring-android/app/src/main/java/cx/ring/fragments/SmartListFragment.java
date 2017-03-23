@@ -508,6 +508,30 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
+    public void updateItem(final int position) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mRecyclerView.getAdapter() != null) {
+                    mSmartListAdapter.notifyItemChanged(position);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void addItem(final int position) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mRecyclerView.getAdapter() != null) {
+                    mSmartListAdapter.notifyItemInserted(position);
+                }
+            }
+        });
+    }
+
+    @Override
     public void goToConversation(CallContact callContact) {
         if (mSearchMenuItem != null) {
             mSearchMenuItem.collapseActionView();

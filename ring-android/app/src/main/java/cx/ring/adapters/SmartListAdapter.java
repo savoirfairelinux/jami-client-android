@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -53,7 +54,9 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         if (smartListViewModel.hasOngoingCall()) {
             holder.convStatus.setText(holder.itemView.getContext().getString(R.string.ongoing_call));
         } else if (smartListViewModel.getLastInteraction() != null) {
-            holder.convStatus.setText(getLastInteractionSummary(smartListViewModel.getLastInteraction(), holder.itemView.getContext()));
+            holder.convStatus.setText(getLastInteractionSummary(smartListViewModel.getLastEntryType(),
+                    smartListViewModel.getLastInteraction(),
+                    holder.itemView.getContext()));
         }
         if (smartListViewModel.hasUnreadTextMessage()) {
             holder.convParticipants.setTypeface(null, Typeface.BOLD);
@@ -86,26 +89,18 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         return mSmartListViewModels.size();
     }
 
-    private String getLastInteractionSummary(HistoryEntry e, Context context) {
-        long lastTextTimestamp = e.getTextMessages().isEmpty() ? 0 : e.getTextMessages().lastEntry().getKey();
-        long lastCallTimestamp = e.getCalls().isEmpty() ? 0 : e.getCalls().lastEntry().getKey();
-        if (lastTextTimestamp > 0 && lastTextTimestamp > lastCallTimestamp) {
-            TextMessage msg = e.getTextMessages().lastEntry().getValue();
-            String msgString = msg.getMessage();
-            if (msgString != null && !msgString.isEmpty() && msgString.contains("\n")) {
-                int lastIndexOfChar = msgString.lastIndexOf("\n");
-                if (lastIndexOfChar + 1 < msgString.length()) {
-                    msgString = msgString.substring(msgString.lastIndexOf("\n") + 1);
-                }
-            }
-            return (msg.isIncoming() ? "" : context.getText(R.string.you_txt_prefix) + " ") + msgString;
+    private String getLastInteractionSummary(int type, String lastInteraction, Context context) {
+        switch (type) {
+            case SmartListViewModel.TYPE_INCOMING_CALL:
+                return String.format(context.getString(R.string.hist_in_call), lastInteraction);
+            case SmartListViewModel.TYPE_OUTGOING_CALL:
+                return String.format(context.getString(R.string.hist_out_call), lastInteraction);
+            case SmartListViewModel.TYPE_INCOMING_MESSAGE:
+                return lastInteraction;
+            case SmartListViewModel.TYPE_OUTGOING_MESSAGE:
+                return context.getText(R.string.you_txt_prefix) + " " + lastInteraction;
+            default:
+                return null;
         }
-        if (lastCallTimestamp > 0) {
-            HistoryCall lastCall = e.getCalls().lastEntry().getValue();
-            return String.format(context.getString(lastCall.isIncoming()
-                    ? R.string.hist_in_call
-                    : R.string.hist_out_call), lastCall.getDurationString());
-        }
-        return null;
     }
 }

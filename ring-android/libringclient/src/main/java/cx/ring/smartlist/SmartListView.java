@@ -35,6 +35,10 @@ public interface SmartListView extends GenericView {
 
     void updateView(ArrayList<SmartListViewModel> list);
 
+    void updateItem(int position);
+
+    void addItem(int position);
+
     void goToConversation(CallContact callContact);
 
     void goToCallActivity(String rawUriNumber);
