@@ -33,6 +33,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -87,7 +88,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         ClipboardHelper.ClipboardHelperCallback,
         SmartListView {
 
-    private static final String TAG = SmartListFragment.class.getSimpleName();
+    public static final String TAG = SmartListFragment.class.getSimpleName();
     private static final String STATE_LOADING = TAG + ".STATE_LOADING";
 
     @Inject
@@ -492,16 +493,15 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void updateView(final ArrayList<SmartListViewModel> list) {
+    public void updateList(final ArrayList<SmartListViewModel> smartListViewModels) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (mRecyclerView.getAdapter() != null) {
-                    mSmartListAdapter.notifyDataSetChanged();
-                } else {
-                    mSmartListAdapter = new SmartListAdapter(list, SmartListFragment.this);
+                if (mRecyclerView.getAdapter() == null) {
+                    mSmartListAdapter = new SmartListAdapter(smartListViewModels, SmartListFragment.this);
                     mRecyclerView.setAdapter(mSmartListAdapter);
                 }
+                mSmartListAdapter.update(smartListViewModels);
                 setLoading(false);
             }
         });
