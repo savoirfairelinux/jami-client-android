@@ -388,7 +388,7 @@ public class ContactServiceImpl extends ContactService {
     public Map<String, String> loadContactData(CallContact callContact) {
 
         String contactName = null;
-        String photoURI = null;
+        String photoURI = "";
         VCard vcard = null;
 
         if (callContact.isFromSystem()) {
@@ -412,7 +412,7 @@ public class ContactServiceImpl extends ContactService {
                 try {
                     photoURI = Arrays.toString(vcard.getPhotos().get(0).getData());
                 } catch (Exception e) {
-                    photoURI = null;
+                    photoURI = "";
                 }
             }
         }

@@ -47,7 +47,7 @@ public interface SmartListView {
 
     void hideNoConversationMessage();
 
-    void updateView(ArrayList<SmartListViewModel> list);
+    void updateList(ArrayList<SmartListViewModel> smartListViewModels);
 
     void goToConversation(CallContact callContact);
 
