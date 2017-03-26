@@ -46,6 +46,30 @@
       "revId": "750a8efa9c3f52cbf27cbe472655fada91e18a4c",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_c625620b",
+        "filename": "compile.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3
+      },
+      "writtenOn": "2017-03-26T04:23:11Z",
+      "side": 1,
+      "message": "put following just after export RELEASE (see line 32)\n\nexport DAEMON_ONLY",
+      "parentUuid": "9ab8dda7_47888e22",
+      "range": {
+        "startLine": 39,
+        "startChar": 69,
+        "endLine": 39,
+        "endChar": 95
+      },
+      "revId": "750a8efa9c3f52cbf27cbe472655fada91e18a4c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
