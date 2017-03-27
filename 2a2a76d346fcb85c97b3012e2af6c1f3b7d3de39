@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_8933fdf5",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/ContactService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-27T16:41:24Z",
+      "side": 1,
+      "message": "Daemon contact are only loaded if we have contact permission and user allow system contact",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 70
+      },
+      "revId": "2a2a76d346fcb85c97b3012e2af6c1f3b7d3de39",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
