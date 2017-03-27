@@ -30,6 +30,7 @@ import cx.ring.client.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.CallActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.CallFragment;
@@ -111,6 +112,8 @@ public interface RingInjectionComponent {
     void inject(ConversationFragment fragment);
 
     void inject(PendingContactRequestsFragment fragment);
+
+    void inject(BlackListFragment fragment);
 
     void inject(LocalService service);
 

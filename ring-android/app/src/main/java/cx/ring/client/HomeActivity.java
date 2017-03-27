@@ -66,6 +66,7 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
 import cx.ring.application.RingApplication;
+import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;
@@ -113,6 +114,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     public static final String ABOUT_TAG = "About";
     public static final String SETTINGS_TAG = "Prefs";
     public static final String SHARE_TAG = "Share";
+    public static final String BLACKLIST_TAG = "BlackList";
     private static final String NAVIGATION_TAG = "Navigation";
     static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
 
@@ -720,6 +722,16 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .replace(R.id.main_frame, fContent, ACCOUNTS_TAG)
                         .addToBackStack(ACCOUNTS_TAG).commit();
+                break;
+            case BLACKLIST:
+                if (fContent instanceof BlackListFragment) {
+                    break;
+                }
+                fContent = new BlackListFragment();
+                getFragmentManager().beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .replace(R.id.main_frame, fContent, BLACKLIST_TAG)
+                        .addToBackStack(BLACKLIST_TAG).commit();
                 break;
             case ABOUT:
                 if (fContent instanceof AboutFragment) {
