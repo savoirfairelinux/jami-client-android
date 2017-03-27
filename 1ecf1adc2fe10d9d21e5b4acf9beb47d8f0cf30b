@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_c9dc9577",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-03-27T18:59:37Z",
+      "side": 1,
+      "message": "two extra lines here",
+      "range": {
+        "startLine": 504,
+        "startChar": 0,
+        "endLine": 504,
+        "endChar": 0
+      },
+      "revId": "1ecf1adc2fe10d9d21e5b4acf9beb47d8f0cf30b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
