@@ -26,6 +26,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -49,9 +50,11 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.application.RingApplication;
+import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
@@ -103,6 +106,9 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     private ViewPager mViewPager = null;
     private PagerSlidingTabStrip mSlidingTabLayout = null;
 
+    private MenuItem mItemAdvanced;
+    private MenuItem mItemBlacklist;
+
     @Override
     public void update(Observable o, ServiceEvent event) {
         if (event == null) {
@@ -134,6 +140,8 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_account_settings);
+
+        ButterKnife.bind(this);
 
         // dependency injection
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
@@ -214,6 +222,20 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.account_edition, menu);
+        mItemAdvanced = menu.findItem(R.id.menuitem_advanced);
+        mItemBlacklist = menu.findItem(R.id.menuitem_blacklist);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if (mItemAdvanced != null) {
+            mItemAdvanced.setVisible(mAccSelected.isRing());
+        }
+        if (mItemBlacklist != null) {
+            mItemBlacklist.setVisible(mAccSelected.isRing());
+        }
         return true;
     }
 
@@ -242,11 +264,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (isAdvancedSettings() && mAccSelected.isRing()) {
-                    displaySummary();
-                } else {
-                    finish();
-                }
+                onBackPressed();
                 return true;
             case R.id.menuitem_delete:
                 AlertDialog deleteDialog = createDeleteDialog();
@@ -257,6 +275,13 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                 mViewPager.setVisibility(View.VISIBLE);
                 getFragmentManager().beginTransaction().remove(mCurrentlyDisplayed).commit();
                 break;
+            case R.id.menuitem_blacklist:
+                mCurrentlyDisplayed = new BlackListFragment();
+                getFragmentManager().beginTransaction()
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .replace(R.id.fragment_container, mCurrentlyDisplayed)
+                        .addToBackStack(BlackListFragment.TAG)
+                        .commit();
             default:
                 break;
         }
