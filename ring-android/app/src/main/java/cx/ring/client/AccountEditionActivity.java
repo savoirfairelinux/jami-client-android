@@ -52,6 +52,7 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.application.RingApplication;
+import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
@@ -257,6 +258,9 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                 mViewPager.setVisibility(View.VISIBLE);
                 getFragmentManager().beginTransaction().remove(mCurrentlyDisplayed).commit();
                 break;
+            case R.id.menuitem_blacklist:
+                mCurrentlyDisplayed = new BlackListFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, mCurrentlyDisplayed).commit();
             default:
                 break;
         }
