@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_e99f114f",
+        "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/ContactRequestsAdapter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-27T20:58:06Z",
+      "side": 1,
+      "message": "Adapter should extends RecyclerView.Adapter\u003cContactRequestView\u003e so class cast can be removed in onBindViewHolder",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 91
+      },
+      "revId": "f8980a5c70d94e9633ea6966c58fb9a68b1875b0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
