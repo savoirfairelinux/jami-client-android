@@ -61,6 +61,7 @@ along with this program; if not, write to the Free Software
     <string name="menu_item_accounts">Manage accounts</string>
     <string name="menu_item_settings">Settings</string>
     <string name="menu_item_share">Share my contact</string>
+    <string name="menu_item_blacklist">Blocked contacts</string>
     <string name="menu_item_about">About Ring</string>
 
     <!-- Dialing Fragment -->
@@ -203,5 +204,8 @@ along with this program; if not, write to the Free Software
     <string name="send_request_button">Send</string>
     <string name="send_request_title">Send a contact request</string>
     <string name="send_request_msg">You must send a contact request to communicate with this user. As long as your contact has not accepted the request, you can send messages but your contact can\'t read them.</string>
+
+    <!-- Blacklist -->
+    <string name="no_blocked_contact">0 blocked contacts</string>
 
 </resources>
