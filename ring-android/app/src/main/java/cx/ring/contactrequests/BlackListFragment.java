@@ -42,7 +42,8 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.AccountEditionActivity;
 import cx.ring.mvp.BaseFragment;
 
-public class BlackListFragment extends BaseFragment<BlackListPresenter> implements BlackListView {
+public class BlackListFragment extends BaseFragment<BlackListPresenter> implements BlackListView,
+        BlackListViewHolder.BlackListListeners {
 
     public static final String TAG = BlackListFragment.class.getSimpleName();
 
@@ -109,6 +110,11 @@ public class BlackListFragment extends BaseFragment<BlackListPresenter> implemen
     }
 
     @Override
+    public void onUnblockClick(BlackListViewModel viewModel) {
+        mBlackListPresenter.unblockClicked(viewModel);
+    }
+
+    @Override
     public void updateView(final ArrayList<BlackListViewModel> list) {
         RingApplication.uiHandler.post(new Runnable() {
             @Override
@@ -116,7 +122,7 @@ public class BlackListFragment extends BaseFragment<BlackListPresenter> implemen
                 if (mBlacklist.getAdapter() != null) {
                     mAdapter.replaceAll(list);
                 } else {
-                    mAdapter = new BlackListAdapter(list);
+                    mAdapter = new BlackListAdapter(list, BlackListFragment.this);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     mBlacklist.setLayoutManager(layoutManager);
                     mBlacklist.setAdapter(mAdapter);
