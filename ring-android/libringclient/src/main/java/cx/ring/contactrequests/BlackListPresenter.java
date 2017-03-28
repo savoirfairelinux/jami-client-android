@@ -86,6 +86,16 @@ public class BlackListPresenter extends RootPresenter<GenericView<BlackListViewM
         getView().showViewModel(new BlackListViewModel(contacts));
     }
 
+    public void unblock(String contactId) {
+        Account account = mAccountService.getCurrentAccount();
+        if (account == null || contactId == null) {
+            return;
+        }
+
+        mContactService.addContact(account.getAccountID(), contactId);
+        updateList();
+    }
+
     @Override
     public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
