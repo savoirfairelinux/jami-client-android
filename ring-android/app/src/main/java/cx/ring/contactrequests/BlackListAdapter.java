@@ -19,8 +19,6 @@
 
 package cx.ring.contactrequests;
 
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +63,8 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListViewHolder> 
                 .into(holder.mPhoto);
 
         holder.mDisplayname.setText(viewModel.getDisplayName());
+
+        holder.bind(mListener, viewModel);
     }
 
     @Override
