@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_6fa6c1c3",
+        "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/ContactRequestView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-28T22:06:51Z",
+      "side": 1,
+      "message": "Should be protected",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 26
+      },
+      "revId": "15bf6beadb5a31c599ebbd0e9360e2c98639fa96",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_0fab8d8a",
+        "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/ContactRequestsAdapter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-28T22:06:51Z",
+      "side": 1,
+      "message": "you can use holder.itemView context so you dont use the fragment context",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 115
+      },
+      "revId": "15bf6beadb5a31c599ebbd0e9360e2c98639fa96",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
