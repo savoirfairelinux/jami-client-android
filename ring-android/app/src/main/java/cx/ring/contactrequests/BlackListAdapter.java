@@ -32,10 +32,12 @@ import cx.ring.R;
 
 public class BlackListAdapter extends RecyclerView.Adapter<BlackListViewHolder> {
 
+    private BlackListViewHolder.BlackListListeners mListener;
     private ArrayList<BlackListViewModel> mViewModels;
 
-    public BlackListAdapter(ArrayList<BlackListViewModel> viewModels) {
+    public BlackListAdapter(ArrayList<BlackListViewModel> viewModels, BlackListViewHolder.BlackListListeners listener) {
         mViewModels = new ArrayList<>(viewModels);
+        mListener = listener;
     }
 
     public void replaceAll(ArrayList<BlackListViewModel> viewModels) {
@@ -61,6 +63,8 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListViewHolder> 
                 .into(holder.mPhoto);
 
         holder.mDisplayname.setText(viewModel.getDisplayName());
+
+        holder.bind(mListener, viewModel);
     }
 
     @Override
