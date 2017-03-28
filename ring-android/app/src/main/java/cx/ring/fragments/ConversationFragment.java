@@ -304,12 +304,7 @@ public class ConversationFragment extends Fragment implements
 
     private void checkContact() {
         Pair<Account, Uri> guess = guess();
-        if(guess == null || guess.first == null || guess.second == null || !guess.first.isRing() || !guess.second.isRingId()) {
-            return;
-        }
-
-        //TODO: to delete when the automatically sending a trust request will be removed
-        if(mAdapter.getItemCount() != 0) {
+        if (guess == null || guess.first == null || guess.second == null || !guess.first.isRing() || !guess.second.isRingId()) {
             return;
         }
 
@@ -324,7 +319,9 @@ public class ConversationFragment extends Fragment implements
 
         List<Map<String, String>> contacts = mContactService.getContacts(accountId);
         for (Map<String, String> contact : contacts) {
-            if (contact.get("id").equals(contactId)) {
+            if (contact.get("id").equals(contactId)
+                    && contact.containsKey("confirmed")
+                    && contact.get("confirmed").equals("true")) {
                 return;
             }
         }
