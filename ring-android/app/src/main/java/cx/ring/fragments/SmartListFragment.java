@@ -483,6 +483,9 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                     case 1:
                         ActionHelper.launchDeleteAction(getActivity(), conversation, SmartListFragment.this);
                         break;
+                    case 2:
+                        presenter.removeContact(conversation.getLastAccountUsed(), conversation.getContact().getDisplayName());
+                        break;
                 }
             }
         });
