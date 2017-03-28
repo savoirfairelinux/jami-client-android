@@ -111,7 +111,7 @@ public class BlackListFragment extends BaseFragment implements BlackListView,
 
     @Override
     public void onUnblockClick(BlackListViewModel viewModel) {
-        //mBlackListPresenter.unblockClicked(viewModel);
+        mBlackListPresenter.unblockClicked(viewModel);
     }
 
     @Override
