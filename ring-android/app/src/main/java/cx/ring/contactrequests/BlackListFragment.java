@@ -40,8 +40,6 @@ import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
-import cx.ring.model.CallContact;
-import cx.ring.mvp.GenericView;
 
 public class BlackListFragment extends Fragment implements BlackListView,
         BlackListViewHolder.BlackListListeners {
@@ -102,7 +100,7 @@ public class BlackListFragment extends Fragment implements BlackListView,
 
     @Override
     public void onUnblockClick(BlackListViewModel viewModel) {
-        //mBlackListPresenter.unblockClicked(viewModel);
+        mBlackListPresenter.unblockClicked(viewModel);
     }
 
     @Override
