@@ -483,6 +483,15 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                     case 1:
                         ActionHelper.launchDeleteAction(getActivity(), conversation, SmartListFragment.this);
                         break;
+                    case 2:
+                        String contactId = conversation.getContact().getDisplayName();
+                        String[] split = contactId.split(":");
+                        if (split.length > 1 && split[0].equals("ring")) {
+                            contactId = split[1];
+                            Log.d(TAG, "blocked contact : " + contactId);
+                            presenter.removeContact(conversation.getLastAccountUsed(), contactId);
+                        }
+                        break;
                 }
             }
         });

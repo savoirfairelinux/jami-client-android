@@ -359,6 +359,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         }
     }
 
+    public void removeContact(String accountId, String contactId) {
+        mContactService.removeContact(accountId, contactId);
+    }
 
     @Override
     public void update(Observable observable, ServiceEvent event) {
