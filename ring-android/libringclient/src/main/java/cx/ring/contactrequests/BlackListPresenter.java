@@ -106,6 +106,17 @@ public class BlackListPresenter extends RootPresenter<BlackListView> implements 
         updateList();
     }
 
+    public void unblockClicked(BlackListViewModel viewModel) {
+        Account account = mAccountService.getAccount(mAccountID);
+        String contactId = viewModel.getDisplayName();
+        if (account == null || contactId == null) {
+            return;
+        }
+
+        mContactService.addContact(account.getAccountID(), contactId);
+        updateList();
+    }
+
     @Override
     public void update(Observable observable, ServiceEvent event) {
         if (event == null) {

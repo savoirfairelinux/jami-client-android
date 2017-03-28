@@ -24,7 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/photo"
+        android:layout_toLeftOf="@+id/unblock"
         android:layout_toRightOf="@+id/photo"
+        android:layout_toStartOf="@+id/unblock"
         android:ellipsize="middle"
         android:gravity="start"
         android:maxLines="1"
@@ -34,5 +36,17 @@
         android:textIsSelectable="false"
         android:textSize="16sp"
         tools:text="display name" />
+
+    <ImageButton
+        android:id="@+id/unblock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/contact_unblock"
+        android:padding="16dp"
+        android:src="@drawable/ic_person_add_black" />
 
 </RelativeLayout>
