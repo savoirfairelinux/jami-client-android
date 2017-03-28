@@ -56,7 +56,6 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.Collection;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -362,14 +361,16 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                 public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
                     presentActions(getActivity(),
                             ((SmartListAdapter.ViewHolder) v.getTag()).conv,
-                            SmartListFragment.this);
+                            SmartListFragment.this,
+                            mSmartListPresenter);
                     return true;
                 }
             };
 
     public static void presentActions(final Activity activity,
                                       final Conversation conversation,
-                                      final Conversation.ConversationActionCallback callback) {
+                                      final Conversation.ConversationActionCallback callback,
+                                      final SmartListPresenter presenter) {
         if (activity == null) {
             cx.ring.utils.Log.d(TAG, "presentActions: activity is null");
             return;
@@ -392,6 +393,15 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                         break;
                     case 1:
                         ActionHelper.launchDeleteAction(activity, conversation, callback);
+                        break;
+                    case 2:
+                        String contactId = conversation.getContact().getDisplayName();
+                        String[] split = contactId.split(":");
+                        if (split.length > 1 && split[0].equals("ring")) {
+                            contactId = split[1];
+                            Log.d(TAG, "blocked contact : " + contactId);
+                            presenter.removeContact(conversation.getLastAccountUsed(), contactId);
+                        }
                         break;
                 }
             }
