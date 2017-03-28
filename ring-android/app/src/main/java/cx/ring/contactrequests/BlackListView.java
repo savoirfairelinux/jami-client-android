@@ -55,6 +55,6 @@ public class BlackListView extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.unblock)
     public void unblockClicked() {
-        //mPresenter.unblock(mContactId);
+        mPresenter.unblock(mContactId);
     }
 }
