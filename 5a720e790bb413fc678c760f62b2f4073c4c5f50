@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_89577d26",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-28T14:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_a9a6f951",
+      "range": {
+        "startLine": 416,
+        "startChar": 12,
+        "endLine": 416,
+        "endChar": 32
+      },
+      "revId": "5a720e790bb413fc678c760f62b2f4073c4c5f50",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_89a9bd26",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-28T13:17:02Z",
       "side": 1,
       "message": "mList !\u003d null",
+      "range": {
+        "startLine": 426,
+        "startChar": 16,
+        "endLine": 426,
+        "endChar": 29
+      },
+      "revId": "5a720e790bb413fc678c760f62b2f4073c4c5f50",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_a954b921",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-28T14:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_89a9bd26",
       "range": {
         "startLine": 426,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_4931850a",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-28T14:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_e9acf137",
+      "range": {
+        "startLine": 652,
+        "startChar": 0,
+        "endLine": 655,
+        "endChar": 5
+      },
+      "revId": "5a720e790bb413fc678c760f62b2f4073c4c5f50",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_096dcd04",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListPresenter.java",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-28T13:17:02Z",
       "side": 1,
       "message": "2017",
+      "range": {
+        "startLine": 2,
+        "startChar": 21,
+        "endLine": 2,
+        "endChar": 22
+      },
+      "revId": "5a720e790bb413fc678c760f62b2f4073c4c5f50",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_6936c105",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListPresenter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-28T14:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_096dcd04",
       "range": {
         "startLine": 2,
         "startChar": 21,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_093b8dec",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListPresenter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-28T14:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_4963c51a",
+      "range": {
+        "startLine": 81,
+        "startChar": 3,
+        "endLine": 84,
+        "endChar": 5
+      },
+      "revId": "5a720e790bb413fc678c760f62b2f4073c4c5f50",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_696801f6",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListPresenter.java",
         "patchSetId": 10
@@ -128,6 +248,30 @@
       "writtenOn": "2017-03-28T13:17:02Z",
       "side": 1,
       "message": "This comment is out of sync",
+      "range": {
+        "startLine": 176,
+        "startChar": 8,
+        "endLine": 177,
+        "endChar": 76
+      },
+      "revId": "5a720e790bb413fc678c760f62b2f4073c4c5f50",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_2940c955",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListPresenter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-28T14:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_696801f6",
       "range": {
         "startLine": 176,
         "startChar": 8,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_c92495c8",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListView.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-28T14:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_297209e6",
+      "range": {
+        "startLine": 2,
+        "startChar": 21,
+        "endLine": 2,
+        "endChar": 22
+      },
+      "revId": "5a720e790bb413fc678c760f62b2f4073c4c5f50",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_c976d5d8",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListView.java",
         "patchSetId": 10
@@ -174,6 +342,30 @@
       "writtenOn": "2017-03-28T13:17:02Z",
       "side": 1,
       "message": "Ok I get why you have this empty showViewModel method. I think you can remove this heritage since you don\u0027t use it",
+      "range": {
+        "startLine": 28,
+        "startChar": 39,
+        "endLine": 28,
+        "endChar": 50
+      },
+      "revId": "5a720e790bb413fc678c760f62b2f4073c4c5f50",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_e92151b5",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListView.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-28T14:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_c976d5d8",
       "range": {
         "startLine": 28,
         "startChar": 39,
