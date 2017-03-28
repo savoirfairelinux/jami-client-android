@@ -62,6 +62,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -595,14 +596,16 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                 public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
                     presentActions(getActivity(),
                             ((SmartListAdapter.ViewHolder) v.getTag()).conv,
-                            SmartListFragment.this);
+                            SmartListFragment.this,
+                            mContactService);
                     return true;
                 }
             };
 
     public static void presentActions(final Activity activity,
                                       final Conversation conversation,
-                                      final Conversation.ConversationActionCallback callback) {
+                                      final Conversation.ConversationActionCallback callback,
+                                      final ContactService service) {
         if (activity == null) {
             cx.ring.utils.Log.d(TAG, "presentActions: activity is null");
             return;
@@ -625,6 +628,15 @@ public class SmartListFragment extends Fragment implements SearchView.OnQueryTex
                         break;
                     case 1:
                         ActionHelper.launchDeleteAction(activity, conversation, callback);
+                        break;
+                    case 2:
+                        String contactId = conversation.getContact().getDisplayName();
+                        String[] split = contactId.split(":");
+                        if (split.length > 1 && split[0].equals("ring")) {
+                            contactId = split[1];
+                            Log.d(TAG, "blocked contact : " + contactId);
+                            service.removeContact(conversation.getLastAccountUsed(), contactId);
+                        }
                         break;
                 }
             }
