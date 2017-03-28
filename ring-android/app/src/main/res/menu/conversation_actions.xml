@@ -32,4 +32,10 @@
         android:title="@string/conversation_action_delete_this"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/menuitem_block"
+        android:icon="@drawable/ic_block_white"
+        android:title="@string/conversation_action_block_this"
+        app:showAsAction="ifRoom" />
+
 </menu>

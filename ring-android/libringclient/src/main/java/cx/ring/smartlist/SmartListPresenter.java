@@ -251,7 +251,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
                 if (smartListViewModel == null || i >= mSmartListViewModels.size()) {
 
-                    if(conversation.getContact().isFromSystem()) {
+                    if (conversation.getContact().isFromSystem()) {
                         Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(conversation.getContact());
                         smartListViewModel = new SmartListViewModel(conversation, tuple.first, tuple.second, null);
                     } else {
@@ -261,7 +261,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
                     mSmartListViewModels.add(smartListViewModel);
                 } else {
-                    if(conversation.getContact().isFromSystem()) {
+                    if (conversation.getContact().isFromSystem()) {
                         Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(conversation.getContact());
                         smartListViewModel.update(conversation, tuple.first, tuple.second, null);
                     } else {
@@ -289,11 +289,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     private ArrayList<SmartListViewModel> filter(ArrayList<SmartListViewModel> list, String query) {
         ArrayList<SmartListViewModel> filteredList = new ArrayList<>();
-        if(list == null || list.size() == 0) {
+        if (list == null || list.size() == 0) {
             return filteredList;
         }
-        for(SmartListViewModel smartListViewModel : list) {
-            if(smartListViewModel.getContactName().toLowerCase().contains(query.toLowerCase())) {
+        for (SmartListViewModel smartListViewModel : list) {
+            if (smartListViewModel.getContactName().toLowerCase().contains(query.toLowerCase())) {
                 filteredList.add(smartListViewModel);
             }
         }
@@ -359,6 +359,12 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         }
     }
 
+    public void removeContact(String accountId, String contactId) {
+        String[] split = contactId.split(":");
+        if (split.length > 1 && split[0].equals("ring")) {
+            mContactService.removeContact(accountId, split[1]);
+        }
+    }
 
     @Override
     public void update(Observable observable, ServiceEvent event) {

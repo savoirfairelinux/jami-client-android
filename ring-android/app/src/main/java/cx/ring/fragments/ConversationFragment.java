@@ -500,8 +500,31 @@ public class ConversationFragment extends Fragment implements
                         this.mConversation.getContact(),
                         this);
                 return true;
+            case R.id.menuitem_block:
+                blockContact();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void blockContact() {
+        Pair<Account, Uri> guess = guess();
+        if (guess.first == null || guess.second == null || !guess.first.isRing() || !guess.second.isRingId()) {
+            return;
+        }
+
+        String accountId = guess.first.getAccountID();
+        String contactId = guess.second.getRawUriString();
+
+        String[] split = contactId.split(":");
+        if (split.length > 1) {
+            contactId = split[1];
+        }
+
+        mContactService.removeContact(accountId, contactId);
+        if (getActivity() instanceof ConversationActivity) {
+            getActivity().finish();
         }
     }
 
