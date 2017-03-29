@@ -112,7 +112,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<GenericView<P
             }
         }
 
-        boolean hasPane = mAccountID != null;
+        boolean hasPane = mAccountID != null && !mAccountID.equals(mAccountService.getCurrentAccount().getAccountID());
         getView().showViewModel(new PendingContactRequestsViewModel(currentAccount, mTrustRequests, hasPane));
         mNotificationService.cancelTrustRequestNotification(currentAccount.getAccountID());
     }
