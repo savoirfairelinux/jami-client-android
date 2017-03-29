@@ -19,6 +19,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <android.support.v14.preference.SwitchPreference
+        android:id="@+id/account_dhtpublicincalls"
+        android:defaultValue="false"
+        android:key="DHT.PublicInCalls"
+        android:persistent="false"
+        android:title="@string/account_dht_public_in_calls_label" />
+
     <cx.ring.views.EditTextIntegerPreference
         android:id="@+id/account_registration_expire"
         android:defaultValue="60"
