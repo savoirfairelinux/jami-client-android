@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_ba9b9971",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-29T14:59:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_1a098d2c",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 42
+      },
+      "revId": "3b76ff4fb13fe93167e4d3bb08b33f56d8421c30",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_3a0ec935",
         "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
         "patchSetId": 17
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-29T13:16:20Z",
       "side": 1,
       "message": "change var name",
+      "range": {
+        "startLine": 84,
+        "startChar": 19,
+        "endLine": 84,
+        "endChar": 23
+      },
+      "revId": "3b76ff4fb13fe93167e4d3bb08b33f56d8421c30",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_5a886522",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-29T14:59:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_3a0ec935",
       "range": {
         "startLine": 84,
         "startChar": 19,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_7a8d2131",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-29T14:59:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_da121558",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 64
+      },
+      "revId": "3b76ff4fb13fe93167e4d3bb08b33f56d8421c30",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_fa0fd12c",
         "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
         "patchSetId": 17
@@ -82,6 +154,30 @@
       "writtenOn": "2017-03-29T13:16:20Z",
       "side": 1,
       "message": "From what I understand we load contact pictures on the main thread now. Not sure if it\u0027s a good idea",
+      "range": {
+        "startLine": 91,
+        "startChar": 40,
+        "endLine": 91,
+        "endChar": 76
+      },
+      "revId": "3b76ff4fb13fe93167e4d3bb08b33f56d8421c30",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_1a82ed00",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-03-29T14:59:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_fa0fd12c",
       "range": {
         "startLine": 91,
         "startChar": 40,
