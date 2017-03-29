@@ -196,6 +196,7 @@ along with this program; if not, write to the Free Software
     <string name="contact_request_title">Pending contact request</string>
     <string name="contact_request_msg">You have %1$s pending requests</string>
     <string name="contact_request_account">For %1$s</string>
+    <string name="no_requests">0 contact requests</string>
 
     <!-- Send contact requests -->
     <string name="send_request_button">Send</string>
