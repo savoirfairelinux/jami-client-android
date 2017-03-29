@@ -56,7 +56,10 @@ public class PendingContactRequestsFragment extends Fragment implements GenericV
     protected RecyclerView mRequestsList;
 
     @BindView(R.id.pane_ringID)
-    TextView mPaneTextView;
+    protected TextView mPaneTextView;
+
+    @BindView(R.id.emptyTextView)
+    protected TextView mEmptyTextView;
 
     private Unbinder mUnbinder;
     private ContactRequestsAdapter mAdapter;
@@ -134,6 +137,8 @@ public class PendingContactRequestsFragment extends Fragment implements GenericV
                 }
                 mPaneTextView.setVisibility(viewModel.hasPane() ? View.VISIBLE : View.GONE);
                 mAdapter.replaceAll(viewModel.getTrustRequests());
+
+                mEmptyTextView.setVisibility(viewModel.getTrustRequests().isEmpty() ? View.VISIBLE : View.GONE);
             }
         });
     }
