@@ -101,7 +101,8 @@ public enum ConfigKey {
             PUBLISHED_SAMEAS_LOCAL,
             STUN_ENABLE, TURN_ENABLE,
             ACCOUNT_AUTOANSWER,
-            ACCOUNT_UPNP_ENABLE));
+            ACCOUNT_UPNP_ENABLE,
+            DHT_PUBLIC_IN));
 
     private final String mKey;
 
