@@ -192,19 +192,18 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         });
 
         if (mAccSelected.isRing()) {
-            mSlidingTabLayout.setVisibility(View.GONE);
-            mViewPager.setVisibility(View.GONE);
-            mCurrentlyDisplayed = new RingAccountSummaryFragment();
-            Bundle args = new Bundle();
-            args.putString(ACCOUNTID_KEY, mAccSelected.getAccountID());
-            mCurrentlyDisplayed.setArguments(args);
-            getFragmentManager().beginTransaction().add(R.id.fragment_container, mCurrentlyDisplayed).commit();
+            displaySummary();
         }
     }
 
-    private void finishAdvanced() {
+    private void displaySummary() {
         mSlidingTabLayout.setVisibility(View.GONE);
         mViewPager.setVisibility(View.GONE);
+        mCurrentlyDisplayed = new RingAccountSummaryFragment();
+        Bundle args = new Bundle();
+        args.putString(ACCOUNTID_KEY, mAccSelected.getAccountID());
+        mCurrentlyDisplayed.setArguments(args);
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, mCurrentlyDisplayed).commit();
     }
 
     private boolean isAdvancedSettings() {
@@ -232,8 +231,8 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @Override
     public void onBackPressed() {
-        if (isAdvancedSettings()) {
-            finishAdvanced();
+        if (isAdvancedSettings() && mAccSelected.isRing()) {
+            displaySummary();
         } else if (!(mCurrentlyDisplayed instanceof BackHandlerInterface) || !((BackHandlerInterface) mCurrentlyDisplayed).onBackPressed()) {
             super.onBackPressed();
         }
@@ -243,7 +242,11 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                if (isAdvancedSettings() && mAccSelected.isRing()) {
+                    displaySummary();
+                } else {
+                    finish();
+                }
                 return true;
             case R.id.menuitem_delete:
                 AlertDialog deleteDialog = createDeleteDialog();
