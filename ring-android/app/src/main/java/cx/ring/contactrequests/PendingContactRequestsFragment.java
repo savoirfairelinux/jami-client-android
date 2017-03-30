@@ -132,6 +132,10 @@ public class PendingContactRequestsFragment extends Fragment implements GenericV
         RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
+                if (mPaneTextView == null || mEmptyTextView == null || mAdapter == null) {
+                    return;
+                }
+
                 if (viewModel.hasPane()) {
                     mPaneTextView.setText(getString(R.string.contact_request_account, viewModel.getAccountUsername()));
                 }
