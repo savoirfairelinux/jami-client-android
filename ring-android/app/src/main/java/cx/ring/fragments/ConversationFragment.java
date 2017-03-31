@@ -348,14 +348,16 @@ public class ConversationFragment extends Fragment implements
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 VCard vcard = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), mAccountService.getCurrentAccount().getAccountID());
-                Bitmap photo = BitmapUtils.bytesToBitmap(vcard.getPhotos().get(0).getData());
-                photo = BitmapUtils.reduceBitmap(photo, 30000);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                vcard.removeProperties(Photo.class);
-                vcard.addPhoto(new Photo(stream.toByteArray(), ImageType.PNG));
-                vcard.removeProperties(RawProperty.class);
-
+                if (vcard != null && !vcard.getPhotos().isEmpty()) {
+                    // Reduce photo size to fit in one DHT packet
+                    Bitmap photo = BitmapUtils.bytesToBitmap(vcard.getPhotos().get(0).getData());
+                    photo = BitmapUtils.reduceBitmap(photo, 30000);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    vcard.removeProperties(Photo.class);
+                    vcard.addPhoto(new Photo(stream.toByteArray(), ImageType.PNG));
+                    vcard.removeProperties(RawProperty.class);
+                }
                 mAccountService.sendTrustRequest(accountId, contactId, Blob.fromString(VCardUtils.vcardToString(vcard)));
             }
         });
