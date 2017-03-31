@@ -1079,7 +1079,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             setDefaultPhoto();
         }
 
-        if (TextUtils.isEmpty(vcard.getFormattedName().getValue())) {
+        if (vcard.getFormattedName() == null || TextUtils.isEmpty(vcard.getFormattedName().getValue())) {
             return;
         }
         contactBubbleTxt.setText(vcard.getFormattedName().getValue());
