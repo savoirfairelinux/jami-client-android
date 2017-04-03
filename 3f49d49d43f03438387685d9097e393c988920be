@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_50aa81d5",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-03T21:23:24Z",
+      "side": 1,
+      "message": "We should use replace() instead of add() when navigating between fragment",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 107
+      },
+      "revId": "3f49d49d43f03438387685d9097e393c988920be",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
