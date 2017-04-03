@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_8d09c297",
+        "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/ContactRequestView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-04-03T15:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_0d9392a4",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 55
+      },
+      "revId": "597de4118648ac0fcf4501a3cc5fcf14d13762da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_cd8c9a82",
         "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/ContactRequestView.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-03-31T19:49:14Z",
       "side": 1,
       "message": "Look at how Hadrien has done it in his smartlist recycler patch",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 85,
+        "endChar": 5
+      },
+      "revId": "597de4118648ac0fcf4501a3cc5fcf14d13762da",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_2dfe8e6c",
+        "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/ContactRequestView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-04-03T15:35:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_cd8c9a82",
       "range": {
         "startLine": 72,
         "startChar": 0,
