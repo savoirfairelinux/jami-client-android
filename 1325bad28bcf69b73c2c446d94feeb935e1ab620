@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_ed24f6c7",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-04-03T19:51:53Z",
+      "side": 1,
+      "message": "these feed lines are useless",
+      "range": {
+        "startLine": 281,
+        "startChar": 0,
+        "endLine": 282,
+        "endChar": 0
+      },
+      "revId": "1325bad28bcf69b73c2c446d94feeb935e1ab620",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_0d22b2b9",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/CircleTransform.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-04-03T19:51:53Z",
+      "side": 1,
+      "message": "use {}",
+      "range": {
+        "startLine": 43,
+        "startChar": 8,
+        "endLine": 43,
+        "endChar": 40
+      },
+      "revId": "1325bad28bcf69b73c2c446d94feeb935e1ab620",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_cd2b3a93",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/CircleTransform.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-04-03T19:51:53Z",
+      "side": 1,
+      "message": "you should use a more explicit variable name",
+      "range": {
+        "startLine": 60,
+        "startChar": 14,
+        "endLine": 60,
+        "endChar": 15
+      },
+      "revId": "1325bad28bcf69b73c2c446d94feeb935e1ab620",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
