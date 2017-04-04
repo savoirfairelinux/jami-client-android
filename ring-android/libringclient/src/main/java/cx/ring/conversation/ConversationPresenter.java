@@ -154,6 +154,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     public void loadConversation() {
         mConversation = mConversationFacade.getConversationById(mConversationId);
 
+        Tuple<String, byte[]> test = mContactService.loadContactData(mConversation.getContact());
+        getView().displayContactPhoto(test.second);
+
         long contactId = CallContact.contactIdFromId(mConversationId);
         CallContact contact = null;
         if (contactId >= 0) {

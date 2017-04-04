@@ -29,6 +29,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.LongSparseArray;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -396,6 +401,27 @@ public class ContactServiceImpl extends ContactService {
 
     @Override
     public Tuple<String, byte[]> loadContactData(CallContact callContact) {
+
+        if (callContact.isFromSystem()) {
+            String contactName = callContact.getDisplayName();
+            String photoURI = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, callContact.getId()).toString();
+            InputStream is = null;
+            try {
+                is = mContext.getContentResolver().openInputStream(android.net.Uri.parse(photoURI));
+                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+                int nRead;
+                byte[] data = new byte[1024];
+                while ((nRead = is.read(data, 0, data.length)) != -1) {
+                    buffer.write(data, 0, nRead);
+                }
+                buffer.flush();
+                byte[] byteArray = buffer.toByteArray();
+                return new Tuple<>(contactName, byteArray);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
 
         String contactName = null;
         byte[] photoURI = null;
