@@ -19,61 +19,90 @@
  */
 package cx.ring.smartlist;
 
-import java.util.Map;
+import java.util.Arrays;
+import java.util.Date;
 
 import cx.ring.model.Conversation;
+import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryEntry;
-import cx.ring.services.ContactService;
-import cx.ring.utils.Tuple;
+import cx.ring.model.TextMessage;
 
 public class SmartListViewModel {
 
+    public static final int TYPE_INCOMING_MESSAGE = 0;
+    public static final int TYPE_OUTGOING_MESSAGE = 1;
+    public static final int TYPE_INCOMING_CALL = 2;
+    public static final int TYPE_OUTGOING_CALL = 3;
+
     private String uuid;
     private String contactName;
-    private HistoryEntry lastInteraction;
+    private String lastInteraction = "";
     private String photoUri;
     private byte[] photoData;
     private long lastInteractionTime;
     private boolean hasUnreadTextMessage;
     private boolean hasOngoingCall;
+    private int lastEntryType;
 
     public SmartListViewModel(Conversation conversation, String contactName, String photoUri, byte[] photoData) {
         this.uuid = conversation.getUuid();
-        setData(conversation, contactName, photoUri, photoData);
-    }
-
-    public void update(Conversation conversation, String contactName, String photoUri, byte[] photoData) {
-        setData(conversation, contactName, photoUri, photoData);
-    }
-
-    private void setData(Conversation conversation, String contactName, String photoUri, byte[] photoData) {
         this.contactName = contactName;
-        this.photoUri = photoUri;
+        this.photoUri = photoUri != null ? photoUri : "";
         this.photoData = photoData;
+        this.lastInteractionTime = new Date().getTime() - conversation.getLastInteraction().getTime();
+        this.hasUnreadTextMessage = conversation.hasUnreadTextMessages();
+        this.hasOngoingCall = conversation.hasCurrentCall();
 
         for (HistoryEntry historyEntry : conversation.getHistory().values()) {
             long lastTextTimestamp = historyEntry.getTextMessages().isEmpty() ? 0 : historyEntry.getTextMessages().lastEntry().getKey();
             long lastCallTimestamp = historyEntry.getCalls().isEmpty() ? 0 : historyEntry.getCalls().lastEntry().getKey();
-            if (lastTextTimestamp > 0 && lastTextTimestamp > lastCallTimestamp) {
-                this.lastInteraction = historyEntry;
+            if (lastTextTimestamp == conversation.getLastInteraction().getTime()
+                    && lastTextTimestamp > 0
+                    && lastTextTimestamp > lastCallTimestamp) {
+                TextMessage msg = historyEntry.getTextMessages().lastEntry().getValue();
+                String msgString = msg.getMessage();
+                if (msgString != null && !msgString.isEmpty() && msgString.contains("\n")) {
+                    int lastIndexOfChar = msgString.lastIndexOf("\n");
+                    if (lastIndexOfChar + 1 < msgString.length()) {
+                        msgString = msgString.substring(msgString.lastIndexOf("\n") + 1);
+                    }
+                }
+                this.lastEntryType = msg.isIncoming() ? TYPE_INCOMING_MESSAGE : TYPE_OUTGOING_MESSAGE;
+                this.lastInteraction = msgString;
                 break;
             }
-            if (lastCallTimestamp > 0) {
-                this.lastInteraction = historyEntry;
+            if (lastCallTimestamp == conversation.getLastInteraction().getTime()
+                    && lastCallTimestamp > 0) {
+                HistoryCall lastCall = historyEntry.getCalls().lastEntry().getValue();
+                this.lastEntryType = lastCall.isIncoming() ? TYPE_INCOMING_CALL : TYPE_OUTGOING_CALL;
+                this.lastInteraction = lastCall.getDurationString();
                 break;
             }
         }
+    }
 
-        this.lastInteractionTime = conversation.getLastInteraction().getTime();
-        this.hasUnreadTextMessage = conversation.hasUnreadTextMessages();
-        this.hasOngoingCall = conversation.hasCurrentCall();
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof SmartListViewModel) {
+            SmartListViewModel slvm = (SmartListViewModel) o;
+            return !(this.photoUri != null && !this.photoUri.equals(slvm.getPhotoUri()))
+                    && !(this.photoData != null && !Arrays.equals(this.photoData, slvm.photoData))
+                    && this.uuid.equals(slvm.getUuid())
+                    && this.contactName.equals(slvm.getContactName())
+                    && this.lastInteraction.equals(slvm.lastInteraction)
+                    && this.hasUnreadTextMessage == slvm.hasUnreadTextMessage()
+                    && this.hasOngoingCall == slvm.hasOngoingCall()
+                    && this.lastEntryType == slvm.getLastEntryType();
+        } else {
+            return false;
+        }
     }
 
     public String getContactName() {
         return contactName;
     }
 
-    public HistoryEntry getLastInteraction() {
+    public String getLastInteraction() {
         return lastInteraction;
     }
 
@@ -99,5 +128,9 @@ public class SmartListViewModel {
 
     public byte[] getPhotoData() {
         return photoData;
+    }
+
+    public int getLastEntryType() {
+        return lastEntryType;
     }
 }
