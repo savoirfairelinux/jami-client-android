@@ -402,6 +402,10 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
+    public void removeConversation(String id) {
+        mConversationMap.remove(id);
+    }
+
     private void parseNewMessage(TextMessage txt, String call) {
         Conversation conversation;
         if (call != null && !call.isEmpty()) {

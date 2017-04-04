@@ -454,7 +454,7 @@ public class ContactServiceImpl extends ContactService {
             return new Tuple<>(contactName, byteArray);
         } catch (IOException e) {
             Log.w(TAG, "Error loading photo for system contact");
-            return null;
+            return new Tuple<>(contactName, null);
         }
     }
 }
