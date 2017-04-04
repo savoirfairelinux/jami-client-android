@@ -79,6 +79,16 @@ public class BitmapUtils {
         return externalBMP;
     }
 
+    public static byte[] stringToBytes(String text) {
+        String[] byteValues = text.substring(1, text.length() - 1).split(",");
+        byte[] bytes = new byte[byteValues.length];
+
+        for (int i = 0, len = bytes.length; i < len; i++) {
+            bytes[i] = Byte.parseByte(byteValues[i].trim());
+        }
+        return bytes;
+    }
+
     public static byte[] bitmapToBytes(Bitmap bmp) {
         int bytes = bmp.getByteCount();
         ByteBuffer buffer = ByteBuffer.allocate(bytes); //Create a new buffer
