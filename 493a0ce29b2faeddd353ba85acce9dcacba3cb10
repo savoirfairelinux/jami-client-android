@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_90f31973",
+        "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/ContactRequestsAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-04T17:48:17Z",
+      "side": 1,
+      "message": "You can now use Glide to load images",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 13
+      },
+      "revId": "493a0ce29b2faeddd353ba85acce9dcacba3cb10",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
