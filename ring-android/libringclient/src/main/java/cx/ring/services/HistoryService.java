@@ -68,6 +68,8 @@ public abstract class HistoryService extends Observable {
 
     protected abstract Dao<HistoryText, Integer> getTextHistoryDao();
 
+    public abstract String getRelativeTimeSpanString(long lastInteraction);
+
     public boolean insertNewEntry(Conference toInsert) {
 
         for (SipCall call : toInsert.getParticipants()) {
