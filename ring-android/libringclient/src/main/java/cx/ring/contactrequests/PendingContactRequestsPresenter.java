@@ -30,6 +30,7 @@ import cx.ring.model.ServiceEvent;
 import cx.ring.model.TrustRequest;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.ContactService;
 import cx.ring.utils.Log;
@@ -37,6 +38,7 @@ import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.TrustRequestUtils;
 import cx.ring.utils.Tuple;
+import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 
 public class PendingContactRequestsPresenter extends RootPresenter<PendingContactRequestsView> implements Observer<ServiceEvent> {
@@ -46,16 +48,19 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
     private AccountService mAccountService;
     private NotificationService mNotificationService;
     private ContactService mContactService;
+    private DeviceRuntimeService mDeviceRuntimeService;
     private String mAccountID;
     private ArrayList<PendingContactRequestsViewModel> mContactRequestsViewModels;
 
     @Inject
     public PendingContactRequestsPresenter(AccountService accountService,
                                            NotificationService notificationService,
-                                           ContactService contactService) {
+                                           ContactService contactService,
+                                           DeviceRuntimeService deviceRuntimeService) {
         mAccountService = accountService;
         mNotificationService = notificationService;
         mContactService = contactService;
+        mDeviceRuntimeService = deviceRuntimeService;
     }
 
     final private List<TrustRequest> mTrustRequests = new ArrayList<>();
@@ -135,8 +140,20 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
 
     public void acceptTrustRequest(PendingContactRequestsViewModel viewModel) {
         String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
-        mAccountService.acceptTrustRequest(accountId, viewModel.getContactId());
-        updateList(true);
+        String contactId = viewModel.getContactId();
+        mAccountService.acceptTrustRequest(accountId, contactId);
+
+        for (TrustRequest request : mTrustRequests) {
+            if (accountId.equals(request.getAccountId()) && contactId.equals(request.getContactId())) {
+                VCard vCard = request.getVCard();
+                if (vCard != null) {
+                    VCardUtils.savePeerProfileToDisk(vCard, contactId + ".vcf", mDeviceRuntimeService.provideFilesDir());
+                }
+                mTrustRequests.remove(request);
+            }
+        }
+
+        updateList(false);
     }
 
     public void refuseTrustRequest(PendingContactRequestsViewModel viewModel) {
