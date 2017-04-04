@@ -55,8 +55,6 @@ import cx.ring.utils.Tuple;
  */
 public abstract class ContactService extends Observable {
 
-    public static final String CONTACT_NAME_KEY = "CONTACT_NAME";
-    public static final String CONTACT_PHOTO_KEY = "CONTACT_PHOTO";
     public static final String BANNED = "banned";
     public static final String ID = "id";
 
