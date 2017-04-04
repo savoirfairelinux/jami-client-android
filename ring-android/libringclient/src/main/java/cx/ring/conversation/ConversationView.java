@@ -35,6 +35,8 @@ public interface ConversationView {
 
     void displayOnGoingCallPane(boolean display);
 
+    void displayContactPhoto(byte[] photo);
+
     void displayNumberSpinner(Conversation conversation, Uri number);
 
     void displayAddContact(boolean display);

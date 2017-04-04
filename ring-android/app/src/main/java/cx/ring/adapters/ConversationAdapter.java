@@ -22,27 +22,26 @@
 package cx.ring.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
-import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 
-import java.lang.ref.WeakReference;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.signature.StringSignature;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.concurrent.ExecutorService;
 
 import cx.ring.R;
 import cx.ring.model.Conversation;
 import cx.ring.model.TextMessage;
+import cx.ring.utils.CircleTransform;
 import cx.ring.views.ConversationViewHolder;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
@@ -51,17 +50,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private static final double MINUTE = 60L * 1000L;
     private static final double HOUR = 3600L * 1000L;
 
-    private final Context mContext;
     private final ArrayList<Conversation.ConversationElement> mTexts = new ArrayList<>();
-    private final LruCache<Long, Bitmap> mMemoryCache;
-    private final ExecutorService mInfosFetcher;
-    private final HashMap<Long, WeakReference<ContactDetailsTask>> mRunningTasks = new HashMap<>();
-
-    public ConversationAdapter(Context ctx, LruCache<Long, Bitmap> cache, ExecutorService pool) {
-        mContext = ctx;
-        mMemoryCache = cache;
-        mInfosFetcher = pool;
-    }
+    private byte[] mPhoto;
 
     public enum ConversationMessageType {
         INCOMING_TEXT_MESSAGE(0),
@@ -95,6 +85,16 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
         mTexts.clear();
         mTexts.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * Updates the contact photo to use for this conversation
+     *
+     * @param photo contact photo to display.
+     */
+    public void setPhoto(byte[] photo) {
+        mPhoto = photo;
         notifyDataSetChanged();
     }
 
@@ -168,7 +168,16 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         boolean isConfigSameAsPreviousMsg = this.isMessageConfigSameAsPrevious(convElement, position);
 
         if (convElement.text.isIncoming() && !isConfigSameAsPreviousMsg) {
-            this.setImage(convViewHolder, convElement);
+            Glide.with(convViewHolder.itemView.getContext())
+                    .fromBytes()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .skipMemoryCache(false)
+                    .load(mPhoto)
+                    .crossFade()
+                    .placeholder(R.drawable.ic_contact_picture)
+                    .transform(new CircleTransform(convViewHolder.itemView.getContext()))
+                    .error(R.drawable.ic_contact_picture)
+                    .into(convViewHolder.mPhoto);
         }
 
         if (convElement.text.getStatus() == TextMessage.Status.SENDING) {
@@ -177,8 +186,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         } else if (shouldSeparateByDetails) {
             convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
             String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
-                    convElement.text.getTimestamp()
-            );
+                    convViewHolder.itemView.getContext(),
+                    convElement.text.getTimestamp());
             convViewHolder.mMsgDetailTxt.setText(timeSeparationString);
         } else {
             convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
@@ -193,14 +202,15 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      */
     private void configureForCallInfoTextMessage(final ConversationViewHolder convViewHolder,
                                                  final Conversation.ConversationElement convElement) {
-        if (convViewHolder == null || mContext == null ||
-                convElement == null || convElement.call == null) {
+        if (convViewHolder == null || convElement == null || convElement.call == null) {
             return;
         }
 
         int pictureResID;
-        String histTxt;
+        String historyTxt;
         convViewHolder.mPhoto.setScaleY(1);
+        Context context = convViewHolder.itemView.getContext();
+
         if (convElement.call.isMissed()) {
             if (convElement.call.isIncoming()) {
                 pictureResID = R.drawable.ic_call_missed_black;
@@ -209,21 +219,21 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 // Flip the photo upside down to show a "missed outgoing call"
                 convViewHolder.mPhoto.setScaleY(-1);
             }
-            histTxt = convElement.call.isIncoming() ?
-                    mContext.getString(R.string.notif_missed_incoming_call) :
-                    mContext.getString(R.string.notif_missed_outgoing_call);
+            historyTxt = convElement.call.isIncoming() ?
+                    context.getString(R.string.notif_missed_incoming_call) :
+                    context.getString(R.string.notif_missed_outgoing_call);
         } else {
             pictureResID = (convElement.call.isIncoming()) ?
                     R.drawable.ic_call_received_black :
                     R.drawable.ic_call_made_black;
-            histTxt = convElement.call.isIncoming() ?
-                    mContext.getString(R.string.notif_incoming_call) :
-                    mContext.getString(R.string.notif_outgoing_call);
+            historyTxt = convElement.call.isIncoming() ?
+                    context.getString(R.string.notif_incoming_call) :
+                    context.getString(R.string.notif_outgoing_call);
         }
 
         convViewHolder.mCid = convElement.call.getContactID();
         convViewHolder.mPhoto.setImageResource(pictureResID);
-        convViewHolder.mHistTxt.setText(histTxt);
+        convViewHolder.mHistTxt.setText(historyTxt);
         convViewHolder.mHistDetailTxt.setText(DateFormat.getDateTimeInstance()
                 .format(convElement.call.getStartDate()));
     }
@@ -235,10 +245,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      *                  Can be the last received message timestamp for example.
      * @return The string to display in the text details between messages.
      */
-    private String computeTimeSeparationStringFromMsgTimeStamp(long timestamp) {
+    private String computeTimeSeparationStringFromMsgTimeStamp(Context context, long timestamp) {
         long now = new Date().getTime();
-        if (now - timestamp < MINUTE && mContext != null) {
-            return mContext.getString(R.string.time_just_now);
+        if (now - timestamp < MINUTE) {
+            return context.getString(R.string.time_just_now);
         } else if (now - timestamp < HOUR) {
             return DateUtils.getRelativeTimeSpanString(timestamp, now, 0, 0).toString();
         } else {
@@ -327,65 +337,5 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             sameConfig = true;
         }
         return sameConfig;
-    }
-
-    /**
-     * Sets the proper image of the conversationElement
-     *
-     * @param convViewHolder The viewHolder to set the image
-     * @param convElement    The source conversationElement
-     */
-    private void setImage(final ConversationViewHolder convViewHolder,
-                          final Conversation.ConversationElement convElement) {
-        final Long cid = convElement.text.getContact().getId();
-        Bitmap bmp = mMemoryCache.get(cid);
-        if (bmp != null && cid != -1L) {
-            convViewHolder.mPhoto.setImageBitmap(bmp);
-        } else {
-            convViewHolder.mPhoto.setImageBitmap(mMemoryCache.get(-1L));
-            final WeakReference<ConversationViewHolder> holderWeakReference =
-                    new WeakReference<>(convViewHolder);
-            final ContactDetailsTask.DetailsLoadedCallback pictureLoadedCallback =
-                    new ContactDetailsTask.DetailsLoadedCallback() {
-                        @Override
-                        public void onDetailsLoaded(final Bitmap bmp, final String name) {
-                            final ConversationViewHolder convViewHolder = holderWeakReference.get();
-                            if (convViewHolder == null || convViewHolder.mPhoto.getParent() == null)
-                                return;
-                            if (convViewHolder.mCid == cid) {
-                                convViewHolder.mPhoto.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        convViewHolder.mPhoto.setImageBitmap(bmp);
-                                        convViewHolder.mPhoto.startAnimation(
-                                                AnimationUtils.loadAnimation(
-                                                        convViewHolder.mPhoto.getContext(),
-                                                        R.anim.contact_fadein)
-                                        );
-                                    }
-                                });
-                            }
-                        }
-                    };
-            WeakReference<ContactDetailsTask> wtask = mRunningTasks.get(cid);
-            ContactDetailsTask task = wtask == null ? null : wtask.get();
-            if (task != null && cid != -1L) {
-                task.addCallback(pictureLoadedCallback);
-            } else {
-                task = new ContactDetailsTask(mContext,
-                        convViewHolder.mPhoto,
-                        null, convElement.text.getContact(),
-                        new ContactDetailsTask.DetailsLoadedCallback() {
-                            @Override
-                            public void onDetailsLoaded(final Bitmap bmp, final String name) {
-                                mMemoryCache.put(cid, bmp);
-                                mRunningTasks.remove(cid);
-                            }
-                        });
-                task.addCallback(pictureLoadedCallback);
-                mRunningTasks.put(cid, new WeakReference<>(task));
-                mInfosFetcher.execute(task);
-            }
-        }
     }
 }
