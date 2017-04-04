@@ -23,6 +23,7 @@ package cx.ring.services;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -81,6 +82,11 @@ public class HistoryServiceImpl extends HistoryService {
             cx.ring.utils.Log.e(TAG, "Unable to get a TextHistoryDao");
             return null;
         }
+    }
+
+    @Override
+    public String getRelativeTimeSpanString(long lastInteraction) {
+        return DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL).toString();
     }
 
     /**
