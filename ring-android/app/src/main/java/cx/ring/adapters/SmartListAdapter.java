@@ -30,6 +30,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
 
@@ -89,23 +91,31 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
             if (isContentUri(photoUri)) {
                 Glide.with(holder.itemView.getContext())
                         .load(Uri.withAppendedPath(Uri.parse(photoUri), ContactsContract.Contacts.Photo.DISPLAY_PHOTO))
-                        .placeholder(R.drawable.ic_contact_picture)
                         .crossFade()
+                        .signature(new StringSignature(smartListViewModel.getUuid()))
+                        .placeholder(R.drawable.ic_contact_picture)
                         .transform(new CircleTransform(holder.itemView.getContext()))
                         .error(R.drawable.ic_contact_picture)
                         .into(holder.photo);
             }
         } else if (smartListViewModel.getPhotoData() != null) {
             Glide.with(holder.itemView.getContext())
+                    .fromBytes()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .skipMemoryCache(false)
                     .load(smartListViewModel.getPhotoData())
-                    .placeholder(R.drawable.ic_contact_picture)
                     .crossFade()
+                    .signature(new StringSignature(smartListViewModel.getUuid()))
+                    .placeholder(R.drawable.ic_contact_picture)
                     .transform(new CircleTransform(holder.itemView.getContext()))
                     .error(R.drawable.ic_contact_picture)
                     .into(holder.photo);
         } else {
             Glide.with(holder.itemView.getContext())
                     .load(R.drawable.ic_contact_picture)
+                    .crossFade()
+                    .signature(new StringSignature(smartListViewModel.getUuid()))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.photo);
         }
         holder.bind(listener, smartListViewModel);
