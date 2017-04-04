@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_23ca1da2",
+        "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/BlackListFragment.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-04T21:50:11Z",
+      "side": 1,
+      "message": "You should extend BaseFragment",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 73
+      },
+      "revId": "c9834b60b6f719fc105f3e8de9ab66ddc04396f0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_43cf19b1",
+        "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/BlackListFragment.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-04T21:50:11Z",
+      "side": 1,
+      "message": "Will be unecessarry after extending BaseFragment",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 41
+      },
+      "revId": "c9834b60b6f719fc105f3e8de9ab66ddc04396f0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
