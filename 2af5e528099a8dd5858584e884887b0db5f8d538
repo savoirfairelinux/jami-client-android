@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_107409ce",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-04T19:04:52Z",
+      "side": 1,
+      "message": "Should be done in presenter",
+      "range": {
+        "startLine": 487,
+        "startChar": 0,
+        "endLine": 493,
+        "endChar": 25
+      },
+      "revId": "2af5e528099a8dd5858584e884887b0db5f8d538",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
