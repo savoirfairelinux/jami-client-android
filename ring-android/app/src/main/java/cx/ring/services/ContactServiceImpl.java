@@ -29,7 +29,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.LongSparseArray;
 
-import java.util.Arrays;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -396,7 +398,14 @@ public class ContactServiceImpl extends ContactService {
 
     @Override
     public Tuple<String, byte[]> loadContactData(CallContact callContact) {
+        if (callContact.isFromSystem()) {
+            return loadSystemContactData(callContact);
+        } else {
+            return loadVCardContactData(callContact);
+        }
+    }
 
+    private Tuple<String, byte[]> loadVCardContactData(CallContact callContact) {
         String contactName = null;
         byte[] photoURI = null;
         VCard vcard = null;
@@ -424,5 +433,28 @@ public class ContactServiceImpl extends ContactService {
         }
 
         return new Tuple<>(contactName, photoURI);
+    }
+
+    private Tuple<String, byte[]> loadSystemContactData(CallContact callContact) {
+        String contactName = callContact.getDisplayName();
+        String photoURI = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, callContact.getId()).toString();
+        InputStream is;
+        try {
+            is = mContext.getContentResolver()
+                    .openInputStream(android.net.Uri.withAppendedPath(android.net.Uri.parse(photoURI),
+                            ContactsContract.Contacts.Photo.DISPLAY_PHOTO));
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            int nRead;
+            byte[] data = new byte[1024];
+            while ((nRead = is.read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, nRead);
+            }
+            buffer.flush();
+            byte[] byteArray = buffer.toByteArray();
+            return new Tuple<>(contactName, byteArray);
+        } catch (IOException e) {
+            Log.w(TAG, "Error loading photo for system contact");
+            return null;
+        }
     }
 }

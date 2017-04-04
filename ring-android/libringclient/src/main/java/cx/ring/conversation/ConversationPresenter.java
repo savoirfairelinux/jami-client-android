@@ -185,9 +185,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         getView().goToHome();
     }
 
-    public void loadConversation() {
-        mConversation = mConversationFacade.getConversationById(mConversationId);
-
+    private void loadConversation() {
         long contactId = CallContact.contactIdFromId(mConversationId);
         CallContact contact = null;
         if (contactId >= 0) {
@@ -211,6 +209,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             }
         }
         mConversation = mConversationFacade.startConversation(contact);
+
+        Tuple<String, byte[]> contactData = mContactService.loadContactData(mConversation.getContact());
+        if (contactData != null) {
+            getView().displayContactPhoto(contactData.second);
+        }
 
         if (!mConversation.getContact().getPhones().isEmpty()) {
             contact = mContactService.getContact(mConversation.getContact().getPhones().get(0).getNumber());
@@ -273,6 +276,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
      * Guess account and number to use to initiate a call
      */
     private Tuple<Account, Uri> guess(Uri number) {
+        if (mConversation == null) {
+            return null;
+        }
         Account account = mAccountService.getAccount(mConversation.getLastAccountUsed());
 
         // Guess account from number
