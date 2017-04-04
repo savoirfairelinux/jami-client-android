@@ -95,8 +95,8 @@ along with this program; if not, write to the Free Software
     <string name="transfer_type_number">Type number to transfer to:</string>
 
     <!-- Notifications -->
-    <string name="notif_missed_incoming_call">Missed call from %1$s</string>
-    <string name="notif_missed_outgoing_call">Missed call to %1$s</string>
+    <string name="notif_missed_incoming_call">Missed incoming call</string>
+    <string name="notif_missed_outgoing_call">Missed outgoing call</string>
     <string name="notif_incoming_call_title">Incoming call from %1$s</string>
     <string name="notif_incoming_call">Incoming call</string>
     <string name="notif_outgoing_call_title">Outgoing call to %1$s</string>
