@@ -43,7 +43,6 @@ import java.util.concurrent.ExecutorService;
 import cx.ring.R;
 import cx.ring.model.Conversation;
 import cx.ring.model.TextMessage;
-import cx.ring.utils.ActionHelper;
 import cx.ring.views.ConversationViewHolder;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
@@ -201,7 +200,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         int pictureResID;
         String histTxt;
-        String callNumber = ActionHelper.getShortenedNumber(convElement.call.number);
         convViewHolder.mPhoto.setScaleY(1);
         if (convElement.call.isMissed()) {
             if (convElement.call.isIncoming()) {
@@ -212,15 +210,15 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 convViewHolder.mPhoto.setScaleY(-1);
             }
             histTxt = convElement.call.isIncoming() ?
-                    mContext.getString(R.string.notif_missed_incoming_call, callNumber) :
-                    mContext.getString(R.string.notif_missed_outgoing_call, callNumber);
+                    mContext.getString(R.string.notif_missed_incoming_call) :
+                    mContext.getString(R.string.notif_missed_outgoing_call);
         } else {
             pictureResID = (convElement.call.isIncoming()) ?
                     R.drawable.ic_call_received_black :
                     R.drawable.ic_call_made_black;
             histTxt = convElement.call.isIncoming() ?
-                    mContext.getString(R.string.notif_incoming_call_title, callNumber) :
-                    mContext.getString(R.string.notif_outgoing_call_title, callNumber);
+                    mContext.getString(R.string.notif_incoming_call) :
+                    mContext.getString(R.string.notif_outgoing_call);
         }
 
         convViewHolder.mCid = convElement.call.getContactID();
