@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_e312c557",
+        "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/BlackListAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-04-04T19:40:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_7031bd0a",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 46
+      },
+      "revId": "cfc176a193c117fbbbc458e6c895fdfa4ba6fef3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_9036b902",
         "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/BlackListViewHolder.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_2309bd2c",
+        "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/BlackListViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-04-04T19:40:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_9036b902",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 26
+      },
+      "revId": "cfc176a193c117fbbbc458e6c895fdfa4ba6fef3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_303b45ed",
         "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/BlackListViewHolder.java",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-04-04T19:11:40Z",
       "side": 1,
       "message": "should be public",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 5
+      },
+      "revId": "cfc176a193c117fbbbc458e6c895fdfa4ba6fef3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_430e3936",
+        "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/BlackListViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-04-04T19:40:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_303b45ed",
       "range": {
         "startLine": 43,
         "startChar": 0,
