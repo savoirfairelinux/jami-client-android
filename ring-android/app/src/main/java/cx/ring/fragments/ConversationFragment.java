@@ -1,6 +1,5 @@
 package cx.ring.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -72,8 +70,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     private static final int MIN_SIZE_TABLET = 960;
 
     public static final int REQ_ADD_CONTACT = 42;
-
-    private LocalService.Callbacks mCallbacks = LocalService.DUMMY_CALLBACKS;
 
     @Inject
     protected ConversationPresenter conversationPresenter;
@@ -135,25 +131,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        Log.d(TAG, "onAttach");
-        super.onAttach(activity);
-
-        if (!(activity instanceof LocalService.Callbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
-        }
-
-        mCallbacks = (LocalService.Callbacks) activity;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.d(TAG, "onDetach");
-        mCallbacks = LocalService.DUMMY_CALLBACKS;
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
@@ -182,9 +159,14 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
         setHasOptionsMenu(true);
 
-        LocalService service = mCallbacks.getService();
-        if (service != null) {
-            bindService(service);
+        mAdapter = new ConversationAdapter();
+
+        if (mHistList != null) {
+            mHistList.setAdapter(mAdapter);
+        }
+
+        if (mDeleteConversation) {
+            presenter.deleteAction();
         }
 
         return inflatedView;
@@ -222,20 +204,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         });
 
         builder.show();
-    }
-
-    public void bindService(final LocalService service) {
-        mAdapter = new ConversationAdapter(getActivity(),
-                service.get40dpContactCache(),
-                service.getThreadPool());
-
-        if (mHistList != null) {
-            mHistList.setAdapter(mAdapter);
-        }
-
-        if (mDeleteConversation) {
-            presenter.deleteAction();
-        }
     }
 
     @OnClick(R.id.msg_send)

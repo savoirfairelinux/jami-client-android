@@ -21,17 +21,12 @@
 
 package cx.ring.client;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import javax.inject.Inject;
 
@@ -40,10 +35,10 @@ import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.service.IDRingService;
-import cx.ring.service.LocalService;
 
-public class ConversationActivity extends AppCompatActivity implements LocalService.Callbacks {
+public class ConversationActivity extends AppCompatActivity {
+
+    private static final String TAG = ConversationActivity.class.getSimpleName();
 
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
@@ -51,11 +46,8 @@ public class ConversationActivity extends AppCompatActivity implements LocalServ
     @Inject
     ConversationFacade mConversationFacade;
 
-    private static final String TAG = ConversationActivity.class.getSimpleName();
     static final long REFRESH_INTERVAL_MS = 30 * 1000;
 
-    private boolean mBound = false;
-    private LocalService mService = null;
     private final Handler mRefreshTaskHandler = new Handler();
 
     private ConversationFragment mConversationFragment;
@@ -69,49 +61,7 @@ public class ConversationActivity extends AppCompatActivity implements LocalServ
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        if (!mBound) {
-            Log.d(TAG, "onCreate: Binding service...");
-            Intent intent = new Intent(this, LocalService.class);
-            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-            mService = null;
-        }
     }
-
-    private ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder binder) {
-            Log.d(TAG, "ConversationActivity onServiceConnected " + className.getClassName());
-            mService = ((LocalService.LocalBinder) binder).getService();
-
-            if (getIntent() == null || getIntent().getData() == null) {
-                return;
-            }
-
-            mBound = true;
-
-            if (mConversationFragment == null) {
-                Bundle bundle = new Bundle();
-                bundle.putString("conversationID", getIntent().getData().getLastPathSegment());
-                bundle.putString("number", getIntent().getStringExtra("number"));
-
-                mConversationFragment = new ConversationFragment();
-                mConversationFragment.setArguments(bundle);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.main_frame, mConversationFragment, null)
-                        .commit();
-            }
-
-            mRefreshTaskHandler.postDelayed(refreshTask, REFRESH_INTERVAL_MS);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            Log.d(TAG, "ConversationActivity onServiceDisconnected " + arg0.getClassName());
-            mBound = false;
-            mRefreshTaskHandler.removeCallbacks(refreshTask);
-        }
-    };
 
     private final Runnable refreshTask = new Runnable() {
         private long lastRefresh = 0;
@@ -132,11 +82,37 @@ public class ConversationActivity extends AppCompatActivity implements LocalServ
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case ConversationFragment.REQ_ADD_CONTACT:
-                if (mService != null) {
-                    mConversationFacade.refreshConversations();
-                }
+                mConversationFacade.refreshConversations();
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (getIntent() == null || getIntent().getData() == null) {
+            return;
+        }
+
+        if (mConversationFragment == null) {
+            Bundle bundle = new Bundle();
+            bundle.putString("conversationID", getIntent().getData().getLastPathSegment());
+            bundle.putString("number", getIntent().getStringExtra("number"));
+
+            mConversationFragment = new ConversationFragment();
+            mConversationFragment.setArguments(bundle);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.main_frame, mConversationFragment, null)
+                    .commit();
+        }
+
+        mRefreshTaskHandler.postDelayed(refreshTask, REFRESH_INTERVAL_MS);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mRefreshTaskHandler.removeCallbacks(refreshTask);
     }
 
     @Override
@@ -145,22 +121,4 @@ public class ConversationActivity extends AppCompatActivity implements LocalServ
         finish();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mBound) {
-            unbindService(mConnection);
-            mBound = false;
-        }
-    }
-
-    @Override
-    public IDRingService getRemoteService() {
-        return mService.getRemoteService();
-    }
-
-    @Override
-    public LocalService getService() {
-        return mService;
-    }
 }
