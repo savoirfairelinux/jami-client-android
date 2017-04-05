@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_032281b9",
+        "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/BlackListFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-05T22:08:39Z",
+      "side": 1,
+      "message": "Should use the presenter as BaseFragment\u003cBlackListViewPresenter\u003e",
+      "range": {
+        "startLine": 45,
+        "startChar": 39,
+        "endLine": 45,
+        "endChar": 51
+      },
+      "revId": "aac1acb1c5959f372e96581ebe163cbe63e8c6fc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_a32e0da4",
+        "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/BlackListFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-05T22:08:39Z",
+      "side": 1,
+      "message": "Should not be shown in this patch as you implement a button which does nothing",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 5
+      },
+      "revId": "aac1acb1c5959f372e96581ebe163cbe63e8c6fc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_c32b0993",
+        "filename": "ring-android/app/src/main/java/cx/ring/contactrequests/BlackListFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-05T22:08:39Z",
+      "side": 1,
+      "message": "The empty list check should be done in presenter",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 88
+      },
+      "revId": "aac1acb1c5959f372e96581ebe163cbe63e8c6fc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
