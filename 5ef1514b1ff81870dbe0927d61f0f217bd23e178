@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_23abfd8a",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/CallContact.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-04-05T14:42:32Z",
+      "side": 1,
+      "message": "displayName",
+      "range": {
+        "startLine": 227,
+        "startChar": 38,
+        "endLine": 227,
+        "endChar": 40
+      },
+      "revId": "5ef1514b1ff81870dbe0927d61f0f217bd23e178",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
