@@ -32,6 +32,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -151,7 +152,10 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
         } else {
             mProfileFragment = (ProfileCreationFragment) getFragmentManager().getFragment(savedInstanceState, PROFILE_TAG);
             mFullname = savedInstanceState.getString("mFullname");
-            mPhotoProfile = savedInstanceState.getParcelable("mPhotoProfile");
+            byte[] bytes = savedInstanceState.getByteArray("mPhotoProfile");
+            if (bytes != null && bytes.length > 0) {
+                mPhotoProfile = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            }
             mLinkAccount = savedInstanceState.getBoolean("mLinkAccount");
         }
     }
@@ -163,7 +167,11 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
             getFragmentManager().putFragment(outState, PROFILE_TAG, mProfileFragment);
         }
         outState.putString("mFullname", mFullname);
-        outState.putParcelable("mPhotoProfile", mPhotoProfile);
+        if (mPhotoProfile != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            mPhotoProfile.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            outState.putByteArray("mPhotoProfile", stream.toByteArray());
+        }
         outState.putBoolean("mLinkAccount", mLinkAccount);
     }
 
