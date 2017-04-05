@@ -45,8 +45,6 @@
   <string name="transfer_no_other_call">Ei muita odottavia puheluita</string>
   <string name="transfer_type_number">Kirjoita numero lähettääksesi: </string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Ohi mennyt puhelu %1$s</string>
-  <string name="notif_missed_outgoing_call">Ohi mennyt lähtevä puhelu: %1$s</string>
   <string name="notif_incoming_call_title">Saapuva puhelu %1$s</string>
   <string name="notif_incoming_call">Saapuva puhelu</string>
   <string name="notif_outgoing_call_title">Lähtevä puhelu %1$s</string>
@@ -109,4 +107,9 @@
   <string name="unknown">Tuntematon</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Virhe</string>
+  <!--Pending contact requests-->
+  <string name="accept">Hyväksy</string>
+  <string name="refuse">Kieltäydy</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Lähetä</string>
 </resources>

@@ -39,8 +39,6 @@
   <string name="transfer_no_other_call">Sen aliaj vokoj</string>
   <string name="transfer_type_number">Entajpu numeron por transigi al:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Maltrafita voko de %1$s</string>
-  <string name="notif_missed_outgoing_call">Maltrafita voko al %1$s</string>
   <string name="notif_incoming_call_title">Eniranta voko de %1$s</string>
   <string name="notif_incoming_call">Eniranta voko</string>
   <string name="notif_outgoing_call_title">Eliranta voko al %1$s</string>
@@ -103,4 +101,9 @@
   <string name="unknown">Nekonata</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Eraro</string>
+  <!--Pending contact requests-->
+  <string name="accept">Akcepti</string>
+  <string name="refuse">Rifuzi</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Sendi</string>
 </resources>

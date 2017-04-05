@@ -41,6 +41,7 @@
     <item quantity="one">Conversations %d</item>
     <item quantity="other">Conversations %d</item>
   </plurals>
+  <string name="home_transfering">Transfert en cours de %1$s à %2$s</string>
   <string name="home_transfer_complet">Transfert complété</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Aucun contact trouvé</string>
@@ -53,8 +54,6 @@
   <string name="transfer_no_other_call">Aucun appel en attente</string>
   <string name="transfer_type_number">Entrer le numéro pour transférer à:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Appel manqué de %1$s</string>
-  <string name="notif_missed_outgoing_call">Appel manqué de %1$s</string>
   <string name="notif_incoming_call_title">Appel entrant de %1$s</string>
   <string name="notif_incoming_call">Appel entrant</string>
   <string name="notif_outgoing_call_title">Appel sortant à %1$s</string>
@@ -78,6 +77,7 @@
   <string name="ab_action_contact_add_question">Ajouter aux contacts?</string>
   <string name="ab_action_audio_call">Appel audio</string>
   <string name="ab_action_video_call">Appel vidéo</string>
+  <string name="ab_action_change_screen_orientation">Modifier l\'orientation de l\'écran</string>
   <string name="share_via">Partager par</string>
   <string name="write_a_message">Écrire un message</string>
   <string name="scan_qr">Numériser le code QR</string>
@@ -123,8 +123,10 @@
   <string name="wizard_back">Précédent</string>
   <!--MenuHeaderView-->
   <string name="profile">Mon profil</string>
+  <string name="profile_message_warning">Votre profil est partagé avec vos contacts uniquement</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre un photo.</string>
+  <string name="profile_name_hint">Entrer votre nom (optionnel)</string>
   <string name="unknown">Inconnu</string>
   <!--Share fragment-->
   <string name="share_message">Numériser ce code QR à partir du scan intégré de l\'application Ring qui veut communiquer avec vous.</string>
@@ -132,4 +134,6 @@
   <string name="share_your_account_information">Partager mes informations de contact</string>
   <string name="generic_error_migration">Erreur</string>
   <string name="generic_error_migration_message">Une erreur s\'est produite durant la migration.</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

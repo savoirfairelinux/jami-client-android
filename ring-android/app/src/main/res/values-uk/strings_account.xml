@@ -90,6 +90,7 @@
   <string name="error_password_char_count">мінімум 6 символів</string>
   <string name="error_passwords_not_equals">Паролі не збігаються</string>
   <string name="restore_failed_dialog_msg">Виникла помилка</string>
+  <string name="export_account_wait_title">Будь ласка зачекайте</string>
   <string name="account_export_end_error_title">Помилка</string>
   <string name="account_new_button">Створити обліковий запис Ring</string>
   <!--Name registration-->
@@ -97,4 +98,6 @@
   <string name="account_status_unknown">Невідомий</string>
   <!--Create account-->
   <string name="account_creation_home">Вітаємо у Ring</string>
+  <!--Devices-->
+  <string name="revoke_device_wait_title">Будь ласка зачекайте</string>
 </resources>

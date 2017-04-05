@@ -7,9 +7,9 @@
   <string name="pref_mobileData_title">Мобильные данные</string>
   <string name="pref_mobileData_summary">Разрешить Ring использовать 3G/LTE сети в дополнение к Wi-Fi</string>
   <string name="pref_systemContacts_title">Использовать контакты из адресной книги</string>
-  <string name="pref_systemContacts_summary">Использовать данные из адресной книги для отображения деталей звонящего.</string>
-  <string name="pref_systemDialer_title">Совершать системные звонки, используя Ring.</string>
-  <string name="pref_systemDialer_summary">Совершать системные звонки, используя Ring тогда, когда это возможно.</string>
+  <string name="pref_systemContacts_summary">Использовать данные из адресной книги для отображения информации о звонящем.</string>
+  <string name="pref_systemDialer_title">Совершать системные звонки с помощью Ring</string>
+  <string name="pref_systemDialer_summary">Использовать Ring для системных звонков, если возможно.</string>
   <string name="pref_startOnBoot_title">Запускать Ring при старте системы</string>
   <string name="pref_startOnBoot_summary">Запускать Ring в фоновом режиме во время старта системы.</string>
   <string name="pref_clearHistory_title">Очистить историю</string>

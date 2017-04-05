@@ -149,4 +149,7 @@
   <!--Create account-->
   <string name="account_creation_home">Mirë se vini te Ring</string>
   <string name="account_creation_profile">Krijoni profilin tuaj</string>
+  <!--Devices-->
+  <string name="enter_password">Jepni fjalëkalimin</string>
+  <string name="revoke_device_wait_title">Ju lutemi, pritni…</string>
 </resources>

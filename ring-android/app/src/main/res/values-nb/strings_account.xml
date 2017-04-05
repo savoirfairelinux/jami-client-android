@@ -87,10 +87,13 @@ Du kan endre kontoen din senere</string>
   <string name="error_password_char_count">minimum 6 tegn</string>
   <string name="error_passwords_not_equals">Passordene stemmer ikke</string>
   <string name="restore_failed_dialog_msg">Det skjedde en feil</string>
+  <string name="export_account_wait_title">Vennligst vent...</string>
   <string name="account_export_end_error_title">Feil</string>
   <string name="account_new_button">Opprett en Ring-konto</string>
   <!--Name registration-->
   <string name="account_status_connecting">Kobler opp</string>
   <string name="account_status_unknown">Ukjent</string>
   <!--Create account-->
+  <!--Devices-->
+  <string name="revoke_device_wait_title">Vennligst vent...</string>
 </resources>

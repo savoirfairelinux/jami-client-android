@@ -76,6 +76,7 @@
   <string name="error_password_char_count">Vähintään 6 merkkiä</string>
   <string name="error_passwords_not_equals">Salasanat eivät täsmää</string>
   <string name="restore_failed_dialog_msg">Virhe tapahtui</string>
+  <string name="export_account_wait_title">Odota hetki...</string>
   <string name="account_export_end_error_title">Virhe</string>
   <string name="account_new_button">Luo Ring tunnus</string>
   <!--Name registration-->
@@ -83,4 +84,6 @@
   <string name="account_status_unknown">Tuntematon</string>
   <!--Create account-->
   <string name="account_creation_home">Tervetuloa Ringiin</string>
+  <!--Devices-->
+  <string name="revoke_device_wait_title">Odota hetki...</string>
 </resources>

@@ -41,6 +41,7 @@
     <item quantity="one">%d gesprek</item>
     <item quantity="other">%d gesprekken</item>
   </plurals>
+  <string name="home_transfering">%1$s wordt verstuurd naar %2$s</string>
   <string name="home_transfer_complet">Overdracht compleet</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Geen contacten gevonden</string>
@@ -53,8 +54,6 @@
   <string name="transfer_no_other_call">Geen verdere oproepen in behandeling</string>
   <string name="transfer_type_number">Nummer ingeven om naar te versturen:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Gemiste oproep van %1$s</string>
-  <string name="notif_missed_outgoing_call">Mislukte oproep naar %1$s</string>
   <string name="notif_incoming_call_title">Inkomende oproep van %1$s</string>
   <string name="notif_incoming_call">Inkomende oproep</string>
   <string name="notif_outgoing_call_title">Uitgaande oproep naar %1$s</string>
@@ -78,6 +77,7 @@
   <string name="ab_action_contact_add_question">Aan contacten toevoegen?</string>
   <string name="ab_action_audio_call">Audiogesprek</string>
   <string name="ab_action_video_call">Videogesprek</string>
+  <string name="ab_action_change_screen_orientation">Schermoriëntatie aanpassen</string>
   <string name="share_via">Delen via</string>
   <string name="write_a_message">Schrijf een bericht</string>
   <string name="scan_qr">QR-code scannen</string>
@@ -123,8 +123,10 @@
   <string name="wizard_back">Terug</string>
   <!--MenuHeaderView-->
   <string name="profile">Mijn profiel</string>
+  <string name="profile_message_warning">Je profiel wordt enkel gedeeld met je contacten</string>
   <string name="open_the_gallery">Galerij openen</string>
   <string name="take_a_photo">Foto nemen</string>
+  <string name="profile_name_hint">Voer je naam in (optioneel)</string>
   <string name="unknown">Onbekend</string>
   <!--Share fragment-->
   <string name="share_message">Scan deze QR-code met de ingebouwde scanner van de Ring-toepassing die met je wil communiceren.</string>
@@ -132,4 +134,9 @@
   <string name="share_your_account_information">Deel mijn contactinformatie</string>
   <string name="generic_error_migration">Fout</string>
   <string name="generic_error_migration_message">Er is een fout opgetreden tijdens het migratieproces</string>
+  <!--Pending contact requests-->
+  <string name="accept">Aanvaarden</string>
+  <string name="refuse">Afwijzen</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Versturen</string>
 </resources>

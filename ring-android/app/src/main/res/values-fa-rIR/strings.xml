@@ -1,11 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string name="sponsor_section">رینگ نرم‌افزار آزادی است که توسعه داده و پشتیبانی می‌شود توسّط</string>
+  <string name="feedback_section">بازخورد</string>
+  <string name="report">برایمان رایانامه‌ای بفرستید</string>
+  <string name="section_license">مجوز</string>
+  <string name="sponsor_section">رینگ نرم‌افزاری آزاد است که توسعه داده و پشتیبانی می‌شود توسّط</string>
   <string name="copyright_section">حق رونوشت</string>
   <string name="contribute_section">مشارکت</string>
   <string name="version_section">نگارش</string>
   <string name="no_email_app_installed">هیچ کارهٔ رایانامه‌ای پیدا نشد. برای فرستادن یک گزارش به ما، یکی نصب کنید</string>
+  <string name="no_browser_app_installed">هیچ کارهٔ مرورگری پیدا نشد، برای مشاهدهٔ این صفحه، یکی نصب کنبد</string>
   <string name="email_chooser_title">فرستادن نامه با…</string>
+  <string name="website_chooser_title">دیدن پایگاه وب با…</string>
+  <string name="license">این نرم‌افزار همان‌گونه که هست، بدون هرنوع ضمانت فراهم شده است،
+برای جزئیات، نگارش ۳ یا بالاتر پروانهٔ جامع همگانی گنو را ببینید</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">رینگ</string>
   <string name="error_no_network">بدون اتصال شبکه</string>
@@ -33,7 +40,6 @@
   <plurals name="home_conferences_title">
     <item quantity="other">%d گفتگو</item>
   </plurals>
-  <string name="home_transfering">ارسال %1$s به %2$s</string>
   <string name="home_transfer_complet">ارسال انجام شد</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">مخاطبی پیدا نشد</string>
@@ -46,8 +52,6 @@
   <string name="transfer_no_other_call">هیچ تماس دیگری معلّق نیست</string>
   <string name="transfer_type_number">شماره‌ای برای فرستادن وارد کنید:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">تماس از دست رفته از %1$s</string>
-  <string name="notif_missed_outgoing_call">تماس از دست رفته به %1$s</string>
   <string name="notif_incoming_call_title">تماس دریافتی از %1$s</string>
   <string name="notif_incoming_call">تماس دریافتی</string>
   <string name="notif_outgoing_call_title">تماس خروجی با %1$s</string>
@@ -112,15 +116,19 @@
   <string name="help_password_choose">برای محافظت از حساب رینگتان، گذرواژه‌ای قوی که به خاطر خواهید سپرد را برگزینید.</string>
   <string name="help_password_enter">گذرواژهٔ حساب رینگ اصلیتان را وارد کنید</string>
   <string name="help_pin_enter">پین را از دیگر حساب رینگ پیکربندی‌شده وارد کنید. برای به دست آوردن یک پین، از ویژگی «برون‌ریزی حساب روی رینگ» استفاده کنید.</string>
-  <string name="account_device_updated_message">با موفّقیت حساب رینگتان را به‌روز کردید.</string>
+  <string name="wizard_next">بعدی</string>
+  <string name="wizard_back">بازگشت</string>
   <!--MenuHeaderView-->
   <string name="profile">نمایهٔ من</string>
-  <string name="profile_message_warning">این با مخاطبانتان هم‌رسانی شده است</string>
   <string name="open_the_gallery">گشودن جُنگ</string>
   <string name="take_a_photo">گرفتن عکس</string>
   <string name="unknown">ناشناخته</string>
   <!--Share fragment-->
   <string name="share_message">این رمز QR را با پویشگر تعبیه شده در کارهٔ رینگی که می‌خواهد با شما گفت‌وگو کند، بپویید.</string>
+  <string name="share_message_no_account">لطفاً برای هم‌رسانی، حسابی را برگزینید.</string>
   <string name="share_your_account_information">هم‌رسانی اطّلاعات تماس من</string>
   <string name="generic_error_migration">خطا</string>
+  <string name="generic_error_migration_message">هنگام مهاجرت، خطایی رخ داد</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

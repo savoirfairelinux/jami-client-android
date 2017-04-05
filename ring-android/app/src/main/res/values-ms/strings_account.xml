@@ -143,8 +143,10 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="registered_username">Nama telah didaftarkan</string>
   <string name="username_already_taken">Nama pengguna telah digunakan pengguna lain</string>
   <string name="invalid_username">Nama pengguna tidak sah</string>
-  <string name="looking_for_username_availability">Sedang mencari status nama pengguna ...</string>
   <string name="account_status_connecting">Menyambung</string>
   <string name="account_status_unknown">Tidak diketahui</string>
   <!--Create account-->
+  <!--Devices-->
+  <string name="enter_password">Masukkan kata laluan</string>
+  <string name="revoke_device_wait_title">Sila tunggu...</string>
 </resources>

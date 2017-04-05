@@ -87,6 +87,7 @@
   <string name="error_password_char_count">Минимум 6 символов</string>
   <string name="error_passwords_not_equals">Пароли не совпадают</string>
   <string name="restore_failed_dialog_msg">Произошла ошибка</string>
+  <string name="export_account_wait_title">Пожалуйста, подождите...</string>
   <string name="account_export_end_error_title">Ошибка</string>
   <string name="account_wizard_title">Добро пожаловать в</string>
   <string name="account_new_button">Создать Ring аккаунт</string>
@@ -95,4 +96,6 @@
   <string name="account_status_unknown">Неизвестно</string>
   <!--Create account-->
   <string name="account_creation_home">Добро пожаловать в Ring</string>
+  <!--Devices-->
+  <string name="revoke_device_wait_title">Пожалуйста, подождите...</string>
 </resources>

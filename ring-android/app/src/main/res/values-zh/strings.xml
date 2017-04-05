@@ -32,4 +32,8 @@
   <!--MenuHeaderView-->
   <string name="unknown">未知</string>
   <!--Share fragment-->
+  <!--Pending contact requests-->
+  <string name="refuse">拒絕</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">發送</string>
 </resources>

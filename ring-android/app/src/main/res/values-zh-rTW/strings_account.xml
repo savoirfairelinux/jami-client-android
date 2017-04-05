@@ -93,4 +93,7 @@
   <string name="account_status_connecting">連接中</string>
   <string name="account_status_unknown">未知</string>
   <!--Create account-->
+  <!--Devices-->
+  <string name="enter_password">輸入密碼</string>
+  <string name="revoke_device_wait_title">請等待...</string>
 </resources>

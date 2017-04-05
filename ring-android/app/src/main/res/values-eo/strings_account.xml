@@ -89,6 +89,7 @@
   <string name="error_password_char_count">6 signoj minimume</string>
   <string name="error_passwords_not_equals">Pasvortoj ne kongruas</string>
   <string name="restore_failed_dialog_msg">Eraro okazis</string>
+  <string name="export_account_wait_title">Bonvole atendu…</string>
   <string name="account_export_end_network_title">Reta eraro</string>
   <string name="account_export_end_error_title">Eraro</string>
   <string name="account_wizard_title">Bonvenu al</string>
@@ -99,4 +100,6 @@
   <string name="account_status_unknown">Nekonata</string>
   <!--Create account-->
   <string name="account_creation_home">Bonvenu al Ring</string>
+  <!--Devices-->
+  <string name="revoke_device_wait_title">Bonvole atendu…</string>
 </resources>

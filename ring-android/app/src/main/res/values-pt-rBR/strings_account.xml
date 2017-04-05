@@ -6,6 +6,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Adicionar conta Ring</string>
   <string name="add_sip_account_title">Adicionar conta SIP</string>
+  <string name="ring_account_default_name">Conta Ring %1$s</string>
   <string name="prompt_alias">Apelido</string>
   <string name="prompt_hostname">Servidor</string>
   <string name="prompt_username">Nome de usuário</string>
@@ -33,6 +34,13 @@ Você pode editar sua conta depois.</string>
   <string name="empty_account_list">Nenhuma conta registrada</string>
   <string name="normal_accounts_titles">Contas</string>
   <string name="normal_devices_titles">Dispositivos conhecidos conectados à esta conta Ring</string>
+  <string name="account_device_revoke">Revogar dispositivo</string>
+  <string name="account_device_revocation_success_title">Sucesso</string>
+  <string name="account_device_revocation_success">Dispositivo foi revogado!</string>
+  <string name="account_device_revocation_error_title">Não é possível revogar dispositivo</string>
+  <string name="account_device_revocation_wrong_password">Senha Incorreta.</string>
+  <string name="account_device_revocation_unknown_device">Dispositivo desconhecido.</string>
+  <string name="account_device_revocation_error_unknown">Erro desconhecido.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Geral</string>
   <string name="account_basic_category">Configurações básicas</string>
@@ -58,6 +66,7 @@ Você pode editar sua conta depois.</string>
   <string name="account_video_enable">Habilitar Vídeo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançado</string>
+  <string name="account_dht_public_in_calls_label">Permitir todas as chamadas/mensagens</string>
   <string name="account_registration_exp_label">Registro expirou</string>
   <string name="account_local_interface_label">Interface local</string>
   <string name="account_local_port_label">Portal Local</string>
@@ -133,6 +142,7 @@ Você pode editar sua conta depois.</string>
   <string name="account_device_added_message">Você configurou sua conta Ring neste dispositivo com sucesso.</string>
   <string name="account_device_updated_title">Dispositivo da conta atualizado</string>
   <string name="account_device_updated_message">Você atualizou sua conta Ring com sucesso.</string>
+  <string name="account_cannot_be_updated_message">Conta do dispositivo não pode ser atualizada. Por favor cheque sua senha.</string>
   <string name="account_sip_success_title">Conta SIP registrada</string>
   <string name="account_sip_success_message">Você registrou sua conta SIP com sucesso.</string>
   <string name="account_sip_register_anyway">Registrar mesmo assim</string>
@@ -159,7 +169,7 @@ Você pode editar sua conta depois.</string>
   <string name="register_username">Registrar usuário público (experimental)</string>
   <string name="username_already_taken">Nome de usuário já em uso</string>
   <string name="invalid_username">Nome de usuário inválido</string>
-  <string name="looking_for_username_availability">Verificando disponibilidade de nome de usuário...</string>
+  <string name="looking_for_username_availability">Buscando disponibilidade de usuário...</string>
   <string name="account_status_connecting">Conectando</string>
   <string name="account_status_connection_error">Erro de conexão</string>
   <string name="account_status_online">Online</string>
@@ -171,4 +181,17 @@ Você pode editar sua conta depois.</string>
   <string name="account_creation_ring">Criar sua conta Ring</string>
   <string name="account_link_title">Conectar este dispositivo</string>
   <string name="account_sip_cannot_be_registered">Impossível registrar conta.</string>
+  <!--Devices-->
+  <string name="account_revoke_device_hint">Digite senha para confirmar</string>
+  <string name="enter_password">Entre a senha</string>
+  <string name="revoke_device_title">Revogar dispositivo</string>
+  <string name="revoke_device_message">Tem certeza que você deseja revogar %1$s ?</string>
+  <string name="revoke_device_wait_title">Por favor, aguarde...</string>
+  <string name="revoke_device_wait_message">Revogando dispositivo</string>
+  <string name="rename_device_title">Renomear este dispositivo</string>
+  <string name="rename_device_message">Escolha um novo nome para identificar este dispositivo na sua conta Ring</string>
+  <string name="rename_device_button">Renomear dispositivo</string>
+  <string name="account_rename_device_hint">Escolher novo nome de dispositivo</string>
+  <string name="account_device_name_empty">Nome do dispositivo não pode estar vazio</string>
+  <string name="account_device_this_indicator">este dispositivo</string>
 </resources>

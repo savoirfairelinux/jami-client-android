@@ -34,7 +34,6 @@
     <item quantity="one">%d Conversations</item>
     <item quantity="other">%d Conversations</item>
   </plurals>
-  <string name="home_transfering">Transfert de %1$s à %2$s</string>
   <string name="home_transfer_complet">Le transfert est terminé</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Aucun contact n\'a été trouvé</string>
@@ -47,8 +46,6 @@
   <string name="transfer_no_other_call">Aucun appel en attente</string>
   <string name="transfer_type_number">Saisir le numéro de téléphone sur lequel transféré l\'appel</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Appel manqué de %1$s</string>
-  <string name="notif_missed_outgoing_call">Appel manqué à %1$s</string>
   <string name="notif_incoming_call_title">Appel entrant de %1$s</string>
   <string name="notif_incoming_call">Appel entrant</string>
   <string name="notif_outgoing_call_title">Appel sortant à %1$s</string>
@@ -113,15 +110,21 @@
   <string name="help_password_choose">Saisir un mot de passe sécuritaire facile à retenir pour protéger votre compte Ring</string>
   <string name="help_password_enter">Entrer votre mot de passe pour votre compte Ring principal</string>
   <string name="help_pin_enter">Entrer votre PIN (numéro d\'identification personnel) configuré sur un autre compte Ring. Utiliser la fonction \"exporter un compte dans Ring\" pour obtenir votre numéro d\'identification personnel.</string>
-  <string name="account_device_updated_message">Votre profil Ring a bien été mis à jour.</string>
+  <string name="wizard_next">Suivant</string>
+  <string name="wizard_back">Retour</string>
   <!--MenuHeaderView-->
   <string name="profile">Mon profil</string>
-  <string name="profile_message_warning">Partage fait avec vos contacts</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre une photo</string>
   <string name="unknown">Inconnu</string>
   <!--Share fragment-->
   <string name="share_message">Scanner le code QR avec le scanner intégré du logiciel Ring pour pouvoir communiquer</string>
+  <string name="share_message_no_account">Sélectionnez un compte à partager.</string>
   <string name="share_your_account_information">Partager mes coordonnées</string>
   <string name="generic_error_migration">Erreur</string>
+  <string name="generic_error_migration_message">Une erreur est survenue lors de la migration</string>
+  <!--Pending contact requests-->
+  <string name="accept">Accepter</string>
+  <string name="refuse">Refuser</string>
+  <!--Send contact requests-->
 </resources>

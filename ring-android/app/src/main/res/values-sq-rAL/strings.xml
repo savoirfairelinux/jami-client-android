@@ -52,8 +52,6 @@
   <string name="transfer_no_other_call">S’ka thirrje të tjera pezull</string>
   <string name="transfer_type_number">Shtypni numrin te i cili të shpërngulet:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Thirrje e humbur nga %1$s</string>
-  <string name="notif_missed_outgoing_call">Thirrje për %1$s e humbur</string>
   <string name="notif_incoming_call_title">Thirrje ardhëse nga %1$s</string>
   <string name="notif_incoming_call">Thirrje ardhëse</string>
   <string name="notif_outgoing_call_title">Thirrje për %1$s</string>
@@ -129,4 +127,8 @@
   <string name="share_your_account_information">Ndaji me të tjerët të dhënat e mia të kontaktit</string>
   <string name="generic_error_migration">Gabim</string>
   <string name="generic_error_migration_message">Ndodhi një gabim gjatë migrimit</string>
+  <!--Pending contact requests-->
+  <string name="accept">Pranoje</string>
+  <string name="refuse">Hidhe tej</string>
+  <!--Send contact requests-->
 </resources>

@@ -1,11 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="feedback_section">Feedback</string>
+  <string name="report">&lt;u&gt;Schreiben Sie uns eine E-Mail&lt;/u&gt;</string>
+  <string name="section_license">Lizenz</string>
   <string name="sponsor_section">Ring ist freie Software. Sie wurde entwickelt und wird unterstützt von</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Mitwirken</string>
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Keine E-Mail-App gefunden, installieren Sie eine, um uns einen Bericht zu schicken</string>
+  <string name="no_browser_app_installed">Keine Browser-App gefunden, installieren Sie eine, um die Homepage darzustellen</string>
   <string name="email_chooser_title">Senden von E-Mails über...</string>
+  <string name="website_chooser_title">Darstellung der Homepage mit...</string>
+  <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter
+&lt;u&gt;GNU General Public License Version 3 oder später&lt;/u&gt;</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Keine Netzwerkkonnektivität</string>
@@ -34,6 +41,7 @@
     <item quantity="one">%d Gespräche</item>
     <item quantity="other">%d Gespräche</item>
   </plurals>
+  <string name="home_transfering">Übertragung von %1$s zu %2$s</string>
   <string name="home_transfer_complet">Übertragung abgeschlossen</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Es wurde kein Kontakt gefunden</string>
@@ -46,8 +54,6 @@
   <string name="transfer_no_other_call">Keine weiteren Anrufe wartend</string>
   <string name="transfer_type_number">Eingabe Empfänger-Nummer:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Verpasster Anruf von %1$s</string>
-  <string name="notif_missed_outgoing_call">Verpasster Anruf zu %1$s</string>
   <string name="notif_incoming_call_title">Eingehender Anruf von %1$s</string>
   <string name="notif_incoming_call">Eingehender Anruf</string>
   <string name="notif_outgoing_call_title">Ausgehende Anruf zu %1$s</string>
@@ -56,6 +62,7 @@
   <string name="notif_current_call">Aktueller Anruf</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sie:</string>
+  <string name="action_call_attended_transfer">Übergabe nach Ankündigung</string>
   <string name="action_call_conference">Konferenz</string>
   <string name="action_call_hangup">Auflegen</string>
   <string name="ongoing_call">Aktiver Anruf</string>
@@ -63,22 +70,23 @@
   <string name="hist_out_call">Ausgehende Anruf von %1$s</string>
   <string name="start_error_title">Kann nicht Ring starten!</string>
   <string name="start_error_mic_required">Ring erfordert Mikrofon-Zugriff.</string>
-  <string name="action_call_accept">Abnehmen</string>
+  <string name="action_call_accept">Annehmen</string>
   <string name="action_call_decline">Ablehnen</string>
   <string name="ab_action_speakerphone">Lautsprecher aktivieren</string>
   <string name="ab_action_contact_add">Kontakte hinzufügen</string>
   <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen?</string>
   <string name="ab_action_audio_call">Audioanruf</string>
   <string name="ab_action_video_call">Videoanruf</string>
+  <string name="ab_action_change_screen_orientation">Ändern der Bildschirmausrichtung</string>
   <string name="share_via">Teilen über</string>
   <string name="write_a_message">Eine Nachricht schreiben</string>
   <string name="scan_qr">QR-Code scannen</string>
   <string name="ab_action_flipcamera">Kamera wechseln</string>
   <!--Text messages-->
   <string name="send_message">Nachricht senden</string>
-  <string name="message_sending">Nachricht senden</string>
+  <string name="message_sending">Nachricht senden...</string>
   <string name="time_just_now">Gerade eben</string>
-  <string name="permission_read_denied">Der Anwendung wurde der lesende Speicherzugriff verwehrt. Daher kann sie nicht ordnungsgemäß funktionieren. Bitte erlaube diesen Zugriff.</string>
+  <string name="permission_read_denied">Der Anwendung wurde der lesende Speicherzugriff verwehrt. Daher kann sie nicht ordnungsgemäß funktionieren. Bitte erlauben Sie diesen Zugriff.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-Berechtigung</string>
   <string name="permission_dialog_camera_message">Video-Konferenzen benötigen Zugriff auf die Kamera. Bitte erlauben Sie diesen Zugriff.</string>
@@ -106,19 +114,26 @@
   <string name="add_call_contact_number_to_contacts">Fügen %1$s hinzu?</string>
   <string name="prompt_new_password">Neues Passwort</string>
   <string name="prompt_new_password_repeat">Neues Passwort wiederholen</string>
-  <string name="account_create_title">Erstellen einen Ring Konto</string>
+  <string name="account_create_title">Erstelle ein Ring-Konto</string>
   <string name="prompt_new_username">Neuen Benutzername eingeben</string>
   <string name="help_password_choose">Wählen Sie ein sicheres Passwort und merken Sie es sich um Ihre Ring-Zugangsdaten zu schützen.</string>
   <string name="help_password_enter">Geben Sie Ring-Konto-Passwort ein.</string>
   <string name="help_pin_enter">Geben Sie die PIN eines anderen konfigurierten Ring-Kontos ein.</string>
   <string name="wizard_next">Weiter</string>
+  <string name="wizard_back">Zurück</string>
   <!--MenuHeaderView-->
   <string name="profile">Mein Profil</string>
+  <string name="profile_message_warning">Ihr Profil wird nur mit Ihren Kontakten geteilt</string>
   <string name="open_the_gallery">Galerie öffnen</string>
   <string name="take_a_photo">Mache ein Foto</string>
+  <string name="profile_name_hint">Name eingeben (optional)</string>
   <string name="unknown">Unbekannt</string>
   <!--Share fragment-->
   <string name="share_message">Scanne diesen QR-Code mit dem Ring-QR-Code-Scanner des neuen Kommunikationspartners.</string>
+  <string name="share_message_no_account">Bitte wählen Sie ein Konto, das Sie teilen wollen.</string>
   <string name="share_your_account_information">Teile meine RING-ID</string>
   <string name="generic_error_migration">Fehler</string>
+  <string name="generic_error_migration_message">Ein Fehler ist während der Datenübernahme aufgetreten</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

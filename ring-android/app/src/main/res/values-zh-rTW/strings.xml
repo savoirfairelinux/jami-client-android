@@ -36,8 +36,6 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">未接來電從 %1$s</string>
-  <string name="notif_missed_outgoing_call">未接通話到 %1$s</string>
   <string name="notif_incoming_call_title">來電從 %1$s</string>
   <string name="notif_incoming_call">來電</string>
   <string name="notif_outgoing_call_title">撥出電話到 %1$s</string>
@@ -86,4 +84,7 @@
   <string name="unknown">未知</string>
   <!--Share fragment-->
   <string name="generic_error_migration">錯誤</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
+  <string name="send_request_button">傳送</string>
 </resources>

@@ -4,6 +4,14 @@
   <string name="pref_category_contacts">Kontakte</string>
   <string name="pref_category_system">System</string>
   <string name="pref_category_privacy">Datenschutz</string>
-  <string name="pref_mobileData_title">Mobile-Daten</string>
+  <string name="pref_mobileData_title">Mobile Daten</string>
+  <string name="pref_mobileData_summary">Ring die Nutzung von 3G/LTE zusätzlich zu WLAN erlauben</string>
+  <string name="pref_systemContacts_title">Systemkontakte benutzen</string>
+  <string name="pref_systemContacts_summary">Systemkontakte benutzen, um Anruferdetails anzuzeigen.</string>
+  <string name="pref_systemDialer_title">Telefonanrufe auch über Ring abwickeln</string>
+  <string name="pref_systemDialer_summary">Ring ebenfalls für normale Telefonanrufe nutzen, sofern dies möglich ist.</string>
+  <string name="pref_startOnBoot_title">Ring beim Hochfahren starten</string>
+  <string name="pref_startOnBoot_summary">Ring im Hintergrund aktivieren während das System startet.</string>
   <string name="pref_clearHistory_title">Verlauf löschen</string>
+  <string name="pref_clearHistory_summary">Löschen der Konversationshistorie. Diese Aktion kann nicht rückgängig gemacht werden.</string>
 </resources>
