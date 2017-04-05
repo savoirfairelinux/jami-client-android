@@ -31,7 +31,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +39,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import java.io.ByteArrayOutputStream;
 
 import javax.inject.Inject;
 
@@ -90,7 +91,10 @@ public class ProfileCreationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
 
         if (savedInstanceState != null) {
-            mSourcePhoto = savedInstanceState.getParcelable(PHOTO_TAG);
+            byte[] bytes = savedInstanceState.getByteArray(PHOTO_TAG);
+            if (bytes != null && bytes.length > 0) {
+                mSourcePhoto = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            }
         }
 
         final View view = inflater.inflate(R.layout.frag_acc_profile_create, parent, false);
@@ -112,7 +116,11 @@ public class ProfileCreationFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(PHOTO_TAG, mSourcePhoto);
+        if (mSourcePhoto != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            outState.putByteArray(PHOTO_TAG, stream.toByteArray());
+        }
     }
 
     private void initProfile() {
