@@ -34,6 +34,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import cx.ring.R;
 import cx.ring.model.HistoryCall;
@@ -101,11 +102,11 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         } else if (smartListViewModel.getPhotoData() != null) {
             Glide.with(holder.itemView.getContext())
                     .fromBytes()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(false)
                     .load(smartListViewModel.getPhotoData())
                     .crossFade()
-                    .signature(new StringSignature(smartListViewModel.getUuid()))
+                    .signature(new StringSignature(String.valueOf(Arrays.hashCode(smartListViewModel.getPhotoData()))))
                     .placeholder(R.drawable.ic_contact_picture)
                     .transform(new CircleTransform(holder.itemView.getContext()))
                     .error(R.drawable.ic_contact_picture)
