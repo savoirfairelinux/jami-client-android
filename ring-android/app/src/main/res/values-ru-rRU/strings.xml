@@ -47,8 +47,6 @@
   <string name="transfer_no_other_call">Отсутствуют ожидающие вызовы</string>
   <string name="transfer_type_number">Укажите  номер для перевода:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Пропущенный вызов от %1$s</string>
-  <string name="notif_missed_outgoing_call">Пропущенный вызов для %1$s</string>
   <string name="notif_incoming_call_title">Входящий вызов от %1$s</string>
   <string name="notif_incoming_call">Входящий вызов</string>
   <string name="notif_outgoing_call_title">Исходящий вызов на %1$s</string>
@@ -111,4 +109,8 @@
   <string name="unknown">Неизвестно</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Ошибка</string>
+  <!--Pending contact requests-->
+  <string name="accept">Принять</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Отправть</string>
 </resources>

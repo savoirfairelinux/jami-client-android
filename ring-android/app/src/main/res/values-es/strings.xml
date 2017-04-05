@@ -48,8 +48,6 @@
   <string name="transfer_no_other_call">No hay llamadas pendientes</string>
   <string name="transfer_type_number">Escribe el número al que transferir:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Llamada perdida de %1$s</string>
-  <string name="notif_missed_outgoing_call">Llamada perdida a %1$s</string>
   <string name="notif_incoming_call_title">Llamada entrante de %1$s</string>
   <string name="notif_incoming_call">Llamada entrante</string>
   <string name="notif_outgoing_call_title">Llamando a %1$s</string>
@@ -127,4 +125,9 @@
   <string name="share_your_account_information">Compartir mi información de contacto</string>
   <string name="generic_error_migration">Error</string>
   <string name="generic_error_migration_message">Ha ocurrido un error durante la migración</string>
+  <!--Pending contact requests-->
+  <string name="accept">Aceptar</string>
+  <string name="refuse">No aceptar</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Enviar</string>
 </resources>

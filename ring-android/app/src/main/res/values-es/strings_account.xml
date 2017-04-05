@@ -145,10 +145,12 @@ Puedes editar tu cuenta luego</string>
   <string name="register_username">Registrar un nombre público (experimental)</string>
   <string name="username_already_taken">El nombre de usuario ya está en uso</string>
   <string name="invalid_username">Nombre de usuario no válido</string>
-  <string name="looking_for_username_availability">Verificando la disponibilidad del nombre de usuario...</string>
   <string name="account_status_connecting">Conectando</string>
   <string name="account_status_unknown">Desconocido</string>
   <!--Create account-->
   <string name="account_creation_home">Bienvenido a Ring</string>
   <string name="account_creation_profile">Crea tu perfil</string>
+  <!--Devices-->
+  <string name="enter_password">Ingresa la contraseña</string>
+  <string name="revoke_device_wait_title">Por favor, espera...</string>
 </resources>

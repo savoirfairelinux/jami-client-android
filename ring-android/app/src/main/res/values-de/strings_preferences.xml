@@ -7,7 +7,7 @@
   <string name="pref_mobileData_title">Mobildaten</string>
   <string name="pref_mobileData_summary">Ring die Nutzung von 3G/LTE neben WiFi erlauben</string>
   <string name="pref_systemContacts_title">Systemkontakte benutzen</string>
-  <string name="pref_systemContacts_summary">Systemkontakte benutzen um Anruferdetails anzuzeigen</string>
+  <string name="pref_systemContacts_summary">Systemkontakte benutzen, um Anruferdetails anzuzeigen</string>
   <string name="pref_systemDialer_title">Auch normale Anrufe über Ring abwickeln</string>
   <string name="pref_systemDialer_summary">Ring für normale Anrufe verwenden, wenn möglich.</string>
   <string name="pref_startOnBoot_title">Ring beim Hochfahren starten</string>

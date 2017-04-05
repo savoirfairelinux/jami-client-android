@@ -43,8 +43,6 @@
   <string name="transfer_no_other_call">Ingen andre samtaler som venter</string>
   <string name="transfer_type_number">Type nummer å overføre til:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Tapt anrop fra %1$s</string>
-  <string name="notif_missed_outgoing_call">Gikk glipp av samtale til %1$s</string>
   <string name="notif_incoming_call_title">Innkommende samtale fra %1$s</string>
   <string name="notif_incoming_call">Innkommende samtale</string>
   <string name="notif_outgoing_call_title">Utgående samtale til %1$s</string>
@@ -104,4 +102,8 @@
   <string name="unknown">Ukjent</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Feil</string>
+  <!--Pending contact requests-->
+  <string name="accept">Aksepter</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Send</string>
 </resources>

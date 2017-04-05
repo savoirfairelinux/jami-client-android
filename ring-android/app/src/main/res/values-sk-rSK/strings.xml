@@ -53,4 +53,6 @@
   <!--Share fragment-->
   <string name="share_your_account_information">Zdielaj </string>
   <string name="generic_error_migration">Chyba</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

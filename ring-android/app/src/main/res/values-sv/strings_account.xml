@@ -6,6 +6,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Lägg till Ring-konto</string>
   <string name="add_sip_account_title">Lägg till SIP-konto</string>
+  <string name="ring_account_default_name">Ring-konto %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Värdnamn</string>
   <string name="prompt_username">Användarnamn</string>
@@ -33,6 +34,13 @@ Du kan ändra kontot senare.</string>
   <string name="empty_account_list">Inget konto registrerat</string>
   <string name="normal_accounts_titles">Konton</string>
   <string name="normal_devices_titles">Kända enheter, länkade till detta Ring-konto</string>
+  <string name="account_device_revoke">Återkalla enhet</string>
+  <string name="account_device_revocation_success_title">Slutfört</string>
+  <string name="account_device_revocation_success">Enheten är inte återkallad!</string>
+  <string name="account_device_revocation_error_title">Kan inte återkalla enheten</string>
+  <string name="account_device_revocation_wrong_password">Fel lösenord.</string>
+  <string name="account_device_revocation_unknown_device">Okänd enhet.</string>
+  <string name="account_device_revocation_error_unknown">Okänt fel.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Allmänt</string>
   <string name="account_basic_category">Grundläggande inställningar</string>
@@ -58,6 +66,7 @@ Du kan ändra kontot senare.</string>
   <string name="account_video_enable">Aktivera video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avancerat</string>
+  <string name="account_dht_public_in_calls_label">Tillåt alla samtal/meddelanden</string>
   <string name="account_registration_exp_label">Registreringen löper ut</string>
   <string name="account_local_interface_label">Lokalt gränssnitt</string>
   <string name="account_local_port_label">Lokal port</string>
@@ -133,6 +142,7 @@ Du kan ändra kontot senare.</string>
   <string name="account_device_added_message">Du har lyckats konfigurera ditt Ring-konto på denna enhet.</string>
   <string name="account_device_updated_title">Kontoenhet uppdaterad</string>
   <string name="account_device_updated_message">Du har lyckats uppdatera ditt Ring-konto.</string>
+  <string name="account_cannot_be_updated_message">Kontoenheten kunde inte uppdateras. Kontrollera ditt lösenord.</string>
   <string name="account_sip_success_title">SIP-konto registrerat</string>
   <string name="account_sip_success_message">Du har registrerat ditt SIP-konto.</string>
   <string name="account_sip_register_anyway">Registrera i alla fall</string>
@@ -159,7 +169,7 @@ Du kan ändra kontot senare.</string>
   <string name="register_username">Registrera ett offentligt namn (experimentellt)</string>
   <string name="username_already_taken">Användarnamnet finns redan</string>
   <string name="invalid_username">Ogiltigt användarnamn</string>
-  <string name="looking_for_username_availability">Kollar användarnamnets tillgänglighet...</string>
+  <string name="looking_for_username_availability">Söker efter användarnamnets tillgänglighet...</string>
   <string name="account_status_connecting">Ansluter</string>
   <string name="account_status_connection_error">Anslutningsfel</string>
   <string name="account_status_online">Uppkopplad</string>
@@ -171,4 +181,17 @@ Du kan ändra kontot senare.</string>
   <string name="account_creation_ring">Skapa ditt Ring-konto</string>
   <string name="account_link_title">Länka den här enheten</string>
   <string name="account_sip_cannot_be_registered">Kan inte registrera konto</string>
+  <!--Devices-->
+  <string name="account_revoke_device_hint">Ange lösenord för att bekräfta</string>
+  <string name="enter_password">Ange lösenord</string>
+  <string name="revoke_device_title">Återkalla enhet</string>
+  <string name="revoke_device_message">Vill du verkligen återkalla %1$s?</string>
+  <string name="revoke_device_wait_title">Vänta...</string>
+  <string name="revoke_device_wait_message">Återkallar enheten</string>
+  <string name="rename_device_title">Byt namn på enheten</string>
+  <string name="rename_device_message">Välj ett namn för att identifiera denna enhet på ditt Ring-konto</string>
+  <string name="rename_device_button">Byt namn på enhet</string>
+  <string name="account_rename_device_hint">Välj nytt enhetsnamn</string>
+  <string name="account_device_name_empty">Enhetsnamnet kan inte lämnas tomt</string>
+  <string name="account_device_this_indicator">denna enhet</string>
 </resources>

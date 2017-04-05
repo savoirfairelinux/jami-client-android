@@ -90,6 +90,7 @@ Możesz edytować swoje konto później</string>
   <string name="error_password_char_count">minimum 6 znaków</string>
   <string name="error_passwords_not_equals">Hasła nie pasują do siebie</string>
   <string name="restore_failed_dialog_msg">Wystąpił błąd</string>
+  <string name="export_account_wait_title">Proszę czekać…</string>
   <string name="account_export_end_error_title">Błąd</string>
   <string name="account_new_button">Stwórz konto Ring</string>
   <!--Name registration-->
@@ -97,4 +98,6 @@ Możesz edytować swoje konto później</string>
   <string name="account_status_unknown">Nieznane</string>
   <!--Create account-->
   <string name="account_creation_home">Witamy w Ring</string>
+  <!--Devices-->
+  <string name="revoke_device_wait_title">Proszę czekać…</string>
 </resources>

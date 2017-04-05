@@ -11,7 +11,7 @@
   <string name="no_browser_app_installed">Es konnte keine Browser-Anwendung gefunden werden, installieren Sie einen, um die Webseite anzusehen</string>
   <string name="email_chooser_title">E-Mail wird gesendet mit...</string>
   <string name="website_chooser_title">Webseite anzeigen mit...</string>
-  <string name="license">Diese Software wird ohne jegliche Gewährleistung zur Verfügung gestellt. Für Details
+  <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter
 &lt;u&gt;GNU General Public License Version 3 oder höher&lt;/u&gt;</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
@@ -41,6 +41,7 @@
     <item quantity="one">%d Unterhaltung</item>
     <item quantity="other">%d Unterhaltungen</item>
   </plurals>
+  <string name="home_transfering">Übertrage von %1$s zu %2$s</string>
   <string name="home_transfer_complet">Übertragung abgeschlossen</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Kein Kontakt gefunden</string>
@@ -53,8 +54,6 @@
   <string name="transfer_no_other_call">Kein anderer Anrufe wartend</string>
   <string name="transfer_type_number">Nummer für Übertragung eingeben:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Verpasster Anruf von %1$s</string>
-  <string name="notif_missed_outgoing_call">Verpasster Anruf zu %1$s</string>
   <string name="notif_incoming_call_title">Eingehender Anruf von %1$s</string>
   <string name="notif_incoming_call">Eingehender Anruf</string>
   <string name="notif_outgoing_call_title">Ausgehender Anruf von %1$s</string>
@@ -63,7 +62,7 @@
   <string name="notif_current_call">Aktueller Anruf</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
-  <string name="action_call_attended_transfer">Überwachter Transfer</string>
+  <string name="action_call_attended_transfer">Übergabe nach Ankündigung</string>
   <string name="action_call_conference">Konferenz</string>
   <string name="action_call_hangup">Auflegen</string>
   <string name="ongoing_call">Derzeitiger Anruf</string>
@@ -78,6 +77,7 @@
   <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen</string>
   <string name="ab_action_audio_call">Audioanruf</string>
   <string name="ab_action_video_call">Videoanruf</string>
+  <string name="ab_action_change_screen_orientation">Bildschirmausrichtung ändern</string>
   <string name="share_via">Teilen mit</string>
   <string name="write_a_message">Sende eine Nachricht</string>
   <string name="scan_qr">QR-Code scannen</string>
@@ -123,8 +123,10 @@
   <string name="wizard_back">Zurück</string>
   <!--MenuHeaderView-->
   <string name="profile">Mein Profil</string>
+  <string name="profile_message_warning">Ihr Profil wird nur mit Ihren Kontakten geteilt</string>
   <string name="open_the_gallery">Galerie öffnen</string>
   <string name="take_a_photo">Foto machen</string>
+  <string name="profile_name_hint">Name eingeben (optional)</string>
   <string name="unknown">Unbekannt</string>
   <!--Share fragment-->
   <string name="share_message">Scannen Sie diesen QR-Code mit dem eingebauten Scanner der Ringanwendung, die mit Ihnen kommunizieren will.</string>
@@ -132,4 +134,9 @@
   <string name="share_your_account_information">Teile meine Kontaktinformationen</string>
   <string name="generic_error_migration">Fehler</string>
   <string name="generic_error_migration_message">Während der Migration ist ein Fehler aufgetreten</string>
+  <!--Pending contact requests-->
+  <string name="accept">Akzeptieren</string>
+  <string name="refuse">Verweigern</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Senden</string>
 </resources>

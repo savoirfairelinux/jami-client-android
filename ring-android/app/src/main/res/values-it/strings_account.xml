@@ -90,6 +90,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="error_password_char_count">6 caratteri minimo</string>
   <string name="error_passwords_not_equals">Le password no corrispondono</string>
   <string name="restore_failed_dialog_msg">C\'è stato un errore</string>
+  <string name="export_account_wait_title">Aspettare</string>
   <string name="account_export_end_error_title">Errore</string>
   <string name="account_device_updated_message">Hai aggiornato con successo il tuo account Ring.</string>
   <string name="account_wizard_title">Benvenuto a</string>
@@ -98,4 +99,6 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_status_connecting">Connessione in corso </string>
   <string name="account_status_unknown">Sconosciuto</string>
   <!--Create account-->
+  <!--Devices-->
+  <string name="revoke_device_wait_title">Aspettare</string>
 </resources>

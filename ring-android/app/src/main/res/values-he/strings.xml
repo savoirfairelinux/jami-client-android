@@ -48,4 +48,8 @@
   <!--MenuHeaderView-->
   <!--Share fragment-->
   <string name="generic_error_migration">שגיאה</string>
+  <!--Pending contact requests-->
+  <string name="accept">קבל</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">שלח</string>
 </resources>

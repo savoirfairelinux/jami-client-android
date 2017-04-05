@@ -10,7 +10,10 @@
   <!--Basic Details-->
   <string name="account_password_label">mot de passe</string>
   <!--Audio Details-->
+  <string name="account_audio_label">Audio</string>
+  <string name="account_ringtone_label">Sonneries</string>
   <!--Video Details-->
+  <string name="account_video_label">Vidéo</string>
   <!--Advanced Details-->
   <!--Security Details-->
   <!--SRTP Details-->
@@ -18,9 +21,11 @@
   <!--TLS Details-->
   <!--restore/backup-->
   <string name="account_export_end_error_title">Erreur</string>
+  <string name="account_device_updated_message">Votre profil Ring a bien été mis à jour.</string>
   <string name="account_new_button">Créer un compte Ring</string>
   <string name="account_link_export_button">Connecter un autre appareil à ce compte</string>
   <!--Name registration-->
   <string name="account_status_unknown">Inconnu</string>
   <!--Create account-->
+  <!--Devices-->
 </resources>

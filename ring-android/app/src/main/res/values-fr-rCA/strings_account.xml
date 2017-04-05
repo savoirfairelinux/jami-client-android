@@ -128,6 +128,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_device_added_message">Votre compte Ring a été configuré avec succès sur cet appareil.</string>
   <string name="account_device_updated_title">Compte de l\'appareil mis à jour</string>
   <string name="account_device_updated_message">Votre compte Ring a bien été mis à jour.</string>
+  <string name="account_cannot_be_updated_message">La mise à jour de l\'appareil associé au compte a échoué. S.v.p. vérifier votre mot de passe.</string>
   <string name="account_sip_success_title">Compte Sip enregistré</string>
   <string name="account_sip_success_message">Votre compte Sip a été enregistré avec succès.</string>
   <string name="account_sip_register_anyway">S\'inscrire de toute façon</string>
@@ -154,7 +155,6 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="register_username">Enregistrer un nom d\'utilisateur public (expérimental)</string>
   <string name="username_already_taken">Nom d\'utilisateur non-disponible</string>
   <string name="invalid_username">Nom d\'utilisateur invalide</string>
-  <string name="looking_for_username_availability">Vérification de la disponibilité du nom d\'utilisateur</string>
   <string name="account_status_connecting">Connexion en cours</string>
   <string name="account_status_connection_error">Erreur de connexion</string>
   <string name="account_status_online">En ligne</string>
@@ -166,4 +166,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_creation_ring">Créer votre compte Ring</string>
   <string name="account_link_title">Associer cet appareil</string>
   <string name="account_sip_cannot_be_registered">Impossible d\'enregistrer le compte</string>
+  <!--Devices-->
+  <string name="enter_password">Entrer le mot de passe</string>
+  <string name="revoke_device_wait_title">Patienter s\'il vous plaît</string>
 </resources>

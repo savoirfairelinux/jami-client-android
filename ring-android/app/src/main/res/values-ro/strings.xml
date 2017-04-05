@@ -32,7 +32,6 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Apel pierdut de la %1$s</string>
   <string name="notif_incoming_call_title">Apel pierdut de la %1$s</string>
   <string name="notif_incoming_call">Apel de intrare</string>
   <string name="notif_current_call_title">Apelul curent cu %1$s</string>
@@ -76,4 +75,6 @@
   <string name="unknown">Necunoscut</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Eroare</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

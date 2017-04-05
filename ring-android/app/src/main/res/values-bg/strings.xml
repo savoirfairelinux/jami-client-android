@@ -44,8 +44,6 @@
   <string name="transfer_no_other_call">Няма други чакащи разговори</string>
   <string name="transfer_type_number">Въведете номер, към който да прехвърлите:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Пропуснато обаждане от %1$s</string>
-  <string name="notif_missed_outgoing_call">Пропуснато обаждане до %1$s</string>
   <string name="notif_incoming_call_title">Входящо обаждане от %1$s</string>
   <string name="notif_incoming_call">Входящо обаждане</string>
   <string name="notif_outgoing_call_title">Изходящо обаждане до %1$s</string>
@@ -115,4 +113,9 @@
   <string name="share_message">Сканирайте този QR-код с вградения скенер на приложението Ring, което иска да се свърже с Вас.</string>
   <string name="share_your_account_information">Споделяне на информацията аз връзка с мен</string>
   <string name="generic_error_migration">Грешка</string>
+  <!--Pending contact requests-->
+  <string name="accept">Приемане</string>
+  <string name="refuse">Отказ</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Изпращане</string>
 </resources>

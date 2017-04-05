@@ -2,5 +2,6 @@
 <resources>
   <!--Strings for xml content description of images-->
   <string name="contact_quick_call_description">Γρήγορη Κλήση</string>
+  <string name="contact_picture_description">Εικόνα επαφής</string>
   <string name="dial_numeric_pad">Αριθμητικό Πληκτρολόγιο</string>
 </resources>

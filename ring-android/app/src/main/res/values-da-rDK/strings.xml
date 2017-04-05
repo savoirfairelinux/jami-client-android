@@ -1,11 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="feedback_section">Tilbagemelding</string>
+  <string name="report">&lt;u&gt;Send os en email&lt;/u&gt;</string>
+  <string name="section_license">Licens</string>
   <string name="sponsor_section">Ring er fri software, udviklet og støttet af</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Bidrag</string>
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Ingen email-app fundet, installér en for at sende os en rapport</string>
+  <string name="no_browser_app_installed">Ingen web-browser applikation fundet, installér en for at se denne side</string>
   <string name="email_chooser_title">Send mail ved brug af...</string>
+  <string name="website_chooser_title">Vis hjemmeside med...</string>
+  <string name="license">Denne software er gjort tilgængelig \"som beset\", uden nogen former for garantier. For flere detaljer, se
+&lt;u&gt;GNU General Public License version 3 eller senere&lt;/u&gt;</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ingen netværksforbindelse</string>
@@ -34,6 +41,7 @@
     <item quantity="one">%d samtale</item>
     <item quantity="other">%d samtaler</item>
   </plurals>
+  <string name="home_transfering">Overfører %1$s til %2$s</string>
   <string name="home_transfer_complet">Overførsel afsluttet</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Ingen kontakt funder</string>
@@ -46,8 +54,6 @@
   <string name="transfer_no_other_call">Ikke andre opkald i kø</string>
   <string name="transfer_type_number">Tast nummer at overføre til:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Mistet opkald fra %1$s</string>
-  <string name="notif_missed_outgoing_call">Mistet opkald til %1$s</string>
   <string name="notif_incoming_call_title">Indgående opkald fra %1$s</string>
   <string name="notif_incoming_call">Indgående opkald</string>
   <string name="notif_outgoing_call_title">Udgående opkald til %1$s</string>
@@ -71,6 +77,7 @@
   <string name="ab_action_contact_add_question">Tilføj til kontakter?</string>
   <string name="ab_action_audio_call">Lydopkald</string>
   <string name="ab_action_video_call">Videoopkald</string>
+  <string name="ab_action_change_screen_orientation">Ændr skærm-orientering</string>
   <string name="share_via">Del via</string>
   <string name="write_a_message">Skriv en besked</string>
   <string name="scan_qr">Scan QR-kode</string>
@@ -113,13 +120,23 @@
   <string name="help_password_enter">Indtast dit primære Ring-konto kodeord</string>
   <string name="help_pin_enter">Indtast PIN-koden fra en anden konfigureret Ring-konto. Brug eksporter-konto-funktionaliteten for at få adgang til en PIN-kode. </string>
   <string name="wizard_next">Næste</string>
+  <string name="wizard_back">Tilbage</string>
   <!--MenuHeaderView-->
   <string name="profile">Min profil</string>
+  <string name="profile_message_warning">Din profil vil kun blive delt med dine kontakter</string>
   <string name="open_the_gallery">Åben galleriet</string>
   <string name="take_a_photo">Tag et billede</string>
+  <string name="profile_name_hint">Indtast dit navn (valgfrit)</string>
   <string name="unknown">Ukendt</string>
   <!--Share fragment-->
   <string name="share_message">Skan denne QRCode med den indbyggede scanner i Ring-applikationen.</string>
+  <string name="share_message_no_account">Vælg en konto at dele.</string>
   <string name="share_your_account_information">Del min kontaktinformation</string>
   <string name="generic_error_migration">Fejl</string>
+  <string name="generic_error_migration_message">Der opstod en fejl under migrering</string>
+  <!--Pending contact requests-->
+  <string name="accept">Accepter</string>
+  <string name="refuse">Afvis</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Send</string>
 </resources>

@@ -3,4 +3,5 @@
   <string name="pref_category_network">Δίκτυο</string>
   <string name="pref_category_contacts">Επαφές</string>
   <string name="pref_category_system">Σύστημα</string>
+  <string name="pref_mobileData_title">Δεδομένα κινητού</string>
 </resources>

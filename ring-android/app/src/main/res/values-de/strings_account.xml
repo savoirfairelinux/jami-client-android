@@ -133,6 +133,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_device_added_message">Sie haben erfolgreich ihr Ring-Konto auf diesem Gerät erstellt.</string>
   <string name="account_device_updated_title">Konto-Gerät aktualisiert</string>
   <string name="account_device_updated_message">Sie haben erfolgreich Ihr Ring-Konto aktualisiert</string>
+  <string name="account_cannot_be_updated_message">Konto-Gerät konnte nicht aktualisiert werden. Bitte überprüfen Sie Ihr Passwort.</string>
   <string name="account_sip_success_title">SIP-Konto registriert</string>
   <string name="account_sip_success_message">Sie haben erfolgreich Ihr SIP-Konto registriert.</string>
   <string name="account_sip_register_anyway">Trotzdem registieren</string>
@@ -159,7 +160,6 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="register_username">Melden Sie sich für einen allgemein-bekannten Benutzername an (experimentell)</string>
   <string name="username_already_taken">Dieser Benutzername ist bereits vergeben</string>
   <string name="invalid_username">Ungültiger Benutzername</string>
-  <string name="looking_for_username_availability">Verfügbarkeit des Benutzernamens wird geprüft ...</string>
   <string name="account_status_connecting">Verbindet</string>
   <string name="account_status_connection_error">Verbindungsfehler</string>
   <string name="account_status_online">Online</string>
@@ -171,4 +171,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_creation_ring">Erstellen Sie Ihr Ring-Konto</string>
   <string name="account_link_title">Verbinde diese Gerät</string>
   <string name="account_sip_cannot_be_registered">Konto kann nicht registriert werden</string>
+  <!--Devices-->
+  <string name="enter_password">Passwort eingeben</string>
+  <string name="revoke_device_wait_title">Bitte warten…</string>
 </resources>
