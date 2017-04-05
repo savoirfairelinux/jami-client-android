@@ -417,12 +417,15 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     private void parseHistoryCalls(List<HistoryCall> historyCalls) {
         for (HistoryCall call : historyCalls) {
-            CallContact contact = mContactService.findContact(call.getContactID(), call.getContactKey(), call.getNumber());
-
-            String key = contact.getIds().get(0);
+            String key = call.getNumber();
+            if (key.contains("<")) {
+                String[] parts = key.split("<");
+                key = parts[1].replace(">", "");
+            }
             if (mConversationMap.containsKey(key)) {
                 mConversationMap.get(key).addHistoryCall(call);
             } else {
+                CallContact contact = mContactService.findContact(call.getContactID(), call.getContactKey(), call.getNumber());
                 Conversation conversation = new Conversation(contact);
                 conversation.addHistoryCall(call);
                 mConversationMap.put(key, conversation);
@@ -432,15 +435,16 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     private void parseHistoryTexts(List<HistoryText> historyTexts) {
         for (HistoryText htext : historyTexts) {
-            CallContact contact = mContactService.findContact(htext.getContactID(), htext.getContactKey(), htext.getNumber());
-
             TextMessage msg = new TextMessage(htext);
-            msg.setContact(contact);
-
-            String key = contact.getIds().get(0);
+            String key = msg.getNumber();
+            if (key.contains("<")) {
+                String[] parts = key.split("<");
+                key = parts[1].replace(">", "");
+            }
             if (mConversationMap.containsKey(key)) {
                 mConversationMap.get(key).addTextMessage(msg);
             } else {
+                CallContact contact = mContactService.findContact(htext.getContactID(), htext.getContactKey(), htext.getNumber());
                 Conversation conversation = new Conversation(contact);
                 conversation.addTextMessage(msg);
                 mConversationMap.put(key, conversation);
@@ -495,7 +499,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
         for (CallContact contact : mContactService.getContacts()) {
             String key = contact.getIds().get(0);
-            if (!mConversationMap.containsKey(key)) {
+            String phone = contact.getPhones().get(0).getNumber().getRawUriString();
+            if (!mConversationMap.containsKey(key) && !mConversationMap.containsKey(phone)) {
                 mConversationMap.put(key, new Conversation(contact));
             }
         }

@@ -81,7 +81,6 @@ import cx.ring.utils.NetworkUtils;
 import cx.ring.viewholders.SmartListViewHolder;
 
 public class SmartListFragment extends BaseFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
-        HomeActivity.Refreshable,
         SmartListViewHolder.SmartListListeners,
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
@@ -138,11 +137,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     }
 
-    public void refresh() {
-        mSmartListPresenter.refresh(NetworkUtils.isConnectedWifi(getActivity()),
-                NetworkUtils.isConnectedMobile(getActivity()));
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -161,7 +155,9 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
         Log.d(TAG, "onResume");
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
-        refresh();
+
+        mSmartListPresenter.refresh(NetworkUtils.isConnectedWifi(getActivity()),
+                NetworkUtils.isConnectedMobile(getActivity()));
     }
 
     @Override
