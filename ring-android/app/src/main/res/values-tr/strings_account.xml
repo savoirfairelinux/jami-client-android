@@ -104,7 +104,6 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="error_passwords_not_equals">Parolalar eşleşmedi</string>
   <string name="restore_failed_dialog_title">Geri yükleme başarısız</string>
   <string name="restore_failed_dialog_msg">Bir hata oluştu</string>
-  <string name="export_account_wait_title">Lütfen bekleyin...</string>
   <string name="export_account_wait_message">Yeni hesap bilgisi yayımlanıyor</string>
   <string name="account_export_end_decryption_message">Sağlanan parola kullanılarak hesabınızın kilidi açılamıyor.</string>
   <string name="account_export_end_network_title">Ağ hatası</string>
@@ -133,6 +132,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_device_added_message">Bu aygıttaki Ring hesabınızı başarıyla kurdunuz.</string>
   <string name="account_device_updated_title">Hesap aygıtı güncellendi</string>
   <string name="account_device_updated_message">Ring hesabınızı başarıyla güncellediniz.</string>
+  <string name="account_cannot_be_updated_message">Hesap aygıtı güncellenemedi. Lütfen parolanızı kontrol edin</string>
   <string name="account_sip_success_title">Sip hesabı kayıtlı</string>
   <string name="account_sip_success_message">Sip hesabınızı başarıyla kaydettiniz.</string>
   <string name="account_sip_register_anyway">Her koşulda kaydol</string>
@@ -159,7 +159,6 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="register_username">Halka açık kullanıcı adı kaydet (deneysel)</string>
   <string name="username_already_taken">Kullanıcı adı önceden alınmış</string>
   <string name="invalid_username">Geçersiz kullanıcı adı</string>
-  <string name="looking_for_username_availability">Kullanıcı adının uygunluğuna bakılıyor ...</string>
   <string name="account_status_connecting">Bağlanılıyor</string>
   <string name="account_status_connection_error">Bağlantı hatası</string>
   <string name="account_status_online">Çevrimiçi</string>
@@ -171,4 +170,5 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_creation_ring">Ring hesabınızı oluşturun</string>
   <string name="account_link_title">Bu aygıtı bağla</string>
   <string name="account_sip_cannot_be_registered">Hesap kaydedilemiyor</string>
+  <!--Devices-->
 </resources>

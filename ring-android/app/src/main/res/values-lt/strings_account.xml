@@ -100,7 +100,6 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
   <string name="restore_failed_dialog_title">Atkūrimas nepavyko</string>
   <string name="restore_failed_dialog_msg">Įvyko klaida</string>
-  <string name="export_account_wait_title">Prašome palaukti...</string>
   <string name="export_account_wait_message">Skelbiama naujos paskyros informacija</string>
   <string name="account_export_end_decryption_message">Naudojant pateiktą slaptažodį, nepavyko atrakinti jūsų paskyros.</string>
   <string name="account_export_end_network_title">Tinklo klaida</string>
@@ -135,11 +134,11 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="register_username">Registruoti viešąjį naudotojo vardą (eksperimentinis)</string>
   <string name="username_already_taken">Naudotojo vardas jau užimtas</string>
   <string name="invalid_username">Neteisingas naudotojo vardas</string>
-  <string name="looking_for_username_availability">Tikrinamas naudotojo vardo prieinamumas...</string>
   <string name="account_status_connecting">Sujungiama</string>
   <string name="account_status_connection_error">Ryšio klaida</string>
   <string name="account_status_unknown">Nežinomas</string>
   <!--Create account-->
   <string name="account_creation_home">Sveiki atvykę į Ring</string>
   <string name="account_creation_profile">Susikurkite savo profilį</string>
+  <!--Devices-->
 </resources>

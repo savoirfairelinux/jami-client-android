@@ -84,4 +84,6 @@
   <string name="unknown">مجهول</string>
   <!--Share fragment-->
   <string name="generic_error_migration">خطأ</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

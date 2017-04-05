@@ -46,8 +46,6 @@
   <string name="transfer_no_other_call">No hi ha altres trucades pendents</string>
   <string name="transfer_type_number">Escriure un número per transferir a:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Trucada perduda de %1$s</string>
-  <string name="notif_missed_outgoing_call">Trucada perduda a %1$s</string>
   <string name="notif_incoming_call_title">Trucada entrant de %1$s</string>
   <string name="notif_incoming_call">Trucada entrant</string>
   <string name="notif_outgoing_call_title">Trucada sortint de %1$s</string>
@@ -122,4 +120,6 @@
   <string name="share_message">Escaneja aquest codi QR amb l\'escàner de l\'aplicació Ring que vulga comunicar-se amb tu.</string>
   <string name="share_your_account_information">Compartir la meua informació de contacte</string>
   <string name="generic_error_migration">Error</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

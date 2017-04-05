@@ -42,8 +42,6 @@
   <string name="transfer_no_other_call">Δεν υπάρχουν εκκρεμείς κλήσεις</string>
   <string name="transfer_type_number">Πληκτρολογείστε αριθμό για προώθηση</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Αναπάντητη κλήση από %1$s</string>
-  <string name="notif_missed_outgoing_call">Αναπάντητη κλήση σε %1$s</string>
   <string name="notif_incoming_call_title">Εισερχόμενη κλήση από %1$s</string>
   <string name="notif_incoming_call">Εισερχόμενη κλήση</string>
   <string name="notif_outgoing_call_title">Εξερχόμενη κλήση  %1$s</string>
@@ -110,4 +108,6 @@
   <!--Share fragment-->
   <string name="share_your_account_information">Μοίρασε τις πληροφορίες των επαφών μου</string>
   <string name="generic_error_migration">Σφάλμα</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

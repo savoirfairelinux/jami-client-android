@@ -7,9 +7,11 @@
   <string name="prompt_hostname">Hostname</string>
   <string name="prompt_username">Benutzername</string>
   <string name="prompt_password">Kennwort</string>
+  <string name="action_create">Konto erstellen</string>
   <string name="action_create_short">Registrieren</string>
   <string name="error_field_required">Dieses Feld ist erforderlich</string>
   <string name="dialog_wait_create">Konto wird hinzugefügt</string>
+  <string name="account_type_ip2ip">IP Konto</string>
   <string name="help_sip_title">Fügen Sie Ihre SIP-Account</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Konto löschen?</string>
@@ -78,4 +80,5 @@
   <string name="account_status_unknown">Unbekannt</string>
   <!--Create account-->
   <string name="account_creation_home">Willkommen bei Ring</string>
+  <!--Devices-->
 </resources>

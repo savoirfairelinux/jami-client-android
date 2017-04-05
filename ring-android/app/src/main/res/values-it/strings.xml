@@ -46,8 +46,6 @@
   <string name="transfer_no_other_call">Nessuna chiamata in corso</string>
   <string name="transfer_type_number">Digita il numero a cui traferire</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Chiamata persa da %1$s</string>
-  <string name="notif_missed_outgoing_call">Chiamata persa a %1$s</string>
   <string name="notif_incoming_call_title">Chiamata in arrivo da %1$s</string>
   <string name="notif_incoming_call">Chiamata in arrivo</string>
   <string name="notif_outgoing_call_title">Chiamata in uscita per %1$s</string>
@@ -122,4 +120,6 @@
   <string name="share_message">Scansiona questo QRCode con il scanner integrato nell\'applicazione Ring che vuole comunicare con te.</string>
   <string name="share_your_account_information">Condividi le mie informazioni di contatto</string>
   <string name="generic_error_migration">Errore</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

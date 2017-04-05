@@ -1,11 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="feedback_section">Обратная связь</string>
+  <string name="report">&lt;u&gt;Отправить нам письмо&lt;/u&gt;</string>
+  <string name="section_license">Лицензия</string>
   <string name="sponsor_section">Ring — свободное программное обеспечение, разработанное и поддерживаемое</string>
   <string name="copyright_section">Авторское право</string>
   <string name="contribute_section">Внести вклад</string>
   <string name="version_section">Версия</string>
-  <string name="no_email_app_installed">Не найден почтовый клиент, установите его, чтобы отправить нам сообщение</string>
+  <string name="no_email_app_installed">Не найден почтовый клиент; установите его, чтобы отправить нам сообщение</string>
+  <string name="no_browser_app_installed">Не найден веб-браузер, установите его, чтобы просмотреть эту страницу</string>
   <string name="email_chooser_title">Отправить письмо используя…</string>
+  <string name="website_chooser_title">Просмотреть веб-сайт с помощью…</string>
+  <string name="license">Это программное обеспечение предоставляется \"как есть\", без каких либо гарантий. Для получения дополнительной информации смотрите
+&lt;u&gt; Лицензию GNU General Public 3 или более поздней версии&lt;/u&gt;</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Нет подключения к сети</string>
@@ -31,12 +38,11 @@
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
-    <item quantity="one">%d Диалог</item>
-    <item quantity="few">%d Диалогов</item>
-    <item quantity="many">%d Диалогов</item>
-    <item quantity="other">%d Диалогов</item>
+    <item quantity="one">%d диалог</item>
+    <item quantity="few">%d диалога</item>
+    <item quantity="many">%d диалогов</item>
+    <item quantity="other">%d диалогов</item>
   </plurals>
-  <string name="home_transfering">Передача %1$s в %2$s</string>
   <string name="home_transfer_complet">Передача завершена</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Контактов не найдено</string>
@@ -49,8 +55,6 @@
   <string name="transfer_no_other_call">Нет ожидающих вызовов</string>
   <string name="transfer_type_number">Тип номера для передачи:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Пропущенный вызов от %1$s</string>
-  <string name="notif_missed_outgoing_call">Пропущенный вызов к %1$s</string>
   <string name="notif_incoming_call_title">Входящий вызов от %1$s</string>
   <string name="notif_incoming_call">Входящий вызов</string>
   <string name="notif_outgoing_call_title">Исходящий вызов к %1$s</string>
@@ -65,7 +69,7 @@
   <string name="ongoing_call">Исходящий вызов</string>
   <string name="hist_in_call">Входящий звонок %1$s</string>
   <string name="hist_out_call">Исходящий звонок %1$s</string>
-  <string name="start_error_title">Невозможно запустить Ring !</string>
+  <string name="start_error_title">Невозможно запустить Ring!</string>
   <string name="start_error_mic_required">Приложению Ring необходимо разрешение на использование микрофона.</string>
   <string name="action_call_accept">Принять вызов</string>
   <string name="action_call_decline">Отклонить</string>
@@ -82,10 +86,10 @@
   <string name="send_message">Отправить сообщение</string>
   <string name="message_sending">Отправка сообщения...</string>
   <string name="time_just_now">Только сейчас</string>
-  <string name="permission_read_denied">Приложению не было разрешено чтение данных из памяти. В связи с этим оно не может работать должным образом. Пожалуйста, рассмотрите возможность предоставления  ему этого разрешения.</string>
+  <string name="permission_read_denied">Приложению не было разрешено чтение данных из памяти, поэтому оно не может работать должным образом. Пожалуйста, предоставьте  ему это разрешение.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на доступ к камере</string>
-  <string name="permission_dialog_camera_message">Видеосвязь требует для работы разрешения на доступ к камере. Пожалуйста, рассмотрите возможность его предоставления.</string>
+  <string name="permission_dialog_camera_message">Видеосвязь требует для работы разрешения на доступ к камере. Пожалуйста, предоставьте его.</string>
   <string name="ringtone_error_title">Ошибка</string>
   <string name="ringtone_error_format_not_supported">Этот формат не поддерживается</string>
   <string name="ringtone_error_size_too_big">Файл слишком большой. Максимальный размер — %1$i кБ.</string>
@@ -94,7 +98,7 @@
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Приложению требуется разрешение «Запись в журнал звонков», чтобы включить эту функцию. Пожалуйста, предоставьте его.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">Отсканируйте QR код аккаунта, который вы хотите добавить.</string>
+  <string name="scan_qr_account_message">Отсканируйте QR-код аккаунта, который вы хотите добавить.</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Очистить историю ?</string>
   <string name="clear_history_dialog_message">Это действие нельзя отменить.</string>
@@ -107,7 +111,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s скопировано в буфер обмена</string>
   <string name="conversation_action_select_peer_number">Выбрать номер</string>
   <!--Contacts-->
-  <string name="add_call_contact_number_to_contacts">Добавить %1$s ?</string>
+  <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
   <string name="prompt_new_password_repeat">Повторите новый пароль</string>
   <string name="account_create_title">Создать аккаунт Ring</string>
@@ -116,15 +120,18 @@
   <string name="help_password_enter">Введите пароль от вашего основного аккаунта Ring</string>
   <string name="help_pin_enter">Введите PIN от настроенного аккаунта Ring. Используйте функцию «экспортировать аккаунт в Ring», чтобы получить PIN.</string>
   <string name="wizard_next">Далее</string>
-  <string name="account_device_updated_message">Вы успешно обновили ваш аккаунт Ring</string>
+  <string name="wizard_back">Назад</string>
   <!--MenuHeaderView-->
   <string name="profile">Мой профиль</string>
-  <string name="profile_message_warning">К этому имеют доступ ваши контакты</string>
   <string name="open_the_gallery">Открыть галерею</string>
   <string name="take_a_photo">Сделать фото</string>
   <string name="unknown">Неизвестно</string>
   <!--Share fragment-->
-  <string name="share_message">Отсканируйте этот QR код встроенным сканером приложения Ring, которое хочет с вами связаться.</string>
+  <string name="share_message">Отсканируйте этот QR-код встроенным сканером приложения Ring, которое хочет с вами связаться.</string>
+  <string name="share_message_no_account">Выберите аккаунт, которым хотите поделиться.</string>
   <string name="share_your_account_information">Поделиться моей контактной информацией</string>
   <string name="generic_error_migration">Ошибка</string>
+  <string name="generic_error_migration_message">В процессе переноса произошла ошибка</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

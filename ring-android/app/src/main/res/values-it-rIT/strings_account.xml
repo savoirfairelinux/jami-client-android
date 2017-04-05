@@ -104,7 +104,6 @@ Potrai modificare il tuo account successivamente</string>
   <string name="error_passwords_not_equals">Le password non corrispondono</string>
   <string name="restore_failed_dialog_title">Ripristino non riuscito</string>
   <string name="restore_failed_dialog_msg">C\'è stato un errore</string>
-  <string name="export_account_wait_title">Prego attendere...</string>
   <string name="export_account_wait_message">Sto pubblicando le informazioni del nuovo account</string>
   <string name="account_export_end_decryption_message">Impossibile sbloccare l\'account x la con la password inserita.</string>
   <string name="account_export_end_network_title">Errore di rete</string>
@@ -159,7 +158,6 @@ Potrai modificare il tuo account successivamente</string>
   <string name="register_username">Registra un nome utente pubblico (sperimentale)</string>
   <string name="username_already_taken">Il nome utente è già utilizzato</string>
   <string name="invalid_username">Nome utente non valido</string>
-  <string name="looking_for_username_availability">Controllo che il nome utente sia disponibile ...</string>
   <string name="account_status_connecting">Collegamento</string>
   <string name="account_status_connection_error">Errore di connessione</string>
   <string name="account_status_online">In linea</string>
@@ -171,4 +169,5 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_creation_ring">Crea il tuo account Ring</string>
   <string name="account_link_title">Collega il dispositivo</string>
   <string name="account_sip_cannot_be_registered">Impossibile registrare l\'account</string>
+  <!--Devices-->
 </resources>

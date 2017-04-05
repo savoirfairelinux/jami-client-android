@@ -42,8 +42,6 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Praleistas skambutis nuo %1$s</string>
-  <string name="notif_missed_outgoing_call">Neatsilieptas skambutis naudotojui %1$s</string>
   <string name="notif_incoming_call_title">Gaunamasis skambutis nuo %1$s</string>
   <string name="notif_incoming_call">Gaunamasis skambutis</string>
   <string name="notif_outgoing_call_title">Išsiunčiamasis skambutis naudotojui %1$s</string>
@@ -109,4 +107,6 @@
   <string name="share_message">Nuskenuokite šį QR kodą įtaisytu Ring programos, norinčios su jumis susisiekti, skeneriu.</string>
   <string name="share_your_account_information">Bendrinti mano kontaktinę informaciją</string>
   <string name="generic_error_migration">Klaida</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

@@ -41,6 +41,7 @@
     <item quantity="one">%d Konuşma</item>
     <item quantity="other">%d Konuşma</item>
   </plurals>
+  <string name="home_transfering">%1$s den %2$s ye aktarılıyor</string>
   <string name="home_transfer_complet">Aktarım tamamlandı</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Kişi bulunamadı</string>
@@ -53,8 +54,6 @@
   <string name="transfer_no_other_call">Bekleyen başka arama yok</string>
   <string name="transfer_type_number">Aktarılacak numarayı girin:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">%1$s\'den yanıtsız arama</string>
-  <string name="notif_missed_outgoing_call">%1$s\'e yanıtsız arama</string>
   <string name="notif_incoming_call_title">%1$s\'dan gelen arama</string>
   <string name="notif_incoming_call">Gelen arama</string>
   <string name="notif_outgoing_call_title">%1$s\'a giden arama</string>
@@ -78,6 +77,7 @@
   <string name="ab_action_contact_add_question">Kişilere eklensin mi?</string>
   <string name="ab_action_audio_call">Sesli arama</string>
   <string name="ab_action_video_call">Görüntülü arama</string>
+  <string name="ab_action_change_screen_orientation">Ekran Yönünü değiştir</string>
   <string name="share_via">Paylaş</string>
   <string name="write_a_message">Bir ileti yaz</string>
   <string name="scan_qr">Kare Kod Tara</string>
@@ -123,8 +123,10 @@
   <string name="wizard_back">Geri</string>
   <!--MenuHeaderView-->
   <string name="profile">Profilim</string>
+  <string name="profile_message_warning">Profiliniz sadece kayıtlı kişilerinizle paylaşılıyor</string>
   <string name="open_the_gallery">Galeriyi aç</string>
   <string name="take_a_photo">Fotoğraf çek</string>
+  <string name="profile_name_hint">Adınızı girin (isteğe bağlı)</string>
   <string name="unknown">Bilinmeyen</string>
   <!--Share fragment-->
   <string name="share_message">Sizinle iletişime geçmek isteyenin Ring uygulamasının gömülü tarayıcısıyla bu QR kodu tarayın.</string>
@@ -132,4 +134,6 @@
   <string name="share_your_account_information">İletişim bilgimi paylaş</string>
   <string name="generic_error_migration">Hata</string>
   <string name="generic_error_migration_message">Göç sırasında bir hata oluştu</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

@@ -6,16 +6,17 @@
   <!--AccountManagementFragment-->
   <!--Basic Details-->
   <!--Audio Details-->
+  <string name="account_ringtone_label">Helinad</string>
   <!--Video Details-->
+  <string name="account_video_label">Video</string>
   <!--Advanced Details-->
   <!--Security Details-->
   <!--SRTP Details-->
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
-  <string name="account_export_end_error_title">Eror</string>
   <!--Name registration-->
-  <string name="account_status_unknown">Tidak diketahui</string>
+  <string name="account_status_connecting">Ühendab</string>
   <!--Create account-->
   <!--Devices-->
 </resources>

@@ -27,4 +27,6 @@
   <string name="unknown">Tidak diketahui</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Eror</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

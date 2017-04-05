@@ -104,7 +104,6 @@
   <string name="error_passwords_not_equals">パスワードが一致しません</string>
   <string name="restore_failed_dialog_title">復元に失敗しました</string>
   <string name="restore_failed_dialog_msg">エラーが発生しました</string>
-  <string name="export_account_wait_title">しばらくお待ちください...</string>
   <string name="export_account_wait_message">新しいアカウント情報を発行しています</string>
   <string name="account_export_end_decryption_message">提供されたパスワードを使用してアカウントをロック解除できませんでした。</string>
   <string name="account_export_end_network_title">ネットワークエラー</string>
@@ -133,6 +132,7 @@
   <string name="account_device_added_message">このデバイスでRingアカウントを設定しました。</string>
   <string name="account_device_updated_title">アカウントデバイスを更新しました</string>
   <string name="account_device_updated_message">Ringアカウントを正常に更新しました。</string>
+  <string name="account_cannot_be_updated_message">アカウントのデバイスを更新できませんでした。パスワードを確認してください。</string>
   <string name="account_sip_success_title">SIP アカウントを登録しました</string>
   <string name="account_sip_success_message">SIPアカウントを正常に登録しました。</string>
   <string name="account_sip_register_anyway">とにかく登録する</string>
@@ -159,7 +159,6 @@
   <string name="register_username">公開ユーザー名を登録 (実験的)</string>
   <string name="username_already_taken">名前はすでに取得されています</string>
   <string name="invalid_username">無効なユーザー名</string>
-  <string name="looking_for_username_availability">ユーザー名が利用可能か検索しています ...</string>
   <string name="account_status_connecting">接続中</string>
   <string name="account_status_connection_error">接続エラー</string>
   <string name="account_status_online">オンライン</string>
@@ -171,4 +170,5 @@
   <string name="account_creation_ring">Ringアカウントを作成</string>
   <string name="account_link_title">このデバイスをリンク</string>
   <string name="account_sip_cannot_be_registered">アカウントを登録できません</string>
+  <!--Devices-->
 </resources>

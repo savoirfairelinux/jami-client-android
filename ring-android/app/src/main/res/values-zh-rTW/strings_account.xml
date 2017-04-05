@@ -71,7 +71,6 @@
   <string name="error_passwords_not_equals">密碼不相符</string>
   <string name="restore_failed_dialog_title">還原失敗</string>
   <string name="restore_failed_dialog_msg">發生錯誤</string>
-  <string name="export_account_wait_title">請等待...</string>
   <string name="account_export_end_network_title">網路錯誤</string>
   <string name="account_export_end_error_title">錯誤</string>
   <string name="account_enter_password">輸入密碼</string>
@@ -93,4 +92,5 @@
   <string name="account_status_connecting">連接中</string>
   <string name="account_status_unknown">未知</string>
   <!--Create account-->
+  <!--Devices-->
 </resources>

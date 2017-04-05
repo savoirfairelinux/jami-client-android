@@ -99,7 +99,6 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="error_passwords_not_equals">Kata laluan tidak sepadan</string>
   <string name="restore_failed_dialog_title">Import gagal</string>
   <string name="restore_failed_dialog_msg">Kegagalan telah terjadi</string>
-  <string name="export_account_wait_title">Sila tunggu...</string>
   <string name="export_account_wait_message">Mengagihkan maklumat akaun baharu</string>
   <string name="account_export_end_decryption_message">Tidak dapat menyahsulitkan akaun anda dengan kata laluan yang diberikan.</string>
   <string name="account_export_end_network_title">Rangkaian gagal</string>
@@ -143,8 +142,8 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="registered_username">Nama telah didaftarkan</string>
   <string name="username_already_taken">Nama pengguna telah digunakan pengguna lain</string>
   <string name="invalid_username">Nama pengguna tidak sah</string>
-  <string name="looking_for_username_availability">Sedang mencari status nama pengguna ...</string>
   <string name="account_status_connecting">Menyambung</string>
   <string name="account_status_unknown">Tidak diketahui</string>
   <!--Create account-->
+  <!--Devices-->
 </resources>

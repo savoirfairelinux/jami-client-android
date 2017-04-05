@@ -45,8 +45,6 @@
   <string name="transfer_no_other_call">Nincs más függő hívás</string>
   <string name="transfer_type_number">Átirányítás a következő számra:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Nem fogadott hívás a következőtől: %1$s</string>
-  <string name="notif_missed_outgoing_call">Nem fogadott hívás a következő felé: %1$s</string>
   <string name="notif_incoming_call_title">Bejövő hívás a következőtől: %1$s</string>
   <string name="notif_incoming_call">Bejövő hívás</string>
   <string name="notif_outgoing_call_title">Kimenő hívás a következő felé: %1$s</string>
@@ -118,4 +116,6 @@
   <!--Share fragment-->
   <string name="share_your_account_information">Elérési adataim megosztása</string>
   <string name="generic_error_migration">Hiba</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

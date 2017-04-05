@@ -1,5 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="feedback_section">Povratna informacija</string>
+  <string name="report">&lt;u&gt;Pošaljite nam email&lt;/u&gt;</string>
+  <string name="section_license">Licenca</string>
   <string name="sponsor_section">Ring je slobodi software koji razvijaju i podržavaju</string>
   <string name="copyright_section">Autorska prava</string>
   <string name="contribute_section">Doprinesite</string>
@@ -43,8 +46,6 @@
   <string name="transfer_to_another_call">Prenesi na drugi razgovor:</string>
   <string name="transfer_no_other_call">Nema dolazećih poziva</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Propušteni poziv od %1$s</string>
-  <string name="notif_missed_outgoing_call">Propušteni poziv za %1$s</string>
   <string name="notif_incoming_call_title">Dolazni poziv od %1$s</string>
   <string name="notif_incoming_call">Dolazni poziv</string>
   <string name="notif_outgoing_call_title">Odlazni poziv za %1$s</string>
@@ -67,6 +68,7 @@
   <string name="ab_action_contact_add_question">Dodati u kontakte?</string>
   <string name="ab_action_audio_call">Audio poziv</string>
   <string name="ab_action_video_call">Video poziv</string>
+  <string name="ab_action_change_screen_orientation">Promjeni orijentaciju zaslona</string>
   <string name="share_via">Dijeli putem</string>
   <string name="write_a_message">Napiši poruku</string>
   <string name="scan_qr">Skeniraj QR kod</string>
@@ -80,6 +82,8 @@
   <string name="permission_dialog_camera_title">Dozvola kamere</string>
   <string name="permission_dialog_camera_message">Video pozivi zahtjevaju dozvolu korištenja kamere. Molimo dozvolite aplikaciji korištenje kamere.</string>
   <string name="ringtone_error_title">Greška</string>
+  <string name="ringtone_error_format_not_supported">Ovaj format nije podržan.</string>
+  <string name="ringtone_error_size_too_big">Ova datoteka je prevelika. Maksimalna veličina je %1$ikB.</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -98,10 +102,20 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodaj %1$s ?</string>
   <string name="prompt_new_password">Nova lozinka</string>
+  <string name="prompt_new_password_repeat">Ponovite novu lozinku</string>
   <string name="account_create_title">Napravite Ring račun</string>
+  <string name="prompt_new_username">Unesite novo korisničko ime</string>
+  <string name="help_password_choose">Izaberite jaku lozinku koju ćete zapamtiti za zaštitu vašega Ring računa.</string>
+  <string name="help_password_enter">Unesite vašu glavnu lozinku Ring računa</string>
   <string name="wizard_next">Slijedeće</string>
+  <string name="wizard_back">Natrag</string>
   <!--MenuHeaderView-->
+  <string name="profile">Moj profil</string>
+  <string name="profile_message_warning">Vaš profil je podjeljen samo sa vašim kontaktima</string>
+  <string name="open_the_gallery">Otvorite galeriju</string>
   <string name="unknown">Nepoznato</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Greška</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

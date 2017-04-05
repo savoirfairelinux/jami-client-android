@@ -22,18 +22,8 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
     <!-- SipCalls -->
-    <string name="call_human_state_incoming">Klingeln</string>
-    <string name="call_human_state_connecting">Verbinden</string>
-    <string name="call_human_state_ringing">Anrufen</string>
-    <string name="call_human_state_current">Sprechen</string>
-    <string name="call_human_state_hungup">Vorbei</string>
-    <string name="call_human_state_busy">Besetzt</string>
-    <string name="call_human_state_failure">Fehlgeschlagen</string>
-    <string name="call_human_state_hold">In die Warteschleife schalten</string>
-    <string name="call_human_state_unhold">Gespräch fortsetzen</string>
-    <string name="call_human_state_over">Vorbei</string>
-    <string name="call_human_state_none">Keine</string>
-    <string name="conference_human_state_hold">In die Warteschleife schalten</string>
-    <string name="conference_human_state_hold_rec">Drücken Sie REC</string>
-    <string name="conference_human_state_default">Keine</string>
-</resources>
+    <string name="call_human_state_incoming">Heliseb</string>
+    <string name="call_human_state_connecting">Ühendab</string>
+    <string name="call_human_state_ringing">Helistab</string>
+    <string name="call_human_state_busy">Kinni</string>
+    </resources>

@@ -85,7 +85,6 @@
   <string name="error_passwords_not_equals">Паролите не съвпадат</string>
   <string name="restore_failed_dialog_title">Неуспешно възстановяване</string>
   <string name="restore_failed_dialog_msg">Възникна грешка</string>
-  <string name="export_account_wait_title">Моля, изчакайте…</string>
   <string name="export_account_wait_message">Публикуване на новата информация за акаунта</string>
   <string name="account_export_end_decryption_message">Отключването на акаунта Ви с предоставената парола не беше успешно.</string>
   <string name="account_export_end_network_title">Мрежова грешка</string>
@@ -130,9 +129,9 @@
   <string name="registered_username">Регистрирано потребителско име</string>
   <string name="username_already_taken">Потребителското име е вече заето</string>
   <string name="invalid_username">Грешно потребителско име</string>
-  <string name="looking_for_username_availability">Проверка дали потребителското име е свободно…</string>
   <string name="account_status_connecting">Свързване</string>
   <string name="account_status_unknown">Неизвестно</string>
   <!--Create account-->
   <string name="account_creation_home">Добре дошли в Ring</string>
+  <!--Devices-->
 </resources>

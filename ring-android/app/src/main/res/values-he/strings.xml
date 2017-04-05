@@ -48,4 +48,6 @@
   <!--MenuHeaderView-->
   <!--Share fragment-->
   <string name="generic_error_migration">שגיאה</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

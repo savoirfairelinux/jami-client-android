@@ -43,8 +43,6 @@
   <string name="transfer_no_other_call">Sem chamadas pendentes</string>
   <string name="transfer_type_number">Insira o número para onde pretende transferir:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Chamada perdida de %1$s</string>
-  <string name="notif_missed_outgoing_call">Chamada perdida para %1$s</string>
   <string name="notif_incoming_call_title">A receber chamada de %1$s</string>
   <string name="notif_incoming_call">A receber chamada</string>
   <string name="notif_current_call_title">Em chamada com %1$s</string>
@@ -113,4 +111,6 @@
   <!--Share fragment-->
   <string name="share_your_account_information">Partilhar a minha informação de contacto</string>
   <string name="generic_error_migration">Erro</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

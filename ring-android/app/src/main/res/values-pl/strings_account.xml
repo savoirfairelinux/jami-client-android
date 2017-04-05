@@ -97,4 +97,5 @@ Możesz edytować swoje konto później</string>
   <string name="account_status_unknown">Nieznane</string>
   <!--Create account-->
   <string name="account_creation_home">Witamy w Ring</string>
+  <!--Devices-->
 </resources>

@@ -53,8 +53,6 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="transfer_no_other_call">Nenhuma outra chamada pendente</string>
   <string name="transfer_type_number">Digite o número para transferir:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Chamada perdida de %1$s</string>
-  <string name="notif_missed_outgoing_call">Chamada perdida para %1$s</string>
   <string name="notif_incoming_call_title">Chamada recebida de %1$s</string>
   <string name="notif_incoming_call">Chamada recebida</string>
   <string name="notif_outgoing_call_title">Chamada efetuada para %1$s</string>
@@ -132,4 +130,6 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="share_your_account_information">Compartilhar meus dados de contato</string>
   <string name="generic_error_migration">Erro</string>
   <string name="generic_error_migration_message">Um erro ocorreu durante a migração</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

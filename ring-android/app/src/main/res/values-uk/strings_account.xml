@@ -97,4 +97,5 @@
   <string name="account_status_unknown">Невідомий</string>
   <!--Create account-->
   <string name="account_creation_home">Вітаємо у Ring</string>
+  <!--Devices-->
 </resources>

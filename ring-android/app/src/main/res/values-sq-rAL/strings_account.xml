@@ -99,7 +99,6 @@
   <string name="error_passwords_not_equals">Fjalëkalimet nuk përputhen</string>
   <string name="restore_failed_dialog_title">Rikthimi dështoi</string>
   <string name="restore_failed_dialog_msg">Ndodhi një gabim</string>
-  <string name="export_account_wait_title">Ju lutemi, pritni…</string>
   <string name="account_export_end_decryption_message">S’u zhbllokua dot llogaria juaj duke përdorur fjalëkalimin e dhënë.</string>
   <string name="account_export_end_network_title">Gabim rrjeti</string>
   <string name="account_export_end_network_message">S’u eksportua dot llogari te rrjeti. Kontrolloni lidhjen tuaj në rrjet.</string>
@@ -149,4 +148,5 @@
   <!--Create account-->
   <string name="account_creation_home">Mirë se vini te Ring</string>
   <string name="account_creation_profile">Krijoni profilin tuaj</string>
+  <!--Devices-->
 </resources>

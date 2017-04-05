@@ -46,8 +46,6 @@
   <string name="transfer_no_other_call">Aucun appel</string>
   <string name="transfer_type_number">Entrez un numéro</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Appel manqué de %1$s</string>
-  <string name="notif_missed_outgoing_call">Appel manqué vers %1$s</string>
   <string name="notif_incoming_call_title">Appel entrant de %1$s</string>
   <string name="notif_incoming_call">Appel entrant</string>
   <string name="notif_outgoing_call_title">Appel sortant vers %1$s</string>
@@ -122,4 +120,6 @@
   <string name="share_message">Scannez ce QRCode avec le scanner intégré de l\'application Ring qui souhaite communiquer avec vous.</string>
   <string name="share_your_account_information">Partagez mes coordonnées</string>
   <string name="generic_error_migration">Erreur</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>

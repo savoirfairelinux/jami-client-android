@@ -46,8 +46,6 @@
   <string name="transfer_no_other_call">Немає викликів, які очікуть</string>
   <string name="transfer_type_number">Введіть номер отримувача:</string>
   <!--Notifications-->
-  <string name="notif_missed_incoming_call">Пропущений виклик від %1$s</string>
-  <string name="notif_missed_outgoing_call">Пропущений виклик до %1$s</string>
   <string name="notif_incoming_call_title">Вхідний виклик від %1$s</string>
   <string name="notif_incoming_call">Вхідний виклик</string>
   <string name="notif_outgoing_call_title">Вихідний виклик до %1$s</string>
@@ -110,4 +108,6 @@
   <string name="unknown">Невідомий</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Помилка</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
 </resources>
