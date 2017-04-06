@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_a69e1b62",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-04-06T19:23:21Z",
+      "side": 1,
+      "message": "redundant. you should factorize these lines",
+      "range": {
+        "startLine": 439,
+        "startChar": 12,
+        "endLine": 443,
+        "endChar": 13
+      },
+      "revId": "5aa0d32cef08679e539fadb86eeb463085caed07",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
