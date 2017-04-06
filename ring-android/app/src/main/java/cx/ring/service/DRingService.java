@@ -676,7 +676,9 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         public void onChange(boolean selfChange, android.net.Uri uri) {
             super.onChange(selfChange, uri);
             Log.d(TAG, "ContactsContentObserver.onChange");
-            mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount().getAccountID());
+            mContactService.loadContacts(mAccountService.getCurrentAccount().isRing(),
+                    mAccountService.getCurrentAccount().isSip(),
+                    mAccountService.getCurrentAccount().getAccountID());
         }
     }
 

@@ -165,6 +165,12 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         switch (event.getEventType()) {
             case ACCOUNTS_CHANGED:
                 loadAccounts();
+                FragmentManager fragmentManager = getFragmentManager();
+                fContent = fragmentManager.findFragmentById(R.id.main_frame);
+                if (fContent == null) {
+                    fContent = new SmartListFragment();
+                    fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commitAllowingStateLoss();
+                }
                 break;
             default:
                 Log.d(TAG, "Event " + event.getEventType() + " is not handled here");
@@ -286,8 +292,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             onNavigationViewReady();
         }
         if (fContent == null) {
-            fContent = new SmartListFragment();
-            fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commitAllowingStateLoss();
+
         } else if (fContent instanceof Refreshable) {
             fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commitAllowingStateLoss();
             ((Refreshable) fContent).refresh();
@@ -296,7 +301,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             presentTrustRequestFragment(mAccountWithPendingrequests);
             mAccountWithPendingrequests = null;
         }
-
     }
 
     @Override
