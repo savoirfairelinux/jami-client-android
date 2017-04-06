@@ -49,6 +49,8 @@ public interface SmartListView {
 
     void hideNoConversationMessage();
 
+    void hideEmptyList();
+
     void updateList(ArrayList<SmartListViewModel> smartListViewModels);
 
     void goToConversation(CallContact callContact);

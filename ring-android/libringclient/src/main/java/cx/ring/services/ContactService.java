@@ -41,6 +41,8 @@ import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Tuple;
+import io.reactivex.Single;
+import io.reactivex.SingleSource;
 
 /**
  * This service handles the contacts
@@ -131,13 +133,27 @@ public abstract class ContactService extends Observable {
             @Override
             public void run() {
                 Settings settings = mPreferencesService.loadSettings();
+                boolean hasChanged = false;
                 if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
-                    mContactList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
+                    Map<Long, CallContact> newList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
+
+                    if (!mContactList.equals(newList)) {
+                        mContactList = newList;
+                        hasChanged = true;
+                    }
+
                 }
-                mContactsRing = loadContactsFromDaemon(accountId);
-                setChanged();
-                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACTS_CHANGED);
-                notifyObservers(event);
+                Map<String, CallContact> newRingList = loadContactsFromDaemon(accountId);
+                if (!mContactsRing.equals(newRingList)) {
+                    mContactsRing = newRingList;
+                    hasChanged = true;
+                }
+
+                if (hasChanged) {
+                    setChanged();
+                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACTS_CHANGED);
+                    notifyObservers(event);
+                }
             }
         });
     }
@@ -169,8 +185,34 @@ public abstract class ContactService extends Observable {
         if (uri == null || uri.isEmpty()) {
             return null;
         }
-
         for (CallContact contact : getContacts()) {
+            if (contact.hasNumber(uri)) {
+                return contact;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Get a contact from the local cache
+     *
+     * @param uri
+     * @return null if contact does not exist in the cache
+     */
+    public CallContact getContact(Uri uri, boolean allowAllContacts) {
+        if (uri == null || uri.isEmpty()) {
+            return null;
+        }
+
+        Collection<CallContact> callContacts;
+        if (allowAllContacts) {
+            callContacts = getContactsNoBanned();
+        } else {
+            callContacts = getContactsConfirmed();
+        }
+
+        for (CallContact contact : callContacts) {
             if (contact.hasNumber(uri)) {
                 return contact;
             }
@@ -213,6 +255,27 @@ public abstract class ContactService extends Observable {
             }
         }
         return contacts;
+    }
+
+    public SingleSource<List<CallContact>> loadContacts(final boolean acceptAllMessages) {
+        return Single.fromCallable(new Callable<List<CallContact>>() {
+            @Override
+            public List<CallContact> call() throws Exception {
+
+                ArrayList<CallContact> contacts;
+                if (acceptAllMessages) {
+                    contacts = new ArrayList<>(getContactsNoBanned());
+                } else {
+                    contacts = new ArrayList<>(getContactsConfirmed());
+                }
+                return contacts;
+            }
+        });
+    }
+
+    public void updateContactUserName(Uri contactId, String userName) {
+        CallContact callContact = getContact(contactId);
+        callContact.setUserName(userName);
     }
 
 
