@@ -35,10 +35,10 @@ import android.text.format.DateUtils;
 import android.util.SparseArray;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -51,7 +51,6 @@ import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
-import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
@@ -63,7 +62,6 @@ import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
-
 import ezvcard.property.Photo;
 
 public class NotificationServiceImpl extends NotificationService implements Observer<ServiceEvent> {
@@ -185,7 +183,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     }
 
     @Override
-    public void showTextNotification(CallContact contact, Conversation conversation, TreeMap<Long, TextMessage> texts) {
+    public void showTextNotification(CallContact contact, TreeMap<Long, TextMessage> texts) {
         NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext);
 
         messageNotificationBuilder.setCategory(NotificationCompat.CATEGORY_MESSAGE)
