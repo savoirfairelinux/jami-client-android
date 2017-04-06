@@ -41,7 +41,6 @@ import javax.inject.Inject;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
-import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
@@ -212,7 +211,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     }
 
     @Override
-    public void showTextNotification(CallContact contact, Conversation conversation, TreeMap<Long, TextMessage> texts) {
+    public void showTextNotification(CallContact contact, TreeMap<Long, TextMessage> texts) {
 
     }
 
