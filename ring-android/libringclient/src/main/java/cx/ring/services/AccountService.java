@@ -43,7 +43,6 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.ServiceEvent;
-import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
@@ -648,7 +647,7 @@ public class AccountService extends Observable {
 
     /**
      * @param accountId id of the account used with the device
-     * @param newName new device name
+     * @param newName   new device name
      */
     public void renameDevice(final String accountId, final String newName) {
         final Account account = getAccount(accountId);
@@ -1307,8 +1306,7 @@ public class AccountService extends Observable {
             }
 
             Log.d(TAG, "incomingAccountMessage: " + accountId + ", " + from + ", " + msg);
-            TextMessage txt = new TextMessage(true, msg, new Uri(from), null, accountId);
-            mHistoryService.incomingMessage(txt);
+            mHistoryService.incomingMessage(accountId, null, from, messages);
         }
 
         @Override
@@ -1469,11 +1467,11 @@ public class AccountService extends Observable {
                 }
                 TrustRequest request = account.getRequest(address);
                 if (request != null) {
-                    Log.d(TAG, "registeredNameFound: updating TrustRequest " +  name);
+                    Log.d(TAG, "registeredNameFound: updating TrustRequest " + name);
                     boolean resolved = request.isNameResolved();
                     request.setUsername(name);
                     if (!resolved) {
-                        Log.d(TAG, "registeredNameFound: TrustRequest resolved " +  name);
+                        Log.d(TAG, "registeredNameFound: TrustRequest resolved " + name);
                         setChanged();
                         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
                         event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
