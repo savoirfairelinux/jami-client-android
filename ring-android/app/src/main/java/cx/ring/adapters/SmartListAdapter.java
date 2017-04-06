@@ -21,7 +21,7 @@ package cx.ring.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.v4.content.ContextCompat;
+import android.os.Bundle;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -35,6 +35,7 @@ import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import cx.ring.R;
 import cx.ring.smartlist.SmartListViewModel;
@@ -65,11 +66,8 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
 
         holder.convParticipants.setText(smartListViewModel.getContactName());
 
-        long lastInteraction = smartListViewModel.getLastInteractionTime().getTime();
-        String lastInteractionStr = lastInteraction == 0 ?
-                "" : DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL).toString();
+        holder.convTime.setText(smartListViewModel.getLastInteractionTime() == 0 ? "" : DateUtils.getRelativeTimeSpanString(smartListViewModel.getLastInteractionTime()));
 
-        holder.convTime.setText(lastInteractionStr);
         if (smartListViewModel.hasOngoingCall()) {
             holder.convStatus.setText(holder.itemView.getContext().getString(R.string.ongoing_call));
         } else if (smartListViewModel.getLastInteraction() != null) {
@@ -80,7 +78,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
             holder.convStatus.setVisibility(View.GONE);
         }
 
-        if (smartListViewModel.hasUnreadTextMessage()) {
+        if (smartListViewModel.hasUnreadTextMessage() || smartListViewModel.hasOngoingCall()) {
             holder.convParticipants.setTypeface(null, Typeface.BOLD);
             holder.convTime.setTypeface(null, Typeface.BOLD);
             holder.convStatus.setTypeface(null, Typeface.BOLD);
@@ -117,19 +115,35 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     }
 
     @Override
+    public void onBindViewHolder(SmartListViewHolder holder, int position, List<Object> payloads) {
+        super.onBindViewHolder(holder, position, payloads);
+
+        if (payloads.isEmpty()) {
+            return;
+        } else {
+            Bundle bundle = (Bundle) payloads.get(0);
+            for (String key : bundle.keySet()) {
+                if (key.equals(SmartListDiffUtil.KEY_CONTACT_NAME)) {
+                    holder.convParticipants.setText(bundle.getString(SmartListDiffUtil.KEY_CONTACT_NAME));
+                } else if (key.equals(SmartListDiffUtil.KEY_PRESENCE)) {
+                    holder.online.setVisibility(bundle.getBoolean(SmartListDiffUtil.KEY_PRESENCE) ? View.VISIBLE : View.GONE);
+                }
+            }
+        }
+    }
+
+    @Override
     public int getItemCount() {
         return mSmartListViewModels.size();
     }
 
     public void update(ArrayList<SmartListViewModel> smartListViewModels) {
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new SmartListDiffUtil(this.mSmartListViewModels, smartListViewModels));
+        diffResult.dispatchUpdatesTo(this);
 
         this.mSmartListViewModels.clear();
         this.mSmartListViewModels.addAll(smartListViewModels);
-
-        diffResult.dispatchUpdatesTo(this);
     }
-
 
     private String getLastInteractionSummary(int type, String lastInteraction, Context context) {
         switch (type) {
