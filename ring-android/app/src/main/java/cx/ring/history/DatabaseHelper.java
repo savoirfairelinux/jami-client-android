@@ -20,6 +20,7 @@
 
 package cx.ring.history;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,6 +35,7 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import cx.ring.model.ConversationModel;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryText;
 
@@ -50,7 +52,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
     private static final String DATABASE_NAME = "history.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     private Dao<HistoryCall, Integer> historyDao = null;
     private Dao<HistoryText, Integer> historyTextDao = null;
@@ -69,6 +71,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             Log.d(TAG, "onCreate");
             TableUtils.createTable(connectionSource, HistoryCall.class);
             TableUtils.createTable(connectionSource, HistoryText.class);
+            TableUtils.createTable(connectionSource, ConversationModel.class);
         } catch (SQLException e) {
             Log.e(TAG, "Can't create database", e);
             throw new RuntimeException(e);
@@ -135,6 +138,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                         break;
                     case 7:
                         updateDatabaseFrom7(db);
+                        break;
+                    case 8:
+                        updateDatabaseFrom8(db);
                         break;
                 }
                 fromDatabaseVersion++;
@@ -219,6 +225,83 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 Log.d(TAG, "Migration from database version 7 to next, done.");
             } catch (SQLiteException exception) {
                 Log.e(TAG, "Migration from database version 7 to next, failed.");
+                throw exception;
+            }
+        }
+    }
+
+    private void updateDatabaseFrom8(SQLiteDatabase db) throws SQLiteException {
+        if (db != null && db.isOpen()) {
+            try {
+                Log.d(TAG, "Will begin migration from database version 8 to next.");
+                db.beginTransaction();
+
+                db.execSQL("ALTER TABLE historytext ADD COLUMN conversationID INTEGER DEFAULT -1");
+                db.execSQL("ALTER TABLE historycall ADD COLUMN conversationID INTEGER DEFAULT -1");
+
+                db.execSQL("CREATE TABLE IF NOT EXISTS `conversation` (`id` INTEGER PRIMARY KEY, `accountID` VARCHAR , " +
+                        "`contactID` VARCHAR ) ;");
+
+                Cursor callTable = db.rawQuery("SELECT accountID, number FROM historycall;", new String[]{});
+                if (callTable.moveToFirst()) {
+                    int indexAccountId = callTable.getColumnIndex("accountID");
+                    int indexContactId = callTable.getColumnIndex("number");
+                    while (!callTable.isAfterLast()) {
+                        String accountId = callTable.getString(indexAccountId);
+                        String contactId = callTable.getString(indexContactId);
+                        Cursor conversationTable = db.rawQuery("SELECT id FROM conversation WHERE accountID=?"
+                                + " AND contactID=?", new String[]{accountId, contactId});
+                        if (conversationTable.getCount() == 0) {
+                            ContentValues contentValues = new ContentValues();
+                            contentValues.put("accountID", accountId);
+                            contentValues.put("contactID", contactId);
+                            long id = db.insert("conversation", null, contentValues);
+
+                            contentValues.clear();
+                            contentValues.put("conversationID", id);
+                            db.update("historycall", contentValues, "accountID=? AND number=?",
+                                    new String[]{accountId, contactId});
+                            db.update("historytext", contentValues, "accountID=? AND number=?",
+                                    new String[]{accountId, contactId});
+                        }
+                        conversationTable.close();
+                        callTable.moveToNext();
+                    }
+                }
+                callTable.close();
+
+                Cursor textTable = db.rawQuery("SELECT accountID, number FROM historytext;", new String[]{});
+                if (textTable.moveToFirst()) {
+                    int indexAccountId = textTable.getColumnIndex("accountID");
+                    int indexContactId = textTable.getColumnIndex("number");
+                    while (!textTable.isAfterLast()) {
+                        String accountId = textTable.getString(indexAccountId);
+                        String contactId = textTable.getString(indexContactId);
+                        Cursor conversationTable = db.rawQuery("SELECT id FROM conversation WHERE accountID=?"
+                                + " AND contactID=?;", new String[]{accountId, contactId});
+                        if (conversationTable.getCount() == 0) {
+                            ContentValues contentValues = new ContentValues();
+                            contentValues.put("accountID", accountId);
+                            contentValues.put("contactID", contactId);
+                            long id = db.insert("conversation", null, contentValues);
+
+                            contentValues.clear();
+                            contentValues.put("conversationID", id);
+                            db.update("historytext", contentValues, "accountID=? AND number=?",
+                                    new String[]{accountId, contactId});
+                        }
+                        conversationTable.close();
+                        textTable.moveToNext();
+                    }
+                }
+                textTable.close();
+
+                db.setTransactionSuccessful();
+                db.endTransaction();
+
+                Log.d(TAG, "Migration from database version 8 to next, done.");
+            } catch (SQLiteException exception) {
+                Log.e(TAG, "Migration from database version 8 to next, failed.");
                 throw exception;
             }
         }
