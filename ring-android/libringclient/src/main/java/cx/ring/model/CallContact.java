@@ -58,10 +58,10 @@ public class CallContact {
     }
 
     public CallContact(long cID, String k, String displayName, long photoID) {
-        this(cID, k, displayName, photoID, new ArrayList<Phone>(), null, false);
+        this(cID, k, displayName, photoID, new ArrayList<Phone>(), false);
     }
 
-    public CallContact(long cID, String k, String displayName, long photoID, ArrayList<Phone> p, String mail, boolean user) {
+    public CallContact(long cID, String k, String displayName, long photoID, ArrayList<Phone> p, boolean user) {
         mId = cID;
         mKey = k;
         mDisplayName = displayName;
@@ -76,14 +76,14 @@ public class CallContact {
     public static CallContact buildUnknown(Uri to) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, 0));
-        return new CallContact(UNKNOWN_ID, null, null, 0, phones, "", false);
+        return new CallContact(UNKNOWN_ID, null, to.getRawUriString(), 0, phones, false);
     }
 
     public static CallContact buildUnknown(String to) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, 0));
 
-        return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
+        return new CallContact(UNKNOWN_ID, null, to, 0, phones, false);
     }
 
     public static CallContact buildUnknown(String to, String address) {
@@ -94,13 +94,13 @@ public class CallContact {
             phones.add(new Phone(to, 0));
         }
 
-        return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
+        return new CallContact(UNKNOWN_ID, null, to, 0, phones, false);
     }
 
     public static CallContact buildUnknown(String to, int type) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, type));
-        return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
+        return new CallContact(UNKNOWN_ID, null, to, 0, phones, false);
     }
 
     public static CallContact buildRingContact(Uri ringId, String username) {
@@ -126,8 +126,6 @@ public class CallContact {
 
     public ArrayList<String> getIds() {
         ArrayList<String> ret = new ArrayList<>(1 + mPhones.size());
-        if (mId != UNKNOWN_ID)
-            ret.add("c:" + Long.toHexString(mId));
         for (Phone p : mPhones)
             ret.add(p.getNumber().getRawUriString());
         return ret;
