@@ -19,6 +19,8 @@
  */
 package cx.ring.adapters;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 
 import java.util.List;
@@ -26,6 +28,9 @@ import java.util.List;
 import cx.ring.smartlist.SmartListViewModel;
 
 public class SmartListDiffUtil extends DiffUtil.Callback {
+
+    public static final String KEY_CONTACT_NAME = "CONTACT_NAME";
+    public static final String KEY_PRESENCE = "PRESENCE";
 
     private List<SmartListViewModel> mOldList;
     private List<SmartListViewModel> mNewList;
@@ -53,5 +58,22 @@ public class SmartListDiffUtil extends DiffUtil.Callback {
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
         return mNewList.get(newItemPosition).equals(mOldList.get(oldItemPosition));
+    }
+
+    @Nullable
+    @Override
+    public Object getChangePayload(int oldItemPosition, int newItemPosition) {
+
+        SmartListViewModel newItem = mNewList.get(newItemPosition);
+        SmartListViewModel oldItem = mOldList.get(oldItemPosition);
+        Bundle diffBundle = new Bundle();
+        if (newItem.getContactName() != null && !newItem.getContactName().equals(oldItem.getContactName())) {
+            diffBundle.putString(KEY_CONTACT_NAME, newItem.getContactName());
+        }
+        if (newItem.isOnline() != oldItem.isOnline()) {
+            diffBundle.putBoolean(KEY_PRESENCE, newItem.isOnline());
+        }
+        if (diffBundle.size() == 0) return null;
+        return diffBundle;
     }
 }
