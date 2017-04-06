@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_c6723749",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-06T20:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_a3336df5",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 3
+      },
+      "revId": "a0c5052b86a3907dc3e5628f5f5c3b36e59b9103",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_435cf925",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-04T20:29:03Z",
       "side": 1,
       "message": "Shouldn\u0027t we exit the screen or catch the HISTORY_MODIFIED signal and react on that?\nRight now nothing happens visually when deleting the conversation.\nI know there is another issue with that for now (conversation is still presented in smartlist), and it will be a separate patch. In the current patch we should at least exit the screen no?",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 151,
+        "endChar": 67
+      },
+      "revId": "a0c5052b86a3907dc3e5628f5f5c3b36e59b9103",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_668fc324",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-06T20:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_435cf925",
       "range": {
         "startLine": 151,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_86943f38",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-06T20:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_23577d04",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 3
+      },
+      "revId": "a0c5052b86a3907dc3e5628f5f5c3b36e59b9103",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_8352f111",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationView.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-04-04T20:29:03Z",
       "side": 1,
       "message": "Not used in fragment",
+      "range": {
+        "startLine": 14,
+        "startChar": 42,
+        "endLine": 14,
+        "endChar": 53
+      },
+      "revId": "a0c5052b86a3907dc3e5628f5f5c3b36e59b9103",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_2699cb6e",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-06T20:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_8352f111",
       "range": {
         "startLine": 14,
         "startChar": 42,
