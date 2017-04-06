@@ -423,6 +423,15 @@ public class CallService extends Observable {
         return currentCalls.get(callId);
     }
 
+    public SipCall getCurrentCallForContactId(String contactId) {
+        for (SipCall call : currentCalls.values()) {
+            if (contactId.contains(call.getContact().getPhones().get(0).getNumber().toString())) {
+                return call;
+            }
+        }
+        return null;
+    }
+
     public void removeCallForId(String callId) {
         currentCalls.remove(callId);
     }

@@ -28,8 +28,7 @@ import java.util.Date;
 import java.util.Random;
 
 @DatabaseTable(tableName = HistoryText.TABLE_NAME)
-public class HistoryText
-{
+public class HistoryText {
     public static final String TABLE_NAME = "historytext";
     public static final String COLUMN_ID_NAME = "id";
     public static final String COLUMN_TIMESTAMP_NAME = "TIMESTAMP";
@@ -42,29 +41,32 @@ public class HistoryText
     public static final String COLUMN_MESSAGE_NAME = "message";
     public static final String COLUMN_READ_NAME = "read";
     public static final String COLUMN_STATE_NAME = "state";
+    public static final String COLUMN_CONVERSATION_ID_NAME = "conversationID";
 
-    @DatabaseField(index = true, columnName=COLUMN_ID_NAME, id = true)
+    @DatabaseField(index = true, columnName = COLUMN_ID_NAME, id = true)
     public long id;
-    @DatabaseField(index = true, columnName=COLUMN_TIMESTAMP_NAME)
+    @DatabaseField(index = true, columnName = COLUMN_TIMESTAMP_NAME)
     public long time;
-    @DatabaseField(columnName=COLUMN_NUMBER_NAME)
+    @DatabaseField(columnName = COLUMN_NUMBER_NAME)
     public String number;
-    @DatabaseField(columnName=COLUMN_DIRECTION_NAME)
+    @DatabaseField(columnName = COLUMN_DIRECTION_NAME)
     public int direction;
-    @DatabaseField(columnName=COLUMN_ACCOUNT_ID_NAME)
+    @DatabaseField(columnName = COLUMN_ACCOUNT_ID_NAME)
     String accountID;
-    @DatabaseField(columnName=COLUMN_CONTACT_ID_NAME)
+    @DatabaseField(columnName = COLUMN_CONTACT_ID_NAME)
     long contactID;
-    @DatabaseField(columnName=COLUMN_CONTACT_KEY_NAME)
+    @DatabaseField(columnName = COLUMN_CONTACT_KEY_NAME)
     String contactKey;
-    @DatabaseField(columnName=COLUMN_CALL_ID_NAME)
+    @DatabaseField(columnName = COLUMN_CALL_ID_NAME)
     String callID;
-    @DatabaseField(columnName=COLUMN_MESSAGE_NAME)
+    @DatabaseField(columnName = COLUMN_MESSAGE_NAME)
     String message;
-    @DatabaseField(columnName=COLUMN_READ_NAME)
+    @DatabaseField(columnName = COLUMN_READ_NAME)
     boolean read;
-    @DatabaseField(columnName=COLUMN_STATE_NAME)
+    @DatabaseField(columnName = COLUMN_STATE_NAME)
     String state;
+    @DatabaseField(columnName = COLUMN_CONVERSATION_ID_NAME)
+    public long conversationID;
 
     static private final Random R = new Random();
 
@@ -84,6 +86,7 @@ public class HistoryText
         }
         read = txt.isRead();
         state = txt.getStatus().toString();
+        conversationID = txt.getConversationID();
     }
 
     public String getAccountID() {
@@ -138,7 +141,11 @@ public class HistoryText
         return read;
     }
 
-    public TextMessage.Status getStatus(){
+    public TextMessage.Status getStatus() {
         return TextMessage.Status.fromString(state);
+    }
+
+    public long getConversationID() {
+        return conversationID;
     }
 }
