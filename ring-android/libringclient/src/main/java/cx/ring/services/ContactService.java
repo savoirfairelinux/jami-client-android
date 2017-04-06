@@ -33,7 +33,9 @@ import javax.inject.Named;
 
 import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.Ringservice;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
+import cx.ring.model.ConfigKey;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
 import cx.ring.model.Uri;
@@ -41,6 +43,8 @@ import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Tuple;
+import io.reactivex.Single;
+import io.reactivex.SingleSource;
 
 /**
  * This service handles the contacts
@@ -213,6 +217,22 @@ public abstract class ContactService extends Observable {
             }
         }
         return contacts;
+    }
+
+    public SingleSource<List<CallContact>> loadContacts(final boolean acceptAllMessages) {
+        return Single.fromCallable(new Callable<List<CallContact>>() {
+            @Override
+            public List<CallContact> call() throws Exception {
+
+                ArrayList<CallContact> contacts;
+                if (acceptAllMessages) {
+                    contacts = new ArrayList<>(getContactsNoBanned());
+                } else {
+                    contacts = new ArrayList<>(getContactsConfirmed());
+                }
+                return contacts;
+            }
+        });
     }
 
 
