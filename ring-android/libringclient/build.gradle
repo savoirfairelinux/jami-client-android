@@ -20,8 +20,12 @@ dependencies {
     // ORM
     compile 'com.j256.ormlite:ormlite-core:4.48'
 
+
     // Required -- JUnit 4 framework
     testCompile 'junit:junit:4.12'
+
+    //Rx
+    compile 'io.reactivex.rxjava2:rxjava:2.0.9'
 }
 
 sourceCompatibility = "1.7"

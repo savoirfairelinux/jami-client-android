@@ -37,6 +37,7 @@ import javax.inject.Inject;
 
 import cx.ring.daemon.StringMap;
 import cx.ring.history.DatabaseHelper;
+import cx.ring.model.ConversationModel;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryText;
 import cx.ring.utils.ProfileChunk;
@@ -82,6 +83,11 @@ public class HistoryServiceImpl extends HistoryService {
             cx.ring.utils.Log.e(TAG, "Unable to get a TextHistoryDao");
             return null;
         }
+    }
+
+    @Override
+    protected Dao<ConversationModel, Integer> getConversationDao() {
+        return null;
     }
 
     /**

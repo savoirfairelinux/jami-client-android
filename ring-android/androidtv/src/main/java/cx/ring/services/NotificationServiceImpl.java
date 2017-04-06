@@ -82,7 +82,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     }
 
     @Override
-    public void showTextNotification(CallContact contact, Conversation conversation, TreeMap<Long, TextMessage> texts) {
+    public void showTextNotification(CallContact contact, TreeMap<Long, TextMessage> texts) {
 
     }
 
