@@ -306,7 +306,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     public void sendTextMessage(String account, Uri to, String txt) {
         long id = mCallService.sendAccountTextMessage(account, to.getRawUriString(), txt);
         Log.i(TAG, "sendAccountTextMessage " + txt + " got id " + id);
-        TextMessage message = new TextMessage(false, txt, to, null, account);
+        long conversationID = mHistoryService.getConversationID(account, to.getRawUriString());
+        TextMessage message = new TextMessage(false, txt, to, null, account, conversationID);
         message.setID(id);
         message.read();
         mHistoryService.insertNewTextMessage(message);
@@ -315,7 +316,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     public void sendTextMessage(Conference conf, String txt) {
         mCallService.sendTextMessage(conf.getId(), txt);
         SipCall call = conf.getParticipants().get(0);
-        TextMessage message = new TextMessage(false, txt, call.getNumberUri(), conf.getId(), call.getAccount());
+        long conversationID = mHistoryService.getConversationID(call.getAccount(), call.getNumber());
+        TextMessage message = new TextMessage(false, txt, call.getNumberUri(), conf.getId(), call.getAccount(), conversationID);
         message.read();
         mHistoryService.insertNewTextMessage(message);
     }
@@ -627,6 +629,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                             if (newState == SipCall.State.HUNGUP) {
                                 call.setTimestampEnd(System.currentTimeMillis());
                             }
+                            long conversationID = mHistoryService.getConversationID(call.getAccount(), call.getNumber());
+                            call.setConversationID(conversationID);
 
                             mHistoryService.insertNewEntry(found);
                             conversation.addHistoryCall(new HistoryCall(call));
