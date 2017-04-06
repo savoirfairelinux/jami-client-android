@@ -50,7 +50,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
     private static final String DATABASE_NAME = "history.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     private Dao<HistoryCall, Integer> historyDao = null;
     private Dao<HistoryText, Integer> historyTextDao = null;
@@ -136,6 +136,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                     case 7:
                         updateDatabaseFrom7(db);
                         break;
+                    case 8:
+                        updateDatabaseFrom8(db);
+                        break;
                 }
                 fromDatabaseVersion++;
             }
@@ -219,6 +222,28 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 Log.d(TAG, "Migration from database version 7 to next, done.");
             } catch (SQLiteException exception) {
                 Log.e(TAG, "Migration from database version 7 to next, failed.");
+                throw exception;
+            }
+        }
+    }
+
+    private void updateDatabaseFrom8(SQLiteDatabase db) throws SQLiteException {
+        if (db != null && db.isOpen()) {
+            try {
+                Log.d(TAG, "Will begin migration from database version 8 to next.");
+                db.beginTransaction();
+
+                db.execSQL("ALTER TABLE historytext ADD COLUMN conversationID BIGINT DEFAULT `-1`");
+                db.execSQL("ALTER TABLE historycall ADD COLUMN conversationID BIGINT DEFAULT `-1`");
+
+                db.execSQL("CREATE TABLE IF NOT EXISTS `conversation` (`id` BIGINT, `accountID` VARCHAR , " +
+                        "`contactID` VARCHAR ) ;");
+
+                db.setTransactionSuccessful();
+                db.endTransaction();
+                Log.d(TAG, "Migration from database version 8 to next, done.");
+            } catch (SQLiteException exception) {
+                Log.e(TAG, "Migration from database version 8 to next, failed.");
                 throw exception;
             }
         }
