@@ -254,7 +254,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     public void sendTextMessage(String account, Uri to, String txt) {
         long id = mCallService.sendAccountTextMessage(account, to.getRawUriString(), txt);
         Log.i(TAG, "sendAccountTextMessage " + txt + " got id " + id);
-        TextMessage message = new TextMessage(false, txt, to, null, account);
+        long conversationID = mHistoryService.getConversationID(account, to.getRawUriString());
+        TextMessage message = new TextMessage(false, txt, to, null, account, conversationID);
         message.setID(id);
         message.read();
         mHistoryService.insertNewTextMessage(message);
@@ -263,7 +264,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     public void sendTextMessage(Conference conf, String txt) {
         mCallService.sendTextMessage(conf.getId(), txt);
         SipCall call = conf.getParticipants().get(0);
-        TextMessage message = new TextMessage(false, txt, call.getNumberUri(), conf.getId(), call.getAccount());
+        long conversationID = mHistoryService.getConversationID(call.getAccount(), call.getNumber());
+        TextMessage message = new TextMessage(false, txt, call.getNumberUri(), conf.getId(), call.getAccount(), conversationID);
         message.read();
         mHistoryService.insertNewTextMessage(message);
     }
@@ -314,7 +316,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             }
 
             CallContact contact = conversation.getContact();
-            mNotificationService.showTextNotification(contact, conversation, texts);
+            mNotificationService.showTextNotification(contact, texts);
         }
     }
 
@@ -354,6 +356,10 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     }
 
     private void parseNewMessage(TextMessage txt, String call) {
+        if (!txt.getAccount().equals(mAccountService.getCurrentAccount().getAccountID())) {
+            return;
+        }
+
         Conversation conversation;
         if (call != null && !call.isEmpty()) {
             conversation = getConversationByCallId(call);
@@ -370,6 +376,9 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     private void parseHistoryCalls(List<HistoryCall> historyCalls, boolean acceptAllMessages) {
         for (HistoryCall call : historyCalls) {
+            if (!call.getAccountID().equals(mAccountService.getCurrentAccount().getAccountID())) {
+                return;
+            }
             String key = StringUtils.getRingIdFromNumber(call.getNumber());
             String phone = "";
             CallContact contact = mContactService.findContact(call.getContactID(), call.getContactKey(), call.getNumber());
@@ -389,6 +398,10 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     private void parseHistoryTexts(List<HistoryText> historyTexts, boolean acceptAllMessages) {
         for (HistoryText htext : historyTexts) {
+            if (!htext.getAccountID().equals(mAccountService.getCurrentAccount().getAccountID())) {
+                return;
+            }
+
             TextMessage msg = new TextMessage(htext);
             String key = StringUtils.getRingIdFromNumber(htext.getNumber());
             String phone = "";
@@ -583,6 +596,9 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                         if (call.getTimestampEnd() == 0) {
                             call.setTimestampEnd(System.currentTimeMillis());
                         }
+
+                        long conversationID = mHistoryService.getConversationID(call.getAccount(), call.getNumber());
+                        call.setConversationID(conversationID);
 
                         mHistoryService.insertNewEntry(new Conference(call));
                         conference.removeParticipant(call);

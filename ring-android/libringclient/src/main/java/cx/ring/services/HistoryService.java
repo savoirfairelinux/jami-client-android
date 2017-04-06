@@ -29,14 +29,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.daemon.StringMap;
+import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.ConversationModel;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryEntry;
 import cx.ring.model.HistoryText;
@@ -46,6 +49,10 @@ import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
+import cx.ring.utils.Tuple;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
+import io.reactivex.annotations.NonNull;
 
 /**
  * A service managing all history related tasks.
@@ -69,6 +76,8 @@ public abstract class HistoryService extends Observable {
     protected abstract Dao<HistoryText, Integer> getTextHistoryDao();
 
     public abstract String getRelativeTimeSpanString(long lastInteraction);
+
+    protected abstract Dao<ConversationModel, Integer> getConversationDao();
 
     public boolean insertNewEntry(Conference toInsert) {
 
@@ -122,7 +131,8 @@ public abstract class HistoryService extends Observable {
     public boolean updateTextMessage(HistoryText txt) {
         try {
             Log.d(TAG, "HistoryDao().update() id:" + txt.id + " acc:" + txt.getAccountID() + " num:"
-                    + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage());
+                    + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage()
+                    + " conversationID:" + txt.getConversationID());
             getTextHistoryDao().update(txt);
         } catch (SQLException e) {
             Log.e(TAG, "Error while updating text message", e);
@@ -251,7 +261,12 @@ public abstract class HistoryService extends Observable {
             return;
         }
 
-        TextMessage txt = new TextMessage(true, msg, new Uri(from), null, accountId);
+        if(!from.contains(CallContact.PREFIX_RING)) {
+            from = CallContact.PREFIX_RING + from;
+        }
+
+        long conversationId = getConversationID(accountId, from);
+        TextMessage txt = new TextMessage(true, msg, new Uri(from), null, accountId, conversationId);
         Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
 
         insertNewTextMessage(txt);
@@ -261,5 +276,56 @@ public abstract class HistoryService extends Observable {
         event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
         setChanged();
         notifyObservers(event);
+    }
+
+    public long getConversationID(String accountID, String contactID) {
+        try {
+            QueryBuilder<ConversationModel, Integer> queryBuilder = getConversationDao().queryBuilder();
+            queryBuilder.where().eq(ConversationModel.COLUMN_ACCOUNT_ID_NAME, accountID)
+                    .and().eq(ConversationModel.COLUMN_CONTACT_ID_NAME, contactID);
+            queryBuilder.selectColumns(ConversationModel.COLUMN_ID_NAME);
+            List<ConversationModel> conversations = getConversationDao().query(queryBuilder.prepare());
+            if (conversations.isEmpty()) {
+                ConversationModel conversationModel = new ConversationModel(accountID, contactID);
+                getConversationDao().create(conversationModel);
+                return conversationModel.getId();
+            } else {
+                return conversations.get(0).getId();
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "Can't find the conversation", e);
+            return -1;
+        }
+    }
+
+    public Single<List<ConversationModel>> getConversationsForAccount(final String accountId) {
+        return Single.fromCallable(new Callable<List<ConversationModel>>() {
+            @Override
+            public List<ConversationModel> call() throws Exception {
+                QueryBuilder<ConversationModel, Integer> queryBuilder = getConversationDao().queryBuilder();
+                queryBuilder.where().eq(ConversationModel.COLUMN_ACCOUNT_ID_NAME, accountId);
+                return getConversationDao().query(queryBuilder.prepare());
+            }
+        });
+    }
+
+    public HistoryText getLastHistoryText(final long conversationId) throws SQLException {
+        QueryBuilder<HistoryText, Integer> textQueryBuilder = getTextHistoryDao().queryBuilder();
+        textQueryBuilder.limit(1L)
+                .orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, false)
+                .where().eq(HistoryText.COLUMN_CONVERSATION_ID_NAME, conversationId);
+        List<HistoryText> textList = getTextHistoryDao().query(textQueryBuilder.prepare());
+
+        return textList.isEmpty() ? null : textList.get(0);
+    }
+
+    public HistoryCall getLastHistoryCall(final long conversationId) throws SQLException {
+        QueryBuilder<HistoryCall, Integer> callQueryBuilder = getCallHistoryDao().queryBuilder();
+        callQueryBuilder.limit(1L)
+                .orderBy(HistoryCall.COLUMN_TIMESTAMP_END_NAME, false)
+                .where().eq(HistoryCall.COLUMN_CONVERSATION_ID_NAME, conversationId);
+        List<HistoryCall> callList = getCallHistoryDao().query(callQueryBuilder.prepare());
+
+        return callList.isEmpty() ? null : callList.get(0);
     }
 }
