@@ -42,6 +42,7 @@ public class HistoryText
     public static final String COLUMN_MESSAGE_NAME = "message";
     public static final String COLUMN_READ_NAME = "read";
     public static final String COLUMN_STATE_NAME = "state";
+    public static final String COLUMN_CONVERSATION_ID_NAME = "conversationID";
 
     @DatabaseField(index = true, columnName=COLUMN_ID_NAME, id = true)
     public long id;
@@ -65,6 +66,8 @@ public class HistoryText
     boolean read;
     @DatabaseField(columnName=COLUMN_STATE_NAME)
     String state;
+    @DatabaseField(columnName = COLUMN_CONVERSATION_ID_NAME)
+    public long conversationID;
 
     static private final Random R = new Random();
 
