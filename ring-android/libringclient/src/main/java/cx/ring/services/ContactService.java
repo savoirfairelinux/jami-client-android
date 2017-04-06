@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
@@ -37,6 +38,8 @@ import cx.ring.model.Settings;
 import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
+import io.reactivex.Single;
+import io.reactivex.SingleSource;
 
 /**
  * This service handles the contacts
@@ -79,6 +82,7 @@ public abstract class ContactService extends Observable {
     public abstract void loadContactData(CallContact callContact);
 
     public abstract void saveVCardContactData(CallContact contact);
+
     public abstract void loadVCardContactData(CallContact contact);
 
     public ContactService() {
@@ -97,18 +101,30 @@ public abstract class ContactService extends Observable {
             @Override
             public void run() {
                 Settings settings = mPreferencesService.loadSettings();
+                boolean hasChanged = false;
                 if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
-                    mContactList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
+                    Map<Long, CallContact> newList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
+
+                    if (!mContactList.equals(newList)) {
+                        mContactList = newList;
+                        hasChanged = true;
+                    }
+
                 }
-                mContactsRing.clear();
-                mAccountId = account.getAccountID();
                 Map<String, CallContact> ringContacts = account.getContacts();
-                for (CallContact contact : ringContacts.values()) {
-                    mContactsRing.put(contact.getPhones().get(0).getNumber().getRawUriString(), contact);
+                if (!mContactsRing.equals(ringContacts.values())) {
+                    mContactsRing.clear();
+                    for (CallContact contact : ringContacts.values()) {
+                        mContactsRing.put(contact.getPhones().get(0).getNumber().getRawUriString(), contact);
+                    }
+                    hasChanged = true;
                 }
-                setChanged();
-                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACTS_CHANGED);
-                notifyObservers(event);
+
+                if (hasChanged) {
+                    setChanged();
+                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACTS_CHANGED);
+                    notifyObservers(event);
+                }
             }
         });
     }
@@ -202,6 +218,28 @@ public abstract class ContactService extends Observable {
             }
         }
         return contacts;
+    }
+
+    public SingleSource<List<CallContact>> loadContacts(
+            final boolean acceptAllMessages) {
+        return Single.fromCallable(new Callable<List<CallContact>>() {
+            @Override
+            public List<CallContact> call() throws Exception {
+
+                ArrayList<CallContact> contacts;
+                if (acceptAllMessages) {
+                    contacts = new ArrayList<>(getContactsNoBanned());
+                } else {
+                    contacts = new ArrayList<>(getContactsDaemon());
+                }
+                return contacts;
+            }
+        });
+    }
+
+    public void updateContactUserName(Uri contactId, String userName) {
+        CallContact callContact = getContact(contactId);
+        callContact.setUsername(userName);
     }
 
 

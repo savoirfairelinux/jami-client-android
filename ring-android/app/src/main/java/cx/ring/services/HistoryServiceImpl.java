@@ -32,6 +32,7 @@ import java.sql.SQLException;
 import javax.inject.Inject;
 
 import cx.ring.history.DatabaseHelper;
+import cx.ring.model.ConversationModel;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryText;
 
@@ -39,6 +40,7 @@ import cx.ring.model.HistoryText;
  * Implements the necessary Android related methods for the {@link HistoryService}
  */
 public class HistoryServiceImpl extends HistoryService {
+
     private static final String TAG = HistoryServiceImpl.class.getSimpleName();
 
     @Inject
@@ -70,6 +72,15 @@ public class HistoryServiceImpl extends HistoryService {
             return getHelper().getTextHistoryDao();
         } catch (SQLException e) {
             cx.ring.utils.Log.e(TAG, "Unable to get a TextHistoryDao");
+            return null;
+        }
+    }
+
+    protected Dao<ConversationModel, Integer> getConversationDao() {
+        try {
+            return getHelper().getConversationDao();
+        } catch (SQLException e) {
+            cx.ring.utils.Log.e(TAG, "Unable to get a ConversationDao");
             return null;
         }
     }

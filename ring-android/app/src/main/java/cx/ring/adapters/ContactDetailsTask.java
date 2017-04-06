@@ -138,6 +138,7 @@ public class ContactDetailsTask implements Runnable {
         synchronized (mCallbacks) {
             for (DetailsLoadedCallback cb : mCallbacks) {
                 cb.onDetailsLoaded(externalBMP, mContact.getDisplayName(), mContact.getRingUsername());
+
             }
             mCallbacks.clear();
         }
