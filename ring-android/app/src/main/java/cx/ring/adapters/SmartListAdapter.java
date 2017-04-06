@@ -21,9 +21,11 @@ package cx.ring.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,7 @@ import com.bumptech.glide.signature.StringSignature;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import cx.ring.R;
 import cx.ring.smartlist.SmartListViewModel;
@@ -85,7 +88,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         }
 
         holder.convParticipants.setText(smartListViewModel.getContactName());
-        holder.convTime.setText(smartListViewModel.getLastInteractionTime());
+        holder.convTime.setText(smartListViewModel.getLastInteractionTime() == 0 ? "" : DateUtils.getRelativeTimeSpanString(smartListViewModel.getLastInteractionTime()));
         if (smartListViewModel.hasOngoingCall()) {
             holder.convStatus.setText(holder.itemView.getContext().getString(R.string.ongoing_call));
         } else if (smartListViewModel.getLastInteraction() != null) {
@@ -130,6 +133,24 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         holder.online.setVisibility(smartListViewModel.isOnline() ? View.VISIBLE : View.GONE);
 
         holder.bind(listener, smartListViewModel);
+    }
+
+    @Override
+    public void onBindViewHolder(SmartListViewHolder holder, int position, List<Object> payloads) {
+        super.onBindViewHolder(holder, position, payloads);
+
+        if (payloads.isEmpty()) {
+            return;
+        } else {
+            Bundle bundle = (Bundle) payloads.get(0);
+            for (String key : bundle.keySet()) {
+                if (key.equals(SmartListDiffUtil.KEY_CONTACT_NAME)) {
+                    holder.convParticipants.setText(bundle.getString(SmartListDiffUtil.KEY_CONTACT_NAME));
+                } else if (key.equals(SmartListDiffUtil.KEY_PRESENCE)) {
+                    holder.online.setVisibility(bundle.getBoolean(SmartListDiffUtil.KEY_PRESENCE) ? View.VISIBLE : View.GONE);
+                }
+            }
+        }
     }
 
     @Override
