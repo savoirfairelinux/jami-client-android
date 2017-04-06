@@ -19,18 +19,26 @@
  */
 package cx.ring.smartlist;
 
+
 import java.lang.ref.WeakReference;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
+import cx.ring.model.ConfigKey;
 import cx.ring.model.Conversation;
+import cx.ring.model.ConversationModel;
+import cx.ring.model.HistoryCall;
+import cx.ring.model.HistoryText;
 import cx.ring.model.Phone;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
@@ -46,6 +54,15 @@ import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.Tuple;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 public class SmartListPresenter extends RootPresenter<SmartListView> implements Observer<ServiceEvent> {
 
@@ -68,10 +85,13 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     private BlockchainInputHandler mBlockchainInputHandler;
     private String mLastBlockchainQuery = null;
 
-    private ArrayList<Conversation> mConversations;
     private ArrayList<SmartListViewModel> mSmartListViewModels;
 
+    private List<ConversationModel> mConversationModels;
+
     private CallContact mCallContact;
+
+    private String currentAccount;
 
     @Inject
     public SmartListPresenter(AccountService accountService, ContactService contactService,
@@ -108,10 +128,151 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         mPresenceService.addObserver(this);
     }
 
+    public void init() {
+        currentAccount = mAccountService.getCurrentAccount().getAccountID();
+        loadConversations(currentAccount);
+    }
+
+    private void loadConversations(final String accountId) {
+        if (mSmartListViewModels == null) {
+            mSmartListViewModels = new ArrayList<>();
+        }
+        mSmartListViewModels.clear();
+        compositeDisposable.add(mHistoryService.getConversationsForAccount(accountId)
+                .map(new Function<List<ConversationModel>, List<ConversationModel>>() {
+                    @Override
+                    public List<ConversationModel> apply(@NonNull List<ConversationModel> conversationModels) throws Exception {
+                        return loadConversationFromContacts(accountId, conversationModels);
+                    }
+                })
+                .flatMapObservable(new Function<List<ConversationModel>, ObservableSource<ConversationModel>>() {
+                    @Override
+                    public ObservableSource<ConversationModel> apply(@NonNull List<ConversationModel> conversationModels) throws Exception {
+                        mConversationModels = conversationModels;
+                        return io.reactivex.Observable.fromIterable(conversationModels);
+                    }
+                })
+                .flatMap(new Function<ConversationModel, ObservableSource<SmartListViewModel>>() {
+                    @Override
+                    public ObservableSource<SmartListViewModel> apply(@NonNull final ConversationModel conversationModel) throws Exception {
+                        return io.reactivex.Observable.fromCallable(new Callable<SmartListViewModel>() {
+                            @Override
+                            public SmartListViewModel call() throws Exception {
+                                return createViewModelFromConversation(conversationModel);
+                            }
+                        });
+                    }
+                })
+                .subscribeOn(Schedulers.computation())
+                .subscribeWith(new DisposableObserver<SmartListViewModel>() {
+                    @Override
+                    public void onNext(@NonNull SmartListViewModel smartListViewModel) {
+                        if (mSmartListViewModels != null && !mSmartListViewModels.contains(smartListViewModel)) {
+                            mSmartListViewModels.add(smartListViewModel);
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e(TAG, e.toString());
+                        getView().setLoading(false);
+                        getView().displayNoConversationMessage();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Collections.sort(mSmartListViewModels, new Comparator<SmartListViewModel>() {
+                            @Override
+                            public int compare(SmartListViewModel lhs, SmartListViewModel rhs) {
+                                return (int) ((rhs.getLastInteractionTime() - lhs.getLastInteractionTime()) / 1000l);
+                            }
+                        });
+
+                        getView().updateList(mSmartListViewModels);
+                        getView().setLoading(false);
+                        getView().hideNoConversationMessage();
+                        subscribePresence();
+                    }
+                }));
+    }
+
+    private List<ConversationModel> loadConversationFromContacts(String accountId, List<ConversationModel> conversationModels) {
+
+        Account account = mAccountService.getCurrentAccount();
+        boolean acceptAllMessages = account.getDetailBoolean(ConfigKey.DHT_PUBLIC_IN);
+        ArrayList<CallContact> contacts;
+        if (acceptAllMessages) {
+            contacts = new ArrayList<>(mContactService.getContactsNoBanned());
+        } else {
+            contacts = new ArrayList<>(mContactService.getContactsConfirmed());
+        }
+
+        boolean found = false;
+
+        for (CallContact callContact : contacts) {
+            for (ConversationModel conversationModel : conversationModels) {
+                if (callContact.getPhones().get(0).getNumber().toString().equals(conversationModel.getContactId())) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                ConversationModel conversationModel = new ConversationModel(accountId, String.valueOf(callContact.getPhones().get(0).getNumber()));
+                conversationModels.add(conversationModel);
+            }
+            found = false;
+        }
+        return conversationModels;
+    }
+
+    private SmartListViewModel createViewModelFromConversation(final ConversationModel conversationModel) throws SQLException {
+        CallContact callContact = mContactService.getContact(new Uri(conversationModel.getContactId()));
+        Tuple<String, byte[]> tuple = mContactService.loadContactData(callContact);
+
+        HistoryText lastText = mHistoryService.getLastHistoryText(conversationModel.getId());
+        HistoryCall lastCall = mHistoryService.getLastHistoryCall(conversationModel.getId());
+        long lastInteractionLong = 0;
+        int lastEntryType = 0;
+        String lastInteraction = "";
+        boolean hasUnreadMessage = lastText != null && !lastText.isRead();
+
+        long lastTextTimestamp = lastText != null ? lastText.getDate().getTime() : 0;
+        long lastCallTimestamp = lastCall != null ? lastCall.getEndDate().getTime() : 0;
+        if (lastTextTimestamp > 0 && lastTextTimestamp > lastCallTimestamp) {
+            String msgString = lastText.getMessage();
+            if (msgString != null && !msgString.isEmpty() && msgString.contains("\n")) {
+                int lastIndexOfChar = msgString.lastIndexOf("\n");
+                if (lastIndexOfChar + 1 < msgString.length()) {
+                    msgString = msgString.substring(msgString.lastIndexOf("\n") + 1);
+                }
+            }
+            lastInteractionLong = lastTextTimestamp;
+            lastEntryType = lastText.isIncoming() ? SmartListViewModel.TYPE_INCOMING_MESSAGE : SmartListViewModel.TYPE_OUTGOING_MESSAGE;
+            lastInteraction = msgString;
+
+        } else if (lastCallTimestamp > 0) {
+            lastInteractionLong = lastCallTimestamp;
+            lastEntryType = lastCall.isIncoming() ? SmartListViewModel.TYPE_INCOMING_CALL : SmartListViewModel.TYPE_OUTGOING_CALL;
+            lastInteraction = lastCall.getDurationString();
+        }
+
+        SmartListViewModel smartListViewModel = new SmartListViewModel(conversationModel.getId(),
+                callContact,
+                tuple.first,
+                tuple.second,
+                lastInteractionLong,
+                lastEntryType,
+                lastInteraction,
+                hasUnreadMessage);
+
+        smartListViewModel.setOnline(mPresenceService.isBuddyOnline(callContact.getIds().get(0)));
+        return smartListViewModel;
+    }
+
     public void refresh() {
         refreshConnectivity();
-        mConversationFacade.refreshConversations();
-        subscribePresence();
+        init();
+        searchForRingIdInBlockchain();
         getView().hideSearchRow();
     }
 
@@ -185,23 +346,24 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     }
 
     public void conversationClicked(SmartListViewModel smartListViewModel) {
-        Conversation conversation = getConversationByUuid(mConversations, smartListViewModel.getUuid());
-        if (conversation != null && conversation.getContact() != null) {
-            startConversation(conversation.getContact());
+        ConversationModel conversation = getConversationById(mConversationModels, smartListViewModel.getUuid());
+        if (conversation != null && conversation.getContactId() != null) {
+            startConversation(mContactService.getContact(new Uri(conversation.getContactId())));
         }
     }
 
+    //TODO
     public void conversationLongClicked(SmartListViewModel smartListViewModel) {
-        Conversation conversation = getConversationByUuid(mConversations, smartListViewModel.getUuid());
+/*        Conversation conversation = getConversationByUuid(mConversations, smartListViewModel.getUuid());
         if (conversation != null) {
             getView().displayConversationDialog(conversation);
-        }
+        }*/
     }
 
     public void photoClicked(SmartListViewModel smartListViewModel) {
-        Conversation conversation = getConversationByUuid(mConversations, smartListViewModel.getUuid());
-        if (conversation != null && conversation.getContact() != null) {
-            getView().goToContact(conversation.getContact());
+        ConversationModel conversation = getConversationById(mConversationModels, smartListViewModel.getUuid());
+        if (conversation != null && conversation.getContactId() != null) {
+            getView().goToContact(mContactService.getContact(new Uri(conversation.getContactId())));
         }
     }
 
@@ -262,44 +424,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         }
     }
 
-    private synchronized void displayConversations() {
-        if (mConversations == null) {
-            mConversations = new ArrayList<>();
-        }
-        mSmartListViewModels = new ArrayList<>();
-        mConversations.clear();
-        mConversations.addAll(mConversationFacade.getConversationsList());
-        if (mConversations != null && mConversations.size() > 0) {
-            for (int i = 0; i < mConversations.size(); i++) {
-                Conversation conversation = mConversations.get(i);
-                SmartListViewModel smartListViewModel;
-                CallContact contact = conversation.getContact();
-
-                long lastInteractionTime = conversation.getLastInteraction().getTime();
-                String lastInteraction = lastInteractionTime == new Date(0).getTime() ?
-                        "" : mHistoryService.getRelativeTimeSpanString(lastInteractionTime);
-                Tuple<String, byte[]> tuple = mContactService.loadContactData(contact);
-                if (tuple != null) {
-                    if (!tuple.first.equals(contact.getPhones().get(0).getNumber().getRawUriString())) {
-                        contact.setDisplayName(tuple.first);
-                    }
-                    smartListViewModel = new SmartListViewModel(conversation,
-                            contact.getDisplayName(),
-                            tuple.second,
-                            lastInteraction);
-                    smartListViewModel.setOnline(mPresenceService.isBuddyOnline(contact.getIds().get(0)));
-                    mSmartListViewModels.add(smartListViewModel);
-                }
-            }
-            getView().updateList(mSmartListViewModels);
-            getView().hideNoConversationMessage();
-            getView().setLoading(false);
-        } else {
-            getView().displayNoConversationMessage();
-            getView().setLoading(false);
-        }
-    }
-
     private ArrayList<SmartListViewModel> filter(ArrayList<SmartListViewModel> list, String query) {
         ArrayList<SmartListViewModel> filteredList = new ArrayList<>();
         if (list == null || list.size() == 0) {
@@ -313,14 +437,15 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         return filteredList;
     }
 
-    private Conversation getConversationByUuid(ArrayList<Conversation> conversations, String uuid) {
-        for (Conversation conversation : conversations) {
-            if (conversation.getUuid().equals(uuid)) {
+    private ConversationModel getConversationById(List<ConversationModel> conversationModels, long id) {
+        for (ConversationModel conversation : conversationModels) {
+            if (conversation.getId() == id) {
                 return conversation;
             }
         }
         return null;
     }
+
 
     private void parseEventState(String name, String address, int state) {
         switch (state) {
@@ -409,20 +534,23 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 refreshConnectivity();
                 break;
             case HISTORY_LOADED:
-            case CONVERSATIONS_CHANGED:
-                displayConversations();
                 searchForRingIdInBlockchain();
+                break;
+            case CONVERSATIONS_CHANGED:
+            case INCOMING_MESSAGE:
+            case INCOMING_CALL:
+                loadConversations(currentAccount);
                 getView().scrollToTop();
                 break;
             case USERNAME_CHANGED:
-                displayConversations();
+                loadConversations(currentAccount);
                 break;
         }
 
         if (observable instanceof PresenceService) {
             switch (event.getEventType()) {
                 case NEW_BUDDY_NOTIFICATION:
-                    displayConversations();
+                    loadConversations(currentAccount);
                     break;
             }
         }

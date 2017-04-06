@@ -24,6 +24,7 @@ import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +86,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         }
 
         holder.convParticipants.setText(smartListViewModel.getContactName());
-        holder.convTime.setText(smartListViewModel.getLastInteractionTime());
+        holder.convTime.setText(smartListViewModel.getLastInteractionTime() == 0 ? "" : DateUtils.getRelativeTimeSpanString(smartListViewModel.getLastInteractionTime()));
         if (smartListViewModel.hasOngoingCall()) {
             holder.convStatus.setText(holder.itemView.getContext().getString(R.string.ongoing_call));
         } else if (smartListViewModel.getLastInteraction() != null) {
@@ -122,7 +123,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
             Glide.with(holder.itemView.getContext())
                     .load(R.drawable.ic_contact_picture)
                     .crossFade()
-                    .signature(new StringSignature(smartListViewModel.getUuid()))
+                    .signature(new StringSignature(Long.toString(smartListViewModel.getUuid())))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.photo);
         }
