@@ -46,6 +46,7 @@ public class HistoryCall implements Serializable {
     public static final String COLUMN_CONTACT_ID_NAME = "contactID";
     public static final String COLUMN_CONTACT_KEY_NAME = "contactKey";
     public static final String COLUMN_CALL_ID_NAME = "callID";
+    public static final String COLUMN_CONVERSATION_ID_NAME = "conversationID";
 
     @DatabaseField(index = true, columnName = COLUMN_TIMESTAMP_START_NAME)
     public long call_start;
@@ -67,6 +68,8 @@ public class HistoryCall implements Serializable {
     String contactKey;
     @DatabaseField(columnName = COLUMN_CALL_ID_NAME)
     String callID;
+    @DatabaseField(columnName = COLUMN_CONVERSATION_ID_NAME)
+    public long conversationID;
 
     public String getAccountID() {
         return accountID;
@@ -84,13 +87,14 @@ public class HistoryCall implements Serializable {
         call_start = call.getTimestampStart();
         call_end = call.getTimestampEnd();
         accountID = call.getAccount();
-        number = call.getNumber();
+        number = call.getNumberUri().getUsername();
         missed = call.isMissed();
         direction = call.getCallType();
         recordPath = call.getRecordPath();
         contactID = call.getContact().getId();
         contactKey = call.getContact().getKey();
         callID = call.getCallId();
+        conversationID = call.getConversationID();
     }
 
     /* Needed by ORMLite */
@@ -167,6 +171,10 @@ public class HistoryCall implements Serializable {
 
     public CharSequence getCallId() {
         return callID;
+    }
+
+    public long getConversationID() {
+        return conversationID;
     }
 
     @Override
