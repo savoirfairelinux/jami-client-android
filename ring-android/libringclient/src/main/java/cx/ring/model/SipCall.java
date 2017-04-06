@@ -39,6 +39,7 @@ public class SipCall {
     private long timestampStart = 0;
     private long timestampEnd = 0;
     private boolean missed = true;
+    private long mConversationID = -1;
 
     private int mCallType;
     private int mCallState = State.NONE;
@@ -70,6 +71,7 @@ public class SipCall {
         timestampEnd = call.timestampEnd;
         mCallType = call.mCallType;
         mCallState = call.mCallState;
+        mConversationID = call.mConversationID;
     }
 
     /**
@@ -320,5 +322,11 @@ public class SipCall {
         return mCallState == State.CURRENT;
     }
 
+    public long getConversationID() {
+        return mConversationID;
+    }
 
+    public void setConversationID(long conversationID) {
+        mConversationID = conversationID;
+    }
 }

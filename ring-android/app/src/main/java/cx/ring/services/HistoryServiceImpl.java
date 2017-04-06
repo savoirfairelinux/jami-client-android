@@ -37,6 +37,7 @@ import javax.inject.Inject;
 
 import cx.ring.daemon.StringMap;
 import cx.ring.history.DatabaseHelper;
+import cx.ring.model.ConversationModel;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryText;
 import cx.ring.utils.ProfileChunk;
@@ -87,6 +88,15 @@ public class HistoryServiceImpl extends HistoryService {
     @Override
     public String getRelativeTimeSpanString(long lastInteraction) {
         return DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL).toString();
+    }
+
+    protected Dao<ConversationModel, Integer> getConversationDao() {
+        try {
+            return getHelper().getConversationDao();
+        } catch (SQLException e) {
+            cx.ring.utils.Log.e(TAG, "Unable to get a ConversationDao");
+            return null;
+        }
     }
 
     /**
