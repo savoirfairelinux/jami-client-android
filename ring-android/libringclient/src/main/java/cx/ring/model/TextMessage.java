@@ -32,6 +32,7 @@ public class TextMessage {
     private Status mState = Status.UNKNOWN;
     private String mMessage;
     private String mCallID = "";
+    private long mConversationID = -1;
 
     private boolean mRead = false;
     private boolean mNotified = false;
@@ -76,7 +77,7 @@ public class TextMessage {
         }
 
         public String toString() {
-            switch (s){
+            switch (s) {
                 case 1:
                     return "SENDING";
                 case 2:
@@ -92,13 +93,14 @@ public class TextMessage {
         }
     }
 
-    public TextMessage(boolean in, String message, Uri number, String callid, String account) {
+    public TextMessage(boolean in, String message, Uri number, String callid, String account, long conversationID) {
         mAccount = account;
         mNumber = number;
         mMessage = message;
         mTimestamp = System.currentTimeMillis();
         mCallID = callid;
         mType = in ? direction.INCOMING : direction.OUTGOING;
+        mConversationID = conversationID;
     }
 
     public TextMessage(HistoryText h) {
@@ -111,6 +113,7 @@ public class TextMessage {
         mCallID = h.getCallId();
         mRead = h.isRead();
         mState = h.getStatus();
+        mConversationID = h.getConversationID();
     }
 
     public String getRecordPath() {
@@ -227,6 +230,10 @@ public class TextMessage {
 
     public void setNotified(boolean noti) {
         mNotified = noti;
+    }
+
+    public long getConversationID() {
+        return mConversationID;
     }
 
     @Override
