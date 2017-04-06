@@ -74,6 +74,7 @@ ANDROID_API=android-$ANDROID_API_VERS
 export ANDROID_TOOLCHAIN="`pwd`/android-toolchain-$ANDROID_API_VERS-$PLATFORM_SHORT_ARCH"
 if [ ! -d "$ANDROID_TOOLCHAIN" ]; then
     $ANDROID_NDK/build/tools/make_standalone_toolchain.py \
+        --unified-headers \
         --arch=$PLATFORM_SHORT_ARCH \
         --api $ANDROID_API_VERS \
         --stl libc++ \
@@ -114,7 +115,7 @@ if [ ! -d "$DAEMON_DIR" ]; then
     exit 1
 fi
 
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -O2 -DHAVE_PTHREADS -I${ANDROID_TOOLCHAIN}/include/c++/4.9.x"
+EXTRA_CFLAGS="${EXTRA_CFLAGS} -D__ANDROID_API__=$ANDROID_API_VERS -O2 -DHAVE_PTHREADS -I${ANDROID_TOOLCHAIN}/include/c++/4.9.x"
 
 # Setup LDFLAGS
 if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
@@ -126,7 +127,7 @@ elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
 elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
     EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/sysroot/usr/lib -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/lib"
 fi
-EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR} -lm -latomic -landroid_support"
+EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR} -pie -lm -latomic -landroid_support"
 
 EXTRA_CXXFLAGS="${EXTRA_CFLAGS}"
 EXTRA_CFLAGS="-std=c11 ${EXTRA_CFLAGS}"
@@ -187,8 +188,8 @@ else
 fi
 
 export SYSROOT=$ANDROID_TOOLCHAIN/sysroot
-echo "EXTRA_CFLAGS= -g -fpic ${EXTRA_CFLAGS}" >> config.mak
-echo "EXTRA_CXXFLAGS= -g -fpic ${EXTRA_CXXFLAGS}" >> config.mak
+echo "EXTRA_CFLAGS=-I${SYSROOT}/usr/include -g -fpic ${EXTRA_CFLAGS}" >> config.mak
+echo "EXTRA_CXXFLAGS=-I${SYSROOT}/usr/include -g -fpic ${EXTRA_CXXFLAGS}" >> config.mak
 echo "EXTRA_LDFLAGS= ${EXTRA_LDFLAGS} -L${SYSROOT}/usr/${LIBDIR}" >> config.mak
 export RING_EXTRA_CFLAGS="${EXTRA_CFLAGS}"
 export RING_EXTRA_CXXFLAGS="${EXTRA_CXXFLAGS}"
