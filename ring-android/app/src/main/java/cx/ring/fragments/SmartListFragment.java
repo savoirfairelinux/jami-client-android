@@ -490,10 +490,21 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
+    public void hideEmptyList() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
     public void updateList(final ArrayList<SmartListViewModel> smartListViewModels) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                mRecyclerView.setVisibility(View.VISIBLE);
                 if (mRecyclerView.getAdapter() == null) {
                     mSmartListAdapter = new SmartListAdapter(smartListViewModels, SmartListFragment.this);
                     mRecyclerView.setAdapter(mSmartListAdapter);

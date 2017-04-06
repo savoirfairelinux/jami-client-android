@@ -35,7 +35,7 @@ public class CallContact {
     private long mId;
     private String mKey;
     private String mDisplayName;
-    private String mUsername;
+    private String mUserName;
     private long mPhotoId;
     private final ArrayList<Phone> mPhones;
     private boolean isUser;
@@ -49,14 +49,13 @@ public class CallContact {
     }
 
     public CallContact(long cID, String k, String displayName, long photoID) {
-        this(cID, k, displayName, photoID, new ArrayList<Phone>(), null, false);
+        this(cID, k, displayName, photoID, new ArrayList<Phone>(), false);
     }
 
-    public CallContact(long cID, String k, String displayName, long photoID, ArrayList<Phone> p, String mail, boolean user) {
+    public CallContact(long cID, String k, String displayName, long photoID, ArrayList<Phone> p, boolean user) {
         mId = cID;
         mKey = k;
         mDisplayName = displayName;
-        mUsername = displayName;
         mPhones = p;
         mPhotoId = photoID;
         isUser = user;
@@ -68,14 +67,14 @@ public class CallContact {
     public static CallContact buildUnknown(Uri to) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, 0));
-        return new CallContact(UNKNOWN_ID, null, to.getRawUriString(), 0, phones, "", false);
+        return new CallContact(UNKNOWN_ID, null, to.getRawUriString(), 0, phones, false);
     }
 
     public static CallContact buildUnknown(String to) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, 0));
 
-        return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
+        return new CallContact(UNKNOWN_ID, null, to, 0, phones, false);
     }
 
     public static CallContact buildUnknown(String to, String address) {
@@ -86,21 +85,21 @@ public class CallContact {
             phones.add(new Phone(to, 0));
         }
 
-        return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
+        return new CallContact(UNKNOWN_ID, null, to, 0, phones, false);
     }
 
     public static CallContact buildUnknown(String to, int type) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, type));
-        return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
+        return new CallContact(UNKNOWN_ID, null, to, 0, phones, false);
     }
 
     public void setContactInfos(String k, String displayName, long photo_id) {
         mKey = k;
         mDisplayName = displayName;
         this.mPhotoId = photo_id;
-        if (mUsername == null && displayName.contains(PREFIX_RING)) {
-            mUsername = displayName;
+        if (mUserName == null && displayName.contains(PREFIX_RING)) {
+            mUserName = displayName;
         }
     }
 
@@ -112,8 +111,6 @@ public class CallContact {
 
     public ArrayList<String> getIds() {
         ArrayList<String> ret = new ArrayList<>(1 + mPhones.size());
-        if (mId != UNKNOWN_ID)
-            ret.add("c:" + Long.toHexString(mId));
         for (Phone p : mPhones)
             ret.add(p.getNumber().getRawUriString());
         return ret;
@@ -247,12 +244,12 @@ public class CallContact {
         mDisplayName = displayName;
     }
 
-    public String getUsername() {
-        return mUsername;
+    public String getUserName() {
+        return mUserName;
     }
 
-    public void setUsername(String mUsername) {
-        this.mUsername = mUsername;
+    public void setUserName(String userName) {
+        this.mUserName = userName;
     }
 
     //region Equals

@@ -187,7 +187,7 @@ public class ContactDetailsTask implements Runnable {
             mImageViewWeakRef.clear();
             if (v == null) {
                 for (DetailsLoadedCallback cb : mCallbacks) {
-                    cb.onDetailsLoaded(externalBMP, formattedName, mContact.getUsername());
+                    cb.onDetailsLoaded(externalBMP, formattedName, mContact.getUserName());
                 }
             } else {
                 v.post(new Runnable() {
