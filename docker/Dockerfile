@@ -49,15 +49,15 @@ RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/tool
 
 # Android Linux NDK
 # See http://developer.android.com/tools/sdk/ndk/index.html
-RUN wget -O /tmp/android-ndk.zip https://dl.google.com/android/repository/android-ndk-r14-linux-x86_64.zip && \
+RUN wget -O /tmp/android-ndk.zip https://dl.google.com/android/repository/android-ndk-r14b-linux-x86_64.zip && \
 	unzip /tmp/android-ndk.zip -d /opt/ && \
 	rm -f /tmp/android-ndk.zip && \
-	chown -R root:root /opt/android-ndk-r14
+	chown -R root:root /opt/android-ndk-r14b
 
 # Other tools and resources of Android SDK
 ENV ANDROID_HOME=/opt/android-sdk
 ENV ANDROID_SDK=/opt/android-sdk
-ENV ANDROID_NDK=/opt/android-ndk-r14
+ENV ANDROID_NDK=/opt/android-ndk-r14b
 ENV PATH=${PATH}:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
 RUN (while sleep 1; do echo "y"; done) | sdkmanager $ANDROID_DEPS
 
