@@ -33,6 +33,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -43,8 +44,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.astuetz.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
 
@@ -68,7 +67,7 @@ import cx.ring.services.AccountService;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
-public class AccountEditionActivity extends AppCompatActivity implements AccountCallbacks, Observer<ServiceEvent> {
+public class AccountEditionActivity extends AppCompatActivity implements AccountCallbacks, ViewPager.OnPageChangeListener, Observer<ServiceEvent> {
 
     @Inject
     AccountService mAccountService;
@@ -104,7 +103,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     private Fragment mCurrentlyDisplayed;
     private ViewPager mViewPager = null;
-    private PagerSlidingTabStrip mSlidingTabLayout = null;
+    private TabLayout mSlidingTabLayout = null;
 
     private MenuItem mItemAdvanced;
     private MenuItem mItemBlacklist;
@@ -161,47 +160,50 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         }
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
-
-        mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setOffscreenPageLimit(4);
         mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), AccountEditionActivity.this, mAccSelected.isRing()));
+        mViewPager.addOnPageChangeListener(this);
 
-        final PagerSlidingTabStrip mSlidingTabLayout = (PagerSlidingTabStrip) findViewById(R.id.sliding_tabs);
-        mSlidingTabLayout.setViewPager(mViewPager);
+        mSlidingTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout.setupWithViewPager(mViewPager);
 
         for (AccountChangedListener listener : listeners) {
             listener.accountChanged(mAccSelected);
         }
 
-        mSlidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                PreferencesPagerAdapter adapter = (PreferencesPagerAdapter) mViewPager.getAdapter();
-                mCurrentlyDisplayed = adapter.getItem(position);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (mCurrentlyDisplayed instanceof RingAccountSummaryFragment) {
-                    RingAccountSummaryFragment deviceAccountFragment = (RingAccountSummaryFragment) mCurrentlyDisplayed;
-                    if (deviceAccountFragment.isDisplayingWizard()) {
-                        deviceAccountFragment.hideWizard();
-                    }
-                }
-                PreferencesPagerAdapter adapter = (PreferencesPagerAdapter) mViewPager.getAdapter();
-                mCurrentlyDisplayed = adapter.getItem(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                //~ Empty.
-            }
-        });
-
         if (mAccSelected.isRing()) {
             displaySummary();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mViewPager != null) {
+            mViewPager.removeOnPageChangeListener(this);
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        PreferencesPagerAdapter adapter = (PreferencesPagerAdapter) mViewPager.getAdapter();
+        mCurrentlyDisplayed = adapter.getItem(position);
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        if (mCurrentlyDisplayed instanceof RingAccountSummaryFragment) {
+            RingAccountSummaryFragment deviceAccountFragment = (RingAccountSummaryFragment) mCurrentlyDisplayed;
+            if (deviceAccountFragment.isDisplayingWizard()) {
+                deviceAccountFragment.hideWizard();
+            }
+        }
+        PreferencesPagerAdapter adapter = (PreferencesPagerAdapter) mViewPager.getAdapter();
+        mCurrentlyDisplayed = adapter.getItem(position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
     }
 
     private void displaySummary() {
