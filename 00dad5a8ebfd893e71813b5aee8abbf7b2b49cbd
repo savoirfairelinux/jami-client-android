@@ -22,6 +22,30 @@
       "revId": "00dad5a8ebfd893e71813b5aee8abbf7b2b49cbd",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_e653b36a",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/ContactService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-04-07T14:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_26e78be6",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 121
+      },
+      "revId": "00dad5a8ebfd893e71813b5aee8abbf7b2b49cbd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
