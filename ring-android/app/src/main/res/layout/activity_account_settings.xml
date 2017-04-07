@@ -10,13 +10,9 @@
         android:id="@+id/header_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:background="@color/color_primary_light"
         android:elevation="4dp"
         android:orientation="vertical">
-
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/main_toolbar"
@@ -30,17 +26,14 @@
             app:contentInsetStart="72dp"
             app:titleTextAppearance="@style/ToolbarTitle" />
 
-        <com.astuetz.PagerSlidingTabStrip
+        <android.support.design.widget.TabLayout
             android:id="@+id/sliding_tabs"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textColor="@color/text_color_primary_dark"
-            app:paddingStart="20dp"
-            app:pstsDividerColor="@android:color/transparent"
-            app:pstsIndicatorColor="@android:color/white"
-            app:pstsIndicatorHeight="2dp"
-            app:pstsShouldExpand="true"
-            app:pstsUnderlineHeight="0dp" />
+            app:tabIndicatorColor="@color/text_color_primary_dark"
+            app:tabSelectedTextColor="@color/text_color_primary_dark"
+            app:tabTextColor="@color/text_color_primary_dark" />
 
     </LinearLayout>
 
