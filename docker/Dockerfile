@@ -36,8 +36,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	zip \
 	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
-
-ENV ANDROID_DEPS='platform-tools build-tools;25.0.2 platforms;android-25 extras;android;m2repository extras;google;m2repository'
+ENV ANDROID_DEPS=\
+'platform-tools \
+ build-tools;25.0.2 \
+ platforms;android-25 \
+ extras;android;m2repository \
+ extras;google;m2repository'
 
 # Android Linux SDK tools
 # See http://developer.android.com/sdk/index.html
