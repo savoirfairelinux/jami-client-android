@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_613a4d38",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-04-10T20:46:01Z",
+      "side": 1,
+      "message": "Jenkins console output shows that bumping this needs some modifications in the Dockerfile I think.\n\n16:03:33 Checking the license for package Android Support Repository in /opt/android-sdk/licenses\n16:03:33 License for package Android Support Repository accepted.\n16:03:33 Preparing \"Install Android Support Repository (revision: 47.0.0)\".\n16:03:33 Warning: Failed to read or create install properties file.\n\n16:03:33 * What went wrong:\n16:03:33 A problem occurred configuring project \u0027:app\u0027.\n16:03:33 \u003e Failed to install the following SDK components:\n16:03:33   [Android Support Repository]\n16:03:33   The SDK directory (/opt/android-sdk) is not writeable,\n16:03:33   please update the directory permissions.\n\nNothing should be installed during compilation in the android-sdk dir. It should be in the Docker image. Could you investigate?\n\nWe can\u0027t merge this patch as is, otherwise all other patches will have this issue too.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 53
+      },
+      "revId": "aa62e7633bc2068fd962e4e9ae78518139c06257",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
