@@ -22,7 +22,6 @@
 package cx.ring.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -124,7 +123,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     private MenuItem mDialpadMenuItem = null;
 
     private Boolean isTabletMode = false;
-    private ConversationFragment mConversationFragment;
 
     @Override
     public void onAttach(Activity activity) {
@@ -140,18 +138,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     @Override
     public void onResume() {
         super.onResume();
-
-        if (mConversationFragment == null) {
-            // is there an old persistent fragment to clean ?
-            Fragment fragment = getFragmentManager().findFragmentByTag(ConversationFragment.class.getName());
-            if (fragment != null) {
-                getFragmentManager().beginTransaction().remove(fragment).commit();
-            }
-        }
-
-        if (mConversationFragment != null && ConversationFragment.isTabletMode(getActivity())) {
-            startConversationTablet(mConversationFragment.getArguments());
-        }
 
         Log.d(TAG, "onResume");
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
@@ -294,15 +280,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         if (mSearchMenuItem != null) {
             mSearchMenuItem.expandActionView();
         }
-    }
-
-    public void startConversationTablet(Bundle bundle) {
-        mConversationFragment = new ConversationFragment();
-        mConversationFragment.setArguments(bundle);
-
-        getFragmentManager().beginTransaction()
-                .replace(R.id.conversation_container, mConversationFragment, mConversationFragment.getClass().getName())
-                .commit();
     }
 
     @Override
@@ -553,7 +530,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         } else {
             Bundle bundle = new Bundle();
             bundle.putString("conversationID", callContact.getIds().get(0));
-            startConversationTablet(bundle);
+            ((HomeActivity) getActivity()).startConversationTablet(bundle);
         }
     }
 

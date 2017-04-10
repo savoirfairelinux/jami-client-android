@@ -162,6 +162,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private float mToolbarSize;
     protected android.app.Fragment fContent;
     protected RingNavigationFragment fNavigation;
+    protected ConversationFragment fConversation;
 
     @Override
     public void update(Observable o, ServiceEvent event) {
@@ -314,7 +315,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         if (fContent instanceof SmartListFragment) {
             Bundle bundle = new Bundle();
             bundle.putString("conversationID", intent.getStringExtra("conversationID"));
-            ((SmartListFragment) fContent).startConversationTablet(bundle);
+            startConversationTablet(bundle);
         }
     }
 
@@ -530,6 +531,15 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         super.onResume();
         mAccountService.addObserver(this);
         setVideoEnabledFromPermission();
+    }
+
+    public void startConversationTablet(Bundle bundle) {
+        fConversation = new ConversationFragment();
+        fConversation.setArguments(bundle);
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.conversation_container, fConversation, ConversationFragment.class.getName())
+                .commit();
     }
 
     private void presentTrustRequestFragment(String accountID) {
