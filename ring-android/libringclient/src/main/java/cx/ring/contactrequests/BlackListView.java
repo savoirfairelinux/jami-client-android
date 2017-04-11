@@ -25,5 +25,7 @@ public interface BlackListView {
 
     void updateView(ArrayList<BlackListViewModel> list);
 
+    void hideListView();
+
     void displayEmptyListMessage(boolean display);
 }

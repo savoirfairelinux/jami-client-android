@@ -116,9 +116,10 @@ public class BlackListFragment extends BaseFragment<BlackListPresenter> implemen
 
     @Override
     public void updateView(final ArrayList<BlackListViewModel> list) {
-        RingApplication.uiHandler.post(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                mBlacklist.setVisibility(View.VISIBLE);
                 if (mBlacklist.getAdapter() != null) {
                     mAdapter.replaceAll(list);
                 } else {
@@ -132,7 +133,22 @@ public class BlackListFragment extends BaseFragment<BlackListPresenter> implemen
     }
 
     @Override
-    public void displayEmptyListMessage(boolean display) {
-        mEmptyTextView.setVisibility(display? View.VISIBLE : View.GONE);
+    public void hideListView() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mBlacklist.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    public void displayEmptyListMessage(final boolean display) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mEmptyTextView.setVisibility(display ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 }
