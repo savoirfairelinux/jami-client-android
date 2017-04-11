@@ -91,6 +91,7 @@ public class BlackListPresenter extends RootPresenter<BlackListView> implements 
         }
 
         if(mViewModels.isEmpty()) {
+            getView().hideListView();
             getView().displayEmptyListMessage(true);
         } else {
             getView().updateView(mViewModels);
