@@ -46,6 +46,30 @@
       "revId": "923d9962a6facdd666064335da20e4b94488085a",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_61724de7",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/AccountAdapter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-04-11T15:56:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_c1c30137",
+      "range": {
+        "startLine": 131,
+        "startChar": 12,
+        "endLine": 151,
+        "endChar": 13
+      },
+      "revId": "923d9962a6facdd666064335da20e4b94488085a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
