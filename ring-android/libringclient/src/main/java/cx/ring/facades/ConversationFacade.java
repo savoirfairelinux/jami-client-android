@@ -542,11 +542,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     String callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
                     int newState = SipCall.stateFromString(event.getEventInput(ServiceEvent.EventInput.STATE, String.class));
 
-                    if (newState == SipCall.State.INCOMING ||
-                            newState == SipCall.State.OVER) {
-                        mHistoryService.updateVCard();
-                    }
-
                     Conversation conversation = null;
                     Conference found = null;
 
@@ -572,14 +567,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                             if ((call.isRinging() || newState == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
                                 call.setTimestampStart(System.currentTimeMillis());
                             }
-                            if (newState == SipCall.State.RINGING) {
-                                try {
-                                    mAccountService.sendProfile(callId, call.getAccount());
-                                    Log.d(TAG, "send vcard " + call.getAccount());
-                                } catch (Exception e) {
-                                    Log.e(TAG, "Error while sending profile", e);
-                                }
-                            }
                             call.setCallState(newState);
                         }
 
@@ -596,23 +583,13 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                             if (newState == SipCall.State.HUNGUP) {
                                 call.setTimestampEnd(System.currentTimeMillis());
                             }
-
-                            mHistoryService.insertNewEntry(found);
-                            conversation.addHistoryCall(new HistoryCall(call));
-                            mNotificationService.cancelCallNotification(call);
                             found.removeParticipant(call);
-                        } else {
-                            mNotificationService.showCallNotification(found);
-                        }
-                        if (newState == SipCall.State.FAILURE || newState == SipCall.State.BUSY || newState == SipCall.State.HUNGUP) {
-                            mCallService.hangUp(callId);
+                            conversation.addHistoryCall(new HistoryCall(call));
                         }
                         if (found.getParticipants().isEmpty()) {
                             conversation.removeConference(found);
                         }
                     }
-
-                    mDeviceRuntimeService.updateAudioState(getCurrentCallingConf());
 
                     setChanged();
                     mEvent = new ServiceEvent(ServiceEvent.EventType.CALL_STATE_CHANGED);
