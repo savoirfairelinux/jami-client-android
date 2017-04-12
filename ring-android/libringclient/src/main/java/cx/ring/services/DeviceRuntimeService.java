@@ -49,6 +49,4 @@ public abstract class DeviceRuntimeService {
 
     public abstract boolean hasGalleryPermission();
 
-    public abstract Map<String, StringMap> retrieveAvailablePreviewSettings();
-
 }
