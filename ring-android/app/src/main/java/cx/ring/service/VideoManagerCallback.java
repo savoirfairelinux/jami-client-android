@@ -56,22 +56,6 @@ public class VideoManagerCallback implements Observer<ServiceEvent> {
         }
 
         switch (event.getEventType()) {
-            case DECODING_STARTED:
-                decodingStarted(
-                        event.getEventInput(ServiceEvent.EventInput.ID, String.class),
-                        event.getEventInput(ServiceEvent.EventInput.PATHS, String.class),
-                        event.getEventInput(ServiceEvent.EventInput.WIDTH, Integer.class),
-                        event.getEventInput(ServiceEvent.EventInput.HEIGHT, Integer.class),
-                        event.getEventInput(ServiceEvent.EventInput.IS_MIXER, Boolean.class)
-                );
-                break;
-            case DECODING_STOPPED:
-                decodingStopped(
-                        event.getEventInput(ServiceEvent.EventInput.ID, String.class),
-                        event.getEventInput(ServiceEvent.EventInput.PATHS, String.class),
-                        event.getEventInput(ServiceEvent.EventInput.IS_MIXER, Boolean.class)
-                );
-                break;
             case GET_CAMERA_INFO:
                 getCameraInfo(
                         event.getEventInput(ServiceEvent.EventInput.CAMERA_ID, String.class),
@@ -144,14 +128,6 @@ public class VideoManagerCallback implements Observer<ServiceEvent> {
 
     public DeviceParams getNativeParams(int i) {
         return mNativeParams.get(i);
-    }
-
-    private void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
-        mRingApplication.decodingStarted(id, shmPath, width, height, isMixer);
-    }
-
-    private void decodingStopped(String id, String shmPath, boolean isMixer) {
-        mRingApplication.decodingStopped(id);
     }
 
     private void setParameters(String camId, int format, int width, int height, int rate) {

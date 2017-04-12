@@ -332,53 +332,6 @@ public class RingApplication extends Application {
         mPermissionsBeingAsked.remove(permission);
     }
 
-    public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
-        Log.i(TAG, "DRingService.decodingStarted() " + id + " " + width + "x" + height);
-        Shm shm = new Shm();
-        shm.id = id;
-        shm.path = shmPath;
-        shm.w = width;
-        shm.h = height;
-        shm.mixer = isMixer;
-        videoInputs.put(id, shm);
-        WeakReference<SurfaceHolder> weakSurfaceHolder = videoSurfaces.get(id);
-        if (weakSurfaceHolder != null) {
-            SurfaceHolder holder = weakSurfaceHolder.get();
-            if (holder != null) {
-                startVideo(shm, holder);
-            }
-        }
-    }
-
-    public void decodingStopped(String id) {
-        Log.i(TAG, "DRingService.decodingStopped() " + id);
-        Shm shm = videoInputs.remove(id);
-        if (shm != null) {
-            stopVideo(shm);
-        }
-    }
-
-    public void startVideo(Shm input, SurfaceHolder holder) {
-        Log.i(TAG, "DRingService.startVideo() " + input.id);
-
-        input.window = mHardwareService.startVideo(input.id, holder.getSurface(), input.w, input.h);
-
-        if (input.window == 0) {
-            Log.i(TAG, "DRingService.startVideo() no window ! " + input.id);
-            Intent intent = new Intent(VIDEO_EVENT);
-            intent.putExtra("start", true);
-            sendBroadcast(intent);
-            return;
-        }
-
-        Intent intent = new Intent(VIDEO_EVENT);
-        intent.putExtra("started", true);
-        intent.putExtra("call", input.id);
-        intent.putExtra("width", input.w);
-        intent.putExtra("height", input.h);
-        sendBroadcast(intent);
-    }
-
     public void stopVideo(Shm input) {
         Log.i(TAG, "DRingService.stopVideo() " + input.id);
         if (input.window != 0) {

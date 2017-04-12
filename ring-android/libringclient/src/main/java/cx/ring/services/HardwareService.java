@@ -33,11 +33,12 @@ import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
 import cx.ring.daemon.VideoCallback;
 import cx.ring.model.ServiceEvent;
+import cx.ring.model.Settings;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 
-public class HardwareService extends Observable {
+public abstract class HardwareService extends Observable {
 
     private static final String TAG = HardwareService.class.getName();
 
@@ -49,6 +50,18 @@ public class HardwareService extends Observable {
     DeviceRuntimeService mDeviceRuntimeService;
 
     private VideoCallback mVideoCallback;
+
+    public abstract void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer);
+
+    public abstract void decodingStopped(String id, String shmPath, boolean isMixer);
+
+    public abstract void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates);
+
+    public abstract void setParameters(String camId, int format, int width, int height, int rate);
+
+    public abstract void startCapture(String camId);
+
+    public abstract void stopCapture();
 
     public HardwareService() {
         mVideoCallback = new VideoCallbackHandler();
@@ -150,25 +163,12 @@ public class HardwareService extends Observable {
         @Override
         public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
             Log.d(TAG, "decodingStarted: " + id + ", " + shmPath + ", " + width + ", " + height + ", " + isMixer);
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DECODING_STARTED);
-            event.addEventInput(ServiceEvent.EventInput.ID, id);
-            event.addEventInput(ServiceEvent.EventInput.PATHS, shmPath);
-            event.addEventInput(ServiceEvent.EventInput.WIDTH, width);
-            event.addEventInput(ServiceEvent.EventInput.HEIGHT, height);
-            event.addEventInput(ServiceEvent.EventInput.IS_MIXER, isMixer);
-            notifyObservers(event);
+            HardwareService.this.decodingStarted(id, shmPath, width, height, isMixer);
         }
 
         @Override
         public void decodingStopped(String id, String shmPath, boolean isMixer) {
-            Log.d(TAG, "decodingStopped: " + id + ", " + shmPath + ", " + isMixer);
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DECODING_STOPPED);
-            event.addEventInput(ServiceEvent.EventInput.ID, id);
-            event.addEventInput(ServiceEvent.EventInput.PATHS, shmPath);
-            event.addEventInput(ServiceEvent.EventInput.IS_MIXER, isMixer);
-            notifyObservers(event);
+            HardwareService.this.decodingStopped(id, shmPath, isMixer);
         }
 
         @Override
@@ -181,6 +181,8 @@ public class HardwareService extends Observable {
             event.addEventInput(ServiceEvent.EventInput.SIZES, sizes);
             event.addEventInput(ServiceEvent.EventInput.RATES, rates);
             notifyObservers(event);
+
+            HardwareService.this.getCameraInfo(camId, formats, sizes, rates);
         }
 
         @Override
@@ -194,6 +196,8 @@ public class HardwareService extends Observable {
             event.addEventInput(ServiceEvent.EventInput.HEIGHT, height);
             event.addEventInput(ServiceEvent.EventInput.RATES, rate);
             notifyObservers(event);
+
+            HardwareService.this.setParameters(camId, format, width, height, rate);
         }
 
         @Override
@@ -203,6 +207,8 @@ public class HardwareService extends Observable {
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.START_CAPTURE);
             event.addEventInput(ServiceEvent.EventInput.CAMERA_ID, camId);
             notifyObservers(event);
+
+            HardwareService.this.startCapture(camId);
         }
 
         @Override
@@ -211,6 +217,8 @@ public class HardwareService extends Observable {
             setChanged();
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.STOP_CAPTURE);
             notifyObservers(event);
+
+            HardwareService.this.stopCapture();
         }
     }
 
