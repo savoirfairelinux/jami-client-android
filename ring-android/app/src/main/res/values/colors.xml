@@ -44,6 +44,7 @@
     <color name="holo_blue_bright">#ff00ddff</color>
 
     <color name="transparent_grey">#AACCCCCC</color>
+    <color name="transparent_dark_grey">#88424242</color>
 
     <color name="text_color_primary">@color/abc_primary_text_material_light</color>
     <color name="text_color_secondary">@color/abc_secondary_text_material_light</color>

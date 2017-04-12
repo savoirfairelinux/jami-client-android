@@ -34,6 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.facades.ConversationFacade;
+import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 
 public class ConversationActivity extends AppCompatActivity {
@@ -96,8 +97,8 @@ public class ConversationActivity extends AppCompatActivity {
 
         if (mConversationFragment == null) {
             Bundle bundle = new Bundle();
-            bundle.putString("conversationID", getIntent().getData().getLastPathSegment());
-            bundle.putString("number", getIntent().getStringExtra("number"));
+            bundle.putString(ConversationFragment.KEY_CONVERSATION_ID, getIntent().getData().getLastPathSegment());
+            bundle.putString(CallFragment.KEY_NUMBER, getIntent().getStringExtra(CallFragment.KEY_NUMBER));
 
             mConversationFragment = new ConversationFragment();
             mConversationFragment.setArguments(bundle);
