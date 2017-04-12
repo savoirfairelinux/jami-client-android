@@ -24,67 +24,28 @@ package cx.ring.client;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.res.Configuration;
-import android.graphics.PixelFormat;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.Pair;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-
-import javax.inject.Inject;
 
 import cx.ring.BuildConfig;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
-import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.CallFragment;
-import cx.ring.model.CallContact;
-import cx.ring.model.Conference;
-import cx.ring.model.Conversation;
-import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
-import cx.ring.model.Account;
-import cx.ring.service.IDRingService;
-import cx.ring.service.LocalService;
-import cx.ring.services.AccountService;
-import cx.ring.utils.CallProximityManager;
 
-import static cx.ring.service.LocalService.Callbacks;
-
-public class CallActivity extends AppCompatActivity implements Callbacks, CallFragment.ConversationCallbacks, CallProximityManager.ProximityDirector {
+public class CallActivity extends AppCompatActivity {
     static final String TAG = CallActivity.class.getSimpleName();
 
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
 
-    @Inject
-    AccountService mAccountService;
-
-    @Inject
-    ConversationFacade mConversationFacade;
-
-    private boolean init = false;
     private View mMainView;
 
-    private LocalService service;
-
-    private CallFragment mCurrentCallFragment;
-    private Conference mDisplayedConference;
-    private String mSavedConferenceId = null;
 
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
-    private CallProximityManager mProximityManager = null;
 
     private int currentOrientation = Configuration.ORIENTATION_PORTRAIT;
     private boolean dimmed = false;
@@ -92,20 +53,6 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null)
-            mSavedConferenceId = savedInstanceState.getString("conference", null);
-        Log.d(TAG, "CallActivity onCreate " + mSavedConferenceId);
-
-        // Dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
-
-        int flags = WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-        Window w = getWindow();
-        w.setFlags(flags, flags);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
 
         setContentView(R.layout.activity_call_layout);
 
@@ -122,20 +69,41 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
             }
         });
 
-        Intent intent = new Intent(this, LocalService.class);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-    }
+        android.net.Uri u = getIntent().getData();
 
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        Window window = getWindow();
-        window.setFormat(PixelFormat.RGBA_8888);
+        String action = getIntent().getAction();
+        if (Intent.ACTION_CALL.equals(action) || ACTION_CALL.equals(action)) {
+            Uri number = new Uri(u.getSchemeSpecificPart());
+            Log.d(TAG, "number " + number);
+
+            boolean hasVideo = getIntent().getBooleanExtra("video", false);
+            String accountId = getIntent().getStringExtra("account");
+
+
+            // Reload a new view
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            CallFragment callFragment = CallFragment.newInstance(CallFragment.ACTION_PLACE_CALL,
+                    accountId,
+                    number,
+                    hasVideo);
+            fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
+
+        } else if (Intent.ACTION_VIEW.equals(action)) {
+            String confId = u.getLastPathSegment();
+            Log.d(TAG, "conf " + confId);
+            // Reload a new view
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            CallFragment callFragment = CallFragment.newInstance(CallFragment.ACTION_GET_CALL,
+                    confId);
+            fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
+        }
+
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        Log.d(TAG, "onConfigurationChanged " + newConfig.screenWidthDp);
 
         currentOrientation = newConfig.orientation;
 
@@ -147,12 +115,6 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
             dimmed = false;
             showSystemUI();
         }
-
-        // Reload a new view
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        mCurrentCallFragment = new CallFragment();
-        fragmentTransaction.replace(R.id.main_call_layout, mCurrentCallFragment).commit();
 
         super.onConfigurationChanged(newConfig);
     }
@@ -192,195 +154,5 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
             hideSystemUI();
         else
             showSystemUI();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mDisplayedConference != null)
-            outState.putString("conference", mDisplayedConference.getId());
-    }
-
-    private Handler mHandler = new Handler();
-    private Runnable mUpdateTimeTask = new Runnable() {
-        @Override
-        public void run() {
-            if (mCurrentCallFragment != null)
-                mCurrentCallFragment.updateTime();
-            mHandler.postAtTime(this, SystemClock.uptimeMillis() + 1000);
-        }
-    };
-
-    /* activity no more in foreground */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mHandler.removeCallbacks(mUpdateTimeTask);
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.d(TAG, "CallActivity onDestroy");
-        unbindService(mConnection);
-        if (mProximityManager != null) {
-            mProximityManager.stopTracking();
-            mProximityManager.release(0);
-        }
-
-        super.onDestroy();
-    }
-
-    /**
-     * Defines callbacks for service binding, passed to bindService()
-     */
-    private ServiceConnection mConnection = new ServiceConnection() {
-        @SuppressWarnings("unchecked")
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder binder) {
-            service = ((LocalService.LocalBinder) binder).getService();
-
-            if (!init) {
-                mProximityManager = new CallProximityManager(CallActivity.this, CallActivity.this);
-                mProximityManager.startTracking();
-
-                if (mSavedConferenceId != null) {
-                    mDisplayedConference = mConversationFacade.getConference(mSavedConferenceId);
-                } else {
-                    checkExternalCall();
-                }
-
-                if (mDisplayedConference == null || mDisplayedConference.getParticipants().isEmpty()) {
-                    Log.e(TAG, "Conference displayed is null or empty");
-                    CallActivity.this.finish();
-                    return;
-                }
-
-                Log.i(TAG, "CallActivity onCreate in:" + mDisplayedConference.isIncoming() +
-                        " out:" + mDisplayedConference.isOnGoing());
-                CallContact contact = mDisplayedConference.getParticipants().get(0).getContact();
-                if (null != contact) {
-                    Log.i(TAG, "CallActivity onCreate contact:" + contact.getDisplayName());
-                }
-
-                init = true;
-            }
-
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            mCurrentCallFragment = new CallFragment();
-            fragmentTransaction.add(R.id.main_call_layout, mCurrentCallFragment).commit();
-            hideSystemUI();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-
-        }
-    };
-
-    private Pair<Account, Uri> guess(Uri number, String account_id) {
-        Account a = mAccountService.getAccount(account_id);
-        Conversation conv = mConversationFacade.findOrStartConversationByNumber(number);
-
-        // Guess account from number
-        if (a == null && number != null)
-            a = mAccountService.guessAccount(number);
-
-        // Guess number from account/call history
-        if (a != null && (number == null || number.isEmpty()))
-            number = new Uri(conv.getLastNumberUsed(a.getAccountID()));
-
-        // If no account found, use first active
-        if (a == null)
-            a = mAccountService.getAccounts().get(0);
-
-        // If no number found, use first from contact
-        if (number == null || number.isEmpty())
-            number = conv.getContact().getPhones().get(0).getNumber();
-
-        return new Pair<>(a, number);
-    }
-
-    private boolean checkExternalCall() {
-        Log.d(TAG, "intent " + getIntent().toString());
-
-        if (getIntent() == null) {
-            terminateCall();
-            return false;
-        }
-
-        android.net.Uri u = getIntent().getData();
-        if (u == null) {
-            terminateCall();
-            return false;
-        }
-
-        Log.d(TAG, "uri " + u.toString());
-
-        String action = getIntent().getAction();
-        if (Intent.ACTION_CALL.equals(action) || ACTION_CALL.equals(action)) {
-            Uri number = new Uri(u.getSchemeSpecificPart());
-            Log.d(TAG, "number " + number);
-
-            boolean hasVideo = getIntent().getBooleanExtra("video", false);
-            Pair<Account, Uri> g = guess(number, getIntent().getStringExtra("account"));
-
-            SipCall call = new SipCall(null, g.first.getAccountID(), g.second, SipCall.Direction.OUTGOING);
-            call.muteVideo(!hasVideo);
-
-            mDisplayedConference = mConversationFacade.placeCall(call);
-        } else if (Intent.ACTION_VIEW.equals(action)) {
-            String conf_id = u.getLastPathSegment();
-            Log.d(TAG, "conf " + conf_id);
-            mDisplayedConference = mConversationFacade.getConference(conf_id);
-        }
-
-        return false;
-    }
-
-    @Override
-    public IDRingService getRemoteService() {
-        return service.getRemoteService();
-    }
-
-    @Override
-    public LocalService getService() {
-        return service;
-    }
-
-    @Override
-    public Conference getDisplayedConference() {
-        return mDisplayedConference;
-    }
-
-    @Override
-    public void updateDisplayedConference(Conference c) {
-        mDisplayedConference = c;
-    }
-
-    @Override
-    public void terminateCall() {
-        mHandler.removeCallbacks(mUpdateTimeTask);
-        finish();
-    }
-
-    @Override
-    public void startTimer() {
-        mHandler.postDelayed(mUpdateTimeTask, 0);
-    }
-
-    @Override
-    public boolean shouldActivateProximity() {
-        return true;
-    }
-
-    @Override
-    public void onProximityTrackingChanged(boolean acquired) {
-    }
-
-    @Override
-    public void onBackPressed() {
-        mCurrentCallFragment.onBackPressed();
-        super.onBackPressed();
     }
 }
