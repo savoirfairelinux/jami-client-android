@@ -29,7 +29,9 @@ public abstract class DeviceRuntimeService {
 
     public abstract void loadNativeLibrary();
 
-    public abstract void updateAudioState(Conference conf);
+    public abstract void updateAudioState(boolean isRinging);
+
+    public abstract void closeAudioState();
 
     public abstract File provideFilesDir();
 
@@ -50,7 +52,5 @@ public abstract class DeviceRuntimeService {
     public abstract boolean hasPhotoPermission();
 
     public abstract boolean hasGalleryPermission();
-
-    public abstract Map<String, StringMap> retrieveAvailablePreviewSettings();
 
 }
