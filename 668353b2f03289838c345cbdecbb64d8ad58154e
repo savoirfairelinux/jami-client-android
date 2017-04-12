@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_f7711f78",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-12T19:59:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_dcc44a61",
+      "range": {
+        "startLine": 131,
+        "startChar": 19,
+        "endLine": 131,
+        "endChar": 20
+      },
+      "revId": "668353b2f03289838c345cbdecbb64d8ad58154e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_dc9bea70",
         "filename": "ring-android/app/src/main/java/cx/ring/services/HistoryServiceImpl.java",
         "patchSetId": 16
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_176f1b94",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/HistoryServiceImpl.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-12T19:59:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_dc9bea70",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 33
+      },
+      "revId": "668353b2f03289838c345cbdecbb64d8ad58154e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_7c88b622",
         "filename": "ring-android/app/src/main/java/cx/ring/services/HistoryServiceImpl.java",
         "patchSetId": 16
@@ -82,6 +130,30 @@
       "writtenOn": "2017-04-11T20:20:09Z",
       "side": 1,
       "message": "not used",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 27
+      },
+      "revId": "668353b2f03289838c345cbdecbb64d8ad58154e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_b76ba784",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/HistoryServiceImpl.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-12T19:59:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_7c88b622",
       "range": {
         "startLine": 44,
         "startChar": 0,
