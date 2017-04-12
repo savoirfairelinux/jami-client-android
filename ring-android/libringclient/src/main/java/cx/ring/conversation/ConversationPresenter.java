@@ -244,7 +244,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
     private void checkContact() {
         Tuple<Account, Uri> guess = guess(mPreferredNumber);
-        if (guess == null || guess.first == null || guess.second == null || !guess.first.isRing() || !guess.second.isRingId()) {
+        long time = System.currentTimeMillis();
+        if (guess == null
+                || guess.first == null || guess.second == null
+                || !guess.first.isRing() || !guess.second.isRingId()
+                || mConversation.getLastContactRequest() + Conversation.PERIOD > time) {
             return;
         }
 
@@ -266,6 +270,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             }
         }
 
+        mConversation.setLastContactRequest(time);
         getView().displaySendTrustRequest(accountId, contactId);
     }
 
