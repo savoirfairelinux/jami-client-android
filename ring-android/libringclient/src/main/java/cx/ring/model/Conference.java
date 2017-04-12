@@ -238,7 +238,7 @@ public class Conference {
 
 
     public boolean isOnGoing() {
-        return mParticipants.size() == 1 && mParticipants.get(0).isOngoing() || mParticipants.size() > 1;
+        return mParticipants.size() == 1 && mParticipants.get(0).isOnGoing() || mParticipants.size() > 1;
     }
 
 }
