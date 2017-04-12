@@ -37,9 +37,10 @@ import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 
-public class HardwareService extends Observable {
+public abstract class HardwareService extends Observable {
 
     private static final String TAG = HardwareService.class.getName();
+    public final static String VIDEO_EVENT = "VIDEO_EVENT";
 
     @Inject
     @Named("DaemonExecutor")
@@ -49,6 +50,32 @@ public class HardwareService extends Observable {
     DeviceRuntimeService mDeviceRuntimeService;
 
     private VideoCallback mVideoCallback;
+
+    public abstract void initVideo();
+
+    public abstract void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer);
+
+    public abstract void decodingStopped(String id, String shmPath, boolean isMixer);
+
+    public abstract void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates);
+
+    public abstract void setParameters(String camId, int format, int width, int height, int rate);
+
+    public abstract void startCapture(String camId);
+
+    public abstract void stopCapture();
+
+    public abstract void addVideoSurface(String id, Object holder);
+
+    public abstract void addPreviewVideoSurface(Object holder);
+
+    public abstract void removeVideoSurface(String id);
+
+    public abstract void removePreviewVideoSurface();
+
+    public abstract void switchInput(String id, boolean front);
+
+    public abstract void setPreviewSettings();
 
     public HardwareService() {
         mVideoCallback = new VideoCallbackHandler();
@@ -150,67 +177,36 @@ public class HardwareService extends Observable {
         @Override
         public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
             Log.d(TAG, "decodingStarted: " + id + ", " + shmPath + ", " + width + ", " + height + ", " + isMixer);
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DECODING_STARTED);
-            event.addEventInput(ServiceEvent.EventInput.ID, id);
-            event.addEventInput(ServiceEvent.EventInput.PATHS, shmPath);
-            event.addEventInput(ServiceEvent.EventInput.WIDTH, width);
-            event.addEventInput(ServiceEvent.EventInput.HEIGHT, height);
-            event.addEventInput(ServiceEvent.EventInput.IS_MIXER, isMixer);
-            notifyObservers(event);
+            HardwareService.this.decodingStarted(id, shmPath, width, height, isMixer);
         }
 
         @Override
         public void decodingStopped(String id, String shmPath, boolean isMixer) {
-            Log.d(TAG, "decodingStopped: " + id + ", " + shmPath + ", " + isMixer);
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DECODING_STOPPED);
-            event.addEventInput(ServiceEvent.EventInput.ID, id);
-            event.addEventInput(ServiceEvent.EventInput.PATHS, shmPath);
-            event.addEventInput(ServiceEvent.EventInput.IS_MIXER, isMixer);
-            notifyObservers(event);
+            Log.d(TAG, "decodingStopped: " + id );
+            HardwareService.this.decodingStopped(id, shmPath, isMixer);
         }
 
         @Override
         public void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates) {
             Log.d(TAG, "getCameraInfo: " + camId + ", " + formats + ", " + sizes + ", " + rates);
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.GET_CAMERA_INFO);
-            event.addEventInput(ServiceEvent.EventInput.CAMERA_ID, camId);
-            event.addEventInput(ServiceEvent.EventInput.FORMATS, formats);
-            event.addEventInput(ServiceEvent.EventInput.SIZES, sizes);
-            event.addEventInput(ServiceEvent.EventInput.RATES, rates);
-            notifyObservers(event);
+            HardwareService.this.getCameraInfo(camId, formats, sizes, rates);
         }
 
         @Override
         public void setParameters(String camId, int format, int width, int height, int rate) {
             Log.d(TAG, "setParameters: " + camId + ", " + format + ", " + width + ", " + height + ", " + rate);
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.SET_PARAMETERS);
-            event.addEventInput(ServiceEvent.EventInput.CAMERA_ID, camId);
-            event.addEventInput(ServiceEvent.EventInput.FORMATS, format);
-            event.addEventInput(ServiceEvent.EventInput.WIDTH, width);
-            event.addEventInput(ServiceEvent.EventInput.HEIGHT, height);
-            event.addEventInput(ServiceEvent.EventInput.RATES, rate);
-            notifyObservers(event);
+            HardwareService.this.setParameters(camId, format, width, height, rate);
         }
 
         @Override
         public void startCapture(String camId) {
-            Log.d(TAG, "startCapture: " + camId);
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.START_CAPTURE);
-            event.addEventInput(ServiceEvent.EventInput.CAMERA_ID, camId);
-            notifyObservers(event);
+            Log.d(TAG, "startCapture: " + camId );
+            HardwareService.this.startCapture(camId);
         }
 
         @Override
         public void stopCapture() {
-            Log.d(TAG, "stopCapture");
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.STOP_CAPTURE);
-            notifyObservers(event);
+            HardwareService.this.stopCapture();
         }
     }
 

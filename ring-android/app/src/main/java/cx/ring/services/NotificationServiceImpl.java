@@ -68,6 +68,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     public static final String TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID = "trustRequestNotificationAccountId";
     public static final String TRUST_REQUEST_NOTIFICATION_FROM = "trustRequestNotificationFrom";
 
+    public static final String KEY_CALL_ID = "callId";
+
     private static final String NOTIF_CALL = "CALL";
     private static final String NOTIF_MSG = "MESSAGE";
     private static final String NOTIF_TRUST_REQUEST = "TRUST REQUEST";
@@ -102,7 +104,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
         SipCall call = conference.getParticipants().get(0);
         CallContact contact = call.getContact();
-        final int notificationId = getCallNotificationId(call);
+        final int notificationId = call.getCallId().hashCode();
         notificationManager.cancel(notificationId);
 
         final Uri callUri = Uri.withAppendedPath(ContentUriHandler.CALL_CONTENT_URI, call.getCallId());
@@ -116,8 +118,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                     .setContentIntent(gotoIntent)
                     .addAction(R.drawable.ic_call_end_white, mContext.getText(R.string.action_call_hangup),
                             PendingIntent.getService(mContext, new Random().nextInt(),
-                                    new Intent(LocalService.ACTION_CALL_END)
-                                            .setClass(mContext, LocalService.class)
+                                    new Intent(DRingService.ACTION_CALL_END)
+                                            .setClass(mContext, DRingService.class)
                                             .setData(callUri),
                                     PendingIntent.FLAG_ONE_SHOT));
         } else if (conference.isRinging()) {
@@ -131,15 +133,15 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                         .setFullScreenIntent(gotoIntent, true)
                         .addAction(R.drawable.ic_call_end_white, mContext.getText(R.string.action_call_decline),
                                 PendingIntent.getService(mContext, new Random().nextInt(),
-                                        new Intent(LocalService.ACTION_CALL_REFUSE)
-                                                .setClass(mContext, LocalService.class)
-                                                .setData(callUri),
+                                        new Intent(DRingService.ACTION_CALL_REFUSE)
+                                                .setClass(mContext, DRingService.class)
+                                                .putExtra(KEY_CALL_ID, call.getCallId()),
                                         PendingIntent.FLAG_ONE_SHOT))
                         .addAction(R.drawable.ic_action_accept, mContext.getText(R.string.action_call_accept),
                                 PendingIntent.getService(mContext, new Random().nextInt(),
-                                        new Intent(LocalService.ACTION_CALL_ACCEPT)
-                                                .setClass(mContext, LocalService.class)
-                                                .setData(callUri),
+                                        new Intent(DRingService.ACTION_CALL_ACCEPT)
+                                                .setClass(mContext, DRingService.class)
+                                                .putExtra(KEY_CALL_ID, call.getCallId()),
                                         PendingIntent.FLAG_ONE_SHOT))
                         .addExtras(extras);
             } else {
@@ -148,9 +150,9 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                         .setContentIntent(gotoIntent)
                         .addAction(R.drawable.ic_call_end_white, mContext.getText(R.string.action_call_hangup),
                                 PendingIntent.getService(mContext, new Random().nextInt(),
-                                        new Intent(LocalService.ACTION_CALL_END)
-                                                .setClass(mContext, LocalService.class)
-                                                .setData(callUri),
+                                        new Intent(DRingService.ACTION_CALL_END)
+                                                .setClass(mContext, DRingService.class)
+                                                .putExtra(KEY_CALL_ID, call.getCallId()),
                                         PendingIntent.FLAG_ONE_SHOT));
             }
 
@@ -346,11 +348,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     }
 
     @Override
-    public void cancelCallNotification(SipCall call) {
-        if (call == null) {
-            return;
-        }
-        int notificationId = getCallNotificationId(call);
+    public void cancelCallNotification(int notificationId) {
         notificationManager.cancel(notificationId);
         mNotificationBuilders.remove(notificationId);
     }

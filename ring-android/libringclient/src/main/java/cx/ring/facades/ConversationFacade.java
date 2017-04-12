@@ -269,39 +269,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         return startConversation(mContactService.findContactByNumber(number.getRawUriString()));
     }
 
-    public Conference placeCall(SipCall call) {
-        Conference conf;
-        CallContact contact = call.getContact();
-        if (contact == null) {
-            contact = mContactService.findContactByNumber(call.getNumberUri().getRawUriString());
-        }
-        Conversation conv = startConversation(contact);
-        mHardwareService.setPreviewSettings(mDeviceRuntimeService.retrieveAvailablePreviewSettings());
-        Uri number = call.getNumberUri();
-        if (number == null || number.isEmpty()) {
-            number = contact.getPhones().get(0).getNumber();
-        }
-        String callId = mCallService.placeCall(call.getAccount(), number.getUriString(), !call.isVideoMuted());
-        if (callId == null || callId.isEmpty()) {
-            return null;
-        }
-        call.setCallID(callId);
-        Account account = mAccountService.getAccount(call.getAccount());
-        if (account.isRing()
-                || account.getDetailBoolean(ConfigKey.SRTP_ENABLE)
-                || account.getDetailBoolean(ConfigKey.TLS_ENABLE)) {
-            Log.i(TAG, "placeCall() call is secure");
-            SecureSipCall secureCall = new SecureSipCall(call, account.getDetail(ConfigKey.SRTP_KEY_EXCHANGE));
-            conf = new Conference(secureCall);
-        } else {
-            conf = new Conference(call);
-        }
-        conf.getParticipants().get(0).setContact(contact);
-        conv.addConference(conf);
-
-        return conf;
-    }
-
     public void sendTextMessage(String account, Uri to, String txt) {
         long id = mCallService.sendAccountTextMessage(account, to.getRawUriString(), txt);
         Log.i(TAG, "sendAccountTextMessage " + txt + " got id " + id);
@@ -542,11 +509,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     String callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
                     int newState = SipCall.stateFromString(event.getEventInput(ServiceEvent.EventInput.STATE, String.class));
 
-                    if (newState == SipCall.State.INCOMING ||
-                            newState == SipCall.State.OVER) {
-                        mHistoryService.updateVCard();
-                    }
-
                     Conversation conversation = null;
                     Conference found = null;
 
@@ -572,14 +534,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                             if ((call.isRinging() || newState == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
                                 call.setTimestampStart(System.currentTimeMillis());
                             }
-                            if (newState == SipCall.State.RINGING) {
-                                try {
-                                    mAccountService.sendProfile(callId, call.getAccount());
-                                    Log.d(TAG, "send vcard " + call.getAccount());
-                                } catch (Exception e) {
-                                    Log.e(TAG, "Error while sending profile", e);
-                                }
-                            }
                             call.setCallState(newState);
                         }
 
@@ -596,23 +550,13 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                             if (newState == SipCall.State.HUNGUP) {
                                 call.setTimestampEnd(System.currentTimeMillis());
                             }
-
-                            mHistoryService.insertNewEntry(found);
-                            conversation.addHistoryCall(new HistoryCall(call));
-                            mNotificationService.cancelCallNotification(call);
                             found.removeParticipant(call);
-                        } else {
-                            mNotificationService.showCallNotification(found);
-                        }
-                        if (newState == SipCall.State.FAILURE || newState == SipCall.State.BUSY || newState == SipCall.State.HUNGUP) {
-                            mCallService.hangUp(callId);
+                            conversation.addHistoryCall(new HistoryCall(call));
                         }
                         if (found.getParticipants().isEmpty()) {
                             conversation.removeConference(found);
                         }
                     }
-
-                    mDeviceRuntimeService.updateAudioState(getCurrentCallingConf());
 
                     setChanged();
                     mEvent = new ServiceEvent(ServiceEvent.EventType.CALL_STATE_CHANGED);
@@ -644,8 +588,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     conv.addConference(toAdd);
                     mNotificationService.showCallNotification(toAdd);
 
-                    Map<String, StringMap> camSettings = mDeviceRuntimeService.retrieveAvailablePreviewSettings();
-                    mHardwareService.setPreviewSettings(camSettings);
+                    mHardwareService.setPreviewSettings();
 
                     // Sending VCard when receiving a call
                     mAccountService.sendProfile(callid, accountId);
