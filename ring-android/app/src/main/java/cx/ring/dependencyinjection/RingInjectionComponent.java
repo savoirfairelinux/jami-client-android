@@ -23,14 +23,16 @@ import javax.inject.Singleton;
 
 import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
+import cx.ring.account.RegisterNameDialog;
 import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.application.RingApplication;
 import cx.ring.client.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
-import cx.ring.client.CallActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.BlackListFragment;
+import cx.ring.contactrequests.PendingContactRequestsFragment;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.AdvancedAccountFragment;
@@ -38,7 +40,6 @@ import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.ProfileCreationFragment;
-import cx.ring.account.RegisterNameDialog;
 import cx.ring.fragments.RingAccountCreationFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.fragments.SecurityAccountFragment;
@@ -48,12 +49,10 @@ import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.service.BootReceiver;
 import cx.ring.service.DRingService;
 import cx.ring.service.LocalService;
-import cx.ring.service.VideoManagerCallback;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
 import cx.ring.services.ContactServiceImpl;
-import cx.ring.facades.ConversationFacade;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeServiceImpl;
 import cx.ring.services.HardwareService;
@@ -65,7 +64,6 @@ import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.ShareFragment;
 import cx.ring.share.SharePresenter;
-import cx.ring.contactrequests.PendingContactRequestsFragment;
 import dagger.Component;
 
 @Singleton
@@ -74,8 +72,6 @@ public interface RingInjectionComponent {
     void inject(RingApplication app);
 
     void inject(RingNavigationFragment view);
-
-    void inject(CallActivity activity);
 
     void inject(HomeActivity activity);
 
@@ -120,8 +116,6 @@ public interface RingInjectionComponent {
     void inject(LocalService service);
 
     void inject(DRingService service);
-
-    void inject(VideoManagerCallback callback);
 
     void inject(DeviceRuntimeServiceImpl service);
 

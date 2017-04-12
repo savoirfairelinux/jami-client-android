@@ -69,9 +69,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
 
     // Receiving commands
-    static public final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
-    static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
-    static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
     static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
 
     @Inject
@@ -287,41 +284,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
                     }
 
                     sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, convId)));
-                    break;
-                }
-                case ACTION_CALL_ACCEPT: {
-                    String callId = intent.getData().getLastPathSegment();
-                    try {
-                        mService.accept(callId);
-                    } catch (RemoteException e) {
-                        Log.e(TAG, "ACTION_CALL_ACCEPT", e);
-                    }
-                    mDeviceRuntimeService.updateAudioState(mConversationFacade.getCurrentCallingConf());
-                    Conference conf = mConversationFacade.getConference(callId);
-                    if (conf != null && !conf.isVisible()) {
-                        startActivity(ActionHelper.getViewIntent(LocalService.this, conf).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                    }
-                    break;
-                }
-                case ACTION_CALL_REFUSE: {
-                    String call_id = intent.getData().getLastPathSegment();
-                    try {
-                        mService.refuse(call_id);
-                    } catch (RemoteException e) {
-                        Log.e(TAG, "ACTION_CALL_REFUSE", e);
-                    }
-                    mDeviceRuntimeService.updateAudioState(mConversationFacade.getCurrentCallingConf());
-                    break;
-                }
-                case ACTION_CALL_END: {
-                    String call_id = intent.getData().getLastPathSegment();
-                    try {
-                        mService.hangUp(call_id);
-                        mService.hangUpConference(call_id);
-                    } catch (RemoteException e) {
-                        Log.e(TAG, "ACTION_CALL_END", e);
-                    }
-                    mDeviceRuntimeService.updateAudioState(mConversationFacade.getCurrentCallingConf());
                     break;
                 }
                 case ConnectivityManager.CONNECTIVITY_ACTION:

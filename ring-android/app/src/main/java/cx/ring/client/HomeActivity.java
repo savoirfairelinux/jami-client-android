@@ -80,6 +80,7 @@ import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.SettingsService;
 import cx.ring.settings.SettingsFragment;
@@ -128,6 +129,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
+
+    @Inject
+    HardwareService mHardwareService;
 
     @Inject
     SettingsService mSettingsService;
@@ -462,8 +466,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                         case Manifest.permission.CAMERA:
                             sharedPref.edit().putBoolean(getString(R.string.pref_systemCamera_key), grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
                             // permissions have changed, video params should be reset
-                            ((RingApplication) getApplication()).restartVideo();
-                            break;
+                            final boolean isVideoAllowed = mDeviceRuntimeService.hasVideoPermission();
+                            if (isVideoAllowed) {
+                                mHardwareService.initVideo();
+                            }
                     }
                 }
 
