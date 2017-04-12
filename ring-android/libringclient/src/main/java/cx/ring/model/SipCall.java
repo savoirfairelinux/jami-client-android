@@ -308,7 +308,7 @@ public class SipCall {
 
     public boolean isOngoing() {
         return !(mCallState == State.CONNECTING || mCallState == State.RINGING || mCallState == State.NONE || mCallState == State.FAILURE
-                || mCallState == State.BUSY || mCallState == State.HUNGUP);
+                || mCallState == State.BUSY || mCallState == State.HUNGUP || mCallState == State.INCOMING || mCallState == State.OVER);
 
     }
 
