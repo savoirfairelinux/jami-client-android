@@ -45,8 +45,10 @@ import javax.inject.Named;
 
 import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
+import cx.ring.client.CallActivity;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.Codec;
+import cx.ring.model.Conference;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
@@ -56,6 +58,8 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
+import cx.ring.utils.ActionHelper;
+import cx.ring.utils.ContentUriHandler;
 
 
 public class DRingService extends Service {
@@ -63,6 +67,10 @@ public class DRingService extends Service {
     public static final String ACTION_TRUST_REQUEST_ACCEPT = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_ACCEPT";
     public static final String ACTION_TRUST_REQUEST_REFUSE = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_REFUSE";
     public static final String ACTION_TRUST_REQUEST_BLOCK = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_BLOCK";
+
+    static public final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
+    static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
+    static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
 
     private static final String TAG = DRingService.class.getName();
 
@@ -530,6 +538,15 @@ public class DRingService extends Service {
                 }
                 break;
             }
+            case ACTION_CALL_ACCEPT:
+            case ACTION_CALL_REFUSE:
+            case ACTION_CALL_END: {
+                Bundle extras = intent.getExtras();
+                if (extras != null) {
+                    handleCallAction(intent.getAction(), extras);
+                }
+                break;
+            }
             default:
                 break;
         }
@@ -554,6 +571,36 @@ public class DRingService extends Service {
                     mContactService.removeContact(account, from);
                     break;
                 }
+            }
+        }
+    }
+
+    private void handleCallAction(String action, Bundle extras) {
+        String callId = extras.getString(NotificationServiceImpl.KEY_CALL_ID);
+
+        if(callId == null || callId.isEmpty()) {
+            return;
+        }
+
+        switch (action) {
+            case ACTION_CALL_ACCEPT: {
+                mCallService.accept(callId);
+                final android.net.Uri confUri = android.net.Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI, mConferenceService.getConferenceId(callId));
+                startActivity(new Intent(Intent.ACTION_VIEW)
+                        .setData(confUri)
+                        .setClass(getApplicationContext(), CallActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                break;
+            }
+            case ACTION_CALL_REFUSE: {
+                mCallService.refuse(callId);
+                mNotificationService.cancelCallNotification(callId.hashCode());
+                break;
+            }
+            case ACTION_CALL_END: {
+                mCallService.hangUp(callId);
+                mNotificationService.cancelCallNotification(callId.hashCode());
+                break;
             }
         }
     }
