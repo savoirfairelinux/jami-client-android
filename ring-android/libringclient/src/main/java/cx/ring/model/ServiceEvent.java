@@ -65,7 +65,8 @@ public class ServiceEvent {
         NEW_SERVER_SUBSCRIPTION_REQUEST,
         SERVER_ERROR,
         NEW_BUDDY_NOTIFICATION,
-        SUBSCRIPTION_STATE_CHANGED
+        SUBSCRIPTION_STATE_CHANGED,
+        VIDEO_EVENT
     }
 
     public enum EventInput {
@@ -107,7 +108,13 @@ public class ServiceEvent {
         REMOTE,
         ERROR,
         BUDDY_URI,
-        LINE_STATE
+        LINE_STATE,
+        VIDEO_START,
+        VIDEO_CAMERA,
+        VIDEO_STARTED,
+        VIDEO_WIDTH,
+        VIDEO_HEIGHT,
+        VIDEO_CALL
     }
 
     private EventType mType;
@@ -132,6 +139,15 @@ public class ServiceEvent {
         }
 
         return null;
+    }
+
+    public <T> T getEventInput(EventInput input, Class<T> clazz, T defaultValue) {
+        Object value = mInputs.get(input);
+        if (value != null && value.getClass().isAssignableFrom(clazz)) {
+            return (T) mInputs.get(input);
+        }
+
+        return defaultValue;
     }
 
     public String getString(EventInput input) {

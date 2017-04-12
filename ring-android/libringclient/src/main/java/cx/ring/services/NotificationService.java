@@ -30,11 +30,16 @@ import cx.ring.model.TextMessage;
 
 public abstract class NotificationService {
 
+    public static final String TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID = "trustRequestNotificationAccountId";
+    public static final String TRUST_REQUEST_NOTIFICATION_FROM = "trustRequestNotificationFrom";
+
+    public static final String KEY_CALL_ID = "callId";
+
     public abstract void showCallNotification(Conference conference);
 
     public abstract void showTextNotification(CallContact contact, Conversation conversation, TreeMap<Long, TextMessage> texts);
 
-    public abstract void cancelCallNotification(SipCall address);
+    public abstract void cancelCallNotification(int notificationId);
 
     public abstract void cancelTextNotification(CallContact contact);
 
