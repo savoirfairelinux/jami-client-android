@@ -19,6 +19,7 @@
  */
 package cx.ring.services;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -30,7 +31,11 @@ import cx.ring.daemon.Blob;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
+import cx.ring.model.CallContact;
+import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
+import cx.ring.model.SipCall;
+import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
@@ -45,8 +50,10 @@ public class CallService extends Observable {
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
-    
+
     private CallbackHandler mCallbackHandler;
+
+    private Map<String, SipCall> currentCalls = new HashMap<>();
 
     public CallService() {
         mCallbackHandler = new CallbackHandler();
@@ -66,6 +73,7 @@ public class CallService extends Observable {
                     public String call() throws Exception {
                         Log.i(TAG, "placeCall() thread running... " + number + " video: " + video);
                         String callId = Ringservice.placeCall(account, number);
+                        parseCall(account, callId, number, SipCall.Direction.OUTGOING);
                         if (!video) {
                             Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
                         }
@@ -411,6 +419,27 @@ public class CallService extends Observable {
         );
     }
 
+    public SipCall getCurrentCallForId(String callId) {
+        return currentCalls.get(callId);
+    }
+
+    public void removeCallForId(String callId) {
+        currentCalls.remove(callId);
+    }
+
+    private void parseCall(String accountId, String callId, String from, int direction) {
+        SipCall call = new SipCall(callId, accountId, new Uri(from), direction);
+        call.setCallState(direction);
+        currentCalls.put(callId, call);
+    }
+
+    private void parseCallState(String callId, String newState, Map<String, String> callDetails) {
+        int callState = SipCall.stateFromString(newState);
+        SipCall sipCall = currentCalls.get(callId);
+        sipCall.setCallState(callState);
+        sipCall.setDetails(callDetails);
+    }
+
     class CallbackHandler {
 
         void callStateChanged(String callId, String newState, int detailCode) {
@@ -418,6 +447,8 @@ public class CallService extends Observable {
 
             // it is thread safe: executed in the same daemon thread than the callback
             Map<String, String> callDetails = getCallDetails(callId);
+
+            parseCallState(callId, newState, callDetails);
 
             setChanged();
 
@@ -431,6 +462,9 @@ public class CallService extends Observable {
 
         void incomingCall(String accountId, String callId, String from) {
             Log.d(TAG, "incoming call: " + accountId + ", " + callId + ", " + from);
+
+            parseCall(accountId, callId, from, SipCall.Direction.INCOMING);
+
             setChanged();
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
             event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
