@@ -61,7 +61,8 @@ public class ServiceEvent {
         CONTACT_REMOVED,
         CONVERSATIONS_CHANGED,
         HISTORY_LOADED,
-        HISTORY_MODIFIED
+        HISTORY_MODIFIED,
+        VIDEO_EVENT
     }
 
     public enum EventInput {
@@ -99,7 +100,13 @@ public class ServiceEvent {
         CONFIRMED,
         BANNED,
         HISTORY_CALLS,
-        HISTORY_TEXTS
+        HISTORY_TEXTS,
+        VIDEO_START,
+        VIDEO_CAMERA,
+        VIDEO_STARTED,
+        VIDEO_WIDTH,
+        VIDEO_HEIGHT,
+        VIDEO_CALL
     }
 
     private EventType mType;
@@ -124,6 +131,15 @@ public class ServiceEvent {
         }
 
         return null;
+    }
+
+    public <T> T getEventInput(EventInput input, Class<T> clazz, T defaultValue) {
+        Object value = mInputs.get(input);
+        if (value != null && value.getClass().isAssignableFrom(clazz)) {
+            return (T) mInputs.get(input);
+        }
+
+        return defaultValue;
     }
 
     public String getString(EventInput input) {
