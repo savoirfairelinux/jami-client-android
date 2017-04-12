@@ -34,7 +34,7 @@ public abstract class NotificationService {
 
     public abstract void showTextNotification(CallContact contact, Conversation conversation, TreeMap<Long, TextMessage> texts);
 
-    public abstract void cancelCallNotification(SipCall address);
+    public abstract void cancelCallNotification(int notificationId);
 
     public abstract void cancelTextNotification(CallContact contact);
 
