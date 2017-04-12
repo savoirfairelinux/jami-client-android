@@ -22,9 +22,9 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
     <!-- SipCalls -->
-    <string name="call_human_state_incoming">Ringing</string>
+    <string name="call_human_state_incoming">Incoming</string>
     <string name="call_human_state_connecting">Connecting</string>
-    <string name="call_human_state_ringing">Calling</string>
+    <string name="call_human_state_ringing">Ringing</string>
     <string name="call_human_state_current">Talking</string>
     <string name="call_human_state_hungup">Over</string>
     <string name="call_human_state_busy">Busy</string>

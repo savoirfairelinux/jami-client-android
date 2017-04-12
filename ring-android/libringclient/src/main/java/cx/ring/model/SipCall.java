@@ -306,10 +306,8 @@ public class SipCall {
         return mCallType == Direction.INCOMING;
     }
 
-    public boolean isOngoing() {
-        return !(mCallState == State.CONNECTING || mCallState == State.RINGING || mCallState == State.NONE || mCallState == State.FAILURE
-                || mCallState == State.BUSY || mCallState == State.HUNGUP || mCallState == State.INCOMING);
-
+    public boolean isOnGoing() {
+        return mCallState == State.CURRENT || mCallState == State.HOLD || mCallState == State.UNHOLD;
     }
 
     public boolean isOnHold() {

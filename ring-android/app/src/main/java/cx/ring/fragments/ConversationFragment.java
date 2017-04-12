@@ -47,6 +47,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ClipboardHelper;
@@ -64,11 +65,12 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         ContactDetailsTask.DetailsLoadedCallback,
         ConversationView {
 
+    public static final int REQ_ADD_CONTACT = 42;
+    public static final String KEY_CONVERSATION_ID = "CONVERSATION_ID";
+
     private static final String TAG = ConversationFragment.class.getSimpleName();
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
     private static final int MIN_SIZE_TABLET = 960;
-
-    public static final int REQ_ADD_CONTACT = 42;
 
     @Inject
     protected ConversationPresenter conversationPresenter;
@@ -77,7 +79,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     protected EditText mMsgEditTxt;
 
     @BindView(R.id.ongoingcall_pane)
-    protected ViewGroup mBottomPane;
+    protected ViewGroup mTopPane;
 
     @BindView(R.id.hist_list)
     protected RecyclerView mHistList;
@@ -140,8 +142,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         // Dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        if (mBottomPane != null) {
-            mBottomPane.setVisibility(View.GONE);
+        if (mTopPane != null) {
+            mTopPane.setVisibility(View.GONE);
         }
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -341,8 +343,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @Override
     protected void initPresenter(ConversationPresenter presenter) {
         super.initPresenter(presenter);
-        String conversationId = getArguments().getString("conversationID");
-        Uri number = new Uri(getArguments().getString("number"));
+        String conversationId = getArguments().getString(KEY_CONVERSATION_ID);
+        Uri number = new Uri(getArguments().getString(CallFragment.KEY_NUMBER));
         conversationPresenter.init(conversationId, number);
     }
 
@@ -386,7 +388,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mBottomPane.setVisibility(display ? View.GONE : View.VISIBLE);
+                mTopPane.setVisibility(display ? View.GONE : View.VISIBLE);
             }
         });
     }
@@ -478,7 +480,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     public void goToCallActivity(String conferenceId) {
         startActivity(new Intent(Intent.ACTION_VIEW)
                 .setClass(getActivity().getApplicationContext(), CallActivity.class)
-                .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONFERENCE_CONTENT_URI, conferenceId)));
+                .putExtra(NotificationService.KEY_CALL_ID, conferenceId));
     }
 
     @Override

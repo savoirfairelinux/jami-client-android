@@ -15,9 +15,9 @@
     </style>
 
     <style name="ActionBar.Transparent" parent="@android:style/Widget.DeviceDefault.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@android:color/transparent</item>
+        <item name="android:background">@color/transparent_dark_grey</item>
         <item name="android:height">@dimen/abc_action_bar_default_height_material</item>
-        <item name="background">@android:color/transparent</item>
+        <item name="background">@color/transparent_dark_grey</item>
     </style>
 
     <style name="ToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
