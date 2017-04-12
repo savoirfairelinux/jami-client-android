@@ -50,6 +50,9 @@ public class Conversation {
     private boolean mVisible = false;
     private String uuid;
 
+    private long mLastContactRequest = 0l;
+    public static final long PERIOD = 10l * 60l * 1000l; //10 minutes
+
     public Conversation(CallContact contact) {
         setContact(contact);
         this.uuid = contact.getIds().get(0);
@@ -166,14 +169,13 @@ public class Conversation {
     }
 
     public void addHistoryCall(HistoryCall call) {
-        if(getHistoryCalls().contains(call)){
+        if (getHistoryCalls().contains(call)) {
             return;
         }
         String accountId = call.getAccountID();
         if (mHistory.containsKey(accountId)) {
             mHistory.get(accountId).addHistoryCall(call, getContact());
-        }
-        else {
+        } else {
             HistoryEntry entry = new HistoryEntry(accountId, getContact());
             entry.addHistoryCall(call, getContact());
             mHistory.put(accountId, entry);
@@ -182,7 +184,7 @@ public class Conversation {
     }
 
     public void addTextMessage(TextMessage txt) {
-        if(getTextMessages().contains(txt)){
+        if (getTextMessages().contains(txt)) {
             return;
         }
         if (txt.getContact() == null) {
@@ -292,6 +294,14 @@ public class Conversation {
 
     public Map<String, HistoryEntry> getRawHistory() {
         return mHistory;
+    }
+
+    public long getLastContactRequest() {
+        return mLastContactRequest;
+    }
+
+    public void setLastContactRequest(long timestamp) {
+        mLastContactRequest = timestamp;
     }
 
     public interface ConversationActionCallback {
