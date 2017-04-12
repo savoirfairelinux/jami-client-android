@@ -45,8 +45,10 @@ import javax.inject.Named;
 
 import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
+import cx.ring.client.CallActivity;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.Codec;
+import cx.ring.model.Conference;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
@@ -56,6 +58,8 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
+import cx.ring.utils.ActionHelper;
+import cx.ring.utils.ContentUriHandler;
 
 
 public class DRingService extends Service {
@@ -63,6 +67,11 @@ public class DRingService extends Service {
     public static final String ACTION_TRUST_REQUEST_ACCEPT = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_ACCEPT";
     public static final String ACTION_TRUST_REQUEST_REFUSE = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_REFUSE";
     public static final String ACTION_TRUST_REQUEST_BLOCK = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_BLOCK";
+
+    static public final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
+    static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
+    static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
+    static public final String ACTION_CALL_VIEW = BuildConfig.APPLICATION_ID + ".action.CALL_VIEW";
 
     private static final String TAG = DRingService.class.getName();
 
@@ -402,7 +411,7 @@ public class DRingService extends Service {
 
         @Override
         public void playDtmf(final String key) throws RemoteException {
-            mCallService.playDtmf(key);
+
         }
 
         @Override
@@ -441,51 +450,38 @@ public class DRingService extends Service {
         }
 
         @Override
+        @Deprecated
         public void videoSurfaceAdded(String id) {
-            Log.d(TAG, "DRingService.videoSurfaceAdded() " + id);
-            RingApplication application = (RingApplication) getApplication();
-            RingApplication.Shm shm = ((RingApplication) getApplication()).videoInputs.get(id);
-            SurfaceHolder holder = application.videoSurfaces.get(id).get();
-            if (shm != null && holder != null && shm.window == 0) {
-                application.startVideo(shm, holder);
-            }
+
         }
 
         @Override
+        @Deprecated
         public void videoSurfaceRemoved(String id) {
-            Log.d(TAG, "DRingService.videoSurfaceRemoved() " + id);
-            RingApplication application = (RingApplication) getApplication();
-            RingApplication.Shm shm = application.videoInputs.get(id);
-            if (shm != null) {
-                application.stopVideo(shm);
-            }
+
         }
 
         @Override
+        @Deprecated
         public void videoPreviewSurfaceAdded() {
-            Log.i(TAG, "DRingService.videoPreviewSurfaceChanged()");
-            ((RingApplication) getApplication()).startCapture(((RingApplication) getApplication()).previewParams);
+
         }
 
         @Override
+        @Deprecated
         public void videoPreviewSurfaceRemoved() {
-            Log.i(TAG, "DRingService.videoPreviewSurfaceChanged()");
-            ((RingApplication) getApplication()).stopCapture();
+
         }
 
         @Override
+        @Deprecated
         public void switchInput(final String id, final boolean front) {
-            RingApplication application = (RingApplication) getApplication();
-            final int camId = (front ? application.mVideoManagerCallback.cameraFront : application.mVideoManagerCallback.cameraBack);
-            final String uri = "camera://" + camId;
-            final cx.ring.daemon.StringMap map = application.mVideoManagerCallback.getNativeParams(camId).toMap(getResources().getConfiguration().orientation);
-            mHardwareService.switchInput(id, uri, map);
         }
 
         @Override
+        @Deprecated
         public void setPreviewSettings() {
-            Map<String, StringMap> camSettings = mDeviceRuntimeService.retrieveAvailablePreviewSettings();
-            mHardwareService.setPreviewSettings(camSettings);
+
         }
 
         @Override
@@ -520,16 +516,25 @@ public class DRingService extends Service {
     };
 
     private void parseIntent(Intent intent) {
+        Bundle extras;
         switch (intent.getAction()) {
             case ACTION_TRUST_REQUEST_ACCEPT:
             case ACTION_TRUST_REQUEST_REFUSE:
-            case ACTION_TRUST_REQUEST_BLOCK: {
-                Bundle extras = intent.getExtras();
+            case ACTION_TRUST_REQUEST_BLOCK:
+                extras = intent.getExtras();
                 if (extras != null) {
                     handleTrustRequestAction(intent.getAction(), extras);
                 }
                 break;
-            }
+            case ACTION_CALL_ACCEPT:
+            case ACTION_CALL_REFUSE:
+            case ACTION_CALL_END:
+            case ACTION_CALL_VIEW:
+                extras = intent.getExtras();
+                if (extras != null) {
+                    handleCallAction(intent.getAction(), extras);
+                }
+                break;
             default:
                 break;
         }
@@ -541,20 +546,50 @@ public class DRingService extends Service {
         if (account != null && from != null) {
             mNotificationService.cancelTrustRequestNotification(account);
             switch (action) {
-                case ACTION_TRUST_REQUEST_ACCEPT: {
+                case ACTION_TRUST_REQUEST_ACCEPT:
                     mAccountService.acceptTrustRequest(account, from);
                     break;
-                }
-                case ACTION_TRUST_REQUEST_REFUSE: {
+                case ACTION_TRUST_REQUEST_REFUSE:
                     mAccountService.discardTrustRequest(account, from);
                     break;
-                }
-                case ACTION_TRUST_REQUEST_BLOCK: {
+                case ACTION_TRUST_REQUEST_BLOCK:
                     mAccountService.discardTrustRequest(account, from);
                     mContactService.removeContact(account, from);
                     break;
-                }
             }
+        }
+    }
+
+    private void handleCallAction(String action, Bundle extras) {
+        String callId = extras.getString(NotificationServiceImpl.KEY_CALL_ID);
+
+        if(callId == null || callId.isEmpty()) {
+            return;
+        }
+
+        switch (action) {
+            case ACTION_CALL_ACCEPT:
+                mCallService.accept(callId);
+                mNotificationService.cancelCallNotification(callId.hashCode());
+                startActivity(new Intent(Intent.ACTION_VIEW)
+                        .putExtras(extras)
+                        .setClass(getApplicationContext(), CallActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_NEW_TASK));
+                break;
+            case ACTION_CALL_REFUSE:
+                mCallService.refuse(callId);
+                mNotificationService.cancelCallNotification(callId.hashCode());
+                break;
+            case ACTION_CALL_END:
+                mCallService.hangUp(callId);
+                mNotificationService.cancelCallNotification(callId.hashCode());
+                break;
+            case ACTION_CALL_VIEW:
+                startActivity(new Intent(Intent.ACTION_VIEW)
+                        .putExtras(extras)
+                        .setClass(getApplicationContext(), CallActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_NEW_TASK));
+                break;
         }
     }
 }
