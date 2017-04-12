@@ -23,7 +23,11 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 
+import cx.ring.utils.Log;
+
 public abstract class BaseFragment<T extends RootPresenter> extends Fragment {
+
+    protected static final String TAG = BaseFragment.class.getSimpleName();
 
     protected T presenter;
 
@@ -39,6 +43,7 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment {
 
     @Override
     public void onDestroyView() {
+        Log.d(TAG, "onDestroyView");
         super.onDestroyView();
         presenter.unbindView();
     }
