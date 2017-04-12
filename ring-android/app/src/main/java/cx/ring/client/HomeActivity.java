@@ -67,6 +67,7 @@ import cx.ring.R;
 import cx.ring.about.AboutFragment;
 import cx.ring.application.RingApplication;
 import cx.ring.fragments.AccountsManagementFragment;
+import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
@@ -80,6 +81,7 @@ import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.SharedPreferencesService;
 import cx.ring.settings.SettingsFragment;
@@ -131,6 +133,9 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Inject
     SharedPreferencesService mSharedPreferencesService;
+
+    @Inject
+    HardwareService mHardwareService;
 
     @Inject
     AccountService mAccountService;
@@ -314,7 +319,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
         if (fContent instanceof SmartListFragment) {
             Bundle bundle = new Bundle();
-            bundle.putString("conversationID", intent.getStringExtra("conversationID"));
+            bundle.putString(ConversationFragment.KEY_CONVERSATION_ID, intent.getStringExtra(ConversationFragment.KEY_CONVERSATION_ID));
             startConversationTablet(bundle);
         }
     }
@@ -462,8 +467,10 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                         case Manifest.permission.CAMERA:
                             sharedPref.edit().putBoolean(getString(R.string.pref_systemCamera_key), grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
                             // permissions have changed, video params should be reset
-                            ((RingApplication) getApplication()).restartVideo();
-                            break;
+                            final boolean isVideoAllowed = mDeviceRuntimeService.hasVideoPermission();
+                            if (isVideoAllowed) {
+                                mHardwareService.initVideo();
+                            }
                     }
                 }
 
@@ -822,7 +829,7 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                     Intent intent = new Intent(Intent.ACTION_VIEW)
                             .setClass(HomeActivity.this, ConversationActivity.class)
                             .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)))
-                            .putExtra("number", selected);
+                            .putExtra(CallFragment.KEY_NUMBER, selected);
                     startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
                 }
             });

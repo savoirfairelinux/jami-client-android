@@ -523,7 +523,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
         } else {
             Bundle bundle = new Bundle();
-            bundle.putString("conversationID", callContact.getIds().get(0));
+            bundle.putString(ConversationFragment.KEY_CONVERSATION_ID, callContact.getIds().get(0));
             ((HomeActivity) getActivity()).startConversationTablet(bundle);
         }
     }
