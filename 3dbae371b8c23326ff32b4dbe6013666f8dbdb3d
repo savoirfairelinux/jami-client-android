@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7aade967_774d2f72",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/AccountEditionActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-04-12T16:01:19Z",
+      "side": 1,
+      "message": "Done. To be honest I never understood why this syntax would be an issue for this kind of one-line statements. It\u0027s a valid syntax that happens to be clear and appropriate. Do we really need to have so rigid rules ?",
+      "parentUuid": "7aade967_7c4af684",
+      "range": {
+        "startLine": 180,
+        "startChar": 7,
+        "endLine": 182,
+        "endChar": 56
+      },
+      "revId": "3dbae371b8c23326ff32b4dbe6013666f8dbdb3d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aade967_1cad0232",
         "filename": "ring-android/build.gradle",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-04-12T14:52:27Z",
       "side": 1,
       "message": "already done in an another commit",
+      "range": {
+        "startLine": 7,
+        "startChar": 50,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "3dbae371b8c23326ff32b4dbe6013666f8dbdb3d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_173e3bb9",
+        "filename": "ring-android/build.gradle",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-04-12T16:01:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aade967_1cad0232",
       "range": {
         "startLine": 7,
         "startChar": 50,
