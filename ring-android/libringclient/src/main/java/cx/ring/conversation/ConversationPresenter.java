@@ -170,6 +170,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         }
 
         Conference conf = mConversation.getCurrentCall();
+
+        if (conf != null && conf.getParticipants().get(0).getCallState() == SipCall.State.INACTIVE) {
+            mConversation.removeConference(conf);
+            conf = null;
+        }
+
         if (conf != null) {
             getView().goToCallActivity(conf.getId());
         } else {
