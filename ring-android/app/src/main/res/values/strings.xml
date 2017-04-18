@@ -208,4 +208,8 @@ along with this program; if not, write to the Free Software
     <!-- Blacklist -->
     <string name="no_blocked_contact">0 blocked contacts</string>
 
+    <!-- Smartlist -->
+    <string name="no_contact_request">No contact request sent</string>
+    <string name="contact_request_sent">Contact request sent</string>
+
 </resources>
