@@ -24,6 +24,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
@@ -39,6 +41,8 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
     public TextView convTime;
     @BindView(R.id.photo)
     public ImageView photo;
+    @BindView(R.id.contact_request)
+    public TextView contactRequest;
 
     public SmartListViewHolder(View itemView) {
         super(itemView);
