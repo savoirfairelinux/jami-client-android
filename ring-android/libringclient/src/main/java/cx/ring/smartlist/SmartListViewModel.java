@@ -19,12 +19,8 @@
  */
 package cx.ring.smartlist;
 
-import java.util.Map;
-
 import cx.ring.model.Conversation;
 import cx.ring.model.HistoryEntry;
-import cx.ring.services.ContactService;
-import cx.ring.utils.Tuple;
 
 public class SmartListViewModel {
 
@@ -36,17 +32,19 @@ public class SmartListViewModel {
     private long lastInteractionTime;
     private boolean hasUnreadTextMessage;
     private boolean hasOngoingCall;
+    private boolean hasRequestSent;
+    private boolean hasRequestConfirmed;
 
-    public SmartListViewModel(Conversation conversation, String contactName, String photoUri, byte[] photoData) {
+    public SmartListViewModel(Conversation conversation, String contactName, String photoUri, byte[] photoData, boolean request, boolean confirmed) {
         this.uuid = conversation.getUuid();
-        setData(conversation, contactName, photoUri, photoData);
+        setData(conversation, contactName, photoUri, photoData, request, confirmed);
     }
 
-    public void update(Conversation conversation, String contactName, String photoUri, byte[] photoData) {
-        setData(conversation, contactName, photoUri, photoData);
+    public void update(Conversation conversation, String contactName, String photoUri, byte[] photoData, boolean request, boolean confirmed) {
+        setData(conversation, contactName, photoUri, photoData, request, confirmed);
     }
 
-    private void setData(Conversation conversation, String contactName, String photoUri, byte[] photoData) {
+    private void setData(Conversation conversation, String contactName, String photoUri, byte[] photoData, boolean request, boolean confirmed) {
         this.contactName = contactName;
         this.photoUri = photoUri;
         this.photoData = photoData;
@@ -67,6 +65,8 @@ public class SmartListViewModel {
         this.lastInteractionTime = conversation.getLastInteraction().getTime();
         this.hasUnreadTextMessage = conversation.hasUnreadTextMessages();
         this.hasOngoingCall = conversation.hasCurrentCall();
+        this.hasRequestSent = request;
+        this.hasRequestConfirmed = confirmed;
     }
 
     public String getContactName() {
@@ -99,5 +99,13 @@ public class SmartListViewModel {
 
     public byte[] getPhotoData() {
         return photoData;
+    }
+
+    public boolean hasRequestSent() {
+        return hasRequestSent;
+    }
+
+    public boolean hasRequestConfirmed() {
+        return hasRequestConfirmed;
     }
 }

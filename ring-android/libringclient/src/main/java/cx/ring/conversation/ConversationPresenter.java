@@ -20,7 +20,6 @@
 package cx.ring.conversation;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -261,13 +260,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             contactId = split[1];
         }
 
-        List<Map<String, String>> contacts = mContactService.getContacts(accountId);
-        for (Map<String, String> contact : contacts) {
-            if (contact.get("id").equals(contactId)
-                    && contact.containsKey("confirmed")
-                    && contact.get("confirmed").equals("true")) {
-                return;
-            }
+        CallContact contact = mContactService.findContact(-1, null, contactUri.getRawUriString());
+        if (contact != null && contact.isConfirmed()) {
+            return;
         }
 
         mConversation.setLastContactRequest(time);

@@ -41,6 +41,8 @@ public class CallContact {
     private boolean stared = false;
     private boolean isFromSystem = false;
     private boolean isBanned = false;
+    private boolean isConfirmed = false;
+    private boolean hasRequest = false;
 
     public CallContact(long cID) {
         this(cID, null, null, UNKNOWN_ID);
@@ -57,6 +59,10 @@ public class CallContact {
         mPhones = p;
         mPhotoId = photoID;
         isUser = user;
+        if (cID != UNKNOWN_ID && (displayName == null || !displayName.contains(PREFIX_RING))) {
+            isConfirmed = true;
+            hasRequest = true;
+        }
     }
 
     public static CallContact buildUnknown(Uri to) {
@@ -219,6 +225,22 @@ public class CallContact {
 
     public void setBanned(boolean banned) {
         isBanned = banned;
+    }
+
+    public boolean isConfirmed() {
+        return isConfirmed;
+    }
+
+    public boolean hasRequest() {
+        return hasRequest;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        isConfirmed = confirmed;
+    }
+
+    public void setRequest(boolean hasRequest) {
+        this.hasRequest = hasRequest;
     }
 
     /**

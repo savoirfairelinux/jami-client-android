@@ -250,25 +250,30 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             for (int i = 0; i < mConversations.size(); i++) {
                 Conversation conversation = mConversations.get(i);
                 SmartListViewModel smartListViewModel = getSmartListViewModelByUuid(mSmartListViewModels, conversation.getUuid());
+                CallContact contact = conversation.getContact();
 
                 if (smartListViewModel == null || i >= mSmartListViewModels.size()) {
 
                     if (conversation.getContact().isFromSystem()) {
-                        Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(conversation.getContact());
-                        smartListViewModel = new SmartListViewModel(conversation, tuple.first, tuple.second, null);
+                        Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(contact);
+                        smartListViewModel = new SmartListViewModel(conversation, tuple.first, tuple.second, null,
+                                contact.hasRequest(), contact.isConfirmed());
                     } else {
-                        Tuple<String, byte[]> tuple = mContactService.loadContactData(conversation.getContact());
-                        smartListViewModel = new SmartListViewModel(conversation, tuple.first, null, tuple.second);
+                        Tuple<String, byte[]> tuple = mContactService.loadContactData(contact);
+                        smartListViewModel = new SmartListViewModel(conversation, tuple.first, null, tuple.second,
+                                contact.hasRequest(), contact.isConfirmed());
                     }
 
                     mSmartListViewModels.add(smartListViewModel);
                 } else {
                     if (conversation.getContact().isFromSystem()) {
                         Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(conversation.getContact());
-                        smartListViewModel.update(conversation, tuple.first, tuple.second, null);
+                        smartListViewModel.update(conversation, tuple.first, tuple.second, null,
+                                contact.hasRequest(), contact.isConfirmed());
                     } else {
-                        Tuple<String, byte[]> tuple = mContactService.loadContactData(conversation.getContact());
-                        smartListViewModel.update(conversation, tuple.first, null, tuple.second);
+                        Tuple<String, byte[]> tuple = mContactService.loadContactData(contact);
+                        smartListViewModel.update(conversation, tuple.first, null, tuple.second,
+                                contact.hasRequest(), contact.isConfirmed());
                     }
                 }
             }

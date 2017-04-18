@@ -504,6 +504,12 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             String phone = contact.getPhones().get(0).getNumber().getRawUriString();
             if (!mConversationMap.containsKey(key) && !mConversationMap.containsKey(phone)) {
                 mConversationMap.put(key, new Conversation(contact));
+            } else {
+                Conversation conversation = mConversationMap.get(key);
+                if (conversation == null) {
+                    conversation = mConversationMap.get(phone);
+                }
+                conversation.setContact(contact);
             }
         }
     }

@@ -58,6 +58,7 @@ public abstract class ContactService extends Observable {
     public static final String CONTACT_NAME_KEY = "CONTACT_NAME";
     public static final String CONTACT_PHOTO_KEY = "CONTACT_PHOTO";
     public static final String BANNED = "banned";
+    public static final String CONFIRMED = "confirmed";
     public static final String ID = "id";
 
     private final static String TAG = ContactService.class.getName();
@@ -111,6 +112,9 @@ public abstract class ContactService extends Observable {
             CallContact callContact = CallContact.buildUnknown(CallContact.PREFIX_RING + contactId);
             if (contact.containsKey(BANNED) && contact.get(BANNED).equals("true")) {
                 callContact.setBanned(true);
+            } else if (contact.containsKey(CONFIRMED)) {
+                callContact.setConfirmed(Boolean.valueOf(contact.get(CONFIRMED)));
+                callContact.setRequest(true);
             }
             contacts.put(contactId, callContact);
         }

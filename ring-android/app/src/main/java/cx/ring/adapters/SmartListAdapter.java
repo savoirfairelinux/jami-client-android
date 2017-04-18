@@ -23,6 +23,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -84,6 +85,15 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
             holder.convParticipants.setTypeface(null, Typeface.NORMAL);
             holder.convTime.setTypeface(null, Typeface.NORMAL);
             holder.convStatus.setTypeface(null, Typeface.NORMAL);
+        }
+        if (!smartListViewModel.hasRequestSent()) {
+            holder.contactRequest.setText(R.string.no_contact_request);
+            holder.contactRequest.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.holo_red_dark));
+        } else if (!smartListViewModel.hasRequestConfirmed()) {
+            holder.contactRequest.setText(R.string.contact_request_sent);
+            holder.contactRequest.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.holo_green_dark));
+        } else {
+            holder.contactRequest.setText("");
         }
 
         String photoUri = smartListViewModel.getPhotoUri();
