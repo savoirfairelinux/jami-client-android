@@ -31,6 +31,8 @@ public class CallContact {
     public static final int DEFAULT_ID = 0;
     public static final String PREFIX_RING = "ring:";
 
+    public enum Status {BANNED, REQUEST_SENT, CONFIRMED, NO_REQUEST}
+
     private long mId;
     private String mKey;
     private String mDisplayName;
@@ -40,7 +42,7 @@ public class CallContact {
     private WeakReference<byte[]> mContactPhoto = new WeakReference<>(null);
     private boolean stared = false;
     private boolean isFromSystem = false;
-    private boolean isBanned = false;
+    private Status mStatus = Status.NO_REQUEST;
 
     public CallContact(long cID) {
         this(cID, null, null, UNKNOWN_ID);
@@ -57,6 +59,9 @@ public class CallContact {
         mPhones = p;
         mPhotoId = photoID;
         isUser = user;
+        if (cID != UNKNOWN_ID && (displayName == null || !displayName.contains(PREFIX_RING))) {
+            mStatus = Status.CONFIRMED;
+        }
     }
 
     public static CallContact buildUnknown(Uri to) {
@@ -209,16 +214,16 @@ public class CallContact {
         return isFromSystem;
     }
 
-    public boolean isBanned() {
-        return isBanned;
+    public Status getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(Status status) {
+        mStatus = status;
     }
 
     public void setFromSystem(boolean fromSystem) {
         isFromSystem = fromSystem;
-    }
-
-    public void setBanned(boolean banned) {
-        isBanned = banned;
     }
 
     /**

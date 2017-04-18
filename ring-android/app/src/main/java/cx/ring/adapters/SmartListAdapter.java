@@ -23,6 +23,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -65,17 +66,39 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     public void onBindViewHolder(SmartListViewHolder holder, int position) {
         final SmartListViewModel smartListViewModel = mSmartListViewModels.get(position);
 
+        switch (smartListViewModel.getStatus()) {
+            case NO_REQUEST:
+                holder.convStatus.setVisibility(View.GONE);
+                holder.contactRequest.setVisibility(View.VISIBLE);
+                holder.contactRequest.setText(R.string.no_contact_request);
+                holder.contactRequest.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.holo_red_dark));
+                break;
+            case REQUEST_SENT:
+                holder.convStatus.setVisibility(View.GONE);
+                holder.contactRequest.setVisibility(View.VISIBLE);
+                holder.contactRequest.setText(R.string.contact_request_sent);
+                holder.contactRequest.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.holo_green_dark));
+                break;
+            default:
+                holder.convStatus.setVisibility(View.VISIBLE);
+                holder.contactRequest.setVisibility(View.GONE);
+
+                long lastInteraction = smartListViewModel.getLastInteractionTime();
+                holder.convTime.setText(lastInteraction == 0 ? "" :
+                        DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL));
+                break;
+        }
+
         holder.convParticipants.setText(smartListViewModel.getContactName());
-        long lastInteraction = smartListViewModel.getLastInteractionTime();
-        holder.convTime.setText(lastInteraction == 0 ? "" :
-                DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL));
+
         if (smartListViewModel.hasOngoingCall()) {
             holder.convStatus.setText(holder.itemView.getContext().getString(R.string.ongoing_call));
         } else if (smartListViewModel.getLastInteraction() != null) {
             holder.convStatus.setText(getLastInteractionSummary(smartListViewModel.getLastInteraction(), holder.itemView.getContext()));
         } else {
-            holder.convStatus.setText("");
+            holder.convStatus.setVisibility(View.GONE);
         }
+
         if (smartListViewModel.hasUnreadTextMessage()) {
             holder.convParticipants.setTypeface(null, Typeface.BOLD);
             holder.convTime.setTypeface(null, Typeface.BOLD);

@@ -250,14 +250,15 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             for (int i = 0; i < mConversations.size(); i++) {
                 Conversation conversation = mConversations.get(i);
                 SmartListViewModel smartListViewModel = getSmartListViewModelByUuid(mSmartListViewModels, conversation.getUuid());
+                CallContact contact = conversation.getContact();
 
                 if (smartListViewModel == null || i >= mSmartListViewModels.size()) {
 
                     if (conversation.getContact().isFromSystem()) {
-                        Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(conversation.getContact());
+                        Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(contact);
                         smartListViewModel = new SmartListViewModel(conversation, tuple.first, tuple.second, null);
                     } else {
-                        Tuple<String, byte[]> tuple = mContactService.loadContactData(conversation.getContact());
+                        Tuple<String, byte[]> tuple = mContactService.loadContactData(contact);
                         smartListViewModel = new SmartListViewModel(conversation, tuple.first, null, tuple.second);
                     }
 
@@ -267,7 +268,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                         Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(conversation.getContact());
                         smartListViewModel.update(conversation, tuple.first, tuple.second, null);
                     } else {
-                        Tuple<String, byte[]> tuple = mContactService.loadContactData(conversation.getContact());
+                        Tuple<String, byte[]> tuple = mContactService.loadContactData(contact);
                         smartListViewModel.update(conversation, tuple.first, null, tuple.second);
                     }
                 }
