@@ -61,7 +61,11 @@ public class ServiceEvent {
         CONTACT_REMOVED,
         CONVERSATIONS_CHANGED,
         HISTORY_LOADED,
-        HISTORY_MODIFIED
+        HISTORY_MODIFIED,
+        NEW_SERVER_SUBSCRIPTION_REQUEST,
+        SERVER_ERROR,
+        NEW_BUDDY_NOTIFICATION,
+        SUBSCRIPTION_STATE_CHANGED
     }
 
     public enum EventInput {
@@ -99,7 +103,11 @@ public class ServiceEvent {
         CONFIRMED,
         BANNED,
         HISTORY_CALLS,
-        HISTORY_TEXTS
+        HISTORY_TEXTS,
+        REMOTE,
+        ERROR,
+        BUDDY_URI,
+        LINE_STATE
     }
 
     private EventType mType;
@@ -129,6 +137,7 @@ public class ServiceEvent {
     public String getString(EventInput input) {
         return getEventInput(input, String.class);
     }
+
     public int getInt(EventInput input) {
         return getEventInput(input, Integer.class);
     }
