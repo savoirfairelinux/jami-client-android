@@ -58,6 +58,7 @@ import cx.ring.services.DeviceRuntimeServiceImpl;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.NotificationServiceImpl;
+import cx.ring.services.PresenceService;
 import cx.ring.services.SettingsServiceImpl;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.SettingsPresenter;
@@ -142,6 +143,8 @@ public interface RingInjectionComponent {
     void inject(NotificationServiceImpl service);
 
     void inject(ConversationFacade service);
+
+    void inject(PresenceService service);
 
     void inject(BootReceiver receiver);
 

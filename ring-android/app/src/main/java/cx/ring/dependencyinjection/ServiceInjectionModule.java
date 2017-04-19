@@ -45,6 +45,7 @@ import cx.ring.services.LogService;
 import cx.ring.services.LogServiceImpl;
 import cx.ring.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
+import cx.ring.services.PresenceService;
 import cx.ring.services.SettingsService;
 import cx.ring.services.SettingsServiceImpl;
 import cx.ring.utils.Log;
@@ -150,6 +151,14 @@ public class ServiceInjectionModule {
         ContactServiceImpl contactService = new ContactServiceImpl();
         mRingApplication.getRingInjectionComponent().inject(contactService);
         return contactService;
+    }
+
+    @Provides
+    @Singleton
+    PresenceService providePresenceService() {
+        PresenceService presenceService = new PresenceService();
+        mRingApplication.getRingInjectionComponent().inject(presenceService);
+        return presenceService;
     }
 
     @Provides

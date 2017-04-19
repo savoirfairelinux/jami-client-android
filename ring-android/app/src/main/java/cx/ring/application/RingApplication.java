@@ -51,6 +51,7 @@ import javax.inject.Named;
 import cx.ring.BuildConfig;
 import cx.ring.daemon.Callback;
 import cx.ring.daemon.ConfigurationCallback;
+import cx.ring.daemon.PresenceCallback;
 import cx.ring.daemon.VideoCallback;
 import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
 import cx.ring.dependencyinjection.PresenterInjectionModule;
@@ -68,6 +69,7 @@ import cx.ring.services.ContactService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
+import cx.ring.services.PresenceService;
 import cx.ring.services.SettingsService;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
@@ -90,6 +92,7 @@ public class RingApplication extends Application {
     // true Daemon callbacks handlers. The notify the Android ones
     private Callback mCallAndConferenceCallbackHandler;
     private ConfigurationCallback mAccountAndContactCallbackHandler;
+    private PresenceCallback mPresenceCallbackHandler;
     private VideoCallback mHardwareCallbackHandler;
 
     public final Map<String, RingApplication.Shm> videoInputs = new HashMap<>();
@@ -130,6 +133,9 @@ public class RingApplication extends Application {
 
     @Inject
     ContactService mContactService;
+
+    @Inject
+    PresenceService mPresenceService;
 
     static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
     private final BroadcastReceiver ringerModeListener = new BroadcastReceiver() {
@@ -200,6 +206,7 @@ public class RingApplication extends Application {
                         mAccountService.getCallbackHandler(),
                         mContactService.getCallbackHandler());
                 mHardwareCallbackHandler = mHardwareService.getCallbackHandler();
+                mPresenceCallbackHandler = mPresenceService.getCallbackHandler();
 
                 // Android specific Low level Services observers
                 mCallService.addObserver(mCallManagerCallBack);
@@ -211,6 +218,7 @@ public class RingApplication extends Application {
                 mDaemonService.startDaemon(
                         mCallAndConferenceCallbackHandler,
                         mAccountAndContactCallbackHandler,
+                        mPresenceCallbackHandler,
                         mHardwareCallbackHandler);
 
                 ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
