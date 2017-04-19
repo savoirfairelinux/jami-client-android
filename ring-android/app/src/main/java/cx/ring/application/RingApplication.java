@@ -51,6 +51,7 @@ import javax.inject.Named;
 import cx.ring.BuildConfig;
 import cx.ring.daemon.Callback;
 import cx.ring.daemon.ConfigurationCallback;
+import cx.ring.daemon.PresenceCallback;
 import cx.ring.daemon.VideoCallback;
 import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
 import cx.ring.dependencyinjection.PresenterInjectionModule;
@@ -90,6 +91,7 @@ public class RingApplication extends Application {
     // true Daemon callbacks handlers. The notify the Android ones
     private Callback mCallAndConferenceCallbackHandler;
     private ConfigurationCallback mAccountAndContactCallbackHandler;
+    private PresenceCallback mPresenceCallbackHandler;
     private VideoCallback mHardwareCallbackHandler;
 
     public final Map<String, RingApplication.Shm> videoInputs = new HashMap<>();
@@ -200,6 +202,7 @@ public class RingApplication extends Application {
                         mAccountService.getCallbackHandler(),
                         mContactService.getCallbackHandler());
                 mHardwareCallbackHandler = mHardwareService.getCallbackHandler();
+                mPresenceCallbackHandler = mDaemonService.getDaemonPresenceCallbackHandler();
 
                 // Android specific Low level Services observers
                 mCallService.addObserver(mCallManagerCallBack);
@@ -211,6 +214,7 @@ public class RingApplication extends Application {
                 mDaemonService.startDaemon(
                         mCallAndConferenceCallbackHandler,
                         mAccountAndContactCallbackHandler,
+                        mPresenceCallbackHandler,
                         mHardwareCallbackHandler);
 
                 ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
