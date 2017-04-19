@@ -179,6 +179,7 @@ namespace std {
 %include "managerimpl.i"
 %include "callmanager.i"
 %include "configurationmanager.i"
+%include "presencemanager.i"
 %include "videomanager.i"
 
 #include "dring/callmanager_interface.h"
@@ -188,13 +189,14 @@ namespace std {
  * that are not declared elsewhere in the c++ code
  */
 
-void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) {
+void init(ConfigurationCallback* confM, Callback* callM, PresenceCallback* presM, VideoCallback* videoM) {
     using namespace std::placeholders;
 
     using std::bind;
     using DRing::exportable_callback;
     using DRing::CallSignal;
     using DRing::ConfigurationSignal;
+    using DRing::PresenceSignal;
     using DRing::VideoSignal;
 
     using SharedCallback = std::shared_ptr<DRing::CallbackWrapperBase>;
@@ -246,6 +248,14 @@ void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) 
         exportable_callback<ConfigurationSignal::DeviceRevocationEnded>(bind(&ConfigurationCallback::deviceRevocationEnded, confM, _1, _2, _3))
     };
 
+    // Presence event handlers
+    const std::map<std::string, SharedCallback> presenceEvHandlers = {
+        exportable_callback<PresenceSignal::NewServerSubscriptionRequest>(bind(&PresenceCallback::newServerSubscriptionRequest, presM, _1 )),
+        exportable_callback<PresenceSignal::ServerError>(bind(&PresenceCallback::serverError, presM, _1, _2, _3 )),
+        exportable_callback<PresenceSignal::NewBuddyNotification>(bind(&PresenceCallback::newBuddyNotification, presM, _1, _2, _3, _4 )),
+        exportable_callback<PresenceSignal::SubscriptionStateChanged>(bind(&PresenceCallback::subscriptionStateChanged, presM, _1, _2, _3 ))
+    };
+
     const std::map<std::string, SharedCallback> videoEvHandlers = {
         exportable_callback<VideoSignal::GetCameraInfo>(bind(&VideoCallback::getCameraInfo, videoM, _1, _2, _3, _4)),
         exportable_callback<VideoSignal::SetParameters>(bind(&VideoCallback::setParameters, videoM, _1, _2, _3, _4, _5)),
@@ -260,6 +270,7 @@ void init(ConfigurationCallback* confM, Callback* callM, VideoCallback* videoM) 
 
     registerCallHandlers(callEvHandlers);
     registerConfHandlers(configEvHandlers);
+    registerPresHandlers(presenceEvHandlers);
     registerVideoHandlers(videoEvHandlers);
 
     DRing::start();
