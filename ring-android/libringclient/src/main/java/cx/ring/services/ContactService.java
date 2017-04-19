@@ -179,12 +179,12 @@ public abstract class ContactService extends Observable {
     public Collection<CallContact> getContacts() {
         List<CallContact> contacts = new ArrayList<>(mContactList.values());
         List<CallContact> contactsRing = new ArrayList<>(mContactsRing.values());
-        for (CallContact contact : contactsRing) {
-            if (!contacts.contains(contact)) {
-                contacts.add(contact);
+        for (CallContact contact : contacts) {
+            if (!contactsRing.contains(contact)) {
+                contactsRing.add(contact);
             }
         }
-        return contacts;
+        return contactsRing;
     }
 
     public Collection<CallContact> getContactsNoBanned() {

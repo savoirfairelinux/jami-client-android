@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
@@ -417,12 +416,12 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         conversation.addTextMessage(txt);
     }
 
-    private void parseHistoryCalls(List<HistoryCall> historyCalls) {
+    private void parseHistoryCalls(List<HistoryCall> historyCalls, boolean acceptAllMessages) {
         for (HistoryCall call : historyCalls) {
             String key = StringUtils.getRingIdFromNumber(call.getNumber());
             if (mConversationMap.containsKey(key)) {
                 mConversationMap.get(key).addHistoryCall(call);
-            } else {
+            } else if (acceptAllMessages) {
                 CallContact contact = mContactService.findContact(call.getContactID(), call.getContactKey(), call.getNumber());
                 Conversation conversation = new Conversation(contact);
                 conversation.addHistoryCall(call);
@@ -431,13 +430,13 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
-    private void parseHistoryTexts(List<HistoryText> historyTexts) {
+    private void parseHistoryTexts(List<HistoryText> historyTexts, boolean acceptAllMessages) {
         for (HistoryText htext : historyTexts) {
             TextMessage msg = new TextMessage(htext);
             String key = StringUtils.getRingIdFromNumber(msg.getNumber());
             if (mConversationMap.containsKey(key)) {
                 mConversationMap.get(key).addTextMessage(msg);
-            } else {
+            } else if (acceptAllMessages) {
                 CallContact contact = mContactService.findContact(htext.getContactID(), htext.getContactKey(), htext.getNumber());
                 Conversation conversation = new Conversation(contact);
                 conversation.addTextMessage(msg);
@@ -446,16 +445,20 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
-    private void aggregateHistory() {
-        Map<String, ArrayList<String>> conferences = mConferenceService.getConferenceList();
+    private void addContactsDaemon() {
+        mConversationMap.clear();
 
-        Iterator<Map.Entry<String, Conversation>> it = mConversationMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, Conversation> entry = it.next();
-            if (entry.getValue().getHistory().isEmpty()) {
-                it.remove();
+        for (CallContact contact : mContactService.getContactsNoBanned()) {
+            String key = contact.getIds().get(0);
+            String phone = contact.getPhones().get(0).getNumber().getRawUriString();
+            if (!mConversationMap.containsKey(key) && !mConversationMap.containsKey(phone)) {
+                mConversationMap.put(key, new Conversation(contact));
             }
         }
+    }
+
+    private void aggregateHistory() {
+        Map<String, ArrayList<String>> conferences = mConferenceService.getConferenceList();
 
         for (Map.Entry<String, ArrayList<String>> conferenceEntry : conferences.entrySet()) {
             Conference conference = new Conference(conferenceEntry.getKey());
@@ -495,17 +498,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                 }
             }
         }
-        for (Conversation conversation : mConversationMap.values()) {
-            Log.d(TAG, "Conversation : " + conversation.getContact().getId() + " " + conversation.getContact().getDisplayName() + " " + conversation.getLastNumberUsed(conversation.getLastAccountUsed()) + " " + conversation.getLastInteraction().toString());
-        }
-
-        for (CallContact contact : mContactService.getContactsNoBanned()) {
-            String key = contact.getIds().get(0);
-            String phone = contact.getPhones().get(0).getNumber().getRawUriString();
-            if (!mConversationMap.containsKey(key) && !mConversationMap.containsKey(phone)) {
-                mConversationMap.put(key, new Conversation(contact));
-            }
-        }
     }
 
     @Override
@@ -528,11 +520,15 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     notifyObservers(mEvent);
                     break;
                 case HISTORY_LOADED:
+                    addContactsDaemon();
+                    Account account = mAccountService.getCurrentAccount();
+                    boolean acceptAllMessages = account.getDetailBoolean(ConfigKey.DHT_PUBLIC_IN);
+
                     List<HistoryCall> historyCalls = (List<HistoryCall>) event.getEventInput(ServiceEvent.EventInput.HISTORY_CALLS, ArrayList.class);
-                    parseHistoryCalls(historyCalls);
+                    parseHistoryCalls(historyCalls, acceptAllMessages);
 
                     List<HistoryText> historyTexts = (List<HistoryText>) event.getEventInput(ServiceEvent.EventInput.HISTORY_TEXTS, ArrayList.class);
-                    parseHistoryTexts(historyTexts);
+                    parseHistoryTexts(historyTexts, acceptAllMessages);
 
                     aggregateHistory();
 
