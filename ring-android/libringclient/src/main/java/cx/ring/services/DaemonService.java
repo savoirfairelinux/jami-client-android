@@ -31,6 +31,7 @@ import cx.ring.daemon.Callback;
 import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.IntegerMap;
+import cx.ring.daemon.PresenceCallback;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.SWIGTYPE_p_time_t;
 import cx.ring.daemon.StringMap;
@@ -75,17 +76,23 @@ public class DaemonService {
         return callbackHandler;
     }
 
+    public PresenceCallback getDaemonPresenceCallbackHandler() {
+        DaemonPresenceCallback callbackHandler = new DaemonPresenceCallback();
+        return callbackHandler;
+    }
+
     public boolean isStarted() {
         return mDaemonStarted;
     }
 
     public void startDaemon(final Callback callManagerCallback,
                             final ConfigurationCallback configurationManagerCallback,
+                            final PresenceCallback presenceManagerCallBack,
                             final VideoCallback videoManagerCallBack) {
 
         if (!mDaemonStarted) {
             Log.i(TAG, "Starting daemon ...");
-            Ringservice.init(configurationManagerCallback, callManagerCallback, videoManagerCallBack);
+            Ringservice.init(configurationManagerCallback, callManagerCallback, presenceManagerCallBack, videoManagerCallBack);
             startRingServicePolling();
             mDaemonStarted = true;
             Log.i(TAG, "DaemonService started");
@@ -273,5 +280,29 @@ public class DaemonService {
             mCallbackHandler.onRtcpReportReceived(callId, stats);
         }
 
+    }
+
+    class DaemonPresenceCallback extends PresenceCallback {
+        private PresenceService.PresenceCallbackHandler mCallbackHandler;
+
+        @Override
+        public void newServerSubscriptionRequest(String remote) {
+            mCallbackHandler.newServerSubscriptionRequest(remote);
+        }
+
+        @Override
+        public void serverError(String accountId, String error, String message) {
+            mCallbackHandler.serverError(accountId, error, message);
+        }
+
+        @Override
+        public void newBuddyNotification(String accountId, String buddyUri, int status, String lineStatus) {
+            mCallbackHandler.newBuddyNotification(accountId, buddyUri, status, lineStatus);
+        }
+
+        @Override
+        public void subscriptionStateChanged(String accountId, String buddyUri, int state) {
+            mCallbackHandler.subscriptionStateChanged(accountId, buddyUri, state);
+        }
     }
 }
