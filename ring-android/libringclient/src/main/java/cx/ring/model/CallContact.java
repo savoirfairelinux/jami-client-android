@@ -41,6 +41,7 @@ public class CallContact {
     private boolean stared = false;
     private boolean isFromSystem = false;
     private boolean isBanned = false;
+    private boolean isOnline = false;
 
     public CallContact(long cID) {
         this(cID, null, null, UNKNOWN_ID);
@@ -219,6 +220,14 @@ public class CallContact {
 
     public void setBanned(boolean banned) {
         isBanned = banned;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
     }
 
     /**
