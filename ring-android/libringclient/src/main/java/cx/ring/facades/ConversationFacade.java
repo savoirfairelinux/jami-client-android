@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.inject.Inject;
@@ -53,6 +54,7 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
+import cx.ring.services.PresenceService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -92,9 +94,11 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
+    private PresenceService mPresenceService;
+
     private Map<String, Conversation> mConversationMap;
 
-    public ConversationFacade(HistoryService historyService, CallService callService, ContactService contactService) {
+    public ConversationFacade(HistoryService historyService, CallService callService, ContactService contactService, PresenceService presenceService) {
         mConversationMap = new HashMap<>();
         mHistoryService = historyService;
         mHistoryService.addObserver(this);
@@ -102,6 +106,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         mCallService.addObserver(this);
         mContactService = contactService;
         mContactService.addObserver(this);
+        mPresenceService = presenceService;
+        mPresenceService.addObserver(this);
     }
 
     private Tuple<Conference, SipCall> getCall(String id) {
@@ -500,6 +506,19 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
+    private void subscribePresence() {
+        String accountId = mAccountService.getCurrentAccount().getAccountID();
+        Set<String> keys = mConversationMap.keySet();
+        for (String key : keys) {
+            Uri uri = new Uri(key);
+            if (uri.isRingId()) {
+                mPresenceService.subscribeBuddy(accountId, key, true);
+            } else {
+                Log.i(TAG, "Trying to subscribe to an invalid uri " + key);
+            }
+        }
+    }
+
     @Override
     public void update(Observable observable, ServiceEvent event) {
 
@@ -531,6 +550,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     parseHistoryTexts(historyTexts, acceptAllMessages);
 
                     aggregateHistory();
+
+                    subscribePresence();
 
                     setChanged();
                     mEvent = new ServiceEvent(ServiceEvent.EventType.HISTORY_LOADED);
@@ -665,6 +686,17 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             switch (event.getEventType()) {
                 case CONTACTS_CHANGED:
                     refreshConversations();
+                    break;
+            }
+        } else if (observable instanceof PresenceService && event != null) {
+            switch (event.getEventType()) {
+                case NEW_BUDDY_NOTIFICATION:
+                    String contactID = event.getEventInput(ServiceEvent.EventInput.BUDDY_URI, String.class);
+                    int status = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
+                    Conversation conversation = mConversationMap.get(CallContact.PREFIX_RING + contactID);
+                    if (conversation != null && conversation.getContact() != null) {
+                        conversation.getContact().setOnline(status == 1);
+                    }
                     break;
             }
         }

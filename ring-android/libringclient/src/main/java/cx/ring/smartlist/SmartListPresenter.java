@@ -38,6 +38,7 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HistoryService;
+import cx.ring.services.PresenceService;
 import cx.ring.services.SettingsService;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.Observable;
@@ -56,6 +57,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     private ConversationFacade mConversationFacade;
 
+    private PresenceService mPresenceService;
+
     private BlockchainInputHandler mBlockchainInputHandler;
     private String mLastBlockchainQuery = null;
 
@@ -65,12 +68,13 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     @Inject
     public SmartListPresenter(AccountService accountService, ContactService contactService,
                               HistoryService historyService, ConversationFacade conversationFacade,
-                              SettingsService settingsService) {
+                              SettingsService settingsService, PresenceService presenceService) {
         this.mAccountService = accountService;
         this.mContactService = contactService;
         this.mHistoryService = historyService;
         this.mSettingsService = settingsService;
         this.mConversationFacade = conversationFacade;
+        mPresenceService = presenceService;
     }
 
     @Override
@@ -83,6 +87,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         super.unbindView();
         mAccountService.removeObserver(this);
         mConversationFacade.removeObserver(this);
+        mPresenceService.removeObserver(this);
     }
 
     @Override
@@ -90,6 +95,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         super.bindView(view);
         mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
+        mPresenceService.addObserver(this);
     }
 
     public void refresh(boolean isConnectedWifi, boolean isConnectedMobile) {
@@ -388,6 +394,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             case INCOMING_MESSAGE:
             case HISTORY_LOADED:
             case CONVERSATIONS_CHANGED:
+            case NEW_BUDDY_NOTIFICATION:
                 displayConversations();
                 break;
         }

@@ -19,12 +19,8 @@
  */
 package cx.ring.smartlist;
 
-import java.util.Map;
-
 import cx.ring.model.Conversation;
 import cx.ring.model.HistoryEntry;
-import cx.ring.services.ContactService;
-import cx.ring.utils.Tuple;
 
 public class SmartListViewModel {
 
@@ -36,6 +32,7 @@ public class SmartListViewModel {
     private long lastInteractionTime;
     private boolean hasUnreadTextMessage;
     private boolean hasOngoingCall;
+    private boolean isOnline = false;
 
     public SmartListViewModel(Conversation conversation, String contactName, String photoUri, byte[] photoData) {
         this.uuid = conversation.getUuid();
@@ -67,6 +64,7 @@ public class SmartListViewModel {
         this.lastInteractionTime = conversation.getLastInteraction().getTime();
         this.hasUnreadTextMessage = conversation.hasUnreadTextMessages();
         this.hasOngoingCall = conversation.hasCurrentCall();
+        this.isOnline = conversation.getContact().isOnline();
     }
 
     public String getContactName() {
@@ -99,5 +97,9 @@ public class SmartListViewModel {
 
     public byte[] getPhotoData() {
         return photoData;
+    }
+
+    public boolean getStatus() {
+        return isOnline;
     }
 }
