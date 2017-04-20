@@ -19,6 +19,8 @@
 
 package cx.ring.services;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
@@ -29,6 +31,7 @@ import cx.ring.daemon.PresenceCallback;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.VectMap;
+import cx.ring.model.CallContact;
 import cx.ring.model.ServiceEvent;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
@@ -46,12 +49,30 @@ public class PresenceService extends Observable {
 
     private PresenceCallbackHandler mCallbackHandler;
 
+    Map<String, Boolean> mPresenceMap;
+
     public PresenceService() {
         mCallbackHandler = new PresenceCallbackHandler();
+        mPresenceMap = new HashMap<>();
     }
 
     public PresenceCallbackHandler getCallbackHandler() {
         return mCallbackHandler;
+    }
+
+    /**
+     * Check service cache for latest presence value
+     * @param uri URI of the contact
+     * @return true if this URI is online according to latest daemon update
+     */
+    public boolean isBuddyOnline(String uri) {
+        if (uri.contains("2d1d544949f29e40cec6248e7bfb1791bc5d3f6c")) {
+            Log.d(TAG, "STOP");
+        }
+        if (uri != null && mPresenceMap.containsKey(uri)) {
+            return mPresenceMap.get(uri);
+        }
+        return false;
     }
 
     public void publish(final String accountID, final boolean status, final String note) {
@@ -155,6 +176,8 @@ public class PresenceService extends Observable {
         @Override
         public void newBuddyNotification(String accountId, String buddyUri, int status, String lineStatus) {
             Log.d(TAG, "newBuddyNotification: " + accountId + ", " + buddyUri + ", " + status + ", " + lineStatus);
+
+            mPresenceMap.put(CallContact.PREFIX_RING + buddyUri, status == 1);
 
             setChanged();
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.NEW_BUDDY_NOTIFICATION);

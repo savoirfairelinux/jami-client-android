@@ -163,13 +163,10 @@ public class ServiceInjectionModule {
 
     @Provides
     @Singleton
-    ConversationFacade provideConversationtFacade(
-            AccountService accountService,
+    ConversationFacade provideConversationFacade(
             ContactService contactService,
-            ConferenceService conferenceService,
             HistoryService historyService,
-            CallService callService
-    ) {
+            CallService callService) {
         ConversationFacade conversationFacade = new ConversationFacade(historyService, callService, contactService);
         mRingApplication.getRingInjectionComponent().inject(conversationFacade);
         return conversationFacade;

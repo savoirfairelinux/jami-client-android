@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -38,13 +39,17 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HistoryService;
+import cx.ring.services.PresenceService;
 import cx.ring.services.SettingsService;
 import cx.ring.utils.BlockchainInputHandler;
+import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.Tuple;
 
 public class SmartListPresenter extends RootPresenter<SmartListView> implements Observer<ServiceEvent> {
+
+    private static final String TAG = SmartListPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
 
@@ -56,6 +61,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     private ConversationFacade mConversationFacade;
 
+    private PresenceService mPresenceService;
+
     private BlockchainInputHandler mBlockchainInputHandler;
     private String mLastBlockchainQuery = null;
 
@@ -65,12 +72,13 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     @Inject
     public SmartListPresenter(AccountService accountService, ContactService contactService,
                               HistoryService historyService, ConversationFacade conversationFacade,
-                              SettingsService settingsService) {
+                              SettingsService settingsService, PresenceService presenceService) {
         this.mAccountService = accountService;
         this.mContactService = contactService;
         this.mHistoryService = historyService;
         this.mSettingsService = settingsService;
         this.mConversationFacade = conversationFacade;
+        this.mPresenceService = presenceService;
     }
 
     @Override
@@ -83,6 +91,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         super.unbindView();
         mAccountService.removeObserver(this);
         mConversationFacade.removeObserver(this);
+        mPresenceService.removeObserver(this);
     }
 
     @Override
@@ -90,6 +99,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         super.bindView(view);
         mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
+        mPresenceService.addObserver(this);
     }
 
     public void refresh(boolean isConnectedWifi, boolean isConnectedMobile) {
@@ -239,6 +249,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         if (mConversations == null) {
             mConversations = new ArrayList<>();
         }
+        subscribePresence();
         mConversations.clear();
         mConversations.addAll(mConversationFacade.getConversationsList());
         if (mConversations != null && mConversations.size() > 0) {
@@ -260,9 +271,10 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                         Tuple<String, byte[]> tuple = mContactService.loadContactData(conversation.getContact());
                         smartListViewModel = new SmartListViewModel(conversation, tuple.first, null, tuple.second);
                     }
-
+                    smartListViewModel.setOnline(mPresenceService.isBuddyOnline(conversation.getContact().getIds().get(0)));
                     mSmartListViewModels.add(smartListViewModel);
                 } else {
+                    smartListViewModel.setOnline(mPresenceService.isBuddyOnline(conversation.getContact().getIds().get(0)));
                     if (conversation.getContact().isFromSystem()) {
                         Tuple<String, String> tuple = mContactService.loadContactDataFromSystem(conversation.getContact());
                         smartListViewModel.update(conversation, tuple.first, tuple.second, null);
@@ -368,6 +380,19 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         }
     }
 
+    private void subscribePresence() {
+        String accountId = mAccountService.getCurrentAccount().getAccountID();
+        Set<String> keys = mConversationFacade.getConversations().keySet();
+        for (String key : keys) {
+            Uri uri = new Uri(key);
+            if (uri.isRingId()) {
+                mPresenceService.subscribeBuddy(accountId, key, true);
+            } else {
+                Log.i(TAG, "Trying to subscribe to an invalid uri " + key);
+            }
+        }
+    }
+
     @Override
     public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
@@ -390,6 +415,14 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             case CONVERSATIONS_CHANGED:
                 displayConversations();
                 break;
+        }
+
+        if (observable instanceof PresenceService) {
+            switch (event.getEventType()) {
+                case NEW_BUDDY_NOTIFICATION:
+                    displayConversations();
+                    break;
+            }
         }
     }
 }
