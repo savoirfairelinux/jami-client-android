@@ -43,6 +43,8 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
     public ImageView photo;
     @BindView(R.id.contact_request)
     public TextView contactRequest;
+    @BindView(R.id.online)
+    public ImageView online;
 
     public SmartListViewHolder(View itemView) {
         super(itemView);

@@ -142,6 +142,9 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.photo);
         }
+
+        holder.online.setVisibility(smartListViewModel.isOnline() ? View.VISIBLE : View.GONE);
+
         holder.bind(listener, smartListViewModel);
     }
 

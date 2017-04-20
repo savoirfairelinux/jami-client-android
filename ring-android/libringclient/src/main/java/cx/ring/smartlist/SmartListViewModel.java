@@ -34,6 +34,7 @@ public class SmartListViewModel {
     private boolean hasUnreadTextMessage;
     private boolean hasOngoingCall;
     private CallContact.Status status;
+    private boolean isOnline = false;
 
     public SmartListViewModel(Conversation conversation, String contactName, String photoUri, byte[] photoData) {
         this.uuid = conversation.getUuid();
@@ -102,5 +103,13 @@ public class SmartListViewModel {
 
     public CallContact.Status getStatus() {
         return status;
+    }
+
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
     }
 }

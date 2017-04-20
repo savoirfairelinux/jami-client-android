@@ -53,6 +53,7 @@ tests/bin
 /libringclient/src/main/java/cx/ring/daemon/RingserviceJNI.java
 /libringclient/src/main/java/cx/ring/daemon/UintVect.java
 /libringclient/src/main/java/cx/ring/daemon/VideoCallback.java
+/libringclient/src/main/java/cx/ring/daemon/PresenceCallback.java
 /libringclient/src/main/jni/ring_wrapper.cpp
 /libringclient/src/main/jni/ring_wrapper.h
 /libringclient/src/main/jni/ringservice_loader.c

@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/call_entry"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="72dp"
     android:background="?android:attr/selectableItemBackground"
     android:descendantFocusability="blocksDescendants"
     android:paddingBottom="8dp"
@@ -32,16 +32,24 @@ along with this program; if not, write to the Free Software
 
     <ImageView
         android:id="@+id/photo"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_centerVertical="true"
+        android:padding="4dp"
         android:background="@null"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_contact_picture" />
+
+    <ImageView
+        android:id="@+id/online"
+        android:layout_width="20dp"
+        android:layout_height="22dp"
+        android:layout_alignBottom="@+id/photo"
+        android:layout_alignEnd="@+id/photo"
+        android:layout_alignRight="@+id/photo"
+        android:src="@drawable/ic_check_circle" />
 
     <RelativeLayout
         android:layout_width="match_parent"
