@@ -23,23 +23,46 @@ along with this program; if not, write to the Free Software
     android:id="@+id/call_entry"
     android:layout_width="match_parent"
     android:layout_height="72dp"
+    android:background="?android:attr/selectableItemBackground"
     android:descendantFocusability="blocksDescendants"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:background="?android:attr/selectableItemBackground">
+    android:paddingRight="16dp">
 
-    <ImageView
-        android:id="@+id/photo"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@null"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_contact_picture" />
+        android:layout_marginRight="16dp">
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_contact_picture" />
+
+        <View
+            android:id="@+id/anchor"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_alignBottom="@+id/photo"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:id="@+id/online"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignTop="@+id/anchor"
+            android:layout_toEndOf="@+id/anchor"
+            android:layout_toRightOf="@+id/anchor"
+            android:src="@drawable/ic_check_circle" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/conv_participant"
@@ -47,9 +70,9 @@ along with this program; if not, write to the Free Software
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="14dp"
-        android:layout_toEndOf="@+id/photo"
+        android:layout_toEndOf="@+id/container"
         android:layout_toLeftOf="@+id/conv_last_time"
-        android:layout_toRightOf="@+id/photo"
+        android:layout_toRightOf="@+id/container"
         android:layout_toStartOf="@+id/conv_last_time"
         android:ellipsize="marquee"
         android:gravity="start"
@@ -59,7 +82,7 @@ along with this program; if not, write to the Free Software
         android:textAlignment="viewStart"
         android:textColor="@color/text_color_primary"
         android:textSize="16sp"
-        tools:text="Test test"/>
+        tools:text="Test test" />
 
     <TextView
         android:id="@+id/conv_last_item"
@@ -68,14 +91,14 @@ along with this program; if not, write to the Free Software
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/conv_participant"
-        android:layout_toEndOf="@+id/photo"
-        android:layout_toRightOf="@+id/photo"
+        android:layout_toEndOf="@+id/container"
+        android:layout_toRightOf="@+id/container"
         android:gravity="start"
         android:maxLines="2"
         android:textAlignment="viewStart"
         android:textColor="@color/text_color_secondary"
         android:textSize="14sp"
-        tools:text="Ongoing call of 56 secs"/>
+        tools:text="Ongoing call of 56 secs" />
 
     <TextView
         android:id="@+id/conv_last_time"
@@ -86,6 +109,6 @@ along with this program; if not, write to the Free Software
         android:layout_alignParentRight="true"
         android:textColor="@color/text_color_secondary"
         android:textSize="12sp"
-        tools:text="2days ago"/>
+        tools:text="2days ago" />
 
 </RelativeLayout>
