@@ -33,6 +33,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.AccountsManagementFragment;
+import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
@@ -157,4 +158,6 @@ public interface RingInjectionComponent {
     void inject(SettingsPresenter presenter);
 
     void inject(RingAccountSummaryPresenter presenter);
+
+    void inject(AdvancedAccountFragment fragment);
 }
