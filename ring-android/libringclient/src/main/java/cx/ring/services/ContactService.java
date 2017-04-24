@@ -204,6 +204,18 @@ public abstract class ContactService extends Observable {
 
         return contacts;
     }
+    public Collection<CallContact> getContactsConfirmed() {
+        List<CallContact> contacts = new ArrayList<>(getContacts());
+        Iterator<CallContact> it = contacts.iterator();
+        while (it.hasNext()) {
+            CallContact contact = it.next();
+            if (!CallContact.Status.CONFIRMED.equals(contact.getStatus())) {
+                it.remove();
+            }
+        }
+        return contacts;
+    }
+
 
     /**
      * Searches a contact in the local cache and then in the system repository

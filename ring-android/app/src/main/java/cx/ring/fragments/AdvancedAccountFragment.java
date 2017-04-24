@@ -35,7 +35,11 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+import javax.inject.Inject;
+
 import cx.ring.R;
+import cx.ring.application.RingApplication;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
@@ -50,6 +54,9 @@ public class AdvancedAccountFragment extends PreferenceFragment {
 
     private static final String TAG = AdvancedAccountFragment.class.getSimpleName();
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
+
+    @Inject
+    protected ConversationFacade mConversationFacade;
 
     private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
 
@@ -67,6 +74,12 @@ public class AdvancedAccountFragment extends PreferenceFragment {
     public void onDetach() {
         super.onDetach();
         mCallbacks = DUMMY_CALLBACKS;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
     }
 
     @Override
@@ -159,6 +172,9 @@ public class AdvancedAccountFragment extends PreferenceFragment {
             Log.i(TAG, "Changing " + preference.getKey() + " value: " + newValue);
 
             if (preference instanceof TwoStatePreference) {
+                if (key != null && key.equals(ConfigKey.DHT_PUBLIC_IN)) {
+                    mConversationFacade.clearConversations();
+                }
                 account.setDetail(key, newValue.toString());
             } else if (preference instanceof PasswordPreference) {
                 account.setDetail(key, newValue.toString());
