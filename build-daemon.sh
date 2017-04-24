@@ -254,13 +254,15 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -lpj-${PJ_TARGET_TUPLE} \
                 -lupnp -lixml -lthreadutil \
                 -lsamplerate \
-                -lgnutls -lnettle -lhogweed -lgmp -liconv \
+                -lgnutls -lnettle -lhogweed -lgmp \
                 -lcryptopp -lboost_random -lboost_system \
                 -lrestbed \
                 -lavformat -lavdevice -lavcodec -lavfilter -lavutil \
                 -lpcre -lsndfile -lyaml-cpp -ljsoncpp \
                 -luuid -lz -lswscale \
-                -lvpx -lopus -lspeex -lvorbis -lvorbisenc -logg -lFLAC"
+                -lvpx -lopus -lspeex -lvorbis -lvorbisenc -logg -lFLAC \
+                -liconv"
+
 LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
 
 echo "Building Ring for Android to ${LIBRING_JNI_DIR}"
