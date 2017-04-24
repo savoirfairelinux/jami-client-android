@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_a3bfe2cf",
+        "filename": "ring-android/app/src/main/java/cx/ring/viewholders/SmartListViewHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-24T20:43:00Z",
+      "side": 1,
+      "message": "Unused",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "6119f473d58018ec19475206f8710b6777f22520",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
