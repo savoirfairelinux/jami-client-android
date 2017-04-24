@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
@@ -455,10 +456,13 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
-    private void addContactsDaemon() {
-        mConversationMap.clear();
-
-        ArrayList<CallContact> contacts = new ArrayList<>(mContactService.getContactsNoBanned());
+    private void addContactDaemon(boolean acceptAllMessages) {
+        ArrayList<CallContact> contacts;
+        if (acceptAllMessages) {
+            contacts = new ArrayList<>(mContactService.getContactsNoBanned());
+        } else {
+            contacts = new ArrayList<>(mContactService.getContactsConfirmed());
+        }
         for (CallContact contact : contacts) {
             String key = contact.getIds().get(0);
             String phone = contact.getPhones().get(0).getNumber().getRawUriString();
@@ -466,6 +470,13 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                 mConversationMap.put(key, new Conversation(contact));
             }
         }
+    }
+
+    /**
+     * Need to be called when switching account/allowing all calls
+     */
+    public void clearConversations() {
+        mConversationMap.clear();
     }
 
     private void aggregateHistory() {
@@ -531,9 +542,10 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     notifyObservers(mEvent);
                     break;
                 case HISTORY_LOADED:
-                    addContactsDaemon();
                     Account account = mAccountService.getCurrentAccount();
                     boolean acceptAllMessages = account.getDetailBoolean(ConfigKey.DHT_PUBLIC_IN);
+
+                    addContactDaemon(acceptAllMessages);
 
                     List<HistoryCall> historyCalls = (List<HistoryCall>) event.getEventInput(ServiceEvent.EventInput.HISTORY_CALLS, ArrayList.class);
                     parseHistoryCalls(historyCalls, acceptAllMessages);

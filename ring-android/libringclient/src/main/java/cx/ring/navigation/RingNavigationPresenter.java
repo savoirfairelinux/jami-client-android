@@ -24,6 +24,7 @@ import java.io.File;
 
 import javax.inject.Inject;
 
+import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.GenericView;
@@ -45,6 +46,9 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
+
+    @Inject
+    ConversationFacade mConversationFacade;
 
     @Override
     public void afterInjection() {
@@ -77,6 +81,7 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
         if (getView() == null) {
             return;
         }
+        mConversationFacade.clearConversations();
         mAccountService.setCurrentAccount(selectedAccount);
     }
 
