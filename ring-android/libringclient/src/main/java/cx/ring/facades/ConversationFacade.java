@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
@@ -455,15 +456,12 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
-    private void addContactsDaemon() {
-        mConversationMap.clear();
-
-        ArrayList<CallContact> contacts = new ArrayList<>(mContactService.getContactsNoBanned());
-        for (CallContact contact : contacts) {
-            String key = contact.getIds().get(0);
-            String phone = contact.getPhones().get(0).getNumber().getRawUriString();
-            if (!mConversationMap.containsKey(key) && !mConversationMap.containsKey(phone)) {
-                mConversationMap.put(key, new Conversation(contact));
+    private void removeAllContactsNotConfirmed() {
+        Iterator<Map.Entry<String, Conversation>> it = mConversationMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Conversation> entry = it.next();
+            if (entry.getValue().getHistory().isEmpty() || entry.getValue().getContact().getStatus() != CallContact.Status.CONFIRMED) {
+                it.remove();
             }
         }
     }
@@ -531,7 +529,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     notifyObservers(mEvent);
                     break;
                 case HISTORY_LOADED:
-                    addContactsDaemon();
+                    removeAllContactsNotConfirmed();
                     Account account = mAccountService.getCurrentAccount();
                     boolean acceptAllMessages = account.getDetailBoolean(ConfigKey.DHT_PUBLIC_IN);
 
