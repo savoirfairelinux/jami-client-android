@@ -20,6 +20,7 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
 
+    <!-- About -->
     <string name="app_name" translatable="false">Ring</string>
     <string name="app_author" translatable="false">Savoir-faire Linux Inc.</string>
     <string name="app_release" translatable="false">Gaston Miron Beta 2 - %1$s</string>
@@ -41,6 +42,14 @@ along with this program; if not, write to the Free Software
     <string name="website_chooser_title">View website using…</string>
     <string name="license">This software is provided \"as is\", without warranty of any kind. For details, see
 &lt;u>GNU General Public License version 3 or later&lt;/u></string>
+    <string name="description">Ring is free software for universal communication which respects the freedoms and privacy of its users.</string>
+    <string name="credits">Credits</string>
+
+    <!-- About dialog -->
+    <string name="developed_by">Developed by</string>
+    <string name="designed_by">Designed by</string>
+    <string name="credits_developer" translatable="false">Adrien Béraud\nAlexandr Sergheev\nAlexandre Lision\nAlexandre Viau\nAline Bonnet\nAndreas Traczyk\nAnthony Léonard\nCyrille Béraud\nEdric Milaret\nÉloi Bail\nEmmanuel Lepage-Vallée\nFrédéric Guimont\nGuillaume Roguez\nJulien Grossholtz\nLoïc Siret\nNicolas Jäger\nNicolas Reynaud\nOlivier Gregoire\nOlivier Soldano\nPatrick Keroulas\nPhilippe Gorley\nRomain Bertozzi\nSeva Ivanov\nSimon Désaulniers\nStepan Salenikovich\nSimon Zeni\nThibault Wittemberg\nBased on the SFLPhone project</string>
+    <string name="credits_designer" translatable="false">Marianne Forget</string>
 
     <!-- RingActivity -->
     <string name="title_activity_sflphone_home">Ring</string>
