@@ -322,10 +322,13 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void onDetailsLoaded(String formattedName) {
+    public void onDetailsLoaded(Bitmap bmp, String formattedName, String username) {
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null && formattedName != null) {
             actionBar.setTitle(formattedName);
+            if (username != null && !username.equals(formattedName)) {
+                actionBar.setSubtitle(username);
+            }
         }
     }
 
