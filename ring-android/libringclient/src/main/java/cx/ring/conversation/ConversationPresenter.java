@@ -208,11 +208,20 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                 }
             }
         }
+
+        if (contact.getPhones().isEmpty()) {
+            mAccountService.lookupName("", "", contact.getDisplayName());
+        } else {
+            Phone phone = contact.getPhones().get(0);
+            if (phone.getNumber().isRingId()) {
+                mAccountService.lookupAddress("", "", phone.getNumber().getHost());
+            }
+        }
         mConversation = mConversationFacade.startConversation(contact);
 
         Tuple<String, byte[]> contactData = mContactService.loadContactData(mConversation.getContact());
         if (contactData != null) {
-            getView().displayContactPhoto(contactData.second);
+            getView().updateContactInfo(contactData.second, contactData.first);
         }
 
         if (!mConversation.getContact().getPhones().isEmpty()) {
@@ -311,16 +320,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         return new Tuple<>(account, number);
     }
 
-
     @Override
     public void update(Observable observable, ServiceEvent arg) {
         if (observable instanceof AccountService && arg != null) {
             if (arg.getEventType() == ServiceEvent.EventType.REGISTERED_NAME_FOUND) {
-                final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-                final int state = arg.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
-
-                getView().updateView(address, name, state);
+                String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                getView().displayContactName(name);
             }
         } else if (observable instanceof ConversationFacade && arg != null) {
             switch (arg.getEventType()) {

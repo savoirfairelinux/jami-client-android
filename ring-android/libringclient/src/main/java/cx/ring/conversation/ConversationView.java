@@ -29,13 +29,11 @@ public interface ConversationView {
 
     void refreshView(Conversation conversation, Uri number);
 
-    void updateView(String address, String name, int state);
-
     void displayContactName(String contactName);
 
     void displayOnGoingCallPane(boolean display);
 
-    void displayContactPhoto(byte[] photo);
+    void updateContactInfo(byte[] photo, String username);
 
     void displayNumberSpinner(Conversation conversation, Uri number);
 

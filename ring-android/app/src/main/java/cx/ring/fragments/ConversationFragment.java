@@ -61,7 +61,6 @@ import ezvcard.property.RawProperty;
 public class ConversationFragment extends BaseFragment<ConversationPresenter> implements
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
-        ContactDetailsTask.DetailsLoadedCallback,
         ConversationView {
 
     private static final String TAG = ConversationFragment.class.getSimpleName();
@@ -111,12 +110,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 final CallContact contact = conversation.getContact();
-                if (contact != null) {
-                    new ContactDetailsTask(getActivity(), contact, ConversationFragment.this).run();
-                }
-
                 if (mAdapter != null) {
                     mAdapter.updateDataset(conversation.getAggregateHistory(), 0);
 
@@ -326,14 +320,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void onDetailsLoaded(Bitmap bmp, String formattedName) {
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionBar != null && formattedName != null) {
-            actionBar.setTitle(formattedName);
-        }
-    }
-
-    @Override
     protected ConversationPresenter createPresenter() {
         return conversationPresenter;
     }
@@ -347,35 +333,12 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void updateView(final String address, final String name, final int state) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (state != 0 || mNumberAdapter == null || mNumberAdapter.isEmpty()) {
-                    return;
-                }
-
-                for (int i = 0; i < mNumberAdapter.getCount(); i++) {
-                    Phone phone = (Phone) mNumberAdapter.getItem(i);
-                    if (phone.getNumber() != null) {
-                        String ringID = phone.getNumber().getRawUriString();
-                        if (address.equals(ringID)) {
-                            phone.getNumber().setUsername(name);
-                            mNumberAdapter.notifyDataSetChanged();
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    @Override
     public void displayContactName(final String contactName) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(contactName);
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(contactName);
                 }
             }
         });
@@ -392,11 +355,15 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void displayContactPhoto(final byte[] photo) {
+    public void updateContactInfo(final byte[] photo, final String username) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mAdapter.setPhoto(photo);
+                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                if (actionBar != null && username != null) {
+                    actionBar.setTitle(username);
+                }
             }
         });
     }

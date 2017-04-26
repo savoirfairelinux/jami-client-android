@@ -36,6 +36,7 @@ public class CallContact {
     private long mId;
     private String mKey;
     private String mDisplayName;
+    private String mUsername;
     private long mPhotoId;
     private final ArrayList<Phone> mPhones;
     private boolean isUser;
@@ -56,6 +57,7 @@ public class CallContact {
         mId = cID;
         mKey = k;
         mDisplayName = displayName;
+        mUsername = displayName;
         mPhones = p;
         mPhotoId = photoID;
         isUser = user;
@@ -98,6 +100,9 @@ public class CallContact {
         mKey = k;
         mDisplayName = displayName;
         this.mPhotoId = photo_id;
+        if (mUsername == null && displayName.contains(PREFIX_RING)) {
+            mUsername = displayName;
+        }
     }
 
     public static String canonicalNumber(String number) {
@@ -237,6 +242,15 @@ public class CallContact {
 
     public void resetDisplayName() {
         mDisplayName = null;
+    }
+
+    public void setDisplayName(String displayName) {
+        mDisplayName = displayName;
+        mUsername = displayName;
+    }
+
+    public String getUsername() {
+        return mUsername;
     }
 
     //region Equals
