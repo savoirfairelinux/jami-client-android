@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_69ec6bc8",
+        "filename": "ring-android/app/src/main/res/layout/dialog_about.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-26T21:17:15Z",
+      "side": 1,
+      "message": "The linear layouts are unecessary",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 23
+      },
+      "revId": "fb184b1c20f464bdcc8a324cb83b652e1b09cb3e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
