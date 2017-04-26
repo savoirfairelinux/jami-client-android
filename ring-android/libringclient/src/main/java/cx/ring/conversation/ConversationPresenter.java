@@ -31,6 +31,7 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
 import cx.ring.model.ServiceEvent;
+import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
@@ -222,7 +223,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             getView().displayContactName(mConversation.getContact().getDisplayName());
         }
 
-        getView().displayOnGoingCallPane(mConversation.getCurrentCall() == null);
+        getView().displayOnGoingCallPane(mConversation.getCurrentCall() == null ||
+                (mConversation.getCurrentCall().getState() != SipCall.State.RINGING &&
+                        mConversation.getCurrentCall().getState() != SipCall.State.CURRENT));
 
         if (mConversation.getContact().getPhones().size() > 1) {
             for (Phone phone : mConversation.getContact().getPhones()) {
