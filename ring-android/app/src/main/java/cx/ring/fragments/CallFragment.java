@@ -1208,7 +1208,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
     }
 
     @Override
-    public void onDetailsLoaded(Bitmap bmp, String formattedName) {
+    public void onDetailsLoaded(Bitmap bmp, String formattedName, String username) {
         if (bmp != null) {
             contactBubbleView.setImageBitmap(bmp);
         }
