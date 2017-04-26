@@ -24,14 +24,16 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -74,6 +76,9 @@ public class AboutFragment extends Fragment implements AboutView {
 
     @BindView(R.id.logo)
     ImageView mImageViewSFLLogo;
+
+    @BindView(R.id.credits)
+    Button mCredits;
 
     private Unbinder mUnbinder;
 
@@ -153,6 +158,12 @@ public class AboutFragment extends Fragment implements AboutView {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "mobile@lists.savoirfairelinux.net"));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[Ring Android - " + BuildConfig.VERSION_NAME + "]");
         launchSystemIntent(emailIntent, getString(R.string.email_chooser_title), getString(R.string.no_email_app_installed));
+    }
+
+    @OnClick(R.id.credits)
+    public void creditsClicked() {
+        BottomSheetDialogFragment dialog = new AboutBottomSheetDialogFragment();
+        dialog.show(((AppCompatActivity) getActivity()).getSupportFragmentManager(), dialog.getTag());
     }
 
     private void launchSystemIntent(Intent intentToLaunch,
