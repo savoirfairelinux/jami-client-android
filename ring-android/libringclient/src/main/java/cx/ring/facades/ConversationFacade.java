@@ -222,8 +222,12 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
 
         CallContact contact = conversation.getContact();
-        if (contact == null || contact.getDisplayName().equals(newDisplayName)
-                || !contact.getDisplayName().contains(ringId)) {
+        if (contact == null || contact.getDisplayName().equals(newDisplayName)) {
+            return;
+        }
+
+        if (!contact.getDisplayName().contains(ringId)) {
+            contact.setUsername(newDisplayName);
             return;
         }
 
@@ -231,6 +235,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         contact.getPhones().clear();
         contact.getPhones().add(new cx.ring.model.Phone(ringIdUri, 0));
         contact.setDisplayName(newDisplayName);
+        contact.setUsername(newDisplayName);
 
         setChanged();
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.USERNAME_CHANGED);
