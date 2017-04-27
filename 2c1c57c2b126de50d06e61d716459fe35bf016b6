@@ -22,6 +22,30 @@
       "revId": "2c1c57c2b126de50d06e61d716459fe35bf016b6",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7aade967_7babd289",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/ContactService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-04-27T14:55:53Z",
+      "side": 0,
+      "message": "This is old code from smartList refactor and it is not used anymore. I don\u0027t think a separate patch is needed to remove this.",
+      "parentUuid": "7aade967_3be79a14",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 67
+      },
+      "revId": "2c1c57c2b126de50d06e61d716459fe35bf016b6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
