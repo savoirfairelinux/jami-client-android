@@ -69,8 +69,8 @@ import cx.ring.services.ContactService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
+import cx.ring.services.PreferencesService;
 import cx.ring.services.PresenceService;
-import cx.ring.services.SharedPreferencesService;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 
@@ -126,7 +126,7 @@ public class RingApplication extends Application {
     HardwareService mHardwareService;
 
     @Inject
-    SharedPreferencesService mSharedPreferencesService;
+    PreferencesService mPreferencesService;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -243,7 +243,7 @@ public class RingApplication extends Application {
         sendBroadcast(intent);
 
         // load accounts from Daemon
-        mAccountService.loadAccountsFromDaemon(mSharedPreferencesService.isConnectedWifiAndMobile());
+        mAccountService.loadAccountsFromDaemon(mPreferencesService.isConnectedWifiAndMobile());
     }
 
     public void restartVideo() {

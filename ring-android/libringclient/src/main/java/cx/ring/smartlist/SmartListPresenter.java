@@ -37,9 +37,10 @@ import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HistoryService;
+import cx.ring.services.PreferencesService;
 import cx.ring.services.PresenceService;
-import cx.ring.services.SharedPreferencesService;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
@@ -56,11 +57,13 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     private HistoryService mHistoryService;
 
-    private SharedPreferencesService mSharedPreferencesService;
+    private PreferencesService mPreferencesService;
 
     private ConversationFacade mConversationFacade;
 
     private PresenceService mPresenceService;
+
+    private DeviceRuntimeService mDeviceRuntimeService;
 
     private BlockchainInputHandler mBlockchainInputHandler;
     private String mLastBlockchainQuery = null;
@@ -73,13 +76,15 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     @Inject
     public SmartListPresenter(AccountService accountService, ContactService contactService,
                               HistoryService historyService, ConversationFacade conversationFacade,
-                              PresenceService presenceService, SharedPreferencesService sharedPreferencesService) {
+                              PresenceService presenceService, PreferencesService sharedPreferencesService,
+                              DeviceRuntimeService deviceRuntimeService) {
         this.mAccountService = accountService;
         this.mContactService = contactService;
         this.mHistoryService = historyService;
-        this.mSharedPreferencesService = sharedPreferencesService;
+        this.mPreferencesService = sharedPreferencesService;
         this.mConversationFacade = conversationFacade;
         this.mPresenceService = presenceService;
+        this.mDeviceRuntimeService = deviceRuntimeService;
     }
 
     @Override
@@ -103,12 +108,21 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         mPresenceService.addObserver(this);
     }
 
-    public void refresh(boolean isConnectedWifi, boolean isConnectedMobile) {
-        boolean isConnected = isConnectedWifi
-                || (isConnectedMobile && mSharedPreferencesService.getUserSettings().isAllowMobileData());
+    public void refresh() {
+        refreshConnectivity();
+        mConversationFacade.refreshConversations();
+        searchForRingIdInBlockchain();
+        getView().hideSearchRow();
+    }
 
-        boolean isMobileAndNotAllowed = isConnectedMobile
-                && !mSharedPreferencesService.getUserSettings().isAllowMobileData();
+    private void refreshConnectivity() {
+        boolean mobileDataAllowed = mPreferencesService.getUserSettings().isAllowMobileData();
+
+        boolean isConnected = mDeviceRuntimeService.isConnectedWifi()
+                || (mDeviceRuntimeService.isConnectedMobile() && mobileDataAllowed);
+
+        boolean isMobileAndNotAllowed = mDeviceRuntimeService.isConnectedMobile()
+                && !mobileDataAllowed;
 
         if (isConnected) {
             getView().hideErrorPanel();
@@ -119,10 +133,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 getView().displayNetworkErrorPanel();
             }
         }
-
-        mConversationFacade.refreshConversations();
-        searchForRingIdInBlockchain();
-        getView().hideSearchRow();
     }
 
     public void queryTextChanged(String query) {
@@ -390,6 +400,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 parseEventState(name, address, state);
                 break;
             case HISTORY_LOADED:
+            case REGISTRATION_STATE_CHANGED:
+                refreshConnectivity();
             case CONVERSATIONS_CHANGED:
                 displayConversations();
                 getView().scrollToTop();

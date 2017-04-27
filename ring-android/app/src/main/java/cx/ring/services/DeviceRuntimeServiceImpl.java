@@ -24,6 +24,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.media.AudioManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 
@@ -37,13 +39,12 @@ import java.util.concurrent.Future;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.Conference;
-import cx.ring.model.Conversation;
 import cx.ring.utils.Log;
 import cx.ring.utils.MediaManager;
+import cx.ring.utils.NetworkUtils;
 
 public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
@@ -116,8 +117,15 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     }
 
     @Override
-    public String provideDefaultVCardName() {
-        return mContext.getString(R.string.unknown);
+    public boolean isConnectedWifi() {
+        NetworkInfo info = NetworkUtils.getNetworkInfo(mContext);
+        return (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_WIFI);
+    }
+
+    @Override
+    public boolean isConnectedMobile() {
+        NetworkInfo info = NetworkUtils.getNetworkInfo(mContext);
+        return (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_MOBILE);
     }
 
     @Override

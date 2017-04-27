@@ -28,20 +28,21 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import cx.ring.model.Settings;
-import cx.ring.utils.NetworkUtils;
 
-public class SharedPreferencesServiceImpl extends SharedPreferencesService {
+public class SharedPreferencesServiceImpl extends PreferencesService {
 
-    public static final String RING_SETTINGS = "ring_settings";
-    public static final String RING_REQUESTS = "ring_requests";
-
-    public static final String RING_MOBILE_DATA = "mobile_data";
-    public static final String RING_SYSTEM_CONTACTS = "system_contacts";
-    public static final String RING_PLACE_CALLS = "place_calls";
-    public static final String RING_ON_STARTUP = "on_startup";
+    private static final String RING_SETTINGS = "ring_settings";
+    private static final String RING_REQUESTS = "ring_requests";
+    private static final String RING_MOBILE_DATA = "mobile_data";
+    private static final String RING_SYSTEM_CONTACTS = "system_contacts";
+    private static final String RING_PLACE_CALLS = "place_calls";
+    private static final String RING_ON_STARTUP = "on_startup";
 
     @Inject
     protected Context mContext;
+
+    @Inject
+    protected DeviceRuntimeService mDevideRuntimeService;
 
     public SharedPreferencesServiceImpl() {
         mUserSettings = null;
@@ -126,8 +127,10 @@ public class SharedPreferencesServiceImpl extends SharedPreferencesService {
         saveRequests(accountId, requests);
     }
 
+
+    @Override
     public boolean isConnectedWifiAndMobile() {
-        return NetworkUtils.isConnectedWifi(mContext)
-                || (NetworkUtils.isConnectedMobile(mContext) && getUserSettings().isAllowMobileData());
+        return mDevideRuntimeService.isConnectedWifi() || (mDevideRuntimeService.isConnectedMobile() && getUserSettings().isAllowMobileData());
     }
+
 }

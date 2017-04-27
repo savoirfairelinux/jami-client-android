@@ -24,7 +24,7 @@ import java.util.Set;
 import cx.ring.model.Settings;
 import cx.ring.utils.Observable;
 
-public abstract class SharedPreferencesService extends Observable {
+public abstract class PreferencesService extends Observable {
 
     protected Settings mUserSettings;
 
