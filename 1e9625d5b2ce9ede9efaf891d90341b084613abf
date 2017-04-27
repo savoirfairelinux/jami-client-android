@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_7bb0b2dd",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-04-27T16:19:14Z",
+      "side": 1,
+      "message": "This state is now properly printed but is weird for the user",
+      "range": {
+        "startLine": 638,
+        "startChar": 16,
+        "endLine": 638,
+        "endChar": 54
+      },
+      "revId": "1e9625d5b2ce9ede9efaf891d90341b084613abf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
