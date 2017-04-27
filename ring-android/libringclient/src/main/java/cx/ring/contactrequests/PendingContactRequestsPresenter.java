@@ -34,7 +34,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.ContactService;
-import cx.ring.services.SharedPreferencesService;
+import cx.ring.services.PreferencesService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -51,7 +51,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
     private NotificationService mNotificationService;
     private ContactService mContactService;
     private DeviceRuntimeService mDeviceRuntimeService;
-    private SharedPreferencesService mSharedPreferencesService;
+    private PreferencesService mPreferencesService;
 
     private String mAccountID;
     private ArrayList<PendingContactRequestsViewModel> mContactRequestsViewModels;
@@ -61,12 +61,12 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
                                            NotificationService notificationService,
                                            ContactService contactService,
                                            DeviceRuntimeService deviceRuntimeService,
-                                           SharedPreferencesService sharedPreferencesService) {
+                                           PreferencesService sharedPreferencesService) {
         mAccountService = accountService;
         mNotificationService = notificationService;
         mContactService = contactService;
         mDeviceRuntimeService = deviceRuntimeService;
-        mSharedPreferencesService = sharedPreferencesService;
+        mPreferencesService = sharedPreferencesService;
     }
 
     final private List<TrustRequest> mTrustRequests = new ArrayList<>();
@@ -159,7 +159,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
             }
         }
 
-        mSharedPreferencesService.removeRequestPreferences(accountId, contactId);
+        mPreferencesService.removeRequestPreferences(accountId, contactId);
         updateList(false);
     }
 
@@ -167,7 +167,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
         String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
         String contactId = viewModel.getContactId();
         mAccountService.discardTrustRequest(accountId, contactId);
-        mSharedPreferencesService.removeRequestPreferences(accountId, contactId);
+        mPreferencesService.removeRequestPreferences(accountId, contactId);
         updateList(true);
     }
 
@@ -176,7 +176,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
         String contactId = viewModel.getContactId();
         mAccountService.discardTrustRequest(accountId, contactId);
         mContactService.removeContact(accountId, contactId);
-        mSharedPreferencesService.removeRequestPreferences(accountId, contactId);
+        mPreferencesService.removeRequestPreferences(accountId, contactId);
         updateList(true);
     }
 

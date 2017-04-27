@@ -33,7 +33,9 @@ public abstract class DeviceRuntimeService {
 
     public abstract File provideFilesDir();
 
-    public abstract String provideDefaultVCardName();
+    public abstract boolean isConnectedMobile();
+
+    public abstract boolean isConnectedWifi();
 
     public abstract long provideDaemonThreadId();
 
