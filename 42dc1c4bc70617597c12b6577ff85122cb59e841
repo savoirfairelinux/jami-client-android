@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_7bdd1242",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 126
+      },
+      "writtenOn": "2017-04-27T14:38:40Z",
+      "side": 1,
+      "message": "you can use mHistoryService.getRelativeTimeSpanString(System.currentTimeMillis() - lastInteraction)",
+      "range": {
+        "startLine": 148,
+        "startChar": 27,
+        "endLine": 148,
+        "endChar": 172
+      },
+      "revId": "42dc1c4bc70617597c12b6577ff85122cb59e841",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
