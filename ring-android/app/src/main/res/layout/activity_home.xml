@@ -69,7 +69,7 @@ along with this program; if not, write to the Free Software
                 style="@style/ToolbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/menu_item_accounts"
+                android:text="@string/menu_item_account"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
         </LinearLayout>

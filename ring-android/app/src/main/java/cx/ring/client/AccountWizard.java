@@ -78,6 +78,7 @@ import ezvcard.property.RawProperty;
 public class AccountWizard extends AppCompatActivity implements Observer<ServiceEvent> {
     static final String TAG = AccountWizard.class.getName();
 
+    public static final int ACCOUNT_CREATE_REQUEST = 1;
     private boolean mCreatingAccount = false;
     private ProfileCreationFragment mProfileFragment;
     private HomeAccountCreationFragment mHomeFragment;

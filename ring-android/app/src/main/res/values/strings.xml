@@ -67,7 +67,7 @@ along with this program; if not, write to the Free Software
     <!-- Sections -->
     <string name="menu_item_home">Home</string>
     <string name="menu_item_contact_request">Contact requests</string>
-    <string name="menu_item_accounts">Manage accounts</string>
+    <string name="menu_item_account">Manage account</string>
     <string name="menu_item_settings">Settings</string>
     <string name="menu_item_share">Share my contact</string>
     <string name="menu_item_blacklist">Blocked contacts</string>

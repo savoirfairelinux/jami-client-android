@@ -72,6 +72,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     @Inject
     AccountService mAccountService;
 
+    public static final int ACCOUNT_EDIT_REQUEST = 2;
     public static final String ACCOUNTID_KEY = AccountEditionActivity.class.getCanonicalName() + "accountid";
 
     public static final AccountCallbacks DUMMY_CALLBACKS = new AccountCallbacks() {

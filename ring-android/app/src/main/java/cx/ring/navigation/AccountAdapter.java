@@ -57,6 +57,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     interface OnAccountActionClicked {
         void onAccountSelected(Account account);
+        void onAccountLongPressed(Account account);
 
         void onAddSIPAccountSelected();
         void onAddRINGAccountSelected();
@@ -82,7 +83,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    class AccountView extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class AccountView extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         @BindView(R.id.account_photo)
         ImageView photo;
@@ -106,6 +107,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             super(view);
             ButterKnife.bind(this, view);
             view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
         }
 
         @Override
@@ -168,6 +170,14 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         }
 
+        @Override
+        public boolean onLongClick(View v) {
+            if (mListener != null) {
+                mListener.onAccountLongPressed(mDataset.get(getAdapterPosition()));
+                return true;
+            }
+            return false;
+        }
     }
 
     @Override
@@ -181,7 +191,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return TYPE_ACCOUNT;
     }
 
-    class AddAccountView extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class AddAccountView extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final int viewtype;
 
         @BindView(R.id.navigation_item_title)
@@ -208,6 +218,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 mListener.onAddSIPAccountSelected();
             }
         }
+
     }
 
     @Override
