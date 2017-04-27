@@ -128,8 +128,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         Log.d(TAG, "onResume");
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
 
-        mSmartListPresenter.refresh(NetworkUtils.isConnectedWifi(getActivity()),
-                NetworkUtils.isConnectedMobile(getActivity()));
+        mSmartListPresenter.refresh();
     }
 
     @Override
@@ -251,8 +250,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     public void refresh() {
-        mSmartListPresenter.refresh(NetworkUtils.isConnectedWifi(getActivity()),
-                NetworkUtils.isConnectedMobile(getActivity()));
+        mSmartListPresenter.refresh();
     }
 
     @OnClick(R.id.newcontact_element)
@@ -368,24 +366,34 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void displayNetworkErrorPanel() {
-        this.showErrorPanel(R.string.error_no_network, false, 0, null);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showErrorPanel(R.string.error_no_network, false, 0, null);
+            }
+        });
     }
 
     @Override
     public void displayMobileDataPanel() {
-        this.showErrorPanel(R.string.error_mobile_network_available_but_disabled,
-                true,
-                R.drawable.ic_settings_white,
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Activity activity = getActivity();
-                        if (activity != null && activity instanceof HomeActivity) {
-                            HomeActivity homeActivity = (HomeActivity) activity;
-                            homeActivity.goToSettings();
-                        }
-                    }
-                });
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showErrorPanel(R.string.error_mobile_network_available_but_disabled,
+                        true,
+                        R.drawable.ic_settings_white,
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Activity activity = getActivity();
+                                if (activity != null && activity instanceof HomeActivity) {
+                                    HomeActivity homeActivity = (HomeActivity) activity;
+                                    homeActivity.goToSettings();
+                                }
+                            }
+                        });
+            }
+        });
     }
 
     @Override

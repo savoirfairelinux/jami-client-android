@@ -26,7 +26,11 @@
 package cx.ring.service;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -56,6 +60,7 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
+import cx.ring.services.SettingsService;
 
 
 public class DRingService extends Service {
@@ -91,6 +96,9 @@ public class DRingService extends Service {
     protected ContactService mContactService;
 
     @Inject
+    protected SettingsService mSettingsService;
+
+    @Inject
     @Named("DaemonExecutor")
     protected ExecutorService mExecutor;
 
@@ -104,12 +112,22 @@ public class DRingService extends Service {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
 
         if (intent != null && intent.getAction() != null) {
             parseIntent(intent);
         }
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(receiver, intentFilter);
 
         return START_STICKY; /* started and stopped explicitly */
     }
@@ -118,6 +136,27 @@ public class DRingService extends Service {
     public IBinder onBind(Intent arg0) {
         Log.i(TAG, "onBound");
         return mBinder;
+    }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "BroadcastReceiver onReceive " + intent.getAction());
+            switch (intent.getAction()) {
+                case ConnectivityManager.CONNECTIVITY_ACTION:
+                case RingApplication.DRING_CONNECTION_CHANGED: {
+                    updateConnectivityState();
+                    break;
+                }
+            }
+        }
+    };
+
+    private void updateConnectivityState() {
+        if (mDaemonService.isStarted()) {
+            mAccountService.setAccountsActive(mSettingsService.isConnectedWifiAndMobile());
+            mHardwareService.connectivityChanged();
+        }
     }
 
     /* ************************************

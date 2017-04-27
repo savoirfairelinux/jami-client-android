@@ -21,6 +21,8 @@ package cx.ring.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,7 +32,7 @@ import javax.inject.Inject;
 import cx.ring.model.Settings;
 import cx.ring.utils.NetworkUtils;
 
-public class SharedPreferencesServiceImpl extends SharedPreferencesService {
+public class SharedPreferencesServiceImpl extends SettingsService {
 
     public static final String RING_SETTINGS = "ring_settings";
     public static final String RING_REQUESTS = "ring_requests";
@@ -129,5 +131,17 @@ public class SharedPreferencesServiceImpl extends SharedPreferencesService {
     public boolean isConnectedWifiAndMobile() {
         return NetworkUtils.isConnectedWifi(mContext)
                 || (NetworkUtils.isConnectedMobile(mContext) && getUserSettings().isAllowMobileData());
+    }
+
+    @Override
+    public boolean isConnectedWifi() {
+        NetworkInfo info = NetworkUtils.getNetworkInfo(mContext);
+        return (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_WIFI);
+    }
+
+    @Override
+    public boolean isConnectedMobile() {
+        NetworkInfo info = NetworkUtils.getNetworkInfo(mContext);
+        return (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_MOBILE);
     }
 }
