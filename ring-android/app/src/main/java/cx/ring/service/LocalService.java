@@ -53,7 +53,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.NotificationService;
-import cx.ring.services.SharedPreferencesService;
+import cx.ring.services.SettingsService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Observable;
@@ -75,7 +75,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
 
     @Inject
-    SharedPreferencesService mSharedPreferencesService;
+    SettingsService mPreferencesService;
 
     @Inject
     AccountService mAccountService;
@@ -161,7 +161,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         // temporary listen for history modifications
         // When MVP/DI injection will be done, only the concerned presenters should listen
         // for model modifications
-        mSharedPreferencesService.addObserver(this);
+        mPreferencesService.addObserver(this);
         mAccountService.addObserver(this);
         mContactService.addObserver(this);
         mConversationFacade.addObserver(this);
@@ -190,7 +190,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     public void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy");
-        mSharedPreferencesService.removeObserver(this);
+        mPreferencesService.removeObserver(this);
         mAccountService.removeObserver(this);
         mContactService.removeObserver(this);
         mConversationFacade.removeObserver(this);
@@ -241,14 +241,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         return super.onUnbind(intent);
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent != null && intent.getAction() != null && mService != null) {
-            receiver.onReceive(this, intent);
-        }
-        return super.onStartCommand(intent, flags, startId);
-    }
-
     public IDRingService getRemoteService() {
         return mService;
     }
@@ -256,7 +248,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     private void updateConnectivityState() {
         if (dringStarted) {
             try {
-                getRemoteService().setAccountsActive(mSharedPreferencesService.isConnectedWifiAndMobile());
+                getRemoteService().setAccountsActive(mPreferencesService.isConnectedWifiAndMobile());
                 getRemoteService().connectivityChanged();
             } catch (RemoteException e) {
                 Log.e(TAG, "updateConnectivityState", e);
@@ -264,102 +256,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         }
     }
 
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "BroadcastReceiver onReceive " + intent.getAction());
-            switch (intent.getAction()) {
-                case RingApplication.DRING_CONNECTION_CHANGED: {
-                    boolean connected = intent.getBooleanExtra("connected", false);
-                    if (connected) {
-                        dringStarted = true;
-                    } else {
-                        Log.w(TAG, "DRing connection lost ");
-                        dringStarted = false;
-                    }
-                    break;
-                }
-                case ACTION_CONV_READ: {
-                    String convId = intent.getData().getLastPathSegment();
-                    Conversation conversation = mConversationFacade.getConversationById(convId);
-                    if (conversation != null) {
-                        mConversationFacade.readConversation(conversation);
-                    }
-
-                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, convId)));
-                    break;
-                }
-                case ACTION_CALL_ACCEPT: {
-                    String callId = intent.getData().getLastPathSegment();
-                    try {
-                        mService.accept(callId);
-                    } catch (RemoteException e) {
-                        Log.e(TAG, "ACTION_CALL_ACCEPT", e);
-                    }
-                    mDeviceRuntimeService.updateAudioState(mConversationFacade.getCurrentCallingConf());
-                    Conference conf = mConversationFacade.getConference(callId);
-                    if (conf != null && !conf.isVisible()) {
-                        startActivity(ActionHelper.getViewIntent(LocalService.this, conf).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                    }
-                    break;
-                }
-                case ACTION_CALL_REFUSE: {
-                    String call_id = intent.getData().getLastPathSegment();
-                    try {
-                        mService.refuse(call_id);
-                    } catch (RemoteException e) {
-                        Log.e(TAG, "ACTION_CALL_REFUSE", e);
-                    }
-                    mDeviceRuntimeService.updateAudioState(mConversationFacade.getCurrentCallingConf());
-                    break;
-                }
-                case ACTION_CALL_END: {
-                    String call_id = intent.getData().getLastPathSegment();
-                    try {
-                        mService.hangUp(call_id);
-                        mService.hangUpConference(call_id);
-                    } catch (RemoteException e) {
-                        Log.e(TAG, "ACTION_CALL_END", e);
-                    }
-                    mDeviceRuntimeService.updateAudioState(mConversationFacade.getCurrentCallingConf());
-                    break;
-                }
-                case ConnectivityManager.CONNECTIVITY_ACTION:
-                    Log.w(TAG, "ConnectivityManager.CONNECTIVITY_ACTION " + " " + intent.getStringExtra(ConnectivityManager.EXTRA_EXTRA_INFO) + " " + intent.getStringExtra(ConnectivityManager.EXTRA_EXTRA_INFO));
-                    updateConnectivityState();
-                    break;
-                case ConfigurationManagerCallback.NAME_LOOKUP_ENDED:
-                    // no refresh here
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
     public void startListener() {
-        IntentFilter intentFilter = new IntentFilter();
-
-        intentFilter.addAction(ACTION_CONV_READ);
-
-        intentFilter.addAction(RingApplication.DRING_CONNECTION_CHANGED);
-
-        intentFilter.addAction(ConfigurationManagerCallback.ACCOUNT_STATE_CHANGED);
-        intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_CHANGED);
-        intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_EXPORT_ENDED);
-        intentFilter.addAction(ConfigurationManagerCallback.ACCOUNTS_DEVICES_CHANGED);
-        intentFilter.addAction(ConfigurationManagerCallback.MESSAGE_STATE_CHANGED);
-        intentFilter.addAction(ConfigurationManagerCallback.NAME_LOOKUP_ENDED);
-        intentFilter.addAction(ConfigurationManagerCallback.NAME_REGISTRATION_ENDED);
-
-        intentFilter.addAction(CallManagerCallBack.CONF_CREATED);
-        intentFilter.addAction(CallManagerCallBack.CONF_CHANGED);
-        intentFilter.addAction(CallManagerCallBack.CONF_REMOVED);
-
-        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-
-        registerReceiver(receiver, intentFilter);
-
         getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver);
     }
 
@@ -378,7 +275,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     }
 
     public void stopListener() {
-        unregisterReceiver(receiver);
         getContentResolver().unregisterContentObserver(contactContentObserver);
     }
 
@@ -389,7 +285,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
     @Override
     public void update(Observable observable, ServiceEvent arg) {
-        if (observable instanceof SharedPreferencesService) {
+        if (observable instanceof SettingsService) {
             refreshContacts();
             updateConnectivityState();
         }

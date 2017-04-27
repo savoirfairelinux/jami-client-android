@@ -39,7 +39,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.PresenceService;
-import cx.ring.services.SharedPreferencesService;
+import cx.ring.services.SettingsService;
 import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
@@ -56,7 +56,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     private HistoryService mHistoryService;
 
-    private SharedPreferencesService mSharedPreferencesService;
+    private SettingsService mPreferencesService;
 
     private ConversationFacade mConversationFacade;
 
@@ -73,11 +73,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     @Inject
     public SmartListPresenter(AccountService accountService, ContactService contactService,
                               HistoryService historyService, ConversationFacade conversationFacade,
-                              PresenceService presenceService, SharedPreferencesService sharedPreferencesService) {
+                              PresenceService presenceService, SettingsService sharedPreferencesService) {
         this.mAccountService = accountService;
         this.mContactService = contactService;
         this.mHistoryService = historyService;
-        this.mSharedPreferencesService = sharedPreferencesService;
+        this.mPreferencesService = sharedPreferencesService;
         this.mConversationFacade = conversationFacade;
         this.mPresenceService = presenceService;
     }
@@ -103,12 +103,19 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         mPresenceService.addObserver(this);
     }
 
-    public void refresh(boolean isConnectedWifi, boolean isConnectedMobile) {
-        boolean isConnected = isConnectedWifi
-                || (isConnectedMobile && mSharedPreferencesService.getUserSettings().isAllowMobileData());
+    public void refresh() {
+        refreshConnectivity();
+        mConversationFacade.refreshConversations();
+        searchForRingIdInBlockchain();
+        getView().hideSearchRow();
+    }
 
-        boolean isMobileAndNotAllowed = isConnectedMobile
-                && !mSharedPreferencesService.getUserSettings().isAllowMobileData();
+    private void refreshConnectivity() {
+        boolean isConnected = mPreferencesService.isConnectedWifi()
+                || (mPreferencesService.isConnectedMobile() && mPreferencesService.getUserSettings().isAllowMobileData());
+
+        boolean isMobileAndNotAllowed = mPreferencesService.isConnectedMobile()
+                && !mPreferencesService.getUserSettings().isAllowMobileData();
 
         if (isConnected) {
             getView().hideErrorPanel();
@@ -119,10 +126,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 getView().displayNetworkErrorPanel();
             }
         }
-
-        mConversationFacade.refreshConversations();
-        searchForRingIdInBlockchain();
-        getView().hideSearchRow();
     }
 
     public void queryTextChanged(String query) {
@@ -390,6 +393,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 parseEventState(name, address, state);
                 break;
             case HISTORY_LOADED:
+            case REGISTRATION_STATE_CHANGED:
+                refreshConnectivity();
             case CONVERSATIONS_CHANGED:
                 displayConversations();
                 getView().scrollToTop();
