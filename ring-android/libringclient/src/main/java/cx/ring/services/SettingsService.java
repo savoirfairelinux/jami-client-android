@@ -24,7 +24,7 @@ import java.util.Set;
 import cx.ring.model.Settings;
 import cx.ring.utils.Observable;
 
-public abstract class SharedPreferencesService extends Observable {
+public abstract class SettingsService extends Observable {
 
     protected Settings mUserSettings;
 
@@ -37,6 +37,10 @@ public abstract class SharedPreferencesService extends Observable {
     }
 
     public abstract boolean isConnectedWifiAndMobile();
+
+    public abstract boolean isConnectedMobile();
+
+    public abstract boolean isConnectedWifi();
 
     public abstract void saveRequestPreferences(String accountId, String contactId);
 

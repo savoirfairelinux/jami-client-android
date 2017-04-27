@@ -87,7 +87,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     DeviceRuntimeService mDeviceRuntimeService;
 
     @Inject
-    protected SharedPreferencesService mSharedPreferencesService;
+    protected SettingsService mSettingsService;
 
     private NotificationManagerCompat notificationManager;
 
@@ -429,11 +429,11 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                     final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
                     final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);
                     if (accountID != null && from != null) {
-                        Set<String> requests = mSharedPreferencesService.loadRequestsPreferences(accountID);
+                        Set<String> requests = mSettingsService.loadRequestsPreferences(accountID);
                         if (requests == null || !requests.contains(from)) {
                             showIncomingTrustRequestNotification(accountID, from);
 
-                            mSharedPreferencesService.saveRequestPreferences(accountID, from);
+                            mSettingsService.saveRequestPreferences(accountID, from);
                         }
                     }
                     break;
