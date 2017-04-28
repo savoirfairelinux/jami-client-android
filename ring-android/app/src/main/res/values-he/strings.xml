@@ -1,6 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="version_section">גרסא</string>
+  <string name="credits">תודות</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">אין חיבוריות רשת</string>
@@ -52,4 +55,6 @@
   <string name="accept">קבל</string>
   <!--Send contact requests-->
   <string name="send_request_button">שלח</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

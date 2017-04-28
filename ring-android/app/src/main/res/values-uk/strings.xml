@@ -1,11 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Ring є безкоштовним програмним забезпеченням, що розроблене та пдітримується</string>
   <string name="copyright_section">Авторське право</string>
   <string name="contribute_section">Співробітничати</string>
   <string name="version_section">Версія</string>
   <string name="no_email_app_installed">Не знайдено жодного поштового додатку, будь ласка встановіть хоча б один поштовий додаток щоб надіслати нам повідомлення</string>
   <string name="email_chooser_title">Надіслати повідомлення за допомогою...</string>
+  <string name="credits">Подяки</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Відсутнє з’єднання з мережею</string>
@@ -113,4 +116,6 @@
   <string name="refuse">Скидання</string>
   <!--Send contact requests-->
   <string name="send_request_button">Відправити</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

@@ -1,11 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Ring является свободным ПО, которое разрабатывается и поддерживается</string>
   <string name="copyright_section">Авторское право</string>
   <string name="contribute_section">Помочь проекту</string>
   <string name="version_section">Версия</string>
   <string name="no_email_app_installed">Не найдено приложение электронной почты. Пожалуйста, установите его для отправки нам отчета.</string>
   <string name="email_chooser_title">Отправить почту, используя...</string>
+  <string name="credits">Кредиты</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Звонок</string>
   <string name="error_no_network">Отсутствует сетевое подключение</string>
@@ -113,4 +116,6 @@
   <string name="accept">Принять</string>
   <!--Send contact requests-->
   <string name="send_request_button">Отправть</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

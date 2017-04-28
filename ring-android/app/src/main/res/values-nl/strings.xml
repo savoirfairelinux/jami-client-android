@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="feedback_section">Feedback</string>
   <string name="report">&lt;u&gt;Stuur ons een e-mail&lt;/u&gt;</string>
   <string name="section_license">Licentie</string>
@@ -13,6 +14,9 @@
   <string name="website_chooser_title">Website bekijken met...</string>
   <string name="license">Deze software wordt \"als zodanig\" aangeboden zonder enige garantie. Bekijk voor meer informatie
 &lt;u&gt;GNU General Public License versie 3 of later&lt;/u&gt;</string>
+  <string name="description">Ring is vrije software voor universele communicatie, die de vrijheden en privacy van haar gebruikers eerbiedigt.</string>
+  <string name="credits">Credits</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Geen netwerkverbinding</string>
@@ -26,9 +30,11 @@
   <string name="drawer_close">Navigatielade sluiten</string>
   <!--Sections-->
   <string name="menu_item_home">Thuis</string>
+  <string name="menu_item_contact_request">Contactverzoeken</string>
   <string name="menu_item_accounts">Accounts beheren</string>
   <string name="menu_item_settings">Instellingen</string>
   <string name="menu_item_share">Deel mijn contact</string>
+  <string name="menu_item_blacklist">Geblokkeerde contacten</string>
   <string name="menu_item_about">Over Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Kies een nummer</string>
@@ -54,6 +60,8 @@
   <string name="transfer_no_other_call">Geen verdere oproepen in behandeling</string>
   <string name="transfer_type_number">Nummer ingeven om naar te versturen:</string>
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Gemiste inkomende oproep</string>
+  <string name="notif_missed_outgoing_call">Gemiste uitgaande oproep</string>
   <string name="notif_incoming_call_title">Inkomende oproep van %1$s</string>
   <string name="notif_incoming_call">Inkomende oproep</string>
   <string name="notif_outgoing_call_title">Uitgaande oproep naar %1$s</string>
@@ -110,6 +118,7 @@
   <string name="conversation_action_copy_peer_number">Nummer kopiëren</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s gekopieerd naar klembord</string>
   <string name="conversation_action_select_peer_number">Kies een nummer</string>
+  <string name="conversation_action_block_this">Contact blokkeren</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s toevoegen?</string>
   <string name="prompt_new_password">Nieuw wachtwoord</string>
@@ -137,6 +146,16 @@
   <!--Pending contact requests-->
   <string name="accept">Aanvaarden</string>
   <string name="refuse">Afwijzen</string>
+  <string name="block">Blokkeren</string>
+  <string name="contact_request_title">Contactverzoek in afwachting</string>
+  <string name="contact_request_msg">Je hebt %1$s verzoeken in afwachting</string>
+  <string name="contact_request_account">Voor %1$s</string>
+  <string name="no_requests">0 contactverzoeken</string>
   <!--Send contact requests-->
   <string name="send_request_button">Versturen</string>
+  <string name="send_request_title">Contactverzoek verzenden</string>
+  <string name="send_request_msg">Je moet een contactverzoek verzenden om met deze gebruiker te communiceren. Zolang je contact het verzoek niet aanvaardt zal deze de berichten die je stuurt niet kunnen lezen.</string>
+  <!--Blacklist-->
+  <string name="no_blocked_contact">0 geblokkeerde contacten</string>
+  <!--Smartlist-->
 </resources>

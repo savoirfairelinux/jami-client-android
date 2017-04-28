@@ -1,11 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Ring adalah aplikasi percuma yang dibangunkan dan disokong oleh</string>
   <string name="copyright_section">Hakcipta</string>
   <string name="contribute_section">Sumbangkan</string>
   <string name="version_section">Versi</string>
   <string name="no_email_app_installed">Tiada aplikasi emel ditemui, pasangkan satu untuk menghantar laporan kepada kami</string>
   <string name="email_chooser_title">Hantar email menggunakan…</string>
+  <string name="credits">Kredit</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Tiada sambungan rangkaian</string>
@@ -121,4 +124,6 @@
   <!--Pending contact requests-->
   <string name="accept">Terima</string>
   <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

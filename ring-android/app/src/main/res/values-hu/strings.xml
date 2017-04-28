@@ -1,11 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">A Ring egy szabad szoftver, amelynek fejlesztője és támogatója:</string>
   <string name="copyright_section">Jogvédelem</string>
   <string name="contribute_section">Hozzájárulás</string>
   <string name="version_section">Verzió</string>
   <string name="no_email_app_installed">Nem találtam emailalkalmazást. Telepítsen egyet, hogy jelentést tudjon küldeni nekünk!</string>
   <string name="email_chooser_title">Levél küldése a következővel…</string>
+  <string name="credits">Készítők</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Nincs hálózati csatlakozás</string>
@@ -119,4 +122,6 @@
   <!--Pending contact requests-->
   <!--Send contact requests-->
   <string name="send_request_button">Elküld</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

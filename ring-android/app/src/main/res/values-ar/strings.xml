@@ -1,10 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Ring برمجية حرّة طوّرت ودعمت بواسطة</string>
   <string name="copyright_section">الحقوق محفوظة</string>
   <string name="contribute_section">مساهمة</string>
   <string name="version_section">الإصدار</string>
   <string name="email_chooser_title">إرسال بريد إلكتروني باستخدام...</string>
+  <string name="credits">الأطراف المصممة</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">الاتصال بالشبكة غير متوفر</string>
@@ -89,4 +92,6 @@
   <string name="refuse">أرفض</string>
   <!--Send contact requests-->
   <string name="send_request_button">أرسل</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

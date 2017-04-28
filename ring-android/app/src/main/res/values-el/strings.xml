@@ -1,11 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Το Ring είναι δωρεάν/ελεύθερο λογισμικό αναπτυγμένο και υποστηριζόμενο από</string>
   <string name="copyright_section">Πνευματική ιδιοκτησία</string>
   <string name="contribute_section">Πρόσφερε</string>
   <string name="version_section">Έκδοση</string>
   <string name="no_email_app_installed">Δεν βρέθηκε κάποια εφαρμογή email, εγκαταστήστε μια για μας στείλετε μια αναφορά</string>
   <string name="email_chooser_title">Αποστολή email σε χρήση...</string>
+  <string name="credits">Μονάδες</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Καμία σύνδεση στο δίκτυο</string>
@@ -111,4 +114,6 @@
   <!--Pending contact requests-->
   <!--Send contact requests-->
   <string name="send_request_button">Αποστολή</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

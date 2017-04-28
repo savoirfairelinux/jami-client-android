@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="section_license">Licencija</string>
   <string name="sponsor_section">Ring yra laisva programinė įranga, kurią kuria ir palaiko</string>
   <string name="copyright_section">Autorių Teisės</string>
@@ -9,6 +10,9 @@
   <string name="no_browser_app_installed">Nerasta jokios saityno naršyklės programėlės, įdiekite kurią nors, kad peržiūrėtumėte šį puslapį</string>
   <string name="email_chooser_title">Siųsti paštą, naudojant...</string>
   <string name="website_chooser_title">Rodyti svetainę, naudojant...</string>
+  <string name="description">Ring yra visuotiniam susisiekimui skirta laisva programinė įranga, kuri gerbia savo naudotojų laisves ir privatumą.</string>
+  <string name="credits">Padėkos</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Nėra tinklo ryšio</string>
@@ -112,4 +116,6 @@
   <string name="refuse">Atmesti</string>
   <!--Send contact requests-->
   <string name="send_request_button">Siųsti</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

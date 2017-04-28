@@ -1,9 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Ring is vrije software ontwikkeld en ondersteund door</string>
   <string name="contribute_section">Bijdragen</string>
   <string name="version_section">Versie</string>
   <string name="no_email_app_installed">Geen emailapplicatie gevonden. Installeer deze om ons een rapportage toe te zenden</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Bellen</string>
   <string name="error_no_network">Geen netwerkverbinding</string>
@@ -50,4 +52,6 @@
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

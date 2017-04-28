@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="feedback_section">Återkoppling</string>
   <string name="report">&lt;u&gt;Skicka e-post till oss&lt;/u&gt;</string>
   <string name="section_license">Licens</string>
@@ -13,6 +14,9 @@
   <string name="website_chooser_title">Visa webbsidan med...</string>
   <string name="license">Denna app tillhandahålles i \"befintligt skick\", utan några som helst garantier. För detaljerad info, se
 &lt;u&gt;GNU General Public License version 3 eller senare&lt;/u&gt;</string>
+  <string name="description">Ring är fri mjukvara för universell kommunikation, med respekt för användarens frihet och integritet.</string>
+  <string name="credits">Tack till</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ingen nätverksanslutning</string>
@@ -30,6 +34,7 @@
   <string name="menu_item_accounts">Hantera konton</string>
   <string name="menu_item_settings">Inställningar</string>
   <string name="menu_item_share">Dela min kontakt</string>
+  <string name="menu_item_blacklist">Blockerade kontakter</string>
   <string name="menu_item_about">Om Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Slå ett nummer</string>
@@ -150,4 +155,7 @@
   <string name="send_request_button">Skicka</string>
   <string name="send_request_title">Skicka en kontaktförfrågan</string>
   <string name="send_request_msg">Du måste skicka en kontaktförfrågan för att kommunicera med den här användaren. Så länge din kontakt inte har accepterat förfrågan, kan du skicka meddelanden, men din kontakt kan inte läsa dem.</string>
+  <!--Blacklist-->
+  <string name="no_blocked_contact">0 blockerade kontakter</string>
+  <!--Smartlist-->
 </resources>

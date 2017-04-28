@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="feedback_section">Обратная связь</string>
   <string name="report">&lt;u&gt;Отправить нам письмо&lt;/u&gt;</string>
   <string name="section_license">Лицензия</string>
@@ -13,6 +14,9 @@
   <string name="website_chooser_title">Просмотреть веб-сайт с помощью…</string>
   <string name="license">Это программное обеспечение предоставляется \"как есть\", без каких либо гарантий. Для получения дополнительной информации смотрите
 &lt;u&gt; Лицензию GNU General Public 3 или более поздней версии&lt;/u&gt;</string>
+  <string name="description">Ring — это свободная программа для всеобщей связи, уважающая свободы и конфиденциальность ее пользователей.</string>
+  <string name="credits">Благодарности</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Нет подключения к сети</string>
@@ -137,4 +141,6 @@
   <string name="refuse">Отклонить</string>
   <!--Send contact requests-->
   <string name="send_request_button">Отправить</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

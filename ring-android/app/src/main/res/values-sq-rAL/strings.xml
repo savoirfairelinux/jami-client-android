@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="feedback_section">Përshtypje</string>
   <string name="report">&lt;u&gt;Dërgonani një email&lt;/u&gt;</string>
   <string name="section_license">Licencë</string>
@@ -12,6 +13,9 @@
   <string name="email_chooser_title">Dërgojeni mesazhi duke përdorur…</string>
   <string name="website_chooser_title">Shiheni sajtin duke përdorur…</string>
   <string name="license">Ky software jepet \"siç është\", pa asnjë garanci të çfaërdo lloji. Për hollësi, shihni &lt;u&gt;GNU General Public License, version 3 ose më të re&lt;/u&gt;</string>
+  <string name="description">Ring është software i lirë për komunikim universal që respekton privatësinë e përdoruesve të tij.</string>
+  <string name="credits">Kredite</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Pa lidhje në rrjet</string>
@@ -131,4 +135,6 @@
   <string name="accept">Pranoje</string>
   <string name="refuse">Hidhe tej</string>
   <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

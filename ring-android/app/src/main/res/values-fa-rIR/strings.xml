@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="feedback_section">بازخورد</string>
   <string name="report">برایمان رایانامه‌ای بفرستید</string>
   <string name="section_license">مجوز</string>
@@ -13,6 +14,8 @@
   <string name="website_chooser_title">دیدن پایگاه وب با…</string>
   <string name="license">این نرم‌افزار همان‌گونه که هست، بدون هرنوع ضمانت فراهم شده است،
 برای جزئیات، نگارش ۳ یا بالاتر پروانهٔ جامع همگانی گنو را ببینید</string>
+  <string name="description">رینگ یک نرم‌افزار ارتباطات عمومی است که به آزادی‌ها و حریم شخصی کاربرانش احترام می‌گذارد.</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">رینگ</string>
   <string name="error_no_network">بدون اتصال شبکه</string>
@@ -29,6 +32,7 @@
   <string name="menu_item_accounts">مدیریت حساب‌ها</string>
   <string name="menu_item_settings">تنظیمات</string>
   <string name="menu_item_share">هم‌رسانی اطّلاعات تماس</string>
+  <string name="menu_item_blacklist">مخاطبین مسدود شده</string>
   <string name="menu_item_about">دربارهٔ رینگ</string>
   <!--Dialing Fragment-->
   <string name="dial_number">تماس با یک شماره</string>
@@ -131,4 +135,6 @@
   <string name="generic_error_migration_message">هنگام مهاجرت، خطایی رخ داد</string>
   <!--Pending contact requests-->
   <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

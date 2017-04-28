@@ -1,11 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Ring er fri programvare utviklet og støttet av</string>
   <string name="copyright_section">Opphavsrett</string>
   <string name="contribute_section">Bidra</string>
   <string name="version_section">Versjon</string>
   <string name="no_email_app_installed">Fant ingen epost-app.  Installer en for å sende oss en rapport</string>
   <string name="email_chooser_title">Send epost vha...</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Mangler nettverksforbindelse</string>
@@ -106,4 +108,6 @@
   <string name="accept">Aksepter</string>
   <!--Send contact requests-->
   <string name="send_request_button">Send</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

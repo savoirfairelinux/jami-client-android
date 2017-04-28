@@ -1,11 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Ring е безплатен софтуер, разработван и поддържан от</string>
   <string name="copyright_section">Авторски права</string>
   <string name="contribute_section">Принос</string>
   <string name="version_section">Версия</string>
   <string name="no_email_app_installed">Не е открито приложение за е-поща. Инсталирайте такова и ни изпратете доклад.</string>
   <string name="email_chooser_title">Изпращане на е-писмо чрез…</string>
+  <string name="credits">Заслуги</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Няма връзка с мрежата</string>
@@ -118,4 +121,6 @@
   <string name="refuse">Отказ</string>
   <!--Send contact requests-->
   <string name="send_request_button">Изпращане</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>
