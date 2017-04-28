@@ -1,11 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Ring é um software livre desenvolvido e mantido por</string>
   <string name="copyright_section">Direitos de autor</string>
   <string name="contribute_section">Contribuir</string>
   <string name="version_section">Versão</string>
   <string name="no_email_app_installed">Nenhuma aplicação de email encontrada no dispositivo. Instale uma para que nos possa enviar um relatório.</string>
   <string name="email_chooser_title">Enviar email utilizando...</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="error_no_network">Sem conexão de rede</string>
   <string name="error_mobile_network_available_but_disabled">Por favor, permita o acesso à rede móvel nas definições do dispositivo.</string>
@@ -114,4 +116,6 @@
   <!--Pending contact requests-->
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

@@ -1,11 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Ring és software lliure desenvolupat i mantingut per</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribueix</string>
   <string name="version_section">Versió</string>
   <string name="no_email_app_installed">No s\'ha trobat cap aplicació de correu, instal·leu una per enviar-nos un informe </string>
   <string name="email_chooser_title">Enviar correu fent servir...</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">No hi ha connexió a la xarxa</string>
@@ -123,4 +125,6 @@
   <!--Pending contact requests-->
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="feedback_section">Feedback</string>
   <string name="report">&lt;u&gt;Schreiben Sie uns eine E-Mail&lt;/u&gt;</string>
   <string name="section_license">Lizenz</string>
@@ -13,6 +14,8 @@
   <string name="website_chooser_title">Darstellung der Homepage mit...</string>
   <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter
 &lt;u&gt;GNU General Public License Version 3 oder später&lt;/u&gt;</string>
+  <string name="credits">Abspann</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Keine Netzwerkkonnektivität</string>
@@ -136,4 +139,6 @@
   <string name="generic_error_migration_message">Ein Fehler ist während der Datenübernahme aufgetreten</string>
   <!--Pending contact requests-->
   <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

@@ -1,6 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="version_section">Eldono</string>
+  <string name="description">Ring estas libera programo por universala komunikado, kiu respektas liberon kaj privatecon de siaj uzantoj.</string>
+  <string name="credits">Kredito</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Sen reta konekto</string>
@@ -106,4 +110,6 @@
   <string name="refuse">Rifuzi</string>
   <!--Send contact requests-->
   <string name="send_request_button">Sendi</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

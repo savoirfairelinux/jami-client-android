@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="feedback_section">Tilbagemelding</string>
   <string name="report">&lt;u&gt;Send os en email&lt;/u&gt;</string>
   <string name="section_license">Licens</string>
@@ -13,6 +14,9 @@
   <string name="website_chooser_title">Vis hjemmeside med...</string>
   <string name="license">Denne software er gjort tilgængelig \"som beset\", uden nogen former for garantier. For flere detaljer, se
 &lt;u&gt;GNU General Public License version 3 eller senere&lt;/u&gt;</string>
+  <string name="description">Ring er fri software til universel kommunikation som respekterer sine brugeres frihed og privatliv.</string>
+  <string name="credits">Krediteringer</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ingen netværksforbindelse</string>
@@ -139,4 +143,6 @@
   <string name="refuse">Afvis</string>
   <!--Send contact requests-->
   <string name="send_request_button">Send</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

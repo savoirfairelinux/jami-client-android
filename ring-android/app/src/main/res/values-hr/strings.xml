@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="feedback_section">Povratna informacija</string>
   <string name="report">&lt;u&gt;Pošaljite nam email&lt;/u&gt;</string>
   <string name="section_license">Licenca</string>
@@ -8,7 +9,11 @@
   <string name="contribute_section">Doprinesite</string>
   <string name="version_section">Verzija</string>
   <string name="no_email_app_installed">Nijedna email aplikacija nije pronađena, instalairajte jednu da biste nam poslali izvješće</string>
+  <string name="no_browser_app_installed">NIje pronađen nijedan web preglednik, instalirajte jadan da biste visjeli stranicu</string>
   <string name="email_chooser_title">Pošalji mail koristeći...</string>
+  <string name="website_chooser_title">Pogledaj web stranicu koristeći...</string>
+  <string name="credits">Zasluge</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Veza nedostupna</string>
@@ -22,6 +27,8 @@
   <string name="menu_item_home">Glavni meni</string>
   <string name="menu_item_accounts">Upravljaj računima</string>
   <string name="menu_item_settings">Postavke</string>
+  <string name="menu_item_share">Dijeli moj kontakt</string>
+  <string name="menu_item_blacklist">Blokirani kontakti</string>
   <string name="menu_item_about">O Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Pozovi broj</string>
@@ -46,6 +53,8 @@
   <string name="transfer_to_another_call">Prenesi na drugi razgovor:</string>
   <string name="transfer_no_other_call">Nema dolazećih poziva</string>
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Propušteni dolazni poziv</string>
+  <string name="notif_missed_outgoing_call">Propušteni odlazni poziv</string>
   <string name="notif_incoming_call_title">Dolazni poziv od %1$s</string>
   <string name="notif_incoming_call">Dolazni poziv</string>
   <string name="notif_outgoing_call_title">Odlazni poziv za %1$s</string>
@@ -99,6 +108,7 @@
   <string name="conversation_action_copy_peer_number">Kopiraj broj</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiran u međuspremnik</string>
   <string name="conversation_action_select_peer_number">Odaberite broj</string>
+  <string name="conversation_action_block_this">Blokiraj ovaj kontakt</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodaj %1$s ?</string>
   <string name="prompt_new_password">Nova lozinka</string>
@@ -113,12 +123,19 @@
   <string name="profile">Moj profil</string>
   <string name="profile_message_warning">Vaš profil je podjeljen samo sa vašim kontaktima</string>
   <string name="open_the_gallery">Otvorite galeriju</string>
+  <string name="take_a_photo">Fotografiraj</string>
   <string name="unknown">Nepoznato</string>
   <!--Share fragment-->
+  <string name="share_message_no_account">Molim odaberite račun za djeljenje</string>
   <string name="generic_error_migration">Greška</string>
   <!--Pending contact requests-->
   <string name="accept">Prihvati</string>
   <string name="refuse">Odbij</string>
+  <string name="block">Blokiraj</string>
+  <string name="contact_request_account">Za %1$s</string>
   <!--Send contact requests-->
   <string name="send_request_button">Pošalji</string>
+  <!--Blacklist-->
+  <string name="no_blocked_contact">0 blokiranih kontakata</string>
+  <!--Smartlist-->
 </resources>

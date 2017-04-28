@@ -1,11 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Ring è un software libero sviluppato e supportato da</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuisci</string>
   <string name="version_section">Versione</string>
   <string name="no_email_app_installed">Applicazione email non trovata, installane una per inviarci un rapporto</string>
   <string name="email_chooser_title">Mandaci un\'email usando...</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Connessione di rete assente</string>
@@ -124,4 +126,6 @@
   <string name="accept">Accettare</string>
   <!--Send contact requests-->
   <string name="send_request_button">Mandare</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

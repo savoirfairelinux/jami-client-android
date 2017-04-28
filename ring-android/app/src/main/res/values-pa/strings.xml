@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">ਰਿੰਗ</string>
   <!--AB menus-->
@@ -31,4 +33,6 @@
   <!--Share fragment-->
   <!--Pending contact requests-->
   <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

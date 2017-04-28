@@ -1,11 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Ring je svobodný software, jejž vyvíjí a podporuje</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Přispět</string>
   <string name="version_section">Verze</string>
   <string name="no_email_app_installed">Nenalezena mailová aplikace, nějakou si nainstalujte, abyste nám poslali hlášení</string>
   <string name="email_chooser_title">Poslat zprávu pomocí…</string>
+  <string name="description">Ring je svobodný software určený k univerzální komunikaci, který respektuje svobody a práva uživatelů.</string>
+  <string name="credits">Zásluhy</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Chybí připojení</string>
@@ -126,4 +130,6 @@
   <string name="refuse">Odmítnout</string>
   <!--Send contact requests-->
   <string name="send_request_button">Odeslat</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

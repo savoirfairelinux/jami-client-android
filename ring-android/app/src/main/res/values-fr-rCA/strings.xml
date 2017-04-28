@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="feedback_section">Commentaires</string>
   <string name="report">Contactez-nous par courriel</string>
   <string name="section_license">Licence</string>
@@ -13,6 +14,8 @@
   <string name="website_chooser_title">Visualiser le site web en utilisant...</string>
   <string name="license">Ce logiciel est fourni \"tel quel\", sans garantie d\'aucune sorte. Pour les détails, consulter
 &lt;u&gt;GNU General Public License version 3 ou plus&lt;/u&gt;</string>
+  <string name="credits">Crédits</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Aucune connectivité réseau</string>
@@ -136,4 +139,6 @@
   <string name="generic_error_migration_message">Une erreur s\'est produite durant la migration.</string>
   <!--Pending contact requests-->
   <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

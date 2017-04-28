@@ -1,11 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Ring 是一個自由軟體開發並支援由</string>
   <string name="copyright_section">版權</string>
   <string name="contribute_section">貢獻</string>
   <string name="version_section">版本</string>
   <string name="no_email_app_installed">沒有找到電子郵件應用程式，請安裝一個來傳送報告給我們</string>
   <string name="email_chooser_title">傳送郵件藉由...</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">沒有網路連接</string>
@@ -87,4 +89,6 @@
   <!--Pending contact requests-->
   <!--Send contact requests-->
   <string name="send_request_button">傳送</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

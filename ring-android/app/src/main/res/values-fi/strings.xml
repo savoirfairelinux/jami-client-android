@@ -1,11 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Ring on vapaa ohjelma jonka on kehittänyt ja jota tukee</string>
   <string name="copyright_section">Tekijänoikeus</string>
   <string name="contribute_section">Tuo panoksesi</string>
   <string name="version_section">Versio</string>
   <string name="no_email_app_installed">Sähköpostiohjelmaa ei löydetty, asenna sellainen lähettääksesi meille raportin</string>
   <string name="email_chooser_title">Lähetä sähköpostia käyttäen...</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ei verkkoyhteyttä</string>
@@ -112,4 +114,6 @@
   <string name="refuse">Kieltäydy</string>
   <!--Send contact requests-->
   <string name="send_request_button">Lähetä</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

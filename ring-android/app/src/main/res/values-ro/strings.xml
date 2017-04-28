@@ -1,11 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="sponsor_section">Ring este un program tip freeware, dezvoltat si sustinut de catre</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuie</string>
   <string name="version_section">Versiune</string>
   <string name="no_email_app_installed">Nu a fost gasita o aplicatie de email. Va rugam sa o instalati pentru a ne putea trimite un raport.</string>
   <string name="email_chooser_title">Trimite email folosind...</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Suna</string>
   <string name="error_no_network">Nu exista conectivitate la retea</string>
@@ -77,4 +79,6 @@
   <string name="generic_error_migration">Eroare</string>
   <!--Pending contact requests-->
   <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

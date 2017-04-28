@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="section_license">Licencia</string>
   <string name="sponsor_section">Ring es un software libre desarrollado y mantenido por</string>
   <string name="copyright_section">Copyright</string>
@@ -8,6 +9,9 @@
   <string name="no_email_app_installed">No se ha encontrado ninguna aplicación de correo. Instala una para enviarnos el informe</string>
   <string name="no_browser_app_installed">No se ha encontrado un navegador, instale uno para poder ver esta página</string>
   <string name="email_chooser_title">Enviar correo usando...</string>
+  <string name="description">Ring es software libre de comunicaciones que respeta las libertades y privacidad de sus usuarios.</string>
+  <string name="credits">Créditos</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Sin conexión a la red</string>
@@ -130,4 +134,6 @@
   <string name="refuse">No aceptar</string>
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

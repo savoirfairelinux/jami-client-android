@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="feedback_section">Feedback</string>
   <string name="report">&lt;u&gt;Mandaci un\'e-mail&lt;/u&gt;</string>
   <string name="section_license">Licenza</string>
@@ -13,6 +14,9 @@
   <string name="website_chooser_title">Visualizza sito web con...</string>
   <string name="license">Questo software è fornito \"così com\'è\", senza alcun genere di garanzia. Per ulteriori dettagli, si veda
 &lt;u&gt;GNU General Public License versione 3 o successive&lt;/u&gt;</string>
+  <string name="description">Ring è software libero per la comunicazione universale che rispetta le libertà e la privacy dei suoi utenti.</string>
+  <string name="credits">Crediti</string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Assenza di connessione di rete</string>
@@ -135,4 +139,6 @@
   <string name="refuse">Rifiuto</string>
   <!--Send contact requests-->
   <string name="send_request_button">Invia</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>

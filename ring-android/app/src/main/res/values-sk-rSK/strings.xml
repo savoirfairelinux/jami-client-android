@@ -1,8 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <!--About-->
   <string name="version_section">Verzia</string>
   <string name="no_email_app_installed">Nainštaluj emailovú aplikáciu, aby si nám poslal správu.</string>
   <string name="email_chooser_title">Email </string>
+  <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Žiadne sieťové pripojenie</string>
@@ -55,4 +57,6 @@
   <string name="generic_error_migration">Chyba</string>
   <!--Pending contact requests-->
   <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
 </resources>
