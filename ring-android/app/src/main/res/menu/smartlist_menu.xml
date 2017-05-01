@@ -11,7 +11,7 @@
         android:icon="@drawable/ic_search_white"
         android:title="@string/searchbar_hint"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="collapseActionView|ifRoom" />
+        app:showAsAction="collapseActionView|always" />
 
     <item
         android:id="@+id/menu_contact_dial"
@@ -30,6 +30,6 @@
         android:id="@+id/menu_scan_qr"
         android:icon="@drawable/ic_action_scan_qr"
         android:title="@string/scan_qr"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
 </menu>
