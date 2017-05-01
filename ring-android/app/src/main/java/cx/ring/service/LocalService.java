@@ -20,7 +20,9 @@
 package cx.ring.service;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -42,12 +44,16 @@ import javax.inject.Inject;
 import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
 import cx.ring.facades.ConversationFacade;
+import cx.ring.model.Conference;
+import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
+import cx.ring.utils.ActionHelper;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
@@ -247,6 +253,70 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
             }
         }
     }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent != null && intent.getAction() != null && mService != null) {
+            receiver.onReceive(this, intent);
+        }
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "BroadcastReceiver onReceive " + intent.getAction());
+            switch (intent.getAction()) {
+                case ACTION_CONV_READ: {
+                    String convId = intent.getData().getLastPathSegment();
+                    Conversation conversation = mConversationFacade.getConversationById(convId);
+                    if (conversation != null) {
+                        mConversationFacade.readConversation(conversation);
+                    }
+
+                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, convId)));
+                    break;
+                }
+                case ACTION_CALL_ACCEPT: {
+                    String callId = intent.getData().getLastPathSegment();
+                    try {
+                        mService.accept(callId);
+                    } catch (RemoteException e) {
+                        Log.e(TAG, "ACTION_CALL_ACCEPT", e);
+                    }
+                    mDeviceRuntimeService.updateAudioState(mConversationFacade.getCurrentCallingConf());
+                    Conference conf = mConversationFacade.getConference(callId);
+                    if (conf != null && !conf.isVisible()) {
+                        startActivity(ActionHelper.getViewIntent(LocalService.this, conf).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    }
+                    break;
+                }
+                case ACTION_CALL_REFUSE: {
+                    String call_id = intent.getData().getLastPathSegment();
+                    try {
+                        mService.refuse(call_id);
+                    } catch (RemoteException e) {
+                        Log.e(TAG, "ACTION_CALL_REFUSE", e);
+                    }
+                    mDeviceRuntimeService.updateAudioState(mConversationFacade.getCurrentCallingConf());
+                    break;
+                }
+                case ACTION_CALL_END: {
+                    String call_id = intent.getData().getLastPathSegment();
+                    try {
+                        mService.hangUp(call_id);
+                        mService.hangUpConference(call_id);
+                    } catch (RemoteException e) {
+                        Log.e(TAG, "ACTION_CALL_END", e);
+                    }
+                    mDeviceRuntimeService.updateAudioState(mConversationFacade.getCurrentCallingConf());
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    };
 
     public void startListener() {
         getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver);
