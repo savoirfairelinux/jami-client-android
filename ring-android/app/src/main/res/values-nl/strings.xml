@@ -17,6 +17,8 @@
   <string name="description">Ring is vrije software voor universele communicatie, die de vrijheden en privacy van haar gebruikers eerbiedigt.</string>
   <string name="credits">Credits</string>
   <!--About dialog-->
+  <string name="developed_by">Ontwikkeld door</string>
+  <string name="designed_by">Ontworpen door</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Geen netwerkverbinding</string>
@@ -158,4 +160,6 @@
   <!--Blacklist-->
   <string name="no_blocked_contact">0 geblokkeerde contacten</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Geen contactverzoek verzonden</string>
+  <string name="contact_request_sent">Contactverzoek verzonden</string>
 </resources>

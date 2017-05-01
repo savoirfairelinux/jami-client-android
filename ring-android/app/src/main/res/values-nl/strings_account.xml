@@ -195,4 +195,5 @@ Je kan je account later bewerken</string>
   <string name="account_rename_device_hint">Kies een nieuwe apparaatnaam</string>
   <string name="account_device_name_empty">Apparaatnaam kan niet leeg zijn</string>
   <string name="account_device_this_indicator">dit apparaat</string>
+  <string name="account_disabled_indicator">uitgeschakeld</string>
 </resources>

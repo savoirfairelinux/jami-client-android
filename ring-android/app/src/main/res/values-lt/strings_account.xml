@@ -3,6 +3,7 @@
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Ištrinti</string>
   <string name="ic_advanced_menu">Išplėstiniai nustatymai</string>
+  <string name="ic_blacklist_menu">Užblokuoti kontaktai</string>
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Pridėti Ring paskyrą</string>
   <string name="add_sip_account_title">Pridėti SIP paskyrą</string>
@@ -62,6 +63,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_video_enable">Įjungti vaizdą</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Išplėstiniai</string>
+  <string name="account_dht_public_in_calls_label">Leisti visus skambučius/žinutes</string>
   <string name="account_registration_exp_label">Registracijos galiojimo laikas</string>
   <string name="account_local_interface_label">Vietinė sąsaja</string>
   <string name="account_local_port_label">Vietinis prievadas</string>

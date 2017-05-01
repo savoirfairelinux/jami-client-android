@@ -29,6 +29,7 @@
   <string name="menu_item_accounts">Tvarkyti paskyras</string>
   <string name="menu_item_settings">Nustatymai</string>
   <string name="menu_item_share">Bendrinti mano kontaktus</string>
+  <string name="menu_item_blacklist">Užblokuoti kontaktai</string>
   <string name="menu_item_about">Apie Ring</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
