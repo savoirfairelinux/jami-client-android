@@ -17,6 +17,8 @@
   <string name="description">Ring är fri mjukvara för universell kommunikation, med respekt för användarens frihet och integritet.</string>
   <string name="credits">Tack till</string>
   <!--About dialog-->
+  <string name="developed_by">Utvecklad av</string>
+  <string name="designed_by">Designad av</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ingen nätverksanslutning</string>
@@ -158,4 +160,6 @@
   <!--Blacklist-->
   <string name="no_blocked_contact">0 blockerade kontakter</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Ingen kontaktförfrågan skickad</string>
+  <string name="contact_request_sent">Kontaktförfrågan skickad</string>
 </resources>

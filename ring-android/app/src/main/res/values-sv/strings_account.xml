@@ -195,4 +195,5 @@ Du kan ändra kontot senare.</string>
   <string name="account_rename_device_hint">Välj nytt enhetsnamn</string>
   <string name="account_device_name_empty">Enhetsnamnet kan inte lämnas tomt</string>
   <string name="account_device_this_indicator">denna enhet</string>
+  <string name="account_disabled_indicator">inaktiverad</string>
 </resources>
