@@ -95,11 +95,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     public void resume() {
+        loadConversation();
         if (mConversation != null) {
             mConversation.setVisible(true);
             mConversationFacade.readConversation(mConversation);
         }
-        loadConversation();
         if (!hasContactRequestPopupShown) {
             checkContact();
             hasContactRequestPopupShown = true;
