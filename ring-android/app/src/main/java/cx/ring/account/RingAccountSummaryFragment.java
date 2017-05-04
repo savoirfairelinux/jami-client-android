@@ -72,7 +72,7 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
         ConfirmRevocationDialog.ConfirmRevocationListener,
         RingAccountSummaryView {
 
-    private static final String TAG = RingAccountSummaryFragment.class.getSimpleName();
+    public static final String TAG = RingAccountSummaryFragment.class.getSimpleName();
     private static final String FRAGMENT_DIALOG_REVOCATION = RingAccountSummaryFragment.class.getSimpleName() + ".dialog.deviceRevocation";
     @Inject
     RingAccountSummaryPresenter mRingAccountSummaryPresenter;
