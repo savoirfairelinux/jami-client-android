@@ -213,11 +213,18 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         Bundle args = new Bundle();
         args.putString(ACCOUNTID_KEY, mAccSelected.getAccountID());
         mCurrentlyDisplayed.setArguments(args);
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container, mCurrentlyDisplayed).commit();
+        getFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, mCurrentlyDisplayed, RingAccountSummaryFragment.TAG)
+                .commit();
     }
 
     private boolean isAdvancedSettings() {
         return mSlidingTabLayout.getVisibility() == View.VISIBLE;
+    }
+
+    private boolean isBlackList() {
+        Fragment fragment = getFragmentManager().findFragmentByTag(BlackListFragment.TAG);
+        return fragment != null && fragment.isVisible();
     }
 
     @Override
@@ -255,7 +262,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @Override
     public void onBackPressed() {
-        if (isAdvancedSettings() && mAccSelected.isRing()) {
+        if ((isAdvancedSettings() && mAccSelected.isRing()) || isBlackList()) {
             displaySummary();
         } else if (!(mCurrentlyDisplayed instanceof BackHandlerInterface) || !((BackHandlerInterface) mCurrentlyDisplayed).onBackPressed()) {
             super.onBackPressed();
@@ -278,14 +285,15 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                 getFragmentManager().beginTransaction().remove(mCurrentlyDisplayed).commit();
                 break;
             case R.id.menuitem_blacklist:
+                mSlidingTabLayout.setVisibility(View.GONE);
+                mViewPager.setVisibility(View.GONE);
                 mCurrentlyDisplayed = new BlackListFragment();
                 Bundle args = new Bundle();
                 args.putString(ACCOUNTID_KEY, mAccSelected.getAccountID());
                 mCurrentlyDisplayed.setArguments(args);
                 getFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .replace(R.id.fragment_container, mCurrentlyDisplayed)
-                        .addToBackStack(BlackListFragment.TAG)
+                        .replace(R.id.fragment_container, mCurrentlyDisplayed, BlackListFragment.TAG)
                         .commit();
             default:
                 break;
