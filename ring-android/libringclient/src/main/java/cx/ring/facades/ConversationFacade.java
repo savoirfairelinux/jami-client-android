@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
@@ -592,6 +591,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
                     if (found == null) {
                         Log.w(TAG, "CALL_STATE_CHANGED : Can't find conference " + callId);
+                         break;
                     } else {
                         SipCall call = found.getCallById(callId);
                         int oldState = call.getCallState();
@@ -661,6 +661,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
                     SipCall call = new SipCall(callid, accountId, number, SipCall.Direction.INCOMING);
                     call.setContact(contact);
+                    call.setCallState(SipCall.State.INCOMING);
 
                     Account accountCall = mAccountService.getAccount(accountId);
 
@@ -686,6 +687,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     setChanged();
                     ServiceEvent event1 = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
                     notifyObservers(event1);
+
+                    refreshConversations();
                     break;
             }
         } else if (observable instanceof ContactService && event != null) {
