@@ -219,7 +219,10 @@ public class ContactServiceImpl extends ContactService {
                 contentUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id);
             }
 
-            Cursor result = contentResolver.query(contentUri, CONTACT_PROJECTION, null, null, null);
+            Cursor result = null;
+            if (contentUri != null) {
+                result = contentResolver.query(contentUri, CONTACT_PROJECTION, null, null, null);
+            }
 
             if (result == null) {
                 return null;
