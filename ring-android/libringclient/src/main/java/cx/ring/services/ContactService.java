@@ -247,7 +247,9 @@ public abstract class ContactService extends Observable {
         if (contact == null && (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission())) {
             Log.w(TAG, "getContactById : cache miss for " + id);
             contact = findContactByIdFromSystem(id, key);
-            mContactList.put(id, contact);
+            if (contact != null) {
+                mContactList.put(id, contact);
+            }
         }
         return contact;
     }
