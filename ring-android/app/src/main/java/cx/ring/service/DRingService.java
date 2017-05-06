@@ -1,27 +1,27 @@
-/**
- * Copyright (C) 2010-2012 Regis Montoya (aka r3gis - www.r3gis.fr)
- * Copyright (C) 2004-2016 Savoir-faire Linux Inc.
- * <p>
- * Author: Regis Montoya <r3gis.3R@gmail.com>
- * Author: Emeric Vigier <emeric.vigier@savoirfairelinux.com>
- * Alexandre Lision <alexandre.lision@savoirfairelinux.com>
- * Adrien Béraud <adrien.beraud@savoirfairelinux.com>
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * If you own a pjsip commercial license you can also redistribute it
- * and/or modify it under the terms of the GNU Lesser General Public License
- * as an android library.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+/*
+  Copyright (C) 2010-2012 Regis Montoya (aka r3gis - www.r3gis.fr)
+  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+  <p>
+  Author: Regis Montoya <r3gis.3R@gmail.com>
+  Author: Emeric Vigier <emeric.vigier@savoirfairelinux.com>
+  Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+  Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+  <p>
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  If you own a pjsip commercial license you can also redistribute it
+  and/or modify it under the terms of the GNU Lesser General Public License
+  as an android library.
+  <p>
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  <p>
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package cx.ring.service;
 
@@ -30,11 +30,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.util.Log;
 
@@ -51,7 +53,9 @@ import javax.inject.Named;
 import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Codec;
+import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
@@ -62,9 +66,10 @@ import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.PreferencesService;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
-
-public class DRingService extends Service {
+public class DRingService extends Service implements Observer<ServiceEvent> {
 
     public static final String ACTION_TRUST_REQUEST_ACCEPT = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_ACCEPT";
     public static final String ACTION_TRUST_REQUEST_REFUSE = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_REFUSE";
@@ -89,6 +94,9 @@ public class DRingService extends Service {
 
     @Inject
     protected ConferenceService mConferenceService;
+
+    @Inject
+    protected ConversationFacade mConversationFacade;
 
     @Inject
     protected AccountService mAccountService;
@@ -123,6 +131,11 @@ public class DRingService extends Service {
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
 
         getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver);
+
+        mPreferencesService.addObserver(this);
+        mAccountService.addObserver(this);
+        mContactService.addObserver(this);
+        mConversationFacade.addObserver(this);
     }
 
     @Override
@@ -130,6 +143,11 @@ public class DRingService extends Service {
         super.onDestroy();
         unregisterReceiver(receiver);
         getContentResolver().unregisterContentObserver(contactContentObserver);
+
+        mPreferencesService.removeObserver(this);
+        mAccountService.removeObserver(this);
+        mContactService.removeObserver(this);
+        mConversationFacade.removeObserver(this);
     }
 
     @Override
@@ -651,6 +669,45 @@ public class DRingService extends Service {
             super.onChange(selfChange, uri);
             Log.d(TAG, "ContactsContentObserver.onChange");
             mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount().getAccountID());
+        }
+    }
+
+    public void refreshContacts() {
+        Log.d(TAG, "refreshContacts");
+        mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount().getAccountID());
+    }
+
+    @Override
+    public void update(Observable observable, ServiceEvent arg) {
+        if (observable instanceof PreferencesService) {
+            refreshContacts();
+            updateConnectivityState();
+        }
+
+        if (observable instanceof AccountService && arg != null) {
+            switch (arg.getEventType()) {
+                case ACCOUNTS_CHANGED:
+
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DRingService.this);
+                    sharedPreferences.edit()
+                            .putBoolean(OutgoingCallHandler.KEY_CACHE_HAVE_RINGACCOUNT, mAccountService.hasRingAccount())
+                            .putBoolean(OutgoingCallHandler.KEY_CACHE_HAVE_SIPACCOUNT, mAccountService.hasSipAccount()).apply();
+
+                    refreshContacts();
+                    return;
+            }
+        }
+
+        if (observable instanceof ContactService && arg != null) {
+            switch (arg.getEventType()) {
+                case CONTACTS_CHANGED:
+                    mConversationFacade.refreshConversations();
+                    return;
+                case CONTACT_ADDED:
+                case CONTACT_REMOVED:
+                    refreshContacts();
+                    break;
+            }
         }
     }
 }
