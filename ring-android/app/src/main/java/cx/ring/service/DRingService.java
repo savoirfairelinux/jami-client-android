@@ -30,10 +30,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import java.io.File;
@@ -106,6 +108,8 @@ public class DRingService extends Service {
     @Named("DaemonExecutor")
     protected ExecutorService mExecutor;
 
+    private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
+
     @Override
     public void onCreate() {
         Log.i(TAG, "onCreated");
@@ -113,12 +117,15 @@ public class DRingService extends Service {
 
         // dependency injection
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+
+        getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+        getContentResolver().unregisterContentObserver(contactContentObserver);
     }
 
     @Override
@@ -626,6 +633,20 @@ public class DRingService extends Service {
                         .setClass(getApplicationContext(), CallActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
+        }
+    }
+
+    private class ContactsContentObserver extends ContentObserver {
+
+        ContactsContentObserver() {
+            super(null);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, android.net.Uri uri) {
+            super.onChange(selfChange, uri);
+            Log.d(TAG, "ContactsContentObserver.onChange");
+            mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount().getAccountID());
         }
     }
 }
