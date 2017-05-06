@@ -246,13 +246,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:windowSoftInputMode="stateAlwaysHidden" />
 
         <service
-            android:name=".service.LocalService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name=".service.LocalService" />
-            </intent-filter>
-        </service>
-        <service
             android:name=".service.DRingService"
             android:exported="false">
             <intent-filter>

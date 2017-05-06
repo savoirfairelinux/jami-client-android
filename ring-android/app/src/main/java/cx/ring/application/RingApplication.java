@@ -52,7 +52,7 @@ import cx.ring.dependencyinjection.RingInjectionModule;
 import cx.ring.dependencyinjection.ServiceInjectionModule;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.ConfigurationManagerCallback;
-import cx.ring.service.LocalService;
+import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
@@ -62,7 +62,6 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
 import cx.ring.services.PresenceService;
-import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 
 public class RingApplication extends Application {
@@ -267,7 +266,7 @@ public class RingApplication extends Application {
         mRingInjectionComponent.inject(this);
 
         // to bootstrap the daemon
-        Intent intent = new Intent(this, LocalService.class);
+        Intent intent = new Intent(this, DRingService.class);
         startService(intent);
         bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
     }
