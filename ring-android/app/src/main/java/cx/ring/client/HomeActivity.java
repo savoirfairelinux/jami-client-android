@@ -687,11 +687,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     }
 
     @Override
-    public IDRingService getRemoteService() {
-        return service.getRemoteService();
-    }
-
-    @Override
     public LocalService getService() {
         return service;
     }
