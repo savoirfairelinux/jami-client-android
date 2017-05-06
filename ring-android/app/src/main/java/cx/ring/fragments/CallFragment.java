@@ -66,6 +66,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.service.DRingService;
 import cx.ring.service.LocalService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.CircleTransform;
@@ -605,7 +606,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         Intent intent = new Intent();
         if (ConversationFragment.isTabletMode(getActivity())) {
             intent.setClass(getActivity(), HomeActivity.class)
-                    .setAction(LocalService.ACTION_CONV_ACCEPT)
+                    .setAction(DRingService.ACTION_CONV_ACCEPT)
                     .putExtra(ConversationFragment.KEY_CONVERSATION_ID, conversationId);
             startActivity(intent);
         } else {
