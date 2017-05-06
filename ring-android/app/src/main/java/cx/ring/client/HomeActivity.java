@@ -71,6 +71,7 @@ import cx.ring.model.AccountConfig;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
 import cx.ring.navigation.RingNavigationFragment;
+import cx.ring.service.DRingService;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
@@ -311,7 +312,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             presentTrustRequestFragment(extra.getString(PendingContactRequestsFragment.ACCOUNT_ID));
             return;
         }
-        if (!ConversationFragment.isTabletMode(this) || !LocalService.ACTION_CONV_ACCEPT.equals(intent.getAction())) {
+        if (!ConversationFragment.isTabletMode(this) || !DRingService.ACTION_CONV_ACCEPT.equals(intent.getAction())) {
             return;
         }
 

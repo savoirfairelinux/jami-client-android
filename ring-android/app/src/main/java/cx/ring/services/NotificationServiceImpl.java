@@ -26,7 +26,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -42,7 +41,6 @@ import javax.inject.Inject;
 
 import cx.ring.BuildConfig;
 import cx.ring.R;
-import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.PendingContactRequestsFragment;
@@ -56,7 +54,6 @@ import cx.ring.model.TextMessage;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.DRingService;
 import cx.ring.service.LocalService;
-import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Log;
@@ -201,7 +198,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
         Intent intentConversation;
         if (ConversationFragment.isTabletMode(mContext)) {
-            intentConversation = new Intent(LocalService.ACTION_CONV_ACCEPT)
+            intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
                     .setClass(mContext, HomeActivity.class)
                     .putExtra(ConversationFragment.KEY_CONVERSATION_ID, contact.getIds().get(0));
         } else {
@@ -210,7 +207,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                     .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
         }
 
-        Intent intentDelete = new Intent(LocalService.ACTION_CONV_READ)
+        Intent intentDelete = new Intent(DRingService.ACTION_CONV_READ)
                 .setClass(mContext, LocalService.class)
                 .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
         messageNotificationBuilder.setContentIntent(PendingIntent.getActivity(mContext, new Random().nextInt(), intentConversation, 0))
