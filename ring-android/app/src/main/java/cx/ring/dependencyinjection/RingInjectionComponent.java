@@ -48,7 +48,6 @@ import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.service.BootReceiver;
 import cx.ring.service.DRingService;
-import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
@@ -112,8 +111,6 @@ public interface RingInjectionComponent {
     void inject(PendingContactRequestsFragment fragment);
 
     void inject(BlackListFragment fragment);
-
-    void inject(LocalService service);
 
     void inject(DRingService service);
 

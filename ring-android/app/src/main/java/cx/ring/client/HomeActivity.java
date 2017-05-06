@@ -72,7 +72,6 @@ import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
 import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.DRingService;
-import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
