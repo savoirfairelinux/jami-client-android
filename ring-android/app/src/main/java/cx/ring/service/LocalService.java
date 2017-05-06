@@ -26,12 +26,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.database.ContentObserver;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import javax.inject.Inject;
@@ -81,8 +79,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
     private IDRingService mService = null;
 
-    private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
-
     // Binder given to clients
     private final IBinder mBinder = new LocalBinder();
 
@@ -120,8 +116,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     }
 
     private void startDRingService() {
-        // start Listener
-        startListener();
         Intent intent = new Intent(this, DRingService.class);
         startService(intent);
         bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
@@ -135,7 +129,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         mAccountService.removeObserver(this);
         mContactService.removeObserver(this);
         mConversationFacade.removeObserver(this);
-        stopListener();
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -220,28 +213,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
             }
         }
     };
-
-    public void startListener() {
-        getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver);
-    }
-
-    private class ContactsContentObserver extends ContentObserver {
-
-        ContactsContentObserver() {
-            super(null);
-        }
-
-        @Override
-        public void onChange(boolean selfChange, android.net.Uri uri) {
-            super.onChange(selfChange, uri);
-            Log.d(TAG, "ContactsContentObserver.onChange");
-            refreshContacts();
-        }
-    }
-
-    public void stopListener() {
-        getContentResolver().unregisterContentObserver(contactContentObserver);
-    }
 
     public void refreshContacts() {
         Log.d(TAG, "refreshContacts");
