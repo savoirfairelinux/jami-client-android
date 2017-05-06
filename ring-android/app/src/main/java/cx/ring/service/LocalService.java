@@ -27,24 +27,18 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.ContentObserver;
-import android.graphics.Bitmap;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.util.Log;
-import android.util.LruCache;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 
 import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
 import cx.ring.facades.ConversationFacade;
-import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
@@ -52,7 +46,6 @@ import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
-import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -62,7 +55,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
     // Emitting events
     static public final String ACTION_CONF_UPDATE = BuildConfig.APPLICATION_ID + ".action.CONF_UPDATE";
-    static public final String ACTION_CONF_LOADED = BuildConfig.APPLICATION_ID + ".action.CONF_LOADED";
 
     static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
 
@@ -88,66 +80,26 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     DeviceRuntimeService mDeviceRuntimeService;
 
     private IDRingService mService = null;
-    private boolean dringStarted = false;
 
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
 
     // Binder given to clients
     private final IBinder mBinder = new LocalBinder();
 
-    private LruCache<Long, Bitmap> mMemoryCache = null;
-    private final ExecutorService mPool = Executors.newCachedThreadPool();
-
-    public LruCache<Long, Bitmap> get40dpContactCache() {
-        return mMemoryCache;
-    }
-
-    public ExecutorService getThreadPool() {
-        return mPool;
-    }
-
     public void reloadAccounts() {
         if (mService != null) {
-            //initAccountLoader();
-        } else {
-            // start DRing service, reload account is part of onServiceConnected
             startDRingService();
         }
     }
 
     public interface Callbacks {
-        IDRingService getRemoteService();
-
         LocalService getService();
     }
 
-    public static class DummyCallbacks implements Callbacks {
-        @Override
-        public IDRingService getRemoteService() {
-            return null;
-        }
-
-        @Override
-        public LocalService getService() {
-            return null;
-        }
-    }
-
-    public static final Callbacks DUMMY_CALLBACKS = new DummyCallbacks();
-
     @Override
     public void onCreate() {
-        Log.d(TAG, "onCreate");
         super.onCreate();
-
-        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-        final int cacheSize = maxMemory / 8;
-        mMemoryCache = new LruCache<Long, Bitmap>(cacheSize) {
-            @Override
-            protected int sizeOf(Long key, Bitmap bitmap) {
-                return bitmap.getByteCount() / 1024;
-            }
-        };
+        Log.d(TAG, "onCreate");
 
         // dependency injection
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
@@ -176,12 +128,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     }
 
     @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mMemoryCache.evictAll();
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy");
@@ -190,8 +136,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         mContactService.removeObserver(this);
         mConversationFacade.removeObserver(this);
         stopListener();
-        mMemoryCache.evictAll();
-        mPool.shutdown();
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -236,18 +180,15 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
         return super.onUnbind(intent);
     }
 
-    public IDRingService getRemoteService() {
-        return mService;
-    }
-
     private void updateConnectivityState() {
-        if (dringStarted) {
-            try {
-                getRemoteService().setAccountsActive(mPreferencesService.isConnectedWifiAndMobile());
-                getRemoteService().connectivityChanged();
-            } catch (RemoteException e) {
-                Log.e(TAG, "updateConnectivityState", e);
-            }
+        if (mService == null) {
+            return;
+        }
+        try {
+            mService.setAccountsActive(mPreferencesService.isConnectedWifiAndMobile());
+            mService.connectivityChanged();
+        } catch (RemoteException e) {
+            Log.e(TAG, "updateConnectivityState", e);
         }
     }
 
@@ -286,7 +227,7 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
     private class ContactsContentObserver extends ContentObserver {
 
-        public ContactsContentObserver() {
+        ContactsContentObserver() {
             super(null);
         }
 
