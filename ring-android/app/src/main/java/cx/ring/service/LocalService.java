@@ -32,7 +32,6 @@ import android.util.Log;
 
 import javax.inject.Inject;
 
-import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.ServiceEvent;
@@ -46,12 +45,6 @@ import cx.ring.utils.Observer;
 
 public class LocalService extends Service implements Observer<ServiceEvent> {
     static final String TAG = LocalService.class.getSimpleName();
-
-    // Emitting events
-    static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
-
-    // Receiving commands
-    static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
 
     @Inject
     PreferencesService mPreferencesService;
