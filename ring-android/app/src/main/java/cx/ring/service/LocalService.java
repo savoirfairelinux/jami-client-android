@@ -82,16 +82,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     // Binder given to clients
     private final IBinder mBinder = new LocalBinder();
 
-    public void reloadAccounts() {
-        if (mService != null) {
-            startDRingService();
-        }
-    }
-
-    public interface Callbacks {
-        LocalService getService();
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();

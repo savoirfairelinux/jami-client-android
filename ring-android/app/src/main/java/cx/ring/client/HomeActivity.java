@@ -23,19 +23,15 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -66,18 +62,15 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
 import cx.ring.application.RingApplication;
+import cx.ring.contactrequests.PendingContactRequestsFragment;
 import cx.ring.fragments.AccountsManagementFragment;
-import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
-import cx.ring.model.CallContact;
 import cx.ring.model.ServiceEvent;
-import cx.ring.model.Phone;
 import cx.ring.model.Settings;
 import cx.ring.navigation.RingNavigationFragment;
-import cx.ring.service.IDRingService;
 import cx.ring.service.LocalService;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
@@ -86,20 +79,16 @@ import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
-import cx.ring.contactrequests.PendingContactRequestsFragment;
-import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
-public class HomeActivity extends AppCompatActivity implements LocalService.Callbacks,
-        RingNavigationFragment.OnNavigationSectionSelected,
+public class HomeActivity extends AppCompatActivity implements RingNavigationFragment.OnNavigationSectionSelected,
         ActivityCompat.OnRequestPermissionsResultCallback,
         Observer<ServiceEvent> {
 
     static final String TAG = HomeActivity.class.getSimpleName();
 
-    public static final int REQUEST_CODE_PREFERENCES = 1;
     public static final int REQUEST_CODE_CREATE_ACCOUNT = 7;
     public static final int REQUEST_CODE_CALL = 3;
     public static final int REQUEST_CODE_CONVERSATION = 4;
@@ -118,8 +107,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
     private static final String NAVIGATION_TAG = "Navigation";
     static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
 
-    private LocalService service;
-    private boolean mBound = false;
     private boolean mNoAccountOpened = false;
     private boolean mIsMigrationDialogAlreadyShowed;
     private boolean mIsAskingForPermissions = false;
@@ -211,7 +198,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         mToolbarSize = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
@@ -267,7 +253,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                     .commit();
         }
 
-        // Bind to LocalService
         String[] toRequest = buildPermissionsToAsk();
         ArrayList<String> permissionsWeCanAsk = new ArrayList<>();
 
@@ -280,12 +265,8 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         if (!permissionsWeCanAsk.isEmpty()) {
             mIsAskingForPermissions = true;
             ActivityCompat.requestPermissions(this, permissionsWeCanAsk.toArray(new String[permissionsWeCanAsk.size()]), RingApplication.PERMISSIONS_REQUEST);
-        } else if (!mBound) {
-            Log.d(TAG, "onCreate: Binding service...");
-            Intent intent = new Intent(this, LocalService.class);
-            startService(intent);
-            bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
         }
+
         // if app opened from notification display trust request fragment when mService will connected
         Intent intent = getIntent();
         Bundle extra = intent.getExtras();
@@ -295,6 +276,27 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
             }
             mAccountWithPendingrequests = extra.getString(PendingContactRequestsFragment.ACCOUNT_ID);
         }
+
+
+        setVideoEnabledFromPermission();
+
+        FragmentManager fragmentManager = getFragmentManager();
+        fContent = fragmentManager.findFragmentById(R.id.main_frame);
+        if (fNavigation != null) {
+            onNavigationViewReady();
+        }
+        if (fContent == null) {
+            fContent = new SmartListFragment();
+            fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commitAllowingStateLoss();
+        } else if (fContent instanceof Refreshable) {
+            fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commitAllowingStateLoss();
+            ((Refreshable) fContent).refresh();
+        }
+        if (mAccountWithPendingrequests != null) {
+            presentTrustRequestFragment(mAccountWithPendingrequests);
+            mAccountWithPendingrequests = null;
+        }
+
     }
 
     @Override
@@ -474,11 +476,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                     }
                 }
 
-                if (!mBound) {
-                    Intent intent = new Intent(this, LocalService.class);
-                    startService(intent);
-                    bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
-                }
                 break;
             }
             case REQUEST_PERMISSION_READ_STORAGE:
@@ -596,58 +593,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
         }
     }
 
-    /* activity finishes itself or is being killed by the system */
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mBound) {
-            unbindService(mConnection);
-            mBound = false;
-        }
-    }
-
-    /**
-     * Defines callbacks for service binding, passed to bindService()
-     */
-    private final ServiceConnection mConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder s) {
-            Log.d(TAG, "onServiceConnected " + className.getClassName());
-
-            LocalService.LocalBinder binder = (LocalService.LocalBinder) s;
-            service = binder.getService();
-
-            setVideoEnabledFromPermission();
-
-            mBound = true;
-
-            FragmentManager fragmentManager = getFragmentManager();
-            fContent = fragmentManager.findFragmentById(R.id.main_frame);
-            if (fNavigation != null) {
-                onNavigationViewReady();
-            }
-            if (fContent == null) {
-                fContent = new SmartListFragment();
-                fragmentManager.beginTransaction().replace(R.id.main_frame, fContent, HOME_TAG).addToBackStack(HOME_TAG).commitAllowingStateLoss();
-            } else if (fContent instanceof Refreshable) {
-                fragmentManager.beginTransaction().replace(R.id.main_frame, fContent).addToBackStack(HOME_TAG).commitAllowingStateLoss();
-                ((Refreshable) fContent).refresh();
-            }
-            if (mAccountWithPendingrequests != null) {
-                presentTrustRequestFragment(mAccountWithPendingrequests);
-                mAccountWithPendingrequests = null;
-            }
-            service.reloadAccounts();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName className) {
-            Log.d(TAG, "onServiceDisconnected " + className.getClassName());
-            mBound = false;
-        }
-    };
-
     // TODO: Remove this when low level services are ready
     public void onNavigationViewReady() {
         if (fNavigation != null) {
@@ -684,11 +629,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 }
                 break;
         }
-    }
-
-    @Override
-    public LocalService getService() {
-        return service;
     }
 
     @Override
@@ -807,41 +747,11 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 .addToBackStack(SETTINGS_TAG).commit();
     }
 
-    public void onTextContact(final CallContact c) {
-        if (c.getPhones().size() > 1) {
-            final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
-            int i = 0;
-            for (Phone p : c.getPhones()) {
-                numbers[i++] = p.getNumber().getRawUriString();
-            }
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.choose_number);
-            builder.setItems(numbers, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    CharSequence selected = numbers[which];
-                    Intent intent = new Intent(Intent.ACTION_VIEW)
-                            .setClass(HomeActivity.this, ConversationActivity.class)
-                            .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)))
-                            .putExtra(CallFragment.KEY_NUMBER, selected);
-                    startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
-                }
-            });
-            builder.show();
-        } else {
-            Intent intent = new Intent(Intent.ACTION_VIEW)
-                    .setClass(this, ConversationActivity.class)
-                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)));
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
-        }
-    }
-
     private void setVideoEnabledFromPermission() {
         //~ Setting correct VIDEO_ENABLED value based on the state of the
         //~ permission. It can handle the case where the user decides to remove a permission from
         //~ the Android general settings.
-        if (!mDeviceRuntimeService.hasVideoPermission() && service != null) {
+        if (!mDeviceRuntimeService.hasVideoPermission()) {
             mAccountService.setAccountsVideoEnabled(false);
         }
     }
