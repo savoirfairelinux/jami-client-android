@@ -20,9 +20,7 @@
 package cx.ring.service;
 
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -37,14 +35,12 @@ import javax.inject.Inject;
 import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
 import cx.ring.facades.ConversationFacade;
-import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
-import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
@@ -52,8 +48,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     static final String TAG = LocalService.class.getSimpleName();
 
     // Emitting events
-    static public final String ACTION_CONF_UPDATE = BuildConfig.APPLICATION_ID + ".action.CONF_UPDATE";
-
     static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
 
     // Receiving commands
@@ -174,35 +168,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
             Log.e(TAG, "updateConnectivityState", e);
         }
     }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent != null && intent.getAction() != null && mService != null) {
-            receiver.onReceive(this, intent);
-        }
-        return super.onStartCommand(intent, flags, startId);
-    }
-
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "BroadcastReceiver onReceive " + intent.getAction());
-            switch (intent.getAction()) {
-                case ACTION_CONV_READ: {
-                    String convId = intent.getData().getLastPathSegment();
-                    Conversation conversation = mConversationFacade.getConversationById(convId);
-                    if (conversation != null) {
-                        mConversationFacade.readConversation(conversation);
-                    }
-
-                    sendBroadcast(new Intent(ACTION_CONF_UPDATE).setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, convId)));
-                    break;
-                }
-                default:
-                    break;
-            }
-        }
-    };
 
     public void refreshContacts() {
         Log.d(TAG, "refreshContacts");
