@@ -51,7 +51,9 @@ import javax.inject.Named;
 import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Codec;
+import cx.ring.model.Conversation;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
@@ -74,6 +76,9 @@ public class DRingService extends Service {
     static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
     static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
     static public final String ACTION_CALL_VIEW = BuildConfig.APPLICATION_ID + ".action.CALL_VIEW";
+
+    static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
+    static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
 
     private static final String TAG = DRingService.class.getName();
 
@@ -103,6 +108,9 @@ public class DRingService extends Service {
 
     @Inject
     protected PreferencesService mPreferencesService;
+
+    @Inject
+    protected ConversationFacade mConversationFacade;
 
     @Inject
     @Named("DaemonExecutor")
@@ -576,6 +584,14 @@ public class DRingService extends Service {
                     handleCallAction(intent.getAction(), extras);
                 }
                 break;
+            case ACTION_CONV_READ: {
+                String convId = intent.getData().getLastPathSegment();
+                Conversation conversation = mConversationFacade.getConversationById(convId);
+                if (conversation != null) {
+                    mConversationFacade.readConversation(conversation);
+                }
+                break;
+            }
             default:
                 break;
         }
