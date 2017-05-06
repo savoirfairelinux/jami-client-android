@@ -67,7 +67,6 @@ import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.service.DRingService;
-import cx.ring.service.LocalService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.CircleTransform;
 import cx.ring.utils.ContentUriHandler;

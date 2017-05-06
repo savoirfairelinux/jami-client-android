@@ -29,7 +29,7 @@ public class BootReceiver extends BroadcastReceiver {
 
             if (isAllowRingOnStartup) {
                 Log.w(TAG, "Starting Ring on boot");
-                Intent serviceIntent = new Intent(context, LocalService.class);
+                Intent serviceIntent = new Intent(context, DRingService.class);
                 context.startService(serviceIntent);
             }
         }
