@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+
+Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Author: Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+-->
+<resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_incoming">Ringer</string>
+    <string name="call_human_state_connecting">Kobler opp</string>
+    <string name="call_human_state_ringing">Kaller opp</string>
+    <string name="call_human_state_current">Snakker</string>
+    <string name="call_human_state_hungup">Over</string>
+    <string name="call_human_state_busy">Opptatt</string>
+    <string name="call_human_state_failure">Feilet</string>
+    <string name="call_human_state_hold">Parker</string>
+    <string name="call_human_state_unhold">Gjenoppta parkert</string>
+    <string name="call_human_state_over">Over</string>
+    <string name="call_human_state_none">Ingen</string>
+    <!-- Conferences -->
+    <string name="conference_human_state_active_attached">Aktive tilkoblet</string>
+    <string name="conference_human_state_active_detached">Aktive frakoblet</string>
+    <string name="conference_human_state_active_attached_rec">Aktive tilkoblet oppt</string>
+    <string name="conference_human_state_active_detached_rec">Aktive frakoblet oppt</string>
+    <string name="conference_human_state_hold">Parker</string>
+    <string name="conference_human_state_hold_rec">Parker oppt</string>
+    <string name="conference_human_state_default">Ingen</string>
+</resources>
