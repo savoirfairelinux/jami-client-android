@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">Feedback</string>
+  <string name="report">&lt;u&gt;Stuur ons een e-mail&lt;/u&gt;</string>
+  <string name="section_license">Licentie</string>
+  <string name="sponsor_section">Ring is vrije software ontwikkeld en ondersteund door</string>
+  <string name="copyright_section">Auteursrecht</string>
+  <string name="contribute_section">Bijdragen</string>
+  <string name="version_section">Versie</string>
+  <string name="no_email_app_installed">Geen e-mailapplicatie gevonden, installeer er een om ons een rapport te kunnen sturen</string>
+  <string name="no_browser_app_installed">Geen webbrowsertoepassing gevonden, installeer er een om deze pagina te bekijken</string>
+  <string name="email_chooser_title">E-mail versturen met...</string>
+  <string name="website_chooser_title">Website bekijken met...</string>
+  <string name="license">Deze software wordt \"als zodanig\" aangeboden zonder enige garantie. Bekijk voor meer informatie
+&lt;u&gt;GNU General Public License versie 3 of later&lt;/u&gt;</string>
+  <string name="description">Ring is vrije software voor universele communicatie, die de vrijheden en privacy van haar gebruikers eerbiedigt.</string>
+  <string name="credits">Credits</string>
+  <!--About dialog-->
+  <string name="developed_by">Ontwikkeld door</string>
+  <string name="designed_by">Ontworpen door</string>
+  <!--RingActivity-->
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">Geen netwerkverbinding</string>
+  <string name="error_mobile_network_available_but_disabled">Geef toegang tot mobiel netwerk in de instellingen.</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Account aanmaken</string>
+  <string name="ab_action_chat">Tekstberichten</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Navigatielade openen</string>
+  <string name="drawer_close">Navigatielade sluiten</string>
+  <!--Sections-->
+  <string name="menu_item_home">Thuis</string>
+  <string name="menu_item_contact_request">Contactverzoeken</string>
+  <string name="menu_item_accounts">Accounts beheren</string>
+  <string name="menu_item_settings">Instellingen</string>
+  <string name="menu_item_share">Deel mijn contact</string>
+  <string name="menu_item_blacklist">Geblokkeerde contacten</string>
+  <string name="menu_item_about">Over Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Kies een nummer</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">Opnieuw afspelen</string>
+  <string name="hist_replay_button_stop">Stoppen</string>
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d gesprek</item>
+    <item quantity="other">%d gesprekken</item>
+  </plurals>
+  <string name="home_transfering">%1$s wordt verstuurd naar %2$s</string>
+  <string name="home_transfer_complet">Overdracht compleet</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Geen contacten gevonden</string>
+  <string name="starred_contacts_title">Favorieten</string>
+  <string name="searchbar_hint">Geef een naam of telefoonnummer in...</string>
+  <string name="choose_number">Kies een nummer</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Versturen naar een andere lopende oproep:</string>
+  <string name="transfer_no_other_call">Geen verdere oproepen in behandeling</string>
+  <string name="transfer_type_number">Nummer ingeven om naar te versturen:</string>
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">Gemiste inkomende oproep</string>
+  <string name="notif_missed_outgoing_call">Gemiste uitgaande oproep</string>
+  <string name="notif_incoming_call_title">Inkomende oproep van %1$s</string>
+  <string name="notif_incoming_call">Inkomende oproep</string>
+  <string name="notif_outgoing_call_title">Uitgaande oproep naar %1$s</string>
+  <string name="notif_outgoing_call">Uitgaande oproep</string>
+  <string name="notif_current_call_title">Huidige oproep met %1$s</string>
+  <string name="notif_current_call">Huidige oproep</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Jij:</string>
+  <string name="action_call_attended_transfer">Bijgewoonde overdracht</string>
+  <string name="action_call_conference">Vergadering</string>
+  <string name="action_call_hangup">Ophangen</string>
+  <string name="ongoing_call">Lopende oproep</string>
+  <string name="hist_in_call">Inkomende oproep van %1$s</string>
+  <string name="hist_out_call">Uitgaande oproep van %1$s</string>
+  <string name="start_error_title">Ring kan niet opgestart worden!</string>
+  <string name="start_error_mic_required">Ring vereist toestemming om de microfoon te kunnen gebruiken.</string>
+  <string name="action_call_accept">Oproep aannemen</string>
+  <string name="action_call_decline">Weigeren</string>
+  <string name="ab_action_speakerphone">Luidspreker inschakelen</string>
+  <string name="ab_action_contact_add">Aan contacten toevoegen</string>
+  <string name="ab_action_contact_add_question">Aan contacten toevoegen?</string>
+  <string name="ab_action_audio_call">Audiogesprek</string>
+  <string name="ab_action_video_call">Videogesprek</string>
+  <string name="ab_action_change_screen_orientation">Schermoriëntatie aanpassen</string>
+  <string name="share_via">Delen via</string>
+  <string name="write_a_message">Schrijf een bericht</string>
+  <string name="scan_qr">QR-code scannen</string>
+  <string name="ab_action_flipcamera">Camera draaien</string>
+  <!--Text messages-->
+  <string name="send_message">Bericht versturen</string>
+  <string name="message_sending">Bericht wordt verstuurd...</string>
+  <string name="time_just_now">Zojuist</string>
+  <string name="permission_read_denied">De applicatie heeft geen machtiging om je opslag te lezen en kan daardoor niet correct functioneren. Gelieve te overwegen deze machtiging toch toe te kennen</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Cameramachtiging</string>
+  <string name="permission_dialog_camera_message">Videogesprekken vereisen machtiging voor gebruik van de camera. Gelieve te overwegen deze machtiging alsnog toe te kennen.</string>
+  <string name="ringtone_error_title">Fout</string>
+  <string name="ringtone_error_format_not_supported">Dit formaat wordt niet ondersteund.</string>
+  <string name="ringtone_error_size_too_big">Dit bestand is te groot. De maximale grootte is %1$ikB.</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring vereist de \"Contacten\"-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring vereist de \"Oproepgeschiedenis\"-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Scan de QR-code van de toe te voegen account.</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Geschiedenis wissen?</string>
+  <string name="clear_history_dialog_message">Handeling kan niet ongedaan gemaakt worden.</string>
+  <string name="clear_history_completed">Geschiedenis is gewist.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Dit gesprek verwijderen</string>
+  <string name="conversation_action_delete_this_title">Dit gesprek verwijderen?</string>
+  <string name="conversation_action_delete_this_message">Handeling kan niet ongedaan gemaakt worden.</string>
+  <string name="conversation_action_copy_peer_number">Nummer kopiëren</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s gekopieerd naar klembord</string>
+  <string name="conversation_action_select_peer_number">Kies een nummer</string>
+  <string name="conversation_action_block_this">Contact blokkeren</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">%1$s toevoegen?</string>
+  <string name="prompt_new_password">Nieuw wachtwoord</string>
+  <string name="prompt_new_password_repeat">Herhaal nieuw wachtwoord</string>
+  <string name="account_create_title">Een Ring-account aanmaken</string>
+  <string name="prompt_new_username">Voer nieuwe gebruikersnaam in</string>
+  <string name="help_password_choose">Kies een sterk wachtwoord om je Ring-account te beschermen.</string>
+  <string name="help_password_enter">Voer hoofdwachtwoord van je Ring-account in</string>
+  <string name="help_pin_enter">Voer de PIN-code van een andere geconfigureerde Ring-account in. Gebruik de \"account exporteren op Ring\"-functie om een PIN-code te verkrijgen.</string>
+  <string name="wizard_next">Volgende</string>
+  <string name="wizard_back">Terug</string>
+  <!--MenuHeaderView-->
+  <string name="profile">Mijn profiel</string>
+  <string name="profile_message_warning">Je profiel wordt enkel gedeeld met je contacten</string>
+  <string name="open_the_gallery">Galerij openen</string>
+  <string name="take_a_photo">Foto nemen</string>
+  <string name="profile_name_hint">Voer je naam in (optioneel)</string>
+  <string name="unknown">Onbekend</string>
+  <!--Share fragment-->
+  <string name="share_message">Scan deze QR-code met de ingebouwde scanner van de Ring-toepassing die met je wil communiceren.</string>
+  <string name="share_message_no_account">Selecteer een account om te delen.</string>
+  <string name="share_your_account_information">Deel mijn contactinformatie</string>
+  <string name="generic_error_migration">Fout</string>
+  <string name="generic_error_migration_message">Er is een fout opgetreden tijdens het migratieproces</string>
+  <!--Pending contact requests-->
+  <string name="accept">Aanvaarden</string>
+  <string name="refuse">Afwijzen</string>
+  <string name="block">Blokkeren</string>
+  <string name="contact_request_title">Contactverzoek in afwachting</string>
+  <string name="contact_request_msg">Je hebt %1$s verzoeken in afwachting</string>
+  <string name="contact_request_account">Voor %1$s</string>
+  <string name="no_requests">0 contactverzoeken</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Versturen</string>
+  <string name="send_request_title">Contactverzoek verzenden</string>
+  <string name="send_request_msg">Je moet een contactverzoek verzenden om met deze gebruiker te communiceren. Zolang je contact het verzoek niet aanvaardt zal deze de berichten die je stuurt niet kunnen lezen.</string>
+  <!--Blacklist-->
+  <string name="no_blocked_contact">0 geblokkeerde contacten</string>
+  <!--Smartlist-->
+  <string name="no_contact_request">Geen contactverzoek verzonden</string>
+  <string name="contact_request_sent">Contactverzoek verzonden</string>
+</resources>
