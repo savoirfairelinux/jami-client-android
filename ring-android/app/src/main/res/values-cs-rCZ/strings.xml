@@ -1,15 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Zpětná vazba</string>
+  <string name="report">&lt;u&gt;Pošlete nám elektronický dopis&lt;/u&gt;</string>
+  <string name="section_license">Povolení</string>
   <string name="sponsor_section">Ring je svobodný software, jejž vyvíjí a podporuje</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Přispět</string>
   <string name="version_section">Verze</string>
   <string name="no_email_app_installed">Nenalezena mailová aplikace, nějakou si nainstalujte, abyste nám poslali hlášení</string>
+  <string name="no_browser_app_installed">Nenalezen žádný program na  prohlížení internetových stránek. Nainstalujte jej pro zobrazení této stránky.</string>
   <string name="email_chooser_title">Poslat zprávu pomocí…</string>
+  <string name="website_chooser_title">Zobrazit stránku pomocí...</string>
+  <string name="license">Tento program je poskytován tak, jak je, bez jakýchkoli záruk. Na podrobnosti se podívejte na znění licence
+&lt;u&gt;GNU General Public License ve verzi 3 nebo pozdější&lt;/u&gt;</string>
   <string name="description">Ring je svobodný software určený k univerzální komunikaci, který respektuje svobody a práva uživatelů.</string>
   <string name="credits">Zásluhy</string>
   <!--About dialog-->
+  <string name="developed_by">Vyvíjeno</string>
+  <string name="designed_by">Navrženo</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Chybí připojení</string>
@@ -23,9 +32,11 @@
   <string name="drawer_close">Zavřít navigační šuplík</string>
   <!--Sections-->
   <string name="menu_item_home">Domov</string>
+  <string name="menu_item_contact_request">Žádosti o kontakt</string>
   <string name="menu_item_accounts">Spravovat účty</string>
   <string name="menu_item_settings">Nastavení</string>
   <string name="menu_item_share">Sdílet můj kontakt</string>
+  <string name="menu_item_blacklist">Blokované kontakty</string>
   <string name="menu_item_about">O Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Vytočit číslo</string>
@@ -39,6 +50,7 @@
     <item quantity="few">%d Konverzace</item>
     <item quantity="other">%d konverzací</item>
   </plurals>
+  <string name="home_transfering">Přenáší se %1$s do %2$s</string>
   <string name="home_transfer_complet">Přesměrování hotovo</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Nenalezen žádný kontakt</string>
@@ -51,6 +63,8 @@
   <string name="transfer_no_other_call">Žádné čekající hovory</string>
   <string name="transfer_type_number">Vložte číslo, na něž chcete hovor přesměrovat:</string>
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Zmeškaný příchozí hovor</string>
+  <string name="notif_missed_outgoing_call">Zmeškaný odchozí hovor</string>
   <string name="notif_incoming_call_title">Příchozí hovor od %1$s</string>
   <string name="notif_incoming_call">Příchozí hovor</string>
   <string name="notif_outgoing_call_title">Odchozí hovor k %1$s</string>
@@ -74,6 +88,7 @@
   <string name="ab_action_contact_add_question">Přidat do kontaktů?</string>
   <string name="ab_action_audio_call">Audio hovor</string>
   <string name="ab_action_video_call">Video hovor</string>
+  <string name="ab_action_change_screen_orientation">Změnit natočení obrazovky</string>
   <string name="share_via">Sdílet přes</string>
   <string name="write_a_message">Napsat zprávu</string>
   <string name="scan_qr">Skenovat QR kód</string>
@@ -106,6 +121,7 @@
   <string name="conversation_action_copy_peer_number">Kopírovat číslo</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s zkopírováno do schránky</string>
   <string name="conversation_action_select_peer_number">Vyberte číslo</string>
+  <string name="conversation_action_block_this">Blokovat tento kontakt</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Přidat %1$s?</string>
   <string name="prompt_new_password">Nové heslo</string>
@@ -116,20 +132,35 @@
   <string name="help_password_enter">Zadejte hlavní heslo ke svému účtu Ring</string>
   <string name="help_pin_enter">Zadejte PIN z jiného nastaveného účtu Ring. Abyste PIN získali, použijte volbu „exportovat účet na Ring“.</string>
   <string name="wizard_next">Další</string>
+  <string name="wizard_back">Zpět</string>
   <!--MenuHeaderView-->
   <string name="profile">Můj profil</string>
+  <string name="profile_message_warning">Váš profil je sdílen jen s vašimi kontakty</string>
   <string name="open_the_gallery">Otevřít galerii</string>
   <string name="take_a_photo">Pořídit fotku</string>
+  <string name="profile_name_hint">Zadejte své jméno (volitelné)</string>
   <string name="unknown">Neznámé</string>
   <!--Share fragment-->
   <string name="share_message">Naskenujte QR kód zabudovaným skenerem aplikace Ring, která s vámi chce komunikovat.</string>
+  <string name="share_message_no_account">Vyberte, prosím, účet ke sdílení.</string>
   <string name="share_your_account_information">Sdílet mé kontaktní informace</string>
   <string name="generic_error_migration">Chyba</string>
+  <string name="generic_error_migration_message">Při převádění došlo k chybě</string>
   <!--Pending contact requests-->
   <string name="accept">Přijmout</string>
   <string name="refuse">Odmítnout</string>
+  <string name="block">Blokovat</string>
+  <string name="contact_request_title">Čekající žádost o kontakt</string>
+  <string name="contact_request_msg">Máte %1$s čekajících žádostí</string>
+  <string name="contact_request_account">Pro %1$s</string>
+  <string name="no_requests">0 žádostí o kontakt</string>
   <!--Send contact requests-->
   <string name="send_request_button">Odeslat</string>
+  <string name="send_request_title">Poslat žádost o kontakt</string>
+  <string name="send_request_msg">Musíte poslat žádost o kontakt, abyste mohl hovořit a psát si s tímto uživatelem. Doku tento uživatel žádost nepřijme, můžete posílat zprávy, ale on si je nebude moci přečíst.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 blokovaných kontaktů</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Neposlána žádná žádost o kontakt</string>
+  <string name="contact_request_sent">Poslána žádost o kontakt</string>
 </resources>

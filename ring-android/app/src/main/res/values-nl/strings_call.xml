@@ -26,7 +26,7 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_connecting">Verbinden</string>
     <string name="call_human_state_ringing">Bellen</string>
     <string name="call_human_state_current">Praten</string>
-    <string name="call_human_state_hungup">Over</string>
+    <string name="call_human_state_hungup">Opgehangen</string>
     <string name="call_human_state_busy">Bezig</string>
     <string name="call_human_state_failure">Mislukt</string>
     <string name="call_human_state_hold">In wacht zetten</string>
@@ -39,6 +39,6 @@ along with this program; if not, write to the Free Software
     <string name="conference_human_state_active_attached_rec">Actief aangesloten rec</string>
     <string name="conference_human_state_active_detached_rec">Actief losgekoppeld rec</string>
     <string name="conference_human_state_hold">In wacht zetten</string>
-    <string name="conference_human_state_hold_rec">In wacht zetten rec</string>
+    <string name="conference_human_state_hold_rec">Pauze rec</string>
     <string name="conference_human_state_default">Geen</string>
 </resources>
