@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="sponsor_section">Ring е безплатен софтуер, разработван и поддържан от</string>
+  <string name="copyright_section">Авторски права</string>
+  <string name="contribute_section">Принос</string>
+  <string name="version_section">Версия</string>
+  <string name="no_email_app_installed">Не е открито приложение за е-поща. Инсталирайте такова и ни изпратете доклад.</string>
+  <string name="email_chooser_title">Изпращане на е-писмо чрез…</string>
+  <string name="credits">Заслуги</string>
+  <!--About dialog-->
+  <!--RingActivity-->
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">Няма връзка с мрежата</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Нов акаунт</string>
+  <string name="ab_action_chat">Текстово съобщение</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Отваряне на менюто</string>
+  <string name="drawer_close">Затваряне на менюто</string>
+  <!--Sections-->
+  <string name="menu_item_home">Начало</string>
+  <string name="menu_item_accounts">Управление на акаунтите</string>
+  <string name="menu_item_settings">Настройки</string>
+  <string name="menu_item_about">Относно Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Наберете номер</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">Повторение</string>
+  <string name="hist_replay_button_stop">Спиране</string>
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d разговор</item>
+    <item quantity="other">%d разговора</item>
+  </plurals>
+  <string name="home_transfer_complet">Прехвърлянето е завършено</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Няма намерен контакт</string>
+  <string name="starred_contacts_title">Любими</string>
+  <string name="searchbar_hint">Въведете име или тел. номер…</string>
+  <string name="choose_number">Изберете номер</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Прехвърляне към друг текущ разговор:</string>
+  <string name="transfer_no_other_call">Няма други чакащи разговори</string>
+  <string name="transfer_type_number">Въведете номер, към който да прехвърлите:</string>
+  <!--Notifications-->
+  <string name="notif_incoming_call_title">Входящо обаждане от %1$s</string>
+  <string name="notif_incoming_call">Входящо обаждане</string>
+  <string name="notif_outgoing_call_title">Изходящо обаждане до %1$s</string>
+  <string name="notif_outgoing_call">Изходящо обаждане</string>
+  <string name="notif_current_call_title">Текущ разговор с %1$s</string>
+  <string name="notif_current_call">Текущ разговор</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Вие:</string>
+  <string name="action_call_conference">Конференция</string>
+  <string name="action_call_hangup">Затваряне</string>
+  <string name="ongoing_call">Текущо обаждане</string>
+  <string name="hist_in_call">Входящо обаждане от %1$s</string>
+  <string name="hist_out_call">Изходящо обаждане до %1$s</string>
+  <string name="start_error_title">Не мога да пусна Ring !</string>
+  <string name="start_error_mic_required">Ring се нуждае от правото за ползване на микрофона, за да работи</string>
+  <string name="action_call_accept">Приемане</string>
+  <string name="action_call_decline">Отказ</string>
+  <string name="ab_action_speakerphone">Включване на колонката</string>
+  <string name="ab_action_contact_add">Добавяне към контактите</string>
+  <string name="ab_action_contact_add_question">Добавяне към контактите?</string>
+  <string name="ab_action_audio_call">Гласово обаждане</string>
+  <string name="share_via">Споделяне чрез</string>
+  <string name="write_a_message">Напишете съобщение</string>
+  <string name="scan_qr">Сканиране на QR-код</string>
+  <string name="ab_action_flipcamera">Обръщане на камерата</string>
+  <!--Text messages-->
+  <string name="send_message">Изпращане на съобщение</string>
+  <string name="message_sending">Изпращане на съобщение…</string>
+  <string name="time_just_now">Току-що</string>
+  <string name="permission_read_denied">Не беше позволено на приложението да чете от мястото за съхранение на данни, така че не може да работи правилно. Моля, дайте това право на приложението.</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Право за използване на камерата</string>
+  <string name="permission_dialog_camera_message">Разговорите с видео изискват правото за използване на камерата. Моля, дайте това право на приложението.</string>
+  <string name="ringtone_error_title">Грешка</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring се нуждае от правото за четене на контактите, за да работи тази функционалност. Моля, разрешете го.</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring се нуждае от правото за запис в историята на обажданията, за да работи тази функционалност. Моля, разрешете го.</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Сканирайте QR-кода на акаунта, който искате да добавите.</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Изчистване на историята?</string>
+  <string name="clear_history_dialog_message">Това действие е необратимо.</string>
+  <string name="clear_history_completed">Историята беше изчистена.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Изтриване на този разговор</string>
+  <string name="conversation_action_delete_this_title">Изтриване на този разговор?</string>
+  <string name="conversation_action_delete_this_message">Това действие е необратимо.</string>
+  <string name="conversation_action_copy_peer_number">Копиране на номера</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s е копиран</string>
+  <string name="conversation_action_select_peer_number">Изберете номер</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Добавяне на %1$s?</string>
+  <string name="prompt_new_password">Нова парола</string>
+  <string name="prompt_new_password_repeat">Повторете новата парола</string>
+  <string name="account_create_title">Създаване на акаунт за Ring</string>
+  <string name="prompt_new_username">Въведете ново потребителско име</string>
+  <string name="help_password_choose">Изберете сигурна парола, която ще запомните, за да е защитен акаунтът Ви.</string>
+  <string name="help_password_enter">Въведете основната си парола за Ring</string>
+  <string name="wizard_next">Напред</string>
+  <!--MenuHeaderView-->
+  <string name="profile">Моят профил</string>
+  <string name="open_the_gallery">Отваряне на галерията</string>
+  <string name="take_a_photo">Снимане</string>
+  <string name="unknown">Неизвестно</string>
+  <!--Share fragment-->
+  <string name="share_message">Сканирайте този QR-код с вградения скенер на приложението Ring, което иска да се свърже с Вас.</string>
+  <string name="share_your_account_information">Споделяне на информацията аз връзка с мен</string>
+  <string name="generic_error_migration">Грешка</string>
+  <!--Pending contact requests-->
+  <string name="accept">Приемане</string>
+  <string name="refuse">Отказ</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Изпращане</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
+</resources>
