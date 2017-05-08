@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Síť</string>
+  <string name="pref_category_contacts">Kontakty</string>
+  <string name="pref_category_system">Systém</string>
+  <string name="pref_category_privacy">Soukromí</string>
+  <string name="pref_mobileData_title">Mobilní data</string>
+  <string name="pref_mobileData_summary">Povolit Ring na 3G/LTE sítích dodatečně k WiFi</string>
+  <string name="pref_systemContacts_title">Použít systémové kontakty</string>
+  <string name="pref_systemContacts_summary">Použít systémové kontakty pro zobrazení údajů volajícího.</string>
+  <string name="pref_systemDialer_title">Vykonávat systémové hovory skrze Ring</string>
+  <string name="pref_systemDialer_summary">Použít Ring k vykonání systémových hovorů, kdy to bude možné.</string>
+  <string name="pref_startOnBoot_title">Spustit Ring po zapnutí</string>
+  <string name="pref_startOnBoot_summary">Spustit Ring v pozadí systému po jeho nastartování.</string>
+  <string name="pref_clearHistory_title">Vymazat historii</string>
+  <string name="pref_clearHistory_summary">Vymaže celou historii konverzací. Tuto činnost nelze vrátit zpět.</string>
+</resources>
