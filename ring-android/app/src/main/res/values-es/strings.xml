@@ -9,9 +9,12 @@
   <string name="no_email_app_installed">No se ha encontrado ninguna aplicación de correo. Instala una para enviarnos el informe</string>
   <string name="no_browser_app_installed">No se ha encontrado un navegador, instale uno para poder ver esta página</string>
   <string name="email_chooser_title">Enviar correo usando...</string>
+  <string name="website_chooser_title">Ver página web usando...</string>
   <string name="description">Ring es software libre de comunicaciones que respeta las libertades y privacidad de sus usuarios.</string>
   <string name="credits">Créditos</string>
   <!--About dialog-->
+  <string name="developed_by">Desarrollado por</string>
+  <string name="designed_by">Diseñado por</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Sin conexión a la red</string>
@@ -25,9 +28,11 @@
   <string name="drawer_close">Cerrar menú lateral</string>
   <!--Sections-->
   <string name="menu_item_home">Inicio</string>
+  <string name="menu_item_contact_request">Solicitudes de contacto</string>
   <string name="menu_item_accounts">Administrar cuentas</string>
   <string name="menu_item_settings">Configuración</string>
   <string name="menu_item_share">Compartir mi contacto</string>
+  <string name="menu_item_blacklist">Contactos bloqueados</string>
   <string name="menu_item_about">Acerca de Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Marcar un Número</string>
@@ -40,6 +45,7 @@
     <item quantity="one">%d Conversacion</item>
     <item quantity="other">Conversaciones: %d</item>
   </plurals>
+  <string name="home_transfering">Transfiriendo %1$s a %2$s</string>
   <string name="home_transfer_complet">Transferencia completada</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">No se ha encontrado el contacto</string>
@@ -52,6 +58,8 @@
   <string name="transfer_no_other_call">No hay llamadas pendientes</string>
   <string name="transfer_type_number">Escribe el número al que transferir:</string>
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Llamada entrante perdida</string>
+  <string name="notif_missed_outgoing_call">Llamada saliente perdida</string>
   <string name="notif_incoming_call_title">Llamada entrante de %1$s</string>
   <string name="notif_incoming_call">Llamada entrante</string>
   <string name="notif_outgoing_call_title">Llamando a %1$s</string>
@@ -75,6 +83,7 @@
   <string name="ab_action_contact_add_question">¿Añadir a contactos?</string>
   <string name="ab_action_audio_call">Llamada de voz</string>
   <string name="ab_action_video_call">Videollamada</string>
+  <string name="ab_action_change_screen_orientation">Cambiar la orientación de la pantalla</string>
   <string name="share_via">Compatir via</string>
   <string name="write_a_message">Escribir un mensaje</string>
   <string name="scan_qr">Escanear código QR</string>
@@ -83,7 +92,7 @@
   <string name="send_message">Enviar mensaje</string>
   <string name="message_sending">Enviando mensaje...</string>
   <string name="time_just_now">En este momento</string>
-  <string name="permission_read_denied">La aplicación no puede funcionar correctamente porque tiene permiso para leer tus archivos. Considera darle los permisos necesarios</string>
+  <string name="permission_read_denied">La aplicación no puede funcionar correctamente porque no tiene permiso para leer tus archivos. Considera darle los permisos necesarios</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permiso de cámara</string>
   <string name="permission_dialog_camera_message">Las conversaciones con vídeo requieren utilizar la cámara. Considera conceder este permiso.</string>
@@ -107,6 +116,7 @@
   <string name="conversation_action_copy_peer_number">Copiar número</string>
   <string name="conversation_action_copied_peer_number_clipboard">Se ha copiado %1$s al portapapeles</string>
   <string name="conversation_action_select_peer_number">Escoge un número</string>
+  <string name="conversation_action_block_this">Bloquear este contacto</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">¿Añadir %1$s ?</string>
   <string name="prompt_new_password">Contraseña nueva</string>
@@ -120,8 +130,10 @@
   <string name="wizard_back">Volver</string>
   <!--MenuHeaderView-->
   <string name="profile">Mi perfil</string>
+  <string name="profile_message_warning">Tu perfil solamente se comparte con tus contactos</string>
   <string name="open_the_gallery">Abrir la galería</string>
   <string name="take_a_photo">Tomar una foto</string>
+  <string name="profile_name_hint">Escribe tu nombre (opcional)</string>
   <string name="unknown">Desconocido</string>
   <!--Share fragment-->
   <string name="share_message">Escanea este QRCode con el escáner integrado de la aplicación Ring que desea comunicarse contigo.</string>
@@ -132,8 +144,16 @@
   <!--Pending contact requests-->
   <string name="accept">Aceptar</string>
   <string name="refuse">No aceptar</string>
+  <string name="block">Bloquear</string>
+  <string name="contact_request_title">Solicitud de contacto pendiente</string>
+  <string name="contact_request_msg">Tienes %1$s solicitudes pendientes</string>
+  <string name="no_requests">Sin solicitudes de contacto</string>
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
+  <string name="send_request_title">Enviar una solicitud de contacto</string>
+  <string name="send_request_msg">Debes enviar una solicitud de contacto para comunicarte con este usuario. Hasta que no haya aceptado la solicitud puedes enviar mensajes, pero el contacto no puede leerlos.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">Sin contactos bloqueados</string>
   <!--Smartlist-->
+  <string name="contact_request_sent">Solicitud de contacto enviada</string>
 </resources>
