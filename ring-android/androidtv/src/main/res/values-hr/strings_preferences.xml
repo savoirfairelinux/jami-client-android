@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Mreža</string>
+  <string name="pref_category_contacts">Kontakti</string>
+  <string name="pref_category_system">Sustav</string>
+  <string name="pref_category_privacy">Privatnost</string>
+  <string name="pref_mobileData_title">Mobilni podaci</string>
+  <string name="pref_mobileData_summary">Dopustite Ring aplikaciji korištenje 3G/LTE mreže uz Wi-Fi</string>
+  <string name="pref_systemContacts_title">Koristi kontakte sustava</string>
+  <string name="pref_systemContacts_summary">Koristi kontakte sustava za prikaz pojedinosti pozivatelja.</string>
+  <string name="pref_startOnBoot_title">Pokreni Ring s uređajem</string>
+  <string name="pref_startOnBoot_summary">Pokreni Ring u pozadini prilikom pokretanja sustava.</string>
+  <string name="pref_clearHistory_title">Očisti povijest</string>
+  <string name="pref_clearHistory_summary">Očisti povijest svih razgovora. Ova se radnja ne može poništiti.</string>
+</resources>
