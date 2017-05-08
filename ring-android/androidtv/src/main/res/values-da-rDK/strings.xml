@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">Tilbagemelding</string>
+  <string name="report">&lt;u&gt;Send os en email&lt;/u&gt;</string>
+  <string name="section_license">Licens</string>
+  <string name="sponsor_section">Ring er fri software, udviklet og støttet af</string>
+  <string name="copyright_section">Copyright</string>
+  <string name="contribute_section">Bidrag</string>
+  <string name="version_section">Version</string>
+  <string name="no_email_app_installed">Ingen email-app fundet, installér en for at sende os en rapport</string>
+  <string name="no_browser_app_installed">Ingen web-browser applikation fundet, installér en for at se denne side</string>
+  <string name="email_chooser_title">Send mail ved brug af...</string>
+  <string name="website_chooser_title">Vis hjemmeside med...</string>
+  <string name="license">Denne software er gjort tilgængelig \"som beset\", uden nogen former for garantier. For flere detaljer, se
+&lt;u&gt;GNU General Public License version 3 eller senere&lt;/u&gt;</string>
+  <string name="description">Ring er fri software til universel kommunikation som respekterer sine brugeres frihed og privatliv.</string>
+  <string name="credits">Krediteringer</string>
+  <!--About dialog-->
+  <!--RingActivity-->
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">Ingen netværksforbindelse</string>
+  <string name="error_mobile_network_available_but_disabled">Venligst tillad adgang til telefon netværk under Indstillinger.</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Ny konto</string>
+  <string name="ab_action_chat">Text-besked</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Åben navigationsskuffen</string>
+  <string name="drawer_close">Luk navigationsskuffen</string>
+  <!--Sections-->
+  <string name="menu_item_home">Hjem</string>
+  <string name="menu_item_accounts">Håndtér konti</string>
+  <string name="menu_item_settings">Indstillinger</string>
+  <string name="menu_item_share">Del min kontakt</string>
+  <string name="menu_item_about">Om Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Indtast et nummer</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">Genafspil</string>
+  <string name="hist_replay_button_stop">Stop</string>
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d samtale</item>
+    <item quantity="other">%d samtaler</item>
+  </plurals>
+  <string name="home_transfering">Overfører %1$s til %2$s</string>
+  <string name="home_transfer_complet">Overførsel afsluttet</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Ingen kontakt funder</string>
+  <string name="starred_contacts_title">Favoritter</string>
+  <string name="searchbar_hint">Indtast navn eller telefonnummer...</string>
+  <string name="choose_number">Vælg et nummer</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Overfør til en anden aktiv samtale:</string>
+  <string name="transfer_no_other_call">Ikke andre opkald i kø</string>
+  <string name="transfer_type_number">Tast nummer at overføre til:</string>
+  <!--Notifications-->
+  <string name="notif_incoming_call_title">Indgående opkald fra %1$s</string>
+  <string name="notif_incoming_call">Indgående opkald</string>
+  <string name="notif_outgoing_call_title">Udgående opkald til %1$s</string>
+  <string name="notif_outgoing_call">Udgående opkald</string>
+  <string name="notif_current_call_title">Aktivt opkald med %1$s</string>
+  <string name="notif_current_call">Nuværende opkald</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Dig:</string>
+  <string name="action_call_attended_transfer">Overvåget overførsel</string>
+  <string name="action_call_conference">Konference</string>
+  <string name="action_call_hangup">Læg på</string>
+  <string name="ongoing_call">Aktivt opkald</string>
+  <string name="hist_in_call">Indgående opkald af %1$s</string>
+  <string name="hist_out_call">Udgående opkald af %1$s</string>
+  <string name="start_error_title">Kan ikke starte Ring !</string>
+  <string name="start_error_mic_required">Ring kræver mikrofon-tilladelse for at fungere.</string>
+  <string name="action_call_accept">Besvar opkald</string>
+  <string name="action_call_decline">Afvis</string>
+  <string name="ab_action_speakerphone">Aktiver højtaler</string>
+  <string name="ab_action_contact_add">Tilføj til kontakt</string>
+  <string name="ab_action_contact_add_question">Tilføj til kontakter?</string>
+  <string name="ab_action_audio_call">Lydopkald</string>
+  <string name="ab_action_video_call">Videoopkald</string>
+  <string name="ab_action_change_screen_orientation">Ændr skærm-orientering</string>
+  <string name="share_via">Del via</string>
+  <string name="write_a_message">Skriv en besked</string>
+  <string name="scan_qr">Scan QR-kode</string>
+  <string name="ab_action_flipcamera">Flip-kamera</string>
+  <!--Text messages-->
+  <string name="send_message">Send besked</string>
+  <string name="message_sending">Sender besked...</string>
+  <string name="time_just_now">Lige nu</string>
+  <string name="permission_read_denied">Mangler tilladelse til at læse fra lageret, og kan dermed ikke fungere ordentligt. Overvej venligst at give denne tilladelse</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Kamera-tilladelse</string>
+  <string name="permission_dialog_camera_message">Video-samtaler kræver kamera-tilladelse for at fungere. Overvej venligst at give denne tilladelse.</string>
+  <string name="ringtone_error_title">Fejl</string>
+  <string name="ringtone_error_format_not_supported">Dette format understøttes ikke.</string>
+  <string name="ringtone_error_size_too_big">Denne fil er for stor. Maksimalt tilladte størrelse er %1$ikB.</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring har brug for \"Læs kontakter\"-tilladelse for at kunne udføre denne funktion. Vær venlig at tillade den.</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring har brug for \"Skriv opkaldsliste\"-tilladelse for at kunne udføre denne funktion. Vær venlig at tillade den.</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Skan QR-koden for kontoen du vil tilføje.</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Ryd historikken?</string>
+  <string name="clear_history_dialog_message">Denne handling kan ikke fortrydes.</string>
+  <string name="clear_history_completed">Historikken er blevet ryddet.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Slet denne samtale</string>
+  <string name="conversation_action_delete_this_title">Slet denne samtale?</string>
+  <string name="conversation_action_delete_this_message">Denne handling kan ikke fortrydes.</string>
+  <string name="conversation_action_copy_peer_number">Kopiér nummer</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopieret til udklipsholder</string>
+  <string name="conversation_action_select_peer_number">Vælg et nummer</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Tilføj %1$s ?</string>
+  <string name="prompt_new_password">Nyt kodeord</string>
+  <string name="prompt_new_password_repeat">Gentag nyt kodeord</string>
+  <string name="account_create_title">Opret en Ring-konto</string>
+  <string name="prompt_new_username">Indtast nyt brugernavn</string>
+  <string name="help_password_choose">Vælg et stærkt kodeord, som du kan huske, til at beskytte din Ring-konto.</string>
+  <string name="help_password_enter">Indtast dit primære Ring-konto kodeord</string>
+  <string name="help_pin_enter">Indtast PIN-koden fra en anden konfigureret Ring-konto. Brug eksporter-konto-funktionaliteten for at få adgang til en PIN-kode. </string>
+  <string name="wizard_next">Næste</string>
+  <string name="wizard_back">Tilbage</string>
+  <!--MenuHeaderView-->
+  <string name="profile">Min profil</string>
+  <string name="profile_message_warning">Din profil vil kun blive delt med dine kontakter</string>
+  <string name="open_the_gallery">Åben galleriet</string>
+  <string name="take_a_photo">Tag et billede</string>
+  <string name="profile_name_hint">Indtast dit navn (valgfrit)</string>
+  <string name="unknown">Ukendt</string>
+  <!--Share fragment-->
+  <string name="share_message">Skan denne QRCode med den indbyggede scanner i Ring-applikationen.</string>
+  <string name="share_message_no_account">Vælg en konto at dele.</string>
+  <string name="share_your_account_information">Del min kontaktinformation</string>
+  <string name="generic_error_migration">Fejl</string>
+  <string name="generic_error_migration_message">Der opstod en fejl under migrering</string>
+  <!--Pending contact requests-->
+  <string name="accept">Accepter</string>
+  <string name="refuse">Afvis</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Send</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
+</resources>

@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Ištrinti</string>
+  <string name="ic_advanced_menu">Išplėstiniai nustatymai</string>
+  <string name="ic_blacklist_menu">Užblokuoti kontaktai</string>
+  <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Pridėti Ring paskyrą</string>
+  <string name="add_sip_account_title">Pridėti SIP paskyrą</string>
+  <string name="ring_account_default_name">Ring paskyra %1$s</string>
+  <string name="prompt_alias">Slapyvardis</string>
+  <string name="prompt_hostname">Kompiuterio vardas</string>
+  <string name="prompt_username">Naudotojo vardas</string>
+  <string name="prompt_password">Slaptažodis</string>
+  <string name="action_create">Sukurti paskyrą</string>
+  <string name="action_create_short">Registruoti</string>
+  <string name="error_field_required">Šis laukas yra būtinas</string>
+  <string name="dialog_wait_create">Pridedama paskyra</string>
+  <string name="dialog_wait_create_details">Prašome palaukti, kol jūsų nauja paskyra yra pridedama</string>
+  <string name="dialog_wait_update">Atnaujinama paskyra</string>
+  <string name="dialog_wait_update_details">Prašome palaukti, kol jūsų naujoji paskyra yra atnaujinama...</string>
+  <string name="dialog_warn_ip2ip_account_title">Sukurti tuščią SIP paskyrą ?</string>
+  <string name="dialog_warn_ip2ip_account_message">Jūs ruošiatės sukurti SIP paskyrą, nenurodę teisingo kompiuterio vardo.
+Jūs galėsite atlikti ir priimti tik tiesioginius ip skambučius. 
+Vėliau, galėsite pataisyti savo paskyros informaciją</string>
+  <string name="account_type_ip2ip">IP paskyra</string>
+  <string name="help_sip_title">Pridėti savo SIP paskyrą</string>
+  <string name="help_sip">Konfigūruokite esamą SIP paskyrą.</string>
+  <string name="create_sip_account">Pridėti SIP paskyrą</string>
+  <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_title">Ištrinti paskyrą ?</string>
+  <string name="account_delete_dialog_message">Šio veiksmo negalima bus atšaukti.</string>
+  <!--AccountManagementFragment-->
+  <string name="empty_account_list">Nėra užregistruotų paskyrų</string>
+  <string name="normal_accounts_titles">Paskyros</string>
+  <string name="normal_devices_titles">Žinomi, su šia Ring paskyra susieti, įrenginiai</string>
+  <string name="account_device_revocation_success_title">Pavyko</string>
+  <string name="account_device_revocation_wrong_password">Neteisingas slaptažodis.</string>
+  <string name="account_device_revocation_unknown_device">Nežinomas įrenginys.</string>
+  <string name="account_device_revocation_error_unknown">Nežinoma klaida.</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Bendra</string>
+  <string name="account_basic_category">Pagrindiniai nustatymai</string>
+  <string name="account_alias_label">Paskyros pavadinimas</string>
+  <string name="account_hostname_label">Kompiuterio vardas</string>
+  <string name="account_bootstrap_label">Pradinė įkeltis</string>
+  <string name="account_username_label">Naudotojo vardas</string>
+  <string name="account_password_label">Slaptažodis</string>
+  <string name="account_optionnal_category">Pasirinktini nustatymai</string>
+  <string name="account_useragent_label">Naudotojo agentas</string>
+  <string name="account_autoanswer_label">Automatinis atsiliepimas</string>
+  <string name="account_upnp_label">Įjungti UPnP</string>
+  <string name="account_proxy_field">Įgaliotasis serveris</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">Garsas</string>
+  <string name="account_preferences_media_tab">Medija</string>
+  <string name="account_ringtone_label">Skambučio melodijos</string>
+  <string name="account_ringtone_enabled_label">Aktyvuoti skambučių melodijas</string>
+  <string name="account_ringtone_path_label">Skambučio melodijos kelias</string>
+  <string name="account_ringtone_custom_label">Naudoti tinkintą skambučio melodiją</string>
+  <!--Video Details-->
+  <string name="account_video_label">Vaizdas</string>
+  <string name="account_video_enable">Įjungti vaizdą</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Išplėstiniai</string>
+  <string name="account_dht_public_in_calls_label">Leisti visus skambučius/žinutes</string>
+  <string name="account_registration_exp_label">Registracijos galiojimo laikas</string>
+  <string name="account_local_interface_label">Vietinė sąsaja</string>
+  <string name="account_local_port_label">Vietinis prievadas</string>
+  <string name="account_stun_enable_label">Naudoti Stun</string>
+  <string name="account_stun_server_label">Stun serveris</string>
+  <string name="account_turn_enable_label">Naudoti TURN</string>
+  <string name="account_turn_server_label">TURN serveris</string>
+  <string name="account_turn_username_label">TURN naudotojo vardas</string>
+  <string name="account_turn_password_label">TURN slaptažodis</string>
+  <string name="account_published_same_as_local_label">Paskelbtas toks pats kaip vietinis</string>
+  <string name="account_published_port_label">Paskelbtas prievadas</string>
+  <string name="account_published_address_label">Paskelbtas adresas</string>
+  <!--Security Details-->
+  <string name="account_credentials_label">Prisijungimo duomenys</string>
+  <string name="account_credentials_edit">Taisyti prisijungimo duomenis</string>
+  <string name="account_credentials_add">Pridėti prisijungimo duomenis</string>
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Saugumas</string>
+  <!--SIP-->
+  <!--TLS Details-->
+  <string name="account_tls_transport_switch_label">Naudoti TLS perdavimą</string>
+  <string name="account_tls_port_label">TLS gavėjo prievadas</string>
+  <string name="account_tls_certificate_list_label">Liudijimų įstaiga</string>
+  <string name="account_tls_certificate_file_label">Liudijimo failas</string>
+  <string name="account_tls_private_key_file_label">Privačiojo rakto failas</string>
+  <string name="account_tls_password_label">Privačiojo rakto slaptažodis</string>
+  <string name="account_tls_method_label">TLS metodas</string>
+  <string name="account_tls_ciphers_label">TLS šifrai</string>
+  <string name="account_tls_server_name_label">Serverio pavadinimas</string>
+  <string name="account_tls_verify_server_label">Tikrinti serverį</string>
+  <string name="account_tls_verify_client_label">Tikrinti klientą</string>
+  <string name="account_tls_negotiation_timeout_sec">Derėjimuisi skirtas laikas (sek.)</string>
+  <string name="account_rtp_max_port">Didžiausias</string>
+  <string name="account_rtp_min_port">Mažiausias</string>
+  <string name="account_rtp_port_range">Garso RTP prievadų rėžis</string>
+  <!--restore/backup-->
+  <string name="account_restore_account">Atkurti paskyrą</string>
+  <string name="account_restore_message">Įrašykite slaptažodį, kad iššifruotumėte failą.</string>
+  <string name="account_restore_decryption_password">Iššifravimo slaptažodis</string>
+  <string name="account_new_device_password">Norėdami atrakinti paskyrą, įveskite pagrindinį slaptažodį</string>
+  <string name="restore_dialog_title">Atkuriama</string>
+  <string name="restore_backup_wait">Prašome palaukti...</string>
+  <string name="error_password_char_count">Mažiausiai 6 simboliai</string>
+  <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
+  <string name="restore_failed_dialog_title">Atkūrimas nepavyko</string>
+  <string name="restore_failed_dialog_msg">Įvyko klaida</string>
+  <string name="export_account_wait_title">Prašome palaukti...</string>
+  <string name="export_account_wait_message">Skelbiama naujos paskyros informacija</string>
+  <string name="account_export_end_decryption_message">Naudojant pateiktą slaptažodį, nepavyko atrakinti jūsų paskyros.</string>
+  <string name="account_export_end_network_title">Tinklo klaida</string>
+  <string name="account_export_end_error_title">Klaida</string>
+  <string name="account_export_end_error_message">Nepavyko eksportuoti paskyros. Įvyko nežinoma klaida.</string>
+  <string name="account_contact_me">Susisiekite su manimi per Ring !</string>
+  <string name="update_account">Atnaujinti paskyrą</string>
+  <string name="account_migration">Jūsų Ring paskyra gali būti atnaujinta.\nPrašome įvesti savo slaptažodį.</string>
+  <string name="ring_account">Ring paskyra</string>
+  <string name="ring_account_identity">Tapatybė</string>
+  <string name="account_migration_title_dialog">Paskyros perkėlimas</string>
+  <string name="account_update_needed">Reikalingas atnaujinimas</string>
+  <string name="account_creation_file_too_big">Failas per didelis</string>
+  <string name="account_cannot_read">Nepavyksta perskaityti %1$s</string>
+  <string name="account_cannot_be_found_title">Nepavyksta rasti paskyros</string>
+  <string name="account_no_network_title">Nepavyksta prisijungti prie tinklo</string>
+  <string name="account_device_added_title">Paskyros įrenginys pridėtas</string>
+  <string name="account_device_added_message">Jūs sėkmingai nusistatėte savo Ring paskyrą šiame įrenginyje.</string>
+  <string name="account_device_updated_title">Paskyros įrenginys atnaujintas</string>
+  <string name="account_device_updated_message">Jūs sėkmingai atnaujinote savo Ring paskyrą.</string>
+  <string name="account_link_button">Susieti šį įrenginį su paskyra</string>
+  <string name="account_import_title">Susieti su esama paskyra</string>
+  <string name="account_link_prompt_pin">Įveskite PIN</string>
+  <string name="account_wizard_title">Sveiki atvykę į </string>
+  <string name="account_new_button">Sukurti Ring paskyrą</string>
+  <string name="account_link_export_button">Susieti kitą įrenginį su šia paskyra</string>
+  <string name="account_end_export_button">užverti</string>
+  <!--Name registration-->
+  <string name="register_name_already_taken">Nepavyksta užregistruoti vardo: vardas jau užimtas.</string>
+  <string name="no_registered_name_for_account">Šiai paskyrai nerasta jokio registruoto vardo</string>
+  <string name="registered_username">Registruotas naudotojo vardas</string>
+  <string name="register_username">Registruoti viešąjį naudotojo vardą (eksperimentinis)</string>
+  <string name="username_already_taken">Naudotojo vardas jau užimtas</string>
+  <string name="invalid_username">Neteisingas naudotojo vardas</string>
+  <string name="looking_for_username_availability">Tikrinamas naudotojo vardo prieinamumas...</string>
+  <string name="account_status_connecting">Sujungiama</string>
+  <string name="account_status_connection_error">Ryšio klaida</string>
+  <string name="account_status_unknown">Nežinomas</string>
+  <!--Create account-->
+  <string name="account_creation_home">Sveiki atvykę į Ring</string>
+  <string name="account_creation_profile">Susikurkite savo profilį</string>
+  <!--Devices-->
+  <string name="revoke_device_wait_title">Prašome palaukti...</string>
+  <string name="rename_device_title">Pervadinti šį įrenginį</string>
+  <string name="rename_device_button">Pervadinti įrenginį</string>
+  <string name="account_device_name_empty">Įrenginio pavadinimas negali būti tuščias</string>
+  <string name="account_device_this_indicator">šis įrenginys</string>
+</resources>

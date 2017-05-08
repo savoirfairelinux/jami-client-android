@@ -46,6 +46,7 @@ VectMap.java
 tests/bin
 /.gradle/
 /app/build/
+/androidtv/build/
 /libringclient/build/
 /libringclient/src/main/java/cx/ring/daemon/Blob.java
 /libringclient/src/main/java/cx/ring/daemon/FloatVect.java
