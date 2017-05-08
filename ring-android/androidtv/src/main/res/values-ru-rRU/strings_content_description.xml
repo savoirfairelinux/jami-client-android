@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Быстрый вызов</string>
+</resources>
