@@ -17,6 +17,8 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="description">Ring é um software livre para comunicação universal que respeita as liberdades e privacidade de seus usuários.</string>
   <string name="credits">Créditos</string>
   <!--About dialog-->
+  <string name="developed_by">Desenvolvido por</string>
+  <string name="designed_by">Desenhado por</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Sem conectividade</string>
@@ -158,4 +160,6 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <!--Blacklist-->
   <string name="no_blocked_contact">0 contatos bloqueados</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Nenhuma solicitação de contato enviada</string>
+  <string name="contact_request_sent">Solicitação de contato enviada</string>
 </resources>
