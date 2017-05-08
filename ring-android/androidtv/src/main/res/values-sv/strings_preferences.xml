@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Nätverk</string>
+  <string name="pref_category_contacts">Kontakter</string>
+  <string name="pref_category_system">System</string>
+  <string name="pref_category_privacy">Sekretess</string>
+  <string name="pref_mobileData_title">Mobildata</string>
+  <string name="pref_mobileData_summary">Tillåt Ring på 3G/LTE-nätverk, som tillägg till WiFi</string>
+  <string name="pref_systemContacts_title">Använd systemkontakter</string>
+  <string name="pref_systemContacts_summary">Använd systemkontakter för att visa uppringaren info</string>
+  <string name="pref_systemDialer_title">Använd Ring till systemsamtal</string>
+  <string name="pref_systemDialer_summary">Använd om möjligt Ring för systemsamtal.</string>
+  <string name="pref_startOnBoot_title">Starta Ring vid systemstart</string>
+  <string name="pref_startOnBoot_summary">Kör Ring i bakgrunden när systemet startas</string>
+  <string name="pref_clearHistory_title">Rensa historik</string>
+  <string name="pref_clearHistory_summary">Ta bort all samtalshistorik. Denna åtgärd kan inte ångras.</string>
+</resources>
