@@ -278,3 +278,9 @@ ${NDK_TOOLCHAIN_PATH}/clang++ --shared -Wall -Wextra  ${ANDROID_APP_DIR}/libring
                                         ${STRIP_ARG} --std=c++11 \
                                         ${STATIC_LIBS_ALL} \
                                         -o ${LIBRING_JNI_DIR}/libring.so
+
+
+# Copying native libs to androidtv folder too
+LIBRING_JNI_ANDROIDTV_DIR=${ANDROID_APP_DIR}/androidtv/src/main/libs/
+mkdir -p ${LIBRING_JNI_ANDROIDTV_DIR}
+cp -r ${LIBRING_JNI_DIR} ${LIBRING_JNI_ANDROIDTV_DIR}
