@@ -1,22 +1,33 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Feedback </string>
+  <string name="report">&lt;u&gt;Trimite-ne un email&lt;/u&gt;</string>
+  <string name="section_license">Licența</string>
   <string name="sponsor_section">Ring este un program tip freeware, dezvoltat si sustinut de catre</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuie</string>
   <string name="version_section">Versiune</string>
   <string name="no_email_app_installed">Nu a fost gasita o aplicatie de email. Va rugam sa o instalati pentru a ne putea trimite un raport.</string>
+  <string name="no_browser_app_installed">Nu a fost găsită nicio aplicație de browser web, instalați una pentru a vedea această pagină</string>
   <string name="email_chooser_title">Trimite email folosind...</string>
+  <string name="website_chooser_title">Vizualizați site-ul folosind ...</string>
+  <string name="license">Acest software este furnizat \"ca atare\", fără garanții de orice natură. Pentru detalii, consultați Licență Publică Generală GNU versiunea 3 sau mai recentă&lt;/u&gt;</string>
+  <string name="credits">Credite</string>
   <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Suna</string>
   <string name="error_no_network">Nu exista conectivitate la retea</string>
   <!--AB menus-->
   <string name="ab_account_creation">Cont nou</string>
+  <string name="ab_action_chat">Mesaje text</string>
   <!--Left Drawer-->
   <!--Accessibility-->
+  <string name="drawer_open">Deschideți sertarul de navigare</string>
+  <string name="drawer_close">Închideți sertarul de navigare</string>
   <!--Sections-->
   <string name="menu_item_home">Acasă</string>
+  <string name="menu_item_contact_request">Solicitări de contact</string>
   <string name="menu_item_accounts">Gestionează conturile</string>
   <string name="menu_item_settings">Setari</string>
   <string name="menu_item_about">Despre Ring</string>

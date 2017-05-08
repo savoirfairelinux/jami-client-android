@@ -14,8 +14,11 @@
   <string name="website_chooser_title">Webサイトを表示…</string>
   <string name="license">このソフトウェアは、現状のまま提供され、いかなる種類の保証もありません。 詳細は以下を参照してください。
 &lt;u&gt;GNU General Public License version 3 以降&lt;/u&gt;</string>
+  <string name="description">Ring は、ユーザーの自由とプライバシーを尊重する普遍的なコミュニケーションのためのフリーソフトウェアです。</string>
   <string name="credits">クレジット</string>
   <!--About dialog-->
+  <string name="developed_by">開発者</string>
+  <string name="designed_by">デザイン</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">ネットワーク接続がありません</string>
@@ -156,4 +159,6 @@
   <!--Blacklist-->
   <string name="no_blocked_contact">0 のブロックした連絡先</string>
   <!--Smartlist-->
+  <string name="no_contact_request">連絡先のリクエストは送信していません</string>
+  <string name="contact_request_sent">連絡先のリクエストを送信しました</string>
 </resources>

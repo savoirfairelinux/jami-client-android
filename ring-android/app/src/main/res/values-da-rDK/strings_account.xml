@@ -3,9 +3,11 @@
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Slet</string>
   <string name="ic_advanced_menu">Avancerede indstillinger</string>
+  <string name="ic_blacklist_menu">Blokerede kontakter</string>
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Tilføj Ring-konto</string>
   <string name="add_sip_account_title">Tilføj SIP-konto</string>
+  <string name="ring_account_default_name">Ring-konto %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Værtsnavn</string>
   <string name="prompt_username">Brugernavn</string>
@@ -33,6 +35,13 @@ Du kan rette din konto senere</string>
   <string name="empty_account_list">Ingen konto registreret</string>
   <string name="normal_accounts_titles">Konti</string>
   <string name="normal_devices_titles">Kendte enheder som er tilknyttet denne Ring-konto</string>
+  <string name="account_device_revoke">Tilbagetræk enheden</string>
+  <string name="account_device_revocation_success_title">Lykkedes</string>
+  <string name="account_device_revocation_success">Enheden er nu trukket tilbage!</string>
+  <string name="account_device_revocation_error_title">Kan ikke tilbagetrække enheden</string>
+  <string name="account_device_revocation_wrong_password">Forkert kodeord.</string>
+  <string name="account_device_revocation_unknown_device">Ukendt enhed.</string>
+  <string name="account_device_revocation_error_unknown">Ukendt fejl.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Generelt</string>
   <string name="account_basic_category">Almindelige Indstillinger</string>
@@ -58,6 +67,7 @@ Du kan rette din konto senere</string>
   <string name="account_video_enable">Aktiver Video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanceret</string>
+  <string name="account_dht_public_in_calls_label">Tillad alle opkald/beskeder</string>
   <string name="account_registration_exp_label">Registreringsudløb</string>
   <string name="account_local_interface_label">Lokalt Interface</string>
   <string name="account_local_port_label">Lokal Port</string>
@@ -66,7 +76,7 @@ Du kan rette din konto senere</string>
   <string name="account_turn_enable_label">Brug TURN</string>
   <string name="account_turn_server_label">TURN-server</string>
   <string name="account_turn_username_label">TURN-brugernavn</string>
-  <string name="account_turn_password_label">TURN-password</string>
+  <string name="account_turn_password_label">TURN-kodeord</string>
   <string name="account_published_same_as_local_label">Publicer samme som lokale</string>
   <string name="account_published_port_label">Publiceret Port</string>
   <string name="account_published_address_label">Publiceret Adresse</string>
@@ -160,6 +170,7 @@ Du kan rette din konto senere</string>
   <string name="register_username">Registrer offentligt brugernavn (eksperimentel funktionalitet)</string>
   <string name="username_already_taken">Brugernavn er allerede taget</string>
   <string name="invalid_username">Ugyldigt brugernavn</string>
+  <string name="looking_for_username_availability">Tjekker efter om brugernavnet er ledigt...</string>
   <string name="account_status_connecting">Forbinder</string>
   <string name="account_status_connection_error">Forbindelsesfejl</string>
   <string name="account_status_online">Forbundet</string>
@@ -172,6 +183,17 @@ Du kan rette din konto senere</string>
   <string name="account_link_title">Tilknyt denne enhed</string>
   <string name="account_sip_cannot_be_registered">Kan ikke registrere konto</string>
   <!--Devices-->
+  <string name="account_revoke_device_hint">Indtast kodeord for at bekræfte</string>
   <string name="enter_password">Indtast kodeord</string>
+  <string name="revoke_device_title">Tilbagetræk enheden</string>
+  <string name="revoke_device_message">Er du sikker på at du vil tilbagetrække %1$s ?</string>
   <string name="revoke_device_wait_title">Vent venligt...</string>
+  <string name="revoke_device_wait_message">Tilbagetrækker enhed</string>
+  <string name="rename_device_title">Omdøb denne enhed</string>
+  <string name="rename_device_message">Vælg et nyt navn til denne enhed i din Ring-konto</string>
+  <string name="rename_device_button">Omdøb enhed</string>
+  <string name="account_rename_device_hint">Vælg nyt enhedsnavn</string>
+  <string name="account_device_name_empty">Enhedsnavn kan ikke være tom</string>
+  <string name="account_device_this_indicator">denne enhed</string>
+  <string name="account_disabled_indicator">deaktiveret</string>
 </resources>

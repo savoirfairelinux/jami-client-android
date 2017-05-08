@@ -195,4 +195,5 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_rename_device_hint">Wählen Sie einen neuen Gerätenamen</string>
   <string name="account_device_name_empty">Geräte darf nicht leer sein</string>
   <string name="account_device_this_indicator">dieses Gerät</string>
+  <string name="account_disabled_indicator">deaktiviert</string>
 </resources>
