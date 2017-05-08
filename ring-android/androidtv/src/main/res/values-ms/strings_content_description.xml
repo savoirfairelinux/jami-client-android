@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings for xml content description of images-->
+  <string name="contact_quick_call_description">Panggilan Pantas</string>
+  <string name="contact_picture_description">Gambar Kenalan</string>
+  <string name="dial_numeric_pad">Pad dail bernombor</string>
+</resources>

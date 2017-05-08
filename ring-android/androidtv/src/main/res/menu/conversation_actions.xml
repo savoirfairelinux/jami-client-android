@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/conv_action_videocall"
+        android:icon="@drawable/ic_videocam_white"
+        android:title="@string/ab_action_video_call"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/conv_action_audiocall"
+        android:icon="@drawable/ic_call_white"
+        android:title="@string/ab_action_audio_call"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuitem_addcontact"
+        android:icon="@drawable/ic_person_add_white"
+        android:title="@string/ab_action_contact_add"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menuitem_copy_content"
+        android:icon="@drawable/ic_content_copy_white"
+        android:title="@string/conversation_action_copy_peer_number"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuitem_delete"
+        android:icon="@drawable/ic_delete_white"
+        android:title="@string/conversation_action_delete_this"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuitem_block"
+        android:icon="@drawable/ic_block_white"
+        android:title="@string/conversation_action_block_this"
+        app:showAsAction="ifRoom" />
+
+</menu>
