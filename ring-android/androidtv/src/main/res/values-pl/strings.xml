@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="sponsor_section">Ring jest wolnym oprogramowaniem stworzonym przez</string>
+  <string name="copyright_section">Prawa autorskie</string>
+  <string name="contribute_section">Współpracuj</string>
+  <string name="version_section">Wersja</string>
+  <string name="no_email_app_installed">Nie znaleziono aplikacji e-mail. Zainstaluj jedną aby wysłać nam raport.</string>
+  <string name="email_chooser_title">Wyślij e-mail używając...</string>
+  <string name="credits">Podziękowania</string>
+  <!--About dialog-->
+  <!--RingActivity-->
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">Brak połączenia z siecią</string>
+  <string name="error_mobile_network_available_but_disabled">Proszę w ustawieniach udzielić dostępu do sieci komórkowej.</string>
+  <!--AB menus-->
+  <string name="ab_account_creation">Nowe konto</string>
+  <string name="ab_action_chat">Tekstowe powiadamiania</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Otwórz szufladę nawigacyjną</string>
+  <string name="drawer_close">Zamknij szufladę nawigacyjną</string>
+  <!--Sections-->
+  <string name="menu_item_home">Ekran główny</string>
+  <string name="menu_item_accounts">Ustawienia kont</string>
+  <string name="menu_item_settings">Ustawienia</string>
+  <string name="menu_item_about">o Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Wykręć numer</string>
+  <!--History Fragment-->
+  <string name="hist_replay_button">Powtórz</string>
+  <string name="hist_replay_button_stop">Zatrzymaj</string>
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Rozmowa</item>
+    <item quantity="few">%d Rozmowy</item>
+    <item quantity="many">%d Rozmowy</item>
+    <item quantity="other">%d Rozmowy</item>
+  </plurals>
+  <string name="home_transfer_complet">Przełaczanie skończone</string>
+  <!--ContactList Fragment-->
+  <string name="no_contact_found">Brak kontaktu</string>
+  <string name="starred_contacts_title">Ulubione kontakty</string>
+  <string name="searchbar_hint">Wpisz nazwisko albo numer telefonu...</string>
+  <string name="choose_number">Wybierz numer</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <string name="transfer_to_another_call">Przełaczenie do innego bieżącego połączenia:</string>
+  <string name="transfer_no_other_call">Żadne inne połączenia nie są oczekiwane</string>
+  <string name="transfer_type_number">Wpisz numer do którego chcesz się przełączyć</string>
+  <!--Notifications-->
+  <string name="notif_incoming_call_title">Połączenie przychodzące od %1$s</string>
+  <string name="notif_incoming_call">Połączenie przychodzące</string>
+  <string name="notif_outgoing_call_title">Połączenie wychodzące do %1$s</string>
+  <string name="notif_outgoing_call">Połączenie wychodzące</string>
+  <string name="notif_current_call_title">Aktualna rozmowa z %1$s</string>
+  <string name="notif_current_call">Aktualna rozmowa</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Ty:</string>
+  <string name="action_call_attended_transfer">Ogłoszone przełaczenie</string>
+  <string name="action_call_conference">Konferencja</string>
+  <string name="action_call_hangup">Odłoż słuchawkę</string>
+  <string name="ongoing_call">Trwa połączenie</string>
+  <string name="hist_in_call">Czas przychodzączego połączenia: %1$s</string>
+  <string name="hist_out_call">Czas wychodzączego połączenia: %1$s</string>
+  <string name="start_error_title">Ring nie może się uruchomić!</string>
+  <string name="start_error_mic_required">Do działania Ring potrzebuje zezwolenia na wykorzystanie mikrofonu.</string>
+  <string name="action_call_accept">Odbierz</string>
+  <string name="action_call_decline">Odrzuć</string>
+  <string name="ab_action_speakerphone">Włącz głośnik</string>
+  <string name="ab_action_contact_add">Dodaj do kontaków</string>
+  <string name="ab_action_contact_add_question">Czy dodać do kontkatów?</string>
+  <string name="ab_action_audio_call">Połączenie głosowe</string>
+  <string name="ab_action_video_call">Połączenie wideo</string>
+  <string name="share_via">Wyślij przez</string>
+  <string name="write_a_message">Napisz wiadomość</string>
+  <string name="scan_qr">Zeskanuj kod QR</string>
+  <string name="ab_action_flipcamera">Zamień kamerę</string>
+  <!--Text messages-->
+  <string name="send_message">Wyślij wiadomość</string>
+  <string name="message_sending">Trwa wysyłanie wiadomości...</string>
+  <string name="time_just_now">W tej chwili</string>
+  <string name="permission_read_denied">Aplikacja nie może odczytać pamięci. Stąd, nie może funkcjonować prawidłowo. Proszę rozważyć przydzielenie jej uprawnień</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Uprawnienia do aparatu</string>
+  <string name="permission_dialog_camera_message">Wideorozmowa wymaga przyznania uprawnień dla aparatu. Proszę rozważyć odblokowanie jej.</string>
+  <string name="ringtone_error_title">Błąd</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring potrzebuje pozwolenia \"Kontakty\" żeby odblokować tą funkcję. Proszę udzielić go.</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring potrzebuje pozwolenie \"Zapisywanie dziennika połączeń\" żeby odblokować tą funkcję. Proszę udzielić go.</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Zeskanuj kod QR konta, które chcesz dodać.</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Wyczyścić historię?</string>
+  <string name="clear_history_dialog_message">Tego działania nie można cofnąć.</string>
+  <string name="clear_history_completed">Historia została wyczyszczona.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Usuń tę rozmowę</string>
+  <string name="conversation_action_delete_this_title">Czy usunąć tę rozmowę?</string>
+  <string name="conversation_action_delete_this_message">Tego działania nie można cofnąć.</string>
+  <string name="conversation_action_copy_peer_number">Skopiuj numer</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s skopiowany do schowka</string>
+  <string name="conversation_action_select_peer_number">Wybierz numer</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Dodać %1$s ?</string>
+  <string name="prompt_new_password">Nowe hasło</string>
+  <string name="account_create_title">Stwórz konto Ring</string>
+  <string name="wizard_next">Następne</string>
+  <!--MenuHeaderView-->
+  <string name="unknown">Nieznane</string>
+  <!--Share fragment-->
+  <string name="generic_error_migration">Błąd</string>
+  <!--Pending contact requests-->
+  <string name="accept">Akceptuj</string>
+  <string name="refuse">Odmów</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Wyślij</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
+</resources>

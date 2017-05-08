@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	wget \
 	yasm \
 	zip \
+	locales \
 	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
 
 # Android SDK tools
@@ -52,7 +53,9 @@ ENV ANDROID_DEPS=\
  platforms;android-25 \
  extras;android;m2repository \
  extras;google;m2repository \
+ extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2 \
  ndk-bundle'
+
 RUN (while sleep 1; do echo "y"; done) | sdkmanager $ANDROID_DEPS
 ENV ANDROID_SDK=/opt/android-sdk
 ENV ANDROID_NDK=/opt/android-sdk/ndk-bundle

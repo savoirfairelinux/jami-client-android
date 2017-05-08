@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+
+Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+Author: Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+-->
+<resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_incoming">正在呼叫</string>
+    <string name="call_human_state_connecting">正在连接</string>
+    <string name="call_human_state_ringing">正在通话</string>
+    <string name="call_human_state_current">正在通话</string>
+    <string name="call_human_state_hungup">结束</string>
+    <string name="call_human_state_busy">忙碌</string>
+    <string name="call_human_state_failure">失败</string>
+    <string name="call_human_state_hold">等待</string>
+    <string name="call_human_state_unhold">取消等待</string>
+    <string name="call_human_state_over">已结束</string>
+    <string name="call_human_state_none">无</string>
+    <!-- Conferences -->
+    <string name="conference_human_state_active_attached">已连接并在线</string>
+    <string name="conference_human_state_active_detached">已连接但离开</string>
+    <string name="conference_human_state_active_attached_rec">已连接并在线，录音</string>
+    <string name="conference_human_state_active_detached_rec">已连接但离开，录音</string>
+    <string name="conference_human_state_hold">等待</string>
+    <string name="conference_human_state_hold_rec">暂停录音</string>
+    <string name="conference_human_state_default">无</string>
+</resources>
