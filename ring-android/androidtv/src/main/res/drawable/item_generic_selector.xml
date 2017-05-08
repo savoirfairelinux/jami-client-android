@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true"><shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <solid android:color="@color/darker_gray" />
+
+            <padding android:bottom="@dimen/padding_large" android:left="@dimen/padding_large" android:right="@dimen/padding_large" android:top="@dimen/padding_large" />
+        </shape></item>
+    <item android:state_focused="true"><shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <solid android:color="@color/light" />
+
+            <padding android:bottom="@dimen/padding_large" android:left="@dimen/padding_large" android:right="@dimen/padding_large" android:top="@dimen/padding_large" />
+        </shape></item>
+    <item><shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <solid android:color="@color/light" />
+
+            <padding android:bottom="@dimen/padding_large" android:left="@dimen/padding_large" android:right="@dimen/padding_large" android:top="@dimen/padding_large" />
+        </shape></item>
+
+</selector>
