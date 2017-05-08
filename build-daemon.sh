@@ -268,6 +268,7 @@ LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
 
 echo "Building Ring JNI library for Android to ${LIBRING_JNI_DIR}"
 mkdir -p ${LIBRING_JNI_DIR}
+
 ${NDK_TOOLCHAIN_PATH}/clang++ \
                 --shared \
                 -Wall -Wextra \
@@ -283,3 +284,8 @@ ${NDK_TOOLCHAIN_PATH}/clang++ \
                 ${STATIC_LIBS_ALL} \
                 ${STRIP_ARG} --std=c++11 \
                 -o ${LIBRING_JNI_DIR}/libring.so
+
+# Copying native libs to androidtv folder too
+LIBRING_JNI_ANDROIDTV_DIR=${ANDROID_APP_DIR}/androidtv/src/main/libs/
+mkdir -p ${LIBRING_JNI_ANDROIDTV_DIR}
+cp -r ${LIBRING_JNI_DIR} ${LIBRING_JNI_ANDROIDTV_DIR}
