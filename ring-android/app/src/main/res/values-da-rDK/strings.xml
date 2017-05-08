@@ -17,6 +17,8 @@
   <string name="description">Ring er fri software til universel kommunikation som respekterer sine brugeres frihed og privatliv.</string>
   <string name="credits">Krediteringer</string>
   <!--About dialog-->
+  <string name="developed_by">Udviklet af</string>
+  <string name="designed_by">Designet af</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ingen netværksforbindelse</string>
@@ -30,9 +32,11 @@
   <string name="drawer_close">Luk navigationsskuffen</string>
   <!--Sections-->
   <string name="menu_item_home">Hjem</string>
+  <string name="menu_item_contact_request">Kontaktforespørgsler</string>
   <string name="menu_item_accounts">Håndtér konti</string>
   <string name="menu_item_settings">Indstillinger</string>
   <string name="menu_item_share">Del min kontakt</string>
+  <string name="menu_item_blacklist">Blokerede kontakter</string>
   <string name="menu_item_about">Om Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Indtast et nummer</string>
@@ -58,6 +62,8 @@
   <string name="transfer_no_other_call">Ikke andre opkald i kø</string>
   <string name="transfer_type_number">Tast nummer at overføre til:</string>
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Ubesvarede indgående opkald</string>
+  <string name="notif_missed_outgoing_call">Ubesvarede udgående opkald</string>
   <string name="notif_incoming_call_title">Indgående opkald fra %1$s</string>
   <string name="notif_incoming_call">Indgående opkald</string>
   <string name="notif_outgoing_call_title">Udgående opkald til %1$s</string>
@@ -114,6 +120,7 @@
   <string name="conversation_action_copy_peer_number">Kopiér nummer</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopieret til udklipsholder</string>
   <string name="conversation_action_select_peer_number">Vælg et nummer</string>
+  <string name="conversation_action_block_this">Blokér denne kontakt</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Tilføj %1$s ?</string>
   <string name="prompt_new_password">Nyt kodeord</string>
@@ -141,8 +148,18 @@
   <!--Pending contact requests-->
   <string name="accept">Accepter</string>
   <string name="refuse">Afvis</string>
+  <string name="block">Blokér</string>
+  <string name="contact_request_title">Afventende kontaktforespørgsler</string>
+  <string name="contact_request_msg">Du har %1$s ventende forespørgsler</string>
+  <string name="contact_request_account">For %1$s</string>
+  <string name="no_requests">0 kontaktforespørgsler</string>
   <!--Send contact requests-->
   <string name="send_request_button">Send</string>
+  <string name="send_request_title">Send en kontaktforespørgsel</string>
+  <string name="send_request_msg">Du skal sende en kontaktforespørgsel for at kommunikere med denne bruger. Så længe kontakten ikke har accepteret forespørgslen, kan du afsende beskeder men kontakten kan ikke læse læse dem. </string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 blokerede kontakter</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Ingen kontaktforespørgsler afsendt</string>
+  <string name="contact_request_sent">Kontaktforespørgsel afsendt</string>
 </resources>

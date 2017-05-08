@@ -17,6 +17,8 @@
   <string name="description">Ring — это свободная программа для всеобщей связи, уважающая свободы и конфиденциальность ее пользователей.</string>
   <string name="credits">Благодарности</string>
   <!--About dialog-->
+  <string name="developed_by">Разработано</string>
+  <string name="designed_by">Оформление</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Нет подключения к сети</string>
@@ -30,9 +32,11 @@
   <string name="drawer_close">Закрыть панель навигации</string>
   <!--Sections-->
   <string name="menu_item_home">Домой</string>
+  <string name="menu_item_contact_request">Запросы на добавление в контакты</string>
   <string name="menu_item_accounts">Управление аккаунтами</string>
   <string name="menu_item_settings">Настройки</string>
   <string name="menu_item_share">Поделиться моим контактом</string>
+  <string name="menu_item_blacklist">Заблокированные контакты</string>
   <string name="menu_item_about">О программе</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Набрать номер</string>
@@ -47,6 +51,7 @@
     <item quantity="many">%d диалогов</item>
     <item quantity="other">%d диалогов</item>
   </plurals>
+  <string name="home_transfering">Передача %1$s из %2$s</string>
   <string name="home_transfer_complet">Передача завершена</string>
   <!--ContactList Fragment-->
   <string name="no_contact_found">Контактов не найдено</string>
@@ -59,6 +64,8 @@
   <string name="transfer_no_other_call">Нет ожидающих вызовов</string>
   <string name="transfer_type_number">Тип номера для передачи:</string>
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Пропущенный входящий вызов</string>
+  <string name="notif_missed_outgoing_call">Пропущенный исходящий вызов</string>
   <string name="notif_incoming_call_title">Входящий вызов от %1$s</string>
   <string name="notif_incoming_call">Входящий вызов</string>
   <string name="notif_outgoing_call_title">Исходящий вызов к %1$s</string>
@@ -82,6 +89,7 @@
   <string name="ab_action_contact_add_question">Добавить в контакты?</string>
   <string name="ab_action_audio_call">Голосовой вызов</string>
   <string name="ab_action_video_call">Видео звонок</string>
+  <string name="ab_action_change_screen_orientation">Изменить ориентацию экрана</string>
   <string name="share_via">Отправить с помощью</string>
   <string name="write_a_message">Написать сообщение</string>
   <string name="scan_qr">Сканировать QR код</string>
@@ -114,6 +122,7 @@
   <string name="conversation_action_copy_peer_number">Копировать номер</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s скопировано в буфер обмена</string>
   <string name="conversation_action_select_peer_number">Выбрать номер</string>
+  <string name="conversation_action_block_this">Заблокировать этот контакт</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
@@ -127,8 +136,10 @@
   <string name="wizard_back">Назад</string>
   <!--MenuHeaderView-->
   <string name="profile">Мой профиль</string>
+  <string name="profile_message_warning">Ваш профиль доступен только вашим контактам</string>
   <string name="open_the_gallery">Открыть галерею</string>
   <string name="take_a_photo">Сделать фото</string>
+  <string name="profile_name_hint">Введите ваше имя (опционально)</string>
   <string name="unknown">Неизвестно</string>
   <!--Share fragment-->
   <string name="share_message">Отсканируйте этот QR-код встроенным сканером приложения Ring, которое хочет с вами связаться.</string>
@@ -139,8 +150,18 @@
   <!--Pending contact requests-->
   <string name="accept">Принять</string>
   <string name="refuse">Отклонить</string>
+  <string name="block">Заблокировать</string>
+  <string name="contact_request_title">Ожидающий запрос на добавление в контакты</string>
+  <string name="contact_request_msg">У вас %1$s ожидающих запросов</string>
+  <string name="contact_request_account">Для %1$s</string>
+  <string name="no_requests">0 запросов на добавление в контакты</string>
   <!--Send contact requests-->
   <string name="send_request_button">Отправить</string>
+  <string name="send_request_title">Отправить запрос на добавление в контакты</string>
+  <string name="send_request_msg">Вы должны отправить запрос на добавление в контакты, чтобы связаться с этим пользователем. Пока ваш контакт не примет запрос, вы можете отправлять сообщения, но ваш контакт не сможет их прочитать.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 заблокированных контактов</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Нет отправленных запросов на добавление в контакты</string>
+  <string name="contact_request_sent">Запрос на добавление в контакты отправлен</string>
 </resources>
