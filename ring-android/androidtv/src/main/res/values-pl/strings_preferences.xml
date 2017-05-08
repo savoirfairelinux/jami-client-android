@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Sieć</string>
+  <string name="pref_category_contacts">Kontakty</string>
+  <string name="pref_category_system">System</string>
+  <string name="pref_category_privacy">Prywatność</string>
+  <string name="pref_mobileData_title">Dane mobilne</string>
+  <string name="pref_mobileData_summary">Pozwól Ring na sieciach 3G / LTE poza Wi-Fi</string>
+  <string name="pref_systemContacts_title">Użyj kontakty z systemu</string>
+  <string name="pref_systemContacts_summary">Użyj kontakty z systemu aby pokazać detale tego który dzwoni</string>
+  <string name="pref_systemDialer_title">Użyj Ring jako zastępstwo dla rozmow które zazwyczaj idą przez system </string>
+  <string name="pref_systemDialer_summary">Użyj Ring żeby zastąpić rozmowy które zazwyczaj idą przez system kiedy mozliwe</string>
+  <string name="pref_startOnBoot_title">Uruchom Ring przy Starcie</string>
+  <string name="pref_startOnBoot_summary">Uruchom Ring w tle podczas uruchomienia systemu.</string>
+  <string name="pref_clearHistory_title">Wyczyść historię</string>
+  <string name="pref_clearHistory_summary">Wyczyść całą historię konwersacji. Ta czynność nie może być cofnięta.</string>
+</resources>
