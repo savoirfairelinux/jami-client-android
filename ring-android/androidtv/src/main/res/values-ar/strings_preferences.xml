@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">الشبكة</string>
+  <string name="pref_category_contacts">الاتصالات</string>
+  <string name="pref_category_system">النظام</string>
+  <string name="pref_category_privacy">الخصوصية</string>
+  <string name="pref_mobileData_title">بيانات الهاتف</string>
+  <string name="pref_mobileData_summary">السماح لـ Ring على شبكات 3G/LTE بالإضافة لـ Wi-Fi</string>
+  <string name="pref_systemContacts_title">استخدام جهات إتصال النظام</string>
+  <string name="pref_systemContacts_summary">استخدام جهات إتصال النظام لإظهار تفاصيل المتصل</string>
+  <string name="pref_startOnBoot_title">بدأ Ring عند بدأ التشغيل</string>
+  <string name="pref_startOnBoot_summary">تشغيل Ring في الخلفية عندما يبدأ النظام</string>
+  <string name="pref_clearHistory_title">مسح السجل</string>
+  <string name="pref_clearHistory_summary">مسح كل سجل المحادثات، هذا الإختيار لايمكن التراجع عنه</string>
+</resources>

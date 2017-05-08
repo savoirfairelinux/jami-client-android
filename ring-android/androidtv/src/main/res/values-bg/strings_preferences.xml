@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string name="pref_category_network">Мрежа</string>
+  <string name="pref_category_contacts">Контакти</string>
+  <string name="pref_category_system">Система</string>
+  <string name="pref_category_privacy">Поверителност</string>
+  <string name="pref_mobileData_title">Мобилни данни</string>
+  <string name="pref_mobileData_summary">Позволяване на работата на Ring на мрежи от вида 3G/LTE, в допълнение към безжичните мрежи</string>
+  <string name="pref_systemContacts_title">Използване на системните контакти</string>
+  <string name="pref_systemContacts_summary">Използване на системните контакти за показване на информация при обаждане.</string>
+  <string name="pref_systemDialer_title">Системни разговори с Ring</string>
+  <string name="pref_systemDialer_summary">Използване на Ring за системните разговори, когато е възможно.</string>
+  <string name="pref_startOnBoot_title">Пускане на Ring при включване</string>
+  <string name="pref_startOnBoot_summary">Пускане на Ring на заден фон когато системата се включва.</string>
+  <string name="pref_clearHistory_title">Изчистване на историята</string>
+  <string name="pref_clearHistory_summary">Изчистване на цялата история на разговорите. Това действие е необратимо.</string>
+</resources>
