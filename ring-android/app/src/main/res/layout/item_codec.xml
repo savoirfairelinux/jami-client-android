@@ -24,52 +24,40 @@ along with this program; if not, write to the Free Software
     android:layout_height="?android:attr/listPreferredItemHeight"
     tools:context=".client.AccountEditionActivity">
 
-    <ImageView
-            android:id="@+id/drag_handle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="16dp"
-            android:src="@drawable/ic_reorder_black"
-        android:layout_alignParentStart="true" />
-
     <TextView
         android:id="@+id/codec_name"
         android:layout_width="wrap_content"
         android:layout_height="?android:attr/listPreferredItemHeight"
-        android:layout_toRightOf="@+id/drag_handle"
-        android:layout_marginLeft="32dp"
+        android:layout_marginLeft="16dp"
         android:gravity="center_vertical"
-        android:textSize="16sp"
-        android:textColor="@color/text_color_primary"
         android:text="H.264"
-        android:layout_toEndOf="@id/drag_handle" />
+        android:textColor="@color/text_color_primary"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/codec_samplerate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/codec_name"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_toEndOf="@id/codec_name"
         android:layout_toRightOf="@+id/codec_name"
         android:gravity="center_vertical"
-        android:textSize="12sp"
         android:text="32000"
         android:textColor="@color/text_color_secondary"
-        android:layout_marginLeft="16dp"
-        android:layout_alignBaseline="@+id/codec_name"
-        android:layout_toEndOf="@id/codec_name" />
+        android:textSize="12sp" />
 
     <CheckBox
         android:id="@+id/codec_checked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:clickable="false"
-        android:focusable="false"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_alignParentEnd="true" />
+        android:clickable="false"
+        android:focusable="false" />
 
 </RelativeLayout>

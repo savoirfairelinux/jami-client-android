@@ -40,6 +40,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -62,7 +63,6 @@ import cx.ring.services.AccountService;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
-import cx.ring.views.dragsortlv.DragSortListView;
 
 public class AccountsManagementFragment extends Fragment implements HomeActivity.Refreshable, Observer<ServiceEvent> {
     static final String TAG = AccountsManagementFragment.class.getSimpleName();
@@ -75,22 +75,10 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
     AccountService mAccountService;
 
     @BindView(R.id.accounts_list)
-    DragSortListView mDnDListView;
+    ListView mDnDListView;
 
     @BindView(R.id.empty_account_list)
     View mEmptyView;
-
-    private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
-        @Override
-        public void drop(int from, int to) {
-            if (from != to) {
-                Account item = mAccountsAdapter.getItem(from);
-                mAccountsAdapter.remove(item);
-                mAccountsAdapter.insert(item, to);
-                mAccountService.setAccountOrder(mAccountsAdapter.getAccountOrder());
-            }
-        }
-    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,7 +104,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
         setHasOptionsMenu(true);
 
         super.onViewCreated(view, savedInstanceState);
-        mDnDListView.setDropListener(onDrop);
     }
 
     @OnItemClick(R.id.accounts_list)
@@ -225,16 +212,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
             mContext = c;
         }
 
-        public void insert(Account item, int to) {
-            accounts.add(to, item);
-            notifyDataSetChanged();
-        }
-
-        public void remove(Account item) {
-            accounts.remove(item);
-            notifyDataSetChanged();
-        }
-
         @Override
         public boolean hasStableIds() {
             return true;
@@ -265,7 +242,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
                 rowView = inflater.inflate(R.layout.item_account_pref, parent, false);
 
                 entryView = new AccountView();
-                entryView.handle = (ImageView) rowView.findViewById(R.id.drag_handle);
                 entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
                 entryView.host = (TextView) rowView.findViewById(R.id.account_host);
                 entryView.loadingIndicator = rowView.findViewById(R.id.loading_indicator);
@@ -300,7 +276,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
                     mAccountService.setAccountDetails(item.getAccountID(), item.getDetails());
                 }
             });
-            entryView.handle.setVisibility(View.VISIBLE);
 
             if (item.isEnabled()) {
                 if (item.isTrying()) {
@@ -340,7 +315,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
          * *******************
          */
         public class AccountView {
-            public ImageView handle;
             public TextView alias;
             public TextView host;
             public View loadingIndicator;
@@ -353,14 +327,6 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
             accounts.clear();
             accounts.addAll(results);
             notifyDataSetChanged();
-        }
-
-        private List<String> getAccountOrder() {
-            ArrayList<String> order = new ArrayList<>(accounts.size());
-            for (Account acc : accounts) {
-                order.add(acc.getAccountID());
-            }
-            return order;
         }
     }
 
