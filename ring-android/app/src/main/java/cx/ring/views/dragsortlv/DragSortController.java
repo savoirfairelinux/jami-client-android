@@ -122,26 +122,6 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
     private int mPositionX;
 
     /**
-     * Calls {@link #DragSortController(DragSortListView, int)} with a
-     * 0 drag handle id, FLING_RIGHT_REMOVE remove mode,
-     * and ON_DOWN drag init. By default, sorting is enabled, and
-     * removal is disabled.
-     *
-     * @param dslv The DSLV instance
-     */
-    public DragSortController(DragSortListView dslv) {
-        this(dslv, 0, ON_DOWN, FLING_REMOVE);
-    }
-
-    public DragSortController(DragSortListView dslv, int dragHandleId, int dragInitMode, int removeMode) {
-        this(dslv, dragHandleId, dragInitMode, removeMode, 0);
-    }
-
-    public DragSortController(DragSortListView dslv, int dragHandleId, int dragInitMode, int removeMode, int clickRemoveId) {
-        this(dslv, dragHandleId, dragInitMode, removeMode, clickRemoveId, 0);
-    }
-
-    /**
      * By default, sorting is enabled, and removal is disabled.
      *
      * @param dslv The DSLV instance
@@ -164,10 +144,6 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
     }
 
 
-    public int getDragInitMode() {
-        return mDragInitMode;
-    }
-
     /**
      * Set how a drag is initiated. Needs to be one of
      * {@link ON_DOWN}, {@link ON_DRAG}, or {@link ON_LONG_PRESS}.
@@ -189,10 +165,6 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
         mSortEnabled = enabled;
     }
 
-    public boolean isSortEnabled() {
-        return mSortEnabled;
-    }
-
     /**
      * One of {@link CLICK_REMOVE}, {@link FLING_RIGHT_REMOVE},
      * {@link FLING_LEFT_REMOVE},
@@ -202,49 +174,11 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
         mRemoveMode = mode;
     }
 
-    public int getRemoveMode() {
-        return mRemoveMode;
-    }
-
     /**
      * Enable/Disable item removal without affecting remove mode.
      */
     public void setRemoveEnabled(boolean enabled) {
         mRemoveEnabled = enabled;
-    }
-
-    public boolean isRemoveEnabled() {
-        return mRemoveEnabled;
-    }
-
-    /**
-     * Set the resource id for the View that represents the drag
-     * handle in a list item.
-     *
-     * @param id An android resource id.
-     */
-    public void setDragHandleId(int id) {
-        mDragHandleId = id;
-    }
-
-    /**
-     * Set the resource id for the View that represents the fling
-     * handle in a list item.
-     *
-     * @param id An android resource id.
-     */
-    public void setFlingHandleId(int id) {
-        mFlingHandleId = id;
-    }
-
-    /**
-     * Set the resource id for the View that represents click
-     * removal button.
-     *
-     * @param id An android resource id.
-     */
-    public void setClickRemoveId(int id) {
-        mClickRemoveId = id;
     }
 
     /**
@@ -312,7 +246,7 @@ public class DragSortController extends SimpleFloatViewManager implements View.O
      * Overrides to provide fading when slide removal is enabled.
      */
     @Override
-    public void onDragFloatView(View floatView, Point position, Point touch) {
+    public void onDragFloatView(Point position) {
 
         if (mRemoveEnabled && mIsRemoving) {
             mPositionX = position.x;

@@ -365,11 +365,6 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         return (NOTIF_TRUST_REQUEST + uri.getRawUriString()).hashCode();
     }
 
-    private int getCallNotificationId(SipCall call) {
-        cx.ring.model.Uri uri = new cx.ring.model.Uri(call.getContact().getDisplayName());
-        return (NOTIF_CALL + uri.getRawUriString()).hashCode();
-    }
-
     private int getTextNotificationId(CallContact contact) {
         cx.ring.model.Uri uri = new cx.ring.model.Uri(contact.getDisplayName());
         return (NOTIF_MSG + uri.getRawUriString()).hashCode();

@@ -80,7 +80,7 @@ public class ContactDetailsTask implements Runnable {
     }
 
     public interface DetailsLoadedCallback {
-        void onDetailsLoaded(Bitmap bmp, String formattedName);
+        void onDetailsLoaded(String formattedName);
     }
 
     public ContactDetailsTask(Context context, ImageView element, CallContact item) {
@@ -187,7 +187,7 @@ public class ContactDetailsTask implements Runnable {
             mImageViewWeakRef.clear();
             if (v == null) {
                 for (DetailsLoadedCallback cb : mCallbacks) {
-                    cb.onDetailsLoaded(externalBMP, formattedName);
+                    cb.onDetailsLoaded(formattedName);
                 }
             } else {
                 v.post(new Runnable() {

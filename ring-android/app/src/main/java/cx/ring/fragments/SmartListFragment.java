@@ -249,22 +249,18 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         return inflatedView;
     }
 
-    public void refresh() {
-        mSmartListPresenter.refresh();
-    }
-
     @OnClick(R.id.newcontact_element)
-    void newContactClicked(View v) {
+    void newContactClicked() {
         mSmartListPresenter.newContactClicked();
     }
 
     @OnClick(R.id.quick_call)
-    void quickCallClicked(View v) {
+    void quickCallClicked() {
         mSmartListPresenter.quickCallClicked();
     }
 
     @OnClick(R.id.newconv_fab)
-    void fabButtonClicked(View v) {
+    void fabButtonClicked() {
         mSmartListPresenter.fabButtonClicked();
     }
 

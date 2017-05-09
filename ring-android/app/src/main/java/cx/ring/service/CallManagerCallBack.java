@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import cx.ring.daemon.IntegerMap;
 import cx.ring.model.ServiceEvent;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -17,11 +16,9 @@ public class CallManagerCallBack implements Observer<ServiceEvent> {
 
     static public final String INCOMING_CALL = "incoming-call";
 
-    static public final String VCARD_COMPLETED = "vcard-completed";
     static public final String CONF_CREATED = "conf_created";
     static public final String CONF_REMOVED = "conf_removed";
     static public final String CONF_CHANGED = "conf_changed";
-    static public final String RECORD_STATE_CHANGED = "record_state";
     static public final String RTCP_REPORT_RECEIVED = "on_rtcp_report_received";
 
 
@@ -60,9 +57,7 @@ public class CallManagerCallBack implements Observer<ServiceEvent> {
                 // todo
                 break;
             case RTCP_REPORT_RECEIVED:
-                onRtcpReportReceived(
-                        event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class),
-                        event.getEventInput(ServiceEvent.EventInput.STATS, IntegerMap.class));
+                onRtcpReportReceived();
                 break;
             default:
                 Log.i(TAG, "Unkown daemon event");
@@ -98,14 +93,7 @@ public class CallManagerCallBack implements Observer<ServiceEvent> {
         mContext.sendBroadcast(intent);
     }
 
-    private void recordPlaybackFilepath(String id, String filename) {
-        Intent intent = new Intent();
-        intent.putExtra("call", id);
-        intent.putExtra("file", filename);
-        mContext.sendBroadcast(intent);
-    }
-
-    private void onRtcpReportReceived(String callId, IntegerMap stats) {
+    private void onRtcpReportReceived() {
         Intent intent = new Intent(RTCP_REPORT_RECEIVED);
         mContext.sendBroadcast(intent);
     }

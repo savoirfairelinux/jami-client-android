@@ -470,7 +470,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                         mCallStatusTxt.setText(callStateToHumanState(callState));
                         break;
                 }
-
             }
         });
     }
