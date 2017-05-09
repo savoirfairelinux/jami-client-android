@@ -62,7 +62,7 @@ public final class AccelerometerListener {
     private static final double VERTICAL_ANGLE = 50.0;
 
     public interface OrientationListener {
-        public void orientationChanged(int orientation);
+        void orientationChanged(int orientation);
     }
 
     public AccelerometerListener(Context context, OrientationListener listener) {
@@ -172,5 +172,5 @@ public final class AccelerometerListener {
                 break;
             }
         }
-    };
+    }
 }

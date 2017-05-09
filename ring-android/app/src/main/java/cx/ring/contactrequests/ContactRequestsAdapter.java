@@ -19,9 +19,6 @@
 
 package cx.ring.contactrequests;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -33,7 +30,6 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.CircleTransform;
 import ezvcard.VCard;
 

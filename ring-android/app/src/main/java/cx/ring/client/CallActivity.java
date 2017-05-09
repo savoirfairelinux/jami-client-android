@@ -375,7 +375,7 @@ public class CallActivity extends AppCompatActivity implements Callbacks, CallFr
     }
 
     @Override
-    public void onProximityTrackingChanged(boolean acquired) {
+    public void onProximityTrackingChanged() {
     }
 
     @Override

@@ -340,14 +340,12 @@ public class RingApplication extends Application {
         mPermissionsBeingAsked.remove(permission);
     }
 
-    public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
+    public void decodingStarted(String id, int width, int height) {
         Log.i(TAG, "DRingService.decodingStarted() " + id + " " + width + "x" + height);
         Shm shm = new Shm();
         shm.id = id;
-        shm.path = shmPath;
         shm.w = width;
         shm.h = height;
-        shm.mixer = isMixer;
         videoInputs.put(id, shm);
         WeakReference<SurfaceHolder> weakSurfaceHolder = videoSurfaces.get(id);
         if (weakSurfaceHolder != null) {
@@ -551,9 +549,7 @@ public class RingApplication extends Application {
 
     static public class Shm {
         String id;
-        String path;
         int w, h;
-        boolean mixer;
         public long window = 0;
     }
 

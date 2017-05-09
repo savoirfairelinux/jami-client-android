@@ -47,10 +47,6 @@ class CodecPreference extends Preference {
 
     private CodecAdapter listAdapter;
 
-    public CodecPreference(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
     public CodecPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setWidgetLayoutResource(R.layout.frag_audio_mgmt);

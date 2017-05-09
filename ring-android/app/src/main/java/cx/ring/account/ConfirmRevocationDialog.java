@@ -127,7 +127,7 @@ public class ConfirmRevocationDialog extends DialogFragment {
     }
 
     @OnEditorAction({R.id.ring_password_txt})
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+    public boolean onEditorAction(TextView v, int actionId) {
         if (v == mPasswordTxt) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 boolean validationResult = validate();

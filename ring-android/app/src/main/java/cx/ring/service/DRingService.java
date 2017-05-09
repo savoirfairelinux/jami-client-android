@@ -484,7 +484,7 @@ public class DRingService extends Service {
             Log.d(TAG, "DRingService.videoSurfaceAdded() " + id);
             RingApplication application = (RingApplication) getApplication();
             RingApplication.Shm shm = ((RingApplication) getApplication()).videoInputs.get(id);
-            SurfaceHolder holder = application.videoSurfaces.get(id).get();
+            SurfaceHolder holder = RingApplication.videoSurfaces.get(id).get();
             if (shm != null && holder != null && shm.window == 0) {
                 application.startVideo(shm, holder);
             }

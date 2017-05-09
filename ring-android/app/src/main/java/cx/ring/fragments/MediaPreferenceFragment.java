@@ -86,13 +86,6 @@ public class MediaPreferenceFragment extends PreferenceFragment
         }
     };
 
-    Preference.OnPreferenceChangeListener mEmptyOnChangeListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            return false;
-        }
-    };
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

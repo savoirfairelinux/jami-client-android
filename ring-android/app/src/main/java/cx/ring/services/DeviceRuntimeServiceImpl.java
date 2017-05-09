@@ -98,7 +98,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
                     mediaManager.obtainAudioFocus(incomingAndRinging);
                     if (incomingAndRinging) {
                         mediaManager.audioManager.setMode(AudioManager.MODE_RINGTONE);
-                        mediaManager.startRing(null);
+                        mediaManager.startRing();
                     } else {
                         mediaManager.stopRing();
                         mediaManager.audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
