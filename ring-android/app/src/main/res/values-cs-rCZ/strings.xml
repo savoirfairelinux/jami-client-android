@@ -24,7 +24,6 @@
   <string name="error_no_network">Chybí připojení</string>
   <string name="error_mobile_network_available_but_disabled">Povolte prosím v nastavení přístup k mobilním datům</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Nový účet</string>
   <string name="ab_action_chat">Textové zprávy</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -36,13 +35,10 @@
   <string name="menu_item_accounts">Spravovat účty</string>
   <string name="menu_item_settings">Nastavení</string>
   <string name="menu_item_share">Sdílet můj kontakt</string>
-  <string name="menu_item_blacklist">Blokované kontakty</string>
   <string name="menu_item_about">O Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Vytočit číslo</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Znovu přehrát</string>
-  <string name="hist_replay_button_stop">Zastavit</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -50,18 +46,11 @@
     <item quantity="few">%d Konverzace</item>
     <item quantity="other">%d konverzací</item>
   </plurals>
-  <string name="home_transfering">Přenáší se %1$s do %2$s</string>
-  <string name="home_transfer_complet">Přesměrování hotovo</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Nenalezen žádný kontakt</string>
-  <string name="starred_contacts_title">Oblíbené</string>
   <string name="searchbar_hint">Vložte jméno nebo číslo…</string>
   <string name="choose_number">Vyberte číslo</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Přesměrovat na čekající hovor:</string>
-  <string name="transfer_no_other_call">Žádné čekající hovory</string>
-  <string name="transfer_type_number">Vložte číslo, na něž chcete hovor přesměrovat:</string>
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Zmeškaný příchozí hovor</string>
   <string name="notif_missed_outgoing_call">Zmeškaný odchozí hovor</string>
@@ -73,8 +62,6 @@
   <string name="notif_current_call">Současný hovor</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vy:</string>
-  <string name="action_call_attended_transfer">Přesměrování na čekající hovor</string>
-  <string name="action_call_conference">Konference</string>
   <string name="action_call_hangup">Zavěsit</string>
   <string name="ongoing_call">Probíhající hovor</string>
   <string name="hist_in_call">Příchozí hovor %1$s</string>
@@ -97,7 +84,6 @@
   <string name="send_message">Odeslat zprávu</string>
   <string name="message_sending">Odesílám zprávu…</string>
   <string name="time_just_now">Právě teď</string>
-  <string name="permission_read_denied">Aplikace nemohla číst z vašeho úložiště, takže nemůže správně fungovat. Prosím zvažte poskytnutí jí tohoto povolení</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Povolení ke kameře</string>
   <string name="permission_dialog_camera_message">Video konverzace vyžadují povolení ke kameře. Prosím zvažte jeho povolení.</string>
@@ -139,7 +125,6 @@
   <string name="open_the_gallery">Otevřít galerii</string>
   <string name="take_a_photo">Pořídit fotku</string>
   <string name="profile_name_hint">Zadejte své jméno (volitelné)</string>
-  <string name="unknown">Neznámé</string>
   <!--Share fragment-->
   <string name="share_message">Naskenujte QR kód zabudovaným skenerem aplikace Ring, která s vámi chce komunikovat.</string>
   <string name="share_message_no_account">Vyberte, prosím, účet ke sdílení.</string>

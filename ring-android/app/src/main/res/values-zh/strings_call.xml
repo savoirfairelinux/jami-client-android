@@ -23,5 +23,4 @@ along with this program; if not, write to the Free Software
 <resources>
     <string name="call_human_state_ringing">撥打</string>
     <string name="call_human_state_hold">保持通話</string>
-    <string name="conference_human_state_hold">保持通話</string>
-    </resources>
+</resources>

@@ -12,7 +12,6 @@
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">الاتصال بالشبكة غير متوفر</string>
   <!--AB menus-->
-  <string name="ab_account_creation">حساب جديد</string>
   <string name="ab_action_chat">رسائل نصية</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -26,8 +25,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">أطلب رقم</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">إعادة</string>
-  <string name="hist_replay_button_stop">توقف</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -38,24 +35,16 @@
     <item quantity="many">%d مكالمة</item>
     <item quantity="other">%d مكالمة</item>
   </plurals>
-  <string name="home_transfer_complet">نقل مكتمل</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">لا إتصال موجود</string>
-  <string name="starred_contacts_title">المفضلة</string>
   <string name="searchbar_hint">ادخل اسم أو رقم هاتف</string>
   <string name="choose_number">إختار رقم</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">أنقل إلى مكالمة جارية أخرى:</string>
-  <string name="transfer_no_other_call">لا مكالمات أخرى قيد الإنتظار</string>
-  <string name="transfer_type_number">إكتب الرقم الذي تريد التحويل إليه:</string>
   <!--Notifications-->
   <string name="notif_incoming_call">مكالمة واردة</string>
   <string name="notif_current_call">المكالمات الحالية</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">أنت:</string>
-  <string name="action_call_attended_transfer">نقل</string>
-  <string name="action_call_conference">مؤتمر</string>
   <string name="action_call_hangup">أنهي المكالمة</string>
   <string name="ongoing_call">مكالمة جارية</string>
   <string name="hist_in_call">مكالمة واردة من %1$s</string>
@@ -84,7 +73,6 @@
   <!--Contacts-->
   <string name="wizard_next">التالي</string>
   <!--MenuHeaderView-->
-  <string name="unknown">مجهول</string>
   <!--Share fragment-->
   <string name="generic_error_migration">خطأ</string>
   <!--Pending contact requests-->

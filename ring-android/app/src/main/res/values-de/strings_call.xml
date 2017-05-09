@@ -34,11 +34,4 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_over">Über</string>
     <string name="call_human_state_none">Kein</string>
     <!-- Conferences -->
-    <string name="conference_human_state_active_attached">Aktiv angefügt</string>
-    <string name="conference_human_state_active_detached">Aktiv getrennt</string>
-    <string name="conference_human_state_active_attached_rec">Aktiv angefügt aufnehmend</string>
-    <string name="conference_human_state_active_detached_rec">Aktiv getrennt aufnehmend</string>
-    <string name="conference_human_state_hold">Halten</string>
-    <string name="conference_human_state_hold_rec">Aufnehmend halten</string>
-    <string name="conference_human_state_default">Kein</string>
 </resources>

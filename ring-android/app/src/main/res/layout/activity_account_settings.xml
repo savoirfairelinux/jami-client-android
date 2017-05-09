@@ -7,7 +7,6 @@
     tools:context=".client.AccountEditionActivity">
 
     <LinearLayout
-        android:id="@+id/header_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_primary_light"

@@ -50,41 +50,6 @@ public class ConferenceDFragment extends DialogFragment implements LoaderManager
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_conference, null);
-
-        /*
-        ArrayList<Conference> calls = getArguments().getParcelableArrayList("calls");
-        final Conference call_selected = getArguments().getParcelable("call_selected");
-
-        mAdapter = new SimpleCallListAdapter(getActivity(), calls);
-        ListView list = (ListView) rootView.findViewById(R.id.concurrent_calls);
-        list.setAdapter(mAdapter);
-        list.setOnItemClickListener(new OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-
-                Intent in = new Intent();
-                
-                in.putExtra("transfer", call_selected);
-                in.putExtra("target", mAdapter.getItem(pos));
-                getTargetFragment().onActivityResult(getTargetRequestCode(), 0, in);
-                dismiss();
-            }
-        });
-        list.setEmptyView(rootView.findViewById(R.id.empty_view));
-
-        
-
-        final AlertDialog a = new AlertDialog.Builder(getActivity()).setView(rootView).setTitle("Transfer " + call_selected.getParticipants().get(0).getContact())
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-
-                        dismiss();
-                    }
-                }).create();
-
-        return a;*/
         return null;
     }
 

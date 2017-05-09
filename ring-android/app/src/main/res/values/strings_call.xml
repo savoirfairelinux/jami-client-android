@@ -34,11 +34,4 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_over">Over</string>
     <string name="call_human_state_none">None</string>
     <!-- Conferences -->
-    <string name="conference_human_state_active_attached">Active attached</string>
-    <string name="conference_human_state_active_detached">Active detached</string>
-    <string name="conference_human_state_active_attached_rec">Active attached rec</string>
-    <string name="conference_human_state_active_detached_rec">Active detached rec</string>
-    <string name="conference_human_state_hold">Hold</string>
-    <string name="conference_human_state_hold_rec">Hold rec</string>
-    <string name="conference_human_state_default">None</string>
 </resources>

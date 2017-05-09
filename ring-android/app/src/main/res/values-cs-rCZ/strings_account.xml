@@ -104,16 +104,9 @@ Svůj účet můžete upravit později</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Rozsah portů zvukového RTP</string>
   <!--restore/backup-->
-  <string name="account_restore_account">Obnovit účet</string>
-  <string name="account_restore_message">Vložte heslo pro dešifrování souboru.</string>
-  <string name="account_restore_decryption_password">Dešifrovací heslo</string>
   <string name="account_new_device_password">Pro odemčení účtu zadejte hlavní heslo</string>
-  <string name="restore_dialog_title">Obnovuje se</string>
-  <string name="restore_backup_wait">Počkejte prosím…</string>
   <string name="error_password_char_count">Nejméně 6 znaků</string>
   <string name="error_passwords_not_equals">Hesla se neshodují</string>
-  <string name="restore_failed_dialog_title">Obnova selhala</string>
-  <string name="restore_failed_dialog_msg">Nastala chyba</string>
   <string name="export_account_wait_title">Počkejte prosím…</string>
   <string name="export_account_wait_message">Zveřejňují se informace o novém účtu</string>
   <string name="account_export_end_decryption_message">Zadaným heslem nebylo možné váš účet odemknout.</string>
@@ -133,8 +126,6 @@ Zadejte, prosím, své heslo.</string>
   <string name="account_migration_title_dialog">Převod účtu</string>
   <string name="account_migration_message_dialog">Vaše účty je potřeba aktualizovat. Chcete jít na obrazovku se správou účtů pro provedení této činnosti?</string>
   <string name="account_update_needed">Nutná aktualizace</string>
-  <string name="account_creation_file_too_big">Soubor je příliš velký</string>
-  <string name="account_cannot_read">Nelze přečíst %1$s</string>
   <string name="account_cannot_be_found_title">Nelze nalézt účet</string>
   <string name="account_cannot_be_found_message">Na síti Ring nebyl účet nalezen.\nUjistěte se, že byl exportován na Ring z existujícího zařízení a že jsou přihlašovací údaje správné.</string>
   <string name="account_sip_cannot_be_registered_message">Můžete pokračovat v postupu vytvoření účtu nebo údaje upravit zde. Úpravy jsou možné i později v nastavení účtu.</string>
@@ -150,9 +141,7 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_sip_success_message">Úspěšně jste zaregistroval účet SIP.</string>
   <string name="account_sip_register_anyway">Přesto zaregistrovat</string>
   <string name="account_link_button">Připojit toto zařízení k účtu</string>
-  <string name="account_import_title">Připojit k už existujícímu účtu</string>
   <string name="account_link_prompt_pin">Zadejte PIN</string>
-  <string name="account_wizard_title">Vítejte v</string>
   <string name="account_new_button">Vytvořit účet Ring</string>
   <string name="account_link_export_button">Připojit k tomuto účtu další zařízení</string>
   <string name="account_link_export_info">Pro použití tohoto účtu na dalších zařízeních jej musíte nejdříve vystavit na Ring. Tím se vygeneruje kód PIN, který musíte zadat na novém zařízení, kde nastavujete účet. PIN zůstává platný 10 minut. \n\nPro začátek prosím poskytněte své heslo:</string>
@@ -160,10 +149,6 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_end_export_button">zavřít</string>
   <string name="account_end_export_infos">Váš PIN je:\n\n%%\n\nK dokončení tohoto procesu otevřete na novém zařízení Ring. Přihlaste se k účtu pomocí „Připojit toto zařízení k účtu“. Váš PIN zůstává platný 10 minut.</string>
   <!--Name registration-->
-  <string name="register_name_wrong_password">Jméno nelze zaregistrovat: chybné heslo k účtu.</string>
-  <string name="register_name_invalid">Jméno nelze zaregistrovat: neplatné jméno.</string>
-  <string name="register_name_already_taken">Jméno nelze zaregistrovat: jméno je již zabrané.</string>
-  <string name="register_name_network_error">Jméno nelze zaregistrovat: chyba sítě nebo serveru.</string>
   <string name="error_username_empty">Zadejte uživatelské jméno</string>
   <string name="no_registered_name_for_account">Pro tento účet nenalezeno žádné registrované jméno</string>
   <string name="register_name">Zaregistrovat jméno</string>

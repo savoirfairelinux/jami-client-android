@@ -33,7 +33,4 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_unhold">Gespräch fortsetzen</string>
     <string name="call_human_state_over">Vorbei</string>
     <string name="call_human_state_none">Keine</string>
-    <string name="conference_human_state_hold">In die Warteschleife schalten</string>
-    <string name="conference_human_state_hold_rec">Drücken Sie REC</string>
-    <string name="conference_human_state_default">Keine</string>
 </resources>

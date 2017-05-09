@@ -21,7 +21,6 @@ along with this program; if not, write to the Free Software
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/login_form"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".client.AccountWizard">
@@ -36,14 +35,12 @@ along with this program; if not, write to the Free Software
         app:bounded_width="320dp">
 
         <android.support.v7.widget.CardView
-            android:id="@+id/ring_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:animateLayoutChanges="false">
 
             <RelativeLayout
-                android:id="@+id/ring_fields"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
@@ -99,7 +96,6 @@ along with this program; if not, write to the Free Software
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/newAccountLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/color_primary_light"

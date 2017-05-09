@@ -24,7 +24,6 @@
   <string name="error_no_network">Keine Netzwerkverbindung</string>
   <string name="error_mobile_network_available_but_disabled">Bitte erlauben Sie den Zugang zum Mobilfunknetz in den Einstellungen</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Neues Konto</string>
   <string name="ab_action_chat">Textnachrichten</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -36,31 +35,21 @@
   <string name="menu_item_accounts">Konten verwalten</string>
   <string name="menu_item_settings">Einstellungen</string>
   <string name="menu_item_share">Meinen Kontakt teilen</string>
-  <string name="menu_item_blacklist">Gesperrte Kontakte</string>
   <string name="menu_item_about">Über Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Nummer wählen</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Erneut wiedergeben</string>
-  <string name="hist_replay_button_stop">Stop</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Unterhaltung</item>
     <item quantity="other">%d Unterhaltungen</item>
   </plurals>
-  <string name="home_transfering">Übertrage von %1$s zu %2$s</string>
-  <string name="home_transfer_complet">Übertragung abgeschlossen</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Kein Kontakt gefunden</string>
-  <string name="starred_contacts_title">Favoriten</string>
   <string name="searchbar_hint">Namen oder Telefonnummer eingeben...</string>
   <string name="choose_number">Nummer auswählen</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Auf einen anderen aktuellen Anruf weiterleiten</string>
-  <string name="transfer_no_other_call">Keine anderen Anrufe wartend</string>
-  <string name="transfer_type_number">Nummer für Übertragung eingeben:</string>
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Verpasster eingehender Anruf</string>
   <string name="notif_missed_outgoing_call">Verpasster ausgehender Anruf</string>
@@ -72,8 +61,6 @@
   <string name="notif_current_call">Aktueller Anruf</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
-  <string name="action_call_attended_transfer">Übergabe nach Ankündigung</string>
-  <string name="action_call_conference">Konferenz</string>
   <string name="action_call_hangup">Auflegen</string>
   <string name="ongoing_call">Derzeitiger Anruf</string>
   <string name="hist_in_call">Eingehender Anruf von %1$s</string>
@@ -96,7 +83,6 @@
   <string name="send_message">Nachricht senden</string>
   <string name="message_sending">Nachricht wird gesendet…</string>
   <string name="time_just_now">Gerade eben</string>
-  <string name="permission_read_denied">Die Anwendung hat keine Berechtigung den Speicher zu lesen und funktioniert deswegen nicht richtig. Bitte erteilen Sie diese Berechtigung.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera Berechtigung</string>
   <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die Anwendung Zugriff auf die Kamera. Bitte erteilen Sie diese Berechtigung.</string>
@@ -138,7 +124,6 @@
   <string name="open_the_gallery">Galerie öffnen</string>
   <string name="take_a_photo">Foto machen</string>
   <string name="profile_name_hint">Name eingeben (optional)</string>
-  <string name="unknown">Unbekannt</string>
   <!--Share fragment-->
   <string name="share_message">Scannen Sie diesen QR-Code mit dem eingebauten Scanner der Ringanwendung, die mit Ihnen kommunizieren will.</string>
   <string name="share_message_no_account">Bitte wählen Sie ein Konto aus.</string>

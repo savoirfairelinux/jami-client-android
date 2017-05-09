@@ -34,11 +34,4 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_over">Koniec</string>
     <string name="call_human_state_none">Nic</string>
     <!-- Conferences -->
-    <string name="conference_human_state_active_attached">Aktywny załącznik</string>
-    <string name="conference_human_state_active_detached">Aktywnie oderwany</string>
-    <string name="conference_human_state_active_attached_rec">Aktywnie podłączony nagrywanie</string>
-    <string name="conference_human_state_active_detached_rec">Aktywnie oderwany nagrywanie</string>
-    <string name="conference_human_state_hold">Czekanie</string>
-    <string name="conference_human_state_hold_rec">Przytrzymaj rec</string>
-    <string name="conference_human_state_default">Nic</string>
 </resources>

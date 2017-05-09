@@ -14,7 +14,6 @@
   <string name="error_no_network">Nincs hálózati csatlakozás</string>
   <string name="error_mobile_network_available_but_disabled">Kérem, engedélyezze a mobilhálózat-elérést a beállítások képernyőn!</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Új fiók</string>
   <string name="ab_action_chat">Szöveges üzenetek</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -28,25 +27,17 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Szám tárcsázása</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Visszajátszás</string>
-  <string name="hist_replay_button_stop">Megállítás</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d beszélgetés</item>
     <item quantity="other">%d beszélgetés</item>
   </plurals>
-  <string name="home_transfer_complet">Átirányítás kész.</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Nem találtam partnereket</string>
-  <string name="starred_contacts_title">Kedvencek</string>
   <string name="searchbar_hint">Név vagy telenfonszám beírása…</string>
   <string name="choose_number">Válasszon egy számot</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Átirányítás egy másik jelenlévő hívásra:</string>
-  <string name="transfer_no_other_call">Nincs más függő hívás</string>
-  <string name="transfer_type_number">Átirányítás a következő számra:</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">Bejövő hívás a következőtől: %1$s</string>
   <string name="notif_incoming_call">Bejövő hívás</string>
@@ -56,7 +47,6 @@
   <string name="notif_current_call">Jelenlegi hívás</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ön:</string>
-  <string name="action_call_conference">Konferencia</string>
   <string name="action_call_hangup">Lerak</string>
   <string name="ongoing_call">Folyamatban lévő hívás </string>
   <string name="hist_in_call">Bejövő hívás ennyi ideje: %1$s</string>
@@ -78,7 +68,6 @@
   <string name="send_message">Üzenet küldése</string>
   <string name="message_sending">Üzenet küldése…</string>
   <string name="time_just_now">Éppen most</string>
-  <string name="permission_read_denied">Az alkalmazás nem kapott engedélyt a tárhelye olvasásához, így nem képes megfelelően működni. Kérem, fontolja meg ennek az engedélynek a bekapcsolását!</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameraengedély</string>
   <string name="permission_dialog_camera_message">A videóhívások igénylik a kameraengedély jelenlétét. Kérem, fontolja meg ennek az engedélynek a bekapcsolását!</string>
@@ -115,7 +104,6 @@
   <string name="profile">Profilom</string>
   <string name="open_the_gallery">Galéria megnyitása</string>
   <string name="take_a_photo">Fotó készítése</string>
-  <string name="unknown">Ismeretlen</string>
   <!--Share fragment-->
   <string name="share_your_account_information">Elérési adataim megosztása</string>
   <string name="generic_error_migration">Hiba</string>

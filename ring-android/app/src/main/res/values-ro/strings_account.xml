@@ -34,8 +34,6 @@
   <string name="account_rtp_max_port">Maximal</string>
   <string name="account_rtp_min_port">Minimal</string>
   <!--restore/backup-->
-  <string name="account_restore_account">Restabiliți contul</string>
-  <string name="restore_backup_wait">Așteptați vă rog...</string>
   <string name="export_account_wait_title">Așteptați vă rog...</string>
   <string name="account_export_end_error_title">Eroare</string>
   <string name="account_new_button">Creați un cont Ring</string>

@@ -22,7 +22,6 @@
   <string name="error_no_network">Assenza di connessione di rete</string>
   <string name="error_mobile_network_available_but_disabled">Per favore consenti l\'accesso alla rete mobile dalla schermata delle impostazioni</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Nuovo account</string>
   <string name="ab_action_chat">Messaggiare</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -37,25 +36,17 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Componi un numero</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Replay</string>
-  <string name="hist_replay_button_stop">Stop</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversazione</item>
     <item quantity="other">%d Conversazioni</item>
   </plurals>
-  <string name="home_transfer_complet">Trasferimento completato</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Nessun contatto trovato</string>
-  <string name="starred_contacts_title">Preferiti</string>
   <string name="searchbar_hint">Digita un nome o un numero di telefono</string>
   <string name="choose_number">Seleziona un numero</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Trasferisci su un\'altra chiamata:</string>
-  <string name="transfer_no_other_call">Nessuna chiamata in attesa</string>
-  <string name="transfer_type_number">Digita il numero al quale trasferire:</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">Chiamata in arrivo da %1$s</string>
   <string name="notif_incoming_call">Chiamata in arrivo</string>
@@ -65,8 +56,6 @@
   <string name="notif_current_call">Chiamata corrente</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
-  <string name="action_call_attended_transfer">Trasferimenti assistiti</string>
-  <string name="action_call_conference">Conferenza</string>
   <string name="action_call_hangup">Chiudi</string>
   <string name="ongoing_call">Chiamata in corso</string>
   <string name="hist_in_call">Chiamata in arrivo di %1$s</string>
@@ -88,7 +77,6 @@
   <string name="send_message">Invia messaggio</string>
   <string name="message_sending">Sto inviando il messaggio...</string>
   <string name="time_just_now">Proprio ora</string>
-  <string name="permission_read_denied">La app non può leggere dalla memoria. Quindi non può funzionare correttamente. Se lo desideri, attiva questo permesso.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permesso videocamera</string>
   <string name="permission_dialog_camera_message">Le videochiamate hanno bisogna del permesso per accedere alla videocamera. Se lo desideri, attivalo.</string>
@@ -127,7 +115,6 @@
   <string name="profile">Il mio profilo</string>
   <string name="open_the_gallery">Apri la galleria immagini</string>
   <string name="take_a_photo">Scatta una foto</string>
-  <string name="unknown">Sconosciuto</string>
   <!--Share fragment-->
   <string name="share_message">Leggi questo codice QR con lo scanner integrato dell\'applicazione Ring che vuole comunicare con te.</string>
   <string name="share_message_no_account">Seleziona un account per la condivisione.</string>
