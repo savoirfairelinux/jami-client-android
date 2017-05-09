@@ -18,7 +18,6 @@
   <string name="error_no_network">Nėra tinklo ryšio</string>
   <string name="error_mobile_network_available_but_disabled">Prašome nustatymų ekrane suteikti prieigą prie korinio tinklo.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Nauja paskyra</string>
   <string name="ab_action_chat">Tekstinis susirašinėjimas</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -29,11 +28,9 @@
   <string name="menu_item_accounts">Tvarkyti paskyras</string>
   <string name="menu_item_settings">Nustatymai</string>
   <string name="menu_item_share">Bendrinti mano kontaktus</string>
-  <string name="menu_item_blacklist">Užblokuoti kontaktai</string>
   <string name="menu_item_about">Apie Ring</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
-  <string name="hist_replay_button_stop">Stabdyti</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -42,7 +39,6 @@
     <item quantity="other">%d pokalbių</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Kontaktų nerasta</string>
   <string name="searchbar_hint">Įrašykite vardą ar telefono numerį...</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -107,7 +103,6 @@
   <string name="profile">Mano profilis</string>
   <string name="open_the_gallery">Atverti galeriją</string>
   <string name="take_a_photo">Padaryti nuotrauką</string>
-  <string name="unknown">Nežinomas</string>
   <!--Share fragment-->
   <string name="share_message">Nuskenuokite šį QR kodą įtaisytu Ring programos, norinčios su jumis susisiekti, skeneriu.</string>
   <string name="share_your_account_information">Bendrinti mano kontaktinę informaciją</string>

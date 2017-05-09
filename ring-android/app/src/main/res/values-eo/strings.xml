@@ -9,7 +9,6 @@
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Sen reta konekto</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Nova konto</string>
   <string name="ab_action_chat">Text messaging</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -23,25 +22,17 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Diski numeron</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Reludi</string>
-  <string name="hist_replay_button_stop">Stopi</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Konversacio</item>
     <item quantity="other">%d Konversacioj</item>
   </plurals>
-  <string name="home_transfer_complet">Transigo finita</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Neniu kontakto trovita</string>
-  <string name="starred_contacts_title">Favorataj</string>
   <string name="searchbar_hint">Entajpu nomon aŭ telefonnumeron…</string>
   <string name="choose_number">Elektu numeron</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Transigu al alian vokon:</string>
-  <string name="transfer_no_other_call">Sen aliaj vokoj</string>
-  <string name="transfer_type_number">Entajpu numeron por transigi al:</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">Eniranta voko de %1$s</string>
   <string name="notif_incoming_call">Eniranta voko</string>
@@ -51,8 +42,6 @@
   <string name="notif_current_call">Aktiva voko</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vi:</string>
-  <string name="action_call_attended_transfer">Attended Transfer</string>
-  <string name="action_call_conference">Konferenco</string>
   <string name="action_call_hangup">Fini vokon</string>
   <string name="ongoing_call">Aktiva voko</string>
   <string name="hist_in_call">Eniranta voko de %1$s</string>
@@ -74,7 +63,6 @@
   <string name="send_message">Sendi mesaĝon</string>
   <string name="message_sending">Sendanta mesaĝon…</string>
   <string name="time_just_now">Ĵus</string>
-  <string name="permission_read_denied">La aplikaĵo ne permesatis legi vian konservadon. Tial, ĝi ne funkcias ĝuste. Bonvole pripensu permesi ĝin</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permeso je kamerao</string>
   <string name="permission_dialog_camera_message">Video-konversacioj bezonas permeson je kamerao por funkcii. Bonvole pripensu permesi ĝin.</string>
@@ -102,7 +90,6 @@
   <string name="account_create_title">Krei Ring konton</string>
   <string name="wizard_next">Sekva</string>
   <!--MenuHeaderView-->
-  <string name="unknown">Nekonata</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Eraro</string>
   <!--Pending contact requests-->

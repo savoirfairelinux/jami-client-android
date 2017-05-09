@@ -104,16 +104,9 @@ Je kan je account later bewerken</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Audio RTP-poortenreeks</string>
   <!--restore/backup-->
-  <string name="account_restore_account">Een account herstellen</string>
-  <string name="account_restore_message">Voer wachtwoord in om het bestand te ontsleutelen.</string>
-  <string name="account_restore_decryption_password">Ontsleutelingswachtwoord</string>
   <string name="account_new_device_password">Voer hoofdwachtwoord in om account te ontgrendelen</string>
-  <string name="restore_dialog_title">Herstellen</string>
-  <string name="restore_backup_wait">Even geduld...</string>
   <string name="error_password_char_count">Minimaal 6 tekens</string>
   <string name="error_passwords_not_equals">Wachtwoorden komen niet overeen</string>
-  <string name="restore_failed_dialog_title">Herstellen mislukt</string>
-  <string name="restore_failed_dialog_msg">Er is een fout opgetreden</string>
   <string name="export_account_wait_title">Even geduld...</string>
   <string name="export_account_wait_message">Nieuwe accountinformatie wordt gepubliceerd</string>
   <string name="account_export_end_decryption_message">Kon je account niet ontgrendelen met het opgegeven wachtwoord.</string>
@@ -132,8 +125,6 @@ Je kan je account later bewerken</string>
   <string name="account_migration_title_dialog">Accountmigratie</string>
   <string name="account_migration_message_dialog">Je account moeten bijgewerkt worden. Wil je naar het accountbeheerscherm gaan om deze handeling uit te voeren?</string>
   <string name="account_update_needed">Update vereist</string>
-  <string name="account_creation_file_too_big">Bestand is te groot</string>
-  <string name="account_cannot_read">Kan %1$s niet lezen</string>
   <string name="account_cannot_be_found_title">Account kan niet gevonden worden</string>
   <string name="account_cannot_be_found_message">Account kon niet gevonden worden op het Ring-netwerk.\nControleer of de account geëxporteerd is van een bestaand apparaat en dat de ingevoerde gebruikersreferenties correct zijn</string>
   <string name="account_sip_cannot_be_registered_message">Je kan doorgaan met het aanmaken van je account of je gegevens hier aanpassen. Aanpassen is later ook mogelijk vanuit de accountinstellingen.</string>
@@ -148,9 +139,7 @@ Je kan je account later bewerken</string>
   <string name="account_sip_success_message">Je SIP-account is met succes geregistreerd.</string>
   <string name="account_sip_register_anyway">Toch registreren</string>
   <string name="account_link_button">Dit apparaat aan een account koppelen</string>
-  <string name="account_import_title">Koppelen aan een bestaande account</string>
   <string name="account_link_prompt_pin">Voer PIN-code in</string>
-  <string name="account_wizard_title">Welkom bij</string>
   <string name="account_new_button">Een Ring-account aanmaken</string>
   <string name="account_link_export_button">Een ander apparaat aan deze account koppelen</string>
   <string name="account_link_export_info">Om deze account op andere apparaten te gebruiken moet je deze eerst op Ring blootstellen. Er zal een PIN-code gegenereerd worden die je op het nieuwe apparaat invoert om de account in te stellen. De PIN-code is 10 minuten geldig. \n\nVoer je wachtwoord in om te beginnen:</string>
@@ -158,10 +147,6 @@ Je kan je account later bewerken</string>
   <string name="account_end_export_button">sluiten</string>
   <string name="account_end_export_infos">Je PIN-code is:\n\n%%\n\nOm het proces te voltooien open je Ring op het nieuwe apparaat. Maak een account aan met \"Dit apparaat aan een account koppelen\". De PIN-code is 10 minuten geldig.</string>
   <!--Name registration-->
-  <string name="register_name_wrong_password">Kan naam niet registreren: verkeerd accountwachtwoord.</string>
-  <string name="register_name_invalid">Kan naam niet registreren: ongeldige naam.</string>
-  <string name="register_name_already_taken">Kan naam niet registreren: naam reeds in gebruik.</string>
-  <string name="register_name_network_error">Kan naam niet registreren: netwerk- of serverfout.</string>
   <string name="error_username_empty">Voer een gebruikersnaam in</string>
   <string name="no_registered_name_for_account">Geen geregistreerde naam gevonden voor deze account</string>
   <string name="register_name">Naam registreren</string>

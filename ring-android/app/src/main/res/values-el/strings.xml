@@ -14,7 +14,6 @@
   <string name="error_no_network">Καμία σύνδεση στο δίκτυο</string>
   <string name="error_mobile_network_available_but_disabled">Παρακαλώ δώστε πρόσβαση στο δίκτυο κινητής τηλεφωνίας από τις  ρυθμίσεις του κινητού.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Νέος Λογαριασμός</string>
   <string name="ab_action_chat">Μήνυμα κειμένου</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -29,21 +28,13 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Κλήση αριθμού</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Απάντηση</string>
-  <string name="hist_replay_button_stop">Τερματισμός</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
-  <string name="home_transfer_complet">Η προώθηση ολοκληρώθηκε</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Δεν βρέθηκαν επαφές</string>
-  <string name="starred_contacts_title">Αγαπημένα</string>
   <string name="searchbar_hint">Εισάγετε ένα όνομα ή αριθμό τηλεφώνου</string>
   <string name="choose_number">Επιλέξτε αριθμό</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Προώθηση σε ενεργή κλήση</string>
-  <string name="transfer_no_other_call">Δεν υπάρχουν εκκρεμείς κλήσεις</string>
-  <string name="transfer_type_number">Πληκτρολογείστε αριθμό για προώθηση</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">Εισερχόμενη κλήση από %1$s</string>
   <string name="notif_incoming_call">Εισερχόμενη κλήση</string>
@@ -53,7 +44,6 @@
   <string name="notif_current_call">Κλήση σε εξέλιξη</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Εσύ</string>
-  <string name="action_call_conference">Συνδιάσκεψη</string>
   <string name="action_call_hangup">Κλείσιμο</string>
   <string name="ongoing_call">Εξερχόμενη κλήση</string>
   <string name="hist_in_call">Εισερχόμενη κλήση από %1$s</string>
@@ -75,7 +65,6 @@
   <string name="send_message">Στείλε μήνυμα</string>
   <string name="message_sending">Μήνυμα αποστέλλεται...</string>
   <string name="time_just_now">Μόλις τώρα</string>
-  <string name="permission_read_denied">Η εφαρμογή δεν ήταν σε θέση να διαβάσει τον δίσκο σας. Με αποτέλεσμα να μην δουλεύει σωστά. Σκεφτείτε να δώσετε δικαιώματα στην λειτουργία αυτή</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Άδεια πρόσβασης στην κάμερα</string>
   <string name="permission_dialog_camera_message">Οι κλήσεις μέσω βίντεο χρειάζεται την άδεια στην κάμερά  για να δουλέψει. Παρακαλώ σκεφτείτε να την ενεργοποιήσετε.</string>
@@ -107,7 +96,6 @@
   <!--MenuHeaderView-->
   <string name="profile">Το προφίλ μου</string>
   <string name="take_a_photo">Λήψη φωτογραφίας</string>
-  <string name="unknown">Άγνωστοι</string>
   <!--Share fragment-->
   <string name="share_your_account_information">Μοίρασε τις πληροφορίες των επαφών μου</string>
   <string name="generic_error_migration">Σφάλμα</string>

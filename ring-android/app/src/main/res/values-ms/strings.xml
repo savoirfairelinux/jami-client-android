@@ -14,7 +14,6 @@
   <string name="error_no_network">Tiada sambungan rangkaian</string>
   <string name="error_mobile_network_available_but_disabled">Sila berikan akses kepada rangkaian selular didalam skrin tetapan.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Akaun baharu</string>
   <string name="ab_action_chat">Pesanan teks</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -29,24 +28,16 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Dail nombor</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Main ulang</string>
-  <string name="hist_replay_button_stop">Berhenti</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="other">%d Perbualan</item>
   </plurals>
-  <string name="home_transfer_complet">Pemindahan berjaya</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Tiada kenalan ditemui</string>
-  <string name="starred_contacts_title">Kegemaran</string>
   <string name="searchbar_hint">Masukkan nama atau nombor telefon</string>
   <string name="choose_number">Pilih nombor</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Pindahkan ke panggilan lain yang sedang berlangsung:</string>
-  <string name="transfer_no_other_call">Tiada panggilan lain yang belum selesai</string>
-  <string name="transfer_type_number">Taipkan nombor untuk memindahkan:</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">Panggilan masuk daripada %1$s</string>
   <string name="notif_incoming_call">Panggilan masuk</string>
@@ -56,8 +47,6 @@
   <string name="notif_current_call">Panggilan sedang berlangsung</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Anda</string>
-  <string name="action_call_attended_transfer">Pemindahan panggilan yang disertai</string>
-  <string name="action_call_conference">Mesyuarat</string>
   <string name="action_call_hangup">Putuskan</string>
   <string name="ongoing_call">Panggilan sedang berlangsung</string>
   <string name="hist_in_call">Panggilan masuk sebanyak %1$s</string>
@@ -79,7 +68,6 @@
   <string name="send_message">Hantar pesan</string>
   <string name="message_sending">Sedang menghantar pesan…</string>
   <string name="time_just_now">Seketika yang lalu</string>
-  <string name="permission_read_denied">Aplikasi ini tidak dibenarkan untuk membaca memori dalaman anda. Oleh begitu, ia tidak dapat bekerja dengan sempurna. Sila pertimbangkan untuk membenarkan akses tersebut</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Akses kamera</string>
   <string name="permission_dialog_camera_message">Perbualan video memerlukan akses kepada kamera untuk bekerja dengan sempurna. Sila pertimbangkan untuk membenarkan akses tersebut.</string>
@@ -116,7 +104,6 @@
   <string name="profile">Profil saya</string>
   <string name="open_the_gallery">Buka galeri</string>
   <string name="take_a_photo">Ambil gambar</string>
-  <string name="unknown">Tidak diketahui</string>
   <!--Share fragment-->
   <string name="share_message">Imbas kod QR ini dengan pemgibas terbina dalam dari aplikasi Ring lain yang ingin berkomunikasi dengan anda.</string>
   <string name="share_your_account_information">Sila pilih akaun untuk dikongsi</string>

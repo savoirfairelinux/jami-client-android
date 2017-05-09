@@ -84,12 +84,8 @@
   <string name="account_rtp_min_port">Мінімум</string>
   <string name="account_rtp_port_range">Порти для передачі аудіо по RTP</string>
   <!--restore/backup-->
-  <string name="account_restore_message">Введіть пароль для розшифрування файлу.</string>
-  <string name="account_restore_decryption_password">Розшифрування паролю</string>
-  <string name="restore_backup_wait">Будь ласка зачекайте</string>
   <string name="error_password_char_count">мінімум 6 символів</string>
   <string name="error_passwords_not_equals">Паролі не збігаються</string>
-  <string name="restore_failed_dialog_msg">Виникла помилка</string>
   <string name="export_account_wait_title">Будь ласка зачекайте</string>
   <string name="account_export_end_error_title">Помилка</string>
   <string name="account_new_button">Створити обліковий запис Ring</string>

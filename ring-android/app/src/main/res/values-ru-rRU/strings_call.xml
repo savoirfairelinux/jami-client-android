@@ -33,7 +33,4 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_unhold">Возврат</string>
     <string name="call_human_state_over">Окончен</string>
     <string name="call_human_state_none">Никто</string>
-    <string name="conference_human_state_hold">Удержать</string>
-    <string name="conference_human_state_hold_rec">Удержать запись</string>
-    <string name="conference_human_state_default">Никто</string>
 </resources>

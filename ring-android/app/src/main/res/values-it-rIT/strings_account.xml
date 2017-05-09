@@ -94,16 +94,9 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_rtp_min_port">Minimo</string>
   <string name="account_rtp_port_range">Intervallo porte audio RTP</string>
   <!--restore/backup-->
-  <string name="account_restore_account">Ripristina un account</string>
-  <string name="account_restore_message">Inserire la password per decriptare il file.</string>
-  <string name="account_restore_decryption_password">Password per decriptare</string>
   <string name="account_new_device_password">Inserire la password principale per sbloccare l\'account</string>
-  <string name="restore_dialog_title">Ripristino</string>
-  <string name="restore_backup_wait">Prego attendere...</string>
   <string name="error_password_char_count">Minimo 6 caratteri</string>
   <string name="error_passwords_not_equals">Le password non corrispondono</string>
-  <string name="restore_failed_dialog_title">Ripristino non riuscito</string>
-  <string name="restore_failed_dialog_msg">C\'è stato un errore</string>
   <string name="export_account_wait_title">Prego attendere...</string>
   <string name="export_account_wait_message">Sto pubblicando le informazioni del nuovo account</string>
   <string name="account_export_end_decryption_message">Impossibile sbloccare l\'account x la con la password inserita.</string>
@@ -122,8 +115,6 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_migration_title_dialog">Migrazione account</string>
   <string name="account_migration_message_dialog">Il tuo account necessita di essere aggiornato. Vuoi andare alla schermata di gestione dell\'account per completare l\'operazione?</string>
   <string name="account_update_needed">Aggiornamento necessario</string>
-  <string name="account_creation_file_too_big">Il file è troppo grande</string>
-  <string name="account_cannot_read">Impossibile leggere %1$s</string>
   <string name="account_cannot_be_found_title">Impossibile trovare l\'account</string>
   <string name="account_cannot_be_found_message">Impossibile trovare l\'account nella rete Ring.\nAssicurati di averlo esportato da un account Ring esistente e di aver fornito le credenziali corrette.</string>
   <string name="account_sip_cannot_be_registered_message">Puoi continuare con la creazione dell\'account oppure modificare le tue informazioni qui. La modifica sarà comunque possibile più tardi nelle impostazioni dell\'account.</string>
@@ -137,9 +128,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_sip_success_message">Hai registrato il tuo account Sip con successo.</string>
   <string name="account_sip_register_anyway">Registrati lo stesso</string>
   <string name="account_link_button">Collega questo dispositivo ad un account</string>
-  <string name="account_import_title">Collega ad un account esistente</string>
   <string name="account_link_prompt_pin">Inserisci il PIN</string>
-  <string name="account_wizard_title">Benvenuto su</string>
   <string name="account_new_button">Crea un account Ring</string>
   <string name="account_link_export_button">Collega un altro dispositivo a questo account</string>
   <string name="account_link_export_info">Per utilizzare questo account su altri dispositivi, devi prima renderlo visibile su Ring. Questo genererà un codice PIN che dovrai inserire nel nuovo dispositivo per impostare l\'account. Il pin è valido per 10 minuti. \n\nPer favore digita la tua password per cominciare:</string>
@@ -147,10 +136,6 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_end_export_button">chiudi</string>
   <string name="account_end_export_infos">Il tuo Pin è:\n\n%%\n\nPer completare la procedura, devi aprire Ring nel nuovo dispositivo. Crea un nuovo account con \"Collega questo dispositivo con un account\". Il tuo pin è valido per 10 minuti.</string>
   <!--Name registration-->
-  <string name="register_name_wrong_password">Non è possibile registrare questo nome: la password dell\'account è errata</string>
-  <string name="register_name_invalid">Non è possibile registrare il nome: nome non valido.</string>
-  <string name="register_name_already_taken">Non è possibile registrare il nome: nome già registrato.</string>
-  <string name="register_name_network_error">Non è possibile registrare il nome: errore di di rete o del server.</string>
   <string name="error_username_empty">Inserire un nome utente</string>
   <string name="no_registered_name_for_account">Nessun nome registrato è stato trovato per questo account</string>
   <string name="register_name">Nome registrazione</string>

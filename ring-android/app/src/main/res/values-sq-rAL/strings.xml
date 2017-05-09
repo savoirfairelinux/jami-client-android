@@ -21,7 +21,6 @@
   <string name="error_no_network">Pa lidhje në rrjet</string>
   <string name="error_mobile_network_available_but_disabled">Ju lutemi, akordojini hyrje rrjetit celular te skena e rregullimeve.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Llogari e re</string>
   <string name="ab_action_chat">Shkëmbim mesazhesh tekst</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -36,25 +35,17 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Thirrni një numër</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Riluaje</string>
-  <string name="hist_replay_button_stop">Ndale</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Bisedë</item>
     <item quantity="other">%d Biseda</item>
   </plurals>
-  <string name="home_transfer_complet">Shpërngulje e plotësuar</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">S’u gjet kontakt</string>
-  <string name="starred_contacts_title">Të parapëlqyer</string>
   <string name="searchbar_hint">Jepni një emër ose një numër telefoni…</string>
   <string name="choose_number">Zgjidhni një numër</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Shpërngule te një tjetër thirrje e tanishme:</string>
-  <string name="transfer_no_other_call">S’ka thirrje të tjera pezull</string>
-  <string name="transfer_type_number">Shtypni numrin te i cili të shpërngulet:</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">Thirrje ardhëse nga %1$s</string>
   <string name="notif_incoming_call">Thirrje ardhëse</string>
@@ -64,7 +55,6 @@
   <string name="notif_current_call">Thirrja e tanishme</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ju:</string>
-  <string name="action_call_conference">Konferencë</string>
   <string name="action_call_hangup">Mbylle thirrjen</string>
   <string name="ongoing_call">Thirrje në kryerje e sipër</string>
   <string name="hist_in_call">Thirrje nga %1$s</string>
@@ -86,7 +76,6 @@
   <string name="send_message">Dërgoje mesazhin</string>
   <string name="message_sending">Po dërgohet mesazhi…</string>
   <string name="time_just_now">Mu tani</string>
-  <string name="permission_read_denied">Aplikacioni s’u lejua të lexonte te depozita juaj. Ndaj, s’mund të funksionojë si duhet. Ju lutemi, shihni mundësinë e akordimit për të kësaj lejeje</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Leje për kamerën</string>
   <string name="permission_dialog_camera_message">Që të funksionojnë, bisedat me video lypin doemos leje për kamerën Ju lutemi, shihni mundësinë e akordimit të saj.</string>
@@ -125,7 +114,6 @@
   <string name="profile">Profili im</string>
   <string name="open_the_gallery">Hape galerinë</string>
   <string name="take_a_photo">Bëni një foto</string>
-  <string name="unknown">E panjohur</string>
   <!--Share fragment-->
   <string name="share_message_no_account">Ju lutemi, përzgjidhni një llogari për ndarje me të.</string>
   <string name="share_your_account_information">Ndaji me të tjerët të dhënat e mia të kontaktit</string>

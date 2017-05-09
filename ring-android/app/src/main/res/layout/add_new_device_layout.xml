@@ -56,7 +56,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:id="@+id/fields_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">

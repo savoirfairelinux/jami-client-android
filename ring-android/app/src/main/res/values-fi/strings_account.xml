@@ -70,12 +70,8 @@
   <string name="account_rtp_min_port">Minimi</string>
   <string name="account_rtp_port_range">RTP porttiväli</string>
   <!--restore/backup-->
-  <string name="account_restore_message">Syötä salasana purkaaksesi tiedoton salauksen.</string>
-  <string name="account_restore_decryption_password">Salauksen purku salasana</string>
-  <string name="restore_backup_wait">Odota hetki...</string>
   <string name="error_password_char_count">Vähintään 6 merkkiä</string>
   <string name="error_passwords_not_equals">Salasanat eivät täsmää</string>
-  <string name="restore_failed_dialog_msg">Virhe tapahtui</string>
   <string name="export_account_wait_title">Odota hetki...</string>
   <string name="account_export_end_error_title">Virhe</string>
   <string name="account_new_button">Luo Ring tunnus</string>

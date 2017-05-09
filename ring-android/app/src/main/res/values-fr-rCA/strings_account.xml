@@ -89,16 +89,9 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <!--restore/backup-->
-  <string name="account_restore_account">Réactiver le compte</string>
-  <string name="account_restore_message">Entrer le mot de passe pour déchiffrer le fichier.</string>
-  <string name="account_restore_decryption_password">Mot de passe de décryptage</string>
   <string name="account_new_device_password">Entrer le mot de passe principal pour déverrouiller le compte</string>
-  <string name="restore_dialog_title">Réactivation en cours</string>
-  <string name="restore_backup_wait">Patienter s\'il vous plaît</string>
   <string name="error_password_char_count">Minimum de 6 caractères</string>
   <string name="error_passwords_not_equals">Les mots de passe ne concordent pas</string>
-  <string name="restore_failed_dialog_title">La réactivation a échouée</string>
-  <string name="restore_failed_dialog_msg">Une erreur est survenue</string>
   <string name="export_account_wait_title">Patienter s\'il vous plaît</string>
   <string name="export_account_wait_message">Publication des informations du nouveau compte</string>
   <string name="account_export_end_decryption_message">Votre compte n\'a pu être déverrouillé avec le mot de passe fourni.</string>
@@ -117,8 +110,6 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_migration_title_dialog">Migration du compte</string>
   <string name="account_migration_message_dialog">Vos comptes doivent être mis à jour. Désirez-vous vous rendre à la fenêtre de Gestion de compte pour effectuer les modifications?</string>
   <string name="account_update_needed">Mise à jour nécessaire</string>
-  <string name="account_creation_file_too_big">Fichier trop volumineux</string>
-  <string name="account_cannot_read">Lecture impossible de %1$s</string>
   <string name="account_cannot_be_found_title">Impossible de trouver le compte</string>
   <string name="account_cannot_be_found_message">Impossible de trouver le compte sur le réseau Ring. \nAssurez-vous que le compte ait été exporté sur Ring depuis un appareil existant et d\'avoir fourni les bonnes informations de connexions.</string>
   <string name="account_sip_cannot_be_registered_message">Vous pouvez continuer avec le processus de création de compte ou modifier vos informations ici. Vous pouvez effectuer des modifications plus tard dans les paramètres du compte.</string>
@@ -133,9 +124,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_sip_success_message">Votre compte Sip a été enregistré avec succès.</string>
   <string name="account_sip_register_anyway">S\'inscrire de toute façon</string>
   <string name="account_link_button">Associer cet appareil à un compte</string>
-  <string name="account_import_title">Associer à un compte existant</string>
   <string name="account_link_prompt_pin">Entrer le NIP</string>
-  <string name="account_wizard_title">Bienvenue à</string>
   <string name="account_new_button">Créer un compte Ring</string>
   <string name="account_link_export_button">Associer un autre appareil à ce compte</string>
   <string name="account_link_export_info">Pour utiliser ce compte sur d\'autres appareils, vous devez d\'abord l\'afficher sur Ring.  Ceci générera un code NIP que vous devez entrer sur le nouvel appareil pour configurer votre compte. Le NIP est valide pour une durée de 10 minutes. \n\nS\'il vous plaît, entrer votre mot de passe pour débuter:</string>
@@ -143,10 +132,6 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_end_export_button">fermer</string>
   <string name="account_end_export_infos">Votre NIP est:\n\n%%\n\nPour compléter le processus, vous devez ouvrir Ring sur le nouvel appareil. Créer un nouveau compte avec \"Associer cet appareil à un compte\". Votre NIP est valide pour une durée de 10 minutes.</string>
   <!--Name registration-->
-  <string name="register_name_wrong_password">Impossible d\'enregistrer le nom: le mot de passe est incorrect.</string>
-  <string name="register_name_invalid">Impossible d\'enregistrer le nom: nom invalide.</string>
-  <string name="register_name_already_taken">Impossible d\'enregistrer le nom: nom indisponible</string>
-  <string name="register_name_network_error">Impossible d\'enregistrer le nom: erreur de réseau ou de serveur</string>
   <string name="error_username_empty">Entrer le nom d\'utilisateur</string>
   <string name="no_registered_name_for_account">Aucun nom enregistré trouvé pour ce compte</string>
   <string name="register_name">Nom d\'enregistrement</string>

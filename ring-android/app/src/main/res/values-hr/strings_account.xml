@@ -78,12 +78,8 @@ Moćete urediti vaš račun kasnije</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <!--restore/backup-->
-  <string name="account_restore_message">Unesite lozinku za dešifriranje datoteke.</string>
-  <string name="account_restore_decryption_password">Lozinka za dešifriranje</string>
-  <string name="restore_backup_wait">Molim pričekajte...</string>
   <string name="error_password_char_count">6 znakova minimum</string>
   <string name="error_passwords_not_equals">Lozinke se ne podudaraju</string>
-  <string name="restore_failed_dialog_msg">Došlo je do greške</string>
   <string name="export_account_wait_title">Molim pričekajte...</string>
   <string name="account_export_end_network_title">Greška mreže</string>
   <string name="account_export_end_error_title">Greška</string>
@@ -91,7 +87,6 @@ Moćete urediti vaš račun kasnije</string>
   <string name="update_account">Ažuriraj račun</string>
   <string name="ring_account">Ring račun</string>
   <string name="account_update_needed">Potrebno je ažuriranje</string>
-  <string name="account_creation_file_too_big">Datoteka je prevelika</string>
   <string name="account_new_button">Napravite Ring račun</string>
   <!--Name registration-->
   <string name="account_status_connecting">Spajanje</string>

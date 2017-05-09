@@ -13,7 +13,6 @@
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Няма връзка с мрежата</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Нов акаунт</string>
   <string name="ab_action_chat">Текстово съобщение</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -27,25 +26,17 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Наберете номер</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Повторение</string>
-  <string name="hist_replay_button_stop">Спиране</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d разговор</item>
     <item quantity="other">%d разговора</item>
   </plurals>
-  <string name="home_transfer_complet">Прехвърлянето е завършено</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Няма намерен контакт</string>
-  <string name="starred_contacts_title">Любими</string>
   <string name="searchbar_hint">Въведете име или тел. номер…</string>
   <string name="choose_number">Изберете номер</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Прехвърляне към друг текущ разговор:</string>
-  <string name="transfer_no_other_call">Няма други чакащи разговори</string>
-  <string name="transfer_type_number">Въведете номер, към който да прехвърлите:</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">Входящо обаждане от %1$s</string>
   <string name="notif_incoming_call">Входящо обаждане</string>
@@ -55,7 +46,6 @@
   <string name="notif_current_call">Текущ разговор</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вие:</string>
-  <string name="action_call_conference">Конференция</string>
   <string name="action_call_hangup">Затваряне</string>
   <string name="ongoing_call">Текущо обаждане</string>
   <string name="hist_in_call">Входящо обаждане от %1$s</string>
@@ -76,7 +66,6 @@
   <string name="send_message">Изпращане на съобщение</string>
   <string name="message_sending">Изпращане на съобщение…</string>
   <string name="time_just_now">Току-що</string>
-  <string name="permission_read_denied">Не беше позволено на приложението да чете от мястото за съхранение на данни, така че не може да работи правилно. Моля, дайте това право на приложението.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Право за използване на камерата</string>
   <string name="permission_dialog_camera_message">Разговорите с видео изискват правото за използване на камерата. Моля, дайте това право на приложението.</string>
@@ -111,7 +100,6 @@
   <string name="profile">Моят профил</string>
   <string name="open_the_gallery">Отваряне на галерията</string>
   <string name="take_a_photo">Снимане</string>
-  <string name="unknown">Неизвестно</string>
   <!--Share fragment-->
   <string name="share_message">Сканирайте този QR-код с вградения скенер на приложението Ring, което иска да се свърже с Вас.</string>
   <string name="share_your_account_information">Споделяне на информацията аз връзка с мен</string>

@@ -81,15 +81,10 @@
   <string name="account_rtp_min_port">Минимум</string>
   <string name="account_rtp_port_range">Диапазон портов RTP</string>
   <!--restore/backup-->
-  <string name="account_restore_message">Введите пароль для расшифровки файла.</string>
-  <string name="account_restore_decryption_password">Дешифрование паролья</string>
-  <string name="restore_backup_wait">Пожалуйста, подождите...</string>
   <string name="error_password_char_count">Минимум 6 символов</string>
   <string name="error_passwords_not_equals">Пароли не совпадают</string>
-  <string name="restore_failed_dialog_msg">Произошла ошибка</string>
   <string name="export_account_wait_title">Пожалуйста, подождите...</string>
   <string name="account_export_end_error_title">Ошибка</string>
-  <string name="account_wizard_title">Добро пожаловать в</string>
   <string name="account_new_button">Создать Ring аккаунт</string>
   <!--Name registration-->
   <string name="account_status_connecting">Подключение</string>

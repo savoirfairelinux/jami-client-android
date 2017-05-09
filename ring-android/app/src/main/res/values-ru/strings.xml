@@ -24,7 +24,6 @@
   <string name="error_no_network">Нет подключения к сети</string>
   <string name="error_mobile_network_available_but_disabled">Пожалуйста, предоставьте доступ к сотовой сети в настройках.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Новый аккаунт</string>
   <string name="ab_action_chat">Сообщения</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -36,13 +35,10 @@
   <string name="menu_item_accounts">Управление аккаунтами</string>
   <string name="menu_item_settings">Настройки</string>
   <string name="menu_item_share">Поделиться моим контактом</string>
-  <string name="menu_item_blacklist">Заблокированные контакты</string>
   <string name="menu_item_about">О программе</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Набрать номер</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Повторить</string>
-  <string name="hist_replay_button_stop">Стоп</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -51,18 +47,11 @@
     <item quantity="many">%d диалогов</item>
     <item quantity="other">%d диалогов</item>
   </plurals>
-  <string name="home_transfering">Передача %1$s из %2$s</string>
-  <string name="home_transfer_complet">Передача завершена</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Контактов не найдено</string>
-  <string name="starred_contacts_title">Избранное</string>
   <string name="searchbar_hint">Введите имя или номер телефона...</string>
   <string name="choose_number">Выберите номер</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Переключение на другой вызов</string>
-  <string name="transfer_no_other_call">Нет ожидающих вызовов</string>
-  <string name="transfer_type_number">Тип номера для передачи:</string>
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Пропущенный входящий вызов</string>
   <string name="notif_missed_outgoing_call">Пропущенный исходящий вызов</string>
@@ -74,8 +63,6 @@
   <string name="notif_current_call">Текущий вызов</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вы:</string>
-  <string name="action_call_attended_transfer">Условная переадресация</string>
-  <string name="action_call_conference">Конференция</string>
   <string name="action_call_hangup">Повесить трубку</string>
   <string name="ongoing_call">Исходящий вызов</string>
   <string name="hist_in_call">Входящий звонок %1$s</string>
@@ -98,7 +85,6 @@
   <string name="send_message">Отправить сообщение</string>
   <string name="message_sending">Отправка сообщения...</string>
   <string name="time_just_now">Только сейчас</string>
-  <string name="permission_read_denied">Приложению не было разрешено чтение данных из памяти, поэтому оно не может работать должным образом. Пожалуйста, предоставьте  ему это разрешение.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на доступ к камере</string>
   <string name="permission_dialog_camera_message">Видеосвязь требует для работы разрешения на доступ к камере. Пожалуйста, предоставьте его.</string>
@@ -140,7 +126,6 @@
   <string name="open_the_gallery">Открыть галерею</string>
   <string name="take_a_photo">Сделать фото</string>
   <string name="profile_name_hint">Введите ваше имя (опционально)</string>
-  <string name="unknown">Неизвестно</string>
   <!--Share fragment-->
   <string name="share_message">Отсканируйте этот QR-код встроенным сканером приложения Ring, которое хочет с вами связаться.</string>
   <string name="share_message_no_account">Выберите аккаунт, которым хотите поделиться.</string>

@@ -89,16 +89,9 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Jarak Port Bunyi RTP</string>
   <!--restore/backup-->
-  <string name="account_restore_account">Import akaun</string>
-  <string name="account_restore_message">Masukkan kata laluan untuk menyahsulitkan fail.</string>
-  <string name="account_restore_decryption_password">Kata laluan penyahsulit</string>
   <string name="account_new_device_password">Masukkan kata laluan utama untuk menyahsulitkan akaun</string>
-  <string name="restore_dialog_title">Mengimport</string>
-  <string name="restore_backup_wait">Sila tunggu...</string>
   <string name="error_password_char_count">Minimum 6 aksara</string>
   <string name="error_passwords_not_equals">Kata laluan tidak sepadan</string>
-  <string name="restore_failed_dialog_title">Import gagal</string>
-  <string name="restore_failed_dialog_msg">Kegagalan telah terjadi</string>
   <string name="export_account_wait_title">Sila tunggu...</string>
   <string name="export_account_wait_message">Mengagihkan maklumat akaun baharu</string>
   <string name="account_export_end_decryption_message">Tidak dapat menyahsulitkan akaun anda dengan kata laluan yang diberikan.</string>
@@ -112,8 +105,6 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="ring_account">Akaun Ring</string>
   <string name="account_migration_title_dialog">Permindahan akaun</string>
   <string name="account_update_needed">Kemaskini diperlukan</string>
-  <string name="account_creation_file_too_big">Saiz fail adalah terlalu besar</string>
-  <string name="account_cannot_read">Tidak dapt membaca %1$s</string>
   <string name="account_cannot_be_found_title">Akaun tidak ditemui</string>
   <string name="account_cannot_be_found_message">Akaun tidak ditemui pada rangkaian Ring.\nPastikan anda telah mengeksport akaun Ring daripada perangkat anda yang sedia ada, dan maklumat yang diberikan adalah tepat.</string>
   <string name="account_no_network_title">Tidak dapat berhubung dengan rangkaian</string>
@@ -123,7 +114,6 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_device_updated_title">Akaun perangkat telah dikemaskinikan</string>
   <string name="account_device_updated_message">Anda telah berjaya mengemaskini akaun Ring anda.</string>
   <string name="account_link_button">Sambungkan perangkat ini dengan akaun</string>
-  <string name="account_import_title">Sambung dengan akaun yang telah sedia ada</string>
   <string name="account_link_prompt_pin">Masukkan PIN</string>
   <string name="account_new_button">Cipta akaun Ring</string>
   <string name="account_link_export_button">Sambungkan perangkat lain dengan akaun ini</string>
@@ -132,10 +122,6 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_end_export_button">tutup</string>
   <string name="account_end_export_infos">PIN anda adalah:\n\n%%\n\nUntuk menyelesaikan proses menyambung, anda mestilah membuka aplikasi Ring pada perangkat baharu. Cipta akaun baharu dengan \\"Sambungkan perangkat ini dengan akaun yang telah sedia ada\\". PIN ini sah selama 10 minit.</string>
   <!--Name registration-->
-  <string name="register_name_wrong_password">Tidak dapat mendaftar nama: kata laluan akaun salah.</string>
-  <string name="register_name_invalid">Tidak dapat mendaftar nama: nama tidak sah.</string>
-  <string name="register_name_already_taken">Tidak dapat mendaftar nama: nama telah digunakan pengguna lain.</string>
-  <string name="register_name_network_error">Tidak dapat mendaftar nama: rangkaian atau server gagal.</string>
   <string name="error_username_empty">Masukkan nama pengguna</string>
   <string name="no_registered_name_for_account">Tiada nama berdaftar dengan akaun ini ditemui</string>
   <string name="register_name">Daftarkan nama</string>

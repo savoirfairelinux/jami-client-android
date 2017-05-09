@@ -14,7 +14,6 @@
   <string name="error_no_network">Отсутствует сетевое подключение</string>
   <string name="error_mobile_network_available_but_disabled">Пожалуйста, разрешите доступ к мобильной сети в настройках</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Новая учетная запись</string>
   <string name="ab_action_chat">Тестовое сообщение</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -28,8 +27,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Набрать номер</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Ответ</string>
-  <string name="hist_replay_button_stop">Стоп</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -38,17 +35,11 @@
     <item quantity="many">%d Бесед</item>
     <item quantity="other">%d беседы</item>
   </plurals>
-  <string name="home_transfer_complet">Перевод завершен</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Контакт не обнаружен</string>
-  <string name="starred_contacts_title">Избранное</string>
   <string name="searchbar_hint">Введите имя или номер телефона</string>
   <string name="choose_number">Выбор номера</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Переход к другому текущему вызову:</string>
-  <string name="transfer_no_other_call">Отсутствуют ожидающие вызовы</string>
-  <string name="transfer_type_number">Укажите  номер для перевода:</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">Входящий вызов от %1$s</string>
   <string name="notif_incoming_call">Входящий вызов</string>
@@ -58,8 +49,6 @@
   <string name="notif_current_call">Текущий вызов</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вы</string>
-  <string name="action_call_attended_transfer">Ручной перевод</string>
-  <string name="action_call_conference">Конференция</string>
   <string name="action_call_hangup">Завершить</string>
   <string name="ongoing_call">Текущий вызов</string>
   <string name="hist_in_call">Входящий вызов от %1$s</string>
@@ -81,7 +70,6 @@
   <string name="send_message">Отправить сообщение</string>
   <string name="message_sending">Отправка сообщения...</string>
   <string name="time_just_now">В данный момент</string>
-  <string name="permission_read_denied">Приложение не имеет прав чтения с накопителя, потому не может функционировать правильно. Пожалуйста, добавьте права доступа к хранилищу данных.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на использование камеры</string>
   <string name="permission_dialog_camera_message">Необходимо доступ к камере для работы с видеозвонками. Пожалуйста, предоставьте их.</string>
@@ -109,7 +97,6 @@
   <string name="account_create_title">Создать Ring аккаунт</string>
   <string name="wizard_next">Далее</string>
   <!--MenuHeaderView-->
-  <string name="unknown">Неизвестно</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Ошибка</string>
   <!--Pending contact requests-->

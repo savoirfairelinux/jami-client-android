@@ -104,16 +104,9 @@ Du kan ändra kontot senare.</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Audio RTP portintervall</string>
   <!--restore/backup-->
-  <string name="account_restore_account">Återställ ett konto</string>
-  <string name="account_restore_message">Ange lösenord för att dekryptera filen</string>
-  <string name="account_restore_decryption_password">Dekrypteringslösenord</string>
   <string name="account_new_device_password">Ange huvudlösenordet för att låsa upp kontot</string>
-  <string name="restore_dialog_title">Återställer</string>
-  <string name="restore_backup_wait">Vänta...</string>
   <string name="error_password_char_count">6 tecken minimum</string>
   <string name="error_passwords_not_equals">Lösenorden stämmer inte</string>
-  <string name="restore_failed_dialog_title">Återställning misslyckades</string>
-  <string name="restore_failed_dialog_msg">Et fel inträffade</string>
   <string name="export_account_wait_title">Vänta...</string>
   <string name="export_account_wait_message">Publicerar ny kontoinformation</string>
   <string name="account_export_end_decryption_message">Kunde inte låsa upp ditt konto med det givna lösenordet.</string>
@@ -132,8 +125,6 @@ Du kan ändra kontot senare.</string>
   <string name="account_migration_title_dialog">Kontodelning</string>
   <string name="account_migration_message_dialog">Dina konton behöver uppdateras. Vill du gå till kontohanteringsfönstret för att uppdatera?</string>
   <string name="account_update_needed">Uppdatering behövs</string>
-  <string name="account_creation_file_too_big">Filen är för stor</string>
-  <string name="account_cannot_read">Kan inte läsa %1$s</string>
   <string name="account_cannot_be_found_title">Kan inte hitta kontot</string>
   <string name="account_cannot_be_found_message">Kontot kunde inte hittas i Ring-nätverket.\nTillse att det har exporterats från en befintlig enhet och att angivna kontouppgifter är korrekt.</string>
   <string name="account_sip_cannot_be_registered_message">Du kan fortsätta med kontoskapandet eller redigera din information här. Redigering är fortfarande möjlig i kontoinställningarna, vid ett senare tillfälle.</string>
@@ -148,9 +139,7 @@ Du kan ändra kontot senare.</string>
   <string name="account_sip_success_message">Du har registrerat ditt SIP-konto.</string>
   <string name="account_sip_register_anyway">Registrera i alla fall</string>
   <string name="account_link_button">Koppla denna enhet till ett konto</string>
-  <string name="account_import_title">Koppla ett befintligt konto</string>
   <string name="account_link_prompt_pin">Ange PIN-kod</string>
-  <string name="account_wizard_title">Välkommen till</string>
   <string name="account_new_button">Skapa ett Ring-konto</string>
   <string name="account_link_export_button">Koppla en annan enhet till detta konto</string>
   <string name="account_link_export_info">För att använda detta konto på en annan enhet, måste du först exponera det på Ring. Detta genererar en PIN-kod som du måste ange på den nya enheten för att öppna kontot. Pin-koden är giltig i 10 minuter.\n\nAnge ditt lösenord för att starta:</string>
@@ -158,10 +147,6 @@ Du kan ändra kontot senare.</string>
   <string name="account_end_export_button">stäng</string>
   <string name="account_end_export_infos">Din PIN-kod är:\n\n%%\n\nFör att slutföra åtgärden, måste du nu öppna Ring på den nya enheten. Skapa ett nytt konto med \"Koppla den här enheten till ett konto\". PIN-koden är giltig i 10 minuter.</string>
   <!--Name registration-->
-  <string name="register_name_wrong_password">Kan inte registrera namnet. Fel kontolösenord.</string>
-  <string name="register_name_invalid">Kan inte registrera namnet. Ogiltigt namn.</string>
-  <string name="register_name_already_taken">Kan inte registrera namnet. Namnet finns redan.</string>
-  <string name="register_name_network_error">Kan inte registrera namnet. Nätverks- eller serverfel.</string>
   <string name="error_username_empty">Ange ett användarnamn</string>
   <string name="no_registered_name_for_account">Inget registrerat namn hittades för detta konto</string>
   <string name="register_name">Registrera namn</string>
