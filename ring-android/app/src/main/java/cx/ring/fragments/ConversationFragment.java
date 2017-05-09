@@ -51,7 +51,6 @@ import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ClipboardHelper;
-import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -328,7 +327,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void onDetailsLoaded(Bitmap bmp, String formattedName) {
+    public void onDetailsLoaded(String formattedName) {
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null && formattedName != null) {
             actionBar.setTitle(formattedName);

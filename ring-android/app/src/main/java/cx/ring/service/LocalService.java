@@ -62,7 +62,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
 
     // Emitting events
     static public final String ACTION_CONF_UPDATE = BuildConfig.APPLICATION_ID + ".action.CONF_UPDATE";
-    static public final String ACTION_CONF_LOADED = BuildConfig.APPLICATION_ID + ".action.CONF_LOADED";
 
     static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
 
@@ -98,14 +97,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
     private LruCache<Long, Bitmap> mMemoryCache = null;
     private final ExecutorService mPool = Executors.newCachedThreadPool();
 
-    public LruCache<Long, Bitmap> get40dpContactCache() {
-        return mMemoryCache;
-    }
-
-    public ExecutorService getThreadPool() {
-        return mPool;
-    }
-
     public void reloadAccounts() {
         if (mService != null) {
             //initAccountLoader();
@@ -132,8 +123,6 @@ public class LocalService extends Service implements Observer<ServiceEvent> {
             return null;
         }
     }
-
-    public static final Callbacks DUMMY_CALLBACKS = new DummyCallbacks();
 
     @Override
     public void onCreate() {

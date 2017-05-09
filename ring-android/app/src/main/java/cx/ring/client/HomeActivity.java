@@ -32,7 +32,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -72,9 +71,7 @@ import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
-import cx.ring.model.CallContact;
 import cx.ring.model.ServiceEvent;
-import cx.ring.model.Phone;
 import cx.ring.model.Settings;
 import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.IDRingService;
@@ -87,7 +84,6 @@ import cx.ring.services.PreferencesService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
 import cx.ring.contactrequests.PendingContactRequestsFragment;
-import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -99,7 +95,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
 
     static final String TAG = HomeActivity.class.getSimpleName();
 
-    public static final int REQUEST_CODE_PREFERENCES = 1;
     public static final int REQUEST_CODE_CREATE_ACCOUNT = 7;
     public static final int REQUEST_CODE_CALL = 3;
     public static final int REQUEST_CODE_CONVERSATION = 4;
@@ -810,36 +805,6 @@ public class HomeActivity extends AppCompatActivity implements LocalService.Call
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(R.id.main_frame, fContent, SETTINGS_TAG)
                 .addToBackStack(SETTINGS_TAG).commit();
-    }
-
-    public void onTextContact(final CallContact c) {
-        if (c.getPhones().size() > 1) {
-            final CharSequence numbers[] = new CharSequence[c.getPhones().size()];
-            int i = 0;
-            for (Phone p : c.getPhones()) {
-                numbers[i++] = p.getNumber().getRawUriString();
-            }
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.choose_number);
-            builder.setItems(numbers, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    CharSequence selected = numbers[which];
-                    Intent intent = new Intent(Intent.ACTION_VIEW)
-                            .setClass(HomeActivity.this, ConversationActivity.class)
-                            .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)))
-                            .putExtra(CallFragment.KEY_NUMBER, selected);
-                    startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
-                }
-            });
-            builder.show();
-        } else {
-            Intent intent = new Intent(Intent.ACTION_VIEW)
-                    .setClass(this, ConversationActivity.class)
-                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, c.getIds().get(0)));
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
-        }
     }
 
     private void setVideoEnabledFromPermission() {
