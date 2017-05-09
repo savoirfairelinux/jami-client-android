@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_145ac283",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/TransferDFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-05-09T19:42:35Z",
+      "side": 1,
+      "message": "This file can be deleted",
+      "revId": "8f92b870a17056a97b2b80433ecae471f65f36ec",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_345fbe74",
+        "filename": "ring-android/app/src/main/java/cx/ring/loaders/ContactsLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-05-09T19:42:35Z",
+      "side": 1,
+      "message": "This file can be deleted",
+      "revId": "8f92b870a17056a97b2b80433ecae471f65f36ec",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
