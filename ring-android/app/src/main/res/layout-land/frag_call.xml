@@ -31,7 +31,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:visibility="gone" />
 
     <FrameLayout
-        android:id="@+id/inner_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
@@ -145,7 +144,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/imageView"
                     android:layout_gravity="center_horizontal" />
 
 
@@ -153,7 +151,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/call_status_bar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:visibility="visible">

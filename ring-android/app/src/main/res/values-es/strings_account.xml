@@ -89,16 +89,9 @@ Puedes editar tu cuenta luego</string>
   <string name="account_rtp_min_port">Mínimo</string>
   <string name="account_rtp_port_range">Intervalo de puertos de audio RTP</string>
   <!--restore/backup-->
-  <string name="account_restore_account">Restaurar una cuenta</string>
-  <string name="account_restore_message">Introduce la contraseña para descifrar el archivo.</string>
-  <string name="account_restore_decryption_password">Contraseña de descifrado</string>
   <string name="account_new_device_password">Ingresa la contraseña principal para desbloquear cuenta</string>
-  <string name="restore_dialog_title">Restaurando</string>
-  <string name="restore_backup_wait">Por favor, espera...</string>
   <string name="error_password_char_count">6 caracteres mínimo</string>
   <string name="error_passwords_not_equals">Las contraseñas no coinciden</string>
-  <string name="restore_failed_dialog_title">La restauración ha fallado</string>
-  <string name="restore_failed_dialog_msg">Ha ocurrido un error</string>
   <string name="export_account_wait_title">Por favor, espera...</string>
   <string name="export_account_wait_message">Publicando nueva información de la cuenta</string>
   <string name="account_export_end_decryption_message">Error al desbloquear tu cuenta con la contraseña provista</string>
@@ -112,8 +105,6 @@ Puedes editar tu cuenta luego</string>
   <string name="ring_account">Cuenta de Ring</string>
   <string name="account_migration_title_dialog">Migración de la cuenta</string>
   <string name="account_update_needed">Actualización requerida</string>
-  <string name="account_creation_file_too_big">El archivo es demasiado grande</string>
-  <string name="account_cannot_read">Error al leer %1$s</string>
   <string name="account_cannot_be_found_title">Error al encontrar la cuenta</string>
   <string name="account_cannot_be_found_message">La cuenta no ha podido ser encontrada en la red de Ring.\nAsegúrate de que haya sido exportada en Ring desde un dispositivo existente, y que las credenciales provistas son correctas.</string>
   <string name="account_no_network_title">Error al conectarse a la red</string>
@@ -123,9 +114,7 @@ Puedes editar tu cuenta luego</string>
   <string name="account_device_updated_title">La cuenta del dispositivo ha sido actualizada</string>
   <string name="account_device_updated_message">Has actualizado tu cuenta de Ring exitosamente</string>
   <string name="account_link_button">Conectar este dispositivo a una cuenta</string>
-  <string name="account_import_title">Conectarse a una cuenta existente</string>
   <string name="account_link_prompt_pin">Ingresa tu PIN</string>
-  <string name="account_wizard_title">Bienvenido a</string>
   <string name="account_new_button">Crear una cuenta en Ring</string>
   <string name="account_link_export_button">Conectar otro dispositivo a esta cuenta</string>
   <string name="account_link_export_info">Para utilizar esta cuenta con otros dispositivos, primero debes exponer tu cuenta en Ring. Esto generará un PIN que deberás ingresar en tu nuevo dispositivo para configurar la cuenta. El PIN es válido por 10 minutos.\n\nPor favor provee tu contraseña para comenzar:</string>
@@ -133,10 +122,6 @@ Puedes editar tu cuenta luego</string>
   <string name="account_end_export_button">cerrar</string>
   <string name="account_end_export_infos">Tu PIN es:\n\n%%\n\nPara completar el proceso, necesitas abrir Ring en el nuevo dispositivo. Crea una nueva cuenta con \"Vincular este dispositivo a una cuenta\". Tu PIN es válido por 10 minutos.</string>
   <!--Name registration-->
-  <string name="register_name_wrong_password">Error al registrar el nombre: la contraseña de la cuenta es incorrecta.</string>
-  <string name="register_name_invalid">Error al registrar el nombre: nombre inválido.</string>
-  <string name="register_name_already_taken">Error al registrar el nombre: este nombre ya ha sido utilizado.</string>
-  <string name="register_name_network_error">Error al registrar el nombre: error de red o servidor.</string>
   <string name="error_username_empty">Ingresa un nombre de usuario</string>
   <string name="no_registered_name_for_account">No se ha encontrado un nombre registrado con esta cuenta</string>
   <string name="register_name">Registrar nombre</string>

@@ -13,7 +13,6 @@
   <string name="error_no_network">Ei verkkoyhteyttä</string>
   <string name="error_mobile_network_available_but_disabled">Anna lupa muuttaa verkkoasetuksia asetusruudussa</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Uusi tunnus</string>
   <string name="ab_action_chat">Tekstiviestittely</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -27,25 +26,17 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Valitse numero</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Toista uudelleen</string>
-  <string name="hist_replay_button_stop">Lopeta</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d keskustelu</item>
     <item quantity="other">%d Keskustelut</item>
   </plurals>
-  <string name="home_transfer_complet">Lähetys valmis</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Yhteystietoa ei löytynyt</string>
-  <string name="starred_contacts_title">Suosikit</string>
   <string name="searchbar_hint">Syötä nimi tai puhelinnumero...</string>
   <string name="choose_number">Valitse numero</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Vaihda puhelua:</string>
-  <string name="transfer_no_other_call">Ei muita odottavia puheluita</string>
-  <string name="transfer_type_number">Kirjoita numero lähettääksesi: </string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">Saapuva puhelu %1$s</string>
   <string name="notif_incoming_call">Saapuva puhelu</string>
@@ -55,8 +46,6 @@
   <string name="notif_current_call">Puhelu</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sinä:</string>
-  <string name="action_call_attended_transfer">Yritetty siirto</string>
-  <string name="action_call_conference">Kokous</string>
   <string name="action_call_hangup">Katkaise puhelu</string>
   <string name="ongoing_call">Tämänhetkinen puhelu</string>
   <string name="hist_in_call">Saapuva puhelu %1$s</string>
@@ -78,7 +67,6 @@
   <string name="send_message">Lähetä viesti</string>
   <string name="message_sending">Viestiä lähetetään...</string>
   <string name="time_just_now">Juuri nyt</string>
-  <string name="permission_read_denied">Ohjelmalla ei ole oikeuksia lukea massamuistia. </string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera oikeudet</string>
   <string name="permission_dialog_camera_message">Videopuhelut vaativat toimiakseen kameran käyttöoikeudet.</string>
@@ -106,7 +94,6 @@
   <string name="account_create_title">Luo Ring tunnus</string>
   <string name="wizard_next">Seuraava</string>
   <!--MenuHeaderView-->
-  <string name="unknown">Tuntematon</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Virhe</string>
   <!--Pending contact requests-->

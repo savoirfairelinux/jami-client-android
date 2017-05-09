@@ -84,12 +84,8 @@ Możesz edytować swoje konto później</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Zakres Portów Audio RTP</string>
   <!--restore/backup-->
-  <string name="account_restore_message">Wprowadź hasło, aby odszyfrować plik.</string>
-  <string name="account_restore_decryption_password">Hasło rozszyfrowania</string>
-  <string name="restore_backup_wait">Proszę czekać…</string>
   <string name="error_password_char_count">minimum 6 znaków</string>
   <string name="error_passwords_not_equals">Hasła nie pasują do siebie</string>
-  <string name="restore_failed_dialog_msg">Wystąpił błąd</string>
   <string name="export_account_wait_title">Proszę czekać…</string>
   <string name="account_export_end_error_title">Błąd</string>
   <string name="account_new_button">Stwórz konto Ring</string>

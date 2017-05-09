@@ -67,11 +67,8 @@
   <string name="account_rtp_max_port">Maximum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <!--restore/backup-->
-  <string name="account_restore_decryption_password">Entschlüsselungskennwort</string>
-  <string name="restore_backup_wait">Bitte warten...</string>
   <string name="error_password_char_count">Mindestens 6 Zeichen</string>
   <string name="error_passwords_not_equals">Kennwörter stimmen nicht überein</string>
-  <string name="restore_failed_dialog_msg">Fehler aufgetreten</string>
   <string name="export_account_wait_title">Bitte warten...</string>
   <string name="account_export_end_error_title">Fehler</string>
   <string name="account_device_updated_message">Sie haben ihr Ring-Konto erfolgreich aktualisiert.</string>

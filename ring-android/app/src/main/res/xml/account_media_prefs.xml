@@ -20,42 +20,32 @@ along with this program; if not, write to the Free Software
 -->
 <android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v7.preference.PreferenceCategory
-        android:id="@+id/audio_ringtone_category"
-        android:title="@string/account_ringtone_label">
+    <android.support.v7.preference.PreferenceCategory android:title="@string/account_ringtone_label">
         <android.support.v14.preference.SwitchPreference
-            android:id="@+id/audio_ringtone"
             android:key="Account.ringtoneEnabled"
             android:persistent="false"
             android:title="@string/account_ringtone_enabled_label" />
 
         <android.support.v14.preference.SwitchPreference
-            android:id="@+id/audio_ringtone_custom"
             android:key="Account.ringtoneCustom"
             android:persistent="true"
             android:title="@string/account_ringtone_custom_label" />
 
         <android.support.v7.preference.Preference
-            android:id="@+id/audio_ringtone_path"
             android:key="Account.ringtonePath"
             android:persistent="false"
             android:title="@string/account_ringtone_path_label" />
     </android.support.v7.preference.PreferenceCategory>
 
-    <android.support.v7.preference.PreferenceCategory
-        android:id="@+id/audio_codecs"
-        android:title="@string/account_audio_label">
+    <android.support.v7.preference.PreferenceCategory android:title="@string/account_audio_label">
         <cx.ring.fragments.CodecPreference
             android:key="Account.audioCodecs"
             android:layout="@layout/frag_audio_mgmt"
             android:persistent="false" />
     </android.support.v7.preference.PreferenceCategory>
 
-    <android.support.v7.preference.PreferenceCategory
-        android:id="@+id/video_category"
-        android:title="@string/account_video_label">
+    <android.support.v7.preference.PreferenceCategory android:title="@string/account_video_label">
         <android.support.v14.preference.SwitchPreference
-            android:id="@+id/enable_video"
             android:key="Account.videoEnabled"
             android:persistent="false"
             android:title="@string/account_video_enable" />

@@ -21,7 +21,6 @@
   <string name="error_no_network">بدون اتصال شبکه</string>
   <string name="error_mobile_network_available_but_disabled">لطفاً در صفحهٔ تنظمیات به شبکهٔ سلولی دسترسی دهید.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">حساب جدید</string>
   <string name="ab_action_chat">پیام متنی</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -32,29 +31,20 @@
   <string name="menu_item_accounts">مدیریت حساب‌ها</string>
   <string name="menu_item_settings">تنظیمات</string>
   <string name="menu_item_share">هم‌رسانی اطّلاعات تماس</string>
-  <string name="menu_item_blacklist">مخاطبین مسدود شده</string>
   <string name="menu_item_about">دربارهٔ رینگ</string>
   <!--Dialing Fragment-->
   <string name="dial_number">تماس با یک شماره</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">پاسخ</string>
-  <string name="hist_replay_button_stop">پایان</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="other">%d گفتگو</item>
   </plurals>
-  <string name="home_transfer_complet">ارسال انجام شد</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">مخاطبی پیدا نشد</string>
-  <string name="starred_contacts_title">برگزیده‌ها</string>
   <string name="searchbar_hint">نام یا شماره تلفن را وارد کنید...</string>
   <string name="choose_number">شماره‌ای را برگزینید</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">جابه‌جایی به دیگر تماس جاری:</string>
-  <string name="transfer_no_other_call">هیچ تماس دیگری معلّق نیست</string>
-  <string name="transfer_type_number">شماره‌ای برای فرستادن وارد کنید:</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">تماس دریافتی از %1$s</string>
   <string name="notif_incoming_call">تماس دریافتی</string>
@@ -64,8 +54,6 @@
   <string name="notif_current_call">تماس کنونی</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">شما:</string>
-  <string name="action_call_attended_transfer">جابه‌جایی توجّه شده</string>
-  <string name="action_call_conference">نشست</string>
   <string name="action_call_hangup">قطع کردن</string>
   <string name="ongoing_call">تماس خروجی</string>
   <string name="hist_in_call">تماس دریافتی به مدّت  %1$s</string>
@@ -87,7 +75,6 @@
   <string name="send_message">ارسال پیام</string>
   <string name="message_sending">در حال ارسال پیام…</string>
   <string name="time_just_now">هم‌اکنون</string>
-  <string name="permission_read_denied">کاره اجازهٔ خواندن از حافظه‌تان را ندارد، بنابراین نمی‌تواند درست رفتار کند. لطفاً این دسترسی را اعطا کنید.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">دسترسی دوربین</string>
   <string name="permission_dialog_camera_message">گفت‌وگوی ویدیویی برای کار کردن نیاز به دسترسی دوربین دارد. لطفاً آن را فعّال کنید.</string>
@@ -126,7 +113,6 @@
   <string name="profile">نمایهٔ من</string>
   <string name="open_the_gallery">گشودن جُنگ</string>
   <string name="take_a_photo">گرفتن عکس</string>
-  <string name="unknown">ناشناخته</string>
   <!--Share fragment-->
   <string name="share_message">این رمز QR را با پویشگر تعبیه شده در کارهٔ رینگی که می‌خواهد با شما گفت‌وگو کند، بپویید.</string>
   <string name="share_message_no_account">لطفاً برای هم‌رسانی، حسابی را برگزینید.</string>

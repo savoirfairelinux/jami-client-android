@@ -104,16 +104,9 @@
   <string name="account_rtp_min_port">کمینه</string>
   <string name="account_rtp_port_range">دامنهٔ درگاه RTP صدا</string>
   <!--restore/backup-->
-  <string name="account_restore_account">بازگردانی یک حساب</string>
-  <string name="account_restore_message">برای رمزگشایی پرونده، گذرواژه را وارد کنید.</string>
-  <string name="account_restore_decryption_password">گذرواژهٔ رمزگشایی</string>
   <string name="account_new_device_password">برای قفل‌گشایی حساب، گذرواژهٔ اصلی را وارد کنید</string>
-  <string name="restore_dialog_title">در حال بازگردانی</string>
-  <string name="restore_backup_wait">لطفاً صبر کنید…</string>
   <string name="error_password_char_count">کمینه ۶ نویسه</string>
   <string name="error_passwords_not_equals">گذرواژه‌ها همتا نیستند</string>
-  <string name="restore_failed_dialog_title">بارگردانی شکست خورد</string>
-  <string name="restore_failed_dialog_msg">خطایی رخ داد</string>
   <string name="export_account_wait_title">لطفاً صبر کنید…</string>
   <string name="export_account_wait_message">در حال انتشار اطّلاعات حساب نو</string>
   <string name="account_export_end_decryption_message">نمی‌توان قفل حسابتان را با گذواژهٔ فراهم شده گشود.</string>
@@ -132,8 +125,6 @@
   <string name="account_migration_title_dialog">مهاجرت حساب</string>
   <string name="account_migration_message_dialog">حساب‌هایتان باید به‌روز شوند. می‌خواهید برای انجام این عمل، به صفحهٔ مدیریت حساب بروید؟</string>
   <string name="account_update_needed">نیاز به به‌روز رسانی است</string>
-  <string name="account_creation_file_too_big">پرونده خیلی بزرگ است</string>
-  <string name="account_cannot_read">نمی‌توان %1$s را خواند</string>
   <string name="account_cannot_be_found_title">نمی‌تواند حساب را یافت</string>
   <string name="account_cannot_be_found_message">حساب نتوانست روی شبکهٔ رینگ پیدا شود.\nمطمئن شوید از یک افزارهٔ موجود، روی رینگ برون‌ریزی شده است و اعتبارنامه‌های فراهم شده درست هستند.</string>
   <string name="account_sip_cannot_be_registered_message">می‌توانید فرایند ایجاد حساب را ادامه داده یا در این‌جا اطّلاعاتتان را ویرایش کنید. ویرایش هم‌چنان بعداٍ در تنظیمات حساب ممکن است.</string>
@@ -148,9 +139,7 @@
   <string name="account_sip_success_message">حساب سیپتان را با موفّقیت ثبت کردید</string>
   <string name="account_sip_register_anyway">در هر صورت ثبت نام کن</string>
   <string name="account_link_button">پیوند این افزاره به یک حساب</string>
-  <string name="account_import_title">پیوند به یک حساب موجود</string>
   <string name="account_link_prompt_pin">پین را وارد کنید</string>
-  <string name="account_wizard_title">خوش آمدید به</string>
   <string name="account_new_button">ساخت یک حساب رینگ</string>
   <string name="account_link_export_button">پیوند افزاره‌ای دیگر به این حساب</string>
   <string name="account_link_export_info">برای استفاده از این حساب روی افزاره‌های دیگر، باید نخست آن را روی رینگ آشکار کنید. این کار یک رمز پین تولید خواهد کرد که باید برای برپایی حساب، روی افزارهٔ نو وارد کنید. پین تا ۱۰ دقیقه معتبر است. \n\nلطفاً برای شروع، گذرواژه‌تان را وارد کنید.</string>
@@ -158,10 +147,6 @@
   <string name="account_end_export_button">بستن</string>
   <string name="account_end_export_infos">پین شما:\n\n%%\n\nبرای کامل کردن فرایند، باید رینگ را روی افزارهٔ نو گشوده و حساب جدیدی را با انتخاب «پیوند این افزاره به یک حساب» ایجاد کنید. پینتان برای ۱۰ دقیقه معتبر است.</string>
   <!--Name registration-->
-  <string name="register_name_wrong_password">نمی‌تواند نام را ثبت کرد: گذرواژهٔ حساب اشتباه</string>
-  <string name="register_name_invalid">نمی‌تواند نام را ثبت کرد: نام نامعتبر</string>
-  <string name="register_name_already_taken">نمی‌تواند نام را ثبت کرد: نام فبلاً برداشته شده</string>
-  <string name="register_name_network_error">نمی‌تواند نام را ثبت کرد: خطای شبکه یا کارساز</string>
   <string name="error_username_empty">یک نام کاربری وارد کنید</string>
   <string name="no_registered_name_for_account">هیچ نام ثبت‌شده‌ای برای این حساب پیدا نشد</string>
   <string name="register_name">ثبت نام</string>

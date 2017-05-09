@@ -94,16 +94,9 @@ Du kan rette din konto senere</string>
   <string name="account_rtp_min_port">Minimum</string>
   <string name="account_rtp_port_range">Portinterval for Lyd-RTP</string>
   <!--restore/backup-->
-  <string name="account_restore_account">Gendan en konto</string>
-  <string name="account_restore_message">Indtast kodeord for at dekryptere filen.</string>
-  <string name="account_restore_decryption_password">Dekrypteringskodeord</string>
   <string name="account_new_device_password">Indtast primære kodeord for at oplåse konto</string>
-  <string name="restore_dialog_title">Genskaber</string>
-  <string name="restore_backup_wait">Vent venligt...</string>
   <string name="error_password_char_count">Mindst 6 tegn</string>
   <string name="error_passwords_not_equals">Kodeord stemmer ikke overens</string>
-  <string name="restore_failed_dialog_title">Genskabelse mislykkedes</string>
-  <string name="restore_failed_dialog_msg">Der skete en fejl</string>
   <string name="export_account_wait_title">Vent venligt...</string>
   <string name="export_account_wait_message">Publicierer ny konto-information</string>
   <string name="account_export_end_decryption_message">Kunne ikke låse din konto op med brug af det angivne kodeord.</string>
@@ -122,8 +115,6 @@ Du kan rette din konto senere</string>
   <string name="account_migration_title_dialog">Konto-migrering</string>
   <string name="account_migration_message_dialog">Dine konti kræver at blive opdateret. Vil du gå til Konto-indstillingerne for at foretage denne operation ?</string>
   <string name="account_update_needed">Opdatering nødvendig</string>
-  <string name="account_creation_file_too_big">Filen er for stor</string>
-  <string name="account_cannot_read">Kan ikke læse %1$s</string>
   <string name="account_cannot_be_found_title">Kan ikke finde konto</string>
   <string name="account_cannot_be_found_message">Kontoen kunne ikke findes på Ring-netværket.\nSikr dig at den er eksporteret fra en eksisterende enhed, og at de angivne bruger-oplysninger er korrekte.</string>
   <string name="account_sip_cannot_be_registered_message">Du kan fortsætte med konto-oprettelsen eller redigere informationerne her. Du kan under alle omstændigheder lave ændringer senere under konti-indstillingerne.</string>
@@ -138,9 +129,7 @@ Du kan rette din konto senere</string>
   <string name="account_sip_success_message">Din SIP-konto blev registreret korrekt.</string>
   <string name="account_sip_register_anyway">Registrer alligevel</string>
   <string name="account_link_button">Tilknyt denne enhed til en konto</string>
-  <string name="account_import_title">Tilknyt til en eksisterende konto</string>
   <string name="account_link_prompt_pin">Indtast PIN-kode</string>
-  <string name="account_wizard_title">Velkommen til</string>
   <string name="account_new_button">Opret en Ring-konto</string>
   <string name="account_link_export_button">Tilknyt en anden enhed til denne konto</string>
   <string name="account_link_export_info">For at bruge denne konto på andre enheder, skal du først gøre den tilgængelig for Ring. Dette vil generere en PIN-kode som skal indtastes på den nye enhed for at installere kontoen. Pin-koden er gyldig i 10 minutter. \n\nIndtast dit kodeord for at starte:</string>
@@ -148,10 +137,6 @@ Du kan rette din konto senere</string>
   <string name="account_end_export_button">luk</string>
   <string name="account_end_export_infos">Din PIN-kode er:\n\n%%\n\nFor at afslutte processen skal du åbne Ring på den nye enhed, og oprette en ny konto med \"Tilknyt denne enhed til en konto\". PIN-koden er gyldig i 10 minutter.</string>
   <!--Name registration-->
-  <string name="register_name_wrong_password">Kan ikke registrere navn: forkert kodeord.</string>
-  <string name="register_name_invalid">Kan ikke registrere navn: ugyldigt navn</string>
-  <string name="register_name_already_taken">Kan ikke registrere navn: navnet er optaget</string>
-  <string name="register_name_network_error">Kan ikke registrere navn: netværk eller server-fejl</string>
   <string name="error_username_empty">Indtast et brugernavn</string>
   <string name="no_registered_name_for_account">Intet registreret navn fundet for denne konto</string>
   <string name="register_name">Registrer navn</string>

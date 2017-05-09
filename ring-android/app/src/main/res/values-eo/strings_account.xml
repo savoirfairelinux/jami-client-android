@@ -83,16 +83,11 @@
   <string name="account_rtp_min_port">Minimumo</string>
   <string name="account_rtp_port_range">Intervalo de Aŭdia RTP</string>
   <!--restore/backup-->
-  <string name="account_restore_message">Entajpu pasvorton por malĉifri la dosieron.</string>
-  <string name="account_restore_decryption_password">Malĉifra pasvorto</string>
-  <string name="restore_backup_wait">Bonvole atendu…</string>
   <string name="error_password_char_count">6 signoj minimume</string>
   <string name="error_passwords_not_equals">Pasvortoj ne kongruas</string>
-  <string name="restore_failed_dialog_msg">Eraro okazis</string>
   <string name="export_account_wait_title">Bonvole atendu…</string>
   <string name="account_export_end_network_title">Reta eraro</string>
   <string name="account_export_end_error_title">Eraro</string>
-  <string name="account_wizard_title">Bonvenu al</string>
   <string name="account_new_button">Krei Ring konton</string>
   <!--Name registration-->
   <string name="username_already_taken">Uzantnomo jam prenita</string>

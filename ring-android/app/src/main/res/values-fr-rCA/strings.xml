@@ -21,7 +21,6 @@
   <string name="error_no_network">Aucune connectivité réseau</string>
   <string name="error_mobile_network_available_but_disabled">Veuillez permettre l\'accès au réseau cellulaire dans l\'écran des réglages.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Nouveau compte</string>
   <string name="ab_action_chat">Messagerie texte</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -36,26 +35,17 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Composer un numéro</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Rejouer</string>
-  <string name="hist_replay_button_stop">Arrêter</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">Conversations %d</item>
     <item quantity="other">Conversations %d</item>
   </plurals>
-  <string name="home_transfering">Transfert en cours de %1$s à %2$s</string>
-  <string name="home_transfer_complet">Transfert complété</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Aucun contact trouvé</string>
-  <string name="starred_contacts_title">Favoris</string>
   <string name="searchbar_hint">Entrer le nom ou le numéro de téléphone</string>
   <string name="choose_number">Choisissez un numéro</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Transférer à un autre appel en cours</string>
-  <string name="transfer_no_other_call">Aucun appel en attente</string>
-  <string name="transfer_type_number">Entrer le numéro pour transférer à:</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">Appel entrant de %1$s</string>
   <string name="notif_incoming_call">Appel entrant</string>
@@ -65,8 +55,6 @@
   <string name="notif_current_call">Appel en cours</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Toi</string>
-  <string name="action_call_attended_transfer">Transfert en cours</string>
-  <string name="action_call_conference">Conférence</string>
   <string name="action_call_hangup">Raccrocher</string>
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
@@ -89,7 +77,6 @@
   <string name="send_message">Envoyer le message</string>
   <string name="message_sending">Transmission du message</string>
   <string name="time_just_now">Maintenant</string>
-  <string name="permission_read_denied">L\'application n\'a pas les droits de lecture de votre espace de stockage. Il ne peut donc pas fonctionner efficacement. S.v.p. envisager l\'octroi des droits de lecture.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Droits d\'accès à la caméra</string>
   <string name="permission_dialog_camera_message">Les conversations vidéos requièrent les droits d\'accès à la caméra pour fonctionner. S.v.p. envisager d\'octroyer ces droits.</string>
@@ -130,7 +117,6 @@
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre un photo.</string>
   <string name="profile_name_hint">Entrer votre nom (optionnel)</string>
-  <string name="unknown">Inconnu</string>
   <!--Share fragment-->
   <string name="share_message">Numériser ce code QR à partir du scan intégré de l\'application Ring qui veut communiquer avec vous.</string>
   <string name="share_message_no_account">S\'il vous plaît sélectionner un compte à partager.</string>

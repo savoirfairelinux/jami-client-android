@@ -22,7 +22,6 @@
   <string name="error_no_network">Ağ bağlantısı yok</string>
   <string name="error_mobile_network_available_but_disabled">Lütfen ayarlar ekranında hücre ağına erişim verin.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Yeni hesap</string>
   <string name="ab_action_chat">Metin ileti</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -34,31 +33,21 @@
   <string name="menu_item_accounts">Hesapları yönet</string>
   <string name="menu_item_settings">Ayarlar</string>
   <string name="menu_item_share">Bilgimi paylaş</string>
-  <string name="menu_item_blacklist">Engellenmiş kişiler</string>
   <string name="menu_item_about">Ring Hakkında</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Bir numara çevir</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Yeniden oynat</string>
-  <string name="hist_replay_button_stop">Durdur</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Konuşma</item>
     <item quantity="other">%d Konuşma</item>
   </plurals>
-  <string name="home_transfering">%1$s den %2$s ye aktarılıyor</string>
-  <string name="home_transfer_complet">Aktarım tamamlandı</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Kişi bulunamadı</string>
-  <string name="starred_contacts_title">Sık Kullanılanlar</string>
   <string name="searchbar_hint">Ad ya da telefon numarası girin...</string>
   <string name="choose_number">Numara seçin</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Başka bir geçerli aramaya aktar:</string>
-  <string name="transfer_no_other_call">Bekleyen başka arama yok</string>
-  <string name="transfer_type_number">Aktarılacak numarayı girin:</string>
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Yanıtsız gelen arama</string>
   <string name="notif_missed_outgoing_call">Yanıtsız giden arama</string>
@@ -70,8 +59,6 @@
   <string name="notif_current_call">Şimdiki arama</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sen:</string>
-  <string name="action_call_attended_transfer">Katılınmış Aktarma</string>
-  <string name="action_call_conference">Toplantı</string>
   <string name="action_call_hangup">Kapat</string>
   <string name="ongoing_call">Giden arama</string>
   <string name="hist_in_call">%1$s gelen arama</string>
@@ -94,7 +81,6 @@
   <string name="send_message">İleti gönder</string>
   <string name="message_sending">İleti gönderiliyor...</string>
   <string name="time_just_now">Şimdi</string>
-  <string name="permission_read_denied">Uygulamaya deponuzu okuma izni verilmedi. Bu yüzden düzgün işleyemez. Lütfen bu izni vermeyi göz ardı etmeyin.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera izni</string>
   <string name="permission_dialog_camera_message">Görüntülü görüşmelerin çalışması için kamera izni gerekir. Lütfen etkinleştirmeyi göz ardı etmeyin.</string>
@@ -136,7 +122,6 @@
   <string name="open_the_gallery">Galeriyi aç</string>
   <string name="take_a_photo">Fotoğraf çek</string>
   <string name="profile_name_hint">Adınızı girin (isteğe bağlı)</string>
-  <string name="unknown">Bilinmeyen</string>
   <!--Share fragment-->
   <string name="share_message">Sizinle iletişime geçmek isteyenin Ring uygulamasının gömülü tarayıcısıyla bu QR kodu tarayın.</string>
   <string name="share_message_no_account">Lütfen paylaşmak için bir hesap seçin.</string>

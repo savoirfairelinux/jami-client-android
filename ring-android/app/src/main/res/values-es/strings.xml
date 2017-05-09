@@ -17,7 +17,6 @@
   <string name="error_no_network">Sin conexión a la red</string>
   <string name="error_mobile_network_available_but_disabled">Permite el acceso a la red móvil en el menú de configuración.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Cuenta nueva</string>
   <string name="ab_action_chat">Mensaje de texto</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -32,25 +31,17 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Marcar un Número</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Repetir</string>
-  <string name="hist_replay_button_stop">Parar</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversacion</item>
     <item quantity="other">Conversaciones: %d</item>
   </plurals>
-  <string name="home_transfer_complet">Transferencia completada</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">No se ha encontrado el contacto</string>
-  <string name="starred_contacts_title">Favoritos</string>
   <string name="searchbar_hint">Introduce nombre o número de teléfono...</string>
   <string name="choose_number">Escoge un número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Transferir a otra llamada en curso:</string>
-  <string name="transfer_no_other_call">No hay llamadas pendientes</string>
-  <string name="transfer_type_number">Escribe el número al que transferir:</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">Llamada entrante de %1$s</string>
   <string name="notif_incoming_call">Llamada entrante</string>
@@ -60,8 +51,6 @@
   <string name="notif_current_call">Llamada en curso</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tú:</string>
-  <string name="action_call_attended_transfer">Transferencia atendida</string>
-  <string name="action_call_conference">Conferencia</string>
   <string name="action_call_hangup">Colgar</string>
   <string name="ongoing_call">Llamada en curso</string>
   <string name="hist_in_call">Llamada entrante de %1$s</string>
@@ -83,7 +72,6 @@
   <string name="send_message">Enviar mensaje</string>
   <string name="message_sending">Enviando mensaje...</string>
   <string name="time_just_now">En este momento</string>
-  <string name="permission_read_denied">La aplicación no puede funcionar correctamente porque tiene permiso para leer tus archivos. Considera darle los permisos necesarios</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permiso de cámara</string>
   <string name="permission_dialog_camera_message">Las conversaciones con vídeo requieren utilizar la cámara. Considera conceder este permiso.</string>
@@ -122,7 +110,6 @@
   <string name="profile">Mi perfil</string>
   <string name="open_the_gallery">Abrir la galería</string>
   <string name="take_a_photo">Tomar una foto</string>
-  <string name="unknown">Desconocido</string>
   <!--Share fragment-->
   <string name="share_message">Escanea este QRCode con el escáner integrado de la aplicación Ring que desea comunicarse contigo.</string>
   <string name="share_message_no_account">Seleccione una cuenta para compartir.</string>

@@ -100,16 +100,9 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_rtp_min_port">Mažiausias</string>
   <string name="account_rtp_port_range">Garso RTP prievadų rėžis</string>
   <!--restore/backup-->
-  <string name="account_restore_account">Atkurti paskyrą</string>
-  <string name="account_restore_message">Įrašykite slaptažodį, kad iššifruotumėte failą.</string>
-  <string name="account_restore_decryption_password">Iššifravimo slaptažodis</string>
   <string name="account_new_device_password">Norėdami atrakinti paskyrą, įveskite pagrindinį slaptažodį</string>
-  <string name="restore_dialog_title">Atkuriama</string>
-  <string name="restore_backup_wait">Prašome palaukti...</string>
   <string name="error_password_char_count">Mažiausiai 6 simboliai</string>
   <string name="error_passwords_not_equals">Slaptažodžiai nesutampa</string>
-  <string name="restore_failed_dialog_title">Atkūrimas nepavyko</string>
-  <string name="restore_failed_dialog_msg">Įvyko klaida</string>
   <string name="export_account_wait_title">Prašome palaukti...</string>
   <string name="export_account_wait_message">Skelbiama naujos paskyros informacija</string>
   <string name="account_export_end_decryption_message">Naudojant pateiktą slaptažodį, nepavyko atrakinti jūsų paskyros.</string>
@@ -123,8 +116,6 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="ring_account_identity">Tapatybė</string>
   <string name="account_migration_title_dialog">Paskyros perkėlimas</string>
   <string name="account_update_needed">Reikalingas atnaujinimas</string>
-  <string name="account_creation_file_too_big">Failas per didelis</string>
-  <string name="account_cannot_read">Nepavyksta perskaityti %1$s</string>
   <string name="account_cannot_be_found_title">Nepavyksta rasti paskyros</string>
   <string name="account_no_network_title">Nepavyksta prisijungti prie tinklo</string>
   <string name="account_device_added_title">Paskyros įrenginys pridėtas</string>
@@ -132,14 +123,11 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_device_updated_title">Paskyros įrenginys atnaujintas</string>
   <string name="account_device_updated_message">Jūs sėkmingai atnaujinote savo Ring paskyrą.</string>
   <string name="account_link_button">Susieti šį įrenginį su paskyra</string>
-  <string name="account_import_title">Susieti su esama paskyra</string>
   <string name="account_link_prompt_pin">Įveskite PIN</string>
-  <string name="account_wizard_title">Sveiki atvykę į </string>
   <string name="account_new_button">Sukurti Ring paskyrą</string>
   <string name="account_link_export_button">Susieti kitą įrenginį su šia paskyra</string>
   <string name="account_end_export_button">užverti</string>
   <!--Name registration-->
-  <string name="register_name_already_taken">Nepavyksta užregistruoti vardo: vardas jau užimtas.</string>
   <string name="no_registered_name_for_account">Šiai paskyrai nerasta jokio registruoto vardo</string>
   <string name="registered_username">Registruotas naudotojo vardas</string>
   <string name="register_username">Registruoti viešąjį naudotojo vardą (eksperimentinis)</string>

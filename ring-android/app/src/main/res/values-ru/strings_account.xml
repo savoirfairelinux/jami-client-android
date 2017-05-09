@@ -94,16 +94,9 @@
   <string name="account_rtp_min_port">Минимум</string>
   <string name="account_rtp_port_range">Диапазон портов для RTP-аудио</string>
   <!--restore/backup-->
-  <string name="account_restore_account">Восстановить аккаунт</string>
-  <string name="account_restore_message">Введите пароль для расшифровки файла.</string>
-  <string name="account_restore_decryption_password">Пароль расшифровки</string>
   <string name="account_new_device_password">Введите основной пароль, чтобы разблокировать аккаунт</string>
-  <string name="restore_dialog_title">Восстановление</string>
-  <string name="restore_backup_wait">Пожалуйста, подождите…</string>
   <string name="error_password_char_count">Минимум 6 символов</string>
   <string name="error_passwords_not_equals">Пароли не совпадают</string>
-  <string name="restore_failed_dialog_title">Восстановление не удалось</string>
-  <string name="restore_failed_dialog_msg">Произошла ошибка</string>
   <string name="export_account_wait_title">Пожалуйста, подождите…</string>
   <string name="export_account_wait_message">Публикация информации о новом аккаунте</string>
   <string name="account_export_end_decryption_message">Не удалось разблокировать аккаунт указанным паролем.</string>
@@ -122,8 +115,6 @@
   <string name="account_migration_title_dialog">Перенос аккаунта</string>
   <string name="account_migration_message_dialog">Ваш аккаунт требуется обновить. Хотите перейти на экран управления аккаунтом для выполнения этой операции?</string>
   <string name="account_update_needed">Необходимо обновление</string>
-  <string name="account_creation_file_too_big">Файл слишком большой</string>
-  <string name="account_cannot_read">Не удалось прочитать %1$s</string>
   <string name="account_cannot_be_found_title">Не удалось найти аккаунт</string>
   <string name="account_cannot_be_found_message">Не удалось найти аккаунт в сети Ring.\nУдостоверьтесь, что он был экспортирован в сеть Ring с существующего устройства, и что предоставленные идентификационные данные верны.</string>
   <string name="account_sip_cannot_be_registered_message">Можно продолжить создание учетной записи или изменить информацию здесь. Редактирование будет возможно и позже в настройках аккаунта.</string>
@@ -137,9 +128,7 @@
   <string name="account_sip_success_message">Вы успешно зарегистрировали свой SIP-аккаунт.</string>
   <string name="account_sip_register_anyway">Всё равно зарегистроваться</string>
   <string name="account_link_button">Привязать это устройство к аккаунту</string>
-  <string name="account_import_title">Привязать к существующему аккаунту</string>
   <string name="account_link_prompt_pin">Введите PIN</string>
-  <string name="account_wizard_title">Добро пожаловать в </string>
   <string name="account_new_button">Создать аккаунт Ring</string>
   <string name="account_link_export_button">Привязать другое устройство к этому аккаунту</string>
   <string name="account_link_export_info">Для использования этого аккаунта на других устройствах нужно сначала выставить его в сеть Ring. Это сгенерирует PIN-код, который потребуется ввести на новом устройстве для настройки аккаунта. PIN-код действителен в течение 10 минут.\n\nПожалуйста, укажите ваш пароль, чтобы начать:</string>
@@ -147,10 +136,6 @@
   <string name="account_end_export_button">закрыть</string>
   <string name="account_end_export_infos">Ваш PIN:\n\n%%\n\nДля завершения процесса нужно открыть Ring на новом устройстве и выбрать \"Привязать это устройство к аккаунту\". Ваш PIN действителен в течение 10 минут.</string>
   <!--Name registration-->
-  <string name="register_name_wrong_password">Не удалось зарегистрировать имя: неверный пароль аккаунта.</string>
-  <string name="register_name_invalid">Не удалось зарегистрировать имя: недопустимое имя.</string>
-  <string name="register_name_already_taken">Не удалось зарегистрировать имя: имя уже занято.</string>
-  <string name="register_name_network_error">Не удалось зарегистрировать имя: ошибка сети или сервера.</string>
   <string name="error_username_empty">Введите имя пользователя</string>
   <string name="no_registered_name_for_account">Не найдено зарегистрированного имени для этого аккаунта</string>
   <string name="register_name">Зарегистрировать имя</string>

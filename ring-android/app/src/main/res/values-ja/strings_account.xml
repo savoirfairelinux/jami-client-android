@@ -104,16 +104,9 @@
   <string name="account_rtp_min_port">最小</string>
   <string name="account_rtp_port_range">音声 RTP ポートの範囲</string>
   <!--restore/backup-->
-  <string name="account_restore_account">アカウントを復元</string>
-  <string name="account_restore_message">ファイルを復号するためのパスワードを入力してください。</string>
-  <string name="account_restore_decryption_password">復号パスワード</string>
   <string name="account_new_device_password">アカウントをロック解除するメインパスワードを入力してください</string>
-  <string name="restore_dialog_title">復元中</string>
-  <string name="restore_backup_wait">しばらくお待ちください…</string>
   <string name="error_password_char_count">6文字以上</string>
   <string name="error_passwords_not_equals">パスワードが一致しません</string>
-  <string name="restore_failed_dialog_title">復元に失敗しました</string>
-  <string name="restore_failed_dialog_msg">エラーが発生しました</string>
   <string name="export_account_wait_title">しばらくお待ちください…</string>
   <string name="export_account_wait_message">新しいアカウント情報を発行しています</string>
   <string name="account_export_end_decryption_message">提供されたパスワードを使用してアカウントをロック解除できませんでした。</string>
@@ -132,8 +125,6 @@
   <string name="account_migration_title_dialog">アカウントの移行</string>
   <string name="account_migration_message_dialog">アカウントを更新する必要があります。 アカウント管理画面に移動して、この操作を実行しますか？</string>
   <string name="account_update_needed">更新が必要です</string>
-  <string name="account_creation_file_too_big">ファイルが大きすぎます</string>
-  <string name="account_cannot_read">%1$s を読み込みできません</string>
   <string name="account_cannot_be_found_title">アカウントが見つかりません</string>
   <string name="account_cannot_be_found_message">Ringネットワーク上にアカウントが見つかりませんでした。\n既存のデバイスからRing上にエクスポートされていることと、提供された資格情報が正しいことを確認してください。</string>
   <string name="account_sip_cannot_be_registered_message">アカウント作成プロセスを続行するか、ここで情報を編集することができます。 アカウント設定で、後で編集することも可能です。</string>
@@ -148,9 +139,7 @@
   <string name="account_sip_success_message">SIPアカウントを正常に登録しました。</string>
   <string name="account_sip_register_anyway">とにかく登録する</string>
   <string name="account_link_button">このデバイスをアカウントへリンク</string>
-  <string name="account_import_title">既存のアカウントにリンク</string>
   <string name="account_link_prompt_pin">PINを入力してください</string>
-  <string name="account_wizard_title">ようこそ</string>
   <string name="account_new_button">Ringアカウントを作成</string>
   <string name="account_link_export_button">別のデバイスをこのアカウントへリンク</string>
   <string name="account_link_export_info">他のデバイスでこのアカウントを使用するには、まずRing上に公開する必要があります。 これにより、アカウントを設定するために新しいデバイスに入力する必要があるPINコードが生成されます。 PINは10分間有効です。 \n\n開始するには、パスワードを入力してください:</string>
@@ -158,10 +147,6 @@
   <string name="account_end_export_button">閉じる</string>
   <string name="account_end_export_infos">あなたのPINは:\n\n%%\n\nプロセスを完了するには、新しいデバイスでRingを開く必要があります。 「このデバイスをアカウントにリンク」で、新しいアカウントを作成します。 あなたのPINは10分間有効です。</string>
   <!--Name registration-->
-  <string name="register_name_wrong_password">名前を登録できません: アカウントのパスワードが間違っています。</string>
-  <string name="register_name_invalid">名前を登録できません: 無効な名前です。</string>
-  <string name="register_name_already_taken">名前を登録できません: 名前はすでに取得されています。</string>
-  <string name="register_name_network_error">名前を登録できません: ネットワークまたはサーバーエラー。</string>
   <string name="error_username_empty">ユーザー名を入力してください</string>
   <string name="no_registered_name_for_account">このアカウントの登録名が見つかりません</string>
   <string name="register_name">登録名</string>

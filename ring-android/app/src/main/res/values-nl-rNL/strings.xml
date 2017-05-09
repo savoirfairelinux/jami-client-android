@@ -10,7 +10,6 @@
   <string name="title_activity_sflphone_home">Bellen</string>
   <string name="error_no_network">Geen netwerkverbinding</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Nieuw account</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <!--Sections-->
@@ -19,18 +18,13 @@
   <string name="menu_item_about">Over Ring</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
-  <string name="hist_replay_button">Opnieuw afspelen</string>
-  <string name="hist_replay_button_stop">Stoppen</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Geen contact gevonden</string>
-  <string name="starred_contacts_title">Favorieten</string>
   <string name="searchbar_hint">Voer een naam of telefoonnummer in...</string>
   <string name="choose_number">Kies een nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_no_other_call">Geen andere gesprekken in de wacht</string>
   <!--Notifications-->
   <!--Call Fragment-->
   <string name="action_call_hangup">Ophangen</string>

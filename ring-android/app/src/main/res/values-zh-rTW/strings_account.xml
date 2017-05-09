@@ -62,15 +62,8 @@
   <string name="account_rtp_min_port">最小值</string>
   <string name="account_rtp_port_range">音訊 RTP 連接埠範圍</string>
   <!--restore/backup-->
-  <string name="account_restore_account">還原帳號</string>
-  <string name="account_restore_message">輸入密碼來解密檔案。</string>
-  <string name="account_restore_decryption_password">解密密碼</string>
-  <string name="restore_dialog_title">還原中...</string>
-  <string name="restore_backup_wait">請等待...</string>
   <string name="error_password_char_count">最小6個字元</string>
   <string name="error_passwords_not_equals">密碼不相符</string>
-  <string name="restore_failed_dialog_title">還原失敗</string>
-  <string name="restore_failed_dialog_msg">發生錯誤</string>
   <string name="export_account_wait_title">請等待...</string>
   <string name="account_export_end_network_title">網路錯誤</string>
   <string name="account_export_end_error_title">錯誤</string>
@@ -78,13 +71,10 @@
   <string name="update_account">更新帳號</string>
   <string name="ring_account">Ring 帳號</string>
   <string name="account_update_needed">需要更新</string>
-  <string name="account_creation_file_too_big">檔案太大</string>
-  <string name="account_cannot_read">無法讀取 %1$s</string>
   <string name="account_cannot_be_found_title">找不到帳號</string>
   <string name="account_no_network_title">無法連接到網路</string>
   <string name="account_device_added_message">你已經在這個裝置上成功設定你的 Ring 帳號。</string>
   <string name="account_link_button">連結這個裝置到一個帳號</string>
-  <string name="account_import_title">連結到一個已存在的帳號</string>
   <string name="account_new_button">建立一個 Ring 帳號</string>
   <string name="account_end_export_button">關閉</string>
   <!--Name registration-->

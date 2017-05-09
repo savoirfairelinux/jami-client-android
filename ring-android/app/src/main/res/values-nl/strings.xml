@@ -24,7 +24,6 @@
   <string name="error_no_network">Geen netwerkverbinding</string>
   <string name="error_mobile_network_available_but_disabled">Geef toegang tot mobiel netwerk in de instellingen.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Account aanmaken</string>
   <string name="ab_action_chat">Tekstberichten</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -36,31 +35,21 @@
   <string name="menu_item_accounts">Accounts beheren</string>
   <string name="menu_item_settings">Instellingen</string>
   <string name="menu_item_share">Deel mijn contact</string>
-  <string name="menu_item_blacklist">Geblokkeerde contacten</string>
   <string name="menu_item_about">Over Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Kies een nummer</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Opnieuw afspelen</string>
-  <string name="hist_replay_button_stop">Stoppen</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d gesprek</item>
     <item quantity="other">%d gesprekken</item>
   </plurals>
-  <string name="home_transfering">%1$s wordt verstuurd naar %2$s</string>
-  <string name="home_transfer_complet">Overdracht compleet</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Geen contacten gevonden</string>
-  <string name="starred_contacts_title">Favorieten</string>
   <string name="searchbar_hint">Geef een naam of telefoonnummer in...</string>
   <string name="choose_number">Kies een nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Versturen naar een andere lopende oproep:</string>
-  <string name="transfer_no_other_call">Geen verdere oproepen in behandeling</string>
-  <string name="transfer_type_number">Nummer ingeven om naar te versturen:</string>
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Gemiste inkomende oproep</string>
   <string name="notif_missed_outgoing_call">Gemiste uitgaande oproep</string>
@@ -72,8 +61,6 @@
   <string name="notif_current_call">Huidige oproep</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Jij:</string>
-  <string name="action_call_attended_transfer">Bijgewoonde overdracht</string>
-  <string name="action_call_conference">Vergadering</string>
   <string name="action_call_hangup">Ophangen</string>
   <string name="ongoing_call">Lopende oproep</string>
   <string name="hist_in_call">Inkomende oproep van %1$s</string>
@@ -96,7 +83,6 @@
   <string name="send_message">Bericht versturen</string>
   <string name="message_sending">Bericht wordt verstuurd...</string>
   <string name="time_just_now">Zojuist</string>
-  <string name="permission_read_denied">De applicatie heeft geen machtiging om je opslag te lezen en kan daardoor niet correct functioneren. Gelieve te overwegen deze machtiging toch toe te kennen</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Cameramachtiging</string>
   <string name="permission_dialog_camera_message">Videogesprekken vereisen machtiging voor gebruik van de camera. Gelieve te overwegen deze machtiging alsnog toe te kennen.</string>
@@ -138,7 +124,6 @@
   <string name="open_the_gallery">Galerij openen</string>
   <string name="take_a_photo">Foto nemen</string>
   <string name="profile_name_hint">Voer je naam in (optioneel)</string>
-  <string name="unknown">Onbekend</string>
   <!--Share fragment-->
   <string name="share_message">Scan deze QR-code met de ingebouwde scanner van de Ring-toepassing die met je wil communiceren.</string>
   <string name="share_message_no_account">Selecteer een account om te delen.</string>

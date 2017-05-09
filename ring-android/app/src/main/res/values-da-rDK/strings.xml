@@ -22,7 +22,6 @@
   <string name="error_no_network">Ingen netværksforbindelse</string>
   <string name="error_mobile_network_available_but_disabled">Venligst tillad adgang til telefon netværk under Indstillinger.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Ny konto</string>
   <string name="ab_action_chat">Text-besked</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -37,26 +36,17 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Indtast et nummer</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Genafspil</string>
-  <string name="hist_replay_button_stop">Stop</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d samtale</item>
     <item quantity="other">%d samtaler</item>
   </plurals>
-  <string name="home_transfering">Overfører %1$s til %2$s</string>
-  <string name="home_transfer_complet">Overførsel afsluttet</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Ingen kontakt funder</string>
-  <string name="starred_contacts_title">Favoritter</string>
   <string name="searchbar_hint">Indtast navn eller telefonnummer...</string>
   <string name="choose_number">Vælg et nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Overfør til en anden aktiv samtale:</string>
-  <string name="transfer_no_other_call">Ikke andre opkald i kø</string>
-  <string name="transfer_type_number">Tast nummer at overføre til:</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">Indgående opkald fra %1$s</string>
   <string name="notif_incoming_call">Indgående opkald</string>
@@ -66,8 +56,6 @@
   <string name="notif_current_call">Nuværende opkald</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Dig:</string>
-  <string name="action_call_attended_transfer">Overvåget overførsel</string>
-  <string name="action_call_conference">Konference</string>
   <string name="action_call_hangup">Læg på</string>
   <string name="ongoing_call">Aktivt opkald</string>
   <string name="hist_in_call">Indgående opkald af %1$s</string>
@@ -90,7 +78,6 @@
   <string name="send_message">Send besked</string>
   <string name="message_sending">Sender besked...</string>
   <string name="time_just_now">Lige nu</string>
-  <string name="permission_read_denied">Mangler tilladelse til at læse fra lageret, og kan dermed ikke fungere ordentligt. Overvej venligst at give denne tilladelse</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-tilladelse</string>
   <string name="permission_dialog_camera_message">Video-samtaler kræver kamera-tilladelse for at fungere. Overvej venligst at give denne tilladelse.</string>
@@ -131,7 +118,6 @@
   <string name="open_the_gallery">Åben galleriet</string>
   <string name="take_a_photo">Tag et billede</string>
   <string name="profile_name_hint">Indtast dit navn (valgfrit)</string>
-  <string name="unknown">Ukendt</string>
   <!--Share fragment-->
   <string name="share_message">Skan denne QRCode med den indbyggede scanner i Ring-applikationen.</string>
   <string name="share_message_no_account">Vælg en konto at dele.</string>

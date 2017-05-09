@@ -12,7 +12,6 @@
   <string name="title_activity_sflphone_home">Suna</string>
   <string name="error_no_network">Nu exista conectivitate la retea</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Cont nou</string>
   <!--Left Drawer-->
   <!--Accessibility-->
   <!--Sections-->
@@ -22,13 +21,9 @@
   <string name="menu_item_about">Despre Ring</string>
   <!--Dialing Fragment-->
   <!--History Fragment-->
-  <string name="hist_replay_button_stop">Stop</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
-  <string name="home_transfer_complet">Transfer Complet</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Nici un  contact găsit</string>
-  <string name="starred_contacts_title">Favoriți</string>
   <string name="searchbar_hint">Introdu numele sau numărul de telefon</string>
   <string name="choose_number">Alege un număr</string>
   <!--FileExplorerDFragement-->
@@ -40,7 +35,6 @@
   <string name="notif_current_call">Apelul curent</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
-  <string name="action_call_conference">Conferință</string>
   <string name="action_call_hangup">Închide</string>
   <string name="start_error_title">Ring nu a putut starta!</string>
   <string name="action_call_decline">Refuză</string>
@@ -74,7 +68,6 @@
   <!--MenuHeaderView-->
   <string name="profile">Profilul meu</string>
   <string name="open_the_gallery">Deschide galeria</string>
-  <string name="unknown">Necunoscut</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Eroare</string>
   <!--Pending contact requests-->

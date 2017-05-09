@@ -20,11 +20,6 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
 
-    <string-array name="drop_actions">
-        <item>@string/action_call_attended_transfer</item>
-        <item>@string/action_call_conference</item>
-    </string-array>
-
     <string-array name="conversation_actions">
         <item>@string/conversation_action_copy_peer_number</item>
         <item>@string/conversation_action_delete_this</item>
