@@ -5,22 +5,13 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <cx.ring.views.dragsortlv.DragSortListView xmlns:dslv="http://schemas.android.com/apk/res/cx.ring"
+    <ListView
         android:id="@+id/dndlistview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:choiceMode="multipleChoice"
         android:descendantFocusability="beforeDescendants"
         android:dividerHeight="1px"
-        android:padding="5dp"
-        dslv:collapsed_height="1px"
-        dslv:drag_enabled="true"
-        dslv:drag_handle_id="@id/drag_handle"
-        dslv:drag_scroll_start="0.33"
-        dslv:drag_start_mode="onDown"
-        dslv:float_alpha="0.6"
-        dslv:float_background_color="@color/action_blue"
-        dslv:remove_enabled="false"
-        dslv:slide_shuffle_speed="0.3" />
+        android:padding="5dp" />
 
 </LinearLayout>

@@ -40,7 +40,6 @@ import java.util.ArrayList;
 
 import cx.ring.R;
 import cx.ring.model.Codec;
-import cx.ring.views.dragsortlv.DragSortListView;
 
 class CodecPreference extends Preference {
     private static final String TAG = CodecPreference.class.getSimpleName();
@@ -84,10 +83,9 @@ class CodecPreference extends Preference {
     public void onBindViewHolder(PreferenceViewHolder holder) {
         super.onBindViewHolder(holder);
 
-        DragSortListView mCodecList = (DragSortListView) holder.findViewById(R.id.dndlistview);
-        if (mCodecList.getInputAdapter() != listAdapter)
+        ListView mCodecList = (ListView) holder.findViewById(R.id.dndlistview);
+        if (mCodecList.getAdapter() != listAdapter)
             mCodecList.setAdapter(listAdapter);
-        mCodecList.setDropListener(onDrop);
         mCodecList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -100,18 +98,6 @@ class CodecPreference extends Preference {
 
         setListViewHeight(mCodecList, (LinearLayout) mCodecList.getParent());
     }
-
-    private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
-        @Override
-        public void drop(int from, int to) {
-            if (from != to) {
-                Codec item = listAdapter.getItem(from);
-                listAdapter.remove(item);
-                listAdapter.insert(item, to);
-                callChangeListener(getActiveCodecList());
-            }
-        }
-    };
 
     ArrayList<Long> getActiveCodecList() {
         ArrayList<Long> results = new ArrayList<>();
@@ -135,16 +121,6 @@ class CodecPreference extends Preference {
         CodecAdapter(Context context) {
             items = new ArrayList<>();
             mContext = context;
-        }
-
-        void insert(Codec item, int to) {
-            items.add(to, item);
-            notifyDataSetChanged();
-        }
-
-        void remove(Codec item) {
-            items.remove(item);
-            notifyDataSetChanged();
         }
 
         @Override
