@@ -87,7 +87,7 @@ public class CallProximityManager implements SensorEventListener, OrientationLis
 
     public interface ProximityDirector {
         boolean shouldActivateProximity();
-        void onProximityTrackingChanged(boolean acquired);
+        void onProximityTrackingChanged();
     }
 
     public CallProximityManager(Context context, ProximityDirector director) {
@@ -198,12 +198,12 @@ public class CallProximityManager implements SensorEventListener, OrientationLis
             if (isValidCallState && active) {
                 // mScreenLocker.show();
                 if (mDirector != null) {
-                    mDirector.onProximityTrackingChanged(true);
+                    mDirector.onProximityTrackingChanged();
                 }
             } else {
                 // mScreenLocker.hide();
                 if (mDirector != null) {
-                    mDirector.onProximityTrackingChanged(false);
+                    mDirector.onProximityTrackingChanged();
                 }
             }
 
@@ -241,7 +241,7 @@ public class CallProximityManager implements SensorEventListener, OrientationLis
         }
         // Notify
         if (mDirector != null) {
-            mDirector.onProximityTrackingChanged(false);
+            mDirector.onProximityTrackingChanged();
         }
     }
 
@@ -255,7 +255,7 @@ public class CallProximityManager implements SensorEventListener, OrientationLis
         }
         // Notify
         if (mDirector != null) {
-            mDirector.onProximityTrackingChanged(true);
+            mDirector.onProximityTrackingChanged();
         }
     }
 
@@ -297,12 +297,6 @@ public class CallProximityManager implements SensorEventListener, OrientationLis
             useTimeoutOverlay = proximitySensor == null && proximityWakeLock == null && !Compatibility.isTabletScreen(mContext);
         }
         return useTimeoutOverlay;
-    }
-
-    public void restartTimer() {
-        if (shouldUseTimeoutOverlay()) {
-            // mScreenLocker.delayedLock(ScreenLocker.WAIT_BEFORE_LOCK_LONG);
-        }
     }
 
     @Override

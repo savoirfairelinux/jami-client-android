@@ -67,7 +67,6 @@ import android.widget.ViewSwitcher;
 import com.skyfishjy.library.RippleBackground;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -81,7 +80,6 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.facades.ConversationFacade;
-import cx.ring.interfaces.CallInterface;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.SecureSipCall;
@@ -103,7 +101,7 @@ import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.property.Photo;
 
-public class CallFragment extends Fragment implements CallInterface, ContactDetailsTask.DetailsLoadedCallback, Observer<ServiceEvent> {
+public class CallFragment extends Fragment implements ContactDetailsTask.DetailsLoadedCallback, Observer<ServiceEvent> {
 
     static final private String TAG = CallFragment.class.getSimpleName();
 
@@ -364,9 +362,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
                 }
                 resetVideoSizes();
             } else if (action.contentEquals(CallManagerCallBack.RECORD_STATE_CHANGED)) {
-                recordingChanged((Conference) intent.getParcelableExtra("conference"), intent.getStringExtra("call"), intent.getStringExtra("file"));
+                recordingChanged();
             } else if (action.contentEquals(CallManagerCallBack.RTCP_REPORT_RECEIVED)) {
-                rtcpReportReceived(null, null); // FIXME
+                rtcpReportReceived(); // FIXME
             } else if (action.contentEquals(CallManagerCallBack.VCARD_COMPLETED)) {
                 updateContactBubble();
             } else {
@@ -503,10 +501,8 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             displayManager.unregisterDisplayListener(displayListener);
         }
 
-        RingApplication application = (RingApplication) getActivity().getApplication();
-
-        application.videoSurfaces.remove(c.getId());
-        application.mCameraPreviewSurface.clear();
+        RingApplication.videoSurfaces.remove(c.getId());
+        RingApplication.mCameraPreviewSurface.clear();
         try {
             IDRingService service = mCallbacks.getRemoteService();
             if (service != null) {
@@ -587,7 +583,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         }
     }
 
-    public void confUpdate() {
+    private void confUpdate() {
         LocalService service = mCallbacks.getService();
         if (service == null)
             return;
@@ -680,13 +676,11 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         }
     }
 
-    @Override
-    public void recordingChanged(Conference c, String callID, String filename) {
+    private void recordingChanged() {
 
     }
 
-    @Override
-    public void rtcpReportReceived(Conference c, HashMap<String, Integer> stats) {
+    private void rtcpReportReceived() {
         // No implementation yet
     }
 
@@ -817,10 +811,9 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         mVideoSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                RingApplication application = (RingApplication) getActivity().getApplication();
                 contactBubbleLayout.setVisibility(View.GONE);
                 Conference c = getConference();
-                application.videoSurfaces.put(c.getId(), new WeakReference<>(holder));
+                RingApplication.videoSurfaces.put(c.getId(), new WeakReference<>(holder));
                 blockSensorScreenRotation();
                 try {
                     mCallbacks.getRemoteService().videoSurfaceAdded(c.getId());
@@ -837,8 +830,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
                 Conference c = getConference();
-                RingApplication application = (RingApplication) getActivity().getApplication();
-                application.videoSurfaces.remove(c.getId());
+                RingApplication.videoSurfaces.remove(c.getId());
                 try {
                     IDRingService service = mCallbacks.getRemoteService();
                     if (service != null)
@@ -869,8 +861,7 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
         videoPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                RingApplication application = (RingApplication) getActivity().getApplication();
-                application.mCameraPreviewSurface = new WeakReference<>(holder);
+                RingApplication.mCameraPreviewSurface = new WeakReference<>(holder);
                 try {
                     mCallbacks.getRemoteService().videoPreviewSurfaceAdded();
                 } catch (RemoteException e) {
@@ -885,9 +876,8 @@ public class CallFragment extends Fragment implements CallInterface, ContactDeta
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                RingApplication application = (RingApplication) getActivity().getApplication();
-                if (videoPreview != null && application.mCameraPreviewSurface.get() == holder) {
-                    application.mCameraPreviewSurface.clear();
+                if (videoPreview != null && RingApplication.mCameraPreviewSurface.get() == holder) {
+                    RingApplication.mCameraPreviewSurface.clear();
                 }
                 try {
                     IDRingService service = mCallbacks.getRemoteService();

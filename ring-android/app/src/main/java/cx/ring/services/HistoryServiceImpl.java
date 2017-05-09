@@ -154,7 +154,4 @@ public class HistoryServiceImpl extends HistoryService {
         }
     }
 
-    public ProfileChunk getProfileChunk() {
-        return mProfileChunk;
-    }
 }

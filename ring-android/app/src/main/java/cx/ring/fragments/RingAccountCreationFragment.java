@@ -184,12 +184,12 @@ public class RingAccountCreationFragment extends Fragment implements Observer<Se
     }
 
     @OnCheckedChanged(R.id.switch_ring_username)
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    public void onCheckedChanged(boolean isChecked) {
         mUsernameBox.setVisibility(isChecked ? View.VISIBLE : View.GONE);
     }
 
     @OnEditorAction(R.id.ring_password)
-    public boolean onPasswordEditorAction(TextView view, int actionId, KeyEvent event) {
+    public boolean onPasswordEditorAction(int actionId, KeyEvent event) {
         Log.w(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             if (mPasswordTxt.getText().length() != 0 && !validateForm()) {
@@ -201,14 +201,14 @@ public class RingAccountCreationFragment extends Fragment implements Observer<Se
     }
 
     @OnFocusChange(R.id.ring_password)
-    public void onFocusChange(View view, boolean hasFocus) {
+    public void onFocusChange(boolean hasFocus) {
         if (!hasFocus) {
             validateForm();
         }
     }
 
     @OnEditorAction(R.id.ring_password_repeat)
-    public boolean onPasswordRepeatEditorAction(TextView view, int actionId, KeyEvent event) {
+    public boolean onPasswordRepeatEditorAction(int actionId, KeyEvent event) {
         Log.i(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             if (mPasswordTxt.getText().length() != 0 && !validateForm()) {
@@ -220,7 +220,7 @@ public class RingAccountCreationFragment extends Fragment implements Observer<Se
     }
 
     @OnTextChanged(R.id.ring_username)
-    public void onUsernameTextChanged(CharSequence s, int start, int before, int count) {
+    public void onUsernameTextChanged() {
         mCreateAccountButton.setEnabled(false);
     }
 

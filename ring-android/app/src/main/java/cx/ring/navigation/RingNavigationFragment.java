@@ -338,7 +338,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     }
 
     @OnClick(R.id.addaccount_btn)
-    public void addNewAccount(View sender) {
+    public void addNewAccount() {
         getActivity().startActivity(new Intent(getActivity(), AccountWizard.class));
     }
 

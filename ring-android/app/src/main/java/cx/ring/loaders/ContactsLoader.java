@@ -88,10 +88,6 @@ public class ContactsLoader extends AsyncTaskLoader<ContactsLoader.Result>
         filterFrom = filter;
     }
 
-    public void setSystemContactPermission (boolean canUseSystemContact) {
-        mCanUseSystemContact = canUseSystemContact;
-    }
-
     private boolean checkCancel() {
         return checkCancel(null);
     }

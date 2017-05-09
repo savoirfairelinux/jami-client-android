@@ -115,7 +115,7 @@ public class RenameDeviceDialog extends DialogFragment {
     }
 
     @OnEditorAction({R.id.ring_device_name_txt})
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+    public boolean onEditorAction(TextView v, int actionId) {
         if (v == mDeviceNameTxt) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 boolean validationResult = validate();

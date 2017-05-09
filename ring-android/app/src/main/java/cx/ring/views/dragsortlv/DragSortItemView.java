@@ -77,10 +77,6 @@ public class DragSortItemView extends ViewGroup {
         mGravity = gravity;
     }
 
-    public int getGravity() {
-        return mGravity;
-    }
-
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         final View child = getChildAt(0);
