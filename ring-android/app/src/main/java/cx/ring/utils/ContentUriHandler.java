@@ -28,8 +28,6 @@ public class ContentUriHandler {
 
     private static final Uri AUTHORITY_URI = Uri.parse("content://" + BuildConfig.APPLICATION_ID);
 
-    public static final Uri CONFERENCE_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "conferences");
-    public static final Uri CALL_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "calls");
     public static final Uri CONVERSATION_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "conversations");
     public static final Uri ACCOUNTS_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "accounts");
 

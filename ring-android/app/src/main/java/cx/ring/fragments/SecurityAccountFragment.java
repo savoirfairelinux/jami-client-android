@@ -252,7 +252,7 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
                 if (key == ConfigKey.TLS_CA_LIST_FILE) {
                     File crt = new File(details.get(ConfigKey.TLS_CA_LIST_FILE));
                     current.setSummary(crt.getName());
-                    setFeedbackIcon(current, crt.getAbsolutePath());
+                    setFeedbackIcon(current);
                     current.setOnPreferenceClickListener(filePickerListener);
                 } else if (key == ConfigKey.TLS_PRIVATE_KEY_FILE) {
                     current.setSummary(new File(details.get(ConfigKey.TLS_PRIVATE_KEY_FILE)).getName());
@@ -260,8 +260,8 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
                 } else if (key == ConfigKey.TLS_CERTIFICATE_FILE) {
                     File pem = new File(details.get(ConfigKey.TLS_CERTIFICATE_FILE));
                     current.setSummary(pem.getName());
-                    setFeedbackIcon(current, pem.getAbsolutePath());
-                    checkForRSAKey(pem.getAbsolutePath());
+                    setFeedbackIcon(current);
+                    checkForRSAKey();
                     current.setOnPreferenceClickListener(filePickerListener);
                 } else if (key == ConfigKey.TLS_METHOD) {
                     String[] values = getTlsMethods();
@@ -284,26 +284,26 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
         }
     }
 
-    public boolean checkCertificate(String crt) {
+    public boolean checkCertificate() {
         // Not implemented
         return false;
     }
 
-    public boolean findRSAKey(String pemPath) {
+    public boolean findRSAKey() {
         // Not implemented
         return false;
     }
 
-    private void checkForRSAKey(String path) {
-        if (findRSAKey(path)) {
+    private void checkForRSAKey() {
+        if (findRSAKey()) {
             tlsCategory.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key()).setEnabled(false);
         } else {
             tlsCategory.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key()).setEnabled(true);
         }
     }
 
-    private void setFeedbackIcon(Preference current, String crtPath) {
-        if (!checkCertificate(crtPath)) {
+    private void setFeedbackIcon(Preference current) {
+        if (!checkCertificate()) {
             current.setIcon(R.drawable.ic_error);
         } else {
             current.setIcon(R.drawable.ic_good);
@@ -344,7 +344,7 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
                 preference.setSummary(myFile.getName());
                 account.setDetail(ConfigKey.TLS_CA_LIST_FILE, myFile.getAbsolutePath());
                 mCallbacks.saveAccount();
-                setFeedbackIcon(preference, myFile.getAbsolutePath());
+                setFeedbackIcon(preference);
                 break;
             case SELECT_PRIVATE_KEY_RC:
                 tlsCategory.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key()).setSummary(myFile.getName());
@@ -356,8 +356,8 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
                 preference.setSummary(myFile.getName());
                 account.setDetail(ConfigKey.TLS_CERTIFICATE_FILE, myFile.getAbsolutePath());
                 mCallbacks.saveAccount();
-                setFeedbackIcon(preference, myFile.getAbsolutePath());
-                checkForRSAKey(myFile.getAbsolutePath());
+                setFeedbackIcon(preference);
+                checkForRSAKey();
                 break;
             default:
                 break;

@@ -51,10 +51,6 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_ADD_SIP_ACCOUNT = 2;
     private OnAccountActionClicked mListener;
 
-    public List<Account> getAccounts() {
-        return mDataset;
-    }
-
     interface OnAccountActionClicked {
         void onAccountSelected(Account account);
 

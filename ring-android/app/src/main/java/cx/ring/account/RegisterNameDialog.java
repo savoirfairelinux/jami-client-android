@@ -234,10 +234,6 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
         super.onDetach();
     }
 
-    public String getUsername() {
-        return mUsernameTxt.getText().toString();
-    }
-
     private boolean isValidUsername() {
         return mUsernameTxtBox.getError() == null;
     }
@@ -279,7 +275,7 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
     }
 
     @OnEditorAction({R.id.ring_username, R.id.ring_password_txt})
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+    public boolean onEditorAction(TextView v, int actionId) {
         if (v == mPasswordTxt) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 boolean validationResult = validate();

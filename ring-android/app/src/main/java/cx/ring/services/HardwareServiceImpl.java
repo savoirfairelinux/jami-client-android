@@ -100,10 +100,8 @@ public class HardwareServiceImpl extends HardwareService {
         Log.i(TAG, "decodingStarted() " + id + " " + width + "x" + height);
         Shm shm = new Shm();
         shm.id = id;
-        shm.path = shmPath;
         shm.w = width;
         shm.h = height;
-        shm.mixer = isMixer;
         videoInputs.put(id, shm);
         WeakReference<SurfaceHolder> weakSurfaceHolder = videoSurfaces.get(id);
         if (weakSurfaceHolder != null) {
@@ -519,9 +517,7 @@ public class HardwareServiceImpl extends HardwareService {
 
     private static class Shm {
         String id;
-        String path;
         int w, h;
-        boolean mixer;
         long window = 0;
     }
 

@@ -66,8 +66,6 @@ public class ConfigurationManagerCallback implements Observer<ServiceEvent> {
         switch (event.getEventType()) {
             case VOLUME_CHANGED:
                 volumeChanged(
-                        event.getEventInput(ServiceEvent.EventInput.DEVICE, String.class),
-                        event.getEventInput(ServiceEvent.EventInput.VALUE, Integer.class)
                 );
                 break;
             case ACCOUNTS_CHANGED:
@@ -77,12 +75,11 @@ public class ConfigurationManagerCallback implements Observer<ServiceEvent> {
                 registrationStateChanged(
                         event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class),
                         event.getEventInput(ServiceEvent.EventInput.STATE, String.class),
-                        event.getEventInput(ServiceEvent.EventInput.DETAIL_CODE, Integer.class),
-                        event.getEventInput(ServiceEvent.EventInput.DETAIL_STRING, String.class)
+                        event.getEventInput(ServiceEvent.EventInput.DETAIL_CODE, Integer.class)
                 );
                 break;
             case STUN_STATUS_FAILURE:
-                stunStatusFailure(event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class));
+                stunStatusFailure();
                 break;
             case INCOMING_ACCOUNT_MESSAGE:
                 incomingAccountMessage(
@@ -93,9 +90,7 @@ public class ConfigurationManagerCallback implements Observer<ServiceEvent> {
                 break;
             case ACCOUNT_MESSAGE_STATUS_CHANGED:
                 accountMessageStatusChanged(
-                        event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class),
                         event.getEventInput(ServiceEvent.EventInput.MESSAGE_ID, Long.class),
-                        event.getEventInput(ServiceEvent.EventInput.TO, String.class),
                         event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class)
                 );
                 break;
@@ -145,7 +140,7 @@ public class ConfigurationManagerCallback implements Observer<ServiceEvent> {
         }
     }
 
-    private void volumeChanged(String device, int value) {
+    private void volumeChanged() {
         // nothing to be done here
     }
 
@@ -154,11 +149,11 @@ public class ConfigurationManagerCallback implements Observer<ServiceEvent> {
         mContext.sendBroadcast(intent);
     }
 
-    private void stunStatusFailure(String accountId) {
+    private void stunStatusFailure() {
         // nothing to be done here
     }
 
-    private void registrationStateChanged(String accountId, String state, int detailCode, String detailString) {
+    private void registrationStateChanged(String accountId, String state, int detailCode) {
         Intent intent = new Intent(ACCOUNT_STATE_CHANGED);
         intent.putExtra("account", accountId);
         intent.putExtra("state", state);
@@ -174,7 +169,7 @@ public class ConfigurationManagerCallback implements Observer<ServiceEvent> {
         mContext.sendBroadcast(intent);
     }
 
-    private void accountMessageStatusChanged(String id, long messageId, String to, int status) {
+    private void accountMessageStatusChanged(long messageId, int status) {
         Intent intent = new Intent(MESSAGE_STATE_CHANGED);
         intent.putExtra(MESSAGE_STATE_CHANGED_EXTRA_ID, messageId);
         intent.putExtra(MESSAGE_STATE_CHANGED_EXTRA_STATUS, status);
