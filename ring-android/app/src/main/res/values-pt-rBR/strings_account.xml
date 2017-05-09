@@ -104,16 +104,9 @@ Você pode editar sua conta depois.</string>
   <string name="account_rtp_min_port">Mínimo</string>
   <string name="account_rtp_port_range">Variação de portas de audio RTP</string>
   <!--restore/backup-->
-  <string name="account_restore_account">Restaurar uma conta</string>
-  <string name="account_restore_message">Digite a senha para descriptografar o arquivo.</string>
-  <string name="account_restore_decryption_password">Senha de descriptografia</string>
   <string name="account_new_device_password">Entre com a senha principal para desbloquear conta</string>
-  <string name="restore_dialog_title">Restaurando</string>
-  <string name="restore_backup_wait">Por favor, aguarde...</string>
   <string name="error_password_char_count">Pelo menos 6 caracteres</string>
   <string name="error_passwords_not_equals">Senhas não correspondem</string>
-  <string name="restore_failed_dialog_title">Falha na restauração</string>
-  <string name="restore_failed_dialog_msg">Um erro ocorreu</string>
   <string name="export_account_wait_title">Por favor, aguarde...</string>
   <string name="export_account_wait_message">Propagando informação da nova conta</string>
   <string name="account_export_end_decryption_message">Não foi possível desbloquear sua conta utilizando a senha fornecida.</string>
@@ -132,8 +125,6 @@ Você pode editar sua conta depois.</string>
   <string name="account_migration_title_dialog">Migração de conta</string>
   <string name="account_migration_message_dialog">Sua conta precisa ser atualizada. Você deseja ir na tela de administração da conta para fazer isto?</string>
   <string name="account_update_needed">Atualização necessária</string>
-  <string name="account_creation_file_too_big">Arquivo muito grande</string>
-  <string name="account_cannot_read">Não foi possível ler %1$s</string>
   <string name="account_cannot_be_found_title">Não foi possível localizar conta</string>
   <string name="account_cannot_be_found_message">Não foi possível localizar a conta na rede Ring.\nCertifique-se de que foi exportada no Ring de um dispositivo existente, e que as informações fornecidas estão corretas.</string>
   <string name="account_sip_cannot_be_registered_message">Você pode continuar com o processo de criação de conta ou editar suas informações aqui. A edição também é possível mais tarde nas configurações de conta.</string>
@@ -148,9 +139,7 @@ Você pode editar sua conta depois.</string>
   <string name="account_sip_success_message">Você registrou sua conta SIP com sucesso.</string>
   <string name="account_sip_register_anyway">Registrar mesmo assim</string>
   <string name="account_link_button">Associar este dispositivo a uma conta</string>
-  <string name="account_import_title">Associar à uma conta existente</string>
   <string name="account_link_prompt_pin">Entre o PIN</string>
-  <string name="account_wizard_title">Bem Vindo a</string>
   <string name="account_new_button">Criar uma conta no Ring</string>
   <string name="account_link_export_button">Associar outro dispositivo à esta conta.</string>
   <string name="account_link_export_info">Para usar esta conta em outros dispositivos, você deve antes expô-la no Ring. Isso gerará um código PIN que você deverá entrar no novo dispositivo para configurar a conta. Este PIN é válido por 10 minutos. \n\n Por favor, forneça sua senha para iniciar:</string>
@@ -158,10 +147,6 @@ Você pode editar sua conta depois.</string>
   <string name="account_end_export_button">fechar</string>
   <string name="account_end_export_infos">Seu PIN é:\n\n%%\n\nPara completar o processo, você deve abrir o Ring no novo dispositivo. Crie uma nova conta com \"Associar este dispositivo à uma conta\". Seu PIN é válido por 10 minutos.</string>
   <!--Name registration-->
-  <string name="register_name_wrong_password">Não foi possível registrar nome: senha da conta errada.</string>
-  <string name="register_name_invalid">Não foi possível registrar nome: nome inválido.</string>
-  <string name="register_name_already_taken">Não foi possível registrar nome: nome já utilizado.</string>
-  <string name="register_name_network_error">Não foi possível registrar nome: erro de rede ou servidor.</string>
   <string name="error_username_empty">Entre um nome de usuário</string>
   <string name="no_registered_name_for_account">Nenhum nome registrado encontrado para esta conta</string>
   <string name="register_name">Registrar nome</string>

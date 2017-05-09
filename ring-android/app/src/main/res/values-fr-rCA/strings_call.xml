@@ -34,11 +34,4 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_over">sur</string>
     <string name="call_human_state_none">rien</string>
     <!-- Conferences -->
-    <string name="conference_human_state_active_attached">active attaché </string>
-    <string name="conference_human_state_active_detached">active détaché</string>
-    <string name="conference_human_state_active_attached_rec">attachement d\'un enregistrement vidéo  </string>
-    <string name="conference_human_state_active_detached_rec">déttachement d\'un enregistrement vidéo  </string>
-    <string name="conference_human_state_hold">tenir</string>
-    <string name="conference_human_state_hold_rec">tenir l\'enregistrement </string>
-    <string name="conference_human_state_default">rien </string>
 </resources>

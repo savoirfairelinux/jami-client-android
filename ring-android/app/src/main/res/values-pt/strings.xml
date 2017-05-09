@@ -12,7 +12,6 @@
   <string name="error_no_network">Sem conexão de rede</string>
   <string name="error_mobile_network_available_but_disabled">Por favor, permita o acesso à rede móvel nas definições do dispositivo.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Criar conta</string>
   <string name="ab_action_chat">Mensagem de texto</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -25,25 +24,17 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Marcar um número</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Reproduzir novamente</string>
-  <string name="hist_replay_button_stop">Parar</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversa</item>
     <item quantity="other">%d Conversas</item>
   </plurals>
-  <string name="home_transfer_complet">Transferência completa</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Contacto não encontrado</string>
-  <string name="starred_contacts_title">Favoritos</string>
   <string name="searchbar_hint">Introduza um nome ou número de telemóvel...</string>
   <string name="choose_number">Escolha um número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Transferir para outra chamada em curso:</string>
-  <string name="transfer_no_other_call">Sem chamadas pendentes</string>
-  <string name="transfer_type_number">Insira o número para onde pretende transferir:</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">A receber chamada de %1$s</string>
   <string name="notif_incoming_call">A receber chamada</string>
@@ -51,7 +42,6 @@
   <string name="notif_current_call">Chamada atual</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
-  <string name="action_call_conference">Conferência</string>
   <string name="action_call_hangup">Desligar</string>
   <string name="ongoing_call">Chamada em curso</string>
   <string name="hist_in_call">A receber chamada de %1$s</string>
@@ -72,7 +62,6 @@
   <string name="send_message">Enviar mensagem</string>
   <string name="message_sending">Enviando a mensagem...</string>
   <string name="time_just_now">Agora mesmo</string>
-  <string name="permission_read_denied">A aplicação não está autorizada a consultar o armazenamento do dispositivo, pelo que poderá não funcionar adequadamente. Por favor, considere garantir esta permissão.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permissão de câmara</string>
   <string name="permission_dialog_camera_message">As conversações por vídeo requerem a permissão da câmara. Por favor, considere garanti-la. </string>
@@ -109,7 +98,6 @@
   <string name="profile">O meu perfil</string>
   <string name="open_the_gallery">Abrir galeria</string>
   <string name="take_a_photo">Capturar fotografia</string>
-  <string name="unknown">Desconhecido</string>
   <!--Share fragment-->
   <string name="share_your_account_information">Partilhar a minha informação de contacto</string>
   <string name="generic_error_migration">Erro</string>

@@ -13,7 +13,6 @@
   <string name="error_no_network">No hi ha connexió a la xarxa</string>
   <string name="error_mobile_network_available_but_disabled">Per favor doneu accés a la xarxa mòbil en la pantalla d\'ajustaments.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Nou compte</string>
   <string name="ab_action_chat">Missatge de text</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -28,25 +27,17 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Marca un número</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Repetir</string>
-  <string name="hist_replay_button_stop">Para</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversa</item>
     <item quantity="other">%d Converses</item>
   </plurals>
-  <string name="home_transfer_complet">Transferència completada</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Contacte no trobat</string>
-  <string name="starred_contacts_title">Favorits</string>
   <string name="searchbar_hint">Fiqueu un nom o número de telèfon</string>
   <string name="choose_number">Escolliu un número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Transferir a altra trucada actual:</string>
-  <string name="transfer_no_other_call">No hi ha altres trucades pendents</string>
-  <string name="transfer_type_number">Escriure un número per transferir a:</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">Trucada entrant de %1$s</string>
   <string name="notif_incoming_call">Trucada entrant</string>
@@ -56,8 +47,6 @@
   <string name="notif_current_call">Trucada actual</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu:</string>
-  <string name="action_call_attended_transfer">Transferència Atesa</string>
-  <string name="action_call_conference">Conferència</string>
   <string name="action_call_hangup">Penjar</string>
   <string name="ongoing_call">Trucada en marxa</string>
   <string name="hist_in_call">Trucada entrant de %1$s</string>
@@ -79,7 +68,6 @@
   <string name="send_message">Enviar el missatge</string>
   <string name="message_sending">Enviant missatge</string>
   <string name="time_just_now">Ara mateix</string>
-  <string name="permission_read_denied">L\'aplicació no té permís per llegir al seu emmagatzematge. Per tant, no pot funcionar. Si us plau, considereu la concessió d\'aquest permís</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permís de la càmera</string>
   <string name="permission_dialog_camera_message">Les videotrucades necessiten el permís de la càmera per feuncionar. Si us plau, considereu habilitar-lo.</string>
@@ -117,7 +105,6 @@
   <string name="profile">El meu perfil</string>
   <string name="open_the_gallery">Obrir la galeria</string>
   <string name="take_a_photo">Fer una foto</string>
-  <string name="unknown">Desconegut</string>
   <!--Share fragment-->
   <string name="share_message">Escaneja aquest codi QR amb l\'escàner de l\'aplicació Ring que vulga comunicar-se amb tu.</string>
   <string name="share_your_account_information">Compartir la meua informació de contacte</string>

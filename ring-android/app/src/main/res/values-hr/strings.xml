@@ -19,7 +19,6 @@
   <string name="error_no_network">Veza nedostupna</string>
   <string name="error_mobile_network_available_but_disabled">Molimo, dozvolite aplikaciji pristup mobilnim podacima u postavkama.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Novi račun</string>
   <string name="ab_action_chat">Dopisivanje</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -28,13 +27,10 @@
   <string name="menu_item_accounts">Upravljaj računima</string>
   <string name="menu_item_settings">Postavke</string>
   <string name="menu_item_share">Dijeli moj kontakt</string>
-  <string name="menu_item_blacklist">Blokirani kontakti</string>
   <string name="menu_item_about">O Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Pozovi broj</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Odgovori</string>
-  <string name="hist_replay_button_stop">Prekini</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -42,16 +38,11 @@
     <item quantity="few">%d razgovora</item>
     <item quantity="other">%d razgovora</item>
   </plurals>
-  <string name="home_transfer_complet">Prijenos dovršen</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Nijedan kontakt nije nađen</string>
-  <string name="starred_contacts_title">Omiljeni</string>
   <string name="searchbar_hint">Unesite ime ili telefonski broj...</string>
   <string name="choose_number">Izaberite broj</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Prenesi na drugi razgovor:</string>
-  <string name="transfer_no_other_call">Nema dolazećih poziva</string>
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Propušteni dolazni poziv</string>
   <string name="notif_missed_outgoing_call">Propušteni odlazni poziv</string>
@@ -63,7 +54,6 @@
   <string name="notif_current_call">Trenutni poziv</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ti:</string>
-  <string name="action_call_conference">Konferencija</string>
   <string name="action_call_hangup">Poklopi</string>
   <string name="ongoing_call">Poziv koji je u tijeku</string>
   <string name="hist_in_call">Dolazni poziv od %1$s</string>
@@ -86,7 +76,6 @@
   <string name="send_message">Pošalji poruku</string>
   <string name="message_sending">Šaljem poruku...</string>
   <string name="time_just_now">Upravo sada</string>
-  <string name="permission_read_denied">Aplikacija nema dozvolu čitanja podataka. Zato ne može normalno funkcionirati. Molimo dozvolite aplikaciji čitanje podataka.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dozvola kamere</string>
   <string name="permission_dialog_camera_message">Video pozivi zahtjevaju dozvolu korištenja kamere. Molimo dozvolite aplikaciji korištenje kamere.</string>
@@ -124,7 +113,6 @@
   <string name="profile_message_warning">Vaš profil je podjeljen samo sa vašim kontaktima</string>
   <string name="open_the_gallery">Otvorite galeriju</string>
   <string name="take_a_photo">Fotografiraj</string>
-  <string name="unknown">Nepoznato</string>
   <!--Share fragment-->
   <string name="share_message_no_account">Molim odaberite račun za djeljenje</string>
   <string name="generic_error_migration">Greška</string>

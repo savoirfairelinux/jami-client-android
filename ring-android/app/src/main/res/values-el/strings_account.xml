@@ -40,7 +40,6 @@
   <!--restore/backup-->
   <string name="account_export_end_error_title">Σφάλμα</string>
   <string name="account_device_updated_message">Ο Ring λογαριασμός σας αναβαθμίστηκε επιτυχώς.</string>
-  <string name="account_wizard_title">Καλώς ήλθατε στο</string>
   <string name="account_new_button">Δημιουργία λογαριασμού Ring</string>
   <!--Name registration-->
   <string name="invalid_username">Μη έγκυρο όνομα χρήστη</string>

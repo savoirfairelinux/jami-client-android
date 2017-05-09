@@ -46,7 +46,6 @@
   <string name="send_message">Kirim pesan</string>
   <string name="message_sending">Mengirimkan pesan...</string>
   <string name="time_just_now">Baru saja</string>
-  <string name="permission_read_denied">Aplikasi ini tidak diizinkan membaca ruang peyimpanan Anda. Sehingga tidak dapat bekerja sebagaimana mestinya.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Izin kamera</string>
   <string name="permission_dialog_camera_message">Percakapan video memerlukan izin kamera agar dapat bekerja.</string>
@@ -88,7 +87,6 @@
   <string name="open_the_gallery">Buka galeri</string>
   <string name="take_a_photo">Ambil foto</string>
   <string name="profile_name_hint">Masukkan nama Anda (opsional)</string>
-  <string name="unknown">Tidak diketahui</string>
   <!--Share fragment-->
   <string name="share_message">Pindai QRCode ini menggunakan pemindai yang tersedia pada aplikasi Ring.</string>
   <string name="share_message_no_account">Silakan pilih akun untuk dibagikan.</string>

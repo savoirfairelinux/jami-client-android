@@ -21,7 +21,6 @@
   <string name="error_no_network">无网络连接</string>
   <string name="error_mobile_network_available_but_disabled">请前往“设置”界面开启移动数据使用权限。</string>
   <!--AB menus-->
-  <string name="ab_account_creation">新账户</string>
   <string name="ab_action_chat">文字消息</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -33,30 +32,20 @@
   <string name="menu_item_accounts">管理帐户</string>
   <string name="menu_item_settings">设置</string>
   <string name="menu_item_share">共享我的通讯录</string>
-  <string name="menu_item_blacklist">已屏蔽的联系人</string>
   <string name="menu_item_about">关于Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">拨号</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">重放</string>
-  <string name="hist_replay_button_stop">停止</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="other">%d个会话</item>
   </plurals>
-  <string name="home_transfering">正在传输从%1$s到%2$s</string>
-  <string name="home_transfer_complet">传输完成</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">未找到联系人</string>
-  <string name="starred_contacts_title">收藏夹</string>
   <string name="searchbar_hint">输入姓名或电话号码…</string>
   <string name="choose_number">选择一个数字</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">切换至另一个当前通话</string>
-  <string name="transfer_no_other_call">无通话</string>
-  <string name="transfer_type_number">输入要切换至的号码：</string>
   <!--Notifications-->
   <string name="notif_missed_incoming_call">未接来电</string>
   <string name="notif_incoming_call_title">来电：%1$s</string>
@@ -67,8 +56,6 @@
   <string name="notif_current_call">当前通话</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">你：</string>
-  <string name="action_call_attended_transfer">转接</string>
-  <string name="action_call_conference">会议</string>
   <string name="action_call_hangup">挂断</string>
   <string name="ongoing_call">正在通话</string>
   <string name="hist_in_call">来电：%1$s</string>
@@ -91,7 +78,6 @@
   <string name="send_message">发消息</string>
   <string name="message_sending">正在发送消息…</string>
   <string name="time_just_now">刚才</string>
-  <string name="permission_read_denied">该应用程序无法读取您的手机存储，无法正常工作。请设置相应权限。</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">摄像头使用权限</string>
   <string name="permission_dialog_camera_message">视频会话需要使用摄像头，请设置相应权限。</string>
@@ -133,7 +119,6 @@
   <string name="open_the_gallery">打开照片库</string>
   <string name="take_a_photo">拍照</string>
   <string name="profile_name_hint">输入您的名字（可选）</string>
-  <string name="unknown">未知</string>
   <!--Share fragment-->
   <string name="share_message">使用Ring扫描此二维码以建立连接。</string>
   <string name="share_message_no_account">请选择要共享的帐户。</string>

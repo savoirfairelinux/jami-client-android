@@ -90,15 +90,9 @@
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
   <!--restore/backup-->
-  <string name="account_restore_account">Riktheni një llogari</string>
-  <string name="account_restore_message">Jepni fjalëkalimin për çfshehtëzim kartele.</string>
-  <string name="account_restore_decryption_password">Fjalëkalim çfeshhtëzimesh</string>
   <string name="account_new_device_password">Që të zhbllokohet llogaria, jepni fjalëkalimin e përgjithshëm</string>
-  <string name="restore_backup_wait">Ju lutemi, pritni…</string>
   <string name="error_password_char_count">Minimumi 6 shenja</string>
   <string name="error_passwords_not_equals">Fjalëkalimet nuk përputhen</string>
-  <string name="restore_failed_dialog_title">Rikthimi dështoi</string>
-  <string name="restore_failed_dialog_msg">Ndodhi një gabim</string>
   <string name="export_account_wait_title">Ju lutemi, pritni…</string>
   <string name="account_export_end_decryption_message">S’u zhbllokua dot llogaria juaj duke përdorur fjalëkalimin e dhënë.</string>
   <string name="account_export_end_network_title">Gabim rrjeti</string>
@@ -116,8 +110,6 @@
   <string name="account_migration_title_dialog">Migrim llogarie</string>
   <string name="account_migration_message_dialog">Llogaritë tuaja lypset të përditësohen. Doni të kalohet te skena e administrimit të Llogarive që të kryeni këtë veprim?</string>
   <string name="account_update_needed">Lypset përditësim</string>
-  <string name="account_creation_file_too_big">Kartela është shumë e madhe</string>
-  <string name="account_cannot_read">S’lexohet dot %1$s</string>
   <string name="account_cannot_be_found_title">S’gjendet dot llogari</string>
   <string name="account_sip_cannot_be_registered_message">Mund të vazhdoni me procesin e krijimit të llogarisë ose të përpunoni këtu të dhënat tuaja. Përpunimi është i mundshëm edhe më vonë, që nga rregullimet llogarie.</string>
   <string name="account_no_network_title">S’lidhet dot te rrjeti</string>
@@ -127,16 +119,11 @@
   <string name="account_sip_success_message">E regjistruat me sukses llogarinë tuaj SIP</string>
   <string name="account_sip_register_anyway">Regjistroje sido qoftë</string>
   <string name="account_link_button">Lidheni këtë pajisje me një llogari</string>
-  <string name="account_import_title">Lidheni me një llogari ekzistuese</string>
   <string name="account_link_prompt_pin">Jepni PIN-in</string>
   <string name="account_new_button">Krijoni një llogari Ring</string>
   <string name="account_link_export_button">Lidhni te kjo llogari një pajisje tjetër</string>
   <string name="account_end_export_button">mbylle</string>
   <!--Name registration-->
-  <string name="register_name_wrong_password">S’regjistrohet dot emri: fjalëkalim llogarie i gabuar.</string>
-  <string name="register_name_invalid">S’regjistrohet dot emri: emër i pavlefshëm.</string>
-  <string name="register_name_already_taken">S’regjistrohet dot emri: emër tashmë i zënë.</string>
-  <string name="register_name_network_error">S’regjistrohet dot emri: gabim rrjeti ose shërbyesi.</string>
   <string name="error_username_empty">Jepni një emër përdoruesi</string>
   <string name="no_registered_name_for_account">S’u gjet emër i regjistruar për këtë llogari</string>
   <string name="register_name">Regjistroni emër</string>

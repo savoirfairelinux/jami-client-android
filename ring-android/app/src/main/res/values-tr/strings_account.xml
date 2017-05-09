@@ -103,16 +103,9 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_rtp_min_port">Asgari</string>
   <string name="account_rtp_port_range">Ses RTP Delik Aralığı</string>
   <!--restore/backup-->
-  <string name="account_restore_account">Hesabı geri yükle</string>
-  <string name="account_restore_message">Dosya şifresini çözmek için parolayı girin.</string>
-  <string name="account_restore_decryption_password">Şifre çözme parolası</string>
   <string name="account_new_device_password">Hesabın kilidini açmak için ana parolayı gir</string>
-  <string name="restore_dialog_title">Geri yükleniyor</string>
-  <string name="restore_backup_wait">Lütfen bekleyin...</string>
   <string name="error_password_char_count">En az 6 karakter</string>
   <string name="error_passwords_not_equals">Parolalar eşleşmedi</string>
-  <string name="restore_failed_dialog_title">Geri yükleme başarısız</string>
-  <string name="restore_failed_dialog_msg">Bir hata oluştu</string>
   <string name="export_account_wait_title">Lütfen bekleyin...</string>
   <string name="export_account_wait_message">Yeni hesap bilgisi yayımlanıyor</string>
   <string name="account_export_end_decryption_message">Sağlanan parola kullanılarak hesabınızın kilidi açılamıyor.</string>
@@ -131,8 +124,6 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_migration_title_dialog">Hesap taşıma</string>
   <string name="account_migration_message_dialog">Hesaplarınızın güncellenmesi gerekli.Hesap yönetim ekranından bu süreci yürütmek ister misiniz?</string>
   <string name="account_update_needed">Güncelleme gerekli</string>
-  <string name="account_creation_file_too_big">Dosya çok büyük</string>
-  <string name="account_cannot_read">%1$s okunamıyor</string>
   <string name="account_cannot_be_found_title">Hesap bulunamadı</string>
   <string name="account_cannot_be_found_message">Hesap Ring ağı üzerinde bulunamadı.\nVar olan bir aygıttan Ring üzerinde dışa aktarıldığından ve sağladığı bilgilerin doğru olduğundan emin olun.</string>
   <string name="account_sip_cannot_be_registered_message">Hesap oluşturma süreciyle devam edebilir ya da bilginizi burada düzenleyebilirsiniz. Düzenleme daha sonra hesap ayarlarında yapılabilir.</string>
@@ -147,9 +138,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_sip_success_message">Sip hesabınızı başarıyla kaydettiniz.</string>
   <string name="account_sip_register_anyway">Her koşulda kaydol</string>
   <string name="account_link_button">Bu aygıtı bir hesaba bağla</string>
-  <string name="account_import_title">Var olan bir hesaba bağla</string>
   <string name="account_link_prompt_pin">PIN\'i gir</string>
-  <string name="account_wizard_title">Hoş geldiniz</string>
   <string name="account_new_button">Bir Ring hesabı oluştur</string>
   <string name="account_link_export_button">Başka aygıtı bu hesaba bağla</string>
   <string name="account_link_export_info">Bu hesabı başka aygıtlarda kullanmak için ilk olarak Ring\'de açığa çıkarmalısınız. Bu, hesabı kurmak için yeni aygıtta girmeniz gereken bir PIN kodu oluşturacak. PIN 10 dakikalığıa geçerlidir.\n\nLütfen başlamak için parolanızı sağlayın:</string>
@@ -157,10 +146,6 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_end_export_button">kapat</string>
   <string name="account_end_export_infos">Pin\'iniz:\n\n%%\n\nSüreci tamamlamak için yeni aygıtta Ring\'i açmanız gerekiyor. \"Bu aygıtı bir hesaba bağla\" ile yeni hesap oluşturun. Pin\'iniz 10 dakikalığına geçerlidir.</string>
   <!--Name registration-->
-  <string name="register_name_wrong_password">Ad kaydedilemiyor: yanlış hesap parolası.</string>
-  <string name="register_name_invalid">Ad kaydedilemiyor: geçersiz ad.</string>
-  <string name="register_name_already_taken">Ad kaydedilemiyor: ad önceden alınmış.</string>
-  <string name="register_name_network_error">Ad kaydedilemiyor: ağ ya da sunucu hatası.</string>
   <string name="error_username_empty">Bir kullanıcı adı gir</string>
   <string name="no_registered_name_for_account">Bu hesap için kaydedilmiş ad bulunamadı</string>
   <string name="register_name">Adı kaydet</string>

@@ -143,17 +143,10 @@ along with this program; if not, write to the Free Software
     <string name="account_rtp_port_range">Audio RTP Port Range</string>
 
     <!-- restore/backup -->
-    <string name="account_restore_account">Restore an account</string>
-    <string name="account_restore_message">Enter password to decrypt the file.</string>
-    <string name="account_restore_decryption_password">Decryption password</string>
     <string name="account_new_device_password">Enter main password to unlock account</string>
 
-    <string name="restore_dialog_title">Restoring</string>
-    <string name="restore_backup_wait">Please wait…</string>
     <string name="error_password_char_count">6 characters minimum</string>
     <string name="error_passwords_not_equals">Passwords do not match</string>
-    <string name="restore_failed_dialog_title">Restore failed</string>
-    <string name="restore_failed_dialog_msg">An error occurred</string>
     <string name="export_account_wait_title">Please wait…</string>
     <string name="export_account_wait_message">Publishing new account information</string>
     <string name="account_export_end_decryption_message">Couldn\'t unlock your account using the provided password.</string>
@@ -172,8 +165,6 @@ along with this program; if not, write to the Free Software
     <string name="account_migration_title_dialog">Account migration</string>
     <string name="account_migration_message_dialog">Your accounts need to be updated. Do you want to go the Account management screen to perform this operation ?</string>
     <string name="account_update_needed">Update needed</string>
-    <string name="account_creation_file_too_big">File is too big</string>
-    <string name="account_cannot_read">Can\'t read %1$s</string>
     <string name="account_cannot_be_found_title">Can\'t find account</string>
     <string name="account_cannot_be_found_message">Account couldn\'t be found on the Ring network.\nMake sure it was exported on Ring from an existing device, and that provided credentials are correct.</string>
     <string name="account_sip_cannot_be_registered_message">You can continue with the account creation process or edit your information here. Edition is still possible later in the account settings.</string>
@@ -189,9 +180,7 @@ along with this program; if not, write to the Free Software
     <string name="account_sip_register_anyway">Register anyway</string>
 
     <string name="account_link_button">Link this device to an account</string>
-    <string name="account_import_title">Link to an existing account</string>
     <string name="account_link_prompt_pin">Enter PIN</string>
-    <string name="account_wizard_title">Welcome to </string>
     <string name="account_new_button">Create a Ring account</string>
     <string name="account_link_export_button">Link another device to this account</string>
     <string name="account_link_export_info">To use this account on other devices, you must first expose it on Ring. This will generate a PIN code that you must enter on the new device to set up the account. The PIN is valid for 10 minutes. \n\nPlease provide your password to start:</string>
@@ -200,10 +189,6 @@ along with this program; if not, write to the Free Software
     <string name="account_end_export_infos">Your Pin is:\n\n%%\n\nTo complete the process, you need to open Ring on the new device. Create a new account with \"Link this device to an account\". Your pin is valid for 10 minutes.</string>
 
     <!-- Name registration -->
-    <string name="register_name_wrong_password">Can\'t register name: wrong account password.</string>
-    <string name="register_name_invalid">Can\'t register name: invalid name.</string>
-    <string name="register_name_already_taken">Can\'t register name: name already taken.</string>
-    <string name="register_name_network_error">Can\'t register name: network or server error.</string>
     <string name="error_username_empty">Enter a username</string>
     <string name="no_registered_name_for_account">No registered name found for this account</string>
     <string name="register_name">Register name</string>

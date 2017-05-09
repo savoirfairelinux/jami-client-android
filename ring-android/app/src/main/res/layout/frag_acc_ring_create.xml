@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_account_creation"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Wizard"
@@ -21,7 +20,6 @@
             app:bounded_width="500dp">
 
             <LinearLayout
-                android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
@@ -78,7 +76,6 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/ring_password_help_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="8dp"

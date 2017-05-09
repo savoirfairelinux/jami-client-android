@@ -24,7 +24,6 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="error_no_network">Sem conectividade</string>
   <string name="error_mobile_network_available_but_disabled">Por favor, conceda acesso a rede do celular na tela de configurações .</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Nova conta</string>
   <string name="ab_action_chat">Mensagens de texto</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -36,31 +35,21 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="menu_item_accounts">Gerenciar contas</string>
   <string name="menu_item_settings">Configurações</string>
   <string name="menu_item_share">Compartilhar meu contato</string>
-  <string name="menu_item_blacklist">Contatos bloqueados</string>
   <string name="menu_item_about">Sobre o Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Disque um número</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Repetir</string>
-  <string name="hist_replay_button_stop">Parar</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d Conversa</item>
     <item quantity="other">%d Conversas</item>
   </plurals>
-  <string name="home_transfering">Transferindo %1$s para %2$s</string>
-  <string name="home_transfer_complet">Transferência completa</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Nenhum contato encontrado</string>
-  <string name="starred_contacts_title">Favoritos</string>
   <string name="searchbar_hint">Digite nome ou número de telefone</string>
   <string name="choose_number">Escolhe um número</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Transferir para outra chamada atual:</string>
-  <string name="transfer_no_other_call">Nenhuma outra chamada pendente</string>
-  <string name="transfer_type_number">Digite o número para transferir:</string>
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Chamadas recebidas perdidas</string>
   <string name="notif_missed_outgoing_call">Chamadas efetuadas perdidas</string>
@@ -72,8 +61,6 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="notif_current_call">Chamada atual</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Você:</string>
-  <string name="action_call_attended_transfer">Transferência atendida</string>
-  <string name="action_call_conference">Conferência</string>
   <string name="action_call_hangup">Desligar</string>
   <string name="ongoing_call">Chamada em andamento</string>
   <string name="hist_in_call">Recebimento de chamada %1$s</string>
@@ -96,7 +83,6 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="send_message">Enviar mensagem</string>
   <string name="message_sending">Enviando mensagem...</string>
   <string name="time_just_now">Agora há pouco</string>
-  <string name="permission_read_denied">Não foi permitido acessar o armazenamento. Por isso, o aplicativo não pôde funcionar corretamente. Considere permitir este acesso.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permissão de câmera</string>
   <string name="permission_dialog_camera_message">Conversas de vídeo requerem permissão para acesso à câmera. Considere habilitá-la.</string>
@@ -138,7 +124,6 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="open_the_gallery">Abrir a galeria</string>
   <string name="take_a_photo">Tirar uma foto</string>
   <string name="profile_name_hint">Insira o seu nome (opcional)</string>
-  <string name="unknown">Desconhecido</string>
   <!--Share fragment-->
   <string name="share_message">Escaneie o QRCode com o escaner embutido da aplicação Ring que deseja se comunicar com você.</string>
   <string name="share_message_no_account">Por favor selecione uma conta para compartilhar.</string>

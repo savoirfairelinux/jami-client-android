@@ -57,7 +57,6 @@ along with this program; if not, write to the Free Software
     <string name="error_mobile_network_available_but_disabled">Please grant access to cellular network in the settings screen.</string>
 
     <!-- AB menus -->
-    <string name="ab_account_creation">New account</string>
     <string name="ab_action_chat">Text messaging</string>
 
     <!-- Left Drawer -->
@@ -70,15 +69,12 @@ along with this program; if not, write to the Free Software
     <string name="menu_item_accounts">Manage accounts</string>
     <string name="menu_item_settings">Settings</string>
     <string name="menu_item_share">Share my contact</string>
-    <string name="menu_item_blacklist">Blocked contacts</string>
     <string name="menu_item_about">About Ring</string>
 
     <!-- Dialing Fragment -->
     <string name="dial_number">Dial a number</string>
 
     <!-- History Fragment -->
-    <string name="hist_replay_button">Replay</string>
-    <string name="hist_replay_button_stop">Stop</string>
 
 
     <!-- DetailsHistory Fragment -->
@@ -88,21 +84,14 @@ along with this program; if not, write to the Free Software
         <item quantity="one">%d Conversation</item>
         <item quantity="other">%d Conversations</item>
     </plurals>
-    <string name="home_transfering">Transferring %1$s to %2$s</string>
-    <string name="home_transfer_complet">Transfer complete</string>
 
     <!-- ContactList Fragment -->
-    <string name="no_contact_found">No contact found</string>
-    <string name="starred_contacts_title">Favorites</string>
     <string name="searchbar_hint">Enter name or phone number&#8230;</string>
     <string name="choose_number">Choose a number</string>
 
     <!-- FileExplorerDFragement -->
 
     <!-- TransferDFragment -->
-    <string name="transfer_to_another_call">Transfer to another current call:</string>
-    <string name="transfer_no_other_call">No other calls pending</string>
-    <string name="transfer_type_number">Type number to transfer to:</string>
 
     <!-- Notifications -->
     <string name="notif_missed_incoming_call">Missed incoming call</string>
@@ -116,8 +105,6 @@ along with this program; if not, write to the Free Software
 
     <!-- Call Fragment -->
     <string name="you_txt_prefix">You:</string>
-    <string name="action_call_attended_transfer">Attended Transfer</string>
-    <string name="action_call_conference">Conference</string>
     <string name="action_call_hangup">Hang up</string>
     <string name="ongoing_call">Ongoing call</string>
     <string name="hist_in_call">Incoming call of %1$s</string>
@@ -141,7 +128,6 @@ along with this program; if not, write to the Free Software
     <string name="send_message">Send message</string>
     <string name="message_sending">Sending message…</string>
     <string name="time_just_now">Just now</string>
-    <string name="permission_read_denied">The app was not allowed to read to your storage. Hence, it cannot function properly. Please consider granting it this permission</string>
 
     <!-- MediaPreferenceFragment -->
     <string name="permission_dialog_camera_title">Camera permission</string>
@@ -191,7 +177,6 @@ along with this program; if not, write to the Free Software
     <string name="open_the_gallery">Open the gallery</string>
     <string name="take_a_photo">Take a photo</string>
     <string name="profile_name_hint">Enter your name (optional)</string>
-    <string name="unknown">Unknown</string>
 
     <!-- Share fragment -->
     <string name="share_message">Scan this QRCode with the embedded scanner of the Ring application that wants to communicate with you.</string>

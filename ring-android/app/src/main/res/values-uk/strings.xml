@@ -14,7 +14,6 @@
   <string name="error_no_network">Відсутнє з’єднання з мережею</string>
   <string name="error_mobile_network_available_but_disabled">Будь ласка надайте права доступу для стільникової мережі у меню налаштувань.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Новий аккаунт</string>
   <string name="ab_action_chat">Текстова переписка</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -28,8 +27,6 @@
   <!--Dialing Fragment-->
   <string name="dial_number">Набрати номер</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Повторити</string>
-  <string name="hist_replay_button_stop">Стоп</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
@@ -37,17 +34,11 @@
     <item quantity="few">%d групових чатів</item>
     <item quantity="other">%d групові чати</item>
   </plurals>
-  <string name="home_transfer_complet">Відправлення закінчено</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Контакт не знайдено</string>
-  <string name="starred_contacts_title">Улюблені</string>
   <string name="searchbar_hint">Введіть ім’я або телефонний номер...</string>
   <string name="choose_number">Оберіть номер</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Перейти до іншого активного виклику</string>
-  <string name="transfer_no_other_call">Немає викликів, які очікуть</string>
-  <string name="transfer_type_number">Введіть номер отримувача:</string>
   <!--Notifications-->
   <string name="notif_incoming_call_title">Вхідний виклик від %1$s</string>
   <string name="notif_incoming_call">Вхідний виклик</string>
@@ -57,8 +48,6 @@
   <string name="notif_current_call">Діючий виклик</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ви:</string>
-  <string name="action_call_attended_transfer">Прийняті обміни</string>
-  <string name="action_call_conference">Конференція</string>
   <string name="action_call_hangup">Скинути</string>
   <string name="ongoing_call">Поточний дзвінок</string>
   <string name="hist_in_call">Вхідний виклик тривалістю %1$s</string>
@@ -80,7 +69,6 @@
   <string name="send_message">Відправити повідомлення</string>
   <string name="message_sending">ВІдправка повідомлення</string>
   <string name="time_just_now">Прямо зараз</string>
-  <string name="permission_read_denied">Додатоку не було дозволено зчитувати фали з вашого пристрою. Отже, він не може функціонувати належним чином. Будь ласка, розгляньте питання про надання йому такого дозволу</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Дозволи для камери</string>
   <string name="permission_dialog_camera_message">Для здійснення відерозмови необхідно надати дозвіл на роботу камери. Будь ласка, розглянути можливість її увімкнення.</string>
@@ -108,7 +96,6 @@
   <string name="account_create_title">Створити обліковий запис Ring</string>
   <string name="wizard_next">Наступний</string>
   <!--MenuHeaderView-->
-  <string name="unknown">Невідомий</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Помилка</string>
   <!--Pending contact requests-->

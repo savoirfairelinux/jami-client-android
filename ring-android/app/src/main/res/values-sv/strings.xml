@@ -24,7 +24,6 @@
   <string name="error_no_network">Ingen nätverksanslutning</string>
   <string name="error_mobile_network_available_but_disabled">Bevilja tillgång till mobilnätet på inställningssidan.</string>
   <!--AB menus-->
-  <string name="ab_account_creation">Nytt konto</string>
   <string name="ab_action_chat">Textmeddelande</string>
   <!--Left Drawer-->
   <!--Accessibility-->
@@ -36,31 +35,21 @@
   <string name="menu_item_accounts">Hantera konton</string>
   <string name="menu_item_settings">Inställningar</string>
   <string name="menu_item_share">Dela min kontakt</string>
-  <string name="menu_item_blacklist">Blockerade kontakter</string>
   <string name="menu_item_about">Om Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Slå ett nummer</string>
   <!--History Fragment-->
-  <string name="hist_replay_button">Svara</string>
-  <string name="hist_replay_button_stop">Stopp</string>
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
     <item quantity="one">%d konversation</item>
     <item quantity="other">%d konversationer</item>
   </plurals>
-  <string name="home_transfering">Överför %1$s till %2$s</string>
-  <string name="home_transfer_complet">Överföring slutförd</string>
   <!--ContactList Fragment-->
-  <string name="no_contact_found">Ingen kontakt hittades</string>
-  <string name="starred_contacts_title">Favoriter</string>
   <string name="searchbar_hint">Ange namn eller telefonnummer...</string>
   <string name="choose_number">Välj ett nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
-  <string name="transfer_to_another_call">Överför till ett annat aktuellt samtal:</string>
-  <string name="transfer_no_other_call">Inga andra samtal väntar</string>
-  <string name="transfer_type_number">Ange nummer att överföra till:</string>
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Missat inkommande samtal</string>
   <string name="notif_missed_outgoing_call">Missat utgående samtal</string>
@@ -72,8 +61,6 @@
   <string name="notif_current_call">Aktuellt samtal</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
-  <string name="action_call_attended_transfer">Bevakad överföring</string>
-  <string name="action_call_conference">Konferens</string>
   <string name="action_call_hangup">Lägg på</string>
   <string name="ongoing_call">Pågående samtal</string>
   <string name="hist_in_call">Inkommande samtal av %1$s</string>
@@ -96,7 +83,6 @@
   <string name="send_message">Skicka meddelande</string>
   <string name="message_sending">Skickar meddelande...</string>
   <string name="time_just_now">Just nu</string>
-  <string name="permission_read_denied">Appen nekas att läsa från din lagringsplats. Överväg att tilldela appen läsrättigheter, annars kommer den inte att fungera korrekt.</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarättighet</string>
   <string name="permission_dialog_camera_message">Videokonversationer kräver kamerarättigheter. Överväg att aktivera det.</string>
@@ -138,7 +124,6 @@
   <string name="open_the_gallery">Öppna galleriet</string>
   <string name="take_a_photo">Ta ett foto</string>
   <string name="profile_name_hint">Ange ditt namn (frivilligt)</string>
-  <string name="unknown">Okänd</string>
   <!--Share fragment-->
   <string name="share_message">Skanna denna QR-kod med den inbyggda skanner som finns i det Ring-program som vill kommunicera med dig.</string>
   <string name="share_message_no_account">Välj ett konto att dela.</string>

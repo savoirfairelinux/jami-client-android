@@ -84,16 +84,11 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_rtp_min_port">Minimo</string>
   <string name="account_rtp_port_range">Intervallo porti audio RTP</string>
   <!--restore/backup-->
-  <string name="account_restore_message">Digitare la password per decifrare il file.</string>
-  <string name="account_restore_decryption_password">Password per decifrare</string>
-  <string name="restore_backup_wait">Aspettare</string>
   <string name="error_password_char_count">6 caratteri minimo</string>
   <string name="error_passwords_not_equals">Le password no corrispondono</string>
-  <string name="restore_failed_dialog_msg">C\'è stato un errore</string>
   <string name="export_account_wait_title">Aspettare</string>
   <string name="account_export_end_error_title">Errore</string>
   <string name="account_device_updated_message">Hai aggiornato con successo il tuo account Ring.</string>
-  <string name="account_wizard_title">Benvenuto a</string>
   <string name="account_new_button">Creare un account Ring</string>
   <!--Name registration-->
   <string name="account_status_connecting">Connessione in corso </string>

@@ -34,11 +34,4 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_over">通話終了</string>
     <string name="call_human_state_none">なし</string>
     <!-- Conferences -->
-    <string name="conference_human_state_active_attached">アクティブ参加</string>
-    <string name="conference_human_state_active_detached">アクティブ退出</string>
-    <string name="conference_human_state_active_attached_rec">アクティブ参加 rec</string>
-    <string name="conference_human_state_active_detached_rec">アクティブ退出 rec</string>
-    <string name="conference_human_state_hold">保留</string>
-    <string name="conference_human_state_hold_rec">保留 rec</string>
-    <string name="conference_human_state_default">なし</string>
 </resources>

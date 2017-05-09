@@ -20,9 +20,7 @@ along with this program; if not, write to the Free Software
 -->
 <android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <android.support.v7.preference.PreferenceCategory
-        android:id="@+id/account_basic_category"
-        android:title="@string/account_basic_category" >
+    <android.support.v7.preference.PreferenceCategory android:title="@string/account_basic_category" >
         <android.support.v7.preference.EditTextPreference
             android:id="@+id/account_alias"
             android:key="Account.alias"
@@ -30,31 +28,25 @@ along with this program; if not, write to the Free Software
             android:summary=""
             android:title="@string/account_alias_label" />
         <android.support.v7.preference.EditTextPreference
-            android:id="@+id/account_hostname"
             android:key="Account.hostname"
             android:persistent="false"
             android:summary=""
             android:title="@string/account_bootstrap_label" />
     </android.support.v7.preference.PreferenceCategory>
-    <android.support.v7.preference.PreferenceCategory
-        android:id="@+id/account_optionnal_category"
-        android:title="@string/account_optionnal_category" >
+    <android.support.v7.preference.PreferenceCategory android:title="@string/account_optionnal_category" >
         <android.support.v7.preference.EditTextPreference
-            android:id="@+id/account_useragent"
             android:defaultValue=""
             android:key="Account.useragent"
             android:persistent="false"
             android:title="@string/account_useragent_label" />
 
         <android.support.v14.preference.SwitchPreference
-            android:id="@+id/account_autoanswer"
             android:defaultValue="false"
             android:key="Account.autoAnswer"
             android:persistent="false"
             android:title="@string/account_autoanswer_label" />
 
         <android.support.v14.preference.SwitchPreference
-            android:id="@+id/account_upnp"
             android:key="Account.upnpEnabled"
             android:persistent="false"
             android:title="@string/account_upnp_label" />

@@ -20,38 +20,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.v14.preference.SwitchPreference
-        android:id="@+id/account_dhtpublicincalls"
         android:defaultValue="false"
         android:key="DHT.PublicInCalls"
         android:persistent="false"
         android:title="@string/account_dht_public_in_calls_label" />
 
     <cx.ring.views.EditTextIntegerPreference
-        android:id="@+id/account_registration_expire"
         android:defaultValue="60"
         android:key="Account.registrationExpire"
         android:persistent="false"
         android:title="@string/account_registration_exp_label" />
 
     <ListPreference
-        android:id="@+id/account_local_interface"
         android:key="Account.localInterface"
         android:persistent="false"
         android:title="@string/account_local_interface_label" />
 
     <cx.ring.views.EditTextIntegerPreference
-        android:id="@+id/account_local_port"
         android:defaultValue="5060"
         android:key="Account.localPort"
         android:persistent="false"
         android:title="@string/account_local_port_label" />
 
-    <android.support.v7.preference.PreferenceCategory
-        android:id="@+id/account_stun_category"
-        android:title="@string/account_published_address_label">
+    <android.support.v7.preference.PreferenceCategory android:title="@string/account_published_address_label">
 
         <android.support.v14.preference.SwitchPreference
-            android:id="@+id/account_stun_enable"
             android:key="STUN.enable"
             android:persistent="false"
             android:summaryOff="Disabled"
@@ -59,7 +52,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:title="@string/account_stun_enable_label" />
 
         <android.support.v7.preference.EditTextPreference
-            android:id="@+id/account_stun_server"
             android:defaultValue=""
             android:dependency="STUN.enable"
             android:key="STUN.server"
@@ -68,7 +60,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:title="@string/account_stun_server_label" />
 
         <android.support.v14.preference.SwitchPreference
-            android:id="@+id/account_turn_enable"
             android:key="TURN.enable"
             android:persistent="false"
             android:summaryOff="Disabled"
@@ -76,7 +67,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:title="@string/account_turn_enable_label" />
 
         <android.support.v7.preference.EditTextPreference
-            android:id="@+id/account_turn_server"
             android:defaultValue=""
             android:dependency="TURN.enable"
             android:key="TURN.server"
@@ -85,7 +75,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:title="@string/account_turn_server_label" />
 
         <android.support.v7.preference.EditTextPreference
-            android:id="@+id/account_turn_username"
             android:defaultValue=""
             android:dependency="TURN.enable"
             android:key="TURN.username"
@@ -94,7 +83,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:title="@string/account_turn_username_label" />
 
         <cx.ring.views.PasswordPreference
-            android:id="@+id/account_turn_password"
             android:defaultValue=""
             android:dependency="TURN.enable"
             android:key="TURN.password"
@@ -103,14 +91,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:title="@string/account_turn_password_label" />
 
         <android.support.v7.preference.CheckBoxPreference
-            android:id="@+id/account_published_sameas_local"
             android:key="Account.publishedSameAsLocal"
             android:disableDependentsState="true"
             android:persistent="false"
             android:title="@string/account_published_same_as_local_label" />
 
         <cx.ring.views.EditTextIntegerPreference
-            android:id="@+id/account_published_port"
             android:defaultValue="5060"
             android:dependency="Account.publishedSameAsLocal"
             android:key="Account.publishedPort"
@@ -118,26 +104,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:title="@string/account_published_port_label" />
 
         <android.support.v7.preference.EditTextPreference
-            android:id="@+id/account_published_address"
             android:dependency="Account.publishedSameAsLocal"
             android:key="Account.publishedAddress"
             android:persistent="false"
             android:title="@string/account_published_address_label" />
     </android.support.v7.preference.PreferenceCategory>
 
-    <android.support.v7.preference.PreferenceCategory
-        android:id="@+id/account_rtp_port_range"
-        android:title="@string/account_rtp_port_range">
+    <android.support.v7.preference.PreferenceCategory android:title="@string/account_rtp_port_range">
 
         <cx.ring.views.EditTextIntegerPreference
-            android:id="@+id/account_rtp_min_port"
             android:defaultValue="0"
             android:key="Account.audioPortMin"
             android:persistent="false"
             android:title="@string/account_rtp_min_port" />
 
         <cx.ring.views.EditTextIntegerPreference
-            android:id="@+id/account_rtp_max_port"
             android:defaultValue="65535"
             android:key="Account.audioPortMax"
             android:persistent="false"
