@@ -181,6 +181,41 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
         return null;
     }
 
+    @Override
+    public void startRinging() {
+        
+    }
+
+    @Override
+    public boolean isSpeakerOn() {
+        return false;
+    }
+
+    @Override
+    public void stopRinging() {
+
+    }
+
+    @Override
+    public void abandonAudioFocus() {
+
+    }
+
+    @Override
+    public void obtainAudioFocus(boolean requesSpeakerOn) {
+
+    }
+
+    @Override
+    public void switchAudioToCurrentMode() {
+
+    }
+
+    @Override
+    public void toggleSpeakerphone() {
+
+    }
+
     private boolean checkPermission(String permission) {
         return ContextCompat.checkSelfPermission(mContext, permission) == PackageManager.PERMISSION_GRANTED;
     }
