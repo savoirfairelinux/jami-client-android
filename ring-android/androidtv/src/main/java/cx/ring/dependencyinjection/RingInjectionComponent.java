@@ -24,6 +24,8 @@ import javax.inject.Singleton;
 import cx.ring.about.AboutPresenter;
 import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.application.RingApplication;
+import cx.ring.client.HomeActivity;
+import cx.ring.client.SearchFragment;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.service.BootReceiver;
@@ -48,6 +50,10 @@ import dagger.Component;
 @Component(modules = {RingInjectionModule.class, PresenterInjectionModule.class, ServiceInjectionModule.class})
 public interface RingInjectionComponent {
     void inject(RingApplication app);
+
+    void inject(HomeActivity activity);
+
+    void inject(SearchFragment fragment);
 
     void inject(DRingService service);
 
