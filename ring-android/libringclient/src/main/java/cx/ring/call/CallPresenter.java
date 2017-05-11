@@ -344,7 +344,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         getView().updateContactBubbleWithVCard(tuple.first, tuple.second);
     }
 
-    private void parseCall(String callId, int callState, HashMap<String, String> callDetails) {
+    private void parseCall(String callId, int callState) {
         if (mSipCall == null || !mSipCall.getCallId().equals(callId)) {
             return;
         }
@@ -353,20 +353,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
                 callState == SipCall.State.OVER) {
             mHistoryService.updateVCard();
         }
-
-        int oldState = mSipCall.getCallState();
-
-        if (callState != oldState) {
-            if ((mSipCall.isRinging() || callState == SipCall.State.CURRENT) && mSipCall.getTimestampStart() == 0) {
-                mSipCall.setTimestampStart(System.currentTimeMillis());
-            }
-            if (callState == SipCall.State.RINGING) {
-                mAccountService.sendProfile(callId, mSipCall.getAccount());
-            }
-            mSipCall.setCallState(callState);
-        }
-
-        mSipCall.setDetails(callDetails);
 
         if (callState == SipCall.State.HUNGUP
                 || callState == SipCall.State.BUSY
@@ -380,7 +366,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         mDeviceRuntimeService.updateAudioState(mSipCall.isRinging() && mSipCall.isIncoming());
     }
 
-
     @Override
     public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
@@ -392,11 +377,10 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
                 case CALL_STATE_CHANGED:
                     String callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
                     int newState = SipCall.stateFromString(event.getEventInput(ServiceEvent.EventInput.STATE, String.class));
-                    HashMap<String, String> callDetails = (HashMap<String, String>) event.getEventInput(ServiceEvent.EventInput.DETAILS, HashMap.class);
 
                     Log.d(TAG, "CALL_STATE_CHANGED: " + callId + " " + newState);
 
-                    parseCall(callId, newState, callDetails);
+                    parseCall(callId, newState);
                     confUpdate();
                     break;
             }

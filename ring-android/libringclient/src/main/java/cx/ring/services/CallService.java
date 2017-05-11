@@ -436,8 +436,10 @@ public class CallService extends Observable {
     private void parseCallState(String callId, String newState, Map<String, String> callDetails) {
         int callState = SipCall.stateFromString(newState);
         SipCall sipCall = currentCalls.get(callId);
-        sipCall.setCallState(callState);
-        sipCall.setDetails(callDetails);
+        if (sipCall != null) {
+            sipCall.setCallState(callState);
+            sipCall.setDetails(callDetails);
+        }
     }
 
     class CallbackHandler {
