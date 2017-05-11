@@ -354,19 +354,10 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
             mHistoryService.updateVCard();
         }
 
-        int oldState = mSipCall.getCallState();
-
-        if (callState != oldState) {
-            if ((mSipCall.isRinging() || callState == SipCall.State.CURRENT) && mSipCall.getTimestampStart() == 0) {
-                mSipCall.setTimestampStart(System.currentTimeMillis());
-            }
-            if (callState == SipCall.State.RINGING) {
-                mAccountService.sendProfile(callId, mSipCall.getAccount());
-            }
-            mSipCall.setCallState(callState);
+        //TODO: Move that logic in CalLService
+        if (callState == SipCall.State.CURRENT) {
+            mAccountService.sendProfile(callId, mSipCall.getAccount());
         }
-
-        mSipCall.setDetails(callDetails);
 
         if (callState == SipCall.State.HUNGUP
                 || callState == SipCall.State.BUSY
@@ -379,7 +370,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
 
         mDeviceRuntimeService.updateAudioState(mSipCall.isRinging() && mSipCall.isIncoming());
     }
-
 
     @Override
     public void update(Observable observable, ServiceEvent event) {
