@@ -552,22 +552,9 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     conference.getParticipants().clear();
                     conference.addParticipant(call);
 
-                    int oldState = call.getCallState();
-
-                    Log.w(TAG, "CALL_STATE_CHANGED for " + callId + " : " + SipCall.stateToString(oldState) + " -> " + SipCall.stateToString(newState));
-
-                    if (newState != oldState) {
-                        Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + newState);
-                        if ((call.isRinging() || newState == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
-                            call.setTimestampStart(System.currentTimeMillis());
-                        }
-                        call.setCallState(newState);
-                    }
-
-                    try {
-                        call.setDetails((HashMap<String, String>) event.getEventInput(ServiceEvent.EventInput.DETAILS, HashMap.class));
-                    } catch (Exception e) {
-                        Log.w(TAG, "CALL_STATE_CHANGED Can't set call details.", e);
+                    Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + newState);
+                    if ((call.isRinging() || newState == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
+                        call.setTimestampStart(System.currentTimeMillis());
                     }
 
                     if (newState == SipCall.State.HUNGUP
@@ -619,9 +606,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     mNotificationService.showCallNotification(toAdd);
 
                     mHardwareService.setPreviewSettings();
-
-                    // Sending VCard when receiving a call
-                    mAccountService.sendProfile(callId, accountId);
 
                     Conference currenConf = getCurrentCallingConf();
                     mDeviceRuntimeService.updateAudioState(currenConf.isRinging()
