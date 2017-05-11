@@ -68,6 +68,8 @@ public abstract class HistoryService extends Observable {
 
     protected abstract Dao<HistoryText, Integer> getTextHistoryDao();
 
+    public abstract void updateVCard();
+
     public abstract String getRelativeTimeSpanString(long lastInteraction);
 
     public boolean insertNewEntry(Conference toInsert) {
@@ -235,9 +237,6 @@ public abstract class HistoryService extends Observable {
 
     }
 
-    public void updateVCard() {
-
-    }
 
     public void incomingMessage(String accountId, String callId, String from, StringMap messages) {
         saveVCard(from, messages);
