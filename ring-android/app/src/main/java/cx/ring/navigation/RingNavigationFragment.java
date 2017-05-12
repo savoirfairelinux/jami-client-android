@@ -65,6 +65,7 @@ import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.GenericView;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.FormattedName;
@@ -416,10 +417,12 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null)) {
+                    BitmapUtils.reduceBitmap(mSourcePhoto, VCardUtils.VCARD_PHOTO_SIZE);
                     mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
 
                 } else {
                     Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_contact_picture);
+                    BitmapUtils.reduceBitmap(bitmap, VCardUtils.VCARD_PHOTO_SIZE);
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 }
                 Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
