@@ -34,22 +34,31 @@ import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
+import cx.ring.utils.Log;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
 /*
  * MainActivity class that loads MainFragment
  */
-public class HomeActivity extends Activity {
+
+public class HomeActivity extends Activity implements Observer<ServiceEvent> {
     private static final String TAG = HomeActivity.class.getName();
+
+    private boolean mNoAccountOpened = false;
 
     public static final int REQUEST_CODE_PHOTO = 5;
     public static final int REQUEST_CODE_GALLERY = 6;
     public static final int REQUEST_PERMISSION_CAMERA = 113;
     public static final int REQUEST_PERMISSION_READ_STORAGE = 114;
+
+    private boolean mIsAskingForPermissions = false;
 
     @Inject
     AccountService mAccountService;
@@ -82,7 +91,28 @@ public class HomeActivity extends Activity {
         }
 
         if (!permissionsWeCanAsk.isEmpty()) {
+            mIsAskingForPermissions = true;
             ActivityCompat.requestPermissions(this, permissionsWeCanAsk.toArray(new String[permissionsWeCanAsk.size()]), RingApplication.PERMISSIONS_REQUEST);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAccountService.addObserver(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mAccountService.removeObserver(this);
+    }
+
+    public void loadAccounts() {
+        if (!mNoAccountOpened && mAccountService.getAccounts().isEmpty() && !mIsAskingForPermissions) {
+            mNoAccountOpened = true;
+            Log.d(TAG, "No account found");
+            startActivityForResult(new Intent(HomeActivity.this, WizardActivity.class), WizardActivity.ACCOUNT_CREATE_REQUEST);
         }
     }
 
@@ -185,6 +215,25 @@ public class HomeActivity extends Activity {
                 } else {
                     return;
                 }
+                break;
+        }
+
+        mIsAskingForPermissions = false;
+        loadAccounts();
+    }
+
+    @Override
+    public void update(Observable observable, ServiceEvent event) {
+        if (event == null) {
+            return;
+        }
+
+        switch (event.getEventType()) {
+            case ACCOUNTS_CHANGED:
+                loadAccounts();
+                break;
+            default:
+                android.util.Log.d(TAG, "Event " + event.getEventType() + " is not handled here");
                 break;
         }
     }
