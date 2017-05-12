@@ -482,6 +482,11 @@ public class HardwareServiceImpl extends HardwareService {
         return Camera.getNumberOfCameras();
     }
 
+    @Override
+    public boolean isPreviewFromFrontCamera() {
+        return Camera.getNumberOfCameras() == 1 || currentCamera == cameraFront;
+    }
+
     private void setCameraDisplayOrientation(int camId, Camera camera) {
         Camera.CameraInfo info = new Camera.CameraInfo();
         Camera.getCameraInfo(camId, info);
