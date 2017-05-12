@@ -40,6 +40,8 @@ public class VCardUtils {
     public static final String VCARD_KEY_PART = "part";
     public static final String VCARD_KEY_OF = "of";
 
+    public static final int VCARD_PHOTO_SIZE = 100000;
+
     private VCardUtils() {
         // Hidden default constructor
     }
