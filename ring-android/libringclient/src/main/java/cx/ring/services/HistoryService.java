@@ -49,7 +49,9 @@ import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
+import io.reactivex.Completable;
 import io.reactivex.Single;
+import io.reactivex.functions.Action;
 
 /**
  * A service managing all history related tasks.
@@ -225,6 +227,35 @@ public abstract class HistoryService extends Observable {
             }
         });
 
+    }
+
+    public Completable clearHistoryForContactAndAccount(final String contactId, final String accoundId) {
+        return Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                long conversationdId = getConversationID(accoundId, contactId);
+
+                DeleteBuilder<HistoryText, Long> deleteTextHistoryBuilder = getTextHistoryDao()
+                        .deleteBuilder();
+                deleteTextHistoryBuilder.where().in(HistoryText.COLUMN_CONVERSATION_ID_NAME, conversationdId);
+                deleteTextHistoryBuilder.delete();
+
+                DeleteBuilder<HistoryCall, Integer> deleteCallsHistoryBuilder = getCallHistoryDao()
+                        .deleteBuilder();
+                deleteCallsHistoryBuilder.where().in(HistoryCall.COLUMN_CONVERSATION_ID_NAME, conversationdId);
+                deleteCallsHistoryBuilder.delete();
+
+                DeleteBuilder<ConversationModel, Integer> deleteConversationBuilder = getConversationDao()
+                        .deleteBuilder();
+                deleteConversationBuilder.where().in(ConversationModel.COLUMN_ID_NAME, conversationdId);
+                deleteConversationBuilder.delete();
+
+                // notify the observers
+                setChanged();
+                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.HISTORY_MODIFIED);
+                notifyObservers(event);
+            }
+        });
     }
 
     public void clearHistory() {

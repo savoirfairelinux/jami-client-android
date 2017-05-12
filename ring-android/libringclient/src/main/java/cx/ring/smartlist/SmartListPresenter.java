@@ -29,7 +29,6 @@ import javax.inject.Inject;
 
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
 import cx.ring.model.ConversationModel;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryText;
@@ -51,6 +50,7 @@ import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.ResourceSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -209,6 +209,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         }
 
         SmartListViewModel smartListViewModel = new SmartListViewModel(conversationModel.getContactId(),
+                conversationModel.getId(),
                 callContact.getStatus(),
                 callContact.getDisplayName() != null ? callContact.getDisplayName() : callContact.getUsername(),
                 callContact.getPhoto(),
@@ -216,7 +217,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 lastEntryType,
                 lastInteraction,
                 hasUnreadMessage);
-
 
         smartListViewModel.setOnline(mPresenceService.isBuddyOnline(callContact.getIds().get(0)));
         smartListViewModel.setHasOngoingCall(mCallService.getCurrentCallForContactId(conversationModel.getContactId()) != null);
@@ -294,12 +294,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         startConversation(mContactService.getContact(new Uri(smartListViewModel.getUuid())));
     }
 
-    //TODO
     public void conversationLongClicked(SmartListViewModel smartListViewModel) {
-/*        Conversation conversation = getConversationByUuid(mConversations, smartListViewModel.getUuid());
-        if (conversation != null) {
-            getView().displayConversationDialog(conversation);
-        }*/
+        getView().displayConversationDialog(smartListViewModel);
     }
 
     public void photoClicked(SmartListViewModel smartListViewModel) {
@@ -334,8 +330,36 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         getView().goToConversation(c);
     }
 
-    public void deleteConversation(Conversation conversation) {
-        mHistoryService.clearHistoryForConversation(conversation);
+    public void copyNumber(SmartListViewModel smartListViewModel) {
+        CallContact callContact = mContactService.getContact(new Uri(smartListViewModel.getUuid()));
+        getView().copyNumber(callContact);
+    }
+
+    public void deleteConversation(SmartListViewModel smartListViewModel) {
+        CallContact callContact = mContactService.getContact(new Uri(smartListViewModel.getUuid()));
+        getView().displayDeleteDialog(callContact);
+    }
+
+    public void deleteConversation(final CallContact callContact) {
+        compositeDisposable.add(mHistoryService.clearHistoryForContactAndAccount(callContact.getIds().get(0), mCurrentAccount.getAccountID())
+                .subscribeOn(Schedulers.computation())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        if (callContact.getStatus() != CallContact.Status.NO_REQUEST) {
+                            loadConversations(mCurrentAccount.getAccountID());
+                        } else {
+                            mContactService.loadContacts(mCurrentAccount.isRing(),
+                                    mCurrentAccount.isSip(),
+                                    mCurrentAccount);
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e(TAG, e.toString());
+                    }
+                }));
     }
 
     public void clickQRSearch() {
@@ -460,12 +484,16 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         getView().setLoading(false);
     }
 
-    public void removeContact(Conversation conversation) {
-        Account account = mAccountService.getCurrentAccount();
-        Uri contactUri = conversation.getContact().getPhones().get(0).getNumber();
-        if (contactUri.isRingId()) {
-            mAccountService.removeContact(account.getAccountID(), contactUri.getRawRingId(), false);
+
+    public void removeContact(SmartListViewModel smartListViewModel) {
+        String contactId = smartListViewModel.getUuid();
+        String[] split = contactId.split(":");
+        if (split.length > 1 && split[0].equals("ring")) {
+            contactId = split[1];
         }
+
+        mAccountService.removeContact(mCurrentAccount.getAccountID(), contactId, false);
+        mSmartListViewModels.remove(smartListViewModel);
     }
 
     private void subscribePresence() {

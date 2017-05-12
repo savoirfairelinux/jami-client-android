@@ -41,7 +41,7 @@ public interface ConversationView {
 
     void displayAddContact(boolean display);
 
-    void displayDeleteDialog(Conversation conversation);
+    void displayDeleteDialog(CallContact callContact);
 
     void displayCopyToClipboard(CallContact callContact);
 

@@ -39,32 +39,35 @@ import cx.ring.model.Uri;
 
 public class ActionHelper {
 
+    public static final String TAG = ActionHelper.class.getSimpleName();
+    public static final int ACTION_COPY = 0;
+    public static final int ACTION_DELETE = 1;
+    public static final int ACTION_BLOCK = 2;
+
     private ActionHelper() {
     }
 
-    private static final String TAG = ActionHelper.class.getSimpleName();
-
-    public static AlertDialog launchDeleteAction(final Activity activity,
-                                                 final Conversation conversation,
+    public static AlertDialog launchDeleteAction(final Context context,
+                                                 final CallContact callContact,
                                                  final Conversation.ConversationActionCallback callback) {
-        if (activity == null) {
+        if (context == null) {
             Log.d(TAG, "launchDeleteAction: activity is null");
             return null;
         }
 
-        if (conversation == null) {
+        if (callContact == null) {
             Log.d(TAG, "launchDeleteAction: conversation is null");
             return null;
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.conversation_action_delete_this_title)
                 .setMessage(R.string.conversation_action_delete_this_message)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         if (callback != null) {
-                            callback.deleteConversation(conversation);
+                            callback.deleteConversation(callContact);
                         }
                     }
                 })
@@ -80,7 +83,7 @@ public class ActionHelper {
         return alertDialog;
     }
 
-    public static void launchCopyNumberToClipboardFromContact(final Activity activity,
+    public static void launchCopyNumberToClipboardFromContact(final Context context,
                                                               final CallContact callContact,
                                                               final Conversation.ConversationActionCallback callback) {
         if (callContact == null) {
@@ -88,7 +91,7 @@ public class ActionHelper {
             return;
         }
 
-        if (activity == null) {
+        if (context == null) {
             Log.d(TAG, "launchCopyNumberToClipboardFromContact: activity is null");
             return;
         }
@@ -96,30 +99,31 @@ public class ActionHelper {
         if (callContact.getPhones().isEmpty()) {
             Log.d(TAG, "launchCopyNumberToClipboardFromContact: no number to copy");
             return;
-        } else if (callContact.getPhones().size() == 1 && callback != null) {
-            String number = callContact.getPhones().get(0).getNumber().toString();
-            callback.copyContactNumberToClipboard(number);
-            return;
         }
 
-        final NumberAdapter adapter = new NumberAdapter(activity, callContact, true);
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle(R.string.conversation_action_select_peer_number);
-        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (callback != null) {
-                    Phone selectedPhone = (Phone) adapter.getItem(which);
-                    callback.copyContactNumberToClipboard(selectedPhone.getNumber().toString());
+        if (callContact.getPhones().size() == 1 && callback != null) {
+            String number = callContact.getPhones().get(0).getNumber().toString();
+            callback.copyContactNumberToClipboard(number);
+        } else {
+            final NumberAdapter adapter = new NumberAdapter(context, callContact, true);
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(R.string.conversation_action_select_peer_number);
+            builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (callback != null) {
+                        Phone selectedPhone = (Phone) adapter.getItem(which);
+                        callback.copyContactNumberToClipboard(selectedPhone.getNumber().toString());
+                    }
                 }
-            }
-        });
-        AlertDialog dialog = builder.create();
-        final int listViewSidePadding = (int) activity
-                .getResources()
-                .getDimension(R.dimen.alert_dialog_side_padding_list_view);
-        dialog.getListView().setPadding(listViewSidePadding, 0, listViewSidePadding, 0);
-        dialog.show();
+            });
+            AlertDialog dialog = builder.create();
+            final int listViewSidePadding = (int) context
+                    .getResources()
+                    .getDimension(R.dimen.alert_dialog_side_padding_list_view);
+            dialog.getListView().setPadding(listViewSidePadding, 0, listViewSidePadding, 0);
+            dialog.show();
+        }
     }
 
     public static void displayAddContactConfirmationDialog(final CallContact contact, final Context context) {

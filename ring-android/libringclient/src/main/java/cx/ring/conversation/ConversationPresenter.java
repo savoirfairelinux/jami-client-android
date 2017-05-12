@@ -114,7 +114,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     public void deleteAction() {
-        getView().displayDeleteDialog(mConversation);
+        getView().displayDeleteDialog(mConversation.getContact());
     }
 
     public void copyToClipboard() {
