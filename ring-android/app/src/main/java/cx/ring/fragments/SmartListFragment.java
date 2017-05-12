@@ -60,6 +60,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
+import cx.ring.adapters.NumberAdapter;
 import cx.ring.adapters.SmartListAdapter;
 import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
@@ -68,6 +69,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeScannerActivity;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.Phone;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.smartlist.SmartListPresenter;
 import cx.ring.smartlist.SmartListView;
@@ -81,7 +83,6 @@ import cx.ring.viewholders.SmartListViewHolder;
 public class SmartListFragment extends BaseFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
         SmartListViewHolder.SmartListListeners,
         Conversation.ConversationActionCallback,
-        ClipboardHelper.ClipboardHelperCallback,
         SmartListView {
 
     public static final String TAG = SmartListFragment.class.getSimpleName();
@@ -324,22 +325,16 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void deleteConversation(Conversation conversation) {
-        mSmartListPresenter.deleteConversation(conversation);
+    public void deleteConversation(CallContact callContact) {
+        mSmartListPresenter.deleteConversation(callContact);
     }
 
     @Override
     public void copyContactNumberToClipboard(String contactNumber) {
-        ClipboardHelper.copyNumberToClipboard(getActivity(), contactNumber, this);
-    }
-
-    @Override
-    public void clipBoardDidCopyNumber(String copiedNumber) {
-        if (getView() != null) {
-            String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
-                    ActionHelper.getShortenedNumber(copiedNumber));
-            Snackbar.make(getView(), snackbarText, Snackbar.LENGTH_LONG).show();
-        }
+        ClipboardHelper.copyNumberToClipboard(getActivity(), contactNumber);
+        String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
+                ActionHelper.getShortenedNumber(contactNumber));
+        Snackbar.make(getView(), snackbarText, Snackbar.LENGTH_LONG).show();
     }
 
     private void showErrorPanel(final int textResId,
@@ -433,28 +428,36 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void displayConversationDialog(final Conversation conversation) {
+    public void displayConversationDialog(final SmartListViewModel smartListViewModel) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setItems(R.array.conversation_actions, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
-                    case 0:
-                        ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(),
-                                conversation.getContact(),
-                                SmartListFragment.this);
+                    case ActionHelper.ACTION_COPY:
+                        presenter.copyNumber(smartListViewModel);
                         break;
-                    case 1:
-                        ActionHelper.launchDeleteAction(getActivity(), conversation, SmartListFragment.this);
+                    case ActionHelper.ACTION_DELETE:
+                        presenter.deleteConversation(smartListViewModel);
                         break;
-                    case 2:
-                        presenter.removeContact(conversation.getLastAccountUsed(), conversation.getContact().getDisplayName());
+                    case ActionHelper.ACTION_BLOCK:
+                        presenter.removeContact(smartListViewModel);
                         break;
                 }
             }
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    public void displayDeleteDialog(CallContact callContact) {
+        ActionHelper.launchDeleteAction(getActivity(), callContact, SmartListFragment.this);
+    }
+
+    @Override
+    public void copyNumber(CallContact callContact) {
+        ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(), callContact, this);
     }
 
     @Override
