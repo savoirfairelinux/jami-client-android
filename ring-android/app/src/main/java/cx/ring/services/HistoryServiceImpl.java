@@ -22,7 +22,6 @@
 package cx.ring.services;
 
 import android.content.Context;
-import android.text.format.DateUtils;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
