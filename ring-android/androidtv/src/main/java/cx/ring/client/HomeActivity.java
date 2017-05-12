@@ -1,15 +1,21 @@
 /*
- * Copyright (C) 2014 The Android Open Source Project
+ *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
+ *  Author: Michel Schmit <michel.schmit@savoirfairelinux.com>
+ *  Aline Bonnet <aline.bonnet@savoirfairelinux.com>
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 package cx.ring.client;
@@ -34,22 +40,31 @@ import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
+import cx.ring.utils.Log;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
 /*
  * MainActivity class that loads MainFragment
  */
-public class HomeActivity extends Activity {
+
+public class HomeActivity extends Activity implements Observer<ServiceEvent> {
     private static final String TAG = HomeActivity.class.getName();
+
+    private boolean mNoAccountOpened = false;
 
     public static final int REQUEST_CODE_PHOTO = 5;
     public static final int REQUEST_CODE_GALLERY = 6;
     public static final int REQUEST_PERMISSION_CAMERA = 113;
     public static final int REQUEST_PERMISSION_READ_STORAGE = 114;
+
+    private boolean mIsAskingForPermissions = false;
 
     @Inject
     AccountService mAccountService;
@@ -82,7 +97,28 @@ public class HomeActivity extends Activity {
         }
 
         if (!permissionsWeCanAsk.isEmpty()) {
+            mIsAskingForPermissions = true;
             ActivityCompat.requestPermissions(this, permissionsWeCanAsk.toArray(new String[permissionsWeCanAsk.size()]), RingApplication.PERMISSIONS_REQUEST);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAccountService.addObserver(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mAccountService.removeObserver(this);
+    }
+
+    public void loadAccounts() {
+        if (!mNoAccountOpened && mAccountService.getAccounts().isEmpty() && !mIsAskingForPermissions) {
+            mNoAccountOpened = true;
+            Log.d(TAG, "No account found");
+            startActivityForResult(new Intent(HomeActivity.this, WizardActivity.class), WizardActivity.ACCOUNT_CREATE_REQUEST);
         }
     }
 
@@ -185,6 +221,25 @@ public class HomeActivity extends Activity {
                 } else {
                     return;
                 }
+                break;
+        }
+
+        mIsAskingForPermissions = false;
+        loadAccounts();
+    }
+
+    @Override
+    public void update(Observable observable, ServiceEvent event) {
+        if (event == null) {
+            return;
+        }
+
+        switch (event.getEventType()) {
+            case ACCOUNTS_CHANGED:
+                loadAccounts();
+                break;
+            default:
+                Log.d(TAG, "Event " + event.getEventType() + " is not handled here");
                 break;
         }
     }
