@@ -35,6 +35,7 @@ public class SmartListViewModel {
     public static final int TYPE_OUTGOING_CALL = 3;
 
     private String uuid;
+    private long conversationId;
     private String contactName;
     private String lastInteraction = "";
     private byte[] photoData;
@@ -45,8 +46,9 @@ public class SmartListViewModel {
     private boolean isOnline = false;
     private int lastEntryType;
 
-    public SmartListViewModel(String id, CallContact callContact, String contactName, byte[] photoData, long lastInteractionTime, int lastEntrytype, String lastInteraction, boolean hasUnreadTextMessage) {
+    public SmartListViewModel(String id, long conversationId, CallContact callContact, String contactName, byte[] photoData, long lastInteractionTime, int lastEntrytype, String lastInteraction, boolean hasUnreadTextMessage) {
         this.uuid = id;
+        this.conversationId = conversationId;
         this.contactName = contactName;
         this.photoData = photoData;
         this.lastInteractionTime = lastInteractionTime;
@@ -55,6 +57,19 @@ public class SmartListViewModel {
         this.status = callContact.getStatus();
         this.lastEntryType = lastEntrytype;
         this.lastInteraction = lastInteraction;
+    }
+
+    public SmartListViewModel(String id, CallContact callContact, String contactName, byte[] photoData) {
+        this.uuid = id;
+        this.conversationId = -1;
+        this.contactName = contactName;
+        this.photoData = photoData;
+        this.lastInteractionTime = 0;
+        this.hasUnreadTextMessage = false;
+        this.hasOngoingCall = false;
+        this.status = callContact.getStatus();
+        this.lastEntryType = 0;
+        this.lastInteraction = "";
     }
 
     @Override
@@ -122,5 +137,9 @@ public class SmartListViewModel {
 
     public int getLastEntryType() {
         return lastEntryType;
+    }
+
+    public long getConversationId() {
+        return conversationId;
     }
 }
