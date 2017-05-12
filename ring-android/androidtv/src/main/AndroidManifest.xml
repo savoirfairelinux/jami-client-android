@@ -68,6 +68,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".client.WizardActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+
+            android:screenOrientation="fullUser"
+            android:theme="@style/AppThemeBase">
+        </activity>
+
         <activity android:name="cx.ring.client.DetailsActivity" />
         <activity android:name="cx.ring.client.PlaybackOverlayActivity" />
         <activity android:name="cx.ring.client.BrowseErrorActivity" />

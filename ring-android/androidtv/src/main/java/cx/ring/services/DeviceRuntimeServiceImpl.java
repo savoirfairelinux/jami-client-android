@@ -183,7 +183,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
     @Override
     public void startRinging() {
-        
+
     }
 
     @Override

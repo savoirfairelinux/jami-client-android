@@ -2,6 +2,7 @@
  *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
  *  Author: Michel Schmit <michel.schmit@savoirfairelinux.com>
+ *  Aline Bonnet <aline.bonnet@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,8 +15,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 package cx.ring.client;
 
@@ -51,13 +51,14 @@ import cx.ring.utils.Observer;
 
 public class HomeActivity extends Activity implements Observer<ServiceEvent> {
     private static final String TAG = HomeActivity.class.getName();
-    
+
+    private boolean mNoAccountOpened = false;
+
     public static final int REQUEST_CODE_PHOTO = 5;
     public static final int REQUEST_CODE_GALLERY = 6;
     public static final int REQUEST_PERMISSION_CAMERA = 113;
     public static final int REQUEST_PERMISSION_READ_STORAGE = 114;
 
-    private boolean mNoAccountOpened = false;
     private boolean mIsAskingForPermissions = false;
 
     @Inject
@@ -236,7 +237,7 @@ public class HomeActivity extends Activity implements Observer<ServiceEvent> {
 
         if (!mNoAccountOpened && mAccountService.getAccounts().isEmpty() && !mIsAskingForPermissions) {
             mNoAccountOpened = true;
-            //TODO: Start account creation activity
+            startActivityForResult(new Intent(HomeActivity.this, WizardActivity.class), WizardActivity.ACCOUNT_CREATE_REQUEST);
         }
     }
 }

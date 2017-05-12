@@ -26,6 +26,7 @@ import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.SearchFragment;
+import cx.ring.client.WizardActivity;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.service.BootReceiver;
@@ -41,9 +42,9 @@ import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.PresenceService;
 import cx.ring.services.SharedPreferencesServiceImpl;
-
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.SharePresenter;
+import cx.ring.wizard.WizardPresenter;
 import dagger.Component;
 
 @Singleton
@@ -54,6 +55,8 @@ public interface RingInjectionComponent {
     void inject(HomeActivity activity);
 
     void inject(SearchFragment fragment);
+
+    void inject(WizardActivity activity);
 
     void inject(DRingService service);
 
@@ -93,4 +96,5 @@ public interface RingInjectionComponent {
 
     void inject(RingAccountSummaryPresenter presenter);
 
+    void inject(WizardPresenter presenter);
 }
