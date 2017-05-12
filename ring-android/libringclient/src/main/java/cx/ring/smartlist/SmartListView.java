@@ -37,7 +37,11 @@ public interface SmartListView {
 
     void displayNoConversationMessage();
 
-    void displayConversationDialog(Conversation conversation);
+    void displayConversationDialog(SmartListViewModel smartListViewModel);
+
+    void displayDeleteDialog(CallContact callContact);
+
+    void copyNumber(CallContact callContact);
 
     void setLoading(boolean display);
 

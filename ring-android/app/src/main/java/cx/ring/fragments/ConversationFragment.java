@@ -58,7 +58,6 @@ import ezvcard.property.RawProperty;
 
 public class ConversationFragment extends BaseFragment<ConversationPresenter> implements
         Conversation.ConversationActionCallback,
-        ClipboardHelper.ClipboardHelperCallback,
         ContactDetailsTask.DetailsLoadedCallback,
         ConversationView {
 
@@ -302,23 +301,16 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void deleteConversation(Conversation conversation) {
+    public void deleteConversation(CallContact callContact) {
         presenter.deleteConversation();
     }
 
     @Override
     public void copyContactNumberToClipboard(String contactNumber) {
-        ClipboardHelper.copyNumberToClipboard(getActivity(), contactNumber, this);
-    }
-
-    @Override
-    public void clipBoardDidCopyNumber(String copiedNumber) {
-        View view = getActivity().findViewById(android.R.id.content);
-        if (view != null) {
-            String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
-                    ActionHelper.getShortenedNumber(copiedNumber));
-            Snackbar.make(view, snackbarText, Snackbar.LENGTH_LONG).show();
-        }
+        ClipboardHelper.copyNumberToClipboard(getActivity(), contactNumber);
+        String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
+                ActionHelper.getShortenedNumber(contactNumber));
+        Snackbar.make(getView(), snackbarText, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -423,12 +415,12 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void displayDeleteDialog(final Conversation conversation) {
+    public void displayDeleteDialog(final CallContact callContact) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mDeleteDialog = ActionHelper.launchDeleteAction(getActivity(),
-                        conversation,
+                        callContact,
                         ConversationFragment.this);
             }
         });
