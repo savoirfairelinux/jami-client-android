@@ -64,6 +64,7 @@ import cx.ring.model.ConfigKey;
 import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -295,6 +296,7 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
         vcard.setFormattedName(new FormattedName(mFullname));
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         if (mPhotoProfile != null) {
+            BitmapUtils.reduceBitmap(mPhotoProfile, VCardUtils.VCARD_PHOTO_SIZE);
             mPhotoProfile.compress(Bitmap.CompressFormat.PNG, 100, stream);
             Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
             vcard.removeProperties(Photo.class);
