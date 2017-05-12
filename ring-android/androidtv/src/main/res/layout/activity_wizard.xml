@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_primary_dark">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="36dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_logo_ring_beta2_blanc" />
+
+    <TextView
+        android:id="@+id/ring_acc_title_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/logo"
+        android:layout_toEndOf="@+id/logo"
+        android:paddingLeft="36dp"
+        android:paddingRight="36dp"
+        android:text="@string/account_creation_home"
+        android:textAlignment="center"
+        android:textColor="@color/text_color_primary_dark"
+        android:textSize="44sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ring_acc_title_txt"
+        android:layout_toEndOf="@+id/logo"
+        android:paddingBottom="24dp"
+        android:paddingLeft="36dp"
+        android:paddingRight="36dp"
+        android:paddingTop="24dp"
+        android:text="@string/help_ring"
+        android:textAlignment="center"
+        android:textColor="@color/text_color_primary_dark"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="36dp"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/color_primary_light"
+            android:indeterminateTintMode="src_atop" />
+
+        <TextView
+            android:id="@+id/text_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_wait_create_details"
+            android:textColor="@color/color_primary_light"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
