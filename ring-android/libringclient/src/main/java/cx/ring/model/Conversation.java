@@ -305,7 +305,7 @@ public class Conversation {
     }
 
     public interface ConversationActionCallback {
-        void deleteConversation(Conversation conversation);
+        void deleteConversation(CallContact callContact);
 
         void copyContactNumberToClipboard(String contactNumber);
     }
