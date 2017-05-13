@@ -59,7 +59,6 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.client.AccountEditionActivity;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
 import cx.ring.utils.KeyboardVisibilityManager;
@@ -139,10 +138,10 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
         super.onResume();
         mRingAccountSummaryPresenter.bindView(this);
 
-        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNTID_KEY) == null) {
+        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY) == null) {
             return;
         }
-        mRingAccountSummaryPresenter.setAccountId(getArguments().getString(AccountEditionActivity.ACCOUNTID_KEY));
+        mRingAccountSummaryPresenter.setAccountId(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
     }
 
     @Override
