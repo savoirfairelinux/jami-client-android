@@ -27,7 +27,7 @@ import cx.ring.account.RegisterNameDialog;
 import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.application.RingApplication;
-import cx.ring.client.AccountEditionActivity;
+import cx.ring.account.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.BlackListFragment;
@@ -38,6 +38,7 @@ import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.ProfileCreationFragment;
 import cx.ring.fragments.RingAccountCreationFragment;
@@ -151,4 +152,7 @@ public interface RingInjectionComponent {
     void inject(RingAccountSummaryPresenter presenter);
 
     void inject(AdvancedAccountFragment fragment);
+
+    void inject(GeneralAccountFragment fragment);
+
 }
