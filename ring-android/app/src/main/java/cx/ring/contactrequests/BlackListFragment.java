@@ -39,7 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.client.AccountEditionActivity;
+import cx.ring.account.AccountEditionActivity;
 import cx.ring.mvp.BaseFragment;
 
 public class BlackListFragment extends BaseFragment<BlackListPresenter> implements BlackListView,

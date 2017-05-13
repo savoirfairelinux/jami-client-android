@@ -19,58 +19,58 @@
  */
 package cx.ring.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v14.preference.PreferenceFragment;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.SwitchPreferenceCompat;
 import android.support.v7.preference.TwoStatePreference;
-import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 
+import javax.inject.Inject;
+
 import cx.ring.R;
-import cx.ring.interfaces.AccountCallbacks;
-import cx.ring.interfaces.AccountChangedListener;
+import cx.ring.account.AccountEditionActivity;
+import cx.ring.application.RingApplication;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
+import cx.ring.model.ServiceEvent;
+import cx.ring.services.AccountService;
+import cx.ring.utils.Log;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 import cx.ring.views.EditTextIntegerPreference;
 import cx.ring.views.EditTextPreferenceDialog;
 import cx.ring.views.PasswordPreference;
 
-import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
-
-public class GeneralAccountFragment extends PreferenceFragment implements AccountChangedListener {
+public class GeneralAccountFragment extends PreferenceFragment implements Observer<ServiceEvent> {
 
     private static final String TAG = GeneralAccountFragment.class.getSimpleName();
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
     private static final String KEY_IS_RING = "accountIsRing";
-    private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
+    private String mAccountID;
+
+    @Inject
+    AccountService mAccountService;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof AccountCallbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+    public void onResume() {
+        super.onResume();
+        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNTID_KEY) == null) {
+            return;
         }
-
-        mCallbacks = (AccountCallbacks) activity;
-        mCallbacks.addOnAccountChanged(this);
+        mAccountID = getArguments().getString(AccountEditionActivity.ACCOUNTID_KEY);
+        mAccountService.addObserver(this);
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.i(TAG, "onDetach");
-        if (mCallbacks != null) {
-            mCallbacks.removeOnAccountChanged(this);
-        }
-        mCallbacks = DUMMY_CALLBACKS;
+    public void onPause() {
+        super.onPause();
+        mAccountService.removeObserver(this);
     }
 
-    @Override
-    public void accountChanged(Account account) {
+    void accountChanged(Account account) {
         if (account == null) {
             return;
         }
@@ -111,7 +111,13 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         Log.i(TAG, "onCreatePreferences " + bundle + " " + s);
-        Account acc = mCallbacks.getAccount();
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNTID_KEY) == null) {
+            return;
+        }
+        mAccountID = getArguments().getString(AccountEditionActivity.ACCOUNTID_KEY);
+
+        Account acc = mAccountService.getAccount(mAccountID);
         if (acc != null) {
             if (acc.isRing()) {
                 addPreferencesFromResource(R.xml.account_prefs_ring);
@@ -137,7 +143,7 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Account acc = mCallbacks.getAccount();
+        Account acc = mAccountService.getAccount(mAccountID);
         if (acc != null) {
             outState.putBoolean(KEY_IS_RING, acc.isRing());
         }
@@ -199,10 +205,11 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            final Account account = mCallbacks.getAccount();
+            final Account account = mAccountService.getAccount(mAccountID);
             if (account != null) {
                 account.setEnabled((Boolean) newValue);
-                mCallbacks.saveAccount();
+                mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
+                mAccountService.setAccountDetails(mAccountID, account.getDetails());
             }
             return false;
         }
@@ -212,7 +219,7 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             Log.i(TAG, "Changing preference " + preference.getKey() + " to value:" + newValue);
-            final Account account = mCallbacks.getAccount();
+            final Account account = mAccountService.getAccount(mAccountID);
             final ConfigKey key = ConfigKey.fromString(preference.getKey());
             if (preference instanceof TwoStatePreference) {
                 account.setDetail(key, newValue.toString());
@@ -236,9 +243,26 @@ public class GeneralAccountFragment extends PreferenceFragment implements Accoun
 
                 account.setDetail(key, newValue.toString());
             }
-            mCallbacks.saveAccount();
+
+            mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
+            mAccountService.setAccountDetails(mAccountID, account.getDetails());
             return true;
         }
     };
 
+    @Override
+    public void update(Observable observable, ServiceEvent event) {
+        if (event == null || getView() == null) {
+            return;
+        }
+
+        switch (event.getEventType()) {
+            case ACCOUNTS_CHANGED:
+            case REGISTRATION_STATE_CHANGED:
+                accountChanged(mAccountService.getAccount(mAccountID));
+                break;
+            default:
+                break;
+        }
+    }
 }

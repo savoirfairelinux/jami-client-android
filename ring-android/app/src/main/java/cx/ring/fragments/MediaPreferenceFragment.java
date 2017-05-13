@@ -45,22 +45,23 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.account.AccountEditionActivity;
 import cx.ring.application.RingApplication;
-import cx.ring.interfaces.AccountCallbacks;
-import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
+import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.FileUtils;
-
-import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
 
 public class MediaPreferenceFragment extends PreferenceFragment
-        implements FragmentCompat.OnRequestPermissionsResultCallback, AccountChangedListener {
+        implements FragmentCompat.OnRequestPermissionsResultCallback, Observer<ServiceEvent> {
+
     static final String TAG = MediaPreferenceFragment.class.getSimpleName();
 
     @Inject
@@ -73,8 +74,6 @@ public class MediaPreferenceFragment extends PreferenceFragment
     private CodecPreference videoCodecsPref = null;
     private SwitchPreference mRingtoneCustom = null;
 
-    protected AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
-
     private int MAX_SIZE_RINGTONE = 800;
 
     private static final int SELECT_RINGTONE_PATH = 40;
@@ -85,29 +84,36 @@ public class MediaPreferenceFragment extends PreferenceFragment
             return true;
         }
     };
+    private String mAccountID;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof AccountCallbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+    public void onResume() {
+        super.onResume();
+        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNTID_KEY) == null) {
+            return;
         }
+        mAccountID = getArguments().getString(AccountEditionActivity.ACCOUNTID_KEY);
+        boolean isRingtoneEnabled = Boolean.valueOf(mAccountService.getAccount(mAccountID).getDetail(ConfigKey.RINGTONE_ENABLED));
+        mRingtoneCustom.setEnabled(isRingtoneEnabled);
+        boolean isCustomRingtoneEnabled = isRingtoneEnabled && mRingtoneCustom.isChecked();
+        findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(isCustomRingtoneEnabled);
 
-        mCallbacks = (AccountCallbacks) activity;
-        mCallbacks.addOnAccountChanged(this);
+        addPreferenceListener(ConfigKey.VIDEO_ENABLED, changeVideoPreferenceListener);
+        mRingtoneCustom.setOnPreferenceChangeListener(changeAudioPreferenceListener);
+        final Account acc = mAccountService.getAccount(mAccountID);
+        if (acc != null) {
+            accountChanged(acc);
+        }
+        mAccountService.addObserver(this);
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        if (mCallbacks != null) {
-            mCallbacks.removeOnAccountChanged(this);
-        }
-        mCallbacks = DUMMY_CALLBACKS;
+    public void onPause() {
+        super.onPause();
+        mAccountService.removeObserver(this);
     }
 
-    @Override
-    public void accountChanged(Account account) {
+    private void accountChanged(Account account) {
         if (account == null) {
             return;
         }
@@ -170,8 +176,9 @@ public class MediaPreferenceFragment extends PreferenceFragment
 
     private void setRingtonepath(File file) {
         findPreference(ConfigKey.RINGTONE_PATH.key()).setSummary(file.getName());
-        mCallbacks.getAccount().setDetail(ConfigKey.RINGTONE_PATH, file.getAbsolutePath());
-        mCallbacks.saveAccount();
+        mAccountService.getAccount(mAccountID).setDetail(ConfigKey.RINGTONE_PATH, file.getAbsolutePath());
+        mAccountService.setCredentials(mAccountID, mAccountService.getAccount(mAccountID).getCredentialsHashMapList());
+        mAccountService.setAccountDetails(mAccountID, mAccountService.getAccount(mAccountID).getDetails());
     }
 
     public void performFileSearch(int requestCodeToSet) {
@@ -191,32 +198,20 @@ public class MediaPreferenceFragment extends PreferenceFragment
         audioCodecsPref = (CodecPreference) findPreference("Account.audioCodecs");
         videoCodecsPref = (CodecPreference) findPreference("Account.videoCodecs");
         mRingtoneCustom = (SwitchPreference) findPreference("Account.ringtoneCustom");
-
-        boolean isRingtoneEnabled = Boolean.valueOf(mCallbacks.getAccount().getDetail(ConfigKey.RINGTONE_ENABLED));
-        mRingtoneCustom.setEnabled(isRingtoneEnabled);
-        boolean isCustomRingtoneEnabled = isRingtoneEnabled && mRingtoneCustom.isChecked();
-        findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(isCustomRingtoneEnabled);
-
-        addPreferenceListener(ConfigKey.VIDEO_ENABLED, changeVideoPreferenceListener);
-        mRingtoneCustom.setOnPreferenceChangeListener(changeAudioPreferenceListener);
-        final Account acc = mCallbacks.getAccount();
-        if (acc != null) {
-            accountChanged(acc);
-        }
     }
 
     private final Preference.OnPreferenceChangeListener changeCodecListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object o) {
-            final Account account = mCallbacks.getAccount();
+            final Account account = mAccountService.getAccount(mAccountID);
             ArrayList<Long> audio = audioCodecsPref.getActiveCodecList();
             ArrayList<Long> video = videoCodecsPref.getActiveCodecList();
             ArrayList<Long> newOrder = new ArrayList<>(audio.size() + video.size());
             newOrder.addAll(audio);
             newOrder.addAll(video);
             mAccountService.setActiveCodecList(newOrder, account.getAccountID());
-
-            mCallbacks.saveAccount();
+            mAccountService.setCredentials(mAccountID, mAccountService.getAccount(mAccountID).getCredentialsHashMapList());
+            mAccountService.setAccountDetails(mAccountID, mAccountService.getAccount(mAccountID).getDetails());
             accountChanged(account);
             return true;
         }
@@ -225,7 +220,7 @@ public class MediaPreferenceFragment extends PreferenceFragment
     private final Preference.OnPreferenceChangeListener changeAudioPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            final Account account = mCallbacks.getAccount();
+            final Account account = mAccountService.getAccount(mAccountID);
             final ConfigKey key = ConfigKey.fromString(preference.getKey());
             if (preference instanceof TwoStatePreference) {
                 if (key == ConfigKey.RINGTONE_ENABLED) {
@@ -248,7 +243,9 @@ public class MediaPreferenceFragment extends PreferenceFragment
                 Log.i(TAG, "Changing" + key + " value:" + newValue);
                 account.setDetail(key, newValue.toString());
             }
-            mCallbacks.saveAccount();
+
+            mAccountService.setCredentials(mAccountID, mAccountService.getAccount(mAccountID).getCredentialsHashMapList());
+            mAccountService.setAccountDetails(mAccountID, mAccountService.getAccount(mAccountID).getDetails());
             return true;
         }
     };
@@ -256,7 +253,7 @@ public class MediaPreferenceFragment extends PreferenceFragment
     private final Preference.OnPreferenceChangeListener changeVideoPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            final Account account = mCallbacks.getAccount();
+            final Account account = mAccountService.getAccount(mAccountID);
             final ConfigKey key = ConfigKey.fromString(preference.getKey());
             if (null != account && newValue instanceof Boolean) {
                 if (newValue.equals(true)) {
@@ -264,19 +261,25 @@ public class MediaPreferenceFragment extends PreferenceFragment
                     if (hasCameraPermission) {
                         if (preference instanceof TwoStatePreference) {
                             account.setDetail(key, newValue.toString());
-                            mCallbacks.saveAccount();
+
+                            mAccountService.setCredentials(mAccountID, mAccountService.getAccount(mAccountID).getCredentialsHashMapList());
+                            mAccountService.setAccountDetails(mAccountID, mAccountService.getAccount(mAccountID).getDetails());
                         }
                     } else {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             requestPermissions(new String[]{Manifest.permission.CAMERA}, RingApplication.PERMISSIONS_REQUEST);
                         } else if (preference instanceof TwoStatePreference) {
                             account.setDetail(key, newValue.toString());
-                            mCallbacks.saveAccount();
+
+                            mAccountService.setCredentials(mAccountID, mAccountService.getAccount(mAccountID).getCredentialsHashMapList());
+                            mAccountService.setAccountDetails(mAccountID, mAccountService.getAccount(mAccountID).getDetails());
                         }
                     }
                 } else if (preference instanceof TwoStatePreference) {
                     account.setDetail(key, newValue.toString());
-                    mCallbacks.saveAccount();
+
+                    mAccountService.setCredentials(mAccountID, mAccountService.getAccount(mAccountID).getCredentialsHashMapList());
+                    mAccountService.setAccountDetails(mAccountID, mAccountService.getAccount(mAccountID).getDetails());
                 }
             }
             return true;
@@ -290,10 +293,12 @@ public class MediaPreferenceFragment extends PreferenceFragment
             switch (permissions[i]) {
                 case Manifest.permission.CAMERA:
                     boolean granted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
-                    final Account account = mCallbacks.getAccount();
+                    final Account account = mAccountService.getAccount(mAccountID);
                     if (account != null) {
                         account.setDetail(ConfigKey.VIDEO_ENABLED, granted);
-                        mCallbacks.saveAccount();
+
+                        mAccountService.setCredentials(mAccountID, mAccountService.getAccount(mAccountID).getCredentialsHashMapList());
+                        mAccountService.setAccountDetails(mAccountID, mAccountService.getAccount(mAccountID).getDetails());
                     }
                     refresh();
                     if (!granted) {
@@ -341,7 +346,7 @@ public class MediaPreferenceFragment extends PreferenceFragment
     }
 
     public void refresh() {
-        final Account account = mCallbacks.getAccount();
+        final Account account = mAccountService.getAccount(mAccountID);
         if (account != null) {
             setPreferenceDetails(account.getConfig());
         }
@@ -365,5 +370,21 @@ public class MediaPreferenceFragment extends PreferenceFragment
                     }
                 });
         builder.show();
+    }
+
+    @Override
+    public void update(Observable observable, ServiceEvent event) {
+        if (event == null || getView() == null) {
+            return;
+        }
+
+        switch (event.getEventType()) {
+            case ACCOUNTS_CHANGED:
+            case REGISTRATION_STATE_CHANGED:
+                accountChanged(mAccountService.getAccount(mAccountID));
+                break;
+            default:
+                break;
+        }
     }
 }

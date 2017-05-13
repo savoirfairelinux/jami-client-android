@@ -19,7 +19,6 @@
  */
 package cx.ring.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v14.preference.PreferenceFragment;
 import android.support.v7.preference.EditTextPreference;
@@ -38,17 +37,16 @@ import java.util.Enumeration;
 import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.account.AccountEditionActivity;
 import cx.ring.application.RingApplication;
 import cx.ring.facades.ConversationFacade;
-import cx.ring.interfaces.AccountCallbacks;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
+import cx.ring.services.AccountService;
 import cx.ring.views.EditTextIntegerPreference;
 import cx.ring.views.EditTextPreferenceDialog;
 import cx.ring.views.PasswordPreference;
-
-import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
 
 public class AdvancedAccountFragment extends PreferenceFragment {
 
@@ -58,40 +56,31 @@ public class AdvancedAccountFragment extends PreferenceFragment {
     @Inject
     protected ConversationFacade mConversationFacade;
 
-    private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
+    @Inject
+    protected AccountService mAccountService;
+
+    private String mAccountID;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof AccountCallbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+    public void onResume() {
+        super.onResume();
+        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNTID_KEY) == null) {
+            return;
         }
-
-        mCallbacks = (AccountCallbacks) activity;
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mCallbacks = DUMMY_CALLBACKS;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-    }
-
-    @Override
-    public void onCreatePreferences(Bundle bundle, String s) {
-        // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.account_advanced_prefs);
-
-        Account account = mCallbacks.getAccount();
+        mAccountID = getArguments().getString(AccountEditionActivity.ACCOUNTID_KEY);
+        Account account = mAccountService.getAccount(mAccountID);
         if (account != null) {
             setPreferenceDetails(account.getConfig());
             setPreferenceListener(account.getConfig(), changeAdvancedPreferenceListener);
         }
+    }
+
+    @Override
+    public void onCreatePreferences(Bundle bundle, String s) {
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
+        // Load the preferences from an XML resource
+        addPreferencesFromResource(R.xml.account_advanced_prefs);
     }
 
     @Override
@@ -148,7 +137,7 @@ public class AdvancedAccountFragment extends PreferenceFragment {
     }
 
     private ArrayList<CharSequence> getNetworkInterfaces() {
-        ArrayList<CharSequence> result = new ArrayList<CharSequence>();
+        ArrayList<CharSequence> result = new ArrayList<>();
         result.add("default");
         try {
 
@@ -167,7 +156,7 @@ public class AdvancedAccountFragment extends PreferenceFragment {
     Preference.OnPreferenceChangeListener changeAdvancedPreferenceListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            final Account account = mCallbacks.getAccount();
+            final Account account = mAccountService.getAccount(mAccountID);
             final ConfigKey key = ConfigKey.fromString(preference.getKey());
             Log.i(TAG, "Changing " + preference.getKey() + " value: " + newValue);
 
@@ -187,7 +176,8 @@ public class AdvancedAccountFragment extends PreferenceFragment {
                 account.setDetail(key, newValue.toString());
             }
 
-            mCallbacks.saveAccount();
+            mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
+            mAccountService.setAccountDetails(mAccountID, account.getDetails());
             return true;
         }
     };

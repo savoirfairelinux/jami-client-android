@@ -59,7 +59,6 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.client.AccountEditionActivity;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
 import cx.ring.utils.KeyboardVisibilityManager;

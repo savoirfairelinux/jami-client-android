@@ -1,7 +1,7 @@
 /*
- *  Copyright (C) 2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
- *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,10 +17,19 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cx.ring.interfaces;
+package cx.ring.account;
 
 import cx.ring.model.Account;
 
-public interface AccountChangedListener {
-    void accountChanged(Account acc);
+public interface AccountEditionView {
+
+    void exit();
+
+    void displayAccountName(String name);
+
+    void displaySummary(Account account);
+
+    void showAdvancedOption(boolean show);
+
+    void showBlacklistOption(boolean show);
 }

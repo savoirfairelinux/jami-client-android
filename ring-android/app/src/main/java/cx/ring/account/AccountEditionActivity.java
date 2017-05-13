@@ -20,7 +20,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cx.ring.client;
+package cx.ring.account;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -39,100 +39,44 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
-import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.application.RingApplication;
 import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SecurityAccountFragment;
-import cx.ring.interfaces.AccountCallbacks;
-import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
-import cx.ring.model.ServiceEvent;
-import cx.ring.services.AccountService;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 
-public class AccountEditionActivity extends AppCompatActivity implements AccountCallbacks, ViewPager.OnPageChangeListener, Observer<ServiceEvent> {
+public class AccountEditionActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, AccountEditionView {
 
     @Inject
-    AccountService mAccountService;
+    AccountEditionPresenter mEditionPresenter;
 
     public static final String ACCOUNTID_KEY = AccountEditionActivity.class.getCanonicalName() + "accountid";
 
-    public static final AccountCallbacks DUMMY_CALLBACKS = new AccountCallbacks() {
-
-        @Override
-        public Account getAccount() {
-            return null;
-        }
-
-        @Override
-        public void addOnAccountChanged(AccountChangedListener list) {
-            // Dummy
-        }
-
-        @Override
-        public void removeOnAccountChanged(AccountChangedListener list) {
-            // Dummy
-        }
-
-        @Override
-        public void saveAccount() {
-            // Dummy
-        }
-    };
-
     private static final String TAG = AccountEditionActivity.class.getSimpleName();
-    private final ArrayList<AccountChangedListener> listeners = new ArrayList<>();
-    private Account mAccSelected = null;
 
     private Fragment mCurrentlyDisplayed;
-    private ViewPager mViewPager = null;
-    private TabLayout mSlidingTabLayout = null;
+
+    @BindView(R.id.pager)
+    ViewPager mViewPager = null;
+
+    @BindView(R.id.sliding_tabs)
+    TabLayout mSlidingTabLayout = null;
 
     private MenuItem mItemAdvanced;
     private MenuItem mItemBlacklist;
-
-    @Override
-    public void update(Observable o, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case REGISTRATION_STATE_CHANGED:
-            case ACCOUNTS_CHANGED:
-                // refresh the selected account
-                mAccSelected = mAccountService.getAccount(mAccSelected.getAccountID());
-                RingApplication.uiHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (AccountChangedListener l : listeners) {
-                            l.accountChanged(mAccSelected);
-                        }
-                    }
-                });
-                break;
-            default:
-                Log.d(TAG, "Event " + event.getEventType() + " is not handled here");
-                break;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,43 +88,20 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
         // dependency injection
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
-
+        mEditionPresenter.bindView(this);
         String accountId = getIntent().getData().getLastPathSegment();
-        mAccSelected = mAccountService.getAccount(accountId);
-        if (mAccSelected == null) {
-            finish();
-        }
+        mEditionPresenter.init(accountId);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(mAccSelected.getAlias());
-        }
-
-        mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setOffscreenPageLimit(4);
-        mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), AccountEditionActivity.this, mAccSelected.isRing()));
+        mViewPager.setAdapter(new PreferencesPagerAdapter(getFragmentManager(), AccountEditionActivity.this, mEditionPresenter.getAccount()));
         mViewPager.addOnPageChangeListener(this);
 
-        mSlidingTabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setupWithViewPager(mViewPager);
-
-        for (AccountChangedListener listener : listeners) {
-            listener.accountChanged(mAccSelected);
-        }
-
-        if (mAccSelected.isRing()) {
-            displaySummary();
-        }
     }
 
     @Override
     protected void onDestroy() {
-        if (mViewPager != null) {
-            mViewPager.removeOnPageChangeListener(this);
-        }
+        mViewPager.removeOnPageChangeListener(this);
         super.onDestroy();
     }
 
@@ -206,16 +127,31 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     public void onPageScrollStateChanged(int state) {
     }
 
-    private void displaySummary() {
+    @Override
+    public void displaySummary(Account selected) {
         mSlidingTabLayout.setVisibility(View.GONE);
         mViewPager.setVisibility(View.GONE);
         mCurrentlyDisplayed = new RingAccountSummaryFragment();
         Bundle args = new Bundle();
-        args.putString(ACCOUNTID_KEY, mAccSelected.getAccountID());
+        args.putString(ACCOUNTID_KEY, selected.getAccountID());
         mCurrentlyDisplayed.setArguments(args);
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, mCurrentlyDisplayed, RingAccountSummaryFragment.TAG)
                 .commit();
+    }
+
+    @Override
+    public void showAdvancedOption(boolean show) {
+        if (mItemAdvanced != null) {
+            mItemAdvanced.setVisible(show);
+        }
+    }
+
+    @Override
+    public void showBlacklistOption(boolean show) {
+        if (mItemBlacklist != null) {
+            mItemBlacklist.setVisible(show);
+        }
     }
 
     private boolean isAdvancedSettings() {
@@ -239,31 +175,26 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        if (mItemAdvanced != null) {
-            mItemAdvanced.setVisible(mAccSelected.isRing());
-        }
-        if (mItemBlacklist != null) {
-            mItemBlacklist.setVisible(mAccSelected.isRing());
-        }
+        mEditionPresenter.prepareOptionsMenu();
         return true;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mAccountService.addObserver(this);
+        mEditionPresenter.bindView(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mAccountService.removeObserver(this);
+        mEditionPresenter.unbindView();
     }
 
     @Override
     public void onBackPressed() {
-        if ((isAdvancedSettings() && mAccSelected.isRing()) || isBlackList()) {
-            displaySummary();
+        if ((isAdvancedSettings() && mEditionPresenter.getAccount().isRing()) || isBlackList()) {
+            displaySummary(mEditionPresenter.getAccount());
         } else if (!(mCurrentlyDisplayed instanceof BackHandlerInterface) || !((BackHandlerInterface) mCurrentlyDisplayed).onBackPressed()) {
             super.onBackPressed();
         }
@@ -289,7 +220,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                 mViewPager.setVisibility(View.GONE);
                 mCurrentlyDisplayed = new BlackListFragment();
                 Bundle args = new Bundle();
-                args.putString(ACCOUNTID_KEY, mAccSelected.getAccountID());
+                args.putString(ACCOUNTID_KEY, mEditionPresenter.getAccount().getAccountID());
                 mCurrentlyDisplayed.setArguments(args);
                 getFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -309,19 +240,10 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("AccountID", mAccSelected.getAccountID());
-
-                        mAccountService.removeAccount(mAccSelected.getAccountID());
-                        finish();
+                        mEditionPresenter.removeAccount();
                     }
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        /* Terminate with no action */
-                    }
-                });
+                .setNegativeButton(android.R.string.cancel, null);
 
         AlertDialog alertDialog = builder.create();
         alertDialog.setOwnerActivity(ownerActivity);
@@ -329,91 +251,88 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     }
 
     @Override
-    public void saveAccount() {
-        if (mAccSelected == null) {
-            return;
-        }
-
-        final Account account = mAccSelected;
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(account.getAlias());
-        }
-
-        Log.i(TAG, "updating account");
-        mAccountService.setCredentials(account.getAccountID(), account.getCredentialsHashMapList());
-        mAccountService.setAccountDetails(account.getAccountID(), account.getDetails());
-
+    public void exit() {
+        finish();
     }
 
     @Override
-    public Account getAccount() {
-        return mAccSelected;
-    }
+    public void displayAccountName(final String name) {
+        RingApplication.uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+                setSupportActionBar(toolbar);
+                ActionBar actionBar = getSupportActionBar();
+                if (actionBar != null) {
+                    actionBar.setDisplayHomeAsUpEnabled(true);
+                    actionBar.setTitle(name);
+                }
+            }
+        });
 
-    @Override
-    public void addOnAccountChanged(AccountChangedListener list) {
-        listeners.add(list);
-    }
-
-    @Override
-    public void removeOnAccountChanged(AccountChangedListener list) {
-        listeners.remove(list);
     }
 
     private static class PreferencesPagerAdapter extends FragmentPagerAdapter {
-        boolean isRing = false;
+        Account mAccount;
         private Context ctx;
 
-        PreferencesPagerAdapter(FragmentManager fm, Context c, boolean ring) {
+        PreferencesPagerAdapter(FragmentManager fm, Context c, Account account) {
             super(fm);
             ctx = c;
-            isRing = ring;
+            mAccount = account;
         }
 
         @Override
         public int getCount() {
-            return isRing ? 3 : 4;
+            return mAccount.isRing() ? 3 : 4;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return isRing ? getRingPanel(position) : getSIPPanel(position);
+            return mAccount.isRing() ? getRingPanel(position) : getSIPPanel(position);
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            int resId = isRing ? getRingPanelTitle(position) : getSIPPanelTitle(position);
+            int resId = mAccount.isRing() ? getRingPanelTitle(position) : getSIPPanelTitle(position);
             return ctx.getString(resId);
         }
 
         @Nullable
-        private static Fragment getRingPanel(int position) {
+        private Fragment getRingPanel(int position) {
             switch (position) {
                 case 0:
-                    return new GeneralAccountFragment();
+                    return fragmentWithBundle(new GeneralAccountFragment());
                 case 1:
-                    return new MediaPreferenceFragment();
+                    return fragmentWithBundle(new MediaPreferenceFragment());
                 case 2:
-                    return new AdvancedAccountFragment();
+                    return fragmentWithBundle(new AdvancedAccountFragment());
                 default:
                     return null;
             }
         }
 
         @Nullable
-        private static Fragment getSIPPanel(int position) {
+        private Fragment getSIPPanel(int position) {
             switch (position) {
                 case 0:
-                    return new GeneralAccountFragment();
+                    return fragmentWithBundle(new GeneralAccountFragment());
                 case 1:
-                    return new MediaPreferenceFragment();
+                    return fragmentWithBundle(new MediaPreferenceFragment());
                 case 2:
-                    return new AdvancedAccountFragment();
+                    return fragmentWithBundle(new AdvancedAccountFragment());
                 case 3:
-                    return new SecurityAccountFragment();
+                    return fragmentWithBundle(new SecurityAccountFragment());
                 default:
                     return null;
             }
+        }
+
+        private Fragment fragmentWithBundle(Fragment result) {
+            Bundle args = new Bundle();
+            args.putString(ACCOUNTID_KEY, mAccount.getAccountID());
+            result.setArguments(args);
+            return result;
         }
 
         @StringRes

@@ -53,7 +53,7 @@ import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.client.AccountEditionActivity;
+import cx.ring.account.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
@@ -333,7 +333,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
     @Override
     public void refresh() {
         mAccountsAdapter.replaceAll(mAccountService.getAccounts());
-        if (mAccountsAdapter.isEmpty()) {
+        if (mAccountsAdapter.isEmpty() && mDnDListView != null) {
             mDnDListView.setEmptyView(mEmptyView);
         }
         mAccountsAdapter.notifyDataSetChanged();
