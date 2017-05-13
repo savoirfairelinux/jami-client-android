@@ -39,20 +39,20 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.account.AccountEditionActivity;
 import cx.ring.application.RingApplication;
-import cx.ring.interfaces.AccountCallbacks;
-import cx.ring.interfaces.AccountChangedListener;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.AccountCredentials;
 import cx.ring.model.ConfigKey;
+import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 import cx.ring.views.CredentialPreferenceDialog;
 import cx.ring.views.CredentialsPreference;
 
-import static cx.ring.client.AccountEditionActivity.DUMMY_CALLBACKS;
-
-public class SecurityAccountFragment extends PreferenceFragment implements AccountChangedListener {
+public class SecurityAccountFragment extends PreferenceFragment implements Observer<ServiceEvent> {
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
     private static final int SELECT_CA_LIST_RC = 42;
     private static final int SELECT_PRIVATE_KEY_RC = 43;
@@ -69,34 +69,34 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
     private PreferenceCategory credentialsCategory;
     private PreferenceCategory tlsCategory;
 
-    private AccountCallbacks mCallbacks = DUMMY_CALLBACKS;
+    private String mAccountID;
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof AccountCallbacks)) {
-            throw new IllegalStateException("Activity must implement fragment's callbacks.");
-        }
-
-        mCallbacks = (AccountCallbacks) activity;
-        mCallbacks.addOnAccountChanged(this);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        if (mCallbacks != null) {
-            mCallbacks.removeOnAccountChanged(this);
-        }
-        mCallbacks = DUMMY_CALLBACKS;
-    }
-
-    @Override
-    public void accountChanged(Account account) {
+    void accountChanged(Account account) {
         if (account != null) {
             reloadCredentials();
             setDetails();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY) == null) {
+            return;
+        }
+        mAccountID = getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY);
+
+        Account acc = mAccountService.getAccount(mAccountID);
+        if (acc != null) {
+            accountChanged(acc);
+        }
+        mAccountService.addObserver(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mAccountService.removeObserver(this);
     }
 
     @Override
@@ -108,11 +108,6 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
         credentialsCategory = (PreferenceCategory) findPreference("Account.credentials");
         credentialsCategory.findPreference("Add.credentials").setOnPreferenceChangeListener(addCredentialListener);
         tlsCategory = (PreferenceCategory) findPreference("TLS.category");
-
-        Account acc = mCallbacks.getAccount();
-        if (acc != null) {
-            accountChanged(acc);
-        }
     }
 
     @Override
@@ -135,7 +130,7 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
     }
 
     private void addAllCredentials() {
-        ArrayList<AccountCredentials> credentials = mCallbacks.getAccount().getCredentials();
+        ArrayList<AccountCredentials> credentials = mAccountService.getAccount(mAccountID).getCredentials();
         int i = 0;
         for (AccountCredentials cred : credentials) {
             CredentialsPreference toAdd = new CredentialsPreference(getPreferenceManager().getContext());
@@ -165,7 +160,7 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Account account = mCallbacks.getAccount();
+            Account account = mAccountService.getAccount(mAccountID);
             // We need the old and new value to correctly edit the list of credentials
             Pair<AccountCredentials, AccountCredentials> result = (Pair<AccountCredentials, AccountCredentials>) newValue;
             account.removeCredential(result.first);
@@ -173,7 +168,9 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
                 // There is a new value for this credentials it means it has been edited (otherwise deleted)
                 account.addCredential(result.second);
             }
-            mCallbacks.saveAccount();
+
+            mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
+            mAccountService.setAccountDetails(mAccountID, account.getDetails());
             reloadCredentials();
             return false;
         }
@@ -183,10 +180,12 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Account account = mCallbacks.getAccount();
+            Account account = mAccountService.getAccount(mAccountID);
             Pair<AccountCredentials, AccountCredentials> result = (Pair<AccountCredentials, AccountCredentials>) newValue;
             account.addCredential(result.second);
-            mCallbacks.saveAccount();
+
+            mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
+            mAccountService.setAccountDetails(mAccountID, account.getDetails());
             reloadCredentials();
             return false;
         }
@@ -212,7 +211,7 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Account account = mCallbacks.getAccount();
+            Account account = mAccountService.getAccount(mAccountID);
             Log.i("TLS", "Setting " + preference.getKey() + " to " + newValue);
             if (preference.getKey().contentEquals(ConfigKey.TLS_ENABLE.key())) {
                 if ((Boolean) newValue) {
@@ -226,7 +225,9 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
                 preference.setSummary((String) newValue);
                 account.setDetail(ConfigKey.fromString(preference.getKey()), (String) newValue);
             }
-            mCallbacks.saveAccount();
+
+            mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
+            mAccountService.setAccountDetails(mAccountID, account.getDetails());
             return true;
         }
     };
@@ -240,7 +241,7 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
     }
 
     private void setDetails() {
-        final AccountConfig details = mCallbacks.getAccount().getConfig();
+        final AccountConfig details = mAccountService.getAccount(mAccountID).getConfig();
 
         for (int i = 0; i < tlsCategory.getPreferenceCount(); ++i) {
             final Preference current = tlsCategory.getPreference(i);
@@ -335,7 +336,7 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
             return;
         }
 
-        Account account = mCallbacks.getAccount();
+        Account account = mAccountService.getAccount(mAccountID);
         File myFile = new File(data.getData().getEncodedPath());
         Preference preference;
         switch (requestCode) {
@@ -343,21 +344,37 @@ public class SecurityAccountFragment extends PreferenceFragment implements Accou
                 preference = tlsCategory.findPreference(ConfigKey.TLS_CA_LIST_FILE.key());
                 preference.setSummary(myFile.getName());
                 account.setDetail(ConfigKey.TLS_CA_LIST_FILE, myFile.getAbsolutePath());
-                mCallbacks.saveAccount();
                 setFeedbackIcon(preference);
                 break;
             case SELECT_PRIVATE_KEY_RC:
                 tlsCategory.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key()).setSummary(myFile.getName());
                 account.setDetail(ConfigKey.TLS_PRIVATE_KEY_FILE, myFile.getAbsolutePath());
-                mCallbacks.saveAccount();
                 break;
             case SELECT_CERTIFICATE_RC:
                 preference = tlsCategory.findPreference(ConfigKey.TLS_CERTIFICATE_FILE.key());
                 preference.setSummary(myFile.getName());
                 account.setDetail(ConfigKey.TLS_CERTIFICATE_FILE, myFile.getAbsolutePath());
-                mCallbacks.saveAccount();
                 setFeedbackIcon(preference);
                 checkForRSAKey();
+                break;
+            default:
+                break;
+        }
+
+        mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
+        mAccountService.setAccountDetails(mAccountID, account.getDetails());
+    }
+
+    @Override
+    public void update(Observable observable, ServiceEvent event) {
+        if (event == null || getView() == null) {
+            return;
+        }
+
+        switch (event.getEventType()) {
+            case ACCOUNTS_CHANGED:
+            case REGISTRATION_STATE_CHANGED:
+                accountChanged(mAccountService.getAccount(mAccountID));
                 break;
             default:
                 break;

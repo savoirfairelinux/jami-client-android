@@ -144,10 +144,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:theme="@style/AppThemeBase">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="cx.ring.client.AccountEditionActivity" />
+                android:value="cx.ring.account.AccountEditionActivity" />
         </activity>
         <activity
-            android:name=".client.AccountEditionActivity"
+            android:name=".account.AccountEditionActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:label="@string/app_name"
             android:screenOrientation="fullUser"

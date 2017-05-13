@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    tools:context=".client.AccountEditionActivity">
+    tools:context=".account.AccountEditionActivity">
 
     <TextView
         android:id="@+id/codec_name"
