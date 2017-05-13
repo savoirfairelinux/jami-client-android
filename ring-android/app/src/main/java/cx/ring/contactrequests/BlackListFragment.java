@@ -39,7 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.client.AccountEditionActivity;
+import cx.ring.account.AccountEditionActivity;
 import cx.ring.mvp.BaseFragment;
 
 public class BlackListFragment extends BaseFragment<BlackListPresenter> implements BlackListView,
@@ -80,10 +80,10 @@ public class BlackListFragment extends BaseFragment<BlackListPresenter> implemen
         // view binding
         mBlackListPresenter.bindView(this);
 
-        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNTID_KEY) == null) {
+        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY) == null) {
             return;
         }
-        mBlackListPresenter.setAccountId(getArguments().getString(AccountEditionActivity.ACCOUNTID_KEY));
+        mBlackListPresenter.setAccountId(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
     }
 
     @Override
