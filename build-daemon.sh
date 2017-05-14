@@ -274,6 +274,7 @@ mkdir -p ${LIBRING_JNI_DIR}
 ${NDK_TOOLCHAIN_PATH}/clang++ --shared -Wall -Wextra  ${ANDROID_APP_DIR}/libringclient/src/main/jni/ring_wrapper.cpp \
                                         ${RING_BUILD_DIR}/src/.libs/libring.a \
                                         -static-libstdc++ \
+                                        -I${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include \
                                         -I${RING_SRC_DIR}/src -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib \
                                         ${STRIP_ARG} --std=c++11 \
                                         ${STATIC_LIBS_ALL} \
