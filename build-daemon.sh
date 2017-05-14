@@ -74,6 +74,7 @@ ANDROID_API=android-$ANDROID_API_VERS
 export ANDROID_TOOLCHAIN="`pwd`/android-toolchain-$ANDROID_API_VERS-$PLATFORM_SHORT_ARCH"
 if [ ! -d "$ANDROID_TOOLCHAIN" ]; then
     $ANDROID_NDK/build/tools/make_standalone_toolchain.py \
+        --unified-headers \
         --arch=$PLATFORM_SHORT_ARCH \
         --api $ANDROID_API_VERS \
         --stl libc++ \
@@ -114,7 +115,7 @@ if [ ! -d "$DAEMON_DIR" ]; then
     exit 1
 fi
 
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -O2 -DHAVE_PTHREADS -I${ANDROID_TOOLCHAIN}/include/c++/4.9.x"
+EXTRA_CFLAGS="${EXTRA_CFLAGS} -O3"
 
 # Setup LDFLAGS
 if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
