@@ -1,4 +1,7 @@
 #include "logger.h"
+extern "C" {
+#include "libavcodec/jni.h"
+}
 
 JavaVM *gJavaVM;
 const char *kringservicePath = "cx/ring/daemon/RingserviceJNI";
@@ -17,6 +20,10 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 	jint r;
 
     RING_INFO("JNI_OnLoad");
+
+	if (av_jni_set_java_vm(vm, reserved)) {
+        RING_ERR("JNI_OnLoad: av_jni_set_java_vm failed");
+	}
 
 	//Assume it is c++
 	r = vm->GetEnv ((void **) &env, JNI_VERSION_1_6);
