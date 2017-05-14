@@ -114,7 +114,7 @@ if [ ! -d "$DAEMON_DIR" ]; then
     exit 1
 fi
 
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -O2 -DHAVE_PTHREADS -I${ANDROID_TOOLCHAIN}/include/c++/4.9.x"
+EXTRA_CFLAGS="${EXTRA_CFLAGS} -O3"
 
 # Setup LDFLAGS
 if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
