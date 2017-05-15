@@ -21,9 +21,12 @@ package cx.ring.dependencyinjection;
 
 import javax.inject.Singleton;
 
+import cx.ring.Call.CallFragment;
+import cx.ring.Call.CallPresenter;
 import cx.ring.about.AboutPresenter;
 import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.application.RingApplication;
+import cx.ring.client.CallActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.SearchActivity;
 import cx.ring.client.SearchFragment;
@@ -57,7 +60,11 @@ public interface RingInjectionComponent {
 
     void inject(SearchFragment fragment);
 
+    void inject(CallFragment fragment);
+
     void inject(WizardActivity activity);
+
+    void inject(CallActivity activity);
 
     void inject(DRingService service);
 
@@ -96,5 +103,8 @@ public interface RingInjectionComponent {
     void inject(SettingsPresenter presenter);
 
     void inject(RingAccountSummaryPresenter presenter);
+
+    void inject(CallPresenter presenter);
+
 
 }

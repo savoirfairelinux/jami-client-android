@@ -144,6 +144,7 @@ public class ContactServiceImpl extends ContactService {
                 String contactNumber = contactCursor.getString(indexNumber);
                 int contactType = contactCursor.getInt(indexType);
                 String contactLabel = contactCursor.getString(indexLabel);
+                Log.d(TAG, "Contact Number  >>> " + contactNumber);
                 Uri uri = new Uri(contactNumber);
 
                 if (uri.isSingleIp() || (uri.isRingId() && loadRingContacts) || loadSipContacts) {
