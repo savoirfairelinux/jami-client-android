@@ -138,7 +138,8 @@
   <string name="send_request_title">Enviar una solicitud de contacto</string>
   <string name="send_request_msg">Debes enviar una solicitud de contacto para comunicarte con este usuario. Hasta que no haya aceptado la solicitud puedes enviar mensajes, pero el contacto no puede leerlos.</string>
   <!--Blacklist-->
-  <string name="no_blocked_contact">Sin contactos bloqueados</string>
+  <string name="no_blocked_contact">0 contactos bloqueados</string>
   <!--Smartlist-->
+  <string name="no_contact_request">No se ha enviado ninguna solicitud de contacto</string>
   <string name="contact_request_sent">Solicitud de contacto enviada</string>
 </resources>

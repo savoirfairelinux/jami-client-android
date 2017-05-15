@@ -21,10 +21,8 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <!-- SipCalls -->
-    <string name="call_human_state_incoming">Вызов</string>
     <string name="call_human_state_connecting">Подключение</string>
-    <string name="call_human_state_ringing">звонящий</string>
+    <string name="call_human_state_ringing">Вызов</string>
     <string name="call_human_state_current">Говорить</string>
     <string name="call_human_state_hungup">Окончен</string>
     <string name="call_human_state_busy">Занят</string>
@@ -33,4 +31,5 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_unhold">Возврат</string>
     <string name="call_human_state_over">Окончен</string>
     <string name="call_human_state_none">Никто</string>
+    <!-- Conferences -->
 </resources>

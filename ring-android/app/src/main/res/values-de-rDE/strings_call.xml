@@ -21,10 +21,8 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <!-- SipCalls -->
-    <string name="call_human_state_incoming">Klingeln</string>
     <string name="call_human_state_connecting">Verbinden</string>
-    <string name="call_human_state_ringing">Anrufen</string>
+    <string name="call_human_state_ringing">Klingeln</string>
     <string name="call_human_state_current">Sprechen</string>
     <string name="call_human_state_hungup">Vorbei</string>
     <string name="call_human_state_busy">Besetzt</string>
@@ -33,4 +31,5 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_unhold">Gespräch fortsetzen</string>
     <string name="call_human_state_over">Vorbei</string>
     <string name="call_human_state_none">Keine</string>
+    <!-- Conferences -->
 </resources>

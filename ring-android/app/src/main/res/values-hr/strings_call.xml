@@ -21,13 +21,12 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <!-- SipCalls -->
-    <string name="call_human_state_incoming">Zvoni</string>
     <string name="call_human_state_connecting">Spajanje</string>
-    <string name="call_human_state_ringing">Zovem</string>
+    <string name="call_human_state_ringing">Zvoni</string>
     <string name="call_human_state_current">Razgovaram</string>
     <string name="call_human_state_busy">Zauzeto</string>
     <string name="call_human_state_failure">Neuspjelo</string>
     <string name="call_human_state_hold">Na čekanje</string>
     <string name="call_human_state_none">Nema</string>
+    <!-- Conferences -->
 </resources>

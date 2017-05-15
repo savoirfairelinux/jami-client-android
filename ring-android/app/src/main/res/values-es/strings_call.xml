@@ -21,10 +21,8 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <!-- SipCalls -->
-    <string name="call_human_state_incoming">Sonando</string>
     <string name="call_human_state_connecting">Conectando</string>
-    <string name="call_human_state_ringing">Llamando</string>
+    <string name="call_human_state_ringing">Sonando</string>
     <string name="call_human_state_current">Hablando</string>
     <string name="call_human_state_hungup">Terminado</string>
     <string name="call_human_state_busy">Ocupado</string>
