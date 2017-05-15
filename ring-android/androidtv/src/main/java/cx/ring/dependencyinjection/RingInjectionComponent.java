@@ -21,11 +21,14 @@ package cx.ring.dependencyinjection;
 
 import javax.inject.Singleton;
 
+import cx.ring.call.AndroidTVCallPresenter;
+import cx.ring.call.CallFragment;
 import cx.ring.about.AboutPresenter;
 import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.application.RingApplication;
+import cx.ring.client.CallActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.client.SearchActivity;
+import cx.ring.client.MainFragment;
 import cx.ring.client.SearchFragment;
 import cx.ring.client.WizardActivity;
 import cx.ring.facades.ConversationFacade;
@@ -58,7 +61,13 @@ public interface RingInjectionComponent {
 
     void inject(SearchFragment fragment);
 
+    void inject(MainFragment fragment);
+
+    void inject(CallFragment fragment);
+
     void inject(WizardActivity activity);
+
+    void inject(CallActivity activity);
 
     void inject(DRingService service);
 
@@ -99,4 +108,7 @@ public interface RingInjectionComponent {
     void inject(RingAccountSummaryPresenter presenter);
 
     void inject(WizardPresenter presenter);
+
+    void inject(AndroidTVCallPresenter presenter);
+
 }
