@@ -21,10 +21,8 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <!-- SipCalls -->
-    <string name="call_human_state_incoming">正在呼叫</string>
     <string name="call_human_state_connecting">正在连接</string>
-    <string name="call_human_state_ringing">正在通话</string>
+    <string name="call_human_state_ringing">正在呼叫</string>
     <string name="call_human_state_current">正在通话</string>
     <string name="call_human_state_hungup">结束</string>
     <string name="call_human_state_busy">忙碌</string>

@@ -21,10 +21,8 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <!-- SipCalls -->
-    <string name="call_human_state_incoming">Ringer</string>
     <string name="call_human_state_connecting">Kobler opp</string>
-    <string name="call_human_state_ringing">Kaller opp</string>
+    <string name="call_human_state_ringing">Ringer</string>
     <string name="call_human_state_current">Snakker</string>
     <string name="call_human_state_hungup">Over</string>
     <string name="call_human_state_busy">Opptatt</string>

@@ -22,4 +22,5 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
     <string name="call_human_state_hold">החזק</string>
+    <!-- Conferences -->
 </resources>

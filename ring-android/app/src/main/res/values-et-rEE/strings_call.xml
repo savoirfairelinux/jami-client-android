@@ -21,9 +21,8 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <!-- SipCalls -->
-    <string name="call_human_state_incoming">Heliseb</string>
     <string name="call_human_state_connecting">Ühendab</string>
-    <string name="call_human_state_ringing">Helistab</string>
+    <string name="call_human_state_ringing">Heliseb</string>
     <string name="call_human_state_busy">Kinni</string>
-    </resources>
+    <!-- Conferences -->
+</resources>
