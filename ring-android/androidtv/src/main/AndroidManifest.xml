@@ -1,9 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cx.ring"
     android:installLocation="auto"
     android:versionCode="76"
     android:versionName="20170501">
-
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -48,15 +48,14 @@
     <application
         android:name=".application.RingApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
         android:banner="@drawable/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:resizeableActivity="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.Leanback">
-
         <activity
-            android:name="cx.ring.client.HomeActivity"
+            android:name=".client.HomeActivity"
             android:banner="@drawable/app_icon_your_company"
             android:icon="@drawable/app_icon_your_company"
             android:label="@string/title_activity_home"
@@ -64,22 +63,19 @@
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".client.WizardActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-
             android:screenOrientation="fullUser"
-            android:theme="@style/AppThemeBase">
-        </activity>
-
-        <activity android:name="cx.ring.client.DetailsActivity" />
-        <activity android:name="cx.ring.client.PlaybackOverlayActivity" />
-        <activity android:name="cx.ring.client.BrowseErrorActivity" />
-        <activity android:name="cx.ring.client.SearchActivity" />
+            android:theme="@style/AppThemeBase"></activity>
+        <activity android:name=".client.DetailsActivity" />
+        <activity android:name=".client.PlaybackOverlayActivity" />
+        <activity android:name=".client.BrowseErrorActivity" />
+        <activity android:name=".client.SearchActivity" />
 
         <service
             android:name=".service.DRingService"
@@ -88,6 +84,8 @@
                 <action android:name=".service.DRingService" />
             </intent-filter>
         </service>
+
+        <activity android:name=".client.CallActivity"></activity>
     </application>
 
 </manifest>

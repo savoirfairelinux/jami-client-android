@@ -94,6 +94,9 @@ public class HomeActivity extends Activity implements Observer<ServiceEvent> {
             mIsAskingForPermissions = true;
             ActivityCompat.requestPermissions(this, permissionsWeCanAsk.toArray(new String[permissionsWeCanAsk.size()]), RingApplication.PERMISSIONS_REQUEST);
         }
+
+        Intent intent = new Intent(HomeActivity.this, CallActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -236,5 +239,7 @@ public class HomeActivity extends Activity implements Observer<ServiceEvent> {
                 android.util.Log.d(TAG, "Event " + event.getEventType() + " is not handled here");
                 break;
         }
+
+        Log.d(TAG, ">>>> " + mAccountService.getCurrentAccount().getAccountID());
     }
 }
