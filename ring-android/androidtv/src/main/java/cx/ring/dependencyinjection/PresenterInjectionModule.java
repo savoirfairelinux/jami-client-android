@@ -21,6 +21,7 @@ package cx.ring.dependencyinjection;
 
 import javax.inject.Singleton;
 
+import cx.ring.Call.CallPresenter;
 import cx.ring.about.AboutPresenter;
 import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.application.RingApplication;
