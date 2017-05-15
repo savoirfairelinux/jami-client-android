@@ -120,6 +120,11 @@ public class HomeActivity extends Activity implements Observer<ServiceEvent> {
             Log.d(TAG, "No account found");
             startActivityForResult(new Intent(HomeActivity.this, WizardActivity.class), WizardActivity.ACCOUNT_CREATE_REQUEST);
         }
+        else {
+            Intent intent = new Intent(HomeActivity.this, CallActivity.class);
+            intent.putExtra("account", mAccountService.getCurrentAccount().getAccountID());
+            startActivity(intent);
+        }
     }
 
     private String[] buildPermissionsToAsk() {
@@ -233,7 +238,7 @@ public class HomeActivity extends Activity implements Observer<ServiceEvent> {
         if (event == null) {
             return;
         }
-
+        Log.d(TAG, "Event : " + event.getEventType());
         switch (event.getEventType()) {
             case ACCOUNTS_CHANGED:
                 loadAccounts();
