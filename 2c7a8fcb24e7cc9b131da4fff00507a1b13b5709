@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_24578704",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/AccountEditionActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-05-15T15:40:21Z",
+      "side": 1,
+      "message": "The presenter should call a method getView().initViewPager(boolean isRing, String accoundId) in the init method",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 49
+      },
+      "revId": "2c7a8fcb24e7cc9b131da4fff00507a1b13b5709",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_c430f3ea",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/AccountEditionActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-05-15T15:40:21Z",
+      "side": 1,
+      "message": "We should not use the whole Account object if we only need the boolean isRing() and the accountId",
+      "range": {
+        "startLine": 276,
+        "startChar": 0,
+        "endLine": 276,
+        "endChar": 25
+      },
+      "revId": "2c7a8fcb24e7cc9b131da4fff00507a1b13b5709",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e4396fd9",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/AccountEditionPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-05-15T15:40:21Z",
+      "side": 1,
+      "message": "The presenter should only have void methods.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 5
+      },
+      "revId": "2c7a8fcb24e7cc9b131da4fff00507a1b13b5709",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
