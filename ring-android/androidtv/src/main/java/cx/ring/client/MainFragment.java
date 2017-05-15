@@ -51,7 +51,11 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
+import javax.inject.Inject;
+
 import cx.ring.R;
+import cx.ring.application.RingApplication;
+import cx.ring.services.AccountService;
 
 public class MainFragment extends BrowseFragment {
     private static final String TAG = "MainFragment";
@@ -70,16 +74,24 @@ public class MainFragment extends BrowseFragment {
     private URI mBackgroundURI;
     private BackgroundManager mBackgroundManager;
 
+    @Inject
+    AccountService mAccountService;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate");
         super.onActivityCreated(savedInstanceState);
 
+
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
+
         prepareBackgroundManager();
 
         setupUIElements();
 
-        //loadRows();
+        loadRows();
 
         setupEventListeners();
     }
@@ -93,7 +105,7 @@ public class MainFragment extends BrowseFragment {
         }
     }
 
-    private void loadRows() {
+/*    private void loadRows() {
         List<Movie> list = MovieList.setupMovies();
 
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
@@ -123,6 +135,21 @@ public class MainFragment extends BrowseFragment {
 
         setAdapter(mRowsAdapter);
 
+    }*/
+
+    private void loadRows() {
+        mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
+
+        /* GridItemPresenter */
+        HeaderItem gridItemPresenterHeader = new HeaderItem(0, "contact");
+
+        GridItemPresenter mGridPresenter = new GridItemPresenter();
+        ArrayObjectAdapter gridRowAdapter = new ArrayObjectAdapter(mGridPresenter);
+        gridRowAdapter.add("contact 1");
+        mRowsAdapter.add(new ListRow(gridItemPresenterHeader, gridRowAdapter));
+
+        /* set */
+        setAdapter(mRowsAdapter);
     }
 
     private void prepareBackgroundManager() {
@@ -135,9 +162,9 @@ public class MainFragment extends BrowseFragment {
     }
 
     private void setupUIElements() {
-        // setBadgeDrawable(getActivity().getResources().getDrawable(
+         setBadgeDrawable(getActivity().getResources().getDrawable(R.drawable.ic_logo_ring_beta2_blanc));
         // R.drawable.videos_by_google_banner));
-        setTitle(getString(R.string.browse_title)); // Badge, when set, takes precedent
+//        setTitle(getString(R.string.browse_title)); // Badge, when set, takes precedent
         // over title
         setHeadersState(HEADERS_ENABLED);
         setHeadersTransitionOnBackEnabled(true);
@@ -193,7 +220,7 @@ public class MainFragment extends BrowseFragment {
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
 
-            if (item instanceof Movie) {
+           /* if (item instanceof Movie) {
                 Movie movie = (Movie) item;
                 Log.d(TAG, "Item: " + item.toString());
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
@@ -212,7 +239,11 @@ public class MainFragment extends BrowseFragment {
                     Toast.makeText(getActivity(), ((String) item), Toast.LENGTH_SHORT)
                             .show();
                 }
-            }
+            }*/
+
+            Intent intent = new Intent(getActivity(), CallActivity.class);
+            intent.putExtra("account", mAccountService.getCurrentAccount().getAccountID());
+            startActivity(intent);
         }
     }
 
