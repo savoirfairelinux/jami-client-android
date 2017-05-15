@@ -21,10 +21,8 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <!-- SipCalls -->
-    <string name="call_human_state_incoming">Soi</string>
     <string name="call_human_state_connecting">Yhdistää</string>
-    <string name="call_human_state_ringing">Soittaa</string>
+    <string name="call_human_state_ringing">Soi</string>
     <string name="call_human_state_current">Puhuu</string>
     <string name="call_human_state_hungup">Katkaistu</string>
     <string name="call_human_state_busy">Kiireinen</string>
@@ -33,4 +31,5 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_unhold">Poista pidosta</string>
     <string name="call_human_state_over">Loppu</string>
     <string name="call_human_state_none">Ei mitään</string>
+    <!-- Conferences -->
 </resources>

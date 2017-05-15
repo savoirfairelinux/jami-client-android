@@ -21,14 +21,13 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <!-- SipCalls -->
-    <string name="call_human_state_incoming">Skambina</string>
     <string name="call_human_state_connecting">Sujungiama</string>
-    <string name="call_human_state_ringing">Skambinama</string>
+    <string name="call_human_state_ringing">Skambina</string>
     <string name="call_human_state_current">Kalbama</string>
     <string name="call_human_state_hungup">Baigta</string>
     <string name="call_human_state_busy">Užimta</string>
     <string name="call_human_state_failure">Nepavyko</string>
     <string name="call_human_state_hold">Užlaikyta</string>
     <string name="call_human_state_over">Baigta</string>
+    <!-- Conferences -->
 </resources>

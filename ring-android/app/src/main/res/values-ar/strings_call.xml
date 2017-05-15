@@ -21,9 +21,7 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <!-- SipCalls -->
-    <string name="call_human_state_incoming">يرنّ</string>
-    <string name="call_human_state_ringing">يتّصل</string>
+    <string name="call_human_state_ringing">يرنّ</string>
     <string name="call_human_state_current">يتم التكلم</string>
     <string name="call_human_state_hungup">فوق</string>
     <string name="call_human_state_busy">مشغول</string>
@@ -31,4 +29,5 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hold">توقف مؤقت</string>
     <string name="call_human_state_unhold">استئنف</string>
     <string name="call_human_state_over">فوق</string>
+    <!-- Conferences -->
 </resources>

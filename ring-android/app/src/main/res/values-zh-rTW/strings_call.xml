@@ -21,13 +21,13 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <!-- SipCalls -->
-    <string name="call_human_state_incoming">響鈴中</string>
     <string name="call_human_state_connecting">連接中</string>
+    <string name="call_human_state_ringing">響鈴中</string>
     <string name="call_human_state_current">通話中</string>
     <string name="call_human_state_hungup">結束</string>
     <string name="call_human_state_busy">忙碌</string>
     <string name="call_human_state_failure">失敗</string>
     <string name="call_human_state_over">結束</string>
     <string name="call_human_state_none">無</string>
+    <!-- Conferences -->
 </resources>

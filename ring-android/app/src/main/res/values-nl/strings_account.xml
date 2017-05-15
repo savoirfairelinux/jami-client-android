@@ -139,13 +139,13 @@ Je kan je account later bewerken</string>
   <string name="account_sip_success_message">Je SIP-account is met succes geregistreerd.</string>
   <string name="account_sip_register_anyway">Toch registreren</string>
   <string name="account_link_button">Dit apparaat aan een account koppelen</string>
-  <string name="account_link_prompt_pin">Voer PIN-code in</string>
+  <string name="account_link_prompt_pin">Voer pincode in</string>
   <string name="account_new_button">Een Ring-account aanmaken</string>
   <string name="account_link_export_button">Een ander apparaat aan deze account koppelen</string>
-  <string name="account_link_export_info">Om deze account op andere apparaten te gebruiken moet je deze eerst op Ring blootstellen. Er zal een PIN-code gegenereerd worden die je op het nieuwe apparaat invoert om de account in te stellen. De PIN-code is 10 minuten geldig. \n\nVoer je wachtwoord in om te beginnen:</string>
-  <string name="account_start_export_button">PIN-code genereren</string>
+  <string name="account_link_export_info">Om deze account op andere apparaten te gebruiken moet je deze eerst op Ring blootstellen. Er zal een pincode gegenereerd worden die je op het nieuwe apparaat invoert om de account in te stellen. De pincode is 10 minuten geldig. \n\nVoer je wachtwoord in om te beginnen:</string>
+  <string name="account_start_export_button">Pincode genereren</string>
   <string name="account_end_export_button">sluiten</string>
-  <string name="account_end_export_infos">Je PIN-code is:\n\n%%\n\nOm het proces te voltooien open je Ring op het nieuwe apparaat. Maak een account aan met \"Dit apparaat aan een account koppelen\". De PIN-code is 10 minuten geldig.</string>
+  <string name="account_end_export_infos">Je pincode is:\n\n%%\n\nOm het proces te voltooien open je Ring op het nieuwe apparaat. Maak een account aan met \"Dit apparaat aan een account koppelen\". De pincode is 10 minuten geldig.</string>
   <!--Name registration-->
   <string name="error_username_empty">Voer een gebruikersnaam in</string>
   <string name="no_registered_name_for_account">Geen geregistreerde naam gevonden voor deze account</string>

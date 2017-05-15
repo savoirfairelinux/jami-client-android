@@ -21,10 +21,8 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <!-- SipCalls -->
-    <string name="call_human_state_incoming">Berdering</string>
     <string name="call_human_state_connecting">Menyambung</string>
-    <string name="call_human_state_ringing">Memanggil</string>
+    <string name="call_human_state_ringing">Berdering</string>
     <string name="call_human_state_current">Bercakap</string>
     <string name="call_human_state_hungup">Selesai</string>
     <string name="call_human_state_busy">Sibuk</string>

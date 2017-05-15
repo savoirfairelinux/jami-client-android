@@ -115,7 +115,7 @@
   <string name="prompt_new_username">Voer nieuwe gebruikersnaam in</string>
   <string name="help_password_choose">Kies een sterk wachtwoord om je Ring-account te beschermen.</string>
   <string name="help_password_enter">Voer het hoofdwachtwoord van je Ring-account in</string>
-  <string name="help_pin_enter">Voer de PIN-code in vanuit je Ring-account dat al is geconfigureerd op een andere apparaat. Gebruik de \"account exporteren op Ring\"-functie om een PIN-code te verkrijgen.</string>
+  <string name="help_pin_enter">Voer de pincode in vanuit je Ring-account die al is geconfigureerd op een ander apparaat. Gebruik de functie \"account exporteren naar de Ring\" om een pincode te verkrijgen.</string>
   <string name="wizard_next">Volgende</string>
   <string name="wizard_back">Terug</string>
   <!--MenuHeaderView-->
