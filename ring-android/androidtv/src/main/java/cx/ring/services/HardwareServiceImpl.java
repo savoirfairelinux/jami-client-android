@@ -108,6 +108,7 @@ public class HardwareServiceImpl extends HardwareService {
         WeakReference<SurfaceHolder> weakSurfaceHolder = videoSurfaces.get(id);
         if (weakSurfaceHolder != null) {
             SurfaceHolder holder = weakSurfaceHolder.get();
+            Log.i(TAG, "surface : " + holder);
             if (holder != null) {
                 shm.window = startVideo(id, holder.getSurface(), width, height);
 
@@ -369,9 +370,10 @@ public class HardwareServiceImpl extends HardwareService {
             return;
         }
 
-        Log.w(TAG, "addVideoSurface " + id + holder.hashCode());
 
         Shm shm = videoInputs.get(id);
+        Log.w(TAG, "addVideoSurface " + id + " " + holder.hashCode());
+//        Log.w(TAG,  "SHM : " + shm + " " + shm.window);
         WeakReference<SurfaceHolder> surfaceHolder = new WeakReference<>((SurfaceHolder) holder);
         videoSurfaces.put(id, surfaceHolder);
         if (shm != null && shm.window == 0) {
