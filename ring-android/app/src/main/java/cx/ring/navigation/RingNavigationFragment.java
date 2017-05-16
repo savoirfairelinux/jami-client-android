@@ -427,14 +427,14 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null)) {
                     mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
 
+                    mRingNavigationPresenter.saveVCard(editText.getText().toString().trim(), photo);
+                    mSourcePhoto = null;
                 } else {
-                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_contact_picture);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    mRingNavigationPresenter.saveVCard(editText.getText().toString().trim());
                 }
-                Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
 
-                mRingNavigationPresenter.saveVCard(editText.getText().toString().trim(), photo);
             }
         });
 

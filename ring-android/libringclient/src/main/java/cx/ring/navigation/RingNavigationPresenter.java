@@ -99,6 +99,18 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
         updateUser();
     }
 
+    public void saveVCard(String username) {
+        String accountId = mAccountService.getCurrentAccount().getAccountID();
+        File filesDir = mDeviceRuntimeService.provideFilesDir();
+
+        VCard vcard = VCardUtils.loadLocalProfileFromDisk(filesDir, accountId);
+        vcard.setFormattedName(username);
+        vcard.removeProperties(RawProperty.class);
+        VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir);
+
+        updateUser();
+    }
+
     public String getAlias(Account account) {
         VCard vcard = VCardUtils.loadLocalProfileFromDisk(mDeviceRuntimeService.provideFilesDir(), account.getAccountID());
         FormattedName name = vcard.getFormattedName();
