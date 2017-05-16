@@ -419,15 +419,13 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
                 if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null)) {
                     BitmapUtils.reduceBitmap(mSourcePhoto, VCardUtils.VCARD_PHOTO_SIZE);
                     mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
 
+                    presenter.saveVCard(editText.getText().toString().trim(), photo);
+                    mSourcePhoto = null;
                 } else {
-                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_contact_picture);
-                    BitmapUtils.reduceBitmap(bitmap, VCardUtils.VCARD_PHOTO_SIZE);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    presenter.saveVCard(editText.getText().toString().trim());
                 }
-                Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
-
-                presenter.saveVCard(editText.getText().toString().trim(), photo);
             }
         });
 
