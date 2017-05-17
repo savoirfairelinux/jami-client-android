@@ -71,9 +71,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
     private static final int MIN_SIZE_TABLET = 960;
 
-    @Inject
-    protected ConversationPresenter conversationPresenter;
-
     @BindView(R.id.msg_input_txt)
     protected EditText mMsgEditTxt;
 
@@ -263,7 +260,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        conversationPresenter.prepareMenu();
+        presenter.prepareMenu();
     }
 
     @Override
@@ -282,12 +279,12 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             case R.id.conv_action_audiocall:
                 number = mNumberAdapter == null ?
                         null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-                conversationPresenter.callWithVideo(false, number);
+                presenter.callWithVideo(false, number);
                 return true;
             case R.id.conv_action_videocall:
                 number = mNumberAdapter == null ?
                         null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-                conversationPresenter.callWithVideo(true, number);
+                presenter.callWithVideo(true, number);
                 return true;
             case R.id.menuitem_addcontact:
                 presenter.addContact();
@@ -335,16 +332,11 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    protected ConversationPresenter createPresenter() {
-        return conversationPresenter;
-    }
-
-    @Override
     protected void initPresenter(ConversationPresenter presenter) {
         super.initPresenter(presenter);
         String conversationId = getArguments().getString(KEY_CONVERSATION_ID);
         Uri number = new Uri(getArguments().getString(CallFragment.KEY_NUMBER));
-        conversationPresenter.init(conversationId, number);
+        presenter.init(conversationId, number);
     }
 
     @Override

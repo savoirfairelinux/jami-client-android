@@ -23,19 +23,21 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 
+import javax.inject.Inject;
+
+import cx.ring.application.RingApplication;
 import cx.ring.utils.Log;
 
 public abstract class BaseFragment<T extends RootPresenter> extends Fragment {
 
     protected static final String TAG = BaseFragment.class.getSimpleName();
 
+    @Inject
     protected T presenter;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        presenter = createPresenter();
 
         presenter.bindView(this);
         initPresenter(presenter);
@@ -47,8 +49,6 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment {
         super.onDestroyView();
         presenter.unbindView();
     }
-
-    protected abstract T createPresenter();
 
     protected void initPresenter(T presenter) {
 
