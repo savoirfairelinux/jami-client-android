@@ -53,4 +53,6 @@ public abstract class DeviceRuntimeService {
 
     public abstract boolean hasGalleryPermission();
 
+    public abstract String getProfileName();
+
 }
