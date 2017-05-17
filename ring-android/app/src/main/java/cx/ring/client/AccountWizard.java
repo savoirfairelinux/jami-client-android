@@ -54,7 +54,7 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.account.HomeAccountCreationFragment;
-import cx.ring.fragments.ProfileCreationFragment;
+import cx.ring.account.ProfileCreationFragment;
 import cx.ring.fragments.RingAccountCreationFragment;
 import cx.ring.fragments.RingLinkAccountFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
@@ -507,26 +507,6 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         //noinspection unchecked
         new CreateAccountTask(this).execute(accountDetails);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case ProfileCreationFragment.REQUEST_CODE_PHOTO:
-                if (resultCode == RESULT_OK && data != null) {
-                    mProfileFragment.updatePhoto((Bitmap) data.getExtras().get("data"));
-                }
-                break;
-            case ProfileCreationFragment.REQUEST_CODE_GALLERY:
-                if (resultCode == RESULT_OK && data != null) {
-                    mProfileFragment.updatePhoto(data.getData());
-                }
-                break;
-            default:
-                break;
-        }
     }
 
     private class WizardPagerAdapter extends FragmentStatePagerAdapter {

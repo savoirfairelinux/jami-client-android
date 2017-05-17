@@ -22,10 +22,12 @@ package cx.ring.services;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
 
 import java.io.File;
@@ -43,6 +45,9 @@ import cx.ring.utils.NetworkUtils;
 public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
     private static final String TAG = DeviceRuntimeServiceImpl.class.getName();
+    private static final String[] PROFILE_PROJECTION = new String[]{ContactsContract.Profile._ID,
+            ContactsContract.Profile.DISPLAY_NAME_PRIMARY,
+            ContactsContract.Profile.PHOTO_ID};
 
     @Inject
     @Named("DaemonExecutor")
@@ -155,6 +160,19 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     @Override
     public boolean hasGalleryPermission() {
         return checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+    }
+
+    @Override
+    public String getProfileName() {
+        Cursor mProfileCursor = mContext.getContentResolver().query(ContactsContract.Profile.CONTENT_URI, PROFILE_PROJECTION, null, null, null);
+        if (mProfileCursor != null) {
+            if (mProfileCursor.moveToFirst()) {
+                mProfileCursor.close();
+                return mProfileCursor.getString(mProfileCursor.getColumnIndex(ContactsContract.Profile.DISPLAY_NAME_PRIMARY));
+            }
+            mProfileCursor.close();
+        }
+        return null;
     }
 
     private boolean checkPermission(String permission) {
