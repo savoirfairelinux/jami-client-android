@@ -41,7 +41,7 @@ import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
-import cx.ring.fragments.ProfileCreationFragment;
+import cx.ring.account.ProfileCreationFragment;
 import cx.ring.fragments.RingAccountCreationFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.fragments.SecurityAccountFragment;
