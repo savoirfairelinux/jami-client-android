@@ -53,7 +53,7 @@ import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.fragments.AccountMigrationFragment;
-import cx.ring.fragments.HomeAccountCreationFragment;
+import cx.ring.account.HomeAccountCreationFragment;
 import cx.ring.fragments.ProfileCreationFragment;
 import cx.ring.fragments.RingAccountCreationFragment;
 import cx.ring.fragments.RingLinkAccountFragment;

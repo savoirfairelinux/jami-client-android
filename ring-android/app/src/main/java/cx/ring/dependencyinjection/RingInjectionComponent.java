@@ -24,6 +24,8 @@ import javax.inject.Singleton;
 import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
 import cx.ring.account.AccountEditionActivity;
+import cx.ring.account.HomeAccountCreationFragment;
+import cx.ring.account.HomeAccountCreationView;
 import cx.ring.account.RegisterNameDialog;
 import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.account.RingAccountSummaryPresenter;
@@ -154,4 +156,6 @@ public interface RingInjectionComponent {
     void inject(AdvancedAccountFragment fragment);
 
     void inject(GeneralAccountFragment fragment);
+
+    void inject(HomeAccountCreationFragment fragment);
 }
