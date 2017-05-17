@@ -22,7 +22,6 @@ package cx.ring.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,23 +36,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.SIPCreationView;
 import cx.ring.wizard.SIPCreationPresenter;
 
-public class SIPAccountCreationFragment extends Fragment implements SIPCreationView {
+public class SIPAccountCreationFragment extends BaseFragment<SIPCreationPresenter> implements SIPCreationView {
 
     static final String TAG = SIPAccountCreationFragment.class.getSimpleName();
-
-    @Inject
-    protected SIPCreationPresenter mPresenter;
 
     @BindView(R.id.alias)
     protected EditText mAliasView;
@@ -116,21 +111,7 @@ public class SIPAccountCreationFragment extends Fragment implements SIPCreationV
         String hostname = mHostnameView.getText().toString();
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
-        mPresenter.startCreation(alias, hostname, username, password, bypassWarnings);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // view binding
-        mPresenter.bindView(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        // view unbinding
-        mPresenter.unbindView();
+        presenter.startCreation(alias, hostname, username, password, bypassWarnings);
     }
 
     @Override
@@ -192,7 +173,7 @@ public class SIPAccountCreationFragment extends Fragment implements SIPCreationV
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mPresenter.removeAccount();
+                        presenter.removeAccount();
                     }
                 },
                 new DialogInterface.OnClickListener() {
@@ -212,7 +193,7 @@ public class SIPAccountCreationFragment extends Fragment implements SIPCreationV
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mPresenter.removeAccount();
+                        presenter.removeAccount();
                     }
                 },
                 new DialogInterface.OnClickListener() {

@@ -19,7 +19,6 @@
 
 package cx.ring.contactrequests;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,24 +31,20 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
+import cx.ring.mvp.BaseFragment;
 import cx.ring.utils.Log;
 
-public class PendingContactRequestsFragment extends Fragment implements PendingContactRequestsView,
+public class PendingContactRequestsFragment extends BaseFragment<PendingContactRequestsPresenter> implements PendingContactRequestsView,
         ContactRequestViewHolder.ContactRequestListeners {
 
     static final String TAG = PendingContactRequestsFragment.class.getSimpleName();
     public static final String ACCOUNT_ID = TAG + "accountID";
-
-    @Inject
-    protected PendingContactRequestsPresenter mPendingContactRequestsPresenter;
 
     @BindView(R.id.requests_list)
     protected RecyclerView mRequestsList;
@@ -82,7 +77,7 @@ public class PendingContactRequestsFragment extends Fragment implements PendingC
     public void presentForAccount(Bundle bundle) {
         if (bundle != null && bundle.containsKey(ACCOUNT_ID)) {
             boolean shouldUpdateList = (bundle.getString(ACCOUNT_ID) == null);
-            mPendingContactRequestsPresenter.updateAccount(bundle.getString(ACCOUNT_ID), shouldUpdateList);
+            presenter.updateAccount(bundle.getString(ACCOUNT_ID), shouldUpdateList);
             getArguments().putString(ACCOUNT_ID, bundle.getString(ACCOUNT_ID));
         }
     }
@@ -94,10 +89,8 @@ public class PendingContactRequestsFragment extends Fragment implements PendingC
 
         Bundle arguments = getArguments();
         if (arguments != null && arguments.containsKey(ACCOUNT_ID)) {
-            mPendingContactRequestsPresenter.updateAccount(getArguments().getString(ACCOUNT_ID), false);
+            presenter.updateAccount(getArguments().getString(ACCOUNT_ID), false);
         }
-        // view binding
-        mPendingContactRequestsPresenter.bindView(this);
     }
 
     @Override
@@ -106,9 +99,6 @@ public class PendingContactRequestsFragment extends Fragment implements PendingC
 
         // Butterknife unbinding
         mUnbinder.unbind();
-
-        // view unbinding
-        mPendingContactRequestsPresenter.unbindView();
     }
 
     @Override
@@ -123,17 +113,17 @@ public class PendingContactRequestsFragment extends Fragment implements PendingC
 
     @Override
     public void onAcceptClick(PendingContactRequestsViewModel viewModel) {
-        mPendingContactRequestsPresenter.acceptTrustRequest(viewModel);
+        presenter.acceptTrustRequest(viewModel);
     }
 
     @Override
     public void onRefuseClick(PendingContactRequestsViewModel viewModel) {
-        mPendingContactRequestsPresenter.refuseTrustRequest(viewModel);
+        presenter.refuseTrustRequest(viewModel);
     }
 
     @Override
     public void onBlockClick(PendingContactRequestsViewModel viewModel) {
-        mPendingContactRequestsPresenter.blockTrustRequest(viewModel);
+        presenter.blockTrustRequest(viewModel);
     }
 
     @Override

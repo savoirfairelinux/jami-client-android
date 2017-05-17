@@ -21,7 +21,6 @@ package cx.ring.settings;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -52,19 +51,17 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Settings;
+import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.GenericView;
 
 /**
  * TODO: improvements : handle multiples permissions for feature.
  */
-public class SettingsFragment extends Fragment implements GenericView<SettingsViewModel> {
+public class SettingsFragment extends BaseFragment<SettingsPresenter> implements GenericView<SettingsViewModel> {
 
     Unbinder mUnbinder;
 
     private boolean mIsRefreshingViewFromPresenter;
-
-    @Inject
-    SettingsPresenter mSettingsPresenter;
 
     @Inject
     Context mContext;
@@ -101,11 +98,8 @@ public class SettingsFragment extends Fragment implements GenericView<SettingsVi
         super.onResume();
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_settings);
 
-        // view binding
-        mSettingsPresenter.bindView(this);
-
         // loading preferences
-        mSettingsPresenter.loadSettings();
+        presenter.loadSettings();
     }
 
     @Override
@@ -114,9 +108,6 @@ public class SettingsFragment extends Fragment implements GenericView<SettingsVi
 
         // Butterknife unbinding
         mUnbinder.unbind();
-
-        // view unbinding
-        mSettingsPresenter.unbindView();
     }
 
     @Override
@@ -163,7 +154,7 @@ public class SettingsFragment extends Fragment implements GenericView<SettingsVi
                         requestPermissions(new String[]{neededPermission}, RingApplication.PERMISSIONS_REQUEST);
                     }
                 }
-            } else if (!mIsRefreshingViewFromPresenter){
+            } else if (!mIsRefreshingViewFromPresenter) {
                 // permission is already granted
                 saveSettings();
             }
@@ -179,7 +170,7 @@ public class SettingsFragment extends Fragment implements GenericView<SettingsVi
         newSettings.setAllowRingOnStartup(mViewStartup.isChecked());
 
         // save settings according to UI inputs
-        mSettingsPresenter.saveSettings(newSettings);
+        presenter.saveSettings(newSettings);
     }
 
     @OnClick(R.id.settings_clear_history)
@@ -191,7 +182,7 @@ public class SettingsFragment extends Fragment implements GenericView<SettingsVi
                     public void onClick(DialogInterface dialog, int id) {
 
                         // ask the presenter to clear history
-                        mSettingsPresenter.clearHistory();
+                        presenter.clearHistory();
 
                         Snackbar.make(getView(),
                                 getString(R.string.clear_history_completed),

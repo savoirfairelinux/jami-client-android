@@ -61,10 +61,11 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
+import cx.ring.mvp.BaseFragment;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.views.LinkNewDeviceLayout;
 
-public class RingAccountSummaryFragment extends Fragment implements BackHandlerInterface,
+public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryPresenter> implements BackHandlerInterface,
         RegisterNameDialog.RegisterNameDialogListener,
         RenameDeviceDialog.RenameDeviceListener,
         DeviceAdapter.DeviceRevocationListener,
@@ -73,8 +74,6 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
 
     public static final String TAG = RingAccountSummaryFragment.class.getSimpleName();
     private static final String FRAGMENT_DIALOG_REVOCATION = RingAccountSummaryFragment.class.getSimpleName() + ".dialog.deviceRevocation";
-    @Inject
-    RingAccountSummaryPresenter mRingAccountSummaryPresenter;
 
     /*
     UI Bindings
@@ -136,19 +135,11 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
     @Override
     public void onResume() {
         super.onResume();
-        mRingAccountSummaryPresenter.bindView(this);
 
         if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY) == null) {
             return;
         }
-        mRingAccountSummaryPresenter.setAccountId(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        // view unbinding
-        mRingAccountSummaryPresenter.unbindView();
+        presenter.setAccountId(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
     }
 
     @Override
@@ -333,13 +324,13 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
         } else if (mRingPassword.getText().length() < 6) {
             mPasswordLayout.setError(getString(R.string.error_password_char_count));
         } else {
-            mRingAccountSummaryPresenter.startAccountExport(mRingPassword.getText().toString());
+            presenter.startAccountExport(mRingPassword.getText().toString());
         }
     }
 
     @OnClick(R.id.account_switch)
     public void onToggleAccount() {
-        mRingAccountSummaryPresenter.enableAccount(mAccountSwitch.isChecked());
+        presenter.enableAccount(mAccountSwitch.isChecked());
     }
 
     @OnClick(R.id.register_name_btn)
@@ -351,7 +342,7 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
 
     @Override
     public void onRegisterName(String name, String password) {
-        mRingAccountSummaryPresenter.registerName(name, password);
+        presenter.registerName(name, password);
     }
 
     @Override
@@ -466,7 +457,7 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
 
     @Override
     public void onConfirmRevocation(String deviceId, String password) {
-        mRingAccountSummaryPresenter.revokeDevice(deviceId, password);
+        presenter.revokeDevice(deviceId, password);
     }
 
     @Override
@@ -481,7 +472,7 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
 
     @Override
     public void onDeviceRename() {
-        final String dev_name = mRingAccountSummaryPresenter.getDeviceName();
+        final String dev_name = presenter.getDeviceName();
         RenameDeviceDialog dialog = new RenameDeviceDialog();
         Bundle args = new Bundle();
         args.putString(RenameDeviceDialog.DEVICENAME_KEY, dev_name);
@@ -492,7 +483,7 @@ public class RingAccountSummaryFragment extends Fragment implements BackHandlerI
 
     @Override
     public void onDeviceRename(String newName) {
-        Log.d(TAG, "onDeviceRename " + mRingAccountSummaryPresenter.getDeviceName() + " -> " + newName);
-        mRingAccountSummaryPresenter.renameDevice(newName);
+        Log.d(TAG, "onDeviceRename " + presenter.getDeviceName() + " -> " + newName);
+        presenter.renameDevice(newName);
     }
 }
