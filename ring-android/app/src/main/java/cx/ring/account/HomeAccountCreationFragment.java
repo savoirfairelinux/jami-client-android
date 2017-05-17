@@ -18,9 +18,8 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.fragments;
+package cx.ring.account;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,31 +30,46 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
+import cx.ring.mvp.BaseFragment;
 
-public class HomeAccountCreationFragment extends Fragment {
+public class HomeAccountCreationFragment extends BaseFragment<HomeAccountCreationPresenter> implements HomeAccountCreationView {
 
     @BindView(R.id.ring_add_account)
-    Button mLinkButton;
+    protected Button mLinkButton;
 
     @BindView(R.id.ring_create_btn)
-    Button mCreateButton;
+    protected Button mCreateButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.frag_acc_home_create, parent, false);
         ButterKnife.bind(this, view);
 
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
         return view;
     }
 
     @OnClick(R.id.ring_add_account)
     public void linkAccountClicked() {
-        ((AccountWizard) getActivity()).newAccount(true);
+        presenter.clickOnCreateAccount();
     }
 
     @OnClick(R.id.ring_create_btn)
     public void createAccountClicked() {
+        presenter.clickOnLinkAccount();
+    }
+
+    @Override
+    public void goToAccountCreation() {
+        ((AccountWizard) getActivity()).newAccount(true);
+    }
+
+    @Override
+    public void goToAccountLink() {
         ((AccountWizard) getActivity()).newAccount(false);
     }
 }
