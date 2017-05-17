@@ -23,11 +23,11 @@ import javax.inject.Singleton;
 
 import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
+import cx.ring.account.AccountEditionActivity;
 import cx.ring.account.RegisterNameDialog;
 import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.application.RingApplication;
-import cx.ring.account.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.BlackListFragment;
@@ -154,5 +154,4 @@ public interface RingInjectionComponent {
     void inject(AdvancedAccountFragment fragment);
 
     void inject(GeneralAccountFragment fragment);
-
 }
