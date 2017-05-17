@@ -18,10 +18,10 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.fragments;
+package cx.ring.account;
 
 import android.Manifest;
-import android.app.Fragment;
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -51,12 +51,12 @@ import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
+import cx.ring.mvp.BaseFragment;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.BitmapUtils;
 
-public class ProfileCreationFragment extends Fragment {
+public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresenter> implements ProfileCreationView {
     static final String TAG = ProfileCreationFragment.class.getSimpleName();
-    private static final String[] PROFILE_PROJECTION = new String[]{ContactsContract.Profile._ID, ContactsContract.Profile.DISPLAY_NAME_PRIMARY, ContactsContract.Profile.PHOTO_ID};
     public static final int REQUEST_CODE_PHOTO = 1;
     public static final int REQUEST_CODE_GALLERY = 2;
     public static final int REQUEST_PERMISSION_CAMERA = 3;
@@ -64,31 +64,33 @@ public class ProfileCreationFragment extends Fragment {
 
     public static final String PHOTO_TAG = "Photo";
 
-    @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
-
     @BindView(R.id.profile_photo)
-    ImageView mPhotoView;
+    protected ImageView mPhotoView;
 
     @BindView(R.id.user_name)
-    EditText mFullnameView;
+    protected EditText mFullnameView;
 
     @BindView(R.id.gallery)
-    ImageButton mGalleryButton;
+    protected ImageButton mGalleryButton;
 
     @BindView(R.id.camera)
-    ImageButton mCameraButton;
+    protected ImageButton mCameraButton;
 
     @BindView(R.id.next_create_account)
-    Button mNextButton;
+    protected Button mNextButton;
 
     @BindView(R.id.last_create_account)
-    Button mLastButton;
+    protected Button mLastButton;
 
     private Bitmap mSourcePhoto;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.frag_acc_profile_create, parent, false);
+        ButterKnife.bind(this, view);
+
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         if (savedInstanceState != null) {
             byte[] bytes = savedInstanceState.getByteArray(PHOTO_TAG);
@@ -97,13 +99,7 @@ public class ProfileCreationFragment extends Fragment {
             }
         }
 
-        final View view = inflater.inflate(R.layout.frag_acc_profile_create, parent, false);
-        ButterKnife.bind(this, view);
-
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-
-        initProfile();
+        presenter.initPresenter();
         if (mPhotoView.getDrawable() == null) {
             if (mSourcePhoto == null) {
                 mSourcePhoto = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.ic_contact_picture);
@@ -123,19 +119,21 @@ public class ProfileCreationFragment extends Fragment {
         }
     }
 
-    private void initProfile() {
-        //~ Checking the state of the READ_CONTACTS permission
-        if (mDeviceRuntimeService.hasContactPermission()) {
-            Cursor mProfileCursor = getActivity().getContentResolver().query(ContactsContract.Profile.CONTENT_URI, PROFILE_PROJECTION, null, null, null);
-            if (mProfileCursor != null) {
-                if (mProfileCursor.moveToFirst()) {
-                    String displayName = mProfileCursor.getString(mProfileCursor.getColumnIndex(ContactsContract.Profile.DISPLAY_NAME_PRIMARY));
-                    mFullnameView.setText(displayName);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case ProfileCreationFragment.REQUEST_CODE_PHOTO:
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    updatePhoto((Bitmap) data.getExtras().get("data"));
                 }
-                mProfileCursor.close();
-            }
-        } else {
-            Log.d(TAG, "READ_CONTACTS permission is not granted.");
+                break;
+            case ProfileCreationFragment.REQUEST_CODE_GALLERY:
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    updatePhoto(data.getData());
+                }
+                break;
+            default:
+                break;
         }
     }
 
@@ -150,39 +148,63 @@ public class ProfileCreationFragment extends Fragment {
 
     @OnClick(R.id.gallery)
     public void galleryClicked() {
-        boolean hasPermission = mDeviceRuntimeService.hasGalleryPermission();
-        if (hasPermission) {
-            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            getActivity().startActivityForResult(intent, REQUEST_CODE_GALLERY);
-        } else {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    REQUEST_PERMISSION_READ_STORAGE);
-        }
+        presenter.galleryClick();
     }
 
     @OnClick(R.id.camera)
     public void cameraClicked() {
-        boolean hasPermission = mDeviceRuntimeService.hasVideoPermission() &&
-                mDeviceRuntimeService.hasPhotoPermission();
-        if (hasPermission) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            getActivity().startActivityForResult(intent, REQUEST_CODE_PHOTO);
-        } else {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_PERMISSION_CAMERA);
-        }
+        presenter.cameraClick();
     }
 
     @OnClick(R.id.next_create_account)
     public void nextClicked() {
-        String fullname = mFullnameView.getText().toString().trim();
-        ((AccountWizard) getActivity()).profileNext(fullname, mSourcePhoto);
+        presenter.nextClick();
     }
 
     @OnClick(R.id.last_create_account)
     public void lastClicked() {
+        presenter.lastClick();
+    }
+
+    @Override
+    public void displayProfileName(String profileName) {
+        mFullnameView.setText(profileName);
+    }
+
+    @Override
+    public void goToGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        getActivity().startActivityForResult(intent, REQUEST_CODE_GALLERY);
+    }
+
+    @Override
+    public void goToPhotoCapture() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        getActivity().startActivityForResult(intent, REQUEST_CODE_PHOTO);
+    }
+
+    @Override
+    public void askStoragePermission() {
+        ActivityCompat.requestPermissions(getActivity(),
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                REQUEST_PERMISSION_READ_STORAGE);
+    }
+
+    @Override
+    public void askPhotoPermission() {
+        ActivityCompat.requestPermissions(getActivity(),
+                new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                REQUEST_PERMISSION_CAMERA);
+    }
+
+    @Override
+    public void goToNext() {
+        String fullname = mFullnameView.getText().toString().trim();
+        ((AccountWizard) getActivity()).profileNext(fullname, mSourcePhoto);
+    }
+
+    @Override
+    public void goToLast() {
         ((AccountWizard) getActivity()).profileLast();
     }
 }
