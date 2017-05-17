@@ -22,10 +22,7 @@
 
 package cx.ring.fragments;
 
-import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -36,43 +33,33 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import cx.ring.R;
+import cx.ring.account.AccountsAdapter;
+import cx.ring.account.AccountsManagementPresenter;
+import cx.ring.account.AccountsManagementView;
 import cx.ring.application.RingApplication;
 import cx.ring.account.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
-import cx.ring.model.ConfigKey;
-import cx.ring.model.ServiceEvent;
-import cx.ring.services.AccountService;
+import cx.ring.mvp.BaseFragment;
 import cx.ring.utils.ContentUriHandler;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 
-public class AccountsManagementFragment extends Fragment implements HomeActivity.Refreshable, Observer<ServiceEvent> {
+public class AccountsManagementFragment extends BaseFragment<AccountsManagementPresenter> implements AccountsManagementView,
+        AccountsAdapter.AccountListeners {
     static final String TAG = AccountsManagementFragment.class.getSimpleName();
 
     public static final int ACCOUNT_CREATE_REQUEST = 1;
     public static final int ACCOUNT_EDIT_REQUEST = 2;
     private AccountsAdapter mAccountsAdapter;
-
-    @Inject
-    AccountService mAccountService;
 
     @BindView(R.id.accounts_list)
     ListView mDnDListView;
@@ -88,7 +75,7 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        mAccountsAdapter = new AccountsAdapter(getActivity());
+        mAccountsAdapter = new AccountsAdapter(this);
     }
 
     @Override
@@ -108,34 +95,20 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
 
     @OnItemClick(R.id.accounts_list)
     @SuppressWarnings("unused")
-    void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-        Account selectedAccount = mAccountsAdapter.getItem(pos);
-        if (selectedAccount.needsMigration()) {
-            launchAccountMigrationActivity(mAccountsAdapter.getItem(pos));
-        } else {
-            launchAccountEditActivity(mAccountsAdapter.getItem(pos));
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mAccountService.removeObserver(this);
+    void onItemClick(int pos) {
+        presenter.clickAccount(mAccountsAdapter.getItem(pos));
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mAccountService.addObserver(this);
-        refresh();
         ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
-        FloatingActionButton btn = ((HomeActivity) getActivity()).getActionButton();
-        btn.setImageResource(R.drawable.ic_add_white);
-        btn.setOnClickListener(new OnClickListener() {
+        FloatingActionButton button = ((HomeActivity) getActivity()).getActionButton();
+        button.setImageResource(R.drawable.ic_add_white);
+        button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AccountWizard.class);
-                startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
+                presenter.addClicked();
             }
         });
     }
@@ -150,192 +123,54 @@ public class AccountsManagementFragment extends Fragment implements HomeActivity
         menu.clear();
     }
 
-    private void launchAccountEditActivity(Account acc) {
+    @Override
+    public void launchAccountEditActivity(Account account) {
         Log.d(TAG, "Launch account edit activity");
 
         Intent intent = new Intent(getActivity(), AccountEditionActivity.class)
                 .setAction(Intent.ACTION_EDIT)
-                .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, acc.getAccountID()));
+                .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.getAccountID()));
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
     }
 
-    private void launchAccountMigrationActivity(Account acc) {
+    @Override
+    public void launchAccountMigrationActivity(Account account) {
         Log.d(TAG, "Launch account migration activity");
 
         Intent intent = new Intent()
                 .setClass(getActivity(), AccountWizard.class)
-                .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, acc.getAccountID()));
+                .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.getAccountID()));
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
+    }
+
+    @Override
+    public void launchWizardActivity() {
+        Intent intent = new Intent(getActivity(), AccountWizard.class);
+        startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        refresh();
+        presenter.refresh();
     }
 
     @Override
-    public void update(Observable observable, ServiceEvent event) {
-
-        if (event == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
-            case REGISTRATION_STATE_CHANGED:
-                RingApplication.uiHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        refresh();
-                    }
-                });
-                break;
-            default:
-                Log.d(TAG, "This event is not handled here");
-                break;
-        }
-    }
-
-    /**
-     * Adapter for accounts List
-     *
-     * @author lisional
-     */
-    public class AccountsAdapter extends BaseAdapter {
-
-        private final ArrayList<Account> accounts = new ArrayList<>();
-        private final Context mContext;
-
-        public AccountsAdapter(Context c) {
-            super();
-            mContext = c;
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return true;
-        }
-
-        @Override
-        public int getCount() {
-            return accounts.size();
-        }
-
-        @Override
-        public Account getItem(int pos) {
-            return accounts.get(pos);
-        }
-
-        @Override
-        public long getItemId(int pos) {
-            return 0;
-        }
-
-        @Override
-        public View getView(final int pos, View convertView, ViewGroup parent) {
-            View rowView = convertView;
-            AccountView entryView;
-
-            if (rowView == null) {
-                LayoutInflater inflater = LayoutInflater.from(mContext);
-                rowView = inflater.inflate(R.layout.item_account_pref, parent, false);
-
-                entryView = new AccountView();
-                entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
-                entryView.host = (TextView) rowView.findViewById(R.id.account_host);
-                entryView.loadingIndicator = rowView.findViewById(R.id.loading_indicator);
-                entryView.errorIndicator = (ImageView) rowView.findViewById(R.id.error_indicator);
-                entryView.enabled = (CheckBox) rowView.findViewById(R.id.account_checked);
-                entryView.errorIndicator.setColorFilter(mContext.getResources().getColor(R.color.error_red));
-                entryView.errorIndicator.setVisibility(View.GONE);
-                entryView.loadingIndicator.setVisibility(View.GONE);
-                rowView.setTag(entryView);
-            } else {
-                entryView = (AccountView) rowView.getTag();
-            }
-
-            final Account item = accounts.get(pos);
-            entryView.alias.setText(item.getAlias());
-            entryView.host.setTextColor(getResources().getColor(R.color.text_color_secondary));
-
-            if (item.isIP2IP()) {
-                entryView.host.setText(item.getRegistrationState());
-            } else if (item.isSip()) {
-                entryView.host.setText(item.getHost() + " - " + item.getRegistrationState());
-            } else {
-                entryView.host.setText(item.getDetail(ConfigKey.ACCOUNT_USERNAME));
-            }
-
-            entryView.enabled.setChecked(item.isEnabled());
-            entryView.enabled.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    item.setEnabled(!item.isEnabled());
-                    mAccountService.setAccountDetails(item.getAccountID(), item.getDetails());
+    public void refresh(final List<Account> accounts) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAccountsAdapter.replaceAll(accounts);
+                if (mAccountsAdapter.isEmpty() && mDnDListView != null) {
+                    mDnDListView.setEmptyView(mEmptyView);
                 }
-            });
-
-            if (item.isEnabled()) {
-                if (item.isTrying()) {
-                    entryView.errorIndicator.setVisibility(View.GONE);
-                    entryView.loadingIndicator.setVisibility(View.VISIBLE);
-                } else if (item.needsMigration()) {
-                    entryView.host.setText(R.string.account_update_needed);
-                    entryView.host.setTextColor(Color.RED);
-                    entryView.errorIndicator.setImageResource(R.drawable.ic_warning);
-                    entryView.errorIndicator.setColorFilter(Color.RED);
-                    entryView.errorIndicator.setVisibility(View.VISIBLE);
-                } else if (item.isInError()) {
-                    entryView.errorIndicator.setImageResource(R.drawable.ic_error_white);
-                    entryView.errorIndicator.setColorFilter(Color.RED);
-                    entryView.errorIndicator.setVisibility(View.VISIBLE);
-                    entryView.loadingIndicator.setVisibility(View.GONE);
-                } else if (!item.isRegistered()) {
-                    entryView.errorIndicator.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
-                    entryView.errorIndicator.setColorFilter(Color.BLACK);
-                    entryView.errorIndicator.setVisibility(View.VISIBLE);
-                    entryView.loadingIndicator.setVisibility(View.GONE);
-                } else {
-                    entryView.errorIndicator.setVisibility(View.GONE);
-                    entryView.loadingIndicator.setVisibility(View.GONE);
-                }
-            } else {
-                entryView.errorIndicator.setVisibility(View.GONE);
-                entryView.loadingIndicator.setVisibility(View.GONE);
+                mAccountsAdapter.notifyDataSetChanged();
             }
-
-            return rowView;
-        }
-
-        /**
-         * ******************
-         * ViewHolder Pattern
-         * *******************
-         */
-        public class AccountView {
-            public TextView alias;
-            public TextView host;
-            public View loadingIndicator;
-            public ImageView errorIndicator;
-            public CheckBox enabled;
-        }
-
-        public void replaceAll(List<Account> results) {
-            Log.d(TAG, "AccountsAdapter replaceAll " + results.size());
-            accounts.clear();
-            accounts.addAll(results);
-            notifyDataSetChanged();
-        }
+        });
     }
 
     @Override
-    public void refresh() {
-        mAccountsAdapter.replaceAll(mAccountService.getAccounts());
-        if (mAccountsAdapter.isEmpty() && mDnDListView != null) {
-            mDnDListView.setEmptyView(mEmptyView);
-        }
-        mAccountsAdapter.notifyDataSetChanged();
+    public void onItemClicked(String accountId, HashMap<String, String> details) {
+        presenter.itemClicked(accountId, details);
     }
 }
