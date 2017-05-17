@@ -51,8 +51,6 @@ import com.skyfishjy.library.RippleBackground;
 
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -84,9 +82,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     public static final String KEY_CONF_ID = "confId";
     public static final String KEY_NUMBER = "number";
     public static final String KEY_HAS_VIDEO = "hasVideo";
-
-    @Inject
-    protected CallPresenter callPresenter;
 
     @BindView(R.id.contact_bubble_layout)
     protected View contactBubbleLayout;
@@ -155,21 +150,16 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     }
 
     @Override
-    protected CallPresenter createPresenter() {
-        return callPresenter;
-    }
-
-    @Override
     protected void initPresenter(CallPresenter presenter) {
         super.initPresenter(presenter);
 
         String action = getArguments().getString(KEY_ACTION);
         if (action.equals(ACTION_PLACE_CALL)) {
-            callPresenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
+            presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
                     (Uri) getArguments().getSerializable(KEY_NUMBER),
                     getArguments().getBoolean(KEY_HAS_VIDEO));
         } else if (action.equals(ACTION_GET_CALL)) {
-            callPresenter.initIncoming(getArguments().getString(KEY_CONF_ID));
+            presenter.initIncoming(getArguments().getString(KEY_CONF_ID));
         }
     }
 
@@ -207,7 +197,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            callPresenter.displayChanged();
+                            presenter.displayChanged();
                         }
                     });
                 }
@@ -234,14 +224,14 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         inflatedView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View parent, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                callPresenter.layoutChanged();
+                presenter.layoutChanged();
             }
         });
         inflatedView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
             @Override
             public void onSystemUiVisibilityChange(int visibility) {
                 boolean ui = (visibility & (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN)) == 0;
-                callPresenter.uiVisibilityChanged(ui);
+                presenter.uiVisibilityChanged(ui);
             }
         });
 
@@ -301,7 +291,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        callPresenter.prepareOptionMenu();
+        presenter.prepareOptionMenu();
     }
 
     @Override
@@ -310,23 +300,23 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         switch (item.getItemId()) {
             case android.R.id.home:
             case R.id.menuitem_chat:
-                callPresenter.chatClick();
+                presenter.chatClick();
                 break;
             case R.id.menuitem_addcontact:
-                callPresenter.acceptCall();
+                presenter.acceptCall();
                 break;
             case R.id.menuitem_speaker:
-                callPresenter.speakerClick();
+                presenter.speakerClick();
                 getActivity().invalidateOptionsMenu();
                 break;
             case R.id.menuitem_camera_flip:
-                callPresenter.switchVideoInputClick();
+                presenter.switchVideoInputClick();
                 break;
             case R.id.menuitem_dialpad:
-                callPresenter.dialpadClick();
+                presenter.dialpadClick();
                 break;
             case R.id.menuitem_change_screen_orientation:
-                callPresenter.screenRotationClick();
+                presenter.screenRotationClick();
                 break;
         }
         return true;
@@ -657,16 +647,16 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @OnClick({R.id.call_hangup_btn})
     public void hangUpClicked() {
-        callPresenter.hangupCall();
+        presenter.hangupCall();
     }
 
     @OnClick(R.id.call_refuse_btn)
     public void refuseClicked() {
-        callPresenter.refuseCall();
+        presenter.refuseCall();
     }
 
     @OnClick(R.id.call_accept_btn)
     public void acceptClicked() {
-        callPresenter.acceptCall();
+        presenter.acceptCall();
     }
 }

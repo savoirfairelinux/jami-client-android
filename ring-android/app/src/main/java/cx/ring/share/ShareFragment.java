@@ -20,7 +20,6 @@
 
 package cx.ring.share;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -34,8 +33,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import javax.inject.Inject;
-
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,13 +41,11 @@ import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
+import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.GenericView;
 import cx.ring.utils.QRCodeUtils;
 
-public class ShareFragment extends Fragment implements GenericView<ShareViewModel> {
-
-    @Inject
-    SharePresenter mSharePresenter;
+public class ShareFragment extends BaseFragment<SharePresenter> implements GenericView<ShareViewModel> {
 
     @BindView(R.id.share_instruction)
     TextView mShareInstruction;
@@ -97,7 +92,7 @@ public class ShareFragment extends Fragment implements GenericView<ShareViewMode
                 mQRCodeSize = mQrImage.getMeasuredWidth();
 
                 // when view is ready, we search for contact infos to display
-                mSharePresenter.loadContactInformation();
+                presenter.loadContactInformation();
             }
         });
 
@@ -108,9 +103,6 @@ public class ShareFragment extends Fragment implements GenericView<ShareViewMode
     public void onResume() {
         super.onResume();
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_share);
-
-        // view binding
-        mSharePresenter.bindView(this);
     }
 
     @Override
@@ -119,9 +111,6 @@ public class ShareFragment extends Fragment implements GenericView<ShareViewMode
 
         // Butterknife unbinding
         mUnbinder.unbind();
-
-        // view unbinding
-        mSharePresenter.unbindView();
     }
 
     @Override

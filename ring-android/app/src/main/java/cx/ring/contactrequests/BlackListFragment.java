@@ -32,8 +32,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -46,9 +44,6 @@ public class BlackListFragment extends BaseFragment<BlackListPresenter> implemen
         BlackListViewHolder.BlackListListeners {
 
     public static final String TAG = BlackListFragment.class.getSimpleName();
-
-    @Inject
-    protected BlackListPresenter mBlackListPresenter;
 
     @BindView(R.id.blacklist)
     protected RecyclerView mBlacklist;
@@ -77,13 +72,11 @@ public class BlackListFragment extends BaseFragment<BlackListPresenter> implemen
     @Override
     public void onResume() {
         super.onResume();
-        // view binding
-        mBlackListPresenter.bindView(this);
 
         if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY) == null) {
             return;
         }
-        mBlackListPresenter.setAccountId(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
+        presenter.setAccountId(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
     }
 
     @Override
@@ -92,11 +85,6 @@ public class BlackListFragment extends BaseFragment<BlackListPresenter> implemen
 
         // Butterknife unbinding
         mUnbinder.unbind();
-    }
-
-    @Override
-    protected BlackListPresenter createPresenter() {
-        return mBlackListPresenter;
     }
 
     @Override
@@ -111,7 +99,7 @@ public class BlackListFragment extends BaseFragment<BlackListPresenter> implemen
 
     @Override
     public void onUnblockClick(BlackListViewModel viewModel) {
-        mBlackListPresenter.unblockClicked(viewModel);
+        presenter.unblockClicked(viewModel);
     }
 
     @Override

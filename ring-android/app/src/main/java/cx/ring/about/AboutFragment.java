@@ -19,7 +19,6 @@
  */
 package cx.ring.about;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -37,8 +36,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -47,11 +44,9 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
+import cx.ring.mvp.BaseFragment;
 
-public class AboutFragment extends Fragment implements AboutView {
-
-    @Inject
-    public AboutPresenter mAboutPresenter;
+public class AboutFragment extends BaseFragment<AboutPresenter> implements AboutView {
 
     @BindView(R.id.logo_ring_beta2)
     ImageView mImageViewLogo;
@@ -102,11 +97,8 @@ public class AboutFragment extends Fragment implements AboutView {
         super.onResume();
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_about);
 
-        // view binding
-        mAboutPresenter.bindView(this);
-
         // fonctional stuff
-        mAboutPresenter.loadAbout();
+        presenter.loadAbout();
     }
 
     @Override
@@ -115,9 +107,6 @@ public class AboutFragment extends Fragment implements AboutView {
 
         // Butterknife unbinding
         mUnbinder.unbind();
-
-        // view unbinding
-        mAboutPresenter.unbindView();
     }
 
     @Override

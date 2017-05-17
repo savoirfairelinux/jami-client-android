@@ -54,8 +54,6 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -86,9 +84,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     public static final String TAG = SmartListFragment.class.getSimpleName();
     private static final String STATE_LOADING = TAG + ".STATE_LOADING";
-
-    @Inject
-    protected SmartListPresenter mSmartListPresenter;
 
     @BindView(R.id.newconv_fab)
     protected FloatingActionButton mFloatingActionButton;
@@ -128,7 +123,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         Log.d(TAG, "onResume");
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
 
-        mSmartListPresenter.refresh();
+        presenter.refresh();
     }
 
     @Override
@@ -196,7 +191,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                     mSearchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
                 return true;
             case R.id.menu_scan_qr:
-                mSmartListPresenter.clickQRSearch();
+                presenter.clickQRSearch();
                 return true;
             default:
                 return false;
@@ -205,7 +200,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        mSmartListPresenter.newContactClicked();
+        presenter.newContactClicked();
         return true;
     }
 
@@ -221,7 +216,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public boolean onQueryTextChange(final String query) {
-        mSmartListPresenter.queryTextChanged(query);
+        presenter.queryTextChanged(query);
         return true;
     }
 
@@ -251,17 +246,17 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @OnClick(R.id.newcontact_element)
     void newContactClicked() {
-        mSmartListPresenter.newContactClicked();
+        presenter.newContactClicked();
     }
 
     @OnClick(R.id.quick_call)
     void quickCallClicked() {
-        mSmartListPresenter.quickCallClicked();
+        presenter.quickCallClicked();
     }
 
     @OnClick(R.id.newconv_fab)
     void fabButtonClicked() {
-        mSmartListPresenter.fabButtonClicked();
+        presenter.fabButtonClicked();
     }
 
     @Override
@@ -271,7 +266,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
             IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (scanResult != null && resultCode == Activity.RESULT_OK) {
                 String contact_uri = scanResult.getContents();
-                mSmartListPresenter.startConversation(CallContact.buildUnknown(contact_uri));
+                presenter.startConversation(CallContact.buildUnknown(contact_uri));
             }
         }
     }
@@ -325,7 +320,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void deleteConversation(Conversation conversation) {
-        mSmartListPresenter.deleteConversation(conversation);
+        presenter.deleteConversation(conversation);
     }
 
     @Override
@@ -561,11 +556,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                 mRecyclerView.scrollToPosition(0);
             }
         });
-    }
-
-    @Override
-    protected SmartListPresenter createPresenter() {
-        return mSmartListPresenter;
     }
 
     @Override

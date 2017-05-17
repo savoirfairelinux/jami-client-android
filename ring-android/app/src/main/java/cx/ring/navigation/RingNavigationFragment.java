@@ -21,7 +21,6 @@ package cx.ring.navigation;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -62,6 +61,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
+import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.GenericView;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.BitmapUtils;
@@ -70,15 +70,12 @@ import ezvcard.parameter.ImageType;
 import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 
-public class RingNavigationFragment extends Fragment implements NavigationAdapter.OnNavigationItemClicked,
+public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter> implements NavigationAdapter.OnNavigationItemClicked,
         AccountAdapter.OnAccountActionClicked, GenericView<RingNavigationViewModel> {
     private static final String TAG = RingNavigationFragment.class.getSimpleName();
 
     private AccountAdapter mAccountAdapter;
     private Account mSelectedAccount;
-
-    @Inject
-    RingNavigationPresenter mRingNavigationPresenter;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -134,7 +131,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
 
         toggleAccountList();
 
-        mRingNavigationPresenter.setAccountOrder(selectedAccount);
+        presenter.setAccountOrder(selectedAccount);
 
         if (mSectionListener != null) {
             mSectionListener.onAccountSelected();
@@ -170,14 +167,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     @Override
     public void onResume() {
         super.onResume();
-        mRingNavigationPresenter.bindView(this);
-        mRingNavigationPresenter.updateUser();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mRingNavigationPresenter.unbindView();
+        presenter.updateUser();
     }
 
     /**
@@ -232,7 +222,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        mRingNavigationPresenter.updateUser();
+        presenter.updateUser();
 
         setupNavigationMenu();
         setupAccountList();
@@ -261,7 +251,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
     }
 
     private void setupAccountList() {
-        mAccountAdapter = new AccountAdapter(mRingNavigationPresenter);
+        mAccountAdapter = new AccountAdapter(presenter);
         mAccountAdapter.setOnAccountActionClickedListener(this);
         mAccountsView.setVisibility(View.GONE);
         mAccountsView.setHasFixedSize(true);
@@ -374,7 +364,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.dialog_profile, null);
 
         final EditText editText = (EditText) view.findViewById(R.id.user_name);
-        editText.setText(mRingNavigationPresenter.getAlias(mSelectedAccount));
+        editText.setText(presenter.getAlias(mSelectedAccount));
         mProfilePhoto = (ImageView) view.findViewById(R.id.profile_photo);
         mProfilePhoto.setImageDrawable(mUserImage.getDrawable());
 
@@ -434,7 +424,7 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
                 }
                 Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
 
-                mRingNavigationPresenter.saveVCard(editText.getText().toString().trim(), photo);
+                presenter.saveVCard(editText.getText().toString().trim(), photo);
             }
         });
 
@@ -446,8 +436,8 @@ public class RingNavigationFragment extends Fragment implements NavigationAdapte
             return;
         }
         mSelectedAccount = selectedAccount;
-        mSelectedAccountAlias.setText(mRingNavigationPresenter.getAccountAlias(selectedAccount));
-        mSelectedAccountHost.setText(mRingNavigationPresenter.getHost(selectedAccount, getString(R.string.account_type_ip2ip)));
+        mSelectedAccountAlias.setText(presenter.getAccountAlias(selectedAccount));
+        mSelectedAccountHost.setText(presenter.getHost(selectedAccount, getString(R.string.account_type_ip2ip)));
         mSelectedAccountDisabled.setVisibility(selectedAccount.isEnabled() ? View.GONE : View.VISIBLE);
         if (selectedAccount.isEnabled()) {
             if (selectedAccount.isTrying()) {
