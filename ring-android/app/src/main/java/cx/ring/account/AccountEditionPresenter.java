@@ -88,13 +88,13 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> i
         getView().displayAccountName(mAccount.getAlias());
 
         if (mAccount.isRing()) {
-            getView().displaySummary(mAccount.getAccountID());
+            getView().displaySummary(mAccount.getAccountID(), mAccount.isRing());
         }
         getView().initViewPager(mAccount.getAccountID(), mAccount.isRing());
     }
 
     public void goToBlackList() {
-        getView().goToBlackList(mAccount.getAccountID());
+        getView().goToBlackList(mAccount.getAccountID(), mAccount.isRing());
     }
 
     public void removeAccount() {

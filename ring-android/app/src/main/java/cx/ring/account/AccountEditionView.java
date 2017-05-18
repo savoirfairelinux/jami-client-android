@@ -19,15 +19,13 @@
 
 package cx.ring.account;
 
-import cx.ring.model.Account;
-
 public interface AccountEditionView {
 
     void exit();
 
     void displayAccountName(String name);
 
-    void displaySummary(String accountId);
+    void displaySummary(String accountId, boolean isRing);
 
     void initViewPager(String accountId, boolean isRing);
 
@@ -35,5 +33,5 @@ public interface AccountEditionView {
 
     void showBlacklistOption(boolean show);
 
-    void goToBlackList(String accountId);
+    void goToBlackList(String accountId, boolean isRing);
 }

@@ -53,13 +53,13 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.fragments.AdvancedAccountFragment;
-import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 
 public class AccountEditionActivity extends AppCompatActivity implements AccountEditionView {
 
     public static final String ACCOUNT_ID_KEY = AccountEditionActivity.class.getCanonicalName() + "accountid";
+    public static final String ACCOUNT_IS_RING_KEY = AccountEditionActivity.class.getCanonicalName() + "accountIsRing";
 
     public static final String TAG = AccountEditionActivity.class.getSimpleName();
 
@@ -94,12 +94,13 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     }
 
     @Override
-    public void displaySummary(String accountId) {
+    public void displaySummary(String accountId, boolean isRing) {
         mSlidingTabLayout.setVisibility(View.GONE);
         mViewPager.setVisibility(View.GONE);
         RingAccountSummaryFragment ringAccountSummaryFragment = new RingAccountSummaryFragment();
         Bundle args = new Bundle();
         args.putString(ACCOUNT_ID_KEY, accountId);
+        args.putBoolean(ACCOUNT_IS_RING_KEY, isRing);
         ringAccountSummaryFragment.setArguments(args);
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, ringAccountSummaryFragment, RingAccountSummaryFragment.TAG)
@@ -129,10 +130,11 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     }
 
     @Override
-    public void goToBlackList(String accountId) {
+    public void goToBlackList(String accountId, boolean isRing) {
         BlackListFragment blackListFragment = new BlackListFragment();
         Bundle args = new Bundle();
         args.putString(ACCOUNT_ID_KEY, accountId);
+        args.putBoolean(ACCOUNT_IS_RING_KEY, isRing);
         blackListFragment.setArguments(args);
         getFragmentManager().beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -307,6 +309,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         private Fragment fragmentWithBundle(Fragment result) {
             Bundle args = new Bundle();
             args.putString(ACCOUNT_ID_KEY, accountId);
+            args.putBoolean(ACCOUNT_IS_RING_KEY, isRing);
             result.setArguments(args);
             return result;
         }

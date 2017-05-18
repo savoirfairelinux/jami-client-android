@@ -27,16 +27,29 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import cx.ring.model.Preferences;
 import cx.ring.model.Settings;
 
 public class SharedPreferencesServiceImpl extends PreferencesService {
 
     private static final String RING_SETTINGS = "ring_settings";
     private static final String RING_REQUESTS = "ring_requests";
+    private static final String RING_GENERAL_PREFERENCES = "ring_general_preferences";
+
     private static final String RING_MOBILE_DATA = "mobile_data";
     private static final String RING_SYSTEM_CONTACTS = "system_contacts";
     private static final String RING_PLACE_CALLS = "place_calls";
     private static final String RING_ON_STARTUP = "on_startup";
+
+    private static final String ACCOUNT_STATUS = "Account.status";
+    private static final String ACCOUNT_ALIAS = "Account.alias";
+    private static final String ACCOUNT_HOSTNAME = "Account.hostname";
+    private static final String ACCOUNT_USERNAME = "Account.username";
+    private static final String ACCOUNT_PASSWORD = "Account.password";
+    private static final String ACCOUNT_ROUTESET = "Account.routeset";
+    private static final String ACCOUNT_USERAGENT = "Account.useragent";
+    private static final String ACCOUNT_AUTOANSWER = "Account.autoAnswer";
+    private static final String ACCOUNT_UPNP_ENABLED = "Account.upnpEnabled";
 
     @Inject
     protected Context mContext;
@@ -81,6 +94,37 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         mUserSettings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
 
         return mUserSettings;
+    }
+
+    @Override
+    public Preferences loadGeneralPreferences(String accountId) {
+        SharedPreferences appPrefs = mContext.getSharedPreferences(RING_GENERAL_PREFERENCES + accountId, Context.MODE_PRIVATE);
+        Preferences prefs = new Preferences();
+
+        prefs.setStatus(appPrefs.getBoolean(ACCOUNT_STATUS, false));
+        prefs.setAlias(appPrefs.getString(ACCOUNT_ALIAS, ""));
+        prefs.setHostname(appPrefs.getString(ACCOUNT_HOSTNAME, ""));
+        prefs.setUsername(appPrefs.getString(ACCOUNT_USERNAME, ""));
+        prefs.setPassword(appPrefs.getString(ACCOUNT_PASSWORD, ""));
+        prefs.setRootset(appPrefs.getString(ACCOUNT_ROUTESET, ""));
+        prefs.setUseragent(appPrefs.getString(ACCOUNT_USERAGENT, ""));
+        prefs.setAutoAnswer(appPrefs.getBoolean(ACCOUNT_AUTOANSWER, false));
+
+        return prefs;
+    }
+
+    @Override
+    public Preferences loadRingPreferences(String accountId) {
+        SharedPreferences appPrefs = mContext.getSharedPreferences(RING_GENERAL_PREFERENCES + accountId, Context.MODE_PRIVATE);
+        Preferences prefs = new Preferences();
+
+        prefs.setAlias(appPrefs.getString(ACCOUNT_ALIAS, ""));
+        prefs.setHostname(appPrefs.getString(ACCOUNT_HOSTNAME, ""));
+        prefs.setUseragent(appPrefs.getString(ACCOUNT_USERAGENT, ""));
+        prefs.setAutoAnswer(appPrefs.getBoolean(ACCOUNT_AUTOANSWER, false));
+        prefs.setUpnpEnabled(appPrefs.getBoolean(ACCOUNT_UPNP_ENABLED, false));
+
+        return prefs;
     }
 
     @Override

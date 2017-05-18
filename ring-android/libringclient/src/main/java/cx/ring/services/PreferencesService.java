@@ -21,6 +21,7 @@ package cx.ring.services;
 
 import java.util.Set;
 
+import cx.ring.model.Preferences;
 import cx.ring.model.Settings;
 import cx.ring.utils.Observable;
 
@@ -43,4 +44,8 @@ public abstract class PreferencesService extends Observable {
     public abstract Set<String> loadRequestsPreferences(String accountId);
 
     public abstract void removeRequestPreferences(String accountId, String contactId);
+
+    public abstract Preferences loadGeneralPreferences(String accountId);
+
+    public abstract Preferences loadRingPreferences(String accountId);
 }
