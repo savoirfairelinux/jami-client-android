@@ -56,7 +56,7 @@ import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.account.HomeAccountCreationFragment;
 import cx.ring.account.ProfileCreationFragment;
 import cx.ring.account.RingAccountCreationFragment;
-import cx.ring.fragments.RingLinkAccountFragment;
+import cx.ring.account.RingLinkAccountFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
