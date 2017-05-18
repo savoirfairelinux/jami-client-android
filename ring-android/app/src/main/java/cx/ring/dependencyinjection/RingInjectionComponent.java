@@ -28,6 +28,7 @@ import cx.ring.account.HomeAccountCreationFragment;
 import cx.ring.account.RegisterNameDialog;
 import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.account.RingAccountSummaryPresenter;
+import cx.ring.account.RingLinkAccountFragment;
 import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
@@ -157,4 +158,6 @@ public interface RingInjectionComponent {
     void inject(GeneralAccountFragment fragment);
 
     void inject(HomeAccountCreationFragment fragment);
+
+    void inject(RingLinkAccountFragment fragment);
 }
