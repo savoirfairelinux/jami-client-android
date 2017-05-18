@@ -18,10 +18,10 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.fragments;
+package cx.ring.account;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,27 +33,22 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
+import cx.ring.mvp.BaseFragment;
 
-public class RingLinkAccountFragment extends Fragment {
-    static final String TAG = RingLinkAccountFragment.class.getSimpleName();
+public class RingLinkAccountFragment extends BaseFragment<RingLinkAccountPresenter> implements RingLinkAccountView {
+
+    public static final String TAG = RingLinkAccountFragment.class.getSimpleName();
 
     @BindView(R.id.ring_add_pin)
-    EditText mPinTxt;
+    protected EditText mPinTxt;
 
     @BindView(R.id.ring_existing_password)
-    EditText mPasswordTxt;
+    protected EditText mPasswordTxt;
 
     @BindView(R.id.link_button)
-    Button mLinkAccountBtn;
-
-    @BindView(R.id.last_create_account)
-    Button mLastButton;
-
-    @OnTextChanged({R.id.ring_existing_password, R.id.ring_add_pin})
-    public void checkNextState() {
-        mLinkAccountBtn.setEnabled(!mPinTxt.getText().toString().isEmpty() && !mPasswordTxt.getText().toString().isEmpty());
-    }
+    protected Button mLinkAccountBtn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -61,17 +56,44 @@ public class RingLinkAccountFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        checkNextState();
+        // dependency injection
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
         return view;
     }
 
     @OnClick(R.id.link_button)
     public void onLinkClick() {
-        ((AccountWizard) getActivity()).createAccount(null, mPinTxt.getText().toString(), mPasswordTxt.getText().toString());
+        presenter.linkClicked();
     }
 
     @OnClick(R.id.last_create_account)
     public void onLastClick() {
+        presenter.lastClicked();
+    }
+
+    @OnTextChanged(value = R.id.ring_existing_password, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterPasswordChanged(Editable txt) {
+        presenter.passwordChanged(txt.toString());
+    }
+
+    @OnTextChanged(value = R.id.ring_add_pin, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterPinChanged(Editable txt) {
+        presenter.pinChanged(txt.toString());
+    }
+
+    @Override
+    public void enableLinkButton(boolean enable) {
+        mLinkAccountBtn.setEnabled(enable);
+    }
+
+    @Override
+    public void goToLast() {
         ((AccountWizard) getActivity()).accountLast();
+    }
+
+    @Override
+    public void createAccount() {
+        ((AccountWizard) getActivity()).createAccount(null, mPinTxt.getText().toString(), mPasswordTxt.getText().toString());
     }
 }
