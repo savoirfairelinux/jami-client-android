@@ -60,7 +60,7 @@ lightclean:
 clean: lightclean
 	rm -rf $(SRC)/gen java-libs/*/gen java-libs/*/bin
 
-distclean: clean jniclean
+distclean: clean
 
 install: $(RING_APK)
 	@echo "=== Installing Ring on device ==="
@@ -84,4 +84,4 @@ apkclean-run: apkclean build-and-run
 distclean-run: distclean build-and-run
 	adb logcat -c
 
-.PHONY: lightclean clean jniclean distclean distclean-run apkclean apkclean-run install run build-and-run
+.PHONY: lightclean clean distclean distclean-run apkclean apkclean-run install run build-and-run

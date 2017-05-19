@@ -266,16 +266,20 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
 
 LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
 
-echo "Building Ring for Android to ${LIBRING_JNI_DIR}"
-
-ARCH="${ANDROID_ABI}" DAEMON_DIR="${DAEMON_DIR}" make jniclean
-
+echo "Building Ring JNI library for Android to ${LIBRING_JNI_DIR}"
 mkdir -p ${LIBRING_JNI_DIR}
-${NDK_TOOLCHAIN_PATH}/clang++ --shared -Wall -Wextra  ${ANDROID_APP_DIR}/libringclient/src/main/jni/ring_wrapper.cpp \
-                                        ${RING_BUILD_DIR}/src/.libs/libring.a \
-                                        -static-libstdc++ \
-                                        -I${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include \
-                                        -I${RING_SRC_DIR}/src -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib \
-                                        ${STRIP_ARG} --std=c++11 \
-                                        ${STATIC_LIBS_ALL} \
-                                        -o ${LIBRING_JNI_DIR}/libring.so
+${NDK_TOOLCHAIN_PATH}/clang++ \
+                --shared \
+                -Wall -Wextra \
+                -Wno-unused-variable \
+                -Wno-unused-function \
+                -Wno-unused-parameter \
+                ${ANDROID_APP_DIR}/libringclient/src/main/jni/ring_wrapper.cpp \
+                ${RING_BUILD_DIR}/src/.libs/libring.a \
+                -static-libstdc++ \
+                -I${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include \
+                -I${RING_SRC_DIR}/src \
+                -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib \
+                ${STATIC_LIBS_ALL} \
+                ${STRIP_ARG} --std=c++11 \
+                -o ${LIBRING_JNI_DIR}/libring.so
