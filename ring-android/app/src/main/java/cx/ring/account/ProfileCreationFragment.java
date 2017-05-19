@@ -99,7 +99,6 @@ public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresent
             }
         }
 
-        presenter.initPresenter();
         if (mPhotoView.getDrawable() == null) {
             if (mSourcePhoto == null) {
                 mSourcePhoto = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.ic_contact_picture);
@@ -107,6 +106,12 @@ public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresent
             mPhotoView.setImageBitmap(BitmapUtils.cropImageToCircle(mSourcePhoto));
         }
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        presenter.initPresenter();
     }
 
     @Override
