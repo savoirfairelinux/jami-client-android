@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_18374ce5",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/AccountsManagementFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-05-19T16:15:51Z",
+      "side": 1,
+      "message": "User action should be passed to the presenter",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 71
+      },
+      "revId": "37b1dd22dadbdb27eb11d5c8200ea8e73ae3dab2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
