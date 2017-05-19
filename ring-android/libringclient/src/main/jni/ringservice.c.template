@@ -11,7 +11,7 @@ void deinitClassHelper(JNIEnv *env, jobject obj) {
 
 	/* delete cached object instances */
     env->DeleteGlobalRef(obj);
-	RING_INFO("deinitClassHelper: object %x deleted", obj);
+	RING_INFO("deinitClassHelper: object %p deleted", obj);
 }
 
 JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
