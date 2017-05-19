@@ -167,8 +167,9 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
         Cursor mProfileCursor = mContext.getContentResolver().query(ContactsContract.Profile.CONTENT_URI, PROFILE_PROJECTION, null, null, null);
         if (mProfileCursor != null) {
             if (mProfileCursor.moveToFirst()) {
+                String profileName = mProfileCursor.getString(mProfileCursor.getColumnIndex(ContactsContract.Profile.DISPLAY_NAME_PRIMARY));
                 mProfileCursor.close();
-                return mProfileCursor.getString(mProfileCursor.getColumnIndex(ContactsContract.Profile.DISPLAY_NAME_PRIMARY));
+                return profileName;
             }
             mProfileCursor.close();
         }
