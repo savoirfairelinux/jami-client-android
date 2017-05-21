@@ -50,6 +50,10 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
+
+        jackOptions {
+            enabled true
+        }
     }
 
     sourceSets {
@@ -72,8 +76,8 @@ android {
         release.setRoot('build-types/release')
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
