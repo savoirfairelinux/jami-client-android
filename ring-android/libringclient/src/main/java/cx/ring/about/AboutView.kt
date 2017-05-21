@@ -17,28 +17,24 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.about;
+package cx.ring.about
 
-import cx.ring.mvp.RootPresenter;
+interface AboutView {
 
-public class AboutPresenter extends RootPresenter<AboutView> {
+    fun showRingLogo(image: ByteArray?)
 
-    @Override
-    public void afterInjection() {
-        // no need to do after injection extra work
-    }
+    fun showSavoirFaireLinuxLogo(image: ByteArray?)
 
-    public void loadAbout() {
-        if (getView() != null) {
-            getView().showRingLogo(null);
-            getView().showSavoirFaireLinuxLogo(null);
-            getView().showContribute("");
-            getView().showCopyright("");
-            getView().showFeedback("");
-            getView().showLicense("");
-            getView().showSupport("");
-            getView().showRelease("");
-        }
-    }
+    fun showRelease(release: String)
+
+    fun showContribute(contribute: String)
+
+    fun showCopyright(copyright: String)
+
+    fun showLicense(license: String)
+
+    fun showFeedback(feedback: String)
+
+    fun showSupport(support: String)
 
 }
