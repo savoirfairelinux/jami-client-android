@@ -63,17 +63,14 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
     @Override
     public void loadNativeLibrary() {
-        Future<Boolean> result = mExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                try {
-                    mDaemonThreadId = Thread.currentThread().getId();
-                    System.loadLibrary("ring");
-                    return true;
-                } catch (Exception e) {
-                    Log.e(TAG, "Could not load Ring library", e);
-                    return false;
-                }
+        Future<Boolean> result = mExecutor.submit(() -> {
+            try {
+                mDaemonThreadId = Thread.currentThread().getId();
+                System.loadLibrary("ring");
+                return true;
+            } catch (Exception e) {
+                Log.e(TAG, "Could not load Ring library", e);
+                return false;
             }
         });
 
@@ -89,17 +86,14 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     public void updateAudioState(final boolean isRinging) {
         Handler mainHandler = new Handler(mContext.getMainLooper());
 
-        mainHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mediaManager.obtainAudioFocus(isRinging);
-                if (isRinging) {
-                    mediaManager.audioManager.setMode(AudioManager.MODE_RINGTONE);
-                    mediaManager.startRing();
-                } else {
-                    mediaManager.stopRing();
-                    mediaManager.audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
-                }
+        mainHandler.post(() -> {
+            mediaManager.obtainAudioFocus(isRinging);
+            if (isRinging) {
+                mediaManager.audioManager.setMode(AudioManager.MODE_RINGTONE);
+                mediaManager.startRing();
+            } else {
+                mediaManager.stopRing();
+                mediaManager.audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
             }
         });
     }

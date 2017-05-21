@@ -62,13 +62,10 @@ public class ConferenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "removeConference() thread running...");
-                        Ringservice.removeConference(confId);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "removeConference() thread running...");
+                    Ringservice.removeConference(confId);
+                    return true;
                 }
         );
     }
@@ -78,14 +75,11 @@ public class ConferenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "joinParticipant() thread running...");
-                        Ringservice.joinParticipant(selCallId, dragCallId);
-                        // Generate a CONF_CREATED callback
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "joinParticipant() thread running...");
+                    Ringservice.joinParticipant(selCallId, dragCallId);
+                    // Generate a CONF_CREATED callback
+                    return true;
                 }
         );
     }
@@ -95,13 +89,10 @@ public class ConferenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "addParticipant() thread running...");
-                        Ringservice.addParticipant(callId, confId);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "addParticipant() thread running...");
+                    Ringservice.addParticipant(callId, confId);
+                    return true;
                 }
         );
     }
@@ -111,13 +102,10 @@ public class ConferenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "addMainParticipant() thread running...");
-                        Ringservice.addMainParticipant(confId);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "addMainParticipant() thread running...");
+                    Ringservice.addMainParticipant(confId);
+                    return true;
                 }
         );
     }
@@ -127,13 +115,10 @@ public class ConferenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "detachParticipant() thread running... " + callId);
-                        Ringservice.detachParticipant(callId);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "detachParticipant() thread running... " + callId);
+                    Ringservice.detachParticipant(callId);
+                    return true;
                 }
         );
     }
@@ -143,13 +128,10 @@ public class ConferenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "joinConference() thread running...");
-                        Ringservice.joinConference(selConfId, dragConfId);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "joinConference() thread running...");
+                    Ringservice.joinConference(selConfId, dragConfId);
+                    return true;
                 }
         );
     }
@@ -159,13 +141,10 @@ public class ConferenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "hangUpConference() thread running...");
-                        Ringservice.hangUpConference(confId);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "hangUpConference() thread running...");
+                    Ringservice.hangUpConference(confId);
+                    return true;
                 }
         );
     }
@@ -175,13 +154,10 @@ public class ConferenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "holdConference() thread running...");
-                        Ringservice.holdConference(confId);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "holdConference() thread running...");
+                    Ringservice.holdConference(confId);
+                    return true;
                 }
         );
     }
@@ -191,13 +167,10 @@ public class ConferenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "unholdConference() thread running...");
-                        Ringservice.unholdConference(confId);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "unholdConference() thread running...");
+                    Ringservice.unholdConference(confId);
+                    return true;
                 }
         );
     }
@@ -208,12 +181,9 @@ public class ConferenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "isConferenceParticipant() thread running...");
-                        return Ringservice.isConferenceParticipant(callId);
-                    }
+                () -> {
+                    Log.i(TAG, "isConferenceParticipant() thread running...");
+                    return Ringservice.isConferenceParticipant(callId);
                 }
         );
     }
@@ -223,33 +193,30 @@ public class ConferenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Map<String, ArrayList<String>>>() {
-                    @Override
-                    public Map<String, ArrayList<String>> call() throws Exception {
-                        Log.i(TAG, "getConferenceList() thread running...");
-                        StringVect callIds = Ringservice.getCallList();
-                        HashMap<String, ArrayList<String>> confs = new HashMap<>(callIds.size());
-                        for (int i = 0; i < callIds.size(); i++) {
-                            String callId = callIds.get(i);
-                            String confId = Ringservice.getConferenceId(callId);
+                (Callable<Map<String, ArrayList<String>>>) () -> {
+                    Log.i(TAG, "getConferenceList() thread running...");
+                    StringVect callIds = Ringservice.getCallList();
+                    HashMap<String, ArrayList<String>> confs = new HashMap<>(callIds.size());
+                    for (int i = 0; i < callIds.size(); i++) {
+                        String callId = callIds.get(i);
+                        String confId = Ringservice.getConferenceId(callId);
 
-                            Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
+                        Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
 
-                            //todo remove condition when callDetails does not contains sips ids anymore
-                            if(!callDetails.get("PEER_NUMBER").contains("sips")) {
-                                if (confId == null || confId.isEmpty()) {
-                                    confId = callId;
-                                }
-                                ArrayList<String> calls = confs.get(confId);
-                                if (calls == null) {
-                                    calls = new ArrayList<>();
-                                    confs.put(confId, calls);
-                                }
-                                calls.add(callId);
+                        //todo remove condition when callDetails does not contains sips ids anymore
+                        if(!callDetails.get("PEER_NUMBER").contains("sips")) {
+                            if (confId == null || confId.isEmpty()) {
+                                confId = callId;
                             }
+                            ArrayList<String> calls = confs.get(confId);
+                            if (calls == null) {
+                                calls = new ArrayList<>();
+                                confs.put(confId, calls);
+                            }
+                            calls.add(callId);
                         }
-                        return confs;
                     }
+                    return confs;
                 }
         );
     }
@@ -259,12 +226,9 @@ public class ConferenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<List<String>>() {
-                    @Override
-                    public List<String> call() throws Exception {
-                        Log.i(TAG, "getParticipantList() thread running...");
-                        return new ArrayList<>(Ringservice.getParticipantList(confId));
-                    }
+                (Callable<List<String>>) () -> {
+                    Log.i(TAG, "getParticipantList() thread running...");
+                    return new ArrayList<>(Ringservice.getParticipantList(confId));
                 }
         );
     }
@@ -278,12 +242,9 @@ public class ConferenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<String>() {
-                    @Override
-                    public String call() throws Exception {
-                        Log.i(TAG, "getConferenceDetails() thread running...");
-                        return Ringservice.getConferenceDetails(callId).get("CONF_STATE");
-                    }
+                () -> {
+                    Log.i(TAG, "getConferenceDetails() thread running...");
+                    return Ringservice.getConferenceDetails(callId).get("CONF_STATE");
                 }
         );
     }
@@ -293,12 +254,9 @@ public class ConferenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Map<String, String>>() {
-                    @Override
-                    public Map<String, String> call() throws Exception {
-                        Log.i(TAG, "getCredentials() thread running...");
-                        return Ringservice.getConferenceDetails(id).toNative();
-                    }
+                (Callable<Map<String, String>>) () -> {
+                    Log.i(TAG, "getCredentials() thread running...");
+                    return Ringservice.getConferenceDetails(id).toNative();
                 }
         );
     }

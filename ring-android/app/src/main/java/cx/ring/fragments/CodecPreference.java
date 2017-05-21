@@ -86,14 +86,10 @@ class CodecPreference extends Preference {
         ListView mCodecList = (ListView) holder.findViewById(R.id.dndlistview);
         if (mCodecList.getAdapter() != listAdapter)
             mCodecList.setAdapter(listAdapter);
-        mCodecList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-                listAdapter.getItem(pos).toggleState();
-                listAdapter.notifyDataSetChanged();
-                callChangeListener(getActiveCodecList());
-            }
+        mCodecList.setOnItemClickListener((arg0, arg1, pos, arg3) -> {
+            listAdapter.getItem(pos).toggleState();
+            listAdapter.notifyDataSetChanged();
+            callChangeListener(getActiveCodecList());
         });
 
         setListViewHeight(mCodecList, (LinearLayout) mCodecList.getParent());

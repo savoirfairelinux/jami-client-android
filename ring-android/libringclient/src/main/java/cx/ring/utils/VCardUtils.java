@@ -30,7 +30,6 @@ import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.io.text.VCardWriter;
-import ezvcard.property.FormattedName;
 import ezvcard.property.Uid;
 
 public class VCardUtils {

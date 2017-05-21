@@ -127,18 +127,15 @@ public abstract class ContactService extends Observable {
      * @param loadSipContacts  if true, sip contacts will be taken care of
      */
     public void loadContacts(final boolean loadRingContacts, final boolean loadSipContacts, final String accountId) {
-        mApplicationExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Settings settings = mPreferencesService.loadSettings();
-                if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
-                    mContactList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
-                }
-                mContactsRing = loadContactsFromDaemon(accountId);
-                setChanged();
-                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACTS_CHANGED);
-                notifyObservers(event);
+        mApplicationExecutor.submit(() -> {
+            Settings settings = mPreferencesService.loadSettings();
+            if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
+                mContactList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
             }
+            mContactsRing = loadContactsFromDaemon(accountId);
+            setChanged();
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACTS_CHANGED);
+            notifyObservers(event);
         });
     }
 
@@ -339,13 +336,10 @@ public abstract class ContactService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "addContact() thread running...");
-                        Ringservice.addContact(accountId, uri);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "addContact() thread running...");
+                    Ringservice.addContact(accountId, uri);
+                    return true;
                 }
         );
     }
@@ -362,13 +356,10 @@ public abstract class ContactService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "removeContact() thread running...");
-                        Ringservice.removeContact(accountId, uri);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "removeContact() thread running...");
+                    Ringservice.removeContact(accountId, uri);
+                    return true;
                 }
         );
     }
@@ -383,12 +374,9 @@ public abstract class ContactService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<List<Map<String, String>>>() {
-                    @Override
-                    public List<Map<String, String>> call() throws Exception {
-                        Log.i(TAG, "getContacts() thread running...");
-                        return Ringservice.getContacts(accountId).toNative();
-                    }
+                (Callable<List<Map<String, String>>>) () -> {
+                    Log.i(TAG, "getContacts() thread running...");
+                    return Ringservice.getContacts(accountId).toNative();
                 }
         );
     }

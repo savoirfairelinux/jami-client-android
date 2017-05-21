@@ -25,7 +25,6 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -80,26 +79,16 @@ public class ConfirmRevocationDialog extends DialogFragment {
                 .setTitle(mRegisterTitle)
                 .setPositiveButton(R.string.revoke_device_title, null) //Set to null. We override the onclick
                 .setNegativeButton(android.R.string.cancel,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                dismiss();
-                            }
-                        }
+                        (dialog, whichButton) -> dismiss()
                 )
                 .create();
-        result.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                Button positiveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
-                positiveButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (validate()) {
-                            dismiss();
-                        }
-                    }
-                });
-            }
+        result.setOnShowListener(dialog -> {
+            Button positiveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(view1 -> {
+                if (validate()) {
+                    dismiss();
+                }
+            });
         });
         result.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         return result;

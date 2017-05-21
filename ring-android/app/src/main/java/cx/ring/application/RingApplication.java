@@ -133,13 +133,10 @@ public class RingApplication extends Application {
 
     private void setDefaultUncaughtExceptionHandler() {
         try {
-            Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-                @Override
-                public void uncaughtException(Thread t, Throwable e) {
-                    Log.e(TAG, "Uncaught Exception detected in thread ", e);
-                    android.os.Process.killProcess(android.os.Process.myPid());
-                    System.exit(2);
-                }
+            Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+                Log.e(TAG, "Uncaught Exception detected in thread ", e);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(2);
             });
         } catch (SecurityException e) {
             Log.e(TAG, "Could not set the Default Uncaught Exception Handler", e);
@@ -168,46 +165,43 @@ public class RingApplication extends Application {
             return;
         }
 
-        Future<Boolean> startResult = mExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                // Android specific callbacks handlers (rely on pure Java low level Services callbacks handlers as they
-                // observe them)
-                mConfigurationCallback = new ConfigurationManagerCallback(getApplicationContext());
-                mCallManagerCallBack = new CallManagerCallBack(getApplicationContext());
+        Future<Boolean> startResult = mExecutor.submit(() -> {
+            // Android specific callbacks handlers (rely on pure Java low level Services callbacks handlers as they
+            // observe them)
+            mConfigurationCallback = new ConfigurationManagerCallback(getApplicationContext());
+            mCallManagerCallBack = new CallManagerCallBack(getApplicationContext());
 
-                // mCallAndConferenceCallbackHandler is a wrapper to handle CallCallbacks and ConferenceCallbacks
-                mCallAndConferenceCallbackHandler = mDaemonService.getDaemonCallbackHandler(
-                        mCallService.getCallbackHandler(),
-                        mConferenceService.getCallbackHandler());
-                mAccountAndContactCallbackHandler = mDaemonService.getDaemonConfigurationCallbackHandler(
-                        mAccountService.getCallbackHandler(),
-                        mContactService.getCallbackHandler());
-                mHardwareCallbackHandler = mHardwareService.getCallbackHandler();
-                mPresenceCallbackHandler = mPresenceService.getCallbackHandler();
+            // mCallAndConferenceCallbackHandler is a wrapper to handle CallCallbacks and ConferenceCallbacks
+            mCallAndConferenceCallbackHandler = mDaemonService.getDaemonCallbackHandler(
+                    mCallService.getCallbackHandler(),
+                    mConferenceService.getCallbackHandler());
+            mAccountAndContactCallbackHandler = mDaemonService.getDaemonConfigurationCallbackHandler(
+                    mAccountService.getCallbackHandler(),
+                    mContactService.getCallbackHandler());
+            mHardwareCallbackHandler = mHardwareService.getCallbackHandler();
+            mPresenceCallbackHandler = mPresenceService.getCallbackHandler();
 
-                // Android specific Low level Services observers
-                mCallService.addObserver(mCallManagerCallBack);
-                mConferenceService.addObserver(mCallManagerCallBack);
-                mAccountService.addObserver(mConfigurationCallback);
-                mContactService.addObserver(mConfigurationCallback);
+            // Android specific Low level Services observers
+            mCallService.addObserver(mCallManagerCallBack);
+            mConferenceService.addObserver(mCallManagerCallBack);
+            mAccountService.addObserver(mConfigurationCallback);
+            mContactService.addObserver(mConfigurationCallback);
 
-                mDaemonService.startDaemon(
-                        mCallAndConferenceCallbackHandler,
-                        mAccountAndContactCallbackHandler,
-                        mPresenceCallbackHandler,
-                        mHardwareCallbackHandler);
+            mDaemonService.startDaemon(
+                    mCallAndConferenceCallbackHandler,
+                    mAccountAndContactCallbackHandler,
+                    mPresenceCallbackHandler,
+                    mHardwareCallbackHandler);
 
-                ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
-                registerReceiver(ringerModeListener, RINGER_FILTER);
+            ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
+            registerReceiver(ringerModeListener, RINGER_FILTER);
 
-                if(mDeviceRuntimeService.hasVideoPermission()) {
-                    //initVideo is called here to give time to the application to initialize hardware cameras
-                    mHardwareService.initVideo();
-                }
-
-                return true;
+            if(mDeviceRuntimeService.hasVideoPermission()) {
+                //initVideo is called here to give time to the application to initialize hardware cameras
+                mHardwareService.initVideo();
             }
+
+            return true;
         });
 
         try {
@@ -225,19 +219,16 @@ public class RingApplication extends Application {
     }
 
     public void terminateDaemon() {
-        Future<Boolean> stopResult = mExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                unregisterReceiver(ringerModeListener);
-                mDaemonService.stopDaemon();
-                mConfigurationCallback = null;
-                mCallManagerCallBack = null;
-                Intent intent = new Intent(DRING_CONNECTION_CHANGED);
-                intent.putExtra("connected", mDaemonService.isStarted());
-                sendBroadcast(intent);
+        Future<Boolean> stopResult = mExecutor.submit(() -> {
+            unregisterReceiver(ringerModeListener);
+            mDaemonService.stopDaemon();
+            mConfigurationCallback = null;
+            mCallManagerCallBack = null;
+            Intent intent = new Intent(DRING_CONNECTION_CHANGED);
+            intent.putExtra("connected", mDaemonService.isStarted());
+            sendBroadcast(intent);
 
-                return true;
-            }
+            return true;
         });
 
         try {

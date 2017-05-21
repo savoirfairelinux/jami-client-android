@@ -128,31 +128,28 @@ public class PendingContactRequestsFragment extends BaseFragment<PendingContactR
 
     @Override
     public void updateView(final ArrayList<PendingContactRequestsViewModel> list) {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (mPaneTextView == null || mEmptyTextView == null) {
-                    return;
-                }
+        RingApplication.uiHandler.post(() -> {
+            if (mPaneTextView == null || mEmptyTextView == null) {
+                return;
+            }
 
-                if (!list.isEmpty()) {
-                    PendingContactRequestsViewModel viewModel = list.get(0);
-                    if (viewModel.hasPane()) {
-                        mPaneTextView.setText(getString(R.string.contact_request_account, viewModel.getAccountUsername()));
-                    }
-                    mPaneTextView.setVisibility(viewModel.hasPane() ? View.VISIBLE : View.GONE);
+            if (!list.isEmpty()) {
+                PendingContactRequestsViewModel viewModel = list.get(0);
+                if (viewModel.hasPane()) {
+                    mPaneTextView.setText(getString(R.string.contact_request_account, viewModel.getAccountUsername()));
                 }
+                mPaneTextView.setVisibility(viewModel.hasPane() ? View.VISIBLE : View.GONE);
+            }
 
-                mEmptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
+            mEmptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
 
-                if (mRequestsList.getAdapter() != null) {
-                    mAdapter.replaceAll(list);
-                } else {
-                    mAdapter = new ContactRequestsAdapter(list, PendingContactRequestsFragment.this);
-                    mRequestsList.setAdapter(mAdapter);
-                    LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                    mRequestsList.setLayoutManager(mLayoutManager);
-                }
+            if (mRequestsList.getAdapter() != null) {
+                mAdapter.replaceAll(list);
+            } else {
+                mAdapter = new ContactRequestsAdapter(list, PendingContactRequestsFragment.this);
+                mRequestsList.setAdapter(mAdapter);
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                mRequestsList.setLayoutManager(mLayoutManager);
             }
         });
     }

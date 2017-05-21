@@ -363,32 +363,14 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                 .setMessage(R.string.account_migration_message_dialog)
                 .setIcon(R.drawable.ic_warning)
                 .setCancelable(true)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        fNavigation.selectSection(RingNavigationFragment.Section.MANAGE);
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        dialog.dismiss();
-                    }
-                });
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                     dialog.dismiss();
-                }
-            });
+                    fNavigation.selectSection(RingNavigationFragment.Section.MANAGE);
+                })
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.dismiss())
+                .setOnCancelListener(dialog -> dialog.dismiss());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            builder.setOnDismissListener(dialog -> dialog.dismiss());
         }
         builder.show();
     }
@@ -440,24 +422,9 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                                         .setMessage(R.string.start_error_mic_required)
                                         .setIcon(R.drawable.ic_mic_black)
                                         .setCancelable(false)
-                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                finish();
-                                            }
-                                        }).setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                            @Override
-                                            public void onCancel(DialogInterface dialog) {
-                                                finish();
-                                            }
-                                        });
+                                        .setPositiveButton(android.R.string.ok, (dialog, which) -> finish()).setOnCancelListener(dialog -> finish());
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                        @Override
-                                        public void onDismiss(DialogInterface dialog) {
-                                            finish();
-                                        }
-                                    });
+                                    builder.setOnDismissListener(dialog -> finish());
                                 }
                                 builder.show();
                                 return;

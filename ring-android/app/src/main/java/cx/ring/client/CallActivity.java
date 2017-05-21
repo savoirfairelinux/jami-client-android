@@ -58,15 +58,12 @@ public class CallActivity extends AppCompatActivity {
         setContentView(R.layout.activity_call_layout);
 
         mMainView = findViewById(R.id.main_call_layout);
-        mMainView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dimmed = !dimmed;
-                if (dimmed) {
-                    hideSystemUI();
-                } else {
-                    showSystemUI();
-                }
+        mMainView.setOnClickListener(v -> {
+            dimmed = !dimmed;
+            if (dimmed) {
+                hideSystemUI();
+            } else {
+                showSystemUI();
             }
         });
 

@@ -191,20 +191,17 @@ public class SecurityAccountFragment extends PreferenceFragment implements Obser
         }
     };
 
-    private Preference.OnPreferenceClickListener filePickerListener = new Preference.OnPreferenceClickListener() {
-        @Override
-        public boolean onPreferenceClick(Preference preference) {
-            if (preference.getKey().contentEquals(ConfigKey.TLS_CA_LIST_FILE.key())) {
-                performFileSearch(SELECT_CA_LIST_RC);
-            }
-            if (preference.getKey().contentEquals(ConfigKey.TLS_PRIVATE_KEY_FILE.key())) {
-                performFileSearch(SELECT_PRIVATE_KEY_RC);
-            }
-            if (preference.getKey().contentEquals(ConfigKey.TLS_CERTIFICATE_FILE.key())) {
-                performFileSearch(SELECT_CERTIFICATE_RC);
-            }
-            return true;
+    private Preference.OnPreferenceClickListener filePickerListener = preference -> {
+        if (preference.getKey().contentEquals(ConfigKey.TLS_CA_LIST_FILE.key())) {
+            performFileSearch(SELECT_CA_LIST_RC);
         }
+        if (preference.getKey().contentEquals(ConfigKey.TLS_PRIVATE_KEY_FILE.key())) {
+            performFileSearch(SELECT_PRIVATE_KEY_RC);
+        }
+        if (preference.getKey().contentEquals(ConfigKey.TLS_CERTIFICATE_FILE.key())) {
+            performFileSearch(SELECT_CERTIFICATE_RC);
+        }
+        return true;
     };
 
     private Preference.OnPreferenceChangeListener tlsListener = new Preference.OnPreferenceChangeListener() {

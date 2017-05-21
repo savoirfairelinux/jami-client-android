@@ -141,69 +141,66 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
 
     @Override
     public void accountChanged(final Account account) {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (account == null) {
-                    Log.w(TAG, "No account to display!");
-                    return;
-                }
-                mDeviceAdapter = new DeviceAdapter(getActivity(), account.getDevices(), account.getDeviceId(),
-                        RingAccountSummaryFragment.this);
-                mDeviceList.setAdapter(mDeviceAdapter);
-
-                int totalHeight = 0;
-                for (int i = 0; i < mDeviceAdapter.getCount(); i++) {
-                    View listItem = mDeviceAdapter.getView(i, null, mDeviceList);
-                    listItem.measure(0, 0);
-                    totalHeight += listItem.getMeasuredHeight();
-                }
-
-                ViewGroup.LayoutParams par = mDeviceList.getLayoutParams();
-                par.height = totalHeight + (mDeviceList.getDividerHeight() * (mDeviceAdapter.getCount() - 1));
-                mDeviceList.setLayoutParams(par);
-                mDeviceList.requestLayout();
-
-                mAccountSwitch.setChecked(account.isEnabled());
-                mAccountNameTxt.setText(account.getAlias());
-                mAccountIdTxt.setText(account.getUsername());
-                String username = account.getRegisteredName();
-                boolean currentRegisteredName = account.registeringUsername;
-                boolean hasRegisteredName = !currentRegisteredName && username != null && !username.isEmpty();
-                registeringNameGroup.setVisibility(currentRegisteredName ? View.VISIBLE : View.GONE);
-                mRegisterNameGroup.setVisibility((!hasRegisteredName && !currentRegisteredName) ? View.VISIBLE : View.GONE);
-                mRegisteredNameGroup.setVisibility(hasRegisteredName ? View.VISIBLE : View.GONE);
-                if (hasRegisteredName) {
-                    mAccountUsernameTxt.setText(username);
-                }
-
-                int color = ContextCompat.getColor(getActivity(), R.color.holo_red_light);
-                String status;
-
-                if (account.isEnabled()) {
-                    if (account.isTrying()) {
-                        status = getString(R.string.account_status_connecting);
-                    } else if (account.needsMigration()) {
-                        status = getString(R.string.account_update_needed);
-                    } else if (account.isInError()) {
-                        status = getString(R.string.account_status_connection_error);
-                    } else if (account.isRegistered()) {
-                        status = getString(R.string.account_status_online);
-                        color = ContextCompat.getColor(getActivity(), R.color.holo_green_dark);
-                    } else {
-                        status = getString(R.string.account_status_unknown);
-                    }
-                } else {
-                    color = ContextCompat.getColor(getActivity(), R.color.darker_gray);
-                    status = getString(R.string.account_status_offline);
-                }
-
-                mAccountStatus.setText(status);
-                Drawable drawable = ContextCompat.getDrawable(getActivity(), R.drawable.static_rounded_background);
-                Drawable wrapped = DrawableCompat.wrap(drawable);
-                DrawableCompat.setTint(wrapped, color);
-                mAccountStatus.setBackground(wrapped);
+        RingApplication.uiHandler.post(() -> {
+            if (account == null) {
+                Log.w(TAG, "No account to display!");
+                return;
             }
+            mDeviceAdapter = new DeviceAdapter(getActivity(), account.getDevices(), account.getDeviceId(),
+                    RingAccountSummaryFragment.this);
+            mDeviceList.setAdapter(mDeviceAdapter);
+
+            int totalHeight = 0;
+            for (int i = 0; i < mDeviceAdapter.getCount(); i++) {
+                View listItem = mDeviceAdapter.getView(i, null, mDeviceList);
+                listItem.measure(0, 0);
+                totalHeight += listItem.getMeasuredHeight();
+            }
+
+            ViewGroup.LayoutParams par = mDeviceList.getLayoutParams();
+            par.height = totalHeight + (mDeviceList.getDividerHeight() * (mDeviceAdapter.getCount() - 1));
+            mDeviceList.setLayoutParams(par);
+            mDeviceList.requestLayout();
+
+            mAccountSwitch.setChecked(account.isEnabled());
+            mAccountNameTxt.setText(account.getAlias());
+            mAccountIdTxt.setText(account.getUsername());
+            String username = account.getRegisteredName();
+            boolean currentRegisteredName = account.registeringUsername;
+            boolean hasRegisteredName = !currentRegisteredName && username != null && !username.isEmpty();
+            registeringNameGroup.setVisibility(currentRegisteredName ? View.VISIBLE : View.GONE);
+            mRegisterNameGroup.setVisibility((!hasRegisteredName && !currentRegisteredName) ? View.VISIBLE : View.GONE);
+            mRegisteredNameGroup.setVisibility(hasRegisteredName ? View.VISIBLE : View.GONE);
+            if (hasRegisteredName) {
+                mAccountUsernameTxt.setText(username);
+            }
+
+            int color = ContextCompat.getColor(getActivity(), R.color.holo_red_light);
+            String status;
+
+            if (account.isEnabled()) {
+                if (account.isTrying()) {
+                    status = getString(R.string.account_status_connecting);
+                } else if (account.needsMigration()) {
+                    status = getString(R.string.account_update_needed);
+                } else if (account.isInError()) {
+                    status = getString(R.string.account_status_connection_error);
+                } else if (account.isRegistered()) {
+                    status = getString(R.string.account_status_online);
+                    color = ContextCompat.getColor(getActivity(), R.color.holo_green_dark);
+                } else {
+                    status = getString(R.string.account_status_unknown);
+                }
+            } else {
+                color = ContextCompat.getColor(getActivity(), R.color.darker_gray);
+                status = getString(R.string.account_status_offline);
+            }
+
+            mAccountStatus.setText(status);
+            Drawable drawable = ContextCompat.getDrawable(getActivity(), R.drawable.static_rounded_background);
+            Drawable wrapped = DrawableCompat.wrap(drawable);
+            DrawableCompat.setTint(wrapped, color);
+            mAccountStatus.setBackground(wrapped);
         });
     }
 
@@ -254,43 +251,34 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
 
     @Override
     public void showNetworkError() {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mWaitDialog.dismiss();
-                AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
-                errorDialog.setTitle(R.string.account_export_end_network_title)
-                        .setMessage(R.string.account_export_end_network_message);
-                errorDialog.setPositiveButton(android.R.string.ok, null);
-                errorDialog.show();
-            }
+        RingApplication.uiHandler.post(() -> {
+            mWaitDialog.dismiss();
+            AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
+            errorDialog.setTitle(R.string.account_export_end_network_title)
+                    .setMessage(R.string.account_export_end_network_message);
+            errorDialog.setPositiveButton(android.R.string.ok, null);
+            errorDialog.show();
         });
     }
 
     @Override
     public void showPasswordError() {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mWaitDialog.dismiss();
-                mPasswordLayout.setError(getString(R.string.account_export_end_decryption_message));
-                mRingPassword.setText("");
-            }
+        RingApplication.uiHandler.post(() -> {
+            mWaitDialog.dismiss();
+            mPasswordLayout.setError(getString(R.string.account_export_end_decryption_message));
+            mRingPassword.setText("");
         });
     }
 
     @Override
     public void showGenericError() {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mWaitDialog.dismiss();
-                AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
-                errorDialog.setTitle(R.string.account_export_end_error_title)
-                        .setMessage(R.string.account_export_end_error_message);
-                errorDialog.setPositiveButton(android.R.string.ok, null);
-                errorDialog.show();
-            }
+        RingApplication.uiHandler.post(() -> {
+            mWaitDialog.dismiss();
+            AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
+            errorDialog.setTitle(R.string.account_export_end_error_title)
+                    .setMessage(R.string.account_export_end_error_message);
+            errorDialog.setPositiveButton(android.R.string.ok, null);
+            errorDialog.show();
         });
     }
 
@@ -377,27 +365,24 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
 
     @Override
     public void showPIN(final String pin) {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                hideWizard();
-                mWaitDialog.dismiss();
-                mLinkAccountView.setVisibility(View.VISIBLE);
-                mPasswordLayout.setVisibility(View.GONE);
-                mEndBtn.setVisibility(View.VISIBLE);
-                mStartBtn.setVisibility(View.GONE);
+        RingApplication.uiHandler.post(() -> {
+            hideWizard();
+            mWaitDialog.dismiss();
+            mLinkAccountView.setVisibility(View.VISIBLE);
+            mPasswordLayout.setVisibility(View.GONE);
+            mEndBtn.setVisibility(View.VISIBLE);
+            mStartBtn.setVisibility(View.GONE);
 
-                String pined = getString(R.string.account_end_export_infos).replace("%%", pin);
-                final SpannableString styledResultText = new SpannableString(pined);
-                int pos = pined.lastIndexOf(pin);
-                styledResultText.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                styledResultText.setSpan(new StyleSpan(Typeface.BOLD), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                styledResultText.setSpan(new RelativeSizeSpan(2.8f), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                mExportInfos.setText(styledResultText);
-                mExportInfos.requestFocus();
+            String pined = getString(R.string.account_end_export_infos).replace("%%", pin);
+            final SpannableString styledResultText = new SpannableString(pined);
+            int pos = pined.lastIndexOf(pin);
+            styledResultText.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            styledResultText.setSpan(new StyleSpan(Typeface.BOLD), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            styledResultText.setSpan(new RelativeSizeSpan(2.8f), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            mExportInfos.setText(styledResultText);
+            mExportInfos.requestFocus();
 
-                KeyboardVisibilityManager.hideKeyboard(getActivity(), 0);
-            }
+            KeyboardVisibilityManager.hideKeyboard(getActivity(), 0);
         });
     }
 
@@ -406,49 +391,38 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
         if (mDeviceAdapter == null) {
             return;
         }
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mDeviceAdapter.setData(devices, currentDeviceId);
-            }
-        });
+        RingApplication.uiHandler.post(() -> mDeviceAdapter.setData(devices, currentDeviceId));
     }
 
     @Override
     public void deviceRevocationEnded(final String device, final int status) {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mWaitDialog.dismiss();
-                int message, title = R.string.account_device_revocation_error_title;
-                switch (status) {
-                    case 0:
-                        title = R.string.account_device_revocation_success_title;
-                        message = R.string.account_device_revocation_success;
-                        break;
-                    case 1:
-                        message = R.string.account_device_revocation_wrong_password;
-                        break;
-                    case 2:
-                        message = R.string.account_device_revocation_unknown_device;
-                        break;
-                    default:
-                        message = R.string.account_device_revocation_error_unknown;
-                }
-                new AlertDialog.Builder(getActivity())
-                        .setTitle(title)
-                        .setMessage(message)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                if (status == 1) {
-                                    onDeviceRevocationAsked(device);
-                                }
-                            }
-                        })
-                        .show();
+        RingApplication.uiHandler.post(() -> {
+            mWaitDialog.dismiss();
+            int message, title = R.string.account_device_revocation_error_title;
+            switch (status) {
+                case 0:
+                    title = R.string.account_device_revocation_success_title;
+                    message = R.string.account_device_revocation_success;
+                    break;
+                case 1:
+                    message = R.string.account_device_revocation_wrong_password;
+                    break;
+                case 2:
+                    message = R.string.account_device_revocation_unknown_device;
+                    break;
+                default:
+                    message = R.string.account_device_revocation_error_unknown;
             }
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                        dialog.dismiss();
+                        if (status == 1) {
+                            onDeviceRevocationAsked(device);
+                        }
+                    })
+                    .show();
         });
     }
 

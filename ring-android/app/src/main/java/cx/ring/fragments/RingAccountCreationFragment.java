@@ -33,10 +33,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -290,19 +288,16 @@ public class RingAccountCreationFragment extends Fragment implements Observer<Se
             return;
         }
 
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                switch (event.getEventType()) {
-                    case REGISTERED_NAME_FOUND:
-                        int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
-                        String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                        handleBlockchainResult(state, name);
-                        break;
-                    default:
-                        Log.d(TAG, "This event " + event.getEventType() + " is not handled here");
-                        break;
-                }
+        RingApplication.uiHandler.post(() -> {
+            switch (event.getEventType()) {
+                case REGISTERED_NAME_FOUND:
+                    int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
+                    String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                    handleBlockchainResult(state, name);
+                    break;
+                default:
+                    Log.d(TAG, "This event " + event.getEventType() + " is not handled here");
+                    break;
             }
         });
     }

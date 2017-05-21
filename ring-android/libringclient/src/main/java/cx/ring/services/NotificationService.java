@@ -25,7 +25,6 @@ import java.util.TreeMap;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 
 public abstract class NotificationService {

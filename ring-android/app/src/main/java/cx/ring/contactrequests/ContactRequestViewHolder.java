@@ -61,26 +61,11 @@ public class ContactRequestViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final ContactRequestListeners clickListerner, final PendingContactRequestsViewModel viewModel) {
-        mButtonAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickListerner.onAcceptClick(viewModel);
-            }
-        });
+        mButtonAccept.setOnClickListener(v -> clickListerner.onAcceptClick(viewModel));
 
-        mButtonRefuse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickListerner.onRefuseClick(viewModel);
-            }
-        });
+        mButtonRefuse.setOnClickListener(v -> clickListerner.onRefuseClick(viewModel));
 
-        mButtonBlock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickListerner.onBlockClick(viewModel);
-            }
-        });
+        mButtonBlock.setOnClickListener(v -> clickListerner.onBlockClick(viewModel));
     }
 
     public interface ContactRequestListeners {

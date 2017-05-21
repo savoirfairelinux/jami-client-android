@@ -194,12 +194,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
                 @Override
                 public void onDisplayChanged(int displayId) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            presenter.displayChanged();
-                        }
-                    });
+                    getActivity().runOnUiThread(() -> presenter.displayChanged());
                 }
             };
         }
@@ -221,18 +216,10 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                 presenter.videoSurfaceDestroyed();
             }
         });
-        inflatedView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View parent, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                presenter.layoutChanged();
-            }
-        });
-        inflatedView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
-                boolean ui = (visibility & (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN)) == 0;
-                presenter.uiVisibilityChanged(ui);
-            }
+        inflatedView.addOnLayoutChangeListener((parent, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> presenter.layoutChanged());
+        inflatedView.setOnSystemUiVisibilityChangeListener(visibility -> {
+            boolean ui = (visibility & (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN)) == 0;
+            presenter.uiVisibilityChanged(ui);
         });
 
         mVideoPreview.getHolder().setFormat(PixelFormat.RGBA_8888);
@@ -338,22 +325,14 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void displayContactBubble(final boolean display) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE);
-            }
-        });
+        getActivity().runOnUiThread(() -> contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE));
     }
 
     @Override
     public void displayVideoSurface(final boolean display) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mVideoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
-                mVideoPreview.setVisibility(display ? View.VISIBLE : View.GONE);
-            }
+        getActivity().runOnUiThread(() -> {
+            mVideoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
+            mVideoPreview.setVisibility(display ? View.VISIBLE : View.GONE);
         });
     }
 
@@ -386,30 +365,22 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void updateTime(final long duration) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mCallStatusTxt.setText(String.format(Locale.getDefault(), "%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
-            }
-        });
+        getActivity().runOnUiThread(() -> mCallStatusTxt.setText(String.format(Locale.getDefault(), "%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60)));
     }
 
     @Override
     public void updateContactBubble(final String contactName) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (contactName.isEmpty()) {
-                    return;
-                }
-                if (contactBubbleTxt.getText().toString().contains(CallContact.PREFIX_RING)) {
-                    contactBubbleNumTxt.setVisibility(View.VISIBLE);
-                    contactBubbleNumTxt.setText(contactBubbleTxt.getText());
-                    contactBubbleTxt.setText(contactName);
-                } else {
-                    contactBubbleNumTxt.setVisibility(View.VISIBLE);
-                    contactBubbleNumTxt.setText(contactName);
-                }
+        getActivity().runOnUiThread(() -> {
+            if (contactName.isEmpty()) {
+                return;
+            }
+            if (contactBubbleTxt.getText().toString().contains(CallContact.PREFIX_RING)) {
+                contactBubbleNumTxt.setVisibility(View.VISIBLE);
+                contactBubbleNumTxt.setText(contactBubbleTxt.getText());
+                contactBubbleTxt.setText(contactName);
+            } else {
+                contactBubbleNumTxt.setVisibility(View.VISIBLE);
+                contactBubbleNumTxt.setText(contactName);
             }
         });
     }
@@ -420,46 +391,40 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
      */
     @Override
     public void updateContactBubbleWithVCard(final String contactName, final byte[] photo) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (photo != null && photo.length > 0) {
-                    Glide.with(getActivity())
-                            .load(photo)
-                            .transform(new CircleTransform(getActivity()))
-                            .error(R.drawable.ic_contact_picture)
-                            .into(contactBubbleView);
-                } else {
-                    Glide.with(getActivity())
-                            .load(R.drawable.ic_contact_picture)
-                            .into(contactBubbleView);
-                }
-
-                if (TextUtils.isEmpty(contactName) || contactName.contains(CallContact.PREFIX_RING)) {
-                    return;
-                }
-                if (contactBubbleTxt.getText().toString().contains(CallContact.PREFIX_RING)) {
-                    contactBubbleNumTxt.setVisibility(View.VISIBLE);
-                    contactBubbleNumTxt.setText(contactBubbleTxt.getText());
-                }
-                contactBubbleTxt.setText(contactName);
+        getActivity().runOnUiThread(() -> {
+            if (photo != null && photo.length > 0) {
+                Glide.with(getActivity())
+                        .load(photo)
+                        .transform(new CircleTransform(getActivity()))
+                        .error(R.drawable.ic_contact_picture)
+                        .into(contactBubbleView);
+            } else {
+                Glide.with(getActivity())
+                        .load(R.drawable.ic_contact_picture)
+                        .into(contactBubbleView);
             }
+
+            if (TextUtils.isEmpty(contactName) || contactName.contains(CallContact.PREFIX_RING)) {
+                return;
+            }
+            if (contactBubbleTxt.getText().toString().contains(CallContact.PREFIX_RING)) {
+                contactBubbleNumTxt.setVisibility(View.VISIBLE);
+                contactBubbleNumTxt.setText(contactBubbleTxt.getText());
+            }
+            contactBubbleTxt.setText(contactName);
         });
     }
 
     @Override
     public void updateCallStatus(final int callState) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                switch (callState) {
-                    case SipCall.State.NONE:
-                        mCallStatusTxt.setText("");
-                        break;
-                    default:
-                        mCallStatusTxt.setText(callStateToHumanState(callState));
-                        break;
-                }
+        getActivity().runOnUiThread(() -> {
+            switch (callState) {
+                case SipCall.State.NONE:
+                    mCallStatusTxt.setText("");
+                    break;
+                default:
+                    mCallStatusTxt.setText(callStateToHumanState(callState));
+                    break;
             }
         });
     }
@@ -489,102 +454,87 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void initNormalStateDisplay(final boolean hasVideo) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                acceptButton.setVisibility(View.GONE);
-                refuseButton.setVisibility(View.GONE);
-                hangupButton.setVisibility(View.VISIBLE);
+        getActivity().runOnUiThread(() -> {
+            acceptButton.setVisibility(View.GONE);
+            refuseButton.setVisibility(View.GONE);
+            hangupButton.setVisibility(View.VISIBLE);
 
-                contactBubbleLayout.setVisibility(hasVideo ? View.INVISIBLE : View.VISIBLE);
+            contactBubbleLayout.setVisibility(hasVideo ? View.INVISIBLE : View.VISIBLE);
 
-                getActivity().invalidateOptionsMenu();
-            }
+            getActivity().invalidateOptionsMenu();
         });
     }
 
     @Override
     public void initIncomingCallDisplay() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                acceptButton.setVisibility(View.VISIBLE);
-                refuseButton.setVisibility(View.VISIBLE);
-                hangupButton.setVisibility(View.GONE);
-            }
+        getActivity().runOnUiThread(() -> {
+            acceptButton.setVisibility(View.VISIBLE);
+            refuseButton.setVisibility(View.VISIBLE);
+            hangupButton.setVisibility(View.GONE);
         });
     }
 
     @Override
     public void initOutGoingCallDisplay() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                acceptButton.setVisibility(View.GONE);
-                refuseButton.setVisibility(View.VISIBLE);
-                hangupButton.setVisibility(View.GONE);
-            }
+        getActivity().runOnUiThread(() -> {
+            acceptButton.setVisibility(View.GONE);
+            refuseButton.setVisibility(View.VISIBLE);
+            hangupButton.setVisibility(View.GONE);
         });
     }
 
     @Override
     public void initContactDisplay(final SipCall call) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                CallContact contact = call.getContact();
-                if (contact == null) {
-                    return;
-                }
-                final String name = contact.getDisplayName();
-                contactBubbleTxt.setText(name);
-                if (!name.contains(CallContact.PREFIX_RING) && contactBubbleNumTxt.getText().toString().isEmpty()) {
-                    contactBubbleNumTxt.setVisibility(View.VISIBLE);
-                    contactBubbleNumTxt.setText(call.getNumber());
-                }
-                mPulseAnimation.startRippleAnimation();
+        getActivity().runOnUiThread(() -> {
+            CallContact contact = call.getContact();
+            if (contact == null) {
+                return;
             }
+            final String name = contact.getDisplayName();
+            contactBubbleTxt.setText(name);
+            if (!name.contains(CallContact.PREFIX_RING) && contactBubbleNumTxt.getText().toString().isEmpty()) {
+                contactBubbleNumTxt.setVisibility(View.VISIBLE);
+                contactBubbleNumTxt.setText(call.getNumber());
+            }
+            mPulseAnimation.startRippleAnimation();
         });
     }
 
     @Override
     public void resetVideoSize(final int videoWidth, final int videoHeight, final int previewWidth, final int previewHeight) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ViewGroup rootView = (ViewGroup) getView();
-                if (rootView == null)
-                    return;
+        getActivity().runOnUiThread(() -> {
+            ViewGroup rootView = (ViewGroup) getView();
+            if (rootView == null)
+                return;
 
-                double videoRatio = videoWidth / (double) videoHeight;
-                double screenRatio = getView().getWidth() / (double) getView().getHeight();
+            double videoRatio = videoWidth / (double) videoHeight;
+            double screenRatio = getView().getWidth() / (double) getView().getHeight();
 
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mVideoSurface.getLayoutParams();
-                int oldW = params.width;
-                int oldH = params.height;
-                if (videoRatio >= screenRatio) {
-                    params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
-                    params.height = (int) (videoHeight * (double) rootView.getWidth() / (double) videoWidth);
-                } else {
-                    params.height = RelativeLayout.LayoutParams.MATCH_PARENT;
-                    params.width = (int) (videoWidth * (double) rootView.getHeight() / (double) videoHeight);
-                }
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mVideoSurface.getLayoutParams();
+            int oldW = params.width;
+            int oldH = params.height;
+            if (videoRatio >= screenRatio) {
+                params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
+                params.height = (int) (videoHeight * (double) rootView.getWidth() / (double) videoWidth);
+            } else {
+                params.height = RelativeLayout.LayoutParams.MATCH_PARENT;
+                params.width = (int) (videoWidth * (double) rootView.getHeight() / (double) videoHeight);
+            }
 
-                if (oldW != params.width || oldH != params.height) {
-                    mVideoSurface.setLayoutParams(params);
-                }
+            if (oldW != params.width || oldH != params.height) {
+                mVideoSurface.setLayoutParams(params);
+            }
 
-                DisplayMetrics metrics = getResources().getDisplayMetrics();
-                RelativeLayout.LayoutParams paramsPreview = (RelativeLayout.LayoutParams) mVideoPreview.getLayoutParams();
-                oldW = paramsPreview.width;
-                oldH = paramsPreview.height;
-                double previewMaxDim = Math.max(previewWidth, previewHeight);
-                double previewRatio = metrics.density * 160. / previewMaxDim;
-                paramsPreview.width = (int) (previewWidth * previewRatio);
-                paramsPreview.height = (int) (previewHeight * previewRatio);
-                if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
-                    mVideoPreview.setLayoutParams(paramsPreview);
-                }
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+            RelativeLayout.LayoutParams paramsPreview = (RelativeLayout.LayoutParams) mVideoPreview.getLayoutParams();
+            oldW = paramsPreview.width;
+            oldH = paramsPreview.height;
+            double previewMaxDim = Math.max(previewWidth, previewHeight);
+            double previewRatio = metrics.density * 160. / previewMaxDim;
+            paramsPreview.width = (int) (previewWidth * previewRatio);
+            paramsPreview.height = (int) (previewHeight * previewRatio);
+            if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
+                mVideoPreview.setLayoutParams(paramsPreview);
             }
         });
     }

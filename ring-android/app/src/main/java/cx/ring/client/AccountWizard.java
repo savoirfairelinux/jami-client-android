@@ -369,49 +369,43 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
     }
 
     private void handleCreationState(final ServiceEvent event) {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
+        RingApplication.uiHandler.post(() -> {
 
-                String stateAccountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
+            String stateAccountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
 
-                if (!TextUtils.isEmpty(stateAccountId) && stateAccountId.equals(mCreatedAccountId)) {
-                    String newState = event.getEventInput(ServiceEvent.EventInput.STATE, String.class);
+            if (!TextUtils.isEmpty(stateAccountId) && stateAccountId.equals(mCreatedAccountId)) {
+                String newState = event.getEventInput(ServiceEvent.EventInput.STATE, String.class);
 
-                    mAccount = mAccountService.getAccount(mCreatedAccountId);
+                mAccount = mAccountService.getAccount(mCreatedAccountId);
 
-                    if (mAccount.isRing() && (newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING))) {
+                if (mAccount.isRing() && (newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING))) {
+                    return;
+                }
+
+                if (mProgress != null) {
+                    if (mProgress.isShowing()) {
+                        mProgress.dismiss();
+                    }
+                    mProgress = null;
+                }
+
+                if (!mCreationError) {
+                    if (mAlertDialog != null && mAlertDialog.isShowing()) {
                         return;
                     }
+                    mAlertDialog = createRingAlertDialog(AccountWizard.this, newState);
+                    if (mCreatedAccount) {
+                        saveProfile(mAccount.getAccountID());
+                        mAlertDialog.setOnDismissListener(dialogInterface -> {
+                            setResult(Activity.RESULT_OK, new Intent());
+                            //unlock the screen orientation
+                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                            finish();
+                        });
 
-                    if (mProgress != null) {
-                        if (mProgress.isShowing()) {
-                            mProgress.dismiss();
-                        }
-                        mProgress = null;
-                    }
-
-                    if (!mCreationError) {
-                        if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                            return;
-                        }
-                        mAlertDialog = createRingAlertDialog(AccountWizard.this, newState);
-                        if (mCreatedAccount) {
-                            saveProfile(mAccount.getAccountID());
-                            mAlertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialogInterface) {
-                                    setResult(Activity.RESULT_OK, new Intent());
-                                    //unlock the screen orientation
-                                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                                    finish();
-                                }
-                            });
-
-                            if (!TextUtils.isEmpty(mUsername)) {
-                                Log.i(TAG, "Account created, registering " + mUsername);
-                                mAccountService.registerName(mAccount, "", mUsername);
-                            }
+                        if (!TextUtils.isEmpty(mUsername)) {
+                            Log.i(TAG, "Account created, registering " + mUsername);
+                            mAccountService.registerName(mAccount, "", mUsername);
                         }
                     }
                 }

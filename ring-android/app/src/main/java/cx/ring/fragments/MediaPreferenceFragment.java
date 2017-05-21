@@ -77,12 +77,9 @@ public class MediaPreferenceFragment extends PreferenceFragment
     private int MAX_SIZE_RINGTONE = 800;
 
     private static final int SELECT_RINGTONE_PATH = 40;
-    private Preference.OnPreferenceClickListener filePickerListener = new Preference.OnPreferenceClickListener() {
-        @Override
-        public boolean onPreferenceClick(Preference preference) {
-            performFileSearch(SELECT_RINGTONE_PATH);
-            return true;
-        }
+    private Preference.OnPreferenceClickListener filePickerListener = preference -> {
+        performFileSearch(SELECT_RINGTONE_PATH);
+        return true;
     };
     private String mAccountID;
 
@@ -363,12 +360,7 @@ public class MediaPreferenceFragment extends PreferenceFragment
                 .setTitle(R.string.permission_dialog_camera_title)
                 .setMessage(R.string.permission_dialog_camera_message)
                 .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss());
         builder.show();
     }
 

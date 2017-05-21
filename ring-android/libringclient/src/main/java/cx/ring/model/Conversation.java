@@ -26,10 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.NavigableMap;
-import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -206,12 +203,7 @@ public class Conversation {
     }
 
     public ArrayList<ConversationElement> getAggregateHistory() {
-        Collections.sort(mAggregateHistory, new Comparator<ConversationElement>() {
-            @Override
-            public int compare(ConversationElement lhs, ConversationElement rhs) {
-                return (int) ((lhs.getDate() - rhs.getDate()) / 1000L);
-            }
-        });
+        Collections.sort(mAggregateHistory, (lhs, rhs) -> (int) ((lhs.getDate() - rhs.getDate()) / 1000L));
         return mAggregateHistory;
     }
 

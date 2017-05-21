@@ -20,7 +20,6 @@
 package cx.ring.call;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -72,11 +71,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     private BlockchainInputHandler mBlockchainInputHandler;
 
     private ScheduledExecutorService executor;
-    private Runnable timeRunnable = new Runnable() {
-        public void run() {
-            updateTime();
-        }
-    };
+    private Runnable timeRunnable = () -> updateTime();
 
     @Inject
     public CallPresenter(AccountService accountService,

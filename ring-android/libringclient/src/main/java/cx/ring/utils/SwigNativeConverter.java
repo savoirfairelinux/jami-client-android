@@ -44,8 +44,7 @@ public class SwigNativeConverter {
     public static Blob convertFromNativeToSwig(byte[] data) {
         Blob toReturn = new Blob();
         toReturn.reserve(data.length);
-        for (int i = 0; i < data.length; i++)
-            toReturn.add(data[i]);
+        for (byte aData : data) toReturn.add(aData);
         return toReturn;
     }
 

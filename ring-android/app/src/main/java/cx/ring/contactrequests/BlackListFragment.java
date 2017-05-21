@@ -104,39 +104,26 @@ public class BlackListFragment extends BaseFragment<BlackListPresenter> implemen
 
     @Override
     public void updateView(final ArrayList<BlackListViewModel> list) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mBlacklist.setVisibility(View.VISIBLE);
-                if (mBlacklist.getAdapter() != null) {
-                    mAdapter.replaceAll(list);
-                } else {
-                    mAdapter = new BlackListAdapter(list, BlackListFragment.this);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                    mBlacklist.setLayoutManager(layoutManager);
-                    mBlacklist.setAdapter(mAdapter);
-                }
+        getActivity().runOnUiThread(() -> {
+            mBlacklist.setVisibility(View.VISIBLE);
+            if (mBlacklist.getAdapter() != null) {
+                mAdapter.replaceAll(list);
+            } else {
+                mAdapter = new BlackListAdapter(list, BlackListFragment.this);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                mBlacklist.setLayoutManager(layoutManager);
+                mBlacklist.setAdapter(mAdapter);
             }
         });
     }
 
     @Override
     public void hideListView() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mBlacklist.setVisibility(View.GONE);
-            }
-        });
+        getActivity().runOnUiThread(() -> mBlacklist.setVisibility(View.GONE));
     }
 
     @Override
     public void displayEmptyListMessage(final boolean display) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mEmptyTextView.setVisibility(display ? View.VISIBLE : View.GONE);
-            }
-        });
+        getActivity().runOnUiThread(() -> mEmptyTextView.setVisibility(display ? View.VISIBLE : View.GONE));
     }
 }

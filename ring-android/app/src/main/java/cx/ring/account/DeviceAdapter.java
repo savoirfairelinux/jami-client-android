@@ -96,22 +96,16 @@ public class DeviceAdapter extends BaseAdapter {
         TextView thisDeviceText = (TextView) view.findViewById(R.id.txt_device_thisflag);
         thisDeviceText.setVisibility(isCurrentDevice ? View.VISIBLE : View.GONE);
         if (isCurrentDevice) {
-            editButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mListener != null) {
-                        mListener.onDeviceRename();
-                    }
+            editButton.setOnClickListener(view12 -> {
+                if (mListener != null) {
+                    mListener.onDeviceRename();
                 }
             });
         }
 
-        revokeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mListener != null) {
-                    mListener.onDeviceRevocationAsked(mDevices.get(i).getKey());
-                }
+        revokeButton.setOnClickListener(view1 -> {
+            if (mListener != null) {
+                mListener.onDeviceRevocationAsked(mDevices.get(i).getKey());
             }
         });
 

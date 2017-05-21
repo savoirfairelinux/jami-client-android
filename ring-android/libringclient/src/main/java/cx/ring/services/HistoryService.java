@@ -142,21 +142,18 @@ public abstract class HistoryService extends Observable {
 
     public void getCallAndTextAsync() throws SQLException {
 
-        mApplicationExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    List<HistoryCall> historyCalls = getAll();
-                    List<HistoryText> historyTexts = getAllTextMessages();
+        mApplicationExecutor.submit(() -> {
+            try {
+                List<HistoryCall> historyCalls = getAll();
+                List<HistoryText> historyTexts = getAllTextMessages();
 
-                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.HISTORY_LOADED);
-                    event.addEventInput(ServiceEvent.EventInput.HISTORY_CALLS, historyCalls);
-                    event.addEventInput(ServiceEvent.EventInput.HISTORY_TEXTS, historyTexts);
-                    setChanged();
-                    notifyObservers(event);
-                } catch (SQLException e) {
-                    Log.e(TAG, "Can't load calls and texts", e);
-                }
+                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.HISTORY_LOADED);
+                event.addEventInput(ServiceEvent.EventInput.HISTORY_CALLS, historyCalls);
+                event.addEventInput(ServiceEvent.EventInput.HISTORY_TEXTS, historyTexts);
+                setChanged();
+                notifyObservers(event);
+            } catch (SQLException e) {
+                Log.e(TAG, "Can't load calls and texts", e);
             }
         });
     }
@@ -184,39 +181,36 @@ public abstract class HistoryService extends Observable {
             return;
         }
 
-        mApplicationExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Map<String, HistoryEntry> history = conversation.getRawHistory();
-                    for (Map.Entry<String, HistoryEntry> entry : history.entrySet()) {
-                        //~ Deleting messages
-                        ArrayList<Long> textMessagesIds = new ArrayList<>(entry.getValue().getTextMessages().size());
-                        for (TextMessage textMessage : entry.getValue().getTextMessages().values()) {
-                            textMessagesIds.add(textMessage.getId());
-                        }
-                        DeleteBuilder<HistoryText, Integer> deleteTextHistoryBuilder = getTextHistoryDao()
-                                .deleteBuilder();
-                        deleteTextHistoryBuilder.where().in(HistoryText.COLUMN_ID_NAME, textMessagesIds);
-                        deleteTextHistoryBuilder.delete();
-                        //~ Deleting calls
-                        ArrayList<String> callIds = new ArrayList<>(entry.getValue().getCalls().size());
-                        for (HistoryCall historyCall : entry.getValue().getCalls().values()) {
-                            callIds.add(historyCall.getCallId().toString());
-                        }
-                        DeleteBuilder<HistoryCall, Integer> deleteCallsHistoryBuilder = getCallHistoryDao()
-                                .deleteBuilder();
-                        deleteCallsHistoryBuilder.where().in(HistoryCall.COLUMN_CALL_ID_NAME, callIds);
-                        deleteCallsHistoryBuilder.delete();
+        mApplicationExecutor.submit(() -> {
+            try {
+                Map<String, HistoryEntry> history = conversation.getRawHistory();
+                for (Map.Entry<String, HistoryEntry> entry : history.entrySet()) {
+                    //~ Deleting messages
+                    ArrayList<Long> textMessagesIds = new ArrayList<>(entry.getValue().getTextMessages().size());
+                    for (TextMessage textMessage : entry.getValue().getTextMessages().values()) {
+                        textMessagesIds.add(textMessage.getId());
                     }
-
-                    // notify the observers
-                    setChanged();
-                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.HISTORY_MODIFIED);
-                    notifyObservers(event);
-                } catch (SQLException e) {
-                    Log.e(TAG, "Error while clearing history for conversation", e);
+                    DeleteBuilder<HistoryText, Integer> deleteTextHistoryBuilder = getTextHistoryDao()
+                            .deleteBuilder();
+                    deleteTextHistoryBuilder.where().in(HistoryText.COLUMN_ID_NAME, textMessagesIds);
+                    deleteTextHistoryBuilder.delete();
+                    //~ Deleting calls
+                    ArrayList<String> callIds = new ArrayList<>(entry.getValue().getCalls().size());
+                    for (HistoryCall historyCall : entry.getValue().getCalls().values()) {
+                        callIds.add(historyCall.getCallId().toString());
+                    }
+                    DeleteBuilder<HistoryCall, Integer> deleteCallsHistoryBuilder = getCallHistoryDao()
+                            .deleteBuilder();
+                    deleteCallsHistoryBuilder.where().in(HistoryCall.COLUMN_CALL_ID_NAME, callIds);
+                    deleteCallsHistoryBuilder.delete();
                 }
+
+                // notify the observers
+                setChanged();
+                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.HISTORY_MODIFIED);
+                notifyObservers(event);
+            } catch (SQLException e) {
+                Log.e(TAG, "Error while clearing history for conversation", e);
             }
         });
 

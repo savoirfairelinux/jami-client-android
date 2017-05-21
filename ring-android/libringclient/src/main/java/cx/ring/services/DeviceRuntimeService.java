@@ -20,10 +20,6 @@
 package cx.ring.services;
 
 import java.io.File;
-import java.util.Map;
-
-import cx.ring.daemon.StringMap;
-import cx.ring.model.Conference;
 
 public abstract class DeviceRuntimeService {
 

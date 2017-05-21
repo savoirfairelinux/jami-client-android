@@ -100,17 +100,7 @@ public class DaemonService {
     }
 
     private void startRingServicePolling() {
-        mScheduledExecutor.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                mExecutor.submit(new Runnable() {
-                    @Override
-                    public void run() {
-                        Ringservice.pollEvents();
-                    }
-                });
-            }
-        }, 0, POLLING_TIMEOUT, TimeUnit.MILLISECONDS);
+        mScheduledExecutor.scheduleAtFixedRate(() -> mExecutor.submit(() -> Ringservice.pollEvents()), 0, POLLING_TIMEOUT, TimeUnit.MILLISECONDS);
     }
 
     public void stopDaemon() {

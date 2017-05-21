@@ -154,12 +154,9 @@ public class SIPAccountCreationFragment extends BaseFragment<SIPCreationPresente
                 getActivity().getString(R.string.dialog_warn_ip2ip_account_message),
                 getActivity().getString(android.R.string.ok),
                 getActivity().getString(android.R.string.cancel),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        createSIPAccount(true);
-                    }
+                (dialog, which) -> {
+                    dialog.dismiss();
+                    createSIPAccount(true);
                 },
                 null);
     }
@@ -170,17 +167,10 @@ public class SIPAccountCreationFragment extends BaseFragment<SIPCreationPresente
                 getActivity().getString(R.string.account_sip_cannot_be_registered_message),
                 getActivity().getString(android.R.string.ok),
                 getActivity().getString(R.string.account_sip_register_anyway),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        presenter.removeAccount();
-                    }
-                },
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        getActivity().setResult(Activity.RESULT_OK, new Intent());
-                        getActivity().finish();
-                    }
+                (dialog, which) -> presenter.removeAccount(),
+                (dialog, id) -> {
+                    getActivity().setResult(Activity.RESULT_OK, new Intent());
+                    getActivity().finish();
                 });
     }
 
@@ -190,17 +180,10 @@ public class SIPAccountCreationFragment extends BaseFragment<SIPCreationPresente
                 getActivity().getString(R.string.account_no_network_message),
                 getActivity().getString(android.R.string.ok),
                 getActivity().getString(R.string.account_sip_register_anyway),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        presenter.removeAccount();
-                    }
-                },
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        getActivity().setResult(Activity.RESULT_OK, new Intent());
-                        getActivity().finish();
-                    }
+                (dialog, which) -> presenter.removeAccount(),
+                (dialog, id) -> {
+                    getActivity().setResult(Activity.RESULT_OK, new Intent());
+                    getActivity().finish();
                 });
     }
 
@@ -210,12 +193,9 @@ public class SIPAccountCreationFragment extends BaseFragment<SIPCreationPresente
                 getActivity().getString(R.string.account_sip_success_message),
                 getActivity().getString(android.R.string.ok),
                 null,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        getActivity().setResult(Activity.RESULT_OK, new Intent());
-                        getActivity().finish();
-                    }
+                (dialog, which) -> {
+                    getActivity().setResult(Activity.RESULT_OK, new Intent());
+                    getActivity().finish();
                 },
                 null);
     }
@@ -227,31 +207,25 @@ public class SIPAccountCreationFragment extends BaseFragment<SIPCreationPresente
                            final DialogInterface.OnClickListener listenerPositive,
                            final DialogInterface.OnClickListener listenerNegative) {
 
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (mProgress != null && mProgress.isShowing()) {
-                    mProgress.dismiss();
-                }
-
-                //orientation is locked during the create of account to avoid the destruction of the thread
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-                dialogBuilder.setPositiveButton(positive, listenerPositive);
-                dialogBuilder.setNegativeButton(negative, listenerNegative);
-                dialogBuilder.setTitle(title).setMessage(message);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    dialogBuilder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            //unlock the screen orientation
-                            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                        }
-                    });
-                }
-                dialogBuilder.show();
+        RingApplication.uiHandler.post(() -> {
+            if (mProgress != null && mProgress.isShowing()) {
+                mProgress.dismiss();
             }
+
+            //orientation is locked during the create of account to avoid the destruction of the thread
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+            dialogBuilder.setPositiveButton(positive, listenerPositive);
+            dialogBuilder.setNegativeButton(negative, listenerNegative);
+            dialogBuilder.setTitle(title).setMessage(message);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                dialogBuilder.setOnDismissListener(dialog -> {
+                    //unlock the screen orientation
+                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                });
+            }
+            dialogBuilder.show();
         });
 
     }

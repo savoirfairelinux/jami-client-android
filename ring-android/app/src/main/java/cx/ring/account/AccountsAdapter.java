@@ -103,13 +103,9 @@ public class AccountsAdapter extends BaseAdapter {
         }
 
         entryView.enabled.setChecked(item.isEnabled());
-        entryView.enabled.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                item.setEnabled(!item.isEnabled());
-                mListeners.onItemClicked(item.getAccountID(), item.getDetails());
-            }
+        entryView.enabled.setOnClickListener(v -> {
+            item.setEnabled(!item.isEnabled());
+            mListeners.onItemClicked(item.getAccountID(), item.getDetails());
         });
 
         if (item.isEnabled()) {

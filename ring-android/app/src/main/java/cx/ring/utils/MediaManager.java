@@ -24,7 +24,6 @@ package cx.ring.utils;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
-import android.os.Handler;
 import android.util.Log;
 import cx.ring.utils.bluetooth.BluetoothWrapper;
 

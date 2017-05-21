@@ -30,9 +30,7 @@ import java.util.ArrayList;
 
 import cx.ring.R;
 import cx.ring.adapters.NumberAdapter;
-import cx.ring.client.CallActivity;
 import cx.ring.model.CallContact;
-import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
 import cx.ring.model.Uri;
@@ -60,19 +58,13 @@ public class ActionHelper {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(R.string.conversation_action_delete_this_title)
                 .setMessage(R.string.conversation_action_delete_this_message)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        if (callback != null) {
-                            callback.deleteConversation(conversation);
-                        }
+                .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
+                    if (callback != null) {
+                        callback.deleteConversation(conversation);
                     }
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        /* Terminate with no action */
-                    }
+                .setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
+                    /* Terminate with no action */
                 });
 
         AlertDialog alertDialog = builder.create();
@@ -105,13 +97,10 @@ public class ActionHelper {
         final NumberAdapter adapter = new NumberAdapter(activity, callContact, true);
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(R.string.conversation_action_select_peer_number);
-        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (callback != null) {
-                    Phone selectedPhone = (Phone) adapter.getItem(which);
-                    callback.copyContactNumberToClipboard(selectedPhone.getNumber().toString());
-                }
+        builder.setAdapter(adapter, (dialog, which) -> {
+            if (callback != null) {
+                Phone selectedPhone = (Phone) adapter.getItem(which);
+                callback.copyContactNumberToClipboard(selectedPhone.getNumber().toString());
             }
         });
         AlertDialog dialog = builder.create();
@@ -132,18 +121,12 @@ public class ActionHelper {
         builder.setTitle(R.string.ab_action_contact_add_question)
                 .setMessage(context.getString(R.string.add_call_contact_number_to_contacts,
                         contact.getDisplayName()))
-                .setPositiveButton(R.string.ab_action_contact_add, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        Intent intent = getAddNumberIntentForContact(contact);
-                        context.startActivity(intent);
-                    }
+                .setPositiveButton(R.string.ab_action_contact_add, (dialog, whichButton) -> {
+                    Intent intent = getAddNumberIntentForContact(contact);
+                    context.startActivity(intent);
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        /* Terminate with no action */
-                    }
+                .setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
+                    /* Terminate with no action */
                 });
 
         AlertDialog alertDialog = builder.create();

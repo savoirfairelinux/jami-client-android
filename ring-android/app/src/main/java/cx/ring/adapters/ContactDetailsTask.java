@@ -190,13 +190,10 @@ public class ContactDetailsTask implements Runnable {
                     cb.onDetailsLoaded(externalBMP, formattedName, mContact.getUsername());
                 }
             } else {
-                v.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        v.setImageBitmap(externalBMP);
-                        if (textView != null) {
-                            textView.setText(formattedName);
-                        }
+                v.post(() -> {
+                    v.setImageBitmap(externalBMP);
+                    if (textView != null) {
+                        textView.setText(formattedName);
                     }
                 });
             }

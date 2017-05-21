@@ -73,7 +73,6 @@ import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
-import cx.ring.utils.NetworkUtils;
 import cx.ring.viewholders.SmartListViewHolder;
 
 public class SmartListFragment extends BaseFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
@@ -273,14 +272,11 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void setLoading(final boolean loading) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mLoader == null) {
-                    return;
-                }
-                mLoader.setVisibility(loading ? View.VISIBLE : View.GONE);
+        getActivity().runOnUiThread(() -> {
+            if (mLoader == null) {
+                return;
             }
+            mLoader.setVisibility(loading ? View.VISIBLE : View.GONE);
         });
     }
 
@@ -309,12 +305,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     private void displayFloatingActionButtonWithDelay(boolean visible, int delay) {
         if (this.mFloatingActionButton != null) {
             final int visibility = (visible) ? View.VISIBLE : View.GONE;
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mFloatingActionButton.setVisibility(visibility);
-                }
-            }, delay);
+            new Handler().postDelayed(() -> mFloatingActionButton.setVisibility(visibility), delay);
         }
     }
 
@@ -357,44 +348,28 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void displayNetworkErrorPanel() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                showErrorPanel(R.string.error_no_network, false, 0, null);
-            }
-        });
+        getActivity().runOnUiThread(() -> showErrorPanel(R.string.error_no_network, false, 0, null));
     }
 
     @Override
     public void displayMobileDataPanel() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                showErrorPanel(R.string.error_mobile_network_available_but_disabled,
-                        true,
-                        R.drawable.ic_settings_white,
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Activity activity = getActivity();
-                                if (activity != null && activity instanceof HomeActivity) {
-                                    HomeActivity homeActivity = (HomeActivity) activity;
-                                    homeActivity.goToSettings();
-                                }
-                            }
-                        });
-            }
-        });
+        getActivity().runOnUiThread(() -> showErrorPanel(R.string.error_mobile_network_available_but_disabled,
+                true,
+                R.drawable.ic_settings_white,
+                v -> {
+                    Activity activity = getActivity();
+                    if (activity != null && activity instanceof HomeActivity) {
+                        HomeActivity homeActivity = (HomeActivity) activity;
+                        homeActivity.goToSettings();
+                    }
+                }));
     }
 
     @Override
     public void displayNewContactRowWithName(final String name) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ((TextView) mNewContact.findViewById(R.id.display_name)).setText(name);
-                mNewContact.setVisibility(View.VISIBLE);
-            }
+        getActivity().runOnUiThread(() -> {
+            ((TextView) mNewContact.findViewById(R.id.display_name)).setText(name);
+            mNewContact.setVisibility(View.VISIBLE);
         });
     }
 
@@ -402,50 +377,41 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     public void displayChooseNumberDialog(final CharSequence[] numbers) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.choose_number);
-        builder.setItems(numbers, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                CharSequence selected = numbers[which];
-                Intent intent = new Intent(CallActivity.ACTION_CALL)
-                        .setClass(getActivity(), CallActivity.class)
-                        .setData(Uri.parse(selected.toString()));
-                startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
-            }
+        builder.setItems(numbers, (dialog, which) -> {
+            CharSequence selected = numbers[which];
+            Intent intent = new Intent(CallActivity.ACTION_CALL)
+                    .setClass(getActivity(), CallActivity.class)
+                    .setData(Uri.parse(selected.toString()));
+            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
         });
         builder.show();
     }
 
     @Override
     public void displayNoConversationMessage() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                String emptyText = getResources().getQuantityString(R.plurals.home_conferences_title, 0, 0);
-                mEmptyTextView.setText(emptyText);
-                mEmptyTextView.setVisibility(View.VISIBLE);
-            }
+        getActivity().runOnUiThread(() -> {
+            String emptyText = getResources().getQuantityString(R.plurals.home_conferences_title, 0, 0);
+            mEmptyTextView.setText(emptyText);
+            mEmptyTextView.setVisibility(View.VISIBLE);
         });
     }
 
     @Override
     public void displayConversationDialog(final Conversation conversation) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setItems(R.array.conversation_actions, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0:
-                        ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(),
-                                conversation.getContact(),
-                                SmartListFragment.this);
-                        break;
-                    case 1:
-                        ActionHelper.launchDeleteAction(getActivity(), conversation, SmartListFragment.this);
-                        break;
-                    case 2:
-                        presenter.removeContact(conversation.getLastAccountUsed(), conversation.getContact().getDisplayName());
-                        break;
-                }
+        builder.setItems(R.array.conversation_actions, (dialog, which) -> {
+            switch (which) {
+                case 0:
+                    ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(),
+                            conversation.getContact(),
+                            SmartListFragment.this);
+                    break;
+                case 1:
+                    ActionHelper.launchDeleteAction(getActivity(), conversation, SmartListFragment.this);
+                    break;
+                case 2:
+                    presenter.removeContact(conversation.getLastAccountUsed(), conversation.getContact().getDisplayName());
+                    break;
             }
         });
         AlertDialog dialog = builder.create();
@@ -461,50 +427,32 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void hideSearchRow() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mNewContact.setVisibility(View.GONE);
-            }
-        });
+        getActivity().runOnUiThread(() -> mNewContact.setVisibility(View.GONE));
     }
 
     @Override
     public void hideErrorPanel() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mErrorMessagePane.setVisibility(View.GONE);
-            }
-        });
+        getActivity().runOnUiThread(() -> mErrorMessagePane.setVisibility(View.GONE));
     }
 
     @Override
     public void hideNoConversationMessage() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mEmptyTextView.setVisibility(View.GONE);
-            }
-        });
+        getActivity().runOnUiThread(() -> mEmptyTextView.setVisibility(View.GONE));
     }
 
     @Override
     public void updateList(final ArrayList<SmartListViewModel> smartListViewModels) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mRecyclerView.getAdapter() == null) {
-                    mSmartListAdapter = new SmartListAdapter(smartListViewModels, SmartListFragment.this);
-                    mRecyclerView.setAdapter(mSmartListAdapter);
-                    mRecyclerView.setHasFixedSize(true);
-                    LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-                    llm.setOrientation(LinearLayoutManager.VERTICAL);
-                    mRecyclerView.setLayoutManager(llm);
-                }
-                mSmartListAdapter.update(smartListViewModels);
-                setLoading(false);
+        getActivity().runOnUiThread(() -> {
+            if (mRecyclerView.getAdapter() == null) {
+                mSmartListAdapter = new SmartListAdapter(smartListViewModels, SmartListFragment.this);
+                mRecyclerView.setAdapter(mSmartListAdapter);
+                mRecyclerView.setHasFixedSize(true);
+                LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+                llm.setOrientation(LinearLayoutManager.VERTICAL);
+                mRecyclerView.setLayoutManager(llm);
             }
+            mSmartListAdapter.update(smartListViewModels);
+            setLoading(false);
         });
     }
 
@@ -550,12 +498,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void scrollToTop() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.scrollToPosition(0);
-            }
-        });
+        getActivity().runOnUiThread(() -> mRecyclerView.scrollToPosition(0));
     }
 
     @Override

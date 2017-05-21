@@ -25,7 +25,6 @@ import android.view.View;
 
 import javax.inject.Inject;
 
-import cx.ring.application.RingApplication;
 import cx.ring.utils.Log;
 
 public abstract class BaseFragment<T extends RootPresenter> extends Fragment {

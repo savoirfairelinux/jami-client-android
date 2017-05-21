@@ -24,8 +24,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
@@ -52,26 +50,12 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final SmartListListeners clickListener, final SmartListViewModel smartListViewModel) {
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickListener.onItemClick(smartListViewModel);
-
-            }
+        itemView.setOnClickListener(v -> clickListener.onItemClick(smartListViewModel));
+        itemView.setOnLongClickListener(v -> {
+            clickListener.onItemLongClick(smartListViewModel);
+            return true;
         });
-        itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                clickListener.onItemLongClick(smartListViewModel);
-                return true;
-            }
-        });
-        photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickListener.onPhotoClick(smartListViewModel);
-            }
-        });
+        photo.setOnClickListener(v -> clickListener.onPhotoClick(smartListViewModel));
     }
 
     public interface SmartListListeners {

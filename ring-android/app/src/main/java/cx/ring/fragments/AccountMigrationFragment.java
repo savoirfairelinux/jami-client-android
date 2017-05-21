@@ -182,53 +182,45 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
 
 
     private void handleMigrationState(final ServiceEvent event) {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
+        RingApplication.uiHandler.post(() -> {
 
-                String newState = event.getEventInput(ServiceEvent.EventInput.STATE, String.class);
-                if (TextUtils.isEmpty(newState)) {
-                    if (mProgress != null) {
-                        mProgress.dismiss();
-                        mProgress = null;
-                    }
-                    return;
-                }
-
+            String newState = event.getEventInput(ServiceEvent.EventInput.STATE, String.class);
+            if (TextUtils.isEmpty(newState)) {
                 if (mProgress != null) {
                     mProgress.dismiss();
                     mProgress = null;
                 }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-                dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //do things
-                    }
+                return;
+            }
+
+            if (mProgress != null) {
+                mProgress.dismiss();
+                mProgress = null;
+            }
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+            dialogBuilder.setPositiveButton(android.R.string.ok, (dialog, id) -> {
+                //do things
+            });
+            boolean success = false;
+            switch (newState) {
+                case AccountConfig.STATE_INVALID:
+                    dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
+                            .setMessage(R.string.account_cannot_be_updated_message);
+                    break;
+                default:
+                    dialogBuilder.setTitle(R.string.account_device_updated_title)
+                            .setMessage(R.string.account_device_updated_message);
+                    success = true;
+                    break;
+            }
+            AlertDialog dialogSuccess = dialogBuilder.show();
+            if (success) {
+                dialogSuccess.setOnDismissListener(dialogInterface -> {
+                    getActivity().setResult(Activity.RESULT_OK, new Intent());
+                    //unlock the screen orientation
+                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                    getActivity().finish();
                 });
-                boolean success = false;
-                switch (newState) {
-                    case AccountConfig.STATE_INVALID:
-                        dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
-                                .setMessage(R.string.account_cannot_be_updated_message);
-                        break;
-                    default:
-                        dialogBuilder.setTitle(R.string.account_device_updated_title)
-                                .setMessage(R.string.account_device_updated_message);
-                        success = true;
-                        break;
-                }
-                AlertDialog dialogSuccess = dialogBuilder.show();
-                if (success) {
-                    dialogSuccess.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialogInterface) {
-                            getActivity().setResult(Activity.RESULT_OK, new Intent());
-                            //unlock the screen orientation
-                            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                            getActivity().finish();
-                        }
-                    });
-                }
             }
         });
     }
@@ -259,20 +251,17 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
 
             final Account account = mAccountService.getAccount(mAccountId);
             if (account == null) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mProgress != null) {
-                            mProgress.dismiss();
-                            mProgress = null;
-                        }
-                        Log.e(TAG, "Error updating account, no account or remote service");
-                        AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
-                        dialogBuilder.setPositiveButton(android.R.string.ok, null);
-                        dialogBuilder.setTitle(R.string.generic_error_migration)
-                                .setMessage(R.string.generic_error_migration_message);
-                        dialogBuilder.create().show();
+                getActivity().runOnUiThread(() -> {
+                    if (mProgress != null) {
+                        mProgress.dismiss();
+                        mProgress = null;
                     }
+                    Log.e(TAG, "Error updating account, no account or remote service");
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                    dialogBuilder.setPositiveButton(android.R.string.ok, null);
+                    dialogBuilder.setTitle(R.string.generic_error_migration)
+                            .setMessage(R.string.generic_error_migration_message);
+                    dialogBuilder.create().show();
                 });
                 return null;
             }

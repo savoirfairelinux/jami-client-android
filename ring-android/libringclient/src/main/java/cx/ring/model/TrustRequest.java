@@ -21,8 +21,6 @@ package cx.ring.model;
 
 import java.util.Random;
 
-import javax.inject.Inject;
-
 import ezvcard.VCard;
 
 public class TrustRequest {

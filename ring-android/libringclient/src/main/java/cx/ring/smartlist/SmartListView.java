@@ -20,7 +20,6 @@
 package cx.ring.smartlist;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;

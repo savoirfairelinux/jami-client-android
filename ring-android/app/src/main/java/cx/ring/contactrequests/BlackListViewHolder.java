@@ -46,12 +46,7 @@ public class BlackListViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final BlackListListeners clickListener, final BlackListViewModel viewModel) {
-        mButtonUnblock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickListener.onUnblockClick(viewModel);
-            }
-        });
+        mButtonUnblock.setOnClickListener(view -> clickListener.onUnblockClick(viewModel));
     }
 
     public interface BlackListListeners {

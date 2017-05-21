@@ -369,63 +369,49 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         mProfilePhoto.setImageDrawable(mUserImage.getDrawable());
 
         ImageButton cameraView = (ImageButton) view.findViewById(R.id.camera);
-        cameraView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean hasPermission = mDeviceRuntimeService.hasVideoPermission() &&
-                        mDeviceRuntimeService.hasPhotoPermission();
-                if (hasPermission) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    getActivity().startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);
-                } else {
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            HomeActivity.REQUEST_PERMISSION_CAMERA);
-                }
+        cameraView.setOnClickListener(v -> {
+            boolean hasPermission = mDeviceRuntimeService.hasVideoPermission() &&
+                    mDeviceRuntimeService.hasPhotoPermission();
+            if (hasPermission) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                getActivity().startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);
+            } else {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        HomeActivity.REQUEST_PERMISSION_CAMERA);
             }
         });
 
         ImageButton gallery = (ImageButton) view.findViewById(R.id.gallery);
-        gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean hasPermission = mDeviceRuntimeService.hasGalleryPermission();
-                if (hasPermission) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    getActivity().startActivityForResult(intent, HomeActivity.REQUEST_CODE_GALLERY);
-                } else {
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            HomeActivity.REQUEST_PERMISSION_READ_STORAGE);
-                }
+        gallery.setOnClickListener(v -> {
+            boolean hasPermission = mDeviceRuntimeService.hasGalleryPermission();
+            if (hasPermission) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                getActivity().startActivityForResult(intent, HomeActivity.REQUEST_CODE_GALLERY);
+            } else {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        HomeActivity.REQUEST_PERMISSION_READ_STORAGE);
             }
         });
 
         builder.setView(view);
 
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
+        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel());
+
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null)) {
+                mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+            } else {
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_contact_picture);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             }
-        });
+            Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
 
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null)) {
-                    mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
-
-                } else {
-                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_contact_picture);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                }
-                Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
-
-                presenter.saveVCard(editText.getText().toString().trim(), photo);
-            }
+            presenter.saveVCard(editText.getText().toString().trim(), photo);
         });
 
         builder.show();
@@ -471,20 +457,17 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
 
     @Override
     public void showViewModel(final RingNavigationViewModel viewModel) {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mAccountAdapter.replaceAll(viewModel.getAccounts());
-                updateUserView(viewModel.getVcard(getActivity().getFilesDir()));
-                updateSelectedAccountView(viewModel.getAccount());
+        RingApplication.uiHandler.post(() -> {
+            mAccountAdapter.replaceAll(viewModel.getAccounts());
+            updateUserView(viewModel.getVcard(getActivity().getFilesDir()));
+            updateSelectedAccountView(viewModel.getAccount());
 
-                if (viewModel.getAccounts().isEmpty()) {
-                    mNewAccountBtn.setVisibility(View.VISIBLE);
-                    mSelectedAccountLayout.setVisibility(View.GONE);
-                } else {
-                    mNewAccountBtn.setVisibility(View.GONE);
-                    mSelectedAccountLayout.setVisibility(View.VISIBLE);
-                }
+            if (viewModel.getAccounts().isEmpty()) {
+                mNewAccountBtn.setVisibility(View.VISIBLE);
+                mSelectedAccountLayout.setVisibility(View.GONE);
+            } else {
+                mNewAccountBtn.setVisibility(View.GONE);
+                mSelectedAccountLayout.setVisibility(View.VISIBLE);
             }
         });
     }

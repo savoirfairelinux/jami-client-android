@@ -104,24 +104,21 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public void refreshView(final Conversation conversation, Uri number) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        getActivity().runOnUiThread(() -> {
 
-                final CallContact contact = conversation.getContact();
-                if (contact != null) {
-                    new ContactDetailsTask(getActivity(), contact, ConversationFragment.this).run();
-                }
-
-                if (mAdapter != null) {
-                    mAdapter.updateDataset(conversation.getAggregateHistory(), 0);
-
-                    if (mAdapter.getItemCount() > 0) {
-                        mHistList.smoothScrollToPosition(mAdapter.getItemCount() - 1);
-                    }
-                }
-                getActivity().invalidateOptionsMenu();
+            final CallContact contact = conversation.getContact();
+            if (contact != null) {
+                new ContactDetailsTask(getActivity(), contact, ConversationFragment.this).run();
             }
+
+            if (mAdapter != null) {
+                mAdapter.updateDataset(conversation.getAggregateHistory(), 0);
+
+                if (mAdapter.getItemCount() > 0) {
+                    mHistList.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+                }
+            }
+            getActivity().invalidateOptionsMenu();
         });
     }
 
@@ -173,29 +170,21 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         builder.setTitle(R.string.send_request_title);
         builder.setMessage(R.string.send_request_msg);
 
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-            }
-        });
+        builder.setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> dialogInterface.cancel());
 
-        builder.setPositiveButton(R.string.send_request_button, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                VCard vcard = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), accountId);
-                if (vcard != null && !vcard.getPhotos().isEmpty()) {
-                    // Reduce photo size to fit in one DHT packet
-                    Bitmap photo = BitmapUtils.bytesToBitmap(vcard.getPhotos().get(0).getData());
-                    photo = BitmapUtils.reduceBitmap(photo, 30000);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    vcard.removeProperties(Photo.class);
-                    vcard.addPhoto(new Photo(stream.toByteArray(), ImageType.PNG));
-                    vcard.removeProperties(RawProperty.class);
-                }
-                presenter.sendTrustRequest(accountId, contactId, vcard);
+        builder.setPositiveButton(R.string.send_request_button, (dialogInterface, i) -> {
+            VCard vcard = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), accountId);
+            if (vcard != null && !vcard.getPhotos().isEmpty()) {
+                // Reduce photo size to fit in one DHT packet
+                Bitmap photo = BitmapUtils.bytesToBitmap(vcard.getPhotos().get(0).getData());
+                photo = BitmapUtils.reduceBitmap(photo, 30000);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                vcard.removeProperties(Photo.class);
+                vcard.addPhoto(new Photo(stream.toByteArray(), ImageType.PNG));
+                vcard.removeProperties(RawProperty.class);
             }
+            presenter.sendTrustRequest(accountId, contactId, vcard);
         });
 
         builder.show();
@@ -342,21 +331,18 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public void updateView(final String address, final String name, final int state) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (state != 0 || mNumberAdapter == null || mNumberAdapter.isEmpty()) {
-                    return;
-                }
+        getActivity().runOnUiThread(() -> {
+            if (state != 0 || mNumberAdapter == null || mNumberAdapter.isEmpty()) {
+                return;
+            }
 
-                for (int i = 0; i < mNumberAdapter.getCount(); i++) {
-                    Phone phone = (Phone) mNumberAdapter.getItem(i);
-                    if (phone.getNumber() != null) {
-                        String ringID = phone.getNumber().getRawUriString();
-                        if (address.equals(ringID)) {
-                            phone.getNumber().setUsername(name);
-                            mNumberAdapter.notifyDataSetChanged();
-                        }
+            for (int i = 0; i < mNumberAdapter.getCount(); i++) {
+                Phone phone = (Phone) mNumberAdapter.getItem(i);
+                if (phone.getNumber() != null) {
+                    String ringID = phone.getNumber().getRawUriString();
+                    if (address.equals(ringID)) {
+                        phone.getNumber().setUsername(name);
+                        mNumberAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -365,73 +351,49 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public void displayContactName(final String contactName) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(contactName);
-                }
+        getActivity().runOnUiThread(() -> {
+            if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(contactName);
             }
         });
     }
 
     @Override
     public void displayOnGoingCallPane(final boolean display) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mTopPane.setVisibility(display ? View.GONE : View.VISIBLE);
-            }
-        });
+        getActivity().runOnUiThread(() -> mTopPane.setVisibility(display ? View.GONE : View.VISIBLE));
     }
 
     @Override
     public void displayContactPhoto(final byte[] photo) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mAdapter.setPhoto(photo);
-            }
-        });
+        getActivity().runOnUiThread(() -> mAdapter.setPhoto(photo));
     }
 
     @Override
     public void displayNumberSpinner(final Conversation conversation, final Uri number) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mNumberSpinner.setVisibility(View.VISIBLE);
-                mNumberAdapter = new NumberAdapter(getActivity(),
-                        conversation.getContact(),
-                        false);
-                mNumberSpinner.setAdapter(mNumberAdapter);
-                mNumberSpinner.setSelection(getIndex(mNumberSpinner, number));
-            }
+        getActivity().runOnUiThread(() -> {
+            mNumberSpinner.setVisibility(View.VISIBLE);
+            mNumberAdapter = new NumberAdapter(getActivity(),
+                    conversation.getContact(),
+                    false);
+            mNumberSpinner.setAdapter(mNumberAdapter);
+            mNumberSpinner.setSelection(getIndex(mNumberSpinner, number));
         });
     }
 
     @Override
     public void displayAddContact(final boolean display) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mAddContactBtn != null) {
-                    mAddContactBtn.setVisible(display);
-                }
+        getActivity().runOnUiThread(() -> {
+            if (mAddContactBtn != null) {
+                mAddContactBtn.setVisible(display);
             }
         });
     }
 
     @Override
     public void displayDeleteDialog(final Conversation conversation) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mDeleteDialog = ActionHelper.launchDeleteAction(getActivity(),
-                        conversation,
-                        ConversationFragment.this);
-            }
-        });
+        getActivity().runOnUiThread(() -> mDeleteDialog = ActionHelper.launchDeleteAction(getActivity(),
+                conversation,
+                ConversationFragment.this));
     }
 
     @Override
@@ -443,12 +405,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public void hideNumberSpinner() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mNumberSpinner.setVisibility(View.GONE);
-            }
-        });
+        getActivity().runOnUiThread(() -> mNumberSpinner.setVisibility(View.GONE));
     }
 
     @Override

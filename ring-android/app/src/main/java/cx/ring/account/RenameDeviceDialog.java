@@ -24,7 +24,6 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -75,19 +74,13 @@ public class RenameDeviceDialog extends DialogFragment {
                 .setPositiveButton(R.string.rename_device_button, null)
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(final DialogInterface dialog) {
-                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (validate()) {
-                            dialog.dismiss();
-                        }
-                    }
-                });
-            }
+        dialog.setOnShowListener(dialog1 -> {
+            Button button = ((AlertDialog) dialog1).getButton(AlertDialog.BUTTON_POSITIVE);
+            button.setOnClickListener(view1 -> {
+                if (validate()) {
+                    dialog1.dismiss();
+                }
+            });
         });
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         return dialog;

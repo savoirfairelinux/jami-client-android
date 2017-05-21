@@ -295,25 +295,19 @@ public class HardwareServiceImpl extends HardwareService {
         final int heigth = videoParams.height;
         final int rotation = videoParams.rotation;
 
-        preview.setPreviewCallbackWithBuffer(new Camera.PreviewCallback() {
-            @Override
-            public void onPreviewFrame(byte[] data, Camera camera) {
-                setVideoFrame(data, videoWidth, heigth, rotation);
-                preview.addCallbackBuffer(data);
-            }
+        preview.setPreviewCallbackWithBuffer((data, camera) -> {
+            setVideoFrame(data, videoWidth, heigth, rotation);
+            preview.addCallbackBuffer(data);
         });
 
         // enqueue first buffer
         int bufferSize = parameters.getPreviewSize().width * parameters.getPreviewSize().height * ImageFormat.getBitsPerPixel(parameters.getPreviewFormat()) / 8;
         preview.addCallbackBuffer(new byte[bufferSize]);
 
-        preview.setErrorCallback(new Camera.ErrorCallback() {
-            @Override
-            public void onError(int error, Camera cam) {
-                Log.w(TAG, "Camera onError " + error);
-                if (preview == cam) {
-                    stopCapture();
-                }
+        preview.setErrorCallback((error, cam) -> {
+            Log.w(TAG, "Camera onError " + error);
+            if (preview == cam) {
+                stopCapture();
             }
         });
         try {

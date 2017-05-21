@@ -20,7 +20,6 @@ package cx.ring.navigation;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,6 @@ import cx.ring.model.Account;
 import cx.ring.utils.CircleTransform;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
-import ezvcard.property.FormattedName;
 
 class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final List<Account> mDataset = new ArrayList<>();
