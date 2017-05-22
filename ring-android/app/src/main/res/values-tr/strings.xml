@@ -17,6 +17,8 @@
   <string name="description">Ring; kullanıcılarının özgürlüklerine ve gizliliğine önem veren, evrensel iletişim için özgür yazılımdır.</string>
   <string name="credits">Krediler</string>
   <!--About dialog-->
+  <string name="developed_by">Geliştiren</string>
+  <string name="designed_by">Düzenleyen</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ağ bağlantısı yok</string>
