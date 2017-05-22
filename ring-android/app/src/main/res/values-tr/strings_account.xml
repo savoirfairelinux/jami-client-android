@@ -7,6 +7,7 @@
   <!--Strings related to account creation-->
   <string name="add_ring_account_title">Ring hesabı ekle</string>
   <string name="add_sip_account_title">SIP hesabı ekle</string>
+  <string name="ring_account_default_name">Ring hesabı %1$s</string>
   <string name="prompt_alias">Takma ad</string>
   <string name="prompt_hostname">Sunucu adı</string>
   <string name="prompt_username">Kullanıcı adı</string>
@@ -177,5 +178,7 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="rename_device_message">Ring hesabınızı bu aygıtta tanımlamak için yeni bir ad seçin</string>
   <string name="rename_device_button">Aygıtı yeniden adlandır</string>
   <string name="account_rename_device_hint">Yeni aygıt adı seç</string>
+  <string name="account_device_name_empty">Aygıt adı boş bırakılamaz</string>
   <string name="account_device_this_indicator">bu aygıt</string>
+  <string name="account_disabled_indicator">devre dışı</string>
 </resources>

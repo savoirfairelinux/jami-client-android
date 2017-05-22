@@ -122,6 +122,8 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_device_added_message">Jūs sėkmingai nusistatėte savo Ring paskyrą šiame įrenginyje.</string>
   <string name="account_device_updated_title">Paskyros įrenginys atnaujintas</string>
   <string name="account_device_updated_message">Jūs sėkmingai atnaujinote savo Ring paskyrą.</string>
+  <string name="account_sip_success_message">Jūs sėkmingai užregistravote savo Sip paskyrą.</string>
+  <string name="account_sip_register_anyway">Vis tiek registruoti</string>
   <string name="account_link_button">Susieti šį įrenginį su paskyra</string>
   <string name="account_link_prompt_pin">Įveskite PIN</string>
   <string name="account_new_button">Sukurti Ring paskyrą</string>
@@ -146,4 +148,5 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="rename_device_button">Pervadinti įrenginį</string>
   <string name="account_device_name_empty">Įrenginio pavadinimas negali būti tuščias</string>
   <string name="account_device_this_indicator">šis įrenginys</string>
+  <string name="account_disabled_indicator">išjungta</string>
 </resources>
