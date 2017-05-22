@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_5872a4e6",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationFragment.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-05-22T15:48:02Z",
+      "side": 1,
+      "message": "Not explicit in the presenter what did change",
+      "range": {
+        "startLine": 131,
+        "startChar": 18,
+        "endLine": 131,
+        "endChar": 29
+      },
+      "revId": "99612a2fd9a4fbcceecbc8628f64085b2831541a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_b880788c",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-05-22T15:48:02Z",
+      "side": 1,
+      "message": "Could we remove this one? Right now I see that we wait for the blockchain to tell us if the username is ok before actually setting it in the VM. What if we set the username the user input directly in the VM? There is already a boolean blocking the process if the blockchain name is invalid. \n\nLogic would be simpler",
+      "range": {
+        "startLine": 46,
+        "startChar": 3,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "99612a2fd9a4fbcceecbc8628f64085b2831541a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_18742cce",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-05-22T15:48:02Z",
+      "side": 1,
+      "message": "mR",
+      "range": {
+        "startLine": 47,
+        "startChar": 33,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "99612a2fd9a4fbcceecbc8628f64085b2831541a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_d87d34b3",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-05-22T15:48:02Z",
+      "side": 1,
+      "message": "not explicit as well",
+      "range": {
+        "startLine": 72,
+        "startChar": 37,
+        "endLine": 72,
+        "endChar": 41
+      },
+      "revId": "99612a2fd9a4fbcceecbc8628f64085b2831541a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_f876f0d7",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-05-22T15:48:02Z",
+      "side": 1,
+      "message": "You should clear VM username field here if isChecked is false. Otherwise the blockchain name will register even if the user has opted out (that happened to me)",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 5
+      },
+      "revId": "99612a2fd9a4fbcceecbc8628f64085b2831541a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_784a0085",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-05-22T15:48:02Z",
+      "side": 1,
+      "message": "This line should be removed. With our current system we know that we get unnecessary events",
+      "range": {
+        "startLine": 197,
+        "startChar": 24,
+        "endLine": 197,
+        "endChar": 98
+      },
+      "revId": "99612a2fd9a4fbcceecbc8628f64085b2831541a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_984fbc92",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountViewModel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-05-22T15:48:02Z",
+      "side": 1,
+      "message": "needed?",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 5
+      },
+      "revId": "99612a2fd9a4fbcceecbc8628f64085b2831541a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
