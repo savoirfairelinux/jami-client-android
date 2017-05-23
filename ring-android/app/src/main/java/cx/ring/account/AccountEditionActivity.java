@@ -292,7 +292,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         private Fragment getSIPPanel(int position) {
             switch (position) {
                 case 0:
-                    return fragmentWithBundle(new GeneralAccountFragment());
+                    return GeneralAccountFragment.newInstance(accountId);
                 case 1:
                     return fragmentWithBundle(new MediaPreferenceFragment());
                 case 2:
