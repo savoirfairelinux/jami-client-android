@@ -294,7 +294,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
                 case 0:
                     return GeneralAccountFragment.newInstance(accountId);
                 case 1:
-                    return fragmentWithBundle(new MediaPreferenceFragment());
+                    return MediaPreferenceFragment.newInstance(accountId);
                 case 2:
                     return fragmentWithBundle(new AdvancedAccountFragment());
                 case 3:

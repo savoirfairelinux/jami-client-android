@@ -30,6 +30,7 @@ public enum ConfigKey {
     ACCOUNT_DTMF_TYPE("Account.dtmfType"),
     RINGTONE_PATH("Account.ringtonePath"),
     RINGTONE_ENABLED("Account.ringtoneEnabled"),
+    RINGTONE_CUSTOM("Account.ringtoneCustom"),
     KEEP_ALIVE_ENABLED("Account.keepAliveEnabled"),
     LOCAL_INTERFACE("Account.localInterface"),
     PUBLISHED_SAMEAS_LOCAL("Account.publishedSameAsLocal"),
