@@ -20,14 +20,12 @@
 package cx.ring.fragments;
 
 import android.os.Bundle;
-import android.support.v14.preference.PreferenceFragment;
+import android.support.annotation.NonNull;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.SwitchPreferenceCompat;
 import android.support.v7.preference.TwoStatePreference;
 import android.view.inputmethod.EditorInfo;
-
-import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionActivity;
@@ -35,42 +33,27 @@ import cx.ring.application.RingApplication;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
-import cx.ring.model.ServiceEvent;
-import cx.ring.services.AccountService;
+import cx.ring.mvp.BasePreferenceFragment;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 import cx.ring.views.EditTextIntegerPreference;
 import cx.ring.views.EditTextPreferenceDialog;
 import cx.ring.views.PasswordPreference;
 
-public class GeneralAccountFragment extends PreferenceFragment implements Observer<ServiceEvent> {
+public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccountPresenter> implements GeneralAccountView {
 
     private static final String TAG = GeneralAccountFragment.class.getSimpleName();
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
-    private static final String KEY_IS_RING = "accountIsRing";
-    private String mAccountID;
 
-    @Inject
-    AccountService mAccountService;
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY) == null) {
-            return;
-        }
-        mAccountID = getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY);
-        mAccountService.addObserver(this);
+    public static GeneralAccountFragment newInstance(@NonNull String accountId) {
+        Bundle bundle = new Bundle();
+        bundle.putString(AccountEditionActivity.ACCOUNT_ID_KEY, accountId);
+        GeneralAccountFragment generalAccountFragment = new GeneralAccountFragment();
+        generalAccountFragment.setArguments(bundle);
+        return generalAccountFragment;
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        mAccountService.removeObserver(this);
-    }
-
-    void accountChanged(Account account) {
+    public void accountChanged(Account account) {
         if (account == null) {
             return;
         }
@@ -109,44 +92,11 @@ public class GeneralAccountFragment extends PreferenceFragment implements Observ
     }
 
     @Override
-    public void onCreatePreferences(Bundle bundle, String s) {
-        Log.i(TAG, "onCreatePreferences " + bundle + " " + s);
+    public void onCreatePreferences(Bundle bundle, String rootKey) {
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY) == null) {
-            return;
-        }
-        mAccountID = getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY);
+        super.onCreatePreferences(bundle, rootKey);
 
-        Account acc = mAccountService.getAccount(mAccountID);
-        if (acc != null) {
-            if (acc.isRing()) {
-                addPreferencesFromResource(R.xml.account_prefs_ring);
-            } else {
-                addPreferencesFromResource(R.xml.account_general_prefs);
-            }
-            accountChanged(acc);
-        } else {
-            if (bundle != null) {
-                Log.w(TAG, "onCreatePreferences: null account, from bundle");
-                boolean isRing = bundle.getBoolean(KEY_IS_RING);
-                if (isRing) {
-                    addPreferencesFromResource(R.xml.account_prefs_ring);
-                } else {
-                    addPreferencesFromResource(R.xml.account_general_prefs);
-                }
-            } else {
-                Log.w(TAG, "onCreatePreferences: null account");
-            }
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Account acc = mAccountService.getAccount(mAccountID);
-        if (acc != null) {
-            outState.putBoolean(KEY_IS_RING, acc.isRing());
-        }
+        presenter.init(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
     }
 
     @Override
@@ -205,12 +155,7 @@ public class GeneralAccountFragment extends PreferenceFragment implements Observ
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            final Account account = mAccountService.getAccount(mAccountID);
-            if (account != null) {
-                account.setEnabled((Boolean) newValue);
-                mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
-                mAccountService.setAccountDetails(mAccountID, account.getDetails());
-            }
+            presenter.accountChanged(newValue);
             return false;
         }
     };
@@ -219,50 +164,34 @@ public class GeneralAccountFragment extends PreferenceFragment implements Observ
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             Log.i(TAG, "Changing preference " + preference.getKey() + " to value:" + newValue);
-            final Account account = mAccountService.getAccount(mAccountID);
             final ConfigKey key = ConfigKey.fromString(preference.getKey());
             if (preference instanceof TwoStatePreference) {
-                account.setDetail(key, newValue.toString());
-            } else {
-                if (preference instanceof PasswordPreference) {
-                    String tmp = "";
-                    for (int i = 0; i < ((String) newValue).length(); ++i) {
-                        tmp += "*";
-                    }
-                    if (account.isSip())
-                        account.getCredentials().get(0).setDetail(key, newValue.toString());
-                    preference.setSummary(tmp);
-                } else if (key == ConfigKey.ACCOUNT_USERNAME) {
-                    if (account.isSip()) {
-                        account.getCredentials().get(0).setDetail(key, newValue.toString());
-                    }
-                    preference.setSummary((CharSequence) newValue);
-                } else {
-                    preference.setSummary((CharSequence) newValue);
+                presenter.twoStatePreferenceChanged(key, newValue);
+            } else if (preference instanceof PasswordPreference) {
+                String tmp = "";
+                for (int i = 0; i < ((String) newValue).length(); ++i) {
+                    tmp += "*";
                 }
-
-                account.setDetail(key, newValue.toString());
+                preference.setSummary(tmp);
+                presenter.passwordPreferenceChanged(key, newValue);
+            } else if (key == ConfigKey.ACCOUNT_USERNAME) {
+                presenter.userNameChanged(key, newValue);
+                preference.setSummary((CharSequence) newValue);
+            } else {
+                preference.setSummary((CharSequence) newValue);
+                presenter.preferenceChanged(key, newValue);
             }
-
-            mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
-            mAccountService.setAccountDetails(mAccountID, account.getDetails());
             return true;
         }
     };
 
     @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null || getView() == null) {
-            return;
-        }
+    public void addRingPreferences() {
+        addPreferencesFromResource(R.xml.account_prefs_ring);
+    }
 
-        switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
-            case REGISTRATION_STATE_CHANGED:
-                accountChanged(mAccountService.getAccount(mAccountID));
-                break;
-            default:
-                break;
-        }
+    @Override
+    public void addSIPPreferences() {
+        addPreferencesFromResource(R.xml.account_general_prefs);
     }
 }
