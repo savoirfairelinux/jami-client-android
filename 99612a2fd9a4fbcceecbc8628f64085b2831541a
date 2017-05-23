@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_d3e3d731",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationFragment.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-05-23T15:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_5872a4e6",
+      "range": {
+        "startLine": 131,
+        "startChar": 18,
+        "endLine": 131,
+        "endChar": 29
+      },
+      "revId": "99612a2fd9a4fbcceecbc8628f64085b2831541a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_b880788c",
         "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationPresenter.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-05-22T15:48:02Z",
       "side": 1,
       "message": "Could we remove this one? Right now I see that we wait for the blockchain to tell us if the username is ok before actually setting it in the VM. What if we set the username the user input directly in the VM? There is already a boolean blocking the process if the blockchain name is invalid. \n\nLogic would be simpler",
+      "range": {
+        "startLine": 46,
+        "startChar": 3,
+        "endLine": 46,
+        "endChar": 30
+      },
+      "revId": "99612a2fd9a4fbcceecbc8628f64085b2831541a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_73e9c319",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-05-23T15:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_b880788c",
       "range": {
         "startLine": 46,
         "startChar": 3,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_93eebf21",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-05-23T15:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_18742cce",
+      "range": {
+        "startLine": 47,
+        "startChar": 33,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "99612a2fd9a4fbcceecbc8628f64085b2831541a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_d87d34b3",
         "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationPresenter.java",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-05-22T15:48:02Z",
       "side": 1,
       "message": "not explicit as well",
+      "range": {
+        "startLine": 72,
+        "startChar": 37,
+        "endLine": 72,
+        "endChar": 41
+      },
+      "revId": "99612a2fd9a4fbcceecbc8628f64085b2831541a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_33f34b0c",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-05-23T15:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_d87d34b3",
       "range": {
         "startLine": 72,
         "startChar": 37,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_53f847e5",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-05-23T15:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_f876f0d7",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 5
+      },
+      "revId": "99612a2fd9a4fbcceecbc8628f64085b2831541a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_784a0085",
         "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationPresenter.java",
         "patchSetId": 6
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_f3dcd376",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountCreationPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-05-23T15:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_784a0085",
+      "range": {
+        "startLine": 197,
+        "startChar": 24,
+        "endLine": 197,
+        "endChar": 98
+      },
+      "revId": "99612a2fd9a4fbcceecbc8628f64085b2831541a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_984fbc92",
         "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountViewModel.java",
         "patchSetId": 6
@@ -151,6 +295,30 @@
       "writtenOn": "2017-05-22T15:48:02Z",
       "side": 1,
       "message": "needed?",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 5
+      },
+      "revId": "99612a2fd9a4fbcceecbc8628f64085b2831541a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_73d0e353",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountViewModel.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-05-23T15:31:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_984fbc92",
       "range": {
         "startLine": 37,
         "startChar": 0,
