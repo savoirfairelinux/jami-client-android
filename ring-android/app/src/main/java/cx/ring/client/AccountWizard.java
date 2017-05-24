@@ -74,6 +74,7 @@ import ezvcard.parameter.ImageType;
 import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
+import ezvcard.property.Uid;
 
 public class AccountWizard extends AppCompatActivity implements Observer<ServiceEvent> {
     static final String TAG = AccountWizard.class.getName();
@@ -293,6 +294,8 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
     public void saveProfile(String accountID) {
         VCard vcard = new VCard();
         vcard.setFormattedName(new FormattedName(mFullname));
+        String ringId = mAccountService.getCurrentAccount().getUsername();
+        vcard.setUid(new Uid(ringId));
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         if (mPhotoProfile != null) {
             mPhotoProfile.compress(Bitmap.CompressFormat.PNG, 100, stream);
