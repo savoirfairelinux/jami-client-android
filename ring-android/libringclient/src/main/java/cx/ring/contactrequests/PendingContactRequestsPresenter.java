@@ -175,7 +175,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
         String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
         String contactId = viewModel.getContactId();
         mAccountService.discardTrustRequest(accountId, contactId);
-        mContactService.removeContact(accountId, contactId);
+        mContactService.removeContact(accountId, contactId, true);
         mPreferencesService.removeRequestPreferences(accountId, contactId);
         updateList(true);
     }

@@ -625,7 +625,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                     break;
                 case ACTION_TRUST_REQUEST_BLOCK:
                     mAccountService.discardTrustRequest(account, from);
-                    mContactService.removeContact(account, from);
+                    mContactService.removeContact(account, from, true);
                     break;
             }
         }
