@@ -356,7 +356,7 @@ public abstract class ContactService extends Observable {
      * @param accountId
      * @param uri
      */
-    public void removeContact(final String accountId, final String uri) {
+    public void removeContact(final String accountId, final String uri, final boolean ban) {
 
         FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
@@ -366,7 +366,7 @@ public abstract class ContactService extends Observable {
                     @Override
                     public Boolean call() throws Exception {
                         Log.i(TAG, "removeContact() thread running...");
-                        Ringservice.removeContact(accountId, uri);
+                        Ringservice.removeContact(accountId, uri, ban);
                         return true;
                     }
                 }

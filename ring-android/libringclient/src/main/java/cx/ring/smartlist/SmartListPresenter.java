@@ -368,7 +368,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     public void removeContact(String accountId, String contactId) {
         String[] split = contactId.split(":");
         if (split.length > 1 && split[0].equals("ring")) {
-            mContactService.removeContact(accountId, split[1]);
+            mContactService.removeContact(accountId, split[1], false);
         }
     }
 
