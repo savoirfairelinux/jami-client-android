@@ -156,7 +156,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             contactId = split[1];
         }
 
-        mContactService.removeContact(accountId, contactId);
+        mContactService.removeContact(accountId, contactId, true);
         getView().goToHome();
     }
 
