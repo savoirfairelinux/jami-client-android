@@ -130,7 +130,7 @@ public class SipCall {
 
     public interface State {
         int NONE = 0;
-        int INCOMING = 1;
+        int SEARCHING = 1;
         int CONNECTING = 2;
         int RINGING = 3;
         int CURRENT = 4;
@@ -215,8 +215,8 @@ public class SipCall {
 
     public static String stateToString(int state) {
         switch (state) {
-            case State.INCOMING:
-                return "INCOMING";
+            case State.SEARCHING:
+                return "SEARCHING";
             case State.CONNECTING:
                 return "CONNECTING";
             case State.RINGING:
@@ -243,8 +243,8 @@ public class SipCall {
 
     public static int stateFromString(String state) {
         switch (state) {
-            case "INCOMING":
-                return State.INCOMING;
+            case "SEARCHING":
+                return State.SEARCHING;
             case "CONNECTING":
                 return State.CONNECTING;
             case "RINGING":
@@ -299,7 +299,7 @@ public class SipCall {
     }
 
     public boolean isRinging() {
-        return mCallState == State.CONNECTING || mCallState == State.RINGING || mCallState == State.NONE || mCallState == State.INCOMING;
+        return mCallState == State.CONNECTING || mCallState == State.RINGING || mCallState == State.NONE || mCallState == State.SEARCHING;
     }
 
     public boolean isIncoming() {
