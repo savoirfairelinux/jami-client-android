@@ -105,7 +105,7 @@ public class HistoryText
     public String getDirection() {
         switch (direction) {
             case TextMessage.direction.INCOMING:
-                return "INCOMING";
+                return "SEARCHING";
             case TextMessage.direction.OUTGOING:
                 return "OUTGOING";
             default:

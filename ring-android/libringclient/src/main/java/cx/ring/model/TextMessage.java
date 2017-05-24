@@ -181,7 +181,7 @@ public class TextMessage {
     public String getTypeString() {
         switch (mType) {
             case direction.INCOMING:
-                return "INCOMING";
+                return "SEARCHING";
             case direction.OUTGOING:
                 return "OUTGOING";
             default:
