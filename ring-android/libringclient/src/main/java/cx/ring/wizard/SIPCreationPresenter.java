@@ -41,6 +41,7 @@ import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.property.FormattedName;
 import ezvcard.property.RawProperty;
+import ezvcard.property.Uid;
 
 public class SIPCreationPresenter extends RootPresenter<SIPCreationView> implements Observer<ServiceEvent> {
 
@@ -217,6 +218,8 @@ public class SIPCreationPresenter extends RootPresenter<SIPCreationView> impleme
             formattedName = mAccount.getAlias();
         }
         vcard.setFormattedName(new FormattedName(formattedName));
+        String vcardUid = formattedName + accountID;
+        vcard.setUid(new Uid(vcardUid));
         vcard.removeProperties(RawProperty.class);
         VCardUtils.saveLocalProfileToDisk(vcard, accountID, mDeviceService.provideFilesDir());
     }
