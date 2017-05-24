@@ -231,7 +231,7 @@ public class VCardUtils {
 
     private static VCard setupDefaultProfile(File filesDir, String accountId) {
         VCard vcard = new VCard();
-        vcard.setUid(new Uid(String.valueOf(System.currentTimeMillis())));
+        vcard.setUid(new Uid(accountId));
         saveLocalProfileToDisk(vcard, accountId, filesDir);
         return vcard;
     }

@@ -38,6 +38,7 @@ import ezvcard.VCard;
 import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
+import ezvcard.property.Uid;
 
 public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavigationViewModel>> implements Observer<ServiceEvent> {
 
@@ -87,10 +88,12 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
 
     public void saveVCard(String username, Photo photo) {
         String accountId = mAccountService.getCurrentAccount().getAccountID();
+        String ringId = mAccountService.getCurrentAccount().getUsername();
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
         VCard vcard = VCardUtils.loadLocalProfileFromDisk(filesDir, accountId);
         vcard.setFormattedName(username);
+        vcard.setUid(new Uid(ringId));
         vcard.removeProperties(Photo.class);
         vcard.addPhoto(photo);
         vcard.removeProperties(RawProperty.class);
