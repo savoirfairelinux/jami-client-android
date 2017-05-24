@@ -22,7 +22,7 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
     <!-- SipCalls -->
-    <string name="call_human_state_incoming">Eingehend</string>
+    <string name="call_human_state_searching">Eingehend</string>
     <string name="call_human_state_connecting">Verbindet</string>
     <string name="call_human_state_ringing">Klingelt</string>
     <string name="call_human_state_current">Sprechend</string>
