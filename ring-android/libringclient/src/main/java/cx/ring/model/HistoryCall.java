@@ -100,7 +100,7 @@ public class HistoryCall implements Serializable {
     public String getDirection() {
         switch (direction) {
             case SipCall.Direction.INCOMING:
-                return "INCOMING";
+                return "SEARCHING";
             case SipCall.Direction.OUTGOING:
                 return "OUTGOING";
             default:

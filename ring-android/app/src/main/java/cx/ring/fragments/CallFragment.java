@@ -619,8 +619,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     public static int callStateToHumanState(final int state) {
         switch (state) {
-            case SipCall.State.INCOMING:
-                return R.string.call_human_state_incoming;
+            case SipCall.State.SEARCHING:
+                return R.string.call_human_state_searching;
             case SipCall.State.CONNECTING:
                 return R.string.call_human_state_connecting;
             case SipCall.State.RINGING:

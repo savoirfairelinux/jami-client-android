@@ -20,7 +20,6 @@
 package cx.ring.call;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -349,7 +348,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
             return;
         }
 
-        if (callState == SipCall.State.INCOMING ||
+        if (callState == SipCall.State.SEARCHING ||
                 callState == SipCall.State.OVER) {
             mHistoryService.updateVCard();
         }
