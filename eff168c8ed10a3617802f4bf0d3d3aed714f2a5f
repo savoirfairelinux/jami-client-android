@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_5320469b",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/TextMessage.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-05-25T00:51:10Z",
+      "side": 1,
+      "message": "Are you sure for this one?",
+      "range": {
+        "startLine": 183,
+        "startChar": 12,
+        "endLine": 184,
+        "endChar": 35
+      },
+      "revId": "eff168c8ed10a3617802f4bf0d3d3aed714f2a5f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
