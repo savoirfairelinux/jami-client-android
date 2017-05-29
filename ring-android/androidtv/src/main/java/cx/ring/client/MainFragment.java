@@ -55,6 +55,7 @@ import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.client.Contact.Contact;
 import cx.ring.services.AccountService;
 
 public class MainFragment extends BrowseFragment {
@@ -106,7 +107,7 @@ public class MainFragment extends BrowseFragment {
     }
 
 /*    private void loadRows() {
-        List<Movie> list = MovieList.setupMovies();
+        List<Contact> list = MovieList.setupMovies();
 
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
         CardPresenter cardPresenter = new CardPresenter();
@@ -140,13 +141,18 @@ public class MainFragment extends BrowseFragment {
     private void loadRows() {
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
 
-        /* GridItemPresenter */
-        HeaderItem gridItemPresenterHeader = new HeaderItem(0, "contact");
+        /* CardPresenter */
+        HeaderItem cardPresenterHeader = new HeaderItem(1, "Contacts");
+        CardPresenter cardPresenter = new CardPresenter();
+        ArrayObjectAdapter cardRowAdapter = new ArrayObjectAdapter(cardPresenter);
 
-        GridItemPresenter mGridPresenter = new GridItemPresenter();
-        ArrayObjectAdapter gridRowAdapter = new ArrayObjectAdapter(mGridPresenter);
-        gridRowAdapter.add("contact 1");
-        mRowsAdapter.add(new ListRow(gridItemPresenterHeader, gridRowAdapter));
+        for(int i=0; i<1; i++) {
+            Contact contact = new Contact();
+            contact.setName("Name" + i);
+            contact.setAddress("Address" + i);
+            cardRowAdapter.add(contact);
+        }
+        mRowsAdapter.add(new ListRow(cardPresenterHeader, cardRowAdapter));
 
         /* set */
         setAdapter(mRowsAdapter);
@@ -220,8 +226,8 @@ public class MainFragment extends BrowseFragment {
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
 
-           /* if (item instanceof Movie) {
-                Movie movie = (Movie) item;
+           /* if (item instanceof Contact) {
+                Contact movie = (Contact) item;
                 Log.d(TAG, "Item: " + item.toString());
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 intent.putExtra(DetailsActivity.MOVIE, movie);
@@ -274,28 +280,4 @@ public class MainFragment extends BrowseFragment {
 
         }
     }
-
-    private class GridItemPresenter extends Presenter {
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent) {
-            TextView view = new TextView(parent.getContext());
-            view.setLayoutParams(new ViewGroup.LayoutParams(GRID_ITEM_WIDTH, GRID_ITEM_HEIGHT));
-            view.setFocusable(true);
-            view.setFocusableInTouchMode(true);
-            view.setBackgroundColor(getResources().getColor(R.color.default_background));
-            view.setTextColor(Color.WHITE);
-            view.setGravity(Gravity.CENTER);
-            return new ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder viewHolder, Object item) {
-            ((TextView) viewHolder.view).setText((String) item);
-        }
-
-        @Override
-        public void onUnbindViewHolder(ViewHolder viewHolder) {
-        }
-    }
-
 }
