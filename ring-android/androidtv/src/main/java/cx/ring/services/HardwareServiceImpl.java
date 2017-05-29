@@ -100,15 +100,12 @@ public class HardwareServiceImpl extends HardwareService {
         Log.i(TAG, "decodingStarted() " + id + " " + width + "x" + height);
         Shm shm = new Shm();
         shm.id = id;
-        shm.path = shmPath;
         shm.w = width;
         shm.h = height;
-        shm.mixer = isMixer;
         videoInputs.put(id, shm);
         WeakReference<SurfaceHolder> weakSurfaceHolder = videoSurfaces.get(id);
         if (weakSurfaceHolder != null) {
             SurfaceHolder holder = weakSurfaceHolder.get();
-            Log.i(TAG, "surface : " + holder);
             if (holder != null) {
                 shm.window = startVideo(id, holder.getSurface(), width, height);
 
@@ -230,10 +227,10 @@ public class HardwareServiceImpl extends HardwareService {
             videoParams = mParams.get(camId);
         } else if (mParams.size() == 2) {
             currentCamera = cameraFront;
-            videoParams = mParams.get("1");
+            videoParams = mParams.get(cameraFront);
         } else {
             currentCamera = cameraBack;
-            videoParams = mParams.get("0");
+            videoParams = mParams.get(cameraBack);
         }
 
         SurfaceHolder surface = mCameraPreviewSurface.get();
@@ -370,10 +367,9 @@ public class HardwareServiceImpl extends HardwareService {
             return;
         }
 
+        Log.w(TAG, "addVideoSurface " + id + holder.hashCode());
 
         Shm shm = videoInputs.get(id);
-        Log.w(TAG, "addVideoSurface " + id + " " + holder.hashCode());
-//        Log.w(TAG,  "SHM : " + shm + " " + shm.window);
         WeakReference<SurfaceHolder> surfaceHolder = new WeakReference<>((SurfaceHolder) holder);
         videoSurfaces.put(id, surfaceHolder);
         if (shm != null && shm.window == 0) {
@@ -521,9 +517,7 @@ public class HardwareServiceImpl extends HardwareService {
 
     private static class Shm {
         String id;
-        String path;
         int w, h;
-        boolean mixer;
         long window = 0;
     }
 
