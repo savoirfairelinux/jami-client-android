@@ -28,6 +28,7 @@ import cx.ring.call.CallFragment;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.model.Uri;
+import cx.ring.utils.Log;
 
 public class CallActivity extends Activity {
 
@@ -43,10 +44,19 @@ public class CallActivity extends Activity {
 
         android.net.Uri u = getIntent().getData();
 
+        Log.d(TAG, "u >> " + u);
         boolean hasVideo = true;
         String accountId = getIntent().getStringExtra("account");
 //        Uri number = new Uri(u.getSchemeSpecificPart());
-        Uri number = new Uri("ring:dd11e2bdb2f4a40b15793880fac45dece7b4996b");
+
+        String ringId = getIntent().getStringExtra("ringId");
+        Uri number = null;
+        if (ringId != null) {
+            number = new Uri(ringId);
+        }
+        else {
+            number = new Uri("ring:528cf76416f6cd657dba70b828621cc42101a8b2");
+        }
 //        michel_schmit account : 528cf76416f6cd657dba70b828621cc42101a8b2
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

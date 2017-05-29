@@ -41,8 +41,8 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
-import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.Log;
+import cx.ring.utils.NameLookupInputHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.Tuple;
@@ -69,7 +69,7 @@ public class AndroidTVCallPresenter extends RootPresenter<CallView> implements O
     private int previewWidth = -1;
     private int previewHeight = -1;
 
-    private BlockchainInputHandler mBlockchainInputHandler;
+    private NameLookupInputHandler mNameLookupInputHandler;
 
     private ScheduledExecutorService executor;
     private Runnable timeRunnable = new Runnable() {
@@ -328,13 +328,9 @@ public class AndroidTVCallPresenter extends RootPresenter<CallView> implements O
             return;
         }
 
-        if (mBlockchainInputHandler == null || !mBlockchainInputHandler.isAlive()) {
-            mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mAccountService));
-        }
-
         String[] split = mSipCall.getNumber().split(":");
         if (split.length > 0) {
-            mBlockchainInputHandler.enqueueNextLookup(split[1]);
+            mAccountService.lookupAddress("", "", split[1]);
         }
     }
 
