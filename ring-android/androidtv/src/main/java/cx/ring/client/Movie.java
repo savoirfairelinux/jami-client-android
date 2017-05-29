@@ -21,7 +21,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 /*
- * Movie class represents video entity with title, description, image thumbs and video url.
+ * Contact class represents video entity with title, description, image thumbs and video url.
  *
  */
 public class Movie implements Serializable {
@@ -131,7 +131,7 @@ public class Movie implements Serializable {
 
     @Override
     public String toString() {
-        return "Movie{" +
+        return "Contact{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", videoUrl='" + videoUrl + '\'' +
