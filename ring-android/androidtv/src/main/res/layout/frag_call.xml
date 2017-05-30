@@ -21,7 +21,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".client.CallActivity">
+    tools:context=".client.CallActivity"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
     <SurfaceView
         android:id="@+id/video_preview_surface"
@@ -126,7 +128,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:src="@drawable/ic_call_end_white"
                     app:backgroundTint="@color/error_red"
                     app:elevation="6dp"
-                    app:pressedTranslationZ="12dp"
+                    app:pressedTranslationZ="1dp"
                     app:rippleColor="@android:color/white" />
 
                 <android.support.design.widget.FloatingActionButton
@@ -138,7 +140,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:src="@drawable/ic_call_white"
                     app:backgroundTint="#4caf50"
                     app:elevation="6dp"
-                    app:pressedTranslationZ="12dp"
+                    app:pressedTranslationZ="1dp"
                     app:rippleColor="@android:color/white" />
 
 
@@ -156,7 +158,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:src="@drawable/ic_call_end_white"
         app:backgroundTint="@color/error_red"
         app:elevation="6dp"
-        app:pressedTranslationZ="12dp"
+        app:pressedTranslationZ="1dp"
         app:rippleColor="@android:color/white" />
 
     <EditText
