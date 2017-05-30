@@ -15,6 +15,7 @@
 package cx.ring.client;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
@@ -56,9 +57,18 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.Contact.Contact;
+import cx.ring.facades.ConversationFacade;
+import cx.ring.model.CallContact;
+import cx.ring.model.Conversation;
+import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
+import cx.ring.services.ContactService;
+import cx.ring.smartlist.SmartListViewModel;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
+import cx.ring.utils.Tuple;
 
-public class MainFragment extends BrowseFragment {
+public class MainFragment extends BrowseFragment implements Observer<ServiceEvent> {
     private static final String TAG = "MainFragment";
 
     private static final int BACKGROUND_UPDATE_DELAY = 300;
@@ -75,8 +85,18 @@ public class MainFragment extends BrowseFragment {
     private URI mBackgroundURI;
     private BackgroundManager mBackgroundManager;
 
+    private ArrayList<Conversation> mConversations;
+    private ArrayObjectAdapter cardRowAdapter;
+
+
     @Inject
     AccountService mAccountService;
+
+    @Inject
+    ConversationFacade mConversationFacade;
+
+    @Inject
+    ContactService mContactService;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -95,6 +115,10 @@ public class MainFragment extends BrowseFragment {
         loadRows();
 
         setupEventListeners();
+
+        mAccountService.addObserver(this);
+        mConversationFacade.addObserver(this);
+        mContactService.addObserver(this);
     }
 
     @Override
@@ -106,45 +130,13 @@ public class MainFragment extends BrowseFragment {
         }
     }
 
-/*    private void loadRows() {
-        List<Contact> list = MovieList.setupMovies();
-
-        mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
-        CardPresenter cardPresenter = new CardPresenter();
-
-        int i;
-        for (i = 0; i < NUM_ROWS; i++) {
-            if (i != 0) {
-                Collections.shuffle(list);
-            }
-            ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(cardPresenter);
-            for (int j = 0; j < NUM_COLS; j++) {
-                listRowAdapter.add(list.get(j % 5));
-            }
-            HeaderItem header = new HeaderItem(i, MovieList.MOVIE_CATEGORY[i]);
-            mRowsAdapter.add(new ListRow(header, listRowAdapter));
-        }
-
-        HeaderItem gridHeader = new HeaderItem(i, "PREFERENCES");
-
-        GridItemPresenter mGridPresenter = new GridItemPresenter();
-        ArrayObjectAdapter gridRowAdapter = new ArrayObjectAdapter(mGridPresenter);
-        gridRowAdapter.add(getResources().getString(R.string.grid_view));
-        gridRowAdapter.add(getString(R.string.error_fragment));
-        gridRowAdapter.add(getResources().getString(R.string.personal_settings));
-        mRowsAdapter.add(new ListRow(gridHeader, gridRowAdapter));
-
-        setAdapter(mRowsAdapter);
-
-    }*/
-
     private void loadRows() {
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
 
         /* CardPresenter */
         HeaderItem cardPresenterHeader = new HeaderItem(1, "Contacts");
         CardPresenter cardPresenter = new CardPresenter();
-        ArrayObjectAdapter cardRowAdapter = new ArrayObjectAdapter(cardPresenter);
+        cardRowAdapter = new ArrayObjectAdapter(cardPresenter);
 
         for(int i=0; i<1; i++) {
             Contact contact = new Contact();
@@ -158,6 +150,31 @@ public class MainFragment extends BrowseFragment {
         setAdapter(mRowsAdapter);
     }
 
+    private synchronized void getConversations() {
+        if (mConversations == null) {
+            mConversations = new ArrayList<>();
+        }
+
+        mConversations.clear();
+        mConversations.addAll(mConversationFacade.getConversationsList());
+
+        if (mConversations != null && mConversations.size() > 0) {
+            cardRowAdapter.clear();
+            for (int i = 0; i < mConversations.size(); i++) {
+                Conversation conversation = mConversations.get(i);
+
+                Contact contact = new Contact();
+                contact.setId(i);
+                contact.setName(conversation.getContact().getDisplayName());
+                contact.setAddress(conversation.getUuid());
+
+                cardRowAdapter.add(contact);
+                Log.d(TAG, "current contact : " + contact.toString());
+            }
+            cardRowAdapter.notifyArrayItemRangeChanged(0, mConversations.size());
+        }
+
+    }
     private void prepareBackgroundManager() {
 
         mBackgroundManager = BackgroundManager.getInstance(getActivity());
@@ -168,7 +185,7 @@ public class MainFragment extends BrowseFragment {
     }
 
     private void setupUIElements() {
-         setBadgeDrawable(getActivity().getResources().getDrawable(R.drawable.ic_logo_ring_beta2_blanc));
+        setBadgeDrawable(getActivity().getResources().getDrawable(R.drawable.ic_logo_ring_beta2_blanc));
         // R.drawable.videos_by_google_banner));
 //        setTitle(getString(R.string.browse_title)); // Badge, when set, takes precedent
         // over title
@@ -221,17 +238,29 @@ public class MainFragment extends BrowseFragment {
         mBackgroundTimer.schedule(new UpdateBackgroundTask(), BACKGROUND_UPDATE_DELAY);
     }
 
+    @Override
+    public void update(Observable observable, ServiceEvent event) {
+        Log.d(TAG, "TV EVENT : " + event.getEventType());
+        switch (event.getEventType()) {
+            case HISTORY_LOADED:
+            case CONVERSATIONS_CHANGED:
+                getConversations();
+                break;
+        }
+    }
+
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
 
-           /* if (item instanceof Contact) {
-                Contact movie = (Contact) item;
-                Log.d(TAG, "Item: " + item.toString());
-                Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(DetailsActivity.MOVIE, movie);
+            if (item instanceof Contact) {
+                Contact contact = (Contact) item;
+                Log.d(TAG, "item: " + item.toString());
 
+                Intent intent = new Intent(getActivity(), CallActivity.class);
+                intent.putExtra("account", mAccountService.getCurrentAccount().getAccountID());
+                intent.putExtra("ringId", contact.getAddress());
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
                         ((ImageCardView) itemViewHolder.view).getMainImageView(),
@@ -245,11 +274,7 @@ public class MainFragment extends BrowseFragment {
                     Toast.makeText(getActivity(), ((String) item), Toast.LENGTH_SHORT)
                             .show();
                 }
-            }*/
-
-            Intent intent = new Intent(getActivity(), CallActivity.class);
-            intent.putExtra("account", mAccountService.getCurrentAccount().getAccountID());
-            startActivity(intent);
+            }
         }
     }
 

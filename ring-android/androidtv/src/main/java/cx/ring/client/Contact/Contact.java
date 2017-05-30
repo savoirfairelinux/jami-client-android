@@ -44,6 +44,7 @@ public class Contact {
         return "Contact{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }
