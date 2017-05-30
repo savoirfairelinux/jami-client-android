@@ -333,7 +333,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         }
 
         String[] split = mSipCall.getNumber().split(":");
-        if (split.length > 0) {
+        if (split.length > 1) {
             mBlockchainInputHandler.enqueueNextLookup(split[1]);
         }
     }
