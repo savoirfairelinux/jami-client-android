@@ -11,6 +11,7 @@ public class Contact {
     private long id;
     private String name;
     private String address;
+    private byte[] photo;
 
     public Contact() {
     }
@@ -39,11 +40,20 @@ public class Contact {
         this.address = studio;
     }
 
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
     @Override
     public String toString() {
         return "Contact{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }

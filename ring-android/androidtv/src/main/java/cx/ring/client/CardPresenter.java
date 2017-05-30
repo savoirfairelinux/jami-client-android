@@ -15,6 +15,8 @@
 package cx.ring.client;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
@@ -89,7 +91,12 @@ public class CardPresenter extends Presenter {
         ((ViewHolder) viewHolder).mCardView.setTitleText(contact.getName());
         ((ViewHolder) viewHolder).mCardView.setContentText(contact.getAddress());
         ((ViewHolder) viewHolder).mCardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
-        ((ViewHolder) viewHolder).mCardView.setMainImage(((ViewHolder) viewHolder).getDefaultCardImage());
+        if (contact.getPhoto() == null) {
+            ((ViewHolder) viewHolder).mCardView.setMainImage(((ViewHolder) viewHolder).getDefaultCardImage());
+        }
+        else {
+            ((ViewHolder) viewHolder).mCardView.setMainImage(new BitmapDrawable(mContext.getResources(), BitmapFactory.decodeByteArray(contact.getPhoto(), 0, contact.getPhoto().length)));
+        }
     }
 
     @Override
