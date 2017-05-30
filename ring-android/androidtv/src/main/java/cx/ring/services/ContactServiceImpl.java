@@ -356,7 +356,7 @@ public class ContactServiceImpl extends ContactService {
     }
 
     public CallContact findContactByNumberFromSystem(String number) {
-        CallContact callContact findContactByNumberFromSystem= null;
+        CallContact callContact = null;
         ContentResolver contentResolver = mContext.getContentResolver();
 
         try {
