@@ -261,18 +261,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == IntentIntegrator.REQUEST_CODE) {
-            IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-            if (scanResult != null && resultCode == Activity.RESULT_OK) {
-                String contact_uri = scanResult.getContents();
-                presenter.startConversation(CallContact.buildUnknown(contact_uri));
-            }
-        }
-    }
-
-    @Override
     public void setLoading(final boolean loading) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -524,22 +512,22 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void goToConversation(CallContact callContact) {
+    public void goToConversation(String accountId, String contactId, long conversationId) {
         if (mSearchMenuItem != null) {
             mSearchMenuItem.collapseActionView();
         }
 
-        if (!isTabletMode) {
-            Intent intent = new Intent()
-                    .setClass(getActivity(), ConversationActivity.class)
-                    .setAction(Intent.ACTION_VIEW)
-                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, callContact.getIds().get(0)));
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
-        } else {
+        //if (!isTabletMode) {
+            ConversationFragment fragment = ConversationFragment.newInstance(accountId, contactId, conversationId);
+            getFragmentManager().beginTransaction()
+                    .addToBackStack(ConversationFragment.TAG)
+                    .replace(R.id.main_frame, fragment, ConversationFragment.TAG)
+                    .commit();
+/*        } else {
             Bundle bundle = new Bundle();
             bundle.putString(ConversationFragment.KEY_CONVERSATION_ID, callContact.getIds().get(0));
             ((HomeActivity) getActivity()).startConversationTablet(bundle);
-        }
+        }*/
     }
 
     @Override
@@ -547,7 +535,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         Intent intent = new Intent(CallActivity.ACTION_CALL)
                 .setClass(getActivity(), CallActivity.class)
                 .setData(Uri.parse(rawUriNumber));
-        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
+        startActivity(intent);
     }
 
     @Override

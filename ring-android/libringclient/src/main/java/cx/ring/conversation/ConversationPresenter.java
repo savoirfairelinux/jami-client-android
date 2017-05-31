@@ -19,6 +19,7 @@
  */
 package cx.ring.conversation;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,22 +29,36 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
+import cx.ring.model.ConfigKey;
 import cx.ring.model.Conversation;
+import cx.ring.model.ConversationModel;
+import cx.ring.model.HistoryCall;
+import cx.ring.model.HistoryText;
 import cx.ring.model.Phone;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
+import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HistoryService;
+import cx.ring.smartlist.SmartListViewModel;
+import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.StringUtils;
 import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.observers.ResourceSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class ConversationPresenter extends RootPresenter<ConversationView> implements Observer<ServiceEvent> {
+
+    public static final String TAG = ConversationPresenter.class.getSimpleName();
 
     private ContactService mContactService;
     private AccountService mAccountService;
@@ -51,8 +66,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     private HistoryService mHistoryService;
 
     private Conversation mConversation;
-    private String mConversationId;
     private Uri mPreferredNumber;
+
+    private String mAccountId;
+    private String mContactId;
+    private long mConversationId;
 
     private boolean hasContactRequestPopupShown = false;
 
@@ -73,18 +91,26 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     @Override
+    public void bindView(ConversationView view) {
+        super.bindView(view);
+
+        mAccountService.addObserver(this);
+        mConversationFacade.addObserver(this);
+    }
+
+    @Override
     public void unbindView() {
         super.unbindView();
         mAccountService.removeObserver(this);
         mConversationFacade.removeObserver(this);
     }
 
-    public void init(String conversationId, Uri number) {
+    public void init(String accountId, String contactId, long conversationId) {
+        mAccountId = accountId;
+        mContactId = contactId;
         mConversationId = conversationId;
-        mPreferredNumber = number;
 
-        mAccountService.addObserver(this);
-        mConversationFacade.addObserver(this);
+        loadHistory(mConversationId);
     }
 
     public void pause() {
@@ -192,7 +218,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     private void loadConversation() {
-        long contactId = CallContact.contactIdFromId(mConversationId);
+/*        long contactId = CallContact.contactIdFromId(mConversationId);
         CallContact contact = null;
         if (contactId >= 0) {
             contact = mContactService.findContactById(contactId);
@@ -250,7 +276,42 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             mPreferredNumber = mConversation.getContact().getPhones().get(0).getNumber();
         }
 
-        getView().refreshView(mConversation, mPreferredNumber);
+        getView().refreshView(mConversation, mPreferredNumber);*/
+    }
+
+    private void loadHistory(long conversationId) {
+        compositeDisposable.add(mHistoryService.getHistoryTextsFromConversationId(conversationId)
+                .zipWith(mHistoryService.getHistoryCallsFromConversationId(conversationId),
+                        new BiFunction<List<HistoryText>, List<HistoryCall>, Conversation>() {
+                            @Override
+                            public Conversation apply(@NonNull List<HistoryText> historyTexts, @NonNull List<HistoryCall> historyCalls) throws Exception {
+                                CallContact callContact = mContactService.getContact(new Uri(mContactId));
+                                Conversation conversation = new Conversation(callContact);
+
+                                for (HistoryCall call : historyCalls) {
+                                    conversation.addHistoryCall(call);
+                                }
+
+                                for (HistoryText htext : historyTexts) {
+                                    TextMessage msg = new TextMessage(htext);
+                                    conversation.addTextMessage(msg);
+                                }
+
+                                return conversation;
+                            }
+                        })
+                .subscribeOn(Schedulers.computation())
+                .subscribeWith(new ResourceSingleObserver<Conversation>() {
+                    @Override
+                    public void onSuccess(@NonNull Conversation conversation) {
+                        getView().refreshView(conversation, new Uri(mContactId));
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e(TAG, e.toString());
+                    }
+                }));
     }
 
     private void checkContact() {

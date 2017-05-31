@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -61,10 +62,14 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         ContactDetailsTask.DetailsLoadedCallback,
         ConversationView {
 
-    public static final int REQ_ADD_CONTACT = 42;
-    public static final String KEY_CONVERSATION_ID = "CONVERSATION_ID";
+    public static final String TAG = ConversationFragment.class.getSimpleName();
 
-    private static final String TAG = ConversationFragment.class.getSimpleName();
+    public static final int REQ_ADD_CONTACT = 42;
+
+    public static final String KEY_CONVERSATION_ID = "CONVERSATION_ID";
+    public static final String KEY_CONTACT_ID = "CONTACT_ID";
+    public static final String KEY_ACCOUNT_ID = "ACCOUNT_ID";
+
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
     private static final int MIN_SIZE_TABLET = 960;
 
@@ -87,6 +92,16 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     private ConversationAdapter mAdapter = null;
     private NumberAdapter mNumberAdapter = null;
+
+    public static ConversationFragment newInstance(@NonNull String accountId, @NonNull String contactId, @NonNull long conversationId) {
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_ACCOUNT_ID, accountId);
+        bundle.putString(KEY_CONTACT_ID, contactId);
+        bundle.putLong(KEY_CONVERSATION_ID, conversationId);
+        ConversationFragment conversationFragment = new ConversationFragment();
+        conversationFragment.setArguments(bundle);
+        return conversationFragment;
+    }
 
     public static Boolean isTabletMode(Context context) {
         return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
@@ -142,6 +157,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setStackFromEnd(true);
 
+        mAdapter = new ConversationAdapter();
+
         if (mHistList != null) {
             mHistList.setLayoutManager(mLayoutManager);
             mHistList.setAdapter(mAdapter);
@@ -153,17 +170,20 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
         setHasOptionsMenu(true);
 
-        mAdapter = new ConversationAdapter();
-
-        if (mHistList != null) {
-            mHistList.setAdapter(mAdapter);
-        }
-
         if (mDeleteConversation) {
             presenter.deleteAction();
         }
 
         return inflatedView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        presenter.init(getArguments().getString(KEY_ACCOUNT_ID),
+                getArguments().getString(KEY_CONTACT_ID),
+                getArguments().getLong(KEY_CONVERSATION_ID));
     }
 
     @Override
@@ -322,14 +342,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
                 actionBar.setSubtitle(username);
             }
         }
-    }
-
-    @Override
-    protected void initPresenter(ConversationPresenter presenter) {
-        super.initPresenter(presenter);
-        String conversationId = getArguments().getString(KEY_CONVERSATION_ID);
-        Uri number = new Uri(getArguments().getString(CallFragment.KEY_NUMBER));
-        presenter.init(conversationId, number);
     }
 
     @Override

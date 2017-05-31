@@ -352,4 +352,26 @@ public abstract class HistoryService extends Observable {
 
         return callList.isEmpty() ? null : callList.get(0);
     }
+
+    public Single<List<HistoryText>> getHistoryTextsFromConversationId(final long conversationId) {
+        return Single.fromCallable(new Callable<List<HistoryText>>() {
+            @Override
+            public List<HistoryText> call() throws Exception {
+                QueryBuilder<HistoryText, Integer> queryBuilder = getTextHistoryDao().queryBuilder();
+                queryBuilder.where().eq(HistoryText.COLUMN_CONVERSATION_ID_NAME, conversationId);
+                return getTextHistoryDao().query(queryBuilder.prepare());
+            }
+        });
+    }
+
+    public Single<List<HistoryCall>> getHistoryCallsFromConversationId(final long conversationId) {
+        return Single.fromCallable(new Callable<List<HistoryCall>>() {
+            @Override
+            public List<HistoryCall> call() throws Exception {
+                QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
+                queryBuilder.where().eq(HistoryCall.COLUMN_CONVERSATION_ID_NAME, conversationId);
+                return getCallHistoryDao().query(queryBuilder.prepare());
+            }
+        });
+    }
 }
