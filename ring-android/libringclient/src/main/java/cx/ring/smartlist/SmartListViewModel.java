@@ -68,6 +68,7 @@ public class SmartListViewModel {
 
     public SmartListViewModel(SmartListViewModel smartListViewModel) {
         this.uuid = smartListViewModel.getUuid();
+        this.conversationId = smartListViewModel.getConversationId();
         this.contactName = smartListViewModel.getContactName();
         this.photoData = smartListViewModel.getPhotoData();
         this.lastInteractionTime = smartListViewModel.getLastInteractionTime();
@@ -98,6 +99,7 @@ public class SmartListViewModel {
             return !(this.photoData != null && !Arrays.equals(this.photoData, slvm.photoData))
                     && this.uuid.equals(slvm.getUuid())
                     && this.contactName != null && this.contactName.equals(slvm.getContactName())
+                    && this.conversationId == (slvm.getConversationId())
                     && this.lastInteraction.equals(slvm.getLastInteraction())
                     && this.lastInteractionTime == slvm.getLastInteractionTime()
                     && this.hasUnreadTextMessage == slvm.hasUnreadTextMessage()

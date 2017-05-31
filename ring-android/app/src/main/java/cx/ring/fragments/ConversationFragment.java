@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -59,10 +60,14 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         Conversation.ConversationActionCallback,
         ConversationView {
 
-    public static final int REQ_ADD_CONTACT = 42;
-    public static final String KEY_CONVERSATION_ID = "CONVERSATION_ID";
+    public static final String TAG = ConversationFragment.class.getSimpleName();
 
-    private static final String TAG = ConversationFragment.class.getSimpleName();
+    public static final int REQ_ADD_CONTACT = 42;
+
+    public static final String KEY_CONVERSATION_ID = "CONVERSATION_ID";
+    public static final String KEY_CONTACT_ID = "CONTACT_ID";
+    public static final String KEY_ACCOUNT_ID = "ACCOUNT_ID";
+
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
     private static final int MIN_SIZE_TABLET = 960;
 
@@ -86,6 +91,16 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     private ConversationAdapter mAdapter = null;
     private NumberAdapter mNumberAdapter = null;
 
+    public static ConversationFragment newInstance(@NonNull String accountId, @NonNull String contactId, @NonNull long conversationId) {
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_ACCOUNT_ID, accountId);
+        bundle.putString(KEY_CONTACT_ID, contactId);
+        bundle.putLong(KEY_CONVERSATION_ID, conversationId);
+        ConversationFragment conversationFragment = new ConversationFragment();
+        conversationFragment.setArguments(bundle);
+        return conversationFragment;
+    }
+
     public static Boolean isTabletMode(Context context) {
         return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
                 && context.getResources().getConfiguration().screenWidthDp >= MIN_SIZE_TABLET;
@@ -100,7 +115,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void refreshView(final Conversation conversation, Uri number) {
+    public void refreshView(final Conversation conversation) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -134,6 +149,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setStackFromEnd(true);
 
+        mAdapter = new ConversationAdapter();
+
         if (mHistList != null) {
             mHistList.setLayoutManager(mLayoutManager);
             mHistList.setAdapter(mAdapter);
@@ -145,12 +162,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
         setHasOptionsMenu(true);
 
-        mAdapter = new ConversationAdapter();
-
-        if (mHistList != null) {
-            mHistList.setAdapter(mAdapter);
-        }
-
         if (mDeleteConversation) {
             presenter.deleteAction();
         }
@@ -159,53 +170,63 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        presenter.init(getArguments().getString(KEY_ACCOUNT_ID),
+                getArguments().getString(KEY_CONTACT_ID),
+                getArguments().getLong(KEY_CONVERSATION_ID));
+    }
+
+    @Override
     public void displaySendTrustRequest(final String accountId, final String contactId) {
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.send_request_title);
-        builder.setMessage(R.string.send_request_msg);
-
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
+            public void run() {
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+                builder.setTitle(R.string.send_request_title);
+                builder.setMessage(R.string.send_request_msg);
+
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                builder.setPositiveButton(R.string.send_request_button, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        VCard vcard = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), accountId);
+                        if (vcard != null && !vcard.getPhotos().isEmpty()) {
+                            // Reduce photo size to fit in one DHT packet
+                            Bitmap photo = BitmapUtils.bytesToBitmap(vcard.getPhotos().get(0).getData());
+                            photo = BitmapUtils.reduceBitmap(photo, 30000);
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                            vcard.removeProperties(Photo.class);
+                            vcard.addPhoto(new Photo(stream.toByteArray(), ImageType.PNG));
+                            vcard.removeProperties(RawProperty.class);
+                        }
+                        presenter.sendTrustRequest(accountId, contactId, vcard);
+                    }
+                });
+
+                builder.show();
             }
         });
-
-        builder.setPositiveButton(R.string.send_request_button, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                VCard vcard = VCardUtils.loadLocalProfileFromDisk(getActivity().getFilesDir(), accountId);
-                if (vcard != null && !vcard.getPhotos().isEmpty()) {
-                    // Reduce photo size to fit in one DHT packet
-                    Bitmap photo = BitmapUtils.bytesToBitmap(vcard.getPhotos().get(0).getData());
-                    photo = BitmapUtils.reduceBitmap(photo, 30000);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    vcard.removeProperties(Photo.class);
-                    vcard.addPhoto(new Photo(stream.toByteArray(), ImageType.PNG));
-                    vcard.removeProperties(RawProperty.class);
-                }
-                presenter.sendTrustRequest(accountId, contactId, vcard);
-            }
-        });
-
-        builder.show();
     }
 
     @OnClick(R.id.msg_send)
     public void sendMessageText() {
-        Uri number = mNumberAdapter == null ?
-                null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-        presenter.sendTextMessage(mMsgEditTxt.getText().toString(), number);
+        presenter.sendTextMessage(mMsgEditTxt.getText().toString());
     }
 
     @OnEditorAction(R.id.msg_input_txt)
     public boolean actionSendMsgText(int actionId) {
         switch (actionId) {
             case EditorInfo.IME_ACTION_SEND:
-                Uri number = mNumberAdapter == null ?
-                        null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-                presenter.sendTextMessage(mMsgEditTxt.getText().toString(), number);
+                presenter.sendTextMessage(mMsgEditTxt.getText().toString());
                 return true;
         }
         return false;
@@ -260,20 +281,15 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Uri number;
         switch (item.getItemId()) {
             case android.R.id.home:
                 startActivity(new Intent(getActivity(), HomeActivity.class));
                 return true;
             case R.id.conv_action_audiocall:
-                number = mNumberAdapter == null ?
-                        null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-                presenter.callWithVideo(false, number);
+                presenter.callWithVideo(false);
                 return true;
             case R.id.conv_action_videocall:
-                number = mNumberAdapter == null ?
-                        null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-                presenter.callWithVideo(true, number);
+                presenter.callWithVideo(true);
                 return true;
             case R.id.menuitem_addcontact:
                 presenter.addContact();
@@ -303,14 +319,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         String snackbarText = getString(R.string.conversation_action_copied_peer_number_clipboard,
                 ActionHelper.getShortenedNumber(contactNumber));
         Snackbar.make(getView(), snackbarText, Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
-    protected void initPresenter(ConversationPresenter presenter) {
-        super.initPresenter(presenter);
-        String conversationId = getArguments().getString(KEY_CONVERSATION_ID);
-        Uri number = new Uri(getArguments().getString(CallFragment.KEY_NUMBER));
-        presenter.init(conversationId, number);
     }
 
     @Override
@@ -360,7 +368,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mTopPane.setVisibility(display ? View.GONE : View.VISIBLE);
+                mTopPane.setVisibility(display ? View.VISIBLE : View.GONE);
             }
         });
     }

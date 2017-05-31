@@ -284,14 +284,16 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     }
 
     public void newContactClicked() {
-        if (mCallContact == null) {
+
+        //TODO
+/*        if (mCallContact == null) {
             return;
         }
-        startConversation(mCallContact);
+        startConversation(mCallContact);*/
     }
 
     public void conversationClicked(SmartListViewModel smartListViewModel) {
-        startConversation(mContactService.getContact(new Uri(smartListViewModel.getUuid())));
+        startConversation(smartListViewModel);
     }
 
     public void conversationLongClicked(SmartListViewModel smartListViewModel) {
@@ -322,12 +324,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         getView().displayMenuItem();
     }
 
-    public void startConversation(CallContact c) {
-        CallContact contact = mContactService.findContact(c.getPhones().get(0).getNumber());
-        if (contact.getUsername() == null) {
-            contact.setUsername(c.getUsername());
-        }
-        getView().goToConversation(c);
+    public void startConversation(SmartListViewModel smartListViewModel) {
+        getView().goToConversation(mCurrentAccount.getAccountID(), smartListViewModel.getUuid(), smartListViewModel.getConversationId());
     }
 
     public void copyNumber(SmartListViewModel smartListViewModel) {
@@ -422,17 +420,13 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     private void updateIncomingCall(String from) {
         Iterator<SmartListViewModel> it = mSmartListViewModels.iterator();
-        Log.d(TAG, from);
         while (it.hasNext()) {
             SmartListViewModel smartListViewModel = it.next();
-
             if (smartListViewModel.getUuid().contains(from)) {
                 it.remove();
-                Log.d(TAG, from + smartListViewModel.getContactName());
                 SmartListViewModel newViewModel = new SmartListViewModel(smartListViewModel);
                 newViewModel.setHasOngoingCall(true);
                 mSmartListViewModels.add(newViewModel);
-
                 Collections.sort(mSmartListViewModels, new SmartListViewModel.SmartListComparator());
                 getView().updateList(mSmartListViewModels);
                 break;
