@@ -202,7 +202,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         } else {
             intentConversation = new Intent(Intent.ACTION_VIEW)
                     .setClass(mContext, ConversationActivity.class)
-                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
+                    .putExtra(ConversationFragment.KEY_ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID())
+                    .putExtra(ConversationFragment.KEY_CONTACT_ID, contact.getIds().get(0));
         }
 
         Intent intentDelete = new Intent(DRingService.ACTION_CONV_READ)

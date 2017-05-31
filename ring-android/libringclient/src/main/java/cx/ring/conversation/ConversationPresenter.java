@@ -24,46 +24,60 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cx.ring.daemon.Blob;
-import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.HistoryCall;
+import cx.ring.model.HistoryText;
+import cx.ring.model.Phone;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
+import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HistoryService;
+import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.observers.ResourceSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class ConversationPresenter extends RootPresenter<ConversationView> implements Observer<ServiceEvent> {
 
+    public static final String TAG = ConversationPresenter.class.getSimpleName();
+
     private ContactService mContactService;
     private AccountService mAccountService;
-    private ConversationFacade mConversationFacade;
     private HistoryService mHistoryService;
+    private CallService mCallService;
 
     private Conversation mConversation;
-    private String mConversationId;
+
+    private String mAccountId;
+    private String mContactId;
+    private long mConversationId;
     private Uri mPreferredNumber;
 
     private boolean hasContactRequestPopupShown = false;
 
     @Inject
-    public ConversationPresenter(ContactService mContactService,
-                                 AccountService mAccountService,
-                                 ConversationFacade mConversationFacade,
-                                 HistoryService mHistoryService) {
-        this.mContactService = mContactService;
-        this.mAccountService = mAccountService;
-        this.mConversationFacade = mConversationFacade;
-        this.mHistoryService = mHistoryService;
+    public ConversationPresenter(ContactService contactService,
+                                 AccountService accountService,
+                                 HistoryService historyService,
+                                 CallService callService) {
+        this.mContactService = contactService;
+        this.mAccountService = accountService;
+        this.mHistoryService = historyService;
+        this.mCallService = callService;
     }
 
     @Override
@@ -72,36 +86,41 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     @Override
+    public void bindView(ConversationView view) {
+        super.bindView(view);
+        mAccountService.addObserver(this);
+        mCallService.addObserver(this);
+        mHistoryService.addObserver(this);
+    }
+
+    @Override
     public void unbindView() {
         super.unbindView();
         mAccountService.removeObserver(this);
-        mConversationFacade.removeObserver(this);
+        mCallService.removeObserver(this);
+        mHistoryService.removeObserver(this);
     }
 
-    public void init(String conversationId, Uri number) {
-        mConversationId = conversationId;
-        mPreferredNumber = number;
-
-        mAccountService.addObserver(this);
-        mConversationFacade.addObserver(this);
+    public void init(String accountId, String contactId, long conversationId) {
+        mAccountId = accountId;
+        mContactId = contactId;
+        if (conversationId != 0L) {
+            mConversationId = conversationId;
+        } else {
+            mConversationId = mHistoryService.getConversationID(accountId, contactId);
+        }
     }
 
     public void pause() {
         if (mConversation != null) {
-            mConversationFacade.readConversation(mConversation);
             mConversation.setVisible(false);
         }
     }
 
     public void resume() {
-        loadConversation();
+        loadHistory(mConversationId);
         if (mConversation != null) {
             mConversation.setVisible(true);
-            mConversationFacade.readConversation(mConversation);
-        }
-        if (!hasContactRequestPopupShown) {
-            checkContact();
-            hasContactRequestPopupShown = true;
         }
     }
 
@@ -121,19 +140,25 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         getView().displayCopyToClipboard(mConversation.getContact());
     }
 
-    public void sendTextMessage(String message, Uri number) {
+    public void sendTextMessage(String message) {
         if (message != null && !message.equals("")) {
             getView().clearMsgEdit();
             Conference conference = mConversation == null ? null : mConversation.getCurrentCall();
+            TextMessage txtMessage;
             if (conference == null || !conference.isOnGoing()) {
-                Tuple<Account, Uri> guess = guess(number);
-                if (guess == null || guess.first == null) {
-                    return;
-                }
-                mConversationFacade.sendTextMessage(guess.first.getAccountID(), guess.second, message);
+                long id = mCallService.sendAccountTextMessage(mAccountId, mContactId, message);
+                txtMessage = new TextMessage(false, message, new Uri(mContactId), null, mAccountId, mConversationId);
+                txtMessage.setID(id);
             } else {
-                mConversationFacade.sendTextMessage(conference, message);
+                mCallService.sendTextMessage(conference.getId(), message);
+                SipCall call = conference.getParticipants().get(0);
+                long conversationID = mHistoryService.getConversationID(call.getAccount(), call.getNumber());
+                txtMessage = new TextMessage(false, message, call.getNumberUri(), conference.getId(), call.getAccount(), conversationID);
             }
+            txtMessage.read();
+            mHistoryService.insertNewTextMessage(txtMessage);
+            mConversation.addTextMessage(txtMessage);
+            getView().refreshView(mConversation);
         }
     }
 
@@ -142,15 +167,13 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     public void blockContact() {
-        Tuple<Account, Uri> guess = guess(mPreferredNumber);
-        if (guess == null || guess.first == null || guess.second == null || !guess.first.isRing() || !guess.second.isRingId()) {
-            return;
+        String[] split = mContactId.split(":");
+        String splitId = mContactId;
+        if (split.length > 1) {
+            splitId = split[1];
         }
 
-        String accountId = guess.first.getAccountID();
-        String contactId = guess.second.getRawRingId();
-
-        mAccountService.removeContact(accountId, contactId, true);
+        mAccountService.removeContact(mAccountId, splitId, true);
         getView().goToHome();
     }
 
@@ -163,11 +186,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         }
     }
 
-    public void callWithVideo(boolean video, Uri number) {
-        if (number == null) {
-            number = mPreferredNumber;
-        }
-
+    public void callWithVideo(boolean video) {
         Conference conf = mConversation.getCurrentCall();
 
         if (conf != null && (conf.getParticipants().get(0).getCallState() == SipCall.State.INACTIVE
@@ -179,7 +198,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         if (conf != null) {
             getView().goToCallActivity(conf.getId());
         } else {
-            Tuple<Account, Uri> guess = guess(number);
+            Tuple<Account, Uri> guess = new Tuple<>(mAccountService.getAccount(mAccountId), new Uri(mContactId));
             if (guess != null && guess.first != null) {
                 getView().goToCallActivityWithResult(guess, video);
             }
@@ -191,77 +210,85 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         getView().goToHome();
     }
 
-    private void loadConversation() {
-        long contactId = CallContact.contactIdFromId(mConversationId);
-        CallContact contact = null;
-        if (contactId >= 0) {
-            contact = mContactService.findContactById(contactId);
-        }
-        if (contact == null) {
-            Uri convUri = new Uri(mConversationId);
-            if (mPreferredNumber != null && !mPreferredNumber.isEmpty()) {
-                contact = mContactService.findContactByNumber(mPreferredNumber.getRawUriString());
-            } else {
-                contact = mContactService.findContactByNumber(convUri.getRawUriString());
-                mPreferredNumber = convUri;
-            }
-        }
-        mConversation = mConversationFacade.startConversation(contact);
-        refreshConversation();
-    }
+    private void loadHistory(long conversationId) {
+        compositeDisposable.add(mHistoryService.getHistoryTextsFromConversationId(conversationId)
+                .zipWith(mHistoryService.getHistoryCallsFromConversationId(conversationId),
+                        new BiFunction<List<HistoryText>, List<HistoryCall>, Conversation>() {
+                            @Override
+                            public Conversation apply(@NonNull List<HistoryText> historyTexts, @NonNull List<HistoryCall> historyCalls) throws Exception {
+                                CallContact callContact = mContactService.getContact(new Uri(mContactId));
+                                Conversation conversation = new Conversation(callContact);
 
-    private void refreshConversation() {
-        if (mConversation == null) {
-            return;
-        }
-        CallContact contact = mConversation.getContact();
-        mContactService.loadContactData(contact);
-        byte[] photo = contact.getPhoto();
-        if (photo != null) {
-            getView().displayContactPhoto(photo);
-        }
+                                for (HistoryCall call : historyCalls) {
+                                    conversation.addHistoryCall(call);
+                                }
 
-        getView().displayContactName(contact);
-        getView().displayOnGoingCallPane(mConversation.getCurrentCall() == null ||
-                (mConversation.getCurrentCall().getState() != SipCall.State.RINGING &&
-                        mConversation.getCurrentCall().getState() != SipCall.State.CURRENT));
+                                for (HistoryText htext : historyTexts) {
+                                    TextMessage msg = new TextMessage(htext);
+                                    conversation.addTextMessage(msg);
+                                }
 
-        if (contact.getPhones().size() > 1) {
-            if (mPreferredNumber == null || mPreferredNumber.isEmpty()) {
-                mPreferredNumber = new Uri(
-                        mConversation.getLastNumberUsed(mConversation.getLastAccountUsed())
-                );
-            }
-            getView().displayNumberSpinner(mConversation, mPreferredNumber);
-        } else {
-            getView().hideNumberSpinner();
-            mPreferredNumber = contact.getPhones().get(0).getNumber();
-        }
+                                return conversation;
+                            }
+                        })
+                .subscribeOn(Schedulers.computation())
+                .subscribeWith(new ResourceSingleObserver<Conversation>() {
+                    @Override
+                    public void onSuccess(@NonNull Conversation conversation) {
+                        mConversation = conversation;
 
-        getView().refreshView(mConversation, mPreferredNumber);
+                        SipCall sipCall = mCallService.getCurrentCallForContactId(mContactId);
+                        if (sipCall != null && sipCall.getCallState() != SipCall.State.INACTIVE) {
+                            mConversation.addConference(new Conference(sipCall));
+                            getView().displayOnGoingCallPane(true);
+                        } else {
+                            mConversation.removeConference(mConversation.getCurrentCall());
+                            getView().displayOnGoingCallPane(false);
+                        }
+
+                        getView().refreshView(conversation);
+                        if (!hasContactRequestPopupShown) {
+                            checkContact();
+                            hasContactRequestPopupShown = true;
+                        }
+
+                        getView().displayContactPhoto(mConversation.getContact().getPhoto());
+                        getView().displayContactName(mConversation.getContact());
+
+                        if (mConversation.getContact().getPhones().size() > 1) {
+                            for (Phone phone : mConversation.getContact().getPhones()) {
+                                if (phone.getNumber() != null && phone.getNumber().isRingId()) {
+                                    mAccountService.lookupAddress("", "", phone.getNumber().getRawUriString());
+                                }
+                            }
+                            if (mPreferredNumber == null || mPreferredNumber.isEmpty()) {
+                                mPreferredNumber = new Uri(
+                                        mConversation.getLastNumberUsed(mConversation.getLastAccountUsed())
+                                );
+                            }
+                            getView().displayNumberSpinner(mConversation, mPreferredNumber);
+                        } else {
+                            getView().hideNumberSpinner();
+                            mPreferredNumber = mConversation.getContact().getPhones().get(0).getNumber();
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e(TAG, e.toString());
+                    }
+                }));
     }
 
     private void checkContact() {
-        Tuple<Account, Uri> guess = guess(mPreferredNumber);
         long time = System.currentTimeMillis();
-        if (guess == null
-                || guess.first == null || guess.second == null
-                || !guess.first.isRing() || !guess.second.isRingId()
-                || guess.first.getContact(guess.second.getRawRingId()) != null
-                || mConversation.getLastContactRequest() + Conversation.PERIOD > time) {
-            return;
-        }
-
-        String accountId = guess.first.getAccountID();
-        Uri contactUri = guess.second;
-
-        CallContact contact = mContactService.findContact(contactUri);
+        CallContact contact = mContactService.getContact(new Uri(mContactId));
         if (contact != null && CallContact.Status.CONFIRMED.equals(contact.getStatus())) {
             return;
         }
 
         mConversation.setLastContactRequest(time);
-        getView().displaySendTrustRequest(accountId, contactUri.getRawRingId());
+        getView().displaySendTrustRequest(mAccountId, mContactId);
     }
 
     /**
@@ -302,24 +329,28 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
 
     @Override
-    public void update(Observable observable, ServiceEvent arg) {
-        if (observable instanceof AccountService && arg != null) {
-            if (arg.getEventType() == ServiceEvent.EventType.REGISTERED_NAME_FOUND) {
-                final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-                final int state = arg.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
+    public void update(Observable observable, ServiceEvent event) {
+        if (observable instanceof AccountService && event != null) {
+            if (event.getEventType() == ServiceEvent.EventType.REGISTERED_NAME_FOUND) {
+                final String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                final String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
+                final int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
 
                 getView().updateView(address, name, state);
             }
-        } else if (observable instanceof ConversationFacade && arg != null) {
-            switch (arg.getEventType()) {
+        } else if (observable instanceof HistoryService && event != null) {
+            switch (event.getEventType()) {
                 case INCOMING_MESSAGE:
-                case CALL_STATE_CHANGED:
-                case USERNAME_CHANGED:
-                    refreshConversation();
+                    TextMessage txt = event.getEventInput(ServiceEvent.EventInput.MESSAGE, TextMessage.class);
+                    mConversation.addTextMessage(txt);
+                    getView().refreshView(mConversation);
                     break;
-                case CONVERSATIONS_CHANGED:
-                    loadConversation();
+            }
+        } else if (observable instanceof CallService && event != null) {
+            switch (event.getEventType()) {
+                case INCOMING_CALL:
+                case CALL_STATE_CHANGED:
+                    loadHistory(mConversationId);
                     break;
             }
         }

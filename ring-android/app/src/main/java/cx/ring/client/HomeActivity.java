@@ -626,11 +626,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             case REQUEST_CODE_CREATE_ACCOUNT:
                 mNoAccountOpened = false;
                 break;
-            case REQUEST_CODE_CALL:
-                if (resultCode == CallActivity.RESULT_FAILURE) {
-                    Log.w(TAG, "Call Failed");
-                }
-                break;
             case REQUEST_CODE_PHOTO:
                 if (resultCode == RESULT_OK && data != null) {
                     fNavigation.updatePhoto((Bitmap) data.getExtras().get("data"));
