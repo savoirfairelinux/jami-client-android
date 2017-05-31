@@ -49,16 +49,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.adapters.NumberAdapter;
 import cx.ring.adapters.SmartListAdapter;
 import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
@@ -67,15 +63,12 @@ import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeScannerActivity;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
-import cx.ring.model.Phone;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.smartlist.SmartListPresenter;
 import cx.ring.smartlist.SmartListView;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
-import cx.ring.utils.ContentUriHandler;
-import cx.ring.utils.NetworkUtils;
 import cx.ring.viewholders.SmartListViewHolder;
 
 public class SmartListFragment extends BaseFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
@@ -258,18 +251,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     @OnClick(R.id.newconv_fab)
     void fabButtonClicked() {
         presenter.fabButtonClicked();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == IntentIntegrator.REQUEST_CODE) {
-            IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-            if (scanResult != null && resultCode == Activity.RESULT_OK) {
-                String contact_uri = scanResult.getContents();
-                presenter.startConversation(CallContact.buildUnknown(contact_uri));
-            }
-        }
     }
 
     @Override
@@ -524,7 +505,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void goToConversation(CallContact callContact) {
+    public void goToConversation(String accountId, String contactId, long conversationId) {
         if (mSearchMenuItem != null) {
             mSearchMenuItem.collapseActionView();
         }
@@ -533,11 +514,13 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
             Intent intent = new Intent()
                     .setClass(getActivity(), ConversationActivity.class)
                     .setAction(Intent.ACTION_VIEW)
-                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, callContact.getIds().get(0)));
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+                    .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
+                    .putExtra(ConversationFragment.KEY_CONTACT_ID, contactId)
+                    .putExtra(ConversationFragment.KEY_CONVERSATION_ID, conversationId);
+            startActivity(intent);
         } else {
             Bundle bundle = new Bundle();
-            bundle.putString(ConversationFragment.KEY_CONVERSATION_ID, callContact.getIds().get(0));
+            bundle.putString(ConversationFragment.KEY_CONVERSATION_ID, contactId);
             ((HomeActivity) getActivity()).startConversationTablet(bundle);
         }
     }
@@ -547,7 +530,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         Intent intent = new Intent(CallActivity.ACTION_CALL)
                 .setClass(getActivity(), CallActivity.class)
                 .setData(Uri.parse(rawUriNumber));
-        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
+        startActivity(intent);
     }
 
     @Override

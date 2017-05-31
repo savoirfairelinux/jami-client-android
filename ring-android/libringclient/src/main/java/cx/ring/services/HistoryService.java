@@ -304,6 +304,9 @@ public abstract class HistoryService extends Observable {
 
     public long getConversationID(String accountID, String contactID) {
         try {
+            if (contactID.contains("<")) {
+                contactID = contactID.split("<")[1].replace(">", "");
+            }
             QueryBuilder<ConversationModel, Integer> queryBuilder = getConversationDao().queryBuilder();
             queryBuilder.where().eq(ConversationModel.COLUMN_ACCOUNT_ID_NAME, accountID)
                     .and().eq(ConversationModel.COLUMN_CONTACT_ID_NAME, contactID);
@@ -351,5 +354,27 @@ public abstract class HistoryService extends Observable {
         List<HistoryCall> callList = getCallHistoryDao().query(callQueryBuilder.prepare());
 
         return callList.isEmpty() ? null : callList.get(0);
+    }
+
+    public Single<List<HistoryText>> getHistoryTextsFromConversationId(final long conversationId) {
+        return Single.fromCallable(new Callable<List<HistoryText>>() {
+            @Override
+            public List<HistoryText> call() throws Exception {
+                QueryBuilder<HistoryText, Integer> queryBuilder = getTextHistoryDao().queryBuilder();
+                queryBuilder.where().eq(HistoryText.COLUMN_CONVERSATION_ID_NAME, conversationId);
+                return getTextHistoryDao().query(queryBuilder.prepare());
+            }
+        });
+    }
+
+    public Single<List<HistoryCall>> getHistoryCallsFromConversationId(final long conversationId) {
+        return Single.fromCallable(new Callable<List<HistoryCall>>() {
+            @Override
+            public List<HistoryCall> call() throws Exception {
+                QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
+                queryBuilder.where().eq(HistoryCall.COLUMN_CONVERSATION_ID_NAME, conversationId);
+                return getCallHistoryDao().query(queryBuilder.prepare());
+            }
+        });
     }
 }

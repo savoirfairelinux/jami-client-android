@@ -27,7 +27,7 @@ import cx.ring.utils.Tuple;
 
 public interface ConversationView {
 
-    void refreshView(Conversation conversation, Uri number);
+    void refreshView(Conversation conversation);
 
     void updateView(String address, String name, int state);
 
