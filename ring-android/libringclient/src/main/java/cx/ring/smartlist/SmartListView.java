@@ -57,7 +57,7 @@ public interface SmartListView {
 
     void updateList(ArrayList<SmartListViewModel> smartListViewModels);
 
-    void goToConversation(CallContact callContact);
+    void goToConversation(String accountId, String contactId, long conversationId);
 
     void goToCallActivity(String rawUriNumber);
 
