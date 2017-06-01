@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Wizard"
-    tools:context="cx.ring.client.AccountWizard">
+    tools:context="cx.ring.account.AccountWizard">
 
     <RelativeLayout
         android:layout_width="match_parent"

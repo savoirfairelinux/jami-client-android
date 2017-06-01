@@ -23,15 +23,12 @@ package cx.ring.account;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,17 +39,13 @@ import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.application.RingApplication;
-import cx.ring.client.AccountWizard;
 import cx.ring.mvp.BaseFragment;
-import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.BitmapUtils;
 
 public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresenter> implements ProfileCreationView {
