@@ -30,7 +30,7 @@ import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.account.RingLinkAccountFragment;
 import cx.ring.application.RingApplication;
-import cx.ring.client.AccountWizard;
+import cx.ring.account.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.contactrequests.ContactRequestsFragment;

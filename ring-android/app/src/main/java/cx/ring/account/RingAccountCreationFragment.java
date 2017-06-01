@@ -41,7 +41,6 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.client.AccountWizard;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.utils.RegisteredNameFilter;
 
