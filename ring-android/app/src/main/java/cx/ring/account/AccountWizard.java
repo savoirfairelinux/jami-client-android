@@ -26,7 +26,6 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -34,19 +33,12 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,16 +46,9 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
-import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
-import cx.ring.model.ConfigKey;
-import cx.ring.model.ServiceEvent;
-import cx.ring.services.AccountService;
-import cx.ring.services.DeviceRuntimeService;
-import cx.ring.utils.BitmapUtils;
+import cx.ring.mvp.BaseActivity;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 import cx.ring.utils.VCardUtils;
 import cx.ring.views.WizardViewPager;
 import ezvcard.VCard;
@@ -73,48 +58,31 @@ import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
 
-public class AccountWizard extends AppCompatActivity implements Observer<ServiceEvent> {
+public class AccountWizard extends BaseActivity<AccountWizardPresenter> implements AccountWizardView {
+    public static final String PROFILE_TAG = "Profile";
     static final String TAG = AccountWizard.class.getName();
-
-    private boolean mCreatingAccount = false;
+    @BindView(R.id.pager)
+    WizardViewPager mViewPager;
     private ProfileCreationFragment mProfileFragment;
     private HomeAccountCreationFragment mHomeFragment;
     private ProgressDialog mProgress = null;
-
     private boolean mLinkAccount = false;
-
-    private boolean mCreationError = false;
-    private boolean mCreatedAccount = false;
-
     private Bitmap mPhotoProfile;
     private String mFullname;
     private String mUsername;
     private String mPassword;
     private String mPin;
     private String mAccountType;
-    private Account mAccount;
-    private String mCreatedAccountId;
-
-    public static final String PROFILE_TAG = "Profile";
-
-    @Inject
-    AccountService mAccountService;
-
-    @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
-
-    @BindView(R.id.pager)
-    WizardViewPager mViewPager;
     private AlertDialog mAlertDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wizard);
-        ButterKnife.bind(this);
-
         // dependency injection
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_wizard);
+        ButterKnife.bind(this);
 
         mViewPager.setAdapter(new WizardPagerAdapter(getFragmentManager()));
         mViewPager.getAdapter().notifyDataSetChanged();
@@ -131,6 +99,8 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
         if (mAccountType == null) {
             mAccountType = AccountConfig.ACCOUNT_TYPE_RING;
         }
+
+        presenter.init(getIntent().getAction() != null ? getIntent().getAction() : AccountConfig.ACCOUNT_TYPE_RING);
 
         if (savedInstanceState == null) {
             if (accountToMigrate != null) {
@@ -174,19 +144,7 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        mAccountService.addObserver(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mAccountService.removeObserver(this);
-    }
-
-    @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         if (mProgress != null) {
             mProgress.dismiss();
             mProgress = null;
@@ -202,10 +160,6 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
 
     @Override
     public void onBackPressed() {
-        if (!mCreatedAccount && mAccount != null) {
-            mAccountService.removeAccount(mAccount.getAccountID());
-        }
-
         FragmentManager fragmentManager = getFragmentManager();
         if (mViewPager.getCurrentItem() > 0) {
             fragmentManager.popBackStack();
@@ -213,89 +167,16 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
             return;
         }
 
-        /**
-         * Ensures that the user has at least one account when exiting this Activity
-         * If not, exit the app
-         */
-        if (!mAccountService.getAccounts().isEmpty()) {
-            FragmentManager fm = getFragmentManager();
-            if (fm.getBackStackEntryCount() >= 1) {
-                fm.popBackStack();
-            } else {
-                finish();
-            }
-        } else {
-            finishAffinity();
-        }
-
+        presenter.backPressed();
     }
 
-    @SuppressWarnings("unchecked")
-    private HashMap<String, String> initAccountDetails() {
-        try {
-            HashMap<String, String> accountDetails = (HashMap<String, String>) mAccountService.getAccountTemplate(mAccountType);
-            for (Map.Entry<String, String> e : accountDetails.entrySet()) {
-                Log.d(TAG, "Default account detail: " + e.getKey() + " -> " + e.getValue());
-            }
-
-            boolean hasCameraPermission = mDeviceRuntimeService.hasVideoPermission();
-            accountDetails.put(ConfigKey.VIDEO_ENABLED.key(), Boolean.toString(hasCameraPermission));
-
-            //~ Sipinfo is forced for any sipaccount since overrtp is not supported yet.
-            //~ This will have to be removed when it will be supported.
-            accountDetails.put(ConfigKey.ACCOUNT_DTMF_TYPE.key(), getString(R.string.account_sip_dtmf_type_sipinfo));
-            return accountDetails;
-        } catch (Exception e) {
-            Toast.makeText(this, "Error creating account", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "Error creating account", e);
-            return null;
-        }
-    }
-
-    private HashMap<String, String> initRingAccountDetails() {
-        HashMap<String, String> accountDetails = initAccountDetails();
-        if (accountDetails != null) {
-            accountDetails.put(ConfigKey.ACCOUNT_ALIAS.key(), mAccountService.getNewAccountName(getText(R.string.ring_account_default_name).toString()));
-            accountDetails.put(ConfigKey.ACCOUNT_HOSTNAME.key(), "bootstrap.ring.cx");
-            accountDetails.put(ConfigKey.ACCOUNT_UPNP_ENABLE.key(), AccountConfig.TRUE_STR);
-        }
-        return accountDetails;
-    }
-
-    public void initRingAccountCreation(String username, String password) {
-        HashMap<String, String> accountDetails = initRingAccountDetails();
-        if (accountDetails != null) {
-            if (!TextUtils.isEmpty(username)) {
-                accountDetails.put(ConfigKey.ACCOUNT_REGISTERED_NAME.key(), username);
-            }
-            if (!TextUtils.isEmpty(password)) {
-                accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), password);
-            }
-            createNewAccount(accountDetails);
-        }
-    }
-
-    public void initRingAccountLink(String pin, String password) {
-        HashMap<String, String> accountDetails = initRingAccountDetails();
-        if (accountDetails != null) {
-            if (!TextUtils.isEmpty(password)) {
-                accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), password);
-            }
-            if (!TextUtils.isEmpty(pin)) {
-                accountDetails.put(ConfigKey.ARCHIVE_PIN.key(), pin);
-            }
-            createNewAccount(accountDetails);
-        }
-    }
-
-    public void saveProfile(String accountID) {
+    @Override
+    public void saveProfile(String accountID, String username) {
         VCard vcard = new VCard();
         vcard.setFormattedName(new FormattedName(mFullname));
-        String ringId = mAccountService.getCurrentAccount().getUsername();
-        vcard.setUid(new Uid(ringId));
+        vcard.setUid(new Uid(username));
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         if (mPhotoProfile != null) {
-            BitmapUtils.reduceBitmap(mPhotoProfile, VCardUtils.VCARD_PHOTO_SIZE);
             mPhotoProfile.compress(Bitmap.CompressFormat.PNG, 100, stream);
             Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
             vcard.removeProperties(Photo.class);
@@ -327,13 +208,6 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
         mViewPager.setCurrentItem(1);
     }
 
-    public void accountNext(String username, String pin, String password) {
-        mUsername = username;
-        mPassword = password;
-        mPin = pin;
-        mViewPager.setCurrentItem(3);
-    }
-
     public void createAccount(String username, String pin, String password) {
         mUsername = username;
         mPassword = password;
@@ -343,171 +217,155 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
 
     public void createAccount() {
         if (mLinkAccount) {
-            initRingAccountLink(mPin, mPassword);
+            presenter.initRingAccountLink(mPin, mPassword, getText(R.string.ring_account_default_name).toString());
         } else {
-            initRingAccountCreation(mUsername, mPassword);
+            presenter.initRingAccountCreation(mUsername, mPassword, getText(R.string.ring_account_default_name).toString());
         }
     }
 
     @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null || (AccountConfig.ACCOUNT_TYPE_SIP.equals(mAccountType))) {
-            return;
-        }
+    public void displayProgress(final boolean display) {
 
-        switch (event.getEventType()) {
-            case ACCOUNT_ADDED:
-                mCreatedAccountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
-                handleCreationState(event);
-                break;
-            case REGISTRATION_STATE_CHANGED:
-                handleCreationState(event);
-                break;
-            default:
-                cx.ring.utils.Log.d(TAG, "Event " + event.getEventType() + " is not handled here");
-                break;
-        }
-    }
-
-    private void handleCreationState(final ServiceEvent event) {
-        RingApplication.uiHandler.post(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                String stateAccountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
-
-                if (!TextUtils.isEmpty(stateAccountId) && stateAccountId.equals(mCreatedAccountId)) {
-                    String newState = event.getEventInput(ServiceEvent.EventInput.STATE, String.class);
-
-                    mAccount = mAccountService.getAccount(mCreatedAccountId);
-
-                    if (mAccount != null && mAccount.isRing() && (newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING))) {
-                        return;
-                    }
-
+                if (display) {
+                    mProgress = new ProgressDialog(AccountWizard.this);
+                    mProgress.setTitle(R.string.dialog_wait_create);
+                    mProgress.setMessage(getString(R.string.dialog_wait_create_details));
+                    mProgress.setCancelable(false);
+                    mProgress.setCanceledOnTouchOutside(false);
+                    mProgress.show();
+                } else {
                     if (mProgress != null) {
                         if (mProgress.isShowing()) {
                             mProgress.dismiss();
                         }
                         mProgress = null;
                     }
-
-                    if (!mCreationError) {
-                        if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                            return;
-                        }
-                        mAlertDialog = createRingAlertDialog(AccountWizard.this, newState);
-                        if (mCreatedAccount) {
-                            saveProfile(mAccount.getAccountID());
-                            mAlertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialogInterface) {
-                                    setResult(Activity.RESULT_OK, new Intent());
-                                    //unlock the screen orientation
-                                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                                    finish();
-                                }
-                            });
-
-                            if (!TextUtils.isEmpty(mUsername)) {
-                                Log.i(TAG, "Account created, registering " + mUsername);
-                                mAccountService.registerName(mAccount, "", mUsername);
-                            }
-                        }
-                    }
                 }
             }
         });
     }
 
-    private AlertDialog createRingAlertDialog(Context context, String state) {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-        dialogBuilder.setPositiveButton(android.R.string.ok, null);
-        switch (state) {
-            case AccountConfig.STATE_ERROR_GENERIC:
+    @Override
+    public void displayCreationError() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(AccountWizard.this, "Error creating account", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+
+    @Override
+    public void blockOrientation() {
+        //orientation is locked during the create of account to avoid the destruction of the thread
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+            }
+        });
+    }
+
+    @Override
+    public void finish(final boolean affinity) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (affinity) {
+                    FragmentManager fm = getFragmentManager();
+                    if (fm.getBackStackEntryCount() >= 1) {
+                        fm.popBackStack();
+                    } else {
+                        finish();
+                    }
+                } else {
+                    finishAffinity();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void displayGenericError() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                    return;
+                }
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AccountWizard.this);
+                dialogBuilder.setPositiveButton(android.R.string.ok, null);
                 dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
                         .setMessage(R.string.account_cannot_be_found_message);
-                mCreationError = true;
-                break;
-            case AccountConfig.STATE_UNREGISTERED:
-                if (mLinkAccount) {
-                    dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
-                            .setMessage(R.string.account_cannot_be_found_message);
-                    mCreationError = true;
-                } else {
-                    dialogBuilder.setTitle(R.string.account_device_added_title)
-                            .setMessage(R.string.account_device_added_message);
-                    mCreatedAccount = true;
-                    mCreationError = false;
-                    break;
+                mAlertDialog = dialogBuilder.show();
+            }
+        });
+    }
+
+    @Override
+    public void displayNetworkError() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                    return;
                 }
-                break;
-            case AccountConfig.STATE_ERROR_NETWORK:
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AccountWizard.this);
+                dialogBuilder.setPositiveButton(android.R.string.ok, null);
                 dialogBuilder.setTitle(R.string.account_no_network_title)
                         .setMessage(R.string.account_no_network_message);
-                mCreationError = true;
-                break;
-            default:
+                mAlertDialog = dialogBuilder.show();
+            }
+        });
+    }
+
+    @Override
+    public void displayCannotBeFoundError() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                    return;
+                }
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AccountWizard.this);
+                dialogBuilder.setPositiveButton(android.R.string.ok, null);
+                dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
+                        .setMessage(R.string.account_cannot_be_found_message);
+                mAlertDialog = dialogBuilder.show();
+            }
+        });
+    }
+
+    @Override
+    public void displaySuccessDialog() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                    return;
+                }
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AccountWizard.this);
+                dialogBuilder.setPositiveButton(android.R.string.ok, null);
                 dialogBuilder.setTitle(R.string.account_device_added_title)
                         .setMessage(R.string.account_device_added_message);
-                mCreatedAccount = true;
-                mCreationError = false;
-                break;
-        }
-        return dialogBuilder.show();
-    }
+                mAlertDialog = dialogBuilder.show();
+                mAlertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        setResult(Activity.RESULT_OK, new Intent());
+                        //unlock the screen orientation
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                        finish();
+                    }
+                });
 
-    private class CreateAccountTask extends AsyncTask<HashMap<String, String>, Void, String> {
-        private final Context context;
-
-        CreateAccountTask(Context context) {
-            Log.d(TAG, "CreateAccountTask ");
-            this.context = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            mProgress = new ProgressDialog(context);
-            mProgress.setTitle(R.string.dialog_wait_create);
-            mProgress.setMessage(context.getString(R.string.dialog_wait_create_details));
-            mProgress.setCancelable(false);
-            mProgress.setCanceledOnTouchOutside(false);
-            mProgress.show();
-        }
-
-        @SafeVarargs
-        @Override
-        protected final String doInBackground(HashMap<String, String>... accs) {
-            if (mAccountType.equals(AccountConfig.ACCOUNT_TYPE_RING) || mAccount == null) {
-                mAccount = mAccountService.addAccount(accs[0]);
-            } else {
-                mAccount.setDetail(ConfigKey.ACCOUNT_ALIAS, accs[0].get(ConfigKey.ACCOUNT_ALIAS.key()));
-                if (accs[0].containsKey(ConfigKey.ACCOUNT_HOSTNAME.key())) {
-                    mAccount.setDetail(ConfigKey.ACCOUNT_HOSTNAME, accs[0].get(ConfigKey.ACCOUNT_HOSTNAME.key()));
-                    mAccount.setDetail(ConfigKey.ACCOUNT_USERNAME, accs[0].get(ConfigKey.ACCOUNT_USERNAME.key()));
-                    mAccount.setDetail(ConfigKey.ACCOUNT_PASSWORD, accs[0].get(ConfigKey.ACCOUNT_PASSWORD.key()));
-                }
-
-                mAccountService.setAccountDetails(mAccount.getAccountID(), mAccount.getDetails());
             }
-
-            mCreatingAccount = false;
-            return mAccount.getAccountID();
-        }
-    }
-
-    private void createNewAccount(HashMap<String, String> accountDetails) {
-        if (mCreatingAccount) {
-            return;
-        }
-
-        mCreatingAccount = true;
-        mCreationError = false;
-
-        //orientation is locked during the create of account to avoid the destruction of the thread
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-        //noinspection unchecked
-        new CreateAccountTask(this).execute(accountDetails);
+        });
     }
 
     private class WizardPagerAdapter extends FragmentStatePagerAdapter {
