@@ -19,8 +19,6 @@
  */
 package cx.ring.call;
 
-import java.lang.ref.WeakReference;
-import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -41,7 +39,6 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
-import cx.ring.utils.BlockchainInputHandler;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -68,8 +65,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     private int videoHeight = -1;
     private int previewWidth = -1;
     private int previewHeight = -1;
-
-    private BlockchainInputHandler mBlockchainInputHandler;
 
     private ScheduledExecutorService executor;
     private Runnable timeRunnable = new Runnable() {
@@ -328,13 +323,9 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
             return;
         }
 
-        if (mBlockchainInputHandler == null || !mBlockchainInputHandler.isAlive()) {
-            mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mAccountService));
-        }
-
         String[] split = mSipCall.getNumber().split(":");
         if (split.length > 1) {
-            mBlockchainInputHandler.enqueueNextLookup(split[1]);
+            mAccountService.lookupName("", "", split[1]);
         }
     }
 

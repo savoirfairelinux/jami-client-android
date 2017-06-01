@@ -29,7 +29,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
-import cx.ring.utils.BlockchainInputHandler;
+import cx.ring.utils.RegisteredNameInputHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
@@ -40,7 +40,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
 
     protected AccountService mAccountService;
 
-    private BlockchainInputHandler mBlockchainInputHandler;
+    private RegisteredNameInputHandler mRegisteredNameInputHandler;
 
     private RingAccountViewModel mRingAccountViewModel = new RingAccountViewModel();
 
@@ -69,11 +69,11 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
 
     void userNameChanged(@NonNull String userName) {
         if (!userName.isEmpty()) {
-            if (mBlockchainInputHandler == null || !mBlockchainInputHandler.isAlive()) {
-                mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mAccountService));
+            if (mRegisteredNameInputHandler == null) {
+                mRegisteredNameInputHandler = new RegisteredNameInputHandler(new WeakReference<>(mAccountService));
             }
             mRingAccountViewModel.setUsername(userName);
-            mBlockchainInputHandler.enqueueNextLookup(userName);
+            mRegisteredNameInputHandler.enqueueNextLookup(userName);
             isRingUserNameCorrect = false;
             getView().enableTextError();
         } else {
