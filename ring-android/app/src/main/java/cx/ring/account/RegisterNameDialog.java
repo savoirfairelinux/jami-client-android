@@ -25,8 +25,8 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -44,7 +44,8 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
-import cx.ring.utils.BlockchainUtils;
+import cx.ring.utils.RegisteredNameFilter;
+import cx.ring.utils.RegisteredNameTextWatcher;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -161,8 +162,9 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
-        BlockchainUtils.attachUsernameTextFilter(mUsernameTxt);
-        mUsernameTextWatcher = BlockchainUtils.attachUsernameTextWatcher(getActivity(), mAccountService, mUsernameTxtBox, mUsernameTxt);
+        mUsernameTxt.setFilters(new InputFilter[]{new RegisteredNameFilter()});
+        mUsernameTextWatcher = new RegisteredNameTextWatcher(getActivity(), mAccountService, mUsernameTxtBox, mUsernameTxt);
+        mUsernameTxt.addTextChangedListener(mUsernameTextWatcher);
 
         AlertDialog dialog = (AlertDialog) getDialog();
         if (dialog != null) {
@@ -210,7 +212,7 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (mUsernameTxt != null) {
-            mUsernameTextWatcher = BlockchainUtils.attachUsernameTextWatcher(getActivity(), mAccountService, mUsernameTxtBox, mUsernameTxt);
+            mUsernameTxt.addTextChangedListener(mUsernameTextWatcher);
         }
     }
 
