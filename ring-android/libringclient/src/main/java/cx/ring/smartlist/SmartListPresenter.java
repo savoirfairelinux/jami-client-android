@@ -41,7 +41,7 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.PreferencesService;
 import cx.ring.services.PresenceService;
-import cx.ring.utils.BlockchainInputHandler;
+import cx.ring.utils.RegisteredNameInputHandler;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -65,7 +65,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     private DeviceRuntimeService mDeviceRuntimeService;
 
-    private BlockchainInputHandler mBlockchainInputHandler;
+    private RegisteredNameInputHandler mRegisteredNameInputHandler;
     private String mLastBlockchainQuery = null;
 
     private ArrayList<Conversation> mConversations;
@@ -159,16 +159,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 }
 
                 // Ring search
-                if (mBlockchainInputHandler == null) {
-                    mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mAccountService));
+                if (mRegisteredNameInputHandler == null) {
+                    mRegisteredNameInputHandler = new RegisteredNameInputHandler(new WeakReference<>(mAccountService));
                 }
 
-                // searching for a ringId or a blockchained username
-                if (!mBlockchainInputHandler.isAlive()) {
-                    mBlockchainInputHandler = new BlockchainInputHandler(new WeakReference<>(mAccountService));
-                }
-
-                mBlockchainInputHandler.enqueueNextLookup(query);
+                mRegisteredNameInputHandler.enqueueNextLookup(query);
                 mLastBlockchainQuery = query;
             }
         }
