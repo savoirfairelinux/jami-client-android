@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.utils.RegisteredNameFilter;
 
 public class RingAccountCreationFragment extends BaseFragment<RingAccountCreationPresenter> implements RingAccountCreationView {
 
@@ -84,6 +86,7 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        mUsernameTxt.setFilters(new InputFilter[]{new RegisteredNameFilter()});
     }
 
     @OnCheckedChanged(R.id.switch_ring_username)

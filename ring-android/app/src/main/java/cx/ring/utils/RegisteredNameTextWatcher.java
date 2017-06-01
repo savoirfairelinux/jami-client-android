@@ -30,22 +30,22 @@ import java.lang.ref.WeakReference;
 import cx.ring.R;
 import cx.ring.services.AccountService;
 
-public class BlockchainTextWatcher implements TextWatcher {
+public class RegisteredNameTextWatcher implements TextWatcher {
 
-    private static final String TAG = BlockchainTextWatcher.class.getName();
+    private static final String TAG = RegisteredNameTextWatcher.class.getName();
 
     private WeakReference<TextInputLayout> mInputLayout;
     private WeakReference<EditText> mInputText;
     private WeakReference<AccountService> mAccountService;
-    private BlockchainInputHandler mBlockchainInputHandler;
+    private NameLookupInputHandler mNameLookupInputHandler;
     private String mLookingForAvailability;
 
-    public BlockchainTextWatcher(Context context, final AccountService accountService, final TextInputLayout inputLayout, final EditText inputText) {
+    public RegisteredNameTextWatcher(Context context, final AccountService accountService, final TextInputLayout inputLayout, final EditText inputText) {
         mInputLayout = new WeakReference<>(inputLayout);
         mInputText = new WeakReference<>(inputText);
         mAccountService = new WeakReference<>(accountService);
         mLookingForAvailability = context.getString(R.string.looking_for_username_availability);
-        mBlockchainInputHandler = new BlockchainInputHandler(mAccountService);
+        mNameLookupInputHandler = new NameLookupInputHandler(mAccountService);
     }
 
     @Override
@@ -76,12 +76,8 @@ public class BlockchainTextWatcher implements TextWatcher {
             mInputLayout.get().setError(mLookingForAvailability);
         }
 
-        if (!mBlockchainInputHandler.isAlive()) {
-            mBlockchainInputHandler = new BlockchainInputHandler(mAccountService);
-        }
-
         if (!TextUtils.isEmpty(name)) {
-            mBlockchainInputHandler.enqueueNextLookup(name);
+            mNameLookupInputHandler.enqueueNextLookup(name);
         }
     }
 }
