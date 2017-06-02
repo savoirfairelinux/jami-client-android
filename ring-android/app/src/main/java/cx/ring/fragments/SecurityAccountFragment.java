@@ -23,91 +23,48 @@ package cx.ring.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v14.preference.PreferenceFragment;
 import android.support.v7.preference.EditTextPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.TwoStatePreference;
-import android.util.Log;
 import android.util.Pair;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionActivity;
 import cx.ring.application.RingApplication;
-import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.AccountCredentials;
 import cx.ring.model.ConfigKey;
-import cx.ring.model.ServiceEvent;
-import cx.ring.services.AccountService;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
+import cx.ring.mvp.BasePreferenceFragment;
+import cx.ring.utils.Tuple;
 import cx.ring.views.CredentialPreferenceDialog;
 import cx.ring.views.CredentialsPreference;
 
-public class SecurityAccountFragment extends PreferenceFragment implements Observer<ServiceEvent> {
+public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAccountPresenter> implements SecurityAccountView {
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
     private static final int SELECT_CA_LIST_RC = 42;
     private static final int SELECT_PRIVATE_KEY_RC = 43;
     private static final int SELECT_CERTIFICATE_RC = 44;
 
-    private static String[] TLS_METHODS = null;
-
-    @Inject
-    AccountService mAccountService;
-
-    @SuppressWarnings("unused")
-    private static final String TAG = SecurityAccountFragment.class.getSimpleName();
-
     private PreferenceCategory credentialsCategory;
     private PreferenceCategory tlsCategory;
-
-    private String mAccountID;
-
-    void accountChanged(Account account) {
-        if (account != null) {
-            reloadCredentials();
-            setDetails();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY) == null) {
-            return;
-        }
-        mAccountID = getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY);
-
-        Account acc = mAccountService.getAccount(mAccountID);
-        if (acc != null) {
-            accountChanged(acc);
-        }
-        mAccountService.addObserver(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mAccountService.removeObserver(this);
-    }
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        super.onCreatePreferences(bundle, s);
 
         addPreferencesFromResource(R.xml.account_security_prefs);
         credentialsCategory = (PreferenceCategory) findPreference("Account.credentials");
         credentialsCategory.findPreference("Add.credentials").setOnPreferenceChangeListener(addCredentialListener);
         tlsCategory = (PreferenceCategory) findPreference("TLS.category");
+
+        presenter.init(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
     }
 
     @Override
@@ -124,13 +81,8 @@ public class SecurityAccountFragment extends PreferenceFragment implements Obser
         }
     }
 
-    public void reloadCredentials() {
-        removeAllCredentials();
-        addAllCredentials();
-    }
-
-    private void addAllCredentials() {
-        ArrayList<AccountCredentials> credentials = mAccountService.getAccount(mAccountID).getCredentials();
+    @Override
+    public void addAllCredentials(ArrayList<AccountCredentials> credentials) {
         int i = 0;
         for (AccountCredentials cred : credentials) {
             CredentialsPreference toAdd = new CredentialsPreference(getPreferenceManager().getContext());
@@ -144,7 +96,8 @@ public class SecurityAccountFragment extends PreferenceFragment implements Obser
         }
     }
 
-    private void removeAllCredentials() {
+    @Override
+    public void removeAllCredentials() {
         int i = 0;
         while (true) {
             Preference toRemove = credentialsCategory.findPreference("credential" + i);
@@ -160,18 +113,9 @@ public class SecurityAccountFragment extends PreferenceFragment implements Obser
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Account account = mAccountService.getAccount(mAccountID);
             // We need the old and new value to correctly edit the list of credentials
             Pair<AccountCredentials, AccountCredentials> result = (Pair<AccountCredentials, AccountCredentials>) newValue;
-            account.removeCredential(result.first);
-            if (result.second != null) {
-                // There is a new value for this credentials it means it has been edited (otherwise deleted)
-                account.addCredential(result.second);
-            }
-
-            mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
-            mAccountService.setAccountDetails(mAccountID, account.getDetails());
-            reloadCredentials();
+            presenter.credentialEdited(new Tuple<>(result.first, result.second));
             return false;
         }
     };
@@ -180,13 +124,8 @@ public class SecurityAccountFragment extends PreferenceFragment implements Obser
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Account account = mAccountService.getAccount(mAccountID);
             Pair<AccountCredentials, AccountCredentials> result = (Pair<AccountCredentials, AccountCredentials>) newValue;
-            account.addCredential(result.second);
-
-            mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
-            mAccountService.setAccountDetails(mAccountID, account.getDetails());
-            reloadCredentials();
+            presenter.credentialAdded(new Tuple<>(result.first, result.second));
             return false;
         }
     };
@@ -211,73 +150,61 @@ public class SecurityAccountFragment extends PreferenceFragment implements Obser
 
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Account account = mAccountService.getAccount(mAccountID);
-            Log.i("TLS", "Setting " + preference.getKey() + " to " + newValue);
+            ConfigKey key = ConfigKey.fromString(preference.getKey());
+
             if (preference.getKey().contentEquals(ConfigKey.TLS_ENABLE.key())) {
                 if ((Boolean) newValue) {
-                    account.setDetail(ConfigKey.STUN_ENABLE, false);
+                    key = ConfigKey.STUN_ENABLE;
+                    newValue = false;
                 }
             }
 
-            if (preference instanceof TwoStatePreference) {
-                account.setDetail(ConfigKey.fromString(preference.getKey()), (Boolean) newValue);
-            } else {
+            if (!(preference instanceof TwoStatePreference)) {
                 preference.setSummary((String) newValue);
-                account.setDetail(ConfigKey.fromString(preference.getKey()), (String) newValue);
             }
 
-            mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
-            mAccountService.setAccountDetails(mAccountID, account.getDetails());
+            presenter.tlsChanged(key, newValue);
+
             return true;
         }
     };
 
-    public String[] getTlsMethods() {
-        if (TLS_METHODS == null) {
-            List<String> methods = mAccountService.getTlsSupportedMethods();
-            TLS_METHODS = methods.toArray(new String[methods.size()]);
-        }
-        return TLS_METHODS;
-    }
-
-    private void setDetails() {
-        final AccountConfig details = mAccountService.getAccount(mAccountID).getConfig();
-
+    @Override
+    public void setDetails(AccountConfig config, String[] tlsMethods) {
         for (int i = 0; i < tlsCategory.getPreferenceCount(); ++i) {
             final Preference current = tlsCategory.getPreference(i);
             final ConfigKey key = ConfigKey.fromString(current.getKey());
 
             if (current instanceof TwoStatePreference) {
-                ((TwoStatePreference) current).setChecked(details.getBool(key));
+                ((TwoStatePreference) current).setChecked(config.getBool(key));
             } else {
                 if (key == ConfigKey.TLS_CA_LIST_FILE) {
-                    File crt = new File(details.get(ConfigKey.TLS_CA_LIST_FILE));
+                    File crt = new File(config.get(ConfigKey.TLS_CA_LIST_FILE));
                     current.setSummary(crt.getName());
                     setFeedbackIcon(current);
                     current.setOnPreferenceClickListener(filePickerListener);
                 } else if (key == ConfigKey.TLS_PRIVATE_KEY_FILE) {
-                    current.setSummary(new File(details.get(ConfigKey.TLS_PRIVATE_KEY_FILE)).getName());
+                    current.setSummary(new File(config.get(ConfigKey.TLS_PRIVATE_KEY_FILE)).getName());
                     current.setOnPreferenceClickListener(filePickerListener);
                 } else if (key == ConfigKey.TLS_CERTIFICATE_FILE) {
-                    File pem = new File(details.get(ConfigKey.TLS_CERTIFICATE_FILE));
+                    File pem = new File(config.get(ConfigKey.TLS_CERTIFICATE_FILE));
                     current.setSummary(pem.getName());
                     setFeedbackIcon(current);
                     checkForRSAKey();
                     current.setOnPreferenceClickListener(filePickerListener);
                 } else if (key == ConfigKey.TLS_METHOD) {
-                    String[] values = getTlsMethods();
                     ListPreference listPref = (ListPreference) current;
-                    String curVal = details.get(key);
-                    listPref.setEntries(values);
-                    listPref.setEntryValues(values);
+                    String curVal = config.get(key);
+                    listPref.setEntries(tlsMethods);
+                    listPref.setEntryValues(tlsMethods);
                     listPref.setValue(curVal);
                     current.setSummary(curVal);
                 } else if (current instanceof EditTextPreference) {
-                    String val = details.get(key);
+                    String val = config.get(key);
                     ((EditTextPreference) current).setText(val);
                     current.setSummary(val);
                 } else {
-                    current.setSummary(details.get(key));
+                    current.setSummary(config.get(key));
                 }
             }
 
@@ -336,24 +263,24 @@ public class SecurityAccountFragment extends PreferenceFragment implements Obser
             return;
         }
 
-        Account account = mAccountService.getAccount(mAccountID);
         File myFile = new File(data.getData().getEncodedPath());
+        ConfigKey key = null;
         Preference preference;
         switch (requestCode) {
             case SELECT_CA_LIST_RC:
                 preference = tlsCategory.findPreference(ConfigKey.TLS_CA_LIST_FILE.key());
                 preference.setSummary(myFile.getName());
-                account.setDetail(ConfigKey.TLS_CA_LIST_FILE, myFile.getAbsolutePath());
+                key = ConfigKey.TLS_CA_LIST_FILE;
                 setFeedbackIcon(preference);
                 break;
             case SELECT_PRIVATE_KEY_RC:
                 tlsCategory.findPreference(ConfigKey.TLS_PRIVATE_KEY_FILE.key()).setSummary(myFile.getName());
-                account.setDetail(ConfigKey.TLS_PRIVATE_KEY_FILE, myFile.getAbsolutePath());
+                key = ConfigKey.TLS_PRIVATE_KEY_FILE;
                 break;
             case SELECT_CERTIFICATE_RC:
                 preference = tlsCategory.findPreference(ConfigKey.TLS_CERTIFICATE_FILE.key());
                 preference.setSummary(myFile.getName());
-                account.setDetail(ConfigKey.TLS_CERTIFICATE_FILE, myFile.getAbsolutePath());
+                key = ConfigKey.TLS_CERTIFICATE_FILE;
                 setFeedbackIcon(preference);
                 checkForRSAKey();
                 break;
@@ -361,23 +288,6 @@ public class SecurityAccountFragment extends PreferenceFragment implements Obser
                 break;
         }
 
-        mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
-        mAccountService.setAccountDetails(mAccountID, account.getDetails());
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null || getView() == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
-            case REGISTRATION_STATE_CHANGED:
-                accountChanged(mAccountService.getAccount(mAccountID));
-                break;
-            default:
-                break;
-        }
+        presenter.fileActivityResult(key, myFile.getAbsolutePath());
     }
 }
