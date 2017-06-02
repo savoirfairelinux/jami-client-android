@@ -511,6 +511,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                 acceptButton.setVisibility(View.VISIBLE);
                 refuseButton.setVisibility(View.VISIBLE);
                 hangupButton.setVisibility(View.GONE);
+
+                getActivity().invalidateOptionsMenu();
             }
         });
     }
@@ -523,6 +525,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                 acceptButton.setVisibility(View.GONE);
                 refuseButton.setVisibility(View.VISIBLE);
                 hangupButton.setVisibility(View.GONE);
+
+                getActivity().invalidateOptionsMenu();
             }
         });
     }
