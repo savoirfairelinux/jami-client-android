@@ -26,7 +26,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v17.leanback.app.GuidedStepFragment;
 import android.support.v7.app.AlertDialog;
@@ -39,6 +38,7 @@ import cx.ring.account.AccountWizardView;
 import cx.ring.application.RingApplication;
 import cx.ring.model.AccountConfig;
 import cx.ring.mvp.BaseActivity;
+import cx.ring.tv.main.HomeActivity;
 import cx.ring.utils.Log;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -83,7 +83,7 @@ public class TVAccountWizard
         }
 
         if (savedInstanceState == null) {
-            GuidedStepFragment.add(getFragmentManager(), mHomeFragment);
+            GuidedStepFragment.addAsRoot(this, mHomeFragment,R.id.migration_container);
         } else {
             mProfileFragment = (TVProfileCreationFragment) getFragmentManager().getFragment(savedInstanceState, PROFILE_TAG);
             mFullname = savedInstanceState.getString("mFullname");
@@ -116,16 +116,6 @@ public class TVAccountWizard
     public void onConfigurationChanged(Configuration newConfig) {
         Log.i(TAG, "onConfigurationChanged " + newConfig);
         super.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public void onBackPressed() {
-        FragmentManager fm = getFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            fm.popBackStack();
-            return;
-        }
-        presenter.backPressed();
     }
 
     @Override
@@ -303,6 +293,7 @@ public class TVAccountWizard
                         setResult(Activity.RESULT_OK, new Intent());
                         //unlock the screen orientation
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                        startActivity(new Intent(TVAccountWizard.this,HomeActivity.class));
                         finish();
                     }
                 });
