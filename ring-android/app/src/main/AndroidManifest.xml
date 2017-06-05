@@ -74,6 +74,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:label="@string/app_name"
         android:resizeableActivity="true"
         android:supportsRtl="true">
+
+        <activity
+            android:name=".launch.LaunchActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+
+            android:screenOrientation="fullUser"
+            android:theme="@style/AppThemeBase">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".client.HomeActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
@@ -82,11 +96,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:screenOrientation="fullUser"
             android:theme="@style/AppThemeBase"
             android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.DIAL" />
                 <action android:name="android.intent.action.VIEW" />
@@ -258,20 +267,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <!-- AndroidTV section  -->
         <activity
-            android:name="cx.ring.tv.main.HomeActivity"
+            android:name=".tv.launch.TVLaunchActivity"
             android:banner="@drawable/banner"
             android:icon="@drawable/ic_launcher"
             android:label="@string/title_activity_sflphone_home"
             android:logo="@drawable/ic_launcher"
-            android:theme="@style/Theme.Leanback"
+            android:theme="@style/AppThemeBase"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
-
-
+        <activity
+            android:name=".tv.main.HomeActivity"
+            android:label="@string/title_activity_sflphone_home"
+            android:theme="@style/Theme.Leanback"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".tv.account.TVAccountWizard"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"

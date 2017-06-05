@@ -4,11 +4,6 @@
     android:orientation="vertical"
     android:background="@color/color_primary_dark">
 
-    <cx.ring.views.WizardViewPager
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <FrameLayout
         android:id="@+id/migration_container"
         android:layout_width="match_parent"
