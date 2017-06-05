@@ -24,13 +24,15 @@ import javax.inject.Singleton;
 import cx.ring.about.AboutFragment;
 import cx.ring.about.AboutPresenter;
 import cx.ring.account.AccountEditionActivity;
+import cx.ring.account.AccountWizard;
 import cx.ring.account.HomeAccountCreationFragment;
+import cx.ring.account.ProfileCreationFragment;
 import cx.ring.account.RegisterNameDialog;
+import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.account.RingLinkAccountFragment;
 import cx.ring.application.RingApplication;
-import cx.ring.account.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.contactrequests.ContactRequestsFragment;
@@ -42,11 +44,10 @@ import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
-import cx.ring.account.ProfileCreationFragment;
-import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.fragments.SmartListFragment;
+import cx.ring.launch.LaunchActivity;
 import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.service.BootReceiver;
@@ -170,6 +171,9 @@ public interface RingInjectionComponent {
 
     void inject(RingLinkAccountFragment fragment);
 
+    void inject(LaunchActivity activity);
+
+
 //    AndroidTV section
 
     void inject(TVCallFragment fragment);
@@ -191,4 +195,5 @@ public interface RingInjectionComponent {
     void inject(TVRingAccountCreationFragment fragment);
 
     void inject(TVRingLinkAccountFragment fragment);
+
 }

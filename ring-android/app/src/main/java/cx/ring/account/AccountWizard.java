@@ -52,6 +52,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.client.HomeActivity;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.model.Account;
@@ -405,6 +406,7 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
                                     setResult(Activity.RESULT_OK, new Intent());
                                     //unlock the screen orientation
                                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                                    startActivity(new Intent(AccountWizard.this, HomeActivity.class));
                                     finish();
                                 }
                             });
