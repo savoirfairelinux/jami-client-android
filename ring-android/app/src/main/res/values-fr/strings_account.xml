@@ -2,7 +2,12 @@
 <resources>
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Supprimer</string>
+  <string name="ic_advanced_menu">Réglages avancés</string>
+  <string name="ic_blacklist_menu">Contacts bloqués</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Ajouter un compte Ring</string>
+  <string name="add_sip_account_title">Ajouter un compte SIP</string>
+  <string name="ring_account_default_name">Compte Ring %1$s</string>
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Nom du serveur</string>
   <string name="prompt_username">Nom d\'utilisateur</string>
@@ -21,6 +26,7 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="help_ring">Un compte Ring permet de se connecter sécuritairement avec un autre interlocuteur à travers un réseau distribué</string>
   <string name="help_sip_title">Ajouter votre compte SIP</string>
   <string name="help_sip">Configurez un compte SIP existant.</string>
+  <string name="create_sip_account">Ajouter un compte SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Supprimer le compte ?</string>
   <string name="account_delete_dialog_message">Cette action est irréversible.</string>
