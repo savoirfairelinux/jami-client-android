@@ -21,12 +21,14 @@ package cx.ring.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.inject.Inject;
 
+import cx.ring.R;
 import cx.ring.model.Settings;
 
 public class SharedPreferencesServiceImpl extends PreferencesService {
@@ -126,7 +128,6 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         requests.remove(contactId);
         saveRequests(accountId, requests);
     }
-
 
     @Override
     public boolean isConnectedWifiAndMobile() {

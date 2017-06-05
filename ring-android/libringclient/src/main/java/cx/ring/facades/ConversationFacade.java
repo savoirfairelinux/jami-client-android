@@ -503,17 +503,19 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     break;
                 case HISTORY_LOADED:
                     Account account = mAccountService.getCurrentAccount();
-                    boolean acceptAllMessages = account.getDetailBoolean(ConfigKey.DHT_PUBLIC_IN);
+                    if (account != null) {
+                        boolean acceptAllMessages = account.getDetailBoolean(ConfigKey.DHT_PUBLIC_IN);
 
-                    addContactDaemon(acceptAllMessages);
+                        addContactDaemon(acceptAllMessages);
 
-                    List<HistoryCall> historyCalls = (List<HistoryCall>) event.getEventInput(ServiceEvent.EventInput.HISTORY_CALLS, ArrayList.class);
-                    parseHistoryCalls(historyCalls, acceptAllMessages);
+                        List<HistoryCall> historyCalls = (List<HistoryCall>) event.getEventInput(ServiceEvent.EventInput.HISTORY_CALLS, ArrayList.class);
+                        parseHistoryCalls(historyCalls, acceptAllMessages);
 
-                    List<HistoryText> historyTexts = (List<HistoryText>) event.getEventInput(ServiceEvent.EventInput.HISTORY_TEXTS, ArrayList.class);
-                    parseHistoryTexts(historyTexts, acceptAllMessages);
+                        List<HistoryText> historyTexts = (List<HistoryText>) event.getEventInput(ServiceEvent.EventInput.HISTORY_TEXTS, ArrayList.class);
+                        parseHistoryTexts(historyTexts, acceptAllMessages);
 
-                    aggregateHistory();
+                        aggregateHistory();
+                    }
 
                     setChanged();
                     mEvent = new ServiceEvent(ServiceEvent.EventType.HISTORY_LOADED);
