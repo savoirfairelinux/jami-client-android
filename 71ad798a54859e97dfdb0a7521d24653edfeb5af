@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_cd1c8b6d",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/TextMessage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-06-05T21:18:55Z",
+      "side": 1,
+      "message": "This one shouldn\u0027t be renamed",
+      "range": {
+        "startLine": 184,
+        "startChar": 24,
+        "endLine": 184,
+        "endChar": 33
+      },
+      "revId": "71ad798a54859e97dfdb0a7521d24653edfeb5af",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
