@@ -142,54 +142,95 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
 
     @Override
     public void enableTextError() {
-        mUsernameTxtBox.setErrorEnabled(true);
-        mUsernameTxtBox.setError(getString(R.string.looking_for_username_availability));
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mUsernameTxtBox.setErrorEnabled(true);
+                mUsernameTxtBox.setError(getString(R.string.looking_for_username_availability));
+
+            }
+        });
     }
 
     @Override
     public void disableTextError() {
-        mUsernameTxtBox.setErrorEnabled(false);
-        mUsernameTxtBox.setError(null);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mUsernameTxtBox.setErrorEnabled(false);
+                mUsernameTxtBox.setError(null);
+            }
+        });
     }
 
     @Override
     public void showExistingNameError() {
-        mUsernameTxtBox.setErrorEnabled(true);
-        mUsernameTxtBox.setError(getString(R.string.username_already_taken));
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mUsernameTxtBox.setErrorEnabled(true);
+                mUsernameTxtBox.setError(getString(R.string.username_already_taken));
+            }
+        });
     }
 
     @Override
     public void showInvalidNameError() {
-        mUsernameTxtBox.setErrorEnabled(true);
-        mUsernameTxtBox.setError(getString(R.string.invalid_username));
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mUsernameTxtBox.setErrorEnabled(true);
+                mUsernameTxtBox.setError(getString(R.string.invalid_username));
+            }
+        });
     }
 
     @Override
-    public void showInvalidPasswordError(boolean display) {
-        if (display) {
-            mPasswordTxtBox.setError(getString(R.string.error_password_char_count));
-        } else {
-            mPasswordTxtBox.setError(null);
-        }
+    public void showInvalidPasswordError(final boolean display) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (display) {
+                    mPasswordTxtBox.setError(getString(R.string.error_password_char_count));
+                } else {
+                    mPasswordTxtBox.setError(null);
+                }
+            }
+        });
     }
 
     @Override
-    public void showNonMatchingPasswordError(boolean display) {
-        if (display) {
-            mPasswordRepeatTxtBox.setError(getString(R.string.error_passwords_not_equals));
-        } else {
-            mPasswordRepeatTxtBox.setError(null);
-        }
+    public void showNonMatchingPasswordError(final boolean display) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (display) {
+                    mPasswordRepeatTxtBox.setError(getString(R.string.error_passwords_not_equals));
+                } else {
+                    mPasswordRepeatTxtBox.setError(null);
+                }
+            }
+        });
     }
 
     @Override
-    public void displayUsernameBox(boolean display) {
-        mUsernameBox.setVisibility(display ? View.VISIBLE : View.GONE);
+    public void displayUsernameBox(final boolean display) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mUsernameBox.setVisibility(display ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     @Override
-    public void enableNextButton(boolean enabled) {
-        mCreateAccountButton.setEnabled(enabled);
+    public void enableNextButton(final boolean enabled) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mCreateAccountButton.setEnabled(enabled);
+            }
+        });
     }
 
     @Override

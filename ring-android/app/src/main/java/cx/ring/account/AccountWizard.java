@@ -44,8 +44,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.client.HomeActivity;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
+import cx.ring.launch.LaunchActivity;
 import cx.ring.model.AccountConfig;
 import cx.ring.mvp.BaseActivity;
 import cx.ring.utils.Log;
@@ -281,9 +283,11 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
                     if (fm.getBackStackEntryCount() >= 1) {
                         fm.popBackStack();
                     } else {
+                        startActivity(new Intent(AccountWizard.this, HomeActivity.class));
                         finish();
                     }
                 } else {
+                    startActivity(new Intent(AccountWizard.this, HomeActivity.class));
                     finishAffinity();
                 }
             }
@@ -360,7 +364,7 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
                         setResult(Activity.RESULT_OK, new Intent());
                         //unlock the screen orientation
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                        finish();
+                        presenter.successDialogClosed();
                     }
                 });
 
