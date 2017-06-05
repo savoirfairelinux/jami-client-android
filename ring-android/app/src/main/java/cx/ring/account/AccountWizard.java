@@ -44,6 +44,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.client.HomeActivity;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.model.AccountConfig;

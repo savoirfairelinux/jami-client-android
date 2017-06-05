@@ -31,6 +31,7 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.GravityCompat;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.model.Account;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
+import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
@@ -51,17 +53,13 @@ import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
-public class HomeActivity extends Activity implements Observer<ServiceEvent> {
+public class HomeActivity extends Activity  {
     private static final String TAG = HomeActivity.class.getName();
-
-    private boolean mNoAccountOpened = false;
 
     public static final int REQUEST_CODE_PHOTO = 5;
     public static final int REQUEST_CODE_GALLERY = 6;
     public static final int REQUEST_PERMISSION_CAMERA = 113;
     public static final int REQUEST_PERMISSION_READ_STORAGE = 114;
-
-    private boolean mIsAskingForPermissions = false;
 
     @Inject
     AccountService mAccountService;
@@ -84,44 +82,6 @@ public class HomeActivity extends Activity implements Observer<ServiceEvent> {
 
         // dependency injection
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
-
-        String[] toRequest = buildPermissionsToAsk();
-        ArrayList<String> permissionsWeCanAsk = new ArrayList<>();
-
-        for (String permission : toRequest) {
-            if (((RingApplication) getApplication()).canAskForPermission(permission)) {
-                permissionsWeCanAsk.add(permission);
-            }
-        }
-
-        if (!permissionsWeCanAsk.isEmpty()) {
-            mIsAskingForPermissions = true;
-            ActivityCompat.requestPermissions(this, permissionsWeCanAsk.toArray(new String[permissionsWeCanAsk.size()]), RingApplication.PERMISSIONS_REQUEST);
-        }
-    }
-
-    private String[] buildPermissionsToAsk() {
-        ArrayList<String> perms = new ArrayList<>();
-
-        if (!mDeviceRuntimeService.hasAudioPermission()) {
-            perms.add(Manifest.permission.RECORD_AUDIO);
-        }
-
-        Settings settings = mPreferencesService.loadSettings();
-
-        if (settings.isAllowSystemContacts() && !mDeviceRuntimeService.hasContactPermission()) {
-            perms.add(Manifest.permission.READ_CONTACTS);
-        }
-
-        if (!mDeviceRuntimeService.hasVideoPermission()) {
-            perms.add(Manifest.permission.CAMERA);
-        }
-
-        if (settings.isAllowPlaceSystemCalls() && !mDeviceRuntimeService.hasCallLogPermission()) {
-            perms.add(Manifest.permission.WRITE_CALL_LOG);
-        }
-
-        return perms.toArray(new String[perms.size()]);
     }
 
     @Override
@@ -129,59 +89,6 @@ public class HomeActivity extends Activity implements Observer<ServiceEvent> {
         Log.d(TAG, "onRequestPermissionsResult");
 
         switch (requestCode) {
-            case RingApplication.PERMISSIONS_REQUEST: {
-                if (grantResults.length == 0) {
-                    return;
-                }
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-                for (int i = 0, n = permissions.length; i < n; i++) {
-                    String permission = permissions[i];
-                    ((RingApplication) getApplication()).permissionHasBeenAsked(permission);
-                    switch (permission) {
-                        case Manifest.permission.RECORD_AUDIO:
-                            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                                Log.e(TAG, "Missing required permission RECORD_AUDIO");
-                                AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                                        .setTitle(R.string.start_error_title)
-                                        .setMessage(R.string.start_error_mic_required)
-                                        .setIcon(R.drawable.ic_mic_black)
-                                        .setCancelable(false)
-                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                finish();
-                                            }
-                                        }).setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                            @Override
-                                            public void onCancel(DialogInterface dialog) {
-                                                finish();
-                                            }
-                                        });
-                                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                    @Override
-                                    public void onDismiss(DialogInterface dialog) {
-                                        finish();
-                                    }
-                                });
-                                builder.show();
-                                return;
-                            }
-                            break;
-                        case Manifest.permission.READ_CONTACTS:
-                            sharedPref.edit().putBoolean(getString(R.string.pref_systemContacts_key), grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
-                            break;
-                        case Manifest.permission.CAMERA:
-                            sharedPref.edit().putBoolean(getString(R.string.pref_systemCamera_key), grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
-                            // permissions have changed, video params should be reset
-                            final boolean isVideoAllowed = mDeviceRuntimeService.hasVideoPermission();
-                            if (isVideoAllowed) {
-                                mHardwareService.initVideo();
-                            }
-                    }
-                }
-
-                break;
-            }
             case REQUEST_PERMISSION_READ_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -199,47 +106,9 @@ public class HomeActivity extends Activity implements Observer<ServiceEvent> {
                 }
                 break;
         }
-        mIsAskingForPermissions = false;
-        loadAccounts();
     }
-
     @Override
-    protected void onResume() {
-        super.onResume();
-        mAccountService.addObserver(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mAccountService.removeObserver(this);
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
-                loadAccounts();
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void loadAccounts() {
-        for (Account account : mAccountService.getAccounts()) {
-            if (account.needsMigration()) {
-                //TODO: handle migration process
-            }
-        }
-
-        if (!mNoAccountOpened && mAccountService.getAccounts().isEmpty() && !mIsAskingForPermissions) {
-            mNoAccountOpened = true;
-            startActivityForResult(new Intent(HomeActivity.this, TVAccountWizard.class), TVAccountWizard.ACCOUNT_CREATE_REQUEST);
-        }
+    public void onBackPressed() {
+        finish();
     }
 }
