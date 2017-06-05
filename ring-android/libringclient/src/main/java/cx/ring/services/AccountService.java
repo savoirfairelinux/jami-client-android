@@ -93,14 +93,13 @@ public class AccountService extends Observable {
     DeviceRuntimeService mDeviceRuntimeService;
 
     private Account mCurrentAccount;
-    private List<Account> mAccountList;
+    private List<Account> mAccountList = null;
     private ConfigurationCallbackHandler mCallbackHandler;
     private boolean mHasSipAccount;
     private boolean mHasRingAccount;
 
     public AccountService() {
         mCallbackHandler = new ConfigurationCallbackHandler();
-        mAccountList = new ArrayList<>();
     }
 
     public ConfigurationCallbackHandler getCallbackHandler() {
@@ -131,6 +130,7 @@ public class AccountService extends Observable {
         mApplicationExecutor.submit(new Runnable() {
             @Override
             public void run() {
+                mAccountList = new ArrayList<>();
                 refreshAccountsCacheFromDaemon();
 
                 if (!mAccountList.isEmpty()) {
