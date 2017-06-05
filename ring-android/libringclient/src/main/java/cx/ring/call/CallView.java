@@ -40,9 +40,9 @@ public interface CallView  {
 
     void updateTime(long duration);
 
-    void updateContactBubble(String contactName);
+    void updateContactBubble(CallContact contact);
 
-    void updateContactBubbleWithVCard(String number, byte[] photo);
+    void updateContactBubbleWithVCard(CallContact contact, byte[] photo);
 
     void updateCallStatus(int callState);
 

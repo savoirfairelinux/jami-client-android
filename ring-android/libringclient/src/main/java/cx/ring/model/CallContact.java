@@ -95,6 +95,12 @@ public class CallContact {
         return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
     }
 
+    public static CallContact buildRingContact(Uri ringId) {
+        ArrayList<Phone> phones = new ArrayList<>();
+        phones.add(new Phone(ringId, 0));
+        return new CallContact(UNKNOWN_ID, null, null, 0, phones, "", false);
+    }
+
     public void setContactInfos(String k, String displayName, long photo_id) {
         mKey = k;
         mDisplayName = displayName;
@@ -248,7 +254,11 @@ public class CallContact {
     }
 
     public String getUsername() {
-        return mUsername;
+        if (mUsername != null && !mUsername.isEmpty()) {
+            return mUsername;
+        } else {
+            return mPhones.get(0).getNumber().getRawUriString();
+        }
     }
 
     public void setUsername(String mUsername) {
