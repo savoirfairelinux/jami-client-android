@@ -58,6 +58,7 @@ import cx.ring.account.ProfileCreationFragment;
 import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.account.RingLinkAccountFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
+import cx.ring.launch.LaunchActivity;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
@@ -409,6 +410,7 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
                                     setResult(Activity.RESULT_OK, new Intent());
                                     //unlock the screen orientation
                                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                                    startActivity(new Intent(AccountWizard.this, HomeActivity.class));
                                     finish();
                                 }
                             });

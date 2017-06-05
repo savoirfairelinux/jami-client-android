@@ -108,9 +108,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     private static final String NAVIGATION_TAG = "Navigation";
     static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
 
-    private boolean mNoAccountOpened = false;
     private boolean mIsMigrationDialogAlreadyShowed;
-    private boolean mIsAskingForPermissions = false;
 
     private ActionBarDrawerToggle mDrawerToggle;
     private Boolean isDrawerLocked = false;
@@ -166,28 +164,17 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
         switch (event.getEventType()) {
             case ACCOUNTS_CHANGED:
-                loadAccounts();
+                for (Account account : mAccountService.getAccounts()) {
+                    if (account.needsMigration()) {
+                        showMigrationDialog();
+                    }
+                }
                 break;
             default:
-                Log.d(TAG, "Event " + event.getEventType() + " is not handled here");
                 break;
         }
 
     }
-
-    private void loadAccounts() {
-        for (Account account : mAccountService.getAccounts()) {
-            if (account.needsMigration()) {
-                showMigrationDialog();
-            }
-        }
-
-        if (!mNoAccountOpened && mAccountService.getAccounts().isEmpty() && !mIsAskingForPermissions) {
-            mNoAccountOpened = true;
-            startActivityForResult(new Intent(HomeActivity.this, AccountWizard.class), AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
-        }
-    }
-
     public interface Refreshable {
         void refresh();
     }
@@ -255,20 +242,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                     .commit();
         }
 
-        String[] toRequest = buildPermissionsToAsk();
-        ArrayList<String> permissionsWeCanAsk = new ArrayList<>();
-
-        for (String permission : toRequest) {
-            if (((RingApplication) getApplication()).canAskForPermission(permission)) {
-                permissionsWeCanAsk.add(permission);
-            }
-        }
-
-        if (!permissionsWeCanAsk.isEmpty()) {
-            mIsAskingForPermissions = true;
-            ActivityCompat.requestPermissions(this, permissionsWeCanAsk.toArray(new String[permissionsWeCanAsk.size()]), RingApplication.PERMISSIONS_REQUEST);
-        }
-
         // if app opened from notification display trust request fragment when mService will connected
         Intent intent = getIntent();
         Bundle extra = intent.getExtras();
@@ -326,30 +299,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             bundle.putString(ConversationFragment.KEY_CONVERSATION_ID, intent.getStringExtra(ConversationFragment.KEY_CONVERSATION_ID));
             startConversationTablet(bundle);
         }
-    }
-
-    private String[] buildPermissionsToAsk() {
-        ArrayList<String> perms = new ArrayList<>();
-
-        if (!mDeviceRuntimeService.hasAudioPermission()) {
-            perms.add(Manifest.permission.RECORD_AUDIO);
-        }
-
-        Settings settings = mPreferencesService.loadSettings();
-
-        if (settings.isAllowSystemContacts() && !mDeviceRuntimeService.hasContactPermission()) {
-            perms.add(Manifest.permission.READ_CONTACTS);
-        }
-
-        if (!mDeviceRuntimeService.hasVideoPermission()) {
-            perms.add(Manifest.permission.CAMERA);
-        }
-
-        if (settings.isAllowPlaceSystemCalls() && !mDeviceRuntimeService.hasCallLogPermission()) {
-            perms.add(Manifest.permission.WRITE_CALL_LOG);
-        }
-
-        return perms.toArray(new String[perms.size()]);
     }
 
     private void showMigrationDialog() {
@@ -425,61 +374,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         Log.d(TAG, "onRequestPermissionsResult");
 
         switch (requestCode) {
-            case RingApplication.PERMISSIONS_REQUEST: {
-                if (grantResults.length == 0) {
-                    return;
-                }
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-                for (int i = 0, n = permissions.length; i < n; i++) {
-                    String permission = permissions[i];
-                    ((RingApplication) getApplication()).permissionHasBeenAsked(permission);
-                    switch (permission) {
-                        case Manifest.permission.RECORD_AUDIO:
-                            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                                Log.e(TAG, "Missing required permission RECORD_AUDIO");
-                                AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                                        .setTitle(R.string.start_error_title)
-                                        .setMessage(R.string.start_error_mic_required)
-                                        .setIcon(R.drawable.ic_mic_black)
-                                        .setCancelable(false)
-                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                finish();
-                                            }
-                                        }).setOnCancelListener(new DialogInterface.OnCancelListener() {
-                                            @Override
-                                            public void onCancel(DialogInterface dialog) {
-                                                finish();
-                                            }
-                                        });
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                        @Override
-                                        public void onDismiss(DialogInterface dialog) {
-                                            finish();
-                                        }
-                                    });
-                                }
-                                builder.show();
-                                return;
-                            }
-                            break;
-                        case Manifest.permission.READ_CONTACTS:
-                            sharedPref.edit().putBoolean(getString(R.string.pref_systemContacts_key), grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
-                            break;
-                        case Manifest.permission.CAMERA:
-                            sharedPref.edit().putBoolean(getString(R.string.pref_systemCamera_key), grantResults[i] == PackageManager.PERMISSION_GRANTED).apply();
-                            // permissions have changed, video params should be reset
-                            final boolean isVideoAllowed = mDeviceRuntimeService.hasVideoPermission();
-                            if (isVideoAllowed) {
-                                mHardwareService.initVideo();
-                            }
-                    }
-                }
-
-                break;
-            }
             case REQUEST_PERMISSION_READ_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -497,9 +391,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                 }
                 break;
         }
-
-        mIsAskingForPermissions = false;
-        loadAccounts();
     }
 
     public void setToolbarState(boolean doubleHeight, int titleRes) {
@@ -621,9 +512,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case REQUEST_CODE_CREATE_ACCOUNT:
-                mNoAccountOpened = false;
-                break;
             case REQUEST_CODE_CALL:
                 if (resultCode == CallActivity.RESULT_FAILURE) {
                     Log.w(TAG, "Call Failed");
