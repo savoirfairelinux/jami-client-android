@@ -22,6 +22,30 @@
       "revId": "84fb6a7c8900b531f3a6fb55f71053a95a59d413",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_226a0e1b",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListPresenter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-06-05T18:35:27Z",
+      "side": 1,
+      "message": "Indeed, the name of the class wasn\u0027t clear. It is used for name lookup and not registration, to avoid making too many requests while the user is typing (typical behavior in search engine interfaces to reduce server load).\nIt now waits for 350ms instead of 2000ms without any typing to make the request.",
+      "parentUuid": "5aaae553_420cea94",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 69
+      },
+      "revId": "84fb6a7c8900b531f3a6fb55f71053a95a59d413",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
