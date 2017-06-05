@@ -15,16 +15,16 @@ def rreplace(s, old, new, occurrence):
     return new.join(li)
 
 def usage():
-    print "jni-xml2cpp.py --file <file> | -i <file>"
+    print("jni-xml2cpp.py --file <file> | -i <file>")
 
 # main
 inputfile = "./dbus/callmanager-introspec.xml"
 outputfile = "./dbus/callmanager-jni.h"
 try:
     opts, args = getopt.getopt(sys.argv[1:], "hi:o:", ["help", "input=", "output="])
-except getopt.GetoptError, err:
+except getopt.GetoptError as err:
     usage()
-    print str(err)
+    print(str(err))
     #print opts
     sys.exit(2)
 
@@ -37,11 +37,11 @@ for opt, arg in opts:
     elif opt in ("-o", "--output"):
         outputfile = arg
     else:
-        print "error: argument not recognized"
+        print("error: argument not recognized")
         sys.exit(3)
 
-print "inputfile = %s" % (inputfile)
-print "outputfile = %s" % (outputfile)
+print("inputfile = %s" % (inputfile))
+print("outputfile = %s" % (outputfile))
 source = "".join(args)
 
 # lxml.objectify
