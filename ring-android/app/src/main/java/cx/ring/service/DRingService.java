@@ -203,7 +203,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
         @Override
         public String placeCall(final String account, final String number, final boolean video) {
-            return mCallService.placeCall(account, number, video);
+            return mCallService.placeCall(account, number, video).getCallId();
         }
 
         @Override

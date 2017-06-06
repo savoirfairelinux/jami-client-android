@@ -42,6 +42,7 @@ import cx.ring.daemon.UintVect;
 import cx.ring.daemon.VectMap;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
+import cx.ring.model.CallContact;
 import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.ServiceEvent;
@@ -91,6 +92,9 @@ public class AccountService extends Observable {
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
+
+    @Inject
+    ContactService mContactService;
 
     private Account mCurrentAccount;
     private List<Account> mAccountList;
@@ -1324,6 +1328,13 @@ public class AccountService extends Observable {
         @Override
         public void registeredNameFound(String accountId, int state, String address, String name) {
             Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
+
+            if (state == 0) {
+                CallContact contact = mContactService.getRingContact(address);
+                if (contact != null) {
+                    contact.setUsername(name);
+                }
+            }
 
             setChanged();
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTERED_NAME_FOUND);

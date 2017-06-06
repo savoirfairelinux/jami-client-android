@@ -395,20 +395,24 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     }
 
     @Override
-    public void updateContactBubble(final String contactName) {
+    public void updateContactBubble(final CallContact contact) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (contactName.isEmpty()) {
+                if (contact == null) {
                     return;
                 }
-                if (contactBubbleTxt.getText().toString().contains(CallContact.PREFIX_RING)) {
+                String username = contact.getUsername();
+                String displayName = contact.getDisplayName();
+                boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
+
+                if (hasProfileName) {
                     contactBubbleNumTxt.setVisibility(View.VISIBLE);
-                    contactBubbleNumTxt.setText(contactBubbleTxt.getText());
-                    contactBubbleTxt.setText(contactName);
+                    contactBubbleTxt.setText(displayName);
+                    contactBubbleNumTxt.setText(username);
                 } else {
-                    contactBubbleNumTxt.setVisibility(View.VISIBLE);
-                    contactBubbleNumTxt.setText(contactName);
+                    contactBubbleNumTxt.setVisibility(View.GONE);
+                    contactBubbleTxt.setText(username);
                 }
             }
         });
@@ -419,7 +423,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
      * contact picture drawable.
      */
     @Override
-    public void updateContactBubbleWithVCard(final String contactName, final byte[] photo) {
+    public void updateContactBubbleWithVCard(final CallContact contact, final byte[] photo) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -434,15 +438,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                             .load(R.drawable.ic_contact_picture)
                             .into(contactBubbleView);
                 }
-
-                if (TextUtils.isEmpty(contactName) || contactName.contains(CallContact.PREFIX_RING)) {
-                    return;
-                }
-                if (contactBubbleTxt.getText().toString().contains(CallContact.PREFIX_RING)) {
-                    contactBubbleNumTxt.setVisibility(View.VISIBLE);
-                    contactBubbleNumTxt.setText(contactBubbleTxt.getText());
-                }
-                contactBubbleTxt.setText(contactName);
+                updateContactBubble(contact);
             }
         });
     }
@@ -537,15 +533,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             @Override
             public void run() {
                 CallContact contact = call.getContact();
-                if (contact == null) {
-                    return;
-                }
-                final String name = contact.getDisplayName();
-                contactBubbleTxt.setText(name);
-                if (!name.contains(CallContact.PREFIX_RING) && contactBubbleNumTxt.getText().toString().isEmpty()) {
-                    contactBubbleNumTxt.setVisibility(View.VISIBLE);
-                    contactBubbleNumTxt.setText(call.getNumber());
-                }
+                updateContactBubble(contact);
                 mPulseAnimation.startRippleAnimation();
             }
         });
