@@ -12,7 +12,7 @@ dependencies {
     }
 
     // QRCode encoding
-    compile 'com.google.zxing:core:3.2.1'
+    compile 'com.google.zxing:core:3.3.0'
 
     // dependency injection
     compile 'javax.inject:javax.inject:1'
