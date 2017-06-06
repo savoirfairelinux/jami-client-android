@@ -147,6 +147,7 @@ public class AndroidTVCallPresenter extends RootPresenter<CallView> implements O
     }
 
     public void initIncoming(String confId) {
+        Log.d(TAG, "incoming call!");
         mSipCall = mCallService.getCurrentCallForId(confId);
         //FIXME sipCall is null for unknowm reason atm
         if (mSipCall == null) {
@@ -341,6 +342,7 @@ public class AndroidTVCallPresenter extends RootPresenter<CallView> implements O
     }
 
     private void parseCall(String callId, int callState, HashMap<String, String> callDetails) {
+
         if (mSipCall == null || !mSipCall.getCallId().equals(callId)) {
             return;
         }
@@ -370,6 +372,7 @@ public class AndroidTVCallPresenter extends RootPresenter<CallView> implements O
                 || callState == SipCall.State.OVER) {
             finish();
         } else if (callState != SipCall.State.INACTIVE) {
+            Log.d(TAG, "show notification");
             mNotificationService.showCallNotification(new Conference(mSipCall));
         }
 
