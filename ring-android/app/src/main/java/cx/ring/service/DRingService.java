@@ -681,6 +681,9 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     }
 
     public void refreshContacts() {
+        if (mAccountService.getCurrentAccount() == null) {
+            return;
+        }
         Log.d(TAG, "refreshContacts");
         mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount().getAccountID());
     }
