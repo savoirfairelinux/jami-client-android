@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_6d3a3738",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-06-06T20:27:26Z",
+      "side": 1,
+      "message": "This should be called by the presenter",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 45
+      },
+      "revId": "44fcec4082199fe36a44602ab982d80937b7a3a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_0d3f0327",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-06-06T20:27:26Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 536,
+        "startChar": 0,
+        "endLine": 536,
+        "endChar": 45
+      },
+      "revId": "44fcec4082199fe36a44602ab982d80937b7a3a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_2d3c3f2f",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/CallContact.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-06-06T20:27:26Z",
+      "side": 1,
+      "message": "The method should be have a more explicit name as we expect a simple getter",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 9
+      },
+      "revId": "44fcec4082199fe36a44602ab982d80937b7a3a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_cd480bcf",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-06-06T20:27:26Z",
+      "side": 1,
+      "message": "Services should not be dependant of other services",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 35
+      },
+      "revId": "44fcec4082199fe36a44602ab982d80937b7a3a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_ed45c7b3",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/CallService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-06-06T20:27:26Z",
+      "side": 1,
+      "message": "Services should not be dependant of other services",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 35
+      },
+      "revId": "44fcec4082199fe36a44602ab982d80937b7a3a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_8d1213b3",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/ContactService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-06-06T20:27:26Z",
+      "side": 1,
+      "message": "Should use CallContact.PREFIX_RING",
+      "range": {
+        "startLine": 185,
+        "startChar": 33,
+        "endLine": 185,
+        "endChar": 40
+      },
+      "revId": "44fcec4082199fe36a44602ab982d80937b7a3a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
