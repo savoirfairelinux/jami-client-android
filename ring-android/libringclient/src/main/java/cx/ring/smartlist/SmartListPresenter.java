@@ -138,6 +138,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     public void queryTextChanged(String query) {
         if (query.equals("")) {
             getView().hideSearchRow();
+            getView().setLoading(false);
         } else {
             Account currentAccount = mAccountService.getCurrentAccount();
             if (currentAccount == null) {
@@ -165,11 +166,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
                 mNameLookupInputHandler.enqueueNextLookup(query);
                 mLastBlockchainQuery = query;
+                getView().setLoading(true);
             }
         }
 
         getView().updateList(filter(mSmartListViewModels, query));
-        getView().setLoading(false);
     }
 
     public void newContactClicked() {
@@ -358,6 +359,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 }
                 break;
         }
+        getView().setLoading(false);
     }
 
     public void removeContact(String accountId, String contactId) {

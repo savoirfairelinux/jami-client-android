@@ -139,7 +139,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                 mDialpadMenuItem.setVisible(false);
                 displayFloatingActionButtonWithDelay(true, 50);
                 setOverflowMenuVisible(menu, true);
-                setLoading(false);
                 return true;
             }
 
@@ -148,7 +147,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                 mDialpadMenuItem.setVisible(true);
                 displayFloatingActionButtonWithDelay(false, 0);
                 setOverflowMenuVisible(menu, false);
-                setLoading(false);
                 return true;
             }
         });
@@ -230,10 +228,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-
-        if (savedInstanceState != null) {
-            this.setLoading(savedInstanceState.getBoolean(STATE_LOADING, false));
-        }
 
         mNewContact.setVisibility(View.GONE);
 
@@ -503,7 +497,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                     mRecyclerView.setLayoutManager(llm);
                 }
                 mSmartListAdapter.update(smartListViewModels);
-                setLoading(false);
             }
         });
     }
