@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_2dac3fed",
+        "filename": "ring-android/app/src/main/res/values-tr/strings_call.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-06-06T07:20:41Z",
+      "side": 1,
+      "message": "Those are translations for \"incoming\", not for \"searching\", so they should be removed (the proper translation will be imported from Transifex once people translate \"Searching\").",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 60
+      },
+      "revId": "812cebb932b87dd955ceedad3cd15a572239522e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
