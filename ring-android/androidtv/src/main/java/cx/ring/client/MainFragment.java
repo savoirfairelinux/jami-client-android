@@ -56,12 +56,13 @@ import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.client.Contact.Contact;
+import cx.ring.client.Contact;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
+import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.Observable;
@@ -98,6 +99,9 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
     @Inject
     ContactService mContactService;
 
+    @Inject
+    CallService mCallService;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate");
@@ -119,6 +123,7 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
         mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
         mContactService.addObserver(this);
+        mCallService.addObserver(this);
     }
 
     @Override
@@ -137,13 +142,6 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
         HeaderItem cardPresenterHeader = new HeaderItem(1, "Contacts");
         CardPresenter cardPresenter = new CardPresenter();
         cardRowAdapter = new ArrayObjectAdapter(cardPresenter);
-
-        for(int i=0; i<1; i++) {
-            Contact contact = new Contact();
-            contact.setName("Name" + i);
-            contact.setAddress("Address" + i);
-            cardRowAdapter.add(contact);
-        }
         mRowsAdapter.add(new ListRow(cardPresenterHeader, cardRowAdapter));
 
         /* set */
@@ -171,7 +169,7 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
                 cardRowAdapter.add(contact);
                 Log.d(TAG, "current contact : " + contact.toString());
             }
-            cardRowAdapter.notifyArrayItemRangeChanged(0, mConversations.size());
+            mRowsAdapter.notifyArrayItemRangeChanged(0, mConversations.size());
         }
 
     }
@@ -245,6 +243,20 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
             case HISTORY_LOADED:
             case CONVERSATIONS_CHANGED:
                 getConversations();
+                break;
+//            case CALL_STATE_CHANGED:
+            case INCOMING_CALL:
+                Log.d(TAG, "TV: Someone is calling?");
+                String callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
+                if (callId != null) {
+                    Log.d(TAG, "call id : " + callId);
+                    Intent intent = new Intent(getActivity(), CallActivity.class);
+                    intent.putExtra("account", mAccountService.getCurrentAccount().getAccountID());
+                    intent.putExtra("ringId", "");
+                    intent.putExtra("callId", callId);
+                    startActivity(intent);
+                }
+
                 break;
         }
     }

@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 
 import cx.ring.R;
-import cx.ring.client.Contact.Contact;
+import cx.ring.client.Contact;
 
 /*
  * A CardPresenter is used to generate Views and bind Objects to them on demand.
