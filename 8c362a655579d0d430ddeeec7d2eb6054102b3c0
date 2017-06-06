@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_2df51f83",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-06-06T20:27:26Z",
+      "side": 1,
+      "message": "Services should not be dependant of other services",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 35
+      },
+      "revId": "8c362a655579d0d430ddeeec7d2eb6054102b3c0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_0df8637b",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/CallService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-06-06T20:27:26Z",
+      "side": 1,
+      "message": "Services should not be dependant of other services",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 35
+      },
+      "revId": "8c362a655579d0d430ddeeec7d2eb6054102b3c0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
