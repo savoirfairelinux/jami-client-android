@@ -1,6 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppTheme.ActionBar.Transparent" parent="style/Theme.AppCompat">
+    <style name="AppTheme.ActionBar.Transparent" parent="@style/Theme.AppCompat">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowContentOverlay">@null</item>
