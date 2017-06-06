@@ -1,4 +1,4 @@
-package cx.ring.client.Contact;
+package cx.ring.client;
 
 /**
  * Created by mschmit on 26/05/17.
