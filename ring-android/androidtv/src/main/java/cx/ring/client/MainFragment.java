@@ -137,13 +137,6 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
         HeaderItem cardPresenterHeader = new HeaderItem(1, "Contacts");
         CardPresenter cardPresenter = new CardPresenter();
         cardRowAdapter = new ArrayObjectAdapter(cardPresenter);
-
-        for(int i=0; i<1; i++) {
-            Contact contact = new Contact();
-            contact.setName("Name" + i);
-            contact.setAddress("Address" + i);
-            cardRowAdapter.add(contact);
-        }
         mRowsAdapter.add(new ListRow(cardPresenterHeader, cardRowAdapter));
 
         /* set */
@@ -171,7 +164,7 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
                 cardRowAdapter.add(contact);
                 Log.d(TAG, "current contact : " + contact.toString());
             }
-            cardRowAdapter.notifyArrayItemRangeChanged(0, mConversations.size());
+            mRowsAdapter.notifyArrayItemRangeChanged(0, 1);
         }
 
     }
@@ -245,6 +238,13 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
             case HISTORY_LOADED:
             case CONVERSATIONS_CHANGED:
                 getConversations();
+                break;
+//            case CALL_STATE_CHANGED:
+            case INCOMING_CALL:
+                Log.d(TAG, "TV: Someone is calling?");
+                Intent intent = new Intent(getActivity(), CallActivity.class);
+                intent.putExtra("account", mAccountService.getCurrentAccount().getAccountID());
+                intent.putExtra("ringId", "");
                 break;
         }
     }

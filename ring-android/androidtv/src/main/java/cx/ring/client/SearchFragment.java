@@ -43,7 +43,7 @@ public class SearchFragment extends android.support.v17.leanback.app.SearchFragm
     private ArrayObjectAdapter mRowsAdapter;
 
     private NameLookupInputHandler mNameLookupInputHandler;
-    private String mLastBlockchainQuery = null;
+    private String mLastNameLookupInput = null;
     private Contact contact = new Contact();
 
     @Inject
@@ -111,7 +111,7 @@ public class SearchFragment extends android.support.v17.leanback.app.SearchFragm
         }
 
         mNameLookupInputHandler.enqueueNextLookup(newQuery);
-        mLastBlockchainQuery = newQuery;
+        mLastNameLookupInput = newQuery;
 
         return true;
     }
@@ -132,8 +132,8 @@ public class SearchFragment extends android.support.v17.leanback.app.SearchFragm
         switch (event.getEventType()) {
             case REGISTERED_NAME_FOUND:
                 String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                if (mLastBlockchainQuery != null
-                        && (mLastBlockchainQuery.equals("") || !mLastBlockchainQuery.equals(name))) {
+                if (mLastNameLookupInput != null
+                        && (mLastNameLookupInput.equals("") || !mLastNameLookupInput.equals(name))) {
                     return;
                 }
                 String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
