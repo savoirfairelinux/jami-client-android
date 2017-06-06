@@ -19,8 +19,6 @@
  */
 package cx.ring.call;
 
-import java.lang.ref.WeakReference;
-import java.util.HashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -42,17 +40,15 @@ import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
-import cx.ring.utils.NameLookupInputHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.Tuple;
 
 public class AndroidTVCallPresenter extends RootPresenter<CallView> implements Observer<ServiceEvent> {
 
-    public final static String TAG = AndroidTVCallPresenter.class.getSimpleName();
+    public final static String TAG = CallPresenter.class.getSimpleName();
 
     protected AccountService mAccountService;
-    protected ConversationFacade mConversationFacade;
     protected NotificationService mNotificationService;
     protected DeviceRuntimeService mDeviceRuntimeService;
     protected HardwareService mHardwareService;
@@ -69,8 +65,6 @@ public class AndroidTVCallPresenter extends RootPresenter<CallView> implements O
     private int previewWidth = -1;
     private int previewHeight = -1;
 
-    private NameLookupInputHandler mNameLookupInputHandler;
-
     private ScheduledExecutorService executor;
     private Runnable timeRunnable = new Runnable() {
         public void run() {
@@ -80,15 +74,13 @@ public class AndroidTVCallPresenter extends RootPresenter<CallView> implements O
 
     @Inject
     public AndroidTVCallPresenter(AccountService accountService,
-                                  ConversationFacade conversationFacade,
-                                  NotificationService notificationService,
-                                  DeviceRuntimeService deviceRuntimeService,
-                                  HardwareService hardwareService,
-                                  CallService callService,
-                                  ContactService contactService,
-                                  HistoryService mHistoryService) {
+                         NotificationService notificationService,
+                         DeviceRuntimeService deviceRuntimeService,
+                         HardwareService hardwareService,
+                         CallService callService,
+                         ContactService contactService,
+                         HistoryService mHistoryService) {
         this.mAccountService = accountService;
-        this.mConversationFacade = conversationFacade;
         this.mNotificationService = notificationService;
         this.mDeviceRuntimeService = deviceRuntimeService;
         this.mHardwareService = hardwareService;
@@ -125,23 +117,14 @@ public class AndroidTVCallPresenter extends RootPresenter<CallView> implements O
     }
 
     public void initOutGoing(String accountId, Uri number, boolean hasVideo) {
-        CallContact contact = mContactService.findContactByNumber(number.getRawUriString());
-
-        Log.d(TAG, "initOutGoing: " + (contact != null));
-
-        String callId = mCallService.placeCall(accountId, number.getUriString(), hasVideo);
-        if (callId == null || callId.isEmpty()) {
+        Log.d(TAG, "initOutGoing: " + number.toString());
+        mSipCall = mCallService.placeCall(accountId, number.getUriString(), hasVideo);
+        if (mSipCall == null) {
             finish();
             return;
         }
-
-        mSipCall = mCallService.getCurrentCallForId(callId);
-        mSipCall.muteVideo(!hasVideo);
-        mSipCall.setCallID(callId);
-        mSipCall.setContact(contact);
         mHasVideo = hasVideo;
         confUpdate();
-        getUsername();
         getContactDetails();
         getView().blockScreenRotation();
     }
@@ -150,17 +133,12 @@ public class AndroidTVCallPresenter extends RootPresenter<CallView> implements O
         mSipCall = mCallService.getCurrentCallForId(confId);
         //FIXME sipCall is null for unknowm reason atm
         if (mSipCall == null) {
+            Log.w(TAG, "initIncoming: null Call");
             finish();
             return;
         }
-        CallContact contact = mSipCall.getContact();
-        if (contact == null) {
-            contact = mContactService.findContactByNumber(mSipCall.getNumberUri().getRawUriString());
-        }
-        mSipCall.setContact(contact);
         mHasVideo = true;
         confUpdate();
-        getUsername();
         getContactDetails();
         getView().blockScreenRotation();
 
@@ -287,7 +265,7 @@ public class AndroidTVCallPresenter extends RootPresenter<CallView> implements O
         if (mSipCall.isOnGoing()) {
             mOnGoingCall = true;
             getView().initNormalStateDisplay(mHasVideo);
-            getView().initContactDisplay(mSipCall);
+            getView().updateContactBubble(mSipCall.getContact());
             if (mHasVideo) {
                 mHardwareService.setPreviewSettings();
                 getView().displayVideoSurface(true);
@@ -300,13 +278,13 @@ public class AndroidTVCallPresenter extends RootPresenter<CallView> implements O
                     mCallService.accept(mSipCall.getCallId());
                 } else {
                     getView().initIncomingCallDisplay();
-                    getView().initContactDisplay(mSipCall);
+                    getView().updateContactBubble(mSipCall.getContact());
                 }
             } else {
                 mOnGoingCall = false;
                 getView().updateCallStatus(mSipCall.getCallState());
                 getView().initOutGoingCallDisplay();
-                getView().initContactDisplay(mSipCall);
+                getView().updateContactBubble(mSipCall.getContact());
             }
         } else {
             finish();
@@ -323,46 +301,21 @@ public class AndroidTVCallPresenter extends RootPresenter<CallView> implements O
         }
     }
 
-    private void getUsername() {
-        if (mSipCall == null) {
-            return;
-        }
-
-        String[] split = mSipCall.getNumber().split(":");
-        if (split.length > 0) {
-            mAccountService.lookupAddress("", "", split[1]);
-        }
-    }
-
     private void getContactDetails() {
         CallContact callContact = mSipCall.getContact();
-        Tuple<String, byte[]> tuple = mContactService.loadContactData(callContact);
-        getView().updateContactBubbleWithVCard(tuple.first, tuple.second);
+        mContactService.loadContactData(callContact);
+        getView().updateContactBubble(callContact);
     }
 
-    private void parseCall(String callId, int callState, HashMap<String, String> callDetails) {
+    private void parseCall(String callId, int callState) {
         if (mSipCall == null || !mSipCall.getCallId().equals(callId)) {
             return;
         }
 
-        if (callState == SipCall.State.INCOMING ||
+        if (callState == SipCall.State.SEARCHING ||
                 callState == SipCall.State.OVER) {
             mHistoryService.updateVCard();
         }
-
-        int oldState = mSipCall.getCallState();
-
-        if (callState != oldState) {
-            if ((mSipCall.isRinging() || callState == SipCall.State.CURRENT) && mSipCall.getTimestampStart() == 0) {
-                mSipCall.setTimestampStart(System.currentTimeMillis());
-            }
-            if (callState == SipCall.State.RINGING) {
-                mAccountService.sendProfile(callId, mSipCall.getAccount());
-            }
-            mSipCall.setCallState(callState);
-        }
-
-        mSipCall.setDetails(callDetails);
 
         if (callState == SipCall.State.HUNGUP
                 || callState == SipCall.State.BUSY
@@ -376,7 +329,6 @@ public class AndroidTVCallPresenter extends RootPresenter<CallView> implements O
         mDeviceRuntimeService.updateAudioState(mSipCall.isRinging() && mSipCall.isIncoming());
     }
 
-
     @Override
     public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
@@ -388,22 +340,18 @@ public class AndroidTVCallPresenter extends RootPresenter<CallView> implements O
                 case CALL_STATE_CHANGED:
                     String callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
                     int newState = SipCall.stateFromString(event.getEventInput(ServiceEvent.EventInput.STATE, String.class));
-                    HashMap<String, String> callDetails = (HashMap<String, String>) event.getEventInput(ServiceEvent.EventInput.DETAILS, HashMap.class);
 
                     Log.d(TAG, "CALL_STATE_CHANGED: " + callId + " " + newState);
 
-                    parseCall(callId, newState, callDetails);
+                    parseCall(callId, newState);
                     confUpdate();
                     break;
             }
         } else if (observable instanceof AccountService) {
             switch (event.getEventType()) {
                 case REGISTERED_NAME_FOUND:
-                    String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                    String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-
-                    if (mSipCall.getNumber().contains(address)) {
-                        getView().updateContactBubble(name);
+                    if (mSipCall != null && mSipCall.getContact() != null) {
+                        getView().updateContactBubble(mSipCall.getContact());
                     }
                     break;
             }

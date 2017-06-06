@@ -28,6 +28,7 @@ import cx.ring.call.CallFragment;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.model.Uri;
+import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
 
 public class CallActivity extends Activity {
@@ -51,19 +52,30 @@ public class CallActivity extends Activity {
 
         String ringId = getIntent().getStringExtra("ringId");
         Uri number = null;
-        if (ringId != null) {
-            number = new Uri(ringId);
-        }
-        else {
-            number = new Uri("ring:528cf76416f6cd657dba70b828621cc42101a8b2");
-        }
-//        michel_schmit account : 528cf76416f6cd657dba70b828621cc42101a8b2
+
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        CallFragment callFragment = CallFragment.newInstance(CallFragment.ACTION_PLACE_CALL,
-                accountId,
-                number,
-                hasVideo);
-        fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
+
+        android.util.Log.d(TAG, "IN CALL ACTIVITY !");
+        if (!ringId.equals("")) {
+
+            android.util.Log.d(TAG, " outgoing call");
+            number = new Uri(ringId);
+            CallFragment callFragment = CallFragment.newInstance(CallFragment.ACTION_PLACE_CALL,
+                    accountId,
+                    number,
+                    hasVideo);
+            fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
+        }
+        else {
+            android.util.Log.d(TAG, "incoming call");
+
+            String confId = getIntent().getStringExtra(NotificationService.KEY_CALL_ID);
+                        Log.d(TAG, "conf " + confId);
+
+            CallFragment callFragment = CallFragment.newInstance(CallFragment.ACTION_GET_CALL,
+                    confId);
+            fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
+        }
     }
 }

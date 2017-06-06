@@ -70,7 +70,6 @@
             android:screenOrientation="fullUser"
             android:theme="@style/AppThemeBase"></activity>
         <activity android:name=".client.DetailsActivity" />
-        <activity android:name=".client.PlaybackOverlayActivity" />
         <activity android:name=".client.BrowseErrorActivity" />
         <activity android:name=".client.SearchActivity" />
         <activity android:name=".client.CallActivity"

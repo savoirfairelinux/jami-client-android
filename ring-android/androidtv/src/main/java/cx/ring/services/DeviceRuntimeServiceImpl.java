@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
@@ -38,9 +39,13 @@ import java.util.concurrent.Future;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.daemon.IntVect;
+import cx.ring.daemon.StringVect;
+import cx.ring.service.OpenSlParams;
 import cx.ring.utils.Log;
 import cx.ring.utils.MediaManager;
 import cx.ring.utils.NetworkUtils;
+import cx.ring.utils.StringUtils;
 
 public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
@@ -95,7 +100,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
                 mediaManager.obtainAudioFocus(isRinging);
                 if (isRinging) {
                     mediaManager.audioManager.setMode(AudioManager.MODE_RINGTONE);
-                    mediaManager.startRing(null);
+                    mediaManager.startRing();
                 } else {
                     mediaManager.stopRing();
                     mediaManager.audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
@@ -176,8 +181,46 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
         return null;
     }
 
-
     private boolean checkPermission(String permission) {
         return ContextCompat.checkSelfPermission(mContext, permission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+
+    @Override
+    public void getHardwareAudioFormat(IntVect ret) {
+        OpenSlParams audioParams = OpenSlParams.createInstance(mContext);
+        ret.add(audioParams.getSampleRate());
+        ret.add(audioParams.getBufferSize());
+        Log.d(TAG, "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
+    }
+
+    @Override
+    public void getAppDataPath(String name, StringVect ret) {
+        if (name == null || ret == null) {
+            return;
+        }
+
+        switch (name) {
+            case "files":
+                ret.add(mContext.getFilesDir().getAbsolutePath());
+                break;
+            case "cache":
+                ret.add(mContext.getCacheDir().getAbsolutePath());
+                break;
+            default:
+                ret.add(mContext.getDir(name, Context.MODE_PRIVATE).getAbsolutePath());
+                break;
+        }
+    }
+
+    @Override
+    public void getDeviceName(StringVect ret) {
+        String manufacturer = Build.MANUFACTURER;
+        String model = Build.MODEL;
+        if (model.startsWith(manufacturer)) {
+            ret.add(StringUtils.capitalize(model));
+        } else {
+            ret.add(StringUtils.capitalize(manufacturer) + " " + model);
+        }
     }
 }
