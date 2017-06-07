@@ -171,7 +171,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
         Conference conf = mConversation.getCurrentCall();
 
-        if (conf != null && conf.getParticipants().get(0).getCallState() == SipCall.State.INACTIVE) {
+        if (conf != null && (conf.getParticipants().get(0).getCallState() == SipCall.State.INACTIVE
+                || conf.getParticipants().get(0).getCallState() == SipCall.State.FAILURE)) {
             mConversation.removeConference(conf);
             conf = null;
         }

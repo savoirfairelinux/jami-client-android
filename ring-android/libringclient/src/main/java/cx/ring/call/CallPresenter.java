@@ -381,7 +381,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
                     String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
                     String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
 
-                    if (mSipCall.getNumber().contains(address)) {
+                    if (mSipCall != null && mSipCall.getNumber().contains(address)) {
                         getView().updateContactBubble(name);
                     }
                     break;
