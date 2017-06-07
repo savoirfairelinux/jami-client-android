@@ -55,9 +55,17 @@ public class DaemonService {
     @Inject
     HistoryService mHistoryService;
 
+    private final SystemInfoCallbacks mSystemInfoCallbacks;
+
     private boolean mDaemonStarted = false;
 
-    public DaemonService() {
+    public DaemonService(SystemInfoCallbacks systemInfoCallbacks) {
+        mSystemInfoCallbacks = systemInfoCallbacks;
+    }
+
+    public interface SystemInfoCallbacks {
+        void getHardwareAudioFormat(IntVect ret);
+        void getAppDataPath(String name, StringVect ret);
     }
 
     public Callback getDaemonCallbackHandler(CallService.CallbackHandler callCallbackHandler,
@@ -173,12 +181,12 @@ public class DaemonService {
 
         @Override
         public void getHardwareAudioFormat(IntVect ret) {
-            mAccountCallbackHandler.getHardwareAudioFormat(ret);
+            mSystemInfoCallbacks.getHardwareAudioFormat(ret);
         }
 
         @Override
         public void getAppDataPath(String name, StringVect ret) {
-            mAccountCallbackHandler.getAppDataPath(name, ret);
+            mSystemInfoCallbacks.getAppDataPath(name, ret);
         }
 
         @Override

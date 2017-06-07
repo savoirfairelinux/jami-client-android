@@ -97,15 +97,6 @@ public class ConfigurationManagerCallback implements Observer<ServiceEvent> {
             case ERROR_ALERT:
                 errorAlert(event.getEventInput(ServiceEvent.EventInput.ALERT, Integer.class));
                 break;
-            case GET_HARDWARE_AUDIO_FORMAT:
-                getHardwareAudioFormat(event.getEventInput(ServiceEvent.EventInput.FORMATS, IntVect.class));
-                break;
-            case GET_APP_DATA_PATH:
-                getAppDataPath(
-                        event.getEventInput(ServiceEvent.EventInput.NAME, String.class),
-                        event.getEventInput(ServiceEvent.EventInput.PATHS, StringVect.class)
-                );
-                break;
             case KNOWN_DEVICES_CHANGED:
                 knownDevicesChanged(
                         event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class),
@@ -178,31 +169,6 @@ public class ConfigurationManagerCallback implements Observer<ServiceEvent> {
 
     private void errorAlert(int alert) {
         Log.d(TAG, "errorAlert : " + alert);
-    }
-
-    private void getHardwareAudioFormat(IntVect ret) {
-        OpenSlParams audioParams = OpenSlParams.createInstance(mContext);
-        ret.add(audioParams.getSampleRate());
-        ret.add(audioParams.getBufferSize());
-        Log.d(TAG, "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
-    }
-
-    private void getAppDataPath(String name, StringVect ret) {
-        if (name == null || ret == null) {
-            return;
-        }
-
-        switch (name) {
-            case "files":
-                ret.add(mContext.getFilesDir().getAbsolutePath());
-                break;
-            case "cache":
-                ret.add(mContext.getCacheDir().getAbsolutePath());
-                break;
-            default:
-                ret.add(mContext.getDir(name, Context.MODE_PRIVATE).getAbsolutePath());
-                break;
-        }
     }
 
     private void knownDevicesChanged(String accountId, StringMap devices) {
