@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	software-properties-common \
 	unzip \
 	wget \
+	curl \
 	yasm \
 	zip \
 	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
