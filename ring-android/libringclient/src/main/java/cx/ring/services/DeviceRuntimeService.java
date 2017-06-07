@@ -25,7 +25,7 @@ import java.util.Map;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.Conference;
 
-public abstract class DeviceRuntimeService {
+public abstract class DeviceRuntimeService implements DaemonService.SystemInfoCallbacks {
 
     public abstract void loadNativeLibrary();
 

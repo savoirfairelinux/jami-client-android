@@ -38,6 +38,9 @@ import java.util.concurrent.Future;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.daemon.IntVect;
+import cx.ring.daemon.StringVect;
+import cx.ring.service.OpenSlParams;
 import cx.ring.utils.Log;
 import cx.ring.utils.MediaManager;
 import cx.ring.utils.NetworkUtils;
@@ -178,5 +181,34 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
     private boolean checkPermission(String permission) {
         return ContextCompat.checkSelfPermission(mContext, permission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+
+    @Override
+    public void getHardwareAudioFormat(IntVect ret) {
+        OpenSlParams audioParams = OpenSlParams.createInstance(mContext);
+        ret.add(audioParams.getSampleRate());
+        ret.add(audioParams.getBufferSize());
+        android.util.Log.d(TAG, "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
+    }
+
+    @Override
+    public void getAppDataPath(String name, StringVect ret) {
+        if (name == null || ret == null) {
+            return;
+        }
+        android.util.Log.d(TAG, "getAppDataPath: " + name);
+
+        switch (name) {
+            case "files":
+                ret.add(mContext.getFilesDir().getAbsolutePath());
+                break;
+            case "cache":
+                ret.add(mContext.getCacheDir().getAbsolutePath());
+                break;
+            default:
+                ret.add(mContext.getDir(name, Context.MODE_PRIVATE).getAbsolutePath());
+                break;
+        }
     }
 }

@@ -1253,27 +1253,6 @@ public class AccountService extends Observable {
         }
 
         @Override
-        public void getHardwareAudioFormat(IntVect ret) {
-            Log.d(TAG, "getHardwareAudioFormat: " + ret.toString());
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.GET_HARDWARE_AUDIO_FORMAT);
-            event.addEventInput(ServiceEvent.EventInput.FORMATS, ret);
-            notifyObservers(event);
-        }
-
-        @Override
-        public void getAppDataPath(String name, StringVect ret) {
-            Log.d(TAG, "getAppDataPath: " + name + ", " + ret);
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.GET_APP_DATA_PATH);
-            event.addEventInput(ServiceEvent.EventInput.NAME, name);
-            event.addEventInput(ServiceEvent.EventInput.PATHS, ret);
-            notifyObservers(event);
-        }
-
-        @Override
         public void knownDevicesChanged(String accountId, StringMap devices) {
             Log.d(TAG, "knownDevicesChanged: " + accountId + ", " + devices);
 

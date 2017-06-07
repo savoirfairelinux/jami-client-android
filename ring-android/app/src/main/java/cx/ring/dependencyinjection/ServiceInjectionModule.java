@@ -109,7 +109,7 @@ public class ServiceInjectionModule {
     @Provides
     @Singleton
     DaemonService provideDaemonService(DeviceRuntimeService deviceRuntimeService) {
-        DaemonService daemonService = new DaemonService();
+        DaemonService daemonService = new DaemonService(deviceRuntimeService);
         mRingApplication.getRingInjectionComponent().inject(daemonService);
         return daemonService;
     }
