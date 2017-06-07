@@ -52,6 +52,6 @@ AR="${CROSS_COMPILE}ar" \
 AS="${CROSS_COMPILE}as" \
 PKG_CONFIG_LIBDIR=$RING_SRC_DIR/contrib/$TARGET_TUPLE/lib/pkgconfig \
 $RING_SRC_DIR/configure --host=$TARGET_TUPLE $EXTRA_PARAMS \
-                   --disable-shared --with-opensl --without-dbus --without-alsa --without-pulse --without-speexdsp \
+                   --disable-shared --with-opensl --without-dbus --without-alsa --without-pulse --without-speexdsp --enable-accel\
                    --prefix=$RING_SRC_DIR/install-android-$TARGET_TUPLE \
                    $*
