@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_8d60d336",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-06-07T06:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_6d3a3738",
+      "range": {
+        "startLine": 441,
+        "startChar": 0,
+        "endLine": 441,
+        "endChar": 45
+      },
+      "revId": "44fcec4082199fe36a44602ab982d80937b7a3a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_0d3f0327",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-06T20:27:26Z",
       "side": 1,
       "message": "^",
+      "range": {
+        "startLine": 536,
+        "startChar": 0,
+        "endLine": 536,
+        "endChar": 45
+      },
+      "revId": "44fcec4082199fe36a44602ab982d80937b7a3a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_ad658f46",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-06-07T06:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_0d3f0327",
       "range": {
         "startLine": 536,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_4d5adb84",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/CallContact.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-06-07T06:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_2d3c3f2f",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 9
+      },
+      "revId": "44fcec4082199fe36a44602ab982d80937b7a3a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_cd480bcf",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-06T20:27:26Z",
       "side": 1,
       "message": "Services should not be dependant of other services",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 35
+      },
+      "revId": "44fcec4082199fe36a44602ab982d80937b7a3a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_0d54e352",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-06-07T06:35:22Z",
+      "side": 1,
+      "message": "I agree that services should ideally be kept as independent as possible from each others.\n\nServices in LRC directly wrap daemon various methods and callback handlers as-is, and simply retransmit callbacks to UI layers. That is a design issue as LRC is meant to model higher-level concepts from daemon and other sources to be used by clients/UIs. It\u0027s also a design issue because Daemon\u0027 callbacks are not organized in a suitable way for this modeling. For instance \"AccountService\" is not an actual \"account service\", but a wrapper around the daemon\u0027 ConfigurationManager callbacks and methods, including things unrelated to Accounts such as getAppDataPath(), or registeredNameFound() (that should be in ContactService, but can\u0027t because of the issue mentioned above).\n\nSomething like ConversationFacade would not be a suitable way to handle this, as there is no guarantee that ConversationFacade will handle the events before any other client components. Despite being in LRC, it\u0027s at the same logical level as other UI components so it\u0027s not suited to perform higher-level logic for presentation to UI components.\nMaybe in the future, UI components would only talk to ConversationFacade and stop using services directly but that would require a major redesign.\n\nI would be happy to discuss a better design. Currently, taking in account the existing design issues and because of the deadline to fix user issues, I think this is the best and lightest approach.\n\nI\u0027m not very familiar with injection so I would be happy to know about technical issues that this new service dependency might introduce. I made some tests and experienced no crash.",
+      "parentUuid": "5aaae553_cd480bcf",
       "range": {
         "startLine": 96,
         "startChar": 0,
@@ -128,6 +224,30 @@
       "writtenOn": "2017-06-06T20:27:26Z",
       "side": 1,
       "message": "Should use CallContact.PREFIX_RING",
+      "range": {
+        "startLine": 185,
+        "startChar": 33,
+        "endLine": 185,
+        "endChar": 40
+      },
+      "revId": "44fcec4082199fe36a44602ab982d80937b7a3a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_2d519f62",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/ContactService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-06-07T06:35:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_8d1213b3",
       "range": {
         "startLine": 185,
         "startChar": 33,
