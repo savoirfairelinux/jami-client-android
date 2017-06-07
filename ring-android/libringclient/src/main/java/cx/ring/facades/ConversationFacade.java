@@ -457,9 +457,11 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             List<SipCall> calls = conference.getParticipants();
             if (calls.size() == 1) {
                 SipCall call = calls.get(0);
-                CallContact contact = mContactService.findContact(-1, null, call.getNumber());
-                call.setContact(contact);
-
+                CallContact contact = call.getContact();
+                if (call.getContact() == null) {
+                    contact = mContactService.findContact(call.getNumberUri());
+                    call.setContact(contact);
+                }
                 Conversation conv = null;
                 ArrayList<String> ids = contact.getIds();
                 for (String id : ids) {
@@ -485,7 +487,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         ServiceEvent mEvent;
         SipCall call;
         String callId;
-        Uri number;
 
         if (observable instanceof HistoryService && event != null) {
 
@@ -524,14 +525,12 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     break;
             }
         } else if (observable instanceof CallService && event != null) {
+            Conversation conversation = null;
+            Conference conference = null;
             switch (event.getEventType()) {
                 case CALL_STATE_CHANGED:
                     callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
                     int newState = SipCall.stateFromString(event.getEventInput(ServiceEvent.EventInput.STATE, String.class));
-
-                    Conversation conversation = null;
-                    Conference conference = null;
-
                     call = mCallService.getCurrentCallForId(callId);
 
                     if (call == null) {
@@ -597,21 +596,12 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     break;
                 case INCOMING_CALL:
                     callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
-                    String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
-                    number = new Uri(event.getEventInput(ServiceEvent.EventInput.FROM, String.class));
-
-                    Log.w(TAG, "INCOMING_CALL : " + callId + " " + accountId + " " + number);
-
-                    CallContact contact = mContactService.findContactByNumber(number.getRawUriString());
-
-                    Conversation conv = startConversation(contact);
-
                     call = mCallService.getCurrentCallForId(callId);
-                    call.setContact(contact);
-                    Conference toAdd = new Conference(call);
+                    conversation = startConversation(call.getContact());
+                    conference = new Conference(call);
 
-                    conv.addConference(toAdd);
-                    mNotificationService.showCallNotification(toAdd);
+                    conversation.addConference(conference);
+                    mNotificationService.showCallNotification(conference);
 
                     mHardwareService.setPreviewSettings();
 

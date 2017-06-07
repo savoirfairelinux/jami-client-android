@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *          Alexandre Savard <alexandre.savard@gmail.com>
@@ -28,8 +28,8 @@ import cx.ring.utils.Log;
 public class SipCall {
     private static final String TAG = SipCall.class.getSimpleName();
 
-    private String mCallID = "";
-    private String mAccount = "";
+    private final String mCallID;
+    private final String mAccount;
     private CallContact mContact = null;
     private Uri mNumber = null;
     private boolean isPeerHolding = false;
@@ -143,10 +143,6 @@ public class SipCall {
         int OVER = 11;
     }
 
-    public void setCallID(String callID) {
-        mCallID = callID;
-    }
-
     public String getCallId() {
         return mCallID;
     }
@@ -165,10 +161,6 @@ public class SipCall {
 
     public void setTimestampEnd(long timestampEnd) {
         this.timestampEnd = timestampEnd;
-    }
-
-    public void setAccount(String account) {
-        mAccount = account;
     }
 
     public String getAccount() {

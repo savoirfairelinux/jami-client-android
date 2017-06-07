@@ -198,7 +198,7 @@ public class DaemonService {
 
         @Override
         public void registeredNameFound(String accountId, int state, String address, String name) {
-            mAccountCallbackHandler.registeredNameFound(accountId, state, address, name);
+            mContactCallbackHandler.registeredNameFound(accountId, state, address, name);
         }
 
         @Override

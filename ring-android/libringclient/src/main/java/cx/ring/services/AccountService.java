@@ -42,6 +42,7 @@ import cx.ring.daemon.UintVect;
 import cx.ring.daemon.VectMap;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
+import cx.ring.model.CallContact;
 import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.ServiceEvent;
@@ -1317,19 +1318,6 @@ public class AccountService extends Observable {
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.NAME_REGISTRATION_ENDED);
             event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
             event.addEventInput(ServiceEvent.EventInput.STATE, state);
-            event.addEventInput(ServiceEvent.EventInput.NAME, name);
-            notifyObservers(event);
-        }
-
-        @Override
-        public void registeredNameFound(String accountId, int state, String address, String name) {
-            Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTERED_NAME_FOUND);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.STATE, state);
-            event.addEventInput(ServiceEvent.EventInput.ADDRESS, address);
             event.addEventInput(ServiceEvent.EventInput.NAME, name);
             notifyObservers(event);
         }
