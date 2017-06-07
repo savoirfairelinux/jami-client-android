@@ -42,6 +42,7 @@ import cx.ring.daemon.UintVect;
 import cx.ring.daemon.VectMap;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
+import cx.ring.model.CallContact;
 import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.ServiceEvent;
@@ -944,54 +945,6 @@ public class AccountService extends Observable {
     }
 
     /**
-     * Looks up for the availibility of the name on the blockchain
-     *
-     * @param account
-     * @param nameserver
-     * @param name
-     */
-    public void lookupName(final String account, final String nameserver, final String name) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "lookupName() thread running...");
-                        Ringservice.lookupName(account, nameserver, name);
-                        return true;
-                    }
-                }
-        );
-    }
-
-    /**
-     * Reverse looks up the address in the blockchain to find the name
-     *
-     * @param account
-     * @param nameserver
-     * @param address
-     */
-    public void lookupAddress(final String account, final String nameserver, final String address) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "lookupAddress() thread running...");
-                        Ringservice.lookupAddress(account, nameserver, address);
-                        return true;
-                    }
-                }
-        );
-    }
-
-    /**
      * Registers a new name on the blockchain for the account
      *
      * @param account
@@ -1317,19 +1270,6 @@ public class AccountService extends Observable {
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.NAME_REGISTRATION_ENDED);
             event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
             event.addEventInput(ServiceEvent.EventInput.STATE, state);
-            event.addEventInput(ServiceEvent.EventInput.NAME, name);
-            notifyObservers(event);
-        }
-
-        @Override
-        public void registeredNameFound(String accountId, int state, String address, String name) {
-            Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTERED_NAME_FOUND);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.STATE, state);
-            event.addEventInput(ServiceEvent.EventInput.ADDRESS, address);
             event.addEventInput(ServiceEvent.EventInput.NAME, name);
             notifyObservers(event);
         }

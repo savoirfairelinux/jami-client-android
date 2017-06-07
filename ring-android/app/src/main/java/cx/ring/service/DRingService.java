@@ -203,7 +203,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
         @Override
         public String placeCall(final String account, final String number, final boolean video) {
-            return mCallService.placeCall(account, number, video);
+            return mCallService.placeCall(account, number, video).getCallId();
         }
 
         @Override
@@ -564,12 +564,12 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
         @Override
         public void lookupName(final String account, final String nameserver, final String name) {
-            mAccountService.lookupName(account, nameserver, name);
+            mContactService.lookupName(account, nameserver, name);
         }
 
         @Override
         public void lookupAddress(final String account, final String nameserver, final String address) {
-            mAccountService.lookupAddress(account, nameserver, address);
+            mContactService.lookupAddress(account, nameserver, address);
         }
 
         @Override

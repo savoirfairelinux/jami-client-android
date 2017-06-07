@@ -43,7 +43,7 @@ import butterknife.OnEditorAction;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.model.ServiceEvent;
-import cx.ring.services.AccountService;
+import cx.ring.services.ContactService;
 import cx.ring.utils.RegisteredNameFilter;
 import cx.ring.utils.RegisteredNameTextWatcher;
 import cx.ring.utils.Log;
@@ -58,7 +58,7 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
     }
 
     @Inject
-    AccountService mAccountService;
+    ContactService mContactService;
 
     @BindString(R.string.username_already_taken)
     String mUserNameAlreadyTaken;
@@ -163,7 +163,7 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         mUsernameTxt.setFilters(new InputFilter[]{new RegisteredNameFilter()});
-        mUsernameTextWatcher = new RegisteredNameTextWatcher(getActivity(), mAccountService, mUsernameTxtBox, mUsernameTxt);
+        mUsernameTextWatcher = new RegisteredNameTextWatcher(getActivity(), mContactService, mUsernameTxtBox, mUsernameTxt);
         mUsernameTxt.addTextChangedListener(mUsernameTextWatcher);
 
         AlertDialog dialog = (AlertDialog) getDialog();
@@ -219,13 +219,13 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
     @Override
     public void onResume() {
         super.onResume();
-        mAccountService.addObserver(this);
+        mContactService.addObserver(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mAccountService.removeObserver(this);
+        mContactService.removeObserver(this);
     }
 
     @Override

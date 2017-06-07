@@ -78,6 +78,9 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     protected AccountService mAccountService;
 
     @Inject
+    protected ContactService mContactService;
+
+    @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
     @Inject
@@ -93,6 +96,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             notificationManager = NotificationManagerCompat.from(mContext);
         }
         mAccountService.addObserver(this);
+        mContactService.addObserver(this);
     }
 
     @Override
@@ -114,7 +118,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext);
 
         if (conference.isOnGoing()) {
-            messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getDisplayName()))
+            messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getRingUsername()))
                     .setContentText(mContext.getText(R.string.notif_current_call))
                     .setContentIntent(gotoIntent)
                     .addAction(R.drawable.ic_call_end_white, mContext.getText(R.string.action_call_hangup),
@@ -127,7 +131,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             if (conference.isIncoming()) {
                 Bundle extras = new Bundle();
                 extras.putBoolean(CallManagerCallBack.INCOMING_CALL, true);
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getDisplayName()))
+                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getRingUsername()))
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setContentText(mContext.getText(R.string.notif_incoming_call))
                         .setContentIntent(gotoIntent)
@@ -146,7 +150,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                                         PendingIntent.FLAG_ONE_SHOT))
                         .addExtras(extras);
             } else {
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
+                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getRingUsername()))
                         .setContentText(mContext.getText(R.string.notif_outgoing_call))
                         .setContentIntent(gotoIntent)
                         .addAction(R.drawable.ic_call_end_white, mContext.getText(R.string.action_call_hangup),
@@ -179,7 +183,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
         String[] split = contact.getDisplayName().split(":");
         if (split.length > 1) {
-            mAccountService.lookupAddress("", "", split[1]);
+            mContactService.lookupAddress("", "", split[1]);
         }
     }
 
@@ -243,7 +247,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
         String[] split = contact.getDisplayName().split(":");
         if (split.length > 1) {
-            mAccountService.lookupAddress("", "", split[1]);
+            mContactService.lookupAddress("", "", split[1]);
         }
     }
 
@@ -382,7 +386,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     @Override
     public void update(Observable observable, ServiceEvent arg) {
-        if (observable instanceof AccountService && arg != null) {
+        if (observable instanceof ContactService && arg != null) {
             switch (arg.getEventType()) {
                 case REGISTERED_NAME_FOUND: {
                     final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
@@ -411,7 +415,12 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                     }
                     break;
                 }
-
+                default:
+                    Log.d(TAG, "Event " + arg.getEventType() + " is not handled here");
+                    break;
+            }
+        } else if (observable instanceof AccountService && arg != null) {
+            switch (arg.getEventType()) {
                 case INCOMING_TRUST_REQUEST: {
                     final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
                     final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);

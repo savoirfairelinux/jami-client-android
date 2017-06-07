@@ -21,16 +21,16 @@ package cx.ring.utils;
 import java.lang.ref.WeakReference;
 import java.util.Timer;
 import java.util.TimerTask;
-import cx.ring.services.AccountService;
+import cx.ring.services.ContactService;
 
 public class NameLookupInputHandler {
     private static final int WAIT_DELAY = 350;
-    private WeakReference<AccountService> mAccountService;
+    private WeakReference<ContactService> mContactService;
     private final Timer timer = new Timer(true);
     private NameTask lastTask = null;
 
-    public NameLookupInputHandler(WeakReference<AccountService> accountService) {
-        mAccountService = accountService;
+    public NameLookupInputHandler(WeakReference<ContactService> accountService) {
+        mContactService = accountService;
     }
 
     public void enqueueNextLookup(String text) {
@@ -47,9 +47,9 @@ public class NameLookupInputHandler {
         }
         @Override
         public void run() {
-            final AccountService accountService = mAccountService.get();
-            if (accountService != null) {
-                accountService.lookupName("", "", mTextToLookup);
+            final ContactService service = mContactService.get();
+            if (service != null) {
+                service.lookupName("", "", mTextToLookup);
             }
         }
     }

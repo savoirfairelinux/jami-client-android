@@ -32,7 +32,6 @@ import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
@@ -49,6 +48,9 @@ public class CallService extends Observable {
     ExecutorService mExecutor;
 
     @Inject
+    ContactService mContactService;
+
+    @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
     private CallbackHandler mCallbackHandler;
@@ -63,21 +65,26 @@ public class CallService extends Observable {
         return mCallbackHandler;
     }
 
-    public String placeCall(final String account, final String number, final boolean video) {
+    public SipCall placeCall(final String account, final String number, final boolean video) {
         return FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<String>() {
+                new Callable<SipCall>() {
                     @Override
-                    public String call() throws Exception {
+                    public SipCall call() throws Exception {
                         Log.i(TAG, "placeCall() thread running... " + number + " video: " + video);
                         String callId = Ringservice.placeCall(account, number);
-                        parseCall(account, callId, number, SipCall.Direction.OUTGOING);
+                        if (callId == null || callId.isEmpty())
+                            return null;
                         if (!video) {
                             Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
                         }
-                        return callId;
+                        CallContact contact = mContactService.findContactByNumber(number);
+                        SipCall call = addCall(account, callId, number, SipCall.Direction.OUTGOING);
+                        call.muteVideo(!video);
+                        call.setContact(contact);
+                        return call;
                     }
                 }
         );
@@ -427,19 +434,34 @@ public class CallService extends Observable {
         currentCalls.remove(callId);
     }
 
-    private void parseCall(String accountId, String callId, String from, int direction) {
-        SipCall call = new SipCall(callId, accountId, new Uri(from), direction);
-        call.setCallState(direction);
-        currentCalls.put(callId, call);
+    private SipCall addCall(String accountId, String callId, String from, int direction) {
+        SipCall call = currentCalls.get(callId);
+        if (call == null) {
+            call = new SipCall(callId, accountId, new Uri(from), direction);
+            currentCalls.put(callId, call);
+        } else {
+            Log.w(TAG, "Call already existed ! " + callId + " " + from);
+        }
+        return call;
     }
 
-    private void parseCallState(String callId, String newState, Map<String, String> callDetails) {
+    private SipCall parseCallState(String callId, String newState, Map<String, String> callDetails) {
         int callState = SipCall.stateFromString(newState);
         SipCall sipCall = currentCalls.get(callId);
         if (sipCall != null) {
             sipCall.setCallState(callState);
             sipCall.setDetails(callDetails);
+        } else if (callState != SipCall.State.OVER) {
+            sipCall = new SipCall(callId, callDetails);
+            CallContact contact = mContactService.findContact(sipCall.getNumberUri());
+            String registeredName = callDetails.get("REGISTERED_NAME");
+            if (registeredName != null && !registeredName.isEmpty()) {
+                contact.setUsername(registeredName);
+            }
+            sipCall.setContact(contact);
+            currentCalls.put(callId, sipCall);
         }
+        return sipCall;
     }
 
     class CallbackHandler {
@@ -465,7 +487,7 @@ public class CallService extends Observable {
         void incomingCall(String accountId, String callId, String from) {
             Log.d(TAG, "incoming call: " + accountId + ", " + callId + ", " + from);
 
-            parseCall(accountId, callId, from, SipCall.Direction.INCOMING);
+            addCall(accountId, callId, from, SipCall.Direction.INCOMING);
 
             setChanged();
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);

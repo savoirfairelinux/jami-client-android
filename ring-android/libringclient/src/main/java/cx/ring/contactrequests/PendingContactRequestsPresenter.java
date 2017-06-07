@@ -80,6 +80,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
     @Override
     public void bindView(PendingContactRequestsView view) {
         mAccountService.addObserver(this);
+        mContactService.addObserver(this);
         super.bindView(view);
         updateList(true);
     }
@@ -95,6 +96,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
     @Override
     public void unbindView() {
         mAccountService.removeObserver(this);
+        mContactService.removeObserver(this);
         super.unbindView();
     }
 
@@ -127,7 +129,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
                 trustRequest.setVCard(tuple.first);
                 trustRequest.setMessage(tuple.second);
                 mTrustRequestsTmp.add(trustRequest);
-                mAccountService.lookupAddress("", "", contactId);
+                mContactService.lookupAddress("", "", contactId);
             }
         }
 
@@ -198,7 +200,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
                 request.setMessage(tuple.second);
                 if (!mTrustRequestsTmp.contains(request) && !mTrustRequests.contains(request)) {
                     mTrustRequestsTmp.add(request);
-                    mAccountService.lookupAddress("", "", from);
+                    mContactService.lookupAddress("", "", from);
                     updateList(false);
                 }
                 break;

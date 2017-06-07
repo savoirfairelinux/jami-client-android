@@ -28,7 +28,7 @@ import javax.inject.Inject;
 import cx.ring.application.RingApplication;
 import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RootPresenter;
-import cx.ring.services.AccountService;
+import cx.ring.services.ContactService;
 import cx.ring.utils.NameLookupInputHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -38,7 +38,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     public static final String TAG = RingAccountCreationPresenter.class.getSimpleName();
     public static final int PASSWORD_MIN_LENGTH = 6;
 
-    protected AccountService mAccountService;
+    protected ContactService mContactService;
 
     private NameLookupInputHandler mNameLookupInputHandler;
 
@@ -51,26 +51,26 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     private String mPasswordConfirm;
 
     @Inject
-    public RingAccountCreationPresenter(AccountService accountService) {
-        this.mAccountService = accountService;
+    public RingAccountCreationPresenter(ContactService contactService) {
+        mContactService = contactService;
     }
 
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
+        mContactService.removeObserver(this);
     }
 
     @Override
     public void bindView(RingAccountCreationView view) {
         super.bindView(view);
-        mAccountService.addObserver(this);
+        mContactService.addObserver(this);
     }
 
     void userNameChanged(@NonNull String userName) {
         if (!userName.isEmpty()) {
             if (mNameLookupInputHandler == null) {
-                mNameLookupInputHandler = new NameLookupInputHandler(new WeakReference<>(mAccountService));
+                mNameLookupInputHandler = new NameLookupInputHandler(new WeakReference<>(mContactService));
             }
             mRingAccountViewModel.setUsername(userName);
             mNameLookupInputHandler.enqueueNextLookup(userName);

@@ -75,7 +75,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
+        mContactService.removeObserver(this);
         mConversationFacade.removeObserver(this);
     }
 
@@ -83,7 +83,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         mConversationId = conversationId;
         mPreferredNumber = number;
 
-        mAccountService.addObserver(this);
+        mContactService.addObserver(this);
         mConversationFacade.addObserver(this);
     }
 
@@ -217,9 +217,10 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         }
         mConversation = mConversationFacade.startConversation(contact);
 
-        Tuple<String, byte[]> contactData = mContactService.loadContactData(mConversation.getContact());
-        if (contactData != null) {
-            getView().displayContactPhoto(contactData.second);
+        mContactService.loadContactData(mConversation.getContact());
+        byte[] photo = mConversation.getContact().getPhoto();
+        if (photo != null) {
+            getView().displayContactPhoto(photo);
         }
 
         if (!mConversation.getContact().getPhones().isEmpty()) {
@@ -237,7 +238,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         if (mConversation.getContact().getPhones().size() > 1) {
             for (Phone phone : mConversation.getContact().getPhones()) {
                 if (phone.getNumber() != null && phone.getNumber().isRingId()) {
-                    mAccountService.lookupAddress("", "", phone.getNumber().getRawUriString());
+                    mContactService.lookupAddress("", "", phone.getNumber().getRawUriString());
                 }
             }
             if (mPreferredNumber == null || mPreferredNumber.isEmpty()) {
@@ -321,7 +322,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
     @Override
     public void update(Observable observable, ServiceEvent arg) {
-        if (observable instanceof AccountService && arg != null) {
+        if (observable instanceof ContactService && arg != null) {
             if (arg.getEventType() == ServiceEvent.EventType.REGISTERED_NAME_FOUND) {
                 final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
                 final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);

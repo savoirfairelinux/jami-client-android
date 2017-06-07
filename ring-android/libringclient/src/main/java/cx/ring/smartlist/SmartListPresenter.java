@@ -96,6 +96,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     public void unbindView() {
         super.unbindView();
         mAccountService.removeObserver(this);
+        mContactService.removeObserver(this);
         mConversationFacade.removeObserver(this);
         mPresenceService.removeObserver(this);
     }
@@ -104,6 +105,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     public void bindView(SmartListView view) {
         super.bindView(view);
         mAccountService.addObserver(this);
+        mContactService.addObserver(this);
         mConversationFacade.addObserver(this);
         mPresenceService.addObserver(this);
     }
@@ -161,7 +163,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
                 // Ring search
                 if (mNameLookupInputHandler == null) {
-                    mNameLookupInputHandler = new NameLookupInputHandler(new WeakReference<>(mAccountService));
+                    mNameLookupInputHandler = new NameLookupInputHandler(new WeakReference<>(mContactService));
                 }
 
                 mNameLookupInputHandler.enqueueNextLookup(query);
@@ -248,11 +250,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             }
 
             if (contact.getPhones().isEmpty()) {
-                mAccountService.lookupName("", "", contact.getDisplayName());
+                mContactService.lookupName("", "", contact.getDisplayName());
             } else {
                 Phone phone = contact.getPhones().get(0);
                 if (phone.getNumber().isRingId()) {
-                    mAccountService.lookupAddress("", "", phone.getNumber().getHost());
+                    mContactService.lookupAddress("", "", phone.getNumber().getHost());
                 }
             }
         }
@@ -274,18 +276,13 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 long lastInteractionTime = conversation.getLastInteraction().getTime();
                 String lastInteraction = lastInteractionTime == new Date(0).getTime() ?
                         "" : mHistoryService.getRelativeTimeSpanString(lastInteractionTime);
-                Tuple<String, byte[]> tuple = mContactService.loadContactData(contact);
-                if (tuple != null) {
-                    if (!tuple.first.equals(contact.getPhones().get(0).getNumber().getRawUriString())) {
-                        contact.setDisplayName(tuple.first);
-                    }
-                    smartListViewModel = new SmartListViewModel(conversation,
+                mContactService.loadContactData(contact);
+                smartListViewModel = new SmartListViewModel(conversation,
                             contact.getDisplayName(),
-                            tuple.second,
+                            contact.getPhoto(),
                             lastInteraction);
-                    smartListViewModel.setOnline(mPresenceService.isBuddyOnline(contact.getIds().get(0)));
-                    mSmartListViewModels.add(smartListViewModel);
-                }
+                smartListViewModel.setOnline(mPresenceService.isBuddyOnline(contact.getIds().get(0)));
+                mSmartListViewModels.add(smartListViewModel);
             }
             getView().updateList(mSmartListViewModels);
             getView().hideNoConversationMessage();
