@@ -217,9 +217,10 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         }
         mConversation = mConversationFacade.startConversation(contact);
 
-        Tuple<String, byte[]> contactData = mContactService.loadContactData(mConversation.getContact());
-        if (contactData != null) {
-            getView().displayContactPhoto(contactData.second);
+        mContactService.loadContactData(mConversation.getContact());
+        byte[] photo = mConversation.getContact().getPhoto();
+        if (photo != null) {
+            getView().displayContactPhoto(photo);
         }
 
         if (!mConversation.getContact().getPhones().isEmpty()) {

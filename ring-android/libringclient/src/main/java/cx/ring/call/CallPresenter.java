@@ -49,7 +49,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     public final static String TAG = CallPresenter.class.getSimpleName();
 
     protected AccountService mAccountService;
-    protected ConversationFacade mConversationFacade;
     protected NotificationService mNotificationService;
     protected DeviceRuntimeService mDeviceRuntimeService;
     protected HardwareService mHardwareService;
@@ -83,7 +82,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
                          ContactService contactService,
                          HistoryService mHistoryService) {
         this.mAccountService = accountService;
-        this.mConversationFacade = conversationFacade;
         this.mNotificationService = notificationService;
         this.mDeviceRuntimeService = deviceRuntimeService;
         this.mHardwareService = hardwareService;
@@ -120,23 +118,14 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     }
 
     public void initOutGoing(String accountId, Uri number, boolean hasVideo) {
-        CallContact contact = mContactService.findContactByNumber(number.getRawUriString());
-
-        Log.d(TAG, "initOutGoing: " + (contact != null));
-
-        String callId = mCallService.placeCall(accountId, number.getUriString(), hasVideo);
-        if (callId == null || callId.isEmpty()) {
+        Log.d(TAG, "initOutGoing: " + number.toString());
+        mSipCall = mCallService.placeCall(accountId, number.getUriString(), hasVideo);
+        if (mSipCall == null) {
             finish();
             return;
         }
-
-        mSipCall = mCallService.getCurrentCallForId(callId);
-        mSipCall.muteVideo(!hasVideo);
-        mSipCall.setCallID(callId);
-        mSipCall.setContact(contact);
         mHasVideo = hasVideo;
         confUpdate();
-        getUsername();
         getContactDetails();
         getView().blockScreenRotation();
     }
@@ -145,17 +134,12 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         mSipCall = mCallService.getCurrentCallForId(confId);
         //FIXME sipCall is null for unknowm reason atm
         if (mSipCall == null) {
+            Log.w(TAG, "initIncoming: null Call");
             finish();
             return;
         }
-        CallContact contact = mSipCall.getContact();
-        if (contact == null) {
-            contact = mContactService.findContactByNumber(mSipCall.getNumberUri().getRawUriString());
-        }
-        mSipCall.setContact(contact);
         mHasVideo = true;
         confUpdate();
-        getUsername();
         getContactDetails();
         getView().blockScreenRotation();
 
@@ -282,7 +266,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         if (mSipCall.isOnGoing()) {
             mOnGoingCall = true;
             getView().initNormalStateDisplay(mHasVideo);
-            getView().initContactDisplay(mSipCall);
+            getView().updateContactBubble(mSipCall.getContact());
             if (mHasVideo) {
                 mHardwareService.setPreviewSettings();
                 getView().displayVideoSurface(true);
@@ -295,13 +279,13 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
                     mCallService.accept(mSipCall.getCallId());
                 } else {
                     getView().initIncomingCallDisplay();
-                    getView().initContactDisplay(mSipCall);
+                    getView().updateContactBubble(mSipCall.getContact());
                 }
             } else {
                 mOnGoingCall = false;
                 getView().updateCallStatus(mSipCall.getCallState());
                 getView().initOutGoingCallDisplay();
-                getView().initContactDisplay(mSipCall);
+                getView().updateContactBubble(mSipCall.getContact());
             }
         } else {
             finish();
@@ -318,21 +302,10 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         }
     }
 
-    private void getUsername() {
-        if (mSipCall == null) {
-            return;
-        }
-
-        String[] split = mSipCall.getNumber().split(":");
-        if (split.length > 1) {
-            mAccountService.lookupAddress("", "", split[1]);
-        }
-    }
-
     private void getContactDetails() {
         CallContact callContact = mSipCall.getContact();
-        Tuple<String, byte[]> tuple = mContactService.loadContactData(callContact);
-        getView().updateContactBubbleWithVCard(tuple.first, tuple.second);
+        mContactService.loadContactData(callContact);
+        getView().updateContactBubble(callContact);
     }
 
     private void parseCall(String callId, int callState) {
@@ -378,11 +351,8 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         } else if (observable instanceof AccountService) {
             switch (event.getEventType()) {
                 case REGISTERED_NAME_FOUND:
-                    String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                    String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-
-                    if (mSipCall != null && mSipCall.getNumber().contains(address)) {
-                        getView().updateContactBubble(name);
+                    if (mSipCall != null && mSipCall.getContact() != null) {
+                        getView().updateContactBubble(mSipCall.getContact());
                     }
                     break;
             }

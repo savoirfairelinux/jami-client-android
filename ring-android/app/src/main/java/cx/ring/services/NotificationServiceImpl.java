@@ -114,7 +114,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext);
 
         if (conference.isOnGoing()) {
-            messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getDisplayName()))
+            messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getRingUsername()))
                     .setContentText(mContext.getText(R.string.notif_current_call))
                     .setContentIntent(gotoIntent)
                     .addAction(R.drawable.ic_call_end_white, mContext.getText(R.string.action_call_hangup),
@@ -127,7 +127,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             if (conference.isIncoming()) {
                 Bundle extras = new Bundle();
                 extras.putBoolean(CallManagerCallBack.INCOMING_CALL, true);
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getDisplayName()))
+                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getRingUsername()))
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setContentText(mContext.getText(R.string.notif_incoming_call))
                         .setContentIntent(gotoIntent)
@@ -146,7 +146,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                                         PendingIntent.FLAG_ONE_SHOT))
                         .addExtras(extras);
             } else {
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
+                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getRingUsername()))
                         .setContentText(mContext.getText(R.string.notif_outgoing_call))
                         .setContentIntent(gotoIntent)
                         .addAction(R.drawable.ic_call_end_white, mContext.getText(R.string.action_call_hangup),

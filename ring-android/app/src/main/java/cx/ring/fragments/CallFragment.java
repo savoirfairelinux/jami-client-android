@@ -30,7 +30,6 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -395,34 +394,11 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     }
 
     @Override
-    public void updateContactBubble(final String contactName) {
+    public void updateContactBubble(@NonNull final CallContact contact) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (contactName.isEmpty()) {
-                    return;
-                }
-                if (contactBubbleTxt.getText().toString().contains(CallContact.PREFIX_RING)) {
-                    contactBubbleNumTxt.setVisibility(View.VISIBLE);
-                    contactBubbleNumTxt.setText(contactBubbleTxt.getText());
-                    contactBubbleTxt.setText(contactName);
-                } else {
-                    contactBubbleNumTxt.setVisibility(View.VISIBLE);
-                    contactBubbleNumTxt.setText(contactName);
-                }
-            }
-        });
-    }
-
-    /**
-     * Updates the bubble contact image with the vcard image, the contact image or by default the
-     * contact picture drawable.
-     */
-    @Override
-    public void updateContactBubbleWithVCard(final String contactName, final byte[] photo) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+                byte[] photo = contact.getPhoto();
                 if (photo != null && photo.length > 0) {
                     Glide.with(getActivity())
                             .load(photo)
@@ -435,14 +411,23 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                             .into(contactBubbleView);
                 }
 
-                if (TextUtils.isEmpty(contactName) || contactName.contains(CallContact.PREFIX_RING)) {
-                    return;
-                }
-                if (contactBubbleTxt.getText().toString().contains(CallContact.PREFIX_RING)) {
+                String username = contact.getRingUsername();
+                String displayName = contact.getDisplayName();
+                boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
+                boolean firstShow = contactBubbleTxt.getText() != null && contactBubbleTxt.getText().length() > 0;
+
+                if (hasProfileName) {
                     contactBubbleNumTxt.setVisibility(View.VISIBLE);
-                    contactBubbleNumTxt.setText(contactBubbleTxt.getText());
+                    contactBubbleTxt.setText(displayName);
+                    contactBubbleNumTxt.setText(username);
+                } else {
+                    contactBubbleNumTxt.setVisibility(View.GONE);
+                    contactBubbleTxt.setText(username);
                 }
-                contactBubbleTxt.setText(contactName);
+
+                if (firstShow) {
+                    mPulseAnimation.startRippleAnimation();
+                }
             }
         });
     }
@@ -527,26 +512,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                 hangupButton.setVisibility(View.GONE);
 
                 getActivity().invalidateOptionsMenu();
-            }
-        });
-    }
-
-    @Override
-    public void initContactDisplay(final SipCall call) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                CallContact contact = call.getContact();
-                if (contact == null) {
-                    return;
-                }
-                final String name = contact.getDisplayName();
-                contactBubbleTxt.setText(name);
-                if (!name.contains(CallContact.PREFIX_RING) && contactBubbleNumTxt.getText().toString().isEmpty()) {
-                    contactBubbleNumTxt.setVisibility(View.VISIBLE);
-                    contactBubbleNumTxt.setText(call.getNumber());
-                }
-                mPulseAnimation.startRippleAnimation();
             }
         });
     }
