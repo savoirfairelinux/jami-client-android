@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_ad4fcf91",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-06-07T14:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aaae553_cd480bcf",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 35
+      },
+      "revId": "44fcec4082199fe36a44602ab982d80937b7a3a2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_ed45c7b3",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/services/CallService.java",
         "patchSetId": 4
