@@ -51,7 +51,7 @@ along with this program; if not, write to the Free Software
         android:layout_alignBottom="@+id/photo"
         android:layout_alignEnd="@+id/photo"
         android:layout_alignRight="@+id/photo"
-        android:src="@drawable/ic_check_circle" />
+        android:src="@drawable/ic_online_indicator" />
 
     <RelativeLayout
         android:layout_width="match_parent"
