@@ -273,18 +273,13 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 long lastInteractionTime = conversation.getLastInteraction().getTime();
                 String lastInteraction = lastInteractionTime == new Date(0).getTime() ?
                         "" : mHistoryService.getRelativeTimeSpanString(lastInteractionTime);
-                Tuple<String, byte[]> tuple = mContactService.loadContactData(contact);
-                if (tuple != null) {
-                    if (!tuple.first.equals(contact.getPhones().get(0).getNumber().getRawUriString())) {
-                        contact.setDisplayName(tuple.first);
-                    }
-                    smartListViewModel = new SmartListViewModel(conversation,
+                mContactService.loadContactData(contact);
+                smartListViewModel = new SmartListViewModel(conversation,
                             contact.getDisplayName(),
-                            tuple.second,
+                            contact.getPhoto(),
                             lastInteraction);
-                    smartListViewModel.setOnline(mPresenceService.isBuddyOnline(contact.getIds().get(0)));
-                    mSmartListViewModels.add(smartListViewModel);
-                }
+                smartListViewModel.setOnline(mPresenceService.isBuddyOnline(contact.getIds().get(0)));
+                mSmartListViewModels.add(smartListViewModel);
             }
             getView().updateList(mSmartListViewModels);
             getView().hideNoConversationMessage();

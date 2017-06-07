@@ -400,12 +400,15 @@ public class ContactServiceImpl extends ContactService {
     }
 
     @Override
-    public Tuple<String, byte[]> loadContactData(CallContact callContact) {
+    public void loadContactData(CallContact callContact) {
+        Tuple<String, byte[]> profileData;
         if (callContact.isFromSystem()) {
-            return loadSystemContactData(callContact);
+            profileData = loadSystemContactData(callContact);
         } else {
-            return loadVCardContactData(callContact);
+            profileData = loadVCardContactData(callContact);
         }
+        callContact.setDisplayName(profileData.first);
+        callContact.setPhoto(profileData.second);
     }
 
     private Tuple<String, byte[]> loadVCardContactData(CallContact callContact) {
