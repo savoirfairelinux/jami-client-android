@@ -33,6 +33,12 @@ public class Account {
     private AccountConfig mDetails;
     private ArrayList<AccountCredentials> credentialsDetails = new ArrayList<>();
     private Map<String, String> devices = new HashMap<>();
+    private Map<String, CallContact> mContacts = new HashMap<>();
+    private Map<String, TrustRequest> mRequests = new HashMap<>();
+
+    private static final String CONTACT_BANNED = "banned";
+    private static final String CONTACT_CONFIRMED = "confirmed";
+    private static final String CONTACT_ID = "id";
 
     public boolean registeringUsername = false;
 
@@ -91,6 +97,16 @@ public class Account {
 
     public String getUsername() {
         return mDetails.get(ConfigKey.ACCOUNT_USERNAME);
+    }
+
+    public String getDisplayUsername() {
+        if (isRing()) {
+            String registeredName = getRegisteredName();
+            if (registeredName != null && !registeredName.isEmpty()) {
+                return registeredName;
+            }
+        }
+        return getUsername();
     }
 
     public String getHost() {
@@ -225,15 +241,21 @@ public class Account {
         return mDetails.getBool(ConfigKey.SRTP_ENABLE) || mDetails.getBool(ConfigKey.TLS_ENABLE);
     }
 
-    public String getShareURI() {
-        String shareUri;
+    public String getUri(boolean display) {
+        String username = display ? getDisplayUsername() : getUsername();
         if (isRing()) {
-            shareUri = getUsername();
+            return username;
         } else {
-            shareUri = getUsername() + "@" + getHost();
+            return username + "@" + getHost();
         }
+    }
 
-        return shareUri;
+    public String getUri() {
+        return getUri(false);
+    }
+
+    public String getDisplayUri() {
+        return getUri(true);
     }
 
     public boolean needsMigration() {
@@ -246,5 +268,73 @@ public class Account {
 
     public String getDeviceName() {
         return getDetail(ConfigKey.ACCOUNT_DEVICE_NAME);
+    }
+
+    public Map<String, CallContact> getContacts() {
+        return mContacts;
+    }
+
+    public List<CallContact> getBannedContacts() {
+        ArrayList<CallContact> banned = new ArrayList<>();
+        for (CallContact contact : mContacts.values()) {
+            if (contact.isBanned()) {
+                banned.add(contact);
+            }
+        }
+        return banned;
+    }
+
+    public CallContact getContact(String ringId) {
+        return mContacts.get(ringId);
+    }
+
+    public void addContact(Map<String,String> contact) {
+        String contactId = contact.get(CONTACT_ID);
+        Uri contactUri = new Uri(contactId);
+        CallContact callContact = mContacts.get(contactId);
+        if (callContact == null) {
+            callContact = CallContact.buildRingContact(contactUri);
+        }
+        if (contact.containsKey(CONTACT_BANNED) && contact.get(CONTACT_BANNED).equals("true")) {
+            callContact.setStatus(CallContact.Status.BANNED);
+        } else if (contact.containsKey(CONTACT_CONFIRMED)) {
+            callContact.setStatus(Boolean.valueOf(contact.get(CONTACT_CONFIRMED)) ?
+                    CallContact.Status.CONFIRMED :
+                    CallContact.Status.REQUEST_SENT);
+        }
+        mContacts.put(contactId, callContact);
+    }
+
+    public void setContacts(List<Map<String,String>> contacts) {
+        for (Map<String, String> contact : contacts) {
+            addContact(contact);
+        }
+    }
+
+    public List<TrustRequest> getRequests() {
+        ArrayList<TrustRequest> requests = new ArrayList<>(mRequests.size());
+        for (TrustRequest request : mRequests.values()) {
+            if (request.isNameResolved()) {
+                requests.add(request);
+            }
+        }
+        return requests;
+    }
+
+    public TrustRequest getRequest(String id) {
+        return mRequests.get(id);
+    }
+
+    public void addRequest(TrustRequest request) {
+        mRequests.put(request.getContactId(), request);
+    }
+
+    public void setRequests(List<TrustRequest> requests) {
+        for (TrustRequest request : requests)
+            addRequest(request);
+    }
+
+    public void removeRequest(String id) {
+        mRequests.remove(id);
     }
 }

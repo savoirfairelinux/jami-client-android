@@ -40,9 +40,7 @@ public interface CallView  {
 
     void updateTime(long duration);
 
-    void updateContactBubble(String contactName);
-
-    void updateContactBubbleWithVCard(String number, byte[] photo);
+    void updateContactBubble(CallContact contact);
 
     void updateCallStatus(int callState);
 
@@ -53,8 +51,6 @@ public interface CallView  {
     void initIncomingCallDisplay();
 
     void initOutGoingCallDisplay();
-
-    void initContactDisplay(SipCall call);
 
     void resetVideoSize(int videoWidth, int videoHeight, int previewWidth, int previewHeight);
 

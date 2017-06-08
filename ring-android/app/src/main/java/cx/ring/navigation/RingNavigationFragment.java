@@ -438,7 +438,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         }
         mSelectedAccount = selectedAccount;
         mSelectedAccountAlias.setText(presenter.getAccountAlias(selectedAccount));
-        mSelectedAccountHost.setText(presenter.getHost(selectedAccount, getString(R.string.account_type_ip2ip)));
+        mSelectedAccountHost.setText(presenter.getUri(selectedAccount, getString(R.string.account_type_ip2ip)));
         mSelectedAccountDisabled.setVisibility(selectedAccount.isEnabled() ? View.GONE : View.VISIBLE);
         if (selectedAccount.isEnabled()) {
             if (selectedAccount.isTrying()) {

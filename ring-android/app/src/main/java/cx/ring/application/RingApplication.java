@@ -181,8 +181,7 @@ public class RingApplication extends Application {
                         mCallService.getCallbackHandler(),
                         mConferenceService.getCallbackHandler());
                 mAccountAndContactCallbackHandler = mDaemonService.getDaemonConfigurationCallbackHandler(
-                        mAccountService.getCallbackHandler(),
-                        mContactService.getCallbackHandler());
+                        mAccountService.getCallbackHandler());
                 mHardwareCallbackHandler = mHardwareService.getCallbackHandler();
                 mPresenceCallbackHandler = mPresenceService.getCallbackHandler();
 
