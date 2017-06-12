@@ -21,8 +21,9 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <string name="call_human_state_incoming">Appel entrant</string>
     <string name="call_human_state_connecting">En cours de connexion</string>
-    <string name="call_human_state_ringing">Appel entrant</string>
+    <string name="call_human_state_ringing">Ça sonne</string>
     <string name="call_human_state_current">En cours</string>
     <string name="call_human_state_hungup">Terminé</string>
     <string name="call_human_state_busy">Occupé</string>

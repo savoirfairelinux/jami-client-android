@@ -21,15 +21,16 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
-    <string name="call_human_state_connecting">connexion en cours</string>
-    <string name="call_human_state_ringing">ça sonne</string>
-    <string name="call_human_state_current">conversation en cours </string>
-    <string name="call_human_state_hungup">sur</string>
-    <string name="call_human_state_busy">occupé </string>
-    <string name="call_human_state_failure">échoué </string>
-    <string name="call_human_state_hold">tenir</string>
-    <string name="call_human_state_unhold">ne pas tenir</string>
-    <string name="call_human_state_over">sur</string>
-    <string name="call_human_state_none">rien</string>
+    <string name="call_human_state_incoming">Appel entrant</string>
+    <string name="call_human_state_connecting">Connexion en cours</string>
+    <string name="call_human_state_ringing">Ça sonne</string>
+    <string name="call_human_state_current">Appel en cours</string>
+    <string name="call_human_state_hungup">Terminé</string>
+    <string name="call_human_state_busy">Occupé</string>
+    <string name="call_human_state_failure">Échoué</string>
+    <string name="call_human_state_hold">Mettre en attente</string>
+    <string name="call_human_state_unhold">Reprendre</string>
+    <string name="call_human_state_over">Terminé</string>
+    <string name="call_human_state_none">...</string>
     <!-- Conferences -->
 </resources>

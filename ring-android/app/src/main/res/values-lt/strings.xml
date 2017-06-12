@@ -13,6 +13,8 @@
   <string name="description">Ring yra visuotiniam susisiekimui skirta laisva programinė įranga, kuri gerbia savo naudotojų laisves ir privatumą.</string>
   <string name="credits">Padėkos</string>
   <!--About dialog-->
+  <string name="developed_by">Sukūrė</string>
+  <string name="designed_by">Apipavidalino</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Nėra tinklo ryšio</string>
@@ -25,11 +27,13 @@
   <string name="drawer_close">Uždaryti naršymo stalčių</string>
   <!--Sections-->
   <string name="menu_item_home">Pradžia</string>
+  <string name="menu_item_contact_request">Kontakto užklausos</string>
   <string name="menu_item_accounts">Tvarkyti paskyras</string>
   <string name="menu_item_settings">Nustatymai</string>
   <string name="menu_item_share">Bendrinti mano kontaktus</string>
   <string name="menu_item_about">Apie Ring</string>
   <!--Dialing Fragment-->
+  <string name="dial_number">Rinkti numerį</string>
   <!--History Fragment-->
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
@@ -43,6 +47,7 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Praleistas gaunamasis skambutis</string>
   <string name="notif_incoming_call_title">Gaunamasis skambutis nuo %1$s</string>
   <string name="notif_incoming_call">Gaunamasis skambutis</string>
   <string name="notif_outgoing_call_title">Išsiunčiamasis skambutis naudotojui %1$s</string>
@@ -63,6 +68,7 @@
   <string name="ab_action_contact_add_question">Pridėti prie kontaktų ?</string>
   <string name="ab_action_audio_call">Garso skambutis</string>
   <string name="ab_action_video_call">Vaizdo skambutis</string>
+  <string name="ab_action_change_screen_orientation">Keisti ekrano orientaciją</string>
   <string name="share_via">Dalintis per</string>
   <string name="write_a_message">Rašykite žinutę</string>
   <string name="scan_qr">Skenuoti QR kodą</string>
@@ -72,6 +78,7 @@
   <string name="message_sending">Siunčiama žinutė...</string>
   <string name="time_just_now">Ką tik</string>
   <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Kameros leidimas</string>
   <string name="ringtone_error_title">Klaida</string>
   <string name="ringtone_error_format_not_supported">Šis formatas yra nepalaikomas.</string>
   <string name="ringtone_error_size_too_big">Šis failas yra per didelis. Didžiausias dydis yra %1$ikB.</string>
@@ -89,6 +96,7 @@
   <string name="conversation_action_delete_this_message">Šio veiksmo negalima bus atšaukti.</string>
   <string name="conversation_action_copy_peer_number">Kopijuoti numerį</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s nukopijuota į iškarpinę</string>
+  <string name="conversation_action_block_this">Užblokuoti šį kontaktą</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Pridėti %1$s ?</string>
   <string name="prompt_new_password">Naujas slaptažodis</string>
@@ -103,15 +111,25 @@
   <string name="profile">Mano profilis</string>
   <string name="open_the_gallery">Atverti galeriją</string>
   <string name="take_a_photo">Padaryti nuotrauką</string>
+  <string name="profile_name_hint">Įveskite savo vardą (nebūtina)</string>
   <!--Share fragment-->
   <string name="share_message">Nuskenuokite šį QR kodą įtaisytu Ring programos, norinčios su jumis susisiekti, skeneriu.</string>
   <string name="share_your_account_information">Bendrinti mano kontaktinę informaciją</string>
   <string name="generic_error_migration">Klaida</string>
+  <string name="generic_error_migration_message">Perkėlimo metu įvyko klaida</string>
   <!--Pending contact requests-->
   <string name="accept">Priimti</string>
   <string name="refuse">Atmesti</string>
+  <string name="block">Užblokuoti</string>
+  <string name="contact_request_title">Laukiančios kontakto užklausos</string>
+  <string name="contact_request_msg">Jūs turite %1$s kontakto užklausas</string>
+  <string name="no_requests">0 kontakto užklausų</string>
   <!--Send contact requests-->
   <string name="send_request_button">Siųsti</string>
+  <string name="send_request_title">Siųsti kontakto užklausą</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 užblokuotų kontaktų</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Jokia kontakto užklausa neišsiųsta</string>
+  <string name="contact_request_sent">Kontakto užklausa išsiųsta</string>
 </resources>

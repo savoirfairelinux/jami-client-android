@@ -22,9 +22,9 @@
   <string name="dialog_warn_ip2ip_account_title">要创建空的SIP帐户吗？</string>
   <string name="dialog_warn_ip2ip_account_message">您正在创建一个主机名非法的SIP帐户。
 该帐户拨出或接听通话将只能直接通过IP地址。
-您可以稍后修改该帐户。</string>
+您可以稍后编辑该帐户。</string>
   <string name="account_type_ip2ip">IP帐户</string>
-  <string name="help_ring">Ring帐户使您在一个完全分布式的网络中，与他人进行安全的点对点通信。</string>
+  <string name="help_ring">Ring帐户允许您在完全分布式的网络中，与他人进行安全的点对点通信。</string>
   <string name="help_sip_title">添加您的SIP帐户</string>
   <string name="help_sip">配置已有的SIP帐户。</string>
   <string name="create_sip_account">添加SIP帐户</string>
@@ -67,7 +67,7 @@
   <string name="account_video_enable">启用视频</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">高级</string>
-  <string name="account_dht_public_in_calls_label">允许所有通话/信息</string>
+  <string name="account_dht_public_in_calls_label">允许所有通话/消息</string>
   <string name="account_registration_exp_label">录音过期</string>
   <string name="account_local_interface_label">本地接口</string>
   <string name="account_local_port_label">本地端口</string>
@@ -81,9 +81,9 @@
   <string name="account_published_port_label">公开端口</string>
   <string name="account_published_address_label">公开地址</string>
   <!--Security Details-->
-  <string name="account_credentials_label">密钥</string>
-  <string name="account_credentials_edit">编辑密钥</string>
-  <string name="account_credentials_add">添加密钥</string>
+  <string name="account_credentials_label">认证信息</string>
+  <string name="account_credentials_edit">编辑认证信息</string>
+  <string name="account_credentials_add">添加认证信息</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">安全</string>
   <!--SIP-->
@@ -180,4 +180,5 @@
   <string name="account_rename_device_hint">输入新的设备名</string>
   <string name="account_device_name_empty">设备名不可为空</string>
   <string name="account_device_this_indicator">该设备</string>
+  <string name="account_disabled_indicator">已禁用</string>
 </resources>
