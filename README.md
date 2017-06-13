@@ -2,9 +2,9 @@
 
 This repository is meant for the porting of Ring to Android.
 
-| App | CI | Packaging
-| :-: | :-: | :-:
-| [![Download on the Play Store](https://img.shields.io/badge/download-play%20store-blue.svg)](https://play.google.com/store/apps/details?id=cx.ring) [![Download on F-Droid](https://img.shields.io/badge/download-fdroid-blue.svg)](https://f-droid.org/repository/browse/?fdid=cx.ring) | [![Build Status](http://test.savoirfairelinux.com/buildStatus/icon?job=ring-client-android)](http://test.savoirfairelinux.com/job/ring-client-android) | [![Build Status](http://test.savoirfairelinux.com/buildStatus/icon?job=ring-packaging-client-android)](https://test.savoirfairelinux.com/job/ring-packaging-client-android/)
+| App | CI
+| :-: | :-: |
+| [![Download on the Play Store](https://img.shields.io/badge/download-play%20store-blue.svg)](https://play.google.com/store/apps/details?id=cx.ring) [![Download on F-Droid](https://img.shields.io/badge/download-fdroid-blue.svg)](https://f-droid.org/repository/browse/?fdid=cx.ring) | [![Build Status](https://jenkins.ring.cx/buildStatus/icon?job=client-android)](https://jenkins.ring.cx/job/client-android/)
 
 ## Environment
 
