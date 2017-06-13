@@ -76,11 +76,9 @@ public class DaemonService {
         return callbackHandler;
     }
 
-    public ConfigurationCallback getDaemonConfigurationCallbackHandler(AccountService.ConfigurationCallbackHandler accountCallbackHandler,
-                                                                       ContactService.ConfigurationCallbackHandler contactCallbackHandler) {
+    public ConfigurationCallback getDaemonConfigurationCallbackHandler(AccountService.ConfigurationCallbackHandler accountCallbackHandler) {
         DaemonConfigurationCallback callbackHandler = new DaemonConfigurationCallback();
         callbackHandler.setAccountCallbackHandler(accountCallbackHandler);
-        callbackHandler.setContactCallbackHandler(contactCallbackHandler);
         return callbackHandler;
     }
 
@@ -134,14 +132,9 @@ public class DaemonService {
 
     class DaemonConfigurationCallback extends ConfigurationCallback {
         private AccountService.ConfigurationCallbackHandler mAccountCallbackHandler;
-        private ContactService.ConfigurationCallbackHandler mContactCallbackHandler;
 
         void setAccountCallbackHandler(AccountService.ConfigurationCallbackHandler callbackHandler) {
             mAccountCallbackHandler = callbackHandler;
-        }
-
-        void setContactCallbackHandler(ContactService.ConfigurationCallbackHandler callbackHandler) {
-            mContactCallbackHandler = callbackHandler;
         }
 
         @Override
@@ -220,18 +213,18 @@ public class DaemonService {
         }
 
         @Override
-        public void incomingTrustRequest(String accountId, String from, Blob message, SWIGTYPE_p_time_t received) {
+        public void incomingTrustRequest(String accountId, String from, Blob message, long received) {
             mAccountCallbackHandler.incomingTrustRequest(accountId, from, message, received);
         }
 
         @Override
         public void contactAdded(String accountId, String uri, boolean confirmed) {
-            mContactCallbackHandler.contactAdded(accountId, uri, confirmed);
+            mAccountCallbackHandler.contactAdded(accountId, uri, confirmed);
         }
 
         @Override
         public void contactRemoved(String accountId, String uri, boolean banned) {
-            mContactCallbackHandler.contactRemoved(accountId, uri, banned);
+            mAccountCallbackHandler.contactRemoved(accountId, uri, banned);
         }
     }
 

@@ -2,6 +2,7 @@
 *  Copyright (C) 2017 Savoir-faire Linux Inc.
 *
 *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
+*  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
 *
 *  This program is free software; you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -32,10 +33,12 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.text.Html;
 import android.text.format.DateUtils;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -45,12 +48,14 @@ import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.PendingContactRequestsFragment;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
+import cx.ring.model.TrustRequest;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.DRingService;
 import cx.ring.utils.BitmapUtils;
@@ -58,6 +63,8 @@ import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+
+import ezvcard.property.Photo;
 
 public class NotificationServiceImpl extends NotificationService implements Observer<ServiceEvent> {
 
@@ -114,7 +121,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext);
 
         if (conference.isOnGoing()) {
-            messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getDisplayName()))
+            messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getRingUsername()))
                     .setContentText(mContext.getText(R.string.notif_current_call))
                     .setContentIntent(gotoIntent)
                     .addAction(R.drawable.ic_call_end_white, mContext.getText(R.string.action_call_hangup),
@@ -127,7 +134,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             if (conference.isIncoming()) {
                 Bundle extras = new Bundle();
                 extras.putBoolean(CallManagerCallBack.INCOMING_CALL, true);
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getDisplayName()))
+                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getRingUsername()))
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setContentText(mContext.getText(R.string.notif_incoming_call))
                         .setContentIntent(gotoIntent)
@@ -146,7 +153,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                                         PendingIntent.FLAG_ONE_SHOT))
                         .addExtras(extras);
             } else {
-                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getDisplayName()))
+                messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_outgoing_call_title, contact.getRingUsername()))
                         .setContentText(mContext.getText(R.string.notif_outgoing_call))
                         .setContentIntent(gotoIntent)
                         .addAction(R.drawable.ic_call_end_white, mContext.getText(R.string.action_call_hangup),
@@ -248,36 +255,26 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     }
 
     @Override
-    public void showIncomingTrustRequestNotification(String accountID, String from) {
-        int notificationId = getIncomingTrustNotificationId(accountID);
+    public void showIncomingTrustRequestNotification(Account account) {
+        int notificationId = getIncomingTrustNotificationId(account.getAccountID());
         NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
-        //count number of notifications to update notification's text
-        int numberOfNotifications = 1;
-        if (messageNotificationBuilder != null) {
-            Bundle notificationInfo = messageNotificationBuilder.getExtras();
-            if (notificationInfo != null) {
-                // do not show notifications for request from account that was already shown
-                String requestSender = notificationInfo.getString(EXTRAS_TRUST_REQUEST_FROM_KEY);
-                if (requestSender != null && requestSender.equals(from)) {
-                    return;
-                }
-                numberOfNotifications = notificationInfo.getInt(EXTRAS_NUMBER_TRUST_REQUEST_KEY);
-                numberOfNotifications++;
 
-                if (numberOfNotifications > 1) {
-                    cancelTrustRequestNotification(accountID);
-                    messageNotificationBuilder.setContentText(String.format(mContext.getString(R.string.contact_request_msg), Integer.toString(numberOfNotifications)));
-                    messageNotificationBuilder.setLargeIcon(null);
-                    messageNotificationBuilder.mActions.clear();
-                    numberOfNotifications--;
-                }
-            }
+        if (messageNotificationBuilder != null) {
+            notificationManager.cancel(notificationId);
         } else {
             messageNotificationBuilder = new NotificationCompat.Builder(mContext);
+        }
+
+        Collection<TrustRequest> requests = account.getRequests();
+        if (requests.isEmpty()) {
+            return;
+        } else if (requests.size() == 1) {
+            TrustRequest request = requests.iterator().next();
+            messageNotificationBuilder = new NotificationCompat.Builder(mContext);
             Bundle info = new Bundle();
-            info.putString(TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID, accountID);
-            info.putString(TRUST_REQUEST_NOTIFICATION_FROM, from);
-            messageNotificationBuilder.setContentText(from)
+            info.putString(TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID, account.getAccountID());
+            info.putString(TRUST_REQUEST_NOTIFICATION_FROM, request.getContactId());
+            messageNotificationBuilder.setContentText(request.getDisplayname())
                     .addAction(R.drawable.ic_action_accept, mContext.getText(R.string.accept),
                             PendingIntent.getService(mContext, new Random().nextInt(),
                                     new Intent(DRingService.ACTION_TRUST_REQUEST_ACCEPT)
@@ -299,33 +296,38 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             Resources res = mContext.getResources();
             int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
             int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
-            Bitmap bmp;
-            bmp = BitmapFactory.decodeResource(res, R.drawable.ic_contact_picture);
-            if (bmp != null) {
-                messageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
+            List<Photo> photos = request.getVCard().getPhotos();
+            if (photos != null && !photos.isEmpty()) {
+                Photo photo = photos.get(0);
+                messageNotificationBuilder.setLargeIcon(BitmapUtils.bytesToBitmap(photo.getData()));
+            } else {
+                Bitmap bmp;
+                bmp = BitmapFactory.decodeResource(res, R.drawable.ic_contact_picture);
+                if (bmp != null) {
+                    messageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
+                }
             }
+        } else {
+            messageNotificationBuilder.setContentText(String.format(mContext.getString(R.string.contact_request_msg), Integer.toString(requests.size())));
+            messageNotificationBuilder.setLargeIcon(null);
+            messageNotificationBuilder.mActions.clear();
         }
 
-        Bundle extras = new Bundle();
-        extras.putInt(EXTRAS_NUMBER_TRUST_REQUEST_KEY, numberOfNotifications);
-        extras.putString(EXTRAS_TRUST_REQUEST_FROM_KEY, from);
-
-        messageNotificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH)
+        messageNotificationBuilder
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
+                .setCategory(NotificationCompat.CATEGORY_SOCIAL)
                 .setContentTitle(mContext.getString(R.string.contact_request_title));
         Intent intentOpenTrustRequestFragment = new Intent(HomeActivity.ACTION_PRESENT_TRUST_REQUEST_FRAGMENT)
                 .setClass(mContext, HomeActivity.class)
-                .putExtra(PendingContactRequestsFragment.ACCOUNT_ID, accountID);
+                .putExtra(PendingContactRequestsFragment.ACCOUNT_ID, account.getAccountID());
         messageNotificationBuilder.setContentIntent(PendingIntent.getActivity(mContext,
-                new Random().nextInt(), intentOpenTrustRequestFragment, PendingIntent.FLAG_ONE_SHOT))
-                .addExtras(extras);
+                new Random().nextInt(), intentOpenTrustRequestFragment, PendingIntent.FLAG_ONE_SHOT));
 
+        mNotificationBuilders.put(notificationId, messageNotificationBuilder);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
-        if (numberOfNotifications == 1) {
-            mNotificationBuilders.put(notificationId, messageNotificationBuilder);
-        }
     }
 
     @Override
@@ -360,9 +362,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         mNotificationBuilders.clear();
     }
 
-    private int getIncomingTrustNotificationId(String accountID) {
-        cx.ring.model.Uri uri = new cx.ring.model.Uri(accountID);
-        return (NOTIF_TRUST_REQUEST + uri.getRawUriString()).hashCode();
+    private int getIncomingTrustNotificationId(String accountId) {
+        return (NOTIF_TRUST_REQUEST + accountId).hashCode();
     }
 
     private int getTextNotificationId(CallContact contact) {
@@ -384,44 +385,17 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     public void update(Observable observable, ServiceEvent arg) {
         if (observable instanceof AccountService && arg != null) {
             switch (arg.getEventType()) {
-                case REGISTERED_NAME_FOUND: {
-                    final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                    final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-                    final int state = arg.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
-
-                    Log.i(TAG, "Updating name " + name + " for address " + address);
-
-                    //state 0: name found
-                    if (state != 0) {
-                        return;
-                    }
-
-                    // Try to update existing Call notification
-                    int notificationId = getCallNotificationId(address);
-                    NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
-                    if (messageNotificationBuilder != null) {
-                        updateNotification(messageNotificationBuilder, notificationId, name);
-                    }
-
-                    // Try to update existing Text notification
-                    notificationId = getTextNotificationId(address);
-                    messageNotificationBuilder = mNotificationBuilders.get(notificationId);
-                    if (messageNotificationBuilder != null) {
-                        updateNotification(messageNotificationBuilder, notificationId, name);
-                    }
-                    break;
-                }
-
                 case INCOMING_TRUST_REQUEST: {
+                    Log.d(TAG, "INCOMING_TRUST_REQUEST");
                     final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
                     final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);
-                    if (accountID != null && from != null) {
-                        Set<String> requests = mPreferencesService.loadRequestsPreferences(accountID);
-                        if (requests == null || !requests.contains(from)) {
-                            showIncomingTrustRequestNotification(accountID, from);
-
-                            mPreferencesService.saveRequestPreferences(accountID, from);
-                        }
+                    Account account = mAccountService.getAccount(accountID);
+                    Set<String> notifiedRequests = mPreferencesService.loadRequestsPreferences(accountID);
+                    if (notifiedRequests == null || !notifiedRequests.contains(from)) {
+                        showIncomingTrustRequestNotification(account);
+                        mPreferencesService.saveRequestPreferences(accountID, from);
+                    } else {
+                        Log.d(TAG, "INCOMING_TRUST_REQUEST: already notified for " + from);
                     }
                     break;
                 }
@@ -430,20 +404,5 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                     break;
             }
         }
-    }
-
-    private void updateNotification(NotificationCompat.Builder messageNotificationBuilder, int notificationId, String name) {
-        Bundle extras = messageNotificationBuilder.getExtras();
-        if (extras != null) {
-            if (extras.getBoolean(CallManagerCallBack.INCOMING_CALL, false)) {
-                messageNotificationBuilder.setContentTitle(mContext.getApplicationContext().getString(R.string.notif_incoming_call_title, name));
-            } else {
-                messageNotificationBuilder.setContentTitle(name);
-            }
-        } else {
-            messageNotificationBuilder.setContentTitle(name);
-        }
-
-        notificationManager.notify(notificationId, messageNotificationBuilder.build());
     }
 }

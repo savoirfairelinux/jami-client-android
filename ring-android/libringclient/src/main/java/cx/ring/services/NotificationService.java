@@ -22,10 +22,10 @@ package cx.ring.services;
 
 import java.util.TreeMap;
 
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 
 public abstract class NotificationService {
@@ -45,7 +45,7 @@ public abstract class NotificationService {
 
     public abstract void cancelAll();
 
-    public abstract void showIncomingTrustRequestNotification(String accountID, String from);
+    public abstract void showIncomingTrustRequestNotification(Account account);
 
     public abstract void cancelTrustRequestNotification(String accountID);
 

@@ -20,7 +20,7 @@
 package cx.ring.contactrequests;
 
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,7 +29,6 @@ import cx.ring.model.CallContact;
 import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
-import cx.ring.services.ContactService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -38,15 +37,13 @@ public class BlackListPresenter extends RootPresenter<BlackListView> implements 
     static private final String TAG = BlackListPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
-    private ContactService mContactService;
 
     private ArrayList<BlackListViewModel> mViewModels;
     private String mAccountID;
 
     @Inject
-    public BlackListPresenter(AccountService accountService, ContactService contactService) {
+    public BlackListPresenter(AccountService accountService) {
         mAccountService = accountService;
-        mContactService = contactService;
     }
 
     @Override
@@ -83,11 +80,9 @@ public class BlackListPresenter extends RootPresenter<BlackListView> implements 
             mViewModels.clear();
         }
 
-        ArrayList<Map<String, String>> list = new ArrayList<>(mContactService.getContacts(account.getAccountID()));
-        for (Map<String, String> contact : list) {
-            if (contact.containsKey("banned") && contact.get("banned").equals("true") && contact.containsKey("id")) {
-                mViewModels.add(new BlackListViewModel(CallContact.buildUnknown(contact.get("id"))));
-            }
+        List<CallContact> list = account.getBannedContacts();
+        for (CallContact contact : list) {
+            mViewModels.add(new BlackListViewModel(contact));
         }
 
         if(mViewModels.isEmpty()) {
@@ -114,7 +109,7 @@ public class BlackListPresenter extends RootPresenter<BlackListView> implements 
             return;
         }
 
-        mContactService.addContact(account.getAccountID(), contactId);
+        mAccountService.addContact(account.getAccountID(), contactId);
         updateList();
     }
 
