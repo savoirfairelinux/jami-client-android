@@ -131,19 +131,11 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
         return (alias == null) ? account.getAlias() : alias;
     }
 
-    public String getHost(Account account, CharSequence defaultNameSip) {
-        String username;
-        if (account.isRing()) {
-            username = account.getRegisteredName();
-            if (account.registeringUsername || username == null || username.isEmpty()) {
-                username = account.getUsername();
-            }
-        } else if (account.isSip() && !account.isIP2IP()) {
-            username = account.getUsername() + "@" + account.getHost();
-        } else {
-            username = defaultNameSip.toString();
+    public String getUri(Account account, CharSequence defaultNameSip) {
+        if (account.isIP2IP()) {
+            return defaultNameSip.toString();
         }
-        return username;
+        return account.getDisplayUri();
     }
 
     @Override

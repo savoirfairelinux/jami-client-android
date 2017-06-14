@@ -26,44 +26,34 @@ import cx.ring.utils.QRCodeUtils;
 
 public class ShareViewModel {
 
-    private WeakReference<Account> mAccount;
+    private final WeakReference<Account> mAccount;
 
     public ShareViewModel(Account account) {
         mAccount = new WeakReference<>(account);
     }
 
-    private boolean isAccountValid() {
-        return mAccount != null && mAccount.get() != null && mAccount.get().isEnabled();
+    private Account getAccount() {
+        Account account = mAccount.get();
+        if (account == null  || !account.isEnabled())
+            return null;
+        return account;
     }
 
     public QRCodeUtils.QRCodeData getAccountQRCodeData() {
-        if (!isAccountValid()) {
+        Account account = getAccount();
+        if (account == null) {
             return null;
         }
 
-        String accountShareUri = getAccountShareUri();
-
-        if (accountShareUri == null || accountShareUri.isEmpty()) {
-            return null;
-        }
-
-        return QRCodeUtils.encodeStringAsQRCodeData(mAccount.get().getShareURI());
+        return QRCodeUtils.encodeStringAsQRCodeData(account.getUri());
     }
 
     public String getAccountShareUri() {
-        if (!isAccountValid()) {
+        Account account = getAccount();
+        if (account == null) {
             return null;
         }
 
-        return mAccount.get().getShareURI();
+        return account.getDisplayUri();
     }
-
-    public String getAccountRegisteredUsername() {
-        if (!isAccountValid()) {
-            return null;
-        }
-
-        return mAccount.get().getRegisteredName();
-    }
-
 }

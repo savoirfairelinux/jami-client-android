@@ -197,7 +197,6 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
         if (name == null || ret == null) {
             return;
         }
-        android.util.Log.d(TAG, "getAppDataPath: " + name);
 
         switch (name) {
             case "files":

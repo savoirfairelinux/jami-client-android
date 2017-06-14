@@ -38,16 +38,8 @@ public class PendingContactRequestsViewModel {
         mFullname = trustRequest.getFullname();
         mUsername = trustRequest.getDisplayname();
         hasPane = pane;
-        mAccountUsername = getAccountUsername(account);
+        mAccountUsername = account.getDisplayUsername();
         mContactId = trustRequest.getContactId();
-    }
-
-    private String getAccountUsername(Account account) {
-        String username = account.getRegisteredName();
-        if (account.registeringUsername || username == null || username.isEmpty()) {
-            username = account.getUsername();
-        }
-        return username;
     }
 
     public String getAccountUsername() {

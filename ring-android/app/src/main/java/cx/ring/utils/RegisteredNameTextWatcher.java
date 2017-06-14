@@ -36,16 +36,14 @@ public class RegisteredNameTextWatcher implements TextWatcher {
 
     private WeakReference<TextInputLayout> mInputLayout;
     private WeakReference<EditText> mInputText;
-    private WeakReference<AccountService> mAccountService;
     private NameLookupInputHandler mNameLookupInputHandler;
     private String mLookingForAvailability;
 
     public RegisteredNameTextWatcher(Context context, final AccountService accountService, final TextInputLayout inputLayout, final EditText inputText) {
         mInputLayout = new WeakReference<>(inputLayout);
         mInputText = new WeakReference<>(inputText);
-        mAccountService = new WeakReference<>(accountService);
         mLookingForAvailability = context.getString(R.string.looking_for_username_availability);
-        mNameLookupInputHandler = new NameLookupInputHandler(mAccountService);
+        mNameLookupInputHandler = new NameLookupInputHandler(new WeakReference<>(accountService));
     }
 
     @Override

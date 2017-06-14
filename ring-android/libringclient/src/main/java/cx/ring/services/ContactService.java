@@ -33,6 +33,7 @@ import javax.inject.Named;
 
 import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.Ringservice;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
@@ -55,9 +56,6 @@ import cx.ring.utils.Tuple;
  */
 public abstract class ContactService extends Observable {
 
-    public static final String BANNED = "banned";
-    public static final String CONFIRMED = "confirmed";
-    public static final String ID = "id";
 
     private final static String TAG = ContactService.class.getName();
 
@@ -71,13 +69,8 @@ public abstract class ContactService extends Observable {
     @Named("ApplicationExecutor")
     ExecutorService mApplicationExecutor;
 
-    @Inject
-    @Named("DaemonExecutor")
-    ExecutorService mExecutor;
-
     private Map<Long, CallContact> mContactList;
     private Map<String, CallContact> mContactsRing;
-    private ConfigurationCallbackHandler mCallbackHandler;
 
     protected abstract Map<Long, CallContact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
 
@@ -89,35 +82,11 @@ public abstract class ContactService extends Observable {
 
     public abstract Tuple<String, String> loadContactDataFromSystem(CallContact callContact);
 
-    public abstract Tuple<String, byte[]> loadContactData(CallContact callContact);
+    public abstract void loadContactData(CallContact callContact);
 
     public ContactService() {
         mContactList = new HashMap<>();
         mContactsRing = new HashMap<>();
-        mCallbackHandler = new ConfigurationCallbackHandler();
-    }
-
-    public ConfigurationCallbackHandler getCallbackHandler() {
-        return mCallbackHandler;
-    }
-
-    public Map<String, CallContact> loadContactsFromDaemon(String accountId) {
-        Map<String, CallContact> contacts = new HashMap<>();
-        ArrayList<Map<String, String>> contactsDaemon = new ArrayList<>(getContacts(accountId));
-
-        for (Map<String, String> contact : contactsDaemon) {
-            String contactId = contact.get(ID);
-            CallContact callContact = CallContact.buildUnknown(CallContact.PREFIX_RING + contactId);
-            if (contact.containsKey(BANNED) && contact.get(BANNED).equals("true")) {
-                callContact.setStatus(CallContact.Status.BANNED);
-            } else if (contact.containsKey(CONFIRMED)) {
-                callContact.setStatus(Boolean.valueOf(contact.get(CONFIRMED)) ?
-                        CallContact.Status.CONFIRMED :
-                        CallContact.Status.REQUEST_SENT);
-            }
-            contacts.put(contactId, callContact);
-        }
-        return contacts;
     }
 
     /**
@@ -126,7 +95,7 @@ public abstract class ContactService extends Observable {
      * @param loadRingContacts if true, ring contacts will be taken care of
      * @param loadSipContacts  if true, sip contacts will be taken care of
      */
-    public void loadContacts(final boolean loadRingContacts, final boolean loadSipContacts, final String accountId) {
+    public void loadContacts(final boolean loadRingContacts, final boolean loadSipContacts, final Account account) {
         mApplicationExecutor.submit(new Runnable() {
             @Override
             public void run() {
@@ -134,7 +103,7 @@ public abstract class ContactService extends Observable {
                 if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
                     mContactList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
                 }
-                mContactsRing = loadContactsFromDaemon(accountId);
+                mContactsRing = account.getContacts();
                 setChanged();
                 ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACTS_CHANGED);
                 notifyObservers(event);
@@ -262,41 +231,50 @@ public abstract class ContactService extends Observable {
      * @return The found/created contact
      */
     public CallContact findContactByNumber(String number) {
-
         if (number == null || number.isEmpty()) {
             return null;
         }
+        return findContact(new Uri(number));
+    }
 
-        Settings settings = mPreferencesService.loadSettings();
+    public CallContact findContact(Uri uri) {
+        if (uri == null) {
+            return null;
+        }
+        String searchedCanonicalNumber = uri.getRawUriString();
 
-        String searchedCanonicalNumber = CallContact.canonicalNumber(number);
-
-        for (CallContact contact : getContacts()) {
-            if (contact.hasNumber(searchedCanonicalNumber)) {
+        // Look for Ring contact by ID
+        boolean isRingId = uri.isRingId();
+        if (isRingId) {
+            CallContact contact = mContactsRing.get(searchedCanonicalNumber);
+            if (contact != null) {
                 return contact;
             }
         }
 
-        if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
-
-            CallContact contact = findContactByNumberFromSystem(number);
-
-            if (contact == null) {
-                contact = CallContact.buildUnknown(number);
+        // Look for other contact
+        for (CallContact c : mContactsRing.values()) {
+            if (c.hasNumber(searchedCanonicalNumber)) {
+                return c;
             }
-
-            if (contact.getId() == CallContact.UNKNOWN_ID) {
-                mContactsRing.put(contact.getDisplayName(), contact);
-            } else {
-                mContactList.put(contact.getId(), contact);
-            }
-
-            return contact;
         }
 
-        CallContact contact = CallContact.buildUnknown(number);
-        mContactsRing.put(contact.getDisplayName(), contact);
+        Settings settings = mPreferencesService.loadSettings();
+        if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
+            CallContact contact = findContactByNumberFromSystem(searchedCanonicalNumber);
+            if (contact != null) {
+                return contact;
+            }
+        }
 
+        CallContact contact;
+        if (isRingId) {
+            contact = CallContact.buildRingContact(uri);
+            mContactsRing.put(searchedCanonicalNumber, contact);
+        } else {
+            contact = CallContact.buildUnknown(uri);
+            mContactList.put(contact.getId(), contact);
+        }
         return contact;
     }
 
@@ -327,94 +305,4 @@ public abstract class ContactService extends Observable {
         return contact;
     }
 
-    /**
-     * Add a new contact for the account Id on the Daemon
-     *
-     * @param accountId
-     * @param uri
-     */
-    public void addContact(final String accountId, final String uri) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "addContact() thread running...");
-                        Ringservice.addContact(accountId, uri);
-                        return true;
-                    }
-                }
-        );
-    }
-
-    /**
-     * Remove an existing contact for the account Id on the Daemon
-     *
-     * @param accountId
-     * @param uri
-     */
-    public void removeContact(final String accountId, final String uri, final boolean ban) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "removeContact() thread running...");
-                        Ringservice.removeContact(accountId, uri, ban);
-                        return true;
-                    }
-                }
-        );
-    }
-
-    /**
-     * @param accountId
-     * @return the contacts list from the daemon
-     */
-    public List<Map<String, String>> getContacts(final String accountId) {
-
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                new Callable<List<Map<String, String>>>() {
-                    @Override
-                    public List<Map<String, String>> call() throws Exception {
-                        Log.i(TAG, "getContacts() thread running...");
-                        return Ringservice.getContacts(accountId).toNative();
-                    }
-                }
-        );
-    }
-
-    class ConfigurationCallbackHandler extends ConfigurationCallback {
-
-        @Override
-        public void contactAdded(String accountId, String uri, boolean confirmed) {
-            Log.d(TAG, "contactAdded: " + accountId + ", " + uri + ", " + confirmed);
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_ADDED);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.CONFIRMED, confirmed);
-            notifyObservers(event);
-        }
-
-        @Override
-        public void contactRemoved(String accountId, String uri, boolean banned) {
-            Log.d(TAG, "contactRemoved: " + accountId + ", " + uri + ", " + banned);
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_REMOVED);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.BANNED, banned);
-            notifyObservers(event);
-        }
-    }
 }

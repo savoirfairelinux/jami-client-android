@@ -54,6 +54,7 @@
 
 /* Avoid uint64_t to be converted to BigInteger */
 %apply int64_t { uint64_t };
+%apply uint64_t { time_t };
 
 namespace std {
 

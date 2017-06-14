@@ -175,8 +175,6 @@ public class ContactServiceImpl extends ContactService {
             cache = new LongSparseArray<>();
         }
 
-        contactCursor.close();
-
         contactCursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, CONTACTS_SUMMARY_PROJECTION,
                 ContactsContract.Contacts._ID + " in (" + contactsIds.toString() + ")", null,
                 ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC");
@@ -400,12 +398,16 @@ public class ContactServiceImpl extends ContactService {
     }
 
     @Override
-    public Tuple<String, byte[]> loadContactData(CallContact callContact) {
+    public void loadContactData(CallContact callContact) {
+        Tuple<String, byte[]> profileData;
         if (callContact.isFromSystem()) {
-            return loadSystemContactData(callContact);
+            profileData = loadSystemContactData(callContact);
         } else {
-            return loadVCardContactData(callContact);
+            profileData = loadVCardContactData(callContact);
         }
+        callContact.setDisplayName(profileData.first);
+        if (profileData.second != null && profileData.second.length > 0)
+            callContact.setPhoto(profileData.second);
     }
 
     private Tuple<String, byte[]> loadVCardContactData(CallContact callContact) {

@@ -33,18 +33,17 @@ import javax.inject.Named;
 
 import cx.ring.daemon.Blob;
 import cx.ring.daemon.ConfigurationCallback;
-import cx.ring.daemon.IntVect;
 import cx.ring.daemon.Ringservice;
-import cx.ring.daemon.SWIGTYPE_p_time_t;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.UintVect;
-import cx.ring.daemon.VectMap;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
+import cx.ring.model.CallContact;
 import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.ServiceEvent;
+import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
@@ -77,7 +76,7 @@ import ezvcard.VCard;
  */
 public class AccountService extends Observable {
 
-    private static final String TAG = AccountService.class.getName();
+    private static final String TAG = AccountService.class.getSimpleName();
 
     private static final int VCARD_CHUNK_SIZE = 1000;
 
@@ -155,17 +154,23 @@ public class AccountService extends Observable {
             List<Map<String, String>> credentials = getCredentials(accountId);
             Map<String, String> volatileAccountDetails = getVolatileAccountDetails(accountId);
             Account account = new Account(accountId, details, credentials, volatileAccountDetails);
-            account.setDevices(getKnownRingDevices(accountId));
+            mAccountList.add(account);
 
             if (account.isSip()) {
                 mHasSipAccount = true;
-            }
-
-            if (account.isRing()) {
+            } else if (account.isRing()) {
                 mHasRingAccount = true;
-            }
 
-            mAccountList.add(account);
+                account.setDevices(getKnownRingDevices(accountId));
+                account.setContacts(getContacts(accountId));
+                List<Map<String, String>> requests = getTrustRequests(accountId);
+                for (Map<String, String> requestInfo : requests) {
+                    TrustRequest request = new TrustRequest(accountId, requestInfo);
+                    account.addRequest(request);
+                    // If name is in cache this can be synchronous
+                    lookupAddress(accountId, "", request.getContactId());
+                }
+            }
         }
     }
 
@@ -944,54 +949,6 @@ public class AccountService extends Observable {
     }
 
     /**
-     * Looks up for the availibility of the name on the blockchain
-     *
-     * @param account
-     * @param nameserver
-     * @param name
-     */
-    public void lookupName(final String account, final String nameserver, final String name) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "lookupName() thread running...");
-                        Ringservice.lookupName(account, nameserver, name);
-                        return true;
-                    }
-                }
-        );
-    }
-
-    /**
-     * Reverse looks up the address in the blockchain to find the name
-     *
-     * @param account
-     * @param nameserver
-     * @param address
-     */
-    public void lookupAddress(final String account, final String nameserver, final String address) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "lookupAddress() thread running...");
-                        Ringservice.lookupAddress(account, nameserver, address);
-                        return true;
-                    }
-                }
-        );
-    }
-
-    /**
      * Registers a new name on the blockchain for the account
      *
      * @param account
@@ -1038,17 +995,17 @@ public class AccountService extends Observable {
      * @param accountId
      * @return all trust requests from the daemon for the account Id
      */
-    public VectMap getTrustRequests(final String accountId) {
+    public List<Map<String, String>> getTrustRequests(final String accountId) {
 
         return FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<VectMap>() {
+                new Callable<List<Map<String, String>>>() {
                     @Override
-                    public VectMap call() throws Exception {
+                    public List<Map<String, String>> call() throws Exception {
                         Log.i(TAG, "getTrustRequests() thread running...");
-                        return Ringservice.getTrustRequests(accountId);
+                        return Ringservice.getTrustRequests(accountId).toNative();
                     }
                 }
         );
@@ -1084,17 +1041,23 @@ public class AccountService extends Observable {
      * @param from
      * @return
      */
-    public Boolean discardTrustRequest(final String accountId, final String from) {
-
-        return FutureUtils.executeDaemonThreadCallable(
+    public void discardTrustRequest(final String accountId, final String from) {
+        Account account = getAccount(accountId);
+        account.removeRequest(from);
+        FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
+                new Callable<Void>() {
                     @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "discardTrustRequest() thread running...");
-                        return Ringservice.discardTrustRequest(accountId, from);
+                    public Void call() throws Exception {
+                        Log.i(TAG, "discardTrustRequest() " + accountId + " " + from);
+                        Ringservice.discardTrustRequest(accountId, from);
+                        setChanged();
+                        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
+                        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+                        notifyObservers(event);
+                        return null;
                     }
                 }
         );
@@ -1118,6 +1081,121 @@ public class AccountService extends Observable {
                     public Boolean call() throws Exception {
                         Log.i(TAG, "sendTrustRequest() thread running...");
                         Ringservice.sendTrustRequest(accountId, to, message);
+                        return true;
+                    }
+                }
+        );
+    }
+
+
+    /**
+     * Add a new contact for the account Id on the Daemon
+     *
+     * @param accountId
+     * @param uri
+     */
+    public void addContact(final String accountId, final String uri) {
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "addContact() thread running...");
+                        Ringservice.addContact(accountId, uri);
+                        return true;
+                    }
+                }
+        );
+    }
+
+    /**
+     * Remove an existing contact for the account Id on the Daemon
+     *
+     * @param accountId
+     * @param uri
+     */
+    public void removeContact(final String accountId, final String uri, final boolean ban) {
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "removeContact() thread running...");
+                        Ringservice.removeContact(accountId, uri, ban);
+                        return true;
+                    }
+                }
+        );
+    }
+
+    /**
+     * @param accountId
+     * @return the contacts list from the daemon
+     */
+    public List<Map<String, String>> getContacts(final String accountId) {
+
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<List<Map<String, String>>>() {
+                    @Override
+                    public List<Map<String, String>> call() throws Exception {
+                        Log.i(TAG, "getContacts() thread running...");
+                        return Ringservice.getContacts(accountId).toNative();
+                    }
+                }
+        );
+    }
+
+    /**
+     * Looks up for the availibility of the name on the blockchain
+     *
+     * @param account
+     * @param nameserver
+     * @param name
+     */
+    public void lookupName(final String account, final String nameserver, final String name) {
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "lookupName() thread running...");
+                        Ringservice.lookupName(account, nameserver, name);
+                        return true;
+                    }
+                }
+        );
+    }
+
+    /**
+     * Reverse looks up the address in the blockchain to find the name
+     *
+     * @param account
+     * @param nameserver
+     * @param address
+     */
+    public void lookupAddress(final String account, final String nameserver, final String address) {
+
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "lookupAddress() " + address);
+                        Ringservice.lookupAddress(account, nameserver, address);
                         return true;
                     }
                 }
@@ -1301,19 +1379,6 @@ public class AccountService extends Observable {
         }
 
         @Override
-        public void registeredNameFound(String accountId, int state, String address, String name) {
-            Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTERED_NAME_FOUND);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.STATE, state);
-            event.addEventInput(ServiceEvent.EventInput.ADDRESS, address);
-            event.addEventInput(ServiceEvent.EventInput.NAME, name);
-            notifyObservers(event);
-        }
-
-        @Override
         public void migrationEnded(String accountId, String state) {
             Log.d(TAG, "migrationEnded: " + accountId + ", " + state);
 
@@ -1337,16 +1402,78 @@ public class AccountService extends Observable {
         }
 
         @Override
-        public void incomingTrustRequest(String accountId, String from, Blob message, SWIGTYPE_p_time_t received) {
+        public void incomingTrustRequest(String accountId, String from, Blob message, long received) {
             Log.d(TAG, "incomingTrustRequest: " + accountId + ", " + from + ", " + message + ", " + received);
 
+            Account account = getAccount(accountId);
+            if (account != null) {
+                TrustRequest request = new TrustRequest(accountId, from, received, message.toJavaString());
+                account.addRequest(request);
+                lookupAddress(accountId, "", from);
+            }
+        }
+
+
+        @Override
+        public void contactAdded(String accountId, String uri, boolean confirmed) {
+            Log.d(TAG, "contactAdded: " + accountId + ", " + uri + ", " + confirmed);
+
             setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_ADDED);
             event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.FROM, from);
-            event.addEventInput(ServiceEvent.EventInput.MESSAGE, message);
-            event.addEventInput(ServiceEvent.EventInput.TIME, received);
+            event.addEventInput(ServiceEvent.EventInput.CONFIRMED, confirmed);
             notifyObservers(event);
         }
+
+        @Override
+        public void contactRemoved(String accountId, String uri, boolean banned) {
+            Log.d(TAG, "contactRemoved: " + accountId + ", " + uri + ", " + banned);
+
+            setChanged();
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_REMOVED);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.BANNED, banned);
+            notifyObservers(event);
+        }
+
+        @Override
+        public void registeredNameFound(String accountId, int state, String address, String name) {
+            Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
+
+            Account account = getAccount(accountId);
+            if (account != null) {
+                if (state == 0) {
+                    CallContact contact = account.getContact(address);
+                    if (contact != null) {
+                        contact.setUsername(name);
+                    }
+                }
+                TrustRequest request = account.getRequest(address);
+                if (request != null) {
+                    Log.d(TAG, "registeredNameFound: updating TrustRequest " +  name);
+                    boolean resolved = request.isNameResolved();
+                    request.setUsername(name);
+                    if (!resolved) {
+                        Log.d(TAG, "registeredNameFound: TrustRequest resolved " +  name);
+                        setChanged();
+                        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
+                        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+                        event.addEventInput(ServiceEvent.EventInput.FROM, request.getContactId());
+                        notifyObservers(event);
+                    }
+                } else {
+                    Log.d(TAG, "registeredNameFound: no TrustRequest for " +  address);
+                }
+            }
+
+            setChanged();
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTERED_NAME_FOUND);
+            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.STATE, state);
+            event.addEventInput(ServiceEvent.EventInput.ADDRESS, address);
+            event.addEventInput(ServiceEvent.EventInput.NAME, name);
+            notifyObservers(event);
+        }
+
     }
 }

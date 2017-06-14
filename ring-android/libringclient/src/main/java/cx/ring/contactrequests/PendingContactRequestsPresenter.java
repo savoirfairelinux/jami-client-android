@@ -21,11 +21,9 @@ package cx.ring.contactrequests;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
-import cx.ring.daemon.Blob;
 import cx.ring.model.Account;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.TrustRequest;
@@ -33,13 +31,10 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.NotificationService;
-import cx.ring.services.ContactService;
 import cx.ring.services.PreferencesService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
-import cx.ring.utils.TrustRequestUtils;
-import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 
@@ -49,7 +44,6 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
 
     private AccountService mAccountService;
     private NotificationService mNotificationService;
-    private ContactService mContactService;
     private DeviceRuntimeService mDeviceRuntimeService;
     private PreferencesService mPreferencesService;
 
@@ -59,18 +53,15 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
     @Inject
     public PendingContactRequestsPresenter(AccountService accountService,
                                            NotificationService notificationService,
-                                           ContactService contactService,
                                            DeviceRuntimeService deviceRuntimeService,
                                            PreferencesService sharedPreferencesService) {
         mAccountService = accountService;
         mNotificationService = notificationService;
-        mContactService = contactService;
         mDeviceRuntimeService = deviceRuntimeService;
         mPreferencesService = sharedPreferencesService;
     }
 
     final private List<TrustRequest> mTrustRequests = new ArrayList<>();
-    final private List<TrustRequest> mTrustRequestsTmp = new ArrayList<>();
 
     @Override
     public void afterInjection() {
@@ -89,7 +80,6 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
         if (shouldUpdateList) {
             updateList(true);
         }
-
     }
 
     @Override
@@ -110,25 +100,9 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
         }
         boolean hasPane = !currentAccount.equals(mAccountService.getCurrentAccount());
 
-
         if (clear) {
             mTrustRequests.clear();
-            mTrustRequestsTmp.clear();
-            ArrayList<Map<String, String>> list = mAccountService.getTrustRequests(currentAccount.getAccountID()).toNative();
-            String accountId = currentAccount.getAccountID();
-
-            for (Map<String, String> request : list) {
-                String contactId = request.get("from");
-                String timestamp = request.get("received");
-                String payload = request.get("payload");
-                TrustRequest trustRequest = new TrustRequest(accountId, contactId);
-                trustRequest.setTimestamp(timestamp);
-                Tuple<VCard, String> tuple = TrustRequestUtils.parsePayload(payload);
-                trustRequest.setVCard(tuple.first);
-                trustRequest.setMessage(tuple.second);
-                mTrustRequestsTmp.add(trustRequest);
-                mAccountService.lookupAddress("", "", contactId);
-            }
+            mTrustRequests.addAll(currentAccount.getRequests());
         }
 
         if (mContactRequestsViewModels == null) {
@@ -175,7 +149,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
         String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
         String contactId = viewModel.getContactId();
         mAccountService.discardTrustRequest(accountId, contactId);
-        mContactService.removeContact(accountId, contactId, true);
+        mAccountService.removeContact(accountId, contactId, true);
         mPreferencesService.removeRequestPreferences(accountId, contactId);
         updateList(true);
     }
@@ -189,50 +163,13 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
 
         switch (event.getEventType()) {
             case INCOMING_TRUST_REQUEST:
-                final String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
-                final String from = event.getEventInput(ServiceEvent.EventInput.FROM, String.class);
-                final String payload = event.getEventInput(ServiceEvent.EventInput.MESSAGE, Blob.class).toJavaString();
-                TrustRequest request = new TrustRequest(accountId, from);
-                Tuple<VCard, String> tuple = TrustRequestUtils.parsePayload(payload);
-                request.setVCard(tuple.first);
-                request.setMessage(tuple.second);
-                if (!mTrustRequestsTmp.contains(request) && !mTrustRequests.contains(request)) {
-                    mTrustRequestsTmp.add(request);
-                    mAccountService.lookupAddress("", "", from);
-                    updateList(false);
-                }
+                updateList(false);
                 break;
             case ACCOUNTS_CHANGED:
                 updateList(true);
                 break;
             case REGISTERED_NAME_FOUND:
-                Log.d(TAG, "update, accountId: " + mAccountService.getCurrentAccount().getAccountID());
-                final String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                final String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-                final int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
-                switch (state) {
-                    case 0: //name found
-                        for (TrustRequest trustRequest : mTrustRequestsTmp) {
-                            if (trustRequest.getContactId().equals(address)) {
-                                trustRequest.setUsername(name);
-                                mTrustRequestsTmp.remove(trustRequest);
-                                mTrustRequests.add(trustRequest);
-                                updateList(false);
-                                break;
-                            }
-                        }
-                        break;
-                    default:
-                        for (TrustRequest trustRequest : mTrustRequestsTmp) {
-                            if (trustRequest.getContactId().equals(address)) {
-                                mTrustRequestsTmp.remove(trustRequest);
-                                mTrustRequests.add(trustRequest);
-                                updateList(false);
-                                break;
-                            }
-                        }
-                        break;
-                }
+                updateList(false);
                 break;
             default:
                 Log.d(TAG, "Event " + event.getEventType() + " is not handled here");

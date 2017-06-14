@@ -71,7 +71,6 @@ public class ShareFragment extends BaseFragment<SharePresenter> implements Gener
     Unbinder mUnbinder;
 
     private String mUriToShow;
-    private String mBlockchainUsername;
     private int mQRCodeSize = 0;
 
     @Override
@@ -129,11 +128,7 @@ public class ShareFragment extends BaseFragment<SharePresenter> implements Gener
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
             sharingIntent.putExtra(Intent.EXTRA_SUBJECT, mAccountCountactMe);
-            if (!TextUtils.isEmpty(mBlockchainUsername)) {
-                sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.account_share_body_with_username, mUriToShow, mBlockchainUsername));
-            } else {
-                sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.account_share_body, mUriToShow));
-            }
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.account_share_body, mUriToShow));
             startActivity(Intent.createChooser(sharingIntent, mShareVia));
         }
     }
@@ -162,8 +157,6 @@ public class ShareFragment extends BaseFragment<SharePresenter> implements Gener
                 }
 
                 mUriToShow = viewModel.getAccountShareUri();
-                mBlockchainUsername = viewModel.getAccountRegisteredUsername();
-
                 if (TextUtils.isEmpty(mUriToShow)) {
                     mShareButton.setEnabled(false);
                 } else {

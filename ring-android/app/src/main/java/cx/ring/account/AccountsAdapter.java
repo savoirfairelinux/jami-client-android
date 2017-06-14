@@ -36,7 +36,6 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.model.Account;
-import cx.ring.model.ConfigKey;
 
 public class AccountsAdapter extends BaseAdapter {
     static final String TAG = AccountsAdapter.class.getSimpleName();
@@ -97,9 +96,9 @@ public class AccountsAdapter extends BaseAdapter {
         if (item.isIP2IP()) {
             entryView.host.setText(item.getRegistrationState());
         } else if (item.isSip()) {
-            entryView.host.setText(item.getHost() + " - " + item.getRegistrationState());
+            entryView.host.setText(item.getDisplayUri() + " - " + item.getRegistrationState());
         } else {
-            entryView.host.setText(item.getDetail(ConfigKey.ACCOUNT_USERNAME));
+            entryView.host.setText(item.getDisplayUri());
         }
 
         entryView.enabled.setChecked(item.isEnabled());

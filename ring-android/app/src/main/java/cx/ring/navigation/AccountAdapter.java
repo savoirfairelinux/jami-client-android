@@ -20,7 +20,6 @@ package cx.ring.navigation;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +39,6 @@ import cx.ring.model.Account;
 import cx.ring.utils.CircleTransform;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
-import ezvcard.property.FormattedName;
 
 class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final List<Account> mDataset = new ArrayList<>();
@@ -128,7 +126,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         .into(photo);
             }
             alias.setText(mRingNavigationPresenter.getAccountAlias(account));
-            host.setText(mRingNavigationPresenter.getHost(account, context.getText(R.string.account_type_ip2ip)));
+            host.setText(mRingNavigationPresenter.getUri(account, context.getText(R.string.account_type_ip2ip)));
             itemView.setEnabled(account.isEnabled());
             disabled_flag.setVisibility(account.isEnabled() ? View.GONE : View.VISIBLE);
             if (account.isEnabled()) {

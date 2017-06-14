@@ -2,6 +2,7 @@
  *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
  *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,14 +20,13 @@
 
 package cx.ring.model;
 
+import java.util.Map;
 import java.util.Random;
 
-import javax.inject.Inject;
-
+import ezvcard.Ezvcard;
 import ezvcard.VCard;
 
 public class TrustRequest {
-
     private static final String TAG = TrustRequest.class.getSimpleName();
 
     private String mAccountId;
@@ -34,15 +34,21 @@ public class TrustRequest {
     private String mContactId;
     private VCard mVcard;
     private String mMessage;
-    private String mTimestamp;
+    private long mTimestamp;
     private int mUuid;
+    private boolean mUsernameResolved = false;
 
-    public TrustRequest(String accountId, String contact) {
+    public TrustRequest(String accountId, String contact, long received, String payload) {
         mAccountId = accountId;
         mContactId = contact;
-        mVcard = new VCard();
+        mTimestamp = received;
+        mVcard = Ezvcard.parse(payload).first();
         mMessage = null;
         mUuid = new Random().nextInt();
+    }
+
+    public TrustRequest(String accountId, Map<String, String> info) {
+        this(accountId, info.get("from"), Long.decode(info.get("received")), info.get("payload"));
     }
 
     public int getUuid() {
@@ -66,18 +72,20 @@ public class TrustRequest {
     }
 
     public String getDisplayname() {
-        return mContactUsername == null ? mContactId : mContactUsername;
+        boolean hasUsername = mContactUsername != null && !mContactUsername.isEmpty();
+        return hasUsername ? mContactUsername : mContactId;
+    }
+
+    public boolean isNameResolved() {
+        return mUsernameResolved;
     }
 
     public void setUsername(String username) {
         mContactUsername = username;
+        mUsernameResolved = true;
     }
 
-    public void setTimestamp(String timestamp) {
-        mTimestamp = timestamp;
-    }
-
-    public String getTimestamp() {
+    public long getTimestamp() {
         return mTimestamp;
     }
 
