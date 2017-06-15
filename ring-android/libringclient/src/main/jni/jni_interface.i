@@ -242,6 +242,7 @@ void init(ConfigurationCallback* confM, Callback* callM, PresenceCallback* presM
         exportable_callback<ConfigurationSignal::CertificateStateChanged>(bind(&ConfigurationCallback::certificateStateChanged, confM, _1, _2, _3 )),
         exportable_callback<ConfigurationSignal::GetHardwareAudioFormat>(bind(&ConfigurationCallback::getHardwareAudioFormat, confM, _1 )),
         exportable_callback<ConfigurationSignal::GetAppDataPath>(bind(&ConfigurationCallback::getAppDataPath, confM, _1, _2 )),
+        exportable_callback<ConfigurationSignal::GetDeviceName>(bind(&ConfigurationCallback::getDeviceName, confM, _1 )),
         exportable_callback<ConfigurationSignal::RegisteredNameFound>(bind(&ConfigurationCallback::registeredNameFound, confM, _1, _2, _3, _4 )),
         exportable_callback<ConfigurationSignal::NameRegistrationEnded>(bind(&ConfigurationCallback::nameRegistrationEnded, confM, _1, _2, _3 )),
         exportable_callback<ConfigurationSignal::MigrationEnded>(bind(&ConfigurationCallback::migrationEnded, confM, _1, _2)),
