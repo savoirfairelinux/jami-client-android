@@ -65,6 +65,7 @@ public class DaemonService {
     public interface SystemInfoCallbacks {
         void getHardwareAudioFormat(IntVect ret);
         void getAppDataPath(String name, StringVect ret);
+        void getDeviceName(StringVect ret);
     }
 
     public Callback getDaemonCallbackHandler(CallService.CallbackHandler callCallbackHandler,
@@ -179,6 +180,11 @@ public class DaemonService {
         @Override
         public void getAppDataPath(String name, StringVect ret) {
             mSystemInfoCallbacks.getAppDataPath(name, ret);
+        }
+
+        @Override
+        public void getDeviceName(StringVect ret) {
+            mSystemInfoCallbacks.getDeviceName(ret);
         }
 
         @Override

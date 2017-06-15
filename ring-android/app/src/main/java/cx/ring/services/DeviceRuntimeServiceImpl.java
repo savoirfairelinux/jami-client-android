@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
@@ -44,6 +45,7 @@ import cx.ring.service.OpenSlParams;
 import cx.ring.utils.Log;
 import cx.ring.utils.MediaManager;
 import cx.ring.utils.NetworkUtils;
+import cx.ring.utils.StringUtils;
 
 public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
 
@@ -189,7 +191,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
         OpenSlParams audioParams = OpenSlParams.createInstance(mContext);
         ret.add(audioParams.getSampleRate());
         ret.add(audioParams.getBufferSize());
-        android.util.Log.d(TAG, "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
+        Log.d(TAG, "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
     }
 
     @Override
@@ -208,6 +210,17 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
             default:
                 ret.add(mContext.getDir(name, Context.MODE_PRIVATE).getAbsolutePath());
                 break;
+        }
+    }
+
+    @Override
+    public void getDeviceName(StringVect ret) {
+        String manufacturer = Build.MANUFACTURER;
+        String model = Build.MODEL;
+        if (model.startsWith(manufacturer)) {
+            ret.add(StringUtils.capitalize(model));
+        } else {
+            ret.add(StringUtils.capitalize(manufacturer) + " " + model);
         }
     }
 }
