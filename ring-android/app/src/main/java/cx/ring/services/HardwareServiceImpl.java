@@ -46,6 +46,7 @@ import cx.ring.utils.Log;
 public class HardwareServiceImpl extends HardwareService {
 
     public static final String TAG = HardwareServiceImpl.class.getName();
+    public static final String AARCH_64 = "aarch64";
 
     private Context mContext;
 
@@ -166,6 +167,10 @@ public class HardwareServiceImpl extends HardwareService {
         DeviceParams p = new DeviceParams();
 
         int MIN_WIDTH = 320;
+        String arch = System.getProperty("os.arch");
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M && arch.equals(AARCH_64)) {
+            MIN_WIDTH = 960;
+        }
         Point size = new Point(0, 0);
         /** {@link Camera.Parameters#getSupportedPreviewSizes} :
          * "This method will always return a list with at least one element."
