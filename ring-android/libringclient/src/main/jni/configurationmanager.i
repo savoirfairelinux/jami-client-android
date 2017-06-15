@@ -49,6 +49,7 @@ public:
     virtual void errorAlert(int alert){}
     virtual void getHardwareAudioFormat(std::vector<int32_t>* /*params_ret*/){}
     virtual void getAppDataPath(const std::string& /* name */, std::vector<std::string>* /*path_ret*/){}
+    virtual void getDeviceName(std::vector<std::string>* /*name_ret*/){}
 
     virtual void nameRegistrationEnded(const std::string& /*account_id*/, int state, const std::string& /*name*/){}
     virtual void registeredNameFound(const std::string& /*account_id*/, int state, const std::string& /*address*/, const std::string& /*name*/){}
@@ -221,6 +222,7 @@ public:
     virtual void errorAlert(int alert){}
     virtual void getHardwareAudioFormat(std::vector<int32_t>* /*params_ret*/){}
     virtual void getAppDataPath(const std::string& /* name */, std::vector<std::string>* /*path_ret*/){}
+    virtual void getDeviceName(std::vector<std::string>* /*name_ret*/){}
 
     virtual void nameRegistrationEnded(const std::string& /*account_id*/, int state, const std::string& /*name*/){}
     virtual void registeredNameFound(const std::string& /*account_id*/, int state, const std::string& /*address*/, const std::string& /*name*/){}

@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
@@ -189,7 +190,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
         OpenSlParams audioParams = OpenSlParams.createInstance(mContext);
         ret.add(audioParams.getSampleRate());
         ret.add(audioParams.getBufferSize());
-        android.util.Log.d(TAG, "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
+        Log.d(TAG, "getHardwareAudioFormat: " + audioParams.getSampleRate() + " " + audioParams.getBufferSize());
     }
 
     @Override
@@ -208,6 +209,29 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
             default:
                 ret.add(mContext.getDir(name, Context.MODE_PRIVATE).getAbsolutePath());
                 break;
+        }
+    }
+
+    private String capitalize(String s) {
+        if (s == null || s.isEmpty()) {
+            return "";
+        }
+        char first = s.charAt(0);
+        if (Character.isUpperCase(first)) {
+            return s;
+        } else {
+            return Character.toUpperCase(first) + s.substring(1);
+        }
+    }
+
+    @Override
+    public void getDeviceName(StringVect ret) {
+        String manufacturer = Build.MANUFACTURER;
+        String model = Build.MODEL;
+        if (model.startsWith(manufacturer)) {
+            ret.add(capitalize(model));
+        } else {
+            ret.add(capitalize(manufacturer) + " " + model);
         }
     }
 }
