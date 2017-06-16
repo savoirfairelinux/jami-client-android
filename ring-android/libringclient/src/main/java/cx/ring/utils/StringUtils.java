@@ -2,6 +2,7 @@
  *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,14 +21,6 @@
 package cx.ring.utils;
 
 public final class StringUtils {
-
-    public static String getRingIdFromNumber(String number) {
-        if (number.contains("<")) {
-            String[] parts = number.split("<");
-            number = parts[1].replace(">", "");
-        }
-        return number;
-    }
 
     public static boolean isEmpty(String s) {
         return s == null || s.isEmpty();

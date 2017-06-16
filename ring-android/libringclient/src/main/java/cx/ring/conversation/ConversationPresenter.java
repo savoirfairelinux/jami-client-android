@@ -149,12 +149,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         }
 
         String accountId = guess.first.getAccountID();
-        String contactId = guess.second.getRawUriString();
-
-        String[] split = contactId.split(":");
-        if (split.length > 1) {
-            contactId = split[1];
-        }
+        String contactId = guess.second.getRawRingId();
 
         mAccountService.removeContact(accountId, contactId, true);
         getView().goToHome();
@@ -268,19 +263,13 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         String accountId = guess.first.getAccountID();
         Uri contactUri = guess.second;
 
-        String contactId = contactUri.getRawUriString();
-        String[] split = contactId.split(":");
-        if (split.length > 1) {
-            contactId = split[1];
-        }
-
-        CallContact contact = mContactService.findContact(-1, null, contactUri.getRawUriString());
+        CallContact contact = mContactService.findContact(contactUri);
         if (contact != null && CallContact.Status.CONFIRMED.equals(contact.getStatus())) {
             return;
         }
 
         mConversation.setLastContactRequest(time);
-        getView().displaySendTrustRequest(accountId, contactId);
+        getView().displaySendTrustRequest(accountId, contactUri.getRawRingId());
     }
 
     /**

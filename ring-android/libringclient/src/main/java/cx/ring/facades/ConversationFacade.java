@@ -374,13 +374,9 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     private void parseHistoryCalls(List<HistoryCall> historyCalls, boolean acceptAllMessages) {
         for (HistoryCall call : historyCalls) {
-            String key = StringUtils.getRingIdFromNumber(call.getNumber());
-            String phone = "";
-            CallContact contact = mContactService.findContact(call.getContactID(), call.getContactKey(), call.getNumber());
-            if (contact != null) {
-                key = contact.getIds().get(0);
-                phone = contact.getPhones().get(0).getNumber().getRawUriString();
-            }
+            CallContact contact = mContactService.findContact(call.getContactID(), call.getContactKey(), new Uri(call.getNumber()));
+            String key = contact.getIds().get(0);
+            String phone = contact.getPhones().get(0).getNumber().getRawUriString();
             if (mConversationMap.containsKey(key) || mConversationMap.containsKey(phone)) {
                 mConversationMap.get(key).addHistoryCall(call);
             } else if (acceptAllMessages) {
@@ -394,13 +390,9 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     private void parseHistoryTexts(List<HistoryText> historyTexts, boolean acceptAllMessages) {
         for (HistoryText htext : historyTexts) {
             TextMessage msg = new TextMessage(htext);
-            String key = StringUtils.getRingIdFromNumber(htext.getNumber());
-            String phone = "";
-            CallContact contact = mContactService.findContact(htext.getContactID(), htext.getContactKey(), htext.getNumber());
-            if (contact != null) {
-                key = contact.getIds().get(0);
-                phone = contact.getPhones().get(0).getNumber().getRawUriString();
-            }
+            CallContact contact = mContactService.findContact(htext.getContactID(), htext.getContactKey(), new Uri(htext.getNumber()));
+            String key = contact.getIds().get(0);
+            String phone = contact.getPhones().get(0).getNumber().getRawUriString();
             if (mConversationMap.containsKey(key) || mConversationMap.containsKey(phone)) {
                 mConversationMap.get(key).addTextMessage(msg);
             } else if (acceptAllMessages) {
