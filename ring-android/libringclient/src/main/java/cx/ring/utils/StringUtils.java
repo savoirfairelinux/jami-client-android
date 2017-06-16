@@ -21,14 +21,6 @@ package cx.ring.utils;
 
 public final class StringUtils {
 
-    public static String getRingIdFromNumber(String number) {
-        if (number.contains("<")) {
-            String[] parts = number.split("<");
-            number = parts[1].replace(">", "");
-        }
-        return number;
-    }
-
     public static boolean isEmpty(String s) {
         return s == null || s.isEmpty();
     }

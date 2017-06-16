@@ -287,21 +287,14 @@ public abstract class ContactService extends Observable {
      * @param contactNumber
      * @return The found/created contact
      */
-    public CallContact findContact(long contactId, String contactKey, String contactNumber) {
-        CallContact contact;
-
-        if (contactId <= CallContact.DEFAULT_ID) {
-            contact = findContactByNumber(contactNumber);
+    public CallContact findContact(long contactId, String contactKey, Uri contactNumber) {
+        CallContact contact = findContactById(contactId, contactKey);
+        if (contact != null) {
+            contact.addPhoneNumber(contactNumber);
         } else {
-            contact = findContactById(contactId, contactKey);
-            if (contact != null) {
-                contact.addPhoneNumber(contactNumber);
-            } else {
-                Log.d(TAG, "Can't find contact with id " + contactId);
-                contact = findContactByNumber(contactNumber);
-            }
+            Log.d(TAG, "Can't find contact with id " + contactId);
+            contact = findContact(contactNumber);
         }
-
         return contact;
     }
 
