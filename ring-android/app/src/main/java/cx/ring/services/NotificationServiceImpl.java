@@ -389,9 +389,6 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                     }
                     break;
                 }
-                default:
-                    Log.d(TAG, "Event " + arg.getEventType() + " is not handled here");
-                    break;
             }
         }
     }
