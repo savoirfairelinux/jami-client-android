@@ -22,6 +22,30 @@
       "revId": "77ae405599ed379c4f9733181e9292bcc53ce7d5",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aa4ed85_c9cd7588",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/DeviceRuntimeServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-06-16T12:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aa4ed85_690a41d4",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 5
+      },
+      "revId": "77ae405599ed379c4f9733181e9292bcc53ce7d5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
