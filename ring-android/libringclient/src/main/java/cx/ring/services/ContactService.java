@@ -292,7 +292,9 @@ public abstract class ContactService extends Observable {
         if (contact != null) {
             contact.addPhoneNumber(contactNumber);
         } else {
-            Log.d(TAG, "Can't find contact with id " + contactId);
+            if (contactId > CallContact.DEFAULT_ID) {
+                Log.d(TAG, "Can't find contact with id " + contactId);
+            }
             contact = findContact(contactNumber);
         }
         return contact;
