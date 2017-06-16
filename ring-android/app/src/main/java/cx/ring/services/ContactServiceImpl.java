@@ -155,7 +155,7 @@ public class ContactServiceImpl extends ContactService {
                             contact.addNumber(contactNumber, contactType, contactLabel, cx.ring.model.Phone.NumberType.SIP);
                             break;
                         case ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE:
-                            if (new Uri(contactNumber).isRingId()) {
+                            if (uri.isRingId()) {
                                 contact.addNumber(contactNumber, contactType, contactLabel, cx.ring.model.Phone.NumberType.UNKNOWN);
                             }
                             break;

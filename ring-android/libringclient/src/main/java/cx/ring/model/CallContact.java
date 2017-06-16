@@ -189,9 +189,9 @@ public class CallContact {
         return stared;
     }
 
-    public void addPhoneNumber(String tel) {
-        if (!hasNumber(tel))
-            mPhones.add(new Phone(tel, 0));
+    public void addPhoneNumber(Uri uri) {
+        if (!hasNumber(uri))
+            mPhones.add(new Phone(uri, 0));
     }
 
     public void addPhoneNumber(String tel, int cat, String label) {
