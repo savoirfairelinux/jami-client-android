@@ -25,6 +25,7 @@ import android.graphics.ImageFormat;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.media.AudioManager;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.LongSparseArray;
 import android.view.Surface;
@@ -141,7 +142,7 @@ public class HardwareServiceImpl extends HardwareService {
 
     @Override
     public void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates) {
-        Log.d(TAG, "getCameraInfo: " + camId + ", " + formats + ", " + sizes + ", " + rates);
+        Log.d(TAG, "getCameraInfo: " + camId);
         int id = Integer.valueOf(camId);
 
         if (id < 0 || id >= Camera.getNumberOfCameras()) {
@@ -165,7 +166,9 @@ public class HardwareServiceImpl extends HardwareService {
 
         DeviceParams p = new DeviceParams();
 
-        int MIN_WIDTH = 320;
+        // Use a larger resolution for Android 6.0+, 64 bits devices
+        final boolean useLargerSize = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.SUPPORTED_64_BIT_ABIS.length > 0;
+        int MIN_WIDTH = useLargerSize ? 640 : 320;
         Point size = new Point(0, 0);
         /** {@link Camera.Parameters#getSupportedPreviewSizes} :
          * "This method will always return a list with at least one element."
@@ -192,6 +195,7 @@ public class HardwareServiceImpl extends HardwareService {
             rates.add(rate);
         }
         p.rate = rates.get(0);
+        Log.d(TAG, "getCameraInfo: using resolution " + p.size.x + "x" + p.size.y + " " + p.rate/1000 + " FPS");
 
         p.infos = new Camera.CameraInfo();
         Camera.getCameraInfo(id, p.infos);
