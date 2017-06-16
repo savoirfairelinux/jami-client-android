@@ -1019,7 +1019,8 @@ public class AccountService extends Observable {
      * @return
      */
     public Boolean acceptTrustRequest(final String accountId, final String from) {
-
+        Account account = getAccount(accountId);
+        account.removeRequest(from);
         return FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
@@ -1028,7 +1029,13 @@ public class AccountService extends Observable {
                     @Override
                     public Boolean call() throws Exception {
                         Log.i(TAG, "acceptTrustRequest() thread running...");
-                        return Ringservice.acceptTrustRequest(accountId, from);
+                        boolean ok = Ringservice.acceptTrustRequest(accountId, from);
+                        if (ok) {
+                            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
+                            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+                            notifyObservers(event);
+                        }
+                        return ok;
                     }
                 }
         );
@@ -1052,11 +1059,13 @@ public class AccountService extends Observable {
                     @Override
                     public Void call() throws Exception {
                         Log.i(TAG, "discardTrustRequest() " + accountId + " " + from);
-                        Ringservice.discardTrustRequest(accountId, from);
-                        setChanged();
-                        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
-                        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-                        notifyObservers(event);
+                        boolean ok = Ringservice.discardTrustRequest(accountId, from);
+                        if (ok) {
+                            setChanged();
+                            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
+                            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+                            notifyObservers(event);
+                        }
                         return null;
                     }
                 }
