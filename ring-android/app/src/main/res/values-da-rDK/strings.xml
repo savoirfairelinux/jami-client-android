@@ -134,8 +134,6 @@
   <string name="accept">Accepter</string>
   <string name="refuse">Afvis</string>
   <string name="block">Blokér</string>
-  <string name="contact_request_title">Afventende kontaktforespørgsler</string>
-  <string name="contact_request_msg">Du har %1$s ventende forespørgsler</string>
   <string name="contact_request_account">For %1$s</string>
   <string name="no_requests">0 kontaktforespørgsler</string>
   <!--Send contact requests-->

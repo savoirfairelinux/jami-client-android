@@ -133,8 +133,6 @@
   <string name="accept">قبول</string>
   <string name="refuse">رد</string>
   <string name="block">مسدود</string>
-  <string name="contact_request_title">درخواست‌های تماس در انتطار</string>
-  <string name="contact_request_msg">‫ %1$s درخواست تماس در انتظار دارید</string>
   <string name="contact_request_account">برای %1$s</string>
   <string name="no_requests">۰</string>
   <!--Send contact requests-->

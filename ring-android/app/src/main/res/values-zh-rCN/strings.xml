@@ -132,8 +132,6 @@
   <string name="accept">接听</string>
   <string name="refuse">拒接</string>
   <string name="block">屏蔽</string>
-  <string name="contact_request_title">未处理的联系人请求</string>
-  <string name="contact_request_msg">您有%1$s个未处理的请求</string>
   <string name="no_requests">0个联系人请求</string>
   <!--Send contact requests-->
   <string name="send_request_button">发送</string>
