@@ -134,7 +134,6 @@
   <string name="accept">Kabul et</string>
   <string name="refuse">Geri Çevir</string>
   <string name="block">Engelleme</string>
-  <string name="contact_request_title">Bekleyen iletişim isteği</string>
   <string name="contact_request_account">%1$s için</string>
   <string name="no_requests">0 iletişim isteği</string>
   <!--Send contact requests-->

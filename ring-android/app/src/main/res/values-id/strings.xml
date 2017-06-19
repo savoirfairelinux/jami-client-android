@@ -97,8 +97,6 @@
   <string name="accept">Terima</string>
   <string name="refuse">Tolak</string>
   <string name="block">Blokir</string>
-  <string name="contact_request_title">Permintaan kontak</string>
-  <string name="contact_request_msg">Anda memiliki %1$s permintaan kontak</string>
   <string name="contact_request_account">Untuk %1$s</string>
   <string name="no_requests">0 permintaan kontak</string>
   <!--Send contact requests-->

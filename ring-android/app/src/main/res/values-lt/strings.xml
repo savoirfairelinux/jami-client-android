@@ -121,8 +121,6 @@
   <string name="accept">Priimti</string>
   <string name="refuse">Atmesti</string>
   <string name="block">Užblokuoti</string>
-  <string name="contact_request_title">Laukiančios kontakto užklausos</string>
-  <string name="contact_request_msg">Jūs turite %1$s kontakto užklausas</string>
   <string name="no_requests">0 kontakto užklausų</string>
   <!--Send contact requests-->
   <string name="send_request_button">Siųsti</string>

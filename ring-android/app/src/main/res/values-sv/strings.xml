@@ -134,8 +134,6 @@
   <string name="accept">Acceptera</string>
   <string name="refuse">Neka</string>
   <string name="block">Blockera</string>
-  <string name="contact_request_title">Väntande kontaktförfrågan</string>
-  <string name="contact_request_msg">Du har %1$s väntande förfrågningar</string>
   <string name="contact_request_account">För %1$s</string>
   <string name="no_requests">0 kontaktförfrågningar</string>
   <!--Send contact requests-->

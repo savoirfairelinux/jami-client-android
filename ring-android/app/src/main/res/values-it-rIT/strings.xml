@@ -134,8 +134,6 @@
   <string name="accept">Accetta</string>
   <string name="refuse">Rifiuto</string>
   <string name="block">Blocca</string>
-  <string name="contact_request_title">Richiesta di contatto in attesa</string>
-  <string name="contact_request_msg">Hai %1$s richieste pendenti</string>
   <string name="contact_request_account">Per %1$s</string>
   <string name="no_requests">0 richieste di contatto</string>
   <!--Send contact requests-->

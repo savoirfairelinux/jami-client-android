@@ -135,8 +135,6 @@
   <string name="accept">Přijmout</string>
   <string name="refuse">Odmítnout</string>
   <string name="block">Blokovat</string>
-  <string name="contact_request_title">Čekající žádost o kontakt</string>
-  <string name="contact_request_msg">Máte %1$s čekajících žádostí</string>
   <string name="contact_request_account">Pro %1$s</string>
   <string name="no_requests">0 žádostí o kontakt</string>
   <!--Send contact requests-->
