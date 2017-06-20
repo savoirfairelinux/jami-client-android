@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="sponsor_section">Ring является свободным ПО, которое разрабатывается и поддерживается</string>
+  <string name="copyright_section">Авторское право</string>
+  <string name="contribute_section">Помочь проекту</string>
+  <string name="version_section">Версия</string>
+  <string name="no_email_app_installed">Не найдено приложение электронной почты. Пожалуйста, установите его для отправки нам отчета.</string>
+  <string name="email_chooser_title">Отправить почту, используя...</string>
+  <string name="credits">Кредиты</string>
+  <!--About dialog-->
+  <!--RingActivity-->
+  <string name="title_activity_sflphone_home">Звонок</string>
+  <string name="error_no_network">Отсутствует сетевое подключение</string>
+  <string name="error_mobile_network_available_but_disabled">Пожалуйста, разрешите доступ к мобильной сети в настройках</string>
+  <!--AB menus-->
+  <string name="ab_action_chat">Тестовое сообщение</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Открыть навигацию</string>
+  <string name="drawer_close">Закрыть навигацию</string>
+  <!--Sections-->
+  <string name="menu_item_home">Домой</string>
+  <string name="menu_item_accounts">Управление учетными записями</string>
+  <string name="menu_item_settings">Настройки</string>
+  <string name="menu_item_about">О Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Набрать номер</string>
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Беседа</item>
+    <item quantity="few">%d Бесед</item>
+    <item quantity="many">%d Бесед</item>
+    <item quantity="other">%d беседы</item>
+  </plurals>
+  <!--ContactList Fragment-->
+  <string name="searchbar_hint">Введите имя или номер телефона</string>
+  <string name="choose_number">Выбор номера</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_incoming_call_title">Входящий вызов от %1$s</string>
+  <string name="notif_incoming_call">Входящий вызов</string>
+  <string name="notif_outgoing_call_title">Исходящий вызов на %1$s</string>
+  <string name="notif_outgoing_call">Исходящий вызов</string>
+  <string name="notif_current_call_title">Текущий вызов от %1$s</string>
+  <string name="notif_current_call">Текущий вызов</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Вы</string>
+  <string name="action_call_hangup">Завершить</string>
+  <string name="ongoing_call">Текущий вызов</string>
+  <string name="hist_in_call">Входящий вызов от %1$s</string>
+  <string name="hist_out_call">Исходящий вызов от %1$s</string>
+  <string name="start_error_title">Невозможно запустить \"Ring\"</string>
+  <string name="start_error_mic_required">Приложению необходим доступ у микрофону для работы</string>
+  <string name="action_call_accept">Совершить звонок</string>
+  <string name="action_call_decline">Отказаться</string>
+  <string name="ab_action_speakerphone">Включить звук</string>
+  <string name="ab_action_contact_add">Добавить контакт</string>
+  <string name="ab_action_contact_add_question">Добавить в контакты?</string>
+  <string name="ab_action_audio_call">Аудиовызов</string>
+  <string name="ab_action_video_call">Видеозвонок</string>
+  <string name="share_via">Поделится</string>
+  <string name="write_a_message">Написать сообщение</string>
+  <string name="scan_qr">Сканировать QR код</string>
+  <string name="ab_action_flipcamera">Перевернуть камеру</string>
+  <!--Text messages-->
+  <string name="send_message">Отправить сообщение</string>
+  <string name="message_sending">Отправка сообщения...</string>
+  <string name="time_just_now">В данный момент</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Разрешение на использование камеры</string>
+  <string name="permission_dialog_camera_message">Необходимо доступ к камере для работы с видеозвонками. Пожалуйста, предоставьте их.</string>
+  <string name="ringtone_error_title">Ошибка</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Приложению необходимы права на чтение контактов для включения данной опции</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Приложению необходимы права на запись истории звонков для включения данной функции</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Сканировать QR код аккаунта, который хотите добавить</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Очистить историю?</string>
+  <string name="clear_history_dialog_message">Это действие не может быть отменено</string>
+  <string name="clear_history_completed">История очищена.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Удалить беседу</string>
+  <string name="conversation_action_delete_this_title">Удалить беседу?</string>
+  <string name="conversation_action_delete_this_message">Это действие не может быть отменено</string>
+  <string name="conversation_action_copy_peer_number">Скопировать номер</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s скопировано в буфер обмена</string>
+  <string name="conversation_action_select_peer_number">Выберите номер</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Добавить %1$s ?</string>
+  <string name="prompt_new_password">Новый пароль</string>
+  <string name="account_create_title">Создать Ring аккаунт</string>
+  <string name="wizard_next">Далее</string>
+  <!--MenuHeaderView-->
+  <!--Share fragment-->
+  <string name="generic_error_migration">Ошибка</string>
+  <!--Pending contact requests-->
+  <string name="accept">Принять</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Отправть</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
+</resources>

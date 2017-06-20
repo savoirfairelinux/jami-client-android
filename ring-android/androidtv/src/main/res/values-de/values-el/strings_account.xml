@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <string name="ic_delete_menu">Διαγραφή</string>
+  <!--Strings related to account creation-->
+  <string name="add_sip_account_title">Προσθήκη λογαριασμού SIP</string>
+  <string name="prompt_alias">Ψευδώνυμο</string>
+  <string name="prompt_hostname">Hostname</string>
+  <string name="prompt_username">Όνομα χρήστη</string>
+  <string name="prompt_password">Σύνθημα</string>
+  <string name="action_create_short">Εγγραφή</string>
+  <string name="create_sip_account">Προσθήκη λογαριασμού SIP</string>
+  <!--Strings related to account deletion-->
+  <string name="account_delete_dialog_message">Η ενέργεια αυτή δεν μπορεί να ανακληθεί.</string>
+  <!--AccountManagementFragment-->
+  <string name="normal_accounts_titles">Λογαριασμοί</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">Γενικά</string>
+  <string name="account_hostname_label">Hostname</string>
+  <string name="account_username_label">Όνομα χρήστη</string>
+  <string name="account_password_label">Σύνθημα</string>
+  <string name="account_proxy_field">Διαμεσολαβητής</string>
+  <!--Audio Details-->
+  <string name="account_audio_label">Ήχος</string>
+  <string name="account_preferences_media_tab">Μέσα</string>
+  <string name="account_ringtone_label">Ringtones</string>
+  <!--Video Details-->
+  <string name="account_video_label">Βίντεο</string>
+  <string name="account_video_enable">Ενεργοποίση βίνταο</string>
+  <!--Advanced Details-->
+  <string name="account_preferences_advanced_tab">Για προχωρημένους</string>
+  <string name="account_turn_enable_label">Χρήση TURN</string>
+  <string name="account_published_address_label">Δημοσιευμένη διεύθυνση</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Ασφάλεια</string>
+  <!--SIP-->
+  <!--TLS Details-->
+  <string name="account_rtp_port_range">Εύρος θυρών RTP ήχου</string>
+  <!--restore/backup-->
+  <string name="account_export_end_error_title">Σφάλμα</string>
+  <string name="account_device_updated_message">Ο Ring λογαριασμός σας αναβαθμίστηκε επιτυχώς.</string>
+  <string name="account_new_button">Δημιουργία λογαριασμού Ring</string>
+  <!--Name registration-->
+  <string name="invalid_username">Μη έγκυρο όνομα χρήστη</string>
+  <string name="account_status_connecting">Συνδέεται</string>
+  <string name="account_status_unknown">Άγνωστοι</string>
+  <!--Create account-->
+  <string name="account_creation_home">Καλώς ήλθατε στο Ring</string>
+  <!--Devices-->
+</resources>

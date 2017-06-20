@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">بازخورد</string>
+  <string name="report">برایمان رایانامه‌ای بفرستید</string>
+  <string name="section_license">مجوز</string>
+  <string name="sponsor_section">رینگ نرم‌افزاری آزاد است که توسعه داده و پشتیبانی می‌شود توسّط</string>
+  <string name="copyright_section">حق رونوشت</string>
+  <string name="contribute_section">مشارکت</string>
+  <string name="version_section">نگارش</string>
+  <string name="no_email_app_installed">هیچ کارهٔ رایانامه‌ای پیدا نشد. برای فرستادن یک گزارش به ما، یکی نصب کنید</string>
+  <string name="no_browser_app_installed">هیچ کارهٔ مرورگری پیدا نشد، برای مشاهدهٔ این صفحه، یکی نصب کنبد</string>
+  <string name="email_chooser_title">فرستادن نامه با…</string>
+  <string name="website_chooser_title">دیدن پایگاه وب با…</string>
+  <string name="license">این نرم‌افزار همان‌گونه که هست، بدون هرنوع ضمانت فراهم شده است،
+برای جزئیات، نگارش ۳ یا بالاتر پروانهٔ جامع همگانی گنو را ببینید</string>
+  <string name="description">رینگ یک نرم‌افزار ارتباطات عمومی است که به آزادی‌ها و حریم شخصی کاربرانش احترام می‌گذارد.</string>
+  <string name="credits">دست‌اندرکاران</string>
+  <!--About dialog-->
+  <string name="developed_by">توسعه توسّط</string>
+  <string name="designed_by">طرّاحی توسّط</string>
+  <!--RingActivity-->
+  <string name="title_activity_sflphone_home">رینگ</string>
+  <string name="error_no_network">بدون اتصال شبکه</string>
+  <string name="error_mobile_network_available_but_disabled">لطفاً در صفحهٔ تنظمیات به شبکهٔ سلولی دسترسی دهید.</string>
+  <!--AB menus-->
+  <string name="ab_action_chat">پیام متنی</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">باز کردن کشوی ناوبری</string>
+  <string name="drawer_close">بستن کشوی ناوبری</string>
+  <!--Sections-->
+  <string name="menu_item_home">خانه</string>
+  <string name="menu_item_contact_request">درخواست‌های تماس</string>
+  <string name="menu_item_accounts">مدیریت حساب‌ها</string>
+  <string name="menu_item_settings">تنظیمات</string>
+  <string name="menu_item_share">هم‌رسانی اطّلاعات تماس</string>
+  <string name="menu_item_about">دربارهٔ رینگ</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">تماس با یک شماره</string>
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="other">%d گفتگو</item>
+  </plurals>
+  <!--ContactList Fragment-->
+  <string name="searchbar_hint">نام یا شماره تلفن را وارد کنید...</string>
+  <string name="choose_number">شماره‌ای را برگزینید</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_missed_incoming_call">تماس ورودی از دست رفته</string>
+  <string name="notif_missed_outgoing_call">تماس خروجی از دست رفته</string>
+  <string name="notif_incoming_call_title">تماس دریافتی از %1$s</string>
+  <string name="notif_incoming_call">تماس دریافتی</string>
+  <string name="notif_outgoing_call_title">تماس خروجی با %1$s</string>
+  <string name="notif_outgoing_call">تماس خروجی</string>
+  <string name="notif_current_call_title">تماس کنونی با %1$s</string>
+  <string name="notif_current_call">تماس کنونی</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">شما:</string>
+  <string name="action_call_hangup">قطع کردن</string>
+  <string name="ongoing_call">تماس خروجی</string>
+  <string name="hist_in_call">تماس دریافتی به مدّت  %1$s</string>
+  <string name="hist_out_call">تماس خروجی به مدّت %1$s</string>
+  <string name="start_error_title">رینگ نمی‌تواند شروع شود!</string>
+  <string name="start_error_mic_required">رینگ برای کار به دسترسی میکروفون نیازمند است.</string>
+  <string name="action_call_accept">برداشتن تماس</string>
+  <string name="action_call_decline">رد کردن</string>
+  <string name="ab_action_speakerphone">فعال کردن بلندگو</string>
+  <string name="ab_action_contact_add">افزودن به مخاطبان</string>
+  <string name="ab_action_contact_add_question">افزودن به مخاطبان؟</string>
+  <string name="ab_action_audio_call">تماس صوتی</string>
+  <string name="ab_action_video_call">تماس ویدیویی</string>
+  <string name="ab_action_change_screen_orientation">تغییر جهت صفحه</string>
+  <string name="share_via">هم‌رسانی با</string>
+  <string name="write_a_message">پیامی بنویسید</string>
+  <string name="scan_qr">پویش رمز QR</string>
+  <string name="ab_action_flipcamera">چرخاندن دوربین</string>
+  <!--Text messages-->
+  <string name="send_message">ارسال پیام</string>
+  <string name="message_sending">در حال ارسال پیام…</string>
+  <string name="time_just_now">هم‌اکنون</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">دسترسی دوربین</string>
+  <string name="permission_dialog_camera_message">گفت‌وگوی ویدیویی برای کار کردن نیاز به دسترسی دوربین دارد. لطفاً آن را فعّال کنید.</string>
+  <string name="ringtone_error_title">خطا</string>
+  <string name="ringtone_error_format_not_supported">این قالب پشتیبانی نمی‌شود.</string>
+  <string name="ringtone_error_size_too_big">این پرونده خیلی بزرگ است. بیشینهٔ اندازه %1$iک‌ب است.</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">رینگ برای فعّال کردن این ویژگی نیاز به دسترسی «خواندن مخاطبان» دارد. لطفاً اعطایش کنید.</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">رینگ برای فعّال کردن این ویژگی نیاز به دسترسی «خواندن گزارش تماس» دارد. لطفاً اعطایش کنید.</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">رمز QR حسابی که می‌خواهید بیفزایید را بپویید.</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">پاک‌سازی تاریخچه؟</string>
+  <string name="clear_history_dialog_message">این کار قابل بازگشت نیست.</string>
+  <string name="clear_history_completed">تاریخچه پاک‌سازی شد.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">حذف این گفت‌وگو</string>
+  <string name="conversation_action_delete_this_title">حذف این گفت‌وگو؟</string>
+  <string name="conversation_action_delete_this_message">این کار قابل بازگشت نیست.</string>
+  <string name="conversation_action_copy_peer_number">رونوشت از شماره</string>
+  <string name="conversation_action_copied_peer_number_clipboard">‫%1$s در حافظه رونویسی شد</string>
+  <string name="conversation_action_select_peer_number">گزینش یک شماره</string>
+  <string name="conversation_action_block_this">مسدود کردن این مخاطب</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">افزودن%1$s؟</string>
+  <string name="prompt_new_password">گذرواژهٔ نو</string>
+  <string name="prompt_new_password_repeat">گذرواژهٔ نو را تکرار کنید</string>
+  <string name="account_create_title">ساخت یک حساب رینگ</string>
+  <string name="prompt_new_username">نام کاربری نو را وارد کنید</string>
+  <string name="help_password_choose">برای محافظت از حساب رینگتان، گذرواژه‌ای قوی که به خاطر خواهید سپرد را برگزینید.</string>
+  <string name="help_password_enter">گذرواژهٔ حساب رینگ اصلیتان را وارد کنید</string>
+  <string name="help_pin_enter">پین را از دیگر حساب رینگ پیکربندی‌شده وارد کنید. برای به دست آوردن یک پین، از ویژگی «برون‌ریزی حساب روی رینگ» استفاده کنید.</string>
+  <string name="wizard_next">بعدی</string>
+  <string name="wizard_back">بازگشت</string>
+  <!--MenuHeaderView-->
+  <string name="profile">نمایهٔ من</string>
+  <string name="profile_message_warning">نمایه‌تان تنها با مخاطبانتان هم‌رسانی می‌شود</string>
+  <string name="open_the_gallery">گشودن جُنگ</string>
+  <string name="take_a_photo">گرفتن عکس</string>
+  <string name="profile_name_hint">نامتان را وارد کنید (اختیاری)</string>
+  <!--Share fragment-->
+  <string name="share_message">این رمز QR را با پویشگر تعبیه شده در کارهٔ رینگی که می‌خواهد با شما گفت‌وگو کند، بپویید.</string>
+  <string name="share_message_no_account">لطفاً برای هم‌رسانی، حسابی را برگزینید.</string>
+  <string name="share_your_account_information">هم‌رسانی اطّلاعات تماس من</string>
+  <string name="generic_error_migration">خطا</string>
+  <string name="generic_error_migration_message">هنگام مهاجرت، خطایی رخ داد</string>
+  <!--Pending contact requests-->
+  <string name="accept">قبول</string>
+  <string name="refuse">رد</string>
+  <string name="block">مسدود</string>
+  <string name="contact_request_title">درخواست‌های تماس در انتطار</string>
+  <string name="contact_request_msg">‫ %1$s درخواست تماس در انتظار دارید</string>
+  <string name="contact_request_account">برای %1$s</string>
+  <string name="no_requests">۰</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">ارسال</string>
+  <string name="send_request_title">ارسال یک درخواست تماس</string>
+  <string name="send_request_msg">برای ارتباط با این کاربر باید یک درخواست تماس ارسال کنید. مادامی که مخاطبتان درخواست را نپذیرفته، می‌توانید پیام بفرستید ولی مخاطبتان نمی‌تواند آن‌‌ها را بخواند.</string>
+  <!--Blacklist-->
+  <string name="no_blocked_contact">۰ مخاطب مسدود</string>
+  <!--Smartlist-->
+  <string name="no_contact_request">هیچ درخواست تماسی ارسال نشده</string>
+  <string name="contact_request_sent">درخواست تماس ارسال شد</string>
+</resources>

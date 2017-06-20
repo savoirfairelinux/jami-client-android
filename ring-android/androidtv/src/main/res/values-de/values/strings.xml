@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+                                                                    
+Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>                     
+Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or   
+(at your option) any later version.                                 
+                                                                    
+This program is distributed in the hope that it will be useful,     
+but WITHOUT ANY WARRANTY; without even the implied warranty of      
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       
+GNU General Public License for more details.                        
+                                                                    
+You should have received a copy of the GNU General Public License   
+along with this program; if not, write to the Free Software         
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
+-->
+<resources>
+
+    <!-- About -->
+    <string name="app_name" translatable="false">Ring</string>
+    <string name="app_author" translatable="false">Savoir-faire Linux Inc.</string>
+    <string name="app_release" translatable="false">Gaston Miron Beta 2 - %1$s</string>
+    <string name="app_website_contribute" translatable="false">&lt;u>https://ring.cx/contribute&lt;/u></string>
+    <string name="gnu_license_website" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
+    <string name="ring_contribute_website" translatable="false">https://ring.cx/contribute</string>
+
+    <string name="copyright" translatable="false">2004&#8211;2017 Savoir-faire Linux Inc.</string>
+    <string name="feedback_section">Feedback</string>
+    <string name="report">&lt;u>Send us an email&lt;/u></string>
+    <string name="section_license">License</string>
+    <string name="sponsor_section">Ring is a free software developed and supported by</string>
+    <string name="copyright_section">Copyright</string>
+    <string name="contribute_section">Contribute</string>
+    <string name="version_section">Version</string>
+    <string name="no_email_app_installed">No email app found, install one to send us a report</string>
+    <string name="no_browser_app_installed">No web browser app found, install one to view this page</string>
+    <string name="email_chooser_title">Send mail using…</string>
+    <string name="website_chooser_title">View website using…</string>
+    <string name="license">This software is provided \"as is\", without warranty of any kind. For details, see
+&lt;u>GNU General Public License version 3 or later&lt;/u></string>
+    <string name="description">Ring is free software for universal communication which respects the freedoms and privacy of its users.</string>
+    <string name="credits">Credits</string>
+
+    <!-- About dialog -->
+    <string name="developed_by">Developed by</string>
+    <string name="designed_by">Designed by</string>
+    <string name="credits_developer" translatable="false">Adrien Béraud\nAlexandr Sergheev\nAlexandre Lision\nAlexandre Viau\nAline Bonnet\nAndreas Traczyk\nAnthony Léonard\nCyrille Béraud\nEdric Milaret\nÉloi Bail\nEmmanuel Lepage-Vallée\nFrédéric Guimont\nGuillaume Roguez\nJulien Grossholtz\nLoïc Siret\nNicolas Jäger\nNicolas Reynaud\nOlivier Gregoire\nOlivier Soldano\nPatrick Keroulas\nPhilippe Gorley\nRomain Bertozzi\nSeva Ivanov\nSimon Désaulniers\nStepan Salenikovich\nSimon Zeni\nThibault Wittemberg\nBased on the SFLPhone project</string>
+    <string name="credits_designer" translatable="false">Marianne Forget</string>
+
+    <!-- RingActivity -->
+    <string name="title_activity_sflphone_home">Ring</string>
+    <string name="error_no_network">No network connectivity</string>
+    <string name="error_mobile_network_available_but_disabled">Please grant access to cellular network in the settings screen.</string>
+
+    <!-- AB menus -->
+    <string name="ab_action_chat">Text messaging</string>
+
+    <!-- Left Drawer -->
+    <!-- Accessibility -->
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <!-- Sections -->
+    <string name="menu_item_home">Home</string>
+    <string name="menu_item_contact_request">Contact requests</string>
+    <string name="menu_item_accounts">Manage accounts</string>
+    <string name="menu_item_settings">Settings</string>
+    <string name="menu_item_share">Share my contact</string>
+    <string name="menu_item_about">About Ring</string>
+
+    <!-- Dialing Fragment -->
+    <string name="dial_number">Dial a number</string>
+
+    <!-- History Fragment -->
+
+
+    <!-- DetailsHistory Fragment -->
+
+    <!-- Home Fragment -->
+    <plurals name="home_conferences_title">
+        <item quantity="one">%d Conversation</item>
+        <item quantity="other">%d Conversations</item>
+    </plurals>
+
+    <!-- ContactList Fragment -->
+    <string name="searchbar_hint">Enter name or phone number&#8230;</string>
+    <string name="choose_number">Choose a number</string>
+
+    <!-- FileExplorerDFragement -->
+
+    <!-- TransferDFragment -->
+
+    <!-- Notifications -->
+    <string name="notif_missed_incoming_call">Missed incoming call</string>
+    <string name="notif_missed_outgoing_call">Missed outgoing call</string>
+    <string name="notif_incoming_call_title">Incoming call from %1$s</string>
+    <string name="notif_incoming_call">Incoming call</string>
+    <string name="notif_outgoing_call_title">Outgoing call to %1$s</string>
+    <string name="notif_outgoing_call">Outgoing call</string>
+    <string name="notif_current_call_title">Current call with %1$s</string>
+    <string name="notif_current_call">Current call</string>
+
+    <!-- Call Fragment -->
+    <string name="you_txt_prefix">You:</string>
+    <string name="action_call_hangup">Hang up</string>
+    <string name="ongoing_call">Ongoing call</string>
+    <string name="hist_in_call">Incoming call of %1$s</string>
+    <string name="hist_out_call">Outgoing call of %1$s</string>
+    <string name="start_error_title">Can\'t start Ring !</string>
+    <string name="start_error_mic_required">Ring requires the microphone permission to work.</string>
+    <string name="action_call_accept">Take call</string>
+    <string name="action_call_decline">Decline</string>
+    <string name="ab_action_speakerphone">Enable speaker</string>
+    <string name="ab_action_contact_add">Add to contacts</string>
+    <string name="ab_action_contact_add_question">Add to contacts ?</string>
+    <string name="ab_action_audio_call">Audio call</string>
+    <string name="ab_action_video_call">Video call</string>
+    <string name="ab_action_change_screen_orientation">Change screen orientation</string>
+    <string name="share_via">Share via</string>
+    <string name="write_a_message">Write a message</string>
+    <string name="scan_qr">Scan QR Code</string>
+    <string name="ab_action_flipcamera">Flip camera</string>
+
+    <!-- Text messages -->
+    <string name="send_message">Send message</string>
+    <string name="message_sending">Sending message…</string>
+    <string name="time_just_now">Just now</string>
+
+    <!-- MediaPreferenceFragment -->
+    <string name="permission_dialog_camera_title">Camera permission</string>
+    <string name="permission_dialog_camera_message">Video conversations require the camera permission to work. Please consider enabling it.</string>
+    <string name="ringtone_error_title">Error</string>
+    <string name="ringtone_error_format_not_supported">This format is not supported.</string>
+    <string name="ringtone_error_size_too_big">This file is too big. The maximum size is %1$ikB.</string>
+
+    <!-- Read contacts permission -->
+    <string name="permission_dialog_read_contacts_message">Ring needs the "Read contacts" permission to enable this feature. Please grant it.</string>
+
+    <!-- Write call log permission -->
+    <string name="permission_dialog_write_call_log_message">Ring needs the "Write call log" permission to enable this feature. Please grant it.</string>
+
+    <!-- QRCode Scan -->
+    <string name="scan_qr_account_message">Scan the QR Code of the account you want to add.</string>
+
+    <!-- Settings -->
+    <string name="clear_history_dialog_title">Clear history ?</string>
+    <string name="clear_history_dialog_message">This action can not be undone.</string>
+    <string name="clear_history_completed">History has been cleared.</string>
+
+    <!-- Conversation -->
+    <string name="conversation_action_delete_this">Delete this conversation</string>
+    <string name="conversation_action_delete_this_title">Delete this conversation ?</string>
+    <string name="conversation_action_delete_this_message">This action can not be undone.</string>
+    <string name="conversation_action_copy_peer_number">Copy number</string>
+    <string name="conversation_action_copied_peer_number_clipboard">%1$s copied to clipboard</string>
+    <string name="conversation_action_select_peer_number">Select a number</string>
+    <string name="conversation_action_block_this">Block this contact</string>
+
+    <!-- Contacts -->
+    <string name="add_call_contact_number_to_contacts">Add %1$s ?</string>
+    <string name="prompt_new_password">New password</string>
+    <string name="prompt_new_password_repeat">Repeat new password</string>
+    <string name="account_create_title">Create a Ring account</string>
+    <string name="prompt_new_username">Enter new username</string>
+    <string name="help_password_choose">Choose a strong password you will remember to protect your Ring account.</string>
+    <string name="help_password_enter">Enter your main Ring account password</string>
+    <string name="help_pin_enter">Enter the PIN from another configured Ring account. Use the \"export account on Ring\" feature to obtain a PIN.</string>
+    <string name="wizard_next">Next</string>
+    <string name="wizard_back">Back</string>
+
+    <!-- MenuHeaderView -->
+    <string name="profile">My profile</string>
+    <string name="profile_message_warning">Your profile is only shared with your contacts</string>
+    <string name="open_the_gallery">Open the gallery</string>
+    <string name="take_a_photo">Take a photo</string>
+    <string name="profile_name_hint">Enter your name (optional)</string>
+
+    <!-- Share fragment -->
+    <string name="share_message">Scan this QRCode with the embedded scanner of the Ring application that wants to communicate with you.</string>
+    <string name="share_message_no_account">Please select an account to share.</string>
+    <string name="share_your_account_information">Share my contact information</string>
+    <string name="generic_error_migration">Error</string>
+    <string name="generic_error_migration_message">An error occurred during migration</string>
+
+    <!-- Pending contact requests -->
+    <string name="accept">Accept</string>
+    <string name="refuse">Refuse</string>
+    <string name="block">Block</string>
+    <string name="contact_request_title">New contact request</string>
+    <string name="contact_request_msg">You have %1$s contact requests</string>
+    <string name="contact_request_account">For %1$s</string>
+    <string name="no_requests">0 contact requests</string>
+
+    <!-- Send contact requests -->
+    <string name="send_request_button">Send</string>
+    <string name="send_request_title">Send a contact request</string>
+    <string name="send_request_msg">You must send a contact request to communicate with this user. As long as your contact has not accepted the request, you can send messages but your contact can\'t read them.</string>
+
+    <!-- Blacklist -->
+    <string name="no_blocked_contact">0 blocked contacts</string>
+
+    <!-- Smartlist -->
+    <string name="no_contact_request">No contact request sent</string>
+    <string name="contact_request_sent">Contact request sent</string>
+
+</resources>

@@ -203,7 +203,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
         @Override
         public String placeCall(final String account, final String number, final boolean video) {
-            return mCallService.placeCall(account, number, video);
+            return mCallService.placeCall(account, number, video).getCallId();
         }
 
         @Override
@@ -621,11 +621,12 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                     mAccountService.acceptTrustRequest(account, from);
                     break;
                 case ACTION_TRUST_REQUEST_REFUSE:
+                    mPreferencesService.removeRequestPreferences(account, from);
                     mAccountService.discardTrustRequest(account, from);
                     break;
                 case ACTION_TRUST_REQUEST_BLOCK:
                     mAccountService.discardTrustRequest(account, from);
-                    mContactService.removeContact(account, from, true);
+                    mAccountService.removeContact(account, from, true);
                     break;
             }
         }
@@ -676,13 +677,16 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         public void onChange(boolean selfChange, android.net.Uri uri) {
             super.onChange(selfChange, uri);
             Log.d(TAG, "ContactsContentObserver.onChange");
-            mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount().getAccountID());
+            mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount());
         }
     }
 
     public void refreshContacts() {
+        if (mAccountService.getCurrentAccount() == null) {
+            return;
+        }
         Log.d(TAG, "refreshContacts");
-        mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount().getAccountID());
+        mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount());
     }
 
     @Override

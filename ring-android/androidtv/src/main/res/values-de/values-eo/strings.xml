@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="version_section">Eldono</string>
+  <string name="description">Ring estas libera programo por universala komunikado, kiu respektas liberon kaj privatecon de siaj uzantoj.</string>
+  <string name="credits">Kredito</string>
+  <!--About dialog-->
+  <!--RingActivity-->
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">Sen reta konekto</string>
+  <!--AB menus-->
+  <string name="ab_action_chat">Text messaging</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Malfermu navigan tirkeston</string>
+  <string name="drawer_close">Fermu navigan tirkeston</string>
+  <!--Sections-->
+  <string name="menu_item_home">Hejmo</string>
+  <string name="menu_item_accounts">Administri kontojn</string>
+  <string name="menu_item_settings">Agordoj</string>
+  <string name="menu_item_about">Pri Ring</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Diski numeron</string>
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <plurals name="home_conferences_title">
+    <item quantity="one">%d Konversacio</item>
+    <item quantity="other">%d Konversacioj</item>
+  </plurals>
+  <!--ContactList Fragment-->
+  <string name="searchbar_hint">Entajpu nomon aŭ telefonnumeron…</string>
+  <string name="choose_number">Elektu numeron</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_incoming_call_title">Eniranta voko de %1$s</string>
+  <string name="notif_incoming_call">Eniranta voko</string>
+  <string name="notif_outgoing_call_title">Eliranta voko al %1$s</string>
+  <string name="notif_outgoing_call">Eliranta voko</string>
+  <string name="notif_current_call_title">Aktiva voko kun %1$s</string>
+  <string name="notif_current_call">Aktiva voko</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Vi:</string>
+  <string name="action_call_hangup">Fini vokon</string>
+  <string name="ongoing_call">Aktiva voko</string>
+  <string name="hist_in_call">Eniranta voko de %1$s</string>
+  <string name="hist_out_call">Eliranta voko de %1$s</string>
+  <string name="start_error_title">Ne povas lanĉi Ring !</string>
+  <string name="start_error_mic_required">Ring bezonas permeson je mikrofono por funkcii.</string>
+  <string name="action_call_accept">Akcepti</string>
+  <string name="action_call_decline">Rifuzi</string>
+  <string name="ab_action_speakerphone">Ŝalti laŭtparolilon</string>
+  <string name="ab_action_contact_add">Aldoni al kontaktoj</string>
+  <string name="ab_action_contact_add_question">Ĉu aldoni al kontaktoj ?</string>
+  <string name="ab_action_audio_call">Sona voko</string>
+  <string name="ab_action_video_call">Videa voko</string>
+  <string name="share_via">Kunhavi per</string>
+  <string name="write_a_message">Skribi mesaĝon</string>
+  <string name="scan_qr">Skani QR Kodon</string>
+  <string name="ab_action_flipcamera">Renversi kameraon</string>
+  <!--Text messages-->
+  <string name="send_message">Sendi mesaĝon</string>
+  <string name="message_sending">Sendanta mesaĝon…</string>
+  <string name="time_just_now">Ĵus</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Permeso je kamerao</string>
+  <string name="permission_dialog_camera_message">Video-konversacioj bezonas permeson je kamerao por funkcii. Bonvole pripensu permesi ĝin.</string>
+  <string name="ringtone_error_title">Eraro</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Ring bezonas la \"Legu kontaktojn\" permeson por ŝalti tiu ĉi funkcion. Bonvole permesu ĝin.</string>
+  <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Ring bezonas la \"Skribu protokolon de vokoj\" permeson por ŝalti tiu ĉi funkcion. Bonvole permesu ĝin.</string>
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Skanu la QR Kodon de la konto, kiun vi volas aldoni.</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Ĉu vakigi historion ?</string>
+  <string name="clear_history_dialog_message">Tiu ĉi ago ne povos malfariĝî.</string>
+  <string name="clear_history_completed">Historio vakigita.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Forigi tiu ĉi konversacion</string>
+  <string name="conversation_action_delete_this_title">Ĉu forigi tiu ĉi konversacion ?</string>
+  <string name="conversation_action_delete_this_message">Tiu ĉi ago ne povos malfariĝi.</string>
+  <string name="conversation_action_copy_peer_number">Kopii numeron</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiita en tondejon</string>
+  <string name="conversation_action_select_peer_number">Elektu numeron</string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Ĉu aldoni %1$s ?</string>
+  <string name="prompt_new_password">Nova pasvorto</string>
+  <string name="account_create_title">Krei Ring konton</string>
+  <string name="wizard_next">Sekva</string>
+  <!--MenuHeaderView-->
+  <!--Share fragment-->
+  <string name="generic_error_migration">Eraro</string>
+  <!--Pending contact requests-->
+  <string name="accept">Akcepti</string>
+  <string name="refuse">Rifuzi</string>
+  <!--Send contact requests-->
+  <string name="send_request_button">Sendi</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
+</resources>

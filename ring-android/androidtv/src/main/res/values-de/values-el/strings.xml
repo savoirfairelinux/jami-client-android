@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="sponsor_section">Το Ring είναι δωρεάν/ελεύθερο λογισμικό αναπτυγμένο και υποστηριζόμενο από</string>
+  <string name="copyright_section">Πνευματική ιδιοκτησία</string>
+  <string name="contribute_section">Πρόσφερε</string>
+  <string name="version_section">Έκδοση</string>
+  <string name="no_email_app_installed">Δεν βρέθηκε κάποια εφαρμογή email, εγκαταστήστε μια για μας στείλετε μια αναφορά</string>
+  <string name="email_chooser_title">Αποστολή email σε χρήση...</string>
+  <string name="credits">Μονάδες</string>
+  <!--About dialog-->
+  <!--RingActivity-->
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">Καμία σύνδεση στο δίκτυο</string>
+  <string name="error_mobile_network_available_but_disabled">Παρακαλώ δώστε πρόσβαση στο δίκτυο κινητής τηλεφωνίας από τις  ρυθμίσεις του κινητού.</string>
+  <!--AB menus-->
+  <string name="ab_action_chat">Μήνυμα κειμένου</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <string name="drawer_open">Άνοιγμα \"συρταριού\" πλοήγησης</string>
+  <string name="drawer_close">Κλείσιμο \"συρταριού\" πλοήγησης</string>
+  <!--Sections-->
+  <string name="menu_item_home">Αρχική</string>
+  <string name="menu_item_accounts">Διαχείριση Λογαριασμών</string>
+  <string name="menu_item_settings">Ρυθμίσεις</string>
+  <string name="menu_item_share">Μοίρασε τις επαφές μου</string>
+  <string name="menu_item_about">Σχετικά</string>
+  <!--Dialing Fragment-->
+  <string name="dial_number">Κλήση αριθμού</string>
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <string name="searchbar_hint">Εισάγετε ένα όνομα ή αριθμό τηλεφώνου</string>
+  <string name="choose_number">Επιλέξτε αριθμό</string>
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <string name="notif_incoming_call_title">Εισερχόμενη κλήση από %1$s</string>
+  <string name="notif_incoming_call">Εισερχόμενη κλήση</string>
+  <string name="notif_outgoing_call_title">Εξερχόμενη κλήση  %1$s</string>
+  <string name="notif_outgoing_call">Εξερχόμενη κλήση</string>
+  <string name="notif_current_call_title">Κλήση σε εξέλιξη με %1$s</string>
+  <string name="notif_current_call">Κλήση σε εξέλιξη</string>
+  <!--Call Fragment-->
+  <string name="you_txt_prefix">Εσύ</string>
+  <string name="action_call_hangup">Κλείσιμο</string>
+  <string name="ongoing_call">Εξερχόμενη κλήση</string>
+  <string name="hist_in_call">Εισερχόμενη κλήση από %1$s</string>
+  <string name="hist_out_call">Εξερχόμενη κλήση από %1$s</string>
+  <string name="start_error_title">Η εφαρμογή Ring δεν μπορεί να ξεκινήσει !</string>
+  <string name="start_error_mic_required">Η εφαρμογή Ring θέλει να χρησιμοποιήσει το μικρόφωνο για να λειτουργήσει.</string>
+  <string name="action_call_accept">Κάνε μια κλήση</string>
+  <string name="action_call_decline">Απόρριψη κλήσης</string>
+  <string name="ab_action_speakerphone">Μεγάφωνο</string>
+  <string name="ab_action_contact_add">Προσθήκη στις επαφές</string>
+  <string name="ab_action_contact_add_question">Προσθήκη στις επαφές;</string>
+  <string name="ab_action_audio_call">Κλήση φωνής</string>
+  <string name="ab_action_video_call">Κλήση βίντεο</string>
+  <string name="share_via">Μοίρασμα μέσω</string>
+  <string name="write_a_message">Γράψε μήνυμα</string>
+  <string name="scan_qr">Σάρωση QR κώδικα</string>
+  <string name="ab_action_flipcamera">Εναλλαγή κάμερας</string>
+  <!--Text messages-->
+  <string name="send_message">Στείλε μήνυμα</string>
+  <string name="message_sending">Μήνυμα αποστέλλεται...</string>
+  <string name="time_just_now">Μόλις τώρα</string>
+  <!--MediaPreferenceFragment-->
+  <string name="permission_dialog_camera_title">Άδεια πρόσβασης στην κάμερα</string>
+  <string name="permission_dialog_camera_message">Οι κλήσεις μέσω βίντεο χρειάζεται την άδεια στην κάμερά  για να δουλέψει. Παρακαλώ σκεφτείτε να την ενεργοποιήσετε.</string>
+  <string name="ringtone_error_title">Σφάλμα</string>
+  <string name="ringtone_error_size_too_big">Το αρχείο είναι πολύ μεγάλο. Το μέγιστο μέγεθος είναι %1$ikB.</string>
+  <!--Read contacts permission-->
+  <string name="permission_dialog_read_contacts_message">Η εφαρμογή Ring χρειάζεται να διαβάσει τις επαφές σας ώστε να ενεργοποιήσει αυτή την λειτουργία. Παρακαλώ δώστε την.</string>
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <string name="scan_qr_account_message">Σαρώστε τον κώδικα QR του λογαριασμού που θέλετε να προσθέσετε.</string>
+  <!--Settings-->
+  <string name="clear_history_dialog_title">Διαγραφή ιστορικού;</string>
+  <string name="clear_history_dialog_message">Η ενέργεια αυτή δεν μπορεί να ανακληθεί.</string>
+  <string name="clear_history_completed">Το ιστορικό έχει διαγραφεί.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this">Διαγραφή αυτής της συνομιλίας</string>
+  <string name="conversation_action_delete_this_title">Διαγραφή αυτής της συνομιλίας;</string>
+  <string name="conversation_action_delete_this_message">Η ενέργεια αυτή δεν μπορεί να ανακληθεί.</string>
+  <string name="conversation_action_copy_peer_number">Αντιγραφή αριθμού </string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s αντιγράφτηκε στο πρόχειρο</string>
+  <string name="conversation_action_select_peer_number">Επιλέξτε αριθμό </string>
+  <!--Contacts-->
+  <string name="add_call_contact_number_to_contacts">Προσθήκη %1$s ;</string>
+  <string name="prompt_new_password">Νέο συνθηματικό</string>
+  <string name="prompt_new_password_repeat">Επανάληψη νέου συνθηματικού</string>
+  <string name="account_create_title">Δημιουργία λογαριασμού Ring</string>
+  <string name="help_password_enter">Εισαγωγή συνθηματικού του κύριου Ring λογαριασμού σας</string>
+  <string name="wizard_next">Επόμενο</string>
+  <!--MenuHeaderView-->
+  <string name="profile">Το προφίλ μου</string>
+  <string name="take_a_photo">Λήψη φωτογραφίας</string>
+  <!--Share fragment-->
+  <string name="share_your_account_information">Μοίρασε τις πληροφορίες των επαφών μου</string>
+  <string name="generic_error_migration">Σφάλμα</string>
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
+  <string name="send_request_button">Αποστολή</string>
+  <!--Blacklist-->
+  <!--Smartlist-->
+</resources>

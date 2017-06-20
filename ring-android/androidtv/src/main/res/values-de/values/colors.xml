@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_primary_light">#3ac0d2</color>
+    <color name="color_primary_dark">#004C60</color>
+
+    <color name="action_blue">#004C60</color>
+
+    <!-- SFL colors-->
+
+    <color name="darker_gray">#aaaaaa</color>
+    <color name="light">#eee</color>
+
+    <color name="white">#FFF</color>
+    <color name="black">#000000</color>
+    <color name="error_red">#f44336</color>
+
+    <color name="error_pane">#e57373</color>
+
+    <color name="transparent_light">#AAFFFFFF</color>
+
+    <!-- A light Holo shade of blue -->
+    <!-- A light Holo shade of green -->
+    <!-- A light Holo shade of red -->
+    <color name="holo_red_light">#ffff4444</color>
+    <!-- A dark Holo shade of blue -->
+    <!-- A dark Holo shade of green -->
+    <color name="holo_green_dark">#ff669900</color>
+    <!-- A dark Holo shade of red -->
+    <color name="holo_red_dark">#ffcc0000</color>
+    <!-- A Holo shade of purple -->
+    <!-- A light Holo shade of orange -->
+    <!-- A dark Holo shade of orange -->
+    <!-- A really bright Holo shade of blue -->
+
+    <color name="transparent_grey">#AACCCCCC</color>
+    <color name="transparent_dark_grey">#88424242</color>
+
+    <color name="text_color_primary">@color/abc_primary_text_material_light</color>
+    <color name="text_color_secondary">@color/abc_secondary_text_material_light</color>
+    <color name="text_color_primary_dark">@color/abc_primary_text_material_dark</color>
+    <color name="text_color_secondary_dark">@color/abc_secondary_text_material_dark</color>
+
+</resources>

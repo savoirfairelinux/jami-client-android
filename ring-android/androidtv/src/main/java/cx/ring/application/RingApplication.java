@@ -181,8 +181,7 @@ public class RingApplication extends Application {
                         mCallService.getCallbackHandler(),
                         mConferenceService.getCallbackHandler());
                 mAccountAndContactCallbackHandler = mDaemonService.getDaemonConfigurationCallbackHandler(
-                        mAccountService.getCallbackHandler(),
-                        mContactService.getCallbackHandler());
+                        mAccountService.getCallbackHandler());
                 mHardwareCallbackHandler = mHardwareService.getCallbackHandler();
                 mPresenceCallbackHandler = mPresenceService.getCallbackHandler();
 
@@ -202,7 +201,7 @@ public class RingApplication extends Application {
                 registerReceiver(ringerModeListener, RINGER_FILTER);
 
                 if(mDeviceRuntimeService.hasVideoPermission()) {
-                    //initVidee is called here to give time to the application to initialize hardware cameras
+                    //initVideo is called here to give time to the application to initialize hardware cameras
                     mHardwareService.initVideo();
                 }
 

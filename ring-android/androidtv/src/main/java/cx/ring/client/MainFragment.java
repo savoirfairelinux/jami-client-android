@@ -161,14 +161,15 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
             cardRowAdapter.clear();
             for (int i = 0; i < mConversations.size(); i++) {
                 Conversation conversation = mConversations.get(i);
-                Tuple<String, byte[]> tuple = mContactService.loadContactData(conversation.getContact());
-                Log.d(TAG, "contact >> " + tuple.first + " " + tuple.second);
+                CallContact callContact = conversation.getContact();
+                mContactService.loadContactData(callContact);
+                Log.d(TAG, "contact >> " + callContact.getDisplayName() + " " + callContact.getPhoto());
 
                 Contact contact = new Contact();
                 contact.setId(i);
-                contact.setName(tuple.first);
+                contact.setName(callContact.getDisplayName());
                 contact.setAddress(conversation.getUuid());
-                contact.setPhoto(tuple.second);
+                contact.setPhoto(callContact.getPhoto());
 
                 cardRowAdapter.add(contact);
                 Log.d(TAG, "current contact : " + contact.toString());
