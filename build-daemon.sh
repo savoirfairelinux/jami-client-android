@@ -149,9 +149,6 @@ echo "Building tools"
 pushd extras/tools
 ./bootstrap
 make $MAKEFLAGS
-#FIXME
-echo "HACK for old Jenkins builder...forcing libtool to be built"
-make .libtool
 make .gas
 popd
 
