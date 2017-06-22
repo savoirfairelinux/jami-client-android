@@ -58,10 +58,5 @@ RUN (while sleep 1; do echo "y"; done) | sdkmanager $ANDROID_DEPS
 ENV ANDROID_SDK=/opt/android-sdk
 ENV ANDROID_NDK=/opt/android-sdk/ndk-bundle
 
-# Gas-preprocessor (for ffmpeg ASM)
-RUN wget https://raw.githubusercontent.com/FFmpeg/gas-preprocessor/master/gas-preprocessor.pl && \
-	chmod a+x gas-preprocessor.pl && \
-	mv gas-preprocessor.pl /usr/bin
-
 WORKDIR /home/builder/src
 VOLUME /home/builder/src
