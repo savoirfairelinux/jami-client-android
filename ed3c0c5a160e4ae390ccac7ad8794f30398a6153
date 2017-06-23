@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da33351e_6ab00bf5",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/client/SearchActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-06-23T20:43:25Z",
+      "side": 1,
+      "message": "No copyright header",
+      "revId": "ed3c0c5a160e4ae390ccac7ad8794f30398a6153",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_8aabcf88",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/client/SearchActivity.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-06-23T20:43:25Z",
+      "side": 1,
+      "message": "I don\u0027t think this line makes sense",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 62
+      },
+      "revId": "ed3c0c5a160e4ae390ccac7ad8794f30398a6153",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_aa917354",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/client/SearchFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-06-23T20:43:25Z",
+      "side": 1,
+      "message": "Wrong copyright header",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 3
+      },
+      "revId": "ed3c0c5a160e4ae390ccac7ad8794f30398a6153",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_0a9fbf60",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/client/SearchFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-06-23T20:43:25Z",
+      "side": 1,
+      "message": "Rename this to RingSearchFragment for example to prevent confusion with system fragment android.support.v17.leanback.app.SearchFragment",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 27
+      },
+      "revId": "ed3c0c5a160e4ae390ccac7ad8794f30398a6153",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da33351e_ea9b7b70",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/client/SearchFragment.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-06-23T20:43:25Z",
+      "side": 1,
+      "message": "This should be done in a presenter not directy in the Fragment",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 9
+      },
+      "revId": "ed3c0c5a160e4ae390ccac7ad8794f30398a6153",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
