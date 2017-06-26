@@ -21,7 +21,7 @@ package cx.ring.contactrequests;
 
 import java.util.ArrayList;
 
-public interface PendingContactRequestsView {
+public interface ContactRequestsView {
 
     void updateView(ArrayList<PendingContactRequestsViewModel> list);
 }

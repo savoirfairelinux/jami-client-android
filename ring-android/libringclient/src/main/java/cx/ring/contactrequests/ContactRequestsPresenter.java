@@ -20,6 +20,7 @@
 package cx.ring.contactrequests;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -38,9 +39,9 @@ import cx.ring.utils.Observer;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 
-public class PendingContactRequestsPresenter extends RootPresenter<PendingContactRequestsView> implements Observer<ServiceEvent> {
+public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView> implements Observer<ServiceEvent> {
 
-    static private final String TAG = PendingContactRequestsPresenter.class.getSimpleName();
+    static private final String TAG = ContactRequestsPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
     private NotificationService mNotificationService;
@@ -51,10 +52,10 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
     private ArrayList<PendingContactRequestsViewModel> mContactRequestsViewModels;
 
     @Inject
-    public PendingContactRequestsPresenter(AccountService accountService,
-                                           NotificationService notificationService,
-                                           DeviceRuntimeService deviceRuntimeService,
-                                           PreferencesService sharedPreferencesService) {
+    public ContactRequestsPresenter(AccountService accountService,
+                                    NotificationService notificationService,
+                                    DeviceRuntimeService deviceRuntimeService,
+                                    PreferencesService sharedPreferencesService) {
         mAccountService = accountService;
         mNotificationService = notificationService;
         mDeviceRuntimeService = deviceRuntimeService;
@@ -69,7 +70,7 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
     }
 
     @Override
-    public void bindView(PendingContactRequestsView view) {
+    public void bindView(ContactRequestsView view) {
         mAccountService.addObserver(this);
         super.bindView(view);
         updateList(true);
@@ -123,13 +124,14 @@ public class PendingContactRequestsPresenter extends RootPresenter<PendingContac
         String contactId = viewModel.getContactId();
         mAccountService.acceptTrustRequest(accountId, contactId);
 
-        for (TrustRequest request : mTrustRequests) {
+        for (Iterator<TrustRequest> it = mTrustRequests.iterator(); it.hasNext(); ) {
+            TrustRequest request = it.next();
             if (accountId.equals(request.getAccountId()) && contactId.equals(request.getContactId())) {
                 VCard vCard = request.getVCard();
                 if (vCard != null) {
                     VCardUtils.savePeerProfileToDisk(vCard, contactId + ".vcf", mDeviceRuntimeService.provideFilesDir());
                 }
-                mTrustRequests.remove(request);
+                it.remove();
             }
         }
 

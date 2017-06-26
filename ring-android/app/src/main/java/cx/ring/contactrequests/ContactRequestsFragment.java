@@ -40,10 +40,10 @@ import cx.ring.client.HomeActivity;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.utils.Log;
 
-public class PendingContactRequestsFragment extends BaseFragment<PendingContactRequestsPresenter> implements PendingContactRequestsView,
+public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresenter> implements ContactRequestsView,
         ContactRequestViewHolder.ContactRequestListeners {
 
-    static final String TAG = PendingContactRequestsFragment.class.getSimpleName();
+    static final String TAG = ContactRequestsFragment.class.getSimpleName();
     public static final String ACCOUNT_ID = TAG + "accountID";
 
     @BindView(R.id.requests_list)
@@ -148,7 +148,7 @@ public class PendingContactRequestsFragment extends BaseFragment<PendingContactR
                 if (mRequestsList.getAdapter() != null) {
                     mAdapter.replaceAll(list);
                 } else {
-                    mAdapter = new ContactRequestsAdapter(list, PendingContactRequestsFragment.this);
+                    mAdapter = new ContactRequestsAdapter(list, ContactRequestsFragment.this);
                     mRequestsList.setAdapter(mAdapter);
                     LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                     mRequestsList.setLayoutManager(mLayoutManager);

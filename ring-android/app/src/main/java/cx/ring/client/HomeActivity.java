@@ -62,7 +62,7 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
 import cx.ring.application.RingApplication;
-import cx.ring.contactrequests.PendingContactRequestsFragment;
+import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;
@@ -271,10 +271,10 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         Intent intent = getIntent();
         Bundle extra = intent.getExtras();
         if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(intent.getAction())) {
-            if (extra == null || extra.getString(PendingContactRequestsFragment.ACCOUNT_ID) == null) {
+            if (extra == null || extra.getString(ContactRequestsFragment.ACCOUNT_ID) == null) {
                 return;
             }
-            mAccountWithPendingrequests = extra.getString(PendingContactRequestsFragment.ACCOUNT_ID);
+            mAccountWithPendingrequests = extra.getString(ContactRequestsFragment.ACCOUNT_ID);
         }
 
 
@@ -305,10 +305,10 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         Log.d(TAG, "onNewIntent " + intent);
         if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(intent.getAction())) {
             Bundle extra = intent.getExtras();
-            if (extra == null || extra.getString(PendingContactRequestsFragment.ACCOUNT_ID) == null) {
+            if (extra == null || extra.getString(ContactRequestsFragment.ACCOUNT_ID) == null) {
                 return;
             }
-            presentTrustRequestFragment(extra.getString(PendingContactRequestsFragment.ACCOUNT_ID));
+            presentTrustRequestFragment(extra.getString(ContactRequestsFragment.ACCOUNT_ID));
             return;
         }
         if (!ConversationFragment.isTabletMode(this) || !DRingService.ACTION_CONV_ACCEPT.equals(intent.getAction())) {
@@ -548,13 +548,13 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
     private void presentTrustRequestFragment(String accountID) {
         Bundle bundle = new Bundle();
-        bundle.putString(PendingContactRequestsFragment.ACCOUNT_ID, accountID);
+        bundle.putString(ContactRequestsFragment.ACCOUNT_ID, accountID);
         mNotificationService.cancelTrustRequestNotification(accountID);
-        if (fContent instanceof PendingContactRequestsFragment) {
-            ((PendingContactRequestsFragment) fContent).presentForAccount(bundle);
+        if (fContent instanceof ContactRequestsFragment) {
+            ((ContactRequestsFragment) fContent).presentForAccount(bundle);
             return;
         }
-        fContent = new PendingContactRequestsFragment();
+        fContent = new ContactRequestsFragment();
         fContent.setArguments(bundle);
         fNavigation.selectSection(RingNavigationFragment.Section.CONTACT_REQUESTS);
         getFragmentManager().beginTransaction()
@@ -651,12 +651,12 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                 break;
             case CONTACT_REQUESTS:
                 Bundle bundle = new Bundle();
-                bundle.putString(PendingContactRequestsFragment.ACCOUNT_ID, null);
-                if (fContent instanceof PendingContactRequestsFragment) {
-                    ((PendingContactRequestsFragment) fContent).presentForAccount(bundle);
+                bundle.putString(ContactRequestsFragment.ACCOUNT_ID, null);
+                if (fContent instanceof ContactRequestsFragment) {
+                    ((ContactRequestsFragment) fContent).presentForAccount(bundle);
                     break;
                 }
-                fContent = new PendingContactRequestsFragment();
+                fContent = new ContactRequestsFragment();
                 fContent.setArguments(bundle);
                 getFragmentManager().beginTransaction()
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

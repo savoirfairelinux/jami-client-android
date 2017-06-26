@@ -46,7 +46,7 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
-import cx.ring.contactrequests.PendingContactRequestsFragment;
+import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
@@ -321,7 +321,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 .setContentTitle(mContext.getString(R.string.contact_request_title));
         Intent intentOpenTrustRequestFragment = new Intent(HomeActivity.ACTION_PRESENT_TRUST_REQUEST_FRAGMENT)
                 .setClass(mContext, HomeActivity.class)
-                .putExtra(PendingContactRequestsFragment.ACCOUNT_ID, account.getAccountID());
+                .putExtra(ContactRequestsFragment.ACCOUNT_ID, account.getAccountID());
         messageNotificationBuilder.setContentIntent(PendingIntent.getActivity(mContext,
                 new Random().nextInt(), intentOpenTrustRequestFragment, PendingIntent.FLAG_ONE_SHOT));
 

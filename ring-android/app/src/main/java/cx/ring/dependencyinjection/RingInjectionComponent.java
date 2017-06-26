@@ -33,7 +33,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.BlackListFragment;
-import cx.ring.contactrequests.PendingContactRequestsFragment;
+import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.AccountsManagementFragment;
@@ -111,7 +111,7 @@ public interface RingInjectionComponent {
 
     void inject(ConversationFragment fragment);
 
-    void inject(PendingContactRequestsFragment fragment);
+    void inject(ContactRequestsFragment fragment);
 
     void inject(BlackListFragment fragment);
 
