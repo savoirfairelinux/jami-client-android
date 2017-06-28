@@ -1344,13 +1344,14 @@ public class AccountService extends Observable {
             Log.d(TAG, "knownDevicesChanged: " + accountId + ", " + devices);
 
             Account accountChanged = getAccount(accountId);
-            accountChanged.setDevices(devices.toNative());
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.KNOWN_DEVICES_CHANGED);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.DEVICES, devices);
-            notifyObservers(event);
+            if (accountChanged != null) {
+                accountChanged.setDevices(devices.toNative());
+                setChanged();
+                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.KNOWN_DEVICES_CHANGED);
+                event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+                event.addEventInput(ServiceEvent.EventInput.DEVICES, devices);
+                notifyObservers(event);
+            }
         }
 
         @Override
@@ -1427,6 +1428,13 @@ public class AccountService extends Observable {
         public void contactAdded(String accountId, String uri, boolean confirmed) {
             Log.d(TAG, "contactAdded: " + accountId + ", " + uri + ", " + confirmed);
 
+            Account account = getAccount(accountId);
+            if (account == null) {
+                Log.d(TAG, "contactAdded: unknown account" + accountId);
+                return;
+            }
+            account.addContact(uri, confirmed);
+
             setChanged();
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_ADDED);
             event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
@@ -1437,6 +1445,13 @@ public class AccountService extends Observable {
         @Override
         public void contactRemoved(String accountId, String uri, boolean banned) {
             Log.d(TAG, "contactRemoved: " + accountId + ", " + uri + ", " + banned);
+
+            Account account = getAccount(accountId);
+            if (account == null) {
+                Log.d(TAG, "contactRemoved: unknown account" + accountId);
+                return;
+            }
+            account.removeContact(uri, banned);
 
             setChanged();
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_REMOVED);

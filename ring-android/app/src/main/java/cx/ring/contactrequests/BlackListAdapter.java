@@ -2,6 +2,7 @@
  *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
  *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,7 +15,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
 package cx.ring.contactrequests;
@@ -27,22 +28,24 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cx.ring.R;
+import cx.ring.model.CallContact;
 
 public class BlackListAdapter extends RecyclerView.Adapter<BlackListViewHolder> {
 
-    private BlackListViewHolder.BlackListListeners mListener;
-    private ArrayList<BlackListViewModel> mViewModels;
+    private final BlackListViewHolder.BlackListListeners mListener;
+    private final ArrayList<CallContact> mBlacklisted;
 
-    public BlackListAdapter(ArrayList<BlackListViewModel> viewModels, BlackListViewHolder.BlackListListeners listener) {
-        mViewModels = new ArrayList<>(viewModels);
+    public BlackListAdapter(List<CallContact> viewModels, BlackListViewHolder.BlackListListeners listener) {
+        mBlacklisted = new ArrayList<>(viewModels);
         mListener = listener;
     }
 
-    public void replaceAll(ArrayList<BlackListViewModel> viewModels) {
-        mViewModels.clear();
-        mViewModels.addAll(viewModels);
+    public void replaceAll(List<CallContact> viewModels) {
+        mBlacklisted.clear();
+        mBlacklisted.addAll(viewModels);
         notifyDataSetChanged();
     }
 
@@ -56,19 +59,12 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListViewHolder> 
 
     @Override
     public void onBindViewHolder(BlackListViewHolder holder, int position) {
-        final BlackListViewModel viewModel = mViewModels.get(position);
-
-        Glide.with(holder.itemView.getContext())
-                .load(R.drawable.ic_contact_picture)
-                .into(holder.mPhoto);
-
-        holder.mDisplayname.setText(viewModel.getDisplayName());
-
-        holder.bind(mListener, viewModel);
+        final CallContact contact = mBlacklisted.get(position);
+        holder.bind(mListener, contact);
     }
 
     @Override
     public int getItemCount() {
-        return mViewModels.size();
+        return mBlacklisted.size();
     }
 }
