@@ -470,7 +470,7 @@ public class CallService extends Observable {
             Log.d(TAG, "call state changed: " + callId + ", " + newState + ", " + detailCode);
 
             // it is thread safe: executed in the same daemon thread than the callback
-            Map<String, String> callDetails = getCallDetails(callId);
+            Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
 
             parseCallState(callId, newState, callDetails);
 
