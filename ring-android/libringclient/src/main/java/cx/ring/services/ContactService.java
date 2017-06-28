@@ -103,7 +103,11 @@ public abstract class ContactService extends Observable {
                 if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
                     mContactList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
                 }
-                mContactsRing = account.getContacts();
+                mContactsRing.clear();
+                Map<String, CallContact> ringContacts = account.getContacts();
+                for (CallContact contact : ringContacts.values()) {
+                    mContactsRing.put(contact.getPhones().get(0).getNumber().getRawUriString(), contact);
+                }
                 setChanged();
                 ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACTS_CHANGED);
                 notifyObservers(event);

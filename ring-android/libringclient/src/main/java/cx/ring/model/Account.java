@@ -288,12 +288,36 @@ public class Account {
         return mContacts.get(ringId);
     }
 
+    public void addContact(String id, boolean confirmed) {
+        CallContact callContact = mContacts.get(id);
+        if (callContact == null) {
+            callContact = CallContact.buildRingContact(new Uri(id));
+            mContacts.put(id, callContact);
+        }
+        if (confirmed) {
+            callContact.setStatus(CallContact.Status.CONFIRMED);
+        } else {
+            callContact.setStatus(CallContact.Status.NO_REQUEST);
+        }
+    }
+    public void removeContact(String id, boolean banned) {
+        if (banned) {
+            CallContact callContact = mContacts.get(id);
+            if (callContact == null) {
+                callContact = CallContact.buildRingContact(new Uri(id));
+                mContacts.put(id, callContact);
+            }
+            callContact.setStatus(CallContact.Status.BANNED);
+        } else {
+            mContacts.remove(id);
+        }
+    }
+
     public void addContact(Map<String,String> contact) {
         String contactId = contact.get(CONTACT_ID);
-        Uri contactUri = new Uri(contactId);
         CallContact callContact = mContacts.get(contactId);
         if (callContact == null) {
-            callContact = CallContact.buildRingContact(contactUri);
+            callContact = CallContact.buildRingContact(new Uri(contactId));
         }
         if (contact.containsKey(CONTACT_BANNED) && contact.get(CONTACT_BANNED).equals("true")) {
             callContact.setStatus(CallContact.Status.BANNED);

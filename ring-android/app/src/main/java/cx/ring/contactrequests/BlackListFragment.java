@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +39,7 @@ import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.account.AccountEditionActivity;
+import cx.ring.model.CallContact;
 import cx.ring.mvp.BaseFragment;
 
 public class BlackListFragment extends BaseFragment<BlackListPresenter> implements BlackListView,
@@ -98,12 +100,12 @@ public class BlackListFragment extends BaseFragment<BlackListPresenter> implemen
     }
 
     @Override
-    public void onUnblockClick(BlackListViewModel viewModel) {
+    public void onUnblockClicked(CallContact viewModel) {
         presenter.unblockClicked(viewModel);
     }
 
     @Override
-    public void updateView(final ArrayList<BlackListViewModel> list) {
+    public void updateView(final List<CallContact> list) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

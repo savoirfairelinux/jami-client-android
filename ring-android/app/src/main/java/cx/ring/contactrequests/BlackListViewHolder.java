@@ -2,6 +2,7 @@
  *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
  *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
+ *  Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,9 +26,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
+import cx.ring.model.CallContact;
+import cx.ring.utils.CircleTransform;
 
 public class BlackListViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.unblock)
@@ -45,16 +50,33 @@ public class BlackListViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, view);
     }
 
-    public void bind(final BlackListListeners clickListener, final BlackListViewModel viewModel) {
+    public void bind(final BlackListListeners clickListener, final CallContact contact) {
+        byte[] photo = contact.getPhoto();
+        if (photo != null && photo.length > 0) {
+            Glide.with(itemView.getContext())
+                    .load(photo)
+                    .placeholder(R.drawable.ic_contact_picture)
+                    .crossFade()
+                    .transform(new CircleTransform(itemView.getContext()))
+                    .error(R.drawable.ic_contact_picture)
+                    .into(mPhoto);
+        } else {
+            Glide.with(itemView.getContext())
+                    .load(R.drawable.ic_contact_picture)
+                    .into(mPhoto);
+        }
+
+        mDisplayname.setText(contact.getRingUsername());
+
         mButtonUnblock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickListener.onUnblockClick(viewModel);
+                clickListener.onUnblockClicked(contact);
             }
         });
     }
 
     public interface BlackListListeners {
-        void onUnblockClick(BlackListViewModel viewModel);
+        void onUnblockClicked(CallContact contact);
     }
 }

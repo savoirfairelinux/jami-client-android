@@ -2,6 +2,7 @@
  *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
  *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +20,6 @@
 
 package cx.ring.contactrequests;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -37,8 +37,6 @@ public class BlackListPresenter extends RootPresenter<BlackListView> implements 
     static private final String TAG = BlackListPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
-
-    private ArrayList<BlackListViewModel> mViewModels;
     private String mAccountID;
 
     @Inject
@@ -74,22 +72,12 @@ public class BlackListPresenter extends RootPresenter<BlackListView> implements 
             return;
         }
 
-        if (mViewModels == null) {
-            mViewModels = new ArrayList<>();
-        } else {
-            mViewModels.clear();
-        }
-
         List<CallContact> list = account.getBannedContacts();
-        for (CallContact contact : list) {
-            mViewModels.add(new BlackListViewModel(contact));
-        }
-
-        if(mViewModels.isEmpty()) {
+        if(list.isEmpty()) {
             getView().hideListView();
             getView().displayEmptyListMessage(true);
         } else {
-            getView().updateView(mViewModels);
+            getView().updateView(list);
             getView().displayEmptyListMessage(false);
         }
     }
@@ -102,14 +90,9 @@ public class BlackListPresenter extends RootPresenter<BlackListView> implements 
         updateList();
     }
 
-    public void unblockClicked(BlackListViewModel viewModel) {
-        Account account = mAccountService.getAccount(mAccountID);
-        String contactId = viewModel.getDisplayName();
-        if (account == null || contactId == null) {
-            return;
-        }
-
-        mAccountService.addContact(account.getAccountID(), contactId);
+    public void unblockClicked(CallContact contact) {
+        String contactId = contact.getPhones().get(0).getNumber().getRawRingId();
+        mAccountService.addContact(mAccountID, contactId);
         updateList();
     }
 
@@ -122,6 +105,8 @@ public class BlackListPresenter extends RootPresenter<BlackListView> implements 
 
         switch (event.getEventType()) {
             case ACCOUNTS_CHANGED:
+            case CONTACT_ADDED:
+            case CONTACT_REMOVED:
                 updateList();
                 break;
             default:
