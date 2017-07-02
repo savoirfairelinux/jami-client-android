@@ -66,7 +66,7 @@ public abstract class HistoryService extends Observable {
 
     protected abstract Dao<HistoryCall, Integer> getCallHistoryDao();
 
-    protected abstract Dao<HistoryText, Integer> getTextHistoryDao();
+    protected abstract Dao<HistoryText, Long> getTextHistoryDao();
 
     public abstract void saveVCard(String from, StringMap messages);
 
@@ -168,7 +168,7 @@ public abstract class HistoryService extends Observable {
     }
 
     private List<HistoryText> getAllTextMessages() throws SQLException {
-        QueryBuilder<HistoryText, Integer> queryBuilder = getTextHistoryDao().queryBuilder();
+        QueryBuilder<HistoryText, Long> queryBuilder = getTextHistoryDao().queryBuilder();
         queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, true);
         return getTextHistoryDao().query(queryBuilder.prepare());
     }
@@ -195,7 +195,7 @@ public abstract class HistoryService extends Observable {
                         for (TextMessage textMessage : entry.getValue().getTextMessages().values()) {
                             textMessagesIds.add(textMessage.getId());
                         }
-                        DeleteBuilder<HistoryText, Integer> deleteTextHistoryBuilder = getTextHistoryDao()
+                        DeleteBuilder<HistoryText, Long> deleteTextHistoryBuilder = getTextHistoryDao()
                                 .deleteBuilder();
                         deleteTextHistoryBuilder.where().in(HistoryText.COLUMN_ID_NAME, textMessagesIds);
                         deleteTextHistoryBuilder.delete();
