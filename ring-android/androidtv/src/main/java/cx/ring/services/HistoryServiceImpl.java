@@ -75,7 +75,7 @@ public class HistoryServiceImpl extends HistoryService {
     }
 
     @Override
-    protected Dao<HistoryText, Integer> getTextHistoryDao() {
+    protected Dao<HistoryText, Long> getTextHistoryDao() {
         try {
             return getHelper().getTextHistoryDao();
         } catch (SQLException e) {
