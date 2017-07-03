@@ -134,6 +134,8 @@
   <string name="accept">Aanvaarden</string>
   <string name="refuse">Afwijzen</string>
   <string name="block">Blokkeren</string>
+  <string name="contact_request_title">Nieuw contactverzoek</string>
+  <string name="contact_request_msg">Je hebt %1$s contactverzoeken</string>
   <string name="contact_request_account">Voor %1$s</string>
   <string name="no_requests">0 contactverzoeken</string>
   <!--Send contact requests-->

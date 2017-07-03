@@ -22,6 +22,11 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
     <string name="call_human_state_ringing">Vyzváňanie</string>
+    <string name="call_human_state_current">Hovorenie</string>
+    <string name="call_human_state_hungup">Cez</string>
     <string name="call_human_state_busy">Zaneprazdnený</string>
+    <string name="call_human_state_failure">Zlyhal</string>
+    <string name="call_human_state_hold">Podržať</string>
+    <string name="call_human_state_over">Cez</string>
     <!-- Conferences -->
 </resources>
