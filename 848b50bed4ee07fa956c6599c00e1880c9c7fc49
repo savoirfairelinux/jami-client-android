@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_60a4b257",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-07-03T23:09:12Z",
+      "side": 1,
+      "message": "It\u0027s possible to end the activity and have the",
+      "revId": "848b50bed4ee07fa956c6599c00e1880c9c7fc49",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
