@@ -36,6 +36,7 @@ Puedes editar tu cuenta luego</string>
   <string name="normal_accounts_titles">Cuentas</string>
   <string name="normal_devices_titles">Dispositivos conocidos conectados a esta cuenta de Ring</string>
   <string name="account_device_revoke">Anular dispositivo</string>
+  <string name="account_device_revocation_success_title">Hecho</string>
   <string name="account_device_revocation_success">¡Se ha anulado el dispositivo!</string>
   <string name="account_device_revocation_error_title">No se puede anular el dispositivo</string>
   <string name="account_device_revocation_wrong_password">Contraseña errónea</string>
@@ -133,6 +134,7 @@ Puedes editar tu cuenta luego</string>
   <string name="account_device_added_message">Has configurado tu cuenta de Ring en este dispositivo exitosamente</string>
   <string name="account_device_updated_title">La cuenta del dispositivo ha sido actualizada</string>
   <string name="account_device_updated_message">Has actualizado tu cuenta de Ring exitosamente</string>
+  <string name="account_cannot_be_updated_message">No se pudo actualizar la cuenta del dispositivo . Compruebe su contraseña.</string>
   <string name="account_sip_success_title">Cuenta SIP registrada</string>
   <string name="account_sip_success_message">Has registrado tu cuenta SIP correctamente.</string>
   <string name="account_sip_register_anyway">Registrar de todos modos</string>

@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Opiniones</string>
+  <string name="report">&lt;u&gt;Envíenos un correo electrónico&lt;/u&gt;</string>
   <string name="section_license">Licencia</string>
   <string name="sponsor_section">Ring es un software libre desarrollado y mantenido por</string>
   <string name="copyright_section">Copyright</string>
@@ -10,6 +12,8 @@
   <string name="no_browser_app_installed">No se ha encontrado un navegador, instale uno para poder ver esta página</string>
   <string name="email_chooser_title">Enviar correo usando...</string>
   <string name="website_chooser_title">Ver página web usando...</string>
+  <string name="license">Este software se proporciona \"tal cual\", sin garantía de ningún tipo. Para más detalles, vea 
+&lt;u&gt;Licencia Pública General GNU versión 3 o posterior&lt;/u&gt;</string>
   <string name="description">Ring es software libre de comunicaciones que respeta las libertades y privacidad de sus usuarios.</string>
   <string name="credits">Créditos</string>
   <!--About dialog-->
@@ -130,7 +134,10 @@
   <string name="accept">Aceptar</string>
   <string name="refuse">No aceptar</string>
   <string name="block">Bloquear</string>
-  <string name="no_requests">Sin solicitudes de contacto</string>
+  <string name="contact_request_title">Nueva solicitud de contacto</string>
+  <string name="contact_request_msg">Tienes %1$ssolicitudes de contacto</string>
+  <string name="contact_request_account">Para %1$s</string>
+  <string name="no_requests">0 solicitudes de contacto</string>
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
   <string name="send_request_title">Enviar una solicitud de contacto</string>

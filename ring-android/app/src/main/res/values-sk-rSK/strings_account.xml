@@ -4,11 +4,13 @@
   <string name="ic_delete_menu">Vymaž</string>
   <!--Strings related to account creation-->
   <string name="prompt_alias">Alias</string>
+  <string name="prompt_hostname">Hostname</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="normal_accounts_titles">Účet</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Všeobecné</string>
+  <string name="account_hostname_label">Hostname</string>
   <!--Audio Details-->
   <string name="account_audio_label">Zvuk</string>
   <string name="account_ringtone_label">Vyzváňacie tóny</string>
