@@ -6,7 +6,7 @@
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
     </style>
 
-    <style name="AppTheme.ActionBar.Transparent" parent="style/Theme.AppCompat.Light">
+    <style name="AppTheme.ActionBar.Transparent" parent="@style/Theme.AppCompat.Light">
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:actionBarStyle">@style/ActionBar.Transparent</item>
