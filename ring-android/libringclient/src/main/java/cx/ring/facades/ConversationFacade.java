@@ -19,7 +19,6 @@
  */
 package cx.ring.facades;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -236,11 +235,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     public void refreshConversations() {
         Log.d(TAG, "refreshConversations()");
-        try {
-            mHistoryService.getCallAndTextAsync();
-        } catch (SQLException e) {
-            Log.e(TAG, "unable to retrieve history calls and texts", e);
-        }
+        mHistoryService.getCallAndTextAsync();
     }
 
     public void updateTextNotifications() {
@@ -454,7 +449,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         if (observable instanceof HistoryService) {
 
             switch (event.getEventType()) {
-                case INCOMING_MESSAGE:
+                case INCOMING_MESSAGE: {
                     TextMessage txt = event.getEventInput(ServiceEvent.EventInput.MESSAGE, TextMessage.class);
 
                     parseNewMessage(txt);
@@ -464,6 +459,19 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     mEvent = new ServiceEvent(ServiceEvent.EventType.INCOMING_MESSAGE);
                     notifyObservers(mEvent);
                     break;
+                }
+                case ACCOUNT_MESSAGE_STATUS_CHANGED: {
+                    TextMessage newMsg = event.getEventInput(ServiceEvent.EventInput.MESSAGE, TextMessage.class);
+                    Conversation conv = getConversationByContact(mContactService.findContactByNumber(newMsg.getNumber()));
+                    if (conv != null) {
+                        conv.updateTextMessage(newMsg);
+                    }
+                    setChanged();
+
+                    mEvent = new ServiceEvent(ServiceEvent.EventType.INCOMING_MESSAGE);
+                    notifyObservers(mEvent);
+                    break;
+                }
                 case HISTORY_LOADED:
                     Account account = mAccountService.getCurrentAccount();
                     if (account != null) {

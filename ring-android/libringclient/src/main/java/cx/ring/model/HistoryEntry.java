@@ -102,6 +102,17 @@ public class HistoryEntry {
         }
     }
 
+    public void updateTextMessage(TextMessage text) {
+        long time = text.getTimestamp();
+        NavigableMap<Long, TextMessage> msgs = mTextMessages.subMap(time, true, time, true);
+        for (TextMessage txt : msgs.values()) {
+            if (txt.equals(text)) {
+                txt.setStatus(text.getStatus());
+                break;
+            }
+        }
+    }
+
     public String getNumber() {
         return mCalls.lastEntry().getValue().number;
     }

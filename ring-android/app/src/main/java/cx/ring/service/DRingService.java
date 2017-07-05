@@ -698,9 +698,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         if (observable instanceof PreferencesService) {
             refreshContacts();
             updateConnectivityState();
-        }
-
-        if (observable instanceof AccountService && arg != null) {
+        } else if (observable instanceof AccountService && arg != null) {
             switch (arg.getEventType()) {
                 case ACCOUNTS_CHANGED:
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DRingService.this);
