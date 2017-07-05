@@ -41,8 +41,6 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
     public TextView convTime;
     @BindView(R.id.photo)
     public ImageView photo;
-    @BindView(R.id.contact_request)
-    public TextView contactRequest;
     @BindView(R.id.online)
     public ImageView online;
 
