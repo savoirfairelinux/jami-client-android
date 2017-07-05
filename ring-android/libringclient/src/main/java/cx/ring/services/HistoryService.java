@@ -124,7 +124,7 @@ public abstract class HistoryService extends Observable {
     public boolean updateTextMessage(HistoryText txt) {
         try {
             Log.d(TAG, "HistoryDao().update() id:" + txt.id + " acc:" + txt.getAccountID() + " num:"
-                    + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage());
+                    + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage() + " status:" + txt.getStatus());
             getTextHistoryDao().update(txt);
         } catch (SQLException e) {
             Log.e(TAG, "Error while updating text message", e);
@@ -138,7 +138,7 @@ public abstract class HistoryService extends Observable {
         return true;
     }
 
-    public void getCallAndTextAsync() throws SQLException {
+    public void getCallAndTextAsync() {
 
         mApplicationExecutor.submit(new Runnable() {
             @Override
@@ -169,6 +169,10 @@ public abstract class HistoryService extends Observable {
         QueryBuilder<HistoryText, Long> queryBuilder = getTextHistoryDao().queryBuilder();
         queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, true);
         return getTextHistoryDao().query(queryBuilder.prepare());
+    }
+
+    private HistoryText getTextMessage(long id) throws SQLException {
+        return getTextHistoryDao().queryForId(id);
     }
 
     /**
@@ -257,4 +261,24 @@ public abstract class HistoryService extends Observable {
         setChanged();
         notifyObservers(event);
     }
+
+    public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
+        TextMessage msg;
+        try {
+            msg = new TextMessage(getTextMessage(messageId));
+            if (!msg.getAccount().equals(accountId)) {
+                throw new Exception("Wrong message account");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error while updating text message status", e);
+            return;
+        }
+        msg.setStatus(status);
+        updateTextMessage(new HistoryText(msg));
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNT_MESSAGE_STATUS_CHANGED);
+        event.addEventInput(ServiceEvent.EventInput.MESSAGE, msg);
+        setChanged();
+        notifyObservers(event);
+    }
+
 }
