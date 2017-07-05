@@ -164,7 +164,7 @@ public class DaemonService {
 
         @Override
         public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
-            mAccountCallbackHandler.accountMessageStatusChanged(accountId, messageId, to, status);
+            mHistoryService.accountMessageStatusChanged(accountId, messageId, to, status);
         }
 
         @Override

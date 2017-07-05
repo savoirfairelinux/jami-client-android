@@ -148,6 +148,9 @@ public class TextMessage {
     public void setStatus(int status) {
         mState = Status.fromInt(status);
     }
+    public void setStatus(Status status) {
+        mState = status;
+    }
 
     public interface direction {
         int INCOMING = 1;
@@ -237,20 +240,7 @@ public class TextMessage {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         TextMessage that = (TextMessage) o;
-
-        if (mTimestamp != that.mTimestamp) {
-            return false;
-        }
-        return mMessage.equals(that.mMessage);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = (int) (mTimestamp ^ (mTimestamp >>> 32));
-        result = 31 * result + mMessage.hashCode();
-        return result;
+        return mID == that.mID;
     }
 }

@@ -187,21 +187,26 @@ public class Conversation {
     }
 
     public void addTextMessage(TextMessage txt) {
-        if (getTextMessages().contains(txt)) {
-            return;
-        }
         if (txt.getContact() == null) {
             txt.setContact(getContact());
         }
         String accountId = txt.getAccount();
-        if (mHistory.containsKey(accountId)) {
-            mHistory.get(accountId).addTextMessage(txt);
+        HistoryEntry accountEntry = mHistory.get(accountId);
+        if (accountEntry != null) {
+            accountEntry.addTextMessage(txt);
         } else {
-            HistoryEntry e = new HistoryEntry(accountId, getContact());
-            e.addTextMessage(txt);
-            mHistory.put(accountId, e);
+            accountEntry = new HistoryEntry(accountId, getContact());
+            accountEntry.addTextMessage(txt);
+            mHistory.put(accountId, accountEntry);
         }
         mAggregateHistory.add(new ConversationElement(txt));
+    }
+
+    public void updateTextMessage(TextMessage txt) {
+        HistoryEntry accountEntry = mHistory.get(txt.getAccount());
+        if (accountEntry != null) {
+            accountEntry.updateTextMessage(txt);
+        }
     }
 
     public Map<String, HistoryEntry> getHistory() {
