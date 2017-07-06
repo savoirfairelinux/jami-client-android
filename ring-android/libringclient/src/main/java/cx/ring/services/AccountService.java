@@ -170,6 +170,9 @@ public class AccountService extends Observable {
                     // If name is in cache this can be synchronous
                     lookupAddress(accountId, "", request.getContactId());
                 }
+                for (CallContact contact : account.getContacts().values()) {
+                    lookupAddress(accountId, "", contact.getPhones().get(0).getNumber().getRawRingId());
+                }
             }
         }
     }
