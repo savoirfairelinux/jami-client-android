@@ -133,16 +133,24 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService implements Au
         return mContext.getFilesDir();
     }
 
+    private boolean isNetworkConnectedForType(int connectivityManagerType) {
+        NetworkInfo info = NetworkUtils.getNetworkInfo(mContext);
+        return (info != null && info.isConnected() && info.getType() == connectivityManagerType);
+    }
+
     @Override
     public boolean isConnectedWifi() {
-        NetworkInfo info = NetworkUtils.getNetworkInfo(mContext);
-        return (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_WIFI);
+        return isNetworkConnectedForType(ConnectivityManager.TYPE_WIFI);
     }
 
     @Override
     public boolean isConnectedMobile() {
-        NetworkInfo info = NetworkUtils.getNetworkInfo(mContext);
-        return (info != null && info.isConnected() && info.getType() == ConnectivityManager.TYPE_MOBILE);
+        return isNetworkConnectedForType(ConnectivityManager.TYPE_MOBILE);
+    }
+
+    @Override
+    public boolean isConnectedEthernet() {
+        return isNetworkConnectedForType(ConnectivityManager.TYPE_ETHERNET);
     }
 
     @Override

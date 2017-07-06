@@ -37,6 +37,8 @@ public abstract class DeviceRuntimeService implements DaemonService.SystemInfoCa
 
     public abstract boolean isConnectedMobile();
 
+    public abstract boolean isConnectedEthernet();
+
     public abstract boolean isConnectedWifi();
 
     public abstract long provideDaemonThreadId();

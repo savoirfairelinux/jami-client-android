@@ -131,8 +131,10 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     }
 
     @Override
-    public boolean isConnectedWifiAndMobile() {
-        return mDevideRuntimeService.isConnectedWifi() || (mDevideRuntimeService.isConnectedMobile() && getUserSettings().isAllowMobileData());
+    public boolean hasNetworkConnected() {
+        return mDevideRuntimeService.isConnectedWifi()
+                || mDevideRuntimeService.isConnectedEthernet()
+                || (mDevideRuntimeService.isConnectedMobile() && getUserSettings().isAllowMobileData());
     }
 
 }
