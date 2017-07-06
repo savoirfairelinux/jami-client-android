@@ -119,6 +119,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         boolean mobileDataAllowed = mPreferencesService.getUserSettings().isAllowMobileData();
 
         boolean isConnected = mDeviceRuntimeService.isConnectedWifi()
+                || mDeviceRuntimeService.isConnectedEthernet()
+                || mDeviceRuntimeService.isConnectedBluetooth()
                 || (mDeviceRuntimeService.isConnectedMobile() && mobileDataAllowed);
 
         boolean isMobileAndNotAllowed = mDeviceRuntimeService.isConnectedMobile()

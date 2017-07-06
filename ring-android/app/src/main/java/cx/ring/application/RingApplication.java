@@ -220,7 +220,7 @@ public class RingApplication extends Application {
         sendBroadcast(intent);
 
         // load accounts from Daemon
-        mAccountService.loadAccountsFromDaemon(mPreferencesService.isConnectedWifiAndMobile());
+        mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected());
     }
 
     public void terminateDaemon() {

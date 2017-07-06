@@ -57,6 +57,8 @@ public final class NetworkUtils {
     public static boolean isConnectionFast(int type, int subType) {
         if (type == ConnectivityManager.TYPE_WIFI) {
             return true;
+        } else if (type == ConnectivityManager.TYPE_ETHERNET) {
+            return true;
         } else if (type == ConnectivityManager.TYPE_MOBILE) {
             switch (subType) {
                 case TelephonyManager.NETWORK_TYPE_1xRTT:
