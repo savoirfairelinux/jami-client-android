@@ -187,7 +187,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
     private void updateConnectivityState() {
         if (mDaemonService.isStarted()) {
-            mAccountService.setAccountsActive(mPreferencesService.isConnectedWifiAndMobile());
+            mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
             mHardwareService.connectivityChanged();
         }
     }

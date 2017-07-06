@@ -36,7 +36,7 @@ public abstract class PreferencesService extends Observable {
         return mUserSettings;
     }
 
-    public abstract boolean isConnectedWifiAndMobile();
+    public abstract boolean hasNetworkConnected();
 
     public abstract void saveRequestPreferences(String accountId, String contactId);
 
