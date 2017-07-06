@@ -256,6 +256,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         if (guess == null
                 || guess.first == null || guess.second == null
                 || !guess.first.isRing() || !guess.second.isRingId()
+                || guess.first.getContact(guess.second.getRawRingId()) != null
                 || mConversation.getLastContactRequest() + Conversation.PERIOD > time) {
             return;
         }
