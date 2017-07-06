@@ -72,8 +72,6 @@ public abstract class HistoryService extends Observable {
 
     public abstract void updateVCard();
 
-    public abstract String getRelativeTimeSpanString(long lastInteraction);
-
     public boolean insertNewEntry(Conference toInsert) {
 
         for (SipCall call : toInsert.getParticipants()) {

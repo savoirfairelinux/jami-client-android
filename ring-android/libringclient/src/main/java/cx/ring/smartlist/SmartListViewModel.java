@@ -20,6 +20,7 @@
 package cx.ring.smartlist;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
@@ -38,26 +39,27 @@ public class SmartListViewModel {
     private String contactName;
     private String lastInteraction = "";
     private byte[] photoData;
-    private String lastInteractionTime;
+    private Date lastInteractionTime;
     private boolean hasUnreadTextMessage;
     private boolean hasOngoingCall;
     private CallContact.Status status;
     private boolean isOnline = false;
     private int lastEntryType;
 
-    public SmartListViewModel(Conversation conversation, String contactName, byte[] photoData, String lastInteractionTime) {
+    public SmartListViewModel(Conversation conversation, String contactName, byte[] photoData) {
         this.uuid = conversation.getUuid();
         this.contactName = contactName;
         this.photoData = photoData;
-        this.lastInteractionTime = lastInteractionTime;
         this.hasUnreadTextMessage = conversation.hasUnreadTextMessages();
         this.hasOngoingCall = conversation.hasCurrentCall();
         this.status = conversation.getContact().getStatus();
 
+        lastInteractionTime = conversation.getLastInteraction();
+        long lastInteraction = lastInteractionTime.getTime();
         for (HistoryEntry historyEntry : conversation.getHistory().values()) {
             long lastTextTimestamp = historyEntry.getTextMessages().isEmpty() ? 0 : historyEntry.getTextMessages().lastEntry().getKey();
             long lastCallTimestamp = historyEntry.getCalls().isEmpty() ? 0 : historyEntry.getCalls().lastEntry().getKey();
-            if (lastTextTimestamp == conversation.getLastInteraction().getTime()
+            if (lastTextTimestamp == lastInteraction
                     && lastTextTimestamp > 0
                     && lastTextTimestamp > lastCallTimestamp) {
                 TextMessage msg = historyEntry.getTextMessages().lastEntry().getValue();
@@ -72,7 +74,7 @@ public class SmartListViewModel {
                 this.lastInteraction = msgString;
                 break;
             }
-            if (lastCallTimestamp == conversation.getLastInteraction().getTime()
+            if (lastCallTimestamp == lastInteraction
                     && lastCallTimestamp > 0) {
                 HistoryCall lastCall = historyEntry.getCalls().lastEntry().getValue();
                 this.lastEntryType = lastCall.isIncoming() ? TYPE_INCOMING_CALL : TYPE_OUTGOING_CALL;
@@ -109,7 +111,7 @@ public class SmartListViewModel {
         return lastInteraction;
     }
 
-    public String getLastInteractionTime() {
+    public Date getLastInteractionTime() {
         return lastInteractionTime;
     }
 

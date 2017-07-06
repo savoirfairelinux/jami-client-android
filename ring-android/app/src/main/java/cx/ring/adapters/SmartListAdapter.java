@@ -24,6 +24,7 @@ import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +86,12 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         }
 
         holder.convParticipants.setText(smartListViewModel.getContactName());
-        holder.convTime.setText(smartListViewModel.getLastInteractionTime());
+
+        long lastInteraction = smartListViewModel.getLastInteractionTime().getTime();
+        String lastInteractionStr = lastInteraction == 0 ?
+                "" : DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL).toString();
+
+        holder.convTime.setText(lastInteractionStr);
         if (smartListViewModel.hasOngoingCall()) {
             holder.convStatus.setText(holder.itemView.getContext().getString(R.string.ongoing_call));
         } else if (smartListViewModel.getLastInteraction() != null) {

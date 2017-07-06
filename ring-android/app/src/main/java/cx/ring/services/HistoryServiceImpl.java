@@ -84,11 +84,6 @@ public class HistoryServiceImpl extends HistoryService {
         }
     }
 
-    @Override
-    public String getRelativeTimeSpanString(long lastInteraction) {
-        return DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL).toString();
-    }
-
     /**
      * Init Helper for our DB
      */
