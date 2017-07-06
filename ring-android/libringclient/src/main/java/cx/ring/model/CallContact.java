@@ -44,6 +44,8 @@ public class CallContact {
     private boolean isFromSystem = false;
     private Status mStatus = Status.NO_REQUEST;
 
+    public boolean detailsLoaded = false;
+
     public CallContact(long cID) {
         this(cID, null, null, UNKNOWN_ID);
     }

@@ -399,6 +399,9 @@ public class ContactServiceImpl extends ContactService {
 
     @Override
     public void loadContactData(CallContact callContact) {
+        if (callContact.detailsLoaded) {
+            return;
+        }
         Tuple<String, byte[]> profileData;
         if (callContact.isFromSystem()) {
             profileData = loadSystemContactData(callContact);
@@ -406,8 +409,10 @@ public class ContactServiceImpl extends ContactService {
             profileData = loadVCardContactData(callContact);
         }
         callContact.setDisplayName(profileData.first);
-        if (profileData.second != null && profileData.second.length > 0)
+        if (profileData.second != null && profileData.second.length > 0) {
             callContact.setPhoto(profileData.second);
+        }
+        callContact.detailsLoaded = true;
     }
 
     private Tuple<String, byte[]> loadVCardContactData(CallContact callContact) {
