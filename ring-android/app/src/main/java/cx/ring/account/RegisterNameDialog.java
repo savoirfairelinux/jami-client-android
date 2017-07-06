@@ -162,8 +162,14 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
+        String accountId = "";
+        Bundle args = getArguments();
+        if (args != null) {
+            accountId = args.getString(AccountEditionActivity.ACCOUNT_ID_KEY, accountId);
+        }
+
         mUsernameTxt.setFilters(new InputFilter[]{new RegisteredNameFilter()});
-        mUsernameTextWatcher = new RegisteredNameTextWatcher(getActivity(), mAccountService, mUsernameTxtBox, mUsernameTxt);
+        mUsernameTextWatcher = new RegisteredNameTextWatcher(getActivity(), mAccountService, accountId, mUsernameTxtBox, mUsernameTxt);
         mUsernameTxt.addTextChangedListener(mUsernameTextWatcher);
 
         AlertDialog dialog = (AlertDialog) getDialog();

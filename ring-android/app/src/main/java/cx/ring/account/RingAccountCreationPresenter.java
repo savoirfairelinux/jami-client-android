@@ -70,7 +70,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     void userNameChanged(@NonNull String userName) {
         if (!userName.isEmpty()) {
             if (mNameLookupInputHandler == null) {
-                mNameLookupInputHandler = new NameLookupInputHandler(new WeakReference<>(mAccountService));
+                mNameLookupInputHandler = new NameLookupInputHandler(mAccountService, "");
             }
             mRingAccountViewModel.setUsername(userName);
             mNameLookupInputHandler.enqueueNextLookup(userName);
