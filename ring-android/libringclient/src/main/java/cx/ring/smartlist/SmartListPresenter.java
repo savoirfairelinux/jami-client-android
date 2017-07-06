@@ -159,16 +159,16 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                     getView().displayNewContactRowWithName(query);
                 } else {
                     getView().hideSearchRow();
-                }
 
-                // Ring search
-                if (mNameLookupInputHandler == null) {
-                    mNameLookupInputHandler = new NameLookupInputHandler(new WeakReference<>(mAccountService));
-                }
+                    // Ring search
+                    if (mNameLookupInputHandler == null) {
+                        mNameLookupInputHandler = new NameLookupInputHandler(mAccountService, currentAccount.getAccountID());
+                    }
 
-                mNameLookupInputHandler.enqueueNextLookup(query);
-                mLastBlockchainQuery = query;
-                getView().setLoading(true);
+                    mLastBlockchainQuery = query;
+                    mNameLookupInputHandler.enqueueNextLookup(query);
+                    getView().setLoading(true);
+                }
             }
         }
 

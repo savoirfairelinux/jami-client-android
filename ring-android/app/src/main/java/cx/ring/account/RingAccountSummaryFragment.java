@@ -332,7 +332,10 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
 
     @OnClick(R.id.register_name_btn)
     public void showUsernameRegistrationPopup() {
+        Bundle args = new Bundle();
+        args.putString(AccountEditionActivity.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
         RegisterNameDialog registrationDialog = new RegisterNameDialog();
+        registrationDialog.setArguments(args);
         registrationDialog.setListener(this);
         registrationDialog.show(getFragmentManager(), TAG);
     }
