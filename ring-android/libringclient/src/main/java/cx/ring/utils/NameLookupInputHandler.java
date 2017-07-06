@@ -25,12 +25,14 @@ import cx.ring.services.AccountService;
 
 public class NameLookupInputHandler {
     private static final int WAIT_DELAY = 350;
-    private WeakReference<AccountService> mAccountService;
+    private final WeakReference<AccountService> mAccountService;
+    private final String mAccountId;
     private final Timer timer = new Timer(true);
     private NameTask lastTask = null;
 
-    public NameLookupInputHandler(WeakReference<AccountService> accountService) {
-        mAccountService = accountService;
+    public NameLookupInputHandler(AccountService accountService, String accountId) {
+        mAccountService = new WeakReference<>(accountService);
+        mAccountId = accountId;
     }
 
     public void enqueueNextLookup(String text) {
@@ -49,7 +51,7 @@ public class NameLookupInputHandler {
         public void run() {
             final AccountService accountService = mAccountService.get();
             if (accountService != null) {
-                accountService.lookupName("", "", mTextToLookup);
+                accountService.lookupName(mAccountId, "", mTextToLookup);
             }
         }
     }
