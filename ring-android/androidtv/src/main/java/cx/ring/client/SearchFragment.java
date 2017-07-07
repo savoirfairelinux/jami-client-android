@@ -20,6 +20,7 @@
 package cx.ring.client;
 
 import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
@@ -155,7 +156,10 @@ public class SearchFragment extends android.support.v17.leanback.app.SearchFragm
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
-            //nothing now
+            Intent intent = new Intent(getActivity(), CallActivity.class);
+            intent.putExtra("account", mAccountService.getCurrentAccount().getAccountID());
+            intent.putExtra("ringId", contact.getAddress());
+            startActivity(intent);
         }
     }
 
