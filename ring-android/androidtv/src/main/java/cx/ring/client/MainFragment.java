@@ -14,10 +14,7 @@
 
 package cx.ring.client;
 
-import java.net.URI;
-import java.util.Collections;
-import java.util.List;
-import java.util.Timer;
+import java.util.ArrayList;
 import java.util.TimerTask;
 
 import android.content.Intent;
@@ -29,7 +26,6 @@ import android.support.v17.leanback.app.BackgroundManager;
 import android.support.v17.leanback.app.BrowseFragment;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
-import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
@@ -37,38 +33,43 @@ import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
+import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.facades.ConversationFacade;
+import cx.ring.model.CallContact;
+import cx.ring.model.Conversation;
+import cx.ring.model.ServiceEvent;
+import cx.ring.services.ContactService;
+import cx.ring.utils.Observable;
+import cx.ring.utils.Observer;
 
-public class MainFragment extends BrowseFragment {
+public class MainFragment extends BrowseFragment implements Observer<ServiceEvent> {
     private static final String TAG = "MainFragment";
 
-    private static final int BACKGROUND_UPDATE_DELAY = 300;
     private static final int GRID_ITEM_WIDTH = 200;
     private static final int GRID_ITEM_HEIGHT = 200;
-    private static final int NUM_ROWS = 6;
-    private static final int NUM_COLS = 15;
 
-    private final Handler mHandler = new Handler();
     private ArrayObjectAdapter mRowsAdapter;
-    private Drawable mDefaultBackground;
     private DisplayMetrics mMetrics;
-    private Timer mBackgroundTimer;
-    private URI mBackgroundURI;
     private BackgroundManager mBackgroundManager;
+
+    private ArrayList<Conversation> mConversations;
+    private ArrayObjectAdapter cardRowAdapter;
+
+    @Inject
+    ConversationFacade mConversationFacade;
+
+    @Inject
+    ContactService mContactService;
+    private Drawable mDefaultBackground;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -79,54 +80,55 @@ public class MainFragment extends BrowseFragment {
 
         setupUIElements();
 
-        //loadRows();
+        loadRows();
 
         setupEventListeners();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (null != mBackgroundTimer) {
-            Log.d(TAG, "onDestroy: " + mBackgroundTimer.toString());
-            mBackgroundTimer.cancel();
-        }
+    private void loadRows() {
+        mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
+
+        /* CardPresenter */
+        HeaderItem cardPresenterHeader = new HeaderItem(1, "Contacts");
+        CardPresenter cardPresenter = new CardPresenter();
+        cardRowAdapter = new ArrayObjectAdapter(cardPresenter);
+        mRowsAdapter.add(new ListRow(cardPresenterHeader, cardRowAdapter));
+
+        /* set */
+        setAdapter(mRowsAdapter);
     }
 
-    private void loadRows() {
-        List<Movie> list = MovieList.setupMovies();
-
-        mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
-        CardPresenter cardPresenter = new CardPresenter();
-
-        int i;
-        for (i = 0; i < NUM_ROWS; i++) {
-            if (i != 0) {
-                Collections.shuffle(list);
-            }
-            ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(cardPresenter);
-            for (int j = 0; j < NUM_COLS; j++) {
-                listRowAdapter.add(list.get(j % 5));
-            }
-            HeaderItem header = new HeaderItem(i, MovieList.MOVIE_CATEGORY[i]);
-            mRowsAdapter.add(new ListRow(header, listRowAdapter));
+    private synchronized void getConversations() {
+        if (mConversations == null) {
+            mConversations = new ArrayList<>();
         }
 
-        HeaderItem gridHeader = new HeaderItem(i, "PREFERENCES");
+        mConversations.clear();
+        mConversations.addAll(mConversationFacade.getConversationsList());
 
-        GridItemPresenter mGridPresenter = new GridItemPresenter();
-        ArrayObjectAdapter gridRowAdapter = new ArrayObjectAdapter(mGridPresenter);
-        gridRowAdapter.add(getResources().getString(R.string.grid_view));
-        gridRowAdapter.add(getString(R.string.error_fragment));
-        gridRowAdapter.add(getResources().getString(R.string.personal_settings));
-        mRowsAdapter.add(new ListRow(gridHeader, gridRowAdapter));
+        if (mConversations != null && mConversations.size() > 0) {
+            cardRowAdapter.clear();
+            for (int i = 0; i < mConversations.size(); i++) {
+                Conversation conversation = mConversations.get(i);
+                CallContact callContact = conversation.getContact();
+                mContactService.loadContactData(callContact);
+                Log.d(TAG, "contact >> " + callContact.getDisplayName() + " " + callContact.getPhoto());
 
-        setAdapter(mRowsAdapter);
+                Contact contact = new Contact();
+                contact.setId(i);
+                contact.setName(callContact.getDisplayName());
+                contact.setAddress(conversation.getUuid());
+                contact.setPhoto(callContact.getPhoto());
+
+                cardRowAdapter.add(contact);
+                Log.d(TAG, "current contact : " + contact.toString());
+            }
+            mRowsAdapter.notifyArrayItemRangeChanged(0, mConversations.size());
+        }
 
     }
 
     private void prepareBackgroundManager() {
-
         mBackgroundManager = BackgroundManager.getInstance(getActivity());
         mBackgroundManager.attach(getActivity().getWindow());
         mDefaultBackground = getResources().getDrawable(R.drawable.default_background);
@@ -135,9 +137,7 @@ public class MainFragment extends BrowseFragment {
     }
 
     private void setupUIElements() {
-        // setBadgeDrawable(getActivity().getResources().getDrawable(
-        // R.drawable.videos_by_google_banner));
-        setTitle(getString(R.string.browse_title)); // Badge, when set, takes precedent
+        setBadgeDrawable(getActivity().getResources().getDrawable(R.drawable.ic_logo_ring_beta2_blanc));
         // over title
         setHeadersState(HEADERS_ENABLED);
         setHeadersTransitionOnBackEnabled(true);
@@ -162,57 +162,17 @@ public class MainFragment extends BrowseFragment {
         setOnItemViewSelectedListener(new ItemViewSelectedListener());
     }
 
-    protected void updateBackground(String uri) {
-        int width = mMetrics.widthPixels;
-        int height = mMetrics.heightPixels;
-        Glide.with(getActivity())
-                .load(uri)
-                .centerCrop()
-                .error(mDefaultBackground)
-                .into(new SimpleTarget<GlideDrawable>(width, height) {
-                    @Override
-                    public void onResourceReady(GlideDrawable resource,
-                                                GlideAnimation<? super GlideDrawable>
-                                                        glideAnimation) {
-                        mBackgroundManager.setDrawable(resource);
-                    }
-                });
-        mBackgroundTimer.cancel();
+    @Override
+    public void update(Observable observable, ServiceEvent event) {
+
     }
 
-    private void startBackgroundTimer() {
-        if (null != mBackgroundTimer) {
-            mBackgroundTimer.cancel();
-        }
-        mBackgroundTimer = new Timer();
-        mBackgroundTimer.schedule(new UpdateBackgroundTask(), BACKGROUND_UPDATE_DELAY);
-    }
 
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
-
-            if (item instanceof Movie) {
-                Movie movie = (Movie) item;
-                Log.d(TAG, "Item: " + item.toString());
-                Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(DetailsActivity.MOVIE, movie);
-
-                Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        getActivity(),
-                        ((ImageCardView) itemViewHolder.view).getMainImageView(),
-                        DetailsActivity.SHARED_ELEMENT_NAME).toBundle();
-                getActivity().startActivity(intent, bundle);
-            } else if (item instanceof String) {
-                if (((String) item).indexOf(getString(R.string.error_fragment)) >= 0) {
-                    Intent intent = new Intent(getActivity(), BrowseErrorActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getActivity(), ((String) item), Toast.LENGTH_SHORT)
-                            .show();
-                }
-            }
+            //Do Nothing
         }
     }
 
@@ -220,29 +180,10 @@ public class MainFragment extends BrowseFragment {
         @Override
         public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item,
                                    RowPresenter.ViewHolder rowViewHolder, Row row) {
-            if (item instanceof Movie) {
-                mBackgroundURI = ((Movie) item).getBackgroundImageURI();
-                startBackgroundTimer();
-            }
-
+            //Do Nothing
         }
     }
 
-    private class UpdateBackgroundTask extends TimerTask {
-
-        @Override
-        public void run() {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (mBackgroundURI != null) {
-                        updateBackground(mBackgroundURI.toString());
-                    }
-                }
-            });
-
-        }
-    }
 
     private class GridItemPresenter extends Presenter {
         @Override
