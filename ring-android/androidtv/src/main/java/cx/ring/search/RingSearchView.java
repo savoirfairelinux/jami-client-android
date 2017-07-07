@@ -20,10 +20,14 @@
 package cx.ring.search;
 
 import cx.ring.model.CallContact;
+import cx.ring.model.Phone;
+import cx.ring.model.Uri;
 
 public interface RingSearchView {
 
     void displayContact(CallContact contact);
 
     void clearSearch();
+
+    void startCall(String accountID, Uri number);
 }

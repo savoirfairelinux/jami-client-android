@@ -19,6 +19,7 @@
  */
 package cx.ring.search;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v17.leanback.app.SearchFragment;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
@@ -31,13 +32,12 @@ import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.client.CallActivity;
 import cx.ring.client.CardPresenter;
 import cx.ring.model.CallContact;
+import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 
 public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
@@ -100,11 +100,19 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         });
     }
 
+    @Override
+    public void startCall(String accountID, Uri number) {
+        Intent intent = new Intent(getActivity(), CallActivity.class);
+        intent.putExtra("account", accountID);
+        intent.putExtra("ringId", number.toString());
+        startActivity(intent);
+    }
+
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
-            //nothing now
+            presenter.contactClicked(((CallContact)item));
         }
     }
 
