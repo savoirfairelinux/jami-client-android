@@ -79,7 +79,8 @@
         <activity android:name="cx.ring.client.DetailsActivity" />
         <activity android:name="cx.ring.client.BrowseErrorActivity" />
         <activity android:name="cx.ring.client.SearchActivity" />
-
+        <activity android:name=".client.CallActivity"
+                  android:theme="@style/AppThemeBase"/>
         <service
             android:name=".service.DRingService"
             android:exported="false">
