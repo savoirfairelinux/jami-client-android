@@ -14,13 +14,16 @@
 
 package cx.ring.client;
 
+import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 
 import cx.ring.R;
 
@@ -29,55 +32,78 @@ import cx.ring.R;
  * It contains an Image CardView
  */
 public class CardPresenter extends Presenter {
-    private static final String TAG = "CardPresenter";
+    private static final String TAG = CardPresenter.class.getSimpleName();
 
-    private static final int CARD_WIDTH = 313;
-    private static final int CARD_HEIGHT = 176;
-    private static int sSelectedBackgroundColor;
-    private static int sDefaultBackgroundColor;
-    private Drawable mDefaultCardImage;
+    private static Context mContext;
+    private static int CARD_WIDTH = 313;
+    private static int CARD_HEIGHT = 176;
 
-    private static void updateCardBackgroundColor(ImageCardView view, boolean selected) {
-        int color = selected ? sSelectedBackgroundColor : sDefaultBackgroundColor;
-        // Both background colors should be set because the view's background is temporarily visible
-        // during animations.
-        view.setBackgroundColor(color);
-        view.findViewById(R.id.info_field).setBackgroundColor(color);
+    static class ViewHolder extends Presenter.ViewHolder {
+        private Contact mContact;
+        private ImageCardView mCardView;
+        private Drawable mDefaultCardImage;
+
+        public ViewHolder(View view) {
+            super(view);
+            mCardView = (ImageCardView) view;
+            mDefaultCardImage = mContext.getResources().getDrawable(R.drawable.ic_contact_picture);
+        }
+
+        public void setContact(Contact c) {
+            mContact = c;
+        }
+
+        public Contact getContact() {
+            return mContact;
+        }
+
+        public ImageCardView getCardView() {
+            return mCardView;
+        }
+
+        public Drawable getDefaultCardImage() {
+            return mDefaultCardImage;
+        }
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
         Log.d(TAG, "onCreateViewHolder");
+        mContext = parent.getContext();
 
-        sDefaultBackgroundColor = parent.getResources().getColor(R.color.default_background);
-        sSelectedBackgroundColor = parent.getResources().getColor(R.color.selected_background);
-        mDefaultCardImage = parent.getResources().getDrawable(R.drawable.movie);
-
-        ImageCardView cardView = new ImageCardView(parent.getContext()) {
-            @Override
-            public void setSelected(boolean selected) {
-                updateCardBackgroundColor(this, selected);
-                super.setSelected(selected);
-            }
-        };
-
+        ImageCardView cardView = new ImageCardView(mContext);
         cardView.setFocusable(true);
         cardView.setFocusableInTouchMode(true);
-        updateCardBackgroundColor(cardView, false);
+        cardView.setBackgroundColor(mContext.getResources().getColor(R.color.fastlane_background));
         return new ViewHolder(cardView);
     }
 
     @Override
     public void onBindViewHolder(Presenter.ViewHolder viewHolder, Object item) {
+        Contact contact = (Contact) item;
+        ((ViewHolder) viewHolder).setContact(contact);
 
+        Log.d(TAG, "onBindViewHolder");
+        ((ViewHolder) viewHolder).mCardView.setTitleText(contact.getName());
+        ((ViewHolder) viewHolder).mCardView.setContentText(contact.getAddress());
+        ((ViewHolder) viewHolder).mCardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
+        if (contact.getPhoto() == null) {
+            ((ViewHolder) viewHolder).mCardView.setMainImage(((ViewHolder) viewHolder).getDefaultCardImage());
+        }
+        else {
+            ((ViewHolder) viewHolder).mCardView.setMainImage(
+                    new BitmapDrawable(mContext.getResources(), BitmapFactory.decodeByteArray(contact.getPhoto(), 0, contact.getPhoto().length)));
+        }
     }
 
     @Override
     public void onUnbindViewHolder(Presenter.ViewHolder viewHolder) {
         Log.d(TAG, "onUnbindViewHolder");
-        ImageCardView cardView = (ImageCardView) viewHolder.view;
-        // Remove references to images so that the garbage collector can free up memory
-        cardView.setBadgeImage(null);
-        cardView.setMainImage(null);
+    }
+
+    @Override
+    public void onViewAttachedToWindow(Presenter.ViewHolder viewHolder) {
+        // TO DO
     }
 }
