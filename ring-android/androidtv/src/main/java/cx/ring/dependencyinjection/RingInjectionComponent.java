@@ -25,10 +25,11 @@ import cx.ring.about.AboutPresenter;
 import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
-import cx.ring.client.SearchFragment;
+import cx.ring.search.RingSearchFragment;
 import cx.ring.client.WizardActivity;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.navigation.RingNavigationPresenter;
+import cx.ring.search.RingSearchPresenter;
 import cx.ring.service.BootReceiver;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
@@ -54,7 +55,7 @@ public interface RingInjectionComponent {
 
     void inject(HomeActivity activity);
 
-    void inject(SearchFragment fragment);
+    void inject(RingSearchFragment fragment);
 
     void inject(WizardActivity activity);
 
@@ -97,4 +98,6 @@ public interface RingInjectionComponent {
     void inject(RingAccountSummaryPresenter presenter);
 
     void inject(WizardPresenter presenter);
+
+    void inject(RingSearchPresenter presenter);
 }
