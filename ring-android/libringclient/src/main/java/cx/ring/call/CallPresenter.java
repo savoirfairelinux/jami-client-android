@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.ServiceEvent;
@@ -42,7 +41,6 @@ import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
-import cx.ring.utils.Tuple;
 
 public class CallPresenter extends RootPresenter<CallView> implements Observer<ServiceEvent> {
 
@@ -50,7 +48,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
 
     protected AccountService mAccountService;
     protected NotificationService mNotificationService;
-    protected DeviceRuntimeService mDeviceRuntimeService;
     protected HardwareService mHardwareService;
     protected CallService mCallService;
     protected ContactService mContactService;
@@ -82,7 +79,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
                          HistoryService mHistoryService) {
         this.mAccountService = accountService;
         this.mNotificationService = notificationService;
-        this.mDeviceRuntimeService = deviceRuntimeService;
         this.mHardwareService = hardwareService;
         this.mCallService = callService;
         this.mContactService = contactService;
@@ -104,8 +100,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         if (mHasVideo) {
             mHardwareService.stopCapture();
         }
-
-        mDeviceRuntimeService.closeAudioState();
     }
 
     @Override
@@ -131,7 +125,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
 
     public void initIncoming(String confId) {
         mSipCall = mCallService.getCurrentCallForId(confId);
-        //FIXME sipCall is null for unknowm reason atm
         if (mSipCall == null) {
             Log.w(TAG, "initIncoming: null Call");
             finish();
@@ -141,8 +134,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         confUpdate();
         getContactDetails();
         getView().blockScreenRotation();
-
-        mDeviceRuntimeService.updateAudioState(mSipCall.isRinging() && mSipCall.isIncoming());
     }
 
     public void prepareOptionMenu() {
@@ -251,10 +242,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     }
 
     private void finish() {
-        if (mSipCall != null) {
-            mCallService.hangUp(mSipCall.getCallId());
-            mNotificationService.cancelCallNotification(mSipCall.getCallId().hashCode());
-        }
         if (executor != null && !executor.isShutdown()) {
             executor.shutdown();
         }
@@ -274,8 +261,10 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
                 mHardwareService.setPreviewSettings();
                 getView().displayVideoSurface(true);
             }
-            executor = Executors.newScheduledThreadPool(1);
-            executor.scheduleAtFixedRate(timeRunnable, 0, 1, TimeUnit.SECONDS);
+            if (executor == null || executor.isShutdown()) {
+                executor = Executors.newSingleThreadScheduledExecutor();
+                executor.scheduleAtFixedRate(timeRunnable, 0, 1, TimeUnit.SECONDS);
+            }
         } else if (mSipCall.isRinging()) {
             if (mSipCall.isIncoming()) {
                 if (mAccountService.getAccount(mSipCall.getAccount()).isAutoanswerEnabled()) {
@@ -311,8 +300,8 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         getView().updateContactBubble(callContact);
     }
 
-    private void parseCall(String callId, int callState) {
-        if (mSipCall == null || !mSipCall.getCallId().equals(callId)) {
+    private void parseCall(SipCall call, int callState) {
+        if (mSipCall == null || mSipCall != call) {
             return;
         }
 
@@ -329,8 +318,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         } else if (callState != SipCall.State.INACTIVE) {
             mNotificationService.showCallNotification(new Conference(mSipCall));
         }
-
-        mDeviceRuntimeService.updateAudioState(mSipCall.isRinging() && mSipCall.isIncoming());
     }
 
     @Override
@@ -342,12 +329,12 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         if (observable instanceof CallService) {
             switch (event.getEventType()) {
                 case CALL_STATE_CHANGED:
-                    String callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
-                    int newState = SipCall.stateFromString(event.getEventInput(ServiceEvent.EventInput.STATE, String.class));
+                    SipCall call = event.getEventInput(ServiceEvent.EventInput.CALL, SipCall.class);
+                    int state = call.getCallState();
 
-                    Log.d(TAG, "CALL_STATE_CHANGED: " + callId + " " + newState);
+                    Log.d(TAG, "CALL_STATE_CHANGED: " + call.getCallId() + " " + state);
 
-                    parseCall(callId, newState);
+                    parseCall(call, state);
                     confUpdate();
                     break;
             }

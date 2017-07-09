@@ -71,6 +71,7 @@ public class ServiceEvent {
     public enum EventInput {
         ID,
         ACCOUNT_ID,
+        CALL,
         CALL_ID,
         CONF_ID,
         MESSAGE_ID,

@@ -324,7 +324,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             switch (arg.getEventType()) {
                 case INCOMING_MESSAGE:
                 case HISTORY_LOADED:
-                case CALL_STATE_CHANGED:
                 case CONVERSATIONS_CHANGED:
                     loadConversation();
                     break;
