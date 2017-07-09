@@ -68,7 +68,7 @@ import cx.ring.utils.Tuple;
  */
 public class ConversationFacade extends Observable implements Observer<ServiceEvent> {
 
-    private final static String TAG = ConversationFacade.class.getName();
+    private final static String TAG = ConversationFacade.class.getSimpleName();
 
     @Inject
     AccountService mAccountService;
@@ -522,20 +522,19 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             Conference conference = null;
             switch (event.getEventType()) {
                 case CALL_STATE_CHANGED:
-                    callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
-                    int newState = SipCall.stateFromString(event.getEventInput(ServiceEvent.EventInput.STATE, String.class));
-                    call = mCallService.getCurrentCallForId(callId);
-
+                    call = event.getEventInput(ServiceEvent.EventInput.CALL, SipCall.class);
                     if (call == null) {
-                        Log.w(TAG, "CALL_STATE_CHANGED : call is null " + callId);
+                        Log.w(TAG, "CALL_STATE_CHANGED : call is null");
                         return;
                     }
+                    int newState = call.getCallState();
+                    mDeviceRuntimeService.updateAudioState(call.isRinging() && call.isIncoming());
 
                     for (Conversation conv : mConversationMap.values()) {
-                        conference = conv.getConference(callId);
+                        conference = conv.getConference(call.getCallId());
                         if (conference != null) {
                             conversation = conv;
-                            Log.w(TAG, "CALL_STATE_CHANGED : found conversation " + callId);
+                            Log.w(TAG, "CALL_STATE_CHANGED : found conversation " + call.getCallId());
                             break;
                         }
                     }
@@ -546,9 +545,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                         conversation.addConference(conference);
                     }
 
-                    conference.getParticipants().clear();
-                    conference.addParticipant(call);
-
                     Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + newState);
                     if ((call.isRinging() || newState == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
                         call.setTimestampStart(System.currentTimeMillis());
@@ -556,11 +552,14 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
                     if ((newState == SipCall.State.CURRENT && call.isIncoming())
                             || newState == SipCall.State.RINGING && call.isOutGoing()) {
-                        mAccountService.sendProfile(callId, call.getAccount());
+                        mAccountService.sendProfile(call.getCallId(), call.getAccount());
                     } else if (newState == SipCall.State.HUNGUP
                             || newState == SipCall.State.BUSY
                             || newState == SipCall.State.FAILURE
                             || newState == SipCall.State.OVER) {
+                        mNotificationService.cancelCallNotification(call.getCallId().hashCode());
+                        mDeviceRuntimeService.closeAudioState();
+
                         if (newState == SipCall.State.HUNGUP) {
                             call.setTimestampEnd(System.currentTimeMillis());
                         }
@@ -571,11 +570,10 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                             call.setTimestampEnd(System.currentTimeMillis());
                         }
 
-                        mHistoryService.insertNewEntry(new Conference(call));
+                        mHistoryService.insertNewEntry(conference);
                         conference.removeParticipant(call);
                         conversation.addHistoryCall(new HistoryCall(call));
-                        mNotificationService.cancelCallNotification(call.getCallId().hashCode());
-                        mCallService.removeCallForId(callId);
+                        mCallService.removeCallForId(call.getCallId());
                     }
                     if (conference.getParticipants().isEmpty()) {
                         conversation.removeConference(conference);
@@ -584,12 +582,9 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     setChanged();
                     mEvent = new ServiceEvent(ServiceEvent.EventType.CALL_STATE_CHANGED);
                     notifyObservers(mEvent);
-
-                    refreshConversations();
                     break;
                 case INCOMING_CALL:
-                    callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
-                    call = mCallService.getCurrentCallForId(callId);
+                    call = event.getEventInput(ServiceEvent.EventInput.CALL, SipCall.class);
                     conversation = startConversation(call.getContact());
                     conference = new Conference(call);
 
@@ -605,8 +600,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     setChanged();
                     ServiceEvent event1 = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
                     notifyObservers(event1);
-
-                    refreshConversations();
                     break;
             }
         } else if (observable instanceof ContactService && event != null) {

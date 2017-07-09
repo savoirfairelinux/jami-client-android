@@ -41,7 +41,7 @@ import cx.ring.utils.Observable;
 
 public class CallService extends Observable {
 
-    private final static String TAG = CallService.class.getName();
+    private final static String TAG = CallService.class.getSimpleName();
 
     @Inject
     @Named("DaemonExecutor")
@@ -445,14 +445,16 @@ public class CallService extends Observable {
         return call;
     }
 
-    private SipCall parseCallState(String callId, String newState, Map<String, String> callDetails) {
+    private SipCall parseCallState(String callId, String newState) {
         int callState = SipCall.stateFromString(newState);
         SipCall sipCall = currentCalls.get(callId);
         if (sipCall != null) {
             sipCall.setCallState(callState);
-            sipCall.setDetails(callDetails);
+            sipCall.setDetails(Ringservice.getCallDetails(callId).toNative());
         } else if (callState != SipCall.State.OVER) {
+            Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
             sipCall = new SipCall(callId, callDetails);
+            sipCall.setCallState(callState);
             CallContact contact = mContactService.findContact(sipCall.getNumberUri());
             String registeredName = callDetails.get("REGISTERED_NAME");
             if (registeredName != null && !registeredName.isEmpty()) {
@@ -468,32 +470,35 @@ public class CallService extends Observable {
 
         void callStateChanged(String callId, String newState, int detailCode) {
             Log.d(TAG, "call state changed: " + callId + ", " + newState + ", " + detailCode);
+            try {
+                SipCall call = parseCallState(callId, newState);
+                if (call != null) {
+                    mDeviceRuntimeService.updateAudioState(call.isRinging() && call.isIncoming());
 
-            // it is thread safe: executed in the same daemon thread than the callback
-            Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
+                    setChanged();
 
-            parseCallState(callId, newState, callDetails);
+                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CALL_STATE_CHANGED);
+                    event.addEventInput(ServiceEvent.EventInput.CALL, call);
+                    notifyObservers(event);
 
-            setChanged();
-
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CALL_STATE_CHANGED);
-            event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
-            event.addEventInput(ServiceEvent.EventInput.STATE, newState);
-            event.addEventInput(ServiceEvent.EventInput.DETAILS, callDetails);
-            event.addEventInput(ServiceEvent.EventInput.DETAIL_CODE, detailCode);
-            notifyObservers(event);
+                    if (call.getCallState() == SipCall.State.OVER) {
+                        currentCalls.remove(call.getCallId());
+                    }
+                } else {
+                    mDeviceRuntimeService.closeAudioState();
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "Exception during state change: ", e);
+            }
         }
 
         void incomingCall(String accountId, String callId, String from) {
             Log.d(TAG, "incoming call: " + accountId + ", " + callId + ", " + from);
 
-            addCall(accountId, callId, from, SipCall.Direction.INCOMING);
-
+            SipCall call = addCall(accountId, callId, from, SipCall.Direction.INCOMING);
             setChanged();
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
-            event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.FROM, from);
+            event.addEventInput(ServiceEvent.EventInput.CALL, call);
             notifyObservers(event);
         }
 
