@@ -134,7 +134,6 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
         mPreferencesService.addObserver(this);
         mAccountService.addObserver(this);
-        mContactService.addObserver(this);
         mConversationFacade.addObserver(this);
     }
 
@@ -146,7 +145,6 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
         mPreferencesService.removeObserver(this);
         mAccountService.removeObserver(this);
-        mContactService.removeObserver(this);
         mConversationFacade.removeObserver(this);
     }
 
@@ -685,7 +683,6 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         if (mAccountService.getCurrentAccount() == null) {
             return;
         }
-        Log.d(TAG, "refreshContacts");
         mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount());
     }
 
@@ -699,22 +696,13 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         if (observable instanceof AccountService && arg != null) {
             switch (arg.getEventType()) {
                 case ACCOUNTS_CHANGED:
-
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DRingService.this);
                     sharedPreferences.edit()
                             .putBoolean(OutgoingCallHandler.KEY_CACHE_HAVE_RINGACCOUNT, mAccountService.hasRingAccount())
                             .putBoolean(OutgoingCallHandler.KEY_CACHE_HAVE_SIPACCOUNT, mAccountService.hasSipAccount()).apply();
 
                     refreshContacts();
-                    return;
-            }
-        }
-
-        if (observable instanceof ContactService && arg != null) {
-            switch (arg.getEventType()) {
-                case CONTACTS_CHANGED:
-                    mConversationFacade.refreshConversations();
-                    return;
+                    break;
                 case CONTACT_ADDED:
                 case CONTACT_REMOVED:
                     refreshContacts();

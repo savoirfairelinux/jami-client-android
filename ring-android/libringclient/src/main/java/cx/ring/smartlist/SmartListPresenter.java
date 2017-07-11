@@ -354,10 +354,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         getView().setLoading(false);
     }
 
-    public void removeContact(String accountId, String contactId) {
-        String[] split = contactId.split(":");
-        if (split.length > 1 && split[0].equals("ring")) {
-            mAccountService.removeContact(accountId, split[1], false);
+    public void removeContact(Conversation conversation) {
+        Account account = mAccountService.getCurrentAccount();
+        Uri contactUri = conversation.getContact().getPhones().get(0).getNumber();
+        if (contactUri.isRingId()) {
+            mAccountService.removeContact(account.getAccountID(), contactUri.getRawRingId(), false);
         }
     }
 
