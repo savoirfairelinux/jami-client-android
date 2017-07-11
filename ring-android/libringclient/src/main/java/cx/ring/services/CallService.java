@@ -34,14 +34,17 @@ import cx.ring.daemon.StringMap;
 import cx.ring.model.CallContact;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
+import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
+import ezvcard.VCard;
 
 public class CallService extends Observable {
 
     private final static String TAG = CallService.class.getSimpleName();
+    private final static String MIME_TEXT_PLAIN = "text/plain";
 
     @Inject
     @Named("DaemonExecutor")
@@ -49,6 +52,9 @@ public class CallService extends Observable {
 
     @Inject
     ContactService mContactService;
+
+    @Inject
+    HistoryService mHistoryService;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -500,6 +506,23 @@ public class CallService extends Observable {
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
             event.addEventInput(ServiceEvent.EventInput.CALL, call);
             notifyObservers(event);
+        }
+
+        public void incomingMessage(String callId, String from, StringMap messages) {
+            SipCall sipCall = currentCalls.get(callId);
+            if (sipCall == null || messages == null) {
+                Log.w(TAG, "incomingMessage: unknown call or no message: " + callId + " " + from);
+                return;
+            }
+            if (sipCall.appendToVCard(from, messages)) {
+                mContactService.saveVCardContactData(sipCall.getContact());
+            }
+            if (messages.has_key(MIME_TEXT_PLAIN)) {
+                String msg = messages.getRaw(MIME_TEXT_PLAIN).toJavaString();
+                TextMessage txt = new TextMessage(true, msg, new Uri(from), callId, sipCall.getAccount());
+                Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
+                mHistoryService.incomingMessage(txt);
+            }
         }
 
         void recordPlaybackFilepath(String id, String filename) {
