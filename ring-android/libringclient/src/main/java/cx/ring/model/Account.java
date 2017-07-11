@@ -291,7 +291,7 @@ public class Account {
     public void addContact(String id, boolean confirmed) {
         CallContact callContact = mContacts.get(id);
         if (callContact == null) {
-            callContact = CallContact.buildRingContact(new Uri(id));
+            callContact = CallContact.buildUnknown(new Uri(id));
             mContacts.put(id, callContact);
         }
         if (confirmed) {
@@ -304,7 +304,7 @@ public class Account {
         if (banned) {
             CallContact callContact = mContacts.get(id);
             if (callContact == null) {
-                callContact = CallContact.buildRingContact(new Uri(id));
+                callContact = CallContact.buildUnknown(new Uri(id));
                 mContacts.put(id, callContact);
             }
             callContact.setStatus(CallContact.Status.BANNED);
@@ -317,7 +317,7 @@ public class Account {
         String contactId = contact.get(CONTACT_ID);
         CallContact callContact = mContacts.get(contactId);
         if (callContact == null) {
-            callContact = CallContact.buildRingContact(new Uri(contactId));
+            callContact = CallContact.buildUnknown(new Uri(contactId));
         }
         if (contact.containsKey(CONTACT_BANNED) && contact.get(CONTACT_BANNED).equals("true")) {
             callContact.setStatus(CallContact.Status.BANNED);

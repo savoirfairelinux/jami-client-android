@@ -19,7 +19,6 @@
  */
 package cx.ring.smartlist;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,7 +44,6 @@ import cx.ring.utils.NameLookupInputHandler;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
-import cx.ring.utils.Tuple;
 
 public class SmartListPresenter extends RootPresenter<SmartListView> implements Observer<ServiceEvent> {
 
@@ -68,7 +66,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     private NameLookupInputHandler mNameLookupInputHandler;
     private String mLastBlockchainQuery = null;
 
-    private ArrayList<Conversation> mConversations;
+    private final ArrayList<Conversation> mConversations = new ArrayList<>();
     private ArrayList<SmartListViewModel> mSmartListViewModels;
 
     private CallContact mCallContact;
@@ -110,9 +108,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
     public void refresh() {
         refreshConnectivity();
-        mConversationFacade.refreshConversations();
         subscribePresence();
         getView().hideSearchRow();
+        displayConversations();
     }
 
     private void refreshConnectivity() {
@@ -152,10 +150,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 mCallContact = CallContact.buildUnknown(query, null);
                 getView().displayNewContactRowWithName(query);
             } else {
-
                 Uri uri = new Uri(query);
                 if (uri.isRingId()) {
-                    mCallContact = CallContact.buildUnknown(query, null);
+                    mCallContact = CallContact.buildUnknown(uri);
                     getView().displayNewContactRowWithName(query);
                 } else {
                     getView().hideSearchRow();
@@ -224,7 +221,10 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     }
 
     public void startConversation(CallContact c) {
-        mContactService.addContact(c);
+        CallContact contact = mContactService.findContact(c.getPhones().get(0).getNumber());
+        if (contact.getUsername() == null) {
+            contact.setUsername(c.getUsername());
+        }
         getView().goToConversation(c);
     }
 
@@ -236,35 +236,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         getView().goToQRActivity();
     }
 
-    private void searchForRingIdInBlockchain() {
-        List<Conversation> conversations = mConversationFacade.getConversationsList();
-        for (Conversation conversation : conversations) {
-            CallContact contact = conversation.getContact();
-            if (contact == null) {
-                continue;
-            }
-
-            Uri contactUri = new Uri(contact.getIds().get(0));
-            if (!contactUri.isRingId()) {
-                continue;
-            }
-
-            if (contact.getPhones().isEmpty()) {
-                mAccountService.lookupName("", "", contact.getDisplayName());
-            } else {
-                Phone phone = contact.getPhones().get(0);
-                if (phone.getNumber().isRingId()) {
-                    mAccountService.lookupAddress("", "", phone.getNumber().getHost());
-                }
-            }
-        }
-    }
-
     private synchronized void displayConversations() {
-        if (mConversations == null) {
-            mConversations = new ArrayList<>();
-        }
-        mSmartListViewModels = new ArrayList<>();
+        mSmartListViewModels = new ArrayList<>(mConversations.size());
         mConversations.clear();
         mConversations.addAll(mConversationFacade.getConversationsList());
         if (!mConversations.isEmpty()) {
@@ -315,15 +288,9 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             case 0:
                 // on found
                 if (mLastBlockchainQuery != null && mLastBlockchainQuery.equals(name)) {
-                    mCallContact = CallContact.buildUnknown(name, address);
+                    mCallContact = CallContact.buildRingContact(new Uri(address), name);
                     getView().displayNewContactRowWithName(name);
                     mLastBlockchainQuery = null;
-                } else {
-                    if (name.equals("") || address.equals("")) {
-                        return;
-                    }
-                    getView().hideSearchRow();
-                    mConversationFacade.updateConversationContactWithRingId(name, address);
                 }
                 break;
             case 1:
@@ -371,8 +338,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             Uri uri = new Uri(key);
             if (uri.isRingId()) {
                 mPresenceService.subscribeBuddy(accountId, key, true);
-            } else {
-                Log.i(TAG, "Trying to subscribe to an invalid uri " + key);
             }
         }
     }
@@ -400,7 +365,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             case HISTORY_LOADED:
             case CONVERSATIONS_CHANGED:
                 displayConversations();
-                searchForRingIdInBlockchain();
                 getView().scrollToTop();
                 break;
             case USERNAME_CHANGED:
