@@ -26,10 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.NavigableMap;
-import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -163,6 +160,12 @@ public class Conversation {
             Date nd = e.getLastInteractionDate();
             if (d.compareTo(nd) < 0) {
                 d = nd;
+            }
+        }
+        Date added = mContact.getAddedDate();
+        if (added != null) {
+            if (d.compareTo(added) < 0) {
+                d = added;
             }
         }
         return d;

@@ -22,6 +22,7 @@ package cx.ring.model;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CallContact {
 
@@ -43,6 +44,7 @@ public class CallContact {
     private boolean stared = false;
     private boolean isFromSystem = false;
     private Status mStatus = Status.NO_REQUEST;
+    private Date mAddedDate = null;
 
     public CallContact(long cID) {
         this(cID, null, null, UNKNOWN_ID);
@@ -236,6 +238,13 @@ public class CallContact {
 
     public void setFromSystem(boolean fromSystem) {
         isFromSystem = fromSystem;
+    }
+
+    public void setAddedDate(Date addedDate) {
+        mAddedDate = addedDate;
+    }
+    public Date getAddedDate() {
+        return mAddedDate;
     }
 
     /**
