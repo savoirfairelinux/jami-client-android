@@ -24,19 +24,21 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 
+import cx.ring.utils.StringUtils;
+
 public class CallContact {
 
 
     public static final int UNKNOWN_ID = -1;
     public static final int DEFAULT_ID = 0;
-    public static final String PREFIX_RING = "ring:";
+    public static final String PREFIX_RING = Uri.RING_URI_SCHEME;
 
     public enum Status {BANNED, REQUEST_SENT, CONFIRMED, NO_REQUEST}
 
     private long mId;
     private String mKey;
     private String mDisplayName;
-    private String mUsername;
+    private String mUsername = null;
     private long mPhotoId;
     private final ArrayList<Phone> mPhones;
     private boolean isUser;
@@ -58,7 +60,6 @@ public class CallContact {
         mId = cID;
         mKey = k;
         mDisplayName = displayName;
-        mUsername = displayName;
         mPhones = p;
         mPhotoId = photoID;
         isUser = user;
@@ -70,7 +71,7 @@ public class CallContact {
     public static CallContact buildUnknown(Uri to) {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, 0));
-        return new CallContact(UNKNOWN_ID, null, to.getRawUriString(), 0, phones, "", false);
+        return new CallContact(UNKNOWN_ID, null, null, 0, phones, "", false);
     }
 
     public static CallContact buildUnknown(String to) {
@@ -97,10 +98,10 @@ public class CallContact {
         return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
     }
 
-    public static CallContact buildRingContact(Uri ringId) {
-        ArrayList<Phone> phones = new ArrayList<>();
-        phones.add(new Phone(ringId, 0));
-        return new CallContact(UNKNOWN_ID, null, null, 0, phones, "", false);
+    public static CallContact buildRingContact(Uri ringId, String username) {
+        CallContact contact = buildUnknown(ringId);
+        contact.setUsername(username);
+        return contact;
     }
 
     public void setContactInfos(String k, String displayName, long photo_id) {
@@ -142,11 +143,7 @@ public class CallContact {
     }
 
     public String getDisplayName() {
-        if (mDisplayName != null && !mDisplayName.isEmpty())
-            return mDisplayName;
-        if (!mPhones.isEmpty())
-            return mPhones.get(0).getNumber().getRawUriString();
-        return "";
+        return !StringUtils.isEmpty(mDisplayName) ? mDisplayName : getRingUsername();
     }
 
     public long getPhotoId() {
@@ -172,7 +169,7 @@ public class CallContact {
 
     @Override
     public String toString() {
-        return mDisplayName;
+        return getRingUsername();
     }
 
     public void setId(long id) {
@@ -256,19 +253,17 @@ public class CallContact {
         return mDisplayName == null || mDisplayName.contentEquals(mPhones.get(0).getNumber().getRawUriString());
     }
 
-    public void resetDisplayName() {
-        mDisplayName = null;
-    }
-
     public void setDisplayName(String displayName) {
         mDisplayName = displayName;
     }
 
     public String getRingUsername() {
-        if (mUsername != null && !mUsername.isEmpty()) {
+        if (!StringUtils.isEmpty(mUsername)) {
             return mUsername;
-        } else {
+        } else if (!mPhones.isEmpty()) {
             return mPhones.get(0).getNumber().getRawUriString();
+        } else {
+            return "";
         }
     }
 
@@ -280,7 +275,6 @@ public class CallContact {
         mUsername = name;
     }
 
-    //region Equals
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -292,11 +286,5 @@ public class CallContact {
         CallContact contact = (CallContact) o;
         return contact.getId() == this.getId() && contact.getDisplayName().equals(this.getDisplayName());
     }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-    //endregion
 
 }

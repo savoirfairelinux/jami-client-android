@@ -71,6 +71,7 @@ public abstract class ContactService extends Observable {
 
     private Map<Long, CallContact> mContactList;
     private Map<String, CallContact> mContactsRing;
+    private String mAccountId;
 
     protected abstract Map<Long, CallContact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
 
@@ -104,6 +105,7 @@ public abstract class ContactService extends Observable {
                     mContactList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
                 }
                 mContactsRing.clear();
+                mAccountId = account.getAccountID();
                 Map<String, CallContact> ringContacts = account.getContacts();
                 for (CallContact contact : ringContacts.values()) {
                     mContactsRing.put(contact.getPhones().get(0).getNumber().getRawUriString(), contact);
@@ -126,7 +128,8 @@ public abstract class ContactService extends Observable {
         }
 
         if (contact.getId() == CallContact.UNKNOWN_ID) {
-            mContactsRing.put(contact.getDisplayName(), contact);
+            Log.w(TAG, "addContact " + contact);
+            mContactsRing.put(contact.getPhones().get(0).getNumber().getRawUriString(), contact);
         } else {
             mContactList.put(contact.getId(), contact);
         }
@@ -143,16 +146,34 @@ public abstract class ContactService extends Observable {
             return null;
         }
 
-        for (CallContact contact : getContacts()) {
-            if (contact.hasNumber(uri)) {
-                return contact;
+        CallContact contact = mContactsRing.get(uri.getRawUriString());
+        if (contact != null) {
+            return contact;
+        }
+
+        for (CallContact c : mContactList.values()) {
+            if (c.hasNumber(uri)) {
+                return c;
             }
         }
 
         return null;
     }
 
-    public Collection<CallContact> getContacts() {
+    public boolean setRingContactName(String accountId, Uri uri, String name) {
+        if (!accountId.equals(mAccountId)) {
+            return false;
+        }
+        Log.w(TAG, "setRingContactName " + uri + " " + name);
+        CallContact contact = mContactsRing.get(uri.getRawUriString());
+        if (contact != null) {
+            contact.setUsername(name);
+            return true;
+        }
+        return false;
+    }
+
+    private Collection<CallContact> getContacts() {
         List<CallContact> contacts = new ArrayList<>(mContactList.values());
         List<CallContact> contactsRing = new ArrayList<>(mContactsRing.values());
         for (CallContact contact : contacts) {
@@ -168,20 +189,19 @@ public abstract class ContactService extends Observable {
         Iterator<CallContact> it = contacts.iterator();
         while (it.hasNext()) {
             CallContact contact = it.next();
-            if (CallContact.Status.BANNED.equals(contact.getStatus())) {
+            if (contact.isBanned()) {
                 it.remove();
             }
         }
-
         return contacts;
     }
 
-    public Collection<CallContact> getContactsConfirmed() {
-        List<CallContact> contacts = new ArrayList<>(getContacts());
+    public Collection<CallContact> getContactsDaemon() {
+        List<CallContact> contacts = new ArrayList<>(mContactsRing.values());
         Iterator<CallContact> it = contacts.iterator();
         while (it.hasNext()) {
             CallContact contact = it.next();
-            if (!CallContact.Status.CONFIRMED.equals(contact.getStatus())) {
+            if (contact.isBanned()) {
                 it.remove();
             }
         }
@@ -267,18 +287,13 @@ public abstract class ContactService extends Observable {
         if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
             CallContact contact = findContactByNumberFromSystem(searchedCanonicalNumber);
             if (contact != null) {
+                mContactList.put(contact.getId(), contact);
                 return contact;
             }
         }
 
-        CallContact contact;
-        if (isRingId) {
-            contact = CallContact.buildRingContact(uri);
-            mContactsRing.put(searchedCanonicalNumber, contact);
-        } else {
-            contact = CallContact.buildUnknown(uri);
-            mContactList.put(contact.getId(), contact);
-        }
+        CallContact contact = CallContact.buildUnknown(uri);
+        mContactsRing.put(searchedCanonicalNumber, contact);
         return contact;
     }
 
