@@ -19,7 +19,6 @@
  */
 package cx.ring.facades;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -70,17 +69,16 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     private final static String TAG = ConversationFacade.class.getName();
 
-    @Inject
-    AccountService mAccountService;
+    private final AccountService mAccountService;
 
-    private ContactService mContactService;
+    private final ContactService mContactService;
 
     @Inject
     ConferenceService mConferenceService;
 
-    private HistoryService mHistoryService;
+    private final HistoryService mHistoryService;
 
-    private CallService mCallService;
+    private final CallService mCallService;
 
     @Inject
     HardwareService mHardwareService;
@@ -91,16 +89,17 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
-    private Map<String, Conversation> mConversationMap;
+    private final Map<String, Conversation> mConversationMap = new HashMap<>();
 
-    public ConversationFacade(HistoryService historyService, CallService callService, ContactService contactService) {
-        mConversationMap = new HashMap<>();
+    public ConversationFacade(HistoryService historyService, CallService callService, ContactService contactService, AccountService accountService) {
         mHistoryService = historyService;
         mHistoryService.addObserver(this);
         mCallService = callService;
         mCallService.addObserver(this);
         mContactService = contactService;
         mContactService.addObserver(this);
+        mAccountService = accountService;
+        mAccountService.addObserver(this);
     }
 
     private Tuple<Conference, SipCall> getCall(String id) {
@@ -128,11 +127,13 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
      * @return
      */
     public Conversation getConversationByContact(CallContact contact) {
-        ArrayList<String> keys = contact.getIds();
-        for (String key : keys) {
-            Conversation conversation = mConversationMap.get(key);
-            if (conversation != null) {
-                return conversation;
+        if (contact != null) {
+            ArrayList<String> keys = contact.getIds();
+            for (String key : keys) {
+                Conversation conversation = mConversationMap.get(key);
+                if (conversation != null) {
+                    return conversation;
+                }
             }
         }
         return null;
@@ -157,9 +158,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
      * @return the started new conversation
      */
     public Conversation startConversation(CallContact contact) {
-        if (contact.isUnknown()) {
-            contact = mContactService.findContactByNumber(contact.getPhones().get(0).getNumber().getRawUriString());
-        }
         Conversation conversation = getConversationByContact(contact);
         if (conversation == null) {
             conversation = new Conversation(contact);
@@ -196,63 +194,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
      */
     public Conversation getConversationById(String id) {
         return mConversationMap.get(id);
-    }
-
-    /**
-     * (also sends CONVERSATIONS_CHANGED event)
-     *
-     * @param newDisplayName
-     * @param ringId
-     */
-    public void updateConversationContactWithRingId(String newDisplayName, String ringId) {
-
-        if (newDisplayName == null || newDisplayName.isEmpty()) {
-            return;
-        }
-
-        Uri uri = new Uri(newDisplayName);
-        if (uri.isRingId()) {
-            return;
-        }
-
-        Conversation conversation = mConversationMap.get(CallContact.PREFIX_RING + ringId);
-        if (conversation == null) {
-            return;
-        }
-
-        CallContact contact = conversation.getContact();
-        if (contact == null || contact.getDisplayName().equals(newDisplayName)) {
-            return;
-        }
-
-        if (!contact.getDisplayName().contains(ringId)) {
-            contact.setUsername(newDisplayName);
-            return;
-        }
-
-        Uri ringIdUri = new Uri(ringId);
-        contact.getPhones().clear();
-        contact.getPhones().add(new cx.ring.model.Phone(ringIdUri, 0));
-        contact.setDisplayName(newDisplayName);
-        contact.setUsername(newDisplayName);
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.USERNAME_CHANGED);
-        notifyObservers(event);
-    }
-
-    public Conversation findOrStartConversationByNumber(Uri number) {
-        if (number == null || number.isEmpty()) {
-            return null;
-        }
-
-        for (Conversation conversation : mConversationMap.values()) {
-            if (conversation.getContact().hasNumber(number)) {
-                return conversation;
-            }
-        }
-
-        return startConversation(mContactService.findContactByNumber(number.getRawUriString()));
     }
 
     public void sendTextMessage(String account, Uri to, String txt) {
@@ -294,11 +235,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     public void refreshConversations() {
         Log.d(TAG, "refreshConversations()");
-        try {
-            mHistoryService.getCallAndTextAsync();
-        } catch (SQLException e) {
-            Log.e(TAG, "unable to retrieve history calls and texts", e);
-        }
+        mHistoryService.getCallAndTextAsync();
     }
 
     public void updateTextNotifications() {
@@ -404,12 +341,12 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     }
 
 
-    private void addContactDaemon(boolean acceptAllMessages) {
+    private void addContacts(boolean acceptAllMessages) {
         ArrayList<CallContact> contacts;
         if (acceptAllMessages) {
             contacts = new ArrayList<>(mContactService.getContactsNoBanned());
         } else {
-            contacts = new ArrayList<>(mContactService.getContactsConfirmed());
+            contacts = new ArrayList<>(mContactService.getContactsDaemon());
         }
         for (CallContact contact : contacts) {
             String key = contact.getIds().get(0);
@@ -472,14 +409,45 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
+    private void searchForRingIdInBlockchain() {
+        final String currentAccountId = mAccountService.getCurrentAccount().getAccountID();
+        for (Conversation conversation : mConversationMap.values()) {
+            CallContact contact = conversation.getContact();
+            if (contact == null) {
+                continue;
+            }
+            Uri contactUri = contact.getPhones().get(0).getNumber();
+            if (!contactUri.isRingId() || !StringUtils.isEmpty(contact.getUsername())) {
+                continue;
+            }
+            boolean currentAccountChecked = false;
+            for (String accountId : conversation.getAccountsUsed()) {
+                Account account = mAccountService.getAccount(accountId);
+                if (account == null || !account.isRing()) {
+                    continue;
+                }
+                if (accountId.equals(currentAccountId)) {
+                    currentAccountChecked = true;
+                }
+                mAccountService.lookupAddress(accountId, "", contactUri.getRawRingId());
+            }
+            if (!currentAccountChecked) {
+                mAccountService.lookupAddress(currentAccountId, "", contactUri.getRawRingId());
+            }
+        }
+    }
+
     @Override
     public void update(Observable observable, ServiceEvent event) {
 
+        if (event == null) {
+            return;
+        }
+
         ServiceEvent mEvent;
-        SipCall call;
         String callId;
 
-        if (observable instanceof HistoryService && event != null) {
+        if (observable instanceof HistoryService) {
 
             switch (event.getEventType()) {
                 case INCOMING_MESSAGE:
@@ -498,7 +466,9 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     if (account != null) {
                         boolean acceptAllMessages = account.getDetailBoolean(ConfigKey.DHT_PUBLIC_IN);
 
-                        addContactDaemon(acceptAllMessages);
+                        mConversationMap.clear();
+
+                        addContacts(acceptAllMessages);
 
                         List<HistoryCall> historyCalls = (List<HistoryCall>) event.getEventInput(ServiceEvent.EventInput.HISTORY_CALLS, ArrayList.class);
                         parseHistoryCalls(historyCalls, acceptAllMessages);
@@ -507,6 +477,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                         parseHistoryTexts(historyTexts, acceptAllMessages);
 
                         aggregateHistory();
+
+                        searchForRingIdInBlockchain();
                     }
 
                     setChanged();
@@ -517,9 +489,10 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     refreshConversations();
                     break;
             }
-        } else if (observable instanceof CallService && event != null) {
+        } else if (observable instanceof CallService) {
             Conversation conversation = null;
             Conference conference = null;
+            SipCall call;
             switch (event.getEventType()) {
                 case CALL_STATE_CHANGED:
                     callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
@@ -609,11 +582,28 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     refreshConversations();
                     break;
             }
-        } else if (observable instanceof ContactService && event != null) {
+        } else if (observable instanceof ContactService) {
             switch (event.getEventType()) {
                 case CONTACTS_CHANGED:
                     refreshConversations();
                     break;
+            }
+        } else if (observable instanceof AccountService) {
+            switch (event.getEventType()) {
+                case REGISTERED_NAME_FOUND: {
+                    int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
+                    if (state != 0) {
+                        break;
+                    }
+                    String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
+                    String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                    Uri address = new Uri(event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class));
+                    if (mContactService.setRingContactName(accountId, address, name)) {
+                        setChanged();
+                        notifyObservers(new ServiceEvent(ServiceEvent.EventType.CONVERSATIONS_CHANGED));
+                    }
+                    break;
+                }
             }
         }
     }
