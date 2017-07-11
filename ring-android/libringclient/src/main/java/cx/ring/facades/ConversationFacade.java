@@ -19,7 +19,6 @@
  */
 package cx.ring.facades;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -236,11 +235,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     public void refreshConversations() {
         Log.d(TAG, "refreshConversations()");
-        try {
-            mHistoryService.getCallAndTextAsync();
-        } catch (SQLException e) {
-            Log.e(TAG, "unable to retrieve history calls and texts", e);
-        }
+        mHistoryService.getCallAndTextAsync();
     }
 
     public void updateTextNotifications() {
@@ -299,10 +294,10 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         mConversationMap.remove(id);
     }
 
-    private void parseNewMessage(TextMessage txt, String call) {
+    private void parseNewMessage(TextMessage txt) {
         Conversation conversation;
-        if (call != null && !call.isEmpty()) {
-            conversation = getConversationByCallId(call);
+        if (!StringUtils.isEmpty(txt.getCallId())) {
+            conversation = getConversationByCallId(txt.getCallId());
         } else {
             conversation = startConversation(mContactService.findContactByNumber(txt.getNumberUri().getRawUriString()));
             txt.setContact(conversation.getContact());
@@ -450,16 +445,14 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
 
         ServiceEvent mEvent;
-        String callId;
 
         if (observable instanceof HistoryService) {
 
             switch (event.getEventType()) {
                 case INCOMING_MESSAGE:
                     TextMessage txt = event.getEventInput(ServiceEvent.EventInput.MESSAGE, TextMessage.class);
-                    callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
 
-                    parseNewMessage(txt, callId);
+                    parseNewMessage(txt);
                     updateTextNotifications();
 
                     setChanged();
