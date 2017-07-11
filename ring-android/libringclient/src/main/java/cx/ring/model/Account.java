@@ -21,9 +21,12 @@
 package cx.ring.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import cx.ring.utils.StringUtils;
 
 public class Account {
 
@@ -36,8 +39,9 @@ public class Account {
     private Map<String, CallContact> mContacts = new HashMap<>();
     private Map<String, TrustRequest> mRequests = new HashMap<>();
 
-    private static final String CONTACT_BANNED = "banned";
+    private static final String CONTACT_ADDED = "added";
     private static final String CONTACT_CONFIRMED = "confirmed";
+    private static final String CONTACT_BANNED = "banned";
     private static final String CONTACT_ID = "id";
 
     public boolean registeringUsername = false;
@@ -294,6 +298,7 @@ public class Account {
             callContact = CallContact.buildRingContact(new Uri(id));
             mContacts.put(id, callContact);
         }
+        callContact.setAddedDate(new Date());
         if (confirmed) {
             callContact.setStatus(CallContact.Status.CONFIRMED);
         } else {
@@ -318,6 +323,11 @@ public class Account {
         CallContact callContact = mContacts.get(contactId);
         if (callContact == null) {
             callContact = CallContact.buildRingContact(new Uri(contactId));
+        }
+        String addedStr = contact.get(CONTACT_ADDED);
+        if (!StringUtils.isEmpty(addedStr)) {
+            long added = Long.valueOf(contact.get(CONTACT_ADDED));
+            callContact.setAddedDate(new Date(added*1000));
         }
         if (contact.containsKey(CONTACT_BANNED) && contact.get(CONTACT_BANNED).equals("true")) {
             callContact.setStatus(CallContact.Status.BANNED);
