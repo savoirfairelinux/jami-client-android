@@ -21,9 +21,15 @@
 package cx.ring.model;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
+import cx.ring.daemon.StringMap;
+import cx.ring.daemon.StringVect;
 import cx.ring.utils.Log;
+import cx.ring.utils.ProfileChunk;
+import cx.ring.utils.VCardUtils;
+import ezvcard.Ezvcard;
 
 public class SipCall {
     private static final String TAG = SipCall.class.getSimpleName();
@@ -44,6 +50,7 @@ public class SipCall {
     private int mCallState = State.NONE;
 
     private String videoSource = null;
+    private ProfileChunk mProfileChunk = null;
 
     public SipCall(String id, String account, Uri number, int direction) {
         mCallID = id;
@@ -310,5 +317,31 @@ public class SipCall {
         return mCallState == State.CURRENT;
     }
 
+    public boolean appendToVCard(String from, StringMap messages) {
+        StringVect keys = messages.keys();
+        for (int i=0, n=keys.size(); i<n; i++) {
+            String key = keys.get(i);
+            HashMap<String, String> messageKeyValue = VCardUtils.parseMimeAttributes(key);
+            String mimeType = messageKeyValue.get(VCardUtils.VCARD_KEY_MIME_TYPE);
+            if (!VCardUtils.MIME_RING_PROFILE_VCARD.equals(mimeType)) {
+                continue;
+            }
+            int part = Integer.parseInt(messageKeyValue.get(VCardUtils.VCARD_KEY_PART));
+            int nbPart = Integer.parseInt(messageKeyValue.get(VCardUtils.VCARD_KEY_OF));
+            if (null == mProfileChunk) {
+                mProfileChunk = new ProfileChunk(nbPart);
+            }
+            String content = messages.getRaw(keys.get(i)).toJavaString();
+            mProfileChunk.addPartAtIndex(content, part);
+            if (mProfileChunk.isProfileComplete()) {
+                if (mContact != null) {
+                    mContact.setVCardProfile(Ezvcard.parse(mProfileChunk.getCompleteProfile()).first());
+                }
+                mProfileChunk = null;
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

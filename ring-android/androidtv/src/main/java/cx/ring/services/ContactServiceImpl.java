@@ -389,55 +389,38 @@ public class ContactServiceImpl extends ContactService {
     }
 
     @Override
-    public Tuple<String, String> loadContactDataFromSystem(CallContact callContact) {
-
-        String contactName = callContact.getDisplayName();
-        String photoURI = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, callContact.getId()).toString();
-
-        return new Tuple<>(contactName, photoURI);
+    public void loadContactData(CallContact callContact) {
+        if (callContact.isFromSystem()) {
+            Tuple<String, byte[]> profileData = loadSystemContactData(callContact);
+            if (!TextUtils.isEmpty(profileData.first) && !profileData.first.startsWith(Uri.RING_URI_SCHEME)) {
+                callContact.setDisplayName(profileData.first);
+            }
+            if (profileData.second != null && profileData.second.length > 0) {
+                callContact.setPhoto(profileData.second);
+            }
+        } else {
+            loadVCardContactData(callContact);
+        }
     }
 
     @Override
-    public void loadContactData(CallContact callContact) {
-        Tuple<String, byte[]> profileData;
-        if (callContact.isFromSystem()) {
-            profileData = loadSystemContactData(callContact);
-        } else {
-            profileData = loadVCardContactData(callContact);
+    public void saveVCardContactData(CallContact contact) {
+        if (contact.vcard != null) {
+            String id = contact.getPhones().get(0).getNumber().getRawRingId();
+            String filename = id + ".vcf";
+            VCardUtils.savePeerProfileToDisk(contact.vcard,
+                    filename,
+                    mContext.getApplicationContext().getFilesDir());
         }
-        callContact.setDisplayName(profileData.first);
-        if (profileData.second != null && profileData.second.length > 0)
-            callContact.setPhoto(profileData.second);
     }
 
-    private Tuple<String, byte[]> loadVCardContactData(CallContact callContact) {
-        String contactName = null;
-        byte[] photoURI = null;
-        VCard vcard = null;
-
-        if (!callContact.getPhones().isEmpty()) {
-            String username = callContact.getPhones().get(0).getNumber().getHost();
-            vcard = VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), username + ".vcf");
-
-            if (vcard != null && vcard.getFormattedName() != null) {
-                if (!TextUtils.isEmpty(vcard.getFormattedName().getValue())) {
-                    contactName = vcard.getFormattedName().getValue();
-                }
-            }
+    @Override
+    public void loadVCardContactData(CallContact callContact) {
+        if (!callContact.detailsLoaded && !callContact.getPhones().isEmpty()) {
+            String username = callContact.getPhones().get(0).getNumber().getRawRingId();
+            VCard vcard = VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), username + ".vcf");
+            callContact.setVCardProfile(vcard);
         }
-        if (contactName == null) {
-            contactName = callContact.getDisplayName();
-        }
-
-        if (vcard != null && !vcard.getPhotos().isEmpty()) {
-            try {
-                photoURI = vcard.getPhotos().get(0).getData();
-            } catch (Exception e) {
-                photoURI = null;
-            }
-        }
-
-        return new Tuple<>(contactName, photoURI);
     }
 
     private Tuple<String, byte[]> loadSystemContactData(CallContact callContact) {
