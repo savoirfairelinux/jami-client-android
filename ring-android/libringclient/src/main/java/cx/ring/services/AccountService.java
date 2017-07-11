@@ -266,10 +266,11 @@ public class AccountService extends Observable {
 
         // the account order is changed
         // the current Account is now on the top of the list
-        List<String> orderedAccountIdList = new ArrayList<>();
+        final List<Account> accounts = getAccounts();
+        List<String> orderedAccountIdList = new ArrayList<>(accounts.size());
         String selectedID = mCurrentAccount.getAccountID();
         orderedAccountIdList.add(selectedID);
-        for (Account account : getAccounts()) {
+        for (Account account : accounts) {
             if (account.getAccountID().contentEquals(selectedID)) {
                 continue;
             }
@@ -364,18 +365,12 @@ public class AccountService extends Observable {
      * @param accountOrder The ordered list of account ids
      */
     public void setAccountOrder(final List<String> accountOrder) {
-
-        ArrayList<Account> newlist = new ArrayList<>(mAccountList.size());
-        String order = "";
+        StringBuilder order = new StringBuilder();
         for (String accountId : accountOrder) {
-            Account account = getAccount(accountId);
-            if (account != null) {
-                newlist.add(account);
-            }
-            order += accountId + File.separator;
+            order.append(accountId);
+            order.append(File.separator);
         }
-
-        final String orderForDaemon = order;
+        final String orderForDaemon = order.toString();
 
         FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
