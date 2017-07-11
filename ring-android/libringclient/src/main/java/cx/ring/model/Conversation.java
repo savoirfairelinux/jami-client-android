@@ -38,6 +38,7 @@ public class Conversation {
     private static final String TAG = Conversation.class.getSimpleName();
 
     private CallContact mContact;
+    private String uuid;
 
     private final Map<String, HistoryEntry> mHistory = new HashMap<>();
     private final ArrayList<Conference> mCurrentCalls;
@@ -45,14 +46,12 @@ public class Conversation {
 
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
-    private String uuid;
 
     private long mLastContactRequest = 0l;
     public static final long PERIOD = 10l * 60l * 1000l; //10 minutes
 
     public Conversation(CallContact contact) {
         setContact(contact);
-        this.uuid = contact.getIds().get(0);
         mCurrentCalls = new ArrayList<>();
     }
 
@@ -127,7 +126,8 @@ public class Conversation {
     }
 
     public void setContact(CallContact contact) {
-        this.mContact = contact;
+        mContact = contact;
+        uuid = contact.getIds().get(0);
     }
 
     public boolean isVisible() {
