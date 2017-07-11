@@ -36,6 +36,7 @@ import ezvcard.property.Uid;
 public class VCardUtils {
     public static final String TAG = VCardUtils.class.getSimpleName();
 
+    public static final String MIME_RING_PROFILE_VCARD = "x-ring/ring.profile.vcard";
     public static final String VCARD_KEY_MIME_TYPE = "mimeType";
     public static final String VCARD_KEY_PART = "part";
     public static final String VCARD_KEY_OF = "of";
@@ -52,18 +53,12 @@ public class VCardUtils {
      * @param elements the mimetype as returned by the daemon
      * @return a correct hashtable, null if invalid input
      */
-    public static HashMap<String, String> parseMimeAttributes(String[] elements) {
-
-        if (elements == null) {
-            return null;
-        }
-
+    public static HashMap<String, String> parseMimeAttributes(String mime) {
+        String[] elements = mime.split(";");
         HashMap<String, String> messageKeyValue = new HashMap<>();
-
         if (elements.length < 2) {
             return messageKeyValue;
         }
-
         messageKeyValue.put(VCARD_KEY_MIME_TYPE, elements[0]);
         String[] pairs = elements[1].split(",");
         for (String pair : pairs) {

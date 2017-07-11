@@ -159,7 +159,7 @@ public class DaemonService {
 
         @Override
         public void incomingAccountMessage(String accountId, String from, StringMap messages) {
-            mHistoryService.incomingMessage(accountId, null, from, messages);
+            mAccountCallbackHandler.incomingAccountMessage(accountId, from, messages);
         }
 
         @Override
@@ -258,7 +258,7 @@ public class DaemonService {
 
         @Override
         public void incomingMessage(String callId, String from, StringMap messages) {
-            mHistoryService.incomingMessage(null, callId, from, messages);
+            mCallbackHandler.incomingMessage(callId, from, messages);
         }
 
         @Override

@@ -43,6 +43,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.ServiceEvent;
+import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
@@ -87,6 +88,9 @@ public class AccountService extends Observable {
     @Inject
     @Named("ApplicationExecutor")
     ExecutorService mApplicationExecutor;
+
+    @Inject
+    HistoryService mHistoryService;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -313,8 +317,6 @@ public class AccountService extends Observable {
         mExecutor.submit(new Runnable() {
             @Override
             public void run() {
-                final String ringProfileVCardMime = "x-ring/ring.profile.vcard";
-
                 VCard vcard = VCardUtils.loadLocalProfileFromDisk(
                         mDeviceRuntimeService.provideFilesDir(),
                         accountId);
@@ -330,7 +332,7 @@ public class AccountService extends Observable {
                 while (i <= nbTotal) {
                     HashMap<String, String> chunk = new HashMap<>();
                     Log.d(TAG, "length vcard " + stringVCard.length() + " id " + key + " part " + i + " nbTotal " + nbTotal);
-                    String keyHashMap = ringProfileVCardMime + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
+                    String keyHashMap = VCardUtils.VCARD_KEY_MIME_TYPE + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
                     String message = stringVCard.substring(0, Math.min(VCARD_CHUNK_SIZE, stringVCard.length()));
                     chunk.put(keyHashMap, message);
                     if (stringVCard.length() > VCARD_CHUNK_SIZE) {
@@ -1305,13 +1307,8 @@ public class AccountService extends Observable {
             }
 
             Log.d(TAG, "incomingAccountMessage: " + accountId + ", " + from + ", " + msg);
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_ACCOUNT_MESSAGE);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.FROM, from);
-            event.addEventInput(ServiceEvent.EventInput.MESSAGES, msg);
-            notifyObservers(event);
+            TextMessage txt = new TextMessage(true, msg, new Uri(from), null, accountId);
+            mHistoryService.incomingMessage(txt);
         }
 
         @Override
@@ -1483,8 +1480,6 @@ public class AccountService extends Observable {
                         event.addEventInput(ServiceEvent.EventInput.FROM, request.getContactId());
                         notifyObservers(event);
                     }
-                } else {
-                    Log.d(TAG, "registeredNameFound: no TrustRequest for " +  address);
                 }
             }
 

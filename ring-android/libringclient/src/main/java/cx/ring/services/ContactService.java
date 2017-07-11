@@ -25,23 +25,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cx.ring.daemon.ConfigurationCallback;
-import cx.ring.daemon.Ringservice;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
 import cx.ring.model.Uri;
-import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
-import cx.ring.utils.Tuple;
 
 /**
  * This service handles the contacts
@@ -81,9 +76,10 @@ public abstract class ContactService extends Observable {
 
     protected abstract CallContact findContactByNumberFromSystem(String number);
 
-    public abstract Tuple<String, String> loadContactDataFromSystem(CallContact callContact);
-
     public abstract void loadContactData(CallContact callContact);
+
+    public abstract void saveVCardContactData(CallContact contact);
+    public abstract void loadVCardContactData(CallContact contact);
 
     public ContactService() {
         mContactList = new HashMap<>();
