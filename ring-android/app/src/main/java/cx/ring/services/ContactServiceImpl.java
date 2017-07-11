@@ -405,7 +405,9 @@ public class ContactServiceImpl extends ContactService {
         } else {
             profileData = loadVCardContactData(callContact);
         }
-        callContact.setDisplayName(profileData.first);
+        if (!TextUtils.isEmpty(profileData.first) && !profileData.first.startsWith(Uri.RING_URI_SCHEME)) {
+            callContact.setDisplayName(profileData.first);
+        }
         if (profileData.second != null && profileData.second.length > 0)
             callContact.setPhoto(profileData.second);
     }

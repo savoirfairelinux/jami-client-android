@@ -182,11 +182,6 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
-
-        String[] split = contact.getDisplayName().split(":");
-        if (split.length > 1) {
-            mAccountService.lookupAddress("", "", split[1]);
-        }
     }
 
     @Override
@@ -247,10 +242,6 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         int notificationId = getTextNotificationId(contact);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
-        String[] split = contact.getDisplayName().split(":");
-        if (split.length > 1) {
-            mAccountService.lookupAddress("", "", split[1]);
-        }
     }
 
     @Override
