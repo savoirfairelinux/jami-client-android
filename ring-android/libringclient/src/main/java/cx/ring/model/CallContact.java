@@ -24,6 +24,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import cx.ring.utils.StringUtils;
+import cx.ring.utils.Tuple;
+import ezvcard.VCard;
 
 public class CallContact {
 
@@ -45,6 +47,9 @@ public class CallContact {
     private boolean stared = false;
     private boolean isFromSystem = false;
     private Status mStatus = Status.NO_REQUEST;
+
+    public boolean detailsLoaded = false;
+    public VCard vcard = null;
 
     public CallContact(long cID) {
         this(cID, null, null, UNKNOWN_ID);
@@ -264,6 +269,42 @@ public class CallContact {
 
     public void setUsername(String name) {
         mUsername = name;
+    }
+
+    private static Tuple<String, byte[]> readVCardContactData(VCard vcard) {
+        String contactName = null;
+        byte[] photo = null;
+        if (vcard != null) {
+            if (!vcard.getPhotos().isEmpty()) {
+                try {
+                    photo = vcard.getPhotos().get(0).getData();
+                } catch (Exception e) {
+                    photo = null;
+                }
+            }
+            if (vcard.getFormattedName() != null) {
+                if (!StringUtils.isEmpty(vcard.getFormattedName().getValue())) {
+                    contactName = vcard.getFormattedName().getValue();
+                }
+            }
+        }
+        return new Tuple<>(contactName, photo);
+    }
+
+    public void setProfile(String name, byte[] photo) {
+        if (!StringUtils.isEmpty(name) && !name.startsWith(Uri.RING_URI_SCHEME)) {
+            setDisplayName(name);
+        }
+        if (photo != null && photo.length > 0) {
+            setPhoto(photo);
+        }
+        detailsLoaded = true;
+    }
+
+    public void setVCardProfile(VCard vcard) {
+        this.vcard = vcard;
+        Tuple<String, byte[]> info = readVCardContactData(vcard);
+        setProfile(info.first, info.second);
     }
 
     @Override

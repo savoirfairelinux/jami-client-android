@@ -294,10 +294,10 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         mConversationMap.remove(id);
     }
 
-    private void parseNewMessage(TextMessage txt, String call) {
+    private void parseNewMessage(TextMessage txt) {
         Conversation conversation;
-        if (call != null && !call.isEmpty()) {
-            conversation = getConversationByCallId(call);
+        if (!StringUtils.isEmpty(txt.getCallId())) {
+            conversation = getConversationByCallId(txt.getCallId());
         } else {
             conversation = startConversation(mContactService.findContactByNumber(txt.getNumberUri().getRawUriString()));
             txt.setContact(conversation.getContact());
@@ -445,16 +445,14 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
 
         ServiceEvent mEvent;
-        String callId;
 
         if (observable instanceof HistoryService) {
 
             switch (event.getEventType()) {
                 case INCOMING_MESSAGE:
                     TextMessage txt = event.getEventInput(ServiceEvent.EventInput.MESSAGE, TextMessage.class);
-                    callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
 
-                    parseNewMessage(txt, callId);
+                    parseNewMessage(txt);
                     updateTextNotifications();
 
                     setChanged();

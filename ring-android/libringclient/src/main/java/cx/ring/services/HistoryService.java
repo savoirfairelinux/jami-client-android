@@ -34,7 +34,6 @@ import java.util.concurrent.ExecutorService;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cx.ring.daemon.StringMap;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.HistoryCall;
@@ -43,7 +42,6 @@ import cx.ring.model.HistoryText;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
-import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 
@@ -67,10 +65,6 @@ public abstract class HistoryService extends Observable {
     protected abstract Dao<HistoryCall, Integer> getCallHistoryDao();
 
     protected abstract Dao<HistoryText, Long> getTextHistoryDao();
-
-    public abstract void saveVCard(String from, StringMap messages);
-
-    public abstract void updateVCard();
 
     public boolean insertNewEntry(Conference toInsert) {
 
@@ -233,27 +227,11 @@ public abstract class HistoryService extends Observable {
         }
     }
 
-
-    public void incomingMessage(String accountId, String callId, String from, StringMap messages) {
-        saveVCard(from, messages);
-
-        String msg = null;
-        final String textPlainMime = "text/plain";
-        if (null != messages && messages.has_key(textPlainMime)) {
-            msg = messages.getRaw(textPlainMime).toJavaString();
-        }
-        if (msg == null) {
-            return;
-        }
-
-        TextMessage txt = new TextMessage(true, msg, new Uri(from), null, accountId);
-        Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
-
+    public void incomingMessage(TextMessage txt) {
         insertNewTextMessage(txt);
 
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_MESSAGE);
         event.addEventInput(ServiceEvent.EventInput.MESSAGE, txt);
-        event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
         setChanged();
         notifyObservers(event);
     }

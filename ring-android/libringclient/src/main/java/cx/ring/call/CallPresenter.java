@@ -316,11 +316,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
             return;
         }
 
-        if (callState == SipCall.State.SEARCHING ||
-                callState == SipCall.State.OVER) {
-            mHistoryService.updateVCard();
-        }
-
         if (callState == SipCall.State.HUNGUP
                 || callState == SipCall.State.BUSY
                 || callState == SipCall.State.FAILURE

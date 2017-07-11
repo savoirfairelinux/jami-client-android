@@ -32,14 +32,10 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import cx.ring.R;
@@ -47,13 +43,10 @@ import cx.ring.model.CallContact;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
-import ezvcard.property.Photo;
 
 public class ContactDetailsTask implements Runnable {
     static final String TAG = ContactDetailsTask.class.getSimpleName();
 
-    private final WeakReference<ImageView> mImageViewWeakRef;
-    private final WeakReference<TextView> mTextViewWeakRef;
     private final CallContact mContact;
 
     private Context mContext;
@@ -74,7 +67,6 @@ public class ContactDetailsTask implements Runnable {
             if (cb == null) {
                 return;
             }
-            mImageViewWeakRef.clear();
             mCallbacks.add(cb);
         }
     }
@@ -83,28 +75,7 @@ public class ContactDetailsTask implements Runnable {
         void onDetailsLoaded(Bitmap bmp, String formattedName, String username);
     }
 
-    public ContactDetailsTask(Context context, ImageView element, CallContact item) {
-        mContact = item;
-        mContext = context;
-        mImageViewWeakRef = new WeakReference<>(element);
-        mTextViewWeakRef = new WeakReference<>(null);
-        mViewWidth = element.getWidth();
-        mViewHeight = element.getHeight();
-    }
-
-    public ContactDetailsTask(Context context, ImageView photoView, TextView nameView, CallContact item, DetailsLoadedCallback cb) {
-        mContact = item;
-        mContext = context;
-        mViewWidth = photoView.getWidth();
-        mViewHeight = photoView.getHeight();
-        mImageViewWeakRef = new WeakReference<>(photoView);
-        mTextViewWeakRef = new WeakReference<>(nameView);
-        addCallback(cb);
-    }
-
     public ContactDetailsTask(Context context, CallContact item, DetailsLoadedCallback cb) {
-        mImageViewWeakRef = new WeakReference<>(null);
-        mTextViewWeakRef = new WeakReference<>(null);
         mViewWidth = 0;
         mViewHeight = 0;
 
@@ -133,36 +104,19 @@ public class ContactDetailsTask implements Runnable {
         Log.i(TAG, "ContactDetailsTask run " + mContact.getId() + " " + mContact.getDisplayName());
 
         final Bitmap externalBMP;
-        String additionnalName = null;
-        VCard vcard = null;
 
-        if (!mContact.getPhones().isEmpty()) {
-            String username = mContact.getPhones().get(0).getNumber().getHost();
+        if (!mContact.detailsLoaded && !mContact.getPhones().isEmpty()) {
+            String username = mContact.getPhones().get(0).getNumber().getRawRingId();
             Log.d(TAG, "getPhones not empty. Username : " + username);
-            vcard = VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), username + ".vcf");
-
-            if (vcard != null && vcard.getFormattedName() != null) {
-                if (!TextUtils.isEmpty(vcard.getFormattedName().getValue())) {
-                    additionnalName = vcard.getFormattedName().getValue();
-                }
-            }
-        }
-        if (additionnalName == null) {
-            additionnalName = mContact.getDisplayName();
+            VCard vcard = VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), username + ".vcf");
+            mContact.setVCardProfile(vcard);
         }
 
-        if (vcard != null && !vcard.getPhotos().isEmpty()) {
-            Photo tmp = vcard.getPhotos().get(0);
-            Bitmap croppedBitmap;
-            if (tmp != null && tmp.getData() != null) {
-                croppedBitmap = BitmapUtils.cropImageToCircle(tmp.getData());
-            } else {
-                croppedBitmap = decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture, mViewWidth, mViewHeight);
-            }
+        byte[] photo = mContact.getPhoto();
+        if (photo != null) {
+            externalBMP = BitmapUtils.cropImageToCircle(photo);
 
-            externalBMP = croppedBitmap != null ? croppedBitmap : decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture, mViewWidth, mViewHeight);
-
-        } else {
+        } else if (mContact.getId() > 0) {
             Bitmap photoBmp;
             try {
                 photoBmp = loadContactPhoto(mContext.getContentResolver(), mContact.getId());
@@ -174,31 +128,16 @@ public class ContactDetailsTask implements Runnable {
                 photoBmp = decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture, mViewWidth, mViewHeight);
             }
 
+            mContact.setPhoto(BitmapUtils.bitmapToBytes(photoBmp));
             externalBMP = BitmapUtils.cropImageToCircle(photoBmp);
             photoBmp.recycle();
+        } else {
+            externalBMP = decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture, mViewWidth, mViewHeight);
         }
 
-        final String formattedName = additionnalName;
-        mContact.setPhoto(BitmapUtils.bitmapToBytes(externalBMP));
         synchronized (mCallbacks) {
-            final ImageView v = mImageViewWeakRef.get();
-            final TextView textView = mTextViewWeakRef.get();
-
-            mImageViewWeakRef.clear();
-            if (v == null) {
-                for (DetailsLoadedCallback cb : mCallbacks) {
-                    cb.onDetailsLoaded(externalBMP, formattedName, mContact.getRingUsername());
-                }
-            } else {
-                v.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        v.setImageBitmap(externalBMP);
-                        if (textView != null) {
-                            textView.setText(formattedName);
-                        }
-                    }
-                });
+            for (DetailsLoadedCallback cb : mCallbacks) {
+                cb.onDetailsLoaded(externalBMP, mContact.getDisplayName(), mContact.getRingUsername());
             }
             mCallbacks.clear();
         }
