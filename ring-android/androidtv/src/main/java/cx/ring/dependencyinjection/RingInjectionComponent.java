@@ -106,4 +106,5 @@ public interface RingInjectionComponent {
     void inject(RingAccountSummaryPresenter presenter);
 
     void inject(WizardPresenter presenter);
+
 }
