@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import cx.ring.call.CallFragment;
 import cx.ring.R;
@@ -54,7 +55,7 @@ public class CallActivity extends Activity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         android.util.Log.d(TAG, "IN CALL ACTIVITY !");
-        if (!ringId.equals("")) {
+        if (!TextUtils.isEmpty(ringId)) {
             Log.d(TAG, " outgoing call");
             Uri number = new Uri(ringId);
             CallFragment callFragment = CallFragment.newInstance(CallFragment.ACTION_PLACE_CALL,
