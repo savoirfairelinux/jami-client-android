@@ -52,10 +52,12 @@ import javax.inject.Named;
 
 import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
+import cx.ring.client.CallActivity;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Codec;
 import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
+import cx.ring.model.SipCall;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
@@ -135,6 +137,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         mAccountService.addObserver(this);
         mContactService.addObserver(this);
         mConversationFacade.addObserver(this);
+        mCallService.addObserver(this);
     }
 
     @Override
@@ -147,6 +150,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         mAccountService.removeObserver(this);
         mContactService.removeObserver(this);
         mConversationFacade.removeObserver(this);
+        mCallService.removeObserver(this);
     }
 
     @Override
@@ -717,6 +721,24 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 case CONTACT_ADDED:
                 case CONTACT_REMOVED:
                     refreshContacts();
+                    break;
+            }
+        }
+
+        if (observable instanceof CallService && arg != null) {
+            switch (arg.getEventType()) {
+                case INCOMING_CALL:
+                    SipCall call = arg.getEventInput(ServiceEvent.EventInput.CALL, SipCall.class);
+                    if (call != null) {
+                        Log.d(TAG, "call id : " + call.getCallId());
+                        Bundle extras = new Bundle();
+                        extras.putString("account", mAccountService.getCurrentAccount().getAccountID());
+                        extras.putString("callId", call.getCallId());
+                        startActivity(new Intent(Intent.ACTION_VIEW)
+                        .putExtras(extras)
+                        .setClass(getApplicationContext(), CallActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                    }
                     break;
             }
         }
