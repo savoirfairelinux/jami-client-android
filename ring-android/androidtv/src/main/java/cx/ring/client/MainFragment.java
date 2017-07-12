@@ -37,8 +37,8 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.facades.ConversationFacade;
-import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
 import cx.ring.services.ContactService;
@@ -55,8 +55,8 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
     private ArrayObjectAdapter mRowsAdapter;
     private DisplayMetrics mMetrics;
     private BackgroundManager mBackgroundManager;
-
     private ArrayList<Conversation> mConversations;
+
     private ArrayObjectAdapter cardRowAdapter;
 
     @Inject
@@ -69,6 +69,8 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate");
         super.onActivityCreated(savedInstanceState);
+
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         prepareBackgroundManager();
 
