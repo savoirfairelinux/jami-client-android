@@ -43,10 +43,13 @@ import android.widget.TextView;
 import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
+import cx.ring.services.AccountService;
+import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -63,18 +66,26 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
 
     private ArrayList<Conversation> mConversations;
     private ArrayObjectAdapter cardRowAdapter;
+    private Drawable mDefaultBackground;
 
     @Inject
     ConversationFacade mConversationFacade;
 
     @Inject
     ContactService mContactService;
-    private Drawable mDefaultBackground;
+
+    @Inject
+    CallService mCallService;
+
+    @Inject
+    AccountService mAccountService;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate");
         super.onActivityCreated(savedInstanceState);
+
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         prepareBackgroundManager();
 
@@ -83,6 +94,8 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
         loadRows();
 
         setupEventListeners();
+        mCallService.addObserver(this);
+        mAccountService.addObserver(this);
     }
 
     private void loadRows() {
@@ -164,7 +177,22 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
 
     @Override
     public void update(Observable observable, ServiceEvent event) {
+        Log.d(TAG, "TV EVENT : " + event.getEventType());
+        switch (event.getEventType()) {
+            case INCOMING_CALL:
+                Log.d(TAG, "TV: Someone is calling?");
+                String callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
+                if (callId != null) {
+                    Log.d(TAG, "call id : " + callId);
+                    Intent intent = new Intent(getActivity(), CallActivity.class);
+                    intent.putExtra("account", mAccountService.getCurrentAccount().getAccountID());
+                    intent.putExtra("ringId", "");
+                    intent.putExtra("callId", callId);
+                    startActivity(intent);
+                }
 
+                break;
+        }
     }
 
 

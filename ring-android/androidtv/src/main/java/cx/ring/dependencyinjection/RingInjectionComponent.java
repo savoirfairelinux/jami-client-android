@@ -24,6 +24,7 @@ import javax.inject.Singleton;
 import cx.ring.about.AboutPresenter;
 import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.application.RingApplication;
+import cx.ring.call.AndroidTVCallPresenter;
 import cx.ring.call.CallFragment;
 import cx.ring.client.CallActivity;
 import cx.ring.client.HomeActivity;
@@ -106,4 +107,6 @@ public interface RingInjectionComponent {
     void inject(RingAccountSummaryPresenter presenter);
 
     void inject(WizardPresenter presenter);
+
+    void inject(AndroidTVCallPresenter presenter);
 }
