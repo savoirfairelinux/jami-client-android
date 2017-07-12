@@ -25,7 +25,7 @@ along with this program; if not, write to the Free Software
     <string name="app_author" translatable="false">Savoir-faire Linux Inc.</string>
     <string name="app_release" translatable="false">Gaston Miron Beta 2 - %1$s</string>
     <string name="app_website_contribute" translatable="false">&lt;u>https://ring.cx/contribute&lt;/u></string>
-    <string name="gnu_license_website" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
+    <string name="gnu_license_website" translatable="false">https://www.gnu.org/licenses/gpl.html</string>
     <string name="ring_contribute_website" translatable="false">https://ring.cx/contribute</string>
 
     <string name="copyright" translatable="false">2004&#8211;2017 Savoir-faire Linux Inc.</string>

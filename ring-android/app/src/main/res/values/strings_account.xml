@@ -155,8 +155,8 @@ along with this program; if not, write to the Free Software
     <string name="account_export_end_error_title">Error</string>
     <string name="account_export_end_error_message">Couldn\'t export account. An unknown error occurred.</string>
     <string name="account_enter_password">Enter password</string>
-    <string name="account_share_body">Contact me using \'%1$s\' on the Ring distributed communication platform: http://ring.cx</string>
-    <string name="account_share_body_with_username">Contact me using \'%1$s\' or my public username \'%2$s\' on the Ring distributed communication platform: http://ring.cx</string>
+    <string name="account_share_body">Contact me using \'%1$s\' on the Ring distributed communication platform: https://ring.cx</string>
+    <string name="account_share_body_with_username">Contact me using \'%1$s\' or my public username \'%2$s\' on the Ring distributed communication platform: https://ring.cx</string>
     <string name="account_contact_me">Contact me on Ring !</string>
     <string name="update_account">Update account</string>
     <string name="account_migration">Your Ring account can be updated.\nPlease enter your password.</string>
