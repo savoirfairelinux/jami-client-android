@@ -85,7 +85,7 @@ public class CardPresenter extends Presenter {
         ((ViewHolder) viewHolder).setContact(contact);
 
         Log.d(TAG, "onBindViewHolder");
-        ((ViewHolder) viewHolder).mCardView.setTitleText(contact.getUsername());
+        ((ViewHolder) viewHolder).mCardView.setTitleText(contact.getDisplayName());
         ((ViewHolder) viewHolder).mCardView.setContentText(contact.getIds().get(0));
         ((ViewHolder) viewHolder).mCardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
         if (contact.getPhoto() == null) {

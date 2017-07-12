@@ -16,31 +16,40 @@ package cx.ring.client;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v17.leanback.app.BackgroundManager;
 import android.support.v17.leanback.app.BrowseFragment;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
+import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
-import android.support.v17.leanback.widget.OnItemViewSelectedListener;
+
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
+
 import java.util.ArrayList;
+
+import android.widget.Toast;
+
 
 import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.facades.ConversationFacade;
+import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
+import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -65,6 +74,9 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
     @Inject
     ContactService mContactService;
 
+    @Inject
+    AccountService mAccountService;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate");
@@ -79,6 +91,9 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
         loadRows();
 
         setupEventListeners();
+
+        mConversationFacade.addObserver(this);
+
     }
 
     private void loadRows() {
@@ -125,28 +140,104 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
         });
 
         setOnItemViewClickedListener(new ItemViewClickedListener());
-        setOnItemViewSelectedListener(new ItemViewSelectedListener());
     }
 
     @Override
     public void update(Observable observable, ServiceEvent event) {
+        Log.d(TAG, "TV EVENT : " + event.getEventType());
+        switch (event.getEventType()) {
+            case HISTORY_LOADED:
+            case CONVERSATIONS_CHANGED:
+                new ShowSpinnerTask().execute();
+                break;
+            case INCOMING_CALL:
+                Log.d(TAG, "TV: Someone is calling?");
+                String callId = event.getEventInput(ServiceEvent.EventInput.CALL_ID, String.class);
+                if (callId != null) {
+                    Log.d(TAG, "call id : " + callId);
+                    Intent intent = new Intent(getActivity(), CallActivity.class);
+                    intent.putExtra("account", mAccountService.getCurrentAccount().getAccountID());
+                    intent.putExtra("ringId", "");
+                    intent.putExtra("callId", callId);
+                    startActivity(intent);
+                }
 
+                break;
+        }
     }
+
 
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
-            //Do Nothing
+
+            if (item instanceof CallContact) {
+                CallContact contact = (CallContact) item;
+                Log.d(TAG, "item: " + item.toString());
+
+                Intent intent = new Intent(getActivity(), CallActivity.class);
+                intent.putExtra("account", mAccountService.getCurrentAccount().getAccountID());
+                intent.putExtra("ringId", contact.getPhones().get(0).getNumber().toString());
+                Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        getActivity(),
+                        ((ImageCardView) itemViewHolder.view).getMainImageView(),
+                        DetailsActivity.SHARED_ELEMENT_NAME).toBundle();
+                getActivity().startActivity(intent, bundle);
+            } else if (item instanceof String) {
+                if (((String) item).contains(getString(R.string.error_fragment))) {
+                    Intent intent = new Intent(getActivity(), BrowseErrorActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), ((String) item), Toast.LENGTH_SHORT)
+                            .show();
+                }
+            }
         }
     }
 
-    private final class ItemViewSelectedListener implements OnItemViewSelectedListener {
+    private class ShowSpinnerTask extends AsyncTask<Void, Void, Void> {
+        SpinnerFragment mSpinnerFragment;
+
         @Override
-        public void onItemSelected(Presenter.ViewHolder itemViewHolder, Object item,
-                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
-            //Do Nothing
+        protected void onPreExecute() {
+            mSpinnerFragment = new SpinnerFragment();
+            getFragmentManager().beginTransaction().add(R.id.main_browse_fragment, mSpinnerFragment).commit();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            getActivity().runOnUiThread(new Runnable(){
+                public void run() {
+                    getConversations();
+                }
+            });
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            getFragmentManager().beginTransaction().remove(mSpinnerFragment).commit();
         }
     }
 
+    private synchronized void getConversations() {
+        if (mConversations == null) {
+            mConversations = new ArrayList<>();
+        }
+
+        mConversations.clear();
+        mConversations.addAll(mConversationFacade.getConversationsList());
+
+        if (mConversations != null && mConversations.size() > 0) {
+            cardRowAdapter.clear();
+            for (int i = 0; i < mConversations.size(); i++) {
+                Conversation conversation = mConversations.get(i);
+                CallContact callContact = conversation.getContact();
+                mContactService.loadContactData(callContact);
+                cardRowAdapter.add(callContact);
+            }
+            mRowsAdapter.notifyArrayItemRangeChanged(0, mConversations.size());
+        }
+    }
 }
