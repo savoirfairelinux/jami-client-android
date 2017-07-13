@@ -100,8 +100,6 @@
   <string name="account_export_end_error_title">Gabim</string>
   <string name="account_export_end_error_message">S’u eksportua dot llogaria. Ndodhi një gabim i panjohur.</string>
   <string name="account_enter_password">Jepni fjalëkalimin</string>
-  <string name="account_share_body">Kontaktomëni duke përdorur \'%1$s\' në platformën Ring për komunikime të shpërndarë: http://ring.cx</string>
-  <string name="account_share_body_with_username">Kontaktomëni duke përdorur \'%1$s\' ose emrin tim publik \'%2$s\' në platformën Ring për komunikime të shpërndarë: http://ring.cx</string>
   <string name="account_contact_me">Lidhuni me mua në Ring!</string>
   <string name="update_account">Përditësoje llogarinë</string>
   <string name="account_migration">Llogaria juaj Ring mund të përditësohet.\nJu lutemi, jepni fjalëkalimin tuaj.</string>

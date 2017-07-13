@@ -23,6 +23,7 @@ along with this program; if not, write to the Free Software
 <resources>
     <!-- SipCalls -->
     <string name="call_human_state_searching">Ieškoma</string>
+    <string name="call_human_state_incoming">Gaunamasis</string>
     <string name="call_human_state_connecting">Sujungiama</string>
     <string name="call_human_state_ringing">Skambina</string>
     <string name="call_human_state_current">Kalbama</string>
@@ -31,5 +32,6 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_failure">Nepavyko</string>
     <string name="call_human_state_hold">Užlaikyta</string>
     <string name="call_human_state_over">Baigta</string>
+    <string name="call_human_state_none">Nėra</string>
     <!-- Conferences -->
 </resources>

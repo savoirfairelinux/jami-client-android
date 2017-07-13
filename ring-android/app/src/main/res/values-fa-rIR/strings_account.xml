@@ -115,8 +115,6 @@
   <string name="account_export_end_error_title">خطا</string>
   <string name="account_export_end_error_message">نمی‌توان حساب را برون‌ریخت. خطایی ناشناخته رخ داد.</string>
   <string name="account_enter_password">گذرواژه را وارد کنید</string>
-  <string name="account_share_body">با استفاده از «%1$s» روی بن‌سازهٔ ارتباطی تویع‌شدهٔ رینگ با من در تماس باشید: http://ring.cx</string>
-  <string name="account_share_body_with_username">با استفاده از «%1$s» یا نام کاربری عمومی «%2$s» روی بن‌سازهٔ ارتباطی تویع‌شدهٔ رینگ با من در تماس باشید: http://ring.cx</string>
   <string name="account_contact_me">با من روی رینگ در تماس باشید!</string>
   <string name="update_account">به‌روز رسانی حساب</string>
   <string name="account_migration">حساب کاربری شما می‌تواند به‌روزر شود.\nلطفا گذرواژه خود را وارد کنید.</string>

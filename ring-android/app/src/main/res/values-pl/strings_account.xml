@@ -115,8 +115,6 @@ Możesz edytować swoje konto później</string>
   <string name="account_export_end_error_title">Błąd</string>
   <string name="account_export_end_error_message">Nie można eksportować konta. Wystąpił nieznany błąd.</string>
   <string name="account_enter_password">Wprowadź hasło</string>
-  <string name="account_share_body">Skontaktuj się ze mną przez \'%1$s\' na rozproszonej platformie komunikacyjnej Ring: http://ring.cx</string>
-  <string name="account_share_body_with_username">Skontaktuj się ze mną przez \'%1$s\' lub moją publiczną nazwę użytkownika \'%2$s\' na rozproszonej platformie komunikacyjnej Ring: http://ring.cx</string>
   <string name="account_contact_me">Skontaktuj się ze mną na Ring !</string>
   <string name="update_account">Zaktualizuj konto</string>
   <string name="account_migration">Twoje konto Ring może zostać zaktualizowane.\nWprowadź swoje hasło</string>

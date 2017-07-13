@@ -21,6 +21,18 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Keresés</string>
+    <string name="call_human_state_incoming">Bejövő</string>
+    <string name="call_human_state_connecting">Kapcsolódás</string>
+    <string name="call_human_state_ringing">Kicsöng</string>
+    <string name="call_human_state_current">Hívásban</string>
+    <string name="call_human_state_hungup">Véget ért</string>
+    <string name="call_human_state_busy">Foglalt</string>
+    <string name="call_human_state_failure">Sikertelen</string>
     <string name="call_human_state_hold">Tartás</string>
+    <string name="call_human_state_unhold">Tartás megszüntetése</string>
+    <string name="call_human_state_over">Véget ért</string>
+    <string name="call_human_state_none">Nincs</string>
     <!-- Conferences -->
 </resources>

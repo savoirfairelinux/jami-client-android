@@ -23,6 +23,7 @@
   <string name="dialog_warn_ip2ip_account_message">Vous êtes sur le point de créer un compte SIP sans avoir fourni un nom d\'hôte correcte.
 Vous pourrez uniquement faire et recevoir des appels directs directs sur IP.
 Vous pouvez modifier le compte plus tard.</string>
+  <string name="account_type_ip2ip">Compte IP</string>
   <string name="help_ring">Un compte Ring permet de se connecter sécuritairement avec un autre interlocuteur à travers un réseau distribué</string>
   <string name="help_sip_title">Ajouter votre compte SIP</string>
   <string name="help_sip">Configurez un compte SIP existant.</string>
@@ -34,6 +35,13 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="empty_account_list">Aucun compte enregistré</string>
   <string name="normal_accounts_titles">Comptes</string>
   <string name="normal_devices_titles">Liste des appareils connus liés à votre compte Ring</string>
+  <string name="account_device_revoke">Révoquer l\'appareil</string>
+  <string name="account_device_revocation_success_title">Succès</string>
+  <string name="account_device_revocation_success">L\'appareil est maintenant révoqué !</string>
+  <string name="account_device_revocation_error_title">Impossible de révoquer l\'appareil</string>
+  <string name="account_device_revocation_wrong_password">Mauvais mot de passe.</string>
+  <string name="account_device_revocation_unknown_device">Appareil inconnu.</string>
+  <string name="account_device_revocation_error_unknown">Erreur inconnue.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Général</string>
   <string name="account_basic_category">Réglages basiques</string>
@@ -109,6 +117,7 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_contact_me">Contactez moi sur Ring !</string>
   <string name="update_account">Mise à jour du compte </string>
   <string name="ring_account">Compte Ring</string>
+  <string name="ring_account_identity">Identité</string>
   <string name="account_migration_title_dialog">Migration du compte</string>
   <string name="account_update_needed">Mise à jour nécessaire</string>
   <string name="account_cannot_be_found_title">Compte introuvable</string>
@@ -136,12 +145,17 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="register_username">Enregistrer un nom d\'utilisateur public (expérimental)</string>
   <string name="username_already_taken">Ce nom d\'utilisateur est déjà utilisé</string>
   <string name="invalid_username">Nom d\'utilisateur incorrect</string>
+  <string name="looking_for_username_availability">Vérification de la disponibilité…</string>
   <string name="account_status_connecting">En cours de connexion</string>
+  <string name="account_status_online">En ligne</string>
   <string name="account_status_unknown">Inconnu</string>
+  <string name="account_status_offline">Déconnecté</string>
   <!--Create account-->
   <string name="account_creation_home">Bienvenue sur Ring</string>
   <string name="account_creation_profile">Créer votre profil</string>
+  <string name="account_creation_ring">Créez votre compte Ring</string>
   <!--Devices-->
   <string name="enter_password">Entrer le mot de passe</string>
+  <string name="revoke_device_title">Révoquer l\'appareil</string>
   <string name="revoke_device_wait_title">Veuillez patienter</string>
 </resources>

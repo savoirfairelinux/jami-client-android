@@ -115,8 +115,6 @@ Svůj účet můžete upravit později</string>
   <string name="account_export_end_error_title">Chyba</string>
   <string name="account_export_end_error_message">Nebylo možné účet exportovat. Nastala neznámá chyba.</string>
   <string name="account_enter_password">Zadejte heslo</string>
-  <string name="account_share_body">Spojte se se mnou pomocí \'%1$s\' na Ringem šířeném komunikačním systému: http://ring.cx</string>
-  <string name="account_share_body_with_username">Spojte se se mnou pomocí \'%1$s\' nebo mého veřejného uživatelského jména \'%2$s\' na Ringem šířeném komunikačním systému: http://ring.cx</string>
   <string name="account_contact_me">Kontaktujte mě na Ring!</string>
   <string name="update_account">Aktualizovat účet</string>
   <string name="account_migration">Váš účet Ring lze aktualizovat.

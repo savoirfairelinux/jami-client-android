@@ -115,8 +115,6 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_export_end_error_title">Errore</string>
   <string name="account_export_end_error_message">Impossibile esportare l\'account. C\'è stato un errore sconosciuto.</string>
   <string name="account_enter_password">Inserire password</string>
-  <string name="account_share_body">Contattami usando \"%1$s\" sulla piattaforma di comunicazione distribuita Ring: http://ring.cx</string>
-  <string name="account_share_body_with_username">Contattami usando \"%1$s\" oppure il mio nome utente pubblico \"%2$s\" sulla piattaforma di comunicazione distribuita Ring: http://ring.cx</string>
   <string name="account_contact_me">Contattami su Ring !</string>
   <string name="update_account">Aggiorna account</string>
   <string name="account_migration">Il tuo account Ring può essere aggiornato.\nPer favore immetti la tua password. </string>

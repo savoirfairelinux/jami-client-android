@@ -7,6 +7,7 @@
   <string name="version_section">Έκδοση</string>
   <string name="no_email_app_installed">Δεν βρέθηκε κάποια εφαρμογή email, εγκαταστήστε μια για μας στείλετε μια αναφορά</string>
   <string name="email_chooser_title">Αποστολή email σε χρήση...</string>
+  <string name="description">Το Ring είναι ελεύθερο λογισμικό για παγκόσμια επικοινωνία που σέβεται τις ελευθερίες και την ιδιωτικότητα των χρηστών του.</string>
   <string name="credits">Μονάδες</string>
   <!--About dialog-->
   <!--RingActivity-->
@@ -21,6 +22,7 @@
   <string name="drawer_close">Κλείσιμο \"συρταριού\" πλοήγησης</string>
   <!--Sections-->
   <string name="menu_item_home">Αρχική</string>
+  <string name="menu_item_contact_request">Αιτήματα επαφών</string>
   <string name="menu_item_accounts">Διαχείριση Λογαριασμών</string>
   <string name="menu_item_settings">Ρυθμίσεις</string>
   <string name="menu_item_share">Μοίρασε τις επαφές μου</string>

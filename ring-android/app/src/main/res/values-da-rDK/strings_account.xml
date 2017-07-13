@@ -115,8 +115,6 @@ Du kan rette din konto senere</string>
   <string name="account_export_end_error_title">Fejl</string>
   <string name="account_export_end_error_message">Kunne ikke eksportere kontoen. En ukendt fejl opstod.</string>
   <string name="account_enter_password">Indtast kodeord</string>
-  <string name="account_share_body">Kontakt mig som \'%1$s\' på Ring, den distribuerede kommunikationsplatform: http://ring.cx</string>
-  <string name="account_share_body_with_username">Kontakt mig som \'%1$s\' eller mit offentlige brugernavn \'%2$s\' på Ring, den distribuerede kommunikationsplatform: http://ring.cx</string>
   <string name="account_contact_me">Kontakt mig på Ring !</string>
   <string name="update_account">Opdater konto</string>
   <string name="account_migration">Din Ring-konto kan opdateres.\nIndtast venligst dit kodeord.</string>

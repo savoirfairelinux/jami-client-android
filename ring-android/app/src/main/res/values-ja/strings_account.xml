@@ -115,8 +115,6 @@
   <string name="account_export_end_error_title">エラー</string>
   <string name="account_export_end_error_message">アカウントをエクスポートできませんでした。 不明なエラーが発生しました。</string>
   <string name="account_enter_password">パスワードを入力してください</string>
-  <string name="account_share_body">Ring分散コミュニケーションプラットフォーム http://ring.cx で \'%1$s\' を使用して私に連絡してください</string>
-  <string name="account_share_body_with_username">Ring分散コミュニケーションプラットフォーム http://ring.cx で \'%1$s\' または、私の公開ユーザー名 \'%2$s\' を使用して私に連絡してください</string>
   <string name="account_contact_me">Ring で私にご連絡ください !</string>
   <string name="update_account">アカウントの更新</string>
   <string name="account_migration">Ringアカウントを更新することができます。\nパスワードを入力してください。</string>

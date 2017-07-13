@@ -115,8 +115,6 @@ Du kan ändra kontot senare.</string>
   <string name="account_export_end_error_title">Fel</string>
   <string name="account_export_end_error_message">Kunde inte exportera kontot. Ett okänt fel har inträffat.</string>
   <string name="account_enter_password">Ange lösenord</string>
-  <string name="account_share_body">Kontakta mig med hjälp av \"%1$s\" på kommunikationsplattformen Ring: http://ring.cx</string>
-  <string name="account_share_body_with_username">Kontakta mig med hjälp av \"%1$s\" eller mitt officiella användarnamn \"%2$s\" på kommunikationsplattformen Ring: http://ring.cx</string>
   <string name="account_contact_me">Kontakta mig på Ring !</string>
   <string name="update_account">Uppdatera konto</string>
   <string name="account_migration">Ditt Ring-konto kan uppdateras.\nAnge ditt lösenord.</string>
