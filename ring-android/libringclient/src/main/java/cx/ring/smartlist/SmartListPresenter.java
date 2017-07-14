@@ -20,8 +20,6 @@
 package cx.ring.smartlist;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -41,7 +39,6 @@ import cx.ring.services.HistoryService;
 import cx.ring.services.PreferencesService;
 import cx.ring.services.PresenceService;
 import cx.ring.utils.NameLookupInputHandler;
-import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
@@ -114,19 +111,13 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     }
 
     private void refreshConnectivity() {
-        boolean mobileDataAllowed = mPreferencesService.getUserSettings().isAllowMobileData();
-
-        boolean isConnected = mDeviceRuntimeService.isConnectedWifi()
-                || mDeviceRuntimeService.isConnectedEthernet()
-                || mDeviceRuntimeService.isConnectedBluetooth()
-                || (mDeviceRuntimeService.isConnectedMobile() && mobileDataAllowed);
-
-        boolean isMobileAndNotAllowed = mDeviceRuntimeService.isConnectedMobile()
-                && !mobileDataAllowed;
+        boolean isConnected = mPreferencesService.hasNetworkConnected();
 
         if (isConnected) {
             getView().hideErrorPanel();
         } else {
+            boolean isMobileAndNotAllowed = mDeviceRuntimeService.isConnectedMobile()
+                    && !mPreferencesService.getUserSettings().isAllowMobileData();
             if (isMobileAndNotAllowed) {
                 getView().displayMobileDataPanel();
             } else {
