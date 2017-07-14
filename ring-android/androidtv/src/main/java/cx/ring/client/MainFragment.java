@@ -26,7 +26,6 @@ import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
-
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
@@ -35,20 +34,18 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
-
 import java.util.ArrayList;
-
-import android.widget.Toast;
-
 
 import javax.inject.Inject;
 
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingTVApplication;
+import cx.ring.call.CallActivity;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
+import cx.ring.search.SearchActivity;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.utils.Observable;
@@ -57,10 +54,6 @@ import cx.ring.utils.Observer;
 public class MainFragment extends BrowseFragment implements Observer<ServiceEvent> {
     private static final String TAG = "MainFragment";
 
-    private static final int GRID_ITEM_WIDTH = 200;
-    private static final int GRID_ITEM_HEIGHT = 200;
-
-    private Drawable mDefaultBackground;
     private ArrayObjectAdapter mRowsAdapter;
     private DisplayMetrics mMetrics;
     private BackgroundManager mBackgroundManager;
@@ -82,7 +75,7 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
         Log.i(TAG, "onCreate");
         super.onActivityCreated(savedInstanceState);
 
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingTVApplication) getActivity().getApplication()).getAndroidTVInjectionComponent().inject(this);
 
         prepareBackgroundManager();
 
@@ -93,6 +86,7 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
         setupEventListeners();
 
         mConversationFacade.addObserver(this);
+        mContactService.addObserver(this);
 
     }
 
@@ -112,13 +106,12 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
     private void prepareBackgroundManager() {
         mBackgroundManager = BackgroundManager.getInstance(getActivity());
         mBackgroundManager.attach(getActivity().getWindow());
-        mDefaultBackground = getResources().getDrawable(R.drawable.default_background);
         mMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
     }
 
     private void setupUIElements() {
-        setBadgeDrawable(getActivity().getResources().getDrawable(R.drawable.ic_logo_ring_beta2_blanc));
+        setBadgeDrawable(getActivity().getResources().getDrawable(R.drawable.ic_ring_logo_white));
         // over title
         setHeadersState(HEADERS_ENABLED);
         setHeadersTransitionOnBackEnabled(true);
@@ -146,7 +139,6 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
     public void update(Observable observable, ServiceEvent event) {
         Log.d(TAG, "TV EVENT : " + event.getEventType());
         switch (event.getEventType()) {
-            case HISTORY_LOADED:
             case CONVERSATIONS_CHANGED:
                 new ShowSpinnerTask().execute();
                 break;
@@ -182,16 +174,8 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
                         ((ImageCardView) itemViewHolder.view).getMainImageView(),
-                        DetailsActivity.SHARED_ELEMENT_NAME).toBundle();
+                        CallActivity.SHARED_ELEMENT_NAME).toBundle();
                 getActivity().startActivity(intent, bundle);
-            } else if (item instanceof String) {
-                if (((String) item).contains(getString(R.string.error_fragment))) {
-                    Intent intent = new Intent(getActivity(), BrowseErrorActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getActivity(), ((String) item), Toast.LENGTH_SHORT)
-                            .show();
-                }
             }
         }
     }
@@ -207,7 +191,7 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
 
         @Override
         protected Void doInBackground(Void... params) {
-            getActivity().runOnUiThread(new Runnable(){
+            getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     getConversations();
                 }
