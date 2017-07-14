@@ -46,7 +46,7 @@
         android:required="false" />
 
     <application
-        android:name=".application.RingApplication"
+        android:name=".application.RingTVApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:banner="@drawable/ic_launcher"
@@ -69,18 +69,21 @@
         </activity>
 
         <activity
-            android:name=".client.WizardActivity"
+            android:name=".wizard.WizardActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
 
             android:screenOrientation="fullUser"
             android:theme="@style/AppThemeBase">
         </activity>
 
-        <activity android:name="cx.ring.client.DetailsActivity" />
-        <activity android:name="cx.ring.client.BrowseErrorActivity" />
-        <activity android:name="cx.ring.client.SearchActivity" />
-        <activity android:name=".client.CallActivity"
-                  android:theme="@style/AppThemeBase"/>
+         <activity android:name="cx.ring.search.SearchActivity" />
+        <activity android:name="cx.ring.call.CallActivity"
+                  android:theme="@style/AppThemeBase">
+            <intent-filter>
+                <action android:name="cx.ring.action.CALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            </activity>
         <service
             android:name=".service.DRingService"
             android:exported="false">
