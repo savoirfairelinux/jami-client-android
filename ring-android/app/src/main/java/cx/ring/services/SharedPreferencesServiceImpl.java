@@ -32,6 +32,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import cx.ring.model.Settings;
+import cx.ring.utils.NetworkUtils;
 
 public class SharedPreferencesServiceImpl extends PreferencesService {
 
@@ -44,9 +45,6 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
 
     @Inject
     protected Context mContext;
-
-    @Inject
-    protected DeviceRuntimeService mDevideRuntimeService;
 
     private final Map<String, Set<String>> mNotifiedRequests = new HashMap<>();
 
@@ -132,10 +130,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
 
     @Override
     public boolean hasNetworkConnected() {
-        return mDevideRuntimeService.isConnectedWifi()
-                || mDevideRuntimeService.isConnectedEthernet()
-                || mDevideRuntimeService.isConnectedBluetooth()
-                || (mDevideRuntimeService.isConnectedMobile() && getUserSettings().isAllowMobileData());
+        return NetworkUtils.isConnectivityAllowed(mContext, getUserSettings().isAllowMobileData());
     }
 
 }

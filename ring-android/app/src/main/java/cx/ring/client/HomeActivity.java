@@ -534,6 +534,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     protected void onResume() {
         super.onResume();
         mAccountService.addObserver(this);
+        mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
         setVideoEnabledFromPermission();
     }
 

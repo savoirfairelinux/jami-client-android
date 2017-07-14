@@ -33,8 +33,10 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
@@ -132,6 +134,14 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
         getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver);
 
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            intentFilter.addAction(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED);
+        }
+        registerReceiver(receiver, intentFilter);
+        updateConnectivityState();
+
         mPreferencesService.addObserver(this);
         mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
@@ -156,10 +166,6 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
             parseIntent(intent);
         }
 
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(receiver, intentFilter);
-
         return START_STICKY; /* started and stopped explicitly */
     }
 
@@ -174,6 +180,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "BroadcastReceiver onReceive " + intent.getAction());
             switch (intent.getAction()) {
+                case PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED:
                 case ConnectivityManager.CONNECTIVITY_ACTION:
                 case RingApplication.DRING_CONNECTION_CHANGED: {
                     updateConnectivityState();
