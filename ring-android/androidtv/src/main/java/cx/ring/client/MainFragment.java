@@ -15,14 +15,11 @@
 package cx.ring.client;
 
 import java.util.ArrayList;
-import java.util.TimerTask;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v17.leanback.app.BackgroundManager;
 import android.support.v17.leanback.app.BrowseFragment;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
@@ -31,27 +28,24 @@ import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
-import android.support.v17.leanback.widget.OnItemViewSelectedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingTVApplication;
+import cx.ring.call.CallActivity;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
+import cx.ring.search.SearchActivity;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
@@ -89,7 +83,7 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
         Log.i(TAG, "onCreate");
         super.onActivityCreated(savedInstanceState);
 
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingTVApplication) getActivity().getApplication()).getAndroidTVInjectionComponent().inject(this);
 
         prepareBackgroundManager();
 
@@ -101,6 +95,7 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
         mCallService.addObserver(this);
         mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
+        mContactService.addObserver(this);
     }
 
     private void loadRows() {
@@ -218,16 +213,8 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
                 Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
                         ((ImageCardView) itemViewHolder.view).getMainImageView(),
-                        DetailsActivity.SHARED_ELEMENT_NAME).toBundle();
+                        CallActivity.SHARED_ELEMENT_NAME).toBundle();
                 getActivity().startActivity(intent, bundle);
-            } else if (item instanceof String) {
-                if (((String) item).indexOf(getString(R.string.error_fragment)) >= 0) {
-                    Intent intent = new Intent(getActivity(), BrowseErrorActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getActivity(), ((String) item), Toast.LENGTH_SHORT)
-                            .show();
-                }
             }
         }
     }
