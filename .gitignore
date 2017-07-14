@@ -1,3 +1,4 @@
 /ring-daemon
 env.sh
 obj/
+android-toolchain-*/
