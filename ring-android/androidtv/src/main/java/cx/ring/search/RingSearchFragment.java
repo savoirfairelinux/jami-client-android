@@ -33,8 +33,8 @@ import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 
 import cx.ring.R;
-import cx.ring.application.RingApplication;
-import cx.ring.client.CallActivity;
+import cx.ring.application.RingTVApplication;
+import cx.ring.call.CallActivity;
 import cx.ring.client.CardPresenter;
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
@@ -54,7 +54,7 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         setSearchResultProvider(this);
 
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingTVApplication) getActivity().getApplication()).getAndroidTVInjectionComponent().inject(this);
         setOnItemViewClickedListener(new ItemViewClickedListener());
     }
 
@@ -112,7 +112,7 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
-            presenter.contactClicked(((CallContact)item));
+            presenter.contactClicked(((CallContact) item));
         }
     }
 
