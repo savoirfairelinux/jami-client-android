@@ -1,0 +1,9 @@
+<resources>
+
+    <!-- Strings for xml content description of images -->
+    <string name="contact_quick_call_description">Quick Call</string>
+    <string name="contact_picture_description">Contact Picture</string>
+    <string name="dial_numeric_pad">Numeric dialpad</string>
+    <string name="contact_unblock">Unblock</string>
+
+</resources>
