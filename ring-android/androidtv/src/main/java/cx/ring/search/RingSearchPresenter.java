@@ -19,11 +19,8 @@
  */
 package cx.ring.search;
 
-import android.content.Intent;
-
 import javax.inject.Inject;
 
-import cx.ring.client.CallActivity;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.ServiceEvent;

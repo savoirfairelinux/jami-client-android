@@ -20,22 +20,14 @@
 package cx.ring.call;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
-import android.hardware.display.DisplayManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -51,23 +43,16 @@ import com.skyfishjy.library.RippleBackground;
 
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
-import cx.ring.call.CallPresenter;
-import cx.ring.call.CallView;
-import cx.ring.client.HomeActivity;
+import cx.ring.application.RingTVApplication;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
-import cx.ring.service.DRingService;
 import cx.ring.utils.CircleTransform;
-import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.KeyboardVisibilityManager;
 
 public class CallFragment extends BaseFragment<CallPresenter> implements CallView {
@@ -82,9 +67,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     public static final String KEY_CONF_ID = "confId";
     public static final String KEY_NUMBER = "number";
     public static final String KEY_HAS_VIDEO = "hasVideo";
-
-    @Inject
-    protected CallPresenter callPresenter;
 
     @BindView(R.id.contact_bubble_layout)
     protected View contactBubbleLayout;
@@ -146,21 +128,16 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     }
 
     @Override
-    protected CallPresenter createPresenter() {
-        return callPresenter;
-    }
-
-    @Override
     protected void initPresenter(CallPresenter presenter) {
         super.initPresenter(presenter);
 
         String action = getArguments().getString(KEY_ACTION);
         if (action.equals(ACTION_PLACE_CALL)) {
-            callPresenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
+            presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
                     (Uri) getArguments().getSerializable(KEY_NUMBER),
                     getArguments().getBoolean(KEY_HAS_VIDEO));
         } else if (action.equals(ACTION_GET_CALL)) {
-            callPresenter.initIncoming(getArguments().getString(KEY_CONF_ID));
+            presenter.initIncoming(getArguments().getString(KEY_CONF_ID));
         }
     }
 
@@ -173,7 +150,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         ButterKnife.bind(this, inflatedView);
 
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingTVApplication) getActivity().getApplication()).getAndroidTVInjectionComponent().inject(this);
 
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
         mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "cx.ring.onIncomingCall");
@@ -205,7 +182,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             @Override
             public void onSystemUiVisibilityChange(int visibility) {
                 boolean ui = (visibility & (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN)) == 0;
-                callPresenter.uiVisibilityChanged(ui);
+                presenter.uiVisibilityChanged(ui);
             }
         });
 
@@ -238,6 +215,12 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        presenter.configurationChanged();
     }
 
     @Override
@@ -486,16 +469,16 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @OnClick({R.id.call_hangup_btn})
     public void hangUpClicked() {
-        callPresenter.hangupCall();
+        presenter.hangupCall();
     }
 
     @OnClick(R.id.call_refuse_btn)
     public void refuseClicked() {
-        callPresenter.refuseCall();
+        presenter.refuseCall();
     }
 
     @OnClick(R.id.call_accept_btn)
     public void acceptClicked() {
-        callPresenter.acceptCall();
+        presenter.acceptCall();
     }
 }
