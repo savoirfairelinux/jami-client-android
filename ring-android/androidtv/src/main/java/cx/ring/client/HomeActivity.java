@@ -33,12 +33,15 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.application.RingTVApplication;
 import cx.ring.model.Account;
+import cx.ring.model.Codec;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
 import cx.ring.services.AccountService;
@@ -48,6 +51,7 @@ import cx.ring.services.PreferencesService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.wizard.WizardActivity;
 
 public class HomeActivity extends Activity implements Observer<ServiceEvent> {
     private static final String TAG = HomeActivity.class.getName();
@@ -81,7 +85,7 @@ public class HomeActivity extends Activity implements Observer<ServiceEvent> {
         setContentView(R.layout.activity_home);
 
         // dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        ((RingTVApplication) getApplication()).getAndroidTVInjectionComponent().inject(this);
 
         String[] toRequest = buildPermissionsToAsk();
         ArrayList<String> permissionsWeCanAsk = new ArrayList<>();
@@ -234,7 +238,7 @@ public class HomeActivity extends Activity implements Observer<ServiceEvent> {
                 //TODO: handle migration process
             }
         }
-
+        
         if (!mNoAccountOpened && mAccountService.getAccounts().isEmpty() && !mIsAskingForPermissions) {
             mNoAccountOpened = true;
             startActivityForResult(new Intent(HomeActivity.this, WizardActivity.class), WizardActivity.ACCOUNT_CREATE_REQUEST);

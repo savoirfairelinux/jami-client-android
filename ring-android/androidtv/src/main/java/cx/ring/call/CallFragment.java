@@ -20,7 +20,6 @@
 package cx.ring.call;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
@@ -30,7 +29,6 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -51,26 +49,20 @@ import com.skyfishjy.library.RippleBackground;
 
 import java.util.Locale;
 
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
-import cx.ring.call.CallPresenter;
-import cx.ring.call.CallView;
-import cx.ring.client.HomeActivity;
+import cx.ring.application.RingTVApplication;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
-import cx.ring.service.DRingService;
 import cx.ring.utils.CircleTransform;
-import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.KeyboardVisibilityManager;
 
-public class CallFragment extends BaseFragment<AndroidTVCallPresenter> implements CallView {
+public class CallFragment extends BaseFragment<CallPresenter> implements CallView {
 
     public static final String TAG = CallFragment.class.getSimpleName();
 
@@ -82,9 +74,6 @@ public class CallFragment extends BaseFragment<AndroidTVCallPresenter> implement
     public static final String KEY_CONF_ID = "confId";
     public static final String KEY_NUMBER = "number";
     public static final String KEY_HAS_VIDEO = "hasVideo";
-
-    @Inject
-    protected AndroidTVCallPresenter callPresenter;
 
     @BindView(R.id.contact_bubble_layout)
     protected View contactBubbleLayout;
@@ -128,7 +117,6 @@ public class CallFragment extends BaseFragment<AndroidTVCallPresenter> implement
     private MenuItem dialPadBtn = null;
     private MenuItem changeScreenOrientationBtn = null;
 
-    // Screen wake lock for incoming call
     private PowerManager.WakeLock mScreenWakeLock;
     private DisplayManager.DisplayListener displayListener;
 
@@ -153,21 +141,16 @@ public class CallFragment extends BaseFragment<AndroidTVCallPresenter> implement
     }
 
     @Override
-    protected AndroidTVCallPresenter createPresenter() {
-        return callPresenter;
-    }
-
-    @Override
-    protected void initPresenter(AndroidTVCallPresenter presenter) {
+    protected void initPresenter(CallPresenter presenter) {
         super.initPresenter(presenter);
 
         String action = getArguments().getString(KEY_ACTION);
         if (action.equals(ACTION_PLACE_CALL)) {
-            callPresenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
+            presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
                     (Uri) getArguments().getSerializable(KEY_NUMBER),
                     getArguments().getBoolean(KEY_HAS_VIDEO));
         } else if (action.equals(ACTION_GET_CALL)) {
-            callPresenter.initIncoming(getArguments().getString(KEY_CONF_ID));
+            presenter.initIncoming(getArguments().getString(KEY_CONF_ID));
         }
     }
 
@@ -180,7 +163,7 @@ public class CallFragment extends BaseFragment<AndroidTVCallPresenter> implement
         ButterKnife.bind(this, inflatedView);
 
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingTVApplication) getActivity().getApplication()).getAndroidTVInjectionComponent().inject(this);
 
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
         mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "cx.ring.onIncomingCall");
@@ -205,7 +188,7 @@ public class CallFragment extends BaseFragment<AndroidTVCallPresenter> implement
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            callPresenter.displayChanged();
+                            presenter.displayChanged();
                         }
                     });
                 }
@@ -232,14 +215,14 @@ public class CallFragment extends BaseFragment<AndroidTVCallPresenter> implement
         inflatedView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View parent, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                callPresenter.layoutChanged();
+                presenter.layoutChanged();
             }
         });
         inflatedView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
             @Override
             public void onSystemUiVisibilityChange(int visibility) {
                 boolean ui = (visibility & (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN)) == 0;
-                callPresenter.uiVisibilityChanged(ui);
+                presenter.uiVisibilityChanged(ui);
             }
         });
 
@@ -292,8 +275,7 @@ public class CallFragment extends BaseFragment<AndroidTVCallPresenter> implement
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        callPresenter.prepareOptionMenu();
+
     }
 
 
@@ -575,16 +557,16 @@ public class CallFragment extends BaseFragment<AndroidTVCallPresenter> implement
 
     @OnClick({R.id.call_hangup_btn})
     public void hangUpClicked() {
-        callPresenter.hangupCall();
+        presenter.hangupCall();
     }
 
     @OnClick(R.id.call_refuse_btn)
     public void refuseClicked() {
-        callPresenter.refuseCall();
+        presenter.refuseCall();
     }
 
     @OnClick(R.id.call_accept_btn)
     public void acceptClicked() {
-        callPresenter.acceptCall();
+        presenter.acceptCall();
     }
 }
