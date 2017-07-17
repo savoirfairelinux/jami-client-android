@@ -11,6 +11,7 @@
   <string name="description">Ring est un logiciel libre de communication universelle qui respecte les libertés et la vie privée de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
   <!--About dialog-->
+  <string name="developed_by">Développé par</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Pas d\'accès au réseau</string>
@@ -66,6 +67,7 @@
   <string name="ab_action_contact_add_question">Ajouter aux contacts ?</string>
   <string name="ab_action_audio_call">Appel audio</string>
   <string name="ab_action_video_call">Appel vidéo</string>
+  <string name="ab_action_change_screen_orientation">Changer l\'orientation de l\'écran</string>
   <string name="share_via">Partager</string>
   <string name="write_a_message">Ecrire un message</string>
   <string name="scan_qr">Scanner un code QR</string>
@@ -73,9 +75,9 @@
   <!--Text messages-->
   <string name="send_message">Envoyer le message</string>
   <string name="message_sending">Envoi du message</string>
-  <string name="time_just_now">A l\'instant</string>
+  <string name="time_just_now">À l\'instant</string>
   <!--MediaPreferenceFragment-->
-  <string name="permission_dialog_camera_title">Permission d\'accès au caméra</string>
+  <string name="permission_dialog_camera_title">Permission d\'accès à la caméra</string>
   <string name="permission_dialog_camera_message">Les conversation vidéo nécessitent la permission d\'utiliser l\'objectif. Merci de l\'autoriser.</string>
   <string name="ringtone_error_title">Erreur</string>
   <string name="ringtone_error_format_not_supported">Cette extension de fichier n\'est pas supportée.</string>
@@ -114,6 +116,7 @@
   <string name="profile_message_warning">Votre profil n\'est partagé qu\'avec vos contacts</string>
   <string name="open_the_gallery">Ouvrir la galerie</string>
   <string name="take_a_photo">Prendre une photo</string>
+  <string name="profile_name_hint">Entrez votre nom (facultatif)</string>
   <!--Share fragment-->
   <string name="share_message">Scannez ce QRCode avec le scanner intégré de l\'application Ring qui souhaite communiquer avec vous.</string>
   <string name="share_your_account_information">Partagez mes coordonnées</string>

@@ -2,12 +2,29 @@
 <resources>
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Törlés</string>
+  <string name="ic_advanced_menu">Speciális beállítások</string>
+  <string name="ic_blacklist_menu">Blokkolt partnerek</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Ring fiók hozzáadása</string>
+  <string name="add_sip_account_title">SIP fiók hozzáadása</string>
+  <string name="ring_account_default_name">Ring fiók: %1$s</string>
   <string name="prompt_alias">Álnév</string>
   <string name="prompt_hostname">Kiszolgálónév</string>
   <string name="prompt_username">Felhasználónév</string>
   <string name="prompt_password">Jelszó</string>
+  <string name="action_create">Fiók létrehozása</string>
   <string name="action_create_short">Regisztráció</string>
+  <string name="error_field_required">Ez a mező szükséges</string>
+  <string name="dialog_wait_create">Fiók hozzáadása</string>
+  <string name="dialog_wait_create_details">Várjon amíg az új fiókja hozzáadásra kerül…</string>
+  <string name="dialog_wait_update">Fiók frissítése</string>
+  <string name="dialog_wait_update_details">Várjon amíg a fiókja frissül…</string>
+  <string name="dialog_warn_ip2ip_account_title">Létrehoz egy üres SIP fiókot?</string>
+  <string name="dialog_warn_ip2ip_account_message">Egy üres SIP fiók készítésére készül, érvényes kiszolgálónév nélkül.
+        Csak közvetlen IP hívásokat tud majd indítani és fogadni.
+        A fiókját később is módosíthatja</string>
+  <string name="account_type_ip2ip">IP fiók</string>
+  <string name="create_sip_account">SIP fiók hozzáadása</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_message">Ez a művelet nem vonható vissza.</string>
   <!--AccountManagementFragment-->

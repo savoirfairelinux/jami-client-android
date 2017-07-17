@@ -115,6 +115,8 @@
   <string name="account_export_end_error_title">错误</string>
   <string name="account_export_end_error_message">无法导出帐户，发生未知错误。</string>
   <string name="account_enter_password">输入密码</string>
+  <string name="account_share_body">使用\'%1$s\'在Ring分布式通讯平台上联系我：https://ring.cx</string>
+  <string name="account_share_body_with_username">使用\'%1$s\'或我的公共用户名\'%2$s\'，在Ring分布式通讯平台上联系我：https://ring.cx</string>
   <string name="account_contact_me">在Ring上联系我！</string>
   <string name="update_account">更新帐户</string>
   <string name="account_migration">您的Ring帐户可以被更新。\n请输入您的密码。</string>
