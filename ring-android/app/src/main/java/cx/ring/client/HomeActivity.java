@@ -32,6 +32,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -155,6 +156,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     protected android.app.Fragment fContent;
     protected RingNavigationFragment fNavigation;
     protected ConversationFragment fConversation;
+    private final Handler mHandler = new Handler();
 
     @Override
     public void update(Observable o, ServiceEvent event) {
@@ -534,9 +536,17 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     protected void onResume() {
         super.onResume();
         mAccountService.addObserver(this);
-        mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
+        mConnectivityChecker.run();
+        mHandler.postDelayed(mConnectivityChecker, 100);
         setVideoEnabledFromPermission();
     }
+
+    private final Runnable mConnectivityChecker = new Runnable() {
+        @Override
+        public void run() {
+            mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
+        }
+    };
 
     public void startConversationTablet(Bundle bundle) {
         fConversation = new ConversationFragment();
