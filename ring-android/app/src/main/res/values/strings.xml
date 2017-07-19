@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+Copyright (C) 2004-2017 Savoir-faire Linux Inc.
                                                                     
 Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>                     
 Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -23,7 +23,7 @@ along with this program; if not, write to the Free Software
     <!-- About -->
     <string name="app_name" translatable="false">Ring</string>
     <string name="app_author" translatable="false">Savoir-faire Linux Inc.</string>
-    <string name="app_release" translatable="false">Gaston Miron Beta 2 - %1$s</string>
+    <string name="app_release" translatable="false">Liberté, Égalité, Fraternité - Version 1.0 - %1$s</string>
     <string name="app_website_contribute" translatable="false">&lt;u>https://ring.cx/contribute&lt;/u></string>
     <string name="gnu_license_website" translatable="false">https://www.gnu.org/licenses/gpl.html</string>
     <string name="ring_contribute_website" translatable="false">https://ring.cx/contribute</string>
@@ -48,7 +48,7 @@ along with this program; if not, write to the Free Software
     <!-- About dialog -->
     <string name="developed_by">Developed by</string>
     <string name="designed_by">Designed by</string>
-    <string name="credits_developer" translatable="false">Adrien Béraud\nAlexandr Sergheev\nAlexandre Lision\nAlexandre Viau\nAline Bonnet\nAndreas Traczyk\nAnthony Léonard\nCyrille Béraud\nEdric Milaret\nÉloi Bail\nEmmanuel Lepage-Vallée\nFrédéric Guimont\nGuillaume Roguez\nJulien Grossholtz\nLoïc Siret\nNicolas Jäger\nNicolas Reynaud\nOlivier Gregoire\nOlivier Soldano\nPatrick Keroulas\nPhilippe Gorley\nRomain Bertozzi\nSeva Ivanov\nSimon Désaulniers\nStepan Salenikovich\nSimon Zeni\nThibault Wittemberg\nBased on the SFLPhone project</string>
+    <string name="credits_developer" translatable="false">Adrien Béraud\nAlexandr Sergheev\nAlexandre Lision\nAlexandre Viau\nAline Bonnet\nAndreas Traczyk\nAnthony Léonard\nCyrille Béraud\nEdric Milaret\nÉloi Bail\nEmmanuel Lepage-Vallée\nFrédéric Guimont\nGuillaume Roguez\nJulien Grossholtz\nKateryna Kostiuk\nLoïc Siret\nNicolas Jäger\nNicolas Reynaud\nOlivier Gregoire\nOlivier Soldano\nPatrick Keroulas\nPhilippe Gorley\nRomain Bertozzi\nSébastien Blin\nSeva Ivanov\nSilbino Gonçalves Matado\nSimon Désaulniers\nStepan Salenikovich\nSimon Zeni\nThibault Wittemberg\nBased on the SFLPhone project</string>
     <string name="credits_designer" translatable="false">Marianne Forget</string>
 
     <!-- RingActivity -->
