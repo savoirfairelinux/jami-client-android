@@ -135,8 +135,16 @@ public class HardwareServiceImpl extends HardwareService {
     public void decodingStopped(String id, String shmPath, boolean isMixer) {
         Log.i(TAG, "decodingStopped() " + id);
         Shm shm = videoInputs.remove(id);
-        if (shm != null) {
-            stopVideo(shm.id, shm.window);
+        if (shm == null) {
+            return;
+        }
+        if (shm.window != 0) {
+            try {
+                stopVideo(shm.id, shm.window);
+            } catch (Exception e) {
+                Log.e(TAG, "decodingStopped error" + e);
+            }
+            shm.window = 0;
         }
     }
 
