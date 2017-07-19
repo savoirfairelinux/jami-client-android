@@ -157,6 +157,9 @@ public abstract class HardwareService extends Observable {
     }
 
     public void stopVideo(final String inputId, long inputWindow) {
+        if (inputWindow == 0) {
+            return;
+        }
         RingserviceJNI.unregisterVideoCallback(inputId, inputWindow);
         RingserviceJNI.releaseNativeWindow(inputWindow);
     }
