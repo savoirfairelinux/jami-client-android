@@ -37,7 +37,7 @@ public final class NetworkUtils {
 
     public static boolean isConnectivityAllowed(Context context, boolean allowMobile) {
         NetworkInfo info = NetworkUtils.getNetworkInfo(context);
-        return info.isConnected() && (info.getType() != ConnectivityManager.TYPE_MOBILE || allowMobile);
+        return info != null && info.isConnected() && (info.getType() != ConnectivityManager.TYPE_MOBILE || allowMobile);
     }
 
 }
