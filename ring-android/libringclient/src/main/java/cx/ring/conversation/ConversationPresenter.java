@@ -200,43 +200,32 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         }
         if (contact == null) {
             Uri convUri = new Uri(mConversationId);
-            if (!mPreferredNumber.isEmpty()) {
+            if (mPreferredNumber != null && !mPreferredNumber.isEmpty()) {
                 contact = mContactService.findContactByNumber(mPreferredNumber.getRawUriString());
-                if (contact == null) {
-                    contact = CallContact.buildUnknown(convUri);
-                }
             } else {
                 contact = mContactService.findContactByNumber(convUri.getRawUriString());
-                if (contact == null) {
-                    contact = CallContact.buildUnknown(convUri);
-                    mPreferredNumber = contact.getPhones().get(0).getNumber();
-                } else {
-                    mPreferredNumber = convUri;
-                }
+                mPreferredNumber = convUri;
             }
         }
         mConversation = mConversationFacade.startConversation(contact);
+        refreshConversation();
+    }
 
-        mContactService.loadContactData(mConversation.getContact());
-        byte[] photo = mConversation.getContact().getPhoto();
+    private void refreshConversation() {
+        CallContact contact = mConversation.getContact();
+        mContactService.loadContactData(contact);
+        byte[] photo = contact.getPhoto();
         if (photo != null) {
             getView().displayContactPhoto(photo);
         }
 
-        if (!mConversation.getContact().getPhones().isEmpty()) {
-            contact = mContactService.getContact(mConversation.getContact().getPhones().get(0).getNumber());
-            if (contact != null) {
-                mConversation.setContact(contact);
-            }
-            getView().displayContactName(mConversation.getContact().getDisplayName());
-        }
-
+        getView().displayContactName(contact.getDisplayName());
         getView().displayOnGoingCallPane(mConversation.getCurrentCall() == null ||
                 (mConversation.getCurrentCall().getState() != SipCall.State.RINGING &&
                         mConversation.getCurrentCall().getState() != SipCall.State.CURRENT));
 
-        if (mConversation.getContact().getPhones().size() > 1) {
-            for (Phone phone : mConversation.getContact().getPhones()) {
+        if (contact.getPhones().size() > 1) {
+            for (Phone phone : contact.getPhones()) {
                 if (phone.getNumber() != null && phone.getNumber().isRingId()) {
                     mAccountService.lookupAddress("", "", phone.getNumber().getRawUriString());
                 }
@@ -249,7 +238,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             getView().displayNumberSpinner(mConversation, mPreferredNumber);
         } else {
             getView().hideNumberSpinner();
-            mPreferredNumber = mConversation.getContact().getPhones().get(0).getNumber();
+            mPreferredNumber = contact.getPhones().get(0).getNumber();
         }
 
         getView().refreshView(mConversation, mPreferredNumber);
@@ -330,7 +319,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                 case INCOMING_MESSAGE:
                 case HISTORY_LOADED:
                 case CONVERSATIONS_CHANGED:
-                    loadConversation();
+                case CALL_STATE_CHANGED:
+                    refreshConversation();
                     break;
             }
         }
