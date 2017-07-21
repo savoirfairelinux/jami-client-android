@@ -175,7 +175,7 @@ public class AboutFragment extends BaseFragment<AboutPresenter> implements About
     //region View Methods Implementation
     @Override
     public void showRingLogo(byte[] image) {
-        mImageViewLogo.setImageResource(R.drawable.logo_ring_beta2);
+        mImageViewLogo.setImageResource(R.drawable.logo_ring);
     }
 
     @Override
