@@ -332,7 +332,7 @@ public class AccountService extends Observable {
                 while (i <= nbTotal) {
                     HashMap<String, String> chunk = new HashMap<>();
                     Log.d(TAG, "length vcard " + stringVCard.length() + " id " + key + " part " + i + " nbTotal " + nbTotal);
-                    String keyHashMap = VCardUtils.VCARD_KEY_MIME_TYPE + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
+                    String keyHashMap = VCardUtils.MIME_RING_PROFILE_VCARD + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
                     String message = stringVCard.substring(0, Math.min(VCARD_CHUNK_SIZE, stringVCard.length()));
                     chunk.put(keyHashMap, message);
                     if (stringVCard.length() > VCARD_CHUNK_SIZE) {
