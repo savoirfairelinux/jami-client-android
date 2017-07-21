@@ -156,7 +156,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     public void clickOnGoingPane() {
-        getView().goToCallActivity(mConversation.getCurrentCall().getId());
+        Conference conf = mConversation.getCurrentCall();
+        if (conf != null) {
+            getView().goToCallActivity(conf.getId());
+        } else {
+            resume();
+        }
     }
 
     public void callWithVideo(boolean video, Uri number) {
