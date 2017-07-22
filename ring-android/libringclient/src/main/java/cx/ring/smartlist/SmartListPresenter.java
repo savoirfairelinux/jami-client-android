@@ -354,7 +354,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             case REGISTRATION_STATE_CHANGED:
                 refreshConnectivity();
                 break;
-            case HISTORY_LOADED:
             case CONVERSATIONS_CHANGED:
                 displayConversations();
                 getView().scrollToTop();
