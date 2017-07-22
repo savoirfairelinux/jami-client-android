@@ -163,7 +163,13 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             conversation = new Conversation(contact);
             mConversationMap.put(contact.getIds().get(0), conversation);
 
-            setConversationVisible();
+            Account account = mAccountService.getCurrentAccount();
+            if (account != null && account.isRing()) {
+                Uri number = contact.getPhones().get(0).getNumber();
+                if (number.isRingId()) {
+                    mAccountService.lookupAddress(account.getAccountID(), "", number.getRawRingId());
+                }
+            }
 
             setChanged();
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONVERSATIONS_CHANGED);
@@ -277,17 +283,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             }
         }
         return null;
-    }
-
-    public void setConversationVisible() {
-        for (Conversation conv : mConversationMap.values()) {
-            boolean isConversationVisible = conv.isVisible();
-            String conversationKey = conv.getContact().getIds().get(0);
-            Conversation newConversation = mConversationMap.get(conversationKey);
-            if (newConversation != null) {
-                newConversation.setVisible(isConversationVisible);
-            }
-        }
     }
 
     public void removeConversation(String id) {
@@ -493,7 +488,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     }
 
                     setChanged();
-                    mEvent = new ServiceEvent(ServiceEvent.EventType.HISTORY_LOADED);
+                    mEvent = new ServiceEvent(ServiceEvent.EventType.CONVERSATIONS_CHANGED);
                     notifyObservers(mEvent);
                     break;
                 case HISTORY_MODIFIED:
@@ -604,7 +599,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     Uri address = new Uri(event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class));
                     if (mContactService.setRingContactName(accountId, address, name)) {
                         setChanged();
-                        notifyObservers(new ServiceEvent(ServiceEvent.EventType.CONVERSATIONS_CHANGED));
+                        notifyObservers(new ServiceEvent(ServiceEvent.EventType.USERNAME_CHANGED));
                     }
                     break;
                 }

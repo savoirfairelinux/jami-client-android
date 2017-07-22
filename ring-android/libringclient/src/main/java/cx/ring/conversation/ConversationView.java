@@ -31,7 +31,7 @@ public interface ConversationView {
 
     void updateView(String address, String name, int state);
 
-    void displayContactName(String contactName);
+    void displayContactName(CallContact contact);
 
     void displayOnGoingCallPane(boolean display);
 

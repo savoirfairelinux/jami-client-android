@@ -59,7 +59,6 @@ import ezvcard.property.RawProperty;
 public class ConversationFragment extends BaseFragment<ConversationPresenter> implements
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
-        ContactDetailsTask.DetailsLoadedCallback,
         ConversationView {
 
     public static final int REQ_ADD_CONTACT = 42;
@@ -107,12 +106,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                final CallContact contact = conversation.getContact();
-                if (contact != null) {
-                    new ContactDetailsTask(getActivity(), contact, ConversationFragment.this).run();
-                }
-
                 if (mAdapter != null) {
                     mAdapter.updateDataset(conversation.getAggregateHistory(), 0);
 
@@ -322,17 +315,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void onDetailsLoaded(Bitmap bmp, String formattedName, String username) {
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionBar != null && formattedName != null) {
-            actionBar.setTitle(formattedName);
-            if (username != null && !username.equals(formattedName)) {
-                actionBar.setSubtitle(username);
-            }
-        }
-    }
-
-    @Override
     protected void initPresenter(ConversationPresenter presenter) {
         super.initPresenter(presenter);
         String conversationId = getArguments().getString(KEY_CONVERSATION_ID);
@@ -364,12 +346,19 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void displayContactName(final String contactName) {
+    public void displayContactName(final CallContact contact) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(contactName);
+                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                if (actionBar == null) {
+                    return;
+                }
+                String displayName = contact.getDisplayName();
+                actionBar.setTitle(displayName);
+                String identity = contact.getRingUsername();
+                if (identity != null && !identity.equals(displayName)) {
+                    actionBar.setSubtitle(identity);
                 }
             }
         });

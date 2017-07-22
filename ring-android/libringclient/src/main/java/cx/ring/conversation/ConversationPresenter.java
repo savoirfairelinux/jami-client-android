@@ -29,7 +29,6 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.model.Phone;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
@@ -212,6 +211,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     private void refreshConversation() {
+        if (mConversation == null) {
+            return;
+        }
         CallContact contact = mConversation.getContact();
         mContactService.loadContactData(contact);
         byte[] photo = contact.getPhoto();
@@ -219,17 +221,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             getView().displayContactPhoto(photo);
         }
 
-        getView().displayContactName(contact.getDisplayName());
+        getView().displayContactName(contact);
         getView().displayOnGoingCallPane(mConversation.getCurrentCall() == null ||
                 (mConversation.getCurrentCall().getState() != SipCall.State.RINGING &&
                         mConversation.getCurrentCall().getState() != SipCall.State.CURRENT));
 
         if (contact.getPhones().size() > 1) {
-            for (Phone phone : contact.getPhones()) {
-                if (phone.getNumber() != null && phone.getNumber().isRingId()) {
-                    mAccountService.lookupAddress("", "", phone.getNumber().getRawUriString());
-                }
-            }
             if (mPreferredNumber == null || mPreferredNumber.isEmpty()) {
                 mPreferredNumber = new Uri(
                         mConversation.getLastNumberUsed(mConversation.getLastAccountUsed())
@@ -317,10 +314,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         } else if (observable instanceof ConversationFacade && arg != null) {
             switch (arg.getEventType()) {
                 case INCOMING_MESSAGE:
-                case HISTORY_LOADED:
-                case CONVERSATIONS_CHANGED:
                 case CALL_STATE_CHANGED:
+                case USERNAME_CHANGED:
                     refreshConversation();
+                    break;
+                case CONVERSATIONS_CHANGED:
+                    loadConversation();
                     break;
             }
         }
