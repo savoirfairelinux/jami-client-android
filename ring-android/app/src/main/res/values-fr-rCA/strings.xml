@@ -8,14 +8,16 @@
   <string name="copyright_section">Droits d\'auteurs</string>
   <string name="contribute_section">Contribuer</string>
   <string name="version_section">Version</string>
-  <string name="no_email_app_installed">Aucune adresse courriel n\'a étée trouvée, ajoutez en une pour nous envoyer un rapport.</string>
+  <string name="no_email_app_installed">Aucune adresse courriel n\'a été trouvée, ajoutez-en une pour nous envoyer un rapport.</string>
   <string name="no_browser_app_installed">Aucun navigateur trouvé, en installer un afin de voir cette page.</string>
   <string name="email_chooser_title">Envoyer un courriel en utilisant</string>
   <string name="website_chooser_title">Visualiser le site web en utilisant...</string>
   <string name="license">Ce logiciel est fourni \"tel quel\", sans garantie d\'aucune sorte. Pour les détails, consulter
 &lt;u&gt;GNU General Public License version 3 ou plus&lt;/u&gt;</string>
+  <string name="description">Ring est un logiciel libre de communication universel qui respecte la liberté et vie privée de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
   <!--About dialog-->
+  <string name="developed_by">Développé par</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Aucune connectivité réseau</string>
@@ -47,6 +49,8 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Appel entrant manqué</string>
+  <string name="notif_missed_outgoing_call">Appel sortant manqué</string>
   <string name="notif_incoming_call_title">Appel entrant de %1$s</string>
   <string name="notif_incoming_call">Appel entrant</string>
   <string name="notif_outgoing_call_title">Appel sortant à %1$s</string>
@@ -100,6 +104,7 @@
   <string name="conversation_action_copy_peer_number">Copier le numéro</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copié sur le tableau de bord</string>
   <string name="conversation_action_select_peer_number">Sélectionner un numéro de téléphone</string>
+  <string name="conversation_action_block_this">Bloquer ce contact</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Ajouter %1$s ?</string>
   <string name="prompt_new_password">Nouveau mot de passe</string>
@@ -124,6 +129,11 @@
   <string name="generic_error_migration">Erreur</string>
   <string name="generic_error_migration_message">Une erreur s\'est produite durant la migration.</string>
   <!--Pending contact requests-->
+  <string name="accept">Accepter</string>
+  <string name="refuse">Refuser</string>
+  <string name="block">Bloquer</string>
+  <string name="contact_request_title">Nouvelle demande de contact</string>
+  <string name="contact_request_msg">Vous avez %1$s demande de contacts</string>
   <!--Send contact requests-->
   <!--Blacklist-->
   <!--Smartlist-->
