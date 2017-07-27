@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_36f2e59a",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/client/SearchFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-07-27T20:23:49Z",
+      "side": 1,
+      "message": "this field should not be used. You have the contact passed in the parameter Object item, just cast it and get the ring id.\n\n((CallContact)item).getIds().get(0)) or getPhones().get(0).getNumber()\n\nI know the API to get the ringid is awful, we will amend it at some point I think",
+      "range": {
+        "startLine": 161,
+        "startChar": 38,
+        "endLine": 161,
+        "endChar": 45
+      },
+      "revId": "9b7a68f87f4ee43a49b56b4054387b821f93b1f7",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
