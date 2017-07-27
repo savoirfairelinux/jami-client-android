@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_969e5155",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/client/SearchFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-07-27T19:37:28Z",
+      "side": 1,
+      "message": "this should be handled by a presenter (see SmartListFragment for example)",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 40
+      },
+      "revId": "c3ffbd9dc7dfa7cfa3f221140688bf2e3ae57cbc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_d69f394f",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/client/SearchFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-07-27T19:37:28Z",
+      "side": 1,
+      "message": "I have added this because I understood why the view was not flushed properly in the first place. If you delete your query text, the last entry text.length \u003e 2 is still displayed",
+      "range": {
+        "startLine": 147,
+        "startChar": 16,
+        "endLine": 149,
+        "endChar": 17
+      },
+      "revId": "c3ffbd9dc7dfa7cfa3f221140688bf2e3ae57cbc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_f6a23d99",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/client/SearchFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-07-27T19:37:28Z",
+      "side": 1,
+      "message": "This is not working properly, and not very \u00272017\u0027. This should be moved in a presenter also",
+      "range": {
+        "startLine": 164,
+        "startChar": 8,
+        "endLine": 188,
+        "endChar": 60
+      },
+      "revId": "c3ffbd9dc7dfa7cfa3f221140688bf2e3ae57cbc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
