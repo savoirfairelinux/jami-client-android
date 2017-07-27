@@ -136,6 +136,8 @@
   <string name="accept">Принять</string>
   <string name="refuse">Отклонить</string>
   <string name="block">Заблокировать</string>
+  <string name="contact_request_title">Новый запрос на добавление в контакты</string>
+  <string name="contact_request_msg">У вас %1$s запросов на добавление в контакты</string>
   <string name="contact_request_account">Для %1$s</string>
   <string name="no_requests">0 запросов на добавление в контакты</string>
   <!--Send contact requests-->

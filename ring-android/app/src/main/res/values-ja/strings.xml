@@ -133,6 +133,8 @@
   <string name="accept">受け入れ</string>
   <string name="refuse">拒否</string>
   <string name="block">ブロック</string>
+  <string name="contact_request_title">新しい連絡先リクエスト</string>
+  <string name="contact_request_msg">%1$s の連絡先リクエストがあります</string>
   <string name="contact_request_account">%1$s に</string>
   <string name="no_requests">0 の連絡先リクエスト</string>
   <!--Send contact requests-->

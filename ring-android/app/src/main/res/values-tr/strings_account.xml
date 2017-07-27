@@ -115,6 +115,8 @@ Hesabınızı daha sonra düzenleyebilirsiniz</string>
   <string name="account_export_end_error_title">Hata</string>
   <string name="account_export_end_error_message">Hesap dışa aktarılamadı. Bilinmeyen bir hata oluştu.</string>
   <string name="account_enter_password">Parolayı gir</string>
+  <string name="account_share_body">Ring dağıtık iletişim platformunda \'%1$s\' kullanarak benimle iletişime geç: https://ring.cx</string>
+  <string name="account_share_body_with_username">Ring dağıtık iletişim platformunda \'%1$s\' veya herkese açık kullanıcı adımı \'%2$s\' kullanarak benimle iletişime geç: https://ring.cx</string>
   <string name="account_contact_me">Benimle Ring üzerinden iletişime geç</string>
   <string name="update_account">Hesabı güncelle</string>
   <string name="account_migration">Ring hesabınız güncellenebilir.\nParolanızı girin.</string>

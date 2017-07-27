@@ -14,8 +14,11 @@
   <string name="website_chooser_title">Darstellung der Homepage mit...</string>
   <string name="license">Diese Software wird \"wie sie ist\" ohne Gewährleistung irgendwelcher Art zur Verfügung gestellt. Details finden Sie unter
 &lt;u&gt;GNU General Public License Version 3 oder später&lt;/u&gt;</string>
+  <string name="description">Ring ist Freie Software für universelle Kommunikation, die die Freiheiten und die Privatsphäre ihrer Nutzer respektiert.</string>
   <string name="credits">Abspann</string>
   <!--About dialog-->
+  <string name="developed_by">Entwickelt von</string>
+  <string name="designed_by">Entworfen von</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Keine Netzwerkkonnektivität</string>
@@ -28,6 +31,7 @@
   <string name="drawer_close">Navigationsfenster schließen</string>
   <!--Sections-->
   <string name="menu_item_home">Home</string>
+  <string name="menu_item_contact_request">Kontaktanfragen</string>
   <string name="menu_item_accounts">Konten verwalten</string>
   <string name="menu_item_settings">Einstellungen</string>
   <string name="menu_item_share">Teile meine RING-ID</string>
@@ -47,6 +51,8 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Verpasster eingehender Anruf</string>
+  <string name="notif_missed_outgoing_call">Verpasster ausgehender Anruf</string>
   <string name="notif_incoming_call_title">Eingehender Anruf von %1$s</string>
   <string name="notif_incoming_call">Eingehender Anruf</string>
   <string name="notif_outgoing_call_title">Ausgehende Anruf zu %1$s</string>
@@ -100,6 +106,7 @@
   <string name="conversation_action_copy_peer_number">Nummer kopieren</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s wurde in die Zwischenablage kopiert.</string>
   <string name="conversation_action_select_peer_number">Nummer auswählen</string>
+  <string name="conversation_action_block_this">Diesen Kontakt blockieren</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Fügen %1$s hinzu?</string>
   <string name="prompt_new_password">Neues Passwort</string>
@@ -124,7 +131,19 @@
   <string name="generic_error_migration">Fehler</string>
   <string name="generic_error_migration_message">Ein Fehler ist während der Datenübernahme aufgetreten</string>
   <!--Pending contact requests-->
+  <string name="accept">Akzeptieren</string>
+  <string name="refuse">Ablehnen</string>
+  <string name="block">Blockieren</string>
+  <string name="contact_request_title">Neue Kontaktanfrage</string>
+  <string name="contact_request_msg">Du hast %1$s Kontaktanfragen</string>
+  <string name="no_requests">0 Kontakanfragen</string>
   <!--Send contact requests-->
+  <string name="send_request_button">Senden</string>
+  <string name="send_request_title">Eine Kontaktanfrage verschicken</string>
+  <string name="send_request_msg">Du musst eine Kontaktanfrage stellen um mit diesem Nutzer zu kommunizieren. So lange dein Kontakt die Anfrage nicht akzeptiert hat, kannst du ihm zwar Nachrichten senden, aber er kann sie nicht lesen.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 blockierte Kontakte</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Keine Kontaktanfrage verschickt</string>
+  <string name="contact_request_sent">Kontaktanfrage verschickt</string>
 </resources>

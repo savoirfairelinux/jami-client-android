@@ -135,13 +135,16 @@
   <string name="refuse">Geri Çevir</string>
   <string name="block">Engelleme</string>
   <string name="contact_request_title">Yeni letişim isteği</string>
+  <string name="contact_request_msg">%1$s iletişim isteğiniz var</string>
   <string name="contact_request_account">%1$s için</string>
   <string name="no_requests">0 iletişim isteği</string>
   <!--Send contact requests-->
   <string name="send_request_button">Gönder</string>
   <string name="send_request_title">Bir ileteşem isteği gönder</string>
+  <string name="send_request_msg">Bu kullanıcıyla iletişime geçmek için iletişim isteği göndermelisiniz. Kişiniz bu isteği kabul etmediği sürece, siz ona ileti gönderebilirsiniz fakat o bunları okuyamaz.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 engellenmiş kişi</string>
   <!--Smartlist-->
   <string name="no_contact_request">Gönderilmiş bir iletişim isteği yok</string>
+  <string name="contact_request_sent">İletişim isteği gönderildi</string>
 </resources>
