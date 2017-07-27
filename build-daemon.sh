@@ -149,6 +149,7 @@ echo "Building tools"
 pushd extras/tools
 ./bootstrap
 make $MAKEFLAGS
+make .pkg-config
 make .gas
 popd
 
