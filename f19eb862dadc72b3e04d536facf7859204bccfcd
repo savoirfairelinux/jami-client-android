@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_961131af",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/client/MainFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-07-27T21:04:50Z",
+      "side": 1,
+      "message": "This should be done in onResume, and calls to removeObserver are missing (in onPause)\n\nRight now, if we put the app in background, and call the TV, the code in the MainFragment gets called and present the CallActivity. It should be the DRingService that gets the input and present a notification or the CallActivity",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 42
+      },
+      "revId": "f19eb862dadc72b3e04d536facf7859204bccfcd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_5617a9a3",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/client/MainFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-07-27T21:04:50Z",
+      "side": 1,
+      "message": "INCOMING_CALL event contains the call not the callId:\n\nSipCall call \u003d event.getEventInput(ServiceEvent.EventInput.CALL, SipCall.class);\n                if (call !\u003d null) {\n                    Log.d(TAG, \"call id : \" + call.getCallId());\n                    Intent intent \u003d new Intent(getActivity(), CallActivity.class);\n                    intent.putExtra(\"account\", mAccountService.getCurrentAccount().getAccountID());\n                    intent.putExtra(\"ringId\", \"\");\n                    intent.putExtra(\"callId\", call.getCallId());\n                    startActivity(intent);\n                }",
+      "range": {
+        "startLine": 183,
+        "startChar": 16,
+        "endLine": 192,
+        "endChar": 17
+      },
+      "revId": "f19eb862dadc72b3e04d536facf7859204bccfcd",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
