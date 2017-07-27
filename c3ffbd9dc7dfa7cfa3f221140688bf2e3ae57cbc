@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "ba3841fe_56bb29c4",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/client/Contact.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-07-27T19:47:11Z",
+      "side": 1,
+      "message": "This model already exists in Ring, and should be mutualized -\u003e CallContact",
+      "revId": "c3ffbd9dc7dfa7cfa3f221140688bf2e3ae57cbc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_b6b0b5de",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/client/MainFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-07-27T19:47:11Z",
+      "side": 1,
+      "message": "This is added but not used. And it does not seem linked to the searchfrag",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 5
+      },
+      "revId": "c3ffbd9dc7dfa7cfa3f221140688bf2e3ae57cbc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3841fe_969e5155",
         "filename": "ring-android/androidtv/src/main/java/cx/ring/client/SearchFragment.java",
         "patchSetId": 4
