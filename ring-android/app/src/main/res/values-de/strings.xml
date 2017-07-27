@@ -134,6 +134,8 @@
   <string name="accept">Akzeptieren</string>
   <string name="refuse">Verweigern</string>
   <string name="block">Sperren</string>
+  <string name="contact_request_title">Neue Kontaktanfrage</string>
+  <string name="contact_request_msg">Du hast %1$s Kontaktanfragen</string>
   <string name="contact_request_account">Für %1$s</string>
   <string name="no_requests">0 Kontaktanfragen</string>
   <!--Send contact requests-->

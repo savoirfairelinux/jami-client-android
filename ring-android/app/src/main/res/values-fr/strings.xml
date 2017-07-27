@@ -1,13 +1,17 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Commentaire</string>
+  <string name="report">@lt;u&gt;Envoyer nous un mail&lt;/u&gt;</string>
   <string name="section_license">Licence</string>
   <string name="sponsor_section">Ring est un logiciel libre développé et soutenu par</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuer</string>
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Application d\'envoi de courriel non-trouvée, installez-en un et renvoyez-nous votre rapport</string>
+  <string name="no_browser_app_installed">Aucun navigateur internet trouvé, installez en un pour afficher cette page</string>
   <string name="email_chooser_title">Envoi du courriel à travers ...</string>
+  <string name="website_chooser_title">Voir le site web avec...</string>
   <string name="description">Ring est un logiciel libre de communication universelle qui respecte les libertés et la vie privée de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
   <!--About dialog-->
@@ -15,7 +19,7 @@
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Pas d\'accès au réseau</string>
-  <string name="error_mobile_network_available_but_disabled">SVP, autorisez l\'accès au réseau cellulaire dans les options de configuration</string>
+  <string name="error_mobile_network_available_but_disabled">Autorisez l\'accès au réseau cellulaire dans les options de configuration s\'il vous plaît</string>
   <!--AB menus-->
   <string name="ab_action_chat">Messagerie texte</string>
   <!--Left Drawer-->
@@ -119,14 +123,23 @@
   <string name="profile_name_hint">Entrez votre nom (facultatif)</string>
   <!--Share fragment-->
   <string name="share_message">Scannez ce QRCode avec le scanner intégré de l\'application Ring qui souhaite communiquer avec vous.</string>
+  <string name="share_message_no_account">Sélectionner le compte à partager.</string>
   <string name="share_your_account_information">Partagez mes coordonnées</string>
   <string name="generic_error_migration">Erreur</string>
   <!--Pending contact requests-->
   <string name="accept">Accepter</string>
   <string name="refuse">Refuser</string>
   <string name="block">Bloquer</string>
+  <string name="contact_request_title">Invitation</string>
+  <string name="contact_request_msg">Vous avez %1$s demande(s) d\'ajout</string>
+  <string name="no_requests">Aucune demande de contact</string>
   <!--Send contact requests-->
   <string name="send_request_button">Envoyer</string>
+  <string name="send_request_title">Envoyer une invitation</string>
+  <string name="send_request_msg">Pour communiquer avec cet utilisateur il est nécessaire de lui envoyer une invitation. Tant que cette personne n\'a pas accepté votre invitation, vous pouvez lui envoyer des messages mais ils ne pourront être lu.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">Aucun contact bloqué</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Aucune invitation envoyée</string>
+  <string name="contact_request_sent">Invitation envoyée</string>
 </resources>

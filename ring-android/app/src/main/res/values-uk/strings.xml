@@ -1,14 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Відгук</string>
+  <string name="report">&lt;u&gt;Надішліть нам email&lt;/u&gt;</string>
+  <string name="section_license">Ліцензія</string>
   <string name="sponsor_section">Ring є безкоштовним програмним забезпеченням, що розроблене та пдітримується</string>
   <string name="copyright_section">Авторське право</string>
-  <string name="contribute_section">Співробітничати</string>
+  <string name="contribute_section">Вклад</string>
   <string name="version_section">Версія</string>
   <string name="no_email_app_installed">Не знайдено жодного поштового додатку, будь ласка встановіть хоча б один поштовий додаток щоб надіслати нам повідомлення</string>
   <string name="email_chooser_title">Надіслати повідомлення за допомогою...</string>
+  <string name="website_chooser_title">Переглянути сайт за допомогою...</string>
   <string name="credits">Подяки</string>
   <!--About dialog-->
+  <string name="developed_by">Розроблено</string>
+  <string name="designed_by">Спроектовано</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Відсутнє з’єднання з мережею</string>
@@ -21,8 +27,10 @@
   <string name="drawer_close">Закрити панель навігації</string>
   <!--Sections-->
   <string name="menu_item_home">Домівка</string>
+  <string name="menu_item_contact_request">Запити контактів</string>
   <string name="menu_item_accounts">Керувати аккаунтами</string>
   <string name="menu_item_settings">Налаштування</string>
+  <string name="menu_item_share">Поділитись своїми контактними даними</string>
   <string name="menu_item_about">Про Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Набрати номер</string>
@@ -40,45 +48,50 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Пропущений вхідний виклик</string>
+  <string name="notif_missed_outgoing_call">Пропущений вихідний виклик</string>
   <string name="notif_incoming_call_title">Вхідний виклик від %1$s</string>
   <string name="notif_incoming_call">Вхідний виклик</string>
   <string name="notif_outgoing_call_title">Вихідний виклик до %1$s</string>
   <string name="notif_outgoing_call">Вихідний виклик</string>
-  <string name="notif_current_call_title">Діючий виклик з %1$s</string>
-  <string name="notif_current_call">Діючий виклик</string>
+  <string name="notif_current_call_title">Поточний виклик з %1$s</string>
+  <string name="notif_current_call">Поточний виклик</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ви:</string>
-  <string name="action_call_hangup">Скинути</string>
-  <string name="ongoing_call">Поточний дзвінок</string>
+  <string name="action_call_hangup">Призупинити</string>
+  <string name="ongoing_call">Вихідний виклик</string>
   <string name="hist_in_call">Вхідний виклик тривалістю %1$s</string>
   <string name="hist_out_call">Вихідний виклик тривалістю %1$s</string>
   <string name="start_error_title">Неможливо запустити Ring!</string>
-  <string name="start_error_mic_required">Ring потребує доступ до мікрофону для роботи</string>
-  <string name="action_call_accept">Здійснити виклик</string>
-  <string name="action_call_decline">Відмовитися</string>
+  <string name="start_error_mic_required">Для своєї роботи, Ring потребує доступ до мікрофону.</string>
+  <string name="action_call_accept">Прийняти виклик</string>
+  <string name="action_call_decline">Відхилити</string>
   <string name="ab_action_speakerphone">Увімкнути гучномовець</string>
-  <string name="ab_action_contact_add">Додати контакти</string>
+  <string name="ab_action_contact_add">Додати до контактів</string>
   <string name="ab_action_contact_add_question">Додати до контактів?</string>
   <string name="ab_action_audio_call">Голосовий виклик</string>
   <string name="ab_action_video_call">Відео виклик</string>
+  <string name="ab_action_change_screen_orientation">Змінити орієнтацію екрану</string>
   <string name="share_via">Поділитися за допомогою</string>
   <string name="write_a_message">Написати повідомлення</string>
-  <string name="scan_qr">Сканувати QR код</string>
-  <string name="ab_action_flipcamera">Фліп камера</string>
+  <string name="scan_qr">Сканування QR коду</string>
+  <string name="ab_action_flipcamera">Змінити камеру</string>
   <!--Text messages-->
   <string name="send_message">Відправити повідомлення</string>
-  <string name="message_sending">ВІдправка повідомлення</string>
+  <string name="message_sending"> Повідомлення надсилається...</string>
   <string name="time_just_now">Прямо зараз</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Дозволи для камери</string>
-  <string name="permission_dialog_camera_message">Для здійснення відерозмови необхідно надати дозвіл на роботу камери. Будь ласка, розглянути можливість її увімкнення.</string>
+  <string name="permission_dialog_camera_message">Для здійснення відерозмови необхідно надати доступ до камери. Будь ласка, розгляньте дану можливість.</string>
   <string name="ringtone_error_title">Помилка</string>
+  <string name="ringtone_error_format_not_supported">Цей формат не підтримується</string>
+  <string name="ringtone_error_size_too_big">Файл занадто довгий.  Максимальний розмір складає %1$i kB.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring потребує права \"Зчитування контактів\" для включення цього функціоналу. Будь ласка надайте це право.</string>
+  <string name="permission_dialog_read_contacts_message">Для включення цього функціоналу Ring потребує прав \"Читання контактів\".  Будь ласка надайте їх.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring потребує права \"Запис журналу викликів \" для включення цього функціоналу. Будь ласка надайте це право.</string>
+  <string name="permission_dialog_write_call_log_message">Для включення цього функціоналу Ring потребує прав \"Запис журналу викликів\".  Будь ласка надайте їх.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">Сканування QR-коду облікового запису який ви хочете додати.</string>
+  <string name="scan_qr_account_message">Проскануйте QR-код облікового запису який ви хочете додати.</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Очистити історію?</string>
   <string name="clear_history_dialog_message">Ця дія не може бути скасована.</string>
@@ -90,19 +103,36 @@
   <string name="conversation_action_copy_peer_number">Копіювати номер</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s збережено у буфер</string>
   <string name="conversation_action_select_peer_number">Виберіть номер</string>
+  <string name="conversation_action_block_this">Заблокувати контакт</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Додати %1$s ?</string>
   <string name="prompt_new_password">Новий пароль</string>
+  <string name="prompt_new_password_repeat">Новий пароль ще раз</string>
   <string name="account_create_title">Створити обліковий запис Ring</string>
-  <string name="wizard_next">Наступний</string>
+  <string name="prompt_new_username">Вкажіть нове ім\'я користувача</string>
+  <string name="help_password_choose">Виберіть стійкий пароль який ви будете пам\'ятати, щоб вбрегти ваш обліковий запис.</string>
+  <string name="help_password_enter">Вкажіть пароль вашого основного облікового запису Ring</string>
+  <string name="wizard_next">Далі</string>
+  <string name="wizard_back">Назад</string>
   <!--MenuHeaderView-->
+  <string name="profile">Мій профіль</string>
+  <string name="open_the_gallery">Відкрити галерею</string>
+  <string name="take_a_photo">Зробити фото</string>
+  <string name="profile_name_hint">Вкажіть ваше ім\'я (не обов\'язково)</string>
   <!--Share fragment-->
   <string name="generic_error_migration">Помилка</string>
   <!--Pending contact requests-->
   <string name="accept">Прийняти</string>
   <string name="refuse">Скидання</string>
+  <string name="block">Заблокувати</string>
+  <string name="contact_request_title">Новий запит контакту</string>
+  <string name="contact_request_msg">У вас є %1$s запитів контактів</string>
+  <string name="contact_request_account">Для %1$s</string>
+  <string name="no_requests">0 запитів контактів</string>
   <!--Send contact requests-->
   <string name="send_request_button">Відправити</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 заблокованих контактів</string>
   <!--Smartlist-->
+  <string name="contact_request_sent">Запит контакту надіслано</string>
 </resources>

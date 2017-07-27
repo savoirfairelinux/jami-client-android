@@ -26,8 +26,11 @@
   <string name="account_tls_server_name_label">Názov servera</string>
   <!--restore/backup-->
   <string name="account_export_end_error_title">Chyba</string>
+  <string name="account_enter_password">Zadaj heslo</string>
+  <string name="account_link_prompt_pin">Zadaj PIN</string>
   <!--Name registration-->
   <string name="account_status_unknown">Neznámy</string>
   <!--Create account-->
   <!--Devices-->
+  <string name="enter_password">Zadaj heslo</string>
 </resources>

@@ -2,18 +2,28 @@
 <resources>
   <!--Strings related to account edition screen-->
   <string name="ic_delete_menu">Изтриване</string>
+  <string name="ic_advanced_menu">Разширени настройки</string>
+  <string name="ic_blacklist_menu">Блокирани контакти</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Добавяне на акаунт за Ring</string>
+  <string name="add_sip_account_title">Добавяне на акаунт за SIP</string>
+  <string name="ring_account_default_name">Акаунт за Ring %1$s</string>
   <string name="prompt_alias">Псевдоним</string>
   <string name="prompt_hostname">Име на сървъра</string>
   <string name="prompt_username">Потребителско име</string>
   <string name="prompt_password">Парола</string>
+  <string name="action_create">Създаване на акаунт</string>
   <string name="action_create_short">Регистриране</string>
   <string name="error_field_required">Това поле е задължително</string>
   <string name="dialog_wait_create">Добавяне на акаунт</string>
   <string name="dialog_wait_create_details">Моля, изчакайте докато новият Ви акаунт бъде добавен…</string>
+  <string name="dialog_wait_update">Обновяване на акаунта</string>
+  <string name="dialog_wait_update_details">Моля, изчакайте докато новият Ви акаунт бъде обновен…</string>
+  <string name="dialog_warn_ip2ip_account_title">Създаване на празен акаунт за SIP</string>
   <string name="help_ring">Акаунтът за Ring Ви позволява да се свързвате безопасно с хора чрез директна връзка през изцяло разпределена мрежа.</string>
   <string name="help_sip_title">Добавяне на акаунт за SIP</string>
   <string name="help_sip">Настройка на съществуващ акаунт за SIP</string>
+  <string name="create_sip_account">Добавяне на акаунт за SIP</string>
   <!--Strings related to account deletion-->
   <string name="account_delete_dialog_title">Изтриване на акаунта?</string>
   <string name="account_delete_dialog_message">Това действие е необратимо.</string>
