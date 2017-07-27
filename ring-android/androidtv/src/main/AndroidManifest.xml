@@ -77,7 +77,6 @@
         </activity>
 
         <activity android:name="cx.ring.client.DetailsActivity" />
-        <activity android:name="cx.ring.client.PlaybackOverlayActivity" />
         <activity android:name="cx.ring.client.BrowseErrorActivity" />
         <activity android:name="cx.ring.client.SearchActivity" />
 
