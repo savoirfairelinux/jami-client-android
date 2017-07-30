@@ -224,6 +224,7 @@ along with this program; if not, write to the Free Software
     <string name="browse_title"><![CDATA[Videos by Your Company]]></string>
     <string name="related_movies">Related Videos</string>
     <string name="vertical_grid_title"><![CDATA[Vertical Video Grid]]></string>
+    <string name="title_activity_home">Ring</string>
     <string name="error">Error</string>
     <string name="ok">OK</string>
     <string name="pause">Pause</string>
