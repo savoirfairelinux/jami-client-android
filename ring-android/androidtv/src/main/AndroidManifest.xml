@@ -48,8 +48,8 @@
     <application
         android:name=".application.RingTVApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
         android:banner="@drawable/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:resizeableActivity="true"
         android:supportsRtl="true"
@@ -57,7 +57,7 @@
 
         <activity
             android:name="cx.ring.client.HomeActivity"
-            android:banner="@drawable/ic_launcher"
+            android:banner="@drawable/banner"
             android:icon="@drawable/ic_launcher"
             android:label="@string/title_activity_home"
             android:logo="@drawable/ic_launcher"
@@ -73,17 +73,18 @@
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
 
             android:screenOrientation="fullUser"
-            android:theme="@style/AppThemeBase">
-        </activity>
+            android:theme="@style/AppThemeBase" />
 
-         <activity android:name="cx.ring.search.SearchActivity" />
-        <activity android:name="cx.ring.call.CallActivity"
-                  android:theme="@style/AppThemeBase">
+        <activity android:name="cx.ring.search.SearchActivity" />
+        <activity
+            android:name="cx.ring.call.CallActivity"
+            android:theme="@style/AppThemeBase">
             <intent-filter>
                 <action android:name="cx.ring.action.CALL" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            </activity>
+        </activity>
+
         <service
             android:name=".service.DRingService"
             android:exported="false">
