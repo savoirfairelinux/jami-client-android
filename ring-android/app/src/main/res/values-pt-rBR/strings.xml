@@ -9,7 +9,7 @@
   <string name="contribute_section">Contribua</string>
   <string name="version_section">Versão</string>
   <string name="no_email_app_installed">Aplicação de e-mail não encontrada. Instale uma para nos enviar um relatório de erros.</string>
-  <string name="no_browser_app_installed">Nenhum Navegador de Internet encontrado, instale um para ver esta página</string>
+  <string name="no_browser_app_installed">Nenhum navegador de internet foi encontrado, instale um para acessar esta página</string>
   <string name="email_chooser_title">Enviar e-mail usando...</string>
   <string name="website_chooser_title">Ver site utilizando...</string>
   <string name="license">Este software é disponibilizado \"no estado\", sem garantia de qualquer tipo. 

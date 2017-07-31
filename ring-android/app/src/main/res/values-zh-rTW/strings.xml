@@ -1,7 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="sponsor_section">Ring 是一個自由軟體開發並支援由</string>
+  <string name="feedback_section">回饋</string>
+  <string name="report">&lt;u&gt;寄一封email給我們&lt;/u&gt;</string>
+  <string name="section_license">授權條款</string>
+  <string name="sponsor_section">Ring 是一個自由軟體由此團隊開發與支援：</string>
   <string name="copyright_section">版權</string>
   <string name="contribute_section">貢獻</string>
   <string name="version_section">版本</string>
@@ -17,6 +20,7 @@
   <!--Accessibility-->
   <!--Sections-->
   <string name="menu_item_home">首頁</string>
+  <string name="menu_item_contact_request">加好友請求</string>
   <string name="menu_item_accounts">管理帳號</string>
   <string name="menu_item_settings">設定</string>
   <string name="menu_item_about">關於 Ring</string>
@@ -81,6 +85,7 @@
   <!--Share fragment-->
   <string name="generic_error_migration">錯誤</string>
   <!--Pending contact requests-->
+  <string name="accept">接聽</string>
   <!--Send contact requests-->
   <string name="send_request_button">傳送</string>
   <!--Blacklist-->
