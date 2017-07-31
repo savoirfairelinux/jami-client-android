@@ -1,44 +1,147 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--Strings related to account edition screen-->
-  <string name="ic_delete_menu">Esborrar</string>
+  <string name="ic_delete_menu">Suprimeix</string>
+  <string name="ic_advanced_menu">Preferències avançades</string>
+  <string name="ic_blacklist_menu">Contactes bloquejats</string>
   <!--Strings related to account creation-->
+  <string name="add_ring_account_title">Afegeix un compte Ring</string>
+  <string name="add_sip_account_title">Afegeix un compte SIP</string>
+  <string name="ring_account_default_name">Compte de Ring %1$s</string>
   <string name="prompt_alias">Àlies</string>
   <string name="prompt_hostname">Nom d\'amfitrió</string>
   <string name="prompt_username">Nom d\'usuari</string>
   <string name="prompt_password">Contrasenya</string>
+  <string name="action_create">Crea compte</string>
+  <string name="action_create_short">Registra</string>
+  <string name="error_field_required">Es requereix aquest camp</string>
+  <string name="dialog_wait_create">S\'està afegint el compte</string>
+  <string name="dialog_wait_create_details">Si us plau, espereu mentre s\'afegeix el vostre nou compte</string>
+  <string name="dialog_wait_update">S\'està actualitzant el compte</string>
+  <string name="dialog_wait_update_details">Si us plau, espereu mentre s\'està actualitzant el compte</string>
+  <string name="dialog_warn_ip2ip_account_title">Voleu crear un compte SIP buit?</string>
+  <string name="dialog_warn_ip2ip_account_message">Esteu a punt de crear un compte SIP sense nom d\'amfitrió vàlid.
+Només podreu fer i rebre trucades directes per IP.
+Podeu editar el vostre compte més endavant.</string>
+  <string name="account_type_ip2ip">Compte IP</string>
+  <string name="help_ring">Un compte Ring us permet arribar a gent de manera segura d\'igual a igual mitjançant una xarxa completament distribuïda.</string>
+  <string name="help_sip_title">Afegiu el vostre compte SIP</string>
+  <string name="help_sip">Configura un compte SIP existent</string>
+  <string name="create_sip_account">Afegeix un compte SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_message">Aquesta acció no pot ser desfeta.</string>
+  <string name="account_delete_dialog_title">Voleu suprimir el compte?</string>
+  <string name="account_delete_dialog_message">Aquesta acció no es pot desfer.</string>
   <!--AccountManagementFragment-->
+  <string name="empty_account_list">No hi ha cap compte registrat</string>
   <string name="normal_accounts_titles">Comptes</string>
+  <string name="normal_devices_titles">Dispositius coneguts enllaçats a aquest compte de Ring</string>
+  <string name="account_device_revoke">Revoca el dispositiu</string>
+  <string name="account_device_revocation_success_title">Èxit</string>
+  <string name="account_device_revocation_success">S\'ha revocat el dispositiu!</string>
+  <string name="account_device_revocation_error_title">No es pot revocar el dispositiu</string>
+  <string name="account_device_revocation_wrong_password">Contrasenya incorrecta.</string>
+  <string name="account_device_revocation_unknown_device">Dispositiu desconegut.</string>
+  <string name="account_device_revocation_error_unknown">Error desconegut.</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">General</string>
+  <string name="account_basic_category">Preferències bàsiques</string>
+  <string name="account_alias_label">Nom del compte</string>
   <string name="account_hostname_label">Nom d\'amfitrió</string>
   <string name="account_bootstrap_label">Bootstrap</string>
   <string name="account_username_label">Nom d\'usuari</string>
   <string name="account_password_label">Contrasenya</string>
+  <string name="account_optionnal_category">Preferències opcionals</string>
+  <string name="account_useragent_label">User Agent</string>
+  <string name="account_autoanswer_label">Resposta automàtica</string>
+  <string name="account_upnp_label">Activa el UPnP</string>
   <string name="account_proxy_field">Intermediari</string>
   <!--Audio Details-->
   <string name="account_audio_label">Àudio</string>
   <string name="account_preferences_media_tab">Mitjans</string>
   <string name="account_ringtone_label">To de trucada</string>
+  <string name="account_ringtone_enabled_label">Activa els tons de trucada</string>
+  <string name="account_ringtone_path_label">Ruta del to de trucada</string>
+  <string name="account_ringtone_custom_label">Utilitza un to de trucada personalitzat</string>
   <!--Video Details-->
   <string name="account_video_label">Vídeo</string>
   <string name="account_video_enable">Habilita el vídeo</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avançat</string>
+  <string name="account_dht_public_in_calls_label">Permet totes les trucades/missatges</string>
+  <string name="account_registration_exp_label">Expiració del registre</string>
+  <string name="account_local_interface_label">Interfície local</string>
+  <string name="account_local_port_label">Port local</string>
+  <string name="account_stun_enable_label">Utilitza Stun</string>
+  <string name="account_stun_server_label">Servidor Stun</string>
   <string name="account_turn_enable_label">Utilitza TURN</string>
+  <string name="account_turn_server_label">Servidor TURN</string>
+  <string name="account_turn_username_label">Usuari de TURN</string>
+  <string name="account_turn_password_label">Contrasenya de TURN</string>
+  <string name="account_published_same_as_local_label">Publica igual que la local</string>
+  <string name="account_published_port_label">Port publicat</string>
+  <string name="account_published_address_label">Adreça publicada</string>
   <!--Security Details-->
+  <string name="account_credentials_label">Credencials</string>
+  <string name="account_credentials_edit">Edita les credencials</string>
+  <string name="account_credentials_add">Afegeix les credencials</string>
   <!--SRTP Details-->
   <string name="account_preferences_security_tab">Seguretat</string>
   <!--SIP-->
   <!--TLS Details-->
+  <string name="account_tls_transport_switch_label">Utilitza transport TLS</string>
+  <string name="account_tls_port_label">Port del receptor TLS</string>
+  <string name="account_tls_certificate_list_label">Autoritats de certificació</string>
+  <string name="account_tls_certificate_file_label">Fitxer del certificat</string>
+  <string name="account_tls_private_key_file_label">Fitxer de la clau privada</string>
+  <string name="account_tls_password_label">Contrasenya de la clau privada</string>
+  <string name="account_tls_method_label">Mètode TLS</string>
+  <string name="account_tls_ciphers_label">Xifrats del TLS</string>
+  <string name="account_tls_server_name_label">Nom del servidor</string>
+  <string name="account_tls_verify_server_label">Verifica el servidor</string>
+  <string name="account_tls_verify_client_label">Client Verifica el client</string>
+  <string name="account_tls_negotiation_timeout_sec">Temps d\'espera de la negociació (s)</string>
+  <string name="account_rtp_max_port">Màxim</string>
+  <string name="account_rtp_min_port">Mínim</string>
+  <string name="account_rtp_port_range">Rang de ports de l\'àudio RTP</string>
   <!--restore/backup-->
+  <string name="account_new_device_password">Introduïu la contrasenya principal per a desbloquejar el compte</string>
+  <string name="error_password_char_count">Mínim 6 caràcters</string>
+  <string name="error_passwords_not_equals">No coincideixen les contrasenyes</string>
+  <string name="export_account_wait_title">Si us plau espereu...</string>
+  <string name="export_account_wait_message">S\'està publicant la informació del nou compte</string>
+  <string name="account_export_end_decryption_message">No s\'ha pogut desbloquejar el vostre compte amb la contrasenya que heu proveït</string>
+  <string name="account_export_end_network_title">Error de xarxa</string>
+  <string name="account_export_end_network_message">No s\'ha pogut exportar el vostre compte per la xarxa. Comproveu la vostre connectivitat.</string>
   <string name="account_export_end_error_title">Error</string>
+  <string name="account_export_end_error_message">No s\'ha pogut exportar el compte. S\'ha produït un error desconegut.</string>
+  <string name="account_enter_password">Introduïu la contrasenya</string>
+  <string name="account_share_body">Contacteu-me utilitzant \'%1$s\' a la plataforma de comunicació distribuïda Ring: https://ring.cx</string>
+  <string name="account_share_body_with_username">Contacteu-me utilitzant \'%1$s\' o el meu nom d\'usuari públic \'%2$s\' a la plataforma de comunicació distribuïda Ring: https://ring.cx</string>
+  <string name="account_contact_me">Contacta\'m a Ring!</string>
+  <string name="update_account">Actualitza el compte</string>
+  <string name="account_migration">Es pot actualitzar el vostre compte de Ring.\nSi us plau, introduïu la vostra contrasenya.</string>
+  <string name="ring_account">Compte de Ring</string>
+  <string name="ring_account_identity">Identitat</string>
+  <string name="account_migration_title_dialog">Migració de compte</string>
+  <string name="account_migration_message_dialog">El vostre compte necessita actualitzar-se. Voleu anar a la pantalla de gestió de comptes per realitzar aquesta operació?</string>
+  <string name="account_update_needed">Es necessita actualitzar</string>
+  <string name="account_cannot_be_found_title">No es pot trobar el compte</string>
+  <string name="account_cannot_be_found_message">No s\'ha pogut trobar el compte a la xarxa Ring.\nAssegureu-vos que s\'ha exportat a Ring des d\'un dispositiu existent i que les credencials són correctes.</string>
+  <string name="account_sip_cannot_be_registered_message">Podeu continuar amb el procés de creació del compte o editar la vostra informació aquí. L\'edició encara és possible més endavant a les preferències del compte.</string>
+  <string name="account_no_network_title">No es pot connectar a la xarxa</string>
+  <string name="account_no_network_message">No s\'ha pogut afegir el compte perquè Ring no s\'ha pogut connectar a la xarxa distribuïda. Comproveu la connectivitat del vostre dispositiu.</string>
+  <string name="account_device_added_title">S\'ha afegit el dispositiu del compte</string>
+  <string name="account_device_added_message">Heu configurat al vostre compte de Ring en aquest dispositiu correctament.</string>
+  <string name="account_device_updated_title">S\'ha actualitzat el dispositiu del compte</string>
   <string name="account_device_updated_message">S\'ha actualitzat correctament el vostre compte de Ring.</string>
+  <string name="account_cannot_be_updated_message">No s\'ha pogut actualitzar el dispositiu del compte. Si us plau, comproveu la vostra contrasenya.</string>
   <string name="account_new_button">Crear un compte de Ring</string>
   <!--Name registration-->
   <string name="account_status_unknown">Desconegut</string>
   <!--Create account-->
+  <string name="account_creation_home">Benvigut a Ring</string>
   <!--Devices-->
+  <string name="enter_password">Introduïu la contrasenya</string>
+  <string name="revoke_device_title">Revoca el dispositiu</string>
+  <string name="revoke_device_wait_title">Si us plau espereu...</string>
 </resources>

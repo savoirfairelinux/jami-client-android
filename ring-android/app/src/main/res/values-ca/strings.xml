@@ -1,13 +1,23 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
-  <string name="sponsor_section">Ring és software lliure desenvolupat i mantingut per</string>
+  <string name="feedback_section">Comentaris</string>
+  <string name="report">&lt;u&gt;Envieu-nos un correu&lt;/u&gt;</string>
+  <string name="section_license">Llicència</string>
+  <string name="sponsor_section">Ring és programari lliure desenvolupat i mantingut per</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribueix</string>
   <string name="version_section">Versió</string>
   <string name="no_email_app_installed">No s\'ha trobat cap aplicació de correu, instal·leu una per enviar-nos un informe </string>
-  <string name="email_chooser_title">Enviar correu fent servir...</string>
+  <string name="no_browser_app_installed">No s\'ha trobat cap navegador web, instal·leu-ne un per a visualitzar aquesta pàgina</string>
+  <string name="email_chooser_title">Envia correu fent servir...</string>
+  <string name="website_chooser_title">Visualitza el lloc web amb...</string>
+  <string name="license">Aquest programari es proporciona \"tal qual\", sense cap tipus de garantia. Per a més detalls, mireu la &lt;u&gt;Llicència GNU General Public versió 3 o posterior&lt;/u&gt;</string>
+  <string name="description">El Ring és un programari per a comunicacions universals que respecta la llibertat i privacitat dels seus usuaris</string>
+  <string name="credits">Crèdits</string>
   <!--About dialog-->
+  <string name="developed_by">Desenvolupat per</string>
+  <string name="designed_by">Dissenyat per</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">No hi ha connexió a la xarxa</string>
@@ -20,6 +30,7 @@
   <string name="drawer_close">Tancar el calaix de navegació</string>
   <!--Sections-->
   <string name="menu_item_home">Inici</string>
+  <string name="menu_item_contact_request">Peticions de contacte</string>
   <string name="menu_item_accounts">Gestionar els comptes</string>
   <string name="menu_item_settings">Opcions</string>
   <string name="menu_item_share">Comparteix el meu contacte</string>
@@ -39,6 +50,8 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Trucada entrant perduda</string>
+  <string name="notif_missed_outgoing_call">Trucada sortint perduda</string>
   <string name="notif_incoming_call_title">Trucada entrant de %1$s</string>
   <string name="notif_incoming_call">Trucada entrant</string>
   <string name="notif_outgoing_call_title">Trucada sortint de %1$s</string>
@@ -60,6 +73,7 @@
   <string name="ab_action_contact_add_question">Afegir als contactes ?</string>
   <string name="ab_action_audio_call">Trucada de veu</string>
   <string name="ab_action_video_call">Videotrucada </string>
+  <string name="ab_action_change_screen_orientation">Canvia l\'orientació de la pantalla</string>
   <string name="share_via">Comparteix via</string>
   <string name="write_a_message">Escriu un missatge</string>
   <string name="scan_qr">Escanejar un codi QR</string>
@@ -91,6 +105,7 @@
   <string name="conversation_action_copy_peer_number">Copia el número</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiat al porta-retalls</string>
   <string name="conversation_action_select_peer_number">Seleccia un número</string>
+  <string name="conversation_action_block_this">Bloqueja aquest contacte</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Afegir %1$s ?</string>
   <string name="prompt_new_password">Nova contrasenya</string>
@@ -101,17 +116,34 @@
   <string name="help_password_enter">Escriure la contrasenya del vostre compte principal de Ring</string>
   <string name="help_pin_enter">Ficar el PIN d\'altre compte configurat de Ring. Feu servir la funció \"exportar compte a Ring\" per obtenir el PIN.</string>
   <string name="wizard_next">Següent</string>
+  <string name="wizard_back">Enrere</string>
   <!--MenuHeaderView-->
   <string name="profile">El meu perfil</string>
+  <string name="profile_message_warning">El vostre perfil només es comparteix amb els vostres contactes</string>
   <string name="open_the_gallery">Obrir la galeria</string>
   <string name="take_a_photo">Fer una foto</string>
+  <string name="profile_name_hint">Introduïu el vostre nom (opcional)</string>
   <!--Share fragment-->
   <string name="share_message">Escaneja aquest codi QR amb l\'escàner de l\'aplicació Ring que vulga comunicar-se amb tu.</string>
+  <string name="share_message_no_account">Si us plau seleccioneu un compte per a compartir</string>
   <string name="share_your_account_information">Compartir la meua informació de contacte</string>
   <string name="generic_error_migration">Error</string>
+  <string name="generic_error_migration_message">S\'ha produït un error durant la migració</string>
   <!--Pending contact requests-->
+  <string name="accept">Accepta</string>
+  <string name="refuse">Rebutja</string>
+  <string name="block">Bloqueja</string>
+  <string name="contact_request_title">Nova petició de contacte</string>
+  <string name="contact_request_msg">Teniu %1$s peticions de contacte</string>
+  <string name="contact_request_account">Per %1$s</string>
+  <string name="no_requests">0 peticions de contacte</string>
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
+  <string name="send_request_title">Envia una petició de contacte</string>
+  <string name="send_request_msg">Heu d\'enviar una petició de contacte per a comunicar-vos amb aquest usuari. Mentre l\'usuari no hagi acceptat la petició, podreu enviar-li missatges però el vostre contacte no els podrà llegir.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 contactes bloquejats</string>
   <!--Smartlist-->
+  <string name="no_contact_request">No s\'ha enviat cap petició de contacte</string>
+  <string name="contact_request_sent">S\'ha enviat una petició de contacte</string>
 </resources>

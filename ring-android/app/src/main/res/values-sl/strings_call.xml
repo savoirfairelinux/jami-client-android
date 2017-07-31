@@ -22,17 +22,17 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
     <!-- SipCalls -->
-    <string name="call_human_state_searching">Recherche</string>
-    <string name="call_human_state_incoming">Appel entrant</string>
-    <string name="call_human_state_connecting">En cours de connexion</string>
-    <string name="call_human_state_ringing">Ça sonne</string>
-    <string name="call_human_state_current">En cours</string>
-    <string name="call_human_state_hungup">Terminé</string>
-    <string name="call_human_state_busy">Occupé</string>
-    <string name="call_human_state_failure">Échec</string>
-    <string name="call_human_state_hold">Mettre en attente</string>
-    <string name="call_human_state_unhold">Reprendre</string>
-    <string name="call_human_state_over">Terminé</string>
-    <string name="call_human_state_none">Aucun</string>
+    <string name="call_human_state_searching">Iščem</string>
+    <string name="call_human_state_incoming">Dohodni</string>
+    <string name="call_human_state_connecting">Povezujem</string>
+    <string name="call_human_state_ringing">Zvoni</string>
+    <string name="call_human_state_current">Sprejemam</string>
+    <string name="call_human_state_hungup">Končano</string>
+    <string name="call_human_state_busy">Zasedeno</string>
+    <string name="call_human_state_failure">Neuspelo</string>
+    <string name="call_human_state_hold">Čakanje</string>
+    <string name="call_human_state_unhold">Vrnjen</string>
+    <string name="call_human_state_over">Končano</string>
+    <string name="call_human_state_none">Neznano</string>
     <!-- Conferences -->
 </resources>

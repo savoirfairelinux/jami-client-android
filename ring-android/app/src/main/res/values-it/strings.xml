@@ -1,13 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Opinioni</string>
+  <string name="report">&lt;u&gt;Inviaci un\'email&lt;/u&gt;</string>
+  <string name="section_license">Licensa</string>
   <string name="sponsor_section">Ring è un software libero sviluppato e supportato da</string>
   <string name="copyright_section">Copyright</string>
   <string name="contribute_section">Contribuisci</string>
   <string name="version_section">Versione</string>
   <string name="no_email_app_installed">Applicazione email non trovata, installane una per inviarci un rapporto</string>
+  <string name="no_browser_app_installed">Browser web non trovato, installane uno per vedere questa pagina</string>
   <string name="email_chooser_title">Mandaci un\'email usando...</string>
+  <string name="website_chooser_title">Visita il sito usando...</string>
+  <string name="license">Questo software è fornito senza garanzia di nessun tipo. Per ulteriori dettagli, leggi la
+&lt;u&gt;GNU General Public License versione 3 o successiva&lt;/u&gt;</string>
+  <string name="description">Ring è un software libero per la comunicazione universale che rispetta le libertà e la privacy dei suoi utenti</string>
+  <string name="credits">Crediti</string>
   <!--About dialog-->
+  <string name="developed_by">Sviluppato da</string>
+  <string name="designed_by">Progettato da</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Connessione di rete assente</string>
@@ -20,6 +31,7 @@
   <string name="drawer_close">Chiudi gli strumenti di navigazione</string>
   <!--Sections-->
   <string name="menu_item_home">Home</string>
+  <string name="menu_item_contact_request">Richieste di contatto</string>
   <string name="menu_item_accounts">Gestisci profili</string>
   <string name="menu_item_settings">Impostazioni</string>
   <string name="menu_item_share">Condividi il mio contatto</string>
@@ -34,11 +46,13 @@
     <item quantity="other">%d Conversazione</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Digita nome o numero telefonico</string>
+  <string name="searchbar_hint">Digita nome o numero telefonico...</string>
   <string name="choose_number">Scegli un numero</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Chiamata in entrata persa</string>
+  <string name="notif_missed_outgoing_call">Chiamata in uscita persa</string>
   <string name="notif_incoming_call_title">Chiamata in arrivo da %1$s</string>
   <string name="notif_incoming_call">Chiamata in arrivo</string>
   <string name="notif_outgoing_call_title">Chiamata in uscita per %1$s</string>
@@ -60,6 +74,7 @@
   <string name="ab_action_contact_add_question">Aggiungere contatti ?</string>
   <string name="ab_action_audio_call">Audiochiamata</string>
   <string name="ab_action_video_call">Videochiamata</string>
+  <string name="ab_action_change_screen_orientation">Cambia orientamento dello schermo</string>
   <string name="share_via">Condividi via</string>
   <string name="write_a_message">Scrivi un messaggio</string>
   <string name="scan_qr">Scansiona QR Code</string>
@@ -91,6 +106,7 @@
   <string name="conversation_action_copy_peer_number">Copia il numero</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiato negli appunti</string>
   <string name="conversation_action_select_peer_number">Scegli un numero</string>
+  <string name="conversation_action_block_this">Blocca questo contatto</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Aggiungi %1$s ?</string>
   <string name="prompt_new_password">Nuovo password</string>
@@ -101,18 +117,34 @@
   <string name="help_password_enter">Inserisci la password del tuo account principale di Ring</string>
   <string name="help_pin_enter">Inserisci il PIN da un altro account Ring già configurato. Usa l\'opzione \"esporta account su Ring\" per ottenere un PIN.</string>
   <string name="wizard_next">Seguente</string>
+  <string name="wizard_back">Indietro</string>
   <!--MenuHeaderView-->
   <string name="profile">Il mio profilo</string>
+  <string name="profile_message_warning">Il tuo profilo è condiviso solo con i tuoi contatti</string>
   <string name="open_the_gallery">Apri la galleria</string>
   <string name="take_a_photo">Scatta una foto</string>
+  <string name="profile_name_hint">Inserisci il tuo nome (opzionale)</string>
   <!--Share fragment-->
   <string name="share_message">Scansiona questo QRCode con il scanner integrato nell\'applicazione Ring che vuole comunicare con te.</string>
+  <string name="share_message_no_account">Per favore seleziona un account da condividere</string>
   <string name="share_your_account_information">Condividi le mie informazioni di contatto</string>
   <string name="generic_error_migration">Errore</string>
+  <string name="generic_error_migration_message">Si è verificato un errore durante il trasferimento</string>
   <!--Pending contact requests-->
   <string name="accept">Accettare</string>
+  <string name="refuse">Rifiuta</string>
+  <string name="block">Blocca</string>
+  <string name="contact_request_title">Nuova richiesta di contatto</string>
+  <string name="contact_request_msg">Hai %1$s richieste di contatto</string>
+  <string name="contact_request_account">Per %1$s</string>
+  <string name="no_requests">0 richieste di contatto</string>
   <!--Send contact requests-->
   <string name="send_request_button">Mandare</string>
+  <string name="send_request_title">Invia una richiesta di contatto</string>
+  <string name="send_request_msg">Devi inviare una richiesta di contatto per comunicare con questo utente. Finché il tuo contatto non avrà accettato la richiesta, puoi inviare messaggi ma il tuo contatto non potrà leggerli.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 contatti bloccati</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Nessuna richiesta di contatto inviata</string>
+  <string name="contact_request_sent">Richiesta di contatto inviata</string>
 </resources>

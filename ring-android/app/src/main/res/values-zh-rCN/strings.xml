@@ -134,6 +134,7 @@
   <string name="block">屏蔽</string>
   <string name="contact_request_title">新联系人请求</string>
   <string name="contact_request_msg">您有%1$s个联系人请求</string>
+  <string name="contact_request_account">为了 %1$s</string>
   <string name="no_requests">0个联系人请求</string>
   <!--Send contact requests-->
   <string name="send_request_button">发送</string>
