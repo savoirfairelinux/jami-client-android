@@ -2,7 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Commentaire</string>
-  <string name="report">&lt;u>Envoyer nous un mail&lt;/u></string>
+  <string name="report">&lt;u&gt;Envoyer nous un mail&lt;/u&gt;</string>
   <string name="section_license">Licence</string>
   <string name="sponsor_section">Ring est un logiciel libre développé et soutenu par</string>
   <string name="copyright_section">Copyright</string>

@@ -10,6 +10,8 @@
   <string name="no_browser_app_installed">Nerasta jokios saityno naršyklės programėlės, įdiekite kurią nors, kad peržiūrėtumėte šį puslapį</string>
   <string name="email_chooser_title">Siųsti paštą, naudojant...</string>
   <string name="website_chooser_title">Rodyti svetainę, naudojant...</string>
+  <string name="license">Ši programinė įranga yra pateikiama \"tokia, kokia yra\", be jokios garantijos. Išsamesnei informacijai, žiūrėkite
+&lt;u&gt;GNU Bendrąją Viešąją Licenciją, versiją 3 arba vėlesnę&lt;/u&gt;</string>
   <string name="description">Ring yra visuotiniam susisiekimui skirta laisva programinė įranga, kuri gerbia savo naudotojų laisves ir privatumą.</string>
   <string name="credits">Padėkos</string>
   <!--About dialog-->
@@ -27,7 +29,7 @@
   <string name="drawer_close">Uždaryti naršymo stalčių</string>
   <!--Sections-->
   <string name="menu_item_home">Pradžia</string>
-  <string name="menu_item_contact_request">Kontakto užklausos</string>
+  <string name="menu_item_contact_request">Kontaktų užklausos</string>
   <string name="menu_item_accounts">Tvarkyti paskyras</string>
   <string name="menu_item_settings">Nustatymai</string>
   <string name="menu_item_share">Bendrinti mano kontaktus</string>
@@ -105,6 +107,7 @@
   <string name="prompt_new_username">Įveskite naują naudotojo vardą</string>
   <string name="help_password_choose">Pasirinkite stiprų slaptažodį, kurį prisiminsite, kad apsaugotumėte savo Ring paskyrą.</string>
   <string name="help_password_enter">Įveskite savo pagrindinės Ring paskyros slaptažodį</string>
+  <string name="help_pin_enter">Įveskite PIN iš kitos sukonfigūruotos Ring paskyros. Norėdami gauti PIN, naudokite ypatybę \"eksportuoti paskyrą Ring sistemoje\".</string>
   <string name="wizard_next">Kitas</string>
   <string name="wizard_back">Atgal</string>
   <!--MenuHeaderView-->
@@ -121,10 +124,14 @@
   <string name="accept">Priimti</string>
   <string name="refuse">Atmesti</string>
   <string name="block">Užblokuoti</string>
-  <string name="no_requests">0 kontakto užklausų</string>
+  <string name="contact_request_title">Nauja kontakto užklausa</string>
+  <string name="contact_request_msg">Jūs turite %1$s kontaktų užklausų</string>
+  <string name="contact_request_account">Skirta %1$s</string>
+  <string name="no_requests">0 kontaktų užklausų</string>
   <!--Send contact requests-->
   <string name="send_request_button">Siųsti</string>
   <string name="send_request_title">Siųsti kontakto užklausą</string>
+  <string name="send_request_msg">Norėdami bendrauti su šiuo naudotoju, privalote išsiųsti kontakto užklausą. Kol kontaktas nepriims užklausos, jūs galite siųsti žinutes, tačiau kontaktas negalės jų perskaityti.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 užblokuotų kontaktų</string>
   <!--Smartlist-->
