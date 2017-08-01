@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_ece6f015",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/client/CardPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-08-01T15:34:19Z",
+      "side": 1,
+      "message": "This is not needed and should be avoided",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "0b4f3307a2f9a4a768ab0a53063c4dea1065d552",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
