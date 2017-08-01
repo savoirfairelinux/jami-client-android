@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_margin="16dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_logo_ring_beta2_blanc" />
+            android:src="@drawable/ic_logo_ring_white" />
 
         <TextView
             android:id="@+id/ring_acc_title_txt"
