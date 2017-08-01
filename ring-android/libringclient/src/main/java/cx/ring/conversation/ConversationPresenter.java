@@ -38,6 +38,7 @@ import cx.ring.services.ContactService;
 import cx.ring.services.HistoryService;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.StringUtils;
 import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -228,9 +229,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
         if (contact.getPhones().size() > 1) {
             if (mPreferredNumber == null || mPreferredNumber.isEmpty()) {
-                mPreferredNumber = new Uri(
-                        mConversation.getLastNumberUsed(mConversation.getLastAccountUsed())
-                );
+                String lastNumber = mConversation.getLastNumberUsed(mConversation.getLastAccountUsed());
+                if (StringUtils.isEmpty(lastNumber)) {
+                    mPreferredNumber = contact.getPhones().get(0).getNumber();
+                } else {
+                    mPreferredNumber = new Uri(lastNumber);
+                }
             }
             getView().displayNumberSpinner(mConversation, mPreferredNumber);
         } else {
