@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_acdd0845",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 36
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-08-01T15:26:45Z",
+      "side": 1,
+      "message": "Introduction of the new reactivex dependency has to be discussed and arguably is not necessary for this change",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 50
+      },
+      "revId": "53c2b612f2800027c5300ba873a69ec72c9b5e4f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
