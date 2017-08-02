@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_0ceeb4ec",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/search/RingSearchPresenter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-08-02T20:19:13Z",
+      "side": 1,
+      "message": "Not needed",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "b2880cd549285c28ccf8dfc665e9396bd5387e3e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_6cbae0e2",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/search/RingSearchPresenter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-08-02T20:19:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "b2880cd549285c28ccf8dfc665e9396bd5387e3e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
