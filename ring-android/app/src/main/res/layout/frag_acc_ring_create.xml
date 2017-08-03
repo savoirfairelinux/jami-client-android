@@ -115,8 +115,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_new_password_repeat"
-                        android:imeActionId="@integer/register_sip_account_actionid"
                         android:imeActionLabel="@string/action_create_short"
+                        android:imeOptions="actionDone"
                         android:inputType="textPassword" />
                 </android.support.design.widget.TextInputLayout>
 

@@ -130,16 +130,20 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         checkForms();
     }
 
+    private boolean canCreateAccount() {
+        return (!isRingUsernameCheck || isRingUserNameCorrect)
+                && isPasswordCorrect
+                && isConfirmCorrect;
+    }
+
     void createAccount() {
-        getView().goToAccountCreation(mRingAccountViewModel.getUsername(), mRingAccountViewModel.getPassword());
+        if (canCreateAccount()) {
+            getView().goToAccountCreation(mRingAccountViewModel.getUsername(), mRingAccountViewModel.getPassword());
+        }
     }
 
     private void checkForms() {
-        if (isRingUsernameCheck) {
-            getView().enableNextButton(isRingUserNameCorrect && isPasswordCorrect && isConfirmCorrect);
-        } else {
-            getView().enableNextButton(isPasswordCorrect && isConfirmCorrect);
-        }
+        getView().enableNextButton(canCreateAccount());
     }
 
     private void handleBlockchainResult(int state, String name) {
