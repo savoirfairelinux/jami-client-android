@@ -62,7 +62,7 @@ import butterknife.ButterKnife;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.ConversationFragment;
@@ -72,7 +72,6 @@ import cx.ring.model.AccountConfig;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
 import cx.ring.navigation.RingNavigationFragment;
-import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
@@ -80,6 +79,7 @@ import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
+import cx.ring.utils.Constants;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -212,7 +212,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         ButterKnife.bind(this);
 
         // dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getApplication()).getRingInjectionComponent().inject(this);
 
         setSupportActionBar(mToolbar);
 
@@ -259,14 +259,14 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         ArrayList<String> permissionsWeCanAsk = new ArrayList<>();
 
         for (String permission : toRequest) {
-            if (((RingApplication) getApplication()).canAskForPermission(permission)) {
+            if (((RingAppApplication) getApplication()).canAskForPermission(permission)) {
                 permissionsWeCanAsk.add(permission);
             }
         }
 
         if (!permissionsWeCanAsk.isEmpty()) {
             mIsAskingForPermissions = true;
-            ActivityCompat.requestPermissions(this, permissionsWeCanAsk.toArray(new String[permissionsWeCanAsk.size()]), RingApplication.PERMISSIONS_REQUEST);
+            ActivityCompat.requestPermissions(this, permissionsWeCanAsk.toArray(new String[permissionsWeCanAsk.size()]), RingAppApplication.PERMISSIONS_REQUEST);
         }
 
         // if app opened from notification display trust request fragment when mService will connected
@@ -313,7 +313,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             presentTrustRequestFragment(extra.getString(ContactRequestsFragment.ACCOUNT_ID));
             return;
         }
-        if (!ConversationFragment.isTabletMode(this) || !DRingService.ACTION_CONV_ACCEPT.equals(intent.getAction())) {
+        if (!ConversationFragment.isTabletMode(this) || !Constants.ACTION_CONV_ACCEPT.equals(intent.getAction())) {
             return;
         }
 
@@ -425,14 +425,14 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         Log.d(TAG, "onRequestPermissionsResult");
 
         switch (requestCode) {
-            case RingApplication.PERMISSIONS_REQUEST: {
+            case RingAppApplication.PERMISSIONS_REQUEST: {
                 if (grantResults.length == 0) {
                     return;
                 }
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
                 for (int i = 0, n = permissions.length; i < n; i++) {
                     String permission = permissions[i];
-                    ((RingApplication) getApplication()).permissionHasBeenAsked(permission);
+                    ((RingAppApplication) getApplication()).permissionHasBeenAsked(permission);
                     switch (permission) {
                         case Manifest.permission.RECORD_AUDIO:
                             if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {

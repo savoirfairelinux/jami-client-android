@@ -29,7 +29,7 @@ import android.view.inputmethod.EditorInfo;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionActivity;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
@@ -93,7 +93,7 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
 
     @Override
     public void onCreatePreferences(Bundle bundle, String rootKey) {
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, rootKey);
 
         presenter.init(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));

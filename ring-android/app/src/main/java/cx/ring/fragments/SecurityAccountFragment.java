@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionActivity;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.AccountCredentials;
 import cx.ring.model.ConfigKey;
@@ -56,7 +56,7 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, s);
 
         addPreferencesFromResource(R.xml.account_security_prefs);

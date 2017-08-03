@@ -22,19 +22,17 @@ package cx.ring.dependencyinjection;
 import javax.inject.Singleton;
 
 import cx.ring.about.AboutFragment;
-import cx.ring.about.AboutPresenter;
 import cx.ring.account.AccountEditionActivity;
 import cx.ring.account.HomeAccountCreationFragment;
+import cx.ring.account.ProfileCreationFragment;
 import cx.ring.account.RegisterNameDialog;
+import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.account.RingAccountSummaryFragment;
-import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.account.RingLinkAccountFragment;
-import cx.ring.application.RingApplication;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.contactrequests.ContactRequestsFragment;
-import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.AdvancedAccountFragment;
@@ -42,36 +40,17 @@ import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
-import cx.ring.account.ProfileCreationFragment;
-import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.navigation.RingNavigationFragment;
-import cx.ring.navigation.RingNavigationPresenter;
-import cx.ring.service.BootReceiver;
-import cx.ring.service.DRingService;
-import cx.ring.services.AccountService;
-import cx.ring.services.CallService;
-import cx.ring.services.ConferenceService;
-import cx.ring.services.ContactServiceImpl;
-import cx.ring.services.DaemonService;
-import cx.ring.services.DeviceRuntimeServiceImpl;
-import cx.ring.services.HardwareService;
-import cx.ring.services.HistoryServiceImpl;
-import cx.ring.services.NotificationServiceImpl;
-import cx.ring.services.PresenceService;
-import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.settings.SettingsFragment;
-import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.ShareFragment;
-import cx.ring.share.SharePresenter;
 import dagger.Component;
 
 @Singleton
 @Component(modules = {RingInjectionModule.class, PresenterInjectionModule.class, ServiceInjectionModule.class})
-public interface RingInjectionComponent {
-    void inject(RingApplication app);
+public interface RingAppInjectionComponent extends RingInjectionComponent {
 
     void inject(RingNavigationFragment view);
 
@@ -114,44 +93,6 @@ public interface RingInjectionComponent {
     void inject(ContactRequestsFragment fragment);
 
     void inject(BlackListFragment fragment);
-
-    void inject(DRingService service);
-
-    void inject(DeviceRuntimeServiceImpl service);
-
-    void inject(DaemonService service);
-
-    void inject(CallService service);
-
-    void inject(ConferenceService service);
-
-    void inject(AccountService service);
-
-    void inject(HardwareService service);
-
-    void inject(SharedPreferencesServiceImpl service);
-
-    void inject(HistoryServiceImpl service);
-
-    void inject(ContactServiceImpl service);
-
-    void inject(NotificationServiceImpl service);
-
-    void inject(ConversationFacade service);
-
-    void inject(PresenceService service);
-
-    void inject(BootReceiver receiver);
-
-    void inject(AboutPresenter presenter);
-
-    void inject(RingNavigationPresenter presenter);
-
-    void inject(SharePresenter presenter);
-
-    void inject(SettingsPresenter presenter);
-
-    void inject(RingAccountSummaryPresenter presenter);
 
     void inject(AdvancedAccountFragment fragment);
 

@@ -42,7 +42,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cx.ring.BuildConfig;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.mvp.BaseFragment;
 
@@ -87,7 +87,7 @@ public class AboutFragment extends BaseFragment<AboutPresenter> implements About
         mUnbinder = ButterKnife.bind(this, inflatedView);
 
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         return inflatedView;
     }

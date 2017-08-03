@@ -51,7 +51,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.account.HomeAccountCreationFragment;
 import cx.ring.account.ProfileCreationFragment;
@@ -118,7 +118,7 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
         ButterKnife.bind(this);
 
         // dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getApplication()).getRingInjectionComponent().inject(this);
 
         mViewPager.setAdapter(new WizardPagerAdapter(getFragmentManager()));
         mViewPager.getAdapter().notifyDataSetChanged();
@@ -374,7 +374,7 @@ public class AccountWizard extends AppCompatActivity implements Observer<Service
     }
 
     private void handleCreationState(final ServiceEvent event) {
-        RingApplication.uiHandler.post(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
 

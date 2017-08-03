@@ -55,7 +55,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseFragment;
@@ -141,7 +141,7 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
 
     @Override
     public void accountChanged(final Account account) {
-        RingApplication.uiHandler.post(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (account == null) {
@@ -254,7 +254,7 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
 
     @Override
     public void showNetworkError() {
-        RingApplication.uiHandler.post(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mWaitDialog.dismiss();
@@ -269,7 +269,7 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
 
     @Override
     public void showPasswordError() {
-        RingApplication.uiHandler.post(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mWaitDialog.dismiss();
@@ -281,7 +281,7 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
 
     @Override
     public void showGenericError() {
-        RingApplication.uiHandler.post(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mWaitDialog.dismiss();
@@ -370,7 +370,7 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
         ButterKnife.bind(this, devLayout);
 
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         mLinkAccountView.setContainer(this);
         hidePopWizard();
@@ -380,7 +380,7 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
 
     @Override
     public void showPIN(final String pin) {
-        RingApplication.uiHandler.post(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 hideWizard();
@@ -409,7 +409,7 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
         if (mDeviceAdapter == null) {
             return;
         }
-        RingApplication.uiHandler.post(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mDeviceAdapter.setData(devices, currentDeviceId);
@@ -419,7 +419,7 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
 
     @Override
     public void deviceRevocationEnded(final String device, final int status) {
-        RingApplication.uiHandler.post(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mWaitDialog.dismiss();

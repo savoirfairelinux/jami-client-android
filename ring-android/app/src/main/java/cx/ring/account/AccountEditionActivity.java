@@ -50,7 +50,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.fragments.AdvancedAccountFragment;
 import cx.ring.fragments.GeneralAccountFragment;
@@ -87,7 +87,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         ButterKnife.bind(this);
 
         // dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getApplication()).getRingInjectionComponent().inject(this);
         mEditionPresenter.bindView(this);
         String accountId = getIntent().getData().getLastPathSegment();
         mEditionPresenter.init(accountId);
@@ -231,7 +231,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @Override
     public void displayAccountName(final String name) {
-        RingApplication.uiHandler.post(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);

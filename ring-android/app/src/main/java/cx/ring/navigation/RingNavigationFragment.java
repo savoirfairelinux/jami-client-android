@@ -57,7 +57,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
@@ -221,7 +221,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         ButterKnife.bind(this, inflatedView);
 
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         presenter.updateUser();
 
@@ -472,7 +472,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
 
     @Override
     public void showViewModel(final RingNavigationViewModel viewModel) {
-        RingApplication.uiHandler.post(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mAccountAdapter.replaceAll(viewModel.getAccounts());
