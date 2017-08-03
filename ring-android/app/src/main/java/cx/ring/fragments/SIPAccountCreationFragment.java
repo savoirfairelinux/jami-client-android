@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
@@ -32,6 +32,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -80,14 +81,11 @@ public class SIPAccountCreationFragment extends BaseFragment<SIPCreationPresente
     }
 
     @OnEditorAction(R.id.password)
-    @SuppressWarnings("unused")
     public boolean keyPressedOnPasswordField(TextView v, int actionId, KeyEvent event) {
-        if (actionId == getResources().getInteger(R.integer.register_sip_account_actionid)
-                || event == null
-                || (event.getAction() == KeyEvent.ACTION_UP)) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
             mCreateSIPAccountButton.callOnClick();
         }
-        return true;
+        return false;
     }
 
     /************************

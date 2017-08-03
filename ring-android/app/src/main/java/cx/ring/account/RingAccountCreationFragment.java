@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
@@ -30,6 +30,7 @@ import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -38,6 +39,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
@@ -58,9 +60,6 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
 
     @BindView(R.id.ring_password_txt_box)
     protected TextInputLayout mPasswordTxtBox;
-
-    @BindView(R.id.ring_password)
-    protected EditText mPasswordTxt;
 
     @BindView(R.id.ring_password_repeat_txt_box)
     protected TextInputLayout mPasswordRepeatTxtBox;
@@ -127,6 +126,14 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
     @OnTextChanged(value = R.id.ring_password_repeat, callback = OnTextChanged.Callback.TEXT_CHANGED)
     public void afterPasswordConfirmChanged(Editable txt) {
         presenter.passwordConfirmChanged(txt.toString());
+    }
+
+    @OnEditorAction(value = R.id.ring_password_repeat)
+    public boolean onPasswordConfirmDone(int keyCode) {
+        if (keyCode == EditorInfo.IME_ACTION_DONE) {
+            presenter.createAccount();
+        }
+        return false;
     }
 
     @OnTextChanged(value = R.id.ring_username, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
