@@ -80,7 +80,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         }
 
         mUserSettings.setAllowMobileData(appPrefs.getBoolean(RING_MOBILE_DATA, false));
-        mUserSettings.setAllowSystemContacts(appPrefs.getBoolean(RING_SYSTEM_CONTACTS, true));
+        mUserSettings.setAllowSystemContacts(appPrefs.getBoolean(RING_SYSTEM_CONTACTS, false));
         mUserSettings.setAllowPlaceSystemCalls(appPrefs.getBoolean(RING_PLACE_CALLS, false));
         mUserSettings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
 
