@@ -30,10 +30,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.R;
-import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.adapters.NumberAdapter;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
@@ -127,7 +126,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         ButterKnife.bind(this, inflatedView);
 
         // Dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         if (mTopPane != null) {
             mTopPane.setVisibility(View.GONE);

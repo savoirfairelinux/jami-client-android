@@ -40,7 +40,7 @@ import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.client.AccountWizard;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.utils.RegisteredNameFilter;
@@ -78,7 +78,7 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.frag_acc_ring_create, parent, false);
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         return view;
     }
 
@@ -142,20 +142,35 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
 
     @Override
     public void disableTextError() {
-        mUsernameTxtBox.setErrorEnabled(false);
-        mUsernameTxtBox.setError(null);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mUsernameTxtBox.setErrorEnabled(false);
+                mUsernameTxtBox.setError(null);
+            }
+        });
     }
 
     @Override
     public void showExistingNameError() {
-        mUsernameTxtBox.setErrorEnabled(true);
-        mUsernameTxtBox.setError(getString(R.string.username_already_taken));
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mUsernameTxtBox.setErrorEnabled(true);
+                mUsernameTxtBox.setError(getString(R.string.username_already_taken));
+            }
+        });
     }
 
     @Override
     public void showInvalidNameError() {
-        mUsernameTxtBox.setErrorEnabled(true);
-        mUsernameTxtBox.setError(getString(R.string.invalid_username));
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mUsernameTxtBox.setErrorEnabled(true);
+                mUsernameTxtBox.setError(getString(R.string.invalid_username));
+            }
+        });
     }
 
     @Override
@@ -182,8 +197,13 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
     }
 
     @Override
-    public void enableNextButton(boolean enabled) {
-        mCreateAccountButton.setEnabled(enabled);
+    public void enableNextButton(final boolean enabled) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mCreateAccountButton.setEnabled(enabled);
+            }
+        });
     }
 
     @Override

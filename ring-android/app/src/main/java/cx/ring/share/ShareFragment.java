@@ -39,7 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.GenericView;
@@ -83,7 +83,7 @@ public class ShareFragment extends BaseFragment<SharePresenter> implements Gener
         mUnbinder = ButterKnife.bind(this, inflatedView);
 
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         mQrImage.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
@@ -142,7 +142,7 @@ public class ShareFragment extends BaseFragment<SharePresenter> implements Gener
             return;
         }
 
-        RingApplication.uiHandler.post(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (qrCodeData == null || mQRCodeSize <= 0) {

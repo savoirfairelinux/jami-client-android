@@ -50,7 +50,7 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
@@ -88,7 +88,7 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
         ButterKnife.bind(this, inflatedView);
 
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         return inflatedView;
     }
@@ -182,7 +182,7 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
 
 
     private void handleMigrationState(final ServiceEvent event) {
-        RingApplication.uiHandler.post(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
 

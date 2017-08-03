@@ -27,9 +27,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.media.AudioManager;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,11 +44,11 @@ import cx.ring.daemon.PresenceCallback;
 import cx.ring.daemon.VideoCallback;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.service.CallManagerCallBack;
+import cx.ring.service.ConfigurationManagerCallback;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
-import cx.ring.services.ConfigurationManagerCallback;
 import cx.ring.services.ContactService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
@@ -259,7 +257,6 @@ public abstract class RingApplication extends Application {
         // todo decide when to stop the daemon
         terminateDaemon();
     }
-
 
 
     public boolean canAskForPermission(String permission) {
