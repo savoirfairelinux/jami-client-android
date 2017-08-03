@@ -15,10 +15,10 @@
   <string name="license">Bu program HERHANGİ BİR TEMİNAT OLMADAN sağlanmıştır. Ayrıntılar için şuna bakın
 &lt;u&gt;GNU Genel Kamu Lisansı sürüm 3 ya da sonrası&lt;/u&gt;</string>
   <string name="description">Ring; kullanıcılarının özgürlüklerine ve gizliliğine önem veren, evrensel iletişim için özgür yazılımdır.</string>
-  <string name="credits">Krediler</string>
+  <string name="credits">Emeği geçenler</string>
   <!--About dialog-->
   <string name="developed_by">Geliştiren</string>
-  <string name="designed_by">Düzenleyen</string>
+  <string name="designed_by">Tasarlayan</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Ağ bağlantısı yok</string>

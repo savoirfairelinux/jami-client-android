@@ -10,6 +10,7 @@
   <string name="version_section">Različica</string>
   <string name="email_chooser_title">Pošlji e-pošto z ...</string>
   <string name="website_chooser_title">Poglej spletno stran z ...</string>
+  <string name="description">Ring je zastonj programska oprema za univerzalno komunikacijo, ki spoštuje svoboščine in zasebnost uporabnikov.</string>
   <string name="credits">Zasluge</string>
   <!--About dialog-->
   <string name="developed_by">Razvoj</string>

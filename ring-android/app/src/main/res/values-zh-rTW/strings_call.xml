@@ -30,7 +30,7 @@ along with this program; if not, write to the Free Software
     <string name="call_human_state_hungup">結束</string>
     <string name="call_human_state_busy">忙碌</string>
     <string name="call_human_state_failure">失敗</string>
-    <string name="call_human_state_hold">暫停通話</string>
+    <string name="call_human_state_hold">通話保留</string>
     <string name="call_human_state_unhold">繼續通話</string>
     <string name="call_human_state_over">結束</string>
     <string name="call_human_state_none">無</string>
