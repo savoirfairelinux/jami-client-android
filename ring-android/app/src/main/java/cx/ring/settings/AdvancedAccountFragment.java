@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package cx.ring.fragments;
+package cx.ring.settings;
 
 import android.os.Bundle;
 import android.support.v14.preference.PreferenceFragment;
@@ -38,7 +38,7 @@ import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionActivity;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
@@ -77,7 +77,7 @@ public class AdvancedAccountFragment extends PreferenceFragment {
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.account_advanced_prefs);

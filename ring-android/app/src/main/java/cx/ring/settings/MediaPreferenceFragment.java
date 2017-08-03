@@ -20,7 +20,7 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.fragments;
+package cx.ring.settings;
 
 import android.Manifest;
 import android.app.Activity;
@@ -46,7 +46,8 @@ import javax.inject.Inject;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionActivity;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
+import cx.ring.fragments.CodecPreference;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.Codec;
@@ -191,7 +192,7 @@ public class MediaPreferenceFragment extends PreferenceFragment
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         Log.d(TAG, "onCreatePreferences");
         addPreferencesFromResource(R.xml.account_media_prefs);
@@ -267,7 +268,7 @@ public class MediaPreferenceFragment extends PreferenceFragment
                         }
                     } else {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            requestPermissions(new String[]{Manifest.permission.CAMERA}, RingApplication.PERMISSIONS_REQUEST);
+                            requestPermissions(new String[]{Manifest.permission.CAMERA}, RingAppApplication.PERMISSIONS_REQUEST);
                         } else if (preference instanceof TwoStatePreference) {
                             account.setDetail(key, newValue.toString());
 

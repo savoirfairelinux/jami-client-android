@@ -30,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.client.AccountWizard;
 import cx.ring.mvp.BaseFragment;
 
@@ -48,7 +48,7 @@ public class HomeAccountCreationFragment extends BaseFragment<HomeAccountCreatio
         ButterKnife.bind(this, view);
 
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         return view;
     }

@@ -48,7 +48,7 @@ import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Settings;
 import cx.ring.mvp.BaseFragment;
@@ -88,7 +88,7 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
         mUnbinder = ButterKnife.bind(this, inflatedView);
 
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         return inflatedView;
     }
@@ -150,8 +150,8 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
             if (ContextCompat.checkSelfPermission(mContext, neededPermission) != PackageManager.PERMISSION_GRANTED) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     //~ Ask permission to use the contacts of the device
-                    if (((RingApplication) getActivity().getApplication()).canAskForPermission(neededPermission)) {
-                        requestPermissions(new String[]{neededPermission}, RingApplication.PERMISSIONS_REQUEST);
+                    if (((RingAppApplication) getActivity().getApplication()).canAskForPermission(neededPermission)) {
+                        requestPermissions(new String[]{neededPermission}, RingAppApplication.PERMISSIONS_REQUEST);
                     }
                 }
             } else if (!mIsRefreshingViewFromPresenter) {
@@ -206,7 +206,7 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
         for (int i = 0, n = permissions.length; i < n; ++i) {
             if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                 String permission = permissions[i];
-                ((RingApplication) getActivity().getApplication()).permissionHasBeenAsked(permission);
+                ((RingAppApplication) getActivity().getApplication()).permissionHasBeenAsked(permission);
                 switch (permission) {
                     case Manifest.permission.READ_CONTACTS:
                         mViewContacts.setChecked(false);

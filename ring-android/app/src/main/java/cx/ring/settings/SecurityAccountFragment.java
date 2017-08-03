@@ -18,7 +18,7 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package cx.ring.fragments;
+package cx.ring.settings;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -35,11 +35,13 @@ import java.util.ArrayList;
 
 import cx.ring.R;
 import cx.ring.account.AccountEditionActivity;
-import cx.ring.application.RingApplication;
+import cx.ring.application.RingAppApplication;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.AccountCredentials;
 import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BasePreferenceFragment;
+import cx.ring.settings.SecurityAccountPresenter;
+import cx.ring.settings.SecurityAccountView;
 import cx.ring.utils.Tuple;
 import cx.ring.views.CredentialPreferenceDialog;
 import cx.ring.views.CredentialsPreference;
@@ -56,7 +58,7 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreatePreferences(bundle, s);
 
         addPreferencesFromResource(R.xml.account_security_prefs);
