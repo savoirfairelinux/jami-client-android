@@ -137,7 +137,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </intent-filter>
         </activity>
         <activity
-            android:name=".client.AccountWizard"
+            android:name=".account.AccountWizard"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
 
             android:screenOrientation="fullUser"

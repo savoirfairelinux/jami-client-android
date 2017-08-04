@@ -2,7 +2,6 @@
  *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
- *  Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,33 +17,26 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.utils;
+package cx.ring.account;
 
-import java.util.Arrays;
+public interface RingAccountCreationView {
 
-public final class StringUtils {
+    void enableTextError();
 
-    public static boolean isEmpty(String s) {
-        return s == null || s.isEmpty();
-    }
+    void disableTextError();
 
-    public static String capitalize(String s) {
-        if (isEmpty(s)) {
-            return "";
-        }
-        char first = s.charAt(0);
-        if (Character.isUpperCase(first)) {
-            return s;
-        } else {
-            return Character.toUpperCase(first) + s.substring(1);
-        }
-    }
-    public static String toPassword(String s){
-        if(s == null || s.isEmpty()){
-            return "";
-        }
-        char[] chars = new char[s.length()];
-        Arrays.fill(chars, '*');
-        return new String(chars);
-    }
+    void showExistingNameError();
+
+    void showInvalidNameError();
+
+    void showInvalidPasswordError(boolean display);
+
+    void showNonMatchingPasswordError(boolean display);
+
+    void displayUsernameBox(boolean display);
+
+    void enableNextButton(boolean enabled);
+
+    void goToAccountCreation(String username, String password);
+
 }
