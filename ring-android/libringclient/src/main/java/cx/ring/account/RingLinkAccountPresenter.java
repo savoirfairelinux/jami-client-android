@@ -58,4 +58,12 @@ public class RingLinkAccountPresenter extends RootPresenter<RingLinkAccountView>
     public void afterInjection() {
 
     }
+
+    public String getPassword() {
+        return mPassword;
+    }
+
+    public String getPin() {
+        return mPin;
+    }
 }

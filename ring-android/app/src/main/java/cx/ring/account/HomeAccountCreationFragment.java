@@ -31,7 +31,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.application.RingAppApplication;
-import cx.ring.client.AccountWizard;
 import cx.ring.mvp.BaseFragment;
 
 public class HomeAccountCreationFragment extends BaseFragment<HomeAccountCreationPresenter> implements HomeAccountCreationView {
