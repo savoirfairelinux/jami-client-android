@@ -31,7 +31,13 @@ import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
+import android.support.v17.leanback.widget.SearchEditText;
+import android.support.v4.content.ContextCompat;
+import android.view.View;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.model.CallContact;
@@ -47,6 +53,11 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
 
     private ArrayObjectAdapter mRowsAdapter;
 
+    @BindView(R.id.lb_search_text_editor)
+    SearchEditText mTextEditor;
+
+    private Unbinder mUnbinder;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +67,32 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         setOnItemViewClickedListener(new ItemViewClickedListener());
+
+        setBadgeDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_launcher));
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        // view injection
+        mUnbinder = ButterKnife.bind(this, view);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Disable voice recognition, it is not working properly for blockchain usernames
+        setSearchQuery("", false);
+        if (mTextEditor!= null) {
+            mTextEditor.requestFocus();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Butterknife unbinding
+        mUnbinder.unbind();
     }
 
     @Override
