@@ -29,7 +29,7 @@ import cx.ring.account.RegisterNameDialog;
 import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.account.RingLinkAccountFragment;
-import cx.ring.client.AccountWizard;
+import cx.ring.account.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.contactrequests.ContactRequestsFragment;

@@ -19,7 +19,7 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.client;
+package cx.ring.account;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -53,10 +53,6 @@ import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.application.RingAppApplication;
 import cx.ring.fragments.AccountMigrationFragment;
-import cx.ring.account.HomeAccountCreationFragment;
-import cx.ring.account.ProfileCreationFragment;
-import cx.ring.account.RingAccountCreationFragment;
-import cx.ring.account.RingLinkAccountFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;

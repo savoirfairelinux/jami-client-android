@@ -22,6 +22,7 @@ package cx.ring.account;
 import javax.inject.Inject;
 
 import cx.ring.model.ServiceEvent;
+import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.utils.NameLookupInputHandler;
@@ -125,20 +126,16 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         checkForms();
     }
 
-    private boolean canCreateAccount() {
-        return (!isRingUsernameCheck || isRingUserNameCorrect)
-                && isPasswordCorrect
-                && isConfirmCorrect;
-    }
-
     void createAccount() {
-        if (canCreateAccount()) {
-            getView().goToAccountCreation(mRingAccountViewModel.getUsername(), mRingAccountViewModel.getPassword());
-        }
+        getView().goToAccountCreation(mRingAccountViewModel.getUsername(), mRingAccountViewModel.getPassword());
     }
 
     private void checkForms() {
-        getView().enableNextButton(canCreateAccount());
+        if (isRingUsernameCheck) {
+            getView().enableNextButton(isRingUserNameCorrect && isPasswordCorrect && isConfirmCorrect);
+        } else {
+            getView().enableNextButton(isPasswordCorrect && isConfirmCorrect);
+        }
     }
 
     private void handleBlockchainResult(int state, String name) {
@@ -184,6 +181,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
             return;
         }
 
+
         switch (event.getEventType()) {
             case REGISTERED_NAME_FOUND:
                 int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
@@ -193,7 +191,9 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
             default:
                 break;
         }
-    }
+
+
+}
 
     @Override
     public void afterInjection() {

@@ -21,13 +21,20 @@ package cx.ring.dependencyinjection;
 
 import javax.inject.Singleton;
 
+import cx.ring.account.AccountWizard;
+import cx.ring.account.HomeAccountCreationFragment;
+import cx.ring.account.ProfileCreationFragment;
+import cx.ring.account.RingAccountCreationFragment;
+import cx.ring.account.RingLinkAccountFragment;
 import cx.ring.application.RingTVApplication;
 import cx.ring.call.CallActivity;
 import cx.ring.call.CallFragment;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.MainFragment;
+
 import cx.ring.search.RingSearchFragment;
-import cx.ring.wizard.WizardActivity;
+
+
 import dagger.Component;
 
 @Singleton
@@ -43,8 +50,15 @@ public interface AndroidTVInjectionComponent extends RingInjectionComponent {
 
     void inject(HomeActivity activity);
 
-    void inject(WizardActivity activity);
-
     void inject(CallActivity activity);
 
+    void inject(AccountWizard activity);
+
+    void inject(HomeAccountCreationFragment fragment);
+
+    void inject(ProfileCreationFragment fragment);
+
+    void inject(RingAccountCreationFragment fragment);
+
+    void inject(RingLinkAccountFragment fragment);
 }
