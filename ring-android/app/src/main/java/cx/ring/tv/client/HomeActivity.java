@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import cx.ring.R;
+import cx.ring.account.AccountWizard;
 import cx.ring.application.RingApplication;
 import cx.ring.model.Account;
 import cx.ring.model.ServiceEvent;
@@ -45,7 +46,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
-import cx.ring.tv.wizard.WizardActivity;
+import cx.ring.tv.account.TVAccountWizard;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -238,7 +239,7 @@ public class HomeActivity extends Activity implements Observer<ServiceEvent> {
         
         if (!mNoAccountOpened && mAccountService.getAccounts().isEmpty() && !mIsAskingForPermissions) {
             mNoAccountOpened = true;
-            startActivityForResult(new Intent(HomeActivity.this, WizardActivity.class), WizardActivity.ACCOUNT_CREATE_REQUEST);
+            startActivityForResult(new Intent(HomeActivity.this, TVAccountWizard.class), TVAccountWizard.ACCOUNT_CREATE_REQUEST);
         }
     }
 }
