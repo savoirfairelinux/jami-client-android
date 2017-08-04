@@ -27,6 +27,7 @@ import javax.inject.Inject;
 
 import cx.ring.application.RingApplication;
 import cx.ring.model.ServiceEvent;
+import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.utils.NameLookupInputHandler;
@@ -67,7 +68,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         mAccountService.addObserver(this);
     }
 
-    void userNameChanged(@NonNull String userName) {
+    public void userNameChanged(@NonNull String userName) {
         if (!userName.isEmpty()) {
             if (mNameLookupInputHandler == null) {
                 mNameLookupInputHandler = new NameLookupInputHandler(mAccountService, "");
@@ -82,7 +83,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         checkForms();
     }
 
-    void ringCheckChanged(boolean isChecked) {
+    public void ringCheckChanged(boolean isChecked) {
         getView().displayUsernameBox(isChecked);
         isRingUsernameCheck = isChecked;
         if (!isChecked) {
@@ -91,7 +92,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         checkForms();
     }
 
-    void passwordChanged(String password) {
+    public void passwordChanged(String password) {
         if (mPasswordConfirm != null && !mPasswordConfirm.isEmpty()) {
             if (!password.equals(mPasswordConfirm)) {
                 getView().showNonMatchingPasswordError(true);
@@ -115,7 +116,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         checkForms();
     }
 
-    void passwordConfirmChanged(String passwordConfirm) {
+    public void passwordConfirmChanged(String passwordConfirm) {
         if (passwordConfirm.isEmpty()) {
             getView().showNonMatchingPasswordError(false);
             isConfirmCorrect = false;
@@ -130,20 +131,16 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         checkForms();
     }
 
-    private boolean canCreateAccount() {
-        return (!isRingUsernameCheck || isRingUserNameCorrect)
-                && isPasswordCorrect
-                && isConfirmCorrect;
-    }
-
-    void createAccount() {
-        if (canCreateAccount()) {
-            getView().goToAccountCreation(mRingAccountViewModel.getUsername(), mRingAccountViewModel.getPassword());
-        }
+    public void createAccount() {
+        getView().goToAccountCreation(mRingAccountViewModel.getUsername(), mRingAccountViewModel.getPassword());
     }
 
     private void checkForms() {
-        getView().enableNextButton(canCreateAccount());
+        if (isRingUsernameCheck) {
+            getView().enableNextButton(isRingUserNameCorrect && isPasswordCorrect && isConfirmCorrect);
+        } else {
+            getView().enableNextButton(isPasswordCorrect && isConfirmCorrect);
+        }
     }
 
     private void handleBlockchainResult(int state, String name) {
