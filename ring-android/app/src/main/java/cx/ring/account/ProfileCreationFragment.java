@@ -42,7 +42,6 @@ import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,9 +49,7 @@ import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.application.RingApplication;
-import cx.ring.client.AccountWizard;
 import cx.ring.mvp.BaseFragment;
-import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.BitmapUtils;
 
 public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresenter> implements ProfileCreationView {

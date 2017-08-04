@@ -63,6 +63,7 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
 import cx.ring.application.RingApplication;
+import cx.ring.account.AccountWizard;
 import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.ConversationFragment;

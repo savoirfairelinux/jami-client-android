@@ -30,7 +30,7 @@ import cx.ring.account.RingAccountSummaryFragment;
 import cx.ring.account.RingAccountSummaryPresenter;
 import cx.ring.account.RingLinkAccountFragment;
 import cx.ring.application.RingApplication;
-import cx.ring.client.AccountWizard;
+import cx.ring.account.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.contactrequests.ContactRequestsFragment;
@@ -66,11 +66,15 @@ import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.ShareFragment;
 import cx.ring.share.SharePresenter;
+import cx.ring.tv.account.TVAccountWizard;
+import cx.ring.tv.account.TVHomeAccountCreationFragment;
+import cx.ring.tv.account.TVProfileCreationFragment;
+import cx.ring.tv.account.TVRingAccountCreationFragment;
+import cx.ring.tv.account.TVRingLinkAccountFragment;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.call.TVCallFragment;
 import cx.ring.tv.client.MainFragment;
 import cx.ring.tv.search.RingSearchFragment;
-import cx.ring.tv.wizard.WizardActivity;
 import dagger.Component;
 
 @Singleton
@@ -176,7 +180,15 @@ public interface RingInjectionComponent {
 
     void inject(cx.ring.tv.client.HomeActivity activity);
 
-    void inject(WizardActivity activity);
-
     void inject(TVCallActivity activity);
+
+    void inject(TVAccountWizard activity);
+
+    void inject(TVHomeAccountCreationFragment fragment);
+
+    void inject(TVProfileCreationFragment fragment);
+
+    void inject(TVRingAccountCreationFragment fragment);
+
+    void inject(TVRingLinkAccountFragment fragment);
 }

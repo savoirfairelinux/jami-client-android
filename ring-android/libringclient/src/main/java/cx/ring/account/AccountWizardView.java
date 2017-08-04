@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
- *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
+ *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,14 +14,29 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+package cx.ring.account;
 
-package cx.ring.tv.wizard;
+public interface AccountWizardView {
 
-public interface WizardView {
+    void displayProgress(boolean display);
 
-    void endCreation();
+    void displayCreationError();
 
-    void errorCreation(String error);
+    void blockOrientation();
+
+    void finish(boolean affinity);
+
+    void saveProfile(String accountId, String username);
+
+    void displayGenericError();
+
+    void displayNetworkError();
+
+    void displaySuccessDialog();
+
+    void displayCannotBeFoundError();
+
 }

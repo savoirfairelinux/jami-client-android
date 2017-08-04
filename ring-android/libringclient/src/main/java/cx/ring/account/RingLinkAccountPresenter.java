@@ -32,21 +32,21 @@ public class RingLinkAccountPresenter extends RootPresenter<RingLinkAccountView>
     public RingLinkAccountPresenter() {
     }
 
-    void passwordChanged(String password) {
+    public void passwordChanged(String password) {
         mPassword = password;
         checkForms();
     }
 
-    void pinChanged(String pin) {
+    public void pinChanged(String pin) {
         mPin = pin;
         checkForms();
     }
 
-    void lastClicked() {
+    public void lastClicked() {
         getView().goToLast();
     }
 
-    void linkClicked() {
+    public void linkClicked() {
         getView().createAccount();
     }
 
@@ -57,5 +57,13 @@ public class RingLinkAccountPresenter extends RootPresenter<RingLinkAccountView>
     @Override
     public void afterInjection() {
 
+    }
+
+    public String getPassword() {
+        return mPassword;
+    }
+
+    public String getPin() {
+        return mPin;
     }
 }
