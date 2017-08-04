@@ -15,7 +15,6 @@
 package cx.ring.client;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v17.leanback.app.BackgroundManager;
@@ -201,7 +200,9 @@ public class MainFragment extends BrowseFragment implements Observer<ServiceEven
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            getFragmentManager().beginTransaction().remove(mSpinnerFragment).commit();
+            if (!isCancelled()) { // Do stuff only if not cancelled
+                getFragmentManager().beginTransaction().remove(mSpinnerFragment).commit();
+            }
         }
     }
 

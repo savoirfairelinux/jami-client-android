@@ -81,4 +81,22 @@
         <item name="colorButtonNormal">@color/color_primary_dark</item>
         <item name="android:textColor">@color/text_color_primary_dark</item>
     </style>
+
+    <style name="Widget.Ring.Leanback.GuidanceIconStyle" parent="Widget.Leanback.GuidanceIconStyle">
+        <item name="android:background">@color/color_primary_light</item>
+    </style>
+    <style name="Widget.Ring.Leanback.FirstStepGuidanceIconStyle" parent="Widget.Leanback.GuidanceIconStyle">
+        <item name="android:background">@color/color_primary_light</item>
+    </style>
+    <style name="Widget.Ring.Leanback.SecondStepGuidanceIconStyle" parent="Widget.Leanback.GuidanceIconStyle">
+        <item name="android:padding">24dp</item>
+    </style>
+    <style name="Theme.Ring.Leanback.GuidedStep" parent="Theme.Leanback.GuidedStep">
+        <item name="guidanceIconStyle">@style/Widget.Ring.Leanback.GuidanceIconStyle</item>
+    </style>
+    <style name="Theme.Ring.Leanback.GuidedStep.First">
+        <item name="guidanceIconStyle">@style/Widget.Ring.Leanback.FirstStepGuidanceIconStyle</item>
+        <item name="guidedStepBackground">@color/color_primary_light</item>
+
+    </style>
 </resources>

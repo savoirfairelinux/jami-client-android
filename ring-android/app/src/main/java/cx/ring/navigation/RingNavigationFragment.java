@@ -58,7 +58,7 @@ import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.application.RingAppApplication;
-import cx.ring.client.AccountWizard;
+import cx.ring.account.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseFragment;
