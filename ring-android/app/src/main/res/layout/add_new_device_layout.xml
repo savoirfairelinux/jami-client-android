@@ -78,16 +78,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
                         android:id="@+id/password_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
                         app:passwordToggleEnabled="true">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/ring_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/account_link_info"
-                            android:layout_marginBottom="0dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
                             android:hint="@string/account_enter_password"
                             android:imeOptions="actionDone"
                             android:inputType="textPassword" />
