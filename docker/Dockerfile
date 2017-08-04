@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	automake \
 	autoconf \
 	autopoint \
+	gettext \
 	ca-certificates \
 	cmake \
 	bc \
