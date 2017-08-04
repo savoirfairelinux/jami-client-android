@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_354bf8b1",
+        "filename": "ring-android/androidtv/src/main/java/cx/ring/search/RingSearchFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-08-04T20:49:15Z",
+      "side": 1,
+      "message": "I am not convinced by this addition, just a test tell me what you think of it",
+      "revId": "ab00f4d7ceef829cfec8158c14baba4b306d794b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
