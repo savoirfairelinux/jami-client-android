@@ -47,7 +47,7 @@ import cx.ring.account.AccountsManagementPresenter;
 import cx.ring.account.AccountsManagementView;
 import cx.ring.application.RingAppApplication;
 import cx.ring.account.AccountEditionActivity;
-import cx.ring.client.AccountWizard;
+import cx.ring.account.AccountWizard;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseFragment;

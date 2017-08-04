@@ -34,7 +34,6 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.application.RingAppApplication;
-import cx.ring.client.AccountWizard;
 import cx.ring.mvp.BaseFragment;
 
 public class RingLinkAccountFragment extends BaseFragment<RingLinkAccountPresenter> implements RingLinkAccountView {

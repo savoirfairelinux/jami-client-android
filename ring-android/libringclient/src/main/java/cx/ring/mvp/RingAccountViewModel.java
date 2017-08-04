@@ -17,38 +17,16 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.account;
-
-import android.graphics.Bitmap;
+package cx.ring.mvp;
 
 import cx.ring.model.Account;
 
 public class RingAccountViewModel {
 
-    private Bitmap mPhotoProfile;
-    private String mFullname;
     private String mUsername;
     private String mPassword;
     private String mPin;
-    private String mAccountType;
     private Account mAccount;
-    private String mCreatedAccountId;
-
-    public Bitmap getPhotoProfile() {
-        return mPhotoProfile;
-    }
-
-    public void setPhotoProfile(Bitmap mPhotoProfile) {
-        this.mPhotoProfile = mPhotoProfile;
-    }
-
-    public String getFullname() {
-        return mFullname;
-    }
-
-    public void setFullname(String mFullname) {
-        this.mFullname = mFullname;
-    }
 
     public String getUsername() {
         return mUsername;
@@ -74,14 +52,6 @@ public class RingAccountViewModel {
         this.mPin = mPin;
     }
 
-    public String getAccountType() {
-        return mAccountType;
-    }
-
-    public void setAccountType(String mAccountType) {
-        this.mAccountType = mAccountType;
-    }
-
     public Account getAccount() {
         return mAccount;
     }
@@ -90,11 +60,4 @@ public class RingAccountViewModel {
         this.mAccount = mAccount;
     }
 
-    public String getCreatedAccountId() {
-        return mCreatedAccountId;
-    }
-
-    public void setCreatedAccountId(String mCreatedAccountId) {
-        this.mCreatedAccountId = mCreatedAccountId;
-    }
 }

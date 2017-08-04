@@ -62,6 +62,7 @@ import butterknife.ButterKnife;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
+import cx.ring.account.AccountWizard;
 import cx.ring.application.RingAppApplication;
 import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.fragments.AccountsManagementFragment;
