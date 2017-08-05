@@ -6,7 +6,9 @@ if [ -z "$ANDROID_ABI" ]; then
     echo "ANDROID_ABI not provided, building for ${ANDROID_ABI}"
 fi
 
-pushd ring-android
+TOP=$(pwd)/ring-android
+
+pushd $TOP
 ./make-swig.sh
 popd
 
@@ -43,6 +45,9 @@ for i in ${ANDROID_ABI_LIST}; do
 done
 
 if [[ $DAEMON_ONLY -eq 0 ]]; then
-    export ANDROID_ABIS
-    make -b -j1 RELEASE=$RELEASE apk
+    if [[ $RELEASE -eq 1 ]]; then
+        cd $TOP && ./gradlew assembleRelease
+    else
+        cd $TOP && ./gradlew assembleDebug
+    fi
 fi
