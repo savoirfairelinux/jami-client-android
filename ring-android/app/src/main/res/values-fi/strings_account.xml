@@ -7,7 +7,6 @@
   <string name="prompt_hostname">Yhteysosoite</string>
   <string name="prompt_username">Käyttäjänimi</string>
   <string name="prompt_password">Salasana</string>
-  <string name="action_create_short">Rekistöröi</string>
   <string name="error_field_required">Tämä kenttä on vaadittu</string>
   <string name="dialog_wait_create">Lisätään tunnusta</string>
   <string name="dialog_wait_create_details">Odota kunnes tunnuksesi on lisätty...</string>

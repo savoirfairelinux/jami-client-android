@@ -7,7 +7,6 @@
   <string name="prompt_hostname">Узел</string>
   <string name="prompt_username">Пользователь</string>
   <string name="prompt_password">Пароль</string>
-  <string name="action_create_short">Зарегистрировать</string>
   <string name="error_field_required">Это обязательное поле</string>
   <string name="dialog_wait_create">Добавление аккаунта</string>
   <string name="dialog_wait_create_details">Пожалуйста, подождите, пока Ваш новый аккаунт будет добавлен...</string>

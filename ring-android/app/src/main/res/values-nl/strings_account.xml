@@ -13,7 +13,6 @@
   <string name="prompt_username">Gebruikersnaam</string>
   <string name="prompt_password">Wachtwoord</string>
   <string name="action_create">Account aanmaken</string>
-  <string name="action_create_short">Registreren</string>
   <string name="error_field_required">Dit veld is verplicht</string>
   <string name="dialog_wait_create">Account wordt toegevoegd</string>
   <string name="dialog_wait_create_details">Je nieuwe account wordt toegevoegd, even geduld...</string>

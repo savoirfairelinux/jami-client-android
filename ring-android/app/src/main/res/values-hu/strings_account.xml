@@ -13,7 +13,6 @@
   <string name="prompt_username">Felhasználónév</string>
   <string name="prompt_password">Jelszó</string>
   <string name="action_create">Fiók létrehozása</string>
-  <string name="action_create_short">Regisztráció</string>
   <string name="error_field_required">Ez a mező szükséges</string>
   <string name="dialog_wait_create">Fiók hozzáadása</string>
   <string name="dialog_wait_create_details">Várjon amíg az új fiókja hozzáadásra kerül…</string>
