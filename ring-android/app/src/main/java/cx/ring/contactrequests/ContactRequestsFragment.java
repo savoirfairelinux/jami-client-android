@@ -38,13 +38,14 @@ import cx.ring.R;
 import cx.ring.application.RingAppApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.utils.Constants;
 import cx.ring.utils.Log;
 
 public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresenter> implements ContactRequestsView,
         ContactRequestViewHolder.ContactRequestListeners {
 
     static final String TAG = ContactRequestsFragment.class.getSimpleName();
-    public static final String ACCOUNT_ID = TAG + "accountID";
+
 
     @BindView(R.id.requests_list)
     protected RecyclerView mRequestsList;
@@ -75,10 +76,10 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
     }
 
     public void presentForAccount(Bundle bundle) {
-        if (bundle != null && bundle.containsKey(ACCOUNT_ID)) {
-            boolean shouldUpdateList = (bundle.getString(ACCOUNT_ID) == null);
-            presenter.updateAccount(bundle.getString(ACCOUNT_ID), shouldUpdateList);
-            getArguments().putString(ACCOUNT_ID, bundle.getString(ACCOUNT_ID));
+        if (bundle != null && bundle.containsKey(Constants.KEY_ACCOUNT_ID)) {
+            boolean shouldUpdateList = (bundle.getString(Constants.KEY_ACCOUNT_ID) == null);
+            presenter.updateAccount(bundle.getString(Constants.KEY_ACCOUNT_ID), shouldUpdateList);
+            getArguments().putString(Constants.KEY_ACCOUNT_ID, bundle.getString(Constants.KEY_ACCOUNT_ID));
         }
     }
 
@@ -88,8 +89,8 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_contact_request);
 
         Bundle arguments = getArguments();
-        if (arguments != null && arguments.containsKey(ACCOUNT_ID)) {
-            presenter.updateAccount(getArguments().getString(ACCOUNT_ID), false);
+        if (arguments != null && arguments.containsKey(Constants.KEY_ACCOUNT_ID)) {
+            presenter.updateAccount(getArguments().getString(Constants.KEY_ACCOUNT_ID), false);
         }
     }
 

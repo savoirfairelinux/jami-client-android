@@ -48,6 +48,7 @@ import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ClipboardHelper;
+import cx.ring.utils.Constants;
 import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -61,7 +62,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         ConversationView {
 
     public static final int REQ_ADD_CONTACT = 42;
-    public static final String KEY_CONVERSATION_ID = "CONVERSATION_ID";
 
     private static final String TAG = ConversationFragment.class.getSimpleName();
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
@@ -316,7 +316,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @Override
     protected void initPresenter(ConversationPresenter presenter) {
         super.initPresenter(presenter);
-        String conversationId = getArguments().getString(KEY_CONVERSATION_ID);
+        String conversationId = getArguments().getString(Constants.KEY_CONVERSATION_ID);
         Uri number = new Uri(getArguments().getString(CallFragment.KEY_NUMBER));
         presenter.init(conversationId, number);
     }

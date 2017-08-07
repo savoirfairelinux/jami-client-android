@@ -36,14 +36,15 @@ import cx.ring.R;
 import cx.ring.fragments.CallFragment;
 import cx.ring.model.Uri;
 import cx.ring.services.NotificationService;
+import cx.ring.utils.Constants;
 
 public class CallActivity extends AppCompatActivity {
     static final String TAG = CallActivity.class.getSimpleName();
 
+    //FIXME: This action should not be here
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
 
     private View mMainView;
-
 
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
@@ -70,16 +71,13 @@ public class CallActivity extends AppCompatActivity {
             }
         });
 
-        android.net.Uri u = getIntent().getData();
-
         String action = getIntent().getAction();
         if (Intent.ACTION_CALL.equals(action) || ACTION_CALL.equals(action)) {
+            android.net.Uri u = getIntent().getData();
             Uri number = new Uri(u.getSchemeSpecificPart());
-            Log.d(TAG, "number " + number);
 
             boolean hasVideo = getIntent().getBooleanExtra("video", false);
             String accountId = getIntent().getStringExtra("account");
-
 
             // Reload a new view
             FragmentManager fragmentManager = getFragmentManager();
@@ -90,7 +88,7 @@ public class CallActivity extends AppCompatActivity {
                     hasVideo);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
 
-        } else if (Intent.ACTION_VIEW.equals(action)) {
+        } else if (Intent.ACTION_VIEW.equals(action) || Constants.ACTION_CALL.equals(action)) {
             String confId = getIntent().getStringExtra(NotificationService.KEY_CALL_ID);
             Log.d(TAG, "conf " + confId);
             // Reload a new view

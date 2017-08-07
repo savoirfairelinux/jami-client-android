@@ -106,7 +106,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     public static final String SETTINGS_TAG = "Prefs";
     public static final String SHARE_TAG = "Share";
     private static final String NAVIGATION_TAG = "Navigation";
-    static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
+
 
     private boolean mNoAccountOpened = false;
     private boolean mIsMigrationDialogAlreadyShowed;
@@ -272,11 +272,11 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         // if app opened from notification display trust request fragment when mService will connected
         Intent intent = getIntent();
         Bundle extra = intent.getExtras();
-        if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(intent.getAction())) {
-            if (extra == null || extra.getString(ContactRequestsFragment.ACCOUNT_ID) == null) {
+        if (Constants.ACTION_TRUST_REQUEST_PRESENT_FRAGMENT.equals(intent.getAction())) {
+            if (extra == null || extra.getString(Constants.KEY_ACCOUNT_ID) == null) {
                 return;
             }
-            mAccountWithPendingrequests = extra.getString(ContactRequestsFragment.ACCOUNT_ID);
+            mAccountWithPendingrequests = extra.getString(Constants.KEY_ACCOUNT_ID);
         }
 
 
@@ -305,12 +305,12 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log.d(TAG, "onNewIntent " + intent);
-        if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(intent.getAction())) {
+        if (Constants.ACTION_TRUST_REQUEST_PRESENT_FRAGMENT.equals(intent.getAction())) {
             Bundle extra = intent.getExtras();
-            if (extra == null || extra.getString(ContactRequestsFragment.ACCOUNT_ID) == null) {
+            if (extra == null || extra.getString(Constants.KEY_ACCOUNT_ID) == null) {
                 return;
             }
-            presentTrustRequestFragment(extra.getString(ContactRequestsFragment.ACCOUNT_ID));
+            presentTrustRequestFragment(extra.getString(Constants.KEY_ACCOUNT_ID));
             return;
         }
         if (!ConversationFragment.isTabletMode(this) || !Constants.ACTION_CONV_ACCEPT.equals(intent.getAction())) {
@@ -323,7 +323,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         }
         if (fContent instanceof SmartListFragment) {
             Bundle bundle = new Bundle();
-            bundle.putString(ConversationFragment.KEY_CONVERSATION_ID, intent.getStringExtra(ConversationFragment.KEY_CONVERSATION_ID));
+            bundle.putString(Constants.KEY_CONVERSATION_ID, intent.getStringExtra(Constants.KEY_CONVERSATION_ID));
             startConversationTablet(bundle);
         }
     }
@@ -559,7 +559,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
     private void presentTrustRequestFragment(String accountID) {
         Bundle bundle = new Bundle();
-        bundle.putString(ContactRequestsFragment.ACCOUNT_ID, accountID);
+        bundle.putString(Constants.KEY_ACCOUNT_ID, accountID);
         mNotificationService.cancelTrustRequestNotification(accountID);
         if (fContent instanceof ContactRequestsFragment) {
             ((ContactRequestsFragment) fContent).presentForAccount(bundle);
@@ -662,7 +662,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                 break;
             case CONTACT_REQUESTS:
                 Bundle bundle = new Bundle();
-                bundle.putString(ContactRequestsFragment.ACCOUNT_ID, null);
+                bundle.putString(Constants.KEY_ACCOUNT_ID, null);
                 if (fContent instanceof ContactRequestsFragment) {
                     ((ContactRequestsFragment) fContent).presentForAccount(bundle);
                     break;
