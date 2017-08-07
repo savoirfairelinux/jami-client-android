@@ -80,6 +80,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:theme="@style/AppThemeBase"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
+                <action android:name="cx.ring.action.TRUST_REQUEST_PRESENT_FRAGMENT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -229,6 +233,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <data android:mimeType="vnd.android.cursor.item/phone_v2" />
                 <data android:mimeType="vnd.android.cursor.item/person" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="cx.ring.action.CALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".client.ConversationActivity"
@@ -237,7 +246,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:parentActivityName=".client.HomeActivity"
             android:screenOrientation="fullUser"
             android:theme="@style/AppThemeBase"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="cx.ring.action.CONV" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".client.QRCodeScannerActivity"
             android:screenOrientation="fullUser"

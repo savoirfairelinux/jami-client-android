@@ -9,11 +9,13 @@ public class Constants {
     public static final String ACTION_TRUST_REQUEST_ACCEPT = APPLICATION_ID + ".action.TRUST_REQUEST_ACCEPT";
     public static final String ACTION_TRUST_REQUEST_REFUSE = APPLICATION_ID + ".action.TRUST_REQUEST_REFUSE";
     public static final String ACTION_TRUST_REQUEST_BLOCK = APPLICATION_ID + ".action.TRUST_REQUEST_BLOCK";
+    static public final String ACTION_TRUST_REQUEST_PRESENT_FRAGMENT = APPLICATION_ID + ".action.TRUST_REQUEST_PRESENT_FRAGMENT";
     public static final String ACTION_CALL = APPLICATION_ID + ".action.CALL";
     public static final String ACTION_CALL_ACCEPT = APPLICATION_ID + ".action.CALL_ACCEPT";
     public static final String ACTION_CALL_REFUSE = APPLICATION_ID + ".action.CALL_REFUSE";
     public static final String ACTION_CALL_END = APPLICATION_ID + ".action.CALL_END";
     public static final String ACTION_CALL_VIEW = APPLICATION_ID + ".action.CALL_VIEW";
+    public static final String ACTION_CONV = APPLICATION_ID + ".action.CONV";
     public static final String ACTION_CONV_READ = APPLICATION_ID + ".action.CONV_READ";
     public static final String ACTION_CONV_ACCEPT = APPLICATION_ID + ".action.CONV_ACCEPT";
     public final static String DRING_CONNECTION_CHANGED = APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
@@ -31,6 +33,9 @@ public class Constants {
     public static final String MESSAGE_STATE_CHANGED_EXTRA_STATUS = "status";
     public static final String EXTRAS_NUMBER_TRUST_REQUEST_KEY = APPLICATION_ID + "numberOfTrustRequestKey";
     public static final String EXTRAS_TRUST_REQUEST_FROM_KEY = APPLICATION_ID + "trustRequestFrom";
+
+    public static final String KEY_ACCOUNT_ID = APPLICATION_ID + ".accountID";
+    public static final String KEY_CONVERSATION_ID = APPLICATION_ID + ".conversationID";
 
     public static final String PREF_SYSTEM_DIALER = "pref_systemDialer";
 

@@ -25,13 +25,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.text.Html;
+import android.text.format.DateUtils;
 import android.util.SparseArray;
 
 import com.example.ring.R;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
@@ -45,13 +50,16 @@ import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
+import cx.ring.model.TrustRequest;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.DRingService;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.Constants;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import ezvcard.property.Photo;
 
 public class NotificationServiceImpl extends NotificationService implements Observer<ServiceEvent> {
 
@@ -213,17 +221,78 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     @Override
     public void showTextNotification(CallContact contact, Conversation conversation, TreeMap<Long, TextMessage> texts) {
+        NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext);
 
+        messageNotificationBuilder.setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setSmallIcon(R.drawable.ic_ring_logo_white);
+        messageNotificationBuilder.setContentTitle(contact.getDisplayName());
+
+        Intent intentConversation;
+/*        if (ConversationFragment.isTabletMode(mContext)) {
+            intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
+                    .setClass(mContext, DRingService.class)
+                    .putExtra(ConversationFragment.KEY_CONVERSATION_ID, contact.getIds().get(0));
+        } else {*/
+        intentConversation = new Intent(Constants.ACTION_CONV)
+                .setClass(mContext, DRingService.class)
+                .putExtra(Constants.KEY_CONVERSATION_ID, contact.getIds().get(0));
+        //}
+
+        Intent intentDelete = new Intent(Constants.ACTION_CONV_READ)
+                .setClass(mContext, DRingService.class)
+                .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
+
+        messageNotificationBuilder.setContentIntent(PendingIntent.getService(mContext, new Random().nextInt(), intentConversation, 0))
+                .setDeleteIntent(PendingIntent.getService(mContext, new Random().nextInt(), intentDelete, 0));
+
+        if (contact.getPhoto() != null) {
+            Resources res = mContext.getResources();
+            int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
+            int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
+
+            Bitmap bmp = BitmapUtils.bytesToBitmap(contact.getPhoto());
+            if (bmp != null) {
+                messageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
+            }
+        }
+        if (texts.size() == 1) {
+            TextMessage txt = texts.firstEntry().getValue();
+            txt.setNotified(true);
+            messageNotificationBuilder.setContentText(txt.getMessage());
+            messageNotificationBuilder.setStyle(null);
+            messageNotificationBuilder.setWhen(txt.getTimestamp());
+        } else {
+            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+            for (TextMessage s : texts.values()) {
+                inboxStyle.addLine(Html.fromHtml("<b>" + DateUtils.formatDateTime(mContext, s.getTimestamp(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL) + "</b> " + s.getMessage()));
+                s.setNotified(true);
+            }
+            messageNotificationBuilder.setContentText(texts.lastEntry().getValue().getMessage());
+            messageNotificationBuilder.setStyle(inboxStyle);
+            messageNotificationBuilder.setWhen(texts.lastEntry().getValue().getTimestamp());
+        }
+
+        int notificationId = getTextNotificationId(contact);
+        notificationManager.notify(notificationId, messageNotificationBuilder.build());
+        mNotificationBuilders.put(notificationId, messageNotificationBuilder);
     }
 
     @Override
     public void cancelCallNotification(int notificationId) {
-
+        notificationManager.cancel(notificationId);
+        mNotificationBuilders.remove(notificationId);
     }
 
     @Override
     public void cancelTextNotification(CallContact contact) {
-
+        if (contact == null) {
+            return;
+        }
+        int notificationId = getTextNotificationId(contact);
+        notificationManager.cancel(notificationId);
+        mNotificationBuilders.remove(notificationId);
     }
 
     @Override
@@ -234,7 +303,78 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     @Override
     public void showIncomingTrustRequestNotification(Account account) {
+        int notificationId = getIncomingTrustNotificationId(account.getAccountID());
+        NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
 
+        if (messageNotificationBuilder != null) {
+            notificationManager.cancel(notificationId);
+        } else {
+            messageNotificationBuilder = new NotificationCompat.Builder(mContext);
+        }
+
+        Collection<TrustRequest> requests = account.getRequests();
+        if (requests.isEmpty()) {
+            return;
+        } else if (requests.size() == 1) {
+            TrustRequest request = requests.iterator().next();
+            messageNotificationBuilder = new NotificationCompat.Builder(mContext);
+            Bundle info = new Bundle();
+            info.putString(TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID, account.getAccountID());
+            info.putString(TRUST_REQUEST_NOTIFICATION_FROM, request.getContactId());
+            messageNotificationBuilder.setContentText(request.getDisplayname())
+                    .addAction(R.drawable.ic_action_accept, mContext.getText(R.string.accept),
+                            PendingIntent.getService(mContext, new Random().nextInt(),
+                                    new Intent(Constants.ACTION_TRUST_REQUEST_ACCEPT)
+                                            .setClass(mContext, DRingService.class)
+                                            .putExtras(info),
+                                    PendingIntent.FLAG_ONE_SHOT))
+                    .addAction(R.drawable.ic_delete_white, mContext.getText(R.string.refuse),
+                            PendingIntent.getService(mContext, new Random().nextInt(),
+                                    new Intent(Constants.ACTION_TRUST_REQUEST_REFUSE)
+                                            .setClass(mContext, DRingService.class)
+                                            .putExtras(info),
+                                    PendingIntent.FLAG_ONE_SHOT))
+                    .addAction(R.drawable.ic_close_white, mContext.getText(R.string.block),
+                            PendingIntent.getService(mContext, new Random().nextInt(),
+                                    new Intent(Constants.ACTION_TRUST_REQUEST_BLOCK)
+                                            .setClass(mContext, DRingService.class)
+                                            .putExtras(info),
+                                    PendingIntent.FLAG_ONE_SHOT));
+            Resources res = mContext.getResources();
+            int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
+            int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
+            List<Photo> photos = request.getVCard().getPhotos();
+            if (photos != null && !photos.isEmpty()) {
+                Photo photo = photos.get(0);
+                messageNotificationBuilder.setLargeIcon(BitmapUtils.bytesToBitmap(photo.getData()));
+            } else {
+                Bitmap bmp;
+                bmp = BitmapFactory.decodeResource(res, R.drawable.ic_contact_picture);
+                if (bmp != null) {
+                    messageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
+                }
+            }
+        } else {
+            messageNotificationBuilder.setContentText(String.format(mContext.getString(R.string.contact_request_msg), Integer.toString(requests.size())));
+            messageNotificationBuilder.setLargeIcon(null);
+            messageNotificationBuilder.mActions.clear();
+        }
+
+        messageNotificationBuilder
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_ring_logo_white)
+                .setCategory(NotificationCompat.CATEGORY_SOCIAL)
+                .setContentTitle(mContext.getString(R.string.contact_request_title));
+        Intent intentOpenTrustRequestFragment = new Intent(Constants.ACTION_TRUST_REQUEST_PRESENT_FRAGMENT)
+                .setClass(mContext, DRingService.class)
+                .putExtra(Constants.KEY_ACCOUNT_ID, account.getAccountID());
+        messageNotificationBuilder.setContentIntent(PendingIntent.getService(mContext,
+                new Random().nextInt(), intentOpenTrustRequestFragment, PendingIntent.FLAG_ONE_SHOT));
+
+        mNotificationBuilders.put(notificationId, messageNotificationBuilder);
+        notificationManager.notify(notificationId, messageNotificationBuilder.build());
     }
 
     @Override

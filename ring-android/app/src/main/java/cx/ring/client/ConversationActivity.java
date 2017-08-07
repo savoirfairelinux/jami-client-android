@@ -36,6 +36,7 @@ import cx.ring.R;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.utils.Constants;
 
 public class ConversationActivity extends AppCompatActivity {
 
@@ -91,13 +92,13 @@ public class ConversationActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (getIntent() == null || getIntent().getData() == null) {
+        if (getIntent() == null || getIntent().getExtras() == null) {
             return;
         }
 
         if (mConversationFragment == null) {
             Bundle bundle = new Bundle();
-            bundle.putString(ConversationFragment.KEY_CONVERSATION_ID, getIntent().getData().getLastPathSegment());
+            bundle.putString(Constants.KEY_CONVERSATION_ID, getIntent().getStringExtra(Constants.KEY_CONVERSATION_ID));
             bundle.putString(CallFragment.KEY_NUMBER, getIntent().getStringExtra(CallFragment.KEY_NUMBER));
 
             mConversationFragment = new ConversationFragment();

@@ -72,7 +72,7 @@ import cx.ring.smartlist.SmartListView;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
-import cx.ring.utils.ContentUriHandler;
+import cx.ring.utils.Constants;
 import cx.ring.viewholders.SmartListViewHolder;
 
 public class SmartListFragment extends BaseFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
@@ -509,12 +509,12 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         if (!isTabletMode) {
             Intent intent = new Intent()
                     .setClass(getActivity(), ConversationActivity.class)
-                    .setAction(Intent.ACTION_VIEW)
-                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, callContact.getIds().get(0)));
+                    .setAction(Constants.ACTION_CONV)
+                    .putExtra(Constants.KEY_CONVERSATION_ID, callContact.getIds().get(0));
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
         } else {
             Bundle bundle = new Bundle();
-            bundle.putString(ConversationFragment.KEY_CONVERSATION_ID, callContact.getIds().get(0));
+            bundle.putString(Constants.KEY_CONVERSATION_ID, callContact.getIds().get(0));
             ((HomeActivity) getActivity()).startConversationTablet(bundle);
         }
     }

@@ -66,7 +66,6 @@ import cx.ring.mvp.BaseFragment;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.CircleTransform;
 import cx.ring.utils.Constants;
-import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.KeyboardVisibilityManager;
 
 public class CallFragment extends BaseFragment<CallPresenter> implements CallView {
@@ -563,13 +562,13 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         if (ConversationFragment.isTabletMode(getActivity())) {
             intent.setClass(getActivity(), HomeActivity.class)
                     .setAction(Constants.ACTION_CONV_ACCEPT)
-                    .putExtra(ConversationFragment.KEY_CONVERSATION_ID, conversationId);
+                    .putExtra(Constants.KEY_CONVERSATION_ID, conversationId);
             startActivity(intent);
         } else {
             intent.setClass(getActivity(), ConversationActivity.class)
-                    .setAction(Intent.ACTION_VIEW)
+                    .setAction(Constants.ACTION_CONV)
                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, conversationId));
+                    .putExtra(Constants.KEY_CONVERSATION_ID, conversationId);
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
         }
     }

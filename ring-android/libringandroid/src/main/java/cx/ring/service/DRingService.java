@@ -573,6 +573,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
             case Constants.ACTION_TRUST_REQUEST_ACCEPT:
             case Constants.ACTION_TRUST_REQUEST_REFUSE:
             case Constants.ACTION_TRUST_REQUEST_BLOCK:
+            case Constants.ACTION_TRUST_REQUEST_PRESENT_FRAGMENT:
                 extras = intent.getExtras();
                 if (extras != null) {
                     handleTrustRequestAction(intent.getAction(), extras);
@@ -587,14 +588,10 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                     handleCallAction(intent.getAction(), extras);
                 }
                 break;
-            case Constants.ACTION_CONV_READ: {
-                String convId = intent.getData().getLastPathSegment();
-                Conversation conversation = mConversationFacade.getConversationById(convId);
-                if (conversation != null) {
-                    mConversationFacade.readConversation(conversation);
-                }
+            case Constants.ACTION_CONV:
+            case Constants.ACTION_CONV_READ:
+                handleConversationAction(intent);
                 break;
-            }
             default:
                 break;
         }
@@ -603,21 +600,32 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     private void handleTrustRequestAction(String action, Bundle extras) {
         String account = extras.getString(NotificationService.TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID);
         String from = extras.getString(NotificationService.TRUST_REQUEST_NOTIFICATION_FROM);
-        if (account != null && from != null) {
-            mNotificationService.cancelTrustRequestNotification(account);
-            switch (action) {
-                case Constants.ACTION_TRUST_REQUEST_ACCEPT:
+        switch (action) {
+            case Constants.ACTION_TRUST_REQUEST_ACCEPT:
+                if (account != null && from != null) {
                     mAccountService.acceptTrustRequest(account, from);
-                    break;
-                case Constants.ACTION_TRUST_REQUEST_REFUSE:
+                }
+                mNotificationService.cancelTrustRequestNotification(account);
+                break;
+            case Constants.ACTION_TRUST_REQUEST_REFUSE:
+                if (account != null && from != null) {
                     mPreferencesService.removeRequestPreferences(account, from);
                     mAccountService.discardTrustRequest(account, from);
-                    break;
-                case Constants.ACTION_TRUST_REQUEST_BLOCK:
+                }
+                mNotificationService.cancelTrustRequestNotification(account);
+                break;
+            case Constants.ACTION_TRUST_REQUEST_BLOCK:
+                if (account != null && from != null) {
                     mAccountService.discardTrustRequest(account, from);
                     mAccountService.removeContact(account, from, true);
-                    break;
-            }
+                }
+                mNotificationService.cancelTrustRequestNotification(account);
+                break;
+            case Constants.ACTION_TRUST_REQUEST_PRESENT_FRAGMENT:
+                startActivity(new Intent(Constants.ACTION_TRUST_REQUEST_PRESENT_FRAGMENT)
+                        .putExtras(extras)
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                break;
         }
     }
 
@@ -632,10 +640,8 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
             case Constants.ACTION_CALL_ACCEPT:
                 mCallService.accept(callId);
                 mNotificationService.cancelCallNotification(callId.hashCode());
-//FIXME We need to implement a navigator pattern to dispatch the event to the activity
-                startActivity(new Intent(Intent.ACTION_VIEW)
+                startActivity(new Intent(Constants.ACTION_CALL)
                         .putExtras(extras)
-                        .setAction(Constants.ACTION_CALL)
                         .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
             case Constants.ACTION_CALL_REFUSE:
@@ -649,11 +655,26 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 mNotificationService.cancelCallNotification(callId.hashCode());
                 break;
             case Constants.ACTION_CALL_VIEW:
-                //FIXME We need to implement a navigator pattern to dispatch the event to the activity
-                startActivity(new Intent(Intent.ACTION_VIEW)
+                startActivity(new Intent(Constants.ACTION_CALL)
                         .putExtras(extras)
-                        .setAction(Constants.ACTION_CALL)
                         .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                break;
+        }
+    }
+
+    private void handleConversationAction(Intent intent) {
+        switch (intent.getAction()) {
+            case Constants.ACTION_CONV:
+                startActivity(new Intent(Constants.ACTION_CONV)
+                        .putExtras(intent.getExtras())
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                break;
+            case Constants.ACTION_CONV_READ:
+                String conversationId = intent.getData().getLastPathSegment();
+                Conversation conversation = mConversationFacade.getConversationById(conversationId);
+                if (conversation != null) {
+                    mConversationFacade.readConversation(conversation);
+                }
                 break;
         }
     }
@@ -722,10 +743,8 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                         Bundle extras = new Bundle();
                         extras.putString("account", mAccountService.getCurrentAccount().getAccountID());
                         extras.putString("callId", call.getCallId());
-                        //FIXME We need to implement a navigator pattern to dispatch the event to the activity
-                        startActivity(new Intent(Intent.ACTION_VIEW)
+                        startActivity(new Intent(Constants.ACTION_CALL)
                                 .putExtras(extras)
-                                .setAction(Constants.ACTION_CALL)
                                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                     }
                     break;
