@@ -632,10 +632,8 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
             case Constants.ACTION_CALL_ACCEPT:
                 mCallService.accept(callId);
                 mNotificationService.cancelCallNotification(callId.hashCode());
-//FIXME We need to implement a navigator pattern to dispatch the event to the activity
-                startActivity(new Intent(Intent.ACTION_VIEW)
+                startActivity(new Intent(Constants.ACTION_CALL)
                         .putExtras(extras)
-                        .setAction(Constants.ACTION_CALL)
                         .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
             case Constants.ACTION_CALL_REFUSE:
@@ -649,10 +647,8 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 mNotificationService.cancelCallNotification(callId.hashCode());
                 break;
             case Constants.ACTION_CALL_VIEW:
-                //FIXME We need to implement a navigator pattern to dispatch the event to the activity
-                startActivity(new Intent(Intent.ACTION_VIEW)
+                startActivity(new Intent(Constants.ACTION_CALL)
                         .putExtras(extras)
-                        .setAction(Constants.ACTION_CALL)
                         .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
         }
@@ -722,10 +718,8 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                         Bundle extras = new Bundle();
                         extras.putString("account", mAccountService.getCurrentAccount().getAccountID());
                         extras.putString("callId", call.getCallId());
-                        //FIXME We need to implement a navigator pattern to dispatch the event to the activity
-                        startActivity(new Intent(Intent.ACTION_VIEW)
+                        startActivity(new Intent(Constants.ACTION_CALL)
                                 .putExtras(extras)
-                                .setAction(Constants.ACTION_CALL)
                                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                     }
                     break;

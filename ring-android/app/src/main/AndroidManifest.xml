@@ -229,6 +229,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <data android:mimeType="vnd.android.cursor.item/phone_v2" />
                 <data android:mimeType="vnd.android.cursor.item/person" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="cx.ring.action.CALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".client.ConversationActivity"
