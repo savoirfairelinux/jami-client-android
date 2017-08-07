@@ -13,7 +13,6 @@
   <string name="prompt_username">Nazwa użytkownika</string>
   <string name="prompt_password">Hasło</string>
   <string name="action_create">Stwórz konto</string>
-  <string name="action_create_short">Zarejestruj</string>
   <string name="error_field_required">To pole jest wymagane</string>
   <string name="dialog_wait_create">Dodawanie konta</string>
   <string name="dialog_wait_create_details">Poczekaj, proszę, aż twoje nowe konto zostanie dodane...</string>

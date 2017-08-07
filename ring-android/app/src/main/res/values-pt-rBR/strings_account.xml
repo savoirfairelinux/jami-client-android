@@ -13,7 +13,6 @@
   <string name="prompt_username">Nome de usuário</string>
   <string name="prompt_password">Senha</string>
   <string name="action_create">Criar conta</string>
-  <string name="action_create_short">Registrar</string>
   <string name="error_field_required">Este campo é obrigatório</string>
   <string name="dialog_wait_create">Adicionando conta</string>
   <string name="dialog_wait_create_details">Por favor, aguarde enquanto sua nova conta é adicionada...</string>
@@ -115,6 +114,8 @@ Você pode editar sua conta depois.</string>
   <string name="account_export_end_error_title">Erro</string>
   <string name="account_export_end_error_message">Não foi possível exportar a conta. Um erro desconhecido ocorreu.</string>
   <string name="account_enter_password">Entre a senha</string>
+  <string name="account_share_body">Contacte-me usando \'%1$s\' na rede de comunicação distribuída Ring: https://ring.cx</string>
+  <string name="account_share_body_with_username">Contacte-me usando \'%1$s\' ou via meu usuário público \'%2$s\' na rede de comunicação distribuída Ring: https://ring.cx</string>
   <string name="account_contact_me">Encontre-me no Ring !</string>
   <string name="update_account">Atualize a conta</string>
   <string name="account_migration">Sua conta no Ring pode ser atualizada.\nPor favor insira sua senha.</string>

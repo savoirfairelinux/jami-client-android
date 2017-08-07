@@ -12,7 +12,6 @@
   <string name="prompt_username">Korisničko ime</string>
   <string name="prompt_password">Lozinka</string>
   <string name="action_create">Napravi račun</string>
-  <string name="action_create_short">Registriraj</string>
   <string name="error_field_required">Potrebno je ovo polje</string>
   <string name="dialog_wait_create">Dodajem račun</string>
   <string name="dialog_wait_create_details">Molim pričekajte dok se vaš novi račun ne doda...</string>

@@ -134,6 +134,8 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="accept">Aceitar</string>
   <string name="refuse">Recusar</string>
   <string name="block">Bloquear</string>
+  <string name="contact_request_title">Nova requisição de contato</string>
+  <string name="contact_request_msg">Você tem %1$s requisição de contato</string>
   <string name="contact_request_account">para %1$s</string>
   <string name="no_requests">0 solicitações de contato</string>
   <!--Send contact requests-->
