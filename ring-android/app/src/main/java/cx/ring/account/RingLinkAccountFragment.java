@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
@@ -25,12 +25,14 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.application.RingAppApplication;
@@ -80,6 +82,14 @@ public class RingLinkAccountFragment extends BaseFragment<RingLinkAccountPresent
     @OnTextChanged(value = R.id.ring_add_pin, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterPinChanged(Editable txt) {
         presenter.pinChanged(txt.toString());
+    }
+
+    @OnEditorAction(value = R.id.ring_add_pin)
+    public boolean onPasswordConfirmDone(int keyCode) {
+        if (keyCode == EditorInfo.IME_ACTION_DONE) {
+            presenter.linkClicked();
+        }
+        return false;
     }
 
     @Override

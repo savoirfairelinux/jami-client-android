@@ -80,8 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    app:passwordToggleEnabled="true">
+                    android:layout_marginRight="12dp">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/ring_add_pin"
@@ -89,9 +88,8 @@
                         android:layout_height="wrap_content"
                         android:digits="0123456789abcdefABCDEF"
                         android:hint="@string/account_link_prompt_pin"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
-                        android:maxLines="1" />
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"/>
 
                 </android.support.design.widget.TextInputLayout>
 
