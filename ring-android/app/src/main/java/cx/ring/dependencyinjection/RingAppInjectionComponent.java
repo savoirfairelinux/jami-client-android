@@ -35,17 +35,21 @@ import cx.ring.contactrequests.BlackListFragment;
 import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.AccountsManagementFragment;
-import cx.ring.settings.AdvancedAccountFragment;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
-import cx.ring.settings.GeneralAccountFragment;
-import cx.ring.settings.MediaPreferenceFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
-import cx.ring.settings.SecurityAccountFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.navigation.RingNavigationFragment;
+import cx.ring.settings.AdvancedAccountFragment;
+import cx.ring.settings.GeneralAccountFragment;
+import cx.ring.settings.MediaPreferenceFragment;
+import cx.ring.settings.SecurityAccountFragment;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
+import cx.ring.tv.call.CallActivity;
+import cx.ring.tv.client.MainFragment;
+import cx.ring.tv.search.RingSearchFragment;
+import cx.ring.tv.wizard.WizardActivity;
 import dagger.Component;
 
 @Singleton
@@ -101,4 +105,18 @@ public interface RingAppInjectionComponent extends RingInjectionComponent {
     void inject(HomeAccountCreationFragment fragment);
 
     void inject(RingLinkAccountFragment fragment);
+
+//   AndroidTV injection
+
+    void inject(cx.ring.tv.call.CallFragment fragment);
+
+    void inject(MainFragment fragment);
+
+    void inject(RingSearchFragment fragment);
+
+    void inject(cx.ring.tv.client.HomeActivity activity);
+
+    void inject(WizardActivity activity);
+
+    void inject(CallActivity activity);
 }
