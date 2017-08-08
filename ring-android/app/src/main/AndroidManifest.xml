@@ -252,6 +252,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <action android:name=".service.DRingService" />
             </intent-filter>
         </service>
+
+        <!-- AndroidTV section -->
+        <activity
+            android:name="cx.ring.tv.client.HomeActivity"
+            android:banner="@drawable/banner"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.Leanback"
+            android:logo="@drawable/ic_launcher"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".tv.wizard.WizardActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+            android:screenOrientation="fullUser"
+            android:theme="@style/AppThemeBase" />
+
+        <activity android:name="cx.ring.tv.search.SearchActivity" />
+        <activity
+            android:name="cx.ring.tv.call.CallActivity"
+            android:theme="@style/AppThemeBase">
+            <intent-filter>
+                <action android:name="cx.ring.action.CALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
