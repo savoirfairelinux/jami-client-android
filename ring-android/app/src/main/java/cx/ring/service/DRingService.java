@@ -26,11 +26,13 @@
 package cx.ring.service;
 
 import android.app.Service;
+import android.app.UiModeManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.net.ConnectivityManager;
 import android.os.Build;
@@ -59,6 +61,7 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Codec;
 import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
+import cx.ring.model.SipCall;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
@@ -69,6 +72,7 @@ import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.PreferencesService;
+import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
@@ -145,6 +149,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         mPreferencesService.addObserver(this);
         mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
+        mCallService.addObserver(this);
     }
 
     @Override
@@ -156,6 +161,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         mPreferencesService.removeObserver(this);
         mAccountService.removeObserver(this);
         mConversationFacade.removeObserver(this);
+        mCallService.removeObserver(this);
     }
 
     @Override
@@ -664,14 +670,24 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 mNotificationService.cancelCallNotification(callId.hashCode());
                 break;
             case ACTION_CALL_VIEW:
-                startActivity(new Intent(Intent.ACTION_VIEW)
-                        .putExtras(extras)
-                        .setClass(getApplicationContext(), CallActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-                break;
+                if (isTv()){
+                    startActivity(new Intent(Intent.ACTION_VIEW)
+                            .putExtras(extras)
+                            .setClass(getApplicationContext(), TVCallActivity.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                }else {
+                    startActivity(new Intent(Intent.ACTION_VIEW)
+                            .putExtras(extras)
+                            .setClass(getApplicationContext(), CallActivity.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                } break;
         }
     }
-
+    private boolean isTv() {
+        UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
+        return (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION);
+    }
     private class ContactsContentObserver extends ContentObserver {
 
         ContactsContentObserver() {
@@ -711,6 +727,25 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 case CONTACT_ADDED:
                 case CONTACT_REMOVED:
                     refreshContacts();
+                    break;
+            }
+        }
+
+        else if (observable instanceof CallService && arg != null) {
+            switch (arg.getEventType()) {
+                case INCOMING_CALL:
+
+                    SipCall call = arg.getEventInput(ServiceEvent.EventInput.CALL, SipCall.class);
+                    if (call != null && isTv()) {
+                        Log.d(TAG, "call id : " + call.getCallId());
+                        Bundle extras = new Bundle();
+                        extras.putString("account", mAccountService.getCurrentAccount().getAccountID());
+                        extras.putString("callId", call.getCallId());
+                        startActivity(new Intent(Intent.ACTION_VIEW)
+                                .putExtras(extras)
+                                .setClass(getApplicationContext(), TVCallActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                    }
                     break;
             }
         }

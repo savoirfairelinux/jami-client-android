@@ -14,6 +14,7 @@ dependencies {
     compile 'com.android.support:preference-v14:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:leanback-v17:25.3.1'
 
     // ORM
     compile 'com.j256.ormlite:ormlite-android:4.48'
@@ -40,7 +41,7 @@ android {
     buildToolsVersion "26.0.1"
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 25
     }
 
