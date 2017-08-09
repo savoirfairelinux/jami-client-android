@@ -40,31 +40,37 @@ import java.util.concurrent.Future;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.BuildConfig;
 import cx.ring.daemon.Callback;
 import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.PresenceCallback;
 import cx.ring.daemon.VideoCallback;
+import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
+import cx.ring.dependencyinjection.PresenterInjectionModule;
 import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.dependencyinjection.RingInjectionModule;
+import cx.ring.dependencyinjection.ServiceInjectionModule;
 import cx.ring.service.CallManagerCallBack;
+import cx.ring.service.ConfigurationManagerCallback;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ConferenceService;
-import cx.ring.services.ConfigurationManagerCallback;
 import cx.ring.services.ContactService;
 import cx.ring.services.DaemonService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
 import cx.ring.services.PresenceService;
-import cx.ring.utils.Constants;
 import cx.ring.utils.Log;
 
-public abstract class RingApplication extends Application {
+public class RingApplication extends Application {
 
     private final static String TAG = RingApplication.class.getName();
+    public final static String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
     public static final int PERMISSIONS_REQUEST = 57;
 
+    private RingInjectionComponent mRingInjectionComponent;
     private Map<String, Boolean> mPermissionsBeingAsked;
 
     // Android Specific callbacks handlers. They rely on low level services notifications
@@ -76,6 +82,10 @@ public abstract class RingApplication extends Application {
     private ConfigurationCallback mAccountAndContactCallbackHandler;
     private PresenceCallback mPresenceCallbackHandler;
     private VideoCallback mHardwareCallbackHandler;
+    /**
+     * Handler to run tasks that needs to be on main thread (UI updates)
+     */
+    public static final Handler uiHandler = new Handler(Looper.getMainLooper());
 
     @Inject
     @Named("DaemonExecutor")
@@ -107,8 +117,6 @@ public abstract class RingApplication extends Application {
 
     @Inject
     PresenceService mPresenceService;
-
-    public abstract RingInjectionComponent getRingInjectionComponent();
 
     static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
     private final BroadcastReceiver ringerModeListener = new BroadcastReceiver() {
@@ -192,7 +200,7 @@ public abstract class RingApplication extends Application {
                 ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
                 registerReceiver(ringerModeListener, RINGER_FILTER);
 
-                if (mDeviceRuntimeService.hasVideoPermission()) {
+                if(mDeviceRuntimeService.hasVideoPermission()) {
                     //initVideo is called here to give time to the application to initialize hardware cameras
                     mHardwareService.initVideo();
                 }
@@ -207,7 +215,7 @@ public abstract class RingApplication extends Application {
             Log.e(TAG, "DRingService start failed", e);
         }
 
-        Intent intent = new Intent(Constants.DRING_CONNECTION_CHANGED);
+        Intent intent = new Intent(DRING_CONNECTION_CHANGED);
         intent.putExtra("connected", mDaemonService.isStarted());
         sendBroadcast(intent);
 
@@ -223,7 +231,7 @@ public abstract class RingApplication extends Application {
                 mDaemonService.stopDaemon();
                 mConfigurationCallback = null;
                 mCallManagerCallBack = null;
-                Intent intent = new Intent(Constants.DRING_CONNECTION_CHANGED);
+                Intent intent = new Intent(DRING_CONNECTION_CHANGED);
                 intent.putExtra("connected", mDaemonService.isStarted());
                 sendBroadcast(intent);
 
@@ -246,6 +254,16 @@ public abstract class RingApplication extends Application {
 
         mPermissionsBeingAsked = new HashMap<>();
 
+        // building injection dependency tree
+        mRingInjectionComponent = DaggerRingInjectionComponent.builder()
+                .ringInjectionModule(new RingInjectionModule(this))
+                .presenterInjectionModule(new PresenterInjectionModule(this))
+                .serviceInjectionModule(new ServiceInjectionModule(this))
+                .build();
+
+        // we can now inject in our self whatever modules define
+        mRingInjectionComponent.inject(this);
+
         // to bootstrap the daemon
         Intent intent = new Intent(this, DRingService.class);
         startService(intent);
@@ -260,7 +278,9 @@ public abstract class RingApplication extends Application {
         terminateDaemon();
     }
 
-
+    public RingInjectionComponent getRingInjectionComponent() {
+        return mRingInjectionComponent;
+    }
 
     public boolean canAskForPermission(String permission) {
 

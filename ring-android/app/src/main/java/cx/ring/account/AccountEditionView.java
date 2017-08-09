@@ -19,6 +19,8 @@
 
 package cx.ring.account;
 
+import cx.ring.model.Account;
+
 public interface AccountEditionView {
 
     void exit();

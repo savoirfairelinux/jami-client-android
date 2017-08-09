@@ -45,7 +45,7 @@ import cx.ring.R;
 import cx.ring.account.AccountsAdapter;
 import cx.ring.account.AccountsManagementPresenter;
 import cx.ring.account.AccountsManagementView;
-import cx.ring.application.RingAppApplication;
+import cx.ring.application.RingApplication;
 import cx.ring.account.AccountEditionActivity;
 import cx.ring.client.AccountWizard;
 import cx.ring.client.HomeActivity;
@@ -73,7 +73,7 @@ public class AccountsManagementFragment extends BaseFragment<AccountsManagementP
         Log.d(TAG, "Create Account Management Fragment");
 
         // dependency injection
-        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         mAccountsAdapter = new AccountsAdapter(this);
     }

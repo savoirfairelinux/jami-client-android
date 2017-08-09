@@ -59,7 +59,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
-import cx.ring.application.RingAppApplication;
+import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
@@ -73,6 +73,7 @@ import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
+import cx.ring.utils.NetworkUtils;
 import cx.ring.viewholders.SmartListViewHolder;
 
 public class SmartListFragment extends BaseFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
@@ -226,7 +227,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         ButterKnife.bind(this, inflatedView);
 
         // dependency injection
-        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         mNewContact.setVisibility(View.GONE);
 

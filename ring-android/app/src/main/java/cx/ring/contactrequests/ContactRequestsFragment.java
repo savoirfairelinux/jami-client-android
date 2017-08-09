@@ -35,7 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cx.ring.R;
-import cx.ring.application.RingAppApplication;
+import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.utils.Log;
@@ -69,7 +69,7 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
         mUnbinder = ButterKnife.bind(this, inflatedView);
 
         // dependency injection
-        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         return inflatedView;
     }
@@ -128,7 +128,7 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
 
     @Override
     public void updateView(final ArrayList<PendingContactRequestsViewModel> list) {
-        getActivity().runOnUiThread(new Runnable() {
+        RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (mPaneTextView == null || mEmptyTextView == null) {

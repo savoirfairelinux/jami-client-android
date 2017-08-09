@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import cx.ring.R;
 import cx.ring.model.Codec;
 
-public class CodecPreference extends Preference {
+class CodecPreference extends Preference {
     private static final String TAG = CodecPreference.class.getSimpleName();
 
     private CodecAdapter listAdapter;
@@ -99,7 +99,7 @@ public class CodecPreference extends Preference {
         setListViewHeight(mCodecList, (LinearLayout) mCodecList.getParent());
     }
 
-    public ArrayList<Long> getActiveCodecList() {
+    ArrayList<Long> getActiveCodecList() {
         ArrayList<Long> results = new ArrayList<>();
         for (int i = 0; i < listAdapter.getCount(); ++i) {
             if (listAdapter.getItem(i).isEnabled()) {
@@ -109,7 +109,7 @@ public class CodecPreference extends Preference {
         return results;
     }
 
-    public void setCodecs(ArrayList<Codec> codecs) {
+    void setCodecs(ArrayList<Codec> codecs) {
         listAdapter.setDataset(codecs);
     }
 
@@ -213,7 +213,7 @@ public class CodecPreference extends Preference {
         }
     }
 
-    public void refresh() {
+    void refresh() {
         if (null != this.listAdapter) {
             this.listAdapter.notifyDataSetChanged();
         }

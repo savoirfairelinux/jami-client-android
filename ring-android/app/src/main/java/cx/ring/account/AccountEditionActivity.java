@@ -50,12 +50,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
-import cx.ring.application.RingAppApplication;
+import cx.ring.application.RingApplication;
 import cx.ring.contactrequests.BlackListFragment;
-import cx.ring.settings.AdvancedAccountFragment;
-import cx.ring.settings.GeneralAccountFragment;
-import cx.ring.settings.MediaPreferenceFragment;
-import cx.ring.settings.SecurityAccountFragment;
+import cx.ring.fragments.AdvancedAccountFragment;
+import cx.ring.fragments.GeneralAccountFragment;
+import cx.ring.fragments.MediaPreferenceFragment;
+import cx.ring.fragments.SecurityAccountFragment;
 
 public class AccountEditionActivity extends AppCompatActivity implements AccountEditionView {
 
@@ -87,7 +87,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         ButterKnife.bind(this);
 
         // dependency injection
-        ((RingAppApplication) getApplication()).getRingInjectionComponent().inject(this);
+        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
         mEditionPresenter.bindView(this);
         String accountId = getIntent().getData().getLastPathSegment();
         mEditionPresenter.init(accountId);
@@ -231,7 +231,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @Override
     public void displayAccountName(final String name) {
-        runOnUiThread(new Runnable() {
+        RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
                 Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);

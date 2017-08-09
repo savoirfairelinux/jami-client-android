@@ -41,14 +41,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnEditorAction;
 import cx.ring.R;
-import cx.ring.application.RingAppApplication;
+import cx.ring.application.RingApplication;
 import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
+import cx.ring.utils.RegisteredNameFilter;
+import cx.ring.utils.RegisteredNameTextWatcher;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
-import cx.ring.utils.RegisteredNameFilter;
-import cx.ring.utils.RegisteredNameTextWatcher;
 
 public class RegisterNameDialog extends DialogFragment implements Observer<ServiceEvent> {
     static final String TAG = RegisterNameDialog.class.getSimpleName();
@@ -117,7 +117,7 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
     }
 
     private void handleBlockchainResult(final int state, final String name) {
-        getActivity().runOnUiThread(new Runnable() {
+        RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
                 String actualName = mUsernameTxt.getText().toString();
@@ -160,7 +160,7 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
         ButterKnife.bind(this, view);
 
         // dependency injection
-        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         String accountId = "";
         Bundle args = getArguments();

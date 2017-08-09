@@ -42,7 +42,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.R;
-import cx.ring.application.RingAppApplication;
+import cx.ring.application.RingApplication;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.SIPCreationView;
 import cx.ring.wizard.SIPCreationPresenter;
@@ -75,7 +75,7 @@ public class SIPAccountCreationFragment extends BaseFragment<SIPCreationPresente
         ButterKnife.bind(this, inflatedView);
 
         // dependency injection
-        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         return inflatedView;
     }
@@ -225,7 +225,7 @@ public class SIPAccountCreationFragment extends BaseFragment<SIPCreationPresente
                            final DialogInterface.OnClickListener listenerPositive,
                            final DialogInterface.OnClickListener listenerNegative) {
 
-        getActivity().runOnUiThread(new Runnable() {
+        RingApplication.uiHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (mProgress != null && mProgress.isShowing()) {

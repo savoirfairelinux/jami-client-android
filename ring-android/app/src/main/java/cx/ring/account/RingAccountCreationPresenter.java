@@ -19,8 +19,13 @@
  */
 package cx.ring.account;
 
+import android.support.annotation.NonNull;
+
+import java.lang.ref.WeakReference;
+
 import javax.inject.Inject;
 
+import cx.ring.application.RingApplication;
 import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
@@ -62,7 +67,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         mAccountService.addObserver(this);
     }
 
-    void userNameChanged(String userName) {
+    void userNameChanged(@NonNull String userName) {
         if (!userName.isEmpty()) {
             if (mNameLookupInputHandler == null) {
                 mNameLookupInputHandler = new NameLookupInputHandler(mAccountService, "");
@@ -184,15 +189,20 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
             return;
         }
 
-        switch (event.getEventType()) {
-            case REGISTERED_NAME_FOUND:
-                int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
-                String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                handleBlockchainResult(state, name);
-                break;
-            default:
-                break;
-        }
+        RingApplication.uiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                switch (event.getEventType()) {
+                    case REGISTERED_NAME_FOUND:
+                        int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
+                        String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                        handleBlockchainResult(state, name);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     @Override

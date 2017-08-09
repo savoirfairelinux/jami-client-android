@@ -30,7 +30,9 @@ import java.util.ArrayList;
 
 import cx.ring.R;
 import cx.ring.adapters.NumberAdapter;
+import cx.ring.client.CallActivity;
 import cx.ring.model.CallContact;
+import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
 import cx.ring.model.Uri;

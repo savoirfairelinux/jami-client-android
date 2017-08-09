@@ -2,6 +2,7 @@
  *  Copyright (C) 2016 Savoir-faire Linux Inc.
  *
  *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
+ *  Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,13 +22,17 @@ package cx.ring.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
 
 import cx.ring.model.Settings;
+import cx.ring.utils.NetworkUtils;
 
 public class SharedPreferencesServiceImpl extends PreferencesService {
 
@@ -41,8 +46,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     @Inject
     protected Context mContext;
 
-    @Inject
-    protected DeviceRuntimeService mDevideRuntimeService;
+    private final Map<String, Set<String>> mNotifiedRequests = new HashMap<>();
 
     public SharedPreferencesServiceImpl() {
         mUserSettings = null;
@@ -76,7 +80,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         }
 
         mUserSettings.setAllowMobileData(appPrefs.getBoolean(RING_MOBILE_DATA, false));
-        mUserSettings.setAllowSystemContacts(appPrefs.getBoolean(RING_SYSTEM_CONTACTS, true));
+        mUserSettings.setAllowSystemContacts(appPrefs.getBoolean(RING_SYSTEM_CONTACTS, false));
         mUserSettings.setAllowPlaceSystemCalls(appPrefs.getBoolean(RING_PLACE_CALLS, false));
         mUserSettings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
 
@@ -94,7 +98,6 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     private void saveRequests(String accountId, Set<String> requests) {
         SharedPreferences preferences = mContext.getSharedPreferences(RING_REQUESTS, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = preferences.edit();
-        edit.clear();
         edit.putStringSet(accountId, requests);
         edit.apply();
     }
@@ -102,38 +105,32 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     @Override
     public void saveRequestPreferences(String accountId, String contactId) {
         Set<String> requests = loadRequestsPreferences(accountId);
-        if (requests == null) {
-            requests = new HashSet<>();
-        }
-
         requests.add(contactId);
         saveRequests(accountId, requests);
     }
 
     @Override
-    public Set<String> loadRequestsPreferences(String accountId) {
-        SharedPreferences preferences = mContext.getSharedPreferences(RING_REQUESTS, Context.MODE_PRIVATE);
-        return preferences.getStringSet(accountId, null);
+    @NonNull
+    public Set<String> loadRequestsPreferences(@NonNull String accountId) {
+        Set<String> requests = mNotifiedRequests.get(accountId);
+        if (requests == null) {
+            SharedPreferences preferences = mContext.getSharedPreferences(RING_REQUESTS, Context.MODE_PRIVATE);
+            requests = new HashSet<>(preferences.getStringSet(accountId, new HashSet<String>()));
+            mNotifiedRequests.put(accountId, requests);
+        }
+        return requests;
     }
 
     @Override
     public void removeRequestPreferences(String accountId, String contactId) {
         Set<String> requests = loadRequestsPreferences(accountId);
-        if (requests == null) {
-            return;
-        }
-
         requests.remove(contactId);
         saveRequests(accountId, requests);
     }
 
-
     @Override
     public boolean hasNetworkConnected() {
-        return mDevideRuntimeService.isConnectedWifi()
-                || mDevideRuntimeService.isConnectedEthernet()
-                || mDevideRuntimeService.isConnectedBluetooth()
-                || (mDevideRuntimeService.isConnectedMobile() && getUserSettings().isAllowMobileData());
+        return NetworkUtils.isConnectivityAllowed(mContext, getUserSettings().isAllowMobileData());
     }
 
 }

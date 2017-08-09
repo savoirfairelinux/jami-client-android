@@ -54,7 +54,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.application.RingAppApplication;
+import cx.ring.application.RingApplication;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
 import cx.ring.client.ConversationActivity;
@@ -63,9 +63,9 @@ import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.service.DRingService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.CircleTransform;
-import cx.ring.utils.Constants;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.KeyboardVisibilityManager;
 
@@ -170,7 +170,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         ButterKnife.bind(this, inflatedView);
 
         // dependency injection
-        ((RingAppApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
         mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "cx.ring.onIncomingCall");
@@ -562,7 +562,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         Intent intent = new Intent();
         if (ConversationFragment.isTabletMode(getActivity())) {
             intent.setClass(getActivity(), HomeActivity.class)
-                    .setAction(Constants.ACTION_CONV_ACCEPT)
+                    .setAction(DRingService.ACTION_CONV_ACCEPT)
                     .putExtra(ConversationFragment.KEY_CONVERSATION_ID, conversationId);
             startActivity(intent);
         } else {
