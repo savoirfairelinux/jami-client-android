@@ -59,9 +59,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:required="false" />
     <uses-feature
         android:name="android.hardware.microphone"
-        android:required="true" />
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.bluetooth"
+        android:required="false" />
+    <uses-feature
+        android:name="android.software.leanback"
         android:required="false" />
 
     <application
@@ -252,6 +255,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <action android:name=".service.DRingService" />
             </intent-filter>
         </service>
+
+        <!-- AndroidTV section  -->
+        <activity
+            android:name="cx.ring.tv.client.HomeActivity"
+            android:banner="@drawable/banner"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/title_activity_sflphone_home"
+            android:logo="@drawable/ic_launcher"
+            android:theme="@style/Theme.Leanback"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".tv.wizard.WizardActivity"
+            android:configChanges="screenSize|screenLayout|smallestScreenSize"
+
+            android:screenOrientation="fullUser"
+            android:theme="@style/AppThemeBase" />
+
+        <activity android:name="cx.ring.tv.search.SearchActivity"
+            android:theme="@style/Theme.Leanback"/>
+
+        <activity
+            android:name="cx.ring.tv.call.CallActivity"
+            android:theme="@style/AppThemeBase">
+            <intent-filter>
+                <action android:name="cx.ring.action.CALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
