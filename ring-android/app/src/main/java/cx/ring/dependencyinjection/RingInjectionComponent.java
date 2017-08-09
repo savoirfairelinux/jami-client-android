@@ -66,6 +66,11 @@ import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.ShareFragment;
 import cx.ring.share.SharePresenter;
+import cx.ring.tv.call.TVCallActivity;
+import cx.ring.tv.call.TVCallFragment;
+import cx.ring.tv.client.MainFragment;
+import cx.ring.tv.search.RingSearchFragment;
+import cx.ring.tv.wizard.WizardActivity;
 import dagger.Component;
 
 @Singleton
@@ -160,4 +165,18 @@ public interface RingInjectionComponent {
     void inject(HomeAccountCreationFragment fragment);
 
     void inject(RingLinkAccountFragment fragment);
+
+//    AndroidTV section
+
+    void inject(TVCallFragment fragment);
+
+    void inject(MainFragment fragment);
+
+    void inject(RingSearchFragment fragment);
+
+    void inject(cx.ring.tv.client.HomeActivity activity);
+
+    void inject(WizardActivity activity);
+
+    void inject(TVCallActivity activity);
 }
