@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_a65fe071",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/RingGuidedStepFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-08-10T20:53:10Z",
+      "side": 1,
+      "message": "Not used",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 5
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_261d90be",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/RingGuidedStepFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-08-10T20:53:10Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 65,
+        "startChar": 26,
+        "endLine": 65,
+        "endChar": 44
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_c65ae482",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVAccountWizard.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-08-10T20:53:10Z",
+      "side": 1,
+      "message": "Can be removed",
+      "range": {
+        "startLine": 169,
+        "startChar": 45,
+        "endLine": 169,
+        "endChar": 58
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_6665d844",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVProfileCreationFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-08-10T20:53:10Z",
+      "side": 1,
+      "message": "Can be removed",
+      "range": {
+        "startLine": 84,
+        "startChar": 94,
+        "endLine": 84,
+        "endChar": 100
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
