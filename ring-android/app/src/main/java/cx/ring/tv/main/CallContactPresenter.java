@@ -12,7 +12,7 @@
  * the License.
  */
 
-package cx.ring.tv.client;
+package cx.ring.tv.main;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -20,7 +20,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,8 +30,8 @@ import cx.ring.model.CallContact;
  * A CardPresenter is used to generate Views and bind Objects to them on demand.
  * It contains an Image CardView
  */
-public class CardPresenter extends Presenter {
-    private static final String TAG = CardPresenter.class.getSimpleName();
+public class CallContactPresenter extends Presenter {
+    private static final String TAG = CallContactPresenter.class.getSimpleName();
 
     private static int CARD_WIDTH = 313;
     private static int CARD_HEIGHT = 176;
@@ -68,13 +67,11 @@ public class CardPresenter extends Presenter {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
-        Log.d(TAG, "onCreateViewHolder");
         Context context = parent.getContext();
-
         ImageCardView cardView = new ImageCardView(context);
         cardView.setFocusable(true);
         cardView.setFocusableInTouchMode(true);
-        cardView.setBackgroundColor(context.getResources().getColor(R.color.fastlane_background));
+        cardView.setBackgroundColor(context.getResources().getColor(R.color.color_primary_dark));
         return new ViewHolder(cardView);
     }
 
@@ -82,8 +79,6 @@ public class CardPresenter extends Presenter {
     public void onBindViewHolder(Presenter.ViewHolder viewHolder, Object item) {
         CallContact contact = (CallContact) item;
         ((ViewHolder) viewHolder).setContact(contact);
-
-        Log.d(TAG, "onBindViewHolder");
         ((ViewHolder) viewHolder).mCardView.setTitleText(contact.getDisplayName());
         ((ViewHolder) viewHolder).mCardView.setContentText(contact.getIds().get(0));
         ((ViewHolder) viewHolder).mCardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
@@ -98,11 +93,11 @@ public class CardPresenter extends Presenter {
 
     @Override
     public void onUnbindViewHolder(Presenter.ViewHolder viewHolder) {
-        Log.d(TAG, "onUnbindViewHolder");
+        // Nothing to do
     }
 
     @Override
     public void onViewAttachedToWindow(Presenter.ViewHolder viewHolder) {
-        // TO DO
+        // Nothing to do
     }
 }

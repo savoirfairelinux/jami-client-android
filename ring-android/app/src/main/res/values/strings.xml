@@ -207,5 +207,6 @@ along with this program; if not, write to the Free Software
     <string name="contact_request_sent">Contact request sent</string>
 
     <string name="search_results">Search Results</string>
+    <string name="tv_contact_row_header">Contacts</string>
 
 </resources>
