@@ -2,9 +2,9 @@
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_browse_fragment"
-    android:name="cx.ring.tv.client.MainFragment"
+    android:name="cx.ring.tv.main.MainFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cx.ring.tv.client.HomeActivity"
+    tools:context="cx.ring.tv.main.HomeActivity"
     tools:deviceIds="tv"
     tools:ignore="MergeRootFrame" />
