@@ -258,7 +258,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <!-- AndroidTV section  -->
         <activity
-            android:name="cx.ring.tv.client.HomeActivity"
+            android:name="cx.ring.tv.main.HomeActivity"
             android:banner="@drawable/banner"
             android:icon="@drawable/ic_launcher"
             android:label="@string/title_activity_sflphone_home"
