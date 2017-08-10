@@ -43,7 +43,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
 import cx.ring.tv.call.TVCallActivity;
-import cx.ring.tv.client.CardPresenter;
+import cx.ring.tv.main.CallContactPresenter;
 import cx.ring.utils.Log;
 
 public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
@@ -119,7 +119,7 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
             @Override
             public void run() {
                 mRowsAdapter.clear();
-                ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenter());
+                ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CallContactPresenter());
                 listRowAdapter.add(contact);
                 HeaderItem header = new HeaderItem(getActivity().getResources().getString(R.string.search_results));
                 mRowsAdapter.add(new ListRow(header, listRowAdapter));
