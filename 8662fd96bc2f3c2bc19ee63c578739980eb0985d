@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba3841fe_a6408057",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/main/MainFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-08-11T15:49:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_e6ac4838",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 100
+      },
+      "revId": "8662fd96bc2f3c2bc19ee63c578739980eb0985d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3841fe_46aa541a",
         "filename": "ring-android/app/src/main/java/cx/ring/tv/main/MainFragment.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-11T14:59:12Z",
       "side": 1,
       "message": "This should be done in onViewCreated",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 26
+      },
+      "revId": "8662fd96bc2f3c2bc19ee63c578739980eb0985d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_0625ecc1",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/main/MainFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-08-11T15:49:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_46aa541a",
       "range": {
         "startLine": 52,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ba3841fe_462ff4a1",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/main/MainFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-08-11T15:49:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_06b04c8a",
+      "range": {
+        "startLine": 104,
+        "startChar": 60,
+        "endLine": 104,
+        "endChar": 63
+      },
+      "revId": "8662fd96bc2f3c2bc19ee63c578739980eb0985d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3841fe_a6bb6071",
         "filename": "ring-android/app/src/main/java/cx/ring/tv/main/MainPresenter.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-11T14:59:12Z",
       "side": 1,
       "message": "These should be private",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "8662fd96bc2f3c2bc19ee63c578739980eb0985d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_e621e8b5",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/main/MainPresenter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-08-11T15:49:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_a6bb6071",
       "range": {
         "startLine": 43,
         "startChar": 0,
