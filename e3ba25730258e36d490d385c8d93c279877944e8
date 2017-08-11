@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba3841fe_664f9893",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/RingGuidedStepFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-08-11T15:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_a65fe071",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 5
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3841fe_261d90be",
         "filename": "ring-android/app/src/main/java/cx/ring/tv/account/RingGuidedStepFragment.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-10T20:53:10Z",
       "side": 1,
       "message": "typo",
+      "range": {
+        "startLine": 65,
+        "startChar": 26,
+        "endLine": 65,
+        "endChar": 44
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_c644a476",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/RingGuidedStepFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-08-11T15:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_261d90be",
       "range": {
         "startLine": 65,
         "startChar": 26,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ba3841fe_864a9c81",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVAccountWizard.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-08-11T15:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_c65ae482",
+      "range": {
+        "startLine": 169,
+        "startChar": 45,
+        "endLine": 169,
+        "endChar": 58
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3841fe_264bd0b1",
         "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVHomeAccountCreationFragment.java",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-10T21:12:05Z",
       "side": 1,
       "message": "do not override nonnull",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 81
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_4681b48e",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVHomeAccountCreationFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-08-11T15:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_264bd0b1",
       "range": {
         "startLine": 46,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ba3841fe_267e30af",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVHomeAccountCreationFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-08-11T15:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_86c73c12",
+      "range": {
+        "startLine": 55,
+        "startChar": 32,
+        "endLine": 55,
+        "endChar": 58
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3841fe_66ccb836",
         "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVProfileCreationFragment.java",
         "patchSetId": 9
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ba3841fe_0677acd5",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVProfileCreationFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-08-11T15:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_66ccb836",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 81
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3841fe_c6d144cf",
         "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVProfileCreationFragment.java",
         "patchSetId": 9
@@ -151,6 +295,30 @@
       "writtenOn": "2017-08-10T21:12:05Z",
       "side": 1,
       "message": "do not override @nonnull",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 88
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_e673a8e5",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVProfileCreationFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-08-11T15:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_c6d144cf",
       "range": {
         "startLine": 44,
         "startChar": 0,
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "ba3841fe_c66dc406",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVRingAccountCreationFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-08-11T15:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_a6d6c0c3",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 81
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3841fe_06db2cee",
         "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVRingAccountCreationFragment.java",
         "patchSetId": 9
@@ -220,6 +412,30 @@
       "writtenOn": "2017-08-10T21:12:05Z",
       "side": 1,
       "message": "do not override @nonnull",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 88
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_a67240e3",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVRingAccountCreationFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-08-11T15:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_06db2cee",
       "range": {
         "startLine": 72,
         "startChar": 0,
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "ba3841fe_8663bc19",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVRingLinkAccountFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-08-11T15:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_e6d728be",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 81
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3841fe_46e534a7",
         "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVRingLinkAccountFragment.java",
         "patchSetId": 9
@@ -266,6 +506,30 @@
       "writtenOn": "2017-08-10T21:12:05Z",
       "side": 1,
       "message": "do not override @nonnull",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 88
+      },
+      "revId": "e3ba25730258e36d490d385c8d93c279877944e8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_666838f6",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVRingLinkAccountFragment.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-08-11T15:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3841fe_46e534a7",
       "range": {
         "startLine": 43,
         "startChar": 0,
