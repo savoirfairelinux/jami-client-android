@@ -217,6 +217,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
         }
+
+        presenter.hangupCall();
     }
 
     @Override
