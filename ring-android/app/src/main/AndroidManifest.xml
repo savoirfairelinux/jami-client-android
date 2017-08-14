@@ -263,7 +263,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:icon="@drawable/ic_launcher"
             android:label="@string/title_activity_sflphone_home"
             android:logo="@drawable/ic_launcher"
-            android:theme="@style/Theme.Leanback"
+            android:theme="@style/Theme.Ring.Leanback.CustomTitle"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
