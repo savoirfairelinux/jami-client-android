@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_ec3ef028",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/AccountWizardPresenter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-08-14T18:59:15Z",
+      "side": 1,
+      "message": "if (!TextUtils.isEmpty(mUsername)) {",
+      "range": {
+        "startLine": 227,
+        "startChar": 23,
+        "endLine": 227,
+        "endChar": 51
+      },
+      "revId": "f728380810d589f7de79e1933d56c906bcd53fb4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
