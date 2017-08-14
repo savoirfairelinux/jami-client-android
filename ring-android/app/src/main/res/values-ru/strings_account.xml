@@ -13,6 +13,8 @@
   <string name="prompt_username">Имя пользователя</string>
   <string name="prompt_password">Пароль</string>
   <string name="action_create">Создать аккаунт</string>
+  <string name="action_create_short">Создать</string>
+  <string name="action_register">Регистрация</string>
   <string name="error_field_required">Это поле обязательно для заполнения</string>
   <string name="dialog_wait_create">Добавление аккаунта</string>
   <string name="dialog_wait_create_details">Пожалуйста, подождите, пока ваш новый аккаунт добавляется…</string>
@@ -23,7 +25,7 @@
 Вы сможете совершать и принимать звонки только напрямую по IP.
 Можно будет изменить аккаунт позднее.</string>
   <string name="account_type_ip2ip">IP-аккаунт</string>
-  <string name="help_ring">Аккаунт Ring позволяет безопасно связываться с людьми напрямую через полностью распределённую сеть.</string>
+  <string name="help_ring">Аккаунт Ring позволяет безопасно связываться с людьми напрямую через полностью распределенную сеть.</string>
   <string name="help_sip_title">Добавить ваш SIP-аккаунт</string>
   <string name="help_sip">Настроить существующий SIP-аккаунт</string>
   <string name="create_sip_account">Добавить аккаунт SIP </string>
@@ -114,8 +116,8 @@
   <string name="account_export_end_error_title">Ошибка</string>
   <string name="account_export_end_error_message">Не удалось экспортировать аккаунт. Произошла неизвестная ошибка.</string>
   <string name="account_enter_password">Введите пароль</string>
-  <string name="account_share_body">Свяжитесь со мной, используя \'%1$s\' в распределённой платформе для общения Ring: https://ring.cx</string>
-  <string name="account_share_body_with_username">Свяжитесь со мной, используя \'%1$s\' или моё публичное имя пользователя \'%2$s\' в распределённой платформе для общения Ring: https://ring.cx</string>
+  <string name="account_share_body">Свяжитесь со мной, используя \'%1$s\' в распределенной платформе для общения Ring: https://ring.cx</string>
+  <string name="account_share_body_with_username">Свяжитесь со мной, используя \'%1$s\' или мое публичное имя пользователя \'%2$s\' в распределенной платформе для общения Ring: https://ring.cx</string>
   <string name="account_contact_me">Свяжитесь со мной в Ring!</string>
   <string name="update_account">Обновить аккаунт</string>
   <string name="account_migration">Ваш аккаунт Ring может быть обновлен.\nПожалуйста, введите ваш пароль.</string>
@@ -127,8 +129,8 @@
   <string name="account_cannot_be_found_title">Не удалось найти аккаунт</string>
   <string name="account_cannot_be_found_message">Не удалось найти аккаунт в сети Ring.\nУдостоверьтесь, что он был экспортирован в сеть Ring с существующего устройства, и что предоставленные идентификационные данные верны.</string>
   <string name="account_sip_cannot_be_registered_message">Можно продолжить создание учетной записи или изменить информацию здесь. Редактирование будет возможно и позже в настройках аккаунта.</string>
-  <string name="account_no_network_title">Не удаётся подключиться к сети</string>
-  <string name="account_no_network_message">Не удалось добавить аккаунт, потому что Ring не смог подключиться к распределённой сети. Проверьте сетевое соединение вашего устройства.</string>
+  <string name="account_no_network_title">Не удается подключиться к сети</string>
+  <string name="account_no_network_message">Не удалось добавить аккаунт, потому что Ring не смог подключиться к распределенной сети. Проверьте сетевое соединение вашего устройства.</string>
   <string name="account_device_added_title">Аккаунт создан</string>
   <string name="account_device_added_message">Вы успешно настроили аккаунт Ring на этом устройстве.</string>
   <string name="account_device_updated_title">Устройство аккаунта обновлено</string>
@@ -136,7 +138,7 @@
   <string name="account_cannot_be_updated_message">Устройство аккаунта не удалось обновить. Проверьте свой пароль.</string>
   <string name="account_sip_success_title">SIP-аккаунт зарегистрирован</string>
   <string name="account_sip_success_message">Вы успешно зарегистрировали свой SIP-аккаунт.</string>
-  <string name="account_sip_register_anyway">Всё равно зарегистроваться</string>
+  <string name="account_sip_register_anyway">Все равно зарегистрироваться</string>
   <string name="account_link_button">Привязать это устройство к аккаунту</string>
   <string name="account_link_prompt_pin">Введите PIN</string>
   <string name="account_new_button">Создать аккаунт Ring</string>

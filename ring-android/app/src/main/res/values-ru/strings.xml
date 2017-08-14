@@ -115,7 +115,7 @@
   <string name="prompt_new_password_repeat">Повторите новый пароль</string>
   <string name="account_create_title">Создать аккаунт Ring</string>
   <string name="prompt_new_username">Введите новое имя пользователя</string>
-  <string name="help_password_choose">Выберите надёжный пароль, который вы запомните, чтобы защитить ваш аккаунт RIng.</string>
+  <string name="help_password_choose">Выберите надежный пароль, который вы запомните, чтобы защитить ваш аккаунт RIng.</string>
   <string name="help_password_enter">Введите пароль от вашего основного аккаунта Ring</string>
   <string name="help_pin_enter">Введите PIN от настроенного аккаунта Ring. Используйте функцию «экспортировать аккаунт в Ring», чтобы получить PIN.</string>
   <string name="wizard_next">Далее</string>

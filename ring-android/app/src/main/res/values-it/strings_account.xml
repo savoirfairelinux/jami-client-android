@@ -13,6 +13,8 @@
   <string name="prompt_username">Nome utente</string>
   <string name="prompt_password">Password</string>
   <string name="action_create">Crea account</string>
+  <string name="action_create_short">Crea</string>
+  <string name="action_register">Register</string>
   <string name="error_field_required">Questo campo è richiesto</string>
   <string name="dialog_wait_create">Aggiunta account </string>
   <string name="dialog_wait_create_details">Aspettare mentre il nuovo account è aggiunto…</string>
@@ -107,6 +109,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_status_connecting">Connessione in corso </string>
   <string name="account_status_unknown">Sconosciuto</string>
   <!--Create account-->
+  <string name="account_creation_home">Benvenuto in Ring</string>
   <!--Devices-->
   <string name="revoke_device_title">Revoca dispositivo</string>
   <string name="revoke_device_wait_title">Aspettare</string>

@@ -7,6 +7,8 @@
   <string name="prompt_hostname">اسم المضيف</string>
   <string name="prompt_username">اسم المستخدم</string>
   <string name="prompt_password">كلمة السر</string>
+  <string name="action_create_short">أحدث</string>
+  <string name="action_register">سجل</string>
   <string name="error_field_required">هذا الحقل مطلوب</string>
   <string name="dialog_wait_create">في طور إضافة حساب</string>
   <string name="dialog_wait_create_details">الرجاء الإنتظار في حين نظيف حسابك</string>

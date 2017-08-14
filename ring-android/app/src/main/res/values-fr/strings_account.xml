@@ -13,6 +13,8 @@
   <string name="prompt_username">Nom d\'utilisateur</string>
   <string name="prompt_password">Mot de passe</string>
   <string name="action_create">Créer le compte</string>
+  <string name="action_create_short">Créer</string>
+  <string name="action_register">Enregistrer</string>
   <string name="error_field_required">Ce champ est requis</string>
   <string name="dialog_wait_create">Ajout du compte</string>
   <string name="dialog_wait_create_details">Merci de patienter pendant l\'ajout de votre compte…</string>
