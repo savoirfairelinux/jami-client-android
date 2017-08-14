@@ -100,4 +100,13 @@
         <item name="guidanceIconStyle">@style/Widget.Ring.Leanback.FirstStepGuidanceIconStyle</item>
         <item name="guidedStepBackground">@color/color_primary_light</item>
     </style>
+
+    <style name="Theme.Ring.LeanbackBrowse" parent="Theme.Leanback.Browse">
+        <item name="defaultSearchColor">@color/color_primary_light</item>
+    </style>
+
+    <style name="Theme.Ring.Leanback.CustomTitle" parent="Theme.Ring.LeanbackBrowse">
+        <item name="browseTitleViewLayout">@layout/titleview</item>
+    </style>
+
 </resources>

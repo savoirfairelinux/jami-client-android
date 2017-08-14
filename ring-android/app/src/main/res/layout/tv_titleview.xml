@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v17.leanback.widget.SearchOrbView
+        android:id="@+id/title_orb"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:transitionGroup="true"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="48dp" />
+
+    <TextView
+        android:id="@+id/title_text"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/title_badge" />
+
+    <ImageView
+        android:id="@+id/title_badge"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:padding="6dp"
+        android:src="@drawable/ic_ring_logo_white"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginEnd="24dp" />
+</merge>
