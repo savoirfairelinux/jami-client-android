@@ -26,6 +26,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.facades.ConversationFacade;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
@@ -93,6 +94,10 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
             case CONVERSATIONS_CHANGED:
                 reloadConversations();
                 break;
+            case ACCOUNTS_CHANGED:
+            case NAME_REGISTRATION_ENDED:
+                reloadAccountInfos();
+                break;
         }
     }
 
@@ -124,4 +129,11 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
         getView().callContact(accountID, ringID);
     }
 
+    public void reloadAccountInfos() {
+        String displayableAddress = null;
+        for (Account account : mAccountService.getAccounts()) {
+            displayableAddress = account.getDisplayUri();
+        }
+        getView().displayAccountInfos(displayableAddress);
+    }
 }
