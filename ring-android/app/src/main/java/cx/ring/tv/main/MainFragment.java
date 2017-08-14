@@ -40,12 +40,11 @@ import cx.ring.tv.search.SearchActivity;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
     private static final String TAG = MainFragment.class.getSimpleName();
-
+    SpinnerFragment mSpinnerFragment;
     private ArrayObjectAdapter mRowsAdapter;
     private DisplayMetrics mMetrics;
     private BackgroundManager mBackgroundManager;
     private ArrayObjectAdapter cardRowAdapter;
-    SpinnerFragment mSpinnerFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +62,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     public void onResume() {
         super.onResume();
         presenter.reloadConversations();
+        presenter.reloadAccountInfos();
     }
 
     private void setupUIElements() {
@@ -70,7 +70,6 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         mBackgroundManager.attach(getActivity().getWindow());
         mMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
-        setBadgeDrawable(getActivity().getResources().getDrawable(R.drawable.ic_ring_logo_white));
         // over title
         setHeadersState(HEADERS_ENABLED);
         setHeadersTransitionOnBackEnabled(true);
@@ -134,6 +133,20 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         intent.putExtra("account", accountID);
         intent.putExtra("ringId", ringID);
         getActivity().startActivity(intent, null);
+    }
+
+    @Override
+    public void displayAccountInfos(final String address) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (address != null) {
+                    setTitle(address);
+                } else {
+                    setTitle("");
+                }
+            }
+        });
     }
 
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
