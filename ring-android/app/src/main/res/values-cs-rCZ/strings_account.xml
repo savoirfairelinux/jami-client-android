@@ -13,6 +13,8 @@
   <string name="prompt_username">Uživatelské jméno</string>
   <string name="prompt_password">Heslo</string>
   <string name="action_create">Vytvořit účet</string>
+  <string name="action_create_short">Vytvořit</string>
+  <string name="action_register">Zaregistrovat</string>
   <string name="error_field_required">Toto pole je vyžadováno</string>
   <string name="dialog_wait_create">Přidávám účet</string>
   <string name="dialog_wait_create_details">Prosím vyčkejte, než bude váš účet přidán…</string>

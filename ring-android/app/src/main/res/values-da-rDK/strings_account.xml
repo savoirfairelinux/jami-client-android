@@ -13,6 +13,8 @@
   <string name="prompt_username">Brugernavn</string>
   <string name="prompt_password">Kodeord</string>
   <string name="action_create">Opret konto</string>
+  <string name="action_create_short">Opret</string>
+  <string name="action_register">Registrér</string>
   <string name="error_field_required">Dette felt er obligatorisk</string>
   <string name="dialog_wait_create">Tilføjer konto</string>
   <string name="dialog_wait_create_details">Vent venligst mens din nye konto tilføjes...</string>

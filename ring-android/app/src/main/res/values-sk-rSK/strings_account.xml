@@ -5,6 +5,7 @@
   <!--Strings related to account creation-->
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Hostname</string>
+  <string name="action_create_short">Vytvor</string>
   <!--Strings related to account deletion-->
   <!--AccountManagementFragment-->
   <string name="normal_accounts_titles">Účet</string>
