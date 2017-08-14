@@ -30,4 +30,6 @@ public interface MainView {
     void showContacts(ArrayList<CallContact> contacts);
 
     void callContact(String accountID, String ringID);
+
+    void displayAccountInfos(String address);
 }

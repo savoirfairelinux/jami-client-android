@@ -272,8 +272,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:icon="@drawable/ic_launcher"
             android:label="@string/title_activity_sflphone_home"
             android:logo="@drawable/ic_launcher"
-            android:theme="@style/AppThemeBase"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:theme="@style/AppThemeBase">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
@@ -282,8 +282,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".tv.main.HomeActivity"
             android:label="@string/title_activity_sflphone_home"
-            android:theme="@style/Theme.Leanback"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.Ring.Leanback.CustomTitle" />
         <activity
             android:name=".tv.account.TVAccountWizard"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
@@ -291,8 +291,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:screenOrientation="fullUser"
             android:theme="@style/AppThemeBase" />
 
-        <activity android:name="cx.ring.tv.search.SearchActivity"
-            android:theme="@style/Theme.Leanback"/>
+        <activity
+            android:name="cx.ring.tv.search.SearchActivity"
+            android:theme="@style/Theme.Leanback" />
 
         <activity
             android:name="cx.ring.tv.call.TVCallActivity"
