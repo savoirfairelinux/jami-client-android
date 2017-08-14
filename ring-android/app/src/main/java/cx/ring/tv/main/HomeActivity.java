@@ -230,6 +230,7 @@ public class HomeActivity extends Activity implements Observer<ServiceEvent> {
         }
     }
 
+
     private void loadAccounts() {
         for (Account account : mAccountService.getAccounts()) {
             if (account.needsMigration()) {

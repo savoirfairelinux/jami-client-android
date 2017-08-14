@@ -15,6 +15,7 @@
 package cx.ring.tv.main;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v17.leanback.app.BackgroundManager;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
@@ -25,10 +26,13 @@ import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -40,12 +44,11 @@ import cx.ring.tv.search.SearchActivity;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
     private static final String TAG = MainFragment.class.getSimpleName();
-
+    SpinnerFragment mSpinnerFragment;
     private ArrayObjectAdapter mRowsAdapter;
     private DisplayMetrics mMetrics;
     private BackgroundManager mBackgroundManager;
     private ArrayObjectAdapter cardRowAdapter;
-    SpinnerFragment mSpinnerFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +66,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     public void onResume() {
         super.onResume();
         presenter.reloadConversations();
+        presenter.reloadAccountInfos();
     }
 
     private void setupUIElements() {
@@ -70,7 +74,6 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         mBackgroundManager.attach(getActivity().getWindow());
         mMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
-        setBadgeDrawable(getActivity().getResources().getDrawable(R.drawable.ic_ring_logo_white));
         // over title
         setHeadersState(HEADERS_ENABLED);
         setHeadersTransitionOnBackEnabled(true);
@@ -99,6 +102,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         });
 
         setOnItemViewClickedListener(new ItemViewClickedListener());
+
     }
 
     @Override
@@ -135,6 +139,90 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         intent.putExtra("ringId", ringID);
         getActivity().startActivity(intent, null);
     }
+
+    @Override
+    public void displayAccountInfos(final String address) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (address != null) {
+                    View titleView = getTitleView();
+                    if (titleView instanceof ViewGroup) {
+                        ViewGroup group = (ViewGroup) titleView;
+                        for (int i = 0; i < group.getChildCount(); i++) {
+                            View child = group.getChildAt(i);
+                            if (child instanceof TextView) {
+                                TextView titleTextView = (TextView) child;
+                                titleTextView.addTextChangedListener(textAutoResizeWatcher(titleTextView, 25, 55));
+                                titleTextView.setText(address);
+                            }
+                        }
+                    }
+                } else {
+                    //setBadgeDrawable(getActivity().getResources().getDrawable(R.drawable.ic_ring_logo_white));
+                }
+            }
+        });
+    }
+
+
+    private TextWatcher textAutoResizeWatcher(final TextView view, final int MIN_SP, final int MAX_SP) {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                final int widthLimitPixels = view.getWidth() - view.getPaddingRight() - view.getPaddingLeft();
+                Paint paint = new Paint();
+                float fontSizeSP = pixelsToSp(view.getTextSize());
+                paint.setTextSize(spToPixels(fontSizeSP));
+
+                String viewText = view.getText().toString();
+
+                float widthPixels = paint.measureText(viewText);
+
+                // Increase font size if necessary.
+                if (widthPixels < widthLimitPixels){
+                    while (widthPixels < widthLimitPixels && fontSizeSP <= MAX_SP){
+                        ++fontSizeSP;
+                        paint.setTextSize(spToPixels(fontSizeSP));
+                        widthPixels = paint.measureText(viewText);
+                    }
+                    --fontSizeSP;
+                }
+                // Decrease font size if necessary.
+                else {
+                    while (widthPixels > widthLimitPixels || fontSizeSP > MAX_SP) {
+                        if (fontSizeSP < MIN_SP) {
+                            fontSizeSP = MIN_SP;
+                            break;
+                        }
+                        --fontSizeSP;
+                        paint.setTextSize(spToPixels(fontSizeSP));
+                        widthPixels = paint.measureText(viewText);
+                    }
+                }
+
+                view.setTextSize(fontSizeSP);
+            }
+        };
+    }
+
+    private float pixelsToSp(float px) {
+        float scaledDensity = getResources().getDisplayMetrics().scaledDensity;
+        return px/scaledDensity;
+    }
+
+    private float spToPixels(float sp) {
+        float scaledDensity = getResources().getDisplayMetrics().scaledDensity;
+        return sp * scaledDensity;
+    }
+
 
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
         @Override
