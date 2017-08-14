@@ -15,6 +15,7 @@
 package cx.ring.tv.main;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v17.leanback.app.BackgroundManager;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
@@ -25,10 +26,13 @@ import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -40,12 +44,11 @@ import cx.ring.tv.search.SearchActivity;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
     private static final String TAG = MainFragment.class.getSimpleName();
-
+    SpinnerFragment mSpinnerFragment;
     private ArrayObjectAdapter mRowsAdapter;
     private DisplayMetrics mMetrics;
     private BackgroundManager mBackgroundManager;
     private ArrayObjectAdapter cardRowAdapter;
-    SpinnerFragment mSpinnerFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +66,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     public void onResume() {
         super.onResume();
         presenter.reloadConversations();
+        presenter.reloadAccountInfos();
     }
 
     private void setupUIElements() {
@@ -70,7 +74,6 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         mBackgroundManager.attach(getActivity().getWindow());
         mMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
-        setBadgeDrawable(getActivity().getResources().getDrawable(R.drawable.ic_ring_logo_white));
         // over title
         setHeadersState(HEADERS_ENABLED);
         setHeadersTransitionOnBackEnabled(true);
@@ -134,6 +137,20 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         intent.putExtra("account", accountID);
         intent.putExtra("ringId", ringID);
         getActivity().startActivity(intent, null);
+    }
+
+    @Override
+    public void displayAccountInfos(final String address) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (address != null) {
+                    setTitle(address);
+                } else {
+                    setTitle("");
+                }
+            }
+        });
     }
 
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
