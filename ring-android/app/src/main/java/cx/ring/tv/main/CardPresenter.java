@@ -30,14 +30,13 @@ import cx.ring.model.CallContact;
  * A CardPresenter is used to generate Views and bind Objects to them on demand.
  * It contains an Image CardView
  */
-public class CallContactPresenter extends Presenter {
-    private static final String TAG = CallContactPresenter.class.getSimpleName();
+public class CardPresenter extends Presenter {
+    private static final String TAG = CardPresenter.class.getSimpleName();
 
     private static int CARD_WIDTH = 313;
     private static int CARD_HEIGHT = 176;
 
     static class ViewHolder extends Presenter.ViewHolder {
-        private CallContact mContact;
         private ImageCardView mCardView;
         private Drawable mDefaultCardImage;
 
@@ -45,14 +44,6 @@ public class CallContactPresenter extends Presenter {
             super(view);
             mCardView = (ImageCardView) view;
             mDefaultCardImage = getCardView().getResources().getDrawable(R.drawable.ic_contact_picture);
-        }
-
-        public void setContact(CallContact c) {
-            mContact = c;
-        }
-
-        public CallContact getContact() {
-            return mContact;
         }
 
         public ImageCardView getCardView() {
@@ -77,17 +68,21 @@ public class CallContactPresenter extends Presenter {
 
     @Override
     public void onBindViewHolder(Presenter.ViewHolder viewHolder, Object item) {
-        CallContact contact = (CallContact) item;
-        ((ViewHolder) viewHolder).setContact(contact);
-        ((ViewHolder) viewHolder).mCardView.setTitleText(contact.getDisplayName());
-        ((ViewHolder) viewHolder).mCardView.setContentText(contact.getIds().get(0));
-        ((ViewHolder) viewHolder).mCardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
+        if (item instanceof CallContact) {
+            onBindViewHolderCallContact((ViewHolder) viewHolder, (CallContact)item);
+        }
+    }
+
+    private void onBindViewHolderCallContact(ViewHolder viewHolder, CallContact contact) {
+        viewHolder.mCardView.setTitleText(contact.getDisplayName());
+        viewHolder.mCardView.setContentText(contact.getIds().get(0));
+        viewHolder.mCardView.setMainImageDimensions(CARD_WIDTH, CARD_HEIGHT);
         if (contact.getPhoto() == null) {
-            ((ViewHolder) viewHolder).mCardView.setMainImage(((ViewHolder) viewHolder).getDefaultCardImage());
+            viewHolder.mCardView.setMainImage(viewHolder.getDefaultCardImage());
         }
         else {
-            ((ViewHolder) viewHolder).mCardView.setMainImage(
-                    new BitmapDrawable(((ViewHolder) viewHolder).mCardView.getResources(), BitmapFactory.decodeByteArray(contact.getPhoto(), 0, contact.getPhoto().length)));
+            viewHolder.mCardView.setMainImage(
+                    new BitmapDrawable(viewHolder.mCardView.getResources(), BitmapFactory.decodeByteArray(contact.getPhoto(), 0, contact.getPhoto().length)));
         }
     }
 

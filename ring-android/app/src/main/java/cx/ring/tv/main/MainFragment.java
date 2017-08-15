@@ -84,7 +84,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
         /* CardPresenter */
         HeaderItem cardPresenterHeader = new HeaderItem(1, getString(R.string.tv_contact_row_header));
-        cardRowAdapter = new ArrayObjectAdapter(new CallContactPresenter());
+        cardRowAdapter = new ArrayObjectAdapter(new CardPresenter());
         mRowsAdapter.add(new ListRow(cardPresenterHeader, cardRowAdapter));
         setAdapter(mRowsAdapter);
 
