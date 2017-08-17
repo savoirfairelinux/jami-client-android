@@ -107,7 +107,7 @@ public class HistoryTimeModel {
     }
 
     private static void initializeCategories() {
-        timeCategories = new ArrayList<String>();
+        timeCategories = new ArrayList<>();
         timeCategories.add(HistoryTimeCategoryModel.TODAY);
         timeCategories.add(HistoryTimeCategoryModel.YESTERDAY);
         timeCategories.add(HistoryTimeCategoryModel.TWO_DAYS);
