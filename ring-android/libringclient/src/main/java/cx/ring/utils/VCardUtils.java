@@ -30,7 +30,6 @@ import ezvcard.Ezvcard;
 import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.io.text.VCardWriter;
-import ezvcard.property.FormattedName;
 import ezvcard.property.Uid;
 
 public class VCardUtils {
@@ -50,7 +49,7 @@ public class VCardUtils {
     /**
      * Parse the "elements" of the mime attributes to build a proper hashtable
      *
-     * @param elements the mimetype as returned by the daemon
+     * @param mime the mimetype as returned by the daemon
      * @return a correct hashtable, null if invalid input
      */
     public static HashMap<String, String> parseMimeAttributes(String mime) {
@@ -78,17 +77,8 @@ public class VCardUtils {
         saveToDisk(vcard, filename, path);
     }
 
-    public static void saveLocalProfileToDisk(String vcard, String accountId, File filesDir) {
-        String path = localProfilePath(filesDir);
-        File vcardPath = new File(path);
-        String filename = accountId + ".vcf";
-
-        saveToDisk(vcard, filename, path);
-    }
-
     public static void saveLocalProfileToDisk(VCard vcard, String accountId, File filesDir) {
         String path = localProfilePath(filesDir);
-        File vcardPath = new File(path);
         String filename = accountId + ".vcf";
 
         saveToDisk(vcard, filename, path);

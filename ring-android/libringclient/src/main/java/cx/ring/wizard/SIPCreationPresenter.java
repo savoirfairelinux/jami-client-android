@@ -21,10 +21,8 @@ package cx.ring.wizard;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
