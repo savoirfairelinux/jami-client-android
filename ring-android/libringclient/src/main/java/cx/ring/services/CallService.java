@@ -39,7 +39,6 @@ import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
-import ezvcard.VCard;
 
 public class CallService extends Observable {
 

@@ -82,11 +82,6 @@ public class DaemonService {
         return callbackHandler;
     }
 
-    public PresenceCallback getDaemonPresenceCallbackHandler() {
-        DaemonPresenceCallback callbackHandler = new DaemonPresenceCallback();
-        return callbackHandler;
-    }
-
     public boolean isStarted() {
         return mDaemonStarted;
     }

@@ -30,7 +30,6 @@ import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.inject.Singleton;
 
 import cx.ring.daemon.Blob;
 import cx.ring.daemon.ConfigurationCallback;

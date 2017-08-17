@@ -20,7 +20,6 @@
 package cx.ring.call;
 
 import cx.ring.model.CallContact;
-import cx.ring.model.SipCall;
 
 public interface CallView  {
 

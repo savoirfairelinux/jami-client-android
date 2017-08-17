@@ -41,22 +41,6 @@ public class SwigNativeConverter {
         return toReturn;
     }
 
-    public static Blob convertFromNativeToSwig(byte[] data) {
-        Blob toReturn = new Blob();
-        toReturn.reserve(data.length);
-        for (int i = 0; i < data.length; i++)
-            toReturn.add(data[i]);
-        return toReturn;
-    }
-
-    private static String tryToGet(StringMap smap, String key) {
-        if (smap.has_key(key)) {
-            return smap.get(key);
-        } else {
-            return "";
-        }
-    }
-
     public static ArrayList<String> convertSwigToNative(StringVect vector) {
         ArrayList<String> toReturn = new ArrayList<>();
         for (int i = 0; i < vector.size(); ++i) {

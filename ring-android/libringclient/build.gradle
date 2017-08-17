@@ -24,5 +24,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+// Truly needed for compilation
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
