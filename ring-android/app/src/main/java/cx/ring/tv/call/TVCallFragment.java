@@ -415,12 +415,14 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
                 DisplayMetrics metrics = getResources().getDisplayMetrics();
                 RelativeLayout.LayoutParams paramsPreview = (RelativeLayout.LayoutParams) mVideoPreview.getLayoutParams();
-                oldW = paramsPreview.width;
-                oldH = paramsPreview.height;
-                double previewMaxDim = Math.max(previewWidth, previewHeight);
+                //FIXME: Currently the Daemon send a preview sise of -1,-1
+                //this is a fix to avoid a square image in this case
+                oldW = Math.max (previewWidth,paramsPreview.width);
+                oldH = Math.max (previewHeight,paramsPreview.height);
+                double previewMaxDim = Math.max(oldW, oldH);
                 double previewRatio = metrics.density * 160. / previewMaxDim;
-                paramsPreview.width = (int) (previewWidth * previewRatio);
-                paramsPreview.height = (int) (previewHeight * previewRatio);
+                paramsPreview.width = (int) (oldW * previewRatio);
+                paramsPreview.height = (int) (oldH * previewRatio);
                 if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
                     mVideoPreview.setLayoutParams(paramsPreview);
                 }
