@@ -345,16 +345,14 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
             switch (event.getEventType()) {
                 case VIDEO_EVENT:
                     boolean videoStart = event.getEventInput(ServiceEvent.EventInput.VIDEO_START, Boolean.class, false);
-                    boolean camera = event.getEventInput(ServiceEvent.EventInput.VIDEO_CAMERA, Boolean.class, false);
                     String callId = event.getEventInput(ServiceEvent.EventInput.VIDEO_CALL, String.class);
 
-                    Log.d(TAG, "VIDEO_EVENT: " + videoStart + " " + camera + " " + callId);
+                    Log.d(TAG, "VIDEO_EVENT: " + videoStart + " " + callId);
+                    previewWidth = event.getEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, Integer.class, 0);
+                    previewHeight = event.getEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, Integer.class, 0);
 
                     if (videoStart) {
                         getView().displayVideoSurface(true);
-                    } else if (camera) {
-                        previewWidth = event.getEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, Integer.class, 0);
-                        previewHeight = event.getEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, Integer.class, 0);
                     } else if (mSipCall != null && callId != null && mSipCall.getCallId().equals(callId)) {
                         boolean videoStarted = event.getEventInput(ServiceEvent.EventInput.VIDEO_STARTED, Boolean.class, false);
                         getView().displayVideoSurface(videoStarted);

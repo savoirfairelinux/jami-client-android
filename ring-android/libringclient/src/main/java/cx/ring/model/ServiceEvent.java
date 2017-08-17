@@ -110,7 +110,6 @@ public class ServiceEvent {
         BUDDY_URI,
         LINE_STATE,
         VIDEO_START,
-        VIDEO_CAMERA,
         VIDEO_STARTED,
         VIDEO_WIDTH,
         VIDEO_HEIGHT,
