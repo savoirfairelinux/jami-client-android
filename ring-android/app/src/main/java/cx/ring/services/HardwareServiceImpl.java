@@ -47,21 +47,17 @@ import cx.ring.utils.Log;
 public class HardwareServiceImpl extends HardwareService {
 
     public static final String TAG = HardwareServiceImpl.class.getName();
-
-    private Context mContext;
-
-    private int cameraFront = 0;
-    private int cameraBack = 0;
-
-    private int currentCamera = -1;
-
-    private final Map<String, Shm> videoInputs = new HashMap<>();
     private static WeakReference<SurfaceHolder> mCameraPreviewSurface = new WeakReference<>(null);
     private static Map<String, WeakReference<SurfaceHolder>> videoSurfaces = Collections.synchronizedMap(new HashMap<String, WeakReference<SurfaceHolder>>());
-    private VideoParams previewParams = null;
-    private Camera previewCamera = null;
+    private final Map<String, Shm> videoInputs = new HashMap<>();
     private final HashMap<String, VideoParams> mParams = new HashMap<>();
     private final LongSparseArray<DeviceParams> mNativeParams = new LongSparseArray<>();
+    private Context mContext;
+    private int cameraFront = 0;
+    private int cameraBack = 0;
+    private int currentCamera = -1;
+    private VideoParams previewParams = null;
+    private Camera previewCamera = null;
 
     public HardwareServiceImpl(Context mContext) {
         this.mContext = mContext;
@@ -203,7 +199,7 @@ public class HardwareServiceImpl extends HardwareService {
             rates.add(rate);
         }
         p.rate = rates.get(0);
-        Log.d(TAG, "getCameraInfo: using resolution " + p.size.x + "x" + p.size.y + " " + p.rate/1000 + " FPS");
+        Log.d(TAG, "getCameraInfo: using resolution " + p.size.x + "x" + p.size.y + " " + p.rate / 1000 + " FPS");
 
         p.infos = new Camera.CameraInfo();
         Camera.getCameraInfo(id, p.infos);
@@ -340,7 +336,6 @@ public class HardwareServiceImpl extends HardwareService {
 
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
         event.addEventInput(ServiceEvent.EventInput.VIDEO_CAMERA, videoParams.id == 1);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_STARTED, true);
         event.addEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, videoParams.rotWidth);
         event.addEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, videoParams.rotHeight);
         setChanged();
@@ -534,6 +529,16 @@ public class HardwareServiceImpl extends HardwareService {
     }
 
     private static class VideoParams {
+        public int id;
+        public int format;
+        // size as captured by Android
+        public int width;
+        public int height;
+        //size, rotated, as seen by the daemon
+        public int rotWidth;
+        public int rotHeight;
+        public int rate;
+        public int rotation;
         public VideoParams(int id, int format, int width, int height, int rate) {
             this.id = id;
             this.format = format;
@@ -541,20 +546,6 @@ public class HardwareServiceImpl extends HardwareService {
             this.height = height;
             this.rate = rate;
         }
-
-        public int id;
-        public int format;
-
-        // size as captured by Android
-        public int width;
-        public int height;
-
-        //size, rotated, as seen by the daemon
-        public int rotWidth;
-        public int rotHeight;
-
-        public int rate;
-        public int rotation;
     }
 
     private static class DeviceParams {
