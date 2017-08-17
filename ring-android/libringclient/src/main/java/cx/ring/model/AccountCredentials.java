@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2004-2016 Savoir-faire Linux Inc.
  * <p>
  * Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>

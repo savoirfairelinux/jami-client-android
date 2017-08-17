@@ -188,7 +188,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         Collections.sort(convs, new Comparator<Conversation>() {
             @Override
             public int compare(Conversation lhs, Conversation rhs) {
-                return (int) ((rhs.getLastInteraction().getTime() - lhs.getLastInteraction().getTime()) / 1000l);
+                return (int) ((rhs.getLastInteraction().getTime() - lhs.getLastInteraction().getTime()) / 1000L);
             }
         });
         return convs;

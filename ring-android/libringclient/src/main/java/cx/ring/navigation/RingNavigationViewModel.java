@@ -39,7 +39,7 @@ public class RingNavigationViewModel {
     }
 
     private boolean isAccountValid() {
-        return mAccount != null && mAccount.get() != null;
+        return mAccount.get() != null;
     }
 
     public VCard getVcard(File filesDir) {

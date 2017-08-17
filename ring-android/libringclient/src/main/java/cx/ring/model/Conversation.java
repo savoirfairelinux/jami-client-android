@@ -47,8 +47,8 @@ public class Conversation {
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
 
-    private long mLastContactRequest = 0l;
-    public static final long PERIOD = 10l * 60l * 1000l; //10 minutes
+    private long mLastContactRequest = 0L;
+    public static final long PERIOD = 10L * 60L * 1000L; //10 minutes
 
     public Conversation(CallContact contact) {
         setContact(contact);

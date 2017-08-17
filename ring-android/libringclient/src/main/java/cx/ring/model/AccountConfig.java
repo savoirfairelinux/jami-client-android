@@ -61,9 +61,7 @@ public class AccountConfig {
             mValues = new HashMap<>(details.size());
             for (Map.Entry<String, String> entry : details.entrySet()) {
                 ConfigKey confKey = ConfigKey.fromString(entry.getKey());
-                if (confKey == null) {
-                    //Log.w(TAG, "Can't find key: " + entry.getKey());
-                } else {
+                if (confKey != null) {
                     mValues.put(confKey, entry.getValue());
                 }
             }

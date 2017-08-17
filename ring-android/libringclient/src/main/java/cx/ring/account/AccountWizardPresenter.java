@@ -84,7 +84,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> imp
             mAccountService.removeAccount(mAccount.getAccountID());
         }
 
-        /**
+        /*
          * Ensures that the user has at least one account when exiting this Activity
          * If not, exit the app
          */
