@@ -78,7 +78,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_margin="10dp"
             android:layout_weight="50"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:clipChildren="false"
+            android:clipToPadding="false">
 
             <TextView
                 android:id="@+id/contact_bubble_txt"
@@ -155,11 +157,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
         android:layout_marginBottom="48dp"
         android:src="@drawable/ic_call_end_white"
         app:backgroundTint="@color/error_red"
-        app:elevation="6dp"
-        app:pressedTranslationZ="1dp"
         app:rippleColor="@android:color/white"/>
 
     <EditText
