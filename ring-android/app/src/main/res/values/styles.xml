@@ -108,5 +108,50 @@
     <style name="Theme.Ring.Leanback.CustomTitle" parent="Theme.Ring.LeanbackBrowse">
         <item name="browseTitleViewLayout">@layout/titleview</item>
     </style>
+    <!-- A default card style. Used in cards example. -->
+    <style name="DefaultCardImageStyle" parent="Widget.Leanback.ImageCardView.ImageStyle">
+        <item name="android:layout_width">@dimen/default_image_card_width</item>
+        <item name="android:layout_height">@dimen/default_image_card_height</item>
+    </style>
+
+    <style name="DefaultCardStyle" parent="Widget.Leanback.ImageCardViewStyle">
+        <item name="cardBackground">@null</item>
+    </style>
+
+    <style name="DefaultCardTheme" parent="Theme.Leanback">
+        <item name="imageCardViewStyle">@style/DefaultCardStyle</item>
+        <item name="imageCardViewImageStyle">@style/DefaultCardImageStyle</item>
+    </style>
+
+    <!-- Icon card style with custom focus handler. Used in cards example. -->
+    <style name="IconCardViewStyle" parent="DefaultCardStyle">
+        <item name="lbImageCardViewType">Title</item>
+    </style>
+
+    <style name="IconCardImageStyle" parent="Widget.Leanback.ImageCardView.ImageStyle">
+        <item name="android:layout_width">96dp</item>
+        <item name="android:layout_height">96dp</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="IconCardTitleStyle" parent="Widget.Leanback.ImageCardView.TitleStyle">
+        <item name="android:maxLines">2</item>
+        <item name="android:minLines">2</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="IconCardInfoAreaStyle" parent="Widget.Leanback.ImageCardView.InfoAreaStyle">
+        <item name="android:layout_width">96dp</item>
+        <item name="android:background">@null</item>
+        <item name="layout_viewType">main</item>
+    </style>
+
+    <!-- Theme corresponding to the IconCardStyle -->
+    <style name="IconCardTheme" parent="Theme.Leanback">
+        <item name="imageCardViewStyle">@style/IconCardViewStyle</item>
+        <item name="imageCardViewTitleStyle">@style/IconCardTitleStyle</item>
+        <item name="imageCardViewImageStyle">@style/IconCardImageStyle</item>
+        <item name="imageCardViewInfoAreaStyle">@style/IconCardInfoAreaStyle</item>
+    </style>
 
 </resources>
