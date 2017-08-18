@@ -130,6 +130,9 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     }
 
     public void reloadAccountInfos() {
+        if (mAccountService == null) {
+            return;
+        }
         String displayableAddress = null;
         for (Account account : mAccountService.getAccounts()) {
             displayableAddress = account.getDisplayUri();
