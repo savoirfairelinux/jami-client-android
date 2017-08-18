@@ -282,6 +282,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity android:name="cx.ring.tv.search.SearchActivity"
             android:theme="@style/Theme.Leanback"/>
 
+        <activity android:name="cx.ring.tv.about.AboutActivity"
+            android:theme="@style/Theme.Leanback"/>
+
         <activity
             android:name="cx.ring.tv.call.TVCallActivity"
             android:theme="@style/AppThemeBase">

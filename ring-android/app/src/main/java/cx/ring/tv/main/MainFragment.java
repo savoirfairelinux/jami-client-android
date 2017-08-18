@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.model.CallContact;
@@ -41,11 +42,22 @@ import cx.ring.tv.search.SearchActivity;
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
     private static final String TAG = MainFragment.class.getSimpleName();
 
+    // Sections headers ids
+    private static final long HEADER_CONTACTS = 0;
+    private static final long HEADER_MISC = 1;
+
+    // MISC sections card ids
+    public static final long ID_ABOUT = 0;
+    public static final long ID_LICENCE = 1;
+    public static final long ID_CONTRIBUTORS = 2;
+
+
     private ArrayObjectAdapter mRowsAdapter;
     private DisplayMetrics mMetrics;
     private BackgroundManager mBackgroundManager;
-    private ArrayObjectAdapter cardRowAdapter;
     SpinnerFragment mSpinnerFragment;
+    private ArrayObjectAdapter cardRowAdapter;
+    private ArrayObjectAdapter mOtherAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,9 +95,19 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
 
         /* CardPresenter */
-        HeaderItem cardPresenterHeader = new HeaderItem(1, getString(R.string.tv_contact_row_header));
+        HeaderItem cardPresenterHeader = new HeaderItem(HEADER_CONTACTS, getString(R.string.tv_contact_row_header));
         cardRowAdapter = new ArrayObjectAdapter(new CardPresenter());
         mRowsAdapter.add(new ListRow(cardPresenterHeader, cardRowAdapter));
+
+        mOtherAdapter = new ArrayObjectAdapter(new CardPresenter());
+        final HeaderItem miscHeader = new HeaderItem(HEADER_MISC, getString(R.string.menu_item_about));
+        mOtherAdapter.add(new CardPresenter.SimpleCard(ID_ABOUT, getString(R.string.version_section), getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME, R.drawable.ic_ring_logo_white));
+        mOtherAdapter.add(new CardPresenter.SimpleCard(ID_LICENCE, getString(R.string.section_license), R.drawable.ic_ring_logo_white));
+        mOtherAdapter.add(new CardPresenter.SimpleCard(ID_CONTRIBUTORS, getString(R.string.credits), R.drawable.ic_group_black));
+
+        mRowsAdapter.add(new ListRow(miscHeader, mOtherAdapter));
+
+
         setAdapter(mRowsAdapter);
 
         // listeners
@@ -143,6 +165,15 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
             if (item instanceof CallContact) {
                 presenter.contactClicked((CallContact) item);
+            } else if (item instanceof CardPresenter.SimpleCard) {
+                long id = ((CardPresenter.SimpleCard) item).getId();
+                if (id == ID_LICENCE) {
+//                    startActivityForResult(new Intent(this, org.videolan.vlc.gui.tv.preferences.PreferencesActivity.class), ACTIVITY_RESULT_PREFERENCES);
+                } else if (id == ID_ABOUT) {
+//                    startActivity(new Intent(this, org.videolan.vlc.gui.tv.AboutActivity.class));
+                } else if (id == ID_CONTRIBUTORS) {
+//                    startActivity(new Intent(this, org.videolan.vlc.gui.tv.AboutActivity.class));
+                }
             }
         }
     }
