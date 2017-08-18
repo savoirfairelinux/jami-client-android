@@ -195,7 +195,7 @@ along with this program; if not, write to the Free Software
     <string name="register_name">Register name</string>
     <string name="trying_to_register_name">Trying to register name</string>
     <string name="registered_username">Registered username</string>
-    <string name="register_username">Register public username (experimental)</string>
+    <string name="register_username">Register public username (optionnal)</string>
     <string name="username_already_taken">Username already taken</string>
     <string name="invalid_username">Invalid username</string>
     <string name="looking_for_username_availability">Looking for username availability…</string>
