@@ -45,7 +45,7 @@ public class TVRingAccountCreationFragment
             presenter.passwordConfirmChanged("password");
             Log.d(TAG, "userNameChanged(" + s.toString() + ")");
             findActionById(USERNAME).setDescription(s.toString());
-
+            presenter.ringCheckChanged(!s.toString().isEmpty());
             presenter.userNameChanged(s.toString());
         }
     };
@@ -74,7 +74,7 @@ public class TVRingAccountCreationFragment
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
         addEditTextAction(actions, USERNAME, getString(R.string.register_username), getString(R.string.prompt_new_username), "");
-        addDisabledAction(actions, CONTINUE, getString(R.string.action_create), "");
+        addAction(actions, CONTINUE, getString(R.string.action_create), "");
 
     }
 
