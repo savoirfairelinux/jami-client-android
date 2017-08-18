@@ -41,11 +41,9 @@ public class TVRingAccountCreationFragment
 
         @Override
         public void afterTextChanged(Editable s) {
-            presenter.passwordChanged("password");
-            presenter.passwordConfirmChanged("password");
             Log.d(TAG, "userNameChanged(" + s.toString() + ")");
             findActionById(USERNAME).setDescription(s.toString());
-
+            presenter.ringCheckChanged(!s.toString().isEmpty());
             presenter.userNameChanged(s.toString());
         }
     };
@@ -56,8 +54,13 @@ public class TVRingAccountCreationFragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
+        // Bind the presenter to the view
         super.onViewCreated(view, savedInstanceState);
 
+        presenter.ringCheckChanged(false);
+        presenter.passwordChanged("password");
+        presenter.passwordConfirmChanged("password");
     }
 
     @Override
@@ -75,7 +78,6 @@ public class TVRingAccountCreationFragment
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
         addEditTextAction(actions, USERNAME, getString(R.string.register_username), getString(R.string.prompt_new_username), "");
         addDisabledAction(actions, CONTINUE, getString(R.string.action_create), "");
-
     }
 
     //FIXME: Leanback doesn't provide methode to know when action are initialised
