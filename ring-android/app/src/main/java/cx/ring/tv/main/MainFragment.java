@@ -19,10 +19,9 @@ import android.os.Bundle;
 import android.support.v17.leanback.app.BackgroundManager;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
-import android.support.v17.leanback.widget.ListRow;
-import android.support.v17.leanback.widget.ListRowPresenter;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.Presenter;
+import android.support.v17.leanback.widget.PresenterSelector;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 import android.util.DisplayMetrics;
@@ -31,15 +30,28 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.model.CallContact;
 import cx.ring.tv.call.TVCallActivity;
+import cx.ring.tv.cards.Card;
+import cx.ring.tv.cards.CardListRow;
+import cx.ring.tv.cards.CardPresenterSelector;
+import cx.ring.tv.cards.CardRow;
+import cx.ring.tv.cards.ShadowRowPresenterSelector;
+import cx.ring.tv.cards.about.AboutCard;
+import cx.ring.tv.cards.contacts.ContactCard;
 import cx.ring.tv.search.SearchActivity;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
+
     private static final String TAG = MainFragment.class.getSimpleName();
+    // Sections headers ids
+    private static final long HEADER_CONTACTS = 0;
+    private static final long HEADER_MISC = 1;
     SpinnerFragment mSpinnerFragment;
     private ArrayObjectAdapter mRowsAdapter;
     private DisplayMetrics mMetrics;
@@ -79,12 +91,27 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         // set search icon color
         setSearchAffordanceColor(getResources().getColor(R.color.color_primary_light));
 
-        mRowsAdapter = new ArrayObjectAdapter(new ListRowPresenter());
+        mRowsAdapter = new ArrayObjectAdapter(new ShadowRowPresenterSelector());
+
+
+
+        /* Contact Presenter */
+
+        List<Card> cards = new ArrayList<>();
+        CardRow contacttRow = new CardRow(
+                CardRow.TYPE_DEFAULT,
+                true,
+                getString(R.string.tv_contact_row_header),
+                cards);
+        HeaderItem cardPresenterHeader = new HeaderItem(HEADER_CONTACTS, getString(R.string.tv_contact_row_header));
+        cardRowAdapter = new ArrayObjectAdapter(new CardPresenterSelector(getActivity()));
+
+        CardListRow contactListRow = new CardListRow(cardPresenterHeader, cardRowAdapter, contacttRow);
 
         /* CardPresenter */
-        HeaderItem cardPresenterHeader = new HeaderItem(1, getString(R.string.tv_contact_row_header));
-        cardRowAdapter = new ArrayObjectAdapter(new CardPresenter());
-        mRowsAdapter.add(new ListRow(cardPresenterHeader, cardRowAdapter));
+        mRowsAdapter.add(contactListRow);
+        mRowsAdapter.add(createAboutCardRow());
+
         setAdapter(mRowsAdapter);
 
         // listeners
@@ -99,6 +126,27 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
         setOnItemViewClickedListener(new ItemViewClickedListener());
     }
+
+
+    private Row createAboutCardRow() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(new AboutCard(Card.Type.VERSION, getString(R.string.version_section) + " " + BuildConfig.VERSION_NAME, "", "ic_ring_logo_white" ));
+     
+        CardRow aboutRow = new CardRow(
+                CardRow.TYPE_DEFAULT,
+                false,
+                getString(R.string.menu_item_about),
+                cards);
+
+        PresenterSelector presenterSelector = new CardPresenterSelector(getActivity());
+        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(presenterSelector);
+        for (Card card : cards) {
+            listRowAdapter.add(card);
+        }
+
+        return new CardListRow(new HeaderItem(HEADER_MISC, getString(R.string.menu_item_about)), listRowAdapter, aboutRow);
+    }
+
 
     @Override
     public void showLoading(final boolean show) {
@@ -121,7 +169,9 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
             @Override
             public void run() {
                 cardRowAdapter.clear();
-                cardRowAdapter.addAll(0, contacts);
+                for (CallContact contact : contacts) {
+                    cardRowAdapter.add(new ContactCard(contact));
+                }
                 mRowsAdapter.notifyArrayItemRangeChanged(0, contacts.size());
             }
         });
@@ -154,8 +204,8 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
 
-            if (item instanceof CallContact) {
-                presenter.contactClicked((CallContact) item);
+            if (item instanceof ContactCard) {
+                presenter.contactClicked(((ContactCard) item).getCallContact());
             }
         }
     }

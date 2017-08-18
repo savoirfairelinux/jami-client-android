@@ -43,7 +43,9 @@ import cx.ring.application.RingApplication;
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
 import cx.ring.tv.call.TVCallActivity;
-import cx.ring.tv.main.CardPresenter;
+import cx.ring.tv.cards.Card;
+import cx.ring.tv.cards.CardPresenterSelector;
+import cx.ring.tv.cards.contacts.ContactCard;
 import cx.ring.utils.Log;
 
 public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
@@ -119,8 +121,8 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
             @Override
             public void run() {
                 mRowsAdapter.clear();
-                ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenter());
-                listRowAdapter.add(contact);
+                ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenterSelector(getActivity()));
+                listRowAdapter.add(new ContactCard(contact, Card.Type.SEARCH_RESULT));
                 HeaderItem header = new HeaderItem(getActivity().getResources().getString(R.string.search_results));
                 mRowsAdapter.add(new ListRow(header, listRowAdapter));
             }
@@ -149,7 +151,7 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
-            presenter.contactClicked(((CallContact) item));
+            presenter.contactClicked(((ContactCard) item).getCallContact());
         }
     }
 
