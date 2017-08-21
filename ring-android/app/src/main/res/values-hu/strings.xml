@@ -147,4 +147,5 @@
   <!--Smartlist-->
   <string name="no_contact_request">Nincs elküldött partnerkérelem</string>
   <string name="contact_request_sent">Partnerkérelem elküldve</string>
+  <string name="tv_contact_row_header">Partnerek</string>
 </resources>

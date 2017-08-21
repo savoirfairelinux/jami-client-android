@@ -148,7 +148,6 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="register_name">Enregistrer un nom</string>
   <string name="trying_to_register_name">Enregistrement du nom en cours</string>
   <string name="registered_username">Nom d\'utilisateur enregistré</string>
-  <string name="register_username">Enregistrer un nom d\'utilisateur public (expérimental)</string>
   <string name="username_already_taken">Ce nom d\'utilisateur est déjà utilisé</string>
   <string name="invalid_username">Nom d\'utilisateur incorrect</string>
   <string name="looking_for_username_availability">Vérification de la disponibilité…</string>

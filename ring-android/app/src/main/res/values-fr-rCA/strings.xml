@@ -142,4 +142,5 @@
   <!--Blacklist-->
   <!--Smartlist-->
   <string name="contact_request_sent">Demande de contact envoyée</string>
+  <string name="tv_contact_row_header">Contacts</string>
 </resources>

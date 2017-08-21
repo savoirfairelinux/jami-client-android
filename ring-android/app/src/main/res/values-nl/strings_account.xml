@@ -153,7 +153,6 @@ Je kan je account later bewerken</string>
   <string name="register_name">Naam registreren</string>
   <string name="trying_to_register_name">Naam wordt geregistreerd</string>
   <string name="registered_username">Geregistreerde gebruikersnaam</string>
-  <string name="register_username">Registreer een publieke gebruikersnaam (experimenteel)</string>
   <string name="username_already_taken">Gebruikersnaam reeds in gebruik</string>
   <string name="invalid_username">Ongeldige gebruikersnaam</string>
   <string name="looking_for_username_availability">Beschikbaarheid van gebruikersnaam wordt gecontroleerd…</string>

@@ -57,6 +57,7 @@
   <string name="account_export_end_network_title">Hálózati hiba</string>
   <string name="account_export_end_error_title">Hiba</string>
   <string name="account_device_updated_message">Sikeresen frissítette a Ringfiókját.</string>
+  <string name="account_link_button">Ezen eszköz fiókhoz kapcsolása</string>
   <string name="account_new_button">Egy Ringfiók létrehozása</string>
   <!--Name registration-->
   <string name="username_already_taken">A felhasználónév már regisztrálva van</string>

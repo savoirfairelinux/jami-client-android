@@ -113,4 +113,5 @@
   <!--Send contact requests-->
   <!--Blacklist-->
   <!--Smartlist-->
+  <string name="tv_contact_row_header">Kenalan</string>
 </resources>

@@ -137,4 +137,5 @@
   <!--Smartlist-->
   <string name="no_contact_request">Jokia kontakto užklausa neišsiųsta</string>
   <string name="contact_request_sent">Kontakto užklausa išsiųsta</string>
+  <string name="tv_contact_row_header">Kontaktai</string>
 </resources>

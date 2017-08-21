@@ -142,4 +142,5 @@
   <!--Smartlist-->
   <string name="no_contact_request">Aucune invitation envoyée</string>
   <string name="contact_request_sent">Invitation envoyée</string>
+  <string name="tv_contact_row_header">Contacts</string>
 </resources>

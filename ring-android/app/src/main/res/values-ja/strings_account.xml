@@ -152,7 +152,6 @@
   <string name="register_name">登録名</string>
   <string name="trying_to_register_name">名前を登録しようとしています</string>
   <string name="registered_username">登録された名前</string>
-  <string name="register_username">公開ユーザー名を登録 (実験的)</string>
   <string name="username_already_taken">名前はすでに取得されています</string>
   <string name="invalid_username">無効なユーザー名</string>
   <string name="looking_for_username_availability">利用可能なユーザー名を検索中…</string>

@@ -65,4 +65,5 @@ GNU General Public Licence verziu 3 alebo neskoršie</string>
   <!--Send contact requests-->
   <!--Blacklist-->
   <!--Smartlist-->
+  <string name="tv_contact_row_header">Kontakty</string>
 </resources>

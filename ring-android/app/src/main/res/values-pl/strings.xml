@@ -136,6 +136,7 @@
   <string name="refuse">Odmów</string>
   <string name="block">Blokuj</string>
   <string name="contact_request_title">Nowe zaproszenie</string>
+  <string name="contact_request_account">Dla %1$s</string>
   <string name="no_requests">Brak zaproszeń</string>
   <!--Send contact requests-->
   <string name="send_request_button">Wyślij</string>
@@ -146,4 +147,6 @@
   <!--Smartlist-->
   <string name="no_contact_request">Brak wysłanych zaproszeń</string>
   <string name="contact_request_sent">Wysłano zaproszenie</string>
+  <string name="search_results">Wyniki wyszukiwania</string>
+  <string name="tv_contact_row_header">Kontakty</string>
 </resources>

@@ -1,15 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Προτάσεις</string>
+  <string name="report">&lt;u&gt;Επικοινωνήστε μαζί μας&lt;/u&gt;</string>
+  <string name="section_license">Άδεια</string>
   <string name="sponsor_section">Το Ring είναι δωρεάν/ελεύθερο λογισμικό αναπτυγμένο και υποστηριζόμενο από</string>
   <string name="copyright_section">Πνευματική ιδιοκτησία</string>
   <string name="contribute_section">Πρόσφερε</string>
   <string name="version_section">Έκδοση</string>
   <string name="no_email_app_installed">Δεν βρέθηκε κάποια εφαρμογή email, εγκαταστήστε μια για μας στείλετε μια αναφορά</string>
+  <string name="no_browser_app_installed">Δεν βρέθηκε πρόγραμμα περιήγησης εγκατεστημένο, εγκαταστείστε ένα για να δείτε την σελίδα.</string>
   <string name="email_chooser_title">Αποστολή email σε χρήση...</string>
+  <string name="website_chooser_title">Προβολή σελίδας με...</string>
+  <string name="license">Η εφαρμογή παρέχεται \"ως έχει\", χωρίς οποιαδήποτε εγγύηση. Για περισσότερες πληροφορίες, ανατρέξτε
+&lt;u&gt;GNU General Public License έκδοση 3 ή αργότερη&lt;/u&gt;</string>
   <string name="description">Το Ring είναι ελεύθερο λογισμικό για παγκόσμια επικοινωνία που σέβεται τις ελευθερίες και την ιδιωτικότητα των χρηστών του.</string>
   <string name="credits">Μονάδες</string>
   <!--About dialog-->
+  <string name="developed_by">Ανάπτυξη</string>
+  <string name="designed_by">Σχεδιασμός</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Καμία σύνδεση στο δίκτυο</string>
@@ -38,6 +47,8 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Αναπάντητη εισερχόμενη κλήση</string>
+  <string name="notif_missed_outgoing_call">Αναπάντητη εξερχόμενη κλήση</string>
   <string name="notif_incoming_call_title">Εισερχόμενη κλήση από %1$s</string>
   <string name="notif_incoming_call">Εισερχόμενη κλήση</string>
   <string name="notif_outgoing_call_title">Εξερχόμενη κλήση  %1$s</string>
@@ -59,6 +70,7 @@
   <string name="ab_action_contact_add_question">Προσθήκη στις επαφές;</string>
   <string name="ab_action_audio_call">Κλήση φωνής</string>
   <string name="ab_action_video_call">Κλήση βίντεο</string>
+  <string name="ab_action_change_screen_orientation">Στρίψτε την οθόνη</string>
   <string name="share_via">Μοίρασμα μέσω</string>
   <string name="write_a_message">Γράψε μήνυμα</string>
   <string name="scan_qr">Σάρωση QR κώδικα</string>
@@ -71,10 +83,12 @@
   <string name="permission_dialog_camera_title">Άδεια πρόσβασης στην κάμερα</string>
   <string name="permission_dialog_camera_message">Οι κλήσεις μέσω βίντεο χρειάζεται την άδεια στην κάμερά  για να δουλέψει. Παρακαλώ σκεφτείτε να την ενεργοποιήσετε.</string>
   <string name="ringtone_error_title">Σφάλμα</string>
+  <string name="ringtone_error_format_not_supported">Η μορφή δεν υποστιρίζεται.</string>
   <string name="ringtone_error_size_too_big">Το αρχείο είναι πολύ μεγάλο. Το μέγιστο μέγεθος είναι %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Η εφαρμογή Ring χρειάζεται να διαβάσει τις επαφές σας ώστε να ενεργοποιήσει αυτή την λειτουργία. Παρακαλώ δώστε την.</string>
   <!--Write call log permission-->
+  <string name="permission_dialog_write_call_log_message">Επιβαιβεώστε την πρόσβαση της εφαρμογής στο αρχείο κλησεων. </string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Σαρώστε τον κώδικα QR του λογαριασμού που θέλετε να προσθέσετε.</string>
   <!--Settings-->
@@ -88,22 +102,47 @@
   <string name="conversation_action_copy_peer_number">Αντιγραφή αριθμού </string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s αντιγράφτηκε στο πρόχειρο</string>
   <string name="conversation_action_select_peer_number">Επιλέξτε αριθμό </string>
+  <string name="conversation_action_block_this">Μπλοκάρισμα επαφής</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Προσθήκη %1$s ;</string>
   <string name="prompt_new_password">Νέο συνθηματικό</string>
   <string name="prompt_new_password_repeat">Επανάληψη νέου συνθηματικού</string>
   <string name="account_create_title">Δημιουργία λογαριασμού Ring</string>
+  <string name="prompt_new_username">Εισάγετε νέο ψευδώνυμο</string>
+  <string name="help_password_choose">Επιλέξτε έναν ισχυρό κωδικό τον οποίο θα θυμάστε πάντα για την διασφάληση του λογαριασμού Ring.</string>
   <string name="help_password_enter">Εισαγωγή συνθηματικού του κύριου Ring λογαριασμού σας</string>
+  <string name="help_pin_enter">Εισάγετε το PIN απο άλλο ρυθμισμένο λογαριασμό Ring. Επελέξτε την διαδικασία \"εξαγωγή λογαριασμού Ring\" για να λάβετε ένα PIN.</string>
   <string name="wizard_next">Επόμενο</string>
+  <string name="wizard_back">Πίσω</string>
   <!--MenuHeaderView-->
   <string name="profile">Το προφίλ μου</string>
+  <string name="profile_message_warning">Το προφίλ σας διαμοιράζεται μόνο με τις επαφές σας</string>
+  <string name="open_the_gallery">Άνοιγμα έκθεσης</string>
   <string name="take_a_photo">Λήψη φωτογραφίας</string>
+  <string name="profile_name_hint">Εισάγετε το όνομα σας (προαιρετικό)</string>
   <!--Share fragment-->
+  <string name="share_message">Σκανάρετε τον κωδικό QR με το ενσωματωμένο σκάνερ της εφαρμογής Ring που επιθυμεί να επικοινωνήσει μαζί σας.</string>
+  <string name="share_message_no_account">Επιλέξτε έναν λογαριασμό για διαμοιρασμό.</string>
   <string name="share_your_account_information">Μοίρασε τις πληροφορίες των επαφών μου</string>
   <string name="generic_error_migration">Σφάλμα</string>
+  <string name="generic_error_migration_message">Δημιουργήθηκε σφάλμα κατα την μετακίνηση</string>
   <!--Pending contact requests-->
+  <string name="accept">Αποδοχή</string>
+  <string name="refuse">Άρνηση</string>
+  <string name="block">Μπλοκάρισμα</string>
+  <string name="contact_request_title">Νέο αίτημα επαφής</string>
+  <string name="contact_request_msg">Έχετε %1$sαίτημα(τα) επαφής</string>
+  <string name="contact_request_account">Για %1$s</string>
+  <string name="no_requests">0 αιτήματα επαφής</string>
   <!--Send contact requests-->
   <string name="send_request_button">Αποστολή</string>
+  <string name="send_request_title">Αποστολή αίτημα επαφής</string>
+  <string name="send_request_msg">Αποστείλετε ένα αίτημα επαφής ώστε να μπορέσετε να επικοινωνήσετε με αυτόν τον χρήστη. Ωσότου το αίτημα σας να γίνει αποδεκτό, μπορείτε να αποστείλετε μηνύματα αλλά ο χρήστης δεν θα μπορεί να τα διαβάσει.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 Μπλοκαρισμένες επαφές</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Δεν έχουν αποσταλλέι αιτήματα επαφής</string>
+  <string name="contact_request_sent">Αίτημα επαφής εστάλει</string>
+  <string name="search_results">Αποτελέσματα αναζήτησης</string>
+  <string name="tv_contact_row_header">Επαφές</string>
 </resources>

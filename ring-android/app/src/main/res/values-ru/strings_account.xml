@@ -153,7 +153,6 @@
   <string name="register_name">Зарегистрировать имя</string>
   <string name="trying_to_register_name">Попытка зарегистрировать имя</string>
   <string name="registered_username">Зарегистрированное имя пользователя</string>
-  <string name="register_username">Зарегистрировать публичное имя (экспериментальная функция)</string>
   <string name="username_already_taken">Имя пользователя уже занято</string>
   <string name="invalid_username">Недопустимое имя пользователя</string>
   <string name="looking_for_username_availability">Проверяем доступность имени пользователя…</string>

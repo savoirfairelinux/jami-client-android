@@ -13,6 +13,7 @@
   <string name="prompt_username">Nom d\'usuari</string>
   <string name="prompt_password">Contrasenya</string>
   <string name="action_create">Crea compte</string>
+  <string name="action_create_short">Crear</string>
   <string name="action_register">Registra</string>
   <string name="error_field_required">Es requereix aquest camp</string>
   <string name="dialog_wait_create">S\'està afegint el compte</string>
@@ -135,12 +136,21 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_device_updated_title">S\'ha actualitzat el dispositiu del compte</string>
   <string name="account_device_updated_message">S\'ha actualitzat correctament el vostre compte de Ring.</string>
   <string name="account_cannot_be_updated_message">No s\'ha pogut actualitzar el dispositiu del compte. Si us plau, comproveu la vostra contrasenya.</string>
+  <string name="account_sip_register_anyway">Registre de totes maneres</string>
+  <string name="account_link_prompt_pin">Introdueix PIN</string>
   <string name="account_new_button">Crear un compte de Ring</string>
+  <string name="account_start_export_button">Genera PIN</string>
+  <string name="account_end_export_button">tanca</string>
   <!--Name registration-->
+  <string name="register_name">Registrar nom</string>
+  <string name="invalid_username">Nom d\'usuari invalid</string>
+  <string name="account_status_connection_error">Error de xarxa</string>
   <string name="account_status_unknown">Desconegut</string>
   <!--Create account-->
   <string name="account_creation_home">Benvigut a Ring</string>
+  <string name="account_creation_profile">Crei el seu perfil</string>
   <!--Devices-->
+  <string name="account_revoke_device_hint">Introduïu la contrasenya per confirmar</string>
   <string name="enter_password">Introduïu la contrasenya</string>
   <string name="revoke_device_title">Revoca el dispositiu</string>
   <string name="revoke_device_wait_title">Si us plau espereu...</string>

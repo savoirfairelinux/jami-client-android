@@ -128,7 +128,6 @@
   <string name="register_name">Regjistroni emër</string>
   <string name="trying_to_register_name">Po provohet të regjistrohet emri</string>
   <string name="registered_username">Emër përdoruesi i regjistruar</string>
-  <string name="register_username">Regjistroni emër përdoruesi publik (eksperimentale)</string>
   <string name="username_already_taken">Emër përdoruesi tashmë i zënë</string>
   <string name="invalid_username">Emër përdoruesi i pavlefshëm</string>
   <string name="account_status_unknown">E panjohur</string>

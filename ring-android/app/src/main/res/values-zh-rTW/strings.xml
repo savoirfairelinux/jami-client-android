@@ -146,4 +146,6 @@
   <!--Smartlist-->
   <string name="no_contact_request">未有送出的聯絡人請求</string>
   <string name="contact_request_sent">聯絡人請求已傳送</string>
+  <string name="search_results">搜尋結果</string>
+  <string name="tv_contact_row_header">聯絡人</string>
 </resources>

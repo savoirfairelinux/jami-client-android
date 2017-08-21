@@ -147,4 +147,6 @@
   <!--Smartlist-->
   <string name="no_contact_request">Ingen kontaktförfrågan skickad</string>
   <string name="contact_request_sent">Kontaktförfrågan skickad</string>
+  <string name="search_results">Sökresultat</string>
+  <string name="tv_contact_row_header">Kontakter</string>
 </resources>

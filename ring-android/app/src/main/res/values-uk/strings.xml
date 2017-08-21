@@ -135,4 +135,5 @@
   <string name="no_blocked_contact">0 заблокованих контактів</string>
   <!--Smartlist-->
   <string name="contact_request_sent">Запит контакту надіслано</string>
+  <string name="tv_contact_row_header">Контакти</string>
 </resources>

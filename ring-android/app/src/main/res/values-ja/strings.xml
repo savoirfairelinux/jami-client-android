@@ -146,4 +146,5 @@
   <!--Smartlist-->
   <string name="no_contact_request">連絡先のリクエストは送信していません</string>
   <string name="contact_request_sent">連絡先のリクエストを送信しました</string>
+  <string name="tv_contact_row_header">連絡先</string>
 </resources>

@@ -147,4 +147,5 @@
   <!--Smartlist-->
   <string name="no_contact_request">Nessuna richiesta di contatto inviata</string>
   <string name="contact_request_sent">Richiesta di contatto inviata</string>
+  <string name="tv_contact_row_header">Contatti</string>
 </resources>

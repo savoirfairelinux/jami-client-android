@@ -1,17 +1,28 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Обратна връзка</string>
+  <string name="report">&lt;u&gt;Изпратете ни е-писмо&lt;/u&gt;</string>
+  <string name="section_license">Лиценз</string>
   <string name="sponsor_section">Ring е безплатен софтуер, разработван и поддържан от</string>
   <string name="copyright_section">Авторски права</string>
   <string name="contribute_section">Принос</string>
   <string name="version_section">Версия</string>
   <string name="no_email_app_installed">Не е открито приложение за е-поща. Инсталирайте такова и ни изпратете доклад.</string>
+  <string name="no_browser_app_installed">Не е открито приложение-браузър. Инсталирайте такова, за да видите тази страница.</string>
   <string name="email_chooser_title">Изпращане на е-писмо чрез…</string>
+  <string name="website_chooser_title">Преглед на уеб сайта чрез…</string>
+  <string name="license">Този софтуер се предоставя във вида, в който е, без никакви гаранции. За повече подробности, вижте
+&lt;u&gt;Общия публичен лиценз на ГНУ, версия 3 или по-нов&lt;/u&gt;</string>
+  <string name="description">Ring е безплатен софтуер за универсална комуникация, който уважава свободата и личните данни на потребителите си.</string>
   <string name="credits">Заслуги</string>
   <!--About dialog-->
+  <string name="developed_by">Разработен от</string>
+  <string name="designed_by">Проектиран от</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Няма връзка с мрежата</string>
+  <string name="error_mobile_network_available_but_disabled">Моля, разрешете достъпа до мобилната мрежа от настройките.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Текстово съобщение</string>
   <!--Left Drawer-->
@@ -20,8 +31,10 @@
   <string name="drawer_close">Затваряне на менюто</string>
   <!--Sections-->
   <string name="menu_item_home">Начало</string>
+  <string name="menu_item_contact_request">Заявки за нови контакти</string>
   <string name="menu_item_accounts">Управление на акаунтите</string>
   <string name="menu_item_settings">Настройки</string>
+  <string name="menu_item_share">Споделяне на моята информация</string>
   <string name="menu_item_about">Относно Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Наберете номер</string>
@@ -38,6 +51,8 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Пропуснато входящо обаждане</string>
+  <string name="notif_missed_outgoing_call">Пропуснато изходящо обаждане</string>
   <string name="notif_incoming_call_title">Входящо обаждане от %1$s</string>
   <string name="notif_incoming_call">Входящо обаждане</string>
   <string name="notif_outgoing_call_title">Изходящо обаждане до %1$s</string>
@@ -58,6 +73,8 @@
   <string name="ab_action_contact_add">Добавяне към контактите</string>
   <string name="ab_action_contact_add_question">Добавяне към контактите?</string>
   <string name="ab_action_audio_call">Гласово обаждане</string>
+  <string name="ab_action_video_call">Обаждане с видео</string>
+  <string name="ab_action_change_screen_orientation">Промяна на ориентацията на екрана</string>
   <string name="share_via">Споделяне чрез</string>
   <string name="write_a_message">Напишете съобщение</string>
   <string name="scan_qr">Сканиране на QR-код</string>
@@ -70,6 +87,8 @@
   <string name="permission_dialog_camera_title">Право за използване на камерата</string>
   <string name="permission_dialog_camera_message">Разговорите с видео изискват правото за използване на камерата. Моля, дайте това право на приложението.</string>
   <string name="ringtone_error_title">Грешка</string>
+  <string name="ringtone_error_format_not_supported">Този формат не се поддържа.</string>
+  <string name="ringtone_error_size_too_big">Файлът е твърде голям. Максималният размер е %1$iКБ.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring се нуждае от правото за четене на контактите, за да работи тази функционалност. Моля, разрешете го.</string>
   <!--Write call log permission-->
@@ -87,6 +106,7 @@
   <string name="conversation_action_copy_peer_number">Копиране на номера</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s е копиран</string>
   <string name="conversation_action_select_peer_number">Изберете номер</string>
+  <string name="conversation_action_block_this">Блокиране на този контакт</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавяне на %1$s?</string>
   <string name="prompt_new_password">Нова парола</string>
@@ -95,20 +115,38 @@
   <string name="prompt_new_username">Въведете ново потребителско име</string>
   <string name="help_password_choose">Изберете сигурна парола, която ще запомните, за да е защитен акаунтът Ви.</string>
   <string name="help_password_enter">Въведете основната си парола за Ring</string>
+  <string name="help_pin_enter">Въведете ПИН-кода на друг настроен акаунт за Ring. Използвайте функцията „Изнасяне на акаунта в Ring“, за да получите ПИН.</string>
   <string name="wizard_next">Напред</string>
+  <string name="wizard_back">Назад</string>
   <!--MenuHeaderView-->
   <string name="profile">Моят профил</string>
+  <string name="profile_message_warning">Профилът Ви се споделя само с контактите Ви</string>
   <string name="open_the_gallery">Отваряне на галерията</string>
   <string name="take_a_photo">Снимане</string>
+  <string name="profile_name_hint">Въведете името си (незадължително)</string>
   <!--Share fragment-->
   <string name="share_message">Сканирайте този QR-код с вградения скенер на приложението Ring, което иска да се свърже с Вас.</string>
+  <string name="share_message_no_account">Моля, изберете кой акаунт искате да споделите</string>
   <string name="share_your_account_information">Споделяне на информацията аз връзка с мен</string>
   <string name="generic_error_migration">Грешка</string>
+  <string name="generic_error_migration_message">Възникна грешка при прехвърлянето</string>
   <!--Pending contact requests-->
   <string name="accept">Приемане</string>
   <string name="refuse">Отказ</string>
+  <string name="block">Блокиране</string>
+  <string name="contact_request_title">Заявка за свързване с нов контакт</string>
+  <string name="contact_request_msg">Имате %1$s заявки за свързване с нови контакти</string>
+  <string name="contact_request_account">За %1$s</string>
+  <string name="no_requests">0 заявки за свързване с нови контакти</string>
   <!--Send contact requests-->
   <string name="send_request_button">Изпращане</string>
+  <string name="send_request_title">Изпращане на заявка за свързване с нов контакт</string>
+  <string name="send_request_msg">Трябва да изпратите заявка за свързване с нов контакт, за да можете да комуникирате с този потребител. Докато заявката Ви не бъде приета, ще можете да изпращате съобщения, но потребителят няма да може да ги чете.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 блокирани контакти</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Няма изпратени заявки за свързване с нови контакти</string>
+  <string name="contact_request_sent">Заявката за свързване с нов контакт е изпратена</string>
+  <string name="search_results">Резултати от търсенето</string>
+  <string name="tv_contact_row_header">Контакти</string>
 </resources>

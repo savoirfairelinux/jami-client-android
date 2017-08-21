@@ -149,4 +149,5 @@
   <!--Smartlist-->
   <string name="no_contact_request">Нет отправленных запросов на добавление в контакты</string>
   <string name="contact_request_sent">Запрос на добавление в контакты отправлен</string>
+  <string name="tv_contact_row_header">Контакты</string>
 </resources>

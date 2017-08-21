@@ -99,4 +99,5 @@
   <string name="send_request_button">Sendi</string>
   <!--Blacklist-->
   <!--Smartlist-->
+  <string name="tv_contact_row_header">Kontaktoj</string>
 </resources>

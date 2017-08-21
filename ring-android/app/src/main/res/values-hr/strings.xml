@@ -126,4 +126,5 @@
   <!--Blacklist-->
   <string name="no_blocked_contact">0 blokiranih kontakata</string>
   <!--Smartlist-->
+  <string name="tv_contact_row_header">Kontakti</string>
 </resources>

@@ -144,7 +144,6 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="register_name">Enregistrer un nom</string>
   <string name="trying_to_register_name">Enregistrement du nom en cours</string>
   <string name="registered_username">Nom d\'utilisateur enregistré</string>
-  <string name="register_username">Enregistrer un nom d\'utilisateur public (expérimental)</string>
   <string name="username_already_taken">Nom d\'utilisateur non-disponible</string>
   <string name="invalid_username">Nom d\'utilisateur invalide</string>
   <string name="account_status_connecting">Connexion en cours</string>

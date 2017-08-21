@@ -153,7 +153,6 @@ Du kan ändra kontot senare.</string>
   <string name="register_name">Registrera namn</string>
   <string name="trying_to_register_name">Försöker registrera namnet</string>
   <string name="registered_username">Registrerat namn</string>
-  <string name="register_username">Registrera ett offentligt namn (experimentellt)</string>
   <string name="username_already_taken">Användarnamnet finns redan</string>
   <string name="invalid_username">Ogiltigt användarnamn</string>
   <string name="looking_for_username_availability">Söker efter användarnamnets tillgänglighet...</string>

@@ -106,4 +106,5 @@
   <!--Blacklist-->
   <string name="no_blocked_contact">0 kontak diblokir</string>
   <!--Smartlist-->
+  <string name="tv_contact_row_header">Kontak</string>
 </resources>

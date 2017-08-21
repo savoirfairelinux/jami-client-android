@@ -147,4 +147,6 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <!--Smartlist-->
   <string name="no_contact_request">Nenhuma solicitação de contato enviada</string>
   <string name="contact_request_sent">Solicitação de contato enviada</string>
+  <string name="search_results">Resultados da Busca</string>
+  <string name="tv_contact_row_header">Contatos</string>
 </resources>

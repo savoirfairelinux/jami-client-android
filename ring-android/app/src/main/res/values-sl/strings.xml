@@ -136,4 +136,5 @@
   <!--Smartlist-->
   <string name="no_contact_request">Ni bilo poslanih zahtev za stik</string>
   <string name="contact_request_sent">Zahteva za stik poslana</string>
+  <string name="tv_contact_row_header">Stiki</string>
 </resources>

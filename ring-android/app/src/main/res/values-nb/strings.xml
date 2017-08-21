@@ -1,16 +1,28 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <!--About-->
+  <string name="feedback_section">Tilbakemelding</string>
+  <string name="report">&lt;u&gt;Send oss en e-post&lt;/u&gt;</string>
+  <string name="section_license">Lisens</string>
   <string name="sponsor_section">Ring er fri programvare utviklet og støttet av</string>
   <string name="copyright_section">Opphavsrett</string>
   <string name="contribute_section">Bidra</string>
   <string name="version_section">Versjon</string>
   <string name="no_email_app_installed">Fant ingen epost-app.  Installer en for å sende oss en rapport</string>
+  <string name="no_browser_app_installed">Ingen nettleser funnet, installer en for å vise denne siden</string>
   <string name="email_chooser_title">Send epost vha...</string>
+  <string name="website_chooser_title">Vis nettside ved bruk av…</string>
+  <string name="license">Denne programvaren tilbys \"som den er\", uten garanti av noen art. For detaljer, se
+&lt;u&gt;GNU General Public Lisens, versjon 3 eller senere&lt;/u&gt;</string>
+  <string name="description">Ring er fri programvare for universell kommunikasjon som respekteret privatlivets fred for dets brukere.</string>
+  <string name="credits">Bidragsytere</string>
   <!--About dialog-->
+  <string name="developed_by">Utviklet av</string>
+  <string name="designed_by">Designet av</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Mangler nettverksforbindelse</string>
+  <string name="error_mobile_network_available_but_disabled">Tildel tilgang til mobilnettverk på innstillingsskjermen.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstmelding</string>
   <!--Left Drawer-->
@@ -19,8 +31,10 @@
   <string name="drawer_close">Lukk navigasjonsskuff</string>
   <!--Sections-->
   <string name="menu_item_home">Hjem</string>
+  <string name="menu_item_contact_request">Kontaktforespørsler</string>
   <string name="menu_item_accounts">Styr kontoer</string>
   <string name="menu_item_settings">Innstillinger</string>
+  <string name="menu_item_share">Del min kontakt</string>
   <string name="menu_item_about">Om Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Slå et nummer</string>
@@ -37,6 +51,8 @@
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_missed_incoming_call">Tapt innkommende anrop</string>
+  <string name="notif_missed_outgoing_call">Tapt utgående anrop</string>
   <string name="notif_incoming_call_title">Innkommende samtale fra %1$s</string>
   <string name="notif_incoming_call">Innkommende samtale</string>
   <string name="notif_outgoing_call_title">Utgående samtale til %1$s</string>
@@ -58,6 +74,7 @@
   <string name="ab_action_contact_add_question">Legg til kontakter?</string>
   <string name="ab_action_audio_call">Talesamtale</string>
   <string name="ab_action_video_call">Videosamtale</string>
+  <string name="ab_action_change_screen_orientation">Endre skjermretning</string>
   <string name="share_via">Del via</string>
   <string name="write_a_message">Skriv en melding</string>
   <string name="scan_qr">Scan QR-kode</string>
@@ -70,6 +87,8 @@
   <string name="permission_dialog_camera_title">Kamerarettigheter</string>
   <string name="permission_dialog_camera_message">Videosamtaler krever tilgang til kameraet for å virke.  Vurder å aktivere det.</string>
   <string name="ringtone_error_title">Feil</string>
+  <string name="ringtone_error_format_not_supported">Dette formatet støttes ikke</string>
+  <string name="ringtone_error_size_too_big">Fila er for stor. Maksimal filstørrelse er %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring trenger tillatelsen \"Lese kontakter\" for å aktivere denne egenskapet.  Vær så snill å tillat dette.</string>
   <!--Write call log permission-->
@@ -84,18 +103,50 @@
   <string name="conversation_action_delete_this">Slett denne samtalen</string>
   <string name="conversation_action_delete_this_title">Slett denne samtalen?</string>
   <string name="conversation_action_delete_this_message">Denne handlingen kan ikke gjøres om.</string>
+  <string name="conversation_action_copy_peer_number">Kopier nummer</string>
+  <string name="conversation_action_copied_peer_number_clipboard">%1$s kopiert til utklippstavle</string>
+  <string name="conversation_action_select_peer_number">Velg et nummer</string>
+  <string name="conversation_action_block_this">Blokker denne kontakten</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
   <string name="prompt_new_password">Nytt passord</string>
+  <string name="prompt_new_password_repeat">Gjenta nytt passord</string>
   <string name="account_create_title">Opprett en Ring-konto</string>
+  <string name="prompt_new_username">Skriv inn nytt brukernavn</string>
+  <string name="help_password_choose">Velg et sterkt passord du husker for å beskytte din Ring-konto.</string>
+  <string name="help_password_enter">Skriv in hovedpassordet for din Ring-konto</string>
+  <string name="help_pin_enter">Skriv inn PIN fra en annen oppsatt Ring-konto. Bruk \"eksporter konto på Ring\"-funksjonen for å hente en PIN.</string>
   <string name="wizard_next">Neste</string>
+  <string name="wizard_back">Tilbake</string>
   <!--MenuHeaderView-->
+  <string name="profile">Min profil</string>
+  <string name="profile_message_warning">Din profil deles bare med dine kontakter</string>
+  <string name="open_the_gallery">Åpne galleriet</string>
+  <string name="take_a_photo">Ta et bilde</string>
+  <string name="profile_name_hint">Skriv inn ditt navn (valgfritt)</string>
   <!--Share fragment-->
+  <string name="share_message">Skann denne QR-koden med den innebygde skanneren i Ring-programmet som ønsker å kommunisere med deg.</string>
+  <string name="share_message_no_account">Velg en konto å dele.</string>
+  <string name="share_your_account_information">Del min kontaktinformasjon</string>
   <string name="generic_error_migration">Feil</string>
+  <string name="generic_error_migration_message">En feil inntraff under flytting</string>
   <!--Pending contact requests-->
   <string name="accept">Aksepter</string>
+  <string name="refuse">Avslå</string>
+  <string name="block">Blokker</string>
+  <string name="contact_request_title">Ny kontaktforespørsel</string>
+  <string name="contact_request_msg">Du har %1$s kontaktforspørsler</string>
+  <string name="contact_request_account">For %1$s</string>
+  <string name="no_requests">0 kontaktforespørsler</string>
   <!--Send contact requests-->
   <string name="send_request_button">Send</string>
+  <string name="send_request_title">Send en kontaktforespørsel</string>
+  <string name="send_request_msg">Du må sende en kontaktforespørsel for å kommunisere med denne brukeren. Så lenge din kontakt ikke har godtatt forespørselen, kan du sende meldinger som din kontakt ikke kan lese.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 blokkerte kontakter</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Ingen kontaktforespørsel sendt</string>
+  <string name="contact_request_sent">Kontaktforespørsel sendt</string>
+  <string name="search_results">Søkeresultater</string>
+  <string name="tv_contact_row_header">Kontakter</string>
 </resources>

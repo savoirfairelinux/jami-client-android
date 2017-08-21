@@ -145,4 +145,5 @@
   <!--Smartlist-->
   <string name="no_contact_request">联系人请求未发送</string>
   <string name="contact_request_sent">联系人请求已发送</string>
+  <string name="tv_contact_row_header">通讯录</string>
 </resources>

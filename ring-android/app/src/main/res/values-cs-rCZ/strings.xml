@@ -146,4 +146,5 @@
   <!--Smartlist-->
   <string name="no_contact_request">Neposlána žádná žádost o kontakt</string>
   <string name="contact_request_sent">Poslána žádost o kontakt</string>
+  <string name="tv_contact_row_header">Kontakty</string>
 </resources>

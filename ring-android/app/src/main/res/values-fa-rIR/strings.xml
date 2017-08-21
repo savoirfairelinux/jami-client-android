@@ -144,4 +144,5 @@
   <!--Smartlist-->
   <string name="no_contact_request">هیچ درخواست تماسی ارسال نشده</string>
   <string name="contact_request_sent">درخواست تماس ارسال شد</string>
+  <string name="tv_contact_row_header">مخاطبان</string>
 </resources>

@@ -116,6 +116,8 @@ Możesz edytować swoje konto później</string>
   <string name="account_export_end_error_title">Błąd</string>
   <string name="account_export_end_error_message">Nie można eksportować konta. Wystąpił nieznany błąd.</string>
   <string name="account_enter_password">Wprowadź hasło</string>
+  <string name="account_share_body">Skontaktuj się ze mną przez %1$s na rozproszonej platformie komunikacyjnej Ring: https://ring.cx</string>
+  <string name="account_share_body_with_username">Skontaktuj się ze mną przez %1$s lub przez moją publiczną nazwę: %2$s na rozproszonej platformie komunikacyjnej Ring: https://ring.cx</string>
   <string name="account_contact_me">Skontaktuj się ze mną na Ring !</string>
   <string name="update_account">Zaktualizuj konto</string>
   <string name="account_migration">Twoje konto Ring może zostać zaktualizowane.\nWprowadź swoje hasło</string>
@@ -151,7 +153,6 @@ Możesz edytować swoje konto później</string>
   <string name="register_name">Zarejestruj nazwę</string>
   <string name="trying_to_register_name">Trwa próba rejestracji nazwy</string>
   <string name="registered_username">Zarejestruj nazwę użytkownika</string>
-  <string name="register_username">Zarejestruj publiczną nazwę użytkownika (eksperymentalne)</string>
   <string name="username_already_taken">Nazwa użytkownika zajęta</string>
   <string name="invalid_username">Nieprawidłowa nazwa użytkownika</string>
   <string name="looking_for_username_availability">Sprawdzanie dostępności nazwy użytkownika...</string>
