@@ -19,14 +19,21 @@
  */
 package cx.ring.mvp;
 
-import cx.ring.model.Account;
+public abstract class RingAccountViewModel {
 
-public class RingAccountViewModel {
+    protected String mFullName;
+    protected String mUsername;
+    protected String mPassword;
+    protected String mPin;
+    protected boolean link;
 
-    private String mUsername;
-    private String mPassword;
-    private String mPin;
-    private Account mAccount;
+    public String getFullName() {
+        return mFullName;
+    }
+
+    public void setFullName(String mFullName) {
+        this.mFullName = mFullName;
+    }
 
     public String getUsername() {
         return mUsername;
@@ -52,12 +59,11 @@ public class RingAccountViewModel {
         this.mPin = mPin;
     }
 
-    public Account getAccount() {
-        return mAccount;
+    public boolean isLink() {
+        return link;
     }
 
-    public void setAccount(Account mAccount) {
-        this.mAccount = mAccount;
+    public void setLink(boolean link) {
+        this.link = link;
     }
-
 }
