@@ -10,9 +10,12 @@ import android.view.View;
 import java.util.List;
 
 import cx.ring.R;
+import cx.ring.account.RingAccountCreationFragment;
+import cx.ring.account.RingAccountViewModelImpl;
 import cx.ring.account.RingLinkAccountPresenter;
 import cx.ring.account.RingLinkAccountView;
 import cx.ring.application.RingApplication;
+import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.utils.StringUtils;
 
 public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAccountPresenter>
@@ -24,10 +27,22 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
     public TVRingLinkAccountFragment() {
     }
 
+    public static TVRingLinkAccountFragment newInstance(RingAccountViewModelImpl ringAccountViewModel) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT, ringAccountViewModel);
+        TVRingLinkAccountFragment fragment = new TVRingLinkAccountFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onViewCreated(view, savedInstanceState);
+
+        RingAccountViewModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
+        presenter.init(ringAccountViewModel);
+
     }
 
     @Override
@@ -70,17 +85,8 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
     }
 
     @Override
-    public void goToLast() {
-        //no op on tv
-    }
-
-    @Override
-    public void createAccount() {
-        ((TVAccountWizard) getActivity()).createAccount(
-                null,
-                presenter.getPin(),
-                presenter.getPassword());
-
+    public void createAccount(RingAccountViewModel ringAccountViewModel) {
+        ((TVAccountWizard) getActivity()).createAccount(ringAccountViewModel);
     }
 
     @Override

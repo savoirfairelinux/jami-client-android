@@ -35,6 +35,7 @@ import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.RingAccountViewModel;
 
 public class RingLinkAccountFragment extends BaseFragment<RingLinkAccountPresenter> implements RingLinkAccountView {
 
@@ -49,6 +50,14 @@ public class RingLinkAccountFragment extends BaseFragment<RingLinkAccountPresent
     @BindView(R.id.link_button)
     protected Button mLinkAccountBtn;
 
+    public static RingLinkAccountFragment newInstance(RingAccountViewModelImpl ringAccountViewModel) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT, ringAccountViewModel);
+        RingLinkAccountFragment fragment = new RingLinkAccountFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.frag_acc_ring_link, parent, false);
@@ -58,17 +67,15 @@ public class RingLinkAccountFragment extends BaseFragment<RingLinkAccountPresent
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
+        RingAccountViewModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
+        presenter.init(ringAccountViewModel);
+
         return view;
     }
 
     @OnClick(R.id.link_button)
     public void onLinkClick() {
         presenter.linkClicked();
-    }
-
-    @OnClick(R.id.last_create_account)
-    public void onLastClick() {
-        presenter.lastClicked();
     }
 
     @OnTextChanged(value = R.id.ring_existing_password, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
@@ -87,12 +94,7 @@ public class RingLinkAccountFragment extends BaseFragment<RingLinkAccountPresent
     }
 
     @Override
-    public void goToLast() {
-        ((AccountWizard) getActivity()).accountLast();
-    }
-
-    @Override
-    public void createAccount() {
-        ((AccountWizard) getActivity()).createAccount(null, mPinTxt.getText().toString(), mPasswordTxt.getText().toString());
+    public void createAccount(RingAccountViewModel ringAccountViewModel) {
+        ((AccountWizard) getActivity()).createAccount(ringAccountViewModel);
     }
 }

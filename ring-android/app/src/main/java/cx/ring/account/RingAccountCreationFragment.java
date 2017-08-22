@@ -44,9 +44,12 @@ import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.utils.RegisteredNameFilter;
 
 public class RingAccountCreationFragment extends BaseFragment<RingAccountCreationPresenter> implements RingAccountCreationView {
+
+    public static final String KEY_RING_ACCOUNT = "RING_ACCOUNT";
 
     @BindView(R.id.switch_ring_username)
     protected Switch mUsernameSwitch;
@@ -63,20 +66,27 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
     @BindView(R.id.ring_password_repeat_txt_box)
     protected TextInputLayout mPasswordRepeatTxtBox;
 
-    @BindView(R.id.last_create_account)
-    protected Button mLastButton;
-
     @BindView(R.id.ring_username_box)
     protected ViewGroup mUsernameBox;
 
     @BindView(R.id.create_account)
     protected Button mCreateAccountButton;
 
+    public static RingAccountCreationFragment newInstance(RingAccountViewModelImpl ringAccountViewModel) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(KEY_RING_ACCOUNT, ringAccountViewModel);
+        RingAccountCreationFragment fragment = new RingAccountCreationFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.frag_acc_ring_create, parent, false);
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
+        setRetainInstance(true);
         return view;
     }
 
@@ -85,6 +95,9 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         mUsernameTxt.setFilters(new InputFilter[]{new RegisteredNameFilter()});
+
+        RingAccountViewModelImpl ringAccountViewModel = getArguments().getParcelable(KEY_RING_ACCOUNT);
+        presenter.init(ringAccountViewModel);
     }
 
     @OnCheckedChanged(R.id.switch_ring_username)
@@ -95,12 +108,6 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
     @OnClick(R.id.create_account)
     public void onCreateAccountButtonClick() {
         presenter.createAccount();
-    }
-
-    @OnClick(R.id.last_create_account)
-    public void lastClicked() {
-        AccountWizard accountWizard = (AccountWizard) getActivity();
-        accountWizard.accountLast();
     }
 
     @Override
@@ -234,11 +241,11 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
     }
 
     @Override
-    public void goToAccountCreation(String username, String password) {
+    public void goToAccountCreation(RingAccountViewModel ringAccountViewModel) {
         Activity wizardActivity = getActivity();
         if (wizardActivity != null && wizardActivity instanceof AccountWizard) {
             AccountWizard wizard = (AccountWizard) wizardActivity;
-            wizard.createAccount(username, null, password);
+            wizard.createAccount(ringAccountViewModel);
         }
     }
 }
