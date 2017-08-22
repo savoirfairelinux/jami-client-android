@@ -22,6 +22,7 @@ package cx.ring.account;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,6 +30,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,14 +45,18 @@ import java.io.ByteArrayOutputStream;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.application.RingApplication;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.utils.BitmapUtils;
 
-public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresenter> implements ProfileCreationView {
-    static final String TAG = ProfileCreationFragment.class.getSimpleName();
+public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresenter> implements ProfileCreationView, TextWatcher {
+    public static final String TAG = ProfileCreationFragment.class.getSimpleName();
+    public static final String KEY_IS_LINK = "IS_LINK";
+
     public static final int REQUEST_CODE_PHOTO = 1;
     public static final int REQUEST_CODE_GALLERY = 2;
     public static final int REQUEST_PERMISSION_CAMERA = 3;
@@ -72,10 +79,15 @@ public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresent
     @BindView(R.id.next_create_account)
     protected Button mNextButton;
 
-    @BindView(R.id.last_create_account)
-    protected Button mLastButton;
-
     private Bitmap mSourcePhoto;
+
+    public static ProfileCreationFragment newInstance(boolean isLink) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(KEY_IS_LINK, isLink);
+        ProfileCreationFragment fragment = new ProfileCreationFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -84,6 +96,8 @@ public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresent
 
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+
+        setRetainInstance(true);
 
         if (savedInstanceState != null) {
             byte[] bytes = savedInstanceState.getByteArray(PHOTO_TAG);
@@ -104,7 +118,12 @@ public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresent
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter.initPresenter();
+
+        RingAccountViewModelImpl ringAccountViewModel = new RingAccountViewModelImpl();
+        boolean isLink = getArguments().getBoolean(KEY_IS_LINK, false);
+        ringAccountViewModel.setLink(isLink);
+
+        presenter.initPresenter(ringAccountViewModel);
     }
 
     @Override
@@ -141,7 +160,7 @@ public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresent
 
     public void updatePhoto(Bitmap image) {
         mSourcePhoto = image;
-        mPhotoView.setImageBitmap(image != null ? BitmapUtils.cropImageToCircle(image) : null);
+        presenter.photoUpdated();
     }
 
     @OnClick(R.id.gallery)
@@ -157,11 +176,6 @@ public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresent
     @OnClick(R.id.next_create_account)
     public void nextClicked() {
         presenter.nextClick();
-    }
-
-    @OnClick(R.id.last_create_account)
-    public void lastClicked() {
-        presenter.lastClick();
     }
 
     @Override
@@ -196,13 +210,34 @@ public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresent
     }
 
     @Override
-    public void goToNext() {
-        String fullname = mFullnameView.getText().toString().trim();
-        ((AccountWizard) getActivity()).profileNext(fullname, mSourcePhoto);
+    public void goToNext(RingAccountViewModel ringAccountViewModel) {
+        if (ringAccountViewModel.isLink()) {
+            Fragment fragment = RingLinkAccountFragment.newInstance((RingAccountViewModelImpl) ringAccountViewModel);
+            replaceFragmentWithSlide(fragment, R.id.wizard_container);
+        } else {
+            Fragment fragment = RingAccountCreationFragment.newInstance((RingAccountViewModelImpl) ringAccountViewModel);
+            replaceFragmentWithSlide(fragment, R.id.wizard_container);
+        }
     }
 
     @Override
-    public void goToLast() {
-        ((AccountWizard) getActivity()).profileLast();
+    public void photoUpdate(RingAccountViewModel ringAccountViewModel) {
+        ((RingAccountViewModelImpl) ringAccountViewModel).setPhoto(mSourcePhoto);
+        mPhotoView.setImageBitmap(mSourcePhoto != null ? BitmapUtils.cropImageToCircle(mSourcePhoto) : null);
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @OnTextChanged(value = R.id.user_name, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void afterTextChanged(Editable txt) {
+        presenter.fullNameUpdated(txt.toString());
     }
 }

@@ -4,30 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Wizard">
+    android:theme="@style/Wizard"
+    tools:background="@color/color_primary_dark">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/add_action_panel"
+        android:layout_above="@+id/next_create_account"
+        android:theme="@style/Wizard"
         tools:background="@color/color_primary_dark">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin">
+            android:paddingRight="@dimen/activity_horizontal_margin">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:gravity="center"
                 android:text="@string/account_creation_profile"
                 android:textColor="@color/text_color_primary_dark"
@@ -52,7 +53,8 @@
                     android:id="@+id/profile_container"
                     android:layout_width="150dp"
                     android:layout_height="160dp"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp">
 
                     <ImageView
                         android:id="@+id/profile_photo"
@@ -120,35 +122,19 @@
 
             </LinearLayout>
 
+
         </LinearLayout>
 
     </ScrollView>
 
-    <RelativeLayout
-        android:id="@+id/add_action_panel"
+    <Button
+        android:id="@+id/next_create_account"
+        style="@style/WizardNavButton"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/color_primary_light">
-
-        <Button
-            android:id="@+id/last_create_account"
-            style="@style/WizardNavButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:text="@string/wizard_back" />
-
-        <Button
-            android:id="@+id/next_create_account"
-            style="@style/WizardNavButton"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:text="@string/wizard_next" />
-
-    </RelativeLayout>
+        android:layout_centerHorizontal="true"
+        android:background="@color/color_primary_light"
+        android:text="@string/wizard_next" />
 
 </RelativeLayout>

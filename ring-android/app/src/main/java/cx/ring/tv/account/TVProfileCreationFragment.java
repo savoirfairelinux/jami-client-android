@@ -3,6 +3,7 @@ package cx.ring.tv.account;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v17.leanback.app.GuidedStepFragment;
 import android.support.v17.leanback.widget.GuidanceStylist;
 import android.support.v17.leanback.widget.GuidedAction;
 import android.view.View;
@@ -12,7 +13,9 @@ import java.util.List;
 import cx.ring.R;
 import cx.ring.account.ProfileCreationPresenter;
 import cx.ring.account.ProfileCreationView;
+import cx.ring.account.RingAccountViewModelImpl;
 import cx.ring.application.RingApplication;
+import cx.ring.mvp.RingAccountViewModel;
 
 public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCreationPresenter>
         implements ProfileCreationView {
@@ -24,7 +27,10 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         super.onViewCreated(view, savedInstanceState);
-        presenter.initPresenter();
+
+        RingAccountViewModelImpl ringAccountViewModel = new RingAccountViewModelImpl();
+
+        presenter.initPresenter(ringAccountViewModel);
     }
 
     @Override
@@ -81,13 +87,13 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     }
 
     @Override
-    public void goToNext() {
-        GuidedAction editText = findActionById(USER_NAME);
-        ((TVAccountWizard) getActivity()).profileNext(editText.getEditDescription().toString());
+    public void goToNext(RingAccountViewModel ringAccountViewModel) {
+        GuidedStepFragment.add(getFragmentManager(), TVRingLinkAccountFragment.newInstance((RingAccountViewModelImpl) ringAccountViewModel));
     }
 
     @Override
-    public void goToLast() {
-
+    public void photoUpdate(RingAccountViewModel ringAccountViewModel) {
+        //not implemented on TV
     }
+
 }

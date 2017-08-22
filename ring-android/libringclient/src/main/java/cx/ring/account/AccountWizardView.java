@@ -19,7 +19,13 @@
  */
 package cx.ring.account;
 
+import cx.ring.mvp.RingAccountViewModel;
+
 public interface AccountWizardView {
+
+    void goToHomeCreation();
+
+    void goToSipCreation();
 
     void displayProgress(boolean display);
 
@@ -29,7 +35,7 @@ public interface AccountWizardView {
 
     void finish(boolean affinity);
 
-    void saveProfile(String accountId, String username);
+    void saveProfile(String accountId, RingAccountViewModel ringAccountViewModel);
 
     void displayGenericError();
 
