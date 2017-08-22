@@ -21,49 +21,41 @@ package cx.ring.account;
 
 import javax.inject.Inject;
 
+import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.mvp.RootPresenter;
 
 public class RingLinkAccountPresenter extends RootPresenter<RingLinkAccountView> {
 
-    private String mPassword = "";
-    private String mPin = "";
+    private RingAccountViewModel mRingAccountViewModel;
 
     @Inject
     public RingLinkAccountPresenter() {
     }
 
+    public void init(RingAccountViewModel ringAccountViewModel) {
+        mRingAccountViewModel = ringAccountViewModel;
+    }
+
     public void passwordChanged(String password) {
-        mPassword = password;
+        mRingAccountViewModel.setPassword(password);
         checkForms();
     }
 
     public void pinChanged(String pin) {
-        mPin = pin;
+        mRingAccountViewModel.setPin(pin);
         checkForms();
     }
 
-    public void lastClicked() {
-        getView().goToLast();
-    }
-
     public void linkClicked() {
-        getView().createAccount();
+        getView().createAccount(mRingAccountViewModel);
     }
 
     private void checkForms() {
-        getView().enableLinkButton(!mPin.isEmpty() && !mPassword.isEmpty());
+        getView().enableLinkButton(!mRingAccountViewModel.getPin().isEmpty() && !mRingAccountViewModel.getPassword().isEmpty());
     }
 
     @Override
     public void afterInjection() {
 
-    }
-
-    public String getPassword() {
-        return mPassword;
-    }
-
-    public String getPin() {
-        return mPin;
     }
 }

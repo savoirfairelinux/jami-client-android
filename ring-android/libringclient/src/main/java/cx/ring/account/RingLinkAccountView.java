@@ -19,11 +19,11 @@
  */
 package cx.ring.account;
 
+import cx.ring.mvp.RingAccountViewModel;
+
 public interface RingLinkAccountView {
 
     void enableLinkButton(boolean enable);
 
-    void goToLast();
-
-    void createAccount();
+    void createAccount(RingAccountViewModel ringAccountViewModel);
 }
