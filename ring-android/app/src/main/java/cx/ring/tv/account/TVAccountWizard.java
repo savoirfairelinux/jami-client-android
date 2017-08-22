@@ -38,6 +38,7 @@ import cx.ring.account.AccountWizardView;
 import cx.ring.application.RingApplication;
 import cx.ring.model.AccountConfig;
 import cx.ring.mvp.BaseActivity;
+import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.tv.main.HomeActivity;
 import cx.ring.utils.Log;
 import cx.ring.utils.VCardUtils;
@@ -50,7 +51,6 @@ public class TVAccountWizard
         extends BaseActivity<AccountWizardPresenter>
         implements AccountWizardView {
     public static final String PROFILE_TAG = "Profile";
-    public static final int ACCOUNT_CREATE_REQUEST = 1;
     static final String TAG = TVAccountWizard.class.getName();
     private TVProfileCreationFragment mProfileFragment = new TVProfileCreationFragment();
     private TVHomeAccountCreationFragment mHomeFragment = new TVHomeAccountCreationFragment();
@@ -58,9 +58,6 @@ public class TVAccountWizard
     private ProgressDialog mProgress = null;
     private boolean mLinkAccount = false;
     private String mFullname;
-    private String mUsername;
-    private String mPassword;
-    private String mPin;
     private String mAccountType;
     private AlertDialog mAlertDialog;
 
@@ -117,51 +114,36 @@ public class TVAccountWizard
         super.onConfigurationChanged(newConfig);
     }
 
-    @Override
-    public void saveProfile(String accountID, String username) {
-        VCard vcard = new VCard();
-        vcard.setFormattedName(new FormattedName(mFullname));
-        vcard.setUid(new Uid(username));
-
-        vcard.removeProperties(RawProperty.class);
-        VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir());
-    }
-
-    public void newAccount(boolean isNewAccount) {
-        Log.d(TAG, "new account. linkAccount is " + isNewAccount);
-        mLinkAccount = !isNewAccount;
-        if (mLinkAccount) {
-            GuidedStepFragment.add(getFragmentManager(), new TVProfileCreationFragment());
-        } else {
-            GuidedStepFragment.add(getFragmentManager(), new TVRingAccountCreationFragment());
+    public void createAccount(RingAccountViewModel ringAccountViewModel) {
+        if (ringAccountViewModel.getFullName() == null || ringAccountViewModel.getFullName().isEmpty()) {
+            ringAccountViewModel.setFullName(ringAccountViewModel.getUsername());
         }
-    }
-
-    public void createAccount(String username, String pin, String password) {
-        mUsername = username;
-        mPassword = password;
-        mPin = pin;
-        if (mFullname == null) {
-            mFullname = username;
-        }
-        createAccount();
-    }
-
-    public void createAccount() {
-        if (mLinkAccount) {
-            presenter.initRingAccountLink(mPin, mPassword, getText(R.string.ring_account_default_name).toString());
+        if (ringAccountViewModel.isLink()) {
+            presenter.initRingAccountLink(ringAccountViewModel,
+                    getText(R.string.ring_account_default_name).toString());
         } else {
-            presenter.initRingAccountCreation(mUsername, mPassword, getText(R.string.ring_account_default_name).toString());
+            presenter.initRingAccountCreation(ringAccountViewModel,
+                    getText(R.string.ring_account_default_name).toString());
         }
     }
 
     public void profileNext(String fullname) {
         mFullname = fullname;
         if (mLinkAccount) {
-            GuidedStepFragment.add(getFragmentManager(), new TVRingLinkAccountFragment());
+
         } else {
             GuidedStepFragment.add(getFragmentManager(), new TVRingAccountCreationFragment());
         }
+    }
+
+    @Override
+    public void goToHomeCreation() {
+
+    }
+
+    @Override
+    public void goToSipCreation() {
+
     }
 
     @Override
@@ -218,6 +200,16 @@ public class TVAccountWizard
                 }
             }
         });
+    }
+
+    @Override
+    public void saveProfile(String accountId, RingAccountViewModel ringAccountViewModel) {
+        VCard vcard = new VCard();
+        vcard.setFormattedName(new FormattedName(mFullname));
+        vcard.setUid(new Uid(ringAccountViewModel.getUsername()));
+
+        vcard.removeProperties(RawProperty.class);
+        VCardUtils.saveLocalProfileToDisk(vcard, accountId, getFilesDir());
     }
 
     @Override
@@ -292,7 +284,7 @@ public class TVAccountWizard
                         setResult(Activity.RESULT_OK, new Intent());
                         //unlock the screen orientation
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                        startActivity(new Intent(TVAccountWizard.this,HomeActivity.class));
+                        startActivity(new Intent(TVAccountWizard.this, HomeActivity.class));
                         finish();
                     }
                 });

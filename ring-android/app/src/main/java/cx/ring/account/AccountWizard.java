@@ -31,16 +31,12 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v13.app.FragmentStatePagerAdapter;
-import android.view.View;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
@@ -49,9 +45,9 @@ import cx.ring.fragments.AccountMigrationFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.model.AccountConfig;
 import cx.ring.mvp.BaseActivity;
+import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.utils.Log;
 import cx.ring.utils.VCardUtils;
-import cx.ring.views.WizardViewPager;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.FormattedName;
@@ -60,19 +56,9 @@ import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
 
 public class AccountWizard extends BaseActivity<AccountWizardPresenter> implements AccountWizardView {
-    public static final String PROFILE_TAG = "Profile";
     static final String TAG = AccountWizard.class.getName();
-    @BindView(R.id.pager)
-    WizardViewPager mViewPager;
-    private ProfileCreationFragment mProfileFragment;
-    private HomeAccountCreationFragment mHomeFragment;
+
     private ProgressDialog mProgress = null;
-    private boolean mLinkAccount = false;
-    private Bitmap mPhotoProfile;
-    private String mFullname;
-    private String mUsername;
-    private String mPassword;
-    private String mPin;
     private String mAccountType;
     private AlertDialog mAlertDialog;
 
@@ -84,9 +70,6 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
 
         setContentView(R.layout.activity_wizard);
         ButterKnife.bind(this);
-
-        mViewPager.setAdapter(new WizardPagerAdapter(getFragmentManager()));
-        mViewPager.getAdapter().notifyDataSetChanged();
 
         String accountToMigrate = null;
         Intent intent = getIntent();
@@ -101,11 +84,8 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
             mAccountType = AccountConfig.ACCOUNT_TYPE_RING;
         }
 
-        presenter.init(getIntent().getAction() != null ? getIntent().getAction() : AccountConfig.ACCOUNT_TYPE_RING);
-
         if (savedInstanceState == null) {
             if (accountToMigrate != null) {
-                mViewPager.setVisibility(View.GONE);
                 Bundle args = new Bundle();
                 args.putString(AccountMigrationFragment.ACCOUNT_ID, getIntent().getData().getLastPathSegment());
                 Fragment fragment = new AccountMigrationFragment();
@@ -113,35 +93,12 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
                 FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager
                         .beginTransaction()
-                        .replace(R.id.migration_container, fragment)
+                        .replace(R.id.wizard_container, fragment)
                         .commit();
             } else {
-                mViewPager.setOffscreenPageLimit(4);
+                presenter.init(getIntent().getAction() != null ? getIntent().getAction() : AccountConfig.ACCOUNT_TYPE_RING);
             }
-        } else {
-            mProfileFragment = (ProfileCreationFragment) getFragmentManager().getFragment(savedInstanceState, PROFILE_TAG);
-            mFullname = savedInstanceState.getString("mFullname");
-            byte[] bytes = savedInstanceState.getByteArray("mPhotoProfile");
-            if (bytes != null && bytes.length > 0) {
-                mPhotoProfile = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            }
-            mLinkAccount = savedInstanceState.getBoolean("mLinkAccount");
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mProfileFragment.isAdded()) {
-            getFragmentManager().putFragment(outState, PROFILE_TAG, mProfileFragment);
-        }
-        outState.putString("mFullname", mFullname);
-        if (mPhotoProfile != null) {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            mPhotoProfile.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            outState.putByteArray("mPhotoProfile", stream.toByteArray());
-        }
-        outState.putBoolean("mLinkAccount", mLinkAccount);
     }
 
     @Override
@@ -160,25 +117,15 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
     }
 
     @Override
-    public void onBackPressed() {
-        FragmentManager fragmentManager = getFragmentManager();
-        if (mViewPager.getCurrentItem() > 0) {
-            fragmentManager.popBackStack();
-            mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1);
-            return;
-        }
+    public void saveProfile(String accountID, RingAccountViewModel ringAccountViewModel) {
+        RingAccountViewModelImpl ringAccountViewModelImpl = (RingAccountViewModelImpl) ringAccountViewModel;
 
-        presenter.backPressed();
-    }
-
-    @Override
-    public void saveProfile(String accountID, String username) {
         VCard vcard = new VCard();
-        vcard.setFormattedName(new FormattedName(mFullname));
-        vcard.setUid(new Uid(username));
+        vcard.setFormattedName(new FormattedName(ringAccountViewModelImpl.getFullName()));
+        vcard.setUid(new Uid(ringAccountViewModelImpl.getUsername()));
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        if (mPhotoProfile != null) {
-            mPhotoProfile.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        if (ringAccountViewModelImpl.getPhoto() != null) {
+            ringAccountViewModelImpl.getPhoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
             Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
             vcard.removeProperties(Photo.class);
             vcard.addPhoto(photoVCard);
@@ -187,46 +134,36 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
         VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir());
     }
 
-    public void newAccount(boolean linkAccount) {
-        Log.d(TAG, "new account. linkAccount is " + linkAccount);
-        mLinkAccount = linkAccount;
-        mViewPager.getAdapter().notifyDataSetChanged();
-        mViewPager.setCurrentItem(1);
-    }
-
-    public void profileLast() {
-        mViewPager.setCurrentItem(0);
-    }
-
-    public void profileNext(String fullname, Bitmap photo) {
-        mPhotoProfile = photo;
-        mFullname = fullname;
-
-        mViewPager.setCurrentItem(2);
-    }
-
-    public void accountLast() {
-        mViewPager.setCurrentItem(1);
-    }
-
-    public void createAccount(String username, String pin, String password) {
-        mUsername = username;
-        mPassword = password;
-        mPin = pin;
-        createAccount();
-    }
-
-    public void createAccount() {
-        if (mLinkAccount) {
-            presenter.initRingAccountLink(mPin, mPassword, getText(R.string.ring_account_default_name).toString());
+    public void createAccount(RingAccountViewModel ringAccountViewModel) {
+        if (ringAccountViewModel.isLink()) {
+            presenter.initRingAccountLink(ringAccountViewModel,
+                    getText(R.string.ring_account_default_name).toString());
         } else {
-            presenter.initRingAccountCreation(mUsername, mPassword, getText(R.string.ring_account_default_name).toString());
+            presenter.initRingAccountCreation(ringAccountViewModel,
+                    getText(R.string.ring_account_default_name).toString());
         }
     }
 
     @Override
-    public void displayProgress(final boolean display) {
+    public void goToHomeCreation() {
+        Fragment fragment = new HomeAccountCreationFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.wizard_container, fragment, HomeAccountCreationFragment.TAG)
+                .commit();
+    }
 
+    @Override
+    public void goToSipCreation() {
+        Fragment fragment = new SIPAccountCreationFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.wizard_container, fragment, SIPAccountCreationFragment.TAG)
+                .commit();
+    }
+
+    @Override
+    public void displayProgress(final boolean display) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -255,11 +192,9 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
             @Override
             public void run() {
                 Toast.makeText(AccountWizard.this, "Error creating account", Toast.LENGTH_SHORT).show();
-
             }
         });
     }
-
 
     @Override
     public void blockOrientation() {
@@ -278,13 +213,8 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
             @Override
             public void run() {
                 if (affinity) {
-                    FragmentManager fm = getFragmentManager();
-                    if (fm.getBackStackEntryCount() >= 1) {
-                        fm.popBackStack();
-                    } else {
-                        startActivity(new Intent(AccountWizard.this, HomeActivity.class));
-                        finish();
-                    }
+                    startActivity(new Intent(AccountWizard.this, HomeActivity.class));
+                    finish();
                 } else {
                     finishAffinity();
                 }
@@ -369,50 +299,4 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
             }
         });
     }
-
-    private class WizardPagerAdapter extends FragmentStatePagerAdapter {
-
-        WizardPagerAdapter(FragmentManager fm) {
-            super(fm);
-            mHomeFragment = new HomeAccountCreationFragment();
-            if (mProfileFragment == null) {
-                mProfileFragment = new ProfileCreationFragment();
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Log.d(TAG, "getItem");
-            switch (position) {
-                case 0:
-                    if (AccountConfig.ACCOUNT_TYPE_SIP.equals(mAccountType)) {
-                        return new SIPAccountCreationFragment();
-                    } else {
-                        return mHomeFragment;
-                    }
-                case 1:
-                    return mProfileFragment;
-                case 2:
-                    if (mLinkAccount) {
-                        return new RingLinkAccountFragment();
-                    } else {
-                        return new RingAccountCreationFragment();
-                    }
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            Log.d(TAG, "getItemPosition");
-            return POSITION_NONE;
-        }
-    }
-
 }
