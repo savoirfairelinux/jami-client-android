@@ -20,6 +20,7 @@
 
 package cx.ring.account;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,8 @@ import cx.ring.mvp.BaseFragment;
 
 public class HomeAccountCreationFragment extends BaseFragment<HomeAccountCreationPresenter> implements HomeAccountCreationView {
 
+    public static final String TAG = HomeAccountCreationFragment.class.getSimpleName();
+
     @BindView(R.id.ring_add_account)
     protected Button mLinkButton;
 
@@ -49,26 +52,30 @@ public class HomeAccountCreationFragment extends BaseFragment<HomeAccountCreatio
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
+        setRetainInstance(true);
+
         return view;
     }
 
     @OnClick(R.id.ring_add_account)
     public void linkAccountClicked() {
-        presenter.clickOnCreateAccount();
+        presenter.clickOnLinkAccount();
     }
 
     @OnClick(R.id.ring_create_btn)
     public void createAccountClicked() {
-        presenter.clickOnLinkAccount();
+        presenter.clickOnCreateAccount();
     }
 
     @Override
     public void goToAccountCreation() {
-        ((AccountWizard) getActivity()).newAccount(true);
+        Fragment fragment = ProfileCreationFragment.newInstance(false);
+        replaceFragmentWithSlide(fragment, R.id.wizard_container);
     }
 
     @Override
     public void goToAccountLink() {
-        ((AccountWizard) getActivity()).newAccount(false);
+        Fragment fragment = ProfileCreationFragment.newInstance(true);
+        replaceFragmentWithSlide(fragment, R.id.wizard_container);
     }
 }

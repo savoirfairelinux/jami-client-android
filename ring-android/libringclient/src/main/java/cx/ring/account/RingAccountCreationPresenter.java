@@ -38,7 +38,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
 
     private NameLookupInputHandler mNameLookupInputHandler;
 
-    private RingAccountViewModel mRingAccountViewModel = new RingAccountViewModel();
+    private RingAccountViewModel mRingAccountViewModel;
 
     private boolean isRingUserNameCorrect = false;
     private boolean isPasswordCorrect = false;
@@ -61,6 +61,10 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     public void bindView(RingAccountCreationView view) {
         super.bindView(view);
         mAccountService.addObserver(this);
+    }
+
+    public void init(RingAccountViewModel ringAccountViewModel) {
+        mRingAccountViewModel = ringAccountViewModel;
     }
 
     public void userNameChanged(String userName) {
@@ -127,7 +131,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     }
 
     public void createAccount() {
-        getView().goToAccountCreation(mRingAccountViewModel.getUsername(), mRingAccountViewModel.getPassword());
+        getView().goToAccountCreation(mRingAccountViewModel);
     }
 
     private void checkForms() {

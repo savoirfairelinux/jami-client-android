@@ -3,6 +3,7 @@ package cx.ring.tv.account;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v17.leanback.app.GuidedStepFragment;
 import android.support.v17.leanback.widget.GuidanceStylist;
 import android.support.v17.leanback.widget.GuidedAction;
 import android.view.View;
@@ -12,6 +13,7 @@ import java.util.List;
 import cx.ring.R;
 import cx.ring.account.HomeAccountCreationPresenter;
 import cx.ring.account.HomeAccountCreationView;
+import cx.ring.account.RingAccountViewModelImpl;
 import cx.ring.application.RingApplication;
 
 public class TVHomeAccountCreationFragment
@@ -30,12 +32,14 @@ public class TVHomeAccountCreationFragment
 
     @Override
     public void goToAccountCreation() {
-        ((TVAccountWizard) getActivity()).newAccount(true);
+        RingAccountViewModelImpl ringAccountViewModel = new RingAccountViewModelImpl();
+        ringAccountViewModel.setLink(false);
+        GuidedStepFragment.add(getFragmentManager(), TVRingAccountCreationFragment.newInstance(ringAccountViewModel));
     }
 
     @Override
     public void goToAccountLink() {
-        ((TVAccountWizard) getActivity()).newAccount(false);
+        GuidedStepFragment.add(getFragmentManager(), new TVProfileCreationFragment());
     }
 
     @Override
