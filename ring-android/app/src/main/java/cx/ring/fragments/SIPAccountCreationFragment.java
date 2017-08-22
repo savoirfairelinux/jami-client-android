@@ -49,7 +49,7 @@ import cx.ring.wizard.SIPCreationPresenter;
 
 public class SIPAccountCreationFragment extends BaseFragment<SIPCreationPresenter> implements SIPCreationView {
 
-    static final String TAG = SIPAccountCreationFragment.class.getSimpleName();
+    public static final String TAG = SIPAccountCreationFragment.class.getSimpleName();
 
     @BindView(R.id.alias)
     protected EditText mAliasView;

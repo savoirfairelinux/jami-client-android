@@ -16,9 +16,12 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 import cx.ring.R;
+import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.account.RingAccountCreationPresenter;
 import cx.ring.account.RingAccountCreationView;
+import cx.ring.account.RingAccountViewModelImpl;
 import cx.ring.application.RingApplication;
+import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.utils.Log;
 
 public class TVRingAccountCreationFragment
@@ -48,6 +51,14 @@ public class TVRingAccountCreationFragment
         }
     };
 
+    public static TVRingAccountCreationFragment newInstance(RingAccountViewModelImpl ringAccountViewModel) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT, ringAccountViewModel);
+        TVRingAccountCreationFragment fragment = new TVRingAccountCreationFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     public TVRingAccountCreationFragment() {
     }
 
@@ -57,6 +68,9 @@ public class TVRingAccountCreationFragment
 
         // Bind the presenter to the view
         super.onViewCreated(view, savedInstanceState);
+
+        RingAccountViewModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
+        presenter.init(ringAccountViewModel);
 
         presenter.ringCheckChanged(false);
         presenter.passwordChanged("password");
@@ -168,13 +182,13 @@ public class TVRingAccountCreationFragment
     }
 
     @Override
-    public void goToAccountCreation(String username, String password) {
+    public void goToAccountCreation(RingAccountViewModel ringAccountViewModel) {
         Activity wizardActivity = getActivity();
         if (wizardActivity != null && wizardActivity instanceof TVAccountWizard) {
             TVAccountWizard wizard = (TVAccountWizard) wizardActivity;
             //Currently it's not possible to create a username without password
             //causing a 400 error
-            wizard.createAccount(username, null, password);
+            wizard.createAccount(ringAccountViewModel);
         }
     }
 

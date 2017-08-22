@@ -19,6 +19,8 @@
  */
 package cx.ring.account;
 
+import cx.ring.mvp.RingAccountViewModel;
+
 public interface RingAccountCreationView {
 
     void enableTextError();
@@ -37,6 +39,6 @@ public interface RingAccountCreationView {
 
     void enableNextButton(boolean enabled);
 
-    void goToAccountCreation(String username, String password);
+    void goToAccountCreation(RingAccountViewModel ringAccountViewModel);
 
 }

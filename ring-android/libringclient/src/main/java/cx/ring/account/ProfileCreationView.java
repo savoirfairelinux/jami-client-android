@@ -20,6 +20,8 @@
 package cx.ring.account;
 
 
+import cx.ring.mvp.RingAccountViewModel;
+
 public interface ProfileCreationView {
 
     void displayProfileName(String profileName);
@@ -32,8 +34,8 @@ public interface ProfileCreationView {
 
     void askPhotoPermission();
 
-    void goToNext();
+    void goToNext(RingAccountViewModel ringAccountViewModel);
 
-    void goToLast();
+    void photoUpdate(RingAccountViewModel ringAccountViewModel);
 
 }
