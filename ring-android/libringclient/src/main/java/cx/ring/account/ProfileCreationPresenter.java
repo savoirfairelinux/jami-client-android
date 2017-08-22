@@ -21,6 +21,7 @@ package cx.ring.account;
 
 import javax.inject.Inject;
 
+import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.Log;
@@ -30,13 +31,14 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
     public static final String TAG = ProfileCreationPresenter.class.getSimpleName();
 
     protected DeviceRuntimeService mDeviceRuntimeService;
+    private RingAccountViewModel mRingAccountViewModel;
 
     @Inject
     public ProfileCreationPresenter(DeviceRuntimeService deviceRuntimeService) {
         this.mDeviceRuntimeService = deviceRuntimeService;
     }
 
-    public void initPresenter() {
+    public void initPresenter(RingAccountViewModel ringAccountViewModel) {
         //~ Checking the state of the READ_CONTACTS permission
         if (mDeviceRuntimeService.hasContactPermission()) {
             String profileName = mDeviceRuntimeService.getProfileName();
@@ -46,6 +48,15 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
         } else {
             Log.d(TAG, "READ_CONTACTS permission is not granted.");
         }
+        this.mRingAccountViewModel = ringAccountViewModel;
+    }
+
+    public void fullNameUpdated(String fullName) {
+        mRingAccountViewModel.setFullName(fullName);
+    }
+
+    public void photoUpdated() {
+        getView().photoUpdate(mRingAccountViewModel);
     }
 
     public void galleryClick() {
@@ -68,11 +79,7 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
     }
 
     public void nextClick() {
-        getView().goToNext();
-    }
-
-    public void lastClick() {
-        getView().goToLast();
+        getView().goToNext(mRingAccountViewModel);
     }
 
     @Override

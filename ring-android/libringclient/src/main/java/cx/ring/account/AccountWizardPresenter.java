@@ -28,6 +28,7 @@ import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.ServiceEvent;
+import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
@@ -45,12 +46,12 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> imp
     private boolean mLinkAccount = false;
     private boolean mCreationError = false;
     private boolean mCreatingAccount = false;
-    private boolean mCreatedAccount = false;
 
-    private String mUsername;
     private String mAccountType;
     private Account mAccount;
     private String mCreatedAccountId;
+
+    private RingAccountViewModel mRingAccountViewModel;
 
     @Inject
     public AccountWizardPresenter(AccountService accountService, DeviceRuntimeService deviceRuntimeService) {
@@ -77,42 +78,36 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> imp
 
     public void init(String accountType) {
         mAccountType = accountType;
-    }
-
-    public void backPressed() {
-        if (!mCreatedAccount && mAccount != null) {
-            mAccountService.removeAccount(mAccount.getAccountID());
+        if (AccountConfig.ACCOUNT_TYPE_SIP.equals(mAccountType)) {
+            getView().goToSipCreation();
+        } else {
+            getView().goToHomeCreation();
         }
-
-        /*
-         * Ensures that the user has at least one account when exiting this Activity
-         * If not, exit the app
-         */
-        getView().finish(!mAccountService.getAccounts().isEmpty());
     }
 
-    public void initRingAccountCreation(String username, String password, String defaultAccountName) {
-        mUsername = username;
+    public void initRingAccountCreation(RingAccountViewModel ringAccountViewModel, String defaultAccountName) {
+        mRingAccountViewModel = ringAccountViewModel;
         HashMap<String, String> accountDetails = initRingAccountDetails(defaultAccountName);
         if (accountDetails != null) {
-            if (!username.isEmpty()) {
-                accountDetails.put(ConfigKey.ACCOUNT_REGISTERED_NAME.key(), username);
+            if (!ringAccountViewModel.getUsername().isEmpty()) {
+                accountDetails.put(ConfigKey.ACCOUNT_REGISTERED_NAME.key(), ringAccountViewModel.getUsername());
             }
-            if (!password.isEmpty()) {
-                accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), password);
+            if (!ringAccountViewModel.getPassword().isEmpty()) {
+                accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), ringAccountViewModel.getPassword());
             }
             createNewAccount(accountDetails);
         }
     }
 
-    public void initRingAccountLink(String pin, String password, String defaultAccountName) {
+    public void initRingAccountLink(RingAccountViewModel ringAccountViewModel, String defaultAccountName) {
+        mRingAccountViewModel = ringAccountViewModel;
         HashMap<String, String> accountDetails = initRingAccountDetails(defaultAccountName);
         if (accountDetails != null) {
-            if (!password.isEmpty()) {
-                accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), password);
+            if (!ringAccountViewModel.getPassword().isEmpty()) {
+                accountDetails.put(ConfigKey.ARCHIVE_PASSWORD.key(), ringAccountViewModel.getPassword());
             }
-            if (!pin.isEmpty()) {
-                accountDetails.put(ConfigKey.ARCHIVE_PIN.key(), pin);
+            if (!ringAccountViewModel.getPin().isEmpty()) {
+                accountDetails.put(ConfigKey.ARCHIVE_PIN.key(), ringAccountViewModel.getPin());
             }
             createNewAccount(accountDetails);
         }
@@ -208,8 +203,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> imp
                             mCreationError = true;
                         } else {
                             getView().displaySuccessDialog();
-                            getView().saveProfile(mAccount.getAccountID(), mAccount.getUsername());
-                            mCreatedAccount = true;
+                            getView().saveProfile(mAccount.getAccountID(), mRingAccountViewModel);
                             mCreationError = false;
                             break;
                         }
@@ -220,15 +214,14 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> imp
                         break;
                     default:
                         getView().displaySuccessDialog();
-                        getView().saveProfile(mAccount.getAccountID(), mAccount.getUsername());
-                        mCreatedAccount = true;
+                        getView().saveProfile(mAccount.getAccountID(), mRingAccountViewModel);
                         mCreationError = false;
                         break;
                 }
 
-                if (mUsername != null && !mUsername.contentEquals("")) {
-                    Log.i(TAG, "Account created, registering " + mUsername);
-                    mAccountService.registerName(mAccount, "", mUsername);
+                if (mRingAccountViewModel.getUsername() != null && !mRingAccountViewModel.getUsername().contentEquals("")) {
+                    Log.i(TAG, "Account created, registering " + mRingAccountViewModel.getUsername());
+                    mAccountService.registerName(mAccount, "", mRingAccountViewModel.getUsername());
                 }
             }
         }
