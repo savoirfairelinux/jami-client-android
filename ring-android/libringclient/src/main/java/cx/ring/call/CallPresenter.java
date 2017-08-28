@@ -348,8 +348,8 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
                     String callId = event.getEventInput(ServiceEvent.EventInput.VIDEO_CALL, String.class);
 
                     Log.d(TAG, "VIDEO_EVENT: " + videoStart + " " + callId);
-                    previewWidth = event.getEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, Integer.class, 0);
-                    previewHeight = event.getEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, Integer.class, 0);
+                    previewHeight = event.getEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, Integer.class, 0);
+                    previewWidth = event.getEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, Integer.class, 0);
 
                     if (videoStart) {
                         getView().displayVideoSurface(true);
