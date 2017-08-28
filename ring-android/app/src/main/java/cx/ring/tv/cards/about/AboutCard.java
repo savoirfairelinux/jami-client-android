@@ -22,12 +22,8 @@ package cx.ring.tv.cards.about;
 import cx.ring.tv.cards.Card;
 
 public class AboutCard extends Card {
-    @Override
-    public Type getType() {
-        return Type.VERSION;
-    }
 
-    public AboutCard(Type pType, String name, String description, String imageId){
+    public AboutCard(Type pType, String name, CharSequence description, String imageId) {
         setType(pType);
         setTitle(name);
         setDescription(description);

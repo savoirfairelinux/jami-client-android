@@ -18,20 +18,9 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_primary_dark">
-
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/main_browse_fragment"
-        android:name="cx.ring.about.AboutFragment"
-        android:layout_width="500dp"
-        android:layout_centerInParent="true"
-        android:layout_height="match_parent"
-        tools:context="cx.ring.tv.about.AboutActivity"
-        tools:deviceIds="tv"
-        tools:ignore="MergeRootFrame" />
-
-</RelativeLayout>
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+          android:name="cx.ring.tv.about.AboutDetailsFragment"
+          android:id="@+id/details_fragment"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+    />

@@ -19,14 +19,12 @@
 
 package cx.ring.tv.about;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import cx.ring.R;
-import cx.ring.about.AboutPresenter;
-import cx.ring.about.AboutView;
-import cx.ring.mvp.BaseActivity;
 
-public class AboutActivity extends BaseActivity<AboutPresenter> implements AboutView {
+public class AboutActivity extends Activity {
 
     public static final String TAG = AboutActivity.class.getSimpleName();
 
@@ -34,45 +32,5 @@ public class AboutActivity extends BaseActivity<AboutPresenter> implements About
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tv_activity_about);
-    }
-
-    @Override
-    public void showRingLogo(byte[] image) {
-
-    }
-
-    @Override
-    public void showSavoirFaireLinuxLogo(byte[] image) {
-
-    }
-
-    @Override
-    public void showRelease(String release) {
-
-    }
-
-    @Override
-    public void showContribute(String contribute) {
-
-    }
-
-    @Override
-    public void showCopyright(String copyright) {
-
-    }
-
-    @Override
-    public void showLicense(String license) {
-
-    }
-
-    @Override
-    public void showFeedback(String feedback) {
-
-    }
-
-    @Override
-    public void showSupport(String support) {
-
     }
 }
