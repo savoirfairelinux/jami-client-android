@@ -60,10 +60,10 @@ public class AboutCardPresenter extends AbstractCardPresenter<ImageCardView> {
         cardView.setTitleText(card.getTitle());
         cardView.setContentText(card.getDescription());
         int resourceId = getContext().getResources()
-                .getIdentifier(card.getLocalImageResourceName(),
+                .getIdentifier(card.getLocalImageResource(),
                         "drawable", getContext().getPackageName());
         cardView.setMainImage(
-                ContextCompat.getDrawable(cardView.getContext(),resourceId));
+                ContextCompat.getDrawable(cardView.getContext(), resourceId));
     }
 
     private void animateIconBackground(Drawable drawable, boolean hasFocus) {

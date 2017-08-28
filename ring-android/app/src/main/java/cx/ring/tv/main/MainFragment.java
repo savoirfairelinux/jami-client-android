@@ -32,10 +32,10 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.model.CallContact;
+import cx.ring.tv.about.AboutActivity;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.cards.Card;
 import cx.ring.tv.cards.CardListRow;
@@ -43,6 +43,7 @@ import cx.ring.tv.cards.CardPresenterSelector;
 import cx.ring.tv.cards.CardRow;
 import cx.ring.tv.cards.ShadowRowPresenterSelector;
 import cx.ring.tv.cards.about.AboutCard;
+import cx.ring.tv.cards.about.AboutCardHelper;
 import cx.ring.tv.cards.contacts.ContactCard;
 import cx.ring.tv.search.SearchActivity;
 
@@ -127,8 +128,10 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     private Row createAboutCardRow() {
         List<Card> cards = new ArrayList<>();
-        cards.add(new AboutCard(Card.Type.VERSION, getString(R.string.version_section) + " " + BuildConfig.VERSION_NAME, "", "ic_ring_logo_white" ));
-     
+        cards.add(AboutCardHelper.getVersionCard(getActivity()));
+        cards.add(AboutCardHelper.getLicencesCard(getActivity()));
+        cards.add(AboutCardHelper.getContributorCard(getActivity()));
+
         CardRow aboutRow = new CardRow(
                 CardRow.TYPE_DEFAULT,
                 false,
@@ -203,6 +206,19 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
             if (item instanceof ContactCard) {
                 presenter.contactClicked(((ContactCard) item).getCallContact());
+            } else if (item instanceof AboutCard) {
+                AboutCard card = (AboutCard) item;
+                switch (card.getType()) {
+                    case CONTRIBUTOR:
+                    case LICENCES:
+                        Intent intent = new Intent(getActivity(),
+                                AboutActivity.class);
+                        intent.putExtra("abouttype", card.getType().ordinal());
+                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

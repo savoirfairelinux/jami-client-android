@@ -16,10 +16,6 @@ package cx.ring.tv.cards;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
-
-import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
  * This is a generic example of a custom data object, containing info we might want to keep with
@@ -28,12 +24,11 @@ import java.net.URISyntaxException;
 public class Card {
 
     private String mTitle = "";
-    private String mDescription = "";
-    private String mExtraText = "";
-    private String mImageUrl;
+    private CharSequence mDescription = "";
+    /*not used at the moment but will be use in futur*/
     private String mFooterColor = null;
-    private String mSelectedColor = null;
     private String mLocalImageResource = null;
+    /*not used at the moment but will be use in futur*/
     private String mFooterResource = null;
     private Card.Type mType;
     private long mId;
@@ -48,6 +43,46 @@ public class Card {
         mTitle = title;
     }
 
+    public int getWidth() {
+        return mWidth;
+    }
+
+    public void setWidth(int width) {
+        mWidth = width;
+    }
+
+    public int getHeight() {
+        return mHeight;
+    }
+
+    public void setHeight(int height) {
+        mHeight = height;
+    }
+
+    public long getId() {
+        return mId;
+    }
+
+    public void setId(long id) {
+        mId = id;
+    }
+
+    public Card.Type getType() {
+        return mType;
+    }
+
+    public void setType(Type type) {
+        mType = type;
+    }
+
+    public CharSequence getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(CharSequence description) {
+        mDescription = description;
+    }
+
     public String getLocalImageResource() {
         return mLocalImageResource;
     }
@@ -56,107 +91,28 @@ public class Card {
         mLocalImageResource = localImageResource;
     }
 
+    /*not used at the moment but will be use in futur*/
     public String getFooterResource() {
         return mFooterResource;
     }
 
+    /*not used at the moment but will be use in futur*/
     public void setFooterResource(String footerResource) {
         mFooterResource = footerResource;
     }
 
-    public void setType(Type type) {
-        mType = type;
-    }
-
-    public void setId(long id) {
-        mId = id;
-    }
-
-    public void setWidth(int width) {
-        mWidth = width;
-    }
-
-    public void setHeight(int height) {
-        mHeight = height;
-    }
-
-    public int getWidth() {
-        return mWidth;
-    }
-
-    public int getHeight() {
-        return mHeight;
-    }
-
-    public long getId() {
-        return mId;
-    }
-
-    public Card.Type getType() {
-        return mType;
-    }
-
-    public String getDescription() {
-        return mDescription;
-    }
-
-    public void setDescription(String description) {
-        mDescription = description;
-    }
-
-    public String getExtraText() {
-        return mExtraText;
-    }
-
-    public void setExtraText(String extraText) {
-        mExtraText = extraText;
-    }
-
+    /*not used at the moment but will be use in futur*/
     public int getFooterColor() {
         if (mFooterColor == null) return -1;
         return Color.parseColor(mFooterColor);
     }
 
+    /*not used at the moment but will be use in futur*/
     public void setFooterColor(String footerColor) {
         mFooterColor = footerColor;
     }
 
-    public int getSelectedColor() {
-        if (mSelectedColor == null) return -1;
-        return Color.parseColor(mSelectedColor);
-    }
-
-    public String getImageUrl() {
-        return mImageUrl;
-    }
-
-    public void setSelectedColor(String selectedColor) {
-        mSelectedColor = selectedColor;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        mImageUrl = imageUrl;
-    }
-
-    public URI getImageURI() {
-        if (getImageUrl() == null) return null;
-        try {
-            return new URI(getImageUrl());
-        } catch (URISyntaxException e) {
-            Log.d("URI exception: ", getImageUrl());
-            return null;
-        }
-    }
-
-    public int getLocalImageResourceId(Context context) {
-        return context.getResources().getIdentifier(getLocalImageResourceName(), "drawable",
-                                                    context.getPackageName());
-    }
-
-    public String getLocalImageResourceName() {
-        return mLocalImageResource;
-    }
-
+    /*not used at the moment but will be use in futur*/
     public String getFooterLocalImageResourceName() {
         return mFooterResource;
     }
