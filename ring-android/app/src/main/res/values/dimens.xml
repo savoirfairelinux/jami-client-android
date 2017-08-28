@@ -39,4 +39,9 @@ along with this program; if not, write to the Free Software
     <dimen name="drawer_content_padding">0dp</dimen>
     <dimen name="drawer_size">320dp</dimen>
 
+    <dimen name="default_image_card_width">168dp</dimen>
+    <dimen name="default_image_card_height">150dp</dimen>
+
+    <dimen name="search_image_card_width">112dp</dimen>
+    <dimen name="search_image_card_height">100dp</dimen>
 </resources>
