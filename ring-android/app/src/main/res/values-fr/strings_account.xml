@@ -116,6 +116,8 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_export_end_error_title">Erreur</string>
   <string name="account_export_end_error_message">Impossible d\'exporter le compte. Une erreur inconnue s\'est produite.</string>
   <string name="account_enter_password">Entrez le mot de passe</string>
+  <string name="account_share_body">Contactez-moi en utilisant  \'%1$s\' sur la plateforme de communication distribuée Ring: https://ring.cx</string>
+  <string name="account_share_body_with_username">Contactez-moi en utilisant  \'%1$s\' ou mon nom d\'utilisateur public \'%2$s\' sur la plateforme de communication distribuée Ring: https://ring.cx</string>
   <string name="account_contact_me">Contactez moi sur Ring !</string>
   <string name="update_account">Mise à jour du compte </string>
   <string name="account_migration">Votre compte Ring va être mis à jour.\nVeuillez entrer votre mot de passe.</string>
@@ -126,14 +128,17 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_update_needed">Mise à jour nécessaire</string>
   <string name="account_cannot_be_found_title">Compte introuvable</string>
   <string name="account_cannot_be_found_message">Le compte n\'a pas pu être trouvé sur le réseau Ring. Veuillez vous assurer qu\'il a été correctement exporté sur Ring depuis un appareil existant et que les identifiants fournis sont corrects.</string>
+  <string name="account_sip_cannot_be_registered_message">Vous pouvez continuer le processus de création du compte ou mettre à jour vos informations ici. Vous pouvez également mettre à jour vos informations plus tard dans les paramètres de compte.</string>
   <string name="account_no_network_title">Impossible de se connecter au réseau</string>
   <string name="account_no_network_message">impossible d\'ajouter le compte car Ring ne peut pas se connecter au réseau. Veuillez vérifier votre connexion.</string>
   <string name="account_device_added_title">Appareil ajouté</string>
   <string name="account_device_added_message">Le compte Ring a été correctement configuré sur cet appareil.</string>
   <string name="account_device_updated_title">Appareil mis à jour</string>
   <string name="account_device_updated_message">Mise à jour de votre compte Ring réalisée avec succès. </string>
+  <string name="account_cannot_be_updated_message">La mise à jour de l\'appareil associé à ce compte a échouée. S.v.p. vérifier votre mot de passe.</string>
   <string name="account_sip_success_title">Compte SIP enregistré</string>
   <string name="account_sip_success_message">Compte SIP enregistré avec succès</string>
+  <string name="account_sip_register_anyway">Poursuivre l\'inscription</string>
   <string name="account_link_button">Lier cet appareil à un compte</string>
   <string name="account_link_prompt_pin">Entrer votre code PIN</string>
   <string name="account_new_button">Créer un compte Ring</string>
@@ -148,6 +153,7 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="register_name">Enregistrer un nom</string>
   <string name="trying_to_register_name">Enregistrement du nom en cours</string>
   <string name="registered_username">Nom d\'utilisateur enregistré</string>
+  <string name="register_username">Enregistrer un nom d\'utilisateur public (optionnel)</string>
   <string name="username_already_taken">Ce nom d\'utilisateur est déjà utilisé</string>
   <string name="invalid_username">Nom d\'utilisateur incorrect</string>
   <string name="looking_for_username_availability">Vérification de la disponibilité…</string>
@@ -166,6 +172,7 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_revoke_device_hint">Entrez le mot de passe pour confirmer</string>
   <string name="enter_password">Entrez votre mot de passe</string>
   <string name="revoke_device_title">Révoquer l\'appareil</string>
+  <string name="revoke_device_message">Êtes-vous certain de vouloir révoquer %1$s ?</string>
   <string name="revoke_device_wait_title">Veuillez patienter</string>
   <string name="revoke_device_wait_message">Révoquer un appareil</string>
   <string name="rename_device_title">Renommer cet appareil</string>

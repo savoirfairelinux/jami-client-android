@@ -21,6 +21,12 @@ along with this program; if not, write to the Free Software
  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Buscant</string>
+    <string name="call_human_state_incoming">Entrant</string>
+    <string name="call_human_state_connecting">Connectant</string>
+    <string name="call_human_state_current">Parlant</string>
+    <string name="call_human_state_busy">Ocupat</string>
     <string name="call_human_state_hold">En espera</string>
     <!-- Conferences -->
 </resources>

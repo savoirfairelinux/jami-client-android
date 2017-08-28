@@ -14,6 +14,7 @@
   <string name="website_chooser_title">Zobacz stronę używając..</string>
   <string name="license">To oprogramowanie jest dostarczane \"tak jak jest\", bez jakiejkolwiek gwarancji. Aby uzyskać szczegółowe informacje, zobacz
 &lt;u&gt;GNU General Public License wersja 3 lub późniejsza&lt;/u&gt;</string>
+  <string name="description">Ring jest wolnym oprogramowaniem do uniwersalnej komunikacji, respektującym wolności i prywatność swoich użytkowników</string>
   <string name="credits">Podziękowania</string>
   <!--About dialog-->
   <string name="developed_by">Rozwijany przez</string>
@@ -136,6 +137,7 @@
   <string name="refuse">Odmów</string>
   <string name="block">Blokuj</string>
   <string name="contact_request_title">Nowe zaproszenie</string>
+  <string name="contact_request_msg">Masz %1$s zaproszeń do dodania kontaktu</string>
   <string name="contact_request_account">Dla %1$s</string>
   <string name="no_requests">Brak zaproszeń</string>
   <!--Send contact requests-->

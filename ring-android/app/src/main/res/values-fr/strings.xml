@@ -12,10 +12,13 @@
   <string name="no_browser_app_installed">Aucun navigateur internet trouvé, installez en un pour afficher cette page</string>
   <string name="email_chooser_title">Envoi du courriel à travers ...</string>
   <string name="website_chooser_title">Voir le site web avec...</string>
+  <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations, 
+&lt;u&gt;GNU General Public License version 3 or later&lt;/u&gt;</string>
   <string name="description">Ring est un logiciel libre de communication universelle qui respecte les libertés et la vie privée de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
   <!--About dialog-->
   <string name="developed_by">Développé par</string>
+  <string name="designed_by">Conçu par</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Pas d\'accès au réseau</string>
@@ -126,12 +129,14 @@
   <string name="share_message_no_account">Sélectionner le compte à partager.</string>
   <string name="share_your_account_information">Partagez mes coordonnées</string>
   <string name="generic_error_migration">Erreur</string>
+  <string name="generic_error_migration_message">Une erreur est survenue pendant la migration</string>
   <!--Pending contact requests-->
   <string name="accept">Accepter</string>
   <string name="refuse">Refuser</string>
   <string name="block">Bloquer</string>
   <string name="contact_request_title">Invitation</string>
   <string name="contact_request_msg">Vous avez %1$s demande(s) d\'ajout</string>
+  <string name="contact_request_account">Pour %1$s</string>
   <string name="no_requests">Aucune demande de contact</string>
   <!--Send contact requests-->
   <string name="send_request_button">Envoyer</string>
@@ -142,5 +147,6 @@
   <!--Smartlist-->
   <string name="no_contact_request">Aucune invitation envoyée</string>
   <string name="contact_request_sent">Invitation envoyée</string>
+  <string name="search_results">Résultats de la recherche</string>
   <string name="tv_contact_row_header">Contacts</string>
 </resources>

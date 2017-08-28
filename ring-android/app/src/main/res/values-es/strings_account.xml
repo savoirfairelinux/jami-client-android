@@ -153,6 +153,7 @@ Puedes editar tu cuenta luego</string>
   <string name="register_name">Registrar nombre</string>
   <string name="trying_to_register_name">Intentando registrar nombre</string>
   <string name="registered_username">Nombre de usuario registrado</string>
+  <string name="register_username">Registrar nombre de usuario público (opcional)</string>
   <string name="username_already_taken">El nombre de usuario ya está en uso</string>
   <string name="invalid_username">Nombre de usuario no válido</string>
   <string name="looking_for_username_availability">Comprobando disponibilidad del nombre de usuario...</string>

@@ -31,6 +31,7 @@
   <string name="drawer_close">Fermer le NavigationDrawer</string>
   <!--Sections-->
   <string name="menu_item_home">Accueil</string>
+  <string name="menu_item_contact_request">Demandes de contact</string>
   <string name="menu_item_accounts">Gérer les comptes</string>
   <string name="menu_item_settings">Réglages</string>
   <string name="menu_item_share">Partager mes informations de contact</string>
@@ -135,12 +136,17 @@
   <string name="block">Bloquer</string>
   <string name="contact_request_title">Nouvelle demande de contact</string>
   <string name="contact_request_msg">Vous avez %1$s demande de contacts</string>
+  <string name="contact_request_account">Pour %1$s</string>
+  <string name="no_requests">0 demande de contact</string>
   <!--Send contact requests-->
   <string name="send_request_button">Envoyer</string>
   <string name="send_request_title">Envoyer une demande de contact</string>
   <string name="send_request_msg">Vous devez envoyer une demande de contact pour communiquer avec cet utilisateur. Vous pourrez lui envoyer des messages, mais il ne pourra les voir que lorsqu\'il aura accepté votre demande.</string>
   <!--Blacklist-->
+  <string name="no_blocked_contact">0 contact bloqué</string>
   <!--Smartlist-->
+  <string name="no_contact_request">Aucune demande de contact n\'a été envoyée</string>
   <string name="contact_request_sent">Demande de contact envoyée</string>
+  <string name="search_results">Résultats de la recherche</string>
   <string name="tv_contact_row_header">Contacts</string>
 </resources>
