@@ -41,7 +41,7 @@ public abstract class AbstractCardPresenter<T extends BaseCardView> extends Pres
         return mContext;
     }
 
-    @Override public final ViewHolder onCreateViewHolder(ViewGroup parent) {
+    @Override public ViewHolder onCreateViewHolder(ViewGroup parent) {
         T cardView = onCreateView();
         return new ViewHolder(cardView);
     }

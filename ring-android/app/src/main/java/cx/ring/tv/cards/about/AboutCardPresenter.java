@@ -22,6 +22,7 @@ package cx.ring.tv.cards.about;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v4.content.ContextCompat;
 import android.view.ContextThemeWrapper;
@@ -59,11 +60,8 @@ public class AboutCardPresenter extends AbstractCardPresenter<ImageCardView> {
     public void onBindViewHolder(Card card, ImageCardView cardView) {
         cardView.setTitleText(card.getTitle());
         cardView.setContentText(card.getDescription());
-        int resourceId = getContext().getResources()
-                .getIdentifier(card.getLocalImageResourceName(),
-                        "drawable", getContext().getPackageName());
         cardView.setMainImage(
-                ContextCompat.getDrawable(cardView.getContext(),resourceId));
+                ContextCompat.getDrawable(cardView.getContext(), card.getLocalImageResource()));
     }
 
     private void animateIconBackground(Drawable drawable, boolean hasFocus) {
