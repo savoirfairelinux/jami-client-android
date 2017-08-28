@@ -50,6 +50,7 @@ along with this program; if not, write to the Free Software
     <string name="designed_by">Designed by</string>
     <string name="credits_developer" translatable="false">Adrien Béraud\nAlexandr Sergheev\nAlexandre Lision\nAlexandre Viau\nAline Bonnet\nAndreas Traczyk\nAnthony Léonard\nCyrille Béraud\nEdric Milaret\nÉloi Bail\nEmmanuel Lepage-Vallée\nFrédéric Guimont\nGuillaume Roguez\nHadrien De Sousa\nJulien Grossholtz\nKateryna Kostiuk\nLoïc Siret\nNicolas Jäger\nNicolas Reynaud\nOlivier Gregoire\nOlivier Soldano\nPatrick Keroulas\nPhilippe Gorley\nRomain Bertozzi\nSébastien Blin\nSeva Ivanov\nSilbino Gonçalves Matado\nSimon Désaulniers\nStepan Salenikovich\nSimon Zeni\nThibault Wittemberg\nBased on the SFLPhone project</string>
     <string name="credits_designer" translatable="false">Marianne Forget</string>
+    <string name="credits_concat" translatable="false"><b><u>%1$s</u></b>\n%2$s\n<b><u>%3$s</u></b>\n%4$s</string>
 
     <!-- RingActivity -->
     <string name="title_activity_sflphone_home">Ring</string>

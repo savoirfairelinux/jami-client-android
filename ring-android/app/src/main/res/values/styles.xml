@@ -137,6 +137,7 @@
     <style name="IconCardTitleStyle" parent="Widget.Leanback.ImageCardView.TitleStyle">
         <item name="android:maxLines">2</item>
         <item name="android:minLines">2</item>
+        <item name="android:textAlignment">center</item>
         <item name="android:gravity">center</item>
     </style>
 
