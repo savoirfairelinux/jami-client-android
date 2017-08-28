@@ -146,5 +146,6 @@
   <!--Smartlist-->
   <string name="no_contact_request">No s\'ha enviat cap petició de contacte</string>
   <string name="contact_request_sent">S\'ha enviat una petició de contacte</string>
+  <string name="search_results">Resultats de cerca</string>
   <string name="tv_contact_row_header">Contactes</string>
 </resources>

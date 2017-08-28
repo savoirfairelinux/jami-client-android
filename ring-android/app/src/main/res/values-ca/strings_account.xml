@@ -137,13 +137,16 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_device_updated_message">S\'ha actualitzat correctament el vostre compte de Ring.</string>
   <string name="account_cannot_be_updated_message">No s\'ha pogut actualitzar el dispositiu del compte. Si us plau, comproveu la vostra contrasenya.</string>
   <string name="account_sip_register_anyway">Registre de totes maneres</string>
+  <string name="account_link_button">Enllaça aquest dispositiu a un compte</string>
   <string name="account_link_prompt_pin">Introdueix PIN</string>
   <string name="account_new_button">Crear un compte de Ring</string>
   <string name="account_start_export_button">Genera PIN</string>
   <string name="account_end_export_button">tanca</string>
   <!--Name registration-->
   <string name="register_name">Registrar nom</string>
+  <string name="username_already_taken">Nom d\'usuari ja registrat.</string>
   <string name="invalid_username">Nom d\'usuari invalid</string>
+  <string name="account_status_connecting">Connectant</string>
   <string name="account_status_connection_error">Error de xarxa</string>
   <string name="account_status_unknown">Desconegut</string>
   <!--Create account-->
