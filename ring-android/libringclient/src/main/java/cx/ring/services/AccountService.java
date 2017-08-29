@@ -142,10 +142,6 @@ public class AccountService extends Observable {
 
                 setAccountsActive(isConnected);
                 Ringservice.connectivityChanged();
-
-                setChanged();
-                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNTS_CHANGED);
-                notifyObservers(event);
             }
         });
     }
