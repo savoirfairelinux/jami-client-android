@@ -95,7 +95,7 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
         }
     }
 
-    public void checkAccounts() {
+    public synchronized void checkAccounts() {
         List<Account> accounts = mAccountService.getAccounts();
 
         if (accounts == null) {
