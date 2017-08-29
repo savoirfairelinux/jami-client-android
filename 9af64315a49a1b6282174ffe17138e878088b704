@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_08c7b246",
+        "filename": "ring-android/fastlane/metadata/android/en-US/full_description.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-08-29T20:06:04Z",
+      "side": 1,
+      "message": "a enlever",
+      "revId": "9af64315a49a1b6282174ffe17138e878088b704",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
