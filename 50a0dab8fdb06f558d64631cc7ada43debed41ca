@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_48c1ba2d",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/about/AboutDetailsFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-08-29T20:44:39Z",
+      "side": 1,
+      "message": "Should be AboutDetailsFragment",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 65
+      },
+      "revId": "50a0dab8fdb06f558d64631cc7ada43debed41ca",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_68f2be9b",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/cards/about/AboutCardHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-08-29T20:44:39Z",
+      "side": 1,
+      "message": "Should be final",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "50a0dab8fdb06f558d64631cc7ada43debed41ca",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_887e22e3",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/cards/about/AboutCardHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-08-29T20:44:39Z",
+      "side": 1,
+      "message": "We can refactor this to use resources id instead of string",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 5
+      },
+      "revId": "50a0dab8fdb06f558d64631cc7ada43debed41ca",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
