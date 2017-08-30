@@ -16,6 +16,24 @@
       "revId": "221a024973a5ae0d4cad7b9b2a97cd3eb43992d3",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba3841fe_63349fde",
+        "filename": "ring-android/fastlane/metadata/android/fr-FR/full_description.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-08-30T02:12:44Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "ba3841fe_28ca764f",
+      "revId": "221a024973a5ae0d4cad7b9b2a97cd3eb43992d3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
