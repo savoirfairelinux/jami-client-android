@@ -73,8 +73,8 @@ public class TVRingAccountCreationFragment
         presenter.init(ringAccountViewModel);
 
         presenter.ringCheckChanged(false);
-        presenter.passwordChanged("password");
-        presenter.passwordConfirmChanged("password");
+        presenter.passwordChanged("");
+        presenter.passwordConfirmChanged("");
     }
 
     @Override
