@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3841fe_63c49f40",
+        "filename": "ring-android/app/src/main/java/cx/ring/account/RingAccountViewModelImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-08-30T19:28:44Z",
+      "side": 1,
+      "message": "Ring headers are better",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 3
+      },
+      "revId": "d76aa60819bf29ba9ab2e6702b9e5f1a675ef8d0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
