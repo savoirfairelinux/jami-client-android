@@ -54,6 +54,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.services.HardwareServiceImpl;
 import cx.ring.utils.CircleTransform;
 import cx.ring.utils.KeyboardVisibilityManager;
 
@@ -413,14 +414,17 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
                     mVideoSurface.setLayoutParams(params);
                 }
 
+                final int mPreviewWidth = HardwareServiceImpl.VIDEO_WIDTH;
+                final int mPreviewHeight = HardwareServiceImpl.VIDEO_HEIGHT;
+
                 DisplayMetrics metrics = getResources().getDisplayMetrics();
                 RelativeLayout.LayoutParams paramsPreview = (RelativeLayout.LayoutParams) mVideoPreview.getLayoutParams();
                 oldW = paramsPreview.width;
                 oldH = paramsPreview.height;
-                double previewMaxDim = Math.max(previewWidth, previewHeight);
+                double previewMaxDim = Math.max(mPreviewWidth, mPreviewHeight);
                 double previewRatio = metrics.density * 160. / previewMaxDim;
-                paramsPreview.width = (int) (previewWidth * previewRatio);
-                paramsPreview.height = (int) (previewHeight * previewRatio);
+                paramsPreview.width = (int) (mPreviewWidth * previewRatio);
+                paramsPreview.height = (int) (mPreviewHeight * previewRatio);
                 if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
                     mVideoPreview.setLayoutParams(paramsPreview);
                 }
