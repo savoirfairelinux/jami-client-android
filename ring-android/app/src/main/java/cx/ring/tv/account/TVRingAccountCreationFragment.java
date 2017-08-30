@@ -59,8 +59,8 @@ public class TVRingAccountCreationFragment
         super.onViewCreated(view, savedInstanceState);
 
         presenter.ringCheckChanged(false);
-        presenter.passwordChanged("password");
-        presenter.passwordConfirmChanged("password");
+        presenter.passwordChanged("");
+        presenter.passwordConfirmChanged("");
     }
 
     @Override
