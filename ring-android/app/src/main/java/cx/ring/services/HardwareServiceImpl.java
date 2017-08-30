@@ -46,6 +46,11 @@ import cx.ring.utils.Log;
 
 public class HardwareServiceImpl extends HardwareService {
 
+    public static final int VIDEO_WIDTH = 640;
+    public static final int MIN_VIDEO_WIDTH = 320;
+    public static final int VIDEO_HEIGHT = 480;
+    public static final int MIN_VIDEO_HEIGHT = 240;
+
     public static final String TAG = HardwareServiceImpl.class.getName();
     private static WeakReference<SurfaceHolder> mCameraPreviewSurface = new WeakReference<>(null);
     private static Map<String, WeakReference<SurfaceHolder>> videoSurfaces = Collections.synchronizedMap(new HashMap<String, WeakReference<SurfaceHolder>>());
@@ -172,7 +177,7 @@ public class HardwareServiceImpl extends HardwareService {
 
         // Use a larger resolution for Android 6.0+, 64 bits devices
         final boolean useLargerSize = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.SUPPORTED_64_BIT_ABIS.length > 0;
-        int MIN_WIDTH = useLargerSize ? 640 : 320;
+        int MIN_WIDTH = useLargerSize ? VIDEO_WIDTH : MIN_VIDEO_WIDTH;
         Point size = new Point(0, 0);
         /** {@link Camera.Parameters#getSupportedPreviewSizes} :
          * "This method will always return a list with at least one element."
@@ -538,6 +543,7 @@ public class HardwareServiceImpl extends HardwareService {
         public int rotHeight;
         public int rate;
         public int rotation;
+
         public VideoParams(int id, int format, int width, int height, int rate) {
             this.id = id;
             this.format = format;

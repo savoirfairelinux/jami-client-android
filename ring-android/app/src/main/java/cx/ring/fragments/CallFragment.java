@@ -64,10 +64,12 @@ import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.service.DRingService;
+import cx.ring.services.HardwareServiceImpl;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.CircleTransform;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.KeyboardVisibilityManager;
+import cx.ring.utils.Log;
 
 public class CallFragment extends BaseFragment<CallPresenter> implements CallView {
 
@@ -542,14 +544,26 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                     mVideoSurface.setLayoutParams(params);
                 }
 
+                final int mPreviewWidth;
+                final int mPreviewHeight;
+
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    mPreviewWidth = HardwareServiceImpl.VIDEO_HEIGHT;
+                    mPreviewHeight = HardwareServiceImpl.VIDEO_WIDTH;
+                } else {
+                    mPreviewWidth = HardwareServiceImpl.VIDEO_WIDTH;
+                    mPreviewHeight = HardwareServiceImpl.VIDEO_HEIGHT;
+                }
+
                 DisplayMetrics metrics = getResources().getDisplayMetrics();
                 RelativeLayout.LayoutParams paramsPreview = (RelativeLayout.LayoutParams) mVideoPreview.getLayoutParams();
                 oldW = paramsPreview.width;
                 oldH = paramsPreview.height;
-                double previewMaxDim = Math.max(previewWidth, previewHeight);
+                double previewMaxDim = Math.max(mPreviewWidth, mPreviewHeight);
                 double previewRatio = metrics.density * 160. / previewMaxDim;
-                paramsPreview.width = (int) (previewWidth * previewRatio);
-                paramsPreview.height = (int) (previewHeight * previewRatio);
+                paramsPreview.width = (int) (mPreviewWidth * previewRatio);
+                paramsPreview.height = (int) (mPreviewHeight * previewRatio);
+
                 if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
                     mVideoPreview.setLayoutParams(paramsPreview);
                 }
