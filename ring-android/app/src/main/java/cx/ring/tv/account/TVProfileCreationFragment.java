@@ -29,7 +29,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
         super.onViewCreated(view, savedInstanceState);
 
         RingAccountViewModelImpl ringAccountViewModel = new RingAccountViewModelImpl();
-
+        ringAccountViewModel.setLink(true);
         presenter.initPresenter(ringAccountViewModel);
     }
 
