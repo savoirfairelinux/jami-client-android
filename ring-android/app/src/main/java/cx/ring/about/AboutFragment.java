@@ -144,7 +144,7 @@ public class AboutFragment extends BaseFragment<AboutPresenter> implements About
 
     @OnClick(R.id.email_report_container)
     public void sendFeedbackEmail() {
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "mobile@lists.savoirfairelinux.net"));
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + "ring-dev@lists.savoirfairelinux.net"));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "[Ring Android - " + BuildConfig.VERSION_NAME + "]");
         launchSystemIntent(emailIntent, getString(R.string.email_chooser_title), getString(R.string.no_email_app_installed));
     }
