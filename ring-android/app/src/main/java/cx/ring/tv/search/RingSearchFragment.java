@@ -145,6 +145,7 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         intent.putExtra("account", accountID);
         intent.putExtra("ringId", number.toString());
         startActivity(intent);
+        getActivity().finish();
     }
 
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
