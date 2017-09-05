@@ -138,6 +138,10 @@ public class AccountService extends Observable {
 
                 if (!mAccountList.isEmpty()) {
                     setCurrentAccount(mAccountList.get(0));
+                } else {
+                    setChanged();
+                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNTS_CHANGED);
+                    notifyObservers(event);
                 }
 
                 setAccountsActive(isConnected);
@@ -644,7 +648,7 @@ public class AccountService extends Observable {
 
     /**
      * @param accountId id of the account used with the device
-     * @param newName new device name
+     * @param newName   new device name
      */
     public void renameDevice(final String accountId, final String newName) {
         final Account account = getAccount(accountId);
@@ -1465,11 +1469,11 @@ public class AccountService extends Observable {
                 }
                 TrustRequest request = account.getRequest(address);
                 if (request != null) {
-                    Log.d(TAG, "registeredNameFound: updating TrustRequest " +  name);
+                    Log.d(TAG, "registeredNameFound: updating TrustRequest " + name);
                     boolean resolved = request.isNameResolved();
                     request.setUsername(name);
                     if (!resolved) {
-                        Log.d(TAG, "registeredNameFound: TrustRequest resolved " +  name);
+                        Log.d(TAG, "registeredNameFound: TrustRequest resolved " + name);
                         setChanged();
                         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
                         event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
