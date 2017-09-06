@@ -84,10 +84,9 @@
                     android:id="@+id/ring_add_pin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:digits="0123456789abcdefABCDEF"
                     android:hint="@string/account_link_prompt_pin"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
+                    android:inputType="textNoSuggestions"
                     android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>
@@ -98,8 +97,9 @@
 
     <Button
         android:id="@+id/link_button"
-        style="@style/WizardNavButton"
+        android:theme="@style/ButtonColoredInverse"
         android:layout_width="match_parent"
+        android:enabled="false"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
