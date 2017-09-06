@@ -52,7 +52,13 @@ public class CardPresenterSelector extends PresenterSelector {
                     presenter = new AboutCardPresenter(mContext);
                     break;
                 case SEARCH_RESULT:
-                    presenter = new ContactCardPresenter(mContext,R.style.SearchtCardTheme);
+                    presenter = new ContactCardPresenter(mContext,R.style.SearchCardTheme);
+                    break;
+                case CONTACT:
+                    presenter = new ContactCardPresenter(mContext,R.style.ContactCardTheme);
+                    break;
+                case CONTACT_WITH_USERNAME:
+                    presenter = new ContactCardPresenter(mContext,R.style.ContactCompleteCardTheme);
                     break;
                 default:
                     presenter = new ContactCardPresenter(mContext, R.style.DefaultCardTheme);

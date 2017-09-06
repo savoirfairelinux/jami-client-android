@@ -125,6 +125,8 @@ public class Card {
         SEARCH_RESULT,
         CONTRIBUTOR,
         LICENCES,
+        CONTACT,
+        CONTACT_WITH_USERNAME,
     }
 
 }

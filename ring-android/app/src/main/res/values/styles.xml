@@ -128,6 +128,14 @@
         <item name="lbImageCardViewType">Title</item>
     </style>
 
+    <style name="ContactTitleViewStyle" parent="DefaultCardStyle">
+        <item name="lbImageCardViewType">Title</item>
+    </style>
+
+    <style name="ContactCompleteCardViewStyle" parent="DefaultCardStyle">
+        <item name="lbImageCardViewType">Title|Content</item>
+    </style>
+
     <style name="IconCardImageStyle" parent="Widget.Leanback.ImageCardView.ImageStyle">
         <item name="android:layout_width">96dp</item>
         <item name="android:layout_height">96dp</item>
@@ -147,8 +155,8 @@
         <item name="layout_viewType">main</item>
     </style>
 
-    <!-- A Searcht card style. Used in cards example. -->
-    <style name="SearchtCardImageStyle" parent="Widget.Leanback.ImageCardView.ImageStyle">
+    <!-- A Search card style. Used in cards example. -->
+    <style name="SearchCardImageStyle" parent="Widget.Leanback.ImageCardView.ImageStyle">
         <item name="android:layout_width">@dimen/search_image_card_width</item>
         <item name="android:layout_height">@dimen/search_image_card_height</item>
     </style>
@@ -157,11 +165,18 @@
         <item name="cardBackground">@null</item>
         <item name="android:layout_width">96dp</item>
         <item name="android:layout_height">96dp</item>
+        <item name="lbImageCardViewType">Title</item>
     </style>
 
-    <style name="SearchtCardTheme" parent="Theme.Leanback">
+    <style name="ContactCardTheme" parent="DefaultCardTheme">
+        <item name="imageCardViewStyle">@style/ContactTitleViewStyle</item>
+    </style>
+    <style name="ContactCompleteCardTheme" parent="DefaultCardTheme">
+        <item name="imageCardViewStyle">@style/ContactCompleteCardViewStyle</item>
+    </style>
+    <style name="SearchCardTheme" parent="Theme.Leanback">
         <item name="imageCardViewStyle">@style/SearchCardStyle</item>
-        <item name="imageCardViewImageStyle">@style/SearchtCardImageStyle</item>
+        <item name="imageCardViewImageStyle">@style/SearchCardImageStyle</item>
     </style>
     <!-- Theme corresponding to the IconCardStyle -->
     <style name="IconCardTheme" parent="Theme.Leanback">
