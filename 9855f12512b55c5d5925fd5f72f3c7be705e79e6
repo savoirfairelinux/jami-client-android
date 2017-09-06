@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_bf5d374b",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/account/AccountWizardPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-09-06T16:36:35Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "9855f12512b55c5d5925fd5f72f3c7be705e79e6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
