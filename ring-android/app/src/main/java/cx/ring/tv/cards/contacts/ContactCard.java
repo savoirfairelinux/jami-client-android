@@ -25,6 +25,7 @@ import cx.ring.tv.cards.Card;
 public class ContactCard extends Card {
     CallContact mCallContact = null;
     private byte[] mPhoto = null;
+
     public ContactCard(CallContact pCallContact, Type type) {
         mCallContact = pCallContact;
         setId(pCallContact.getId());
@@ -37,7 +38,18 @@ public class ContactCard extends Card {
     }
 
     public ContactCard(CallContact pCallContact) {
-        this(pCallContact, Type.DEFAULT);
+        mCallContact = pCallContact;
+        setId(pCallContact.getId());
+        setTitle(pCallContact.getDisplayName());
+        setDescription(pCallContact.getRingUsername());
+        if (pCallContact.getPhoto() != null) {
+            mPhoto = pCallContact.getPhoto();
+        }
+        if (pCallContact.getDisplayName().equals(pCallContact.getRingUsername())) {
+            setType(Type.CONTACT);
+        } else {
+            setType(Type.CONTACT_WITH_USERNAME);
+        }
     }
 
     public CallContact getCallContact() {

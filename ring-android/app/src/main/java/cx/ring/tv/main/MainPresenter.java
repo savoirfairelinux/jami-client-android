@@ -92,10 +92,9 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
 
         switch (event.getEventType()) {
             case CONVERSATIONS_CHANGED:
-                reloadConversations();
-                break;
             case ACCOUNTS_CHANGED:
             case NAME_REGISTRATION_ENDED:
+                reloadConversations();
                 reloadAccountInfos();
                 break;
         }
