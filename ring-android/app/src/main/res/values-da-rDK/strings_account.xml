@@ -153,6 +153,7 @@ Du kan rette din konto senere</string>
   <string name="register_name">Registrer navn</string>
   <string name="trying_to_register_name">Forsøger at registrere navn</string>
   <string name="registered_username">Registreret brugernavn</string>
+  <string name="register_username">Registrer et offentligt brugernavn (valgfrit)</string>
   <string name="username_already_taken">Brugernavn er allerede taget</string>
   <string name="invalid_username">Ugyldigt brugernavn</string>
   <string name="looking_for_username_availability">Tjekker efter om brugernavnet er ledigt...</string>
