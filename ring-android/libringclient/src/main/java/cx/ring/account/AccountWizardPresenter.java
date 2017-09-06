@@ -205,6 +205,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> imp
                             getView().displaySuccessDialog();
                             getView().saveProfile(mAccount.getAccountID(), mRingAccountViewModel);
                             mCreationError = false;
+                            mAccountService.setCurrentAccount(mAccount);
                             break;
                         }
                         break;
@@ -216,6 +217,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> imp
                         getView().displaySuccessDialog();
                         getView().saveProfile(mAccount.getAccountID(), mRingAccountViewModel);
                         mCreationError = false;
+                        mAccountService.setCurrentAccount(mAccount);
                         break;
                 }
 
