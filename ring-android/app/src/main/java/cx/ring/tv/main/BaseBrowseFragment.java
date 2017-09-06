@@ -26,7 +26,6 @@ import android.view.View;
 import javax.inject.Inject;
 
 import cx.ring.mvp.RootPresenter;
-import cx.ring.utils.Log;
 
 public class BaseBrowseFragment<T extends RootPresenter> extends BrowseFragment {
 

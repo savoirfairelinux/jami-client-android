@@ -26,13 +26,13 @@ import android.widget.ProgressBar;
 /**
  * SpinnerFragment shows spinning progressbar to notify user that
  * application is processing something (while downloading, or preparing sth etc.)
- *
+ * <p>
  * Example of usage in AsyncTask
  * + Start showing: OnPreExecute
- *         mSpinnerFragment = new SpinnerFragment();
- *         getFragmentManager().beginTransaction().add(R.id.some_view_group, mSpinnerFragment).commit();
+ * mSpinnerFragment = new SpinnerFragment();
+ * getFragmentManager().beginTransaction().add(R.id.some_view_group, mSpinnerFragment).commit();
  * + Stop showing: OnPostExecute
- *         getFragmentManager().beginTransaction().remove(mSpinnerFragment).commit();
+ * getFragmentManager().beginTransaction().remove(mSpinnerFragment).commit();
  */
 public class SpinnerFragment extends Fragment {
 

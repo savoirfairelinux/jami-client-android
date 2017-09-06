@@ -3,7 +3,6 @@ package cx.ring.tv.account;
 import android.os.Bundle;
 import android.support.v17.leanback.app.GuidedStepFragment;
 import android.support.v17.leanback.widget.GuidedAction;
-import android.support.v17.leanback.widget.GuidedActionEditText;
 import android.text.InputType;
 import android.view.View;
 
@@ -28,6 +27,7 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
                 .description(desc)
                 .build());
     }
+
     protected static void addDisabledAction(List<GuidedAction> actions, long id, String title, String desc) {
         actions.add(new GuidedAction.Builder()
                 .id(id)

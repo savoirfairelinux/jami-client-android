@@ -19,48 +19,29 @@
  */
 package cx.ring.tv.main;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.GravityCompat;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 import cx.ring.R;
-import cx.ring.account.AccountWizard;
 import cx.ring.application.RingApplication;
-import cx.ring.model.Account;
-import cx.ring.model.ServiceEvent;
-import cx.ring.model.Settings;
-import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
-import cx.ring.tv.account.TVAccountWizard;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 
-public class HomeActivity extends Activity  {
-    private static final String TAG = HomeActivity.class.getName();
-
+public class HomeActivity extends Activity {
     public static final int REQUEST_CODE_PHOTO = 5;
     public static final int REQUEST_CODE_GALLERY = 6;
     public static final int REQUEST_PERMISSION_CAMERA = 113;
     public static final int REQUEST_PERMISSION_READ_STORAGE = 114;
-
+    private static final String TAG = HomeActivity.class.getName();
     @Inject
     AccountService mAccountService;
 
@@ -107,6 +88,7 @@ public class HomeActivity extends Activity  {
                 break;
         }
     }
+
     @Override
     public void onBackPressed() {
         finish();

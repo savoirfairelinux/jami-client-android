@@ -22,7 +22,6 @@ package cx.ring.tv.cards.about;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v4.content.ContextCompat;
 import android.view.ContextThemeWrapper;
