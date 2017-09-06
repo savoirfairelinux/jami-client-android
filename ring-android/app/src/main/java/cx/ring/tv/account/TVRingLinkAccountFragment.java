@@ -20,9 +20,9 @@ import cx.ring.utils.StringUtils;
 
 public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAccountPresenter>
         implements RingLinkAccountView {
-    private static final int PASSWORD = 0;
-    private static final int PIN = 1;
-    private static final int LINK = 2;
+    private static final long PASSWORD = 1L;
+    private static final long PIN = 2L;
+    private static final long LINK = 3L;
 
     public TVRingLinkAccountFragment() {
     }
@@ -50,7 +50,7 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
     public GuidanceStylist.Guidance onCreateGuidance(Bundle savedInstanceState) {
         String title = getString(R.string.account_link_title);
         String breadcrumb = "";
-        String description = "";
+        String description = getString(R.string.help_password_enter)+"\n"+getString(R.string.help_pin_enter);
 
         Drawable icon = getActivity().getResources().getDrawable(R.drawable.ic_contact_picture);
         return new GuidanceStylist.Guidance(title, description, breadcrumb, icon);
@@ -58,9 +58,7 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
 
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
-        addMultilineActions(actions, getString(R.string.help_password_enter), "");
         addPasswordAction(actions, PASSWORD, getString(R.string.account_enter_password), "", "");
-        addMultilineActions(actions, getString(R.string.help_pin_enter), "");
         addPasswordAction(actions, PIN, getString(R.string.account_link_prompt_pin), "", "");
         addDisabledAction(actions, LINK, getString(R.string.account_link_title), "");
     }
@@ -80,7 +78,6 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
     @Override
     public void enableLinkButton(boolean enable) {
         findActionById(LINK).setEnabled(enable);
-
         notifyActionChanged(findActionPositionById(LINK));
     }
 
@@ -104,7 +101,7 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
             notifyActionChanged(findActionPositionById(PIN));
             presenter.pinChanged(action.getEditDescription().toString());
         }
-        return super.onGuidedActionEditedAndProceed(action);
+        return GuidedAction.ACTION_ID_NEXT;
     }
 
 }
