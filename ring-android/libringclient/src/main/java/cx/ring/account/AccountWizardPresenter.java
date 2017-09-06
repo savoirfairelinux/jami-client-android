@@ -24,6 +24,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
@@ -205,6 +206,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> imp
                             getView().displaySuccessDialog();
                             getView().saveProfile(mAccount.getAccountID(), mRingAccountViewModel);
                             mCreationError = false;
+                            mAccountService.setCurrentAccount(mAccount);
                             break;
                         }
                         break;
@@ -216,6 +218,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> imp
                         getView().displaySuccessDialog();
                         getView().saveProfile(mAccount.getAccountID(), mRingAccountViewModel);
                         mCreationError = false;
+                        mAccountService.setCurrentAccount(mAccount);
                         break;
                 }
 
