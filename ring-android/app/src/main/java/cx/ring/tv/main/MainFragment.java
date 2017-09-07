@@ -42,9 +42,9 @@ import cx.ring.tv.cards.CardListRow;
 import cx.ring.tv.cards.CardPresenterSelector;
 import cx.ring.tv.cards.CardRow;
 import cx.ring.tv.cards.ShadowRowPresenterSelector;
-import cx.ring.tv.cards.about.AboutCard;
-import cx.ring.tv.cards.about.AboutCardHelper;
 import cx.ring.tv.cards.contacts.ContactCard;
+import cx.ring.tv.cards.iconcards.IconCard;
+import cx.ring.tv.cards.iconcards.IconCardHelper;
 import cx.ring.tv.search.SearchActivity;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
@@ -96,7 +96,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
         /* Contact Presenter */
         List<Card> cards = new ArrayList<>();
-        CardRow contacttRow = new CardRow(
+        CardRow contactRow = new CardRow(
                 CardRow.TYPE_DEFAULT,
                 true,
                 getString(R.string.tv_contact_row_header),
@@ -104,10 +104,11 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         HeaderItem cardPresenterHeader = new HeaderItem(HEADER_CONTACTS, getString(R.string.tv_contact_row_header));
         cardRowAdapter = new ArrayObjectAdapter(new CardPresenterSelector(getActivity()));
 
-        CardListRow contactListRow = new CardListRow(cardPresenterHeader, cardRowAdapter, contacttRow);
+        CardListRow contactListRow = new CardListRow(cardPresenterHeader, cardRowAdapter, contactRow);
 
         /* CardPresenter */
         mRowsAdapter.add(contactListRow);
+        mRowsAdapter.add(createMyAccountRow());
         mRowsAdapter.add(createAboutCardRow());
 
         setAdapter(mRowsAdapter);
@@ -125,17 +126,11 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         setOnItemViewClickedListener(new ItemViewClickedListener());
     }
 
-
-    private Row createAboutCardRow() {
-        List<Card> cards = new ArrayList<>();
-        cards.add(AboutCardHelper.getVersionCard(getActivity()));
-        cards.add(AboutCardHelper.getLicencesCard(getActivity()));
-        cards.add(AboutCardHelper.getContributorCard(getActivity()));
-
-        CardRow aboutRow = new CardRow(
+    private Row createRow(String titleSection, List<Card> cards, boolean shadow) {
+        CardRow row = new CardRow(
                 CardRow.TYPE_DEFAULT,
-                false,
-                getString(R.string.menu_item_about),
+                shadow,
+                titleSection,
                 cards);
 
         PresenterSelector presenterSelector = new CardPresenterSelector(getActivity());
@@ -144,9 +139,25 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
             listRowAdapter.add(card);
         }
 
-        return new CardListRow(new HeaderItem(HEADER_MISC, getString(R.string.menu_item_about)), listRowAdapter, aboutRow);
+        return new CardListRow(new HeaderItem(HEADER_MISC, titleSection), listRowAdapter, row);
+
     }
 
+    private Row createMyAccountRow() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(IconCardHelper.getAccountAddDevice(getActivity()));
+
+        return createRow(getString(R.string.ring_account), cards, false);
+    }
+
+    private Row createAboutCardRow() {
+        List<Card> cards = new ArrayList<>();
+        cards.add(IconCardHelper.getVersionCard(getActivity()));
+        cards.add(IconCardHelper.getLicencesCard(getActivity()));
+        cards.add(IconCardHelper.getContributorCard(getActivity()));
+
+        return createRow(getString(R.string.menu_item_about), cards, false);
+    }
 
     @Override
     public void showLoading(final boolean show) {
@@ -206,11 +217,11 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
             if (item instanceof ContactCard) {
                 presenter.contactClicked(((ContactCard) item).getCallContact());
-            } else if (item instanceof AboutCard) {
-                AboutCard card = (AboutCard) item;
+            } else if (item instanceof IconCard) {
+                IconCard card = (IconCard) item;
                 switch (card.getType()) {
-                    case CONTRIBUTOR:
-                    case LICENCES:
+                    case ABOUT_CONTRIBUTOR:
+                    case ABOUT_LICENCES:
                         Intent intent = new Intent(getActivity(),
                                 AboutActivity.class);
                         intent.putExtra("abouttype", card.getType().ordinal());

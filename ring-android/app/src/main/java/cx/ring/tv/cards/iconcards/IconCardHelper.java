@@ -17,7 +17,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.cards.about;
+package cx.ring.tv.cards.iconcards;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -30,35 +30,41 @@ import cx.ring.R;
 import cx.ring.tv.cards.Card;
 
 
-public final class AboutCardHelper {
+public final class IconCardHelper {
 
-    private AboutCardHelper() {
+    private IconCardHelper() {
         /* Helper so no constructor */
     }
 
-    public static AboutCard getAboutCardByType(Context pContext, Card.Type type) {
+    public static IconCard getAboutCardByType(Context pContext, Card.Type type) {
         switch (type) {
-            case CONTRIBUTOR:
+            case ABOUT_CONTRIBUTOR:
                 return getContributorCard(pContext);
-            case LICENCES:
+            case ABOUT_LICENCES:
                 return getLicencesCard(pContext);
-            case VERSION:
+            case ABOUT_VERSION:
                 return getVersionCard(pContext);
+            case ACCOUNT_ADD_DEVICE:
+                return getAccountAddDevice(pContext);
             default:
                 return null;
         }
     }
 
-    public static AboutCard getVersionCard(Context pContext) {
-        return new AboutCard(Card.Type.VERSION, pContext.getString(R.string.version_section) + " 1.0" + " " + BuildConfig.VERSION_NAME, "", R.drawable.ic_ring_logo_white);
+    public static IconCard getVersionCard(Context pContext) {
+        return new IconCard(Card.Type.ABOUT_VERSION, pContext.getString(R.string.version_section) + " 1.0" + " " + BuildConfig.VERSION_NAME, "", R.drawable.ic_ring_logo_white);
     }
 
-    public static AboutCard getLicencesCard(Context pContext) {
-        return new AboutCard(Card.Type.LICENCES, pContext.getString(R.string.section_license), formatLicence(pContext), R.drawable.ic_description);
+    public static IconCard getLicencesCard(Context pContext) {
+        return new IconCard(Card.Type.ABOUT_LICENCES, pContext.getString(R.string.section_license), formatLicence(pContext), R.drawable.ic_description);
     }
 
-    public static AboutCard getContributorCard(Context pContext) {
-        return new AboutCard(Card.Type.CONTRIBUTOR, pContext.getString(R.string.credits), formatContributors(pContext), R.drawable.ic_face);
+    public static IconCard getContributorCard(Context pContext) {
+        return new IconCard(Card.Type.ABOUT_CONTRIBUTOR, pContext.getString(R.string.credits), formatContributors(pContext), R.drawable.ic_face);
+    }
+
+    public static IconCard getAccountAddDevice(Context pContext) {
+        return new IconCard(Card.Type.ACCOUNT_ADD_DEVICE, pContext.getString(R.string.account_link_button), "",R.drawable.ic_add_white);
     }
 
     private static CharSequence formatLicence(Context pContext) {
