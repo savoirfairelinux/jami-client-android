@@ -68,11 +68,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     @Override
-    public void afterInjection() {
-
-    }
-
-    @Override
     public void unbindView() {
         super.unbindView();
         mAccountService.removeObserver(this);

@@ -60,11 +60,6 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> implement
     }
 
     @Override
-    public void afterInjection() {
-
-    }
-
-    @Override
     public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
             return;

@@ -58,11 +58,6 @@ public class SIPCreationPresenter extends RootPresenter<SIPCreationView> impleme
     }
 
     @Override
-    public void afterInjection() {
-        // Nothing to do here
-    }
-
-    @Override
     public void bindView(SIPCreationView view) {
         super.bindView(view);
     }

@@ -83,11 +83,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     }
 
     @Override
-    public void afterInjection() {
-
-    }
-
-    @Override
     public void unbindView() {
         super.unbindView();
         mAccountService.removeObserver(this);

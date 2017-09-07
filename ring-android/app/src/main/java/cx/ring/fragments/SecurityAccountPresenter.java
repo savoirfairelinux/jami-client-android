@@ -45,11 +45,6 @@ public class SecurityAccountPresenter extends RootPresenter<SecurityAccountView>
         this.mAccountService = accountService;
     }
 
-    @Override
-    public void afterInjection() {
-
-    }
-
     public void init(String accountId) {
         mAccount = mAccountService.getAccount(accountId);
         if (mAccount != null) {

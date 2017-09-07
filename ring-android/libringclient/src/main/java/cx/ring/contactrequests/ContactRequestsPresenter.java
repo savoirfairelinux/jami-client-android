@@ -65,11 +65,6 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
     final private List<TrustRequest> mTrustRequests = new ArrayList<>();
 
     @Override
-    public void afterInjection() {
-
-    }
-
-    @Override
     public void bindView(ContactRequestsView view) {
         mAccountService.addObserver(this);
         super.bindView(view);
