@@ -189,9 +189,4 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
                 break;
         }
     }
-
-    @Override
-    public void afterInjection() {
-
-    }
 }

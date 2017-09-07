@@ -41,11 +41,6 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> i
     }
 
     @Override
-    public void afterInjection() {
-
-    }
-
-    @Override
     public void unbindView() {
         super.unbindView();
         mAccountService.removeObserver(this);

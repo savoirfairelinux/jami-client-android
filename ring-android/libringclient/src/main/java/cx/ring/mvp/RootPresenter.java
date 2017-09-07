@@ -49,8 +49,6 @@ public abstract class RootPresenter<T> {
         return null;
     }
 
-    public abstract void afterInjection ();
-
 }
 
 

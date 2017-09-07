@@ -38,10 +38,13 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
     private static final int PIN_GENERATION_WRONG_PASSWORD = 1;
     private static final int PIN_GENERATION_NETWORK_ERROR = 2;
 
-    @Inject
-    AccountService mAccountService;
-
+    private AccountService mAccountService;
     private String mAccountID;
+
+    @Inject
+    public RingAccountSummaryPresenter(AccountService accountService) {
+        this.mAccountService = accountService;
+    }
 
     @Override
     public void bindView(RingAccountSummaryView view) {
@@ -53,11 +56,6 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
     public void unbindView() {
         mAccountService.removeObserver(this);
         super.unbindView();
-    }
-
-    @Override
-    public void afterInjection() {
-
     }
 
     @Override
