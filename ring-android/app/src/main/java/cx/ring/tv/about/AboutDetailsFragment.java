@@ -17,8 +17,8 @@ import android.view.ViewGroup;
 
 import cx.ring.R;
 import cx.ring.tv.cards.Card;
-import cx.ring.tv.cards.about.AboutCard;
-import cx.ring.tv.cards.about.AboutCardHelper;
+import cx.ring.tv.cards.iconcards.IconCard;
+import cx.ring.tv.cards.iconcards.IconCardHelper;
 import cx.ring.utils.Log;
 
 public class AboutDetailsFragment extends DetailsFragment {
@@ -42,7 +42,7 @@ public class AboutDetailsFragment extends DetailsFragment {
             cardType = Card.Type.values()[ordinal];
         }
 
-        AboutCard card = AboutCardHelper.getAboutCardByType(getActivity(), cardType);
+        IconCard card = IconCardHelper.getAboutCardByType(getActivity(), cardType);
 
         ClassPresenterSelector selector = new ClassPresenterSelector();
 

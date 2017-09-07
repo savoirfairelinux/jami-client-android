@@ -120,11 +120,12 @@ public class Card {
     }
 
     public enum Type {
-        VERSION,
+        ABOUT_VERSION,
         DEFAULT,
         SEARCH_RESULT,
-        CONTRIBUTOR,
-        LICENCES,
+        ABOUT_CONTRIBUTOR,
+        ACCOUNT_ADD_DEVICE,
+        ABOUT_LICENCES,
         CONTACT,
         CONTACT_WITH_USERNAME,
     }
