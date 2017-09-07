@@ -68,6 +68,7 @@ import cx.ring.settings.SettingsFragment;
 import cx.ring.settings.SettingsPresenter;
 import cx.ring.share.ShareFragment;
 import cx.ring.share.SharePresenter;
+import cx.ring.tv.account.TVAccountExport;
 import cx.ring.tv.account.TVAccountWizard;
 import cx.ring.tv.account.TVHomeAccountCreationFragment;
 import cx.ring.tv.account.TVProfileCreationFragment;
@@ -185,6 +186,8 @@ public interface RingInjectionComponent {
     void inject(TVRingAccountCreationFragment fragment);
 
     void inject(TVRingLinkAccountFragment fragment);
+
+    void inject(TVAccountExport fragment);
 
     void inject(TVLaunchActivity activity);
 
