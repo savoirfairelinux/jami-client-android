@@ -46,7 +46,6 @@ import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.PresenceCallback;
 import cx.ring.daemon.VideoCallback;
 import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
-import cx.ring.dependencyinjection.PresenterInjectionModule;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionModule;
 import cx.ring.dependencyinjection.ServiceInjectionModule;
@@ -257,7 +256,6 @@ public class RingApplication extends Application {
         // building injection dependency tree
         mRingInjectionComponent = DaggerRingInjectionComponent.builder()
                 .ringInjectionModule(new RingInjectionModule(this))
-                .presenterInjectionModule(new PresenterInjectionModule(this))
                 .serviceInjectionModule(new ServiceInjectionModule(this))
                 .build();
 

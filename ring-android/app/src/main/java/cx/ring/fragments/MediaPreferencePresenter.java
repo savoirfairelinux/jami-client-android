@@ -61,11 +61,6 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
     }
 
     @Override
-    public void afterInjection() {
-
-    }
-
-    @Override
     public void unbindView() {
         super.unbindView();
         mAccountService.removeObserver(this);

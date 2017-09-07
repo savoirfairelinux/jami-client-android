@@ -45,11 +45,6 @@ public class BlackListPresenter extends RootPresenter<BlackListView> implements 
     }
 
     @Override
-    public void afterInjection() {
-
-    }
-
-    @Override
     public void bindView(BlackListView view) {
         mAccountService.addObserver(this);
         super.bindView(view);

@@ -38,8 +38,4 @@ public class HomeAccountCreationPresenter extends RootPresenter<HomeAccountCreat
         getView().goToAccountLink();
     }
 
-    @Override
-    public void afterInjection() {
-
-    }
 }

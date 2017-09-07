@@ -32,18 +32,25 @@ import cx.ring.utils.Observer;
 
 public class SettingsPresenter extends RootPresenter<GenericView<SettingsViewModel>> implements Observer<ServiceEvent> {
 
-    @Inject
-    PreferencesService mPreferencesService;
+    private PreferencesService mPreferencesService;
+    private HistoryService mHistoryService;
 
     @Inject
-    HistoryService mHistoryService;
+    public SettingsPresenter(PreferencesService preferencesService, HistoryService historyService) {
+        this.mPreferencesService = preferencesService;
+        this.mHistoryService = historyService;
+    }
 
     @Override
-    public void afterInjection() {
-        // We observe the application settings changes
+    public void bindView(GenericView<SettingsViewModel> view) {
+        super.bindView(view);
         mPreferencesService.addObserver(this);
-        // no need to observe the history changes
-        // only the smartlist should do so
+    }
+
+    @Override
+    public void unbindView() {
+        super.unbindView();
+        mPreferencesService.removeObserver(this);
     }
 
     public void loadSettings() {

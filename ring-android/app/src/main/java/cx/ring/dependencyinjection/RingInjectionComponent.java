@@ -80,7 +80,7 @@ import cx.ring.tv.search.RingSearchFragment;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {RingInjectionModule.class, PresenterInjectionModule.class, ServiceInjectionModule.class})
+@Component(modules = {RingInjectionModule.class, ServiceInjectionModule.class})
 public interface RingInjectionComponent {
     void inject(RingApplication app);
 
@@ -154,16 +154,6 @@ public interface RingInjectionComponent {
 
     void inject(BootReceiver receiver);
 
-    void inject(AboutPresenter presenter);
-
-    void inject(RingNavigationPresenter presenter);
-
-    void inject(SharePresenter presenter);
-
-    void inject(SettingsPresenter presenter);
-
-    void inject(RingAccountSummaryPresenter presenter);
-
     void inject(AdvancedAccountFragment fragment);
 
     void inject(GeneralAccountFragment fragment);
@@ -174,9 +164,7 @@ public interface RingInjectionComponent {
 
     void inject(LaunchActivity activity);
 
-
 //    AndroidTV section
-
     void inject(TVCallFragment fragment);
 
     void inject(MainFragment fragment);

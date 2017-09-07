@@ -54,11 +54,6 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
     }
 
     @Override
-    public void afterInjection() {
-
-    }
-
-    @Override
     public void unbindView() {
         super.unbindView();
         mAccountService.removeObserver(this);

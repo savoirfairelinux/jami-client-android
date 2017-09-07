@@ -31,13 +31,23 @@ import cx.ring.utils.Observer;
 
 public class SharePresenter extends RootPresenter<GenericView<ShareViewModel>> implements Observer<ServiceEvent> {
 
+    private AccountService mAccountService;
+
     @Inject
-    AccountService mAccountService;
+    public SharePresenter(AccountService accountService) {
+        mAccountService = accountService;
+    }
 
     @Override
-    public void afterInjection() {
-        // We observe the application state changes
-        mAccountService.addObserver(this);
+    public void bindView(GenericView<ShareViewModel> view) {
+        super.bindView(view);
+
+    }
+
+    @Override
+    public void unbindView() {
+        super.unbindView();
+        mAccountService.removeObserver(this);
     }
 
     public void loadContactInformation() {

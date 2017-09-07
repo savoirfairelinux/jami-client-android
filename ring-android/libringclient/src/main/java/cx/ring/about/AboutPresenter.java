@@ -19,13 +19,14 @@
  */
 package cx.ring.about;
 
+import javax.inject.Inject;
+
 import cx.ring.mvp.RootPresenter;
 
 public class AboutPresenter extends RootPresenter<AboutView> {
 
-    @Override
-    public void afterInjection() {
-        // no need to do after injection extra work
+    @Inject
+    public AboutPresenter() {
     }
 
     public void loadAbout() {

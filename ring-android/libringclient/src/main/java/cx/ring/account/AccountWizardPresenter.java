@@ -71,11 +71,6 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> imp
         mAccountService.removeObserver(this);
     }
 
-    @Override
-    public void afterInjection() {
-
-    }
-
     public void init(String accountType) {
         mAccountType = accountType;
         if (AccountConfig.ACCOUNT_TYPE_SIP.equals(mAccountType)) {
