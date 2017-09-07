@@ -25,6 +25,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v17.leanback.app.GuidedStepFragment;
 
 import javax.inject.Inject;
 
@@ -91,6 +92,10 @@ public class HomeActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        finish();
+        if (GuidedStepFragment.getCurrentGuidedStepFragment(getFragmentManager()) != null) {
+            getFragmentManager().popBackStack();
+        } else {
+            finish();
+        }
     }
 }
