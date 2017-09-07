@@ -32,4 +32,6 @@ public interface MainView {
     void callContact(String accountID, String ringID);
 
     void displayAccountInfos(String address);
+
+    void showExportDialog(String pAccountID);
 }
