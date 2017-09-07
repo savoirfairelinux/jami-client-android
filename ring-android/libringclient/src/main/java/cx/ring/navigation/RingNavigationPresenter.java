@@ -27,7 +27,6 @@ import javax.inject.Inject;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.ServiceEvent;
-import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
@@ -40,7 +39,7 @@ import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
 
-public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavigationViewModel>> implements Observer<ServiceEvent> {
+public class RingNavigationPresenter extends RootPresenter<RingNavigationView> implements Observer<ServiceEvent> {
 
     @Inject
     AccountService mAccountService;
@@ -58,7 +57,7 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
     }
 
     @Override
-    public void bindView(GenericView<RingNavigationViewModel> view) {
+    public void bindView(RingNavigationView view) {
         mAccountService.addObserver(this);
         super.bindView(view);
     }
@@ -137,6 +136,26 @@ public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavig
         }
         return account.getDisplayUri();
     }
+
+    public void cameraClicked() {
+        boolean hasPermission = mDeviceRuntimeService.hasVideoPermission() &&
+                mDeviceRuntimeService.hasPhotoPermission();
+        if (hasPermission) {
+            getView().gotToImageCapture();
+        } else {
+            getView().askCameraPermission();
+        }
+    }
+
+    public void galleryClicked() {
+        boolean hasPermission = mDeviceRuntimeService.hasGalleryPermission();
+        if (hasPermission) {
+            getView().goToGallery();
+        } else {
+            getView().askGalleryPermission();
+        }
+    }
+
 
     @Override
     public void update(Observable observable, ServiceEvent event) {
