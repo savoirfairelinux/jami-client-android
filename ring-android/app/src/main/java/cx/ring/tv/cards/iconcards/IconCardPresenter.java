@@ -17,7 +17,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.cards.about;
+package cx.ring.tv.cards.iconcards;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -32,11 +32,11 @@ import cx.ring.R;
 import cx.ring.tv.cards.AbstractCardPresenter;
 import cx.ring.tv.cards.Card;
 
-public class AboutCardPresenter extends AbstractCardPresenter<ImageCardView> {
+public class IconCardPresenter extends AbstractCardPresenter<ImageCardView> {
 
     private static final int ANIMATION_DURATION = 200;
 
-    public AboutCardPresenter(Context context) {
+    public IconCardPresenter(Context context) {
         super(new ContextThemeWrapper(context, R.style.IconCardTheme));
     }
 

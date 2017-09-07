@@ -10,7 +10,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
-import cx.ring.tv.cards.about.AboutCard;
+import cx.ring.tv.cards.iconcards.IconCard;
 
 public class AboutDetailsPresenter
         extends Presenter {
@@ -33,7 +33,7 @@ public class AboutDetailsPresenter
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Object itemData) {
-        AboutCard card = (AboutCard) itemData;
+        IconCard card = (IconCard) itemData;
 
         mPrimaryText.setText(card.getTitle());
         mExtraText.setText(card.getDescription());
