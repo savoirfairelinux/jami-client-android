@@ -26,7 +26,6 @@ import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -39,7 +38,6 @@ import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -51,11 +49,11 @@ import android.widget.TextView;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseFragment;
@@ -359,23 +357,21 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
                 getString(R.string.revoke_device_wait_message));
     }
 
-    @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (container == null) {
-            return null;
-        }
-        ViewGroup devLayout = (ViewGroup) inflater.inflate(R.layout.frag_device_list, container, false);
+    public int getLayout() {
+        return R.layout.frag_device_list;
+    }
 
-        ButterKnife.bind(this, devLayout);
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
+    }
 
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mLinkAccountView.setContainer(this);
         hidePopWizard();
-
-        return devLayout;
     }
 
     @Override

@@ -48,6 +48,7 @@ import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.fragments.SecurityAccountFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.launch.LaunchActivity;
+import cx.ring.mvp.BaseFragment;
 import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.service.BootReceiver;

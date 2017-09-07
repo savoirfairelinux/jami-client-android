@@ -37,6 +37,7 @@ import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.utils.Log;
 
@@ -55,23 +56,22 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
     @BindView(R.id.emptyTextView)
     protected TextView mEmptyTextView;
 
-    private Unbinder mUnbinder;
     private ContactRequestsAdapter mAdapter;
 
     @Override
+    public int getLayout() {
+        return R.layout.frag_pending_contact_requests;
+    }
+
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView");
         setHasOptionsMenu(true);
-
-        final View inflatedView = inflater.inflate(R.layout.frag_pending_contact_requests, parent, false);
-
-        // views injection
-        mUnbinder = ButterKnife.bind(this, inflatedView);
-
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-
-        return inflatedView;
+        return super.onCreateView(inflater, parent, savedInstanceState);
     }
 
     public void presentForAccount(Bundle bundle) {
@@ -91,14 +91,6 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
         if (arguments != null && arguments.containsKey(ACCOUNT_ID)) {
             presenter.updateAccount(getArguments().getString(ACCOUNT_ID), false);
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        // Butterknife unbinding
-        mUnbinder.unbind();
     }
 
     @Override

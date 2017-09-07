@@ -29,7 +29,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -53,14 +52,13 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.adapters.ContactDetailsTask;
-
-import cx.ring.application.RingApplication;
 import cx.ring.account.AccountWizard;
+import cx.ring.adapters.ContactDetailsTask;
+import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.GenericView;
@@ -212,17 +210,19 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
+    public int getLayout() {
+        return R.layout.frag_navigation;
+    }
 
-        View inflatedView = inflater.inflate(R.layout.frag_navigation, container, false);
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
+    }
 
-        ButterKnife.bind(this, inflatedView);
-
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         presenter.updateUser();
 
@@ -248,8 +248,6 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
                 selectSection(RingNavigationFragment.Section.HOME);
             }
         }
-
-        return inflatedView;
     }
 
     private void setupAccountList() {

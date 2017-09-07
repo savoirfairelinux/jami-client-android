@@ -37,13 +37,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import cx.ring.BuildConfig;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseFragment;
 
 public class AboutFragment extends BaseFragment<AboutPresenter> implements AboutView {
@@ -75,21 +73,20 @@ public class AboutFragment extends BaseFragment<AboutPresenter> implements About
     @BindView(R.id.credits)
     Button mCredits;
 
-    private Unbinder mUnbinder;
+    @Override
+    public int getLayout() {
+        return R.layout.frag_about;
+    }
+
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-
-        final View inflatedView = inflater.inflate(R.layout.frag_about, parent, false);
-
-        // views injection
-        mUnbinder = ButterKnife.bind(this, inflatedView);
-
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-
-        return inflatedView;
+        return super.onCreateView(inflater, parent, savedInstanceState);
     }
 
     @Override
@@ -99,14 +96,6 @@ public class AboutFragment extends BaseFragment<AboutPresenter> implements About
 
         // fonctional stuff
         presenter.loadAbout();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        // Butterknife unbinding
-        mUnbinder.unbind();
     }
 
     @Override

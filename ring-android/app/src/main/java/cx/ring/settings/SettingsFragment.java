@@ -50,6 +50,7 @@ import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Settings;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.GenericView;
@@ -59,12 +60,7 @@ import cx.ring.mvp.GenericView;
  */
 public class SettingsFragment extends BaseFragment<SettingsPresenter> implements GenericView<SettingsViewModel> {
 
-    Unbinder mUnbinder;
-
     private boolean mIsRefreshingViewFromPresenter;
-
-    @Inject
-    Context mContext;
 
     @BindView(R.id.settings_mobile_data)
     Switch mViewMobileData;
@@ -79,18 +75,19 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
     Switch mViewStartup;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+    public int getLayout() {
+        return R.layout.frag_settings;
+    }
+
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-
-        final View inflatedView = inflater.inflate(R.layout.frag_settings, parent, false);
-
-        // views injection
-        mUnbinder = ButterKnife.bind(this, inflatedView);
-
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-
-        return inflatedView;
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -100,14 +97,6 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
 
         // loading preferences
         presenter.loadSettings();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        // Butterknife unbinding
-        mUnbinder.unbind();
     }
 
     @Override
@@ -147,7 +136,7 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
 
         // Some specific permissions are required, we must check for them
         if (!TextUtils.isEmpty(neededPermission)) {
-            if (ContextCompat.checkSelfPermission(mContext, neededPermission) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getActivity(), neededPermission) != PackageManager.PERMISSION_GRANTED) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     //~ Ask permission to use the contacts of the device
                     if (((RingApplication) getActivity().getApplication()).canAskForPermission(neededPermission)) {

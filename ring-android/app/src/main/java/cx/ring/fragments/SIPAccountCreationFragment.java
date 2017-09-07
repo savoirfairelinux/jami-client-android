@@ -43,6 +43,7 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.SIPCreationView;
 import cx.ring.wizard.SIPCreationPresenter;
@@ -69,15 +70,13 @@ public class SIPAccountCreationFragment extends BaseFragment<SIPCreationPresente
     private ProgressDialog mProgress = null;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        final View inflatedView = inflater.inflate(R.layout.frag_acc_sip_create, parent, false);
+    public int getLayout() {
+        return R.layout.frag_acc_sip_create;
+    }
 
-        ButterKnife.bind(this, inflatedView);
-
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-
-        return inflatedView;
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
     }
 
     @OnEditorAction(R.id.password)

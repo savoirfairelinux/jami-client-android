@@ -22,16 +22,13 @@ package cx.ring.account;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseFragment;
 
 public class HomeAccountCreationFragment extends BaseFragment<HomeAccountCreationPresenter> implements HomeAccountCreationView {
@@ -45,16 +42,19 @@ public class HomeAccountCreationFragment extends BaseFragment<HomeAccountCreatio
     protected Button mCreateButton;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.frag_acc_home_create, parent, false);
-        ButterKnife.bind(this, view);
+    public int getLayout() {
+        return R.layout.frag_acc_home_create;
+    }
 
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
+    }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         setRetainInstance(true);
-
-        return view;
     }
 
     @OnClick(R.id.ring_add_account)

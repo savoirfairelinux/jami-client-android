@@ -31,7 +31,6 @@ import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -51,14 +50,13 @@ import com.skyfishjy.library.RippleBackground;
 import java.util.Locale;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
@@ -69,7 +67,6 @@ import cx.ring.utils.ActionHelper;
 import cx.ring.utils.CircleTransform;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.KeyboardVisibilityManager;
-import cx.ring.utils.Log;
 
 public class CallFragment extends BaseFragment<CallPresenter> implements CallView {
 
@@ -163,17 +160,20 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public int getLayout() {
+        return R.layout.frag_call;
+    }
+
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View inflatedView = inflater.inflate(R.layout.frag_call, container, false);
-
-        ButterKnife.bind(this, inflatedView);
-
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-
+        super.onViewCreated(view, savedInstanceState);
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
         mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "cx.ring.onIncomingCall");
         mScreenWakeLock.setReferenceCounted(false);
@@ -182,27 +182,25 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             mScreenWakeLock.acquire();
         }
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            displayListener = new DisplayManager.DisplayListener() {
-                @Override
-                public void onDisplayAdded(int displayId) {
-                }
+        displayListener = new DisplayManager.DisplayListener() {
+            @Override
+            public void onDisplayAdded(int displayId) {
+            }
 
-                @Override
-                public void onDisplayRemoved(int displayId) {
-                }
+            @Override
+            public void onDisplayRemoved(int displayId) {
+            }
 
-                @Override
-                public void onDisplayChanged(int displayId) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            presenter.displayChanged();
-                        }
-                    });
-                }
-            };
-        }
+            @Override
+            public void onDisplayChanged(int displayId) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        presenter.displayChanged();
+                    }
+                });
+            }
+        };
 
         mVideoSurface.getHolder().setFormat(PixelFormat.RGBA_8888);
         mVideoSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -221,13 +219,13 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                 presenter.videoSurfaceDestroyed();
             }
         });
-        inflatedView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+        view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View parent, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 presenter.layoutChanged();
             }
         });
-        inflatedView.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+        view.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
             @Override
             public void onSystemUiVisibilityChange(int visibility) {
                 boolean ui = (visibility & (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN)) == 0;
@@ -253,8 +251,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             }
         });
         mVideoPreview.setZOrderMediaOverlay(true);
-
-        return inflatedView;
     }
 
     @Override

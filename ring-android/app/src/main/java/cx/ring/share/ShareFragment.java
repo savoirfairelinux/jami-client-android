@@ -41,6 +41,7 @@ import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.GenericView;
 import cx.ring.utils.QRCodeUtils;
@@ -48,42 +49,44 @@ import cx.ring.utils.QRCodeUtils;
 public class ShareFragment extends BaseFragment<SharePresenter> implements GenericView<ShareViewModel> {
 
     @BindView(R.id.share_instruction)
-    TextView mShareInstruction;
+    protected TextView mShareInstruction;
 
     @BindView(R.id.qr_image)
-    ImageView mQrImage;
+    protected ImageView mQrImage;
 
     @BindString(R.string.share_message)
-    String mShareMessage;
+    protected String mShareMessage;
 
     @BindString(R.string.share_message_no_account)
-    String mShareMessageNoAccount;
+    protected String mShareMessageNoAccount;
 
     @BindString(R.string.account_contact_me)
-    String mAccountCountactMe;
+    protected String mAccountCountactMe;
 
     @BindString(R.string.share_via)
-    String mShareVia;
+    protected String mShareVia;
 
     @BindView(R.id.share_button)
-    AppCompatButton mShareButton;
-
-    Unbinder mUnbinder;
+    protected AppCompatButton mShareButton;
 
     private String mUriToShow;
     private int mQRCodeSize = 0;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+    public int getLayout() {
+        return R.layout.frag_share;
+    }
+
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         setHasOptionsMenu(true);
-
-        final View inflatedView = inflater.inflate(R.layout.frag_share, parent, false);
-
-        // views injection
-        mUnbinder = ButterKnife.bind(this, inflatedView);
-
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
 
         mQrImage.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
@@ -94,22 +97,12 @@ public class ShareFragment extends BaseFragment<SharePresenter> implements Gener
                 presenter.loadContactInformation();
             }
         });
-
-        return inflatedView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_share);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        // Butterknife unbinding
-        mUnbinder.unbind();
     }
 
     @Override

@@ -43,6 +43,7 @@ import butterknife.OnEditorAction;
 import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.utils.RegisteredNameFilter;
@@ -81,18 +82,21 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.frag_acc_ring_create, parent, false);
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+    public int getLayout() {
+        return R.layout.frag_acc_ring_create;
+    }
 
-        setRetainInstance(true);
-        return view;
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        setRetainInstance(true);
+
         ButterKnife.bind(this, view);
         mUsernameTxt.setFilters(new InputFilter[]{new RegisteredNameFilter()});
 
