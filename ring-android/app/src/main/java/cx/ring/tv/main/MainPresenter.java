@@ -133,4 +133,8 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
         }
         getView().displayAccountInfos(displayableAddress);
     }
+
+    public void onExportClicked() {
+        getView().showExportDialog(mAccountService.getCurrentAccount().getAccountID());
+    }
 }

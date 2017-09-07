@@ -17,15 +17,15 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.cards.about;
+package cx.ring.tv.cards.iconcards;
 
 import android.support.annotation.DrawableRes;
 
 import cx.ring.tv.cards.Card;
 
-public class AboutCard extends Card {
+public class IconCard extends Card {
 
-    public AboutCard(Type pType, String name, CharSequence description, @DrawableRes int imageId) {
+    public IconCard(Type pType, String name, CharSequence description, @DrawableRes int imageId) {
         setType(pType);
         setTitle(name);
         setDescription(description);
