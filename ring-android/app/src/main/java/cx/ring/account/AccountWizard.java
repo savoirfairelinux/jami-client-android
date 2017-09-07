@@ -117,21 +117,26 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
     }
 
     @Override
-    public void saveProfile(String accountID, RingAccountViewModel ringAccountViewModel) {
-        RingAccountViewModelImpl ringAccountViewModelImpl = (RingAccountViewModelImpl) ringAccountViewModel;
+    public void saveProfile(final String accountID, final RingAccountViewModel ringAccountViewModel) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                RingAccountViewModelImpl ringAccountViewModelImpl = (RingAccountViewModelImpl) ringAccountViewModel;
 
-        VCard vcard = new VCard();
-        vcard.setFormattedName(new FormattedName(ringAccountViewModelImpl.getFullName()));
-        vcard.setUid(new Uid(ringAccountViewModelImpl.getUsername()));
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        if (ringAccountViewModelImpl.getPhoto() != null) {
-            ringAccountViewModelImpl.getPhoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
-            Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
-            vcard.removeProperties(Photo.class);
-            vcard.addPhoto(photoVCard);
-        }
-        vcard.removeProperties(RawProperty.class);
-        VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir());
+                VCard vcard = new VCard();
+                vcard.setFormattedName(new FormattedName(ringAccountViewModelImpl.getFullName()));
+                vcard.setUid(new Uid(ringAccountViewModelImpl.getUsername()));
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                if (ringAccountViewModelImpl.getPhoto() != null) {
+                    ringAccountViewModelImpl.getPhoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
+                    vcard.removeProperties(Photo.class);
+                    vcard.addPhoto(photoVCard);
+                }
+                vcard.removeProperties(RawProperty.class);
+                VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir());
+            }
+        });
     }
 
     public void createAccount(RingAccountViewModel ringAccountViewModel) {
