@@ -37,7 +37,7 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
                 .build());
     }
 
-    protected static void addEditTextAction(List<GuidedAction> actions, int id,
+    protected static void addEditTextAction(List<GuidedAction> actions, long id,
                                             String title, String desc, String editdesc) {
         actions.add(
                 new GuidedAction.Builder()
@@ -50,7 +50,7 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
                         .build());
     }
 
-    protected static void addPasswordAction(List<GuidedAction> actions, int id,
+    protected static void addPasswordAction(List<GuidedAction> actions, long id,
                                             String title, String desc, String editdesc) {
         actions.add(
                 new GuidedAction.Builder()
@@ -61,18 +61,6 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
                         .descriptionEditInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
                         .descriptionEditable(true)
                         .build());
-    }
-
-    protected static void addMultilineActions(List<GuidedAction> actions,
-                                              String title, String desc) {
-        actions.add(new GuidedAction.Builder()
-                .title(title)
-                .description(desc)
-                .multilineDescription(true)
-                .infoOnly(true)
-                .enabled(false)
-                .focusable(false)
-                .build());
     }
 
     @Override
