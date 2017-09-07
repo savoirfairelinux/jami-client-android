@@ -27,28 +27,26 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import cx.ring.R;
+import cx.ring.account.AccountEditionActivity;
+import cx.ring.account.AccountWizard;
 import cx.ring.account.AccountsAdapter;
 import cx.ring.account.AccountsManagementPresenter;
 import cx.ring.account.AccountsManagementView;
 import cx.ring.application.RingApplication;
-import cx.ring.account.AccountEditionActivity;
-import cx.ring.account.AccountWizard;
 import cx.ring.client.HomeActivity;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.utils.ContentUriHandler;
@@ -62,10 +60,10 @@ public class AccountsManagementFragment extends BaseFragment<AccountsManagementP
     private AccountsAdapter mAccountsAdapter;
 
     @BindView(R.id.accounts_list)
-    ListView mDnDListView;
+    protected ListView mDnDListView;
 
     @BindView(R.id.empty_account_list)
-    View mEmptyView;
+    protected View mEmptyView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,17 +77,19 @@ public class AccountsManagementFragment extends BaseFragment<AccountsManagementP
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View inflatedView = inflater.inflate(R.layout.frag_accounts_list, parent, false);
-        ButterKnife.bind(this, inflatedView);
-        mDnDListView.setAdapter(mAccountsAdapter);
-        return inflatedView;
+    public int getLayout() {
+        return R.layout.frag_accounts_list;
+    }
+
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-
+        mDnDListView.setAdapter(mAccountsAdapter);
         super.onViewCreated(view, savedInstanceState);
     }
 

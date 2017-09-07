@@ -32,9 +32,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -43,12 +41,11 @@ import android.widget.ImageView;
 import java.io.ByteArrayOutputStream;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cx.ring.R;
 import cx.ring.adapters.ContactDetailsTask;
-import cx.ring.application.RingApplication;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.utils.BitmapUtils;
@@ -90,12 +87,18 @@ public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresent
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.frag_acc_profile_create, parent, false);
-        ButterKnife.bind(this, view);
+    public int getLayout() {
+        return R.layout.frag_acc_profile_create;
+    }
 
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         setRetainInstance(true);
 
@@ -112,12 +115,6 @@ public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresent
             }
             mPhotoView.setImageBitmap(BitmapUtils.cropImageToCircle(mSourcePhoto));
         }
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
         RingAccountViewModelImpl ringAccountViewModel = new RingAccountViewModelImpl();
         boolean isLink = getArguments().getBoolean(KEY_IS_LINK, false);

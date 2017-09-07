@@ -22,18 +22,15 @@ package cx.ring.account;
 
 import android.os.Bundle;
 import android.text.Editable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.RingAccountViewModel;
 
@@ -59,18 +56,20 @@ public class RingLinkAccountFragment extends BaseFragment<RingLinkAccountPresent
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.frag_acc_ring_link, parent, false);
+    public int getLayout() {
+        return R.layout.frag_acc_ring_link;
+    }
 
-        ButterKnife.bind(this, view);
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
+    }
 
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         RingAccountViewModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
         presenter.init(ringAccountViewModel);
-
-        return view;
     }
 
     @OnClick(R.id.link_button)

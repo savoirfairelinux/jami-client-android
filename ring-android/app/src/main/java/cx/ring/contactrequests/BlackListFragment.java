@@ -39,6 +39,7 @@ import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.account.AccountEditionActivity;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.mvp.BaseFragment;
 
@@ -54,21 +55,22 @@ public class BlackListFragment extends BaseFragment<BlackListPresenter> implemen
     protected TextView mEmptyTextView;
 
     private BlackListAdapter mAdapter;
-    private Unbinder mUnbinder;
+
+    @Override
+    public int getLayout() {
+        return R.layout.frag_blacklist;
+    }
+
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-
-        final View inflatedView = inflater.inflate(R.layout.frag_blacklist, container, false);
-
-        mUnbinder = ButterKnife.bind(this, inflatedView);
-
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
-
-        return inflatedView;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -79,14 +81,6 @@ public class BlackListFragment extends BaseFragment<BlackListPresenter> implemen
             return;
         }
         presenter.setAccountId(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        // Butterknife unbinding
-        mUnbinder.unbind();
     }
 
     @Override

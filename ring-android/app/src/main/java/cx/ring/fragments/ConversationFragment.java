@@ -39,6 +39,7 @@ import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.conversation.ConversationView;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
@@ -119,15 +120,18 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
+    public int getLayout() {
+        return R.layout.frag_conversation;
+    }
 
-        View inflatedView = inflater.inflate(R.layout.frag_conversation, container, false);
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
+    }
 
-        ButterKnife.bind(this, inflatedView);
-
-        // Dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         if (mTopPane != null) {
             mTopPane.setVisibility(View.GONE);
@@ -156,8 +160,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         if (mDeleteConversation) {
             presenter.deleteAction();
         }
-
-        return inflatedView;
     }
 
     @Override

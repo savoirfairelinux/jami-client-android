@@ -64,6 +64,7 @@ import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeScannerActivity;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.mvp.BaseFragment;
@@ -219,23 +220,25 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView");
+    public int getLayout() {
+        return R.layout.frag_smartlist;
+    }
+
+    @Override
+    public void injectFragment(RingInjectionComponent component) {
+        component.inject(this);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View inflatedView = inflater.inflate(cx.ring.R.layout.frag_smartlist, container, false);
-
-        ButterKnife.bind(this, inflatedView);
-
-        // dependency injection
-        ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
+        super.onViewCreated(view, savedInstanceState);
 
         mNewContact.setVisibility(View.GONE);
 
         if (ConversationFragment.isTabletMode(getActivity())) {
             isTabletMode = true;
         }
-
-        return inflatedView;
     }
 
     @OnClick(R.id.newcontact_element)

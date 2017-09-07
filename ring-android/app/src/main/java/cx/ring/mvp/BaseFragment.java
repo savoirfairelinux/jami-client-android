@@ -23,12 +23,20 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.account.RingAccountCreationFragment;
+import cx.ring.application.RingApplication;
+import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.utils.Log;
 
 public abstract class BaseFragment<T extends RootPresenter> extends Fragment {
@@ -37,6 +45,24 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment {
 
     @Inject
     protected T presenter;
+
+    private Unbinder mUnbinder;
+
+    @LayoutRes
+    public abstract int getLayout();
+
+    public abstract void injectFragment(RingInjectionComponent component);
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        final View inflatedView = inflater.inflate(getLayout(), container, false);
+        // dependency injection
+        injectFragment(((RingApplication) getActivity().getApplication()).getRingInjectionComponent());
+        //Butterknife
+        mUnbinder = ButterKnife.bind(this, inflatedView);
+        return inflatedView;
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -52,6 +78,8 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment {
         Log.d(TAG, "onDestroyView");
         super.onDestroyView();
         presenter.unbindView();
+        // Butterknife unbinding
+        mUnbinder.unbind();
     }
 
     protected void initPresenter(T presenter) {
