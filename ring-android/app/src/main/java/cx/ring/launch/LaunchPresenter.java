@@ -100,7 +100,6 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
 
         if (accounts == null) {
             mAccountService.addObserver(this);
-            mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected());
         } else if (accounts.isEmpty()) {
             getView().goToAccountCreation();
         } else {
