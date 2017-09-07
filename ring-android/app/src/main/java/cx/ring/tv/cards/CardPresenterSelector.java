@@ -19,10 +19,11 @@ import android.content.Context;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.PresenterSelector;
 
+import java.security.InvalidParameterException;
 import java.util.HashMap;
 
 import cx.ring.R;
-import cx.ring.tv.cards.about.AboutCardPresenter;
+import cx.ring.tv.cards.iconcards.IconCardPresenter;
 import cx.ring.tv.cards.contacts.ContactCardPresenter;
 
 /**
@@ -46,10 +47,11 @@ public class CardPresenterSelector extends PresenterSelector {
         Presenter presenter = presenters.get(card.getType());
         if (presenter == null) {
             switch (card.getType()) {
-                case VERSION:
-                case CONTRIBUTOR:
-                case LICENCES:
-                    presenter = new AboutCardPresenter(mContext);
+                case ABOUT_VERSION:
+                case ABOUT_CONTRIBUTOR:
+                case ABOUT_LICENCES:
+                case ACCOUNT_ADD_DEVICE:
+                    presenter = new IconCardPresenter(mContext);
                     break;
                 case SEARCH_RESULT:
                     presenter = new ContactCardPresenter(mContext,R.style.SearchCardTheme);
@@ -61,8 +63,7 @@ public class CardPresenterSelector extends PresenterSelector {
                     presenter = new ContactCardPresenter(mContext,R.style.ContactCompleteCardTheme);
                     break;
                 default:
-                    presenter = new ContactCardPresenter(mContext, R.style.DefaultCardTheme);
-                    break;
+                    throw new InvalidParameterException("Uncatched card type");
             }
         }
         presenters.put(card.getType(), presenter);
