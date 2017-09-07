@@ -42,12 +42,11 @@ import javax.inject.Named;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.StringVect;
 import cx.ring.service.OpenSlParams;
+import cx.ring.utils.BluetoothWrapper;
 import cx.ring.utils.Log;
 import cx.ring.utils.NetworkUtils;
-import cx.ring.utils.StringUtils;
-
 import cx.ring.utils.Ringer;
-import cx.ring.utils.BluetoothWrapper;
+import cx.ring.utils.StringUtils;
 
 public class DeviceRuntimeServiceImpl extends DeviceRuntimeService implements AudioManager.OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
 

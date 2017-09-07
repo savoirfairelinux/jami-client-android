@@ -81,9 +81,4 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
     public void nextClick() {
         getView().goToNext(mRingAccountViewModel);
     }
-
-    @Override
-    public void afterInjection() {
-
-    }
 }

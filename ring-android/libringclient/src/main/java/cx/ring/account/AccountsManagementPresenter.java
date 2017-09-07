@@ -43,11 +43,6 @@ public class AccountsManagementPresenter extends RootPresenter<AccountsManagemen
     }
 
     @Override
-    public void afterInjection() {
-
-    }
-
-    @Override
     public void bindView(AccountsManagementView view) {
         super.bindView(view);
         mAccountService.addObserver(this);

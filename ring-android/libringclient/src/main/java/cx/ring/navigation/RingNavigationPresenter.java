@@ -42,19 +42,17 @@ import ezvcard.property.Uid;
 
 public class RingNavigationPresenter extends RootPresenter<GenericView<RingNavigationViewModel>> implements Observer<ServiceEvent> {
 
-    @Inject
-    AccountService mAccountService;
+    private AccountService mAccountService;
+    private DeviceRuntimeService mDeviceRuntimeService;
+    private ConversationFacade mConversationFacade;
 
     @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
-
-    @Inject
-    ConversationFacade mConversationFacade;
-
-    @Override
-    public void afterInjection() {
-        // We observe the application state changes
-        mAccountService.addObserver(this);
+    public RingNavigationPresenter(AccountService accountService,
+                                   DeviceRuntimeService deviceRuntimeService,
+                                   ConversationFacade conversationFacade) {
+        this.mAccountService = accountService;
+        this.mDeviceRuntimeService = deviceRuntimeService;
+        this.mConversationFacade = conversationFacade;
     }
 
     @Override

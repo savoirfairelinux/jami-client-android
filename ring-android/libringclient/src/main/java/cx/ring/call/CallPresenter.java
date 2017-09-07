@@ -86,11 +86,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     }
 
     @Override
-    public void afterInjection() {
-
-    }
-
-    @Override
     public void unbindView() {
         super.unbindView();
         mAccountService.removeObserver(this);

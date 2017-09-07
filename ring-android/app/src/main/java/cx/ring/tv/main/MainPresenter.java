@@ -80,11 +80,6 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     }
 
     @Override
-    public void afterInjection() {
-
-    }
-
-    @Override
     public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
             return;

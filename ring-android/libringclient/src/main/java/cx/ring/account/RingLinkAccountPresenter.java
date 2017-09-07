@@ -53,9 +53,4 @@ public class RingLinkAccountPresenter extends RootPresenter<RingLinkAccountView>
     private void checkForms() {
         getView().enableLinkButton(!mRingAccountViewModel.getPin().isEmpty() && !mRingAccountViewModel.getPassword().isEmpty());
     }
-
-    @Override
-    public void afterInjection() {
-
-    }
 }
