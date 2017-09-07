@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_c5714e79",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/navigation/RingNavigationView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8
+      },
+      "writtenOn": "2017-09-07T16:21:07Z",
+      "side": 1,
+      "message": "header",
+      "revId": "bb8aad8b1538670446fe6cf57d35c8fd384152ca",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
