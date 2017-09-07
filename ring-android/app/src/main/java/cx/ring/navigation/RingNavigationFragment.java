@@ -50,21 +50,16 @@ import android.widget.TextView;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.adapters.ContactDetailsTask;
-
-import cx.ring.application.RingApplication;
 import cx.ring.account.AccountWizard;
+import cx.ring.adapters.ContactDetailsTask;
+import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseFragment;
-import cx.ring.mvp.GenericView;
-import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -73,60 +68,57 @@ import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 
 public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter> implements NavigationAdapter.OnNavigationItemClicked,
-        AccountAdapter.OnAccountActionClicked, GenericView<RingNavigationViewModel> {
-    private static final String TAG = RingNavigationFragment.class.getSimpleName();
+        AccountAdapter.OnAccountActionClicked, RingNavigationView {
 
-    private AccountAdapter mAccountAdapter;
-    private Account mSelectedAccount;
-
-    @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
+    public static final String TAG = RingNavigationFragment.class.getSimpleName();
 
     /***************
      * Header views
      ***************/
 
     @BindView(R.id.account_selection)
-    RelativeLayout mSelectedAccountLayout;
+    protected RelativeLayout mSelectedAccountLayout;
 
     @BindView(R.id.addaccount_btn)
-    Button mNewAccountBtn;
+    protected Button mNewAccountBtn;
 
     @BindView(R.id.user_photo)
-    ImageView mUserImage;
-    private Bitmap mSourcePhoto;
-    private ImageView mProfilePhoto;
+    protected ImageView mUserImage;
 
     @BindView(R.id.account_alias)
-    TextView mSelectedAccountAlias;
+    protected TextView mSelectedAccountAlias;
 
     @BindView(R.id.account_disabled)
-    TextView mSelectedAccountDisabled;
+    protected TextView mSelectedAccountDisabled;
 
     @BindView(R.id.account_host)
-    TextView mSelectedAccountHost;
+    protected TextView mSelectedAccountHost;
 
     @BindView(R.id.loading_indicator)
-    ProgressBar mSelectedAccountLoading;
+    protected ProgressBar mSelectedAccountLoading;
 
     @BindView(R.id.error_indicator)
-    ImageView mSelectedAccountError;
+    protected ImageView mSelectedAccountError;
 
     @BindView(R.id.account_selected_arrow)
-    ImageView mSelectedAccountArrow;
+    protected ImageView mSelectedAccountArrow;
 
     /**************
      * Menu views
      **************/
 
     @BindView(R.id.drawer_menu)
-    RecyclerView mMenuView;
+    protected RecyclerView mMenuView;
 
     @BindView(R.id.drawer_accounts)
-    RecyclerView mAccountsView;
+    protected RecyclerView mAccountsView;
 
     private NavigationAdapter mMenuAdapter;
     private OnNavigationSectionSelected mSectionListener;
+    private AccountAdapter mAccountAdapter;
+    private Account mSelectedAccount;
+    private Bitmap mSourcePhoto;
+    private ImageView mProfilePhoto;
 
     @Override
     public void onAccountSelected(Account selectedAccount) {
@@ -374,16 +366,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         cameraView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean hasPermission = mDeviceRuntimeService.hasVideoPermission() &&
-                        mDeviceRuntimeService.hasPhotoPermission();
-                if (hasPermission) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    getActivity().startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);
-                } else {
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                            HomeActivity.REQUEST_PERMISSION_CAMERA);
-                }
+                presenter.cameraClicked();
             }
         });
 
@@ -391,15 +374,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean hasPermission = mDeviceRuntimeService.hasGalleryPermission();
-                if (hasPermission) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    getActivity().startActivityForResult(intent, HomeActivity.REQUEST_CODE_GALLERY);
-                } else {
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            HomeActivity.REQUEST_PERMISSION_READ_STORAGE);
-                }
+                presenter.galleryClicked();
             }
         });
 
@@ -489,5 +464,31 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
                 }
             }
         });
+    }
+
+    @Override
+    public void gotToImageCapture() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        getActivity().startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);
+    }
+
+    @Override
+    public void askCameraPermission() {
+        ActivityCompat.requestPermissions(getActivity(),
+                new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                HomeActivity.REQUEST_PERMISSION_CAMERA);
+    }
+
+    @Override
+    public void goToGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        getActivity().startActivityForResult(intent, HomeActivity.REQUEST_CODE_GALLERY);
+    }
+
+    @Override
+    public void askGalleryPermission() {
+        ActivityCompat.requestPermissions(getActivity(),
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                HomeActivity.REQUEST_PERMISSION_READ_STORAGE);
     }
 }
