@@ -28,7 +28,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -171,6 +170,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         }
 
     }
+
     public interface Refreshable {
         void refresh();
     }
@@ -329,14 +329,12 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                         dialog.dismiss();
                     }
                 });
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    dialog.dismiss();
-                }
-            });
-        }
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                dialog.dismiss();
+            }
+        });
         builder.show();
     }
 

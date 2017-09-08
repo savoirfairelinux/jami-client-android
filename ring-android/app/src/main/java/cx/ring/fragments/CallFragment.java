@@ -257,10 +257,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     public void onStop() {
         super.onStop();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            DisplayManager displayManager = (DisplayManager) getActivity().getSystemService(Context.DISPLAY_SERVICE);
-            displayManager.unregisterDisplayListener(displayListener);
-        }
+        DisplayManager displayManager = (DisplayManager) getActivity().getSystemService(Context.DISPLAY_SERVICE);
+        displayManager.unregisterDisplayListener(displayListener);
 
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
