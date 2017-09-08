@@ -23,24 +23,22 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
-
 import java.util.ArrayList;
 
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.launch.LaunchPresenter;
 import cx.ring.launch.LaunchView;
 import cx.ring.mvp.BaseActivity;
 import cx.ring.tv.account.TVAccountWizard;
-import cx.ring.application.RingApplication;
 import cx.ring.tv.main.HomeActivity;
 
-public class TVLaunchActivity  extends BaseActivity<LaunchPresenter> implements LaunchView {
+public class TVLaunchActivity extends BaseActivity<LaunchPresenter> implements LaunchView {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +65,6 @@ public class TVLaunchActivity  extends BaseActivity<LaunchPresenter> implements 
         finish();
     }
 
-  
 
     @Override
     public void askPermissions(ArrayList<String> permissionsWeCanAsk) {
@@ -94,14 +91,13 @@ public class TVLaunchActivity  extends BaseActivity<LaunchPresenter> implements 
                         finish();
                     }
                 });
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    finish();
-                }
-            });
-        }
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                finish();
+            }
+        });
+
         builder.show();
     }
 

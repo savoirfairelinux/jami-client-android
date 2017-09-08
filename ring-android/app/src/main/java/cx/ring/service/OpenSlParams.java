@@ -13,74 +13,72 @@ import android.util.Log;
  */
 public abstract class OpenSlParams {
 
-  /**
-   * @return The recommended sample rate in Hz.
-   */
-  public abstract int getSampleRate();
+    /**
+     * @return The recommended sample rate in Hz.
+     */
+    public abstract int getSampleRate();
 
-  /**
-   * @return The recommended buffer size in frames.
-   */
-  public abstract int getBufferSize();
+    /**
+     * @return The recommended buffer size in frames.
+     */
+    public abstract int getBufferSize();
 
-  /**
-   * @param context, e.g., the current activity.
-   * @return OpenSlParams instance for the given context.
-   */
-  public static OpenSlParams createInstance(Context context) {
-    return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-        ? new JellyBeanMr1OpenSlParams(context)
-        : new DefaultOpenSlParams();
-  }
-
-  private OpenSlParams() {
-    // Not meant to be instantiated except here.
-  }
-
-  // Implementation for Jelly Bean MR1 or later.
-  @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-  private static class JellyBeanMr1OpenSlParams extends OpenSlParams {
-
-    private final int sampleRate;
-    private final int bufferSize;
-
-    private JellyBeanMr1OpenSlParams(Context context) {
-      AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-      // Provide default values in case config lookup fails.
-      int sr = 44100;
-      int bs = 64;
-      try {
-        // If possible, query the native sample rate and buffer size.
-        sr = Integer.parseInt(am.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE));
-        bs = Integer.parseInt(am.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER));
-      } catch (NumberFormatException e) {
-        Log.w(getClass().getName(), "Failed to read native OpenSL config: " + e);
-      }
-      sampleRate = sr;
-      bufferSize = bs;
+    /**
+     * @param context, e.g., the current activity.
+     * @return OpenSlParams instance for the given context.
+     */
+    public static OpenSlParams createInstance(Context context) {
+        return new JellyBeanMr1OpenSlParams(context);
     }
 
-    @Override
-    public int getSampleRate() {
-      return sampleRate;
+    private OpenSlParams() {
+        // Not meant to be instantiated except here.
     }
 
-    @Override
-    public int getBufferSize() {
-      return bufferSize;
-    }
-  }
+    // Implementation for Jelly Bean MR1 or later.
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private static class JellyBeanMr1OpenSlParams extends OpenSlParams {
 
-  // Default factory for Jelly Bean or older.
-  private static class DefaultOpenSlParams extends OpenSlParams {
-    @Override
-    public int getSampleRate() {
-      return 44100;
+        private final int sampleRate;
+        private final int bufferSize;
+
+        private JellyBeanMr1OpenSlParams(Context context) {
+            AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+            // Provide default values in case config lookup fails.
+            int sr = 44100;
+            int bs = 64;
+            try {
+                // If possible, query the native sample rate and buffer size.
+                sr = Integer.parseInt(am.getProperty(AudioManager.PROPERTY_OUTPUT_SAMPLE_RATE));
+                bs = Integer.parseInt(am.getProperty(AudioManager.PROPERTY_OUTPUT_FRAMES_PER_BUFFER));
+            } catch (NumberFormatException e) {
+                Log.w(getClass().getName(), "Failed to read native OpenSL config: " + e);
+            }
+            sampleRate = sr;
+            bufferSize = bs;
+        }
+
+        @Override
+        public int getSampleRate() {
+            return sampleRate;
+        }
+
+        @Override
+        public int getBufferSize() {
+            return bufferSize;
+        }
     }
 
-    @Override
-    public int getBufferSize() {
-      return 64;
+    // Default factory for Jelly Bean or older.
+    private static class DefaultOpenSlParams extends OpenSlParams {
+        @Override
+        public int getSampleRate() {
+            return 44100;
+        }
+
+        @Override
+        public int getBufferSize() {
+            return 64;
+        }
     }
-  }
 }
