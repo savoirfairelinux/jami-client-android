@@ -7,12 +7,11 @@
     android:theme="@style/Wizard"
     tools:background="@color/color_primary_dark">
 
-    <cx.ring.views.BoundedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/next_create_account"
-        android:layout_gravity="center"
-        app:bounded_width="500dp">
+        android:layout_gravity="center">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -110,7 +109,7 @@
 
         </LinearLayout>
 
-    </cx.ring.views.BoundedScrollView>
+    </ScrollView>
 
     <Button
         android:id="@+id/next_create_account"

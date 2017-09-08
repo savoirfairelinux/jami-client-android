@@ -7,12 +7,11 @@
     android:theme="@style/Wizard"
     tools:background="@color/color_primary_dark">
 
-    <cx.ring.views.BoundedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/link_button"
-        android:layout_centerInParent="true"
-        app:bounded_width="500dp">
+        android:layout_centerInParent="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,7 +92,7 @@
 
         </LinearLayout>
 
-    </cx.ring.views.BoundedScrollView>
+    </ScrollView>
 
     <Button
         android:id="@+id/link_button"

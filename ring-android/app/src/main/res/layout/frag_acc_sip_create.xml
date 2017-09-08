@@ -27,13 +27,12 @@ along with this program; if not, write to the Free Software
     android:theme="@style/Wizard"
     tools:background="@color/color_primary_dark">
 
-    <cx.ring.views.BoundedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_gravity="center_horizontal"
-        app:bounded_width="500dp">
+        android:layout_gravity="center_horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -135,6 +134,6 @@ along with this program; if not, write to the Free Software
 
         </LinearLayout>
 
-    </cx.ring.views.BoundedScrollView>
+    </ScrollView>
 
 </RelativeLayout>
