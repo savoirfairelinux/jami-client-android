@@ -8,12 +8,11 @@
     tools:background="@color/color_primary_dark"
     tools:context="cx.ring.account.AccountWizard">
 
-    <cx.ring.views.BoundedScrollView
-        android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="500dp"
         android:layout_height="match_parent"
         android:layout_above="@+id/create_account"
-        android:layout_centerInParent="true"
-        app:bounded_width="500dp">
+        android:layout_centerInParent="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -118,17 +117,17 @@
 
         </LinearLayout>
 
-    </cx.ring.views.BoundedScrollView>
+    </ScrollView>
 
     <Button
         android:id="@+id/create_account"
-        android:theme="@style/ButtonColoredInverse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@color/color_primary_light"
         android:enabled="false"
-        android:text="@string/account_new_button" />
+        android:text="@string/account_new_button"
+        android:theme="@style/ButtonColoredInverse" />
 
 </RelativeLayout>
