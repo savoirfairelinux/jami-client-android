@@ -99,11 +99,9 @@
 
                 </RelativeLayout>
 
-                <cx.ring.views.BoundedRelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    app:bounded_width="300dp">
+                <RelativeLayout
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/user_name"
@@ -118,7 +116,7 @@
                         android:textColor="@color/text_color_primary_dark"
                         android:textColorHint="@color/text_color_secondary_dark" />
 
-                </cx.ring.views.BoundedRelativeLayout>
+                </RelativeLayout>
 
             </LinearLayout>
 
