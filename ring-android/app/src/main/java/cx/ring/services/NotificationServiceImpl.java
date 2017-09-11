@@ -35,10 +35,10 @@ import android.text.format.DateUtils;
 import android.util.SparseArray;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -63,7 +63,6 @@ import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
-
 import ezvcard.property.Photo;
 
 public class NotificationServiceImpl extends NotificationService implements Observer<ServiceEvent> {

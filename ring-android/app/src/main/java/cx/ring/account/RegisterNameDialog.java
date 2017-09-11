@@ -44,11 +44,11 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
-import cx.ring.utils.RegisteredNameFilter;
-import cx.ring.utils.RegisteredNameTextWatcher;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.RegisteredNameFilter;
+import cx.ring.utils.RegisteredNameTextWatcher;
 
 public class RegisterNameDialog extends DialogFragment implements Observer<ServiceEvent> {
     static final String TAG = RegisterNameDialog.class.getSimpleName();

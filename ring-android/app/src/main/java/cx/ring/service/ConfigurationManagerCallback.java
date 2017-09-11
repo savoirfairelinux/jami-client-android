@@ -27,9 +27,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import cx.ring.BuildConfig;
-import cx.ring.daemon.IntVect;
 import cx.ring.daemon.StringMap;
-import cx.ring.daemon.StringVect;
 import cx.ring.model.ServiceEvent;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;

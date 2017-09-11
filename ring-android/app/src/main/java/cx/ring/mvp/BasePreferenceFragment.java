@@ -20,7 +20,6 @@ package cx.ring.mvp;
  */
 
 import android.os.Bundle;
-
 import android.support.v14.preference.PreferenceFragment;
 import android.view.View;
 
