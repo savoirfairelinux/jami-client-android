@@ -28,7 +28,6 @@ import android.widget.TextView;
 
 import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
-import cx.ring.model.Conversation;
 
 public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public TextView mMsgTxt;

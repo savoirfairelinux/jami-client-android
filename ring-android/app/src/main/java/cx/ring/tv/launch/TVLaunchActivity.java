@@ -29,15 +29,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
-
 import java.util.ArrayList;
 
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.launch.LaunchPresenter;
 import cx.ring.launch.LaunchView;
 import cx.ring.mvp.BaseActivity;
 import cx.ring.tv.account.TVAccountWizard;
-import cx.ring.application.RingApplication;
 import cx.ring.tv.main.HomeActivity;
 
 public class TVLaunchActivity  extends BaseActivity<LaunchPresenter> implements LaunchView {
