@@ -1,6 +1,9 @@
 package cx.ring.tv.account;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
 import android.support.v17.leanback.app.GuidedStepFragment;
 import android.support.v17.leanback.widget.GuidedAction;
 import android.text.InputType;
@@ -34,6 +37,16 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
                 .title(title)
                 .description(desc)
                 .enabled(false)
+                .build());
+    }
+
+    protected static void addDisabledAction(List<GuidedAction> actions, long id, String title, String desc, Drawable icon) {
+        actions.add(new GuidedAction.Builder()
+                .id(id)
+                .title(title)
+                .description(desc)
+                .enabled(false)
+                .icon(icon)
                 .build());
     }
 

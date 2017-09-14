@@ -44,7 +44,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     private boolean isPasswordCorrect = false;
     private boolean isConfirmCorrect = false;
     private boolean isRingUsernameCheck = true;
-    private String mPasswordConfirm;
+    private String mPasswordConfirm = "";
 
     @Inject
     public RingAccountCreationPresenter(AccountService accountService) {
@@ -92,14 +92,12 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     }
 
     public void passwordChanged(String password) {
-        if (mPasswordConfirm != null && !mPasswordConfirm.isEmpty()) {
-            if (!password.equals(mPasswordConfirm)) {
-                getView().showNonMatchingPasswordError(true);
-                isConfirmCorrect = false;
-            } else {
-                getView().showNonMatchingPasswordError(false);
-                isConfirmCorrect = true;
-            }
+        if (!password.equals(mPasswordConfirm)) {
+            getView().showNonMatchingPasswordError(true);
+            isConfirmCorrect = false;
+        } else {
+            getView().showNonMatchingPasswordError(false);
+            isConfirmCorrect = true;
         }
         if (!password.isEmpty() && password.length() < PASSWORD_MIN_LENGTH) {
             getView().showInvalidPasswordError(true);
@@ -113,7 +111,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     }
 
     public void passwordConfirmChanged(String passwordConfirm) {
-        if (!passwordConfirm.isEmpty() && !passwordConfirm.equals(mRingAccountViewModel.getPassword())) {
+        if (!passwordConfirm.equals(mRingAccountViewModel.getPassword())) {
             getView().showNonMatchingPasswordError(true);
             isConfirmCorrect = false;
         } else {
