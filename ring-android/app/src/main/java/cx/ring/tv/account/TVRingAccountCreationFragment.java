@@ -6,12 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v17.leanback.widget.GuidanceStylist;
 import android.support.v17.leanback.widget.GuidedAction;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import java.util.List;
 
@@ -23,6 +18,7 @@ import cx.ring.account.RingAccountViewModelImpl;
 import cx.ring.application.RingApplication;
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.utils.Log;
+import cx.ring.utils.StringUtils;
 
 public class TVRingAccountCreationFragment
         extends RingGuidedStepFragment<RingAccountCreationPresenter>
@@ -30,26 +26,9 @@ public class TVRingAccountCreationFragment
 
     private static final String TAG = TVRingAccountCreationFragment.class.getSimpleName();
     private static final int USERNAME = 0;
+    private static final int PASSWORD = 1;
+    private static final int PASSWORD_CONFIRMATION = 2;
     private static final int CONTINUE = 3;
-    TextWatcher usernameWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            Log.d(TAG, "userNameChanged(" + s.toString() + ")");
-            findActionById(USERNAME).setDescription(s.toString());
-            presenter.ringCheckChanged(!s.toString().isEmpty());
-            presenter.userNameChanged(s.toString());
-        }
-    };
 
     public static TVRingAccountCreationFragment newInstance(RingAccountViewModelImpl ringAccountViewModel) {
         Bundle bundle = new Bundle();
@@ -73,8 +52,6 @@ public class TVRingAccountCreationFragment
         presenter.init(ringAccountViewModel);
 
         presenter.ringCheckChanged(false);
-        presenter.passwordChanged("");
-        presenter.passwordConfirmChanged("");
     }
 
     @Override
@@ -91,29 +68,55 @@ public class TVRingAccountCreationFragment
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
         addEditTextAction(actions, USERNAME, getString(R.string.register_username), getString(R.string.prompt_new_username), "");
-        addDisabledAction(actions, CONTINUE, getString(R.string.action_create), "");
+        addPasswordAction(actions, PASSWORD, getString(R.string.prompt_new_password_optional), getString(R.string.enter_password), "");
+        addPasswordAction(actions, PASSWORD_CONFIRMATION, getString(R.string.prompt_new_password_repeat), getString(R.string.enter_password), "");
+        addDisabledAction(actions, CONTINUE, getString(R.string.action_create), "", getResources().getDrawable(R.drawable.ic_good));
     }
 
-    //FIXME: Leanback doesn't provide methode to know when action are initialised
-    // so we use this, the down effect is what we initialise several time the textwatcher
     @Override
     public void onGuidedActionFocused(GuidedAction action) {
-        super.onGuidedActionFocused(action);
-        //FIXME: Leanback doesn't provide access to the EditText Textwatcher
-        //So we need to access it by parsing children, this code will break if
-        //view architecture change
-        ViewGroup view = (ViewGroup) getActionItemView(findActionPositionById(USERNAME));
-        for (int index = 0; index < view.getChildCount(); ++index) {
-            View nextChild = view.getChildAt(index);
-            if (nextChild instanceof LinearLayout) {
-                ViewGroup editContainer = ((ViewGroup) nextChild);
-                if (editContainer.getChildCount() >= 2 && editContainer.getChildAt(1) instanceof EditText) {
-                    EditText text = (EditText) editContainer.getChildAt(1);
-                    text.removeTextChangedListener(usernameWatcher);
-                    text.addTextChangedListener(usernameWatcher);
-                }
-            }
+        if (action.getId() == PASSWORD) {
+            passwordChanged(action);
+        } else if (action.getId() == PASSWORD_CONFIRMATION) {
+            confirmPasswordChanged(action);
         }
+    }
+
+    @Override
+    public long onGuidedActionEditedAndProceed(GuidedAction action) {
+        if (action.getId() == USERNAME) {
+            String username = action.getEditDescription().toString();
+            findActionById(USERNAME).setDescription(username);
+            presenter.ringCheckChanged(!username.isEmpty());
+            presenter.userNameChanged(username);
+        } else if (action.getId() == PASSWORD) {
+            passwordChanged(action);
+        } else if (action.getId() == PASSWORD_CONFIRMATION) {
+            confirmPasswordChanged(action);
+        }
+        return GuidedAction.ACTION_ID_NEXT;
+    }
+
+    private void passwordChanged(GuidedAction action) {
+        String password = action.getEditDescription().toString();
+        if (password.length() > 0) {
+            action.setDescription(StringUtils.toPassword(password));
+        } else {
+            action.setDescription(getString(R.string.account_enter_password));
+        }
+        notifyActionChanged(findActionPositionById(PASSWORD));
+        presenter.passwordChanged(password);
+    }
+
+    private void confirmPasswordChanged(GuidedAction action) {
+        String passwordConfirm = action.getEditDescription().toString();
+        if (passwordConfirm.length() > 0) {
+            action.setDescription(StringUtils.toPassword(passwordConfirm));
+        } else {
+            action.setDescription(getString(R.string.account_enter_password));
+        }
+        notifyActionChanged(findActionPositionById(PASSWORD_CONFIRMATION));
+        presenter.passwordConfirmChanged(passwordConfirm);
     }
 
     @Override
@@ -153,12 +156,24 @@ public class TVRingAccountCreationFragment
 
     @Override
     public void showInvalidPasswordError(boolean display) {
-        //NOOP on TV
+        Log.d(TAG, "showInvalidPasswordError");
+        if (display) {
+            findActionById(CONTINUE).setIcon(getResources().getDrawable(R.drawable.ic_error));
+            findActionById(CONTINUE).setDescription(getString(R.string.error_password_char_count));
+            findActionById(CONTINUE).setEnabled(false);
+        }
+        notifyActionChanged(findActionPositionById(CONTINUE));
     }
 
     @Override
     public void showNonMatchingPasswordError(boolean display) {
-        //NOOP on TV
+        Log.d(TAG, "showNonMatchingPasswordError");
+        if (display) {
+            findActionById(CONTINUE).setIcon(getResources().getDrawable(R.drawable.ic_error));
+            findActionById(CONTINUE).setDescription(getString(R.string.error_passwords_not_equals));
+            findActionById(CONTINUE).setEnabled(false);
+        }
+        notifyActionChanged(findActionPositionById(CONTINUE));
     }
 
     @Override
