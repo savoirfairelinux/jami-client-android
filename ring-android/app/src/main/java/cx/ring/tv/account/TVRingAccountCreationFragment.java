@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cx.ring.R;
@@ -30,7 +31,10 @@ public class TVRingAccountCreationFragment
 
     private static final String TAG = TVRingAccountCreationFragment.class.getSimpleName();
     private static final int USERNAME = 0;
-    private static final int CONTINUE = 3;
+    private static final int PASSWORD_SUBACTIONS = 1;
+    private static final int PASSWORD = 1;
+    private static final int PASSWORD_CONFIRMATION = 3;
+    private static final int CONTINUE = 1;
     TextWatcher usernameWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -92,6 +96,15 @@ public class TVRingAccountCreationFragment
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
         addEditTextAction(actions, USERNAME, getString(R.string.register_username), getString(R.string.prompt_new_username), "");
         addDisabledAction(actions, CONTINUE, getString(R.string.action_create), "");
+        List<GuidedAction> subActions = new ArrayList<GuidedAction>();
+        addPasswordAction(subActions, PASSWORD, "Password", "desc", "editdesc");
+        addPasswordAction(subActions, PASSWORD_CONFIRMATION, "Password2", "desc2", "editdesc2");
+        actions.add(new GuidedAction.Builder()
+                .id(PASSWORD_SUBACTIONS)
+                .title("subactions")
+                .description("guidedstep_subactions_desc")
+                .subActions(subActions)
+                .build());
     }
 
     //FIXME: Leanback doesn't provide methode to know when action are initialised
@@ -119,6 +132,21 @@ public class TVRingAccountCreationFragment
     @Override
     public int onProvideTheme() {
         return R.style.Theme_Ring_Leanback_GuidedStep_First;
+    }
+
+
+    @Override
+    public boolean onSubGuidedActionClicked(GuidedAction action) {
+        return super.onSubGuidedActionClicked(action);
+    }
+
+
+    @Override
+    public long onGuidedActionEditedAndProceed(GuidedAction action) {
+        if(action.getId() == PASSWORD){
+            return PASSWORD_CONFIRMATION;
+        }
+        return super.onGuidedActionEditedAndProceed(action);
     }
 
     @Override

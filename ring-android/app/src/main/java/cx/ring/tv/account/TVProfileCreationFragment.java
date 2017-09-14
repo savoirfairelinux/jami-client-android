@@ -8,6 +8,7 @@ import android.support.v17.leanback.widget.GuidanceStylist;
 import android.support.v17.leanback.widget.GuidedAction;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cx.ring.R;
