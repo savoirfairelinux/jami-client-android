@@ -72,7 +72,7 @@ public class TVAccountExport
         String title = getString(R.string.account_export_title);
         String breadcrumb = "";
         String description = getString(R.string.account_link_export_info_light);
-        Drawable icon = getActivity().getResources().getDrawable(R.drawable.ic_contact_picture);
+        Drawable icon = getActivity().getResources().getDrawable(R.drawable.ic_devices_white);
         return new GuidanceStylist.Guidance(title, description, breadcrumb, icon);
     }
 
