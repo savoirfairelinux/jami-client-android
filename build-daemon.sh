@@ -66,7 +66,7 @@ if [ "${HAVE_64}" = 1 ];then
     ANDROID_API_VERS=21
     LIBDIR=lib64
 else
-    ANDROID_API_VERS=16
+    ANDROID_API_VERS=18
     LIBDIR=lib
 fi
 ANDROID_API=android-$ANDROID_API_VERS
