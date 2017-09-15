@@ -64,7 +64,7 @@ public final class IconCardHelper {
     }
 
     public static IconCard getAccountAddDevice(Context pContext) {
-        return new IconCard(Card.Type.ACCOUNT_ADD_DEVICE, pContext.getString(R.string.account_link_button), "",R.drawable.ic_add_white);
+        return new IconCard(Card.Type.ACCOUNT_ADD_DEVICE, pContext.getString(R.string.account_link_export_button), "",R.drawable.ic_add_white);
     }
 
     private static CharSequence formatLicence(Context pContext) {
