@@ -11,7 +11,7 @@
   <string name="prompt_alias">Alias</string>
   <string name="prompt_hostname">Værtsnavn</string>
   <string name="prompt_username">Brugernavn</string>
-  <string name="prompt_password">Kodeord</string>
+  <string name="prompt_password">Adgangskode</string>
   <string name="action_create">Opret konto</string>
   <string name="action_create_short">Opret</string>
   <string name="action_register">Registrér</string>
@@ -20,7 +20,7 @@
   <string name="dialog_wait_create_details">Vent venligst mens din nye konto tilføjes...</string>
   <string name="dialog_wait_update">Opdaterer konto</string>
   <string name="dialog_wait_update_details">Vent venligst mens din nye konto opdateres...</string>
-  <string name="dialog_warn_ip2ip_account_title">Opret tom SIP konto ?</string>
+  <string name="dialog_warn_ip2ip_account_title">Opret tom SIP-konto?</string>
   <string name="dialog_warn_ip2ip_account_message">Du er ved at oprette en SIP konto uden et gyldigt værtsnavn.
 Du vil kun kunne foretage eller modtage direkte IP opkald.
 Du kan rette din konto senere</string>
@@ -30,7 +30,7 @@ Du kan rette din konto senere</string>
   <string name="help_sip">Konfigurer en eksisterende SIP-konto.</string>
   <string name="create_sip_account">Tilføj SIP-konto</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Slet konto ?</string>
+  <string name="account_delete_dialog_title">Slet konto?</string>
   <string name="account_delete_dialog_message">Denne handling kan ikke fortrydes.</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Ingen konto registreret</string>
@@ -40,7 +40,7 @@ Du kan rette din konto senere</string>
   <string name="account_device_revocation_success_title">Lykkedes</string>
   <string name="account_device_revocation_success">Enheden er nu trukket tilbage!</string>
   <string name="account_device_revocation_error_title">Kan ikke tilbagetrække enheden</string>
-  <string name="account_device_revocation_wrong_password">Forkert kodeord.</string>
+  <string name="account_device_revocation_wrong_password">Forkert adgangskode.</string>
   <string name="account_device_revocation_unknown_device">Ukendt enhed.</string>
   <string name="account_device_revocation_error_unknown">Ukendt fejl.</string>
   <!--Basic Details-->
@@ -50,10 +50,10 @@ Du kan rette din konto senere</string>
   <string name="account_hostname_label">Værtsnavn</string>
   <string name="account_bootstrap_label">Bootstrap</string>
   <string name="account_username_label">Brugernavn</string>
-  <string name="account_password_label">Kodeord</string>
+  <string name="account_password_label">Adgangskode</string>
   <string name="account_optionnal_category">Valgfrie Indstillinger</string>
   <string name="account_useragent_label">Brugerklient</string>
-  <string name="account_autoanswer_label">Svar Opkald Automatisk</string>
+  <string name="account_autoanswer_label">Besvar automatisk</string>
   <string name="account_upnp_label">Aktivér UPnP</string>
   <string name="account_proxy_field">Stedfortræder</string>
   <!--Audio Details-->
@@ -65,19 +65,19 @@ Du kan rette din konto senere</string>
   <string name="account_ringtone_custom_label">Anvend brugervalgt ringetone</string>
   <!--Video Details-->
   <string name="account_video_label">Video</string>
-  <string name="account_video_enable">Aktiver Video</string>
+  <string name="account_video_enable">Aktiver video</string>
   <!--Advanced Details-->
   <string name="account_preferences_advanced_tab">Avanceret</string>
   <string name="account_dht_public_in_calls_label">Tillad alle opkald/beskeder</string>
   <string name="account_registration_exp_label">Registreringsudløb</string>
-  <string name="account_local_interface_label">Lokalt Interface</string>
-  <string name="account_local_port_label">Lokal Port</string>
+  <string name="account_local_interface_label">Lokal grænseflade</string>
+  <string name="account_local_port_label">Lokal port</string>
   <string name="account_stun_enable_label">Brug STUN</string>
   <string name="account_stun_server_label">STUN-server</string>
   <string name="account_turn_enable_label">Brug TURN</string>
   <string name="account_turn_server_label">TURN-server</string>
   <string name="account_turn_username_label">TURN-brugernavn</string>
-  <string name="account_turn_password_label">TURN-kodeord</string>
+  <string name="account_turn_password_label">TURN-adgangskode</string>
   <string name="account_published_same_as_local_label">Publicer samme som lokale</string>
   <string name="account_published_port_label">Publiceret Port</string>
   <string name="account_published_address_label">Publiceret Adresse</string>
@@ -94,7 +94,7 @@ Du kan rette din konto senere</string>
   <string name="account_tls_certificate_list_label">Certificeringsautoriteter</string>
   <string name="account_tls_certificate_file_label">Certifikatfil</string>
   <string name="account_tls_private_key_file_label">Privat-nøglefil</string>
-  <string name="account_tls_password_label">Kodeord for Privatnøgle</string>
+  <string name="account_tls_password_label">Adgangskode for Privatnøgle</string>
   <string name="account_tls_method_label">TLS-metode</string>
   <string name="account_tls_ciphers_label">TLS- cifre </string>
   <string name="account_tls_server_name_label">Servernavn</string>
@@ -103,28 +103,28 @@ Du kan rette din konto senere</string>
   <string name="account_tls_negotiation_timeout_sec">Tidsgrænse for Forhandling</string>
   <string name="account_rtp_max_port">Maksimum</string>
   <string name="account_rtp_min_port">Minimum</string>
-  <string name="account_rtp_port_range">Portinterval for Lyd-RTP</string>
+  <string name="account_rtp_port_range">Område for lyd RTP-port</string>
   <!--restore/backup-->
-  <string name="account_new_device_password">Indtast primære kodeord for at oplåse konto</string>
+  <string name="account_new_device_password">Indtast primære adgangskode for at oplåse konto</string>
   <string name="error_password_char_count">Mindst 6 tegn</string>
-  <string name="error_passwords_not_equals">Kodeord stemmer ikke overens</string>
+  <string name="error_passwords_not_equals">Adgangskoderne er ikke ens</string>
   <string name="export_account_wait_title">Vent venligt...</string>
   <string name="export_account_wait_message">Publicierer ny konto-information</string>
-  <string name="account_export_end_decryption_message">Kunne ikke låse din konto op med brug af det angivne kodeord.</string>
+  <string name="account_export_end_decryption_message">Kunne ikke låse din konto op med brug af den angivne adgangskode.</string>
   <string name="account_export_end_network_title">Netværksfejl</string>
   <string name="account_export_end_network_message">Kunne ikke eksportere kontoen til netværket. Kontroller forbindelsen.</string>
   <string name="account_export_end_error_title">Fejl</string>
   <string name="account_export_end_error_message">Kunne ikke eksportere kontoen. En ukendt fejl opstod.</string>
-  <string name="account_enter_password">Indtast kodeord</string>
+  <string name="account_enter_password">Indtast adgangskode</string>
   <string name="account_share_body">Kontakt mig som \'%1$s\' på Ring, den distribuerede kommunikationsplatform: https://ring.cx</string>
   <string name="account_share_body_with_username">Kontakt mig som \'%1$s\' eller via mit offentlige brugernavn \'%2$s\' på Ring, den distribuerede kommunikationsplatform: https://ring.cx</string>
-  <string name="account_contact_me">Kontakt mig på Ring !</string>
+  <string name="account_contact_me">Kontakt mig på Ring!</string>
   <string name="update_account">Opdater konto</string>
-  <string name="account_migration">Din Ring-konto kan opdateres.\nIndtast venligst dit kodeord.</string>
+  <string name="account_migration">Din Ring-konto kan opdateres.\nIndtast venligst din adgangskode.</string>
   <string name="ring_account">Ring-konto</string>
   <string name="ring_account_identity">Identitet</string>
   <string name="account_migration_title_dialog">Konto-migrering</string>
-  <string name="account_migration_message_dialog">Dine konti kræver at blive opdateret. Vil du gå til Konto-indstillingerne for at foretage denne operation ?</string>
+  <string name="account_migration_message_dialog">Dine konti kræver at blive opdateret. Vil du gå til Konto-indstillingerne for at foretage denne handling?</string>
   <string name="account_update_needed">Opdatering nødvendig</string>
   <string name="account_cannot_be_found_title">Kan ikke finde konto</string>
   <string name="account_cannot_be_found_message">Kontoen kunne ikke findes på Ring-netværket.\nSikr dig at den er eksporteret fra en eksisterende enhed, og at de angivne bruger-oplysninger er korrekte.</string>
@@ -135,7 +135,7 @@ Du kan rette din konto senere</string>
   <string name="account_device_added_message">Du har nu konfigureret din Ring-konto på denne enhed.</string>
   <string name="account_device_updated_title">Enheds-konto opdateret</string>
   <string name="account_device_updated_message">Du har opdateret din Ring-konto.</string>
-  <string name="account_cannot_be_updated_message">Kontoen på enheden kunne ikke opdateres. Kontroller venligst dit kodeord.</string>
+  <string name="account_cannot_be_updated_message">Kontoen på enheden kunne ikke opdateres. Kontroller venligst din adgangskode.</string>
   <string name="account_sip_success_title">SIP-konto registreret</string>
   <string name="account_sip_success_message">Din SIP-konto blev registreret korrekt.</string>
   <string name="account_sip_register_anyway">Registrer alligevel</string>
@@ -143,7 +143,7 @@ Du kan rette din konto senere</string>
   <string name="account_link_prompt_pin">Indtast PIN-kode</string>
   <string name="account_new_button">Opret en Ring-konto</string>
   <string name="account_link_export_button">Tilknyt en anden enhed til denne konto</string>
-  <string name="account_link_export_info">For at bruge denne konto på andre enheder, skal du først gøre den tilgængelig for Ring. Dette vil generere en PIN-kode som skal indtastes på den nye enhed for at installere kontoen. Pin-koden er gyldig i 10 minutter. \n\nIndtast dit kodeord for at starte:</string>
+  <string name="account_link_export_info">For at bruge denne konto på andre enheder, skal du først gøre den tilgængelig for Ring. Dette vil generere en PIN-kode som skal indtastes på den nye enhed for at installere kontoen. Pin-koden er gyldig i 10 minutter. \n\nIndtast din adgangskode for at starte:</string>
   <string name="account_start_export_button">Generer PIN-kode</string>
   <string name="account_end_export_button">luk</string>
   <string name="account_end_export_infos">Din PIN-kode er:\n\n%%\n\nFor at afslutte processen skal du åbne Ring på den nye enhed, og oprette en ny konto med \"Tilknyt denne enhed til en konto\". PIN-koden er gyldig i 10 minutter.</string>
@@ -169,10 +169,10 @@ Du kan rette din konto senere</string>
   <string name="account_link_title">Tilknyt denne enhed</string>
   <string name="account_sip_cannot_be_registered">Kan ikke registrere konto</string>
   <!--Devices-->
-  <string name="account_revoke_device_hint">Indtast kodeord for at bekræfte</string>
-  <string name="enter_password">Indtast kodeord</string>
+  <string name="account_revoke_device_hint">Indtast adgangskode for at bekræfte</string>
+  <string name="enter_password">Indtast adgangskode</string>
   <string name="revoke_device_title">Tilbagetræk enheden</string>
-  <string name="revoke_device_message">Er du sikker på at du vil tilbagetrække %1$s ?</string>
+  <string name="revoke_device_message">Er du sikker på, at du vil tilbagetrække %1$s?</string>
   <string name="revoke_device_wait_title">Vent venligt...</string>
   <string name="revoke_device_wait_message">Tilbagetrækker enhed</string>
   <string name="rename_device_title">Omdøb denne enhed</string>

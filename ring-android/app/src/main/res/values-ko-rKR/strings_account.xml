@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Strings related to account edition screen-->
+  <!--Strings related to account creation-->
+  <string name="prompt_alias">별칭</string>
+  <string name="prompt_hostname">호스트명</string>
+  <string name="prompt_username">사용자명</string>
+  <string name="prompt_password">암호</string>
+  <string name="action_create_short">생성하기</string>
+  <!--Strings related to account deletion-->
+  <!--AccountManagementFragment-->
+  <string name="account_device_revocation_wrong_password">잘못된 암호입니다.</string>
+  <!--Basic Details-->
+  <string name="account_preferences_basic_tab">일반</string>
+  <string name="account_hostname_label">호스트명</string>
+  <string name="account_username_label">사용자명</string>
+  <string name="account_password_label">암호</string>
+  <string name="account_proxy_field">프록시</string>
+  <!--Audio Details-->
+  <!--Video Details-->
+  <string name="account_video_label">비디오</string>
+  <!--Advanced Details-->
+  <string name="account_turn_enable_label">TURN 사용</string>
+  <string name="account_published_address_label">공개 주소</string>
+  <!--Security Details-->
+  <!--SRTP Details-->
+  <string name="account_preferences_security_tab">보안</string>
+  <!--SIP-->
+  <!--TLS Details-->
+  <!--restore/backup-->
+  <string name="ring_account">Ring 계정</string>
+  <string name="account_link_button">이 장치를 계정에 연결하기</string>
+  <!--Name registration-->
+  <!--Create account-->
+  <string name="account_creation_profile">프로필 만들기</string>
+  <!--Devices-->
+</resources>

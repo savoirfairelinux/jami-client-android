@@ -11,20 +11,20 @@
   <string name="action_register">Зареєструватися</string>
   <string name="error_field_required">Це поле обов’язкове</string>
   <string name="dialog_wait_create">Додання аккаунту</string>
-  <string name="dialog_wait_create_details">Почекайте пока ваш аккаунт створюється.</string>
-  <string name="dialog_warn_ip2ip_account_title">Створити порожній SIP аккаунт?</string>
+  <string name="dialog_wait_create_details">Почекайте поки ваш обліковий запис створюється.</string>
+  <string name="dialog_warn_ip2ip_account_title">Створити порожній обліковий запис SIP аккаунт?</string>
   <string name="dialog_warn_ip2ip_account_message">Ви збираєтесь створити обліковий запис SIP без імені хоста.
 Вам будуть доступні лише прямі IP дзвінки. 
 Ви зможете відредагувати цей обліковий запис пізніше</string>
-  <string name="help_ring">Акаунт Ring дозволяє досягати людей безпечно у рівноправній та повністю розподіленій мережі.</string>
+  <string name="help_ring">Обліковий запис Ring дозволяє спілкуватися захищено у рівноправній та повністю розподіленій мережі.</string>
   <string name="help_sip_title">Додати Ваш обліковий запис SIP</string>
   <string name="help_sip">Налаштувати існуючий обліковий запис SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Видалити акаунт?</string>
+  <string name="account_delete_dialog_title">Видалити обліковий запис?</string>
   <string name="account_delete_dialog_message">Ця дія не може бути скасована.</string>
   <!--AccountManagementFragment-->
-  <string name="empty_account_list">Немає зареєстрованного аккаунту</string>
-  <string name="normal_accounts_titles">Аккаунти</string>
+  <string name="empty_account_list">Немає зареєстрованного облікового запису</string>
+  <string name="normal_accounts_titles">Облікові записи</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Головні</string>
   <string name="account_basic_category">Базові налаштування</string>
@@ -90,6 +90,7 @@
   <string name="export_account_wait_title">Будь ласка зачекайте</string>
   <string name="account_export_end_error_title">Помилка</string>
   <string name="account_new_button">Створити обліковий запис Ring</string>
+  <string name="account_link_export_button">Прив\'язати інший пристрій до цього облікового запису</string>
   <!--Name registration-->
   <string name="account_status_connecting">З\'єднання</string>
   <string name="account_status_unknown">Невідомий</string>
