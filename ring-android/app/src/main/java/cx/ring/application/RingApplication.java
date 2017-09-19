@@ -167,59 +167,58 @@ public class RingApplication extends Application {
             return;
         }
 
-        Future<Boolean> startResult = mExecutor.submit(new Callable<Boolean>() {
+        mExecutor.submit(new Callable<Boolean>() {
             @Override
-            public Boolean call() throws Exception {
-                // Android specific callbacks handlers (rely on pure Java low level Services callbacks handlers as they
-                // observe them)
-                mConfigurationCallback = new ConfigurationManagerCallback(getApplicationContext());
-                mCallManagerCallBack = new CallManagerCallBack(getApplicationContext());
+            public Boolean call() {
+                try {
+                    // Android specific callbacks handlers (rely on pure Java low level Services callbacks handlers as they
+                    // observe them)
+                    mConfigurationCallback = new ConfigurationManagerCallback(getApplicationContext());
+                    mCallManagerCallBack = new CallManagerCallBack(getApplicationContext());
 
-                // mCallAndConferenceCallbackHandler is a wrapper to handle CallCallbacks and ConferenceCallbacks
-                mCallAndConferenceCallbackHandler = mDaemonService.getDaemonCallbackHandler(
-                        mCallService.getCallbackHandler(),
-                        mConferenceService.getCallbackHandler());
-                mAccountAndContactCallbackHandler = mDaemonService.getDaemonConfigurationCallbackHandler(
-                        mAccountService.getCallbackHandler());
-                mHardwareCallbackHandler = mHardwareService.getCallbackHandler();
-                mPresenceCallbackHandler = mPresenceService.getCallbackHandler();
+                    // mCallAndConferenceCallbackHandler is a wrapper to handle CallCallbacks and ConferenceCallbacks
+                    mCallAndConferenceCallbackHandler = mDaemonService.getDaemonCallbackHandler(
+                            mCallService.getCallbackHandler(),
+                            mConferenceService.getCallbackHandler());
+                    mAccountAndContactCallbackHandler = mDaemonService.getDaemonConfigurationCallbackHandler(
+                            mAccountService.getCallbackHandler());
+                    mHardwareCallbackHandler = mHardwareService.getCallbackHandler();
+                    mPresenceCallbackHandler = mPresenceService.getCallbackHandler();
 
-                // Android specific Low level Services observers
-                mCallService.addObserver(mCallManagerCallBack);
-                mConferenceService.addObserver(mCallManagerCallBack);
-                mAccountService.addObserver(mConfigurationCallback);
-                mContactService.addObserver(mConfigurationCallback);
+                    // Android specific Low level Services observers
+                    mCallService.addObserver(mCallManagerCallBack);
+                    mConferenceService.addObserver(mCallManagerCallBack);
+                    mAccountService.addObserver(mConfigurationCallback);
+                    mContactService.addObserver(mConfigurationCallback);
 
-                mDaemonService.startDaemon(
-                        mCallAndConferenceCallbackHandler,
-                        mAccountAndContactCallbackHandler,
-                        mPresenceCallbackHandler,
-                        mHardwareCallbackHandler);
+                    mDaemonService.startDaemon(
+                            mCallAndConferenceCallbackHandler,
+                            mAccountAndContactCallbackHandler,
+                            mPresenceCallbackHandler,
+                            mHardwareCallbackHandler);
 
-                ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
-                registerReceiver(ringerModeListener, RINGER_FILTER);
+                    if(mDeviceRuntimeService.hasVideoPermission()) {
+                        //initVideo is called here to give time to the application to initialize hardware cameras
+                        mHardwareService.initVideo();
+                    }
 
-                if(mDeviceRuntimeService.hasVideoPermission()) {
-                    //initVideo is called here to give time to the application to initialize hardware cameras
-                    mHardwareService.initVideo();
+                    ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
+                    registerReceiver(ringerModeListener, RINGER_FILTER);
+
+                    // load accounts from Daemon
+                    mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected());
+
+                    Intent intent = new Intent(DRING_CONNECTION_CHANGED);
+                    intent.putExtra("connected", mDaemonService.isStarted());
+                    sendBroadcast(intent);
+                } catch (Exception e) {
+                    Log.e(TAG, "DRingService start failed", e);
                 }
 
                 return true;
             }
         });
 
-        try {
-            startResult.get();
-        } catch (Exception e) {
-            Log.e(TAG, "DRingService start failed", e);
-        }
-
-        Intent intent = new Intent(DRING_CONNECTION_CHANGED);
-        intent.putExtra("connected", mDaemonService.isStarted());
-        sendBroadcast(intent);
-
-        // load accounts from Daemon
-        mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected());
     }
 
     public void terminateDaemon() {

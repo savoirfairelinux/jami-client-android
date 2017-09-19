@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -96,10 +97,11 @@ public class AccountService extends Observable {
     DeviceRuntimeService mDeviceRuntimeService;
 
     private Account mCurrentAccount;
-    private List<Account> mAccountList = null;
+    private List<Account> mAccountList = new ArrayList<>();
     private ConfigurationCallbackHandler mCallbackHandler;
     private boolean mHasSipAccount;
     private boolean mHasRingAccount;
+    private AtomicBoolean mAccountsLoaded = new AtomicBoolean(false);
 
     public AccountService() {
         mCallbackHandler = new ConfigurationCallbackHandler();
@@ -123,6 +125,8 @@ public class AccountService extends Observable {
         return mHasRingAccount;
     }
 
+    public boolean isLoaded() { return mAccountsLoaded.get(); }
+
     /**
      * Loads the accounts from the daemon and then builds the local cache (also sends ACCOUNTS_CHANGED event)
      *
@@ -133,7 +137,6 @@ public class AccountService extends Observable {
         mApplicationExecutor.submit(new Runnable() {
             @Override
             public void run() {
-                mAccountList = new ArrayList<>();
                 refreshAccountsCacheFromDaemon();
 
                 if (!mAccountList.isEmpty()) {
@@ -151,7 +154,8 @@ public class AccountService extends Observable {
     }
 
     private void refreshAccountsCacheFromDaemon() {
-        mAccountList.clear();
+        mAccountsLoaded.set(false);
+        mAccountList = new ArrayList<>();
         List<String> accountIds = getAccountList();
         for (String accountId : accountIds) {
             Map<String, String> details = getAccountDetails(accountId);
@@ -179,6 +183,7 @@ public class AccountService extends Observable {
                 }
             }
         }
+        mAccountsLoaded.set(true);
     }
 
     private Account getAccountByName(final String name) {
@@ -1229,11 +1234,7 @@ public class AccountService extends Observable {
         public void accountsChanged() {
             super.accountsChanged();
             Log.d(TAG, "accounts changed");
-            String currentAccountId = "";
-
-            if (mCurrentAccount != null) {
-                currentAccountId = mCurrentAccount.getAccountID();
-            }
+            String currentAccountId = mCurrentAccount == null ? "" : mCurrentAccount.getAccountID();
 
             // Accounts have changed in Daemon, we have to update our local cache
             refreshAccountsCacheFromDaemon();
