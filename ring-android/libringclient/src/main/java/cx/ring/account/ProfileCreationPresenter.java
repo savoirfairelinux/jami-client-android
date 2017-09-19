@@ -39,6 +39,7 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
     }
 
     public void initPresenter(RingAccountViewModel ringAccountViewModel) {
+        this.mRingAccountViewModel = ringAccountViewModel;
         //~ Checking the state of the READ_CONTACTS permission
         if (mDeviceRuntimeService.hasContactPermission()) {
             String profileName = mDeviceRuntimeService.getProfileName();
@@ -48,7 +49,6 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
         } else {
             Log.d(TAG, "READ_CONTACTS permission is not granted.");
         }
-        this.mRingAccountViewModel = ringAccountViewModel;
     }
 
     public void fullNameUpdated(String fullName) {
