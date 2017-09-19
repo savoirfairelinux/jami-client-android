@@ -70,7 +70,11 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
         if (!permissionsWeCanAsk.isEmpty()) {
             getView().askPermissions(permissionsWeCanAsk);
         } else {
-            checkAccounts();
+            if (!mAccountService.isLoaded()) {
+                mAccountService.addObserver(this);
+            } else {
+                checkAccounts();
+            }
         }
     }
 
@@ -93,9 +97,7 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
     public void checkAccounts() {
         List<Account> accounts = mAccountService.getAccounts();
 
-        if (accounts == null) {
-            mAccountService.addObserver(this);
-        } else if (accounts.isEmpty()) {
+        if (accounts.isEmpty()) {
             getView().goToAccountCreation();
         } else {
             getView().goToHome();
