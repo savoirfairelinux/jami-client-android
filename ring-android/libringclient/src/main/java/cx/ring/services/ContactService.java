@@ -64,8 +64,8 @@ public abstract class ContactService extends Observable {
     @Named("ApplicationExecutor")
     ExecutorService mApplicationExecutor;
 
-    private Map<Long, CallContact> mContactList;
-    private Map<String, CallContact> mContactsRing;
+    private Map<Long, CallContact> mContactList = new HashMap<>();
+    private Map<String, CallContact> mContactsRing = new HashMap<>();
     private String mAccountId;
 
     protected abstract Map<Long, CallContact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
@@ -82,8 +82,6 @@ public abstract class ContactService extends Observable {
     public abstract void loadVCardContactData(CallContact contact);
 
     public ContactService() {
-        mContactList = new HashMap<>();
-        mContactsRing = new HashMap<>();
     }
 
     /**

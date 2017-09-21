@@ -136,7 +136,9 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         // dependency injection
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
 
-        getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver);
+        if (mDeviceRuntimeService.hasContactPermission()) {
+            getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver);
+        }
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
