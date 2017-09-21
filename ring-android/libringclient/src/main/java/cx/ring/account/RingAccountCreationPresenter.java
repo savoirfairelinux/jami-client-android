@@ -92,6 +92,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     }
 
     public void passwordChanged(String password) {
+        mRingAccountViewModel.setPassword(password);
         if (!password.equals(mPasswordConfirm)) {
             getView().showNonMatchingPasswordError(true);
             isConfirmCorrect = false;
@@ -104,7 +105,6 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
             isPasswordCorrect = false;
         } else {
             getView().showInvalidPasswordError(false);
-            mRingAccountViewModel.setPassword(password);
             isPasswordCorrect = true;
         }
         checkForms();
