@@ -147,13 +147,14 @@ Du kan ändra kontot senare.</string>
   <string name="account_start_export_button">Generera PIN-kod</string>
   <string name="account_end_export_button">stäng</string>
   <string name="account_end_export_infos">Din PIN-kod är:\n\n%%\n\nFör att slutföra åtgärden, måste du nu öppna Ring på den nya enheten. Skapa ett nytt konto med \"Koppla den här enheten till ett konto\". PIN-koden är giltig i 10 minuter.</string>
+  <string name="account_link_export_info_light">För att använda detta konto på en annan enhet, måste du först exponera det på Ring. Detta genererar en PIN-kod som du måste ange på den nya enheten för att öppna kontot. Pin-koden är giltig i 10 minuter.</string>
+  <string name="account_export_title">Lägg till enheter</string>
   <!--Name registration-->
   <string name="error_username_empty">Ange ett användarnamn</string>
   <string name="no_registered_name_for_account">Inget registrerat namn hittades för detta konto</string>
   <string name="register_name">Registrera namn</string>
   <string name="trying_to_register_name">Försöker registrera namnet</string>
   <string name="registered_username">Registrerat namn</string>
-  <string name="register_username">Registrera offentligt användarnamn (frivilligt)</string>
   <string name="username_already_taken">Användarnamnet finns redan</string>
   <string name="invalid_username">Ogiltigt användarnamn</string>
   <string name="looking_for_username_availability">Söker efter användarnamnets tillgänglighet...</string>

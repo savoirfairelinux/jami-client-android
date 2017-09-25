@@ -147,13 +147,14 @@
   <string name="account_start_export_button">生成 PIN 碼</string>
   <string name="account_end_export_button">關閉</string>
   <string name="account_end_export_infos">您的 PIN 碼是：\n\n%%\n\n要完成過程，您需要在新裝置上開啟 Ring。以「連結這個裝置到一個帳號」來建立新帳號。您的 PIN 碼在 10 分鐘內有效。</string>
+  <string name="account_link_export_info_light">要在其他裝置上使用這個帳號，您必須先在 Ring 上揭露它。這將會生成一個您必須在新裝置上輸入以設定帳號的 PIN 碼。PIN 碼在 10 分鐘內有效。</string>
+  <string name="account_export_title">新增裝置</string>
   <!--Name registration-->
   <string name="error_username_empty">輸入使用者名稱</string>
   <string name="no_registered_name_for_account">找不到這個帳號已註冊的名稱</string>
   <string name="register_name">註冊名稱</string>
   <string name="trying_to_register_name">正在嘗試註冊名稱</string>
   <string name="registered_username">已註冊的使用者名稱</string>
-  <string name="register_username">註冊公開的使用者名稱（可選）</string>
   <string name="username_already_taken">已取得的使用者名稱</string>
   <string name="invalid_username">無效的使用者名稱</string>
   <string name="looking_for_username_availability">正在尋找使用者名稱的可用性…</string>

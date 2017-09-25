@@ -27,5 +27,6 @@
   <!--Name registration-->
   <string name="account_status_unknown">Inconnu</string>
   <!--Create account-->
+  <string name="account_creation_home">Bienvenue sur ring</string>
   <!--Devices-->
 </resources>

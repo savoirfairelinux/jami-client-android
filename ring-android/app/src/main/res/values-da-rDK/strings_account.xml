@@ -143,17 +143,18 @@ Du kan rette din konto senere</string>
   <string name="account_link_prompt_pin">Indtast PIN-kode</string>
   <string name="account_new_button">Opret en Ring-konto</string>
   <string name="account_link_export_button">Tilknyt en anden enhed til denne konto</string>
-  <string name="account_link_export_info">For at bruge denne konto på andre enheder, skal du først gøre den tilgængelig for Ring. Dette vil generere en PIN-kode som skal indtastes på den nye enhed for at installere kontoen. Pin-koden er gyldig i 10 minutter. \n\nIndtast din adgangskode for at starte:</string>
+  <string name="account_link_export_info">For at bruge denne konto på andre enheder, skal du først gøre den tilgængelig for Ring. Dette vil generere en PIN-kode som skal indtastes på den nye enhed for at opsætte kontoen. PIN-koden er gyldig i 10 minutter. \n\nIndtast din adgangskode for at starte:</string>
   <string name="account_start_export_button">Generer PIN-kode</string>
   <string name="account_end_export_button">luk</string>
   <string name="account_end_export_infos">Din PIN-kode er:\n\n%%\n\nFor at afslutte processen skal du åbne Ring på den nye enhed, og oprette en ny konto med \"Tilknyt denne enhed til en konto\". PIN-koden er gyldig i 10 minutter.</string>
+  <string name="account_link_export_info_light">For at bruge denne konto på andre enheder, skal du først gøre den tilgængelig for Ring. Dette vil generere en PIN-kode som skal indtastes på den nye enhed for at opsætte kontoen. PIN-koden er gyldig i 10 minutter.</string>
+  <string name="account_export_title">Tilføj enheder</string>
   <!--Name registration-->
   <string name="error_username_empty">Indtast et brugernavn</string>
   <string name="no_registered_name_for_account">Intet registreret navn fundet for denne konto</string>
   <string name="register_name">Registrer navn</string>
   <string name="trying_to_register_name">Forsøger at registrere navn</string>
   <string name="registered_username">Registreret brugernavn</string>
-  <string name="register_username">Registrer et offentligt brugernavn (valgfrit)</string>
   <string name="username_already_taken">Brugernavn er allerede taget</string>
   <string name="invalid_username">Ugyldigt brugernavn</string>
   <string name="looking_for_username_availability">Tjekker efter om brugernavnet er ledigt...</string>
