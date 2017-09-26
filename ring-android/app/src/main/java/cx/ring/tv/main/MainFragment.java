@@ -79,6 +79,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         super.onResume();
         presenter.reloadConversations();
         presenter.reloadAccountInfos();
+        mBackgroundManager.setDrawable(getResources().getDrawable(R.drawable.tv_background));
     }
 
     private void setupUIElements() {
