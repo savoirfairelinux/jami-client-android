@@ -26,7 +26,7 @@ import android.support.v17.leanback.widget.PresenterSelector;
 public class ShadowRowPresenterSelector extends PresenterSelector {
 
     private ListRowPresenter mShadowEnabledRowPresenter = new ListRowPresenter();
-    private ListRowPresenter mShadowDisabledRowPresenter = new ListRowPresenter();
+    private ListRowPresenter mShadowDisabledRowPresenter = new NoDimListRowPresenter();
 
     public ShadowRowPresenterSelector() {
         mShadowEnabledRowPresenter.setNumRows(1);
