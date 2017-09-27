@@ -112,7 +112,6 @@
 
     <style name="Theme.Ring.LeanbackBrowse" parent="Theme.Leanback.Browse">
         <item name="defaultSearchColor">@color/color_primary_light</item>
-        <item name="searchOrbViewStyle">@style/CustomSearchOrbView</item>
 
     </style>
 
@@ -121,12 +120,8 @@
     </style>
 
     <style name="Theme.Ring.Leanback" parent="Theme.Leanback">
-        <item name="searchOrbViewStyle">@style/CustomSearchOrbView</item>
     </style>
 
-    <style name="CustomSearchOrbView" parent="Widget.Leanback.SearchOrbViewStyle">
-        <item name="searchOrbIcon">@drawable/ic_personadd</item>
-    </style>
 
 
     <!-- A default card style. Used in cards example. -->
