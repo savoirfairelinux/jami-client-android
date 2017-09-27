@@ -127,15 +127,6 @@ public class TVAccountWizard
         }
     }
 
-    public void profileNext(String fullname) {
-        mFullname = fullname;
-        if (mLinkAccount) {
-
-        } else {
-            GuidedStepFragment.add(getFragmentManager(), new TVRingAccountCreationFragment());
-        }
-    }
-
     @Override
     public void goToHomeCreation() {
 
