@@ -208,5 +208,7 @@ along with this program; if not, write to the Free Software
 
     <string name="search_results">Search Results</string>
     <string name="tv_contact_row_header">Contacts</string>
+    <string name="gallery_error_title">No Gallery app found</string>
+    <string name="gallery_error_message">No application found on device to open Gallery</string>
 
 </resources>

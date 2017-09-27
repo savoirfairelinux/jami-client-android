@@ -51,12 +51,14 @@ public class TVHomeAccountCreationFragment
     public void goToAccountCreation() {
         RingAccountViewModelImpl ringAccountViewModel = new RingAccountViewModelImpl();
         ringAccountViewModel.setLink(false);
-        GuidedStepFragment.add(getFragmentManager(), TVRingAccountCreationFragment.newInstance(ringAccountViewModel));
+        GuidedStepFragment.add(getFragmentManager(), TVProfileCreationFragment.newInstance(ringAccountViewModel));
     }
 
     @Override
     public void goToAccountLink() {
-        GuidedStepFragment.add(getFragmentManager(), new TVProfileCreationFragment());
+        RingAccountViewModelImpl ringAccountViewModel = new RingAccountViewModelImpl();
+        ringAccountViewModel.setLink(true);
+        GuidedStepFragment.add(getFragmentManager(), TVProfileCreationFragment.newInstance(ringAccountViewModel));
     }
 
     @Override
