@@ -25,15 +25,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v17.leanback.app.GuidedStepFragment;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.account.AccountWizardPresenter;
 import cx.ring.account.AccountWizardView;
+import cx.ring.account.RingAccountViewModelImpl;
 import cx.ring.application.RingApplication;
 import cx.ring.model.AccountConfig;
 import cx.ring.mvp.BaseActivity;
@@ -42,7 +46,9 @@ import cx.ring.tv.main.HomeActivity;
 import cx.ring.utils.Log;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import ezvcard.parameter.ImageType;
 import ezvcard.property.FormattedName;
+import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
 
@@ -126,15 +132,6 @@ public class TVAccountWizard
         }
     }
 
-    public void profileNext(String fullname) {
-        mFullname = fullname;
-        if (mLinkAccount) {
-
-        } else {
-            GuidedStepFragment.add(getFragmentManager(), new TVRingAccountCreationFragment());
-        }
-    }
-
     @Override
     public void goToHomeCreation() {
 
@@ -202,13 +199,26 @@ public class TVAccountWizard
     }
 
     @Override
-    public void saveProfile(String accountId, RingAccountViewModel ringAccountViewModel) {
-        VCard vcard = new VCard();
-        vcard.setFormattedName(new FormattedName(mFullname));
-        vcard.setUid(new Uid(ringAccountViewModel.getUsername()));
+    public void saveProfile(final String accountID, final RingAccountViewModel ringAccountViewModel) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                RingAccountViewModelImpl ringAccountViewModelImpl = (RingAccountViewModelImpl) ringAccountViewModel;
 
-        vcard.removeProperties(RawProperty.class);
-        VCardUtils.saveLocalProfileToDisk(vcard, accountId, getFilesDir());
+                VCard vcard = new VCard();
+                vcard.setFormattedName(new FormattedName(ringAccountViewModelImpl.getFullName()));
+                vcard.setUid(new Uid(ringAccountViewModelImpl.getUsername()));
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                if (ringAccountViewModelImpl.getPhoto() != null) {
+                    ringAccountViewModelImpl.getPhoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
+                    vcard.removeProperties(Photo.class);
+                    vcard.addPhoto(photoVCard);
+                }
+                vcard.removeProperties(RawProperty.class);
+                VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir());
+            }
+        });
     }
 
     @Override
