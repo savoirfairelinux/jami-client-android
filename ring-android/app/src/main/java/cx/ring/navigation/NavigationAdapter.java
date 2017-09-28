@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
@@ -42,42 +42,8 @@ class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Navigatio
     private OnNavigationItemClicked mListener;
     private int mItemSelected;
 
-    interface OnNavigationItemClicked {
-        void onNavigationItemClicked(int position);
-    }
-
     NavigationAdapter(ArrayList<RingNavigationFragment.NavigationItem> menu) {
         mDataset = menu;
-    }
-
-    class NavigationItemView extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        @BindView(R.id.navigation_item_icon)
-        AppCompatImageView icon;
-
-        @BindView(R.id.navigation_item_title)
-        TextView title;
-
-        @BindColor(R.color.color_primary_light)
-        int tintColor;
-
-        @BindColor(R.color.transparent_grey)
-        int backgroundHighlightColor;
-
-        NavigationItemView(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-            view.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (mListener != null) {
-                mItemSelected = getAdapterPosition();
-                setSelection(mItemSelected);
-                mListener.onNavigationItemClicked(mItemSelected);
-            }
-        }
     }
 
     void setSelection(int position) {
@@ -115,5 +81,39 @@ class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Navigatio
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    interface OnNavigationItemClicked {
+        void onNavigationItemClicked(int position);
+    }
+
+    class NavigationItemView extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        @BindView(R.id.navigation_item_icon)
+        AppCompatImageView icon;
+
+        @BindView(R.id.navigation_item_title)
+        TextView title;
+
+        @BindColor(R.color.color_primary_light)
+        int tintColor;
+
+        @BindColor(R.color.transparent_grey)
+        int backgroundHighlightColor;
+
+        NavigationItemView(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mListener != null) {
+                mItemSelected = getAdapterPosition();
+                setSelection(mItemSelected);
+                mListener.onNavigationItemClicked(mItemSelected);
+            }
+        }
     }
 }

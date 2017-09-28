@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2015-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2015-2017 Savoir-faire Linux Inc.
  *
  *  Authors:    Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *              Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
@@ -18,7 +18,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 package cx.ring.client;
 
 import android.content.Intent;
@@ -39,31 +38,9 @@ import cx.ring.fragments.ConversationFragment;
 
 public class ConversationActivity extends AppCompatActivity {
 
-    private static final String TAG = ConversationActivity.class.getSimpleName();
-
-    @BindView(R.id.main_toolbar)
-    Toolbar mToolbar;
-
-    @Inject
-    ConversationFacade mConversationFacade;
-
     static final long REFRESH_INTERVAL_MS = 30 * 1000;
-
+    private static final String TAG = ConversationActivity.class.getSimpleName();
     private final Handler mRefreshTaskHandler = new Handler();
-
-    private ConversationFragment mConversationFragment;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_conversation);
-
-        ButterKnife.bind(this);
-        setSupportActionBar(mToolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
     private final Runnable refreshTask = new Runnable() {
         private long lastRefresh = 0;
 
@@ -77,6 +54,22 @@ public class ConversationActivity extends AppCompatActivity {
             mRefreshTaskHandler.postAtTime(this, lastRefresh + REFRESH_INTERVAL_MS);
         }
     };
+    @BindView(R.id.main_toolbar)
+    Toolbar mToolbar;
+    @Inject
+    ConversationFacade mConversationFacade;
+    private ConversationFragment mConversationFragment;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_conversation);
+
+        ButterKnife.bind(this);
+        setSupportActionBar(mToolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -17,7 +17,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cx.ring.fragments;
 
 import android.app.Activity;
@@ -52,6 +51,62 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
 
     private PreferenceCategory credentialsCategory;
     private PreferenceCategory tlsCategory;
+    private Preference.OnPreferenceChangeListener editCredentialListener = new Preference.OnPreferenceChangeListener() {
+
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            // We need the old and new value to correctly edit the list of credentials
+            Pair<AccountCredentials, AccountCredentials> result = (Pair<AccountCredentials, AccountCredentials>) newValue;
+            presenter.credentialEdited(new Tuple<>(result.first, result.second));
+            return false;
+        }
+    };
+    private Preference.OnPreferenceChangeListener addCredentialListener = new Preference.OnPreferenceChangeListener() {
+
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            Pair<AccountCredentials, AccountCredentials> result = (Pair<AccountCredentials, AccountCredentials>) newValue;
+            presenter.credentialAdded(new Tuple<>(result.first, result.second));
+            return false;
+        }
+    };
+    private Preference.OnPreferenceClickListener filePickerListener = new Preference.OnPreferenceClickListener() {
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+            if (preference.getKey().contentEquals(ConfigKey.TLS_CA_LIST_FILE.key())) {
+                performFileSearch(SELECT_CA_LIST_RC);
+            }
+            if (preference.getKey().contentEquals(ConfigKey.TLS_PRIVATE_KEY_FILE.key())) {
+                performFileSearch(SELECT_PRIVATE_KEY_RC);
+            }
+            if (preference.getKey().contentEquals(ConfigKey.TLS_CERTIFICATE_FILE.key())) {
+                performFileSearch(SELECT_CERTIFICATE_RC);
+            }
+            return true;
+        }
+    };
+    private Preference.OnPreferenceChangeListener tlsListener = new Preference.OnPreferenceChangeListener() {
+
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            ConfigKey key = ConfigKey.fromString(preference.getKey());
+
+            if (preference.getKey().contentEquals(ConfigKey.TLS_ENABLE.key())) {
+                if ((Boolean) newValue) {
+                    key = ConfigKey.STUN_ENABLE;
+                    newValue = false;
+                }
+            }
+
+            if (!(preference instanceof TwoStatePreference)) {
+                preference.setSummary((String) newValue);
+            }
+
+            presenter.tlsChanged(key, newValue);
+
+            return true;
+        }
+    };
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
@@ -108,66 +163,6 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
             i++;
         }
     }
-
-    private Preference.OnPreferenceChangeListener editCredentialListener = new Preference.OnPreferenceChangeListener() {
-
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            // We need the old and new value to correctly edit the list of credentials
-            Pair<AccountCredentials, AccountCredentials> result = (Pair<AccountCredentials, AccountCredentials>) newValue;
-            presenter.credentialEdited(new Tuple<>(result.first, result.second));
-            return false;
-        }
-    };
-
-    private Preference.OnPreferenceChangeListener addCredentialListener = new Preference.OnPreferenceChangeListener() {
-
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Pair<AccountCredentials, AccountCredentials> result = (Pair<AccountCredentials, AccountCredentials>) newValue;
-            presenter.credentialAdded(new Tuple<>(result.first, result.second));
-            return false;
-        }
-    };
-
-    private Preference.OnPreferenceClickListener filePickerListener = new Preference.OnPreferenceClickListener() {
-        @Override
-        public boolean onPreferenceClick(Preference preference) {
-            if (preference.getKey().contentEquals(ConfigKey.TLS_CA_LIST_FILE.key())) {
-                performFileSearch(SELECT_CA_LIST_RC);
-            }
-            if (preference.getKey().contentEquals(ConfigKey.TLS_PRIVATE_KEY_FILE.key())) {
-                performFileSearch(SELECT_PRIVATE_KEY_RC);
-            }
-            if (preference.getKey().contentEquals(ConfigKey.TLS_CERTIFICATE_FILE.key())) {
-                performFileSearch(SELECT_CERTIFICATE_RC);
-            }
-            return true;
-        }
-    };
-
-    private Preference.OnPreferenceChangeListener tlsListener = new Preference.OnPreferenceChangeListener() {
-
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            ConfigKey key = ConfigKey.fromString(preference.getKey());
-
-            if (preference.getKey().contentEquals(ConfigKey.TLS_ENABLE.key())) {
-                if ((Boolean) newValue) {
-                    key = ConfigKey.STUN_ENABLE;
-                    newValue = false;
-                }
-            }
-
-            if (!(preference instanceof TwoStatePreference)) {
-                preference.setSummary((String) newValue);
-            }
-
-            presenter.tlsChanged(key, newValue);
-
-            return true;
-        }
-    };
 
     @Override
     public void setDetails(AccountConfig config, String[] tlsMethods) {

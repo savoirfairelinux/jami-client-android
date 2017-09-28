@@ -10,8 +10,10 @@
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
+ *
+ * Modified by: Loïc Siret <loic.siret@savoirfairelinux.com>
+ *
  */
-
 package cx.ring.tv.cards;
 
 import android.graphics.Color;
@@ -23,11 +25,11 @@ import android.support.annotation.DrawableRes;
  */
 public class Card {
 
+    int mLocalImageResource = -1;
     private String mTitle = "";
     private CharSequence mDescription = "";
     /*not used at the moment but will be use in futur*/
     private String mFooterColor = null;
-    int  mLocalImageResource = -1;
     /*not used at the moment but will be use in futur*/
     private String mFooterResource = null;
     private Card.Type mType;
@@ -83,7 +85,9 @@ public class Card {
         mDescription = description;
     }
 
-    public @DrawableRes int getLocalImageResource() {
+    public
+    @DrawableRes
+    int getLocalImageResource() {
         return mLocalImageResource;
     }
 

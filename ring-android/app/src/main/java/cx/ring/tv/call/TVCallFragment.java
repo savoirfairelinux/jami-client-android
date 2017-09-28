@@ -128,6 +128,34 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         return countDownFragment;
     }
 
+    public static int callStateToHumanState(final int state) {
+        switch (state) {
+            case SipCall.State.SEARCHING:
+                return R.string.call_human_state_searching;
+            case SipCall.State.CONNECTING:
+                return R.string.call_human_state_connecting;
+            case SipCall.State.RINGING:
+                return R.string.call_human_state_ringing;
+            case SipCall.State.CURRENT:
+                return R.string.call_human_state_current;
+            case SipCall.State.HUNGUP:
+                return R.string.call_human_state_hungup;
+            case SipCall.State.BUSY:
+                return R.string.call_human_state_busy;
+            case SipCall.State.FAILURE:
+                return R.string.call_human_state_failure;
+            case SipCall.State.HOLD:
+                return R.string.call_human_state_hold;
+            case SipCall.State.UNHOLD:
+                return R.string.call_human_state_unhold;
+            case SipCall.State.OVER:
+                return R.string.call_human_state_over;
+            case SipCall.State.NONE:
+            default:
+                return R.string.call_human_state_none;
+        }
+    }
+
     @Override
     protected void initPresenter(CallPresenter presenter) {
         super.initPresenter(presenter);
@@ -444,34 +472,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @Override
     public void finish() {
         getActivity().finish();
-    }
-
-    public static int callStateToHumanState(final int state) {
-        switch (state) {
-            case SipCall.State.SEARCHING:
-                return R.string.call_human_state_searching;
-            case SipCall.State.CONNECTING:
-                return R.string.call_human_state_connecting;
-            case SipCall.State.RINGING:
-                return R.string.call_human_state_ringing;
-            case SipCall.State.CURRENT:
-                return R.string.call_human_state_current;
-            case SipCall.State.HUNGUP:
-                return R.string.call_human_state_hungup;
-            case SipCall.State.BUSY:
-                return R.string.call_human_state_busy;
-            case SipCall.State.FAILURE:
-                return R.string.call_human_state_failure;
-            case SipCall.State.HOLD:
-                return R.string.call_human_state_hold;
-            case SipCall.State.UNHOLD:
-                return R.string.call_human_state_unhold;
-            case SipCall.State.OVER:
-                return R.string.call_human_state_over;
-            case SipCall.State.NONE:
-            default:
-                return R.string.call_human_state_none;
-        }
     }
 
     @OnClick({R.id.call_hangup_btn})

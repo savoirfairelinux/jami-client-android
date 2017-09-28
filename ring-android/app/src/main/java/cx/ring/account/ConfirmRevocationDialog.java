@@ -39,27 +39,17 @@ import butterknife.OnEditorAction;
 import cx.ring.R;
 
 public class ConfirmRevocationDialog extends DialogFragment {
-    static final String TAG = ConfirmRevocationDialog.class.getSimpleName();
     public static final String DEVICEID_KEY = "deviceid_key";
-
-    private String mDeviceId;
-
-    public interface ConfirmRevocationListener {
-        void onConfirmRevocation(String deviceId, String password);
-    }
-
+    static final String TAG = ConfirmRevocationDialog.class.getSimpleName();
     @BindView(R.id.ring_password_txt_box)
     protected TextInputLayout mPasswordTxtBox;
-
     @BindView(R.id.ring_password_txt)
     protected EditText mPasswordTxt;
-
     @BindString(R.string.enter_password)
     protected String mPromptPassword;
-
     @BindString(R.string.revoke_device_title)
     protected String mRegisterTitle;
-
+    private String mDeviceId;
     private ConfirmRevocationListener mListener = null;
 
     public void setListener(ConfirmRevocationListener listener) {
@@ -138,5 +128,9 @@ public class ConfirmRevocationDialog extends DialogFragment {
             }
         }
         return false;
+    }
+
+    public interface ConfirmRevocationListener {
+        void onConfirmRevocation(String deviceId, String password);
     }
 }

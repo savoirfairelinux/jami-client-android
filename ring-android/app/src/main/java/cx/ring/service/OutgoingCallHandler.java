@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2015-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2015-2017 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
@@ -17,7 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 package cx.ring.service;
 
 import android.content.BroadcastReceiver;
@@ -30,15 +29,13 @@ import cx.ring.R;
 import cx.ring.client.CallActivity;
 import cx.ring.model.Uri;
 
-public class OutgoingCallHandler extends BroadcastReceiver
-{
-    private static final String TAG = OutgoingCallHandler.class.getSimpleName();
+public class OutgoingCallHandler extends BroadcastReceiver {
     public static final String KEY_CACHE_HAVE_RINGACCOUNT = "cache_haveRingAccount";
     public static final String KEY_CACHE_HAVE_SIPACCOUNT = "cache_haveSipAccount";
+    private static final String TAG = OutgoingCallHandler.class.getSimpleName();
 
     @Override
-    public void onReceive(Context context, Intent intent)
-    {
+    public void onReceive(Context context, Intent intent) {
         String phoneNumber = getResultData();
         if (phoneNumber == null)
             phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);

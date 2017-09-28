@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2015-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2015-2017 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
@@ -113,6 +113,12 @@ class CodecPreference extends Preference {
         listAdapter.setDataset(codecs);
     }
 
+    void refresh() {
+        if (null != this.listAdapter) {
+            this.listAdapter.notifyDataSetChanged();
+        }
+    }
+
     private static class CodecAdapter extends BaseAdapter {
 
         ArrayList<Codec> items;
@@ -210,12 +216,6 @@ class CodecPreference extends Preference {
             public TextView name;
             public TextView samplerate;
             public CheckBox enabled;
-        }
-    }
-
-    void refresh() {
-        if (null != this.listAdapter) {
-            this.listAdapter.notifyDataSetChanged();
         }
     }
 }

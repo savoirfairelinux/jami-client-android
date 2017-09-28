@@ -38,22 +38,14 @@ import butterknife.OnEditorAction;
 import cx.ring.R;
 
 public class RenameDeviceDialog extends DialogFragment {
-    static final String TAG = RenameDeviceDialog.class.getSimpleName();
     public static final String DEVICENAME_KEY = "devicename_key";
-
-    public interface RenameDeviceListener {
-        void onDeviceRename(String newName);
-    }
-
+    static final String TAG = RenameDeviceDialog.class.getSimpleName();
     @BindView(R.id.ring_device_name_txt_box)
     public TextInputLayout mDeviceNameTxtBox;
-
-    @BindString(R.string.account_device_name_empty)
-    protected String mPromptDeviceName;
-
     @BindView(R.id.ring_device_name_txt)
     public EditText mDeviceNameTxt;
-
+    @BindString(R.string.account_device_name_empty)
+    protected String mPromptDeviceName;
     private RenameDeviceListener mListener = null;
 
     public void setListener(RenameDeviceListener listener) {
@@ -125,5 +117,9 @@ public class RenameDeviceDialog extends DialogFragment {
             }
         }
         return false;
+    }
+
+    public interface RenameDeviceListener {
+        void onDeviceRename(String newName);
     }
 }

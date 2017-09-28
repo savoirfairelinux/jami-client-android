@@ -16,7 +16,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cx.ring.account;
 
 import android.graphics.Color;
@@ -143,6 +142,17 @@ public class AccountsAdapter extends BaseAdapter {
         return rowView;
     }
 
+    public void replaceAll(List<Account> results) {
+        Log.d(TAG, "AccountsAdapter replaceAll " + results.size());
+        accounts.clear();
+        accounts.addAll(results);
+        notifyDataSetChanged();
+    }
+
+    public interface AccountListeners {
+        void onItemClicked(String accountId, HashMap<String, String> details);
+    }
+
     /**
      * ******************
      * ViewHolder Pattern
@@ -154,16 +164,5 @@ public class AccountsAdapter extends BaseAdapter {
         public View loadingIndicator;
         public ImageView errorIndicator;
         public CheckBox enabled;
-    }
-
-    public void replaceAll(List<Account> results) {
-        Log.d(TAG, "AccountsAdapter replaceAll " + results.size());
-        accounts.clear();
-        accounts.addAll(results);
-        notifyDataSetChanged();
-    }
-
-    public interface AccountListeners {
-        void onItemClicked(String accountId, HashMap<String, String> details);
     }
 }

@@ -1,4 +1,4 @@
-package cx.ring.tv.launch;/*
+/*
  *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
@@ -17,6 +17,7 @@ package cx.ring.tv.launch;/*
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+package cx.ring.tv.launch;
 
 import android.Manifest;
 import android.app.AlertDialog;

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2016-2017 Savoir-faire Linux Inc.
  *
  *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
  *  Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
@@ -42,11 +42,9 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     private static final String RING_SYSTEM_CONTACTS = "system_contacts";
     private static final String RING_PLACE_CALLS = "place_calls";
     private static final String RING_ON_STARTUP = "on_startup";
-
+    private final Map<String, Set<String>> mNotifiedRequests = new HashMap<>();
     @Inject
     protected Context mContext;
-
-    private final Map<String, Set<String>> mNotifiedRequests = new HashMap<>();
 
     public SharedPreferencesServiceImpl() {
         mUserSettings = null;

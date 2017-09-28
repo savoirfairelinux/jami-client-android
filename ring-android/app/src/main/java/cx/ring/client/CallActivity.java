@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -19,7 +19,6 @@
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 package cx.ring.client;
 
 import android.app.FragmentManager;
@@ -38,16 +37,11 @@ import cx.ring.model.Uri;
 import cx.ring.services.NotificationService;
 
 public class CallActivity extends AppCompatActivity {
-    static final String TAG = CallActivity.class.getSimpleName();
-
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
-
-    private View mMainView;
-
-
+    static final String TAG = CallActivity.class.getSimpleName();
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
-
+    private View mMainView;
     private int currentOrientation = Configuration.ORIENTATION_PORTRAIT;
     private boolean dimmed = false;
 

@@ -11,7 +11,6 @@
  *  or implied. See the License for the specific language governing permissions and limitations under
  *  the License.
  */
-
 package cx.ring.tv.cards;
 
 import java.util.List;
@@ -35,12 +34,27 @@ public class CardRow {
     private String mTitle;
     private List<Card> mCards;
 
+    public CardRow(int pType, boolean pShadow, String pTitle, List<Card> pCards) {
+        mType = pType;
+        mShadow = pShadow;
+        mTitle = pTitle;
+        mCards = pCards;
+    }
+
     public int getType() {
         return mType;
     }
 
+    public void setType(int pType) {
+        mType = pType;
+    }
+
     public String getTitle() {
         return mTitle;
+    }
+
+    public void setTitle(String pTitle) {
+        mTitle = pTitle;
     }
 
     public boolean useShadow() {
@@ -51,26 +65,11 @@ public class CardRow {
         return mCards;
     }
 
-    public void setType(int pType) {
-        mType = pType;
-    }
-
-    public void setShadow(boolean pShadow) {
-        mShadow = pShadow;
-    }
-
-    public void setTitle(String pTitle) {
-        mTitle = pTitle;
-    }
-
     public void setCards(List<Card> pCards) {
         mCards = pCards;
     }
 
-    public CardRow(int pType, boolean pShadow, String pTitle, List<Card> pCards) {
-        mType = pType;
+    public void setShadow(boolean pShadow) {
         mShadow = pShadow;
-        mTitle = pTitle;
-        mCards = pCards;
     }
 }

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2015-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2015-2017 Savoir-faire Linux Inc.
  *
  *  Authors:    Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *              Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
@@ -18,7 +18,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 package cx.ring.adapters;
 
 import android.content.Context;
@@ -51,22 +50,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     private final ArrayList<Conversation.ConversationElement> mTexts = new ArrayList<>();
     private byte[] mPhoto;
-
-    public enum ConversationMessageType {
-        INCOMING_TEXT_MESSAGE(0),
-        OUTGOING_TEXT_MESSAGE(1),
-        CALL_INFORMATION_TEXT_MESSAGE(2);
-
-        int type;
-
-        ConversationMessageType(int p) {
-            type = p;
-        }
-
-        public int getType() {
-            return type;
-        }
-    }
 
     /**
      * Refreshes the data and notifies the changes
@@ -336,5 +319,21 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             sameConfig = true;
         }
         return sameConfig;
+    }
+
+    public enum ConversationMessageType {
+        INCOMING_TEXT_MESSAGE(0),
+        OUTGOING_TEXT_MESSAGE(1),
+        CALL_INFORMATION_TEXT_MESSAGE(2);
+
+        int type;
+
+        ConversationMessageType(int p) {
+            type = p;
+        }
+
+        public int getType() {
+            return type;
+        }
     }
 }

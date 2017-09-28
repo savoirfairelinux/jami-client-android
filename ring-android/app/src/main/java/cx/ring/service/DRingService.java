@@ -1,6 +1,6 @@
 /*
   Copyright (C) 2010-2012 Regis Montoya (aka r3gis - www.r3gis.fr)
-  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
   <p>
   Author: Regis Montoya <r3gis.3R@gmail.com>
   Author: Emeric Vigier <emeric.vigier@savoirfairelinux.com>
@@ -91,127 +91,17 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
 
     private static final String TAG = DRingService.class.getName();
-
+    private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
     @Inject
     protected DaemonService mDaemonService;
-
     @Inject
     protected CallService mCallService;
-
     @Inject
     protected ConferenceService mConferenceService;
-
     @Inject
     protected AccountService mAccountService;
-
     @Inject
     protected HardwareService mHardwareService;
-
-    @Inject
-    protected DeviceRuntimeService mDeviceRuntimeService;
-
-    @Inject
-    protected NotificationService mNotificationService;
-
-    @Inject
-    protected ContactService mContactService;
-
-    @Inject
-    protected PreferencesService mPreferencesService;
-
-    @Inject
-    protected ConversationFacade mConversationFacade;
-
-    @Inject
-    @Named("DaemonExecutor")
-    protected ExecutorService mExecutor;
-
-    private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
-
-    @Override
-    public void onCreate() {
-        Log.i(TAG, "onCreated");
-        super.onCreate();
-
-        // dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
-
-        if (mDeviceRuntimeService.hasContactPermission()) {
-            getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver);
-        }
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            intentFilter.addAction(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED);
-        }
-        registerReceiver(receiver, intentFilter);
-        updateConnectivityState();
-
-        mPreferencesService.addObserver(this);
-        mAccountService.addObserver(this);
-        mConversationFacade.addObserver(this);
-        mCallService.addObserver(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(receiver);
-        getContentResolver().unregisterContentObserver(contactContentObserver);
-
-        mPreferencesService.removeObserver(this);
-        mAccountService.removeObserver(this);
-        mConversationFacade.removeObserver(this);
-        mCallService.removeObserver(this);
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
-
-        if (intent != null && intent.getAction() != null) {
-            parseIntent(intent);
-        }
-
-        return START_STICKY; /* started and stopped explicitly */
-    }
-
-    @Override
-    public IBinder onBind(Intent arg0) {
-        Log.i(TAG, "onBound");
-        return mBinder;
-    }
-
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "BroadcastReceiver onReceive " + intent.getAction());
-            switch (intent.getAction()) {
-                case PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED:
-                case ConnectivityManager.CONNECTIVITY_ACTION:
-                case RingApplication.DRING_CONNECTION_CHANGED: {
-                    updateConnectivityState();
-                    break;
-                }
-            }
-        }
-    };
-
-    private void updateConnectivityState() {
-        if (mDaemonService.isStarted()) {
-            mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
-            mHardwareService.connectivityChanged();
-        }
-    }
-
-    /* ************************************
-     *
-     * Implement public interface for the service
-     *
-     * *********************************
-     */
-
     protected final IDRingService.Stub mBinder = new IDRingService.Stub() {
 
         @Override
@@ -426,6 +316,11 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         }
 
         @Override
+        public void setRecordPath(final String path) throws RemoteException {
+            mCallService.setRecordPath(path);
+        }
+
+        @Override
         public boolean toggleRecordingCall(final String id) throws RemoteException {
             return mCallService.toggleRecordingCall(id);
         }
@@ -438,11 +333,6 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         @Override
         public void stopRecordedFilePlayback(final String filepath) throws RemoteException {
             mCallService.stopRecordedFilePlayback(filepath);
-        }
-
-        @Override
-        public void setRecordPath(final String path) throws RemoteException {
-            mCallService.setRecordPath(path);
         }
 
         @Override
@@ -590,6 +480,102 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
             mAccountService.registerName(account, password, name);
         }
     };
+    @Inject
+    protected DeviceRuntimeService mDeviceRuntimeService;
+    @Inject
+    protected NotificationService mNotificationService;
+    @Inject
+    protected ContactService mContactService;
+    @Inject
+    protected PreferencesService mPreferencesService;
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "BroadcastReceiver onReceive " + intent.getAction());
+            switch (intent.getAction()) {
+                case PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED:
+                case ConnectivityManager.CONNECTIVITY_ACTION:
+                case RingApplication.DRING_CONNECTION_CHANGED: {
+                    updateConnectivityState();
+                    break;
+                }
+            }
+        }
+    };
+    @Inject
+    protected ConversationFacade mConversationFacade;
+    @Inject
+    @Named("DaemonExecutor")
+    protected ExecutorService mExecutor;
+
+    @Override
+    public void onCreate() {
+        Log.i(TAG, "onCreated");
+        super.onCreate();
+
+        // dependency injection
+        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+
+        if (mDeviceRuntimeService.hasContactPermission()) {
+            getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver);
+        }
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            intentFilter.addAction(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED);
+        }
+        registerReceiver(receiver, intentFilter);
+        updateConnectivityState();
+
+        mPreferencesService.addObserver(this);
+        mAccountService.addObserver(this);
+        mConversationFacade.addObserver(this);
+        mCallService.addObserver(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+        getContentResolver().unregisterContentObserver(contactContentObserver);
+
+        mPreferencesService.removeObserver(this);
+        mAccountService.removeObserver(this);
+        mConversationFacade.removeObserver(this);
+        mCallService.removeObserver(this);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
+
+        if (intent != null && intent.getAction() != null) {
+            parseIntent(intent);
+        }
+
+        return START_STICKY; /* started and stopped explicitly */
+    }
+
+    @Override
+    public IBinder onBind(Intent arg0) {
+        Log.i(TAG, "onBound");
+        return mBinder;
+    }
+
+    /* ************************************
+     *
+     * Implement public interface for the service
+     *
+     * *********************************
+     */
+
+    private void updateConnectivityState() {
+        if (mDaemonService.isStarted()) {
+            mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
+            mHardwareService.connectivityChanged();
+        }
+    }
 
     private void parseIntent(Intent intent) {
         Bundle extras;
@@ -672,36 +658,25 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 mNotificationService.cancelCallNotification(callId.hashCode());
                 break;
             case ACTION_CALL_VIEW:
-                if (isTv()){
+                if (isTv()) {
                     startActivity(new Intent(Intent.ACTION_VIEW)
                             .putExtras(extras)
                             .setClass(getApplicationContext(), TVCallActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
 
-                }else {
+                } else {
                     startActivity(new Intent(Intent.ACTION_VIEW)
                             .putExtras(extras)
                             .setClass(getApplicationContext(), CallActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
-                } break;
+                }
+                break;
         }
     }
+
     private boolean isTv() {
         UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
         return (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION);
-    }
-    private class ContactsContentObserver extends ContentObserver {
-
-        ContactsContentObserver() {
-            super(null);
-        }
-
-        @Override
-        public void onChange(boolean selfChange, android.net.Uri uri) {
-            super.onChange(selfChange, uri);
-            Log.d(TAG, "ContactsContentObserver.onChange");
-            mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount());
-        }
     }
 
     public void refreshContacts() {
@@ -731,9 +706,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                     refreshContacts();
                     break;
             }
-        }
-
-        else if (observable instanceof CallService && arg != null) {
+        } else if (observable instanceof CallService && arg != null) {
             switch (arg.getEventType()) {
                 case INCOMING_CALL:
 
@@ -750,6 +723,20 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                     }
                     break;
             }
+        }
+    }
+
+    private class ContactsContentObserver extends ContentObserver {
+
+        ContactsContentObserver() {
+            super(null);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, android.net.Uri uri) {
+            super.onChange(selfChange, uri);
+            Log.d(TAG, "ContactsContentObserver.onChange");
+            mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount());
         }
     }
 }
