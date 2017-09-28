@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2016-2017 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
@@ -16,7 +16,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cx.ring.views;
 
 import android.app.AlertDialog;
@@ -82,7 +81,7 @@ public class CredentialPreferenceDialog extends PreferenceDialogFragment {
         mUsernameField = (EditText) view.findViewById(R.id.credentials_username);
         mPasswordField = (EditText) view.findViewById(R.id.credentials_password);
         mRealmField = (EditText) view.findViewById(R.id.credentials_realm);
-        if(mUsernameField == null) {
+        if (mUsernameField == null) {
             throw new IllegalStateException("Dialog view must contain an EditText with id @id/credentials_username");
         } else if (creds != null) {
             mUsernameField.setText(creds.getUsername());
@@ -92,7 +91,7 @@ public class CredentialPreferenceDialog extends PreferenceDialogFragment {
     }
 
     private CredentialsPreference getCredentialsPreference() {
-        return (CredentialsPreference)this.getPreference();
+        return (CredentialsPreference) this.getPreference();
     }
 
     protected boolean needInputMethod() {
@@ -104,8 +103,8 @@ public class CredentialPreferenceDialog extends PreferenceDialogFragment {
                 mUsernameField.getText().toString(),
                 mPasswordField.getText().toString(),
                 mRealmField.getText().toString());
-        if(positiveResult) {
-            if(this.getCredentialsPreference().callChangeListener(new Pair<>(creds, newcreds))) {
+        if (positiveResult) {
+            if (this.getCredentialsPreference().callChangeListener(new Pair<>(creds, newcreds))) {
                 this.getCredentialsPreference().setCreds(newcreds);
             }
         }

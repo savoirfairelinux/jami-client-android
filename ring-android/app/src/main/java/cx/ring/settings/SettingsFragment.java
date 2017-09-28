@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author:     Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *              Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
@@ -53,19 +53,15 @@ import cx.ring.mvp.GenericView;
  */
 public class SettingsFragment extends BaseFragment<SettingsPresenter> implements GenericView<SettingsViewModel> {
 
-    private boolean mIsRefreshingViewFromPresenter;
-
     @BindView(R.id.settings_mobile_data)
     Switch mViewMobileData;
-
     @BindView(R.id.settings_contacts)
     Switch mViewContacts;
-
     @BindView(R.id.settings_place_call)
     Switch mViewPlaceCall;
-
     @BindView(R.id.settings_startup)
     Switch mViewStartup;
+    private boolean mIsRefreshingViewFromPresenter;
 
     @Override
     public int getLayout() {

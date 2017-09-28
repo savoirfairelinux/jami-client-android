@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -60,6 +60,34 @@ public class AdvancedAccountFragment extends PreferenceFragment {
     protected AccountService mAccountService;
 
     private String mAccountID;
+    Preference.OnPreferenceChangeListener changeAdvancedPreferenceListener = new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            final Account account = mAccountService.getAccount(mAccountID);
+            final ConfigKey key = ConfigKey.fromString(preference.getKey());
+            Log.i(TAG, "Changing " + preference.getKey() + " value: " + newValue);
+
+            if (preference instanceof TwoStatePreference) {
+                if (key != null && key.equals(ConfigKey.DHT_PUBLIC_IN)) {
+                    mConversationFacade.clearConversations();
+                }
+                account.setDetail(key, newValue.toString());
+            } else if (preference instanceof PasswordPreference) {
+                account.setDetail(key, newValue.toString());
+                preference.setSummary(TextUtils.isEmpty(newValue.toString()) ? "" : "******");
+            } else {
+                if (key == ConfigKey.AUDIO_PORT_MAX || key == ConfigKey.AUDIO_PORT_MIN) {
+                    newValue = adjustRtpRange(Integer.valueOf((String) newValue));
+                }
+                preference.setSummary(newValue.toString());
+                account.setDetail(key, newValue.toString());
+            }
+
+            mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
+            mAccountService.setAccountDetails(mAccountID, account.getDetails());
+            return true;
+        }
+    };
 
     @Override
     public void onResume() {
@@ -152,35 +180,6 @@ public class AdvancedAccountFragment extends PreferenceFragment {
         }
         return result;
     }
-
-    Preference.OnPreferenceChangeListener changeAdvancedPreferenceListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            final Account account = mAccountService.getAccount(mAccountID);
-            final ConfigKey key = ConfigKey.fromString(preference.getKey());
-            Log.i(TAG, "Changing " + preference.getKey() + " value: " + newValue);
-
-            if (preference instanceof TwoStatePreference) {
-                if (key != null && key.equals(ConfigKey.DHT_PUBLIC_IN)) {
-                    mConversationFacade.clearConversations();
-                }
-                account.setDetail(key, newValue.toString());
-            } else if (preference instanceof PasswordPreference) {
-                account.setDetail(key, newValue.toString());
-                preference.setSummary(TextUtils.isEmpty(newValue.toString()) ? "" : "******");
-            } else {
-                if (key == ConfigKey.AUDIO_PORT_MAX || key == ConfigKey.AUDIO_PORT_MIN) {
-                    newValue = adjustRtpRange(Integer.valueOf((String) newValue));
-                }
-                preference.setSummary(newValue.toString());
-                account.setDetail(key, newValue.toString());
-            }
-
-            mAccountService.setCredentials(mAccountID, account.getCredentialsHashMapList());
-            mAccountService.setAccountDetails(mAccountID, account.getDetails());
-            return true;
-        }
-    };
 
     private String adjustRtpRange(int newValue) {
         if (newValue < 1024) {

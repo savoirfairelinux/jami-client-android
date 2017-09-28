@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
@@ -17,7 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 package cx.ring.fragments;
 
 import android.app.Activity;
@@ -60,19 +59,14 @@ import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
 public class AccountMigrationFragment extends Fragment implements Observer<ServiceEvent> {
-    static final String TAG = AccountMigrationFragment.class.getSimpleName();
-
     public static final String ACCOUNT_ID = "ACCOUNT_ID";
-
-    private String mAccountId;
-
+    static final String TAG = AccountMigrationFragment.class.getSimpleName();
     @Inject
     AccountService mAccountService;
-
     // UI references.
     @BindView(R.id.ring_password)
     EditText mRingPassword;
-
+    private String mAccountId;
     private ProgressDialog mProgress = null;
 
     private boolean migratingAccount = false;

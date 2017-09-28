@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Beraud <adrien.beraud@savoirfairelinux.com>
  *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
@@ -83,32 +83,26 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         ActivityCompat.OnRequestPermissionsResultCallback,
         Observer<ServiceEvent> {
 
-    static final String TAG = HomeActivity.class.getSimpleName();
-
     public static final int REQUEST_CODE_CREATE_ACCOUNT = 7;
     public static final int REQUEST_CODE_CALL = 3;
     public static final int REQUEST_CODE_CONVERSATION = 4;
-
     public static final int REQUEST_CODE_PHOTO = 5;
     public static final int REQUEST_CODE_GALLERY = 6;
     public static final int REQUEST_PERMISSION_CAMERA = 113;
     public static final int REQUEST_PERMISSION_READ_STORAGE = 114;
-
     public static final String HOME_TAG = "Home";
     public static final String CONTACT_REQUESTS_TAG = "Trust request";
     public static final String ACCOUNTS_TAG = "Accounts";
     public static final String ABOUT_TAG = "About";
     public static final String SETTINGS_TAG = "Prefs";
     public static final String SHARE_TAG = "Share";
-    private static final String NAVIGATION_TAG = "Navigation";
     static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
-
-    private boolean mIsMigrationDialogAlreadyShowed;
-
-    private ActionBarDrawerToggle mDrawerToggle;
-    private Boolean isDrawerLocked = false;
-    private String mAccountWithPendingrequests = null;
-
+    static final String TAG = HomeActivity.class.getSimpleName();
+    private static final String NAVIGATION_TAG = "Navigation";
+    private final Handler mHandler = new Handler();
+    protected android.app.Fragment fContent;
+    protected RingNavigationFragment fNavigation;
+    protected ConversationFragment fConversation;
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
@@ -120,36 +114,33 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
     @Inject
     AccountService mAccountService;
-
+    private final Runnable mConnectivityChecker = new Runnable() {
+        @Override
+        public void run() {
+            mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
+        }
+    };
     @Inject
     NotificationService mNotificationService;
-
     @BindView(R.id.left_drawer)
     NavigationView mNavigationView;
-
     @BindView(R.id.drawer_layout)
     DrawerLayout mNavigationDrawer;
-
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
-
     @BindView(R.id.toolbar_spacer)
     LinearLayout mToolbarSpacerView;
-
     @BindView(R.id.toolbar_spacer_title)
     TextView mToolbarSpacerTitle;
-
     @BindView(R.id.action_button)
     FloatingActionButton actionButton;
-
     @BindView(R.id.content_frame)
     RelativeLayout mFrameLayout;
-
+    private boolean mIsMigrationDialogAlreadyShowed;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private Boolean isDrawerLocked = false;
+    private String mAccountWithPendingrequests = null;
     private float mToolbarSize;
-    protected android.app.Fragment fContent;
-    protected RingNavigationFragment fNavigation;
-    protected ConversationFragment fConversation;
-    private final Handler mHandler = new Handler();
 
     @Override
     public void update(Observable o, ServiceEvent event) {
@@ -169,10 +160,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                 break;
         }
 
-    }
-
-    public interface Refreshable {
-        void refresh();
     }
 
     /* called before activity is killed, e.g. rotation */
@@ -426,13 +413,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         setVideoEnabledFromPermission();
     }
 
-    private final Runnable mConnectivityChecker = new Runnable() {
-        @Override
-        public void run() {
-            mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
-        }
-    };
-
     public void startConversationTablet(Bundle bundle) {
         fConversation = new ConversationFragment();
         fConversation.setArguments(bundle);
@@ -647,5 +627,9 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         if (!mDeviceRuntimeService.hasVideoPermission()) {
             mAccountService.setAccountsVideoEnabled(false);
         }
+    }
+
+    public interface Refreshable {
+        void refresh();
     }
 }

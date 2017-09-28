@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -18,7 +18,6 @@
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 package cx.ring.adapters;
 
 import android.content.ContentResolver;
@@ -46,34 +45,16 @@ import ezvcard.VCard;
 
 public class ContactDetailsTask implements Runnable {
     static final String TAG = ContactDetailsTask.class.getSimpleName();
-
-    private final CallContact mContact;
-
-    private Context mContext;
-
-    private final ArrayList<DetailsLoadedCallback> mCallbacks = new ArrayList<>(1);
-
-    private final int mViewWidth, mViewHeight;
-
     private final static String MIME_TYPE_JPG = "image/jpg";
     private final static String MIME_TYPE_JPEG = "image/jpeg";
     private final static String MIME_TYPE_PNG = "image/png";
     private final static int ORIENTATION_LEFT = 270;
     private final static int ORIENTATION_RIGHT = 90;
     private final static int MAX_IMAGE_DIMENSION = 200;
-
-    public void addCallback(DetailsLoadedCallback cb) {
-        synchronized (mCallbacks) {
-            if (cb == null) {
-                return;
-            }
-            mCallbacks.add(cb);
-        }
-    }
-
-    public interface DetailsLoadedCallback {
-        void onDetailsLoaded(Bitmap bmp, String formattedName, String username);
-    }
+    private final CallContact mContact;
+    private final ArrayList<DetailsLoadedCallback> mCallbacks = new ArrayList<>(1);
+    private final int mViewWidth, mViewHeight;
+    private Context mContext;
 
     public ContactDetailsTask(Context context, CallContact item, DetailsLoadedCallback cb) {
         mViewWidth = 0;
@@ -94,53 +75,6 @@ public class ContactDetailsTask implements Runnable {
             return null;
         }
         return BitmapFactory.decodeStream(input);
-    }
-
-    @Override
-    public void run() {
-        if (mContact == null) {
-            return;
-        }
-        Log.i(TAG, "ContactDetailsTask run " + mContact.getId() + " " + mContact.getDisplayName());
-
-        final Bitmap externalBMP;
-
-        if (!mContact.detailsLoaded && !mContact.getPhones().isEmpty()) {
-            String username = mContact.getPhones().get(0).getNumber().getRawRingId();
-            Log.d(TAG, "getPhones not empty. Username : " + username);
-            VCard vcard = VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), username + ".vcf");
-            mContact.setVCardProfile(vcard);
-        }
-
-        byte[] photo = mContact.getPhoto();
-        if (photo != null) {
-            externalBMP = BitmapUtils.cropImageToCircle(photo);
-
-        } else if (mContact.getId() > 0) {
-            Bitmap photoBmp;
-            try {
-                photoBmp = loadContactPhoto(mContext.getContentResolver(), mContact.getId());
-            } catch (IllegalArgumentException e) {
-                photoBmp = null;
-            }
-
-            if (photoBmp == null) {
-                photoBmp = decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture, mViewWidth, mViewHeight);
-            }
-
-            mContact.setPhoto(BitmapUtils.bitmapToBytes(photoBmp));
-            externalBMP = BitmapUtils.cropImageToCircle(photoBmp);
-            photoBmp.recycle();
-        } else {
-            externalBMP = decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture, mViewWidth, mViewHeight);
-        }
-
-        synchronized (mCallbacks) {
-            for (DetailsLoadedCallback cb : mCallbacks) {
-                cb.onDetailsLoaded(externalBMP, mContact.getDisplayName(), mContact.getRingUsername());
-            }
-            mCallbacks.clear();
-        }
     }
 
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId, int reqWidth, int reqHeight) {
@@ -245,5 +179,65 @@ public class ContactDetailsTask implements Runnable {
 
         cursor.moveToFirst();
         return cursor.getInt(0);
+    }
+
+    public void addCallback(DetailsLoadedCallback cb) {
+        synchronized (mCallbacks) {
+            if (cb == null) {
+                return;
+            }
+            mCallbacks.add(cb);
+        }
+    }
+
+    @Override
+    public void run() {
+        if (mContact == null) {
+            return;
+        }
+        Log.i(TAG, "ContactDetailsTask run " + mContact.getId() + " " + mContact.getDisplayName());
+
+        final Bitmap externalBMP;
+
+        if (!mContact.detailsLoaded && !mContact.getPhones().isEmpty()) {
+            String username = mContact.getPhones().get(0).getNumber().getRawRingId();
+            Log.d(TAG, "getPhones not empty. Username : " + username);
+            VCard vcard = VCardUtils.loadPeerProfileFromDisk(mContext.getFilesDir(), username + ".vcf");
+            mContact.setVCardProfile(vcard);
+        }
+
+        byte[] photo = mContact.getPhoto();
+        if (photo != null) {
+            externalBMP = BitmapUtils.cropImageToCircle(photo);
+
+        } else if (mContact.getId() > 0) {
+            Bitmap photoBmp;
+            try {
+                photoBmp = loadContactPhoto(mContext.getContentResolver(), mContact.getId());
+            } catch (IllegalArgumentException e) {
+                photoBmp = null;
+            }
+
+            if (photoBmp == null) {
+                photoBmp = decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture, mViewWidth, mViewHeight);
+            }
+
+            mContact.setPhoto(BitmapUtils.bitmapToBytes(photoBmp));
+            externalBMP = BitmapUtils.cropImageToCircle(photoBmp);
+            photoBmp.recycle();
+        } else {
+            externalBMP = decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture, mViewWidth, mViewHeight);
+        }
+
+        synchronized (mCallbacks) {
+            for (DetailsLoadedCallback cb : mCallbacks) {
+                cb.onDetailsLoaded(externalBMP, mContact.getDisplayName(), mContact.getRingUsername());
+            }
+            mCallbacks.clear();
+        }
+    }
+
+    public interface DetailsLoadedCallback {
+        void onDetailsLoaded(Bitmap bmp, String formattedName, String username);
     }
 }

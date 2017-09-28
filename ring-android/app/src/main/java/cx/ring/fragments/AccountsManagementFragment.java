@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
@@ -19,7 +19,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 package cx.ring.fragments;
 
 import android.content.Intent;
@@ -53,17 +52,14 @@ import cx.ring.utils.ContentUriHandler;
 
 public class AccountsManagementFragment extends BaseFragment<AccountsManagementPresenter> implements AccountsManagementView,
         AccountsAdapter.AccountListeners {
-    static final String TAG = AccountsManagementFragment.class.getSimpleName();
-
     public static final int ACCOUNT_CREATE_REQUEST = 1;
     public static final int ACCOUNT_EDIT_REQUEST = 2;
-    private AccountsAdapter mAccountsAdapter;
-
+    static final String TAG = AccountsManagementFragment.class.getSimpleName();
     @BindView(R.id.accounts_list)
     protected ListView mDnDListView;
-
     @BindView(R.id.empty_account_list)
     protected View mEmptyView;
+    private AccountsAdapter mAccountsAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

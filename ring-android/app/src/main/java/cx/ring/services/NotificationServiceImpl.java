@@ -18,7 +18,6 @@
 *  along with this program; if not, write to the Free Software
 *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
-
 package cx.ring.services;
 
 import android.app.PendingIntent;
@@ -75,23 +74,16 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     private static final String EXTRAS_NUMBER_TRUST_REQUEST_KEY = BuildConfig.APPLICATION_ID + "numberOfTrustRequestKey";
     private static final String EXTRAS_TRUST_REQUEST_FROM_KEY = BuildConfig.APPLICATION_ID + "trustRequestFrom";
-
-
+    private final SparseArray<NotificationCompat.Builder> mNotificationBuilders = new SparseArray<>();
     @Inject
     protected Context mContext;
-
     @Inject
     protected AccountService mAccountService;
-
-    @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
-
     @Inject
     protected PreferencesService mPreferencesService;
-
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
     private NotificationManagerCompat notificationManager;
-
-    private final SparseArray<NotificationCompat.Builder> mNotificationBuilders = new SparseArray<>();
 
     public void initHelper() {
         if (notificationManager == null) {

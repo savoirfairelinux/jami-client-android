@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
@@ -16,7 +16,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cx.ring.views;
 
 import android.content.Context;
@@ -26,9 +25,10 @@ import android.util.AttributeSet;
 public class EditTextIntegerPreference extends EditTextPreference {
 
     public EditTextIntegerPreference(Context context, AttributeSet attrs, int defStyleAttr,
-                                    int defStyleRes) {
+                                     int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
+
     public EditTextIntegerPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }

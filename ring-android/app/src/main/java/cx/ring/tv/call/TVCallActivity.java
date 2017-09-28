@@ -16,7 +16,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cx.ring.tv.call;
 
 import android.app.Activity;
@@ -33,8 +32,8 @@ import cx.ring.utils.Log;
 
 public class TVCallActivity extends Activity {
 
-    static final String TAG = TVCallActivity.class.getSimpleName();
     public static final String SHARED_ELEMENT_NAME = "shared_element";
+    static final String TAG = TVCallActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

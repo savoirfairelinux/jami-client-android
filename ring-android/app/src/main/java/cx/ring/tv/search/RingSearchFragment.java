@@ -52,12 +52,9 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         implements SearchFragment.SearchResultProvider, RingSearchView {
 
     private static final String TAG = RingSearchFragment.class.getSimpleName();
-
-    private ArrayObjectAdapter mRowsAdapter;
-
     @BindView(R.id.lb_search_text_editor)
     SearchEditText mTextEditor;
-
+    private ArrayObjectAdapter mRowsAdapter;
     private Unbinder mUnbinder;
 
     @Override
@@ -85,7 +82,7 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         super.onResume();
         //Disable voice recognition, it is not working properly for blockchain usernames
         setSearchQuery("", false);
-        if (mTextEditor!= null) {
+        if (mTextEditor != null) {
             mTextEditor.requestFocus();
         }
     }

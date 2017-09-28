@@ -52,7 +52,7 @@ public class TVAccountExport
     private ProgressDialog mWaitDialog;
     private String mIdAccount;
 
-    public static TVAccountExport createInstance(String idAccount){
+    public static TVAccountExport createInstance(String idAccount) {
         TVAccountExport fragment = new TVAccountExport();
         fragment.mIdAccount = idAccount;
         return fragment;

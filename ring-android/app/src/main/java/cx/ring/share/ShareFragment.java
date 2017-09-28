@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2015-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2015-2017 Savoir-faire Linux Inc.
  *
  *  Authors: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *           Alexandre Lision <alexandre.lision@savoirfairelinux.com>
@@ -17,7 +17,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cx.ring.share;
 
 import android.content.Intent;

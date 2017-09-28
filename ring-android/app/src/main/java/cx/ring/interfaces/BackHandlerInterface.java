@@ -1,7 +1,5 @@
-package cx.ring.interfaces;
-
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Loïc Siret <loic.siret@savoirfairelinux.com>
  *
@@ -18,6 +16,8 @@ package cx.ring.interfaces;
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+package cx.ring.interfaces;
+
 public interface BackHandlerInterface {
     boolean onBackPressed();
 }

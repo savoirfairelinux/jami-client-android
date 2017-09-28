@@ -29,7 +29,6 @@ import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.tv.cards.Card;
 
-
 public final class IconCardHelper {
 
     private IconCardHelper() {
@@ -64,7 +63,7 @@ public final class IconCardHelper {
     }
 
     public static IconCard getAccountAddDevice(Context pContext) {
-        return new IconCard(Card.Type.ACCOUNT_ADD_DEVICE, pContext.getString(R.string.account_link_export_button), "",R.drawable.ic_add_white);
+        return new IconCard(Card.Type.ACCOUNT_ADD_DEVICE, pContext.getString(R.string.account_link_export_button), "", R.drawable.ic_add_white);
     }
 
     private static CharSequence formatLicence(Context pContext) {
@@ -80,6 +79,6 @@ public final class IconCardHelper {
         SpannableString designedby = new SpannableString(res.getString(R.string.designed_by));
         designedby.setSpan(new UnderlineSpan(), 0, designedby.length(), 0);
         CharSequence design = res.getString(R.string.credits_designer).replaceAll("\n", "<br/>");
-        return Html.fromHtml("<b><u>" + developedby + "</u></b><br/>" + developed + "<br/><br/><b><u>" + designedby + "</u></b><br/>" + design+"<br/>");
+        return Html.fromHtml("<b><u>" + developedby + "</u></b><br/>" + developed + "<br/><br/><b><u>" + designedby + "</u></b><br/>" + design + "<br/>");
     }
 }

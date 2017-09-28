@@ -12,7 +12,6 @@
  * the License.
  *
  */
-
 package cx.ring.tv.cards;
 
 import android.content.Context;
@@ -23,8 +22,8 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 
 import cx.ring.R;
-import cx.ring.tv.cards.iconcards.IconCardPresenter;
 import cx.ring.tv.cards.contacts.ContactCardPresenter;
+import cx.ring.tv.cards.iconcards.IconCardPresenter;
 
 /**
  * This PresenterSelector will decide what Presenter to use depending on a given card's type.
@@ -54,13 +53,13 @@ public class CardPresenterSelector extends PresenterSelector {
                     presenter = new IconCardPresenter(mContext);
                     break;
                 case SEARCH_RESULT:
-                    presenter = new ContactCardPresenter(mContext,R.style.SearchCardTheme);
+                    presenter = new ContactCardPresenter(mContext, R.style.SearchCardTheme);
                     break;
                 case CONTACT:
-                    presenter = new ContactCardPresenter(mContext,R.style.ContactCardTheme);
+                    presenter = new ContactCardPresenter(mContext, R.style.ContactCardTheme);
                     break;
                 case CONTACT_WITH_USERNAME:
-                    presenter = new ContactCardPresenter(mContext,R.style.ContactCompleteCardTheme);
+                    presenter = new ContactCardPresenter(mContext, R.style.ContactCompleteCardTheme);
                     break;
                 default:
                     throw new InvalidParameterException("Uncatched card type");

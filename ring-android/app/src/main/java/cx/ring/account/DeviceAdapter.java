@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *
@@ -37,11 +37,6 @@ public class DeviceAdapter extends BaseAdapter {
 
     private String mCurrentDeviceId;
     private DeviceRevocationListener mListener;
-
-    public interface DeviceRevocationListener {
-        void onDeviceRevocationAsked(String deviceId);
-        void onDeviceRename();
-    }
 
     public DeviceAdapter(Context c, Map<String, String> devices, String currentDeviceId,
                          DeviceRevocationListener listener) {
@@ -116,5 +111,11 @@ public class DeviceAdapter extends BaseAdapter {
         });
 
         return view;
+    }
+
+    public interface DeviceRevocationListener {
+        void onDeviceRevocationAsked(String deviceId);
+
+        void onDeviceRename();
     }
 }

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *          Alexandre Savard <alexandre.savard@savoirfairelinux.com>
@@ -19,7 +19,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cx.ring.account;
 
 import android.app.Activity;
@@ -258,6 +257,36 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             this.isRing = isRing;
         }
 
+        @StringRes
+        private static int getRingPanelTitle(int position) {
+            switch (position) {
+                case 0:
+                    return R.string.account_preferences_basic_tab;
+                case 1:
+                    return R.string.account_preferences_media_tab;
+                case 2:
+                    return R.string.account_preferences_advanced_tab;
+                default:
+                    return -1;
+            }
+        }
+
+        @StringRes
+        private static int getSIPPanelTitle(int position) {
+            switch (position) {
+                case 0:
+                    return R.string.account_preferences_basic_tab;
+                case 1:
+                    return R.string.account_preferences_media_tab;
+                case 2:
+                    return R.string.account_preferences_advanced_tab;
+                case 3:
+                    return R.string.account_preferences_security_tab;
+                default:
+                    return -1;
+            }
+        }
+
         @Override
         public int getCount() {
             return isRing ? 3 : 4;
@@ -309,36 +338,6 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             args.putString(ACCOUNT_ID_KEY, accountId);
             result.setArguments(args);
             return result;
-        }
-
-        @StringRes
-        private static int getRingPanelTitle(int position) {
-            switch (position) {
-                case 0:
-                    return R.string.account_preferences_basic_tab;
-                case 1:
-                    return R.string.account_preferences_media_tab;
-                case 2:
-                    return R.string.account_preferences_advanced_tab;
-                default:
-                    return -1;
-            }
-        }
-
-        @StringRes
-        private static int getSIPPanelTitle(int position) {
-            switch (position) {
-                case 0:
-                    return R.string.account_preferences_basic_tab;
-                case 1:
-                    return R.string.account_preferences_media_tab;
-                case 2:
-                    return R.string.account_preferences_advanced_tab;
-                case 3:
-                    return R.string.account_preferences_security_tab;
-                default:
-                    return -1;
-            }
         }
     }
 }

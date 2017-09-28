@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -147,60 +147,10 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         }
     }
 
-    public interface OnNavigationSectionSelected {
-        void onNavigationSectionSelected(Section position);
-
-        void onAccountSelected();
-
-        void onAddRingAccountSelected();
-
-        void onAddSipAccountSelected();
-    }
-
     @Override
     public void onResume() {
         super.onResume();
         presenter.updateUser();
-    }
-
-    /**
-     * Exposed enumeration listing app sections
-     */
-    public enum Section {
-        HOME(0),
-        CONTACT_REQUESTS(1),
-        MANAGE(2),
-        SETTINGS(3),
-        SHARE(4),
-        ABOUT(5);
-
-        final int position;
-
-        Section(int pos) {
-            position = pos;
-        }
-
-        public static Section valueOf(int sectionInt) {
-            for (Section section : Section.values()) {
-                if (section.position == sectionInt) {
-                    return section;
-                }
-            }
-            return HOME;
-        }
-    }
-
-    /**
-     * Internal class describing navigation sections
-     */
-    class NavigationItem {
-        int mResTitleId;
-        int mResImageId;
-
-        NavigationItem(int resTitle, int resId) {
-            mResTitleId = resTitle;
-            mResImageId = resId;
-        }
     }
 
     @Override
@@ -489,5 +439,55 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         ActivityCompat.requestPermissions(getActivity(),
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                 HomeActivity.REQUEST_PERMISSION_READ_STORAGE);
+    }
+
+    /**
+     * Exposed enumeration listing app sections
+     */
+    public enum Section {
+        HOME(0),
+        CONTACT_REQUESTS(1),
+        MANAGE(2),
+        SETTINGS(3),
+        SHARE(4),
+        ABOUT(5);
+
+        final int position;
+
+        Section(int pos) {
+            position = pos;
+        }
+
+        public static Section valueOf(int sectionInt) {
+            for (Section section : Section.values()) {
+                if (section.position == sectionInt) {
+                    return section;
+                }
+            }
+            return HOME;
+        }
+    }
+
+    public interface OnNavigationSectionSelected {
+        void onNavigationSectionSelected(Section position);
+
+        void onAccountSelected();
+
+        void onAddRingAccountSelected();
+
+        void onAddSipAccountSelected();
+    }
+
+    /**
+     * Internal class describing navigation sections
+     */
+    class NavigationItem {
+        int mResTitleId;
+        int mResImageId;
+
+        NavigationItem(int resTitle, int resId) {
+            mResTitleId = resTitle;
+            mResImageId = resId;
+        }
     }
 }

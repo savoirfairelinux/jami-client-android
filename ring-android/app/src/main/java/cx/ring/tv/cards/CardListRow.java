@@ -12,7 +12,6 @@
  * the License.
  *
  */
-
 package cx.ring.tv.cards;
 
 import android.support.v17.leanback.widget.HeaderItem;
