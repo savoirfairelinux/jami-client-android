@@ -22,6 +22,30 @@
       "revId": "c8f50813ccd06deacb7c976803cf76abd6ee3c3e",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a3d3df0_b26e01c8",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/cards/NoDimListRowPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-09-28T15:49:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3d3df0_d792979e",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "c8f50813ccd06deacb7c976803cf76abd6ee3c3e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
