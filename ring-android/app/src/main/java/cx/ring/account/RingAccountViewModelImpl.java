@@ -27,7 +27,30 @@ import cx.ring.mvp.RingAccountViewModel;
 
 public class RingAccountViewModelImpl extends RingAccountViewModel implements Parcelable {
 
+    public static final Creator<RingAccountViewModelImpl> CREATOR = new Creator<RingAccountViewModelImpl>() {
+        @Override
+        public RingAccountViewModelImpl createFromParcel(Parcel source) {
+            return new RingAccountViewModelImpl(source);
+        }
+
+        @Override
+        public RingAccountViewModelImpl[] newArray(int size) {
+            return new RingAccountViewModelImpl[size];
+        }
+    };
     private Bitmap photo;
+
+    public RingAccountViewModelImpl() {
+    }
+
+    protected RingAccountViewModelImpl(Parcel in) {
+        this.photo = in.readParcelable(Bitmap.class.getClassLoader());
+        this.mFullName = in.readString();
+        this.mUsername = in.readString();
+        this.mPassword = in.readString();
+        this.mPin = in.readString();
+        this.link = in.readByte() != 0;
+    }
 
     public Bitmap getPhoto() {
         return photo;
@@ -51,28 +74,4 @@ public class RingAccountViewModelImpl extends RingAccountViewModel implements Pa
         dest.writeString(this.mPin);
         dest.writeByte(this.link ? (byte) 1 : (byte) 0);
     }
-
-    public RingAccountViewModelImpl() {
-    }
-
-    protected RingAccountViewModelImpl(Parcel in) {
-        this.photo = in.readParcelable(Bitmap.class.getClassLoader());
-        this.mFullName = in.readString();
-        this.mUsername = in.readString();
-        this.mPassword = in.readString();
-        this.mPin = in.readString();
-        this.link = in.readByte() != 0;
-    }
-
-    public static final Creator<RingAccountViewModelImpl> CREATOR = new Creator<RingAccountViewModelImpl>() {
-        @Override
-        public RingAccountViewModelImpl createFromParcel(Parcel source) {
-            return new RingAccountViewModelImpl(source);
-        }
-
-        @Override
-        public RingAccountViewModelImpl[] newArray(int size) {
-            return new RingAccountViewModelImpl[size];
-        }
-    };
 }

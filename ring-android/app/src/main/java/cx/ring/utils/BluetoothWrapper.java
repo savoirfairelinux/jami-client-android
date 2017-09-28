@@ -18,7 +18,6 @@
  * You should have received a copy of the GNU General Public License
  * along with CSipSimple.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cx.ring.utils;
 
 import android.bluetooth.BluetoothAdapter;
@@ -45,33 +44,25 @@ public class BluetoothWrapper {
     private boolean isBluetoothConnected = false;
     private BluetoothAdapter bluetoothAdapter;
     private boolean targetBt = false;
-
-    public interface BluetoothChangeListener {
-        void onBluetoothStateChanged(int status);
-    }
-
     private BluetoothChangeListener btChangesListener;
-
-    public BluetoothWrapper(Context context) {
-        mContext = context;
-        audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-        if (bluetoothAdapter == null) {
-            try {
-                bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-            } catch (RuntimeException e) {
-                Log.w(TAG, "Cant get default bluetooth adapter ", e);
+    // Create a BroadcastReceiver for ACTION_FOUND.
+    private final BroadcastReceiver mBtReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "BT state changed");
+            String action = intent.getAction();
+            if (BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED.equals(action)) {
+                int status = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, 0);
+                if (status == 2) {
+                    Log.d(TAG, "BT device found");
+                    // Discovery has found a device. Get the BluetoothDevice
+                    // object and its info from the Intent.
+                    if (btChangesListener != null) {
+                        btChangesListener.onBluetoothStateChanged(status);
+                    }
+                }
             }
         }
-    }
-
-    public void setBluetoothChangeListener(BluetoothChangeListener listener) {
-        btChangesListener = listener;
-    }
-
-    public boolean isBTHeadsetConnected() {
-        return bluetoothAdapter != null && (bluetoothAdapter.getProfileConnectionState(BluetoothProfile.HEADSET) == BluetoothAdapter.STATE_CONNECTED);
-    }
-
+    };
     private BroadcastReceiver mediaStateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -95,25 +86,25 @@ public class BluetoothWrapper {
         }
     };
 
-    // Create a BroadcastReceiver for ACTION_FOUND.
-    private final BroadcastReceiver mBtReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "BT state changed");
-            String action = intent.getAction();
-            if (BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED.equals(action)) {
-                int status = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, 0);
-                if (status == 2) {
-                    Log.d(TAG, "BT device found");
-                    // Discovery has found a device. Get the BluetoothDevice
-                    // object and its info from the Intent.
-                    if (btChangesListener != null) {
-                        btChangesListener.onBluetoothStateChanged(status);
-                    }
-                }
+    public BluetoothWrapper(Context context) {
+        mContext = context;
+        audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        if (bluetoothAdapter == null) {
+            try {
+                bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            } catch (RuntimeException e) {
+                Log.w(TAG, "Cant get default bluetooth adapter ", e);
             }
         }
-    };
+    }
 
+    public void setBluetoothChangeListener(BluetoothChangeListener listener) {
+        btChangesListener = listener;
+    }
+
+    public boolean isBTHeadsetConnected() {
+        return bluetoothAdapter != null && (bluetoothAdapter.getProfileConnectionState(BluetoothProfile.HEADSET) == BluetoothAdapter.STATE_CONNECTED);
+    }
 
     public boolean canBluetooth() {
         // Detect if any bluetooth a device is available for call
@@ -192,5 +183,9 @@ public class BluetoothWrapper {
         } catch (Exception e) {
             Log.w(TAG, "Failed to unregister media state receiver", e);
         }
+    }
+
+    public interface BluetoothChangeListener {
+        void onBluetoothStateChanged(int status);
     }
 }

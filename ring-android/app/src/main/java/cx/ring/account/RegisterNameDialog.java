@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2016-2017 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
@@ -52,46 +52,29 @@ import cx.ring.utils.RegisteredNameTextWatcher;
 
 public class RegisterNameDialog extends DialogFragment implements Observer<ServiceEvent> {
     static final String TAG = RegisterNameDialog.class.getSimpleName();
-
-    public interface RegisterNameDialogListener {
-        void onRegisterName(String name, String password);
-    }
-
-    @Inject
-    AccountService mAccountService;
-
-    @BindString(R.string.username_already_taken)
-    String mUserNameAlreadyTaken;
-
-    @BindString(R.string.invalid_username)
-    String mInvalidUsername;
-
     @BindView(R.id.ring_username_txt_box)
     public TextInputLayout mUsernameTxtBox;
-
     @BindView(R.id.ring_username)
     public EditText mUsernameTxt;
-
     @BindView(R.id.ring_password_txt_box)
     public TextInputLayout mPasswordTxtBox;
-
     @BindView(R.id.ring_password_txt)
     public EditText mPasswordTxt;
-
     @BindString(R.string.register_name)
     public String mRegisterTitle;
-
     @BindString(R.string.register_username)
     public String mRegisterMessage;
-
     @BindString(R.string.prompt_new_username)
     public String mPromptUsername;
-
     @BindString(R.string.prompt_password)
     public String mPromptPassword;
-
+    @Inject
+    AccountService mAccountService;
+    @BindString(R.string.username_already_taken)
+    String mUserNameAlreadyTaken;
+    @BindString(R.string.invalid_username)
+    String mInvalidUsername;
     private TextWatcher mUsernameTextWatcher;
-
     private RegisterNameDialogListener mListener = null;
 
     public void setListener(RegisterNameDialogListener l) {
@@ -295,5 +278,9 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
             }
         }
         return false;
+    }
+
+    public interface RegisterNameDialogListener {
+        void onRegisterName(String name, String password);
     }
 }

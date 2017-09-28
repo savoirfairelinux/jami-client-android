@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  *          Alexandre Lision <alexandre.lision@savoirfairelinux.com>
@@ -19,7 +19,6 @@
  *  along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 package cx.ring.fragments;
 
 import android.Manifest;
@@ -53,12 +52,57 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
         implements FragmentCompat.OnRequestPermissionsResultCallback, MediaPreferenceView {
 
     public static final String TAG = MediaPreferenceFragment.class.getSimpleName();
-
+    private static final int SELECT_RINGTONE_PATH = 40;
+    private final Preference.OnPreferenceChangeListener changeVideoPreferenceListener = new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            final ConfigKey key = ConfigKey.fromString(preference.getKey());
+            boolean versionMOrSuperior = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+            presenter.videoPreferenceChanged(key, newValue, versionMOrSuperior);
+            return true;
+        }
+    };
     private CodecPreference audioCodecsPref = null;
     private CodecPreference videoCodecsPref = null;
+    private final Preference.OnPreferenceChangeListener changeCodecListener = new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object o) {
+            ArrayList<Long> audio = audioCodecsPref.getActiveCodecList();
+            ArrayList<Long> video = videoCodecsPref.getActiveCodecList();
+            ArrayList<Long> newOrder = new ArrayList<>(audio.size() + video.size());
+            newOrder.addAll(audio);
+            newOrder.addAll(video);
+            presenter.codecChanged(newOrder);
+            return true;
+        }
+    };
     private SwitchPreference mRingtoneCustom = null;
+    private final Preference.OnPreferenceChangeListener changeAudioPreferenceListener = new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            final ConfigKey key = ConfigKey.fromString(preference.getKey());
+            if (preference instanceof TwoStatePreference) {
+                if (key == ConfigKey.RINGTONE_ENABLED) {
+                    mRingtoneCustom.setEnabled((Boolean) newValue);
+                    Boolean isEnabled = (Boolean) newValue && mRingtoneCustom.isChecked();
+                    getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(isEnabled);
+                } else if (key == ConfigKey.RINGTONE_CUSTOM) {
+                    getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled((Boolean) newValue);
+                    if ((Boolean) newValue) {
+                        findPreference(ConfigKey.RINGTONE_PATH.key()).setSummary(
+                                new File(FileUtils.ringtonesPath(getActivity()) + File.separator + "default.wav").getName());
+                    }
+                }
+            } else if (key == ConfigKey.ACCOUNT_DTMF_TYPE) {
+                preference.setSummary(((String) newValue).contentEquals("overrtp") ? "RTP" : "SIP");
+            } else {
+                preference.setSummary((CharSequence) newValue);
+            }
 
-    private static final int SELECT_RINGTONE_PATH = 40;
+            presenter.audioPreferenceChanged(key, newValue);
+            return true;
+        }
+    };
     private Preference.OnPreferenceClickListener filePickerListener = new Preference.OnPreferenceClickListener() {
         @Override
         public boolean onPreferenceClick(Preference preference) {
@@ -181,56 +225,6 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
             presenter.onFileFound(type, path);
         }
     }
-
-    private final Preference.OnPreferenceChangeListener changeCodecListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object o) {
-            ArrayList<Long> audio = audioCodecsPref.getActiveCodecList();
-            ArrayList<Long> video = videoCodecsPref.getActiveCodecList();
-            ArrayList<Long> newOrder = new ArrayList<>(audio.size() + video.size());
-            newOrder.addAll(audio);
-            newOrder.addAll(video);
-            presenter.codecChanged(newOrder);
-            return true;
-        }
-    };
-
-    private final Preference.OnPreferenceChangeListener changeAudioPreferenceListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            final ConfigKey key = ConfigKey.fromString(preference.getKey());
-            if (preference instanceof TwoStatePreference) {
-                if (key == ConfigKey.RINGTONE_ENABLED) {
-                    mRingtoneCustom.setEnabled((Boolean) newValue);
-                    Boolean isEnabled = (Boolean) newValue && mRingtoneCustom.isChecked();
-                    getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(isEnabled);
-                } else if (key == ConfigKey.RINGTONE_CUSTOM) {
-                    getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled((Boolean) newValue);
-                    if ((Boolean) newValue) {
-                        findPreference(ConfigKey.RINGTONE_PATH.key()).setSummary(
-                                new File(FileUtils.ringtonesPath(getActivity()) + File.separator + "default.wav").getName());
-                    }
-                }
-            } else if (key == ConfigKey.ACCOUNT_DTMF_TYPE) {
-                preference.setSummary(((String) newValue).contentEquals("overrtp") ? "RTP" : "SIP");
-            } else {
-                preference.setSummary((CharSequence) newValue);
-            }
-
-            presenter.audioPreferenceChanged(key, newValue);
-            return true;
-        }
-    };
-
-    private final Preference.OnPreferenceChangeListener changeVideoPreferenceListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            final ConfigKey key = ConfigKey.fromString(preference.getKey());
-            boolean versionMOrSuperior = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
-            presenter.videoPreferenceChanged(key, newValue, versionMOrSuperior);
-            return true;
-        }
-    };
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

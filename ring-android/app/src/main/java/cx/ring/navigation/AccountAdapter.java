@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016 by Savoir-faire Linux
+ * Copyright (C) 2016-2017 by Savoir-faire Linux
  * Author : Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  * <p>
  * This library is free software; you can redistribute it and/or
@@ -41,20 +41,12 @@ import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 
 class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private final List<Account> mDataset = new ArrayList<>();
-    private final RingNavigationPresenter mRingNavigationPresenter;
-
     private static final int TYPE_ACCOUNT = 0;
     private static final int TYPE_ADD_RING_ACCOUNT = 1;
     private static final int TYPE_ADD_SIP_ACCOUNT = 2;
+    private final List<Account> mDataset = new ArrayList<>();
+    private final RingNavigationPresenter mRingNavigationPresenter;
     private OnAccountActionClicked mListener;
-
-    interface OnAccountActionClicked {
-        void onAccountSelected(Account account);
-
-        void onAddSIPAccountSelected();
-        void onAddRINGAccountSelected();
-    }
 
     AccountAdapter(RingNavigationPresenter presenter) {
         mRingNavigationPresenter = presenter;
@@ -74,6 +66,77 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         for (Account account : results) {
             mDataset.add(account);
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == mDataset.size()) {
+            return TYPE_ADD_RING_ACCOUNT;
+        }
+        if (position == mDataset.size() + 1) {
+            return TYPE_ADD_SIP_ACCOUNT;
+        }
+        return TYPE_ACCOUNT;
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                      int viewType) {
+        RecyclerView.ViewHolder viewHolder;
+        View holderView;
+        switch (viewType) {
+            case TYPE_ACCOUNT:
+                holderView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.item_account, parent, false);
+                viewHolder = new AccountView(holderView);
+                break;
+            case TYPE_ADD_SIP_ACCOUNT:
+            case TYPE_ADD_RING_ACCOUNT:
+                holderView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.item_menu, parent, false);
+                viewHolder = new AddAccountView(holderView, viewType);
+                break;
+            default:
+                return null;
+        }
+
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        switch (getItemViewType(position)) {
+            case TYPE_ACCOUNT: {
+                ((AccountView) holder).update(mDataset.get(position));
+                break;
+            }
+            case TYPE_ADD_SIP_ACCOUNT:
+                ((AddAccountView) holder).icon.setImageResource(R.drawable.ic_add_black_24dp);
+                ((AddAccountView) holder).title.setText(R.string.add_sip_account_title);
+                break;
+            case TYPE_ADD_RING_ACCOUNT:
+                ((AddAccountView) holder).icon.setImageResource(R.drawable.ic_add_black_24dp);
+                ((AddAccountView) holder).title.setText(R.string.add_ring_account_title);
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Return the size of your dataset (invoked by the layout manager)
+    @Override
+    public int getItemCount() {
+        // Add two entries for account creation
+        return mDataset.size() + 2;
+    }
+
+    interface OnAccountActionClicked {
+        void onAccountSelected(Account account);
+
+        void onAddSIPAccountSelected();
+
+        void onAddRINGAccountSelected();
     }
 
     class AccountView extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -164,17 +227,6 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (position == mDataset.size()) {
-            return TYPE_ADD_RING_ACCOUNT;
-        }
-        if (position == mDataset.size() + 1) {
-            return TYPE_ADD_SIP_ACCOUNT;
-        }
-        return TYPE_ACCOUNT;
-    }
-
     class AddAccountView extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final int viewtype;
 
@@ -202,57 +254,5 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 mListener.onAddSIPAccountSelected();
             }
         }
-    }
-
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                      int viewType) {
-        RecyclerView.ViewHolder viewHolder;
-        View holderView;
-        switch (viewType) {
-            case TYPE_ACCOUNT:
-                holderView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.item_account, parent, false);
-                viewHolder = new AccountView(holderView);
-                break;
-            case TYPE_ADD_SIP_ACCOUNT:
-            case TYPE_ADD_RING_ACCOUNT:
-                holderView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.item_menu, parent, false);
-                viewHolder = new AddAccountView(holderView, viewType);
-                break;
-            default:
-                return null;
-        }
-
-        return viewHolder;
-    }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-        switch (getItemViewType(position)) {
-            case TYPE_ACCOUNT: {
-                ((AccountView) holder).update(mDataset.get(position));
-                break;
-            }
-            case TYPE_ADD_SIP_ACCOUNT:
-                ((AddAccountView) holder).icon.setImageResource(R.drawable.ic_add_black_24dp);
-                ((AddAccountView) holder).title.setText(R.string.add_sip_account_title);
-                break;
-            case TYPE_ADD_RING_ACCOUNT:
-                ((AddAccountView) holder).icon.setImageResource(R.drawable.ic_add_black_24dp);
-                ((AddAccountView) holder).title.setText(R.string.add_ring_account_title);
-                break;
-            default:
-                break;
-        }
-    }
-
-    // Return the size of your dataset (invoked by the layout manager)
-    @Override
-    public int getItemCount() {
-        // Add two entries for account creation
-        return mDataset.size() + 2;
     }
 }

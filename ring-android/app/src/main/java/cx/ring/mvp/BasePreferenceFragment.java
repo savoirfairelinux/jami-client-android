@@ -1,4 +1,3 @@
-package cx.ring.mvp;
 /*
  *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
@@ -18,6 +17,7 @@ package cx.ring.mvp;
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+package cx.ring.mvp;
 
 import android.os.Bundle;
 import android.support.v14.preference.PreferenceFragment;

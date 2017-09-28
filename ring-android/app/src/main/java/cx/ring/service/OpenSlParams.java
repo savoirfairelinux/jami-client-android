@@ -1,3 +1,20 @@
+/*
+ *  Copyright (C) 2017 Savoir-faire Linux Inc.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
 package cx.ring.service;
 
 import android.annotation.TargetApi;
@@ -13,15 +30,9 @@ import android.util.Log;
  */
 public abstract class OpenSlParams {
 
-    /**
-     * @return The recommended sample rate in Hz.
-     */
-    public abstract int getSampleRate();
-
-    /**
-     * @return The recommended buffer size in frames.
-     */
-    public abstract int getBufferSize();
+    private OpenSlParams() {
+        // Not meant to be instantiated except here.
+    }
 
     /**
      * @param context, e.g., the current activity.
@@ -31,9 +42,15 @@ public abstract class OpenSlParams {
         return new JellyBeanMr1OpenSlParams(context);
     }
 
-    private OpenSlParams() {
-        // Not meant to be instantiated except here.
-    }
+    /**
+     * @return The recommended sample rate in Hz.
+     */
+    public abstract int getSampleRate();
+
+    /**
+     * @return The recommended buffer size in frames.
+     */
+    public abstract int getBufferSize();
 
     // Implementation for Jelly Bean MR1 or later.
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)

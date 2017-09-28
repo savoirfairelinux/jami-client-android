@@ -11,7 +11,6 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package cx.ring.tv.main;
 
 import android.content.Intent;
@@ -25,7 +24,6 @@ import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.PresenterSelector;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
-import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -216,7 +214,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     @Override
     public void showExportDialog(String pAccountID) {
         GuidedStepFragment wizard = TVAccountExport.createInstance(pAccountID);
-        GuidedStepFragment.add(getFragmentManager(), wizard,R.id.main_browse_fragment);
+        GuidedStepFragment.add(getFragmentManager(), wizard, R.id.main_browse_fragment);
     }
 
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
@@ -238,7 +236,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                         break;
                     case ACCOUNT_ADD_DEVICE:
                         presenter.onExportClicked();
-                         break;
+                        break;
                     default:
                         break;
                 }

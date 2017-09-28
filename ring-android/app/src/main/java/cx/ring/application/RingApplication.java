@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2016-2017 Savoir-faire Linux Inc.
  *
  *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
  *
@@ -65,63 +65,64 @@ import cx.ring.utils.Log;
 
 public class RingApplication extends Application {
 
-    private final static String TAG = RingApplication.class.getName();
     public final static String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
     public static final int PERMISSIONS_REQUEST = 57;
-
+    /**
+     * Handler to run tasks that needs to be on main thread (UI updates)
+     */
+    public static final Handler uiHandler = new Handler(Looper.getMainLooper());
+    private final static String TAG = RingApplication.class.getName();
+    static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
+    @Inject
+    @Named("DaemonExecutor")
+    ExecutorService mExecutor;
+    @Inject
+    DaemonService mDaemonService;
+    @Inject
+    AccountService mAccountService;
+    @Inject
+    CallService mCallService;
+    private final BroadcastReceiver ringerModeListener = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ringerModeChanged(intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, AudioManager.RINGER_MODE_NORMAL));
+        }
+    };
+    @Inject
+    ConferenceService mConferenceService;
+    @Inject
+    HardwareService mHardwareService;
+    @Inject
+    PreferencesService mPreferencesService;
+    @Inject
+    DeviceRuntimeService mDeviceRuntimeService;
+    @Inject
+    ContactService mContactService;
+    @Inject
+    PresenceService mPresenceService;
     private RingInjectionComponent mRingInjectionComponent;
     private Map<String, Boolean> mPermissionsBeingAsked;
-
     // Android Specific callbacks handlers. They rely on low level services notifications
     private ConfigurationManagerCallback mConfigurationCallback;
     private CallManagerCallBack mCallManagerCallBack;
-
     // true Daemon callbacks handlers. The notify the Android ones
     private Callback mCallAndConferenceCallbackHandler;
     private ConfigurationCallback mAccountAndContactCallbackHandler;
     private PresenceCallback mPresenceCallbackHandler;
     private VideoCallback mHardwareCallbackHandler;
-    /**
-     * Handler to run tasks that needs to be on main thread (UI updates)
-     */
-    public static final Handler uiHandler = new Handler(Looper.getMainLooper());
+    private final ServiceConnection mConnection = new ServiceConnection() {
 
-    @Inject
-    @Named("DaemonExecutor")
-    ExecutorService mExecutor;
-
-    @Inject
-    DaemonService mDaemonService;
-
-    @Inject
-    AccountService mAccountService;
-
-    @Inject
-    CallService mCallService;
-
-    @Inject
-    ConferenceService mConferenceService;
-
-    @Inject
-    HardwareService mHardwareService;
-
-    @Inject
-    PreferencesService mPreferencesService;
-
-    @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
-
-    @Inject
-    ContactService mContactService;
-
-    @Inject
-    PresenceService mPresenceService;
-
-    static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
-    private final BroadcastReceiver ringerModeListener = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context, Intent intent) {
-            ringerModeChanged(intent.getIntExtra(AudioManager.EXTRA_RINGER_MODE, AudioManager.RINGER_MODE_NORMAL));
+        public void onServiceConnected(ComponentName className, IBinder s) {
+            Log.d(TAG, "onServiceConnected " + className.getClassName());
+
+            // bootstrap Daemon
+            bootstrapDaemon();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName className) {
+            Log.d(TAG, "onServiceDisconnected " + className.getClassName());
         }
     };
 
@@ -144,22 +145,6 @@ public class RingApplication extends Application {
             Log.e(TAG, "Could not set the Default Uncaught Exception Handler", e);
         }
     }
-
-    private final ServiceConnection mConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder s) {
-            Log.d(TAG, "onServiceConnected " + className.getClassName());
-
-            // bootstrap Daemon
-            bootstrapDaemon();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName className) {
-            Log.d(TAG, "onServiceDisconnected " + className.getClassName());
-        }
-    };
 
     public void bootstrapDaemon() {
 
@@ -197,7 +182,7 @@ public class RingApplication extends Application {
                             mPresenceCallbackHandler,
                             mHardwareCallbackHandler);
 
-                    if(mDeviceRuntimeService.hasVideoPermission()) {
+                    if (mDeviceRuntimeService.hasVideoPermission()) {
                         //initVideo is called here to give time to the application to initialize hardware cameras
                         mHardwareService.initVideo();
                     }

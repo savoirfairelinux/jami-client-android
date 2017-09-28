@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2016-2017 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -17,7 +17,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cx.ring.views;
 
 import android.content.Context;
@@ -86,7 +85,6 @@ public class CredentialsPreference extends DialogPreference {
     }
 
     private static class SavedState extends BaseSavedState {
-        AccountCredentials creds;
         public static final Creator<CredentialsPreference.SavedState> CREATOR = new Creator<CredentialsPreference.SavedState>() {
             public CredentialsPreference.SavedState createFromParcel(Parcel in) {
                 return new CredentialsPreference.SavedState(in);
@@ -96,19 +94,20 @@ public class CredentialsPreference extends DialogPreference {
                 return new CredentialsPreference.SavedState[size];
             }
         };
+        AccountCredentials creds;
 
         public SavedState(Parcel source) {
             super(source);
             creds = (AccountCredentials) source.readSerializable();
         }
 
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
         public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             dest.writeSerializable(creds);
-        }
-
-        public SavedState(Parcelable superState) {
-            super(superState);
         }
     }
 }

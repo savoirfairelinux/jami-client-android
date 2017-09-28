@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2016-2017 Savoir-faire Linux Inc.
  *
  *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
  *
@@ -54,19 +54,37 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService implements Au
     private static final String[] PROFILE_PROJECTION = new String[]{ContactsContract.Profile._ID,
             ContactsContract.Profile.DISPLAY_NAME_PRIMARY,
             ContactsContract.Profile.PHOTO_ID};
-
+    @Inject
+    protected Context mContext;
     @Inject
     @Named("DaemonExecutor")
     ExecutorService mExecutor;
-
-    @Inject
-    protected Context mContext;
-
     private long mDaemonThreadId = -1;
 
     private Ringer mRinger;
     private AudioManager mAudioManager;
     private BluetoothWrapper mBluetoothWrapper;
+
+    /**
+     * Get the stream id for in call track. Can differ on some devices. Current device for which it's different :
+     *
+     * @return
+     */
+    public static int getInCallStream(boolean requestBluetooth) {
+        /* Archos 5IT */
+        if (android.os.Build.BRAND.equalsIgnoreCase("archos") && android.os.Build.DEVICE.equalsIgnoreCase("g7a")) {
+            // Since archos has no voice call capabilities, voice call stream is
+            // not implemented
+            // So we have to choose the good stream tag, which is by default
+            // falled back to music
+            return AudioManager.STREAM_MUSIC;
+        }
+        if (requestBluetooth) {
+            return 6; /* STREAM_BLUETOOTH_SCO -- Thx @Stefan for the contrib */
+        }
+
+        return AudioManager.STREAM_VOICE_CALL;
+    }
 
     @Override
     public void loadNativeLibrary() {
@@ -332,26 +350,5 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService implements Au
         if (mAudioManager.getMode() == AudioManager.MODE_IN_COMMUNICATION) {
             routeToBTHeadset();
         }
-    }
-
-    /**
-     * Get the stream id for in call track. Can differ on some devices. Current device for which it's different :
-     *
-     * @return
-     */
-    public static int getInCallStream(boolean requestBluetooth) {
-        /* Archos 5IT */
-        if (android.os.Build.BRAND.equalsIgnoreCase("archos") && android.os.Build.DEVICE.equalsIgnoreCase("g7a")) {
-            // Since archos has no voice call capabilities, voice call stream is
-            // not implemented
-            // So we have to choose the good stream tag, which is by default
-            // falled back to music
-            return AudioManager.STREAM_MUSIC;
-        }
-        if (requestBluetooth) {
-            return 6; /* STREAM_BLUETOOTH_SCO -- Thx @Stefan for the contrib */
-        }
-
-        return AudioManager.STREAM_VOICE_CALL;
     }
 }

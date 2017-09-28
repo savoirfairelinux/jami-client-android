@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2015-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2015-2017 Savoir-faire Linux Inc.
  *
  *  Author: Romain Bertozzi <romain.bertozzi@savoirfairelinux.com>
  *
@@ -17,7 +17,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 package cx.ring.utils;
 
 import android.app.Activity;
@@ -33,10 +32,6 @@ public class ClipboardHelper {
     public static final String TAG = ClipboardHelper.class.getSimpleName();
     public static final String COPY_CALL_CONTACT_NUMBER_CLIP_LABEL =
             BuildConfig.APPLICATION_ID + ".clipboard.contactNumber";
-
-    public interface ClipboardHelperCallback {
-        void clipBoardDidCopyNumber(String copiedNumber);
-    }
 
     public static void copyNumberToClipboard(final Activity activity,
                                              final String number,
@@ -59,5 +54,9 @@ public class ClipboardHelper {
         if (callback != null) {
             callback.clipBoardDidCopyNumber(number);
         }
+    }
+
+    public interface ClipboardHelperCallback {
+        void clipBoardDidCopyNumber(String copiedNumber);
     }
 }

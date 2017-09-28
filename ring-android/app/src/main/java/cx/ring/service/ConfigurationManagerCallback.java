@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2010-2012 Regis Montoya (aka r3gis - www.r3gis.fr)
- * Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ * Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  * <p>
  * Author: Alexandre Savard <alexandre.savard@savoirfairelinux.com>
  * <p>
@@ -34,8 +34,6 @@ import cx.ring.utils.Observer;
 
 public class ConfigurationManagerCallback implements Observer<ServiceEvent> {
 
-    private static final String TAG = ConfigurationManagerCallback.class.getSimpleName();
-
     static final String ACCOUNTS_CHANGED = BuildConfig.APPLICATION_ID + "accounts.changed";
     static final String ACCOUNTS_DEVICES_CHANGED = BuildConfig.APPLICATION_ID + "accounts.devicesChanged";
     static final String ACCOUNTS_EXPORT_ENDED = BuildConfig.APPLICATION_ID + "accounts.exportEnded";
@@ -44,10 +42,9 @@ public class ConfigurationManagerCallback implements Observer<ServiceEvent> {
     static final String MESSAGE_STATE_CHANGED = BuildConfig.APPLICATION_ID + ".message.stateChanged";
     static final String NAME_LOOKUP_ENDED = BuildConfig.APPLICATION_ID + ".name.lookupEnded";
     static final String NAME_REGISTRATION_ENDED = BuildConfig.APPLICATION_ID + ".name.registrationEnded";
-
     static final String MESSAGE_STATE_CHANGED_EXTRA_ID = "id";
     static final String MESSAGE_STATE_CHANGED_EXTRA_STATUS = "status";
-
+    private static final String TAG = ConfigurationManagerCallback.class.getSimpleName();
     private final Context mContext;
 
     public ConfigurationManagerCallback(Context context) {

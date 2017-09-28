@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2004-2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2017 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -43,6 +43,38 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
 
     private static final String TAG = GeneralAccountFragment.class.getSimpleName();
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
+    private final Preference.OnPreferenceChangeListener changeAccountStatusListener = new Preference.OnPreferenceChangeListener() {
+
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            presenter.accountChanged(newValue);
+            return false;
+        }
+    };
+    private final Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            Log.i(TAG, "Changing preference " + preference.getKey() + " to value:" + newValue);
+            final ConfigKey key = ConfigKey.fromString(preference.getKey());
+            if (preference instanceof TwoStatePreference) {
+                presenter.twoStatePreferenceChanged(key, newValue);
+            } else if (preference instanceof PasswordPreference) {
+                String tmp = "";
+                for (int i = 0; i < ((String) newValue).length(); ++i) {
+                    tmp += "*";
+                }
+                preference.setSummary(tmp);
+                presenter.passwordPreferenceChanged(key, newValue);
+            } else if (key == ConfigKey.ACCOUNT_USERNAME) {
+                presenter.userNameChanged(key, newValue);
+                preference.setSummary((CharSequence) newValue);
+            } else {
+                preference.setSummary((CharSequence) newValue);
+                presenter.preferenceChanged(key, newValue);
+            }
+            return true;
+        }
+    };
 
     public static GeneralAccountFragment newInstance(@NonNull String accountId) {
         Bundle bundle = new Bundle();
@@ -150,40 +182,6 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
             }
         }
     }
-
-    private final Preference.OnPreferenceChangeListener changeAccountStatusListener = new Preference.OnPreferenceChangeListener() {
-
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            presenter.accountChanged(newValue);
-            return false;
-        }
-    };
-
-    private final Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Log.i(TAG, "Changing preference " + preference.getKey() + " to value:" + newValue);
-            final ConfigKey key = ConfigKey.fromString(preference.getKey());
-            if (preference instanceof TwoStatePreference) {
-                presenter.twoStatePreferenceChanged(key, newValue);
-            } else if (preference instanceof PasswordPreference) {
-                String tmp = "";
-                for (int i = 0; i < ((String) newValue).length(); ++i) {
-                    tmp += "*";
-                }
-                preference.setSummary(tmp);
-                presenter.passwordPreferenceChanged(key, newValue);
-            } else if (key == ConfigKey.ACCOUNT_USERNAME) {
-                presenter.userNameChanged(key, newValue);
-                preference.setSummary((CharSequence) newValue);
-            } else {
-                preference.setSummary((CharSequence) newValue);
-                presenter.preferenceChanged(key, newValue);
-            }
-            return true;
-        }
-    };
 
     @Override
     public void addRingPreferences() {

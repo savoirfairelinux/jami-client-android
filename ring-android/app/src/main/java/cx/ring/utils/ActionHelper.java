@@ -37,10 +37,10 @@ import cx.ring.model.Uri;
 
 public class ActionHelper {
 
+    private static final String TAG = ActionHelper.class.getSimpleName();
+
     private ActionHelper() {
     }
-
-    private static final String TAG = ActionHelper.class.getSimpleName();
 
     public static AlertDialog launchDeleteAction(final Activity activity,
                                                  final Conversation conversation,
