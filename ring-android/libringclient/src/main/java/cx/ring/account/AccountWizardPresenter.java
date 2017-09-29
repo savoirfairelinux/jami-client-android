@@ -109,7 +109,10 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> imp
     }
 
     public void successDialogClosed() {
-        getView().finish(true);
+        AccountWizardView view = getView();
+        if (view != null) {
+            getView().finish(true);
+        }
     }
 
     private HashMap<String, String> initRingAccountDetails(String defaultAccountName) {
