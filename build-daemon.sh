@@ -253,8 +253,8 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -lpj-${PJ_TARGET_TUPLE} \
                 -lupnp -lixml -lthreadutil \
                 -lsamplerate \
+                -lsecp256k1 \
                 -lgnutls -lnettle -lhogweed -lgmp \
-                -lcryptopp -lboost_random -lboost_system \
                 -lrestbed \
                 -lavformat -lavdevice -lavcodec -lavfilter -lavutil \
                 -lpcre -lsndfile -lyaml-cpp -ljsoncpp \
