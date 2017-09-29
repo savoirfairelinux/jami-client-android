@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2004-2017 Savoir-faire Linux Inc.
-                                                                    
-Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>                     
+
+Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
 Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or   
-(at your option) any later version.                                 
-                                                                    
-This program is distributed in the hope that it will be useful,     
-but WITHOUT ANY WARRANTY; without even the implied warranty of      
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the       
-GNU General Public License for more details.                        
-                                                                    
-You should have received a copy of the GNU General Public License   
-along with this program; if not, write to the Free Software         
- Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.          
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 -->
 <resources>
 
@@ -48,9 +48,7 @@ along with this program; if not, write to the Free Software
     <!-- About dialog -->
     <string name="developed_by">Developed by</string>
     <string name="designed_by">Designed by</string>
-    <string name="credits_developer" translatable="false">Adrien Béraud\nAlexandr Sergheev\nAlexandre Lision\nAlexandre Viau\nAline Bonnet\nAndreas Traczyk\nAnthony Léonard\nCyrille Béraud\nEdric Milaret\nÉloi Bail\nEmmanuel Lepage-Vallée\nFrédéric Guimont\nGuillaume Roguez\nHadrien De Sousa\nJulien Grossholtz\nKateryna Kostiuk\nLoïc Siret\nNicolas Jäger\nNicolas Reynaud\nOlivier Gregoire\nOlivier Soldano\nPatrick Keroulas\nPhilippe Gorley\nRomain Bertozzi\nSébastien Blin\nSeva Ivanov\nSilbino Gonçalves Matado\nSimon Désaulniers\nStepan Salenikovich\nSimon Zeni\nThibault Wittemberg\nBased on the SFLPhone project</string>
-    <string name="credits_designer" translatable="false">Marianne Forget</string>
-    <string name="credits_concat" translatable="false"><b><u>%1$s</u></b>\n%2$s\n<b><u>%3$s</u></b>\n%4$s</string>
+    <string name="credits_developer" translatable="false">Adrien Béraud\nAlexandr Sergheev\nAlexandre Lision\nAlexandre Viau\nAline Bonnet\nAndreas Traczyk\nAnthony Léonard\nCyrille Béraud\nEdric Milaret\nÉloi Bail\nEmmanuel Lepage-Vallée\nFrédéric Guimont\nGuillaume Roguez\nHadrien De Sousa\nJulien Grossholtz\nKateryna Kostiuk\nLoïc Siret\nMarianne Forget\nMichel Schmit\nNicolas Jäger\nNicolas Reynaud\nOlivier Gregoire\nOlivier Soldano\nPatrick Keroulas\nPhilippe Gorley\nRomain Bertozzi\nSaher Azer\nSébastien Blin\nSeva Ivanov\nSilbino Gonçalves Matado\nSimon Désaulniers\nStepan Salenikovich\nSimon Zeni\nThibault Wittemberg</string>
 
     <!-- RingActivity -->
     <string name="title_activity_sflphone_home">Ring</string>
