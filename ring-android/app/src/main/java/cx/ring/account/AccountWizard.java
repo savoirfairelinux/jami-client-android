@@ -107,6 +107,10 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
             mProgress.dismiss();
             mProgress = null;
         }
+        if (mAlertDialog != null) {
+            mAlertDialog.dismiss();
+            mAlertDialog = null;
+        }
         super.onDestroy();
     }
 
