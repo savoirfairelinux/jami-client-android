@@ -64,11 +64,28 @@ public final class IconCardHelper {
     }
 
     public static IconCard getAccountAddDevice(Context pContext) {
-        return new IconCard(Card.Type.ACCOUNT_ADD_DEVICE, pContext.getString(R.string.account_link_export_button), "",R.drawable.ic_add_white);
+        return new IconCard(Card.Type.ACCOUNT_ADD_DEVICE, pContext.getString(R.string.account_link_export_button), "", R.drawable.ic_add_white);
     }
 
     private static CharSequence formatLicence(Context pContext) {
-        return Html.fromHtml(pContext.getResources().getString(R.string.license)).toString();
+        Resources res = pContext.getResources();
+
+        SpannableString version = new SpannableString(res.getString(R.string.version_section));
+        version.setSpan(new UnderlineSpan(), 0, version.length(), 0);
+        CharSequence versioned = res.getString(R.string.app_release, BuildConfig.VERSION_NAME);
+
+        SpannableString licence = new SpannableString(res.getString(R.string.section_license));
+        licence.setSpan(new UnderlineSpan(), 0, licence.length(), 0);
+        CharSequence licenced = res.getString(R.string.license);
+
+        SpannableString copyright = new SpannableString(res.getString(R.string.copyright_section));
+        copyright.setSpan(new UnderlineSpan(), 0, copyright.length(), 0);
+        CharSequence copyrighted = res.getString(R.string.copyright);
+
+
+        return Html.fromHtml("<b><u>" + version + "</u></b><br/>" + versioned + "<BR/><BR/>"
+                + "<b><u>" + licence + "</u></b><br/>" + licenced + "<BR/><BR/>jjjh"
+                + "<b><u>" + copyright + "</u></b><br/>" + copyrighted);
     }
 
     private static CharSequence formatContributors(Context pContext) {
@@ -77,9 +94,6 @@ public final class IconCardHelper {
         SpannableString developedby = new SpannableString(res.getString(R.string.developed_by));
         developedby.setSpan(new UnderlineSpan(), 0, developedby.length(), 0);
         CharSequence developed = res.getString(R.string.credits_developer).replaceAll("\n", "<br/>");
-        SpannableString designedby = new SpannableString(res.getString(R.string.designed_by));
-        designedby.setSpan(new UnderlineSpan(), 0, designedby.length(), 0);
-        CharSequence design = res.getString(R.string.credits_designer).replaceAll("\n", "<br/>");
-        return Html.fromHtml("<b><u>" + developedby + "</u></b><br/>" + developed + "<br/><br/><b><u>" + designedby + "</u></b><br/>" + design+"<br/>");
+        return Html.fromHtml("<b><u>" + developedby + "</u></b><br/>" + developed);
     }
 }
