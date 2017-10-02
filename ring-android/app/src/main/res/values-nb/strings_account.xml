@@ -17,7 +17,7 @@
   <string name="action_register">Registrer</string>
   <string name="error_field_required">Dette feltet er påkrevd</string>
   <string name="dialog_wait_create">Legger til konto</string>
-  <string name="dialog_wait_create_details">Vent litt mens din nye konto blir lagt til...</string>
+  <string name="dialog_wait_create_details">Vent litt mens din nye konto blir lagt til…</string>
   <string name="dialog_wait_update">Oppdaterer konto</string>
   <string name="dialog_wait_update_details">Vent mens din nye konto oppdateres…</string>
   <string name="dialog_warn_ip2ip_account_title">Lag tom SIP-konto?</string>
@@ -25,7 +25,7 @@
 Du vil kun være i stand til å gjennomføre direkte IP-samtaler.
 Du kan endre kontoen din senere</string>
   <string name="account_type_ip2ip">IP-konto</string>
-  <string name="help_ring">En Ring-konto lar deg na folk på sikkert via mellom likemenn via et fullstendig distribuert nettverk.</string>
+  <string name="help_ring">En Ring-konto lar deg nå folk på sikkert via mellom likemenn via et fullstendig distribuert nettverk.</string>
   <string name="help_sip_title">Legg til SIP-kontoen din</string>
   <string name="help_sip">Sett opp en eksisterende SIP-konto.</string>
   <string name="create_sip_account">Legg til SIP-konto</string>
@@ -55,7 +55,7 @@ Du kan endre kontoen din senere</string>
   <string name="account_useragent_label">Brukeragent</string>
   <string name="account_autoanswer_label">Autosvar</string>
   <string name="account_upnp_label">Aktiver UPnP</string>
-  <string name="account_proxy_field">Proxy</string>
+  <string name="account_proxy_field">Mellomtjener</string>
   <!--Audio Details-->
   <string name="account_audio_label">Lyd</string>
   <string name="account_preferences_media_tab">Media</string>
@@ -72,8 +72,8 @@ Du kan endre kontoen din senere</string>
   <string name="account_registration_exp_label">Registreringstidsgrense</string>
   <string name="account_local_interface_label">Lokalt grensesnitt</string>
   <string name="account_local_port_label">Lokal port</string>
-  <string name="account_stun_enable_label">Bruk Stun</string>
-  <string name="account_stun_server_label">Stun-tjener</string>
+  <string name="account_stun_enable_label">Bruk STUN</string>
+  <string name="account_stun_server_label">STUN-tjener</string>
   <string name="account_turn_enable_label">Bruk TURN</string>
   <string name="account_turn_server_label">TURN-tjener</string>
   <string name="account_turn_username_label">TURN-brukernavn</string>
@@ -91,12 +91,12 @@ Du kan endre kontoen din senere</string>
   <!--TLS Details-->
   <string name="account_tls_transport_switch_label">Bruk TLS-transport</string>
   <string name="account_tls_port_label">TLS-lytteport</string>
-  <string name="account_tls_certificate_list_label">Sertifikatautoriteter</string>
+  <string name="account_tls_certificate_list_label">Sertifikatutstedere</string>
   <string name="account_tls_certificate_file_label">Sertifikatfil</string>
   <string name="account_tls_private_key_file_label">Privat nøkkelfil</string>
   <string name="account_tls_password_label">Privat nøkkel-passord</string>
   <string name="account_tls_method_label">TLS-metoder</string>
-  <string name="account_tls_ciphers_label">TLS-sifer</string>
+  <string name="account_tls_ciphers_label">TLS-krypteringsalgoritme</string>
   <string name="account_tls_server_name_label">Tjenernavn</string>
   <string name="account_tls_verify_server_label">Kontroller tjener</string>
   <string name="account_tls_verify_client_label">Kontroller klient</string>
@@ -108,7 +108,7 @@ Du kan endre kontoen din senere</string>
   <string name="account_new_device_password">Skriv inn hovedpassord for å låse opp konto</string>
   <string name="error_password_char_count">minimum 6 tegn</string>
   <string name="error_passwords_not_equals">Passordene stemmer ikke</string>
-  <string name="export_account_wait_title">Vennligst vent...</string>
+  <string name="export_account_wait_title">Vent…</string>
   <string name="export_account_wait_message">Offentliggjør ny kontoinformasjon</string>
   <string name="account_export_end_decryption_message">Kunne ikke låse opp kontoen ved bruk av oppgitt passord.</string>
   <string name="account_export_end_network_title">Nettverksfeil</string>
@@ -147,12 +147,15 @@ Du kan endre kontoen din senere</string>
   <string name="account_start_export_button">Generer PIN</string>
   <string name="account_end_export_button">lukk</string>
   <string name="account_end_export_infos">Din PIN er:\n\n%%\n\nFor å fullføre prosessen, må du åpne Ring på den nye enheten. Opprett en ny konto med \"Lenk denne enheten til en konto\". Din PIN-kode er gyldig i 10 minutter.</string>
+  <string name="account_link_export_info_light">For å bruke denne kontoen på andre enheter, må du først synliggjøre den på Ring. Dette vil generere en PIN-kode som du må skrive inn på den nye enheten for å sette opp en konto. PIN-koden er gyldig i 10 minutter.</string>
+  <string name="account_export_title">Legg til enheter</string>
   <!--Name registration-->
   <string name="error_username_empty">Skriv inn et brukernavn</string>
   <string name="no_registered_name_for_account">Fant inget registrert navn for denne kontoen</string>
   <string name="register_name">Registrer navn</string>
   <string name="trying_to_register_name">Prøver å registrere navn</string>
   <string name="registered_username">Registrert brukernavn</string>
+  <string name="register_username">Registrer offentlig brukernavn (valgfritt)</string>
   <string name="username_already_taken">Brukernavnet er allerede i bruk</string>
   <string name="invalid_username">Ugyldig brukernavn</string>
   <string name="looking_for_username_availability">Sjekker hvorvidt brukernavnet er tilgjengelig…</string>
@@ -172,7 +175,7 @@ Du kan endre kontoen din senere</string>
   <string name="enter_password">Skriv inn passord</string>
   <string name="revoke_device_title">Tilbakekall enhet</string>
   <string name="revoke_device_message">Er du sikker på at du vil tilbakekalle %1$s?</string>
-  <string name="revoke_device_wait_title">Vennligst vent...</string>
+  <string name="revoke_device_wait_title">Vent…</string>
   <string name="revoke_device_wait_message">Tilbakekall enhet</string>
   <string name="rename_device_title">Gi denne enheten nytt navn</string>
   <string name="rename_device_message">Velg et nytt navn for å identifisere denne enheten i din Ring-konto</string>

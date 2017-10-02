@@ -8,9 +8,9 @@
   <string name="copyright_section">Opphavsrett</string>
   <string name="contribute_section">Bidra</string>
   <string name="version_section">Versjon</string>
-  <string name="no_email_app_installed">Fant ingen epost-app.  Installer en for å sende oss en rapport</string>
+  <string name="no_email_app_installed">Fant ingen e-postprogram.  Installer en for å sende oss en rapport</string>
   <string name="no_browser_app_installed">Ingen nettleser funnet, installer en for å vise denne siden</string>
-  <string name="email_chooser_title">Send epost vha...</string>
+  <string name="email_chooser_title">Send e-post ved bruk av…</string>
   <string name="website_chooser_title">Vis nettside ved bruk av…</string>
   <string name="license">Denne programvaren tilbys \"som den er\", uten garanti av noen art. For detaljer, se
 &lt;u&gt;GNU General Public Lisens, versjon 3 eller senere&lt;/u&gt;</string>
@@ -46,7 +46,7 @@
     <item quantity="other">%d samtaler</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Skriv inn navn eller telefonnummer...</string>
+  <string name="searchbar_hint">Skriv inn navn eller telefonnummer…</string>
   <string name="choose_number">Velg et nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -65,7 +65,7 @@
   <string name="ongoing_call">Pågående samtale</string>
   <string name="hist_in_call">Innkommende samtale med %1$s</string>
   <string name="hist_out_call">Utgående samtale med %1$s</string>
-  <string name="start_error_title">Klarer ikke starte Ring!</string>
+  <string name="start_error_title">Klarer ikke å starte Ring!</string>
   <string name="start_error_mic_required">Ring krever tilgang til mikrofonen for å virke.</string>
   <string name="action_call_accept">Ta samtale</string>
   <string name="action_call_decline">Avslå</string>
@@ -77,11 +77,11 @@
   <string name="ab_action_change_screen_orientation">Endre skjermretning</string>
   <string name="share_via">Del via</string>
   <string name="write_a_message">Skriv en melding</string>
-  <string name="scan_qr">Scan QR-kode</string>
+  <string name="scan_qr">Skann QR-kode</string>
   <string name="ab_action_flipcamera">Snu kamera</string>
   <!--Text messages-->
   <string name="send_message">Send melding</string>
-  <string name="message_sending">Sender melding...</string>
+  <string name="message_sending">Sender melding…</string>
   <string name="time_just_now">Akkurat nå</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarettigheter</string>
@@ -90,15 +90,15 @@
   <string name="ringtone_error_format_not_supported">Dette formatet støttes ikke</string>
   <string name="ringtone_error_size_too_big">Fila er for stor. Maksimal filstørrelse er %1$ikB.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring trenger tillatelsen \"Lese kontakter\" for å aktivere denne egenskapet.  Vær så snill å tillat dette.</string>
+  <string name="permission_dialog_read_contacts_message">Ring trenger tillatelsen \"Lese kontakter\" for å aktivere denne egenskapen. Tillat dette.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring trenger tillatelsen \"Skriv i samtalelogg\" for å aktivere denne egenskapen. Vær så snill å tillat dette.</string>
+  <string name="permission_dialog_write_call_log_message">Ring trenger tillatelsen \"Skriv i samtalelogg\" for å aktivere denne egenskapen. Tillat dette.</string>
   <!--QRCode Scan-->
-  <string name="scan_qr_account_message">Les av QR-koden for kontoen du ønsker å legge til.</string>
+  <string name="scan_qr_account_message">Skann QR-koden tilhørende kontoen du ønsker å legge til.</string>
   <!--Settings-->
   <string name="clear_history_dialog_title">Nullstill historikk?</string>
   <string name="clear_history_dialog_message">Denne handlingen kan ikke gjøres om.</string>
-  <string name="clear_history_completed">Historikken har blitt nullstilt.</string>
+  <string name="clear_history_completed">Historikken har blitt tømt.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Slett denne samtalen</string>
   <string name="conversation_action_delete_this_title">Slett denne samtalen?</string>
@@ -110,6 +110,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Legg til %1$s?</string>
   <string name="prompt_new_password">Nytt passord</string>
+  <string name="prompt_new_password_optional">Nytt passord (valgfritt)</string>
   <string name="prompt_new_password_repeat">Gjenta nytt passord</string>
   <string name="account_create_title">Opprett en Ring-konto</string>
   <string name="prompt_new_username">Skriv inn nytt brukernavn</string>

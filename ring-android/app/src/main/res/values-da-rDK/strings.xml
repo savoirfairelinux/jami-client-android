@@ -110,6 +110,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Tilføj %1$s?</string>
   <string name="prompt_new_password">Ny adgangskode</string>
+  <string name="prompt_new_password_optional">Ny adgangskode (valgfrit)</string>
   <string name="prompt_new_password_repeat">Gentag ny adgangskode</string>
   <string name="account_create_title">Opret en Ring-konto</string>
   <string name="prompt_new_username">Indtast nyt brugernavn</string>
