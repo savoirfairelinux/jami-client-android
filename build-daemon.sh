@@ -71,6 +71,10 @@ else
 fi
 ANDROID_API=android-$ANDROID_API_VERS
 
+if [ -e "$ANDROID_NDK/source.properties" ]; then
+    NDK_VERSION=$(sed -En -e 's/^Pkg.Revision\s*=\s*([0-9a-f]+)/r\1/p' $ANDROID_NDK/source.properties)
+fi
+
 export ANDROID_TOOLCHAIN="`pwd`/android-toolchain-$ANDROID_API_VERS-$PLATFORM_SHORT_ARCH"
 if [ ! -d "$ANDROID_TOOLCHAIN" ]; then
     $ANDROID_NDK/build/tools/make_standalone_toolchain.py \
@@ -93,6 +97,7 @@ export HAVE_X86
 export HAVE_MIPS
 export HAVE_64
 export PLATFORM_SHORT_ARCH
+export NDK_VERSION
 
 # Add the NDK toolchain to the PATH, needed both for contribs and for building
 # stub libraries
