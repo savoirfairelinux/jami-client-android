@@ -129,7 +129,9 @@ public class Card {
         ACCOUNT_ADD_DEVICE,
         ABOUT_LICENCES,
         CONTACT,
+        CONTACT_ONLINE,
         CONTACT_WITH_USERNAME,
+        CONTACT_WITH_USERNAME_ONLINE,
     }
 
 }
