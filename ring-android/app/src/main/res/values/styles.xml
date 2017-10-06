@@ -152,9 +152,15 @@
     <style name="ContactTitleViewStyle" parent="DefaultCardStyle">
         <item name="lbImageCardViewType">Title</item>
     </style>
+    <style name="ContactTitleViewOnlineStyle" parent="DefaultCardStyle">
+        <item name="lbImageCardViewType">Title|Content|IconOnRight</item>
+    </style>
 
     <style name="ContactCompleteCardViewStyle" parent="DefaultCardStyle">
         <item name="lbImageCardViewType">Title|Content</item>
+    </style>
+    <style name="ContactCompleteCardOnlineViewStyle" parent="DefaultCardStyle">
+        <item name="lbImageCardViewType">Title|Content|IconOnRight</item>
     </style>
 
     <style name="IconCardImageStyle" parent="Widget.Leanback.ImageCardView.ImageStyle">
@@ -207,6 +213,25 @@
         <item name="imageCardViewTitleStyle">@style/IconCardTitleStyle</item>
         <item name="imageCardViewImageStyle">@style/IconCardImageStyle</item>
         <item name="imageCardViewInfoAreaStyle">@style/IconCardInfoAreaStyle</item>
+    </style>
+    <style name="Widget.Leanback.ImageCardView.BadgeStyle">
+        <item name="android:id">@id/extra_badge</item>
+        <item name="android:layout_width">@dimen/lb_basic_card_info_badge_size</item>
+        <item name="android:layout_height">@dimen/lb_basic_card_info_badge_size</item>
+        <item name="android:contentDescription">@null</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+    <style name="OnlineBadgeStyle" parent="Widget.Leanback.ImageCardView.BadgeStyle">
+        <item name="android:src">@drawable/ic_tv_online_indicator</item>
+    </style>
+    <style name="ContactCardOnlineTheme" parent="ContactCardTheme">
+        <item name="imageCardViewBadgeStyle">@style/OnlineBadgeStyle</item>
+        <item name="imageCardViewStyle">@style/ContactCompleteCardViewStyle</item>
+    </style>
+
+    <style name="ContactCompleteCardOnlineTheme" parent="ContactCompleteCardTheme">
+        <item name="imageCardViewStyle">@style/ContactTitleViewOnlineStyle</item>
+        <item name="imageCardViewBadgeStyle">@style/OnlineBadgeStyle</item>
     </style>
 
 </resources>

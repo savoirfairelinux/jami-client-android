@@ -145,6 +145,6 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> implement
     }
 
     public void contactClicked(CallContact contact) {
-        getView().startCall(mAccountService.getCurrentAccount().getAccountID(), contact.getPhones().get(0).getNumber());
+        getView().startCall(mAccountService.getCurrentAccount().getAccountID(), contact.getPhones().get(0).getNumber().toString());
     }
 }

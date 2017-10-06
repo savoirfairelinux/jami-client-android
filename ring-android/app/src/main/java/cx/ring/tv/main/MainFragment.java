@@ -34,7 +34,7 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.model.CallContact;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.tv.about.AboutActivity;
 import cx.ring.tv.account.TVAccountExport;
 import cx.ring.tv.call.TVCallActivity;
@@ -177,12 +177,30 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     }
 
     @Override
-    public void showContacts(final ArrayList<CallContact> contacts) {
+    public void refreshContact(final SmartListViewModel contact) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ContactCard updatedCard = new ContactCard(contact);
+                int pos = cardRowAdapter.indexOf(updatedCard);
+                if (pos > -1) {
+                    ContactCard previousCard = (ContactCard) cardRowAdapter.get(pos);
+                    if (previousCard.getModel().isOnline() != updatedCard.getModel().isOnline()) {
+                        cardRowAdapter.replace(pos, updatedCard);
+                        mRowsAdapter.notifyArrayItemRangeChanged(pos, 1);
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public void showContacts(final ArrayList<SmartListViewModel> contacts) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 cardRowAdapter.clear();
-                for (CallContact contact : contacts) {
+                for (SmartListViewModel contact : contacts) {
                     cardRowAdapter.add(new ContactCard(contact));
                 }
                 mRowsAdapter.notifyArrayItemRangeChanged(0, contacts.size());
@@ -224,7 +242,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
 
             if (item instanceof ContactCard) {
-                presenter.contactClicked(((ContactCard) item).getCallContact());
+                presenter.contactClicked(((ContactCard) item).getModel());
             } else if (item instanceof IconCard) {
                 IconCard card = (IconCard) item;
                 switch (card.getType()) {
