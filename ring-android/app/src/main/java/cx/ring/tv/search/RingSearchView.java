@@ -28,5 +28,5 @@ public interface RingSearchView {
 
     void clearSearch();
 
-    void startCall(String accountID, Uri number);
+    void startCall(String accountID, String number);
 }

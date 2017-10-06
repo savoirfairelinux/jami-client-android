@@ -27,6 +27,7 @@ import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.NameLookupInputHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -145,6 +146,6 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> implement
     }
 
     public void contactClicked(CallContact contact) {
-        getView().startCall(mAccountService.getCurrentAccount().getAccountID(), contact.getPhones().get(0).getNumber());
+        getView().startCall(mAccountService.getCurrentAccount().getAccountID(), contact.getPhones().get(0).getNumber().toString());
     }
 }

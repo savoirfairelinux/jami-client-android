@@ -19,15 +19,19 @@
  */
 package cx.ring.tv.cards.contacts;
 
+import java.util.Arrays;
+
 import cx.ring.model.CallContact;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.tv.cards.Card;
 
 public class ContactCard extends Card {
-    CallContact mCallContact = null;
+    SmartListViewModel mModel = null;
+    CallContact mContact = null;
     private byte[] mPhoto = null;
 
     public ContactCard(CallContact pCallContact, Type type) {
-        mCallContact = pCallContact;
+        mContact = pCallContact;
         setId(pCallContact.getId());
         setTitle(pCallContact.getDisplayName());
         setDescription(pCallContact.getRingUsername());
@@ -37,26 +41,60 @@ public class ContactCard extends Card {
         setType(type);
     }
 
-    public ContactCard(CallContact pCallContact) {
-        mCallContact = pCallContact;
-        setId(pCallContact.getId());
-        setTitle(pCallContact.getDisplayName());
-        setDescription(pCallContact.getRingUsername());
-        if (pCallContact.getPhoto() != null) {
-            mPhoto = pCallContact.getPhoto();
+    public ContactCard(SmartListViewModel model) {
+        mModel = model;
+        setTitle(mModel.getContactName());
+        setDescription(mModel.getUuid());
+        if (mModel.getPhotoData() != null) {
+            mPhoto = mModel.getPhotoData();
         }
-        if (pCallContact.getDisplayName().equals(pCallContact.getRingUsername())) {
-            setType(Type.CONTACT);
+        if (mModel.getContactName().equals(mModel.getUuid())) {
+            if (model.isOnline()) {
+                setType(Type.CONTACT_ONLINE);
+            } else {
+                setType(Type.CONTACT);
+            }
         } else {
-            setType(Type.CONTACT_WITH_USERNAME);
+            if (model.isOnline()) {
+                setType(Type.CONTACT_WITH_USERNAME_ONLINE);
+            } else {
+                setType(Type.CONTACT_WITH_USERNAME);
+            }
         }
     }
 
-    public CallContact getCallContact() {
-        return mCallContact;
+    public SmartListViewModel getModel() {
+        return mModel;
+    }
+
+    public CallContact getContact() {
+        return mContact;
     }
 
     public byte[] getPhoto() {
         return mPhoto;
+    }
+
+    @Override
+    public boolean equals(Object pO) {
+        if (this == pO) return true;
+        if (pO == null || getClass() != pO.getClass()) return false;
+
+        ContactCard that = (ContactCard) pO;
+
+        if (mModel != null )
+            return mModel.getUuid().equals(that.mModel.getUuid());
+        if (mContact != null ? !mContact.equals(that.mContact) : that.mContact != null)
+            return false;
+        return Arrays.equals(mPhoto, that.mPhoto);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mModel != null ? mModel.hashCode() : 0;
+        result = 31 * result + (mContact != null ? mContact.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(mPhoto);
+        return result;
     }
 }

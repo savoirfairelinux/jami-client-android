@@ -58,8 +58,14 @@ public class CardPresenterSelector extends PresenterSelector {
                 case CONTACT:
                     presenter = new ContactCardPresenter(mContext, R.style.ContactCardTheme);
                     break;
+                case CONTACT_ONLINE:
+                    presenter = new ContactCardPresenter(mContext, R.style.ContactCardOnlineTheme);
+                    break;
                 case CONTACT_WITH_USERNAME:
                     presenter = new ContactCardPresenter(mContext, R.style.ContactCompleteCardTheme);
+                    break;
+                case CONTACT_WITH_USERNAME_ONLINE:
+                    presenter = new ContactCardPresenter(mContext, R.style.ContactCompleteCardOnlineTheme);
                     break;
                 default:
                     throw new InvalidParameterException("Uncatched card type");

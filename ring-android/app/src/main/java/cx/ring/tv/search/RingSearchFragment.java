@@ -42,6 +42,7 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.cards.Card;
 import cx.ring.tv.cards.CardPresenterSelector;
@@ -137,11 +138,11 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
     }
 
     @Override
-    public void startCall(String accountID, Uri number) {
+    public void startCall(String accountID, String number) {
         Intent intent = new Intent(getActivity(), TVCallActivity.class);
         intent.putExtra("account", accountID);
-        intent.putExtra("ringId", number.toString());
-        startActivity(intent);
+        intent.putExtra("ringId", number);
+        getActivity().startActivity(intent, null);
         getActivity().finish();
     }
 
@@ -149,7 +150,7 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
-            presenter.contactClicked(((ContactCard) item).getCallContact());
+            presenter.contactClicked(((ContactCard) item).getContact());
         }
     }
 
