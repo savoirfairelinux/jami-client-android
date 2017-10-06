@@ -20,6 +20,7 @@
 package cx.ring.tv.main;
 
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
@@ -30,9 +31,12 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
+import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
+import cx.ring.services.PresenceService;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
@@ -47,6 +51,8 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
 
     private ContactService mContactService;
 
+    private PresenceService mPresenceService;
+
     private ExecutorService mExecutor;
 
     private ArrayList<Conversation> mConversations;
@@ -54,10 +60,12 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     @Inject
     public MainPresenter(AccountService accountService,
                          ContactService contactService,
+                         PresenceService presenceService,
                          @Named("ApplicationExecutor") ExecutorService executor,
                          ConversationFacade conversationfacade) {
         mAccountService = accountService;
         mContactService = contactService;
+        mPresenceService = presenceService;
         mConversationFacade = conversationfacade;
         mExecutor = executor;
         mConversations = new ArrayList<>();
@@ -69,6 +77,7 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
         mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
         mContactService.addObserver(this);
+        mPresenceService.addObserver(this);
     }
 
     @Override
@@ -77,6 +86,7 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
         mAccountService.removeObserver(this);
         mConversationFacade.removeObserver(this);
         mContactService.removeObserver(this);
+        mPresenceService.removeObserver(this);
     }
 
     @Override
@@ -93,6 +103,27 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
                 reloadAccountInfos();
                 break;
         }
+        if (observable instanceof PresenceService) {
+            switch (event.getEventType()) {
+                case NEW_BUDDY_NOTIFICATION:
+                    refreshContact(
+                            event.getString(ServiceEvent.EventInput.BUDDY_URI));
+                           break;
+            }
+        }
+    }
+
+    private void refreshContact(String buddy) {
+        for (Conversation conversation : mConversations) {
+            CallContact callContact = conversation.getContact();
+            if (callContact.getIds().get(0).equals("ring:"+buddy)) {
+                SmartListViewModel smartListViewModel = new SmartListViewModel(conversation,
+                        callContact.getDisplayName(),
+                        callContact.getPhoto());
+                smartListViewModel.setOnline(mPresenceService.isBuddyOnline(callContact.getIds().get(0)));
+                getView().refreshContact(smartListViewModel);
+            }
+        }
     }
 
     public void reloadConversations() {
@@ -102,24 +133,30 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
             public void run() {
                 mConversations.clear();
                 mConversations.addAll(mConversationFacade.getConversationsList());
-                ArrayList<CallContact> contacts = new ArrayList<>();
+                ArrayList<SmartListViewModel> contacts = new ArrayList<>();
                 if (mConversations != null && mConversations.size() > 0) {
                     for (int i = 0; i < mConversations.size(); i++) {
                         Conversation conversation = mConversations.get(i);
                         CallContact callContact = conversation.getContact();
                         mContactService.loadContactData(callContact);
-                        contacts.add(callContact);
+                        SmartListViewModel smartListViewModel = new SmartListViewModel(conversation,
+                                callContact.getDisplayName(),
+                                callContact.getPhoto());
+                        smartListViewModel.setOnline(mPresenceService.isBuddyOnline(callContact.getIds().get(0)));
+                        contacts.add(smartListViewModel);
                     }
                 }
                 getView().showLoading(false);
                 getView().showContacts(contacts);
             }
         });
+
+        subscribePresence();
     }
 
-    public void contactClicked(CallContact item) {
+    public void contactClicked(SmartListViewModel item) {
         String accountID = mAccountService.getCurrentAccount().getAccountID();
-        String ringID = item.getPhones().get(0).getNumber().toString();
+        String ringID = item.getUuid();
         getView().callContact(accountID, ringID);
     }
 
@@ -136,5 +173,19 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
 
     public void onExportClicked() {
         getView().showExportDialog(mAccountService.getCurrentAccount().getAccountID());
+    }
+
+    private void subscribePresence() {
+        if (mAccountService.getCurrentAccount() == null) {
+            return;
+        }
+        String accountId = mAccountService.getCurrentAccount().getAccountID();
+        Set<String> keys = mConversationFacade.getConversations().keySet();
+        for (String key : keys) {
+            Uri uri = new Uri(key);
+            if (uri.isRingId()) {
+                mPresenceService.subscribeBuddy(accountId, key, true);
+            }
+        }
     }
 }
