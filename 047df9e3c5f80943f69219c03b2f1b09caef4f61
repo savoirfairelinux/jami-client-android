@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3d3df0_fa6e96c8",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/main/MainView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-10-06T20:10:38Z",
+      "side": 1,
+      "message": "Import unused",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 33
+      },
+      "revId": "047df9e3c5f80943f69219c03b2f1b09caef4f61",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
