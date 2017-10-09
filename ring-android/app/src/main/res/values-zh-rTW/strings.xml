@@ -109,6 +109,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">加入 %1$s 嗎？</string>
   <string name="prompt_new_password">新密碼</string>
+  <string name="prompt_new_password_optional">新密碼（選擇性）</string>
   <string name="prompt_new_password_repeat">重新輸入新密碼</string>
   <string name="account_create_title">建立一個 Ring 帳號</string>
   <string name="prompt_new_username">輸入新使用者名稱</string>

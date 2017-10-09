@@ -14,7 +14,7 @@
   <string name="prompt_password">Adgangskode</string>
   <string name="action_create">Opret konto</string>
   <string name="action_create_short">Opret</string>
-  <string name="action_register">Registrér</string>
+  <string name="action_register">Registrer</string>
   <string name="error_field_required">Dette felt er obligatorisk</string>
   <string name="dialog_wait_create">Tilføjer konto</string>
   <string name="dialog_wait_create_details">Vent venligst mens din nye konto tilføjes...</string>
@@ -155,6 +155,7 @@ Du kan rette din konto senere</string>
   <string name="register_name">Registrer navn</string>
   <string name="trying_to_register_name">Forsøger at registrere navn</string>
   <string name="registered_username">Registreret brugernavn</string>
+  <string name="register_username">Registrer offentligt brugernavn (valgfrit)</string>
   <string name="username_already_taken">Brugernavn er allerede taget</string>
   <string name="invalid_username">Ugyldigt brugernavn</string>
   <string name="looking_for_username_availability">Tjekker efter om brugernavnet er ledigt...</string>

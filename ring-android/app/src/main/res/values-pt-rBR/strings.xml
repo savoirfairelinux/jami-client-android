@@ -110,6 +110,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s ?</string>
   <string name="prompt_new_password">Nova senha</string>
+  <string name="prompt_new_password_optional">Nova senha (opcional)</string>
   <string name="prompt_new_password_repeat">Repita a nova senha</string>
   <string name="account_create_title">Criar uma conta no Ring</string>
   <string name="prompt_new_username">Entre novo nome de usuário</string>
