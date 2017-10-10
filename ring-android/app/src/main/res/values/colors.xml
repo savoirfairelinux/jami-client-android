@@ -40,5 +40,22 @@
     <color name="text_color_secondary">@color/abc_secondary_text_material_light</color>
     <color name="text_color_primary_dark">@color/abc_primary_text_material_dark</color>
     <color name="text_color_secondary_dark">@color/abc_secondary_text_material_dark</color>
-
+    <array name="avatar_colors">
+        <item>#f44336</item><!-- Red -->
+        <item>#e91e63</item><!-- Pink -->
+        <item>#9c27b0</item><!-- Purple -->
+        <item>#673ab7</item><!-- Deep Purple -->
+        <item>#3f51b5</item><!-- Indigo -->
+        <item>#2196f3</item><!-- Blue -->
+        <item>#00bcd4</item><!-- Cyan -->
+        <item>#009688</item><!-- Teal -->
+        <item>#4caf50</item><!-- Green -->
+        <item>#8bc34a</item><!-- Light Green -->
+        <item>#9e9e9e</item><!-- Grey -->
+        <item>#cddc39</item><!-- Lime -->
+        <item>#ffc107</item><!-- Amber -->
+        <item>#ff5722</item><!-- Deep Orange -->
+        <item>#795548</item><!-- Brown -->
+        <item>#607d8b</item><!-- Blue Grey -->
+    </array>
 </resources>
