@@ -43,6 +43,7 @@ import cx.ring.model.AccountConfig;
 import cx.ring.mvp.BaseActivity;
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.tv.main.HomeActivity;
+import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -210,7 +211,11 @@ public class TVAccountWizard
                 vcard.setUid(new Uid(ringAccountViewModelImpl.getUsername()));
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 if (ringAccountViewModelImpl.getPhoto() != null) {
-                    ringAccountViewModelImpl.getPhoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+                    Bitmap source = BitmapUtils.reduceBitmap(ringAccountViewModelImpl.getPhoto() , 30000);
+
+                    BitmapUtils.reduceBitmap(source, VCardUtils.VCARD_PHOTO_SIZE);
+                    source.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
                     vcard.removeProperties(Photo.class);
                     vcard.addPhoto(photoVCard);
