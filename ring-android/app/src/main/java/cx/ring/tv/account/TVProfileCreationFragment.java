@@ -97,7 +97,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
 
         super.onViewCreated(view, savedInstanceState);
 
-        RingAccountViewModelImpl ringAccountViewModel = new RingAccountViewModelImpl();
+        RingAccountViewModelImpl ringAccountViewModel = (RingAccountViewModelImpl) getArguments().get(RingAccountCreationFragment.KEY_RING_ACCOUNT);
         presenter.initPresenter(ringAccountViewModel);
     }
 
