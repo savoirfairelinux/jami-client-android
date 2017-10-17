@@ -80,10 +80,10 @@ public class TVHomeAccountCreationFragment
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
         addAction(actions, LINK_ACCOUNT,
                 getString(R.string.account_link_button),
-                "");
+                "",true);
         addAction(actions, CREATE_ACCOUNT,
                 getString(R.string.account_create_title),
-                null);
+                "",true);
     }
 
     @Override

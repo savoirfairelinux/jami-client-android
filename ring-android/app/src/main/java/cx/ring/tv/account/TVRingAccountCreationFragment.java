@@ -67,7 +67,7 @@ public class TVRingAccountCreationFragment
             Log.d(TAG, "userNameChanged(" + s.toString() + ")");
             findActionById(USERNAME).setDescription(s.toString());
             boolean empty = s.toString().isEmpty();
-            if(!empty){
+            if (!empty) {
                 presenter.userNameChanged(s.toString());
             }
             presenter.ringCheckChanged(!empty);
@@ -94,8 +94,10 @@ public class TVRingAccountCreationFragment
 
         RingAccountViewModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
         presenter.init(ringAccountViewModel);
-
         presenter.ringCheckChanged(false);
+        if (ringAccountViewModel.getPhoto() != null) {
+            getGuidanceStylist().getIconView().setImageBitmap(ringAccountViewModel.getPhoto());
+        }
     }
 
     @Override
@@ -115,7 +117,7 @@ public class TVRingAccountCreationFragment
         addDisabledAction(actions, CHECK, "", "", null);
         addPasswordAction(actions, PASSWORD, getString(R.string.prompt_new_password_optional), getString(R.string.enter_password), "");
         addPasswordAction(actions, PASSWORD_CONFIRMATION, getString(R.string.prompt_new_password_repeat), getString(R.string.enter_password), "");
-        addDisabledAction(actions, CONTINUE, getString(R.string.action_create), "", null);
+        addDisabledAction(actions, CONTINUE, getString(R.string.action_create), "", null, true);
     }
 
     @Override
