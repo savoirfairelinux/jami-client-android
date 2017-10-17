@@ -38,7 +38,6 @@ import android.view.View;
 import java.util.List;
 
 import cx.ring.R;
-import cx.ring.account.AccountWizard;
 import cx.ring.account.ProfileCreationFragment;
 import cx.ring.account.ProfileCreationPresenter;
 import cx.ring.account.ProfileCreationView;
@@ -99,6 +98,10 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
 
         RingAccountViewModelImpl ringAccountViewModel = (RingAccountViewModelImpl) getArguments().get(RingAccountCreationFragment.KEY_RING_ACCOUNT);
         presenter.initPresenter(ringAccountViewModel);
+
+        if (ringAccountViewModel.getPhoto() != null) {
+            getGuidanceStylist().getIconView().setImageBitmap(ringAccountViewModel.getPhoto());
+        }
     }
 
     @Override
@@ -121,9 +124,9 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
         String desc = getString(R.string.account_creation_profile);
         String editdesc = getString(R.string.profile_name_hint);
         addEditTextAction(actions, USER_NAME, desc, editdesc, "");
-        addAction(actions, CAMERA, getActivity().getResources().getString(R.string.take_a_photo),"");
-        addAction(actions, GALLERY, getActivity().getResources().getString(R.string.open_the_gallery),"");
-        addAction(actions, NEXT, getActivity().getResources().getString(R.string.wizard_next), "");
+        addAction(actions, CAMERA, getActivity().getResources().getString(R.string.take_a_photo), "");
+        addAction(actions, GALLERY, getActivity().getResources().getString(R.string.open_the_gallery), "");
+        addAction(actions, NEXT, getActivity().getResources().getString(R.string.wizard_next), "", true);
     }
 
     @Override
@@ -148,7 +151,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
         try {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, REQUEST_CODE_GALLERY);
-        }catch (ActivityNotFoundException e){
+        } catch (ActivityNotFoundException e) {
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
             dialogBuilder.setPositiveButton(android.R.string.ok, null);
             dialogBuilder.setTitle(R.string.gallery_error_title)

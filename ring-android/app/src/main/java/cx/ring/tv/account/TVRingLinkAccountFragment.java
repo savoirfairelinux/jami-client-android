@@ -59,7 +59,9 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
 
         RingAccountViewModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
         presenter.init(ringAccountViewModel);
-
+        if (ringAccountViewModel.getPhoto() != null) {
+            getGuidanceStylist().getIconView().setImageBitmap(ringAccountViewModel.getPhoto());
+        }
     }
 
     @Override
@@ -77,7 +79,7 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
         addPasswordAction(actions, PASSWORD, getString(R.string.account_enter_password), "", "");
         addPasswordAction(actions, PIN, getString(R.string.account_link_prompt_pin), "", "");
-        addDisabledAction(actions, LINK, getString(R.string.account_link_title), "");
+        addDisabledAction(actions, LINK, getString(R.string.account_link_title), "", null, true);
     }
 
     @Override

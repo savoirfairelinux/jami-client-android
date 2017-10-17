@@ -45,6 +45,14 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
                 .description(desc)
                 .build());
     }
+    protected static void addAction(List<GuidedAction> actions, long id, String title, String desc, boolean next) {
+        actions.add(new GuidedAction.Builder()
+                .id(id)
+                .title(title)
+                .description(desc)
+                .hasNext(next)
+                .build());
+    }
 
     protected static void addDisabledAction(List<GuidedAction> actions, long id, String title, String desc) {
         actions.add(new GuidedAction.Builder()
@@ -62,6 +70,16 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
                 .description(desc)
                 .enabled(false)
                 .icon(icon)
+                .build());
+    }
+    protected static void addDisabledAction(List<GuidedAction> actions, long id, String title, String desc, Drawable icon,boolean next) {
+        actions.add(new GuidedAction.Builder()
+                .id(id)
+                .title(title)
+                .description(desc)
+                .enabled(false)
+                .icon(icon)
+                .hasNext(next)
                 .build());
     }
 
