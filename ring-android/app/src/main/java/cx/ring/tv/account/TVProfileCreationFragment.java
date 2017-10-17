@@ -190,7 +190,6 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
 
     @Override
     public void photoUpdate(RingAccountViewModel ringAccountViewModel) {
-        //not implemented on TV
         ((RingAccountViewModelImpl) ringAccountViewModel).setPhoto(mSourcePhoto);
         RingAccountViewModelImpl model = (RingAccountViewModelImpl) ringAccountViewModel;
         getGuidanceStylist().getIconView().setImageBitmap(model.getPhoto());
