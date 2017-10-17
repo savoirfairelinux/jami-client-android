@@ -23,7 +23,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v17.leanback.widget.GuidanceStylist;
 import android.support.v17.leanback.widget.GuidedAction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.List;
 
@@ -45,7 +49,30 @@ public class TVRingAccountCreationFragment
     private static final int USERNAME = 0;
     private static final int PASSWORD = 1;
     private static final int PASSWORD_CONFIRMATION = 2;
-    private static final int CONTINUE = 3;
+    private static final int CHECK = 3;
+    private static final int CONTINUE = 4;
+    private TextWatcher mUsernameWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            Log.d(TAG, "userNameChanged(" + s.toString() + ")");
+            findActionById(USERNAME).setDescription(s.toString());
+            boolean empty = s.toString().isEmpty();
+            if(!empty){
+                presenter.userNameChanged(s.toString());
+            }
+            presenter.ringCheckChanged(!empty);
+        }
+    };
 
     public TVRingAccountCreationFragment() {
     }
@@ -85,28 +112,26 @@ public class TVRingAccountCreationFragment
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
         addEditTextAction(actions, USERNAME, getString(R.string.register_username), getString(R.string.prompt_new_username), "");
+        addDisabledAction(actions, CHECK, "", "", null);
         addPasswordAction(actions, PASSWORD, getString(R.string.prompt_new_password_optional), getString(R.string.enter_password), "");
         addPasswordAction(actions, PASSWORD_CONFIRMATION, getString(R.string.prompt_new_password_repeat), getString(R.string.enter_password), "");
-        addDisabledAction(actions, CONTINUE, getString(R.string.action_create), "", getResources().getDrawable(R.drawable.ic_good));
+        addDisabledAction(actions, CONTINUE, getString(R.string.action_create), "", null);
     }
 
     @Override
     public void onGuidedActionFocused(GuidedAction action) {
-        if (action.getId() == PASSWORD) {
-            passwordChanged(action);
-        } else if (action.getId() == PASSWORD_CONFIRMATION) {
-            confirmPasswordChanged(action);
+        if (action.getId() == USERNAME) {
+            ViewGroup view = (ViewGroup) getActionItemView(findActionPositionById(USERNAME));
+            EditText text = (EditText) view.findViewById(R.id.guidedactions_item_description);
+            text.removeTextChangedListener(mUsernameWatcher);
+            text.addTextChangedListener(mUsernameWatcher);
         }
     }
 
+
     @Override
     public long onGuidedActionEditedAndProceed(GuidedAction action) {
-        if (action.getId() == USERNAME) {
-            String username = action.getEditDescription().toString();
-            findActionById(USERNAME).setDescription(username);
-            presenter.ringCheckChanged(!username.isEmpty());
-            presenter.userNameChanged(username);
-        } else if (action.getId() == PASSWORD) {
+        if (action.getId() == PASSWORD) {
             passwordChanged(action);
         } else if (action.getId() == PASSWORD_CONFIRMATION) {
             confirmPasswordChanged(action);
@@ -144,31 +169,36 @@ public class TVRingAccountCreationFragment
     @Override
     public void enableTextError() {
         Log.d(TAG, "enableTextError");
-        findActionById(CONTINUE).setTitle(getString(R.string.looking_for_username_availability));
-        notifyActionChanged(findActionPositionById(CONTINUE));
+        findActionById(CHECK).setIcon(null);
+
+        findActionById(CHECK).setTitle(getString(R.string.looking_for_username_availability));
+        notifyActionChanged(findActionPositionById(CHECK));
     }
 
     @Override
     public void disableTextError() {
         Log.d(TAG, "disableTextError");
+        findActionById(CHECK).setIcon(null);
+        findActionById(CHECK).setDescription("");
+
+        notifyActionChanged(findActionPositionById(CHECK));
     }
 
     @Override
     public void showExistingNameError() {
         Log.d(TAG, "showExistingNameError");
-        findActionById(CONTINUE).setIcon(getResources().getDrawable(R.drawable.ic_error));
-        findActionById(CONTINUE).setDescription(getString(R.string.username_already_taken));
+        findActionById(CHECK).setIcon(getResources().getDrawable(R.drawable.ic_error));
+        findActionById(CHECK).setDescription(getString(R.string.username_already_taken));
 
-        findActionById(CONTINUE).setEnabled(false);
-        notifyActionChanged(findActionPositionById(CONTINUE));
+        notifyActionChanged(findActionPositionById(CHECK));
     }
 
     @Override
     public void showInvalidNameError() {
         Log.d(TAG, "showInvalidNameError");
-        findActionById(CONTINUE).setIcon(getResources().getDrawable(R.drawable.ic_error));
-        findActionById(CONTINUE).setDescription(getString(R.string.invalid_username));
-        notifyActionChanged(findActionPositionById(CONTINUE));
+        findActionById(CHECK).setIcon(getResources().getDrawable(R.drawable.ic_error));
+        findActionById(CHECK).setDescription(getString(R.string.invalid_username));
+        notifyActionChanged(findActionPositionById(CHECK));
     }
 
     @Override
@@ -195,21 +225,23 @@ public class TVRingAccountCreationFragment
 
     @Override
     public void displayUsernameBox(boolean display) {
-        //NOOP on TV
     }
 
     @Override
     public void enableNextButton(boolean enabled) {
         Log.d(TAG, "enableNextButton(" + enabled + ")");
+        GuidedAction actionCheck = findActionById(CHECK);
         GuidedAction actionContinue = findActionById(CONTINUE);
 
         if (enabled) {
-            actionContinue.setIcon(getResources().getDrawable(R.drawable.ic_good));
-            actionContinue.setTitle(getString(R.string.action_create));
-            actionContinue.setDescription("");
-            actionContinue.setEnabled(true);
+            actionCheck.setIcon(getResources().getDrawable(R.drawable.ic_good));
+            actionCheck.setTitle(getString(R.string.no_registered_name_for_account));
+            actionCheck.setDescription("");
+            actionContinue.setIcon(null);
+            actionCheck.setDescription("");
         }
         actionContinue.setEnabled(enabled);
+        notifyActionChanged(findActionPositionById(CHECK));
         notifyActionChanged(findActionPositionById(CONTINUE));
     }
 
@@ -218,8 +250,6 @@ public class TVRingAccountCreationFragment
         Activity wizardActivity = getActivity();
         if (wizardActivity != null && wizardActivity instanceof TVAccountWizard) {
             TVAccountWizard wizard = (TVAccountWizard) wizardActivity;
-            //Currently it's not possible to create a username without password
-            //causing a 400 error
             wizard.createAccount(ringAccountViewModel);
         }
     }
