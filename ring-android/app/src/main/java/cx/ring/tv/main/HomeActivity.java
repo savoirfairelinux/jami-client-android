@@ -95,7 +95,7 @@ public class HomeActivity extends Activity {
         if (GuidedStepFragment.getCurrentGuidedStepFragment(getFragmentManager()) != null) {
             getFragmentManager().popBackStack();
         } else {
-            finish();
+            super.onBackPressed();
         }
     }
 }
