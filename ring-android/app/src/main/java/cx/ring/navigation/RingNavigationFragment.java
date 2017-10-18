@@ -342,6 +342,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null)) {
+                    //FIXME: Reduce the bitmap but not use it.
                     BitmapUtils.reduceBitmap(mSourcePhoto, VCardUtils.VCARD_PHOTO_SIZE);
                     mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);

@@ -149,6 +149,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="64dp"
+        android:contentDescription="@string/action_call_hangup"
         android:src="@drawable/ic_call_end_white"
         android:visibility="gone"
         app:backgroundTint="@color/error_red"
