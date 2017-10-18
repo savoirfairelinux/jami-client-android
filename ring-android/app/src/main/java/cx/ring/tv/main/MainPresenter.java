@@ -36,7 +36,7 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.PresenceService;
-import cx.ring.smartlist.SmartListViewModel;
+import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
@@ -108,7 +108,7 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
                 case NEW_BUDDY_NOTIFICATION:
                     refreshContact(
                             event.getString(ServiceEvent.EventInput.BUDDY_URI));
-                           break;
+                    break;
             }
         }
     }
@@ -116,11 +116,10 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     private void refreshContact(String buddy) {
         for (Conversation conversation : mConversations) {
             CallContact callContact = conversation.getContact();
-            if (callContact.getIds().get(0).equals("ring:"+buddy)) {
-                SmartListViewModel smartListViewModel = new SmartListViewModel(conversation,
-                        callContact.getDisplayName(),
-                        callContact.getPhoto());
-                smartListViewModel.setOnline(mPresenceService.isBuddyOnline(callContact.getIds().get(0)));
+            if (callContact.getIds().get(0).equals("ring:" + buddy)) {
+                TVListViewModel smartListViewModel = new TVListViewModel(
+                        callContact,
+                        mPresenceService.isBuddyOnline(callContact.getIds().get(0)));
                 getView().refreshContact(smartListViewModel);
             }
         }
@@ -133,16 +132,16 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
             public void run() {
                 mConversations.clear();
                 mConversations.addAll(mConversationFacade.getConversationsList());
-                ArrayList<SmartListViewModel> contacts = new ArrayList<>();
+                ArrayList<TVListViewModel> contacts = new ArrayList<>();
                 if (mConversations != null && mConversations.size() > 0) {
                     for (int i = 0; i < mConversations.size(); i++) {
                         Conversation conversation = mConversations.get(i);
                         CallContact callContact = conversation.getContact();
                         mContactService.loadContactData(callContact);
-                        SmartListViewModel smartListViewModel = new SmartListViewModel(conversation,
-                                callContact.getDisplayName(),
-                                callContact.getPhoto());
-                        smartListViewModel.setOnline(mPresenceService.isBuddyOnline(callContact.getIds().get(0)));
+
+                        TVListViewModel smartListViewModel = new TVListViewModel(
+                                callContact,
+                                mPresenceService.isBuddyOnline(callContact.getIds().get(0)));
                         contacts.add(smartListViewModel);
                     }
                 }
@@ -154,9 +153,10 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
         subscribePresence();
     }
 
-    public void contactClicked(SmartListViewModel item) {
+    public void contactClicked(TVListViewModel item) {
         String accountID = mAccountService.getCurrentAccount().getAccountID();
-        String ringID = item.getUuid();
+
+        String ringID = item.getCallContact().getPhones().get(0).getNumber().toString();
         getView().callContact(accountID, ringID);
     }
 
