@@ -24,14 +24,14 @@ import java.util.Arrays;
 import cx.ring.model.CallContact;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.tv.cards.Card;
+import cx.ring.tv.model.TVListViewModel;
 
 public class ContactCard extends Card {
-    SmartListViewModel mModel = null;
-    CallContact mContact = null;
+    TVListViewModel mModel = null;
     private byte[] mPhoto = null;
 
     public ContactCard(CallContact pCallContact, Type type) {
-        mContact = pCallContact;
+        mModel =  new TVListViewModel(pCallContact);
         setId(pCallContact.getId());
         setTitle(pCallContact.getDisplayName());
         setDescription(pCallContact.getRingUsername());
@@ -41,14 +41,14 @@ public class ContactCard extends Card {
         setType(type);
     }
 
-    public ContactCard(SmartListViewModel model) {
+    public ContactCard(TVListViewModel model) {
         mModel = model;
-        setTitle(mModel.getContactName());
-        setDescription(mModel.getUuid());
-        if (mModel.getPhotoData() != null) {
-            mPhoto = mModel.getPhotoData();
+        setTitle(mModel.getCallContact().getDisplayName());
+        setDescription(mModel.getCallContact().getRingUsername());
+        if (mModel.getCallContact().getPhoto() != null) {
+            mPhoto = mModel.getCallContact().getPhoto();
         }
-        if (mModel.getContactName().equals(mModel.getUuid())) {
+        if (mModel.getCallContact().getDisplayName().equals(mModel.getCallContact().getRingUsername())) {
             if (model.isOnline()) {
                 setType(Type.CONTACT_ONLINE);
             } else {
@@ -63,13 +63,10 @@ public class ContactCard extends Card {
         }
     }
 
-    public SmartListViewModel getModel() {
+    public TVListViewModel getModel() {
         return mModel;
     }
 
-    public CallContact getContact() {
-        return mContact;
-    }
 
     public byte[] getPhoto() {
         return mPhoto;
@@ -83,18 +80,9 @@ public class ContactCard extends Card {
         ContactCard that = (ContactCard) pO;
 
         if (mModel != null )
-            return mModel.getUuid().equals(that.mModel.getUuid());
-        if (mContact != null ? !mContact.equals(that.mContact) : that.mContact != null)
-            return false;
+            return mModel.getCallContact().getId() == that.mModel.getCallContact().getId();
         return Arrays.equals(mPhoto, that.mPhoto);
 
     }
 
-    @Override
-    public int hashCode() {
-        int result = mModel != null ? mModel.hashCode() : 0;
-        result = 31 * result + (mContact != null ? mContact.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(mPhoto);
-        return result;
-    }
 }

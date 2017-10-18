@@ -22,14 +22,15 @@ package cx.ring.tv.main;
 import java.util.ArrayList;
 
 import cx.ring.smartlist.SmartListViewModel;
+import cx.ring.tv.model.TVListViewModel;
 
 public interface MainView {
 
     void showLoading(boolean show);
 
-    void refreshContact(SmartListViewModel contact);
+    void refreshContact(TVListViewModel contact);
 
-    void showContacts(ArrayList<SmartListViewModel> contacts);
+    void showContacts(ArrayList<TVListViewModel> contacts);
 
     void callContact(String accountID, String ringID);
 

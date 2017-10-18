@@ -46,6 +46,7 @@ import cx.ring.tv.cards.ShadowRowPresenterSelector;
 import cx.ring.tv.cards.contacts.ContactCard;
 import cx.ring.tv.cards.iconcards.IconCard;
 import cx.ring.tv.cards.iconcards.IconCardHelper;
+import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.search.SearchActivity;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
@@ -177,7 +178,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     }
 
     @Override
-    public void refreshContact(final SmartListViewModel contact) {
+    public void refreshContact(final TVListViewModel contact) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -195,12 +196,12 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     }
 
     @Override
-    public void showContacts(final ArrayList<SmartListViewModel> contacts) {
+    public void showContacts(final ArrayList<TVListViewModel> contacts) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 cardRowAdapter.clear();
-                for (SmartListViewModel contact : contacts) {
+                for (TVListViewModel contact : contacts) {
                     cardRowAdapter.add(new ContactCard(contact));
                 }
                 mRowsAdapter.notifyArrayItemRangeChanged(0, contacts.size());

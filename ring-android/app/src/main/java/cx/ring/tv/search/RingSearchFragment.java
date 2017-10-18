@@ -148,7 +148,7 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
-            presenter.contactClicked(((ContactCard) item).getContact());
+            presenter.contactClicked(((ContactCard) item).getModel().getCallContact());
         }
     }
 
