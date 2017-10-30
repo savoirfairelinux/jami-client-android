@@ -84,7 +84,6 @@
                     android:id="@+id/ring_add_pin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:digits="0123456789abcdefABCDEF"
                     android:hint="@string/account_link_prompt_pin"
                     android:imeOptions="actionDone"
                     android:inputType="textNoSuggestions"
