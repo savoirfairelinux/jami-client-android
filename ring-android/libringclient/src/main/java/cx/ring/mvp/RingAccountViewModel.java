@@ -59,7 +59,7 @@ public abstract class RingAccountViewModel {
     }
 
     public void setPin(String mPin) {
-        this.mPin = mPin;
+        this.mPin = mPin.toUpperCase();
     }
 
     public boolean isLink() {
