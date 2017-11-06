@@ -110,6 +110,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Ajouter %1$s</string>
   <string name="prompt_new_password">Nouveau mot de passe</string>
+  <string name="prompt_new_password_optional">Nouveau mot de passe (optionnel)</string>
   <string name="prompt_new_password_repeat">Confirmez le mot de passe</string>
   <string name="account_create_title">Créer un compte Ring</string>
   <string name="prompt_new_username">Entrez un nouveau nom d\'utilisateur</string>
@@ -149,4 +150,6 @@
   <string name="contact_request_sent">Invitation envoyée</string>
   <string name="search_results">Résultats de la recherche</string>
   <string name="tv_contact_row_header">Contacts</string>
+  <string name="gallery_error_title">Aucune application Gallery sur l\'appareil</string>
+  <string name="gallery_error_message">Aucune application trouvé sur l\'appareil pour ouvrir Gallery</string>
 </resources>
