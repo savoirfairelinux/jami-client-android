@@ -43,5 +43,7 @@
 -keep,includedescriptorclasses class com.journeyapps.barcodescanner.** { *; }
 -keepclassmembers class com.journeyapps.barcodescanner.** { *; }
 
--keep,includedescriptorclasses class se.emilsjolander.stickylistheaders.** { *; }
--keepclassmembers class se.emilsjolander.stickylistheaders.** { *; }
+-keepattributes *Annotation*
+
+-keep class kotlin.** { *; }
+-keep class org.jetbrains.** { *; }
