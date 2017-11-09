@@ -43,5 +43,13 @@
 -keep,includedescriptorclasses class com.journeyapps.barcodescanner.** { *; }
 -keepclassmembers class com.journeyapps.barcodescanner.** { *; }
 
--keep,includedescriptorclasses class se.emilsjolander.stickylistheaders.** { *; }
--keepclassmembers class se.emilsjolander.stickylistheaders.** { *; }
+-dontwarn kotlin.reflect.jvm.internal.impl.descriptors.CallableDescriptor
+-dontwarn kotlin.reflect.jvm.internal.impl.descriptors.ClassDescriptor
+-dontwarn kotlin.reflect.jvm.internal.impl.descriptors.ClassifierDescriptorWithTypeParameters
+-dontwarn kotlin.reflect.jvm.internal.impl.descriptors.annotations.AnnotationDescriptor
+-dontwarn kotlin.reflect.jvm.internal.impl.descriptors.impl.PropertyDescriptorImpl
+-dontwarn kotlin.reflect.jvm.internal.impl.load.java.JavaClassFinder
+-dontwarn kotlin.reflect.jvm.internal.impl.resolve.OverridingUtil
+-dontwarn kotlin.reflect.jvm.internal.impl.types.DescriptorSubstitutor
+-dontwarn kotlin.reflect.jvm.internal.impl.types.DescriptorSubstitutor
+-dontwarn kotlin.reflect.jvm.internal.impl.types.TypeConstructor
