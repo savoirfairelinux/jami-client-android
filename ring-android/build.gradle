@@ -4,17 +4,20 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.0'
     }
 }
 allprojects {
     repositories {
+        jcenter()
         mavenCentral()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 }
 
-dependencies {
-}
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.3' //version required
+    gradleVersion = '4.1' //version required
 }
