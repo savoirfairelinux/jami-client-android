@@ -111,6 +111,11 @@ public abstract class ContactService extends Observable {
         });
     }
 
+    public void updateContactUserName(Uri contactId, String userName) {
+        CallContact callContact = getContact(contactId);
+        callContact.setUsername(userName);
+    }
+
     /**
      * Add a contact to the local cache
      *

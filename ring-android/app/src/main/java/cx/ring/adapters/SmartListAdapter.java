@@ -64,7 +64,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
 
         holder.convParticipants.setText(smartListViewModel.getContactName());
 
-        long lastInteraction = smartListViewModel.getLastInteractionTime().getTime();
+        long lastInteraction = smartListViewModel.getLastInteractionTime();
         String lastInteractionStr = lastInteraction == 0 ?
                 "" : DateUtils.getRelativeTimeSpanString(lastInteraction, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL).toString();
 
