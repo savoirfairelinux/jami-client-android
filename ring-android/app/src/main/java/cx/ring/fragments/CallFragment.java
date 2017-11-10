@@ -59,7 +59,6 @@ import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
-import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.service.DRingService;
 import cx.ring.services.HardwareServiceImpl;
@@ -126,11 +125,11 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     private PowerManager.WakeLock mScreenWakeLock;
     private DisplayManager.DisplayListener displayListener;
 
-    public static CallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable Uri number, boolean hasVideo) {
+    public static CallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean hasVideo) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_ACTION, action);
         bundle.putString(KEY_ACCOUNT_ID, accountID);
-        bundle.putSerializable(KEY_NUMBER, number);
+        bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactRingId);
         bundle.putBoolean(KEY_HAS_VIDEO, hasVideo);
         CallFragment countDownFragment = new CallFragment();
         countDownFragment.setArguments(bundle);
@@ -181,7 +180,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         String action = getArguments().getString(KEY_ACTION);
         if (action.equals(ACTION_PLACE_CALL)) {
             presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
-                    (Uri) getArguments().getSerializable(KEY_NUMBER),
+                    getArguments().getString(ConversationFragment.KEY_CONTACT_RING_ID),
                     getArguments().getBoolean(KEY_HAS_VIDEO));
         } else if (action.equals(ACTION_GET_CALL)) {
             presenter.initIncoming(getArguments().getString(KEY_CONF_ID));
@@ -594,18 +593,19 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     }
 
     @Override
-    public void goToConversation(String conversationId) {
+    public void goToConversation(String accountId, String conversationId) {
         Intent intent = new Intent();
         if (ConversationFragment.isTabletMode(getActivity())) {
             intent.setClass(getActivity(), HomeActivity.class)
                     .setAction(DRingService.ACTION_CONV_ACCEPT)
-                    .putExtra(ConversationFragment.KEY_CONVERSATION_ID, conversationId);
+                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, conversationId);
             startActivity(intent);
         } else {
             intent.setClass(getActivity(), ConversationActivity.class)
                     .setAction(Intent.ACTION_VIEW)
                     .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, conversationId));
+                    .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
+                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, conversationId);
             startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
         }
     }
