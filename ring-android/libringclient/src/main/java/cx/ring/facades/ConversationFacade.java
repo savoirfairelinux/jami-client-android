@@ -219,29 +219,9 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         mHistoryService.insertNewTextMessage(message);
     }
 
-    private void readTextMessage(TextMessage message) {
-        message.read();
-        HistoryText ht = new HistoryText(message);
-        mHistoryService.updateTextMessage(ht);
-    }
-
-    public void readConversation(Conversation conv) {
-        for (HistoryEntry h : conv.getRawHistory().values()) {
-            NavigableMap<Long, TextMessage> messages = h.getTextMessages();
-            for (TextMessage msg : messages.descendingMap().values()) {
-                if (msg.isRead()) {
-                    break;
-                }
-                readTextMessage(msg);
-            }
-        }
-        mNotificationService.cancelTextNotification(conv.getContact());
-        updateTextNotifications();
-    }
-
     public void refreshConversations() {
         Log.d(TAG, "refreshConversations()");
-        mHistoryService.getCallAndTextAsync();
+        mHistoryService.getCallAndTextAsyncForAccount(mAccountService.getCurrentAccount().getAccountID());
     }
 
     public void updateTextNotifications() {
@@ -265,16 +245,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
-    public synchronized Conference getConference(String id) {
-        for (Conversation conv : mConversationMap.values()) {
-            Conference conf = conv.getConference(id);
-            if (conf != null) {
-                return conf;
-            }
-        }
-        return null;
-    }
-
     public Conference getCurrentCallingConf() {
         for (Conversation c : getConversations().values()) {
             Conference conf = c.getCurrentCall();
@@ -283,10 +253,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             }
         }
         return null;
-    }
-
-    public void removeConversation(String id) {
-        mConversationMap.remove(id);
     }
 
     private void parseNewMessage(TextMessage txt) {
