@@ -29,7 +29,6 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
-import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
@@ -105,9 +104,8 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         mHardwareService.addObserver(this);
     }
 
-    public void initOutGoing(String accountId, Uri number, boolean hasVideo) {
-        Log.d(TAG, "initOutGoing: " + number.toString());
-        mSipCall = mCallService.placeCall(accountId, number.getUriString(), hasVideo);
+    public void initOutGoing(String accountId, String contactRingId, boolean hasVideo) {
+        mSipCall = mCallService.placeCall(accountId, contactRingId, hasVideo);
         if (mSipCall == null) {
             finish();
             return;

@@ -19,15 +19,13 @@
  */
 package cx.ring.conversation;
 
-import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.Uri;
-import cx.ring.utils.Tuple;
 
 public interface ConversationView {
 
-    void refreshView(Conversation conversation, Uri number);
+    void refreshView(Conversation conversation);
 
     void updateView(String address, String name, int state);
 
@@ -45,7 +43,7 @@ public interface ConversationView {
 
     void displayCopyToClipboard(CallContact callContact);
 
-    void displaySendTrustRequest(String accountId, String contactId);
+    void displaySendTrustRequest(String accountId);
 
     void hideNumberSpinner();
 
@@ -57,5 +55,5 @@ public interface ConversationView {
 
     void goToCallActivity(String conferenceId);
 
-    void goToCallActivityWithResult(Tuple<Account, Uri> guess, boolean hasVideo);
+    void goToCallActivityWithResult(String accountId, String contactRingId, boolean hasVideo);
 }
