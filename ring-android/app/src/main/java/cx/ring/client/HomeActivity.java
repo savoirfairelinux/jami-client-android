@@ -279,7 +279,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         }
         if (fContent instanceof SmartListFragment) {
             Bundle bundle = new Bundle();
-            bundle.putString(ConversationFragment.KEY_CONVERSATION_ID, intent.getStringExtra(ConversationFragment.KEY_CONVERSATION_ID));
+            bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, intent.getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID));
             startConversationTablet(bundle);
         }
     }

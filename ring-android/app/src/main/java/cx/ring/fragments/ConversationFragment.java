@@ -53,7 +53,6 @@ import cx.ring.client.HomeActivity;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.conversation.ConversationView;
 import cx.ring.dependencyinjection.RingInjectionComponent;
-import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
@@ -63,7 +62,6 @@ import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ClipboardHelper;
-import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
@@ -76,9 +74,10 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         ConversationView {
 
     public static final int REQ_ADD_CONTACT = 42;
-    public static final String KEY_CONVERSATION_ID = "CONVERSATION_ID";
 
-    private static final String TAG = ConversationFragment.class.getSimpleName();
+    public static final String KEY_CONTACT_RING_ID = "CONTACT_RING_ID";
+    public static final String KEY_ACCOUNT_ID = "ACCOUNT_ID";
+
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
     private static final int MIN_SIZE_TABLET = 960;
 
@@ -116,7 +115,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void refreshView(final Conversation conversation, Uri number) {
+    public void refreshView(final Conversation conversation) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -176,8 +175,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void displaySendTrustRequest(final String accountId, final String contactId) {
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+    public void displaySendTrustRequest(final String accountId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.send_request_title);
         builder.setMessage(R.string.send_request_msg);
 
@@ -202,7 +201,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
                     vcard.addPhoto(new Photo(stream.toByteArray(), ImageType.PNG));
                     vcard.removeProperties(RawProperty.class);
                 }
-                presenter.sendTrustRequest(accountId, contactId, vcard);
+                presenter.sendTrustRequest(vcard);
             }
         });
 
@@ -211,18 +210,14 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @OnClick(R.id.msg_send)
     public void sendMessageText() {
-        Uri number = mNumberAdapter == null ?
-                null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-        presenter.sendTextMessage(mMsgEditTxt.getText().toString(), number);
+        presenter.sendTextMessage(mMsgEditTxt.getText().toString());
     }
 
     @OnEditorAction(R.id.msg_input_txt)
     public boolean actionSendMsgText(int actionId) {
         switch (actionId) {
             case EditorInfo.IME_ACTION_SEND:
-                Uri number = mNumberAdapter == null ?
-                        null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-                presenter.sendTextMessage(mMsgEditTxt.getText().toString(), number);
+                presenter.sendTextMessage(mMsgEditTxt.getText().toString());
                 return true;
         }
         return false;
@@ -277,20 +272,15 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Uri number;
         switch (item.getItemId()) {
             case android.R.id.home:
                 startActivity(new Intent(getActivity(), HomeActivity.class));
                 return true;
             case R.id.conv_action_audiocall:
-                number = mNumberAdapter == null ?
-                        null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-                presenter.callWithVideo(false, number);
+                presenter.callWithVideo(false);
                 return true;
             case R.id.conv_action_videocall:
-                number = mNumberAdapter == null ?
-                        null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-                presenter.callWithVideo(true, number);
+                presenter.callWithVideo(true);
                 return true;
             case R.id.menuitem_addcontact:
                 presenter.addContact();
@@ -310,7 +300,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void deleteConversation(Conversation conversation) {
+    public void deleteConversation(CallContact callContact) {
         presenter.deleteConversation();
     }
 
@@ -332,9 +322,9 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @Override
     protected void initPresenter(ConversationPresenter presenter) {
         super.initPresenter(presenter);
-        String conversationId = getArguments().getString(KEY_CONVERSATION_ID);
-        Uri number = new Uri(getArguments().getString(CallFragment.KEY_NUMBER));
-        presenter.init(conversationId, number);
+        String contactRingID = getArguments().getString(KEY_CONTACT_RING_ID);
+        String accountId = getArguments().getString(KEY_ACCOUNT_ID);
+        presenter.init(contactRingID, accountId);
     }
 
     @Override
@@ -384,7 +374,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mTopPane.setVisibility(display ? View.GONE : View.VISIBLE);
+                mTopPane.setVisibility(display ? View.VISIBLE : View.GONE);
             }
         });
     }
@@ -432,7 +422,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             @Override
             public void run() {
                 mDeleteDialog = ActionHelper.launchDeleteAction(getActivity(),
-                        conversation,
+                        conversation.getContact(),
                         ConversationFragment.this);
             }
         });
@@ -480,12 +470,12 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void goToCallActivityWithResult(Tuple<Account, Uri> guess, boolean hasVideo) {
+    public void goToCallActivityWithResult(String accountId, String contactRingId, boolean hasVideo) {
         Intent intent = new Intent(CallActivity.ACTION_CALL)
                 .setClass(getActivity().getApplicationContext(), CallActivity.class)
-                .putExtra("account", guess.first.getAccountID())
-                .putExtra("video", hasVideo)
-                .setData(android.net.Uri.parse(guess.second.getRawUriString()));
+                .putExtra(KEY_ACCOUNT_ID, accountId)
+                .putExtra(CallActivity.KEY_CALL_VIDEO, hasVideo)
+                .putExtra(KEY_CONTACT_RING_ID, contactRingId);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
     }
 }

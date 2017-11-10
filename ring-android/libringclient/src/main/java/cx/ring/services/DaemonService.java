@@ -64,7 +64,9 @@ public class DaemonService {
 
     public interface SystemInfoCallbacks {
         void getHardwareAudioFormat(IntVect ret);
+
         void getAppDataPath(String name, StringVect ret);
+
         void getDeviceName(StringVect ret);
     }
 
@@ -154,7 +156,7 @@ public class DaemonService {
 
         @Override
         public void incomingAccountMessage(String accountId, String from, StringMap messages) {
-            mAccountCallbackHandler.incomingAccountMessage(accountId, from, messages);
+            mHistoryService.incomingMessage(accountId, null, from, messages);
         }
 
         @Override
