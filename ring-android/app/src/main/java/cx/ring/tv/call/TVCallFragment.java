@@ -50,7 +50,6 @@ import cx.ring.call.CallView;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
-import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.services.HardwareServiceImpl;
 import cx.ring.utils.CircleTransform;
@@ -66,7 +65,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     public static final String KEY_ACTION = "action";
     public static final String KEY_ACCOUNT_ID = "accountId";
     public static final String KEY_CONF_ID = "confId";
-    public static final String KEY_NUMBER = "number";
+    public static final String KEY_CONTACT_RING_ID = "CONTACT_RING_ID";
     public static final String KEY_HAS_VIDEO = "hasVideo";
 
     @BindView(R.id.contact_bubble_layout)
@@ -108,11 +107,11 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     // Screen wake lock for incoming call
     private PowerManager.WakeLock mScreenWakeLock;
 
-    public static TVCallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable Uri number, boolean hasVideo) {
+    public static TVCallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean hasVideo) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_ACTION, action);
         bundle.putString(KEY_ACCOUNT_ID, accountID);
-        bundle.putSerializable(KEY_NUMBER, number);
+        bundle.putSerializable(KEY_CONTACT_RING_ID, contactRingId);
         bundle.putBoolean(KEY_HAS_VIDEO, hasVideo);
         TVCallFragment countDownFragment = new TVCallFragment();
         countDownFragment.setArguments(bundle);
@@ -163,7 +162,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         String action = getArguments().getString(KEY_ACTION);
         if (action.equals(ACTION_PLACE_CALL)) {
             presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
-                    (Uri) getArguments().getSerializable(KEY_NUMBER),
+                    getArguments().getString(KEY_CONTACT_RING_ID),
                     getArguments().getBoolean(KEY_HAS_VIDEO));
         } else if (action.equals(ACTION_GET_CALL)) {
             presenter.initIncoming(getArguments().getString(KEY_CONF_ID));

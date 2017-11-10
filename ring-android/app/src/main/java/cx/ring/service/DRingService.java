@@ -57,7 +57,9 @@ import javax.inject.Named;
 import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
+import cx.ring.client.ConversationActivity;
 import cx.ring.facades.ConversationFacade;
+import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Codec;
 import cx.ring.model.Conversation;
 import cx.ring.model.ServiceEvent;
@@ -597,14 +599,13 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                     handleCallAction(intent.getAction(), extras);
                 }
                 break;
-            case ACTION_CONV_READ: {
-                String convId = intent.getData().getLastPathSegment();
-                Conversation conversation = mConversationFacade.getConversationById(convId);
-                if (conversation != null) {
-                    mConversationFacade.readConversation(conversation);
+            case ACTION_CONV_READ:
+            case ACTION_CONV_ACCEPT:
+                extras = intent.getExtras();
+                if (extras != null) {
+                    handleConvAction(intent.getAction(), intent.getExtras());
                 }
                 break;
-            }
             default:
                 break;
         }
@@ -670,6 +671,30 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                             .setClass(getApplicationContext(), CallActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                 }
+                break;
+        }
+    }
+
+    private void handleConvAction(String action, Bundle extras) {
+        String ringId = extras.getString(ConversationFragment.KEY_CONTACT_RING_ID);
+
+        if (ringId == null || ringId.isEmpty()) {
+            return;
+        }
+
+        switch (action) {
+            case ACTION_CONV_READ:
+                Conversation conversation = mConversationFacade.getConversationById(ringId);
+                if (conversation != null) {
+                    mConversationFacade.readConversation(conversation);
+                }
+            case ACTION_CONV_ACCEPT:
+                startActivity(new Intent(Intent.ACTION_VIEW)
+                        .putExtras(extras)
+                        .setClass(getApplicationContext(), ConversationActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                break;
+            default:
                 break;
         }
     }

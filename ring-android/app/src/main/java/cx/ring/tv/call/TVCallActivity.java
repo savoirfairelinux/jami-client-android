@@ -26,7 +26,6 @@ import android.text.TextUtils;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
-import cx.ring.model.Uri;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
 
@@ -56,10 +55,9 @@ public class TVCallActivity extends Activity {
         android.util.Log.d(TAG, "IN CALL ACTIVITY !");
         if (!TextUtils.isEmpty(ringId)) {
             Log.d(TAG, " outgoing call");
-            Uri number = new Uri(ringId);
             TVCallFragment callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_PLACE_CALL,
                     accountId,
-                    number,
+                    ringId,
                     hasVideo);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
         } else {

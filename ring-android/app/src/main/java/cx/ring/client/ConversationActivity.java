@@ -22,8 +22,6 @@ package cx.ring.client;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -33,27 +31,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.facades.ConversationFacade;
-import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 
 public class ConversationActivity extends AppCompatActivity {
 
-    static final long REFRESH_INTERVAL_MS = 30 * 1000;
-    private static final String TAG = ConversationActivity.class.getSimpleName();
-    private final Handler mRefreshTaskHandler = new Handler();
-    private final Runnable refreshTask = new Runnable() {
-        private long lastRefresh = 0;
-
-        public void run() {
-            if (lastRefresh == 0) {
-                lastRefresh = SystemClock.uptimeMillis();
-            } else {
-                lastRefresh += REFRESH_INTERVAL_MS;
-            }
-
-            mRefreshTaskHandler.postAtTime(this, lastRefresh + REFRESH_INTERVAL_MS);
-        }
-    };
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
     @Inject
@@ -84,14 +65,14 @@ public class ConversationActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (getIntent() == null || getIntent().getData() == null) {
+        if (getIntent() == null || getIntent().getExtras() == null) {
             return;
         }
 
         if (mConversationFragment == null) {
             Bundle bundle = new Bundle();
-            bundle.putString(ConversationFragment.KEY_CONVERSATION_ID, getIntent().getData().getLastPathSegment());
-            bundle.putString(CallFragment.KEY_NUMBER, getIntent().getStringExtra(CallFragment.KEY_NUMBER));
+            bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, getIntent().getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID));
+            bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, getIntent().getStringExtra(ConversationFragment.KEY_ACCOUNT_ID));
 
             mConversationFragment = new ConversationFragment();
             mConversationFragment.setArguments(bundle);
@@ -100,13 +81,6 @@ public class ConversationActivity extends AppCompatActivity {
                     .commit();
         }
 
-        mRefreshTaskHandler.postDelayed(refreshTask, REFRESH_INTERVAL_MS);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mRefreshTaskHandler.removeCallbacks(refreshTask);
     }
 
     @Override

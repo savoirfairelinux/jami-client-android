@@ -29,11 +29,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.daemon.StringMap;
+import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.HistoryCall;
@@ -42,8 +45,12 @@ import cx.ring.model.HistoryText;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
+import cx.ring.model.Uri;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
+import io.reactivex.Completable;
+import io.reactivex.Single;
+import io.reactivex.functions.Action;
 
 /**
  * A service managing all history related tasks.
@@ -81,10 +88,6 @@ public abstract class HistoryService extends Observable {
             }
         }
 
-        // notify the observers
-        setChanged();
-        notifyObservers();
-
         return true;
     }
 
@@ -96,11 +99,6 @@ public abstract class HistoryService extends Observable {
             Log.e(TAG, "Error while inserting text message", e);
             return false;
         }
-
-        // notify the observers
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.HISTORY_MODIFIED);
-        notifyObservers(event);
 
         return true;
     }
@@ -132,14 +130,14 @@ public abstract class HistoryService extends Observable {
         return true;
     }
 
-    public void getCallAndTextAsync() {
+    public void getCallAndTextAsyncForAccount(final String accountId) {
 
         mApplicationExecutor.submit(new Runnable() {
             @Override
             public void run() {
                 try {
-                    List<HistoryCall> historyCalls = getAll();
-                    List<HistoryText> historyTexts = getAllTextMessages();
+                    List<HistoryCall> historyCalls = getAllForAccount(accountId);
+                    List<HistoryText> historyTexts = getAllTextMessagesForAccount(accountId);
 
                     ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.HISTORY_LOADED);
                     event.addEventInput(ServiceEvent.EventInput.HISTORY_CALLS, historyCalls);
@@ -153,16 +151,86 @@ public abstract class HistoryService extends Observable {
         });
     }
 
-    private List<HistoryCall> getAll() throws SQLException {
+    private List<HistoryCall> getAllForAccount(String accountId) throws SQLException {
         QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
+        queryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId);
         queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, true);
         return getCallHistoryDao().query(queryBuilder.prepare());
     }
 
-    private List<HistoryText> getAllTextMessages() throws SQLException {
+    private List<HistoryText> getAllTextMessagesForAccount(String accountId) throws SQLException {
         QueryBuilder<HistoryText, Long> queryBuilder = getTextHistoryDao().queryBuilder();
+        queryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId);
         queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, true);
         return getTextHistoryDao().query(queryBuilder.prepare());
+    }
+
+    public Single<List<HistoryText>> getLastMessagesForAccountAndContactRingId(final String accountId, final String contactRingId) {
+        return Single.fromCallable(new Callable<List<HistoryText>>() {
+            @Override
+            public List<HistoryText> call() throws Exception {
+                QueryBuilder<HistoryText, Long> queryBuilder = getTextHistoryDao().queryBuilder();
+                queryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryText.COLUMN_NUMBER_NAME, contactRingId);
+                queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, false);
+                queryBuilder.limit(1L);
+                return getTextHistoryDao().query(queryBuilder.prepare());
+            }
+        });
+    }
+
+    public Single<List<HistoryCall>> getLastCallsForAccountAndContactRingId(final String accountId, final String contactRingId) {
+        return Single.fromCallable(new Callable<List<HistoryCall>>() {
+            @Override
+            public List<HistoryCall> call() throws Exception {
+                QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
+                queryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryText.COLUMN_NUMBER_NAME, contactRingId);
+                queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, false);
+                queryBuilder.limit(1L);
+                return getCallHistoryDao().query(queryBuilder.prepare());
+            }
+        });
+    }
+
+    public Single<List<HistoryText>> getAllTextMessagesForAccountAndContactRingId(final String accountId, final String contactRingId) {
+        return Single.fromCallable(new Callable<List<HistoryText>>() {
+            @Override
+            public List<HistoryText> call() throws Exception {
+                QueryBuilder<HistoryText, Long> queryBuilder = getTextHistoryDao().queryBuilder();
+                queryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryText.COLUMN_NUMBER_NAME, contactRingId);
+                queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, true);
+                return getTextHistoryDao().query(queryBuilder.prepare());
+            }
+        });
+    }
+
+    public Single<List<HistoryCall>> getAllCallsForAccountAndContactRingId(final String accountId, final String contactRingId) {
+        return Single.fromCallable(new Callable<List<HistoryCall>>() {
+            @Override
+            public List<HistoryCall> call() throws Exception {
+                QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
+                queryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryCall.COLUMN_NUMBER_NAME, contactRingId);
+                queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, true);
+                return getCallHistoryDao().query(queryBuilder.prepare());
+            }
+        });
+    }
+
+    public Completable clearHistoryForContactAndAccount(final String contactId, final String accoundId) {
+        return Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+
+                DeleteBuilder<HistoryText, Long> deleteTextHistoryBuilder = getTextHistoryDao()
+                        .deleteBuilder();
+                deleteTextHistoryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accoundId).and().eq(HistoryText.COLUMN_NUMBER_NAME, contactId);
+                deleteTextHistoryBuilder.delete();
+
+                DeleteBuilder<HistoryCall, Integer> deleteCallsHistoryBuilder = getCallHistoryDao()
+                        .deleteBuilder();
+                deleteCallsHistoryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accoundId).and().eq(HistoryCall.COLUMN_NUMBER_NAME, contactId);
+                deleteCallsHistoryBuilder.delete();
+            }
+        });
     }
 
     private HistoryText getTextMessage(long id) throws SQLException {
@@ -231,7 +299,23 @@ public abstract class HistoryService extends Observable {
         }
     }
 
-    public void incomingMessage(TextMessage txt) {
+    public void incomingMessage(String accountId, String callId, String from, StringMap messages) {
+
+        String msg = null;
+        final String textPlainMime = "text/plain";
+        if (null != messages && messages.has_key(textPlainMime)) {
+            msg = messages.getRaw(textPlainMime).toJavaString();
+        }
+        if (msg == null) {
+            return;
+        }
+
+        if (!from.contains(CallContact.PREFIX_RING)) {
+            from = CallContact.PREFIX_RING + from;
+        }
+
+        TextMessage txt = new TextMessage(true, msg, new Uri(from), callId, accountId);
+        Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
         insertNewTextMessage(txt);
 
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_MESSAGE);

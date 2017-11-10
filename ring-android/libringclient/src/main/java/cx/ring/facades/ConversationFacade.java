@@ -241,7 +241,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     public void refreshConversations() {
         Log.d(TAG, "refreshConversations()");
-        mHistoryService.getCallAndTextAsync();
+        mHistoryService.getCallAndTextAsyncForAccount(mAccountService.getCurrentAccount().getAccountID());
     }
 
     public void updateTextNotifications() {
@@ -263,16 +263,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             CallContact contact = conversation.getContact();
             mNotificationService.showTextNotification(contact, conversation, texts);
         }
-    }
-
-    public synchronized Conference getConference(String id) {
-        for (Conversation conv : mConversationMap.values()) {
-            Conference conf = conv.getConference(id);
-            if (conf != null) {
-                return conf;
-            }
-        }
-        return null;
     }
 
     public Conference getCurrentCallingConf() {
