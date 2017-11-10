@@ -53,7 +53,7 @@ public interface CallView  {
 
     void resetVideoSize(int videoWidth, int videoHeight, int previewWidth, int previewHeight);
 
-    void goToConversation(String conversationId);
+    void goToConversation(String accountId, String conversationId);
 
     void goToAddContact(CallContact callContact);
 

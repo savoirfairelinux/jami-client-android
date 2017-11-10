@@ -43,6 +43,8 @@ public abstract class NotificationService {
 
     public abstract void cancelTextNotification(CallContact contact);
 
+    public abstract void cancelTextNotification(String ringId);
+
     public abstract void cancelAll();
 
     public abstract void showIncomingTrustRequestNotification(Account account);
