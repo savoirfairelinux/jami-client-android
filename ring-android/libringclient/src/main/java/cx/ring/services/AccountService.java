@@ -44,7 +44,6 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.ServiceEvent;
-import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
@@ -125,7 +124,9 @@ public class AccountService extends Observable {
         return mHasRingAccount;
     }
 
-    public boolean isLoaded() { return mAccountsLoaded.get(); }
+    public boolean isLoaded() {
+        return mAccountsLoaded.get();
+    }
 
     /**
      * Loads the accounts from the daemon and then builds the local cache (also sends ACCOUNTS_CHANGED event)
@@ -395,35 +396,6 @@ public class AccountService extends Observable {
                     }
                 }
         );
-    }
-
-    /**
-     * @param uri
-     * @return an Account from the local cache that corresponds to the uri
-     */
-    public Account guessAccount(Uri uri) {
-        if (uri.isRingId()) {
-            for (Account account : mAccountList) {
-                if (account.isRing()) {
-                    return account;
-                }
-            }
-            // ring ids must be called with ring accounts
-            return null;
-        }
-        for (Account account : mAccountList) {
-            if (account.isSip() && account.getHost().equals(uri.getHost())) {
-                return account;
-            }
-        }
-        if (uri.isSingleIp()) {
-            for (Account account : mAccountList) {
-                if (account.isIP2IP()) {
-                    return account;
-                }
-            }
-        }
-        return mAccountList.get(0);
     }
 
     /**
@@ -1293,23 +1265,6 @@ public class AccountService extends Observable {
                 event.addEventInput(ServiceEvent.EventInput.DETAIL_STRING, detailString);
                 notifyObservers(event);
             }
-        }
-
-        @Override
-        public void incomingAccountMessage(String accountId, String from, StringMap messages) {
-
-            String msg = null;
-            final String textPlainMime = "text/plain";
-            if (null != messages && messages.has_key(textPlainMime)) {
-                msg = messages.getRaw(textPlainMime).toJavaString();
-            }
-            if (msg == null) {
-                return;
-            }
-
-            Log.d(TAG, "incomingAccountMessage: " + accountId + ", " + from + ", " + msg);
-            TextMessage txt = new TextMessage(true, msg, new Uri(from), null, accountId);
-            mHistoryService.incomingMessage(txt);
         }
 
         @Override
