@@ -33,16 +33,19 @@ import android.view.View;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.fragments.CallFragment;
-import cx.ring.model.Uri;
+import cx.ring.fragments.ConversationFragment;
 import cx.ring.services.NotificationService;
 
 public class CallActivity extends AppCompatActivity {
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
-    static final String TAG = CallActivity.class.getSimpleName();
+    public static final String KEY_CALL_VIDEO = "CALL_VIDEO";
+
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
     private View mMainView;
     private int currentOrientation = Configuration.ORIENTATION_PORTRAIT;
+
+
     private boolean dimmed = false;
 
     @Override
@@ -64,29 +67,24 @@ public class CallActivity extends AppCompatActivity {
             }
         });
 
-        android.net.Uri u = getIntent().getData();
-
         String action = getIntent().getAction();
         if (Intent.ACTION_CALL.equals(action) || ACTION_CALL.equals(action)) {
-            Uri number = new Uri(u.getSchemeSpecificPart());
-            Log.d(TAG, "number " + number);
 
-            boolean hasVideo = getIntent().getBooleanExtra("video", false);
-            String accountId = getIntent().getStringExtra("account");
-
+            boolean hasVideo = getIntent().getBooleanExtra(KEY_CALL_VIDEO, false);
+            String accountId = getIntent().getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
+            String contactRingId = getIntent().getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
 
             // Reload a new view
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             CallFragment callFragment = CallFragment.newInstance(CallFragment.ACTION_PLACE_CALL,
                     accountId,
-                    number,
+                    contactRingId,
                     hasVideo);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
 
         } else if (Intent.ACTION_VIEW.equals(action)) {
             String confId = getIntent().getStringExtra(NotificationService.KEY_CALL_ID);
-            Log.d(TAG, "conf " + confId);
             // Reload a new view
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
