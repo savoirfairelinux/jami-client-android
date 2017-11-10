@@ -153,6 +153,27 @@ public abstract class HistoryService extends Observable {
         });
     }
 
+    public void getCallAndTextAsyncForAccount(final String accountId) {
+
+        mApplicationExecutor.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    List<HistoryCall> historyCalls = getAllForAccount(accountId);
+                    List<HistoryText> historyTexts = getAllTextMessagesForAccount(accountId);
+
+                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.HISTORY_LOADED);
+                    event.addEventInput(ServiceEvent.EventInput.HISTORY_CALLS, historyCalls);
+                    event.addEventInput(ServiceEvent.EventInput.HISTORY_TEXTS, historyTexts);
+                    setChanged();
+                    notifyObservers(event);
+                } catch (SQLException e) {
+                    Log.e(TAG, "Can't load calls and texts", e);
+                }
+            }
+        });
+    }
+
     private List<HistoryCall> getAll() throws SQLException {
         QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
         queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, true);
@@ -161,6 +182,20 @@ public abstract class HistoryService extends Observable {
 
     private List<HistoryText> getAllTextMessages() throws SQLException {
         QueryBuilder<HistoryText, Long> queryBuilder = getTextHistoryDao().queryBuilder();
+        queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, true);
+        return getTextHistoryDao().query(queryBuilder.prepare());
+    }
+
+    private List<HistoryCall> getAllForAccount(String accountId) throws SQLException {
+        QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
+        queryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId);
+        queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, true);
+        return getCallHistoryDao().query(queryBuilder.prepare());
+    }
+
+    private List<HistoryText> getAllTextMessagesForAccount(String accountId) throws SQLException {
+        QueryBuilder<HistoryText, Long> queryBuilder = getTextHistoryDao().queryBuilder();
+        queryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId);
         queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, true);
         return getTextHistoryDao().query(queryBuilder.prepare());
     }

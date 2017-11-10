@@ -243,6 +243,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             getView().setLoading(false);
         } else {
             getView().displayNoConversationMessage();
+            getView().hideList();
             getView().setLoading(false);
         }
     }
