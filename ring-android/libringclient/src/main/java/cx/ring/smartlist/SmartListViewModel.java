@@ -20,13 +20,9 @@
 package cx.ring.smartlist;
 
 import java.util.Arrays;
-import java.util.Date;
+import java.util.Comparator;
 
 import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
-import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryEntry;
-import cx.ring.model.TextMessage;
 
 public class SmartListViewModel {
 
@@ -39,47 +35,47 @@ public class SmartListViewModel {
     private String contactName;
     private String lastInteraction = "";
     private byte[] photoData;
-    private Date lastInteractionTime;
+    private long lastInteractionTime;
     private boolean hasUnreadTextMessage;
     private boolean hasOngoingCall;
     private CallContact.Status status;
     private boolean isOnline = false;
     private int lastEntryType;
 
-    public SmartListViewModel(Conversation conversation, String contactName, byte[] photoData) {
-        this.uuid = conversation.getUuid();
+    public SmartListViewModel(String id, CallContact.Status status, String contactName, byte[] photoData, long lastInteractionTime, int lastEntrytype, String lastInteraction, boolean hasUnreadTextMessage) {
+        this.uuid = id;
         this.contactName = contactName;
         this.photoData = photoData;
-        this.hasUnreadTextMessage = conversation.hasUnreadTextMessages();
-        this.hasOngoingCall = conversation.hasCurrentCall();
-        this.status = conversation.getContact().getStatus();
+        this.lastInteractionTime = lastInteractionTime;
+        this.hasUnreadTextMessage = hasUnreadTextMessage;
+        this.hasOngoingCall = false;
+        this.status = status;
+        this.lastEntryType = lastEntrytype;
+        this.lastInteraction = lastInteraction;
+    }
 
-        lastInteractionTime = conversation.getLastInteraction();
-        long lastInteraction = lastInteractionTime.getTime();
-        for (HistoryEntry historyEntry : conversation.getHistory().values()) {
-            long lastTextTimestamp = historyEntry.getTextMessages().isEmpty() ? 0 : historyEntry.getTextMessages().lastEntry().getKey();
-            long lastCallTimestamp = historyEntry.getCalls().isEmpty() ? 0 : historyEntry.getCalls().lastEntry().getKey();
-            if (lastTextTimestamp == lastInteraction
-                    && lastTextTimestamp > 0
-                    && lastTextTimestamp > lastCallTimestamp) {
-                TextMessage msg = historyEntry.getTextMessages().lastEntry().getValue();
-                String msgString = msg.getMessage();
-                if (msgString != null && !msgString.isEmpty() && msgString.contains("\n")) {
-                    int lastIndexOfChar = msgString.lastIndexOf("\n");
-                    if (lastIndexOfChar + 1 < msgString.length()) {
-                        msgString = msgString.substring(msgString.lastIndexOf("\n") + 1);
-                    }
-                }
-                this.lastEntryType = msg.isIncoming() ? TYPE_INCOMING_MESSAGE : TYPE_OUTGOING_MESSAGE;
-                this.lastInteraction = msgString;
-                break;
+    public SmartListViewModel(SmartListViewModel smartListViewModel) {
+        this.uuid = smartListViewModel.getUuid();
+        this.contactName = smartListViewModel.getContactName();
+        this.photoData = smartListViewModel.getPhotoData();
+        this.lastInteractionTime = smartListViewModel.getLastInteractionTime();
+        this.hasUnreadTextMessage = smartListViewModel.hasUnreadTextMessage();
+        this.hasOngoingCall = smartListViewModel.hasOngoingCall();
+        this.status = smartListViewModel.getStatus();
+        this.lastEntryType = smartListViewModel.getLastEntryType();
+        this.lastInteraction = smartListViewModel.getLastInteraction();
+    }
+
+    public static class SmartListComparator implements Comparator<SmartListViewModel> {
+        @Override
+        public int compare(SmartListViewModel lhs, SmartListViewModel rhs) {
+            if (lhs.hasOngoingCall) {
+                return -1;
             }
-            if (lastCallTimestamp == lastInteraction
-                    && lastCallTimestamp > 0) {
-                HistoryCall lastCall = historyEntry.getCalls().lastEntry().getValue();
-                this.lastEntryType = lastCall.isIncoming() ? TYPE_INCOMING_CALL : TYPE_OUTGOING_CALL;
-                this.lastInteraction = lastCall.getDurationString();
-                break;
+            if (rhs.getLastInteractionTime() != lhs.getLastInteractionTime()) {
+                return (int) ((rhs.getLastInteractionTime() - lhs.getLastInteractionTime()) / 1000L);
+            } else {
+                return (rhs.getContactName().compareTo(lhs.getContactName()));
             }
         }
     }
@@ -92,7 +88,7 @@ public class SmartListViewModel {
                     && this.uuid.equals(slvm.getUuid())
                     && this.contactName.equals(slvm.getContactName())
                     && this.lastInteraction.equals(slvm.getLastInteraction())
-                    && this.lastInteractionTime.equals(slvm.getLastInteractionTime())
+                    && this.lastInteractionTime == slvm.getLastInteractionTime()
                     && this.hasUnreadTextMessage == slvm.hasUnreadTextMessage()
                     && this.hasOngoingCall == slvm.hasOngoingCall()
                     && this.lastEntryType == slvm.getLastEntryType()
@@ -111,7 +107,7 @@ public class SmartListViewModel {
         return lastInteraction;
     }
 
-    public Date getLastInteractionTime() {
+    public long getLastInteractionTime() {
         return lastInteractionTime;
     }
 
@@ -145,6 +141,10 @@ public class SmartListViewModel {
 
     public void setContactName(String contactName) {
         this.contactName = contactName;
+    }
+
+    public void setHasOngoingCall(boolean hasOngoingCall) {
+        this.hasOngoingCall = hasOngoingCall;
     }
 
     public int getLastEntryType() {

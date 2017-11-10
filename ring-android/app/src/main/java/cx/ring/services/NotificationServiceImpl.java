@@ -218,22 +218,17 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 .setSmallIcon(R.drawable.ic_ring_logo_white);
         messageNotificationBuilder.setContentTitle(contact.getDisplayName());
 
-        Intent intentConversation;
-        if (ConversationFragment.isTabletMode(mContext)) {
-            intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
-                    .setClass(mContext, HomeActivity.class)
-                    .putExtra(ConversationFragment.KEY_CONVERSATION_ID, contact.getIds().get(0));
-        } else {
-            intentConversation = new Intent(Intent.ACTION_VIEW)
-                    .setClass(mContext, ConversationActivity.class)
-                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
-        }
+        Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
+                .setClass(mContext, DRingService.class)
+                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
+                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPhones().get(0).getNumber().toString());
 
         Intent intentDelete = new Intent(DRingService.ACTION_CONV_READ)
                 .setClass(mContext, DRingService.class)
-                .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
+                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
+                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPhones().get(0).getNumber().toString());
 
-        messageNotificationBuilder.setContentIntent(PendingIntent.getActivity(mContext, new Random().nextInt(), intentConversation, 0))
+        messageNotificationBuilder.setContentIntent(PendingIntent.getService(mContext, new Random().nextInt(), intentConversation, 0))
                 .setDeleteIntent(PendingIntent.getService(mContext, new Random().nextInt(), intentDelete, 0));
 
         if (contact.getPhoto() != null) {

@@ -21,9 +21,13 @@ package cx.ring.mvp;
 
 import java.lang.ref.WeakReference;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 public abstract class RootPresenter<T> {
 
-    public RootPresenter () {
+    protected CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+
+    public RootPresenter() {
 
     }
 
@@ -39,6 +43,7 @@ public abstract class RootPresenter<T> {
         }
 
         mView = null;
+        mCompositeDisposable.dispose();
     }
 
     public T getView() {
