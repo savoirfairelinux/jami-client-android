@@ -241,7 +241,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     public void refreshConversations() {
         Log.d(TAG, "refreshConversations()");
-        mHistoryService.getCallAndTextAsync();
+        mHistoryService.getCallAndTextAsyncForAccount(mAccountService.getCurrentAccount().getAccountID());
     }
 
     public void updateTextNotifications() {
