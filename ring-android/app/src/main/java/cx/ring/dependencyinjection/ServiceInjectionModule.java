@@ -75,7 +75,7 @@ public class ServiceInjectionModule {
     HistoryService provideHistoryService() {
         HistoryServiceImpl historyService = new HistoryServiceImpl();
         mRingApplication.getRingInjectionComponent().inject(historyService);
-        historyService.initHelper();
+        //historyService.initHelper();
         return historyService;
     }
 

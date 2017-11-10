@@ -48,7 +48,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -60,6 +64,7 @@ import cx.ring.about.AboutFragment;
 import cx.ring.account.AccountWizard;
 import cx.ring.application.RingApplication;
 import cx.ring.contactrequests.ContactRequestsFragment;
+import cx.ring.database.models.HistoryTextModel;
 import cx.ring.fragments.AccountsManagementFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;
@@ -73,11 +78,14 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
+import cx.ring.services.RoomService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class HomeActivity extends AppCompatActivity implements RingNavigationFragment.OnNavigationSectionSelected,
         ActivityCompat.OnRequestPermissionsResultCallback,
@@ -111,6 +119,9 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
     @Inject
     HardwareService mHardwareService;
+
+    @Inject
+    RoomService mRoomService;
 
     @Inject
     AccountService mAccountService;
@@ -255,6 +266,30 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             mAccountWithPendingrequests = null;
         }
 
+        mRoomService.getHistoryTextDao().getAllHistorytext()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<HistoryTextModel>>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<HistoryTextModel> historyTextModels) {
+                        Log.d("TAG", String.valueOf(historyTextModels.size()));
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        Log.d("TAG", t.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d("TAG", "OK");
+                    }
+                });
     }
 
     @Override

@@ -76,7 +76,7 @@ import cx.ring.tv.search.RingSearchFragment;
 import dagger.Component;
 
 @Singleton
-@Component(modules = {RingInjectionModule.class, ServiceInjectionModule.class})
+@Component(modules = {RingInjectionModule.class, ServiceInjectionModule.class, RoomModule.class})
 public interface RingInjectionComponent {
     void inject(RingApplication app);
 

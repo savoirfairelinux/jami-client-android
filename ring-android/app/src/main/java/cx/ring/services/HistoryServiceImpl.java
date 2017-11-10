@@ -30,7 +30,7 @@ import java.sql.SQLException;
 
 import javax.inject.Inject;
 
-import cx.ring.history.DatabaseHelper;
+import cx.ring.database.DatabaseHelper;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryText;
 

@@ -48,6 +48,7 @@ import cx.ring.daemon.VideoCallback;
 import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionModule;
+import cx.ring.dependencyinjection.RoomModule;
 import cx.ring.dependencyinjection.ServiceInjectionModule;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.ConfigurationManagerCallback;
@@ -241,6 +242,7 @@ public class RingApplication extends Application {
         mRingInjectionComponent = DaggerRingInjectionComponent.builder()
                 .ringInjectionModule(new RingInjectionModule(this))
                 .serviceInjectionModule(new ServiceInjectionModule(this))
+                .roomModule(new RoomModule(this))
                 .build();
 
         // we can now inject in our self whatever modules define
