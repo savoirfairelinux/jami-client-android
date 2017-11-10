@@ -46,6 +46,8 @@ public interface SmartListView {
 
     void hideErrorPanel();
 
+    void hideList();
+
     void hideNoConversationMessage();
 
     void updateList(ArrayList<SmartListViewModel> smartListViewModels);

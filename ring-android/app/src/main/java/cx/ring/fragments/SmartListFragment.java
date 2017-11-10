@@ -472,6 +472,16 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
+    public void hideList() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
     public void hideNoConversationMessage() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -494,6 +504,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                     llm.setOrientation(LinearLayoutManager.VERTICAL);
                     mRecyclerView.setLayoutManager(llm);
                 }
+                mRecyclerView.setVisibility(View.VISIBLE);
                 mSmartListAdapter.update(smartListViewModels);
             }
         });
