@@ -47,7 +47,6 @@ import java.util.TreeMap;
 import javax.inject.Inject;
 
 import cx.ring.R;
-import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.fragments.ConversationFragment;
@@ -62,7 +61,6 @@ import cx.ring.model.TrustRequest;
 import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.DRingService;
 import cx.ring.utils.BitmapUtils;
-import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -101,7 +99,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void registerNotificationChannels(){
+    private void registerNotificationChannels() {
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager == null)
             return;
@@ -218,23 +216,19 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 .setSmallIcon(R.drawable.ic_ring_logo_white);
         messageNotificationBuilder.setContentTitle(contact.getDisplayName());
 
-        Intent intentConversation;
-        if (ConversationFragment.isTabletMode(mContext)) {
-            intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
-                    .setClass(mContext, HomeActivity.class)
-                    .putExtra(ConversationFragment.KEY_CONVERSATION_ID, contact.getIds().get(0));
-        } else {
-            intentConversation = new Intent(Intent.ACTION_VIEW)
-                    .setClass(mContext, ConversationActivity.class)
-                    .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
-        }
+        Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
+                .setClass(mContext, DRingService.class)
+                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
+                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPhones().get(0).getNumber().toString());
 
         Intent intentDelete = new Intent(DRingService.ACTION_CONV_READ)
                 .setClass(mContext, DRingService.class)
-                .setData(android.net.Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, contact.getIds().get(0)));
+                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
+                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPhones().get(0).getNumber().toString());
 
-        messageNotificationBuilder.setContentIntent(PendingIntent.getActivity(mContext, new Random().nextInt(), intentConversation, 0))
-                .setDeleteIntent(PendingIntent.getService(mContext, new Random().nextInt(), intentDelete, 0));
+        messageNotificationBuilder.setContentIntent(PendingIntent.getService(mContext, new Random().nextInt(), intentConversation, 0))
+                .setDeleteIntent(PendingIntent.getService(mContext, new Random().nextInt(), intentDelete, 0))
+                .setAutoCancel(true);
 
         if (contact.getPhoto() != null) {
             Resources res = mContext.getResources();
@@ -354,6 +348,13 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         mNotificationBuilders.remove(notificationId);
     }
 
+    public void cancelTextNotification(String ringId) {
+        int notificationId = (NOTIF_MSG + ringId).hashCode();
+        notificationManager.cancel(notificationId);
+        mNotificationBuilders.remove(notificationId);
+    }
+
+
     @Override
     public void cancelTrustRequestNotification(String accountID) {
         if (accountID == null) {
@@ -381,8 +382,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     }
 
     private int getTextNotificationId(CallContact contact) {
-        cx.ring.model.Uri uri = new cx.ring.model.Uri(contact.getDisplayName());
-        return (NOTIF_MSG + uri.getRawUriString()).hashCode();
+        return (NOTIF_MSG + contact.getPhones().get(0).getNumber().toString()).hashCode();
     }
 
     @Override

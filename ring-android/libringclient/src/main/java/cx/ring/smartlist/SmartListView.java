@@ -36,7 +36,11 @@ public interface SmartListView {
 
     void displayNoConversationMessage();
 
-    void displayConversationDialog(Conversation conversation);
+    void displayConversationDialog(SmartListViewModel smartListViewModel);
+
+    void displayDeleteDialog(CallContact callContact);
+
+    void copyNumber(CallContact callContact);
 
     void setLoading(boolean display);
 
@@ -46,13 +50,15 @@ public interface SmartListView {
 
     void hideErrorPanel();
 
+    void hideList();
+
     void hideNoConversationMessage();
 
     void updateList(ArrayList<SmartListViewModel> smartListViewModels);
 
-    void goToConversation(CallContact callContact);
+    void goToConversation(String accountId, String contactId);
 
-    void goToCallActivity(String rawUriNumber);
+    void goToCallActivity(String accountId, String contactId);
 
     void goToQRActivity();
 
