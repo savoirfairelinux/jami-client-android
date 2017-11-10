@@ -34,7 +34,6 @@ import cx.ring.daemon.StringMap;
 import cx.ring.model.CallContact;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
-import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
@@ -435,6 +434,15 @@ public class CallService extends Observable {
         return currentCalls.get(callId);
     }
 
+    public SipCall getCurrentCallForContactId(String contactId) {
+        for (SipCall call : currentCalls.values()) {
+            if (contactId.contains(call.getContact().getPhones().get(0).getNumber().toString())) {
+                return call;
+            }
+        }
+        return null;
+    }
+
     public void removeCallForId(String callId) {
         currentCalls.remove(callId);
     }
@@ -517,10 +525,7 @@ public class CallService extends Observable {
                 mContactService.saveVCardContactData(sipCall.getContact());
             }
             if (messages.has_key(MIME_TEXT_PLAIN)) {
-                String msg = messages.getRaw(MIME_TEXT_PLAIN).toJavaString();
-                TextMessage txt = new TextMessage(true, msg, new Uri(from), callId, sipCall.getAccount());
-                Log.w(TAG, "New text messsage " + txt.getAccount() + " " + txt.getCallId() + " " + txt.getMessage());
-                mHistoryService.incomingMessage(txt);
+                mHistoryService.incomingMessage(sipCall.getAccount(), callId, from, messages);
             }
         }
 
