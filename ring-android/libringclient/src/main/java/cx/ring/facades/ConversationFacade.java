@@ -265,16 +265,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
-    public synchronized Conference getConference(String id) {
-        for (Conversation conv : mConversationMap.values()) {
-            Conference conf = conv.getConference(id);
-            if (conf != null) {
-                return conf;
-            }
-        }
-        return null;
-    }
-
     public Conference getCurrentCallingConf() {
         for (Conversation c : getConversations().values()) {
             Conference conf = c.getCurrentCall();
