@@ -29,6 +29,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
@@ -44,6 +45,7 @@ import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
+import io.reactivex.Single;
 
 /**
  * A service managing all history related tasks.
@@ -198,6 +200,30 @@ public abstract class HistoryService extends Observable {
         queryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId);
         queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, true);
         return getTextHistoryDao().query(queryBuilder.prepare());
+    }
+
+    public Single<List<HistoryText>> getAllTextMessagesForAccountAndContactRingId(final String accountId, final String contactRingId) {
+        return Single.fromCallable(new Callable<List<HistoryText>>() {
+            @Override
+            public List<HistoryText> call() throws Exception {
+                QueryBuilder<HistoryText, Long> queryBuilder = getTextHistoryDao().queryBuilder();
+                queryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryText.COLUMN_NUMBER_NAME, contactRingId);
+                queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, true);
+                return getTextHistoryDao().query(queryBuilder.prepare());
+            }
+        });
+    }
+
+    public Single<List<HistoryCall>> getAllCallsForAccountAndContactRingId(final String accountId, final String contactRingId) {
+        return Single.fromCallable(new Callable<List<HistoryCall>>() {
+            @Override
+            public List<HistoryCall> call() throws Exception {
+                QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
+                queryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryCall.COLUMN_NUMBER_NAME, contactRingId);
+                queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, true);
+                return getCallHistoryDao().query(queryBuilder.prepare());
+            }
+        });
     }
 
     private HistoryText getTextMessage(long id) throws SQLException {

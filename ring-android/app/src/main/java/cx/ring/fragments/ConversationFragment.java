@@ -76,7 +76,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         ConversationView {
 
     public static final int REQ_ADD_CONTACT = 42;
-    public static final String KEY_CONVERSATION_ID = "CONVERSATION_ID";
+    public static final String KEY_CONTACT_RING_ID = "CONTACT_RING_ID";
 
     private static final String TAG = ConversationFragment.class.getSimpleName();
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
@@ -116,7 +116,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void refreshView(final Conversation conversation, Uri number) {
+    public void refreshView(final Conversation conversation) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -332,9 +332,9 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @Override
     protected void initPresenter(ConversationPresenter presenter) {
         super.initPresenter(presenter);
-        String conversationId = getArguments().getString(KEY_CONVERSATION_ID);
+        String contactRingID = getArguments().getString(KEY_CONTACT_RING_ID);
         Uri number = new Uri(getArguments().getString(CallFragment.KEY_NUMBER));
-        presenter.init(conversationId, number);
+        presenter.init(contactRingID, number);
     }
 
     @Override
@@ -384,7 +384,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mTopPane.setVisibility(display ? View.GONE : View.VISIBLE);
+                mTopPane.setVisibility(display ? View.VISIBLE : View.GONE);
             }
         });
     }

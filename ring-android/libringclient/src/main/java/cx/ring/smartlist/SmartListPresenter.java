@@ -211,7 +211,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         if (contact.getUsername() == null) {
             contact.setUsername(c.getUsername());
         }
-        getView().goToConversation(c);
+        getView().goToConversation(contact);
     }
 
     public void deleteConversation(Conversation conversation) {
