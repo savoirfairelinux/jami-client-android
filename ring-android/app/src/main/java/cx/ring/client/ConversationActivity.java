@@ -90,7 +90,7 @@ public class ConversationActivity extends AppCompatActivity {
 
         if (mConversationFragment == null) {
             Bundle bundle = new Bundle();
-            bundle.putString(ConversationFragment.KEY_CONVERSATION_ID, getIntent().getData().getLastPathSegment());
+            bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, getIntent().getData().getLastPathSegment());
             bundle.putString(CallFragment.KEY_NUMBER, getIntent().getStringExtra(CallFragment.KEY_NUMBER));
 
             mConversationFragment = new ConversationFragment();

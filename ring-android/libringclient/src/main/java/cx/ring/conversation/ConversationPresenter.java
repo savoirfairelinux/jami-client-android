@@ -29,29 +29,40 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.HistoryCall;
+import cx.ring.model.HistoryText;
+import cx.ring.model.Phone;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
+import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HistoryService;
+import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
-import cx.ring.utils.StringUtils;
 import cx.ring.utils.Tuple;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.observers.ResourceSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class ConversationPresenter extends RootPresenter<ConversationView> implements Observer<ServiceEvent> {
 
+    private static final String TAG = ConversationPresenter.class.getSimpleName();
     private ContactService mContactService;
     private AccountService mAccountService;
     private ConversationFacade mConversationFacade;
     private HistoryService mHistoryService;
+    private CallService mCallService;
 
     private Conversation mConversation;
-    private String mConversationId;
+    private String mContactRingId;
     private Uri mPreferredNumber;
 
     private boolean hasContactRequestPopupShown = false;
@@ -60,11 +71,13 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     public ConversationPresenter(ContactService mContactService,
                                  AccountService mAccountService,
                                  ConversationFacade mConversationFacade,
-                                 HistoryService mHistoryService) {
+                                 HistoryService mHistoryService,
+                                 CallService callService) {
         this.mContactService = mContactService;
         this.mAccountService = mAccountService;
         this.mConversationFacade = mConversationFacade;
         this.mHistoryService = mHistoryService;
+        this.mCallService = callService;
     }
 
     @Override
@@ -72,14 +85,16 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         super.unbindView();
         mAccountService.removeObserver(this);
         mConversationFacade.removeObserver(this);
+        mHistoryService.removeObserver(this);
     }
 
     public void init(String conversationId, Uri number) {
-        mConversationId = conversationId;
+        mContactRingId = conversationId;
         mPreferredNumber = number;
 
         mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
+        mHistoryService.addObserver(this);
     }
 
     public void pause() {
@@ -90,7 +105,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     public void resume() {
-        loadConversation();
+        loadHistory();
         if (mConversation != null) {
             mConversation.setVisible(true);
             mConversationFacade.readConversation(mConversation);
@@ -117,19 +132,26 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         getView().displayCopyToClipboard(mConversation.getContact());
     }
 
-    public void sendTextMessage(String message, Uri number) {
+    public void sendTextMessage(String message) {
+        String accountId = mAccountService.getCurrentAccount().getAccountID();
+
         if (message != null && !message.equals("")) {
             getView().clearMsgEdit();
             Conference conference = mConversation == null ? null : mConversation.getCurrentCall();
+            TextMessage txtMessage;
             if (conference == null || !conference.isOnGoing()) {
-                Tuple<Account, Uri> guess = guess(number);
-                if (guess == null || guess.first == null) {
-                    return;
-                }
-                mConversationFacade.sendTextMessage(guess.first.getAccountID(), guess.second, message);
+                long id = mCallService.sendAccountTextMessage(accountId, mContactRingId, message);
+                txtMessage = new TextMessage(false, message, new Uri(mContactRingId), null, accountId);
+                txtMessage.setID(id);
             } else {
-                mConversationFacade.sendTextMessage(conference, message);
+                mCallService.sendTextMessage(conference.getId(), message);
+                SipCall call = conference.getParticipants().get(0);
+                txtMessage = new TextMessage(false, message, call.getNumberUri(), conference.getId(), call.getAccount());
             }
+            txtMessage.read();
+            mHistoryService.insertNewTextMessage(txtMessage);
+            mConversation.addTextMessage(txtMessage);
+            getView().refreshView(mConversation);
         }
     }
 
@@ -187,57 +209,77 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         getView().goToHome();
     }
 
-    private void loadConversation() {
-        long contactId = CallContact.contactIdFromId(mConversationId);
-        CallContact contact = null;
-        if (contactId >= 0) {
-            contact = mContactService.findContactById(contactId);
-        }
-        if (contact == null) {
-            Uri convUri = new Uri(mConversationId);
-            if (mPreferredNumber != null && !mPreferredNumber.isEmpty()) {
-                contact = mContactService.findContactByNumber(mPreferredNumber.getRawUriString());
-            } else {
-                contact = mContactService.findContactByNumber(convUri.getRawUriString());
-                mPreferredNumber = convUri;
-            }
-        }
-        mConversation = mConversationFacade.startConversation(contact);
-        refreshConversation();
-    }
+    private void loadHistory() {
+        String accountId = mAccountService.getCurrentAccount().getAccountID();
 
-    private void refreshConversation() {
-        if (mConversation == null) {
-            return;
-        }
-        CallContact contact = mConversation.getContact();
-        mContactService.loadContactData(contact);
-        byte[] photo = contact.getPhoto();
-        if (photo != null) {
-            getView().displayContactPhoto(photo);
-        }
 
-        getView().displayContactName(contact);
-        getView().displayOnGoingCallPane(mConversation.getCurrentCall() == null ||
-                (mConversation.getCurrentCall().getState() != SipCall.State.RINGING &&
-                        mConversation.getCurrentCall().getState() != SipCall.State.CURRENT));
+        mHistoryService.getAllTextMessagesForAccountAndContactRingId(accountId, mContactRingId)
+                .zipWith(mHistoryService.getAllCallsForAccountAndContactRingId(accountId, mContactRingId),
+                        new BiFunction<List<HistoryText>, List<HistoryCall>, Conversation>() {
+                            @Override
+                            public Conversation apply(@NonNull List<HistoryText> historyTexts, @NonNull List<HistoryCall> historyCalls) throws Exception {
+                                CallContact callContact = mContactService.getContact(new Uri(mContactRingId));
+                                Conversation conversation = new Conversation(callContact);
 
-        if (contact.getPhones().size() > 1) {
-            if (mPreferredNumber == null || mPreferredNumber.isEmpty()) {
-                String lastNumber = mConversation.getLastNumberUsed(mConversation.getLastAccountUsed());
-                if (StringUtils.isEmpty(lastNumber)) {
-                    mPreferredNumber = contact.getPhones().get(0).getNumber();
-                } else {
-                    mPreferredNumber = new Uri(lastNumber);
-                }
-            }
-            getView().displayNumberSpinner(mConversation, mPreferredNumber);
-        } else {
-            getView().hideNumberSpinner();
-            mPreferredNumber = contact.getPhones().get(0).getNumber();
-        }
+                                for (HistoryCall call : historyCalls) {
+                                    conversation.addHistoryCall(call);
+                                }
 
-        getView().refreshView(mConversation, mPreferredNumber);
+                                for (HistoryText htext : historyTexts) {
+                                    TextMessage msg = new TextMessage(htext);
+                                    conversation.addTextMessage(msg);
+                                }
+
+                                return conversation;
+                            }
+                        })
+                .subscribeOn(Schedulers.computation())
+                .subscribeWith(new ResourceSingleObserver<Conversation>() {
+                    @Override
+                    public void onSuccess(@NonNull Conversation conversation) {
+                        mConversation = conversation;
+
+                        SipCall sipCall = mCallService.getCurrentCallForContactId(mContactRingId);
+                        if (sipCall != null && sipCall.getCallState() != SipCall.State.INACTIVE) {
+                            mConversation.addConference(new Conference(sipCall));
+                            getView().displayOnGoingCallPane(true);
+                        } else {
+                            mConversation.removeConference(mConversation.getCurrentCall());
+                            getView().displayOnGoingCallPane(false);
+                        }
+
+                        getView().refreshView(conversation);
+                        if (!hasContactRequestPopupShown) {
+                            checkContact();
+                            hasContactRequestPopupShown = true;
+                        }
+
+                        getView().displayContactPhoto(mConversation.getContact().getPhoto());
+                        getView().displayContactName(mConversation.getContact());
+
+                        if (mConversation.getContact().getPhones().size() > 1) {
+                            for (Phone phone : mConversation.getContact().getPhones()) {
+                                if (phone.getNumber() != null && phone.getNumber().isRingId()) {
+                                    mAccountService.lookupAddress("", "", phone.getNumber().getRawUriString());
+                                }
+                            }
+                            if (mPreferredNumber == null || mPreferredNumber.isEmpty()) {
+                                mPreferredNumber = new Uri(
+                                        mConversation.getLastNumberUsed(mConversation.getLastAccountUsed())
+                                );
+                            }
+                            getView().displayNumberSpinner(mConversation, mPreferredNumber);
+                        } else {
+                            getView().hideNumberSpinner();
+                            mPreferredNumber = mConversation.getContact().getPhones().get(0).getNumber();
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e(TAG, e.toString());
+                    }
+                });
     }
 
     private void checkContact() {
@@ -301,24 +343,28 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
 
     @Override
-    public void update(Observable observable, ServiceEvent arg) {
-        if (observable instanceof AccountService && arg != null) {
-            if (arg.getEventType() == ServiceEvent.EventType.REGISTERED_NAME_FOUND) {
-                final String name = arg.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                final String address = arg.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-                final int state = arg.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
+    public void update(Observable observable, ServiceEvent event) {
+        if (observable instanceof AccountService && event != null) {
+            if (event.getEventType() == ServiceEvent.EventType.REGISTERED_NAME_FOUND) {
+                final String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
+                final String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
+                final int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
 
                 getView().updateView(address, name, state);
             }
-        } else if (observable instanceof ConversationFacade && arg != null) {
-            switch (arg.getEventType()) {
+        } else if (observable instanceof HistoryService && event != null) {
+            switch (event.getEventType()) {
                 case INCOMING_MESSAGE:
-                case CALL_STATE_CHANGED:
-                case USERNAME_CHANGED:
-                    refreshConversation();
+                    TextMessage txt = event.getEventInput(ServiceEvent.EventInput.MESSAGE, TextMessage.class);
+                    mConversation.addTextMessage(txt);
+                    getView().refreshView(mConversation);
                     break;
-                case CONVERSATIONS_CHANGED:
-                    loadConversation();
+            }
+        } else if (observable instanceof ConversationFacade && event != null) {
+            switch (event.getEventType()) {
+                case INCOMING_CALL:
+                case CALL_STATE_CHANGED:
+                    loadHistory();
                     break;
             }
         }

@@ -189,7 +189,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         if (ConversationFragment.isTabletMode(mContext)) {
             intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
                     .setClass(mContext, HomeActivity.class)
-                    .putExtra(ConversationFragment.KEY_CONVERSATION_ID, contact.getIds().get(0));
+                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getIds().get(0));
         } else {
             intentConversation = new Intent(Intent.ACTION_VIEW)
                     .setClass(mContext, ConversationActivity.class)
