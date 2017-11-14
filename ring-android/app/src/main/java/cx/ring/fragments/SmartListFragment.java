@@ -69,7 +69,6 @@ import cx.ring.smartlist.SmartListView;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
-import cx.ring.utils.ContentUriHandler;
 import cx.ring.viewholders.SmartListViewHolder;
 
 public class SmartListFragment extends BaseFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
@@ -311,8 +310,8 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void deleteConversation(Conversation conversation) {
-        presenter.deleteConversation(conversation);
+    public void deleteConversation(CallContact callContact) {
+        presenter.deleteConversation(callContact);
     }
 
     @Override
@@ -420,28 +419,36 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void displayConversationDialog(final Conversation conversation) {
+    public void displayConversationDialog(final SmartListViewModel smartListViewModel) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setItems(R.array.conversation_actions, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
-                    case 0:
-                        ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(),
-                                conversation.getContact(),
-                                SmartListFragment.this);
+                    case ActionHelper.ACTION_COPY:
+                        presenter.copyNumber(smartListViewModel);
                         break;
-                    case 1:
-                        ActionHelper.launchDeleteAction(getActivity(), conversation, SmartListFragment.this);
+                    case ActionHelper.ACTION_DELETE:
+                        presenter.deleteConversation(smartListViewModel);
                         break;
-                    case 2:
-                        presenter.removeContact(conversation);
+                    case ActionHelper.ACTION_BLOCK:
+                        presenter.removeContact(smartListViewModel);
                         break;
                 }
             }
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    public void displayDeleteDialog(CallContact callContact) {
+        ActionHelper.launchDeleteAction(getActivity(), callContact, SmartListFragment.this);
+    }
+
+    @Override
+    public void copyNumber(CallContact callContact) {
+        ActionHelper.launchCopyNumberToClipboardFromContact(getActivity(), callContact, this);
     }
 
     @Override
@@ -511,7 +518,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void goToConversation(CallContact callContact) {
+    public void goToConversation(String accountId, String contactId) {
         if (mSearchMenuItem != null) {
             mSearchMenuItem.collapseActionView();
         }
@@ -520,11 +527,12 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
             Intent intent = new Intent()
                     .setClass(getActivity(), ConversationActivity.class)
                     .setAction(Intent.ACTION_VIEW)
-                    .setData(Uri.withAppendedPath(ContentUriHandler.CONVERSATION_CONTENT_URI, callContact.getIds().get(0)));
-            startActivityForResult(intent, HomeActivity.REQUEST_CODE_CONVERSATION);
+                    .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
+                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+            startActivity(intent);
         } else {
             Bundle bundle = new Bundle();
-            bundle.putString(ConversationFragment.KEY_CONVERSATION_ID, callContact.getIds().get(0));
+            bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
             ((HomeActivity) getActivity()).startConversationTablet(bundle);
         }
     }

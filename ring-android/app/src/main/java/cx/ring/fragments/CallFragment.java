@@ -599,7 +599,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         if (ConversationFragment.isTabletMode(getActivity())) {
             intent.setClass(getActivity(), HomeActivity.class)
                     .setAction(DRingService.ACTION_CONV_ACCEPT)
-                    .putExtra(ConversationFragment.KEY_CONVERSATION_ID, conversationId);
+                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, conversationId);
             startActivity(intent);
         } else {
             intent.setClass(getActivity(), ConversationActivity.class)
