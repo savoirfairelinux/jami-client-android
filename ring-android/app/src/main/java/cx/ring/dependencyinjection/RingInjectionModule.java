@@ -24,6 +24,8 @@ import android.content.Context;
 import cx.ring.application.RingApplication;
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 @Module
 public class RingInjectionModule {
@@ -42,6 +44,11 @@ public class RingInjectionModule {
     @Provides
     Context provideContext() {
         return mRingApplication;
+    }
+
+    @Provides
+    Scheduler provideMainSchedulers() {
+        return AndroidSchedulers.mainThread();
     }
 
 }

@@ -27,7 +27,7 @@ import cx.ring.utils.Tuple;
 
 public interface ConversationView {
 
-    void refreshView(Conversation conversation, Uri number);
+    void refreshView(Conversation conversation);
 
     void updateView(String address, String name, int state);
 
@@ -45,7 +45,7 @@ public interface ConversationView {
 
     void displayCopyToClipboard(CallContact callContact);
 
-    void displaySendTrustRequest(String accountId, String contactId);
+    void displaySendTrustRequest(String accountId);
 
     void hideNumberSpinner();
 
