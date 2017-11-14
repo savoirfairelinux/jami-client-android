@@ -76,9 +76,10 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         ConversationView {
 
     public static final int REQ_ADD_CONTACT = 42;
-    public static final String KEY_CONVERSATION_ID = "CONVERSATION_ID";
 
-    private static final String TAG = ConversationFragment.class.getSimpleName();
+    public static final String KEY_CONTACT_RING_ID = "CONTACT_RING_ID";
+    public static final String KEY_ACCOUNT_ID = "ACCOUNT_ID";
+
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
     private static final int MIN_SIZE_TABLET = 960;
 
@@ -116,7 +117,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void refreshView(final Conversation conversation, Uri number) {
+    public void refreshView(final Conversation conversation) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -177,7 +178,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public void displaySendTrustRequest(final String accountId, final String contactId) {
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.send_request_title);
         builder.setMessage(R.string.send_request_msg);
 
@@ -211,18 +212,14 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @OnClick(R.id.msg_send)
     public void sendMessageText() {
-        Uri number = mNumberAdapter == null ?
-                null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-        presenter.sendTextMessage(mMsgEditTxt.getText().toString(), number);
+        presenter.sendTextMessage(mMsgEditTxt.getText().toString());
     }
 
     @OnEditorAction(R.id.msg_input_txt)
     public boolean actionSendMsgText(int actionId) {
         switch (actionId) {
             case EditorInfo.IME_ACTION_SEND:
-                Uri number = mNumberAdapter == null ?
-                        null : ((Phone) mNumberSpinner.getSelectedItem()).getNumber();
-                presenter.sendTextMessage(mMsgEditTxt.getText().toString(), number);
+                presenter.sendTextMessage(mMsgEditTxt.getText().toString());
                 return true;
         }
         return false;
@@ -310,7 +307,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void deleteConversation(Conversation conversation) {
+    public void deleteConversation(CallContact callContact) {
         presenter.deleteConversation();
     }
 
@@ -332,9 +329,9 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @Override
     protected void initPresenter(ConversationPresenter presenter) {
         super.initPresenter(presenter);
-        String conversationId = getArguments().getString(KEY_CONVERSATION_ID);
-        Uri number = new Uri(getArguments().getString(CallFragment.KEY_NUMBER));
-        presenter.init(conversationId, number);
+        String contactRingID = getArguments().getString(KEY_CONTACT_RING_ID);
+        String accountId = getArguments().getString(KEY_ACCOUNT_ID);
+        presenter.init(contactRingID, accountId);
     }
 
     @Override
@@ -384,7 +381,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mTopPane.setVisibility(display ? View.GONE : View.VISIBLE);
+                mTopPane.setVisibility(display ? View.VISIBLE : View.GONE);
             }
         });
     }
@@ -432,7 +429,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             @Override
             public void run() {
                 mDeleteDialog = ActionHelper.launchDeleteAction(getActivity(),
-                        conversation,
+                        conversation.getContact(),
                         ConversationFragment.this);
             }
         });
