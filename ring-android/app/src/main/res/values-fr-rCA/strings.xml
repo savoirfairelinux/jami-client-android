@@ -60,7 +60,7 @@
   <string name="notif_current_call_title">Appel en cours avec %1$s</string>
   <string name="notif_current_call">Appel en cours</string>
   <!--Call Fragment-->
-  <string name="you_txt_prefix">Toi</string>
+  <string name="you_txt_prefix">Toi:</string>
   <string name="action_call_hangup">Raccrocher</string>
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>

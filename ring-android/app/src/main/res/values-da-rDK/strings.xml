@@ -150,4 +150,6 @@
   <string name="contact_request_sent">Kontaktforespørgsel afsendt</string>
   <string name="search_results">Søgeresultater</string>
   <string name="tv_contact_row_header">Kontakter</string>
+  <string name="gallery_error_title">Ingen Galleri-applikation fundet</string>
+  <string name="gallery_error_message">Der blev ikke funden nogen applikation på enheden der kan vise Galleriet</string>
 </resources>

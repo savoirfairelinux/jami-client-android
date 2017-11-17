@@ -140,14 +140,14 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_sip_success_message">Compte SIP enregistré avec succès</string>
   <string name="account_sip_register_anyway">Poursuivre l\'inscription</string>
   <string name="account_link_button">Lier cet appareil à un compte</string>
-  <string name="account_link_prompt_pin">Entrer votre code PIN</string>
+  <string name="account_link_prompt_pin">Entrer votre NIP</string>
   <string name="account_new_button">Créer un compte Ring</string>
   <string name="account_link_export_button">Lier un autre appareil à ce compte</string>
-  <string name="account_link_export_info">Pour utiliser ce compte sur un autre appareil, vous devez d\'abord l\'exposer sur Ring. Ceci générera un code PIN que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le code PIN sera valable pendant 10 minutes. \n\nMerci de commencer par entrer votre mot de passe:</string>
-  <string name="account_start_export_button">Générer un code PIN</string>
+  <string name="account_link_export_info">Pour utiliser ce compte sur un autre appareil, vous devez d\'abord l\'exposer sur Ring. Ceci générera un NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP sera valable pendant 10 minutes. \n\nMerci de commencer par entrer votre mot de passe:</string>
+  <string name="account_start_export_button">Générer un NIP</string>
   <string name="account_end_export_button">fermer</string>
-  <string name="account_end_export_infos">Votre code Pin est:\n\n%%\n\nPour terminer le processus, vous devez ouvrir Ring sur un autre appareil puis créer un nouveau compte avec \"Lier cet appareil à un compte\".  Votre code pin est utilisable pendant 10 minutes.</string>
-  <string name="account_link_export_info_light">Pour emmener ce compte sur un autre appareil, vous devez d\'abord l\'exposer sur Ring. Ceci créera un code PIN que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le code PIN sera valable pendant 10 minutes.</string>
+  <string name="account_end_export_infos">Votre NIP est:\n\n%%\n\nPour terminer le processus, vous devez ouvrir Ring sur un autre appareil puis créer un nouveau compte avec \"Lier cet appareil à un compte\".  Votre NIP est utilisable pendant 10 minutes.</string>
+  <string name="account_link_export_info_light">Pour emmener ce compte sur un autre appareil, vous devez d\'abord l\'exposer sur Ring. Ceci créera un NIP que vous devrez entrer sur le nouvel appareil pour configurer le compte. Le NIP sera valable pendant 10 minutes.</string>
   <string name="account_export_title">Ajoutez des appareils</string>
   <!--Name registration-->
   <string name="error_username_empty">Entrer un nom d\'utilisateur</string>

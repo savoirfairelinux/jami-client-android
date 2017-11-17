@@ -116,7 +116,7 @@
   <string name="prompt_new_username">Entrez un nouveau nom d\'utilisateur</string>
   <string name="help_password_choose">Choisissez un mot de passe sécurisé dont vous vous rappellerez pour protéger votre compte Ring.</string>
   <string name="help_password_enter">Entrez le mot de passe de votre compte Ring</string>
-  <string name="help_pin_enter">Entrez le code PIN obtenu en configurant un autre compte Ring . Utilisez la fonction \"exportez un compte sur Ring\" pour obtenir un code PIN.</string>
+  <string name="help_pin_enter">Entrez le NIP obtenu en configurant un autre compte Ring . Utilisez la fonction \"exportez un compte sur Ring\" pour obtenir un NIP.</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
   <!--MenuHeaderView-->
@@ -127,7 +127,7 @@
   <string name="profile_name_hint">Entrez votre nom (facultatif)</string>
   <!--Share fragment-->
   <string name="share_message">Scannez ce QRCode avec le scanner intégré de l\'application Ring qui souhaite communiquer avec vous.</string>
-  <string name="share_message_no_account">Sélectionner le compte à partager.</string>
+  <string name="share_message_no_account">Veuillez sélectionner le compte à partager.</string>
   <string name="share_your_account_information">Partagez mes coordonnées</string>
   <string name="generic_error_migration">Erreur</string>
   <string name="generic_error_migration_message">Une erreur est survenue pendant la migration</string>
