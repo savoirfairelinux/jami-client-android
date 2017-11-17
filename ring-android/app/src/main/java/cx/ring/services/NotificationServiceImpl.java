@@ -20,12 +20,16 @@
 */
 package cx.ring.services;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -41,7 +45,6 @@ import java.util.TreeMap;
 
 import javax.inject.Inject;
 
-import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
@@ -68,12 +71,9 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     private static final String TAG = NotificationServiceImpl.class.getSimpleName();
 
-    private static final String NOTIF_CALL = "CALL";
     private static final String NOTIF_MSG = "MESSAGE";
     private static final String NOTIF_TRUST_REQUEST = "TRUST REQUEST";
 
-    private static final String EXTRAS_NUMBER_TRUST_REQUEST_KEY = BuildConfig.APPLICATION_ID + "numberOfTrustRequestKey";
-    private static final String EXTRAS_TRUST_REQUEST_FROM_KEY = BuildConfig.APPLICATION_ID + "trustRequestFrom";
     private final SparseArray<NotificationCompat.Builder> mNotificationBuilders = new SparseArray<>();
     @Inject
     protected Context mContext;
@@ -108,7 +108,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 new Intent(DRingService.ACTION_CALL_VIEW)
                         .setClass(mContext, DRingService.class)
                         .putExtra(KEY_CALL_ID, call.getCallId()), 0);
-        NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext);
+        NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext, createNotificationChannel());
 
         if (conference.isOnGoing()) {
             messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_current_call_title, contact.getRingUsername()))
@@ -177,7 +177,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     @Override
     public void showTextNotification(CallContact contact, Conversation conversation, TreeMap<Long, TextMessage> texts) {
-        NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext);
+        NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext, createNotificationChannel());
 
         messageNotificationBuilder.setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -243,7 +243,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         if (messageNotificationBuilder != null) {
             notificationManager.cancel(notificationId);
         } else {
-            messageNotificationBuilder = new NotificationCompat.Builder(mContext);
+            messageNotificationBuilder = new NotificationCompat.Builder(mContext, createNotificationChannel());
         }
 
         Collection<TrustRequest> requests = account.getRequests();
@@ -251,7 +251,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             return;
         } else if (requests.size() == 1) {
             TrustRequest request = requests.iterator().next();
-            messageNotificationBuilder = new NotificationCompat.Builder(mContext);
+            messageNotificationBuilder = new NotificationCompat.Builder(mContext, createNotificationChannel());
             Bundle info = new Bundle();
             info.putString(TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID, account.getAccountID());
             info.putString(TRUST_REQUEST_NOTIFICATION_FROM, request.getContactId());
@@ -352,14 +352,20 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         return (NOTIF_MSG + uri.getRawUriString()).hashCode();
     }
 
-    private int getCallNotificationId(String uri) {
-        cx.ring.model.Uri formattedUri = new cx.ring.model.Uri(uri);
-        return (NOTIF_CALL + formattedUri.getRawUriString()).hashCode();
-    }
+    private String createNotificationChannel() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            return NotificationChannel.DEFAULT_CHANNEL_ID;
+        }
+        NotificationManager notificationManager =
+                (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
-    private int getTextNotificationId(String uri) {
-        cx.ring.model.Uri formattedUri = new cx.ring.model.Uri(uri);
-        return (NOTIF_MSG + formattedUri.getRawUriString()).hashCode();
+        String channelId = mContext.getString(R.string.app_name);
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        NotificationChannel notificationChannel = new NotificationChannel(channelId, channelId, importance);
+        notificationChannel.enableVibration(false);
+        notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        notificationManager.createNotificationChannel(notificationChannel);
+        return channelId;
     }
 
     @Override
