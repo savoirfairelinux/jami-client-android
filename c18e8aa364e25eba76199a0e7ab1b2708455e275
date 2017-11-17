@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a42497e_5b4a3c84",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2017-11-17T18:30:33Z",
+      "side": 1,
+      "message": "Why not use DEFAULT_CHANNEL_ID ?",
+      "range": {
+        "startLine": 362,
+        "startChar": 15,
+        "endLine": 362,
+        "endChar": 24
+      },
+      "revId": "c18e8aa364e25eba76199a0e7ab1b2708455e275",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
