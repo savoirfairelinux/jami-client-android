@@ -101,6 +101,9 @@ along with this program; if not, write to the Free Software
     <string name="notif_outgoing_call">Outgoing call</string>
     <string name="notif_current_call_title">Current call with %1$s</string>
     <string name="notif_current_call">Current call</string>
+    <string name="notif_channel_calls">Calls</string>
+    <string name="notif_channel_messages">Messages</string>
+    <string name="notif_channel_requests">Requests</string>
 
     <!-- Call Fragment -->
     <string name="you_txt_prefix">You:</string>
