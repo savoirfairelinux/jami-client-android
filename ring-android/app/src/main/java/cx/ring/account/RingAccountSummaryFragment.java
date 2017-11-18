@@ -56,6 +56,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.interfaces.BackHandlerInterface;
 import cx.ring.model.Account;
+import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.views.LinkNewDeviceLayout;
@@ -126,6 +127,7 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
     */
     private DeviceAdapter mDeviceAdapter;
     private ProgressDialog mWaitDialog;
+    private boolean mAccountHasPassword = true;
 
     @Override
     public void onResume() {
@@ -201,6 +203,9 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
                 Drawable wrapped = DrawableCompat.wrap(drawable);
                 DrawableCompat.setTint(wrapped, color);
                 mAccountStatus.setBackground(wrapped);
+
+                mAccountHasPassword = account.getDetailBoolean(ConfigKey.ARCHIVE_HAS_PASSWORD);
+                mPasswordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
             }
         });
     }
@@ -232,7 +237,7 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
 
     private void showWizard() {
         mLinkAccountView.setVisibility(View.VISIBLE);
-        mPasswordLayout.setVisibility(View.VISIBLE);
+        mPasswordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
         mEndBtn.setVisibility(View.GONE);
         mStartBtn.setVisibility(View.VISIBLE);
         mExportInfos.setText(R.string.account_link_export_info);
@@ -331,6 +336,7 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
     public void showUsernameRegistrationPopup() {
         Bundle args = new Bundle();
         args.putString(AccountEditionActivity.ACCOUNT_ID_KEY, getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
+        args.putBoolean(AccountEditionActivity.ACCOUNT_HAS_PASSWORD_KEY, mAccountHasPassword);
         RegisterNameDialog registrationDialog = new RegisterNameDialog();
         registrationDialog.setArguments(args);
         registrationDialog.setListener(this);
