@@ -1,6 +1,6 @@
 #!/bin/bash -
 #
-#  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+#  Copyright (C) 2004-2017 Savoir-Faire Linux Inc.
 #
 #  Author: Emeric Vigier <emeric.vigier@savoirfairelinux.com>
 #
@@ -15,78 +15,35 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-#
-#  Additional permission under GNU GPL version 3 section 7:
-#
-#  If you modify this program, or any covered work, by linking or
-#  combining it with the OpenSSL project's OpenSSL library (or a
-#  modified version of that library), containing parts covered by the
-#  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
-#  grants you additional permission to convey the resulting work.
-#  Corresponding Source for a non-source form of such a combination
-#  shall include the source code for the parts of OpenSSL used as well
-#  as that of the covered work.
-#
-
-# input: jni/jni_interface.i
-# output: ringservice_loader.c
-#         ring_wrapper.cpp
-#         ringservice.java
-#         ringserviceJNI.java
-#         ManagerImpl.java
+#  along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 SRCDIR=libringclient/src/main/jni
 PACKAGE=cx.ring.daemon
 PACKAGEDIR=libringclient/src/main/java/cx/ring/daemon
 ROOT=`pwd`
 
-echo "in $ROOT"
-
-echo "Checking that swig is 2.0.6 or later"
-SWIGVER=`swig -version | \
-    grep -i "SWIG version" | \
-    awk '{print $3}'`
-SWIGVER1=`echo $SWIGVER | \
-    awk '{split($0, array, ".")} END{print array[1]}'`
-SWIGVER2=`echo $SWIGVER | \
-    awk '{split($0, array, ".")} END{print array[2]}'`
-SWIGVER3=`echo $SWIGVER | \
-    awk '{split($0, array, ".")} END{print array[3]}'`
-
-echo swig-$SWIGVER1.$SWIGVER2.$SWIGVER3
-
-if [[ $SWIGVER1 -ge 2 ]]; then
-    echo "swig version is greater than 2.x"
-    if [[ $SWIGVER1 -gt 2 ]]; then
-        echo "swig version is greater than 3.x"
-    else
-        if [[ $SWIGVER2 -ge 1 ]]; then
-            echo "swig version is greater than 2.1"
-        else
-            echo "swig version is less than 2.1"
-            if [[ $SWIGVER3 -ge 6 ]]; then
-                echo "swig version is greater than 2.0.6"
-            else
-                echo "swig version is less than 2.0.6"
-                echo "exiting..."
+echo "Checking for SWIG version 3.0.10 or later"
+SWIGVER=`swig -version | grep -i "SWIG version" | awk '{print $3}'`
+SWIGVER1=`echo $SWIGVER | awk '{split($0, array, ".")} END{print array[1]}'`
+SWIGVER2=`echo $SWIGVER | awk '{split($0, array, ".")} END{print array[2]}'`
+SWIGVER3=`echo $SWIGVER | awk '{split($0, array, ".")} END{print array[3]}'`
+if [[ $SWIGVER1 -ge 3 ]]; then
+    if [[ $SWIGVER1 -eq 3 ]]; then
+        if [[ $SWIGVER2 -eq 0 ]]; then
+            if [[ $SWIGVER3 -lt 10 ]]; then
+                echo "error: SWIG version is less than 3.0.10"
                 exit 4
             fi
         fi
     fi
 else
-    echo "swig version is less than 2.x"
-    echo "exiting..."
+    echo "error: SWIG version is less than 3.x"
     exit 3
 fi
-
-echo "Creating package folder $PACKAGEDIR ..."
 
 mkdir -p $PACKAGEDIR
 
 echo "Generating ring_wrapper.cpp..."
-
 swig -v -c++ -java \
 -package $PACKAGE \
 -outdir $PACKAGEDIR \
@@ -103,6 +60,5 @@ python $SRCDIR/JavaJNI2CJNI_Load.py \
 echo "Appending ring_wrapper.cpp..."
 cat $SRCDIR/ringservice_loader.c >> $SRCDIR/ring_wrapper.cpp
 
-echo -n "in "
-echo "Done"
+echo "SWIG bindings successfully generated !"
 exit 0
