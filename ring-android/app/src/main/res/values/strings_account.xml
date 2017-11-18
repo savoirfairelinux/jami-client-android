@@ -184,7 +184,7 @@ along with this program; if not, write to the Free Software
     <string name="account_link_prompt_pin">Enter PIN</string>
     <string name="account_new_button">Create a Ring account</string>
     <string name="account_link_export_button">Link another device to this account</string>
-    <string name="account_link_export_info">To use this account on other devices, you must first expose it on Ring. This will generate a PIN code that you must enter on the new device to set up the account. The PIN is valid for 10 minutes. \n\nPlease provide your password to start:</string>
+    <string name="account_link_export_info">To use this account on other devices, you must first expose it on Ring. This will generate a PIN code that you must enter on the new device to set up the account. The PIN is valid for 10 minutes.</string>
     <string name="account_start_export_button">Generate Pin</string>
     <string name="account_end_export_button">close</string>
     <string name="account_end_export_infos">Your Pin is:\n\n%%\n\nTo complete the process, you need to open Ring on the new device. Create a new account with \"Link this device to an account\". Your pin is valid for 10 minutes.</string>

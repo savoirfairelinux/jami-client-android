@@ -65,6 +65,7 @@ public enum ConfigKey {
     VIDEO_PORT_MAX("Account.videoPortMax"),
     PRESENCE_ENABLE("Account.presenceEnabled"),
     ARCHIVE_PASSWORD("Account.archivePassword"),
+    ARCHIVE_HAS_PASSWORD("Account.archiveHasPassword"),
     ARCHIVE_PIN("Account.archivePIN"),
     DISPLAY_NAME("Account.displayName"),
     ETH_ACCOUNT("ETH.account"),

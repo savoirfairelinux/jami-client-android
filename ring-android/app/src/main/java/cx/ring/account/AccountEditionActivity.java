@@ -59,6 +59,7 @@ import cx.ring.fragments.SecurityAccountFragment;
 public class AccountEditionActivity extends AppCompatActivity implements AccountEditionView {
 
     public static final String ACCOUNT_ID_KEY = AccountEditionActivity.class.getCanonicalName() + "accountid";
+    public static final String ACCOUNT_HAS_PASSWORD_KEY = AccountEditionActivity.class.getCanonicalName() + "hasPassword";
 
     public static final String TAG = AccountEditionActivity.class.getSimpleName();
 
