@@ -314,12 +314,11 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
     @OnClick(R.id.btn_start_export)
     public void onClickStart() {
         mPasswordLayout.setError(null);
-        if (mRingPassword.getText().length() == 0) {
-            mPasswordLayout.setError(getString(R.string.account_enter_password));
-        } else if (mRingPassword.getText().length() < 6) {
+        String password = mRingPassword.getText().toString();
+        if (!password.isEmpty() && password.length() < 6) {
             mPasswordLayout.setError(getString(R.string.error_password_char_count));
         } else {
-            presenter.startAccountExport(mRingPassword.getText().toString());
+            presenter.startAccountExport(password);
         }
     }
 
