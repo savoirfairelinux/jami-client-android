@@ -1,6 +1,6 @@
 #!/bin/bash -
 #
-#  Copyright (C) 2004-2014 Savoir-Faire Linux Inc.
+#  Copyright (C) 2004-2017 Savoir-Faire Linux Inc.
 #
 #  Author: Emeric Vigier <emeric.vigier@savoirfairelinux.com>
 #
@@ -15,20 +15,7 @@
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-#
-#  Additional permission under GNU GPL version 3 section 7:
-#
-#  If you modify this program, or any covered work, by linking or
-#  combining it with the OpenSSL project's OpenSSL library (or a
-#  modified version of that library), containing parts covered by the
-#  terms of the OpenSSL or SSLeay licenses, Savoir-Faire Linux Inc.
-#  grants you additional permission to convey the resulting work.
-#  Corresponding Source for a non-source form of such a combination
-#  shall include the source code for the parts of OpenSSL used as well
-#  as that of the covered work.
-#
+#  along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 # input: jni/jni_interface.i
 # output: ringservice_loader.c
@@ -44,7 +31,7 @@ ROOT=`pwd`
 
 echo "in $ROOT"
 
-echo "Checking that swig is 2.0.6 or later"
+echo "Checking that swig is 3.0.10 or later"
 SWIGVER=`swig -version | \
     grep -i "SWIG version" | \
     awk '{print $3}'`
@@ -57,26 +44,24 @@ SWIGVER3=`echo $SWIGVER | \
 
 echo swig-$SWIGVER1.$SWIGVER2.$SWIGVER3
 
-if [[ $SWIGVER1 -ge 2 ]]; then
-    echo "swig version is greater than 2.x"
-    if [[ $SWIGVER1 -gt 2 ]]; then
+if [[ $SWIGVER1 -ge 3 ]]; then
+    if [[ $SWIGVER1 -gt 3 ]]; then
         echo "swig version is greater than 3.x"
     else
         if [[ $SWIGVER2 -ge 1 ]]; then
-            echo "swig version is greater than 2.1"
+            echo "swig version is greater than 3.1"
         else
-            echo "swig version is less than 2.1"
-            if [[ $SWIGVER3 -ge 6 ]]; then
-                echo "swig version is greater than 2.0.6"
+            if [[ $SWIGVER3 -ge 10 ]]; then
+                echo "swig version is greater than 3.0.10"
             else
-                echo "swig version is less than 2.0.6"
+                echo "swig version is less than 3.0.10"
                 echo "exiting..."
                 exit 4
             fi
         fi
     fi
 else
-    echo "swig version is less than 2.x"
+    echo "swig version is less than 3.x"
     echo "exiting..."
     exit 3
 fi
