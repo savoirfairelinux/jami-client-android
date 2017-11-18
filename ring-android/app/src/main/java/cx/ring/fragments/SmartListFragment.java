@@ -24,6 +24,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -43,6 +44,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -152,6 +154,12 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         mSearchView.setQueryHint(getString(R.string.searchbar_hint));
         mSearchView.setLayoutParams(new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.MATCH_PARENT));
         mSearchView.setImeOptions(EditorInfo.IME_ACTION_GO);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            EditText editText = mSearchView.findViewById(R.id.search_src_text);
+            if (editText != null) {
+                editText.setAutofillHints(View.AUTOFILL_HINT_USERNAME);
+            }
+        }
 
         Intent intent = getActivity().getIntent();
         if (intent != null && intent.getAction() != null) {
