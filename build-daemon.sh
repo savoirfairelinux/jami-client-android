@@ -114,6 +114,11 @@ if [ ! -d "$DAEMON_DIR" ]; then
     exit 1
 fi
 
+SRCDIR=$DAEMON_DIR/bin/jni
+PACKAGEDIR=`pwd`/ring-android/libringclient/src/main/java/cx/ring/daemon
+ROOT=`pwd`/ring-android
+PACKAGE=cx.ring.daemon
+
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -O3"
 
 # Setup LDFLAGS
@@ -143,19 +148,22 @@ MAKEFLAGS=-j`sysctl -n machdep.cpu.thread_count`
 fi
 
 # Build buildsystem tools
-cd "$DAEMON_DIR"
+cd $DAEMON_DIR/extras/tools
 export PATH=`pwd`/extras/tools/build/bin:$PATH
 echo "Building tools"
-pushd extras/tools
 ./bootstrap
 make $MAKEFLAGS
 make .pkg-config
 make .gas
-popd
+
+#Build JNI interface
+cd $SRCDIR
+ROOT=$ROOT PACKAGEDIR=$PACKAGEDIR PACKAGE=$PACKAGE $SRCDIR/make-swig.sh
 
 ############
 # Contribs #
 ############
+cd $DAEMON_DIR
 echo "Building the contribs"
 mkdir -p contrib/native-${TARGET_TUPLE}
 
@@ -165,7 +173,7 @@ export CROSS_COMPILE="${CROSS_COMPILE}"
 
 mkdir -p contrib/${TARGET_TUPLE}/lib/pkgconfig
 
-pushd contrib/native-${TARGET_TUPLE}
+cd $DAEMON_DIR/contrib/native-${TARGET_TUPLE}
 ../bootstrap --host=${TARGET_TUPLE} --disable-libav --enable-ffmpeg --disable-speexdsp
 
 # Some libraries have arm assembly which won't build in thumb mode
@@ -197,11 +205,11 @@ make list
 make fetch
 export PATH="$PATH:$PWD/../$TARGET_TUPLE/bin"
 make $MAKEFLAGS
-popd
 
 ############
 # Make Ring #
 ############
+cd $DAEMON_DIR
 RING_SRC_DIR="${DAEMON_DIR}"
 RING_BUILD_DIR="`realpath build-android-${TARGET_TUPLE}`"
 export RING_SRC_DIR="${RING_SRC_DIR}"
@@ -274,7 +282,7 @@ ${NDK_TOOLCHAIN_PATH}/clang++ \
                 -Wno-unused-variable \
                 -Wno-unused-function \
                 -Wno-unused-parameter \
-                ${ANDROID_APP_DIR}/libringclient/src/main/jni/ring_wrapper.cpp \
+                ${SRCDIR}/ring_wrapper.cpp \
                 ${RING_BUILD_DIR}/src/.libs/libring.a \
                 -static-libstdc++ \
                 -I${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include \
