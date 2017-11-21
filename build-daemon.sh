@@ -114,6 +114,11 @@ if [ ! -d "$DAEMON_DIR" ]; then
     exit 1
 fi
 
+SRCDIR=$DAEMON_DIR/bin/jni
+PACKAGEDIR=`pwd`/ring-android/libringclient/src/main/java/cx/ring/daemon
+ROOT=`pwd`/ring-android
+PACKAGE=cx.ring.daemon
+
 EXTRA_CFLAGS="${EXTRA_CFLAGS} -O3"
 
 # Setup LDFLAGS
@@ -151,6 +156,11 @@ pushd extras/tools
 make $MAKEFLAGS
 make .pkg-config
 make .gas
+popd
+
+#Make JNI interface
+pushd $SRCDIR
+ROOT=$ROOT PACKAGEDIR=$PACKAGEDIR PACKAGE=$PACKAGE $SRCDIR/make-swig.sh
 popd
 
 ############
@@ -274,7 +284,7 @@ ${NDK_TOOLCHAIN_PATH}/clang++ \
                 -Wno-unused-variable \
                 -Wno-unused-function \
                 -Wno-unused-parameter \
-                ${ANDROID_APP_DIR}/libringclient/src/main/jni/ring_wrapper.cpp \
+                ${SRCDIR}/ring_wrapper.cpp \
                 ${RING_BUILD_DIR}/src/.libs/libring.a \
                 -static-libstdc++ \
                 -I${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include \
