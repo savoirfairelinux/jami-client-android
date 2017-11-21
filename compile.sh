@@ -8,10 +8,6 @@ fi
 
 TOP=$(pwd)/ring-android
 
-pushd $TOP
-./make-swig.sh
-popd
-
 # Flags:
 
   # --release: build in release mode
