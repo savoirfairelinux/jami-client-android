@@ -122,7 +122,7 @@ if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
     EXTRA_LDFLAGS="-march=armv7-a -mfpu=vfpv3-d16 -mcpu=cortex-a8 -lm_hard -D_NDK_MATH_NO_SOFTFP=1"
 elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
     EXTRA_CFLAGS="${EXTRA_CFLAGS} -march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16"
-    EXTRA_LDFLAGS="-march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16"
+    EXTRA_LDFLAGS="-march=armv7-a -mthumb -mfloat-abi=softfp -mfpu=vfpv3-d16 -Wl,--fix-cortex-a8"
 elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
     EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/sysroot/usr/lib -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/lib"
 fi
