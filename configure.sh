@@ -28,12 +28,6 @@ fi
 
 LDFLAGS="-Wl,-Bdynamic,-dynamic-linker=/system/bin/linker -Wl,--no-undefined"
 
-if [ -n "$HAVE_ARM" ]; then
-    if [ ${ANDROID_ABI} = "armeabi-v7a" ]; then
-        LDFLAGS="$LDFLAGS -Wl,--fix-cortex-a8"
-    fi
-fi
-
 CPPFLAGS="-I${NDK_TOOLCHAIN_PATH}/include/c++/4.9.x -I${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include "
 LDFLAGS="$LDFLAGS -L${NDK_TOOLCHAIN_PATH}/${TARGET_TUPLE}/lib/${ANDROID_ABI} -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib "
 
