@@ -22,13 +22,9 @@ if [ -z "$ANDROID_API" ];then
 fi
 
 CFLAGS="-fpic -g -O2 -fstrict-aliasing -funsafe-math-optimizations"
-if [ -n "$HAVE_ARM" -a ! -n "$HAVE_64" ]; then
-    CFLAGS="${CFLAGS} -mlong-calls"
-fi
+CPPFLAGS="-I${NDK_TOOLCHAIN_PATH}/include/c++/4.9.x -I${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include "
 
 LDFLAGS="-Wl,-Bdynamic,-dynamic-linker=/system/bin/linker -Wl,--no-undefined"
-
-CPPFLAGS="-I${NDK_TOOLCHAIN_PATH}/include/c++/4.9.x -I${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include "
 LDFLAGS="$LDFLAGS -L${NDK_TOOLCHAIN_PATH}/${TARGET_TUPLE}/lib/${ANDROID_ABI} -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib "
 
 SYSROOT=$NDK_TOOLCHAIN_PATH/sysroot
