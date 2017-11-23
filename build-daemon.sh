@@ -165,8 +165,7 @@ cd $DAEMON_DIR
 echo "Building the contribs"
 mkdir -p contrib/native-${TARGET_TUPLE}
 
-ANDROID_BIN=${NDK_TOOLCHAIN_PATH}
-CROSS_COMPILE=${ANDROID_BIN}/${TARGET_TUPLE}-
+CROSS_COMPILE=${NDK_TOOLCHAIN_PATH}/${TARGET_TUPLE}-
 export CROSS_COMPILE="${CROSS_COMPILE}"
 
 mkdir -p contrib/${TARGET_TUPLE}/lib/pkgconfig
@@ -243,9 +242,9 @@ if [[ $DAEMON_ONLY -eq 1 ]]; then
     exit 0
 fi
 
-####################################
-# Ring android UI and specific code
-####################################
+######################
+# Building JNI library
+######################
 cd ${ANDROID_TOPLEVEL_DIR}
 
 STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
