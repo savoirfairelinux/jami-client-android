@@ -68,7 +68,7 @@ public abstract class ContactService extends Observable {
     private Map<String, CallContact> mContactsRing = new HashMap<>();
     private String mAccountId;
 
-    protected abstract Map<Long, CallContact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
+    public abstract Map<Long, CallContact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
 
     protected abstract CallContact findContactByIdFromSystem(Long contactId, String contactKey);
 

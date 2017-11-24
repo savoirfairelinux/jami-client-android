@@ -67,6 +67,13 @@ public class Uri implements Serializable {
         return builder.toString();
     }
 
+    public String getNumberString() {
+        return this.toString().replace("(", "")
+                .replace(")", "")
+                .replace("-", "")
+                .replace(" ", "");
+    }
+
     public String getUriString() {
         if (getDisplayName() == null || getDisplayName().isEmpty()) {
             return getRawUriString();
