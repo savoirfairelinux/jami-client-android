@@ -47,4 +47,11 @@ public final class StringUtils {
         Arrays.fill(chars, '*');
         return new String(chars);
     }
+
+    public static String toNumber(String s) {
+        return s.replace("(", "")
+                .replace(")", "")
+                .replace("-", "")
+                .replace(" ", "");
+    }
 }

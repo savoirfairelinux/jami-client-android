@@ -80,7 +80,6 @@ import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
 public class HomeActivity extends AppCompatActivity implements RingNavigationFragment.OnNavigationSectionSelected,
-        ActivityCompat.OnRequestPermissionsResultCallback,
         Observer<ServiceEvent> {
 
     public static final int REQUEST_CODE_CREATE_ACCOUNT = 7;
@@ -348,30 +347,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         }
 
         super.onStart();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult");
-
-        switch (requestCode) {
-            case REQUEST_PERMISSION_READ_STORAGE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, REQUEST_CODE_GALLERY);
-                } else {
-                    return;
-                }
-                break;
-            case REQUEST_PERMISSION_CAMERA:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, REQUEST_CODE_PHOTO);
-                } else {
-                    return;
-                }
-                break;
-        }
     }
 
     public void setToolbarState(boolean doubleHeight, int titleRes) {

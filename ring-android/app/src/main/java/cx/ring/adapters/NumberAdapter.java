@@ -84,13 +84,13 @@ public class NumberAdapter extends BaseAdapter {
         }
 
         Phone number = mNumbers.get(position);
-        ImageView numberIcon = (ImageView) convertView.findViewById(R.id.number_icon);
+        ImageView numberIcon = convertView.findViewById(R.id.number_icon);
         numberIcon.setImageResource(number.getNumber().isRingId() ?
                 R.drawable.ring_logo_24dp : R.drawable.ic_dialer_sip_black);
 
         if (longView) {
-            TextView numberTxt = (TextView) convertView.findViewById(R.id.number_txt);
-            TextView numberLabelTxt = (TextView) convertView.findViewById(R.id.number_label_txt);
+            TextView numberTxt = convertView.findViewById(R.id.number_txt);
+            TextView numberLabelTxt = convertView.findViewById(R.id.number_label_txt);
 
             numberTxt.setText(number.getNumber().getRawUriString());
             numberLabelTxt.setText(ContactsContract.CommonDataKinds.Phone.getTypeLabel(mContext.getResources(), number.getCategory(), number.getLabel()));

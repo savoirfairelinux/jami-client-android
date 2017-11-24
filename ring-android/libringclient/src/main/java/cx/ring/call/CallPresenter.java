@@ -40,6 +40,7 @@ import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.StringUtils;
 
 public class CallPresenter extends RootPresenter<CallView> implements Observer<ServiceEvent> {
 
@@ -71,7 +72,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     @Inject
     public CallPresenter(AccountService accountService,
                          NotificationService notificationService,
-                         DeviceRuntimeService deviceRuntimeService,
                          HardwareService hardwareService,
                          CallService callService,
                          ContactService contactService,
@@ -105,7 +105,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     }
 
     public void initOutGoing(String accountId, String contactRingId, boolean hasVideo) {
-        mSipCall = mCallService.placeCall(accountId, contactRingId, hasVideo);
+        mSipCall = mCallService.placeCall(accountId, StringUtils.toNumber(contactRingId), hasVideo);
         if (mSipCall == null) {
             finish();
             return;
