@@ -24,6 +24,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 
@@ -48,7 +50,9 @@ import cx.ring.utils.Log;
 import cx.ring.utils.NameLookupInputHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import io.reactivex.ObservableSource;
 import io.reactivex.Scheduler;
+import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
@@ -251,6 +255,14 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     }
 
     private void loadConversations() {
+        if (mAccountService.getCurrentAccount().isSip()) {
+            loadContacts();
+        } else {
+            loadHistory();
+        }
+    }
+
+    private void loadHistory() {
         mSmartListViewModels = new ArrayList<>(mContactService.getContactsDaemon().size());
         final String accountId = mAccountService.getCurrentAccount().getAccountID();
 
@@ -305,6 +317,54 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 }));
     }
 
+    private void loadContacts() {
+        mSmartListViewModels = new ArrayList<>(mContactService.getContactsDaemon().size());
+
+        mCompositeDisposable.add(Single.fromCallable(new Callable<Map<Long, CallContact>>() {
+            @Override
+            public Map<Long, CallContact> call() throws Exception {
+                return mContactService.loadContactsFromSystem(false, true);
+            }
+        }).flatMapObservable(new Function<Map<Long, CallContact>, ObservableSource<CallContact>>() {
+            @Override
+            public ObservableSource<CallContact> apply(Map<Long, CallContact> longCallContactMap) throws Exception {
+                return io.reactivex.Observable.fromIterable(longCallContactMap.values());
+            }
+        }).map(new Function<CallContact, SmartListViewModel>() {
+            @Override
+            public SmartListViewModel apply(CallContact callContact) throws Exception {
+                return modelToViewModel(callContact);
+            }
+        }).subscribeOn(Schedulers.computation())
+                .observeOn(mMainScheduler)
+                .subscribeWith(new DisposableObserver<SmartListViewModel>() {
+                    @Override
+                    public void onNext(SmartListViewModel smartListViewModel) {
+                        mSmartListViewModels.add(smartListViewModel);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        if (mSmartListViewModels.size() > 0) {
+                            Collections.sort(mSmartListViewModels, new SmartListViewModel.SmartListComparator());
+                            getView().updateList(mSmartListViewModels);
+                            getView().hideNoConversationMessage();
+                            getView().setLoading(false);
+                        } else {
+                            getView().hideList();
+                            getView().displayNoConversationMessage();
+                            getView().setLoading(false);
+                        }
+                    }
+                }));
+
+    }
+
     private SmartListViewModel modelToViewModel(String ringId, CallContact callContact, @NonNull List<HistoryText> lastTexts, @NonNull List<HistoryCall> lastCalls) {
         HistoryText lastText = lastTexts.size() > 0 ? lastTexts.get(0) : null;
         HistoryCall lastCall = lastCalls.size() > 0 ? lastCalls.get(0) : null;
@@ -346,6 +406,24 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 lastInteraction,
                 hasUnreadMessage);
         smartListViewModel.setOnline(mPresenceService.isBuddyOnline(callContact.getIds().get(0)));
+
+        return smartListViewModel;
+    }
+
+    private SmartListViewModel modelToViewModel(CallContact callContact) {
+        SmartListViewModel smartListViewModel;
+
+        callContact.setUsername(callContact.getDisplayName());
+
+        mContactService.loadContactData(callContact);
+        smartListViewModel = new SmartListViewModel(callContact.getPhones().get(0).getNumber().toString(),
+                callContact.getStatus(),
+                callContact.getDisplayName() != null ? callContact.getDisplayName() : callContact.getUsername(),
+                callContact.getPhoto(),
+                0,
+                0,
+                "",
+                false);
 
         return smartListViewModel;
     }
