@@ -20,8 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cx.ring"
     android:installLocation="auto"
-    android:versionCode="95"
-    android:versionName="20171020">
+    android:versionCode="96"
+    android:versionName="20171126">
 
     <supports-screens
         android:anyDensity="true"
@@ -66,6 +66,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-feature
         android:name="android.software.leanback"
         android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false"/>
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false"/>
