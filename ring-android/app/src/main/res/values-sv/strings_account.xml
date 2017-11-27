@@ -143,7 +143,7 @@ Du kan ändra kontot senare.</string>
   <string name="account_link_prompt_pin">Ange PIN-kod</string>
   <string name="account_new_button">Skapa ett Ring-konto</string>
   <string name="account_link_export_button">Koppla en annan enhet till detta konto</string>
-  <string name="account_link_export_info">För att använda detta konto på en annan enhet, måste du först exponera det på Ring. Detta genererar en PIN-kod som du måste ange på den nya enheten för att öppna kontot. Pin-koden är giltig i 10 minuter.\n\nAnge ditt lösenord för att starta:</string>
+  <string name="account_link_export_info">För att använda detta konto på en annan enhet, måste du först exponera det på Ring. Detta genererar en PIN-kod som du måste ange på den nya enheten för att öppna kontot. Pin-koden är giltig i 10 minuter.</string>
   <string name="account_start_export_button">Generera PIN-kod</string>
   <string name="account_end_export_button">stäng</string>
   <string name="account_end_export_infos">Din PIN-kod är:\n\n%%\n\nFör att slutföra åtgärden, måste du nu öppna Ring på den nya enheten. Skapa ett nytt konto med \"Koppla den här enheten till ett konto\". PIN-koden är giltig i 10 minuter.</string>

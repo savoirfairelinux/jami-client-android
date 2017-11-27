@@ -54,6 +54,7 @@
   <string name="notif_outgoing_call">Odhodni klic</string>
   <string name="notif_current_call_title">Trenutni klic z %1$s</string>
   <string name="notif_current_call">Trenutni klic</string>
+  <string name="notif_channel_calls">Klici</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ti:</string>
   <string name="action_call_hangup">Prekini</string>

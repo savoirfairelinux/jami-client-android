@@ -60,6 +60,7 @@
   <string name="notif_outgoing_call">Odchozí hovor</string>
   <string name="notif_current_call_title">Současný hovor s %1$s</string>
   <string name="notif_current_call">Současný hovor</string>
+  <string name="notif_channel_calls">Hovory</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vy:</string>
   <string name="action_call_hangup">Zavěsit</string>

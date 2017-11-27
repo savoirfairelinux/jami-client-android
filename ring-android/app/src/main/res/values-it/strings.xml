@@ -59,6 +59,7 @@
   <string name="notif_outgoing_call">Chiamata in uscita</string>
   <string name="notif_current_call_title">Chiamata in corso con %1$s</string>
   <string name="notif_current_call">Chiamata attiva</string>
+  <string name="notif_channel_calls">Chiamate</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tu</string>
   <string name="action_call_hangup">Riattacca</string>

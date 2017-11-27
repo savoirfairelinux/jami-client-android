@@ -143,7 +143,6 @@
   <string name="account_link_prompt_pin">输入PIN</string>
   <string name="account_new_button">创建Ring帐户</string>
   <string name="account_link_export_button">将另一设备与该帐户进行连接</string>
-  <string name="account_link_export_info">要在其他设备上使用该帐户，您需要将其连接至Ring，在此过程中您会得到一个PIN，在10分钟内有效。请将其输入您的新设备以设置该帐户。\n\n首先，请输入您的密码：</string>
   <string name="account_start_export_button">生成PIN</string>
   <string name="account_end_export_button">关闭</string>
   <string name="account_end_export_infos">您的PIN是：\n\n%%\n\n要继续，请在新设备上打开Ring，点击“将此设备与一个帐户进行连接”。您的PIN将在10分钟内有效。</string>

@@ -61,6 +61,7 @@
   <string name="notif_outgoing_call">Połączenie wychodzące</string>
   <string name="notif_current_call_title">Aktualna rozmowa z %1$s</string>
   <string name="notif_current_call">Aktualna rozmowa</string>
+  <string name="notif_channel_calls">Rozmowy</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ty:</string>
   <string name="action_call_hangup">Rozłącz się</string>

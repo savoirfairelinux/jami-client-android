@@ -143,7 +143,7 @@ Sie können ihr Konto später bearbeiten</string>
   <string name="account_link_prompt_pin">PIN eingeben</string>
   <string name="account_new_button">Ein Ring-Konto erstellen</string>
   <string name="account_link_export_button">Weiteres Gerät mit diesem Konto verknüpfen</string>
-  <string name="account_link_export_info">Um dieses Konto auf weiteren Geräten zu verwenden, müssen Sie zuerst in den Kontoeinstellungen eine PIN generieren. Diese muss auf dem neuen Gerät eingeben werden, um das Konto zu importieren. Die PIN ist für 10 Minuten gültig. \n\nBitte geben Sie Ihr Passwort ein um zu beginnen:</string>
+  <string name="account_link_export_info">Um ihr Benutzerkonto auf weiteren Endgeräten zu nutzen, müssen Sie auf dem vorhandenen Endgerät eine PIN generieren. Diese PIN muss anschließend auf dem neu hinzuzufügenden Endgerät eingegeben werden. Diese PIN ist für 10 Minuten gültig.</string>
   <string name="account_start_export_button">PIN generieren</string>
   <string name="account_end_export_button">Schließen</string>
   <string name="account_end_export_infos">Ihre PIN ist:\n\n%%\n\nUm den Prozess abzuschließen, öffnen Sie Ring auf dem neuen Gerät. Erstellen Sie ein Konto mit \"Dieses Gerät mit einem Konto verknüpfen\". Ihre PIN ist 10 Minuten gültig.</string>

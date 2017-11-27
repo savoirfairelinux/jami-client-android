@@ -143,7 +143,6 @@ Puedes editar tu cuenta luego</string>
   <string name="account_link_prompt_pin">Ingresa tu PIN</string>
   <string name="account_new_button">Crear una cuenta en Ring</string>
   <string name="account_link_export_button">Conectar otro dispositivo a esta cuenta</string>
-  <string name="account_link_export_info">Para utilizar esta cuenta con otros dispositivos, primero debes exponer tu cuenta en Ring. Esto generará un PIN que deberás ingresar en tu nuevo dispositivo para configurar la cuenta. El PIN es válido por 10 minutos.\n\nPor favor provee tu contraseña para comenzar:</string>
   <string name="account_start_export_button">Generar PIN</string>
   <string name="account_end_export_button">cerrar</string>
   <string name="account_end_export_infos">Tu PIN es:\n\n%%\n\nPara completar el proceso, necesitas abrir Ring en el nuevo dispositivo. Crea una nueva cuenta con \"Vincular este dispositivo a una cuenta\". Tu PIN es válido por 10 minutos.</string>

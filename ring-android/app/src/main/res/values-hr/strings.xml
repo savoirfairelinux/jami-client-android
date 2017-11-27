@@ -52,6 +52,7 @@
   <string name="notif_outgoing_call">Odlazni poziv</string>
   <string name="notif_current_call_title">Trenutni poziv sa %1$s</string>
   <string name="notif_current_call">Trenutni poziv</string>
+  <string name="notif_channel_calls">Pozivi</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ti:</string>
   <string name="action_call_hangup">Poklopi</string>

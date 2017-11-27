@@ -117,7 +117,6 @@ Anda masih akan dapat mengubah maklumat akaun anda pada masa hadapan</string>
   <string name="account_link_prompt_pin">Masukkan PIN</string>
   <string name="account_new_button">Cipta akaun Ring</string>
   <string name="account_link_export_button">Sambungkan perangkat lain dengan akaun ini</string>
-  <string name="account_link_export_info">Untuk menggunakan akaun ini diperangkat lain, ada mestilah terlebih dahulu mengeksport akaun Ring kerangkaian agihan. Ini akan menciptakan kod PIN yang anda mesti masukkan pada perangkat tersebut. PIN tersebut sah selama 10 minit. \n\nSila berikan kata laluan utama akaun anda untuk memulakan:</string>
   <string name="account_start_export_button">Ciptakan PIN</string>
   <string name="account_end_export_button">tutup</string>
   <string name="account_end_export_infos">PIN anda adalah:\n\n%%\n\nUntuk menyelesaikan proses menyambung, anda mestilah membuka aplikasi Ring pada perangkat baharu. Cipta akaun baharu dengan \\"Sambungkan perangkat ini dengan akaun yang telah sedia ada\\". PIN ini sah selama 10 minit.</string>

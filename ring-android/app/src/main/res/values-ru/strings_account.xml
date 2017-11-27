@@ -143,7 +143,6 @@
   <string name="account_link_prompt_pin">Введите PIN</string>
   <string name="account_new_button">Создать аккаунт Ring</string>
   <string name="account_link_export_button">Привязать другое устройство к этому аккаунту</string>
-  <string name="account_link_export_info">Для использования этого аккаунта на других устройствах нужно сначала выставить его в сеть Ring. Это сгенерирует PIN-код, который потребуется ввести на новом устройстве для настройки аккаунта. PIN-код действителен в течение 10 минут.\n\nПожалуйста, укажите ваш пароль, чтобы начать:</string>
   <string name="account_start_export_button">Сгенерировать PIN</string>
   <string name="account_end_export_button">закрыть</string>
   <string name="account_end_export_infos">Ваш PIN:\n\n%%\n\nДля завершения процесса нужно открыть Ring на новом устройстве и выбрать \"Привязать это устройство к аккаунту\". Ваш PIN действителен в течение 10 минут.</string>

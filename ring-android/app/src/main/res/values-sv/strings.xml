@@ -59,6 +59,7 @@
   <string name="notif_outgoing_call">Utgående samtal</string>
   <string name="notif_current_call_title">Aktuellt samtal med %1$s</string>
   <string name="notif_current_call">Aktuellt samtal</string>
+  <string name="notif_channel_calls">Samtal</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
   <string name="action_call_hangup">Lägg på</string>

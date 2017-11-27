@@ -59,6 +59,7 @@
   <string name="notif_outgoing_call">Giden arama</string>
   <string name="notif_current_call_title">%1$s ile şimdiki arama</string>
   <string name="notif_current_call">Şimdiki arama</string>
+  <string name="notif_channel_calls">Aramalar</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sen:</string>
   <string name="action_call_hangup">Kapat</string>

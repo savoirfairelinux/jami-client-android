@@ -53,6 +53,7 @@
   <string name="notif_outgoing_call">Thirrje për</string>
   <string name="notif_current_call_title">Thirrje e tanishme me %1$s</string>
   <string name="notif_current_call">Thirrja e tanishme</string>
+  <string name="notif_channel_calls">Thirrje</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ju:</string>
   <string name="action_call_hangup">Mbylle thirrjen</string>

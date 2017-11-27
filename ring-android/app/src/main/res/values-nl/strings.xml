@@ -59,6 +59,9 @@
   <string name="notif_outgoing_call">Uitgaande oproep</string>
   <string name="notif_current_call_title">Huidige oproep met %1$s</string>
   <string name="notif_current_call">Huidige oproep</string>
+  <string name="notif_channel_calls">Oproepen</string>
+  <string name="notif_channel_messages">Berichten</string>
+  <string name="notif_channel_requests">Verzoeken</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Jij:</string>
   <string name="action_call_hangup">Ophangen</string>

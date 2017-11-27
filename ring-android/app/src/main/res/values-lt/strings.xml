@@ -56,6 +56,7 @@
   <string name="notif_outgoing_call">Išsiunčiamasis skambutis</string>
   <string name="notif_current_call_title">Esamas skambutis su %1$s</string>
   <string name="notif_current_call">Esamas skambutis</string>
+  <string name="notif_channel_calls">Skambučiai</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Jūs:</string>
   <string name="action_call_hangup">Padėti ragelį</string>

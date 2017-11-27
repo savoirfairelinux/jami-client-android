@@ -128,7 +128,6 @@
   <string name="account_link_prompt_pin">Въведете ПИН</string>
   <string name="account_new_button">Създаване на акаунт за Ring</string>
   <string name="account_link_export_button">Свързване на друго устройство с този акаунт</string>
-  <string name="account_link_export_info">За да използвате този акаунт на други устройства, трябва първо да го направите видим в Ring. Това ще създаде ПИН код , който трябва да въведете на новото устройство, за да настроите акаунта. Кодът има давност 10 минути\n\nМоля, въведете паролата си, за да започнем:</string>
   <string name="account_start_export_button">Създаване на ПИН код</string>
   <string name="account_end_export_button">затваряне</string>
   <string name="account_end_export_infos">Вашият ПИН код е:\n\n%%\n\nЗа да завършите процеса, трябва да пуснете Ring на новото устройство. Създайте нов профил чрез „Свързване на това устройство с акаунт“. Кодът има давност 10 минути.</string>

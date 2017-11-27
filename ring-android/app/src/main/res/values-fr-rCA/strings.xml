@@ -59,6 +59,7 @@
   <string name="notif_outgoing_call">Appel sortant</string>
   <string name="notif_current_call_title">Appel en cours avec %1$s</string>
   <string name="notif_current_call">Appel en cours</string>
+  <string name="notif_channel_calls">Appels</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Toi:</string>
   <string name="action_call_hangup">Raccrocher</string>

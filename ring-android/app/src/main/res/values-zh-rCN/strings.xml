@@ -57,6 +57,7 @@
   <string name="notif_outgoing_call">去电</string>
   <string name="notif_current_call_title">当前通话：%1$s</string>
   <string name="notif_current_call">当前通话</string>
+  <string name="notif_channel_calls">呼叫</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">你：</string>
   <string name="action_call_hangup">挂断</string>

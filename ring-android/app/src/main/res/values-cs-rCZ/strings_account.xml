@@ -143,7 +143,6 @@ Prověřte, prosím, své heslo.</string>
   <string name="account_link_prompt_pin">Zadejte PIN</string>
   <string name="account_new_button">Vytvořit účet Ring</string>
   <string name="account_link_export_button">Připojit k tomuto účtu další zařízení</string>
-  <string name="account_link_export_info">Pro použití tohoto účtu na dalších zařízeních jej musíte nejdříve vystavit na Ring. Tím se vygeneruje kód PIN, který musíte zadat na novém zařízení, kde nastavujete účet. PIN zůstává platný 10 minut. \n\nPro začátek prosím poskytněte své heslo:</string>
   <string name="account_start_export_button">Vygenerovat PIN</string>
   <string name="account_end_export_button">zavřít</string>
   <string name="account_end_export_infos">Váš PIN je:\n\n%%\n\nK dokončení tohoto procesu otevřete na novém zařízení Ring. Přihlaste se k účtu pomocí „Připojit toto zařízení k účtu“. Váš PIN zůstává platný 10 minut.</string>

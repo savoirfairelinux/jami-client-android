@@ -61,6 +61,7 @@
   <string name="notif_outgoing_call">Исходящий вызов</string>
   <string name="notif_current_call_title">Текущий вызов с %1$s</string>
   <string name="notif_current_call">Текущий вызов</string>
+  <string name="notif_channel_calls">Звонки</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вы:</string>
   <string name="action_call_hangup">Повесить трубку</string>

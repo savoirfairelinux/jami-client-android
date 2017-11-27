@@ -58,6 +58,7 @@
   <string name="notif_outgoing_call">تماس خروجی</string>
   <string name="notif_current_call_title">تماس کنونی با %1$s</string>
   <string name="notif_current_call">تماس کنونی</string>
+  <string name="notif_channel_calls">تماس‌ها</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">شما:</string>
   <string name="action_call_hangup">قطع کردن</string>

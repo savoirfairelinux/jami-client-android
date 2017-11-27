@@ -44,6 +44,7 @@
   <string name="notif_outgoing_call">Lähtevä puhelu</string>
   <string name="notif_current_call_title">Puhelu %1$s</string>
   <string name="notif_current_call">Puhelu</string>
+  <string name="notif_channel_calls">Puhelut</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sinä:</string>
   <string name="action_call_hangup">Katkaise puhelu</string>

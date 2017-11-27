@@ -38,6 +38,7 @@ GNU General Public Licence verziu 3 alebo neskoršie</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
   <!--Notifications-->
+  <string name="notif_channel_calls">Hovory</string>
   <!--Call Fragment-->
   <string name="action_call_hangup">Zlož</string>
   <string name="action_call_accept">Zdvihni hovor</string>

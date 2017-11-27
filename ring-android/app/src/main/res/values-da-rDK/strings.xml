@@ -59,6 +59,7 @@
   <string name="notif_outgoing_call">Udgående opkald</string>
   <string name="notif_current_call_title">Aktivt opkald med %1$s</string>
   <string name="notif_current_call">Nuværende opkald</string>
+  <string name="notif_channel_calls">Opkald</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Dig:</string>
   <string name="action_call_hangup">Læg på</string>

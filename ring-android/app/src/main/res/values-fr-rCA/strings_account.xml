@@ -143,7 +143,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_link_prompt_pin">Entrer le NIP</string>
   <string name="account_new_button">Créer un compte Ring</string>
   <string name="account_link_export_button">Associer un autre appareil à ce compte</string>
-  <string name="account_link_export_info">Pour utiliser ce compte sur d\'autres appareils, vous devez d\'abord l\'afficher sur Ring.  Ceci générera un code NIP que vous devez entrer sur le nouvel appareil pour configurer votre compte. Le NIP est valide pour une durée de 10 minutes. \n\nS\'il vous plaît, entrer votre mot de passe pour débuter:</string>
+  <string name="account_link_export_info">Pour utiliser ce compte sur d\'autres appareils, vous devez l\'exposer sur Ring en premier. Cela va généer un code NIP que vous devez entrer sur le nouveau appareil pour configurer un nouveau compte. Le NIP est valide pour 10 minutes.</string>
   <string name="account_start_export_button">Générer le NIP</string>
   <string name="account_end_export_button">fermer</string>
   <string name="account_end_export_infos">Votre NIP est:\n\n%%\n\nPour compléter le processus, vous devez ouvrir Ring sur le nouvel appareil. Créer un nouveau compte avec \"Associer cet appareil à un compte\". Votre NIP est valide pour une durée de 10 minutes.</string>
