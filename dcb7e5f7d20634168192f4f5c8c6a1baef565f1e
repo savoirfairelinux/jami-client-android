@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a42497e_8aaaa8d2",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-11-28T18:58:53Z",
+      "side": 1,
+      "message": "What if getCurrentAccount \u003d\u003d null ?",
+      "range": {
+        "startLine": 147,
+        "startChar": 35,
+        "endLine": 147,
+        "endChar": 70
+      },
+      "revId": "dcb7e5f7d20634168192f4f5c8c6a1baef565f1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_0aefb8b1",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-11-28T18:58:53Z",
+      "side": 1,
+      "message": "may be a short explanation ?",
+      "revId": "dcb7e5f7d20634168192f4f5c8c6a1baef565f1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_2ab9d42e",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListPresenter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-11-28T18:58:53Z",
+      "side": 1,
+      "message": "What if current account null ?",
+      "range": {
+        "startLine": 217,
+        "startChar": 51,
+        "endLine": 217,
+        "endChar": 70
+      },
+      "revId": "dcb7e5f7d20634168192f4f5c8c6a1baef565f1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_0ab6983d",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListPresenter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-11-28T18:58:53Z",
+      "side": 1,
+      "message": "What if current account null ?",
+      "range": {
+        "startLine": 231,
+        "startChar": 49,
+        "endLine": 231,
+        "endChar": 66
+      },
+      "revId": "dcb7e5f7d20634168192f4f5c8c6a1baef565f1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_6a82bc53",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListPresenter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-11-28T18:58:53Z",
+      "side": 1,
+      "message": "What if current account null ?",
+      "range": {
+        "startLine": 255,
+        "startChar": 49,
+        "endLine": 255,
+        "endChar": 66
+      },
+      "revId": "dcb7e5f7d20634168192f4f5c8c6a1baef565f1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_4a870062",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListPresenter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-11-28T18:58:53Z",
+      "side": 1,
+      "message": "What if current account null ?",
+      "range": {
+        "startLine": 257,
+        "startChar": 63,
+        "endLine": 257,
+        "endChar": 80
+      },
+      "revId": "dcb7e5f7d20634168192f4f5c8c6a1baef565f1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_8a81084d",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListPresenter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-11-28T18:58:53Z",
+      "side": 1,
+      "message": "What if getUuid null ?",
+      "range": {
+        "startLine": 370,
+        "startChar": 35,
+        "endLine": 370,
+        "endChar": 42
+      },
+      "revId": "dcb7e5f7d20634168192f4f5c8c6a1baef565f1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_aa7cc473",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListPresenter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-11-28T18:58:53Z",
+      "side": 1,
+      "message": "What if getContactName null ?",
+      "range": {
+        "startLine": 371,
+        "startChar": 40,
+        "endLine": 371,
+        "endChar": 56
+      },
+      "revId": "dcb7e5f7d20634168192f4f5c8c6a1baef565f1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_6a047c7e",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListPresenter.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-11-28T18:58:53Z",
+      "side": 1,
+      "message": "Please inverse to \u003d\u003e \"\".equals(name) and \"\".equals(address)",
+      "range": {
+        "startLine": 436,
+        "startChar": 23,
+        "endLine": 436,
+        "endChar": 61
+      },
+      "revId": "dcb7e5f7d20634168192f4f5c8c6a1baef565f1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
