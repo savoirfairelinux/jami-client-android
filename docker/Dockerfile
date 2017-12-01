@@ -40,6 +40,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Android SDK tools
 RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip && \
+	echo "444e22ce8ca0f67353bda4b85175ed3731cae3ffa695ca18119cbacef1c1bea0  /tmp/android-tools.zip" > /tmp/check && \
+	sha256sum -c /tmp/check && \
 	mkdir -p /opt/android-sdk && \
 	unzip -d /opt/android-sdk /tmp/android-tools.zip && \
 	rm -f /tmp/android-tools.zip && \
