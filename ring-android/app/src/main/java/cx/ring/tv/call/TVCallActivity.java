@@ -31,7 +31,6 @@ import cx.ring.utils.Log;
 
 public class TVCallActivity extends Activity {
 
-    public static final String SHARED_ELEMENT_NAME = "shared_element";
     static final String TAG = TVCallActivity.class.getSimpleName();
 
     @Override
@@ -45,7 +44,7 @@ public class TVCallActivity extends Activity {
         android.net.Uri u = getIntent().getData();
 
         Log.d(TAG, "u >> " + u);
-        boolean hasVideo = true;
+        boolean audioOnly = false;
         String accountId = getIntent().getStringExtra("account");
         String ringId = getIntent().getStringExtra("ringId");
 
@@ -58,7 +57,7 @@ public class TVCallActivity extends Activity {
             TVCallFragment callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_PLACE_CALL,
                     accountId,
                     ringId,
-                    hasVideo);
+                    audioOnly);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
         } else {
             Log.d(TAG, "incoming call");

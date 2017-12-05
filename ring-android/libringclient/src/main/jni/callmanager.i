@@ -58,7 +58,7 @@ public:
 namespace DRing {
 
 /* Call related methods */
-std::string placeCall(const std::string& accountID, const std::string& to);
+std::string placeCall(const std::string& accountID, const std::string& to, const std::map<std::string, std::string>& VolatileCallDetails);
 
 bool refuse(const std::string& callID);
 bool accept(const std::string& callID);
@@ -91,7 +91,7 @@ std::map<std::string, std::string> getConferenceDetails(const std::string& callI
 
 /* File Playback methods */
 bool startRecordedFilePlayback(const std::string& filepath);
-void stopRecordedFilePlayback(const std::string& filepath);
+void stopRecordedFilePlayback();
 
 /* General audio methods */
 bool toggleRecording(const std::string& callID);

@@ -69,7 +69,7 @@ public class CallService extends Observable {
         return mCallbackHandler;
     }
 
-    public SipCall placeCall(final String account, final String number, final boolean video) {
+    public SipCall placeCall(final String account, final String number, final boolean audioOnly) {
         return FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
@@ -77,16 +77,20 @@ public class CallService extends Observable {
                 new Callable<SipCall>() {
                     @Override
                     public SipCall call() throws Exception {
-                        Log.i(TAG, "placeCall() thread running... " + number + " video: " + video);
-                        String callId = Ringservice.placeCall(account, number);
+                        Log.i(TAG, "placeCall() thread running... " + number + " audioOnly: " + audioOnly);
+
+                        HashMap<String, String> volatileDetails = new HashMap<>();
+                        volatileDetails.put(SipCall.KEY_AUDIO_ONLY, String.valueOf(audioOnly));
+
+                        String callId = Ringservice.placeCall(account, number, StringMap.toSwig(volatileDetails));
                         if (callId == null || callId.isEmpty())
                             return null;
-                        if (!video) {
+                        if (audioOnly) {
                             Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
                         }
                         CallContact contact = mContactService.findContactByNumber(number);
                         SipCall call = addCall(account, callId, number, SipCall.Direction.OUTGOING);
-                        call.muteVideo(!video);
+                        call.muteVideo(audioOnly);
                         call.setContact(contact);
                         return call;
                     }
@@ -362,7 +366,7 @@ public class CallService extends Observable {
         return false;
     }
 
-    public void stopRecordedFilePlayback(final String filepath) {
+    public void stopRecordedFilePlayback() {
         FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
@@ -371,7 +375,7 @@ public class CallService extends Observable {
                     @Override
                     public Boolean call() throws Exception {
                         Log.i(TAG, "stopRecordedFilePlayback() thread running...");
-                        Ringservice.stopRecordedFilePlayback(filepath);
+                        Ringservice.stopRecordedFilePlayback();
                         return true;
                     }
                 }
@@ -521,7 +525,7 @@ public class CallService extends Observable {
                 Log.w(TAG, "incomingMessage: unknown call or no message: " + callId + " " + from);
                 return;
             }
-            if (sipCall.appendToVCard(from, messages)) {
+            if (sipCall.appendToVCard(messages)) {
                 mContactService.saveVCardContactData(sipCall.getContact());
             }
             if (messages.has_key(MIME_TEXT_PLAIN)) {

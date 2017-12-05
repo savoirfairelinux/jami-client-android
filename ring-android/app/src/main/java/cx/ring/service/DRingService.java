@@ -337,7 +337,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
         @Override
         public void stopRecordedFilePlayback(final String filepath) throws RemoteException {
-            mCallService.stopRecordedFilePlayback(filepath);
+            mCallService.stopRecordedFilePlayback();
         }
 
         @Override

@@ -32,7 +32,16 @@ import cx.ring.utils.VCardUtils;
 import ezvcard.Ezvcard;
 
 public class SipCall {
-    private static final String TAG = SipCall.class.getSimpleName();
+
+    public final static String KEY_ACCOUNT_ID = "ACCOUNTID";
+    public final static String KEY_AUDIO_ONLY = "AUDIO_ONLY";
+    public final static String KEY_CALL_TYPE = "CALL_TYPE";
+    public final static String KEY_CALL_STATE = "CALL_STATE";
+    public final static String KEY_PEER_NUMBER = "PEER_NUMBER";
+    public final static String KEY_PEER_HOLDING = "PEER_HOLDING";
+    public final static String KEY_AUDIO_MUTED = "PEER_NUMBER";
+    public final static String KEY_VIDEO_MUTED = "VIDEO_MUTED";
+
 
     private final String mCallID;
     private final String mAccount;
@@ -42,6 +51,7 @@ public class SipCall {
     private boolean isAudioMuted = false;
     private boolean isVideoMuted = false;
     private boolean isRecording = false;
+    private boolean isAudioOnly = false;
     private long timestampStart = 0;
     private long timestampEnd = 0;
     private boolean missed = true;
@@ -49,7 +59,6 @@ public class SipCall {
     private int mCallType;
     private int mCallState = State.NONE;
 
-    private String videoSource = null;
     private ProfileChunk mProfileChunk = null;
 
     public SipCall(String id, String account, Uri number, int direction) {
@@ -81,16 +90,16 @@ public class SipCall {
 
     /**
      * *********************
-     * Construtors
+     * Constructors
      * *********************
      */
 
     public SipCall(String callId, Map<String, String> call_details) {
         this(callId,
-                call_details.get("ACCOUNTID"),
-                call_details.get("PEER_NUMBER"),
-                Integer.parseInt(call_details.get("CALL_TYPE")));
-        mCallState = stateFromString(call_details.get("CALL_STATE"));
+                call_details.get(KEY_ACCOUNT_ID),
+                call_details.get(KEY_PEER_NUMBER),
+                Integer.parseInt(call_details.get(KEY_CALL_TYPE)));
+        mCallState = stateFromString(call_details.get(KEY_CALL_STATE));
         setDetails(call_details);
     }
 
@@ -108,26 +117,18 @@ public class SipCall {
     }
 
     public void setDetails(Map<String, String> details) {
-        isPeerHolding = "true".equals(details.get("PEER_HOLDING"));
-        isAudioMuted = "true".equals(details.get("AUDIO_MUTED"));
-        isVideoMuted = "true".equals(details.get("VIDEO_MUTED"));
-        videoSource = details.get("VIDEO_SOURCE");
+        isPeerHolding = "true".equals(details.get(KEY_PEER_HOLDING));
+        isAudioMuted = "true".equals(details.get(KEY_AUDIO_MUTED));
+        isVideoMuted = "true".equals(details.get(KEY_VIDEO_MUTED));
+        isAudioOnly = "true".equals(details.get(KEY_AUDIO_ONLY));
     }
 
     public long getDuration() {
         return isMissed() ? 0 : timestampEnd - timestampStart;
     }
 
-    public String getVideoSource() {
-        return videoSource;
-    }
-
     public void muteVideo(boolean mute) {
         isVideoMuted = mute;
-    }
-
-    public boolean isVideoMuted() {
-        return isVideoMuted;
     }
 
     public interface Direction {
@@ -200,44 +201,16 @@ public class SipCall {
         mNumber = n;
     }
 
+    public boolean isAudioOnly() {
+        return isAudioOnly;
+    }
+
     public String getNumber() {
         return mNumber.getUriString();
     }
 
     public Uri getNumberUri() {
         return mNumber;
-    }
-
-    public String stateToString() {
-        return stateToString(mCallState);
-    }
-
-    public static String stateToString(int state) {
-        switch (state) {
-            case State.SEARCHING:
-                return "SEARCHING";
-            case State.CONNECTING:
-                return "CONNECTING";
-            case State.RINGING:
-                return "RINGING";
-            case State.CURRENT:
-                return "CURRENT";
-            case State.HUNGUP:
-                return "HUNGUP";
-            case State.BUSY:
-                return "BUSY";
-            case State.FAILURE:
-                return "FAILURE";
-            case State.HOLD:
-                return "HOLD";
-            case State.UNHOLD:
-                return "UNHOLD";
-            case State.OVER:
-                return "OVER";
-            case State.NONE:
-            default:
-                return "NONE";
-        }
     }
 
     public static int stateFromString(String state) {
@@ -270,21 +243,6 @@ public class SipCall {
         }
     }
 
-    public boolean isRecording() {
-        return isRecording;
-    }
-
-    public void setRecording(boolean isRecording) {
-        this.isRecording = isRecording;
-    }
-
-    public void printCallInfo() {
-        Log.i(TAG, "CallInfo: CallID: " + mCallID);
-        Log.i(TAG, "          AccountID: " + mAccount);
-        Log.i(TAG, "          CallState: " + stateToString());
-        Log.i(TAG, "          CallType: " + mCallType);
-    }
-
     /**
      * Compare sip calls based on call ID
      */
@@ -309,17 +267,13 @@ public class SipCall {
         return mCallState == State.CURRENT || mCallState == State.HOLD || mCallState == State.UNHOLD;
     }
 
-    public boolean isOnHold() {
-        return mCallState == State.HOLD;
-    }
-
     public boolean isCurrent() {
         return mCallState == State.CURRENT;
     }
 
-    public boolean appendToVCard(String from, StringMap messages) {
+    public boolean appendToVCard(StringMap messages) {
         StringVect keys = messages.keys();
-        for (int i=0, n=keys.size(); i<n; i++) {
+        for (int i = 0, n = keys.size(); i < n; i++) {
             String key = keys.get(i);
             HashMap<String, String> messageKeyValue = VCardUtils.parseMimeAttributes(key);
             String mimeType = messageKeyValue.get(VCardUtils.VCARD_KEY_MIME_TYPE);
