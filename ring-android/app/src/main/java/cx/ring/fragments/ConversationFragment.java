@@ -277,10 +277,10 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
                 startActivity(new Intent(getActivity(), HomeActivity.class));
                 return true;
             case R.id.conv_action_audiocall:
-                presenter.callWithVideo(false);
+                presenter.callWithAudioOnly(true);
                 return true;
             case R.id.conv_action_videocall:
-                presenter.callWithVideo(true);
+                presenter.callWithAudioOnly(false);
                 return true;
             case R.id.menuitem_addcontact:
                 presenter.addContact();
@@ -470,11 +470,11 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void goToCallActivityWithResult(String accountId, String contactRingId, boolean hasVideo) {
+    public void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly) {
         Intent intent = new Intent(CallActivity.ACTION_CALL)
                 .setClass(getActivity().getApplicationContext(), CallActivity.class)
                 .putExtra(KEY_ACCOUNT_ID, accountId)
-                .putExtra(CallActivity.KEY_CALL_VIDEO, hasVideo)
+                .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly)
                 .putExtra(KEY_CONTACT_RING_ID, contactRingId);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
     }

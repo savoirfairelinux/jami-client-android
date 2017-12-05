@@ -530,7 +530,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     public void goToCallActivity(String accountId, String contactId) {
         Intent intent = new Intent(CallActivity.ACTION_CALL)
                 .setClass(getActivity(), CallActivity.class)
-                .putExtra(CallActivity.KEY_CALL_VIDEO, true)
+                .putExtra(CallFragment.KEY_AUDIO_ONLY, false)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);

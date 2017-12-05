@@ -33,7 +33,6 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
-import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
@@ -55,7 +54,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
 
     private SipCall mSipCall;
     private boolean mOnGoingCall = false;
-    private boolean mHasVideo = false;
+    private boolean mAudioOnly = true;
 
     private int videoWidth = -1;
     private int videoHeight = -1;
@@ -91,7 +90,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         mCallService.removeObserver(this);
         mHardwareService.removeObserver(this);
 
-        if (mHasVideo) {
+        if (!mAudioOnly) {
             mHardwareService.stopCapture();
         }
     }
@@ -104,13 +103,13 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         mHardwareService.addObserver(this);
     }
 
-    public void initOutGoing(String accountId, String contactRingId, boolean hasVideo) {
-        mSipCall = mCallService.placeCall(accountId, StringUtils.toNumber(contactRingId), hasVideo);
+    public void initOutGoing(String accountId, String contactRingId, boolean audioOnly) {
+        mAudioOnly = audioOnly;
+        mSipCall = mCallService.placeCall(accountId, StringUtils.toNumber(contactRingId), audioOnly);
         if (mSipCall == null) {
             finish();
             return;
         }
-        mHasVideo = hasVideo;
         confUpdate();
         getContactDetails();
         getView().blockScreenRotation();
@@ -123,7 +122,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
             finish();
             return;
         }
-        mHasVideo = true;
+        mAudioOnly = mSipCall.isAudioOnly();
         confUpdate();
         getContactDetails();
         getView().blockScreenRotation();
@@ -133,7 +132,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         boolean isSpeakerOn = mHardwareService.isSpeakerPhoneOn();
         boolean hasContact = mSipCall != null && null != mSipCall.getContact() && mSipCall.getContact().isUnknown();
         boolean canDial = mOnGoingCall && mSipCall != null && !mSipCall.isIncoming();
-        boolean hasMultipleCamera = mHardwareService.getCameraCount() > 1 && mOnGoingCall && mHasVideo;
+        boolean hasMultipleCamera = mHardwareService.getCameraCount() > 1 && mOnGoingCall && !mAudioOnly;
         getView().initMenu(isSpeakerOn, hasContact, hasMultipleCamera, canDial, mOnGoingCall);
     }
 
@@ -248,9 +247,9 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         }
         if (mSipCall.isOnGoing()) {
             mOnGoingCall = true;
-            getView().initNormalStateDisplay(mHasVideo);
+            getView().initNormalStateDisplay(mAudioOnly);
             getView().updateContactBubble(mSipCall.getContact());
-            if (mHasVideo) {
+            if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
                 getView().displayVideoSurface(true);
             }

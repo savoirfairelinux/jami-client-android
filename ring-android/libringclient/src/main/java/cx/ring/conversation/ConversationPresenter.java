@@ -171,7 +171,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         }
     }
 
-    public void callWithVideo(boolean video) {
+    public void callWithAudioOnly(boolean audioOnly) {
         Conference conf = mConversation.getCurrentCall();
 
         if (conf != null && (conf.getParticipants().get(0).getCallState() == SipCall.State.INACTIVE
@@ -183,7 +183,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         if (conf != null) {
             getView().goToCallActivity(conf.getId());
         } else {
-            getView().goToCallActivityWithResult(mAccountId, mContactRingId, video);
+            getView().goToCallActivityWithResult(mAccountId, mContactRingId, audioOnly);
         }
     }
 

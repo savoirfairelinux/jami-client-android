@@ -27,7 +27,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
 import cx.ring.BuildConfig;
@@ -38,7 +37,6 @@ import cx.ring.services.NotificationService;
 
 public class CallActivity extends AppCompatActivity {
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
-    public static final String KEY_CALL_VIDEO = "CALL_VIDEO";
 
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
@@ -70,7 +68,7 @@ public class CallActivity extends AppCompatActivity {
         String action = getIntent().getAction();
         if (Intent.ACTION_CALL.equals(action) || ACTION_CALL.equals(action)) {
 
-            boolean hasVideo = getIntent().getBooleanExtra(KEY_CALL_VIDEO, false);
+            boolean audioOnly = getIntent().getBooleanExtra(CallFragment.KEY_AUDIO_ONLY, true);
             String accountId = getIntent().getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
             String contactRingId = getIntent().getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
 
@@ -80,7 +78,7 @@ public class CallActivity extends AppCompatActivity {
             CallFragment callFragment = CallFragment.newInstance(CallFragment.ACTION_PLACE_CALL,
                     accountId,
                     contactRingId,
-                    hasVideo);
+                    audioOnly);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
 
         } else if (Intent.ACTION_VIEW.equals(action)) {

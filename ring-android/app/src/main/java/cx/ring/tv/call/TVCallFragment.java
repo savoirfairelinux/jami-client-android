@@ -66,7 +66,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     public static final String KEY_ACCOUNT_ID = "accountId";
     public static final String KEY_CONF_ID = "confId";
     public static final String KEY_CONTACT_RING_ID = "CONTACT_RING_ID";
-    public static final String KEY_HAS_VIDEO = "hasVideo";
+    public static final String KEY_AUDIO_ONLY = "AUDIO_ONLY";
 
     @BindView(R.id.contact_bubble_layout)
     protected View contactBubbleLayout;
@@ -107,12 +107,12 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     // Screen wake lock for incoming call
     private PowerManager.WakeLock mScreenWakeLock;
 
-    public static TVCallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean hasVideo) {
+    public static TVCallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean audioOnly) {
         Bundle bundle = new Bundle();
         bundle.putString(KEY_ACTION, action);
         bundle.putString(KEY_ACCOUNT_ID, accountID);
         bundle.putSerializable(KEY_CONTACT_RING_ID, contactRingId);
-        bundle.putBoolean(KEY_HAS_VIDEO, hasVideo);
+        bundle.putBoolean(KEY_AUDIO_ONLY, audioOnly);
         TVCallFragment countDownFragment = new TVCallFragment();
         countDownFragment.setArguments(bundle);
         return countDownFragment;
@@ -163,7 +163,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         if (action.equals(ACTION_PLACE_CALL)) {
             presenter.initOutGoing(getArguments().getString(KEY_ACCOUNT_ID),
                     getArguments().getString(KEY_CONTACT_RING_ID),
-                    getArguments().getBoolean(KEY_HAS_VIDEO));
+                    getArguments().getBoolean(KEY_AUDIO_ONLY));
         } else if (action.equals(ACTION_GET_CALL)) {
             presenter.initIncoming(getArguments().getString(KEY_CONF_ID));
         }
@@ -374,7 +374,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
-    public void initNormalStateDisplay(final boolean hasVideo) {
+    public void initNormalStateDisplay(final boolean audioOnly) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -382,7 +382,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
                 refuseButton.setVisibility(View.GONE);
                 hangupButton.setVisibility(View.VISIBLE);
 
-                contactBubbleLayout.setVisibility(hasVideo ? View.INVISIBLE : View.VISIBLE);
+                contactBubbleLayout.setVisibility(audioOnly ? View.INVISIBLE : View.VISIBLE);
 
                 getActivity().invalidateOptionsMenu();
             }
