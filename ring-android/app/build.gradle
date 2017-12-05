@@ -4,7 +4,8 @@ def android_support_version = "27.0.0"
 
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
-    compile project(':libringclient')
+
+    compile project (":libringclient")
 
     compile "com.android.support:support-v13:$android_support_version"
     compile "com.android.support:design:$android_support_version"
