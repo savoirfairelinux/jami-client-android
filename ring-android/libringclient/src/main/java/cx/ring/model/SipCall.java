@@ -32,6 +32,16 @@ import cx.ring.utils.VCardUtils;
 import ezvcard.Ezvcard;
 
 public class SipCall {
+
+    public final static String KEY_AUDIO_ONLY = "AUDIO_ONLY";
+    public final static String KEY_CALL_TYPE = "CALL_TYPE";
+    public final static String KEY_CALL_STATE = "CALL_STATE";
+    public final static String KEY_PEER_NUMBER = "PEER_NUMBER";
+    public final static String KEY_PEER_HOLDING = "PEER_HOLDING";
+    public final static String KEY_AUDIO_MUTED = "PEER_NUMBER";
+    public final static String KEY_VIDEO_MUTED = "VIDEO_MUTED";
+    public final static String KEY_VIDEO_SOURCE = "VIDEO_SOURCE";
+
     private static final String TAG = SipCall.class.getSimpleName();
 
     private final String mCallID;
@@ -42,6 +52,7 @@ public class SipCall {
     private boolean isAudioMuted = false;
     private boolean isVideoMuted = false;
     private boolean isRecording = false;
+    private boolean isAudioOnly = false;
     private long timestampStart = 0;
     private long timestampEnd = 0;
     private boolean missed = true;
@@ -88,9 +99,9 @@ public class SipCall {
     public SipCall(String callId, Map<String, String> call_details) {
         this(callId,
                 call_details.get("ACCOUNTID"),
-                call_details.get("PEER_NUMBER"),
-                Integer.parseInt(call_details.get("CALL_TYPE")));
-        mCallState = stateFromString(call_details.get("CALL_STATE"));
+                call_details.get(KEY_PEER_NUMBER),
+                Integer.parseInt(call_details.get(KEY_CALL_TYPE)));
+        mCallState = stateFromString(call_details.get(KEY_CALL_STATE));
         setDetails(call_details);
     }
 
@@ -108,10 +119,11 @@ public class SipCall {
     }
 
     public void setDetails(Map<String, String> details) {
-        isPeerHolding = "true".equals(details.get("PEER_HOLDING"));
-        isAudioMuted = "true".equals(details.get("AUDIO_MUTED"));
-        isVideoMuted = "true".equals(details.get("VIDEO_MUTED"));
-        videoSource = details.get("VIDEO_SOURCE");
+        isPeerHolding = "true".equals(details.get(KEY_PEER_HOLDING));
+        isAudioMuted = "true".equals(details.get(KEY_AUDIO_MUTED));
+        isVideoMuted = "true".equals(details.get(KEY_VIDEO_MUTED));
+        isAudioOnly = "true".equals(details.get(KEY_AUDIO_ONLY));
+        videoSource = details.get(KEY_VIDEO_SOURCE);
     }
 
     public long getDuration() {
@@ -198,6 +210,14 @@ public class SipCall {
 
     public void setNumber(Uri n) {
         mNumber = n;
+    }
+
+    public boolean isAudioOnly() {
+        return isAudioOnly;
+    }
+
+    public void setAudioOnly(boolean audioOnly) {
+        isAudioOnly = audioOnly;
     }
 
     public String getNumber() {
@@ -319,7 +339,7 @@ public class SipCall {
 
     public boolean appendToVCard(String from, StringMap messages) {
         StringVect keys = messages.keys();
-        for (int i=0, n=keys.size(); i<n; i++) {
+        for (int i = 0, n = keys.size(); i < n; i++) {
             String key = keys.get(i);
             HashMap<String, String> messageKeyValue = VCardUtils.parseMimeAttributes(key);
             String mimeType = messageKeyValue.get(VCardUtils.VCARD_KEY_MIME_TYPE);

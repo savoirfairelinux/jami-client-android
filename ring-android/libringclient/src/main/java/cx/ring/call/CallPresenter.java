@@ -33,7 +33,6 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
-import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
@@ -123,7 +122,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
             finish();
             return;
         }
-        mHasVideo = true;
+        mHasVideo = !mSipCall.isAudioOnly();
         confUpdate();
         getContactDetails();
         getView().blockScreenRotation();

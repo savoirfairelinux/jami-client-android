@@ -78,7 +78,11 @@ public class CallService extends Observable {
                     @Override
                     public SipCall call() throws Exception {
                         Log.i(TAG, "placeCall() thread running... " + number + " video: " + video);
-                        String callId = Ringservice.placeCall(account, number);
+
+                        HashMap<String, String> volatileDetails = new HashMap<>();
+                        volatileDetails.put(SipCall.KEY_AUDIO_ONLY, String.valueOf(!video));
+
+                        String callId = Ringservice.placeCall(account, number, StringMap.toSwig(volatileDetails));
                         if (callId == null || callId.isEmpty())
                             return null;
                         if (!video) {
