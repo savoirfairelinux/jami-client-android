@@ -149,6 +149,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             txtMessage.read();
             mHistoryService.insertNewTextMessage(txtMessage);
             mConversation.addTextMessage(txtMessage);
+
+            if (mContactService.getContact(new Uri(mContactRingId)).getStatus() == CallContact.Status.NO_REQUEST) {
+                getView().loadVcard(mAccountId);
+            }
+
             getView().refreshView(mConversation);
         }
     }
