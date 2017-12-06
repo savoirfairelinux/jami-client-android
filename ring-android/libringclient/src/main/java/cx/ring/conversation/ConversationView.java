@@ -56,4 +56,6 @@ public interface ConversationView {
     void goToCallActivity(String conferenceId);
 
     void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly);
+
+    void loadVcard(String accountId);
 }
