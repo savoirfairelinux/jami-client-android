@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.IBinder;
@@ -182,9 +183,13 @@ public class RingApplication extends Application {
                             mPresenceCallbackHandler,
                             mHardwareCallbackHandler);
 
-                    if (mDeviceRuntimeService.hasVideoPermission()) {
+                    // Check if the camera hardware feature is available.
+                    if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA) && mDeviceRuntimeService.hasVideoPermission()) {
                         //initVideo is called here to give time to the application to initialize hardware cameras
+                        Log.d(TAG, "At least one camera available. Initializing video...");
                         mHardwareService.initVideo();
+                    } else {
+                        Log.d(TAG, "No camera available");
                     }
 
                     ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
