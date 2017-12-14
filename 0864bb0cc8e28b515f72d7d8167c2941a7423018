@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a42497e_93a65dc0",
+        "filename": "ring-android/app/src/main/res/layout/frag_acc_profile_create.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2017-12-14T16:20:09Z",
+      "side": 1,
+      "message": "layout_centerHorizontal devrait suffire vu que le layout_height est à match_parent",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 37
+      },
+      "revId": "0864bb0cc8e28b515f72d7d8167c2941a7423018",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
