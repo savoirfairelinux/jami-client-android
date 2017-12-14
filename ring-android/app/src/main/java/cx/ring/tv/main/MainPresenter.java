@@ -30,11 +30,13 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.CustomError;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
+import cx.ring.services.HardwareService;
 import cx.ring.services.PresenceService;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.Observable;
@@ -46,27 +48,25 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     private static final String TAG = MainPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
-
     private ConversationFacade mConversationFacade;
-
     private ContactService mContactService;
-
     private PresenceService mPresenceService;
-
+    private HardwareService mHardwareService;
     private ExecutorService mExecutor;
-
     private ArrayList<Conversation> mConversations;
 
     @Inject
     public MainPresenter(AccountService accountService,
                          ContactService contactService,
                          PresenceService presenceService,
+                         HardwareService hardwareService,
                          @Named("ApplicationExecutor") ExecutorService executor,
                          ConversationFacade conversationfacade) {
         mAccountService = accountService;
         mContactService = contactService;
         mPresenceService = presenceService;
         mConversationFacade = conversationfacade;
+        this.mHardwareService = hardwareService;
         mExecutor = executor;
         mConversations = new ArrayList<>();
     }
@@ -154,6 +154,11 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     }
 
     public void contactClicked(TVListViewModel item) {
+        if (!mHardwareService.hasMicrophone()) {
+            getView().displayErrorToast(CustomError.NO_MICROPHONE);
+            return;
+        }
+
         String accountID = mAccountService.getCurrentAccount().getAccountID();
 
         String ringID = item.getCallContact().getPhones().get(0).getNumber().toString();

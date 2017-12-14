@@ -65,6 +65,8 @@ public abstract class HardwareService extends Observable {
 
     public abstract void startCapture(String camId);
 
+    public abstract boolean hasMicrophone();
+
     public abstract void stopCapture();
 
     public abstract void addVideoSurface(String id, Object holder);

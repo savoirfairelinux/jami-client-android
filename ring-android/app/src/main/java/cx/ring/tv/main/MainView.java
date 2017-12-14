@@ -21,6 +21,7 @@ package cx.ring.tv.main;
 
 import java.util.ArrayList;
 
+import cx.ring.model.CustomError;
 import cx.ring.tv.model.TVListViewModel;
 
 public interface MainView {
@@ -32,6 +33,8 @@ public interface MainView {
     void showContacts(ArrayList<TVListViewModel> contacts);
 
     void callContact(String accountID, String ringID);
+
+    void displayErrorToast(CustomError error);
 
     void displayAccountInfos(String address);
 

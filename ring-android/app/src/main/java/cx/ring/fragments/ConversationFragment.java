@@ -38,6 +38,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 
@@ -55,6 +56,7 @@ import cx.ring.conversation.ConversationView;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.CustomError;
 import cx.ring.model.Phone;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
@@ -195,6 +197,19 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         });
 
         builder.show();
+    }
+
+    @Override
+    public void displayErrorToast(CustomError error) {
+        String errorString = "";
+        switch (error) {
+            case NO_MICROPHONE:
+                errorString = getString(R.string.call_error_no_microphone);
+                break;
+        }
+
+        Toast toast = Toast.makeText(getActivity(), errorString, Toast.LENGTH_LONG);
+        toast.show();
     }
 
     @OnClick(R.id.msg_send)

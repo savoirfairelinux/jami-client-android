@@ -20,6 +20,7 @@
 package cx.ring.tv.search;
 
 import cx.ring.model.CallContact;
+import cx.ring.model.CustomError;
 import cx.ring.model.Uri;
 
 public interface RingSearchView {
@@ -27,6 +28,8 @@ public interface RingSearchView {
     void displayContact(CallContact contact);
 
     void clearSearch();
+
+    void displayErrorToast(CustomError error);
 
     void startCall(String accountID, String number);
 }
