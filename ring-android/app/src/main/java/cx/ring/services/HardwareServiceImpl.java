@@ -75,18 +75,28 @@ public class HardwareServiceImpl extends HardwareService {
         Log.i(TAG, "initVideo()");
         mNativeParams.clear();
         int numberCameras = Camera.getNumberOfCameras();
-        Camera.CameraInfo camInfo = new Camera.CameraInfo();
-        for (int i = 0; i < numberCameras; i++) {
-            addVideoDevice(Integer.toString(i));
-            Camera.getCameraInfo(i, camInfo);
-            if (camInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                cameraFront = i;
-            } else {
-                cameraBack = i;
+        if (numberCameras > 0) {
+            Camera.CameraInfo camInfo = new Camera.CameraInfo();
+            for (int i = 0; i < numberCameras; i++) {
+                addVideoDevice(Integer.toString(i));
+                Camera.getCameraInfo(i, camInfo);
+                if (camInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                    cameraFront = i;
+                } else {
+                    cameraBack = i;
+                }
             }
+            currentCamera = cameraFront;
+            setDefaultVideoDevice(Integer.toString(cameraFront));
+        } else {
+            Log.w(TAG, "initVideo: No camera available");
+            currentCamera = -1;
+            cameraFront = -1;
         }
-        currentCamera = cameraFront;
-        setDefaultVideoDevice(Integer.toString(cameraFront));
+    }
+
+    public boolean isVideoAvailable() {
+        return mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA) || Camera.getNumberOfCameras() > 0;
     }
 
     public boolean hasMicrophone() {
