@@ -23,10 +23,12 @@ import javax.inject.Inject;
 
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
+import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.services.HardwareService;
 import cx.ring.utils.NameLookupInputHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -36,15 +38,18 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> implement
 
     private static final String TAG = RingSearchPresenter.class.getSimpleName();
 
-    AccountService mAccountService;
+    private AccountService mAccountService;
+    private HardwareService mHardwareService;
 
     private NameLookupInputHandler mNameLookupInputHandler;
     private String mLastBlockchainQuery = null;
     private CallContact mCallContact;
 
     @Inject
-    public RingSearchPresenter(AccountService accountService) {
+    public RingSearchPresenter(AccountService accountService,
+                               HardwareService hardwareService) {
         this.mAccountService = accountService;
+        this.mHardwareService = hardwareService;
     }
 
     @Override
@@ -145,6 +150,11 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> implement
     }
 
     public void contactClicked(CallContact contact) {
+        if (!mHardwareService.hasMicrophone()) {
+            getView().displayErrorToast(RingError.NO_MICROPHONE);
+            return;
+        }
+
         getView().startCall(mAccountService.getCurrentAccount().getAccountID(), contact.getPhones().get(0).getNumber().toString());
     }
 }

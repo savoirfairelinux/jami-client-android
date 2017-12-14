@@ -34,6 +34,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryText;
 import cx.ring.model.Phone;
+import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
@@ -43,6 +44,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.PreferencesService;
 import cx.ring.services.PresenceService;
@@ -71,6 +73,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     private PreferencesService mPreferencesService;
     private PresenceService mPresenceService;
     private DeviceRuntimeService mDeviceRuntimeService;
+    private HardwareService mHardwareService;
     private CallService mCallService;
     private Scheduler mMainScheduler;
 
@@ -86,7 +89,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                               HistoryService historyService,
                               PresenceService presenceService, PreferencesService sharedPreferencesService,
                               DeviceRuntimeService deviceRuntimeService, CallService callService,
-                              Scheduler mainScheduler) {
+                              Scheduler mainScheduler, HardwareService hardwareService) {
         this.mAccountService = accountService;
         this.mContactService = contactService;
         this.mHistoryService = historyService;
@@ -95,6 +98,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         this.mDeviceRuntimeService = deviceRuntimeService;
         this.mCallService = callService;
         this.mMainScheduler = mainScheduler;
+        this.mHardwareService = hardwareService;
     }
 
     @Override
@@ -207,6 +211,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
                 getView().displayChooseNumberDialog(numbers);
             } else {
+                if (!mHardwareService.hasMicrophone()) {
+                    getView().displayErrorToast(RingError.NO_MICROPHONE);
+                    return;
+                }
+
                 getView().goToCallActivity(mAccountService.getCurrentAccount().getAccountID(),
                         mCallContact.getPhones().get(0).getNumber().getRawUriString());
             }

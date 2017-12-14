@@ -22,9 +22,9 @@ package cx.ring.smartlist;
 import java.util.ArrayList;
 
 import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
+import cx.ring.mvp.BaseView;
 
-public interface SmartListView {
+public interface SmartListView extends BaseView {
 
     void displayNetworkErrorPanel();
 
@@ -39,6 +39,7 @@ public interface SmartListView {
     void displayConversationDialog(SmartListViewModel smartListViewModel);
 
     void displayDeleteDialog(CallContact callContact);
+
 
     void copyNumber(CallContact callContact);
 

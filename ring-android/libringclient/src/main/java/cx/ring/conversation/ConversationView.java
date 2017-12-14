@@ -22,8 +22,9 @@ package cx.ring.conversation;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.Uri;
+import cx.ring.mvp.BaseView;
 
-public interface ConversationView {
+public interface ConversationView extends BaseView {
 
     void refreshView(Conversation conversation);
 
@@ -44,6 +45,8 @@ public interface ConversationView {
     void displayCopyToClipboard(CallContact callContact);
 
     void displaySendTrustRequest(String accountId);
+
+    void displayErrorToast(int error);
 
     void hideNumberSpinner();
 
