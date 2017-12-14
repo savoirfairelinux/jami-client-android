@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a42497e_96ee4b21",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2017-12-14T21:14:21Z",
+      "side": 1,
+      "message": "Since there\u0027s no \"default\", could it be a \"if\" instead of a \"switch\"?",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 220,
+        "endChar": 9
+      },
+      "revId": "79f8135a30b3081f61e77b28bbfe8ce62d625e4d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_f6f34f08",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2017-12-14T21:14:21Z",
+      "side": 1,
+      "message": "Toast.makeText(...).show() is quite common and do not add an extra variable",
+      "range": {
+        "startLine": 222,
+        "startChar": 8,
+        "endLine": 223,
+        "endChar": 21
+      },
+      "revId": "79f8135a30b3081f61e77b28bbfe8ce62d625e4d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_36c49791",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2017-12-14T21:14:21Z",
+      "side": 1,
+      "message": "rename to hasIntegratedMicrophone?",
+      "range": {
+        "startLine": 94,
+        "startChar": 16,
+        "endLine": 94,
+        "endChar": 36
+      },
+      "revId": "79f8135a30b3081f61e77b28bbfe8ce62d625e4d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_56c5e359",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2017-12-14T21:14:21Z",
+      "side": 1,
+      "message": "Triggered even if hasPackageMicrophone is true. May not be required",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 27
+      },
+      "revId": "79f8135a30b3081f61e77b28bbfe8ce62d625e4d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_16cb5b73",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/CustomError.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2017-12-14T21:14:21Z",
+      "side": 1,
+      "message": "Rename to ExternalInputDeviceError?",
+      "range": {
+        "startLine": 7,
+        "startChar": 12,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "79f8135a30b3081f61e77b28bbfe8ce62d625e4d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_d6b9f3ea",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/CustomError.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2017-12-14T21:14:21Z",
+      "side": 1,
+      "message": "Enums are not very efficient on Android.\nSomething like :\n\npublic class CustomError {\n  public static int NO_MICROPHONE \u003d 1;\n}\n\ncould be better.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "79f8135a30b3081f61e77b28bbfe8ce62d625e4d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
