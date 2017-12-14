@@ -103,8 +103,14 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         mHardwareService.addObserver(this);
     }
 
+
     public void initOutGoing(String accountId, String contactRingId, boolean audioOnly) {
+
         mAudioOnly = audioOnly;
+        if (mHardwareService.getCameraCount() == 0) {
+            mAudioOnly = true;
+        }
+
         mSipCall = mCallService.placeCall(accountId, StringUtils.toNumber(contactRingId), audioOnly);
         if (mSipCall == null) {
             finish();

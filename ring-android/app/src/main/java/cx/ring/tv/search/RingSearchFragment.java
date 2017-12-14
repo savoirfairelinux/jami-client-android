@@ -34,6 +34,7 @@ import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v17.leanback.widget.SearchEditText;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +42,7 @@ import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.model.CallContact;
+import cx.ring.model.CustomError;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.cards.Card;
 import cx.ring.tv.cards.CardPresenterSelector;
@@ -142,6 +144,19 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         intent.putExtra("ringId", number);
         getActivity().startActivity(intent, null);
         getActivity().finish();
+    }
+
+    @Override
+    public void displayErrorToast(CustomError error) {
+        String errorString = "";
+        switch (error) {
+            case NO_MICROPHONE:
+                errorString = getString(R.string.call_error_no_microphone);
+                break;
+        }
+
+        Toast toast = Toast.makeText(getActivity(), errorString, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
