@@ -72,6 +72,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false"/>
+    <uses-feature android:name="android.hardware.usb.host"
+        android:required="false"/>
 
     <application
         android:name=".application.RingApplication"
@@ -258,9 +260,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".tv.account.TVAccountWizard"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-
             android:screenOrientation="fullUser"
-            android:theme="@style/AppThemeBase" />
+            android:theme="@style/AppThemeBase" >
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name="cx.ring.tv.search.SearchActivity"
