@@ -89,7 +89,7 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
     }
 
     public void cameraPermissionChanged(boolean isGranted) {
-        if (isGranted) {
+        if (isGranted && mHardwareService.isVideoAvailable()) {
             mHardwareService.initVideo();
         }
     }
