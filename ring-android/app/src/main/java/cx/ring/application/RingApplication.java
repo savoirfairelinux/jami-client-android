@@ -182,9 +182,13 @@ public class RingApplication extends Application {
                             mPresenceCallbackHandler,
                             mHardwareCallbackHandler);
 
-                    if (mDeviceRuntimeService.hasVideoPermission()) {
+                    // Check if the camera hardware feature is available.
+                    if (mDeviceRuntimeService.hasVideoPermission() && mHardwareService.isVideoAvailable()) {
                         //initVideo is called here to give time to the application to initialize hardware cameras
+                        Log.d(TAG, "At least one camera available. Initializing video...");
                         mHardwareService.initVideo();
+                    } else {
+                        Log.d(TAG, "No camera available");
                     }
 
                     ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
