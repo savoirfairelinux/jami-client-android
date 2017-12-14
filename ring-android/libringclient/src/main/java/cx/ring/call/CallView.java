@@ -21,7 +21,7 @@ package cx.ring.call;
 
 import cx.ring.model.CallContact;
 
-public interface CallView  {
+public interface CallView {
 
     void blockScreenRotation();
 

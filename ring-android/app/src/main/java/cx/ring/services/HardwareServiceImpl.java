@@ -20,11 +20,13 @@
 package cx.ring.services;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.ImageFormat;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.media.AudioManager;
+import android.media.MediaRecorder;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.LongSparseArray;
@@ -32,6 +34,7 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Collections;
@@ -84,6 +87,29 @@ public class HardwareServiceImpl extends HardwareService {
         }
         currentCamera = cameraFront;
         setDefaultVideoDevice(Integer.toString(cameraFront));
+    }
+
+    public boolean hasMicrophone() {
+        PackageManager pm = mContext.getPackageManager();
+        boolean hasMicrophone = pm.hasSystemFeature(PackageManager.FEATURE_MICROPHONE);
+
+        if (!hasMicrophone) {
+            MediaRecorder recorder = new MediaRecorder();
+            recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+            recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+            recorder.setOutputFile(new File(mContext.getCacheDir(), "MediaUtil#micAvailTestFile").getAbsolutePath());
+            try {
+                recorder.prepare();
+                recorder.start();
+                hasMicrophone = true;
+            } catch (Exception exception) {
+                hasMicrophone = false;
+            }
+            recorder.release();
+        }
+
+        return hasMicrophone;
     }
 
     @Override

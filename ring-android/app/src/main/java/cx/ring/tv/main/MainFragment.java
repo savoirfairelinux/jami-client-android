@@ -28,12 +28,14 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.model.RingError;
 import cx.ring.tv.about.AboutActivity;
 import cx.ring.tv.account.TVAccountExport;
 import cx.ring.tv.call.TVCallActivity;

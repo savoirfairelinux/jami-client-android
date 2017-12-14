@@ -38,6 +38,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 
@@ -56,6 +57,7 @@ import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
+import cx.ring.model.RingError;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.services.NotificationService;

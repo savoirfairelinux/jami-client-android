@@ -22,12 +22,16 @@ package cx.ring.tv.main;
 import android.os.Bundle;
 import android.support.v17.leanback.app.BrowseFragment;
 import android.view.View;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
+import cx.ring.R;
+import cx.ring.model.RingError;
+import cx.ring.mvp.BaseView;
 import cx.ring.mvp.RootPresenter;
 
-public class BaseBrowseFragment<T extends RootPresenter> extends BrowseFragment {
+public class BaseBrowseFragment<T extends RootPresenter> extends BrowseFragment implements BaseView {
 
     protected static final String TAG = BaseBrowseFragment.class.getSimpleName();
 
@@ -47,6 +51,20 @@ public class BaseBrowseFragment<T extends RootPresenter> extends BrowseFragment 
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unbindView();
+    }
+
+    public void displayErrorToast(int error) {
+        String errorString;
+        switch (error) {
+            case RingError.NO_MICROPHONE:
+                errorString = getString(R.string.call_error_no_microphone);
+                break;
+            default:
+                errorString = getString(R.string.generic_error);
+                break;
+        }
+
+        Toast.makeText(getActivity(), errorString, Toast.LENGTH_LONG).show();
     }
 
     protected void initPresenter(T presenter) {

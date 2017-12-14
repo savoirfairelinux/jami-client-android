@@ -20,13 +20,15 @@
 package cx.ring.tv.search;
 
 import cx.ring.model.CallContact;
-import cx.ring.model.Uri;
+import cx.ring.model.RingError;
 
 public interface RingSearchView {
 
     void displayContact(CallContact contact);
 
     void clearSearch();
+
+    void displayErrorToast(int error);
 
     void startCall(String accountID, String number);
 }

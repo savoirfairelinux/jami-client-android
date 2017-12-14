@@ -34,6 +34,7 @@ import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v17.leanback.widget.SearchEditText;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +42,7 @@ import butterknife.Unbinder;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.model.CallContact;
+import cx.ring.model.RingError;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.cards.Card;
 import cx.ring.tv.cards.CardPresenterSelector;

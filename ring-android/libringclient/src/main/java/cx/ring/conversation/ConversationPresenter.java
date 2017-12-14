@@ -28,6 +28,7 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.RingError;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryText;
 import cx.ring.model.ServiceEvent;
@@ -38,6 +39,7 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
+import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
@@ -58,6 +60,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     private AccountService mAccountService;
     private HistoryService mHistoryService;
     private NotificationService mNotificationService;
+    private HardwareService mHardwareService;
     private ConversationFacade mConversationFacade;
     private CallService mCallService;
     private Scheduler mMainScheduler;
@@ -74,6 +77,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                                  HistoryService mHistoryService,
                                  CallService callService,
                                  NotificationService notificationService,
+                                 HardwareService hardwareService,
                                  ConversationFacade conversationFacade,
                                  Scheduler mainScheduler) {
         this.mContactService = mContactService;
@@ -82,6 +86,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         this.mCallService = callService;
         this.mMainScheduler = mainScheduler;
         this.mNotificationService = notificationService;
+        this.mHardwareService = hardwareService;
         this.mConversationFacade = conversationFacade;
     }
 
@@ -172,6 +177,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     public void callWithAudioOnly(boolean audioOnly) {
+        if (!mHardwareService.hasMicrophone()) {
+            getView().displayErrorToast(RingError.NO_MICROPHONE);
+            return;
+        }
+
         Conference conf = mConversation.getCurrentCall();
 
         if (conf != null && (conf.getParticipants().get(0).getCallState() == SipCall.State.INACTIVE

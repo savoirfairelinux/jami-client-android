@@ -21,13 +21,18 @@ package cx.ring.tv.search;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
+import cx.ring.R;
+import cx.ring.model.RingError;
+import cx.ring.mvp.BaseView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.utils.Log;
 
-public class BaseSearchFragment<T extends RootPresenter> extends android.support.v17.leanback.app.SearchFragment {
+public class BaseSearchFragment<T extends RootPresenter> extends android.support.v17.leanback.app.SearchFragment
+        implements BaseView {
 
     protected static final String TAG = BaseSearchFragment.class.getSimpleName();
 
@@ -48,6 +53,21 @@ public class BaseSearchFragment<T extends RootPresenter> extends android.support
         Log.d(TAG, "onDestroyView");
         super.onDestroyView();
         presenter.unbindView();
+    }
+
+    @Override
+    public void displayErrorToast(int error) {
+        String errorString;
+        switch (error) {
+            case RingError.NO_MICROPHONE:
+                errorString = getString(R.string.call_error_no_microphone);
+                break;
+            default:
+                errorString = getString(R.string.generic_error);
+                break;
+        }
+
+        Toast.makeText(getActivity(), errorString, Toast.LENGTH_LONG).show();
     }
 
     protected void initPresenter(T presenter) {
