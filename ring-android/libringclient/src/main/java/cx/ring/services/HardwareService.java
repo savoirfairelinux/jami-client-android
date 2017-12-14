@@ -51,6 +51,8 @@ public abstract class HardwareService extends Observable {
 
     public abstract void initVideo();
 
+    public abstract boolean isVideoAvailable();
+
     public abstract boolean isSpeakerPhoneOn();
 
     public abstract void switchSpeakerPhone();

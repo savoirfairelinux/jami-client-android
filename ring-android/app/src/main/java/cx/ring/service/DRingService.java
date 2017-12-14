@@ -34,6 +34,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
+import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -496,12 +497,22 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "BroadcastReceiver onReceive " + intent.getAction());
-            switch (intent.getAction()) {
+            String action = intent.getAction();
+            if (action == null) {
+                Log.w(TAG, "onReceive: received a null action on broadcast receiver");
+                return;
+            }
+            Log.d(TAG, "BroadcastReceiver onReceive " + action);
+            switch (action) {
                 case PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED:
                 case ConnectivityManager.CONNECTIVITY_ACTION:
                 case RingApplication.DRING_CONNECTION_CHANGED: {
                     updateConnectivityState();
+                    break;
+                }
+                case UsbManager.ACTION_USB_DEVICE_ATTACHED:
+                case UsbManager.ACTION_USB_DEVICE_DETACHED: {
+                    mHardwareService.initVideo();
                     break;
                 }
             }
@@ -530,6 +541,8 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             intentFilter.addAction(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED);
         }
+        intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
+        intentFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
         registerReceiver(receiver, intentFilter);
         updateConnectivityState();
 
