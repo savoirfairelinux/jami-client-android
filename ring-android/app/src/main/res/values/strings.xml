@@ -214,4 +214,6 @@ along with this program; if not, write to the Free Software
     <string name="gallery_error_title">No Gallery app found</string>
     <string name="gallery_error_message">No application found on device to open Gallery</string>
 
+    <string name="generic_error">An unknown error occurred</string>
+
 </resources>

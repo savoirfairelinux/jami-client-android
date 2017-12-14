@@ -28,6 +28,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -37,9 +38,10 @@ import cx.ring.R;
 import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.application.RingApplication;
 import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.model.RingError;
 import cx.ring.utils.Log;
 
-public abstract class BaseFragment<T extends RootPresenter> extends Fragment {
+public abstract class BaseFragment<T extends RootPresenter> extends Fragment implements BaseView {
 
     protected static final String TAG = BaseFragment.class.getSimpleName();
 
@@ -80,6 +82,20 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment {
         presenter.unbindView();
         // Butterknife unbinding
         mUnbinder.unbind();
+    }
+
+    public void displayErrorToast(int error) {
+        String errorString;
+        switch (error) {
+            case RingError.NO_MICROPHONE:
+                errorString = getString(R.string.call_error_no_microphone);
+                break;
+            default:
+                errorString = getString(R.string.generic_error);
+                break;
+        }
+
+        Toast.makeText(getActivity(), errorString, Toast.LENGTH_LONG).show();
     }
 
     protected void initPresenter(T presenter) {

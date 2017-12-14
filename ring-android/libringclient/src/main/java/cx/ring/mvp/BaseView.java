@@ -1,7 +1,9 @@
+package cx.ring.mvp;
+
 /*
  *  Copyright (C) 2017 Savoir-faire Linux Inc.
  *
- *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,18 +19,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.tv.search;
 
-import cx.ring.model.CallContact;
-import cx.ring.model.RingError;
-
-public interface RingSearchView {
-
-    void displayContact(CallContact contact);
-
-    void clearSearch();
+public interface BaseView {
 
     void displayErrorToast(int error);
 
-    void startCall(String accountID, String number);
 }
