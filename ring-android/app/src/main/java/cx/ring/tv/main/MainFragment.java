@@ -28,12 +28,14 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.model.CustomError;
 import cx.ring.tv.about.AboutActivity;
 import cx.ring.tv.account.TVAccountExport;
 import cx.ring.tv.call.TVCallActivity;
@@ -214,6 +216,19 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         intent.putExtra("account", accountID);
         intent.putExtra("ringId", ringID);
         getActivity().startActivity(intent, null);
+    }
+
+    @Override
+    public void displayErrorToast(CustomError error) {
+        String errorString = "";
+        switch (error) {
+            case NO_MICROPHONE:
+                errorString = getString(R.string.call_error_no_microphone);
+                break;
+        }
+
+        Toast toast = Toast.makeText(getActivity(), errorString, Toast.LENGTH_LONG);
+        toast.show();
     }
 
     @Override

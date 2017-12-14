@@ -20,6 +20,7 @@
 package cx.ring.services;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.ImageFormat;
 import android.graphics.Point;
@@ -84,6 +85,11 @@ public class HardwareServiceImpl extends HardwareService {
         }
         currentCamera = cameraFront;
         setDefaultVideoDevice(Integer.toString(cameraFront));
+    }
+
+    public boolean hasMicrophone() {
+        PackageManager pm = mContext.getPackageManager();
+        return pm.hasSystemFeature(PackageManager.FEATURE_MICROPHONE);
     }
 
     @Override
