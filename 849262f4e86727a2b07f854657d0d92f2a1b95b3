@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a42497e_f6834fca",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-12-15T16:16:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a42497e_363f7727",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "849262f4e86727a2b07f854657d0d92f2a1b95b3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a42497e_d63a9335",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-15T15:57:21Z",
       "side": 1,
       "message": "Useless import",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 31
+      },
+      "revId": "849262f4e86727a2b07f854657d0d92f2a1b95b3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_d688d3e9",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-12-15T16:16:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a42497e_d63a9335",
       "range": {
         "startLine": 60,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7a42497e_366db733",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/main/MainFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-12-15T16:16:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a42497e_b61267b2",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "849262f4e86727a2b07f854657d0d92f2a1b95b3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a42497e_564683c0",
         "filename": "ring-android/app/src/main/java/cx/ring/tv/main/MainFragment.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-15T15:57:21Z",
       "side": 1,
       "message": "Useless import",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "849262f4e86727a2b07f854657d0d92f2a1b95b3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_166a3b1a",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/main/MainFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-12-15T16:16:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a42497e_564683c0",
       "range": {
         "startLine": 38,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7a42497e_76773f03",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/search/RingSearchFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-12-15T16:16:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a42497e_96176ba3",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "849262f4e86727a2b07f854657d0d92f2a1b95b3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a42497e_f60cef96",
         "filename": "ring-android/app/src/main/java/cx/ring/tv/search/RingSearchFragment.java",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2017-12-15T15:57:21Z",
       "side": 1,
       "message": "^",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "849262f4e86727a2b07f854657d0d92f2a1b95b3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_5674c3fc",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/search/RingSearchFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-12-15T16:16:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a42497e_f60cef96",
       "range": {
         "startLine": 45,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7a42497e_b660a736",
+        "filename": "ring-android/app/src/main/res/values/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-12-15T16:16:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a42497e_163cfb2e",
+      "range": {
+        "startLine": 217,
+        "startChar": 50,
+        "endLine": 217,
+        "endChar": 57
+      },
+      "revId": "849262f4e86727a2b07f854657d0d92f2a1b95b3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a42497e_d611f3ad",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/model/RingError.java",
         "patchSetId": 4
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "7a42497e_9665ab47",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/RingError.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-12-15T16:16:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a42497e_d611f3ad",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 3
+      },
+      "revId": "849262f4e86727a2b07f854657d0d92f2a1b95b3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a42497e_7649ffcf",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/mvp/BaseView.java",
         "patchSetId": 4
@@ -197,6 +389,30 @@
       "writtenOn": "2017-12-15T15:57:21Z",
       "side": 1,
       "message": "Classic licence header instead?\n\n/*\n *  Copyright (C) 2017 Savoir-faire Linux Inc.\n *\n *  Author: Hadrien De Sousa \u003chadrien.desousa@savoirfairelinux.com\u003e\n *\n *  This program is free software; you can redistribute it and/or modify\n *  it under the terms of the GNU General Public License as published by\n *  the Free Software Foundation; either version 3 of the License, or\n *  (at your option) any later version.\n *\n *  This program is distributed in the hope that it will be useful,\n *  but WITHOUT ANY WARRANTY; without even the implied warranty of\n *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n *  GNU General Public License for more details.\n *\n *  You should have received a copy of the GNU General Public License\n *  along with this program; if not, write to the Free Software\n *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.\n */",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 3
+      },
+      "revId": "849262f4e86727a2b07f854657d0d92f2a1b95b3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_f65a2f82",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/mvp/BaseView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2017-12-15T16:16:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a42497e_7649ffcf",
       "range": {
         "startLine": 3,
         "startChar": 0,
