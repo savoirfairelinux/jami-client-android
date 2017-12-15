@@ -522,6 +522,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         } else {
             Bundle bundle = new Bundle();
             bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+            bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
             ((HomeActivity) getActivity()).startConversationTablet(bundle);
         }
     }
