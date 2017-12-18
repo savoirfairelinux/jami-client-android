@@ -39,4 +39,6 @@ public interface MainView {
     void displayAccountInfos(String address);
 
     void showExportDialog(String pAccountID);
+
+    void showAccountManagement();
 }
