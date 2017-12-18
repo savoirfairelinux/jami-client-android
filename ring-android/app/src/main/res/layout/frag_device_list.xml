@@ -44,7 +44,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:id="@+id/account_alias_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/account_switch"
                     android:layout_toStartOf="@+id/account_switch"
                     android:paddingBottom="8dp"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
@@ -65,8 +64,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:id="@+id/account_switch"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true" />
+                    android:layout_alignParentEnd="true" />
 
             </RelativeLayout>
 
@@ -93,7 +91,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:ellipsize="middle"
                     android:gravity="center_vertical"
-                    android:lines="1"
                     android:paddingBottom="8dp"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
@@ -167,8 +164,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:paddingBottom="16dp"
-                        android:paddingEnd="16dp"
-                        android:paddingRight="16dp"
                         android:paddingTop="4dp"
                         android:text="@string/registered_username" />
 
@@ -180,8 +175,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_gravity="start"
                         android:paddingBottom="16dp"
                         android:paddingEnd="8dp"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="8dp"
                         android:paddingStart="16dp"
                         android:paddingTop="4dp"
                         android:textAlignment="viewStart"

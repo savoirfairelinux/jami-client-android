@@ -11,7 +11,6 @@
         android:layout_height="48dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:scaleType="centerCrop"
         tools:src="@drawable/ic_contact_picture" />
 
@@ -21,7 +20,6 @@
         android:layout_height="48dp"
         android:layout_alignBaseline="@id/photo"
         android:layout_toEndOf="@+id/photo"
-        android:layout_toRightOf="@+id/photo"
         android:gravity="center"
         android:maxLines="1"
         android:singleLine="true"
@@ -37,7 +35,6 @@
         android:layout_height="48dp"
         android:layout_alignBaseline="@id/photo"
         android:layout_toEndOf="@+id/photo"
-        android:layout_toRightOf="@+id/photo"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:visibility="gone">
@@ -58,7 +55,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="middle"
-            android:maxLines="1"
             android:singleLine="true"
             android:textColor="@color/text_color_primary"
             android:textIsSelectable="false"
@@ -72,10 +68,8 @@
         style="@style/ButtonColored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@id/photo"
-        android:drawableLeft="@drawable/ic_action_accept"
         android:drawableStart="@drawable/ic_action_accept"
         android:text="@string/accept" />
 
@@ -86,7 +80,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/photo"
         android:layout_centerHorizontal="true"
-        android:drawableLeft="@drawable/ic_delete_white"
         android:drawableStart="@drawable/ic_delete_white"
         android:text="@string/refuse" />
 
@@ -96,9 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_below="@id/photo"
-        android:drawableLeft="@drawable/ic_close_white"
         android:drawableStart="@drawable/ic_close_white"
         android:text="@string/block" />
 

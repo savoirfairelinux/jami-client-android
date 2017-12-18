@@ -34,13 +34,12 @@ along with this program; if not, write to the Free Software
         android:id="@+id/photo"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:layout_centerVertical="true"
-        android:paddingRight="4dp"
-        android:paddingEnd="4dp"
-        android:paddingBottom="4dp"
+        android:layout_marginEnd="16dp"
         android:background="@null"
+        android:paddingBottom="4dp"
+        android:paddingEnd="4dp"
+        android:paddingStart="0dp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_contact_picture" />
 
@@ -50,22 +49,19 @@ along with this program; if not, write to the Free Software
         android:layout_height="22dp"
         android:layout_alignBottom="@+id/photo"
         android:layout_alignEnd="@+id/photo"
-        android:layout_alignRight="@+id/photo"
         android:src="@drawable/ic_online_indicator" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/photo"
-        android:layout_toRightOf="@+id/photo">
+        android:layout_toEndOf="@+id/photo">
 
         <TextView
             android:id="@+id/conv_participant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/conv_last_time"
             android:layout_toStartOf="@+id/conv_last_time"
             android:ellipsize="marquee"
             android:gravity="start"
@@ -96,7 +92,6 @@ along with this program; if not, write to the Free Software
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/conv_participant"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:textColor="@color/text_color_secondary"
             android:textSize="12sp"
             tools:text="2days ago" />

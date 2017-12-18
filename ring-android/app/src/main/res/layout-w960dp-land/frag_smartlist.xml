@@ -11,7 +11,6 @@
         android:id="@+id/error_msg_pane"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@color/error_pane"
@@ -23,10 +22,9 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_settings_white" />
+            app:srcCompat="@drawable/ic_settings_white" />
 
         <TextView
             android:id="@+id/error_msg_txt"
@@ -73,7 +71,6 @@
             android:id="@+id/confs_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="0dp"
             android:layout_marginStart="0dp"
             android:clipToPadding="false"
             android:divider="@null"
@@ -104,11 +101,11 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_compat_margin"
             android:elevation="6dp"
-            android:src="@drawable/ic_dialpad_white"
             app:backgroundTint="@color/color_primary_light"
             app:elevation="6dp"
             app:pressedTranslationZ="12dp"
-            app:rippleColor="@color/color_primary_dark" />
+            app:rippleColor="@color/color_primary_dark"
+            app:srcCompat="@drawable/ic_dialpad_white" />
 
     </FrameLayout>
 
@@ -116,15 +113,13 @@
         android:id="@+id/separator"
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:background="@color/darker_gray"
-        android:layout_toRightOf="@+id/smartlist_layout"
-        android:layout_toEndOf="@+id/smartlist_layout"/>
+        android:layout_toEndOf="@+id/smartlist_layout"
+        android:background="@color/darker_gray" />
 
     <FrameLayout
         android:id="@+id/conversation_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toRightOf="@+id/separator"
-        android:layout_toEndOf="@+id/separator"/>
+        android:layout_toEndOf="@+id/separator" />
 
 </RelativeLayout>
