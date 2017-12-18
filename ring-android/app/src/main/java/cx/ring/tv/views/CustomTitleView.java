@@ -19,8 +19,11 @@ import android.support.v17.leanback.widget.TitleViewAdapter;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import cx.ring.R;
 
@@ -29,7 +32,7 @@ import cx.ring.R;
  */
 public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.Provider {
     private final TextView mTitleView;
-    private final View mLogoView;
+    private final ImageView mLogoView;
     private final View mSearchOrbView;
 
     private final TitleViewAdapter mTitleViewAdapter = new TitleViewAdapter() {
@@ -73,8 +76,8 @@ public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.
     public CustomTitleView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         View root = LayoutInflater.from(context).inflate(R.layout.tv_titleview, this);
-        mTitleView = (TextView) root.findViewById(R.id.title_text);
-        mLogoView = root.findViewById(R.id.title_badge);
+        mTitleView = root.findViewById(R.id.title_text);
+        mLogoView = root.findViewById(R.id.title_photo_contact);
         mSearchOrbView = root.findViewById(R.id.title_orb);
 
         setClipChildren(false);
@@ -87,6 +90,20 @@ public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.
             mTitleView.setVisibility(View.VISIBLE);
             mLogoView.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void setCurrentAccountPhoto(byte[] photo) {
+        if (photo != null && photo.length > 0) {
+            Glide.with(getContext())
+                    .load(photo)
+                    .error(R.drawable.ic_contact_picture)
+                    .into(mLogoView);
+        } else {
+            Glide.with(getContext())
+                    .load(R.drawable.ic_contact_picture)
+                    .into(mLogoView);
+        }
+        mLogoView.setVisibility(View.VISIBLE);
     }
 
     @Override
