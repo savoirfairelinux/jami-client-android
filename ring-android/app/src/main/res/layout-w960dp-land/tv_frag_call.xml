@@ -17,13 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                tools:context=".tv.call.TVCallActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    tools:context=".tv.call.TVCallActivity">
 
     <SurfaceView
         android:id="@+id/video_preview_surface"
@@ -32,7 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
     <SurfaceView
         android:id="@+id/camera_preview_surface"
@@ -40,10 +40,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_height="120dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_margin="8dp"
         android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/contact_bubble_layout"
@@ -69,7 +68,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_width="160dp"
                 android:layout_height="160dp"
                 android:layout_centerInParent="true"
-                tools:src="@drawable/ic_contact_picture"/>
+                tools:src="@drawable/ic_contact_picture" />
         </com.skyfishjy.library.RippleBackground>
 
         <LinearLayout
@@ -77,10 +76,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:layout_weight="50"
-            android:gravity="center"
-            android:orientation="vertical"
             android:clipChildren="false"
-            android:clipToPadding="false">
+            android:clipToPadding="false"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/contact_bubble_txt"
@@ -92,7 +91,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/text_color_primary_dark"
                 android:transitionName="shared_element"
-                tools:text="Contact Name"/>
+                tools:text="Contact Name" />
 
             <TextView
                 android:id="@+id/contact_bubble_num_txt"
@@ -105,7 +104,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/text_color_secondary_dark"
-                tools:text="ring:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"/>
+                tools:text="ring:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
 
             <TextView
                 android:id="@+id/call_status_txt"
@@ -114,7 +113,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/text_color_primary_dark"
                 android:textSize="16sp"
-                tools:text="Connecting"/>
+                tools:text="Connecting" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -128,11 +127,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:contentDescription="@string/action_call_decline"
-                    android:src="@drawable/ic_call_end_white"
                     app:backgroundTint="@color/error_red"
                     app:elevation="6dp"
                     app:pressedTranslationZ="12dp"
-                    app:rippleColor="@android:color/white"/>
+                    app:rippleColor="@android:color/white"
+                    app:srcCompat="@drawable/ic_call_end_white" />
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/call_accept_btn"
@@ -140,11 +139,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:contentDescription="@string/action_call_accept"
-                    android:src="@drawable/ic_call_white"
                     app:backgroundTint="#4caf50"
                     app:elevation="6dp"
                     app:pressedTranslationZ="12dp"
-                    app:rippleColor="@android:color/white"/>
+                    app:rippleColor="@android:color/white"
+                    app:srcCompat="@drawable/ic_call_white" />
 
 
             </LinearLayout>
@@ -159,9 +158,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_centerHorizontal="true"
         android:layout_margin="16dp"
         android:layout_marginBottom="48dp"
-        android:src="@drawable/ic_call_end_white"
         app:backgroundTint="@color/error_red"
-        app:rippleColor="@android:color/white"/>
+        app:rippleColor="@android:color/white"
+        app:srcCompat="@drawable/ic_call_end_white" />
 
     <EditText
         android:id="@+id/dialpad_edit_text"
@@ -169,6 +168,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="phone"
-        android:visibility="visible"/>
+        android:visibility="visible" />
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="72dp"
@@ -13,10 +14,8 @@
         android:id="@+id/account_alias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/account_disabled"
         android:layout_toStartOf="@+id/account_disabled"
         android:ellipsize="end"
         android:fontFamily="sans-serif-medium"
@@ -32,9 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/account_alias"
         android:layout_alignWithParentIfMissing="true"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_toLeftOf="@+id/loading_indicator"
         android:layout_toStartOf="@+id/loading_indicator"
         android:text="@string/account_disabled_indicator"
         android:textStyle="italic" />
@@ -43,13 +40,10 @@
         android:id="@+id/account_host"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/account_alias"
-        android:layout_toLeftOf="@+id/loading_indicator"
         android:layout_toStartOf="@+id/loading_indicator"
         android:ellipsize="middle"
-        android:maxLines="1"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/white"
@@ -62,9 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_toLeftOf="@+id/error_indicator"
         android:layout_toStartOf="@+id/error_indicator" />
 
     <ImageView
@@ -73,13 +65,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="false"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_toLeftOf="@+id/account_selected_arrow"
         android:layout_toStartOf="@+id/account_selected_arrow"
         android:clickable="false"
         android:focusable="false"
-        android:src="@drawable/ic_error_white" />
+        app:srcCompat="@drawable/ic_error_white" />
 
     <ImageView
         android:id="@+id/account_selected_arrow"
@@ -87,14 +77,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:alpha="0.54"
         android:clickable="false"
         android:focusable="false"
-        android:src="@drawable/ic_arrow_drop_down_black_24dp"
-        android:tint="@color/white" />
+        android:tint="@color/white"
+        app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp" />
 
 </RelativeLayout>

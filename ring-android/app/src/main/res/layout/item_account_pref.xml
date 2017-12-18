@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="72dp">
@@ -8,36 +10,32 @@
         android:id="@+id/account_alias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_toLeftOf="@+id/error_indicator"
         android:layout_toStartOf="@id/error_indicator"
         android:focusable="false"
         android:gravity="start"
         android:textAlignment="viewStart"
-        android:textAppearance="@style/ListPrimary" />
+        android:textAppearance="@style/ListPrimary"
+        tools:text="Ring account" />
 
     <TextView
         android:id="@+id/account_host"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/account_alias"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:layout_toLeftOf="@+id/error_indicator"
         android:layout_toStartOf="@id/error_indicator"
         android:ellipsize="middle"
         android:focusable="false"
         android:gravity="start"
         android:singleLine="true"
         android:textAlignment="viewStart"
-        android:textAppearance="@style/ListSecondary" />
+        android:textAppearance="@style/ListSecondary"
+        tools:text="testaccount" />
 
     <ImageView
         android:id="@+id/error_indicator"
@@ -45,14 +43,13 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_margin="16dp"
-        android:layout_toLeftOf="@+id/account_checked"
         android:layout_toStartOf="@+id/account_checked"
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:src="@drawable/ic_error_white"
         android:tint="@color/error_red"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_error_white" />
 
     <ProgressBar
         android:id="@+id/loading_indicator"
@@ -61,8 +58,6 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_toLeftOf="@+id/account_checked"
         android:layout_toStartOf="@+id/account_checked"
         android:visibility="gone" />
 
@@ -71,7 +66,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_margin="16dp"
         android:focusable="false" />

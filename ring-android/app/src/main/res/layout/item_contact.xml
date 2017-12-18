@@ -21,6 +21,7 @@ along with this program; if not, write to the Free Software
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="72dp"
@@ -31,7 +32,6 @@ along with this program; if not, write to the Free Software
         android:id="@+id/photo"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
@@ -46,8 +46,6 @@ along with this program; if not, write to the Free Software
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/photo"
-        android:layout_toLeftOf="@+id/quick_call"
-        android:layout_toRightOf="@+id/photo"
         android:layout_toStartOf="@+id/quick_call"
         android:ellipsize="end"
         android:gravity="start"
@@ -64,13 +62,12 @@ along with this program; if not, write to the Free Software
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:alpha="0.54"
         android:background="?selectableItemBackgroundBorderless"
         android:contentDescription="@string/contact_quick_call_description"
         android:padding="16dp"
-        android:src="@drawable/ic_videocam_white"
-        android:tint="@color/black" />
+        android:tint="@color/black"
+        app:srcCompat="@drawable/ic_videocam_white" />
 
 </RelativeLayout>
