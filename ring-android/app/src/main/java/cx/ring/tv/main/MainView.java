@@ -21,7 +21,7 @@ package cx.ring.tv.main;
 
 import java.util.ArrayList;
 
-import cx.ring.model.RingError;
+import cx.ring.navigation.RingNavigationViewModel;
 import cx.ring.tv.model.TVListViewModel;
 
 public interface MainView {
@@ -36,7 +36,7 @@ public interface MainView {
 
     void displayErrorToast(int error);
 
-    void displayAccountInfos(String address);
+    void displayAccountInfos(String address, RingNavigationViewModel viewModel);
 
     void showExportDialog(String pAccountID);
 }
