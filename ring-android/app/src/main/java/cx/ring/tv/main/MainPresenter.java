@@ -185,6 +185,10 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
         getView().showExportDialog(mAccountService.getCurrentAccount().getAccountID());
     }
 
+    public void onAccountManagementClicked() {
+        getView().showAccountManagement();
+    }
+
     private void subscribePresence() {
         if (mAccountService.getCurrentAccount() == null) {
             return;
