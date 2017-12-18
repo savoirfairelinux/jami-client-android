@@ -50,6 +50,7 @@ public class CardPresenterSelector extends PresenterSelector {
                 case ABOUT_CONTRIBUTOR:
                 case ABOUT_LICENCES:
                 case ACCOUNT_ADD_DEVICE:
+                case ACCOUNT_MANAGEMENT:
                     presenter = new IconCardPresenter(mContext);
                     break;
                 case SEARCH_RESULT:
