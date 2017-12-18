@@ -261,11 +261,11 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
             @Override
             public void run() {
                 mWaitDialog.dismiss();
-                AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
-                errorDialog.setTitle(R.string.account_export_end_network_title)
-                        .setMessage(R.string.account_export_end_network_message);
-                errorDialog.setPositiveButton(android.R.string.ok, null);
-                errorDialog.show();
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(R.string.account_export_end_network_title)
+                        .setMessage(R.string.account_export_end_network_message)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
             }
         });
     }
@@ -288,11 +288,11 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
             @Override
             public void run() {
                 mWaitDialog.dismiss();
-                AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
-                errorDialog.setTitle(R.string.account_export_end_error_title)
-                        .setMessage(R.string.account_export_end_error_message);
-                errorDialog.setPositiveButton(android.R.string.ok, null);
-                errorDialog.show();
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(R.string.account_export_end_error_title)
+                        .setMessage(R.string.account_export_end_error_message)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show();
             }
         });
     }
