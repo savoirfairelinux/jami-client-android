@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright (C) 2004-2016 Savoir-faire Linux Inc.
 
 Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
@@ -20,6 +19,7 @@ along with this program; if not, write to the Free Software
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/call_entry"
     android:layout_width="wrap_content"
     android:layout_height="56dp"
@@ -27,15 +27,13 @@ along with this program; if not, write to the Free Software
     android:padding="8dp">
 
     <ImageView
+        android:id="@+id/number_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/number_icon"
-        android:layout_alignParentLeft="true"
-        android:src="@drawable/ic_dialer_sip_black"
         android:layout_alignParentStart="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_alignParentTop="false"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
+        app:srcCompat="@drawable/ic_dialer_sip_black" />
 
 </RelativeLayout>
