@@ -44,10 +44,18 @@ public final class IconCardHelper {
             case ABOUT_VERSION:
                 return getVersionCard(pContext);
             case ACCOUNT_ADD_DEVICE:
-                return getAccountAddDevice(pContext);
+                return getAccountAddDeviceCard(pContext);
             default:
                 return null;
         }
+    }
+
+    public static IconCard getAccountAddDeviceCard(Context pContext) {
+        return new IconCard(Card.Type.ACCOUNT_ADD_DEVICE, pContext.getString(R.string.account_link_export_button), "", R.drawable.ic_add_white);
+    }
+
+    public static IconCard getAccountManagementCard(Context pContext) {
+        return new IconCard(Card.Type.ACCOUNT_MANAGEMENT, pContext.getString(R.string.menu_item_account), "", R.drawable.ic_group_white);
     }
 
     public static IconCard getVersionCard(Context pContext) {
@@ -60,10 +68,6 @@ public final class IconCardHelper {
 
     public static IconCard getContributorCard(Context pContext) {
         return new IconCard(Card.Type.ABOUT_CONTRIBUTOR, pContext.getString(R.string.credits), formatContributors(pContext), R.drawable.ic_face);
-    }
-
-    public static IconCard getAccountAddDevice(Context pContext) {
-        return new IconCard(Card.Type.ACCOUNT_ADD_DEVICE, pContext.getString(R.string.account_link_export_button), "", R.drawable.ic_add_white);
     }
 
     private static CharSequence formatLicence(Context pContext) {

@@ -39,4 +39,6 @@ public interface MainView {
     void displayAccountInfos(String address, RingNavigationViewModel viewModel);
 
     void showExportDialog(String pAccountID);
+
+    void showAccountManagement();
 }
