@@ -25,6 +25,7 @@ import android.support.v17.leanback.widget.PresenterSelector;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.navigation.RingNavigationViewModel;
 import cx.ring.tv.about.AboutActivity;
 import cx.ring.tv.account.TVAccountExport;
 import cx.ring.tv.call.TVCallActivity;
@@ -47,6 +49,8 @@ import cx.ring.tv.cards.iconcards.IconCard;
 import cx.ring.tv.cards.iconcards.IconCardHelper;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.search.SearchActivity;
+import cx.ring.tv.views.CustomTitleView;
+import ezvcard.property.Photo;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
 
@@ -59,6 +63,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     private DisplayMetrics mMetrics;
     private BackgroundManager mBackgroundManager;
     private ArrayObjectAdapter cardRowAdapter;
+    private CustomTitleView titleView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,6 +75,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupUIElements();
+        titleView = view.findViewById(R.id.browse_title_group);
     }
 
     @Override
@@ -217,7 +223,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     }
 
     @Override
-    public void displayAccountInfos(final String address) {
+    public void displayAccountInfos(final String address, final RingNavigationViewModel viewModel) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -225,6 +231,16 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                     setTitle(address);
                 } else {
                     setTitle("");
+                }
+
+                if (getActivity() == null) {
+                    Log.e(TAG, "displayAccountInfos: Not able to get activity");
+                    return;
+                }
+
+                List<Photo> photos = viewModel.getVcard(getActivity().getFilesDir()).getPhotos();
+                if (!photos.isEmpty()) {
+                    titleView.setCurrentAccountPhoto(photos.get(0).getData());
                 }
             }
         });

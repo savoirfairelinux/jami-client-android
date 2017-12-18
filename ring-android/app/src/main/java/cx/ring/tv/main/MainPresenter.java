@@ -20,6 +20,7 @@
 package cx.ring.tv.main;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
@@ -34,6 +35,7 @@ import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
+import cx.ring.navigation.RingNavigationViewModel;
 import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
@@ -170,10 +172,13 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
             return;
         }
         String displayableAddress = null;
-        for (Account account : mAccountService.getAccounts()) {
+        List<Account> accounts = mAccountService.getAccounts();
+        for (Account account : accounts) {
             displayableAddress = account.getDisplayUri();
         }
-        getView().displayAccountInfos(displayableAddress);
+
+        RingNavigationViewModel viewModel = new RingNavigationViewModel(mAccountService.getCurrentAccount(), accounts);
+        getView().displayAccountInfos(displayableAddress, viewModel);
     }
 
     public void onExportClicked() {
