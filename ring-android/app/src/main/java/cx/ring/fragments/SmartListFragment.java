@@ -399,19 +399,19 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void displayChooseNumberDialog(final CharSequence[] numbers) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.choose_number);
-        builder.setItems(numbers, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                CharSequence selected = numbers[which];
-                Intent intent = new Intent(CallActivity.ACTION_CALL)
-                        .setClass(getActivity(), CallActivity.class)
-                        .setData(Uri.parse(selected.toString()));
-                startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
-            }
-        });
-        builder.show();
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.choose_number)
+                .setItems(numbers, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        CharSequence selected = numbers[which];
+                        Intent intent = new Intent(CallActivity.ACTION_CALL)
+                                .setClass(getActivity(), CallActivity.class)
+                                .setData(Uri.parse(selected.toString()));
+                        startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -423,25 +423,25 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void displayConversationDialog(final SmartListViewModel smartListViewModel) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setItems(R.array.conversation_actions, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case ActionHelper.ACTION_COPY:
-                        presenter.copyNumber(smartListViewModel);
-                        break;
-                    case ActionHelper.ACTION_DELETE:
-                        presenter.deleteConversation(smartListViewModel);
-                        break;
-                    case ActionHelper.ACTION_BLOCK:
-                        presenter.removeContact(smartListViewModel);
-                        break;
-                }
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        new AlertDialog.Builder(getActivity())
+                .setItems(R.array.conversation_actions, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case ActionHelper.ACTION_COPY:
+                                presenter.copyNumber(smartListViewModel);
+                                break;
+                            case ActionHelper.ACTION_DELETE:
+                                presenter.deleteConversation(smartListViewModel);
+                                break;
+                            case ActionHelper.ACTION_BLOCK:
+                                presenter.removeContact(smartListViewModel);
+                                break;
+                        }
+                    }
+                })
+                .create()
+                .show();
     }
 
     @Override

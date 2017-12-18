@@ -179,7 +179,6 @@ public class TVAccountWizard
         //Noop on TV
     }
 
-
     @Override
     public void finish(final boolean affinity) {
         runOnUiThread(new Runnable() {
@@ -232,9 +231,9 @@ public class TVAccountWizard
                 if (mAlertDialog != null && mAlertDialog.isShowing()) {
                     return;
                 }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TVAccountWizard.this);
-                dialogBuilder.setPositiveButton(android.R.string.ok, null);
-                dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TVAccountWizard.this)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .setTitle(R.string.account_cannot_be_found_title)
                         .setMessage(R.string.account_cannot_be_found_message);
                 mAlertDialog = dialogBuilder.show();
             }
@@ -250,9 +249,9 @@ public class TVAccountWizard
                 if (mAlertDialog != null && mAlertDialog.isShowing()) {
                     return;
                 }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TVAccountWizard.this);
-                dialogBuilder.setPositiveButton(android.R.string.ok, null);
-                dialogBuilder.setTitle(R.string.account_no_network_title)
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TVAccountWizard.this)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .setTitle(R.string.account_no_network_title)
                         .setMessage(R.string.account_no_network_message);
                 mAlertDialog = dialogBuilder.show();
             }
@@ -267,9 +266,9 @@ public class TVAccountWizard
                 if (mAlertDialog != null && mAlertDialog.isShowing()) {
                     return;
                 }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TVAccountWizard.this);
-                dialogBuilder.setPositiveButton(android.R.string.ok, null);
-                dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TVAccountWizard.this)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .setTitle(R.string.account_cannot_be_found_title)
                         .setMessage(R.string.account_cannot_be_found_message);
                 mAlertDialog = dialogBuilder.show();
             }
@@ -284,9 +283,9 @@ public class TVAccountWizard
                 if (mAlertDialog != null && mAlertDialog.isShowing()) {
                     return;
                 }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TVAccountWizard.this);
-                dialogBuilder.setPositiveButton(android.R.string.ok, null);
-                dialogBuilder.setTitle(R.string.account_device_added_title)
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TVAccountWizard.this)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .setTitle(R.string.account_device_added_title)
                         .setMessage(R.string.account_device_added_message);
                 mAlertDialog = dialogBuilder.show();
                 mAlertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
