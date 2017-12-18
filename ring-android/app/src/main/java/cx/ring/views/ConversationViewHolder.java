@@ -39,14 +39,14 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public ConversationViewHolder(ViewGroup v, int type) {
         super(v);
         if (type == ConversationAdapter.ConversationMessageType.CALL_INFORMATION_TEXT_MESSAGE.getType()) {
-            mHistTxt = (TextView) v.findViewById(R.id.call_hist_txt);
-            mHistDetailTxt = (TextView) v.findViewById(R.id.call_details_txt);
-            mPhoto = (ImageView) v.findViewById(R.id.call_icon);
+            mHistTxt = v.findViewById(R.id.call_hist_txt);
+            mHistDetailTxt = v.findViewById(R.id.call_details_txt);
+            mPhoto = v.findViewById(R.id.call_icon);
         } else {
-            mMsgTxt = (TextView) v.findViewById(R.id.msg_txt);
-            mMsgDetailTxt = (TextView) v.findViewById(R.id.msg_details_txt);
+            mMsgTxt = v.findViewById(R.id.msg_txt);
+            mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
             if (type == ConversationAdapter.ConversationMessageType.INCOMING_TEXT_MESSAGE.getType()) {
-                mPhoto = (ImageView) v.findViewById(R.id.photo);
+                mPhoto = v.findViewById(R.id.photo);
             }
         }
     }
