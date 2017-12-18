@@ -78,9 +78,9 @@ public class CredentialPreferenceDialog extends PreferenceDialogFragment {
 
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
-        mUsernameField = (EditText) view.findViewById(R.id.credentials_username);
-        mPasswordField = (EditText) view.findViewById(R.id.credentials_password);
-        mRealmField = (EditText) view.findViewById(R.id.credentials_realm);
+        mUsernameField = view.findViewById(R.id.credentials_username);
+        mPasswordField = view.findViewById(R.id.credentials_password);
+        mRealmField = view.findViewById(R.id.credentials_realm);
         if (mUsernameField == null) {
             throw new IllegalStateException("Dialog view must contain an EditText with id @id/credentials_username");
         } else if (creds != null) {

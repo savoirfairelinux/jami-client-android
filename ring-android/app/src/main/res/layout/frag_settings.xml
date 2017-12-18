@@ -57,30 +57,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:id="@+id/network_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true">
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
-                            android:src="@drawable/ic_perm_data_setting_black_24dp"
-                            android:contentDescription="@string/pref_mobileData_summary" />
+                            android:contentDescription="@string/pref_mobileData_summary"
+                            android:src="@drawable/ic_perm_data_setting_black_24dp" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/network_image"
-                        android:layout_toRightOf="@+id/network_image"
-                        android:layout_toStartOf="@+id/settings_mobile_data"
-                        android:layout_toLeftOf="@+id/settings_mobile_data"
                         android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/network_image"
+                        android:layout_toStartOf="@+id/settings_mobile_data"
+                        android:orientation="vertical"
                         android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:orientation="vertical">
+                        android:paddingRight="16dp">
 
                         <TextView
                             style="@style/ListPrimary"
@@ -100,7 +97,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:id="@+id/settings_mobile_data"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
                         android:checked="false" />
 
@@ -127,30 +123,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:id="@+id/contacts_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true">
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
-                            android:src="@drawable/ic_group_black"
-                            android:contentDescription="@string/pref_systemContacts_summary" />
+                            android:contentDescription="@string/pref_systemContacts_summary"
+                            app:srcCompat="@drawable/ic_group_black" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/contacts_image"
-                        android:layout_toRightOf="@+id/contacts_image"
-                        android:layout_toStartOf="@+id/settings_contacts"
-                        android:layout_toLeftOf="@+id/settings_contacts"
                         android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/contacts_image"
+                        android:layout_toStartOf="@+id/settings_contacts"
+                        android:orientation="vertical"
                         android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:orientation="vertical">
+                        android:paddingRight="16dp">
 
                         <TextView
                             style="@style/ListPrimary"
@@ -170,7 +163,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:id="@+id/settings_contacts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
                         android:checked="false" />
 
@@ -197,37 +189,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:id="@+id/system_dialer_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true">
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
-                            android:src="@drawable/ic_dialpad_black"
-                            android:contentDescription="@string/pref_systemDialer_summary" />
+                            android:contentDescription="@string/pref_systemDialer_summary"
+                            app:srcCompat="@drawable/ic_dialpad_black" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/system_dialer_image"
-                        android:layout_toRightOf="@+id/system_dialer_image"
-                        android:layout_toStartOf="@+id/settings_place_call"
-                        android:layout_toLeftOf="@+id/settings_place_call"
                         android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/system_dialer_image"
+                        android:layout_toStartOf="@+id/settings_place_call"
+                        android:orientation="vertical"
                         android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:orientation="vertical">
+                        android:paddingRight="16dp">
 
                         <TextView
                             style="@style/ListPrimary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:lines="1"
                             android:ellipsize="end"
+                            android:lines="1"
                             android:text="@string/pref_systemDialer_title" />
 
                         <TextView
@@ -241,7 +230,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:id="@+id/settings_place_call"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
                         android:checked="false" />
 
@@ -258,38 +246,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:id="@+id/system_startOnBoot_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true">
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true">
 
 
-                    <ImageView
+                        <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
-                            android:src="@drawable/ic_android_black"
-                            android:contentDescription="@string/pref_startOnBoot_summary" />
+                            android:contentDescription="@string/pref_startOnBoot_summary"
+                            app:srcCompat="@drawable/ic_android_black" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/system_startOnBoot_image"
-                        android:layout_toRightOf="@+id/system_startOnBoot_image"
-                        android:layout_toStartOf="@+id/settings_startup"
-                        android:layout_toLeftOf="@+id/settings_startup"
                         android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/system_startOnBoot_image"
+                        android:layout_toStartOf="@+id/settings_startup"
+                        android:orientation="vertical"
                         android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        android:orientation="vertical">
+                        android:paddingRight="16dp">
 
                         <TextView
                             style="@style/ListPrimary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:lines="1"
                             android:ellipsize="end"
+                            android:lines="1"
                             android:text="@string/pref_startOnBoot_title" />
 
                         <TextView
@@ -303,7 +288,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:id="@+id/settings_startup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
                         android:checked="false" />
 
@@ -324,15 +308,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
-                    android:padding="8dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
                     <TextView
                         style="@style/ListPrimary"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:lines="1"
                         android:ellipsize="end"
+                        android:lines="1"
                         android:text="@string/pref_clearHistory_title" />
 
                     <TextView
