@@ -83,13 +83,12 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> i
         mAccountService.setCurrentAccount(selectedAccount);
     }
 
-    public void saveVCard(String username, Photo photo) {
+    public void saveVCardPhoto(Photo photo) {
         String accountId = mAccountService.getCurrentAccount().getAccountID();
         String ringId = mAccountService.getCurrentAccount().getUsername();
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
         VCard vcard = VCardUtils.loadLocalProfileFromDisk(filesDir, accountId);
-        vcard.setFormattedName(username);
         vcard.setUid(new Uid(ringId));
         vcard.removeProperties(Photo.class);
         vcard.addPhoto(photo);
@@ -99,7 +98,7 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> i
         updateUser();
     }
 
-    public void saveVCard(String username) {
+    public void saveVCardFormattedName(String username) {
         String accountId = mAccountService.getCurrentAccount().getAccountID();
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 

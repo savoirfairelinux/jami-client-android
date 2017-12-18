@@ -48,7 +48,7 @@ along with this program; if not, write to the Free Software
     <!-- About dialog -->
     <string name="developed_by">Developed by</string>
     <string name="designed_by">Designed by</string>
-    <string name="credits_developer" translatable="false">Adrien Béraud\nAlexandr Sergheev\nAlexandre Lision\nAlexandre Viau\nAline Bonnet\nAndreas Traczyk\nAnthony Léonard\nCyrille Béraud\nEdric Milaret\nÉloi Bail\nEmmanuel Lepage-Vallée\nFrédéric Guimont\nGuillaume Roguez\nHadrien De Sousa\nJulien Grossholtz\nKateryna Kostiuk\nLoïc Siret\nMarianne Forget\nMichel Schmit\nNicolas Jäger\nNicolas Reynaud\nOlivier Gregoire\nOlivier Soldano\nPatrick Keroulas\nPhilippe Gorley\nRomain Bertozzi\nSaher Azer\nSébastien Blin\nSeva Ivanov\nSilbino Gonçalves Matado\nSimon Désaulniers\nStepan Salenikovich\nSimon Zeni\nThibault Wittemberg</string>
+    <string name="credits_developer" translatable="false">Adrien Béraud\nAlexandr Sergheev\nAlexandre Lision\nAlexandre Viau\nAline Bonnet\nAndreas Traczyk\nAnthony Léonard\nCyrille Béraud\nEdric Milaret\nÉloi Bail\nEmmanuel Lepage-Vallée\nFrédéric Guimont\nGuillaume Roguez\nHadrien De Sousa\nJulien Grossholtz\nKateryna Kostiuk\nLoïc Siret\nMarianne Forget\nMichel Schmit\nNicolas Jäger\nNicolas Reynaud\nOlivier Gregoire\nOlivier Soldano\nPatrick Keroulas\nPierre Duchemin\nPhilippe Gorley\nRomain Bertozzi\nSaher Azer\nSébastien Blin\nSeva Ivanov\nSilbino Gonçalves Matado\nSimon Désaulniers\nStepan Salenikovich\nSimon Zeni\nThibault Wittemberg</string>
 
     <!-- RingActivity -->
     <string name="title_activity_sflphone_home">Ring</string>
@@ -66,6 +66,7 @@ along with this program; if not, write to the Free Software
     <string name="menu_item_home">Home</string>
     <string name="menu_item_contact_request">Contact requests</string>
     <string name="menu_item_accounts">Manage accounts</string>
+    <string name="menu_item_account">Manage account</string>
     <string name="menu_item_settings">Settings</string>
     <string name="menu_item_share">Share my contact</string>
     <string name="menu_item_about">About Ring</string>
