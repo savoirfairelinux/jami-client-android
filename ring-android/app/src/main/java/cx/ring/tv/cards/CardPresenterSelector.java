@@ -31,7 +31,7 @@ import cx.ring.tv.cards.iconcards.IconCardPresenter;
 public class CardPresenterSelector extends PresenterSelector {
 
     private final Context mContext;
-    private final HashMap<Card.Type, Presenter> presenters = new HashMap<Card.Type, Presenter>();
+    private final HashMap<Card.Type, Presenter> presenters = new HashMap<>();
 
     public CardPresenterSelector(Context context) {
         mContext = context;
@@ -50,6 +50,7 @@ public class CardPresenterSelector extends PresenterSelector {
                 case ABOUT_CONTRIBUTOR:
                 case ABOUT_LICENCES:
                 case ACCOUNT_ADD_DEVICE:
+                case ACCOUNT_EDIT_PROFILE:
                     presenter = new IconCardPresenter(mContext);
                     break;
                 case SEARCH_RESULT:
