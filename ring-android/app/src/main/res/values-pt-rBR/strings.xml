@@ -60,6 +60,8 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="notif_current_call_title">Chamada atual com %1$s</string>
   <string name="notif_current_call">Chamada atual</string>
   <string name="notif_channel_calls">Chamadas</string>
+  <string name="notif_channel_messages">Mensagens</string>
+  <string name="notif_channel_requests">Solicitações</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Você:</string>
   <string name="action_call_hangup">Desligar</string>
@@ -151,4 +153,6 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="contact_request_sent">Solicitação de contato enviada</string>
   <string name="search_results">Resultados da Busca</string>
   <string name="tv_contact_row_header">Contatos</string>
+  <string name="gallery_error_title">Galeria de aplicativos não encontrada</string>
+  <string name="gallery_error_message">Aplicativo não encontrado no dispositivo para abrir a Galeria</string>
 </resources>
