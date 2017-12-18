@@ -46,6 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:baselineAligned="false"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -71,12 +72,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/anchor"
-                        android:layout_toRightOf="@+id/anchor"
+                        android:layout_toEndOf="@+id/anchor"
                         android:contentDescription="@string/take_a_photo"
-                        android:src="@drawable/ic_photo_camera"
                         android:text="@string/take_a_photo"
                         app:backgroundTint="@color/light"
-                        app:rippleColor="@android:color/white" />
+                        app:rippleColor="@android:color/white"
+                        app:srcCompat="@drawable/ic_photo_camera" />
 
                     <Space
                         android:id="@+id/anchor"
@@ -90,17 +91,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/anchor"
-                        android:layout_toLeftOf="@+id/anchor"
+                        android:layout_toStartOf="@+id/anchor"
                         android:contentDescription="@string/open_the_gallery"
-                        android:src="@drawable/ic_insert_photo"
                         android:text="@string/open_the_gallery"
                         app:backgroundTint="@color/light"
-                        app:rippleColor="@android:color/white" />
+                        app:rippleColor="@android:color/white"
+                        app:srcCompat="@drawable/ic_insert_photo" />
 
                 </RelativeLayout>
 
                 <cx.ring.views.BoundedRelativeLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     app:bounded_width="300dp">

@@ -66,7 +66,7 @@ public class CustomCameraActivity extends Activity {
         ButterKnife.bind(this);
         mCamera = getCameraInstance();
         mCameraPreview = new CameraPreview(this, mCamera);
-        FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
+        FrameLayout preview = findViewById(R.id.camera_preview);
         preview.addView(mCameraPreview);
     }
 

@@ -39,7 +39,6 @@ along with this program; if not, write to the Free Software
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:background="@color/color_primary_light"
@@ -61,7 +60,8 @@ along with this program; if not, write to the Free Software
             android:elevation="@dimen/toolbar_elevation"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/toolbar_content_inset"
+            android:paddingEnd="0dp"
+            android:paddingStart="@dimen/toolbar_content_inset"
             android:visibility="gone">
 
             <TextView
@@ -78,7 +78,6 @@ along with this program; if not, write to the Free Software
             android:id="@+id/main_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/toolbar_spacer"
             android:orientation="vertical" />
@@ -88,10 +87,8 @@ along with this program; if not, write to the Free Software
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/toolbar_spacer"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="@dimen/action_button_bpadding"
-            android:layout_marginLeft="@dimen/action_button_lpadding"
             android:layout_marginStart="@dimen/action_button_lpadding"
             android:adjustViewBounds="false"
             android:baselineAlignBottom="false"
