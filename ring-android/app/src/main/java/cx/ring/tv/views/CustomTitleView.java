@@ -31,6 +31,7 @@ import cx.ring.R;
  * Custom title view to be used in {@link android.support.v17.leanback.app.BrowseFragment}.
  */
 public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.Provider {
+    private final TextView mAliasView;
     private final TextView mTitleView;
     private final ImageView mLogoView;
     private final View mSearchOrbView;
@@ -76,6 +77,7 @@ public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.
     public CustomTitleView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         View root = LayoutInflater.from(context).inflate(R.layout.tv_titleview, this);
+        mAliasView = root.findViewById(R.id.account_alias);
         mTitleView = root.findViewById(R.id.title_text);
         mLogoView = root.findViewById(R.id.title_photo_contact);
         mSearchOrbView = root.findViewById(R.id.title_orb);
@@ -89,6 +91,13 @@ public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.
             mTitleView.setText(title);
             mTitleView.setVisibility(View.VISIBLE);
             mLogoView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setAlias(CharSequence alias) {
+        if (alias != null) {
+            mAliasView.setText(alias);
+            mAliasView.setVisibility(VISIBLE);
         }
     }
 
