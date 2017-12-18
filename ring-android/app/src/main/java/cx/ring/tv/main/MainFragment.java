@@ -153,7 +153,8 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     private Row createMyAccountRow() {
         List<Card> cards = new ArrayList<>();
-        cards.add(IconCardHelper.getAccountAddDevice(getActivity()));
+        cards.add(IconCardHelper.getAccountAddDeviceCard(getActivity()));
+        cards.add(IconCardHelper.getAccountManagementCard(getActivity()));
 
         return createRow(getString(R.string.ring_account), cards, false);
     }
@@ -252,6 +253,11 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         GuidedStepFragment.add(getFragmentManager(), wizard, R.id.main_browse_fragment);
     }
 
+    @Override
+    public void showAccountManagement() {
+
+    }
+
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
         @Override
         public void onItemClicked(Presenter.ViewHolder itemViewHolder, Object item,
@@ -271,6 +277,9 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                         break;
                     case ACCOUNT_ADD_DEVICE:
                         presenter.onExportClicked();
+                        break;
+                    case ACCOUNT_MANAGEMENT:
+                        presenter.onAccountManagementClicked();
                         break;
                     default:
                         break;
