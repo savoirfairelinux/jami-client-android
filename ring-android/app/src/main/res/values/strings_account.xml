@@ -214,6 +214,9 @@ along with this program; if not, write to the Free Software
     <string name="account_link_title">Link this device</string>
     <string name="account_sip_cannot_be_registered">Can\'t register account</string>
 
+    <!-- Edit profile-->
+    <string name="account_edit_profile">Edit your profile</string>
+
     <!-- Devices -->
     <string name="account_revoke_device_hint">Enter password to confirm</string>
     <string name="enter_password">Enter password</string>
