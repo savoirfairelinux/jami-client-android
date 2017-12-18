@@ -37,6 +37,7 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.navigation.RingNavigationViewModel;
 import cx.ring.tv.about.AboutActivity;
+import cx.ring.tv.account.TVProfileEditingActivity;
 import cx.ring.tv.account.TVAccountExport;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.cards.Card;
@@ -50,6 +51,8 @@ import cx.ring.tv.cards.iconcards.IconCardHelper;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.search.SearchActivity;
 import cx.ring.tv.views.CustomTitleView;
+import ezvcard.VCard;
+import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
@@ -148,12 +151,12 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         }
 
         return new CardListRow(new HeaderItem(HEADER_MISC, titleSection), listRowAdapter, row);
-
     }
 
     private Row createMyAccountRow() {
         List<Card> cards = new ArrayList<>();
-        cards.add(IconCardHelper.getAccountAddDevice(getActivity()));
+        cards.add(IconCardHelper.getAccountAddDeviceCard(getActivity()));
+        cards.add(IconCardHelper.getAccountManagementCard(getActivity()));
 
         return createRow(getString(R.string.ring_account), cards, false);
     }
@@ -238,8 +241,19 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                     return;
                 }
 
-                List<Photo> photos = viewModel.getVcard(getActivity().getFilesDir()).getPhotos();
-                if (!photos.isEmpty()) {
+                VCard vcard = viewModel.getVcard(getActivity().getFilesDir());
+                if (vcard == null) {
+                    Log.e(TAG, "displayAccountInfos: Not able to get vcard");
+                    return;
+                }
+
+                FormattedName formattedName = vcard.getFormattedName();
+                if (formattedName != null) {
+                    titleView.setAlias(formattedName.getValue());
+                }
+
+                List<Photo> photos = vcard.getPhotos();
+                if (!photos.isEmpty() && photos.get(0) != null) {
                     titleView.setCurrentAccountPhoto(photos.get(0).getData());
                 }
             }
@@ -250,6 +264,19 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     public void showExportDialog(String pAccountID) {
         GuidedStepFragment wizard = TVAccountExport.createInstance(pAccountID);
         GuidedStepFragment.add(getFragmentManager(), wizard, R.id.main_browse_fragment);
+    }
+
+    @Override
+    public void showProfileEditing() {
+        Intent intent = new Intent(getActivity(), TVProfileEditingActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showLicence(IconCard card) {
+        Intent intent = new Intent(getActivity(), AboutActivity.class);
+        intent.putExtra("abouttype", card.getType().ordinal());
+        startActivity(intent);
     }
 
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
@@ -264,13 +291,13 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                 switch (card.getType()) {
                     case ABOUT_CONTRIBUTOR:
                     case ABOUT_LICENCES:
-                        Intent intent = new Intent(getActivity(),
-                                AboutActivity.class);
-                        intent.putExtra("abouttype", card.getType().ordinal());
-                        startActivity(intent);
+                        presenter.onLicenceClicked(card);
                         break;
                     case ACCOUNT_ADD_DEVICE:
                         presenter.onExportClicked();
+                        break;
+                    case ACCOUNT_EDIT_PROFILE:
+                        presenter.onEditProfileClicked();
                         break;
                     default:
                         break;

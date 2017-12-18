@@ -347,10 +347,11 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
                     mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
 
-                    presenter.saveVCard(editText.getText().toString().trim(), photo);
+                    presenter.saveVCardFormattedName(editText.getText().toString().trim());
+                    presenter.saveVCardPhoto(photo);
                     mSourcePhoto = null;
                 } else {
-                    presenter.saveVCard(editText.getText().toString().trim());
+                    presenter.saveVCardFormattedName(editText.getText().toString().trim());
                 }
             }
         });
