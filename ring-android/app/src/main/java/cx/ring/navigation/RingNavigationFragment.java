@@ -306,12 +306,12 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.dialog_profile, null);
 
-        final EditText editText = (EditText) view.findViewById(R.id.user_name);
+        final EditText editText = view.findViewById(R.id.user_name);
         editText.setText(presenter.getAlias(mSelectedAccount));
-        mProfilePhoto = (ImageView) view.findViewById(R.id.profile_photo);
+        mProfilePhoto = view.findViewById(R.id.profile_photo);
         mProfilePhoto.setImageDrawable(mUserImage.getDrawable());
 
-        ImageButton cameraView = (ImageButton) view.findViewById(R.id.camera);
+        ImageButton cameraView = view.findViewById(R.id.camera);
         cameraView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -319,7 +319,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
             }
         });
 
-        ImageButton gallery = (ImageButton) view.findViewById(R.id.gallery);
+        ImageButton gallery = view.findViewById(R.id.gallery);
         gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
