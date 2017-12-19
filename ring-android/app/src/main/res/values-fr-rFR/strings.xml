@@ -98,7 +98,7 @@
   <string name="account_create_title">Créer un compte Ring</string>
   <string name="prompt_new_username">Saisir un nouveau nom d\'utilisateur</string>
   <string name="help_password_choose">Saisir un mot de passe sécuritaire facile à retenir pour protéger votre compte Ring</string>
-  <string name="help_password_enter">Entrer votre mot de passe pour votre compte Ring principal</string>
+  <string name="help_password_enter">Entrer votre mot de passe pour votre compte Ring principal.</string>
   <string name="help_pin_enter">Entrer votre PIN (numéro d\'identification personnel) configuré sur un autre compte Ring. Utiliser la fonction \"exporter un compte dans Ring\" pour obtenir votre numéro d\'identification personnel.</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Retour</string>
