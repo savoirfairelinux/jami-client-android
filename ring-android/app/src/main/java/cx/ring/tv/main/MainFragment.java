@@ -37,6 +37,7 @@ import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.navigation.RingNavigationViewModel;
 import cx.ring.tv.about.AboutActivity;
+import cx.ring.tv.account.TVProfileEditingActivity;
 import cx.ring.tv.account.TVAccountExport;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.tv.cards.Card;
@@ -148,7 +149,6 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         }
 
         return new CardListRow(new HeaderItem(HEADER_MISC, titleSection), listRowAdapter, row);
-
     }
 
     private Row createMyAccountRow() {
@@ -254,8 +254,16 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     }
 
     @Override
-    public void showAccountManagement() {
+    public void showProfileEditing() {
+        Intent intent = new Intent(getActivity(), TVProfileEditingActivity.class);
+        startActivity(intent);
+    }
 
+    @Override
+    public void showLicence(IconCard card) {
+        Intent intent = new Intent(getActivity(), AboutActivity.class);
+        intent.putExtra("abouttype", card.getType().ordinal());
+        startActivity(intent);
     }
 
     private final class ItemViewClickedListener implements OnItemViewClickedListener {
@@ -270,16 +278,13 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                 switch (card.getType()) {
                     case ABOUT_CONTRIBUTOR:
                     case ABOUT_LICENCES:
-                        Intent intent = new Intent(getActivity(),
-                                AboutActivity.class);
-                        intent.putExtra("abouttype", card.getType().ordinal());
-                        startActivity(intent);
+                        presenter.onLicenceClicked(card);
                         break;
                     case ACCOUNT_ADD_DEVICE:
                         presenter.onExportClicked();
                         break;
-                    case ACCOUNT_MANAGEMENT:
-                        presenter.onAccountManagementClicked();
+                    case ACCOUNT_EDIT_PROFILE:
+                        presenter.onEditProfileClicked();
                         break;
                     default:
                         break;

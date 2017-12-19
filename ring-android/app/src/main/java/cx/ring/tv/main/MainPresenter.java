@@ -40,6 +40,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PresenceService;
+import cx.ring.tv.cards.iconcards.IconCard;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -185,8 +186,12 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
         getView().showExportDialog(mAccountService.getCurrentAccount().getAccountID());
     }
 
-    public void onAccountManagementClicked() {
-        getView().showAccountManagement();
+    public void onLicenceClicked(IconCard card) {
+        getView().showLicence(card);
+    }
+
+    public void onEditProfileClicked() {
+        getView().showProfileEditing();
     }
 
     private void subscribePresence() {

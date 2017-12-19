@@ -22,6 +22,7 @@ package cx.ring.tv.main;
 import java.util.ArrayList;
 
 import cx.ring.navigation.RingNavigationViewModel;
+import cx.ring.tv.cards.iconcards.IconCard;
 import cx.ring.tv.model.TVListViewModel;
 
 public interface MainView {
@@ -40,5 +41,7 @@ public interface MainView {
 
     void showExportDialog(String pAccountID);
 
-    void showAccountManagement();
+    void showProfileEditing();
+
+    void showLicence(IconCard card);
 }

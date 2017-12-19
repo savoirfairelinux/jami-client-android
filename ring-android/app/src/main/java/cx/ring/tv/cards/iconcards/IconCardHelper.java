@@ -45,6 +45,8 @@ public final class IconCardHelper {
                 return getVersionCard(pContext);
             case ACCOUNT_ADD_DEVICE:
                 return getAccountAddDeviceCard(pContext);
+            case ACCOUNT_EDIT_PROFILE:
+                return getAccountManagementCard(pContext);
             default:
                 return null;
         }
@@ -55,7 +57,7 @@ public final class IconCardHelper {
     }
 
     public static IconCard getAccountManagementCard(Context pContext) {
-        return new IconCard(Card.Type.ACCOUNT_MANAGEMENT, pContext.getString(R.string.menu_item_account), "", R.drawable.ic_group_white);
+        return new IconCard(Card.Type.ACCOUNT_EDIT_PROFILE, pContext.getString(R.string.account_edit_profile), "", R.drawable.ic_account_card_details_white);
     }
 
     public static IconCard getVersionCard(Context pContext) {

@@ -127,7 +127,7 @@ public class Card {
         SEARCH_RESULT,
         ABOUT_CONTRIBUTOR,
         ACCOUNT_ADD_DEVICE,
-        ACCOUNT_MANAGEMENT,
+        ACCOUNT_EDIT_PROFILE,
         ABOUT_LICENCES,
         CONTACT,
         CONTACT_ONLINE,
