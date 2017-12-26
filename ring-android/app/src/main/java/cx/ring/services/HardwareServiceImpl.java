@@ -113,10 +113,14 @@ public class HardwareServiceImpl extends HardwareService {
                 recorder.prepare();
                 recorder.start();
                 hasMicrophone = true;
+            } catch (IllegalStateException e) {
+                // Microphone is already in use
+                hasMicrophone = true;
             } catch (Exception exception) {
                 hasMicrophone = false;
+            } finally {
+                recorder.release();
             }
-            recorder.release();
         }
 
         return hasMicrophone;
