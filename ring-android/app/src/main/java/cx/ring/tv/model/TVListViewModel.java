@@ -19,11 +19,13 @@
  */
 package cx.ring.tv.model;
 
+import android.support.annotation.NonNull;
+
 import cx.ring.model.CallContact;
 
-public class TVListViewModel {
-    CallContact mCallContact;
-    boolean isOnline;
+public class TVListViewModel implements Comparable<TVListViewModel> {
+    private CallContact mCallContact;
+    private boolean isOnline;
 
     public TVListViewModel(CallContact pCallContact, boolean pIsOnline) {
         mCallContact = pCallContact;
@@ -49,5 +51,10 @@ public class TVListViewModel {
 
     public void setOnline(boolean pOnline) {
         isOnline = pOnline;
+    }
+
+    @Override
+    public int compareTo(@NonNull TVListViewModel o) {
+        return mCallContact.getDisplayName().compareTo(o.getCallContact().getDisplayName());
     }
 }
