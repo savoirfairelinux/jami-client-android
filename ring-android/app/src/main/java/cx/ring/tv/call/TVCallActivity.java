@@ -23,6 +23,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
@@ -32,6 +34,7 @@ import cx.ring.utils.Log;
 public class TVCallActivity extends Activity {
 
     static final String TAG = TVCallActivity.class.getSimpleName();
+    private TVCallFragment callFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,7 @@ public class TVCallActivity extends Activity {
         android.util.Log.d(TAG, "IN CALL ACTIVITY !");
         if (!TextUtils.isEmpty(ringId)) {
             Log.d(TAG, " outgoing call");
-            TVCallFragment callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_PLACE_CALL,
+            callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_PLACE_CALL,
                     accountId,
                     ringId,
                     audioOnly);
@@ -65,9 +68,21 @@ public class TVCallActivity extends Activity {
             String confId = getIntent().getStringExtra(NotificationService.KEY_CALL_ID);
             Log.d(TAG, "conf " + confId);
 
-            TVCallFragment callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_GET_CALL,
+            callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_GET_CALL,
                     confId);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        callFragment.onKeyDown();
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        callFragment.onKeyDown();
+        return super.onTouchEvent(event);
     }
 }
