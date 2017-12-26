@@ -125,7 +125,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             app:elevation="6dp"
             app:pressedTranslationZ="12dp"
             app:rippleColor="@android:color/white"
-            app:srcCompat="@drawable/ic_call_end_white" />
+            app:srcCompat="@drawable/ic_call_end_white"
+            app:useCompatPadding="true" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/call_accept_btn"
@@ -137,7 +138,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             app:elevation="6dp"
             app:pressedTranslationZ="12dp"
             app:rippleColor="@android:color/white"
-            app:srcCompat="@drawable/ic_call_white" />
+            app:srcCompat="@drawable/ic_call_white"
+            app:useCompatPadding="true" />
 
     </LinearLayout>
 
@@ -155,6 +157,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         app:pressedTranslationZ="12dp"
         app:rippleColor="@android:color/white"
         app:srcCompat="@drawable/ic_call_end_white"
+        app:useCompatPadding="true"
         tools:visibility="visible" />
 
     <EditText

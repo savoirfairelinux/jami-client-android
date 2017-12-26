@@ -380,6 +380,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
             public void run() {
                 acceptButton.setVisibility(View.GONE);
                 refuseButton.setVisibility(View.GONE);
+                hangupButton.setAlpha(0.4f);
                 hangupButton.setVisibility(View.VISIBLE);
 
                 contactBubbleLayout.setVisibility(audioOnly ? View.INVISIBLE : View.VISIBLE);
