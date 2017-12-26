@@ -156,8 +156,8 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     }
 
     public void contactClicked(TVListViewModel item) {
-        if (!mHardwareService.hasMicrophone()) {
-            getView().displayErrorToast(RingError.NO_MICROPHONE);
+        if (!mHardwareService.isVideoAvailable() && !mHardwareService.hasMicrophone()) {
+            getView().displayErrorToast(RingError.NO_INPUT);
             return;
         }
 
