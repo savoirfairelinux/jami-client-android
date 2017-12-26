@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +32,10 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -106,6 +111,19 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     // Screen wake lock for incoming call
     private PowerManager.WakeLock mScreenWakeLock;
+    private Handler handler;
+    private Runnable runnable;
+    private AnimationSet animationSet;
+    private Animation fadeOutAnimation;
+
+    public TVCallFragment() {
+        animationSet = new AnimationSet(false);
+
+        fadeOutAnimation = new AlphaAnimation(1, 0);
+        fadeOutAnimation.setInterpolator(new AccelerateInterpolator());
+        fadeOutAnimation.setStartOffset(1000);
+        fadeOutAnimation.setDuration(1000);
+    }
 
     public static TVCallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean audioOnly) {
         Bundle bundle = new Bundle();
@@ -209,14 +227,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
             }
         });
 
-        view.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
-                boolean ui = (visibility & (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN)) == 0;
-                presenter.uiVisibilityChanged(ui);
-            }
-        });
-
         mVideoPreview.getHolder().setFormat(PixelFormat.RGBA_8888);
         mVideoPreview.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -235,6 +245,14 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
             }
         });
         mVideoPreview.setZOrderMediaOverlay(true);
+
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                presenter.uiVisibilityChanged(false);
+            }
+        };
     }
 
     @Override
@@ -282,7 +300,14 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void displayHangupButton(boolean display) {
-        hangupButton.setVisibility(display ? View.VISIBLE : View.GONE);
+        if (display) {
+            hangupButton.setVisibility(View.VISIBLE);
+        } else {
+            animationSet.addAnimation(fadeOutAnimation);
+            hangupButton.setAnimation(animationSet);
+
+            hangupButton.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -385,6 +410,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
                 contactBubbleLayout.setVisibility(audioOnly ? View.INVISIBLE : View.VISIBLE);
 
                 getActivity().invalidateOptionsMenu();
+
+                handleVisibilityTimer();
             }
         });
     }
@@ -486,5 +513,20 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @OnClick(R.id.call_accept_btn)
     public void acceptClicked() {
         presenter.acceptCall();
+    }
+
+    public void onKeyDown() {
+        handleVisibilityTimer();
+    }
+
+    private void handleVisibilityTimer() {
+        presenter.uiVisibilityChanged(true);
+        handler.postDelayed(runnable, 5000);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
     }
 }
