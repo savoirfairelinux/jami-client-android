@@ -20,17 +20,15 @@
 package cx.ring.tv.main;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
 import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
@@ -41,8 +39,14 @@ import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PresenceService;
 import cx.ring.tv.model.TVListViewModel;
+import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class MainPresenter extends RootPresenter<MainView> implements Observer<ServiceEvent> {
@@ -54,23 +58,23 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     private ContactService mContactService;
     private PresenceService mPresenceService;
     private HardwareService mHardwareService;
-    private ExecutorService mExecutor;
-    private ArrayList<Conversation> mConversations;
+    private Scheduler mMainScheduler;
+
+    private ArrayList<TVListViewModel> mTvListViewModels;
 
     @Inject
     public MainPresenter(AccountService accountService,
                          ContactService contactService,
                          PresenceService presenceService,
                          HardwareService hardwareService,
-                         @Named("ApplicationExecutor") ExecutorService executor,
-                         ConversationFacade conversationfacade) {
+                         ConversationFacade conversationfacade,
+                         Scheduler mainScheduler) {
         mAccountService = accountService;
         mContactService = contactService;
         mPresenceService = presenceService;
         mConversationFacade = conversationfacade;
-        this.mHardwareService = hardwareService;
-        mExecutor = executor;
-        mConversations = new ArrayList<>();
+        mHardwareService = hardwareService;
+        mMainScheduler = mainScheduler;
     }
 
     @Override
@@ -116,8 +120,8 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     }
 
     private void refreshContact(String buddy) {
-        for (Conversation conversation : mConversations) {
-            CallContact callContact = conversation.getContact();
+        for (TVListViewModel tvListViewModel : mTvListViewModels) {
+            CallContact callContact = tvListViewModel.getCallContact();
             if (callContact.getIds().get(0).equals("ring:" + buddy)) {
                 TVListViewModel smartListViewModel = new TVListViewModel(
                         callContact,
@@ -129,30 +133,56 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
 
     public void reloadConversations() {
         getView().showLoading(true);
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                mConversations.clear();
-                mConversations.addAll(mConversationFacade.getConversationsList());
-                ArrayList<TVListViewModel> contacts = new ArrayList<>();
-                if (mConversations != null && mConversations.size() > 0) {
-                    for (int i = 0; i < mConversations.size(); i++) {
-                        Conversation conversation = mConversations.get(i);
-                        CallContact callContact = conversation.getContact();
-                        mContactService.loadContactData(callContact);
 
-                        TVListViewModel smartListViewModel = new TVListViewModel(
-                                callContact,
-                                mPresenceService.isBuddyOnline(callContact.getIds().get(0)));
-                        contacts.add(smartListViewModel);
+        Account currentAccount = mAccountService.getCurrentAccount();
+        if (currentAccount == null) {
+            android.util.Log.e(TAG, "reloadConversations: Not able to get currentAccount");
+            return;
+        }
+
+        final Collection<CallContact> contacts = currentAccount.getContacts().values();
+
+        //Get all non-ban contact and then get last message and last call to create a smartList entry
+        mCompositeDisposable.add(io.reactivex.Observable.fromIterable(contacts)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(mMainScheduler)
+                .filter(new Predicate<CallContact>() {
+                    @Override
+                    public boolean test(CallContact callContact) throws Exception {
+                        return !callContact.isBanned();
                     }
-                }
-                getView().showLoading(false);
-                getView().showContacts(contacts);
-            }
-        });
+                })
+                .map(new Function<CallContact, TVListViewModel>() {
+                    @Override
+                    public TVListViewModel apply(CallContact callContact) throws Exception {
+                        return modelToViewModel(callContact);
+                    }
+                })
+                .toSortedList()
+                .doOnError(new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.d(TAG, throwable.toString());
+                        getView().showLoading(false);
+                    }
+                })
+                .subscribe(new Consumer<List<TVListViewModel>>() {
+                    @Override
+                    public void accept(List<TVListViewModel> tvListViewModels) throws Exception {
+                        getView().showContacts(tvListViewModels);
+                        getView().showLoading(false);
+                    }
+                }));
 
         subscribePresence();
+    }
+
+    private TVListViewModel modelToViewModel(CallContact callContact) {
+        mContactService.loadContactData(callContact);
+
+        return new TVListViewModel(
+                callContact,
+                mPresenceService.isBuddyOnline(callContact.getIds().get(0)));
     }
 
     public void contactClicked(TVListViewModel item) {
