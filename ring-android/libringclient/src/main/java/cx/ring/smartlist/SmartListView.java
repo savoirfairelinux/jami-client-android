@@ -40,7 +40,6 @@ public interface SmartListView extends BaseView {
 
     void displayDeleteDialog(CallContact callContact);
 
-
     void copyNumber(CallContact callContact);
 
     void setLoading(boolean display);

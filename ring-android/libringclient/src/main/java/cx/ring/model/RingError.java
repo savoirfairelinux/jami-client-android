@@ -24,5 +24,6 @@ public abstract class RingError {
 
     public static final int GENERIC_ERROR = 0;
     public static final int NO_MICROPHONE = 1;
+    public static final int NO_INPUT = 2;
 
 }

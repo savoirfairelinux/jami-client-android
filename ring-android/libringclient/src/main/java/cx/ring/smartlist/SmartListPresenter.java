@@ -211,8 +211,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
                 getView().displayChooseNumberDialog(numbers);
             } else {
-                if (!mHardwareService.hasMicrophone()) {
-                    getView().displayErrorToast(RingError.NO_MICROPHONE);
+                if (!mHardwareService.isVideoAvailable() && !mHardwareService.hasMicrophone()) {
+                    getView().displayErrorToast(RingError.NO_INPUT);
                     return;
                 }
 

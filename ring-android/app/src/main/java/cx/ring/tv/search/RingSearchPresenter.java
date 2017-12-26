@@ -150,8 +150,8 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> implement
     }
 
     public void contactClicked(CallContact contact) {
-        if (!mHardwareService.hasMicrophone()) {
-            getView().displayErrorToast(RingError.NO_MICROPHONE);
+        if (!mHardwareService.isVideoAvailable() && !mHardwareService.hasMicrophone()) {
+            getView().displayErrorToast(RingError.NO_INPUT);
             return;
         }
 

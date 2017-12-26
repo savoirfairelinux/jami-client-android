@@ -87,8 +87,8 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment imp
     public void displayErrorToast(int error) {
         String errorString;
         switch (error) {
-            case RingError.NO_MICROPHONE:
-                errorString = getString(R.string.call_error_no_microphone);
+            case RingError.NO_INPUT:
+                errorString = getString(R.string.call_error_no_camera_no_microphone);
                 break;
             default:
                 errorString = getString(R.string.generic_error);
