@@ -224,15 +224,17 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     }
 
     @Override
-    public void showContacts(final ArrayList<TVListViewModel> contacts) {
+    public void showContacts(final List<TVListViewModel> contacts) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 cardRowAdapter.clear();
-                for (TVListViewModel contact : contacts) {
-                    cardRowAdapter.add(new ContactCard(contact));
+                if (!contacts.isEmpty()) {
+                    for (TVListViewModel contact : contacts) {
+                        cardRowAdapter.add(new ContactCard(contact));
+                    }
+                    cardRowAdapter.notifyArrayItemRangeChanged(0, contacts.size());
                 }
-                cardRowAdapter.notifyArrayItemRangeChanged(0, contacts.size());
             }
         });
     }
