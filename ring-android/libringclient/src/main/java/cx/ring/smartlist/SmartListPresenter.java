@@ -264,6 +264,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     }
 
     private void loadConversations() {
+        getView().setLoading(true);
         if (mAccountService.getCurrentAccount().isSip()) {
             loadContacts();
         } else {
@@ -638,7 +639,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             switch (event.getEventType()) {
                 case NEW_BUDDY_NOTIFICATION:
                     updatePresence();
-                    return;
+                return;
             }
         }
     }
