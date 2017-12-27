@@ -45,3 +45,14 @@
 
 -keep,includedescriptorclasses class se.emilsjolander.stickylistheaders.** { *; }
 -keepclassmembers class se.emilsjolander.stickylistheaders.** { *; }
+
+-keep class butterknife.** { *; }
+-dontwarn butterknife.**
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
