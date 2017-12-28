@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a42497e_22ce0d84",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/main/MainPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 120
+      },
+      "writtenOn": "2017-12-28T19:24:53Z",
+      "side": 1,
+      "message": "Maybe you can remove this this, to be consistent with upper lines",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 13
+      },
+      "revId": "317859aa2734b96c52cdd82ecb1e35ac4445cb21",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
