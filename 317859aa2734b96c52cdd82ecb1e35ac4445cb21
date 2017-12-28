@@ -22,6 +22,53 @@
       "revId": "317859aa2734b96c52cdd82ecb1e35ac4445cb21",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_62765540",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/main/MainPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2017-12-28T19:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a42497e_22ce0d84",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 13
+      },
+      "revId": "317859aa2734b96c52cdd82ecb1e35ac4445cb21",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_0279512f",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/main/MainPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2017-12-28T19:56:12Z",
+      "side": 1,
+      "message": "Is this the expected behaviour for smartlist?\ni.e should I display a contact if I sent him a trust request, but he haven\u0027t answered yet?",
+      "range": {
+        "startLine": 149,
+        "startChar": 16,
+        "endLine": 154,
+        "endChar": 18
+      },
+      "revId": "317859aa2734b96c52cdd82ecb1e35ac4445cb21",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
