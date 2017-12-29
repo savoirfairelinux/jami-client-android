@@ -33,7 +33,8 @@ along with this program; if not, write to the Free Software
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/drawer_content_padding">
+        android:paddingEnd="0dp"
+        android:paddingStart="@dimen/drawer_content_padding">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/main_toolbar"
