@@ -24,11 +24,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.utils.MediaButtonsHelper;
 
 public class ConversationActivity extends AppCompatActivity {
 
@@ -73,5 +75,11 @@ public class ConversationActivity extends AppCompatActivity {
     public void onBackPressed() {
         startActivity(new Intent(this, HomeActivity.class));
         finish();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        MediaButtonsHelper.handleMediaKeyCode(keyCode, mConversationFragment);
+        return super.onKeyDown(keyCode, event);
     }
 }
