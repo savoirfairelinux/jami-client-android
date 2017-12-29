@@ -62,6 +62,7 @@ import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.ClipboardHelper;
+import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
@@ -71,6 +72,7 @@ import ezvcard.property.RawProperty;
 public class ConversationFragment extends BaseFragment<ConversationPresenter> implements
         Conversation.ConversationActionCallback,
         ClipboardHelper.ClipboardHelperCallback,
+        MediaButtonsHelper.MediaButtonsHelperCallback,
         ConversationView {
 
     public static final int REQ_ADD_CONTACT = 42;
@@ -466,5 +468,20 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
                 .putExtra(CallFragment.KEY_AUDIO_ONLY, audioOnly)
                 .putExtra(KEY_CONTACT_RING_ID, contactRingId);
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
+    }
+
+    @Override
+    public void positiveButtonClicked() {
+        presenter.clickOnGoingPane();
+    }
+
+    @Override
+    public void negativeButtonClicked() {
+        presenter.clickOnGoingPane();
+    }
+
+    @Override
+    public void toggleButtonClicked() {
+        presenter.clickOnGoingPane();
     }
 }
