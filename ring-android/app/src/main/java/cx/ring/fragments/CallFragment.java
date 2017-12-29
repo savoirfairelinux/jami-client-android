@@ -634,4 +634,9 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     public void acceptClicked() {
         presenter.acceptCall();
     }
+
+    @Override
+    public void onMediaButtonClicked() {
+        presenter.mediaButtonClicked();
+    }
 }

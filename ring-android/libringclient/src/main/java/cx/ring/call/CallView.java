@@ -58,4 +58,6 @@ public interface CallView {
     void goToAddContact(CallContact callContact);
 
     void finish();
+
+    void onMediaButtonClicked();
 }

@@ -473,6 +473,12 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         getActivity().finish();
     }
 
+    @Override
+    public void onMediaButtonClicked() {
+        // Bluetooth is not handled on AndroidTV yet
+        presenter.hangupCall();
+    }
+
     @OnClick({R.id.call_hangup_btn})
     public void hangUpClicked() {
         presenter.hangupCall();

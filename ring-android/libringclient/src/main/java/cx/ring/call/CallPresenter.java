@@ -363,4 +363,8 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
             }
         }
     }
+
+    public void mediaButtonClicked() {
+        hangupCall();
+    }
 }
