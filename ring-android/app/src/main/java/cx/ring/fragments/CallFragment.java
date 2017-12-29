@@ -65,8 +65,9 @@ import cx.ring.services.HardwareServiceImpl;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.CircleTransform;
 import cx.ring.utils.KeyboardVisibilityManager;
+import cx.ring.utils.MediaButtonsHelper;
 
-public class CallFragment extends BaseFragment<CallPresenter> implements CallView {
+public class CallFragment extends BaseFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback {
 
     public static final String TAG = CallFragment.class.getSimpleName();
 
@@ -633,5 +634,20 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     @OnClick(R.id.call_accept_btn)
     public void acceptClicked() {
         presenter.acceptCall();
+    }
+
+    @Override
+    public void positiveButtonClicked() {
+        presenter.positiveButtonClicked();
+    }
+
+    @Override
+    public void negativeButtonClicked() {
+        presenter.negativeButtonClicked();
+    }
+
+    @Override
+    public void toggleButtonClicked() {
+        presenter.toggleButtonClicked();
     }
 }

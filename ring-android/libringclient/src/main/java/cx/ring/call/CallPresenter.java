@@ -363,4 +363,26 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
             }
         }
     }
+
+    public void positiveButtonClicked() {
+        if (mSipCall.isRinging() && mSipCall.isIncoming()) {
+            acceptCall();
+        } else {
+            hangupCall();
+        }
+    }
+
+    public void negativeButtonClicked() {
+        if (mSipCall.isRinging() && mSipCall.isIncoming()) {
+            refuseCall();
+        } else {
+            hangupCall();
+        }
+    }
+
+    public void toggleButtonClicked() {
+        if (!(mSipCall.isRinging() && mSipCall.isIncoming())) {
+            hangupCall();
+        }
+    }
 }
