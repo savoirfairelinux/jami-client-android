@@ -291,7 +291,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
         mIsMigrationDialogAlreadyShowed = true;
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this)
+        new AlertDialog.Builder(HomeActivity.this)
                 .setTitle(R.string.account_migration_title_dialog)
                 .setMessage(R.string.account_migration_message_dialog)
                 .setIcon(R.drawable.ic_warning)
@@ -314,14 +314,14 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                     public void onCancel(DialogInterface dialog) {
                         dialog.dismiss();
                     }
-                });
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                dialog.dismiss();
-            }
-        });
-        builder.show();
+                })
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     @Override
