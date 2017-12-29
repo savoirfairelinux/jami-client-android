@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 
 import cx.ring.BuildConfig;
@@ -38,13 +39,14 @@ import cx.ring.services.NotificationService;
 public class CallActivity extends AppCompatActivity {
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
 
+    private static final String TAG = CallActivity.class.getSimpleName();
+
     /* result code sent in case of call failure */
     public static int RESULT_FAILURE = -10;
     private View mMainView;
     private int currentOrientation = Configuration.ORIENTATION_PORTRAIT;
-
-
     private boolean dimmed = false;
+    private CallFragment callFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +77,7 @@ public class CallActivity extends AppCompatActivity {
             // Reload a new view
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            CallFragment callFragment = CallFragment.newInstance(CallFragment.ACTION_PLACE_CALL,
+            callFragment = CallFragment.newInstance(CallFragment.ACTION_PLACE_CALL,
                     accountId,
                     contactRingId,
                     audioOnly);
@@ -86,11 +88,10 @@ public class CallActivity extends AppCompatActivity {
             // Reload a new view
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            CallFragment callFragment = CallFragment.newInstance(CallFragment.ACTION_GET_CALL,
+            callFragment = CallFragment.newInstance(CallFragment.ACTION_GET_CALL,
                     confId);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
         }
-
     }
 
     @Override
@@ -127,7 +128,7 @@ public class CallActivity extends AppCompatActivity {
     }
 
     // This snippet shows the system bars. It does this by removing all the flags
-// except for the ones that make the content appear under the system bars.
+    // except for the ones that make the content appear under the system bars.
     private void showSystemUI() {
         if (mMainView != null) {
             mMainView.setSystemUiVisibility(
@@ -145,6 +146,34 @@ public class CallActivity extends AppCompatActivity {
             hideSystemUI();
         } else {
             showSystemUI();
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        handleMediaKeyCode(keyCode);
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void handleMediaKeyCode(int keyCode) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_CALL:
+            case KeyEvent.KEYCODE_MEDIA_PLAY:
+            case KeyEvent.KEYCODE_ENTER:
+            case KeyEvent.KEYCODE_BUTTON_A:
+            case KeyEvent.KEYCODE_HOME:
+                callFragment.onPositiveButtonClicked();
+                break;
+            case KeyEvent.KEYCODE_ENDCALL:
+            case KeyEvent.KEYCODE_MEDIA_PAUSE:
+            case KeyEvent.KEYCODE_DEL:
+            case KeyEvent.KEYCODE_BUTTON_B:
+            case KeyEvent.KEYCODE_MEDIA_STOP:
+                callFragment.onNegativeButtonClicked();
+                break;
+            case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
+                callFragment.onToggleButtonClicked();
+                break;
         }
     }
 }

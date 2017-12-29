@@ -58,4 +58,10 @@ public interface CallView {
     void goToAddContact(CallContact callContact);
 
     void finish();
+
+    void onPositiveButtonClicked();
+
+    void onNegativeButtonClicked();
+
+    void onToggleButtonClicked();
 }

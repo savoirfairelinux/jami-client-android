@@ -473,6 +473,18 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         getActivity().finish();
     }
 
+    @Override
+    public void onPositiveButtonClicked() {
+    }
+
+    @Override
+    public void onNegativeButtonClicked() {
+    }
+
+    @Override
+    public void onToggleButtonClicked() {
+    }
+
     @OnClick({R.id.call_hangup_btn})
     public void hangUpClicked() {
         presenter.hangupCall();

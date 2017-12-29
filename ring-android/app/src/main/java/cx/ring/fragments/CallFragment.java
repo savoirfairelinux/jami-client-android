@@ -634,4 +634,19 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     public void acceptClicked() {
         presenter.acceptCall();
     }
+
+    @Override
+    public void onPositiveButtonClicked() {
+        presenter.positiveButtonClicked();
+    }
+
+    @Override
+    public void onNegativeButtonClicked() {
+        presenter.negativeButtonClicked();
+    }
+
+    @Override
+    public void onToggleButtonClicked() {
+        presenter.toggleButtonClicked();
+    }
 }
