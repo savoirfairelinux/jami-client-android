@@ -155,4 +155,5 @@
   <string name="tv_contact_row_header">Contacts</string>
   <string name="gallery_error_title">Aucune application Gallery sur l\'appareil</string>
   <string name="gallery_error_message">Aucune application trouvé sur l\'appareil pour ouvrir Gallery</string>
+  <string name="generic_error">Une étrange erreur s\'est produite</string>
 </resources>
