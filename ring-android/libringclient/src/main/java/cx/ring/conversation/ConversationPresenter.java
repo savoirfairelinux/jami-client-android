@@ -28,9 +28,9 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.model.RingError;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryText;
+import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
@@ -42,6 +42,7 @@ import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
+import cx.ring.services.VCardService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -56,6 +57,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ConversationPresenter extends RootPresenter<ConversationView> implements Observer<ServiceEvent> {
 
     private static final String TAG = ConversationPresenter.class.getSimpleName();
+
     private ContactService mContactService;
     private AccountService mAccountService;
     private HistoryService mHistoryService;
@@ -64,6 +66,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     private ConversationFacade mConversationFacade;
     private CallService mCallService;
     private Scheduler mMainScheduler;
+    private VCardService mVCardService;
 
     private Conversation mConversation;
     private String mContactRingId;
@@ -79,6 +82,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                                  NotificationService notificationService,
                                  HardwareService hardwareService,
                                  ConversationFacade conversationFacade,
+                                 VCardService vCardService,
                                  Scheduler mainScheduler) {
         this.mContactService = mContactService;
         this.mAccountService = mAccountService;
@@ -88,6 +92,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         this.mNotificationService = notificationService;
         this.mHardwareService = hardwareService;
         this.mConversationFacade = conversationFacade;
+        this.mVCardService = vCardService;
     }
 
     @Override
@@ -158,7 +163,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         }
     }
 
-    public void sendTrustRequest(VCard vCard) {
+    public void sendTrustRequest() {
+        VCard vCard = mVCardService.loadSmallVCard(mAccountId);
         mAccountService.sendTrustRequest(mAccountId, new Uri(mContactRingId).getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard)));
     }
 

@@ -21,7 +21,6 @@
 package cx.ring.utils;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.HashMap;
@@ -32,7 +31,7 @@ import ezvcard.VCardVersion;
 import ezvcard.io.text.VCardWriter;
 import ezvcard.property.Uid;
 
-public class VCardUtils {
+public final class VCardUtils {
     public static final String TAG = VCardUtils.class.getSimpleName();
 
     public static final String MIME_RING_PROFILE_VCARD = "x-ring/ring.profile.vcard";
@@ -67,11 +66,6 @@ public class VCardUtils {
         return messageKeyValue;
     }
 
-    public static void savePeerProfileToDisk(String vcard, String filename, File filesDir) {
-        String path = peerProfilePath(filesDir);
-        saveToDisk(vcard, filename, path);
-    }
-
     public static void savePeerProfileToDisk(VCard vcard, String filename, File filesDir) {
         String path = peerProfilePath(filesDir);
         saveToDisk(vcard, filename, path);
@@ -82,34 +76,6 @@ public class VCardUtils {
         String filename = accountId + ".vcf";
 
         saveToDisk(vcard, filename, path);
-    }
-
-    /**
-     * Saves a vcard string to an internal new vcf file.
-     *
-     * @param vcard    the string to save
-     * @param filename the filename of the vcf
-     * @param path     the path of the vcf
-     */
-    private static void saveToDisk(String vcard, String filename, String path) {
-        if (vcard == null || vcard.equals("") || filename == null || filename.equals("")) {
-            return;
-        }
-
-        File peerProfilesFile = new File(path);
-        if (!peerProfilesFile.exists()) {
-            peerProfilesFile.mkdirs();
-        }
-        FileOutputStream outputStream;
-        try {
-            File outputFile = new File(path + File.separator + filename);
-            outputStream = new FileOutputStream(outputFile);
-            outputStream.write(vcard.getBytes());
-            outputStream.close();
-            Log.d(TAG, "vcard in saveToDisk " + vcard);
-        } catch (Exception e) {
-            Log.e(TAG, "Error while saving VCard to disk", e);
-        }
     }
 
     /**

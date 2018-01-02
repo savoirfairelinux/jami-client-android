@@ -35,7 +35,7 @@ import java.nio.ByteBuffer;
 /**
  * Helper calls to manipulates Bitmaps
  */
-public class BitmapUtils {
+public final class BitmapUtils {
 
     private static final String TAG = BitmapUtils.class.getName();
 
