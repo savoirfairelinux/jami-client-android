@@ -34,6 +34,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.util.SparseArray;
@@ -202,6 +203,9 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             }
         }
 
+        messageNotificationBuilder.setColor(ResourcesCompat.getColor(mContext.getResources(),
+                R.color.color_primary_dark, null));
+
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
     }
@@ -256,6 +260,9 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             messageNotificationBuilder.setStyle(inboxStyle);
             messageNotificationBuilder.setWhen(texts.lastEntry().getValue().getTimestamp());
         }
+
+        messageNotificationBuilder.setColor(ResourcesCompat.getColor(mContext.getResources(),
+                R.color.color_primary_dark, null));
 
         int notificationId = getTextNotificationId(contact);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
@@ -333,6 +340,9 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 .putExtra(ContactRequestsFragment.ACCOUNT_ID, account.getAccountID());
         messageNotificationBuilder.setContentIntent(PendingIntent.getActivity(mContext,
                 new Random().nextInt(), intentOpenTrustRequestFragment, PendingIntent.FLAG_ONE_SHOT));
+
+        messageNotificationBuilder.setColor(ResourcesCompat.getColor(mContext.getResources(),
+                R.color.color_primary_dark, null));
 
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
