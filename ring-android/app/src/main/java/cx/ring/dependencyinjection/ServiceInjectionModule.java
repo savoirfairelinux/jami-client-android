@@ -49,6 +49,8 @@ import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.PreferencesService;
 import cx.ring.services.PresenceService;
 import cx.ring.services.SharedPreferencesServiceImpl;
+import cx.ring.services.VCardService;
+import cx.ring.services.VCardServiceImpl;
 import cx.ring.utils.Log;
 import dagger.Module;
 import dagger.Provides;
@@ -171,6 +173,12 @@ public class ServiceInjectionModule {
         ConversationFacade conversationFacade = new ConversationFacade(historyService, callService, contactService, accountService);
         mRingApplication.getRingInjectionComponent().inject(conversationFacade);
         return conversationFacade;
+    }
+
+    @Provides
+    @Singleton
+    VCardService provideVCardService(Context context) {
+        return new VCardServiceImpl(context);
     }
 
     @Provides
