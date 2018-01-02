@@ -264,6 +264,10 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         messageNotificationBuilder.setColor(ResourcesCompat.getColor(mContext.getResources(),
                 R.color.color_primary_dark, null));
 
+        // Reuse intentDelete for the 'Mark as read' action
+        PendingIntent pIntent = PendingIntent.getService(mContext, (int) System.currentTimeMillis(), intentDelete, 0);
+        messageNotificationBuilder.addAction(0, mContext.getString(R.string.notif_mark_as_read), pIntent);
+
         int notificationId = getTextNotificationId(contact);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);

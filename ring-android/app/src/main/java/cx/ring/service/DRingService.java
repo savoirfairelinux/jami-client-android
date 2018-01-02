@@ -703,6 +703,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 Conversation conversation = mConversationFacade.getConversationById(ringId);
                 if (conversation != null) {
                     mHistoryService.readMessages(conversation);
+                    mNotificationService.cancelTextNotification(ringId);
                 }
                 break;
             case ACTION_CONV_ACCEPT:
