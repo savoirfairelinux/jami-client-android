@@ -104,6 +104,7 @@ along with this program; if not, write to the Free Software
     <string name="notif_channel_calls">Calls</string>
     <string name="notif_channel_messages">Messages</string>
     <string name="notif_channel_requests">Requests</string>
+    <string name="notif_mark_as_read">Mark as read</string>
 
     <!-- Call Fragment -->
     <string name="you_txt_prefix">You:</string>
