@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a42497e_78a0c8f4",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-01-03T20:07:12Z",
+      "side": 1,
+      "message": "What if first interaction between users is a call instead of a text message?",
+      "range": {
+        "startLine": 163,
+        "startChar": 12,
+        "endLine": 165,
+        "endChar": 13
+      },
+      "revId": "6a31e9586997a43716dc0a23d76707f11758429f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
