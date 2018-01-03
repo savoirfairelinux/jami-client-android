@@ -302,7 +302,7 @@ public class Account {
         if (confirmed) {
             callContact.setStatus(CallContact.Status.CONFIRMED);
         } else {
-            callContact.setStatus(CallContact.Status.NO_REQUEST);
+            callContact.setStatus(CallContact.Status.REQUEST_SENT);
         }
     }
     public void removeContact(String id, boolean banned) {
