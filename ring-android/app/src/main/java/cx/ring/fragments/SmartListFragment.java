@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cx.ring.R;
+import cx.ring.account.AccountWizard;
 import cx.ring.adapters.SmartListAdapter;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
@@ -540,6 +541,12 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     @Override
     public void goToQRActivity() {
         QRCodeScannerActivity.startQRCodeScanWithFragmentReceiver(this);
+    }
+
+    @Override
+    public void goToWizardActivity() {
+        getActivity().startActivity(new Intent(getActivity(), AccountWizard.class));
+        getActivity().finish();
     }
 
     @Override

@@ -264,6 +264,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     }
 
     private void loadConversations() {
+        if (mAccountService.getCurrentAccount() == null) {
+            Log.w(TAG, "loadConversations: Not able to get current account, launching wizard...");
+            getView().goToWizardActivity();
+            return;
+        }
         if (mAccountService.getCurrentAccount().isSip()) {
             loadContacts();
         } else {
