@@ -38,19 +38,25 @@ public class RingLinkAccountPresenter extends RootPresenter<RingLinkAccountView>
 
     public void passwordChanged(String password) {
         mRingAccountViewModel.setPassword(password);
-        checkForms();
+        showHideLinkButton();
     }
 
     public void pinChanged(String pin) {
         mRingAccountViewModel.setPin(pin);
-        checkForms();
+        showHideLinkButton();
     }
 
     public void linkClicked() {
-        getView().createAccount(mRingAccountViewModel);
+        if (isFormValid()) {
+            getView().createAccount(mRingAccountViewModel);
+        }
     }
 
-    private void checkForms() {
-        getView().enableLinkButton(!mRingAccountViewModel.getPin().isEmpty() && !mRingAccountViewModel.getPassword().isEmpty());
+    private void showHideLinkButton() {
+        getView().enableLinkButton(isFormValid());
+    }
+
+    private boolean isFormValid() {
+        return !mRingAccountViewModel.getPin().isEmpty() && !mRingAccountViewModel.getPassword().isEmpty();
     }
 }
