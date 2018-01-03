@@ -21,6 +21,7 @@ package cx.ring.tv.search;
 
 import javax.inject.Inject;
 
+import cx.ring.daemon.Blob;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.RingError;
@@ -29,9 +30,12 @@ import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.HardwareService;
+import cx.ring.services.VCardService;
 import cx.ring.utils.NameLookupInputHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.VCardUtils;
+import ezvcard.VCard;
 
 
 public class RingSearchPresenter extends RootPresenter<RingSearchView> implements Observer<ServiceEvent> {
@@ -40,6 +44,7 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> implement
 
     private AccountService mAccountService;
     private HardwareService mHardwareService;
+    private VCardService mVCardService;
 
     private NameLookupInputHandler mNameLookupInputHandler;
     private String mLastBlockchainQuery = null;
@@ -47,9 +52,11 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> implement
 
     @Inject
     public RingSearchPresenter(AccountService accountService,
-                               HardwareService hardwareService) {
+                               HardwareService hardwareService,
+                               VCardService vCardService) {
         this.mAccountService = accountService;
         this.mHardwareService = hardwareService;
+        this.mVCardService = vCardService;
     }
 
     @Override
@@ -155,6 +162,15 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> implement
             return;
         }
 
-        getView().startCall(mAccountService.getCurrentAccount().getAccountID(), contact.getPhones().get(0).getNumber().toString());
+        String accountId = mAccountService.getCurrentAccount().getAccountID();
+
+        if (contact.getStatus() == CallContact.Status.NO_REQUEST) {
+            VCard vCard = mVCardService.loadSmallVCard(accountId);
+            mAccountService.sendTrustRequest(accountId,
+                    contact.getPhones().get(0).getNumber().getRawRingId(),
+                    Blob.fromString(VCardUtils.vcardToString(vCard)));
+        }
+
+        getView().startCall(accountId, contact.getPhones().get(0).getNumber().toString());
     }
 }
