@@ -33,6 +33,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
+import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.navigation.RingNavigationViewModel;
@@ -40,6 +41,7 @@ import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PresenceService;
+import cx.ring.tv.model.TVContactRequestViewModel;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -56,6 +58,7 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     private HardwareService mHardwareService;
     private ExecutorService mExecutor;
     private ArrayList<Conversation> mConversations;
+    private ArrayList<TVContactRequestViewModel> mContactRequestViewModels;
 
     @Inject
     public MainPresenter(AccountService accountService,
@@ -153,6 +156,30 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
         });
 
         subscribePresence();
+    }
+
+    public void loadContactRequest() {
+        List<TrustRequest> requests = mAccountService.getCurrentAccount().getRequests();
+        mContactRequestViewModels = new ArrayList<>();
+
+        for (TrustRequest request : requests) {
+
+            byte[] photo;
+            if (request.getVCard().getPhotos().isEmpty()) {
+                photo = null;
+            } else {
+                photo = request.getVCard().getPhotos().get(0).getData();
+            }
+
+            TVContactRequestViewModel tvContactRequestVM = new TVContactRequestViewModel(request.getContactId(),
+                    request.getDisplayname(),
+                    request.getFullname(),
+                    photo,
+                    request.getMessage());
+            mContactRequestViewModels.add(tvContactRequestVM);
+        }
+
+        getView().showContactRequests(mContactRequestViewModels);
     }
 
     public void contactClicked(TVListViewModel item) {
