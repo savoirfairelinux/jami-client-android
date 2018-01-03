@@ -28,6 +28,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -222,6 +223,14 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         AlertDialog alertDialog = builder.create();
         alertDialog.setOwnerActivity(ownerActivity);
         return alertDialog;
+    }
+
+    @Override
+    public void goToWizardActivity() {
+        Intent intent = new Intent(this, AccountWizard.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     @Override
