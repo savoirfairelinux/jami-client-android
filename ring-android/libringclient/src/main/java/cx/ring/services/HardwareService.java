@@ -31,7 +31,6 @@ import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
-import cx.ring.daemon.VideoCallback;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
@@ -46,8 +45,6 @@ public abstract class HardwareService extends Observable {
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
-
-    private VideoCallback mVideoCallback;
 
     public abstract void initVideo();
 
@@ -88,14 +85,6 @@ public abstract class HardwareService extends Observable {
     public abstract int getCameraCount();
 
     public abstract boolean isPreviewFromFrontCamera();
-
-    public HardwareService() {
-        mVideoCallback = new VideoCallbackHandler();
-    }
-
-    public VideoCallback getCallbackHandler() {
-        return mVideoCallback;
-    }
 
     public void connectivityChanged() {
         FutureUtils.executeDaemonThreadCallable(
@@ -195,43 +184,6 @@ public abstract class HardwareService extends Observable {
     public void setDefaultVideoDevice(String deviceId) {
         Log.d(TAG, "setDefaultVideoDevice: " + deviceId);
         RingserviceJNI.setDefaultDevice(deviceId);
-    }
-
-    private class VideoCallbackHandler extends VideoCallback {
-
-        public VideoCallbackHandler() {
-        }
-
-        @Override
-        public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
-            HardwareService.this.decodingStarted(id, shmPath, width, height, isMixer);
-        }
-
-        @Override
-        public void decodingStopped(String id, String shmPath, boolean isMixer) {
-            HardwareService.this.decodingStopped(id, shmPath, isMixer);
-        }
-
-        @Override
-        public void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates) {
-            HardwareService.this.getCameraInfo(camId, formats, sizes, rates);
-        }
-
-        @Override
-        public void setParameters(String camId, int format, int width, int height, int rate) {
-            HardwareService.this.setParameters(camId, format, width, height, rate);
-        }
-
-        @Override
-        public void startCapture(String camId) {
-            Log.d(TAG, "startCapture: " + camId);
-            HardwareService.this.startCapture(camId);
-        }
-
-        @Override
-        public void stopCapture() {
-            HardwareService.this.stopCapture();
-        }
     }
 
 }

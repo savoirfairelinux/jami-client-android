@@ -27,7 +27,6 @@ import java.util.concurrent.ExecutorService;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cx.ring.daemon.PresenceCallback;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.VectMap;
@@ -47,21 +46,15 @@ public class PresenceService extends Observable {
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
-    private PresenceCallbackHandler mCallbackHandler;
-
     Map<String, Boolean> mPresenceMap;
 
     public PresenceService() {
-        mCallbackHandler = new PresenceCallbackHandler();
         mPresenceMap = new HashMap<>();
-    }
-
-    public PresenceCallbackHandler getCallbackHandler() {
-        return mCallbackHandler;
     }
 
     /**
      * Check service cache for latest presence value
+     *
      * @param uri URI of the contact
      * @return true if this URI is online according to latest daemon update
      */
@@ -146,55 +139,49 @@ public class PresenceService extends Observable {
         );
     }
 
-    class PresenceCallbackHandler extends PresenceCallback {
+    public void newServerSubscriptionRequest(String remote) {
+        Log.d(TAG, "newServerSubscriptionRequest: " + remote);
 
-        @Override
-        public void newServerSubscriptionRequest(String remote) {
-            Log.d(TAG, "newServerSubscriptionRequest: " + remote);
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.NEW_SERVER_SUBSCRIPTION_REQUEST);
+        event.addEventInput(ServiceEvent.EventInput.REMOTE, remote);
+        notifyObservers(event);
+    }
 
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.NEW_SERVER_SUBSCRIPTION_REQUEST);
-            event.addEventInput(ServiceEvent.EventInput.REMOTE, remote);
-            notifyObservers(event);
-        }
+    public void serverError(String accountId, String error, String message) {
+        Log.d(TAG, "serverError: " + accountId + ", " + error + ", " + message);
 
-        @Override
-        public void serverError(String accountId, String error, String message) {
-            Log.d(TAG, "serverError: " + accountId + ", " + error + ", " + message);
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.SERVER_ERROR);
+        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+        event.addEventInput(ServiceEvent.EventInput.ERROR, error);
+        event.addEventInput(ServiceEvent.EventInput.MESSAGE, message);
+        notifyObservers(event);
+    }
 
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.SERVER_ERROR);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.ERROR, error);
-            event.addEventInput(ServiceEvent.EventInput.MESSAGE, message);
-            notifyObservers(event);
-        }
+    public void newBuddyNotification(String accountId, String buddyUri, int status, String lineStatus) {
+        Log.d(TAG, "newBuddyNotification: " + accountId + ", " + buddyUri + ", " + status + ", " + lineStatus);
 
-        @Override
-        public void newBuddyNotification(String accountId, String buddyUri, int status, String lineStatus) {
-            Log.d(TAG, "newBuddyNotification: " + accountId + ", " + buddyUri + ", " + status + ", " + lineStatus);
+        mPresenceMap.put(CallContact.PREFIX_RING + buddyUri, status == 1);
 
-            mPresenceMap.put(CallContact.PREFIX_RING + buddyUri, status == 1);
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.NEW_BUDDY_NOTIFICATION);
+        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+        event.addEventInput(ServiceEvent.EventInput.BUDDY_URI, buddyUri);
+        event.addEventInput(ServiceEvent.EventInput.STATE, status);
+        event.addEventInput(ServiceEvent.EventInput.LINE_STATE, lineStatus);
+        notifyObservers(event);
+    }
 
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.NEW_BUDDY_NOTIFICATION);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.BUDDY_URI, buddyUri);
-            event.addEventInput(ServiceEvent.EventInput.STATE, status);
-            event.addEventInput(ServiceEvent.EventInput.LINE_STATE, lineStatus);
-            notifyObservers(event);
-        }
+    public void subscriptionStateChanged(String accountId, String buddyUri, int state) {
+        Log.d(TAG, "subscriptionStateChanged: " + accountId + ", " + buddyUri + ", " + state);
 
-        @Override
-        public void subscriptionStateChanged(String accountId, String buddyUri, int state) {
-            Log.d(TAG, "subscriptionStateChanged: " + accountId + ", " + buddyUri + ", " + state);
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.SUBSCRIPTION_STATE_CHANGED);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.BUDDY_URI, buddyUri);
-            event.addEventInput(ServiceEvent.EventInput.STATE, state);
-            notifyObservers(event);
-        }
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.SUBSCRIPTION_STATE_CHANGED);
+        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+        event.addEventInput(ServiceEvent.EventInput.BUDDY_URI, buddyUri);
+        event.addEventInput(ServiceEvent.EventInput.STATE, state);
+        notifyObservers(event);
     }
 }
+

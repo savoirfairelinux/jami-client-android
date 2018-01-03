@@ -33,7 +33,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.daemon.Blob;
-import cx.ring.daemon.ConfigurationCallback;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
@@ -45,7 +44,6 @@ import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.TrustRequest;
-import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
@@ -97,18 +95,9 @@ public class AccountService extends Observable {
 
     private Account mCurrentAccount;
     private List<Account> mAccountList = new ArrayList<>();
-    private ConfigurationCallbackHandler mCallbackHandler;
     private boolean mHasSipAccount;
     private boolean mHasRingAccount;
     private AtomicBoolean mAccountsLoaded = new AtomicBoolean(false);
-
-    public AccountService() {
-        mCallbackHandler = new ConfigurationCallbackHandler();
-    }
-
-    public ConfigurationCallbackHandler getCallbackHandler() {
-        return mCallbackHandler;
-    }
 
     /**
      * @return true if at least one of the loaded accounts is a SIP one
@@ -1188,265 +1177,241 @@ public class AccountService extends Observable {
         );
     }
 
-    class ConfigurationCallbackHandler extends ConfigurationCallback {
+    public void volumeChanged(String device, int value) {
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VOLUME_CHANGED);
+        event.addEventInput(ServiceEvent.EventInput.DEVICE, device);
+        event.addEventInput(ServiceEvent.EventInput.VALUE, value);
+        notifyObservers(event);
+    }
 
-        @Override
-        public void volumeChanged(String device, int value) {
-            Log.d(TAG, "volume changed");
-            super.volumeChanged(device, value);
+    public void accountsChanged() {
+        String currentAccountId = mCurrentAccount == null ? "" : mCurrentAccount.getAccountID();
 
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VOLUME_CHANGED);
-            event.addEventInput(ServiceEvent.EventInput.DEVICE, device);
-            event.addEventInput(ServiceEvent.EventInput.VALUE, value);
-            notifyObservers(event);
+        // Accounts have changed in Daemon, we have to update our local cache
+        refreshAccountsCacheFromDaemon();
+
+        // if there was a current account we restore it according to the new list
+        Account currentAccount = getAccount(currentAccountId);
+        if (currentAccount != null) {
+            mCurrentAccount = currentAccount;
+        } else if (!mAccountList.isEmpty()) {
+            // no current account, by default it will be the first one
+            mCurrentAccount = mAccountList.get(0);
+        } else {
+            mCurrentAccount = null;
         }
 
-        @Override
-        public void accountsChanged() {
-            super.accountsChanged();
-            Log.d(TAG, "accounts changed");
-            String currentAccountId = mCurrentAccount == null ? "" : mCurrentAccount.getAccountID();
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNTS_CHANGED);
+        notifyObservers(event);
+    }
 
-            // Accounts have changed in Daemon, we have to update our local cache
-            refreshAccountsCacheFromDaemon();
+    public void stunStatusFailure(String accountId) {
+        Log.d(TAG, "stun status failure: " + accountId);
 
-            // if there was a current account we restore it according to the new list
-            Account currentAccount = getAccount(currentAccountId);
-            if (currentAccount != null) {
-                mCurrentAccount = currentAccount;
-            } else if (!mAccountList.isEmpty()) {
-                // no current account, by default it will be the first one
-                mCurrentAccount = mAccountList.get(0);
-            } else {
-                mCurrentAccount = null;
-            }
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.STUN_STATUS_FAILURE);
+        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+        notifyObservers(event);
+    }
 
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNTS_CHANGED);
-            notifyObservers(event);
+    public void registrationStateChanged(String accountId, String newState, int code, String detailString) {
+        Log.d(TAG, "stun status registrationStateChanged: " + accountId + ", " + newState + ", " + code + ", " + detailString);
+
+        Account account = getAccount(accountId);
+        if (account == null) {
+            return;
+        }
+        String oldState = account.getRegistrationState();
+        if (oldState.contentEquals(AccountConfig.STATE_INITIALIZING) &&
+                !newState.contentEquals(AccountConfig.STATE_INITIALIZING)) {
+            account.setDetails(getAccountDetails(account.getAccountID()));
+            account.setCredentials(getCredentials(account.getAccountID()));
+            account.setDevices(getKnownRingDevices(account.getAccountID()));
+            account.setVolatileDetails(getVolatileAccountDetails(account.getAccountID()));
+        } else {
+            account.setRegistrationState(newState, code);
         }
 
-        @Override
-        public void stunStatusFailure(String accountId) {
-            Log.d(TAG, "stun status failure: " + accountId);
-
+        if (!oldState.equals(newState)) {
             setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.STUN_STATUS_FAILURE);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTRATION_STATE_CHANGED);
             event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+            event.addEventInput(ServiceEvent.EventInput.STATE, newState);
+            event.addEventInput(ServiceEvent.EventInput.DETAIL_CODE, code);
+            event.addEventInput(ServiceEvent.EventInput.DETAIL_STRING, detailString);
             notifyObservers(event);
         }
+    }
 
-        @Override
-        public void registrationStateChanged(String accountId, String newState, int code, String detailString) {
-            Log.d(TAG, "stun status registrationStateChanged: " + accountId + ", " + newState + ", " + code + ", " + detailString);
+    public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
+        Log.d(TAG, "accountMessageStatusChanged: " + accountId + ", " + messageId + ", " + to + ", " + status);
 
-            Account account = getAccount(accountId);
-            if (account == null) {
-                return;
-            }
-            String oldState = account.getRegistrationState();
-            if (oldState.contentEquals(AccountConfig.STATE_INITIALIZING) &&
-                    !newState.contentEquals(AccountConfig.STATE_INITIALIZING)) {
-                account.setDetails(getAccountDetails(account.getAccountID()));
-                account.setCredentials(getCredentials(account.getAccountID()));
-                account.setDevices(getKnownRingDevices(account.getAccountID()));
-                account.setVolatileDetails(getVolatileAccountDetails(account.getAccountID()));
-            } else {
-                account.setRegistrationState(newState, code);
-            }
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNT_MESSAGE_STATUS_CHANGED);
+        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+        event.addEventInput(ServiceEvent.EventInput.MESSAGE_ID, messageId);
+        event.addEventInput(ServiceEvent.EventInput.TO, to);
+        event.addEventInput(ServiceEvent.EventInput.STATE, status);
+        notifyObservers(event);
+    }
 
-            if (!oldState.equals(newState)) {
-                setChanged();
-                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTRATION_STATE_CHANGED);
-                event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-                event.addEventInput(ServiceEvent.EventInput.STATE, newState);
-                event.addEventInput(ServiceEvent.EventInput.DETAIL_CODE, code);
-                event.addEventInput(ServiceEvent.EventInput.DETAIL_STRING, detailString);
-                notifyObservers(event);
-            }
-        }
+    public void errorAlert(int alert) {
+        Log.d(TAG, "errorAlert : " + alert);
 
-        @Override
-        public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
-            Log.d(TAG, "accountMessageStatusChanged: " + accountId + ", " + messageId + ", " + to + ", " + status);
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ERROR_ALERT);
+        event.addEventInput(ServiceEvent.EventInput.ALERT, alert);
+        notifyObservers(event);
+    }
 
+    public void knownDevicesChanged(String accountId, StringMap devices) {
+        Log.d(TAG, "knownDevicesChanged: " + accountId + ", " + devices);
+
+        Account accountChanged = getAccount(accountId);
+        if (accountChanged != null) {
+            accountChanged.setDevices(devices.toNative());
             setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNT_MESSAGE_STATUS_CHANGED);
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.KNOWN_DEVICES_CHANGED);
             event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.MESSAGE_ID, messageId);
-            event.addEventInput(ServiceEvent.EventInput.TO, to);
-            event.addEventInput(ServiceEvent.EventInput.STATE, status);
+            event.addEventInput(ServiceEvent.EventInput.DEVICES, devices);
             notifyObservers(event);
         }
+    }
 
-        @Override
-        public void errorAlert(int alert) {
-            Log.d(TAG, "errorAlert : " + alert);
+    public void exportOnRingEnded(String accountId, int code, String pin) {
+        Log.d(TAG, "exportOnRingEnded: " + accountId + ", " + code + ", " + pin);
 
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ERROR_ALERT);
-            event.addEventInput(ServiceEvent.EventInput.ALERT, alert);
-            notifyObservers(event);
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.EXPORT_ON_RING_ENDED);
+        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+        event.addEventInput(ServiceEvent.EventInput.CODE, code);
+        event.addEventInput(ServiceEvent.EventInput.PIN, pin);
+        notifyObservers(event);
+    }
+
+    public void nameRegistrationEnded(String accountId, int state, String name) {
+        Log.d(TAG, "nameRegistrationEnded: " + accountId + ", " + state + ", " + name);
+
+        Account acc = getAccount(accountId);
+        if (acc == null) {
+            Log.w(TAG, "Can't find account for name registration callback");
+            return;
         }
 
-        @Override
-        public void knownDevicesChanged(String accountId, StringMap devices) {
-            Log.d(TAG, "knownDevicesChanged: " + accountId + ", " + devices);
+        acc.registeringUsername = false;
+        acc.setVolatileDetails(getVolatileAccountDetails(acc.getAccountID()));
+        acc.setDetail(ConfigKey.ACCOUNT_REGISTERED_NAME, name);
 
-            Account accountChanged = getAccount(accountId);
-            if (accountChanged != null) {
-                accountChanged.setDevices(devices.toNative());
-                setChanged();
-                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.KNOWN_DEVICES_CHANGED);
-                event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-                event.addEventInput(ServiceEvent.EventInput.DEVICES, devices);
-                notifyObservers(event);
-            }
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.NAME_REGISTRATION_ENDED);
+        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+        event.addEventInput(ServiceEvent.EventInput.STATE, state);
+        event.addEventInput(ServiceEvent.EventInput.NAME, name);
+        notifyObservers(event);
+    }
+
+    public void migrationEnded(String accountId, String state) {
+        Log.d(TAG, "migrationEnded: " + accountId + ", " + state);
+
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.MIGRATION_ENDED);
+        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+        event.addEventInput(ServiceEvent.EventInput.STATE, state);
+        notifyObservers(event);
+    }
+
+    public void deviceRevocationEnded(String accountId, String device, int state) {
+        Log.d(TAG, "deviceRevocationEnded: " + accountId + ", " + device + ", " + state);
+
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DEVICE_REVOCATION_ENDED);
+        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+        event.addEventInput(ServiceEvent.EventInput.DEVICE, device);
+        event.addEventInput(ServiceEvent.EventInput.STATE, state);
+        notifyObservers(event);
+    }
+
+    public void incomingTrustRequest(String accountId, String from, Blob message, long received) {
+        Log.d(TAG, "incomingTrustRequest: " + accountId + ", " + from + ", " + message + ", " + received);
+
+        Account account = getAccount(accountId);
+        if (account != null) {
+            TrustRequest request = new TrustRequest(accountId, from, received, message.toJavaString());
+            account.addRequest(request);
+            lookupAddress(accountId, "", from);
         }
+    }
 
-        @Override
-        public void exportOnRingEnded(String accountId, int code, String pin) {
-            Log.d(TAG, "exportOnRingEnded: " + accountId + ", " + code + ", " + pin);
 
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.EXPORT_ON_RING_ENDED);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.CODE, code);
-            event.addEventInput(ServiceEvent.EventInput.PIN, pin);
-            notifyObservers(event);
+    public void contactAdded(String accountId, String uri, boolean confirmed) {
+        Log.d(TAG, "contactAdded: " + accountId + ", " + uri + ", " + confirmed);
+
+        Account account = getAccount(accountId);
+        if (account == null) {
+            Log.d(TAG, "contactAdded: unknown account" + accountId);
+            return;
         }
+        account.addContact(uri, confirmed);
 
-        @Override
-        public void nameRegistrationEnded(String accountId, int state, String name) {
-            Log.d(TAG, "nameRegistrationEnded: " + accountId + ", " + state + ", " + name);
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_ADDED);
+        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+        event.addEventInput(ServiceEvent.EventInput.CONFIRMED, confirmed);
+        notifyObservers(event);
+    }
 
-            Account acc = getAccount(accountId);
-            if (acc == null) {
-                Log.w(TAG, "Can't find account for name registration callback");
-                return;
-            }
+    public void contactRemoved(String accountId, String uri, boolean banned) {
+        Log.d(TAG, "contactRemoved: " + accountId + ", " + uri + ", " + banned);
 
-            acc.registeringUsername = false;
-            acc.setVolatileDetails(getVolatileAccountDetails(acc.getAccountID()));
-            acc.setDetail(ConfigKey.ACCOUNT_REGISTERED_NAME, name);
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.NAME_REGISTRATION_ENDED);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.STATE, state);
-            event.addEventInput(ServiceEvent.EventInput.NAME, name);
-            notifyObservers(event);
+        Account account = getAccount(accountId);
+        if (account == null) {
+            Log.d(TAG, "contactRemoved: unknown account" + accountId);
+            return;
         }
+        account.removeContact(uri, banned);
 
-        @Override
-        public void migrationEnded(String accountId, String state) {
-            Log.d(TAG, "migrationEnded: " + accountId + ", " + state);
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_REMOVED);
+        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+        event.addEventInput(ServiceEvent.EventInput.BANNED, banned);
+        notifyObservers(event);
+    }
 
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.MIGRATION_ENDED);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.STATE, state);
-            notifyObservers(event);
-        }
+    public void registeredNameFound(String accountId, int state, String address, String name) {
+        Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
 
-        @Override
-        public void deviceRevocationEnded(String accountId, String device, int state) {
-            Log.d(TAG, "deviceRevocationEnded: " + accountId + ", " + device + ", " + state);
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DEVICE_REVOCATION_ENDED);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.DEVICE, device);
-            event.addEventInput(ServiceEvent.EventInput.STATE, state);
-            notifyObservers(event);
-        }
-
-        @Override
-        public void incomingTrustRequest(String accountId, String from, Blob message, long received) {
-            Log.d(TAG, "incomingTrustRequest: " + accountId + ", " + from + ", " + message + ", " + received);
-
-            Account account = getAccount(accountId);
-            if (account != null) {
-                TrustRequest request = new TrustRequest(accountId, from, received, message.toJavaString());
-                account.addRequest(request);
-                lookupAddress(accountId, "", from);
-            }
-        }
-
-
-        @Override
-        public void contactAdded(String accountId, String uri, boolean confirmed) {
-            Log.d(TAG, "contactAdded: " + accountId + ", " + uri + ", " + confirmed);
-
-            Account account = getAccount(accountId);
-            if (account == null) {
-                Log.d(TAG, "contactAdded: unknown account" + accountId);
-                return;
-            }
-            account.addContact(uri, confirmed);
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_ADDED);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.CONFIRMED, confirmed);
-            notifyObservers(event);
-        }
-
-        @Override
-        public void contactRemoved(String accountId, String uri, boolean banned) {
-            Log.d(TAG, "contactRemoved: " + accountId + ", " + uri + ", " + banned);
-
-            Account account = getAccount(accountId);
-            if (account == null) {
-                Log.d(TAG, "contactRemoved: unknown account" + accountId);
-                return;
-            }
-            account.removeContact(uri, banned);
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_REMOVED);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.BANNED, banned);
-            notifyObservers(event);
-        }
-
-        @Override
-        public void registeredNameFound(String accountId, int state, String address, String name) {
-            Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
-
-            Account account = getAccount(accountId);
-            if (account != null) {
-                if (state == 0) {
-                    CallContact contact = account.getContact(address);
-                    if (contact != null) {
-                        contact.setUsername(name);
-                    }
-                }
-                TrustRequest request = account.getRequest(address);
-                if (request != null) {
-                    Log.d(TAG, "registeredNameFound: updating TrustRequest " + name);
-                    boolean resolved = request.isNameResolved();
-                    request.setUsername(name);
-                    if (!resolved) {
-                        Log.d(TAG, "registeredNameFound: TrustRequest resolved " + name);
-                        setChanged();
-                        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
-                        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-                        event.addEventInput(ServiceEvent.EventInput.FROM, request.getContactId());
-                        notifyObservers(event);
-                    }
+        Account account = getAccount(accountId);
+        if (account != null) {
+            if (state == 0) {
+                CallContact contact = account.getContact(address);
+                if (contact != null) {
+                    contact.setUsername(name);
                 }
             }
-
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTERED_NAME_FOUND);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.STATE, state);
-            event.addEventInput(ServiceEvent.EventInput.ADDRESS, address);
-            event.addEventInput(ServiceEvent.EventInput.NAME, name);
-            notifyObservers(event);
+            TrustRequest request = account.getRequest(address);
+            if (request != null) {
+                Log.d(TAG, "registeredNameFound: updating TrustRequest " + name);
+                boolean resolved = request.isNameResolved();
+                request.setUsername(name);
+                if (!resolved) {
+                    Log.d(TAG, "registeredNameFound: TrustRequest resolved " + name);
+                    setChanged();
+                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
+                    event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+                    event.addEventInput(ServiceEvent.EventInput.FROM, request.getContactId());
+                    notifyObservers(event);
+                }
+            }
         }
 
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTERED_NAME_FOUND);
+        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+        event.addEventInput(ServiceEvent.EventInput.STATE, state);
+        event.addEventInput(ServiceEvent.EventInput.ADDRESS, address);
+        event.addEventInput(ServiceEvent.EventInput.NAME, name);
+        notifyObservers(event);
     }
 }

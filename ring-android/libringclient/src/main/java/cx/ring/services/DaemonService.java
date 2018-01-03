@@ -35,6 +35,7 @@ import cx.ring.daemon.PresenceCallback;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
+import cx.ring.daemon.UintVect;
 import cx.ring.daemon.VideoCallback;
 import cx.ring.utils.Log;
 
@@ -54,8 +55,26 @@ public class DaemonService {
     @Inject
     HistoryService mHistoryService;
 
-    private final SystemInfoCallbacks mSystemInfoCallbacks;
+    @Inject
+    protected CallService mCallService;
 
+    @Inject
+    protected ConferenceService mConferenceService;
+
+    @Inject
+    protected HardwareService mHardwareService;
+
+    @Inject
+    protected PresenceService mPresenceService;
+
+    @Inject
+    protected AccountService mAccountService;
+
+    private final SystemInfoCallbacks mSystemInfoCallbacks;
+    private DaemonVideoCallback mHardwareCallback;
+    private DaemonPresenceCallback mPresenceCallback;
+    private DaemonCallAndConferenceCallback mCallAndConferenceCallback;
+    private DaemonConfigurationCallback mConfigurationCallback;
     private boolean mDaemonStarted = false;
 
     public DaemonService(SystemInfoCallbacks systemInfoCallbacks) {
@@ -70,32 +89,20 @@ public class DaemonService {
         void getDeviceName(StringVect ret);
     }
 
-    public Callback getDaemonCallbackHandler(CallService.CallbackHandler callCallbackHandler,
-                                             ConferenceService.ConferenceCallbackHandler confCallbackHandler) {
-        DaemonCallback callbackHandler = new DaemonCallback();
-        callbackHandler.setCallbackHandler(callCallbackHandler);
-        callbackHandler.setConferenceCallbackHandler(confCallbackHandler);
-        return callbackHandler;
-    }
-
-    public ConfigurationCallback getDaemonConfigurationCallbackHandler(AccountService.ConfigurationCallbackHandler accountCallbackHandler) {
-        DaemonConfigurationCallback callbackHandler = new DaemonConfigurationCallback();
-        callbackHandler.setAccountCallbackHandler(accountCallbackHandler);
-        return callbackHandler;
-    }
-
     public boolean isStarted() {
         return mDaemonStarted;
     }
 
-    public void startDaemon(final Callback callManagerCallback,
-                            final ConfigurationCallback configurationManagerCallback,
-                            final PresenceCallback presenceManagerCallBack,
-                            final VideoCallback videoManagerCallBack) {
+    public void startDaemon() {
+
+        mCallAndConferenceCallback = new DaemonCallAndConferenceCallback();
+        mHardwareCallback = new DaemonVideoCallback();
+        mPresenceCallback = new DaemonPresenceCallback();
+        mConfigurationCallback = new DaemonConfigurationCallback();
 
         if (!mDaemonStarted) {
             Log.i(TAG, "Starting daemon ...");
-            Ringservice.init(configurationManagerCallback, callManagerCallback, presenceManagerCallBack, videoManagerCallBack);
+            Ringservice.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mHardwareCallback);
             startRingServicePolling();
             mDaemonStarted = true;
             Log.i(TAG, "DaemonService started");
@@ -128,30 +135,25 @@ public class DaemonService {
     }
 
     class DaemonConfigurationCallback extends ConfigurationCallback {
-        private AccountService.ConfigurationCallbackHandler mAccountCallbackHandler;
-
-        void setAccountCallbackHandler(AccountService.ConfigurationCallbackHandler callbackHandler) {
-            mAccountCallbackHandler = callbackHandler;
-        }
 
         @Override
         public void volumeChanged(String device, int value) {
-            mAccountCallbackHandler.volumeChanged(device, value);
+            mAccountService.volumeChanged(device, value);
         }
 
         @Override
         public void accountsChanged() {
-            mAccountCallbackHandler.accountsChanged();
+            mAccountService.accountsChanged();
         }
 
         @Override
         public void stunStatusFailure(String accountId) {
-            mAccountCallbackHandler.stunStatusFailure(accountId);
+            mAccountService.stunStatusFailure(accountId);
         }
 
         @Override
         public void registrationStateChanged(String accountId, String newState, int code, String detailString) {
-            mAccountCallbackHandler.registrationStateChanged(accountId, newState, code, detailString);
+            mAccountService.registrationStateChanged(accountId, newState, code, detailString);
         }
 
         @Override
@@ -166,7 +168,7 @@ public class DaemonService {
 
         @Override
         public void errorAlert(int alert) {
-            mAccountCallbackHandler.errorAlert(alert);
+            mAccountService.errorAlert(alert);
         }
 
         @Override
@@ -186,126 +188,148 @@ public class DaemonService {
 
         @Override
         public void knownDevicesChanged(String accountId, StringMap devices) {
-            mAccountCallbackHandler.knownDevicesChanged(accountId, devices);
+            mAccountService.knownDevicesChanged(accountId, devices);
         }
 
         @Override
         public void exportOnRingEnded(String accountId, int code, String pin) {
-            mAccountCallbackHandler.exportOnRingEnded(accountId, code, pin);
+            mAccountService.exportOnRingEnded(accountId, code, pin);
         }
 
         @Override
         public void nameRegistrationEnded(String accountId, int state, String name) {
-            mAccountCallbackHandler.nameRegistrationEnded(accountId, state, name);
+            mAccountService.nameRegistrationEnded(accountId, state, name);
         }
 
         @Override
         public void registeredNameFound(String accountId, int state, String address, String name) {
-            mAccountCallbackHandler.registeredNameFound(accountId, state, address, name);
+            mAccountService.registeredNameFound(accountId, state, address, name);
         }
 
         @Override
         public void migrationEnded(String accountId, String state) {
-            mAccountCallbackHandler.migrationEnded(accountId, state);
+            mAccountService.migrationEnded(accountId, state);
         }
 
         @Override
         public void deviceRevocationEnded(String accountId, String device, int state) {
-            mAccountCallbackHandler.deviceRevocationEnded(accountId, device, state);
+            mAccountService.deviceRevocationEnded(accountId, device, state);
         }
 
         @Override
         public void incomingTrustRequest(String accountId, String from, Blob message, long received) {
-            mAccountCallbackHandler.incomingTrustRequest(accountId, from, message, received);
+            mAccountService.incomingTrustRequest(accountId, from, message, received);
         }
 
         @Override
         public void contactAdded(String accountId, String uri, boolean confirmed) {
-            mAccountCallbackHandler.contactAdded(accountId, uri, confirmed);
+            mAccountService.contactAdded(accountId, uri, confirmed);
         }
 
         @Override
         public void contactRemoved(String accountId, String uri, boolean banned) {
-            mAccountCallbackHandler.contactRemoved(accountId, uri, banned);
+            mAccountService.contactRemoved(accountId, uri, banned);
         }
     }
 
-    class DaemonCallback extends Callback {
-
-        private CallService.CallbackHandler mCallbackHandler;
-        private ConferenceService.ConferenceCallbackHandler mConferenceCallbackHandler;
-
-        void setCallbackHandler(CallService.CallbackHandler callbackHandler) {
-            mCallbackHandler = callbackHandler;
-        }
-
-        void setConferenceCallbackHandler(ConferenceService.ConferenceCallbackHandler callbackHandler) {
-            mConferenceCallbackHandler = callbackHandler;
-        }
+    class DaemonCallAndConferenceCallback extends Callback {
 
         @Override
         public void callStateChanged(String callId, String newState, int detailCode) {
-            mCallbackHandler.callStateChanged(callId, newState, detailCode);
+            mCallService.callStateChanged(callId, newState, detailCode);
         }
 
         @Override
         public void incomingCall(String accountId, String callId, String from) {
-            mCallbackHandler.incomingCall(accountId, callId, from);
+            mCallService.incomingCall(accountId, callId, from);
         }
 
         @Override
         public void incomingMessage(String callId, String from, StringMap messages) {
-            mCallbackHandler.incomingMessage(callId, from, messages);
+            mCallService.incomingMessage(callId, from, messages);
         }
 
         @Override
         public void conferenceCreated(final String confId) {
-            mConferenceCallbackHandler.conferenceCreated(confId);
+            mConferenceService.conferenceCreated(confId);
         }
 
         @Override
         public void conferenceRemoved(String confId) {
-            mConferenceCallbackHandler.conferenceRemoved(confId);
+            mConferenceService.conferenceRemoved(confId);
         }
 
         @Override
         public void conferenceChanged(String confId, String state) {
-            mConferenceCallbackHandler.conferenceChanged(confId, state);
+            mConferenceService.conferenceChanged(confId, state);
         }
 
         @Override
         public void recordPlaybackFilepath(String id, String filename) {
-            mCallbackHandler.recordPlaybackFilepath(id, filename);
+            mCallService.recordPlaybackFilepath(id, filename);
         }
 
         @Override
         public void onRtcpReportReceived(String callId, IntegerMap stats) {
-            mCallbackHandler.onRtcpReportReceived(callId, stats);
+            mCallService.onRtcpReportReceived(callId, stats);
         }
 
     }
 
     class DaemonPresenceCallback extends PresenceCallback {
-        private PresenceService.PresenceCallbackHandler mCallbackHandler;
 
         @Override
         public void newServerSubscriptionRequest(String remote) {
-            mCallbackHandler.newServerSubscriptionRequest(remote);
+            mPresenceService.newServerSubscriptionRequest(remote);
         }
 
         @Override
         public void serverError(String accountId, String error, String message) {
-            mCallbackHandler.serverError(accountId, error, message);
+            mPresenceService.serverError(accountId, error, message);
         }
 
         @Override
         public void newBuddyNotification(String accountId, String buddyUri, int status, String lineStatus) {
-            mCallbackHandler.newBuddyNotification(accountId, buddyUri, status, lineStatus);
+            mPresenceService.newBuddyNotification(accountId, buddyUri, status, lineStatus);
         }
 
         @Override
         public void subscriptionStateChanged(String accountId, String buddyUri, int state) {
-            mCallbackHandler.subscriptionStateChanged(accountId, buddyUri, state);
+            mPresenceService.subscriptionStateChanged(accountId, buddyUri, state);
+        }
+    }
+
+    private class DaemonVideoCallback extends VideoCallback {
+
+        @Override
+        public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
+            mHardwareService.decodingStarted(id, shmPath, width, height, isMixer);
+        }
+
+        @Override
+        public void decodingStopped(String id, String shmPath, boolean isMixer) {
+            mHardwareService.decodingStopped(id, shmPath, isMixer);
+        }
+
+        @Override
+        public void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates) {
+            mHardwareService.getCameraInfo(camId, formats, sizes, rates);
+        }
+
+        @Override
+        public void setParameters(String camId, int format, int width, int height, int rate) {
+            mHardwareService.setParameters(camId, format, width, height, rate);
+        }
+
+        @Override
+        public void startCapture(String camId) {
+            Log.d(TAG, "startCapture: " + camId);
+            mHardwareService.startCapture(camId);
+        }
+
+        @Override
+        public void stopCapture() {
+            mHardwareService.stopCapture();
         }
     }
 }
