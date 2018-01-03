@@ -117,7 +117,7 @@ public class ServiceInjectionModule {
 
     @Provides
     @Singleton
-    CallService provideCallService(DaemonService daemonService) {
+    CallService provideCallService() {
         CallService callService = new CallService();
         mRingApplication.getRingInjectionComponent().inject(callService);
         return callService;
@@ -125,7 +125,7 @@ public class ServiceInjectionModule {
 
     @Provides
     @Singleton
-    ConferenceService provideConferenceService(DaemonService daemonService) {
+    ConferenceService provideConferenceService() {
         ConferenceService conferenceService = new ConferenceService();
         mRingApplication.getRingInjectionComponent().inject(conferenceService);
         return conferenceService;
@@ -133,7 +133,7 @@ public class ServiceInjectionModule {
 
     @Provides
     @Singleton
-    AccountService provideAccountService(DaemonService daemonService) {
+    AccountService provideAccountService() {
         AccountService accountService = new AccountService();
         mRingApplication.getRingInjectionComponent().inject(accountService);
         return accountService;
