@@ -19,11 +19,13 @@ import android.support.v17.leanback.app.BackgroundManager;
 import android.support.v17.leanback.app.GuidedStepFragment;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
+import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.PresenterSelector;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,9 +46,12 @@ import cx.ring.tv.cards.CardListRow;
 import cx.ring.tv.cards.CardPresenterSelector;
 import cx.ring.tv.cards.CardRow;
 import cx.ring.tv.cards.ShadowRowPresenterSelector;
+import cx.ring.tv.cards.contactrequests.ContactRequestCard;
 import cx.ring.tv.cards.contacts.ContactCard;
 import cx.ring.tv.cards.iconcards.IconCard;
 import cx.ring.tv.cards.iconcards.IconCardHelper;
+import cx.ring.tv.contactrequest.TVContactRequestActivity;
+import cx.ring.tv.model.TVContactRequestViewModel;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.search.SearchActivity;
 import cx.ring.tv.views.CustomTitleView;
@@ -63,6 +68,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     private DisplayMetrics mMetrics;
     private BackgroundManager mBackgroundManager;
     private ArrayObjectAdapter cardRowAdapter;
+    private ArrayObjectAdapter contactRequestRowAdapter;
     private CustomTitleView titleView;
 
     @Override
@@ -83,6 +89,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         super.onResume();
         presenter.reloadConversations();
         presenter.reloadAccountInfos();
+        presenter.loadContactRequest();
         mBackgroundManager.setDrawable(getResources().getDrawable(R.drawable.tv_background));
     }
 
@@ -117,6 +124,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         /* CardPresenter */
         mRowsAdapter.add(contactListRow);
         mRowsAdapter.add(createMyAccountRow());
+        mRowsAdapter.add(createContactRequestRow());
         mRowsAdapter.add(createAboutCardRow());
 
         setAdapter(mRowsAdapter);
@@ -158,6 +166,21 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         return createRow(getString(R.string.ring_account), cards, false);
     }
 
+    private Row createContactRequestRow() {
+        List<Card> cards = new ArrayList<>();
+        CardRow contactRequestRow = new CardRow(
+                CardRow.TYPE_DEFAULT,
+                true,
+                getString(R.string.menu_item_contact_request),
+                cards);
+
+        contactRequestRowAdapter = new ArrayObjectAdapter(new CardPresenterSelector(getActivity()));
+
+        return new CardListRow(new HeaderItem(HEADER_MISC, getString(R.string.menu_item_contact_request)),
+                contactRequestRowAdapter,
+                contactRequestRow);
+    }
+
     private Row createAboutCardRow() {
         List<Card> cards = new ArrayList<>();
         cards.add(IconCardHelper.getVersionCard(getActivity()));
@@ -193,7 +216,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                     ContactCard previousCard = (ContactCard) cardRowAdapter.get(pos);
                     if (previousCard.getModel().isOnline() != updatedCard.getModel().isOnline()) {
                         cardRowAdapter.replace(pos, updatedCard);
-                        mRowsAdapter.notifyArrayItemRangeChanged(pos, 1);
+                        cardRowAdapter.notifyArrayItemRangeChanged(pos, 1);
                     }
                 }
             }
@@ -209,7 +232,21 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                 for (TVListViewModel contact : contacts) {
                     cardRowAdapter.add(new ContactCard(contact));
                 }
-                mRowsAdapter.notifyArrayItemRangeChanged(0, contacts.size());
+                cardRowAdapter.notifyArrayItemRangeChanged(0, contacts.size());
+            }
+        });
+    }
+
+    @Override
+    public void showContactRequests(final ArrayList<TVContactRequestViewModel> contactRequests) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                contactRequestRowAdapter.clear();
+                for (TVContactRequestViewModel contact : contactRequests) {
+                    contactRequestRowAdapter.add(new ContactRequestCard(contact));
+                }
+                contactRequestRowAdapter.notifyArrayItemRangeChanged(0, contactRequests.size());
             }
         });
     }
@@ -259,6 +296,16 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
             if (item instanceof ContactCard) {
                 presenter.contactClicked(((ContactCard) item).getModel());
+            } else if (item instanceof ContactRequestCard) {
+                Intent intent = new Intent(getActivity(), TVContactRequestActivity.class);
+                intent.putExtra(TVContactRequestActivity.CONTACT_REQUEST, ((ContactRequestCard) item).getModel());
+
+                Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        getActivity(),
+                        ((ImageCardView) itemViewHolder.view).getMainImageView(),
+                        TVContactRequestActivity.SHARED_ELEMENT_NAME).toBundle();
+                getActivity().startActivity(intent, bundle);
+
             } else if (item instanceof IconCard) {
                 IconCard card = (IconCard) item;
                 switch (card.getType()) {
