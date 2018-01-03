@@ -32,7 +32,6 @@ public class PendingContactRequestsViewModel {
     private boolean hasPane;
     private String mContactId;
 
-
     public PendingContactRequestsViewModel(Account account, TrustRequest trustRequest, boolean pane) {
         mVcard = trustRequest.getVCard();
         mFullname = trustRequest.getFullname();
