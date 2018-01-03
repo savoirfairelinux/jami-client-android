@@ -22,6 +22,7 @@ package cx.ring.tv.main;
 import java.util.ArrayList;
 
 import cx.ring.navigation.RingNavigationViewModel;
+import cx.ring.tv.model.TVContactRequestViewModel;
 import cx.ring.tv.model.TVListViewModel;
 
 public interface MainView {
@@ -31,6 +32,10 @@ public interface MainView {
     void refreshContact(TVListViewModel contact);
 
     void showContacts(ArrayList<TVListViewModel> contacts);
+
+    void showContactRequestsRow(boolean display);
+
+    void showContactRequests(ArrayList<TVContactRequestViewModel> contactRequests);
 
     void callContact(String accountID, String ringID);
 
