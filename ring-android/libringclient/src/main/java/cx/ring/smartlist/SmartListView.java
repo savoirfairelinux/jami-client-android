@@ -62,6 +62,8 @@ public interface SmartListView extends BaseView {
 
     void goToQRActivity();
 
+    void goToWizardActivity();
+
     void goToContact(CallContact callContact);
 
     void scrollToTop();
