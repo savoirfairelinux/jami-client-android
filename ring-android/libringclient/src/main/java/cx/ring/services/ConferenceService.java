@@ -47,16 +47,6 @@ public class ConferenceService extends Observable {
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
-    private ConferenceCallbackHandler mCallbackHandler;
-
-    public ConferenceService() {
-        mCallbackHandler = new ConferenceCallbackHandler();
-    }
-
-    public ConferenceCallbackHandler getCallbackHandler() {
-        return mCallbackHandler;
-    }
-
     public void removeConference(final String confId) {
         FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
@@ -236,7 +226,7 @@ public class ConferenceService extends Observable {
                             Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
 
                             //todo remove condition when callDetails does not contains sips ids anymore
-                            if(!callDetails.get("PEER_NUMBER").contains("sips")) {
+                            if (!callDetails.get("PEER_NUMBER").contains("sips")) {
                                 if (confId == null || confId.isEmpty()) {
                                     confId = callId;
                                 }
@@ -303,32 +293,29 @@ public class ConferenceService extends Observable {
         );
     }
 
-    class ConferenceCallbackHandler {
+    void conferenceCreated(final String confId) {
+        Log.d(TAG, "conference created: " + confId);
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_CREATED);
+        event.addEventInput(ServiceEvent.EventInput.CONF_ID, confId);
+        notifyObservers(event);
+    }
 
-        void conferenceCreated(final String confId) {
-            Log.d(TAG, "conference created: " + confId);
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_CREATED);
-            event.addEventInput(ServiceEvent.EventInput.CONF_ID, confId);
-            notifyObservers(event);
-        }
+    void conferenceRemoved(String confId) {
+        Log.d(TAG, "conference removed: " + confId);
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_REMOVED);
+        event.addEventInput(ServiceEvent.EventInput.CONF_ID, confId);
+        notifyObservers(event);
+    }
 
-        void conferenceRemoved(String confId) {
-            Log.d(TAG, "conference removed: " + confId);
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_REMOVED);
-            event.addEventInput(ServiceEvent.EventInput.CONF_ID, confId);
-            notifyObservers(event);
-        }
-
-        void conferenceChanged(String confId, String state) {
-            Log.d(TAG, "conference changed: " + confId + ", " + state);
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_CHANGED);
-            event.addEventInput(ServiceEvent.EventInput.CONF_ID, confId);
-            event.addEventInput(ServiceEvent.EventInput.STATE, state);
-            notifyObservers(event);
-        }
+    void conferenceChanged(String confId, String state) {
+        Log.d(TAG, "conference changed: " + confId + ", " + state);
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_CHANGED);
+        event.addEventInput(ServiceEvent.EventInput.CONF_ID, confId);
+        event.addEventInput(ServiceEvent.EventInput.STATE, state);
+        notifyObservers(event);
     }
 
 }

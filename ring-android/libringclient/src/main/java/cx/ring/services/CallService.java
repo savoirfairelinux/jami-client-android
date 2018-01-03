@@ -57,17 +57,7 @@ public class CallService extends Observable {
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
-    private CallbackHandler mCallbackHandler;
-
     private Map<String, SipCall> currentCalls = new HashMap<>();
-
-    public CallService() {
-        mCallbackHandler = new CallbackHandler();
-    }
-
-    public CallbackHandler getCallbackHandler() {
-        return mCallbackHandler;
-    }
 
     public SipCall placeCall(final String account, final String number, final boolean audioOnly) {
         return FutureUtils.executeDaemonThreadCallable(
@@ -483,68 +473,65 @@ public class CallService extends Observable {
         return sipCall;
     }
 
-    class CallbackHandler {
+    void callStateChanged(String callId, String newState, int detailCode) {
+        Log.d(TAG, "call state changed: " + callId + ", " + newState + ", " + detailCode);
+        try {
+            SipCall call = parseCallState(callId, newState);
+            if (call != null) {
+                mDeviceRuntimeService.updateAudioState(call.isRinging() && call.isIncoming());
 
-        void callStateChanged(String callId, String newState, int detailCode) {
-            Log.d(TAG, "call state changed: " + callId + ", " + newState + ", " + detailCode);
-            try {
-                SipCall call = parseCallState(callId, newState);
-                if (call != null) {
-                    mDeviceRuntimeService.updateAudioState(call.isRinging() && call.isIncoming());
+                setChanged();
 
-                    setChanged();
+                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CALL_STATE_CHANGED);
+                event.addEventInput(ServiceEvent.EventInput.CALL, call);
+                notifyObservers(event);
 
-                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CALL_STATE_CHANGED);
-                    event.addEventInput(ServiceEvent.EventInput.CALL, call);
-                    notifyObservers(event);
-
-                    if (call.getCallState() == SipCall.State.OVER) {
-                        currentCalls.remove(call.getCallId());
-                    }
-                } else {
-                    mDeviceRuntimeService.closeAudioState();
+                if (call.getCallState() == SipCall.State.OVER) {
+                    currentCalls.remove(call.getCallId());
                 }
-            } catch (Exception e) {
-                Log.w(TAG, "Exception during state change: ", e);
+            } else {
+                mDeviceRuntimeService.closeAudioState();
             }
+        } catch (Exception e) {
+            Log.w(TAG, "Exception during state change: ", e);
         }
+    }
 
-        void incomingCall(String accountId, String callId, String from) {
-            Log.d(TAG, "incoming call: " + accountId + ", " + callId + ", " + from);
+    void incomingCall(String accountId, String callId, String from) {
+        Log.d(TAG, "incoming call: " + accountId + ", " + callId + ", " + from);
 
-            SipCall call = addCall(accountId, callId, from, SipCall.Direction.INCOMING);
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
-            event.addEventInput(ServiceEvent.EventInput.CALL, call);
-            notifyObservers(event);
+        SipCall call = addCall(accountId, callId, from, SipCall.Direction.INCOMING);
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
+        event.addEventInput(ServiceEvent.EventInput.CALL, call);
+        notifyObservers(event);
+    }
+
+    public void incomingMessage(String callId, String from, StringMap messages) {
+        SipCall sipCall = currentCalls.get(callId);
+        if (sipCall == null || messages == null) {
+            Log.w(TAG, "incomingMessage: unknown call or no message: " + callId + " " + from);
+            return;
         }
-
-        public void incomingMessage(String callId, String from, StringMap messages) {
-            SipCall sipCall = currentCalls.get(callId);
-            if (sipCall == null || messages == null) {
-                Log.w(TAG, "incomingMessage: unknown call or no message: " + callId + " " + from);
-                return;
-            }
-            if (sipCall.appendToVCard(messages)) {
-                mContactService.saveVCardContactData(sipCall.getContact());
-            }
-            if (messages.has_key(MIME_TEXT_PLAIN)) {
-                mHistoryService.incomingMessage(sipCall.getAccount(), callId, from, messages);
-            }
+        if (sipCall.appendToVCard(messages)) {
+            mContactService.saveVCardContactData(sipCall.getContact());
         }
-
-        void recordPlaybackFilepath(String id, String filename) {
-            Log.d(TAG, "record playback filepath: " + id + ", " + filename);
-            // todo needs more explainations on that
+        if (messages.has_key(MIME_TEXT_PLAIN)) {
+            mHistoryService.incomingMessage(sipCall.getAccount(), callId, from, messages);
         }
+    }
 
-        void onRtcpReportReceived(String callId, IntegerMap stats) {
-            Log.i(TAG, "on RTCP report received: " + callId);
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_CHANGED);
-            event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
-            event.addEventInput(ServiceEvent.EventInput.STATS, stats);
-            notifyObservers(event);
-        }
+    void recordPlaybackFilepath(String id, String filename) {
+        Log.d(TAG, "record playback filepath: " + id + ", " + filename);
+        // todo needs more explainations on that
+    }
+
+    void onRtcpReportReceived(String callId, IntegerMap stats) {
+        Log.i(TAG, "on RTCP report received: " + callId);
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_CHANGED);
+        event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
+        event.addEventInput(ServiceEvent.EventInput.STATS, stats);
+        notifyObservers(event);
     }
 }

@@ -47,8 +47,6 @@ public abstract class HardwareService extends Observable {
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
-    private VideoCallback mVideoCallback;
-
     public abstract void initVideo();
 
     public abstract boolean isVideoAvailable();
@@ -88,14 +86,6 @@ public abstract class HardwareService extends Observable {
     public abstract int getCameraCount();
 
     public abstract boolean isPreviewFromFrontCamera();
-
-    public HardwareService() {
-        mVideoCallback = new VideoCallbackHandler();
-    }
-
-    public VideoCallback getCallbackHandler() {
-        return mVideoCallback;
-    }
 
     public void connectivityChanged() {
         FutureUtils.executeDaemonThreadCallable(

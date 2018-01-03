@@ -101,11 +101,6 @@ public class RingApplication extends Application {
     private RingInjectionComponent mRingInjectionComponent;
     private Map<String, Boolean> mPermissionsBeingAsked;
 
-    // true Daemon callbacks handlers. The notify the Android ones
-    private Callback mCallAndConferenceCallbackHandler;
-    private ConfigurationCallback mAccountAndContactCallbackHandler;
-    private PresenceCallback mPresenceCallbackHandler;
-    private VideoCallback mHardwareCallbackHandler;
     private final ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
@@ -153,20 +148,7 @@ public class RingApplication extends Application {
             public Boolean call() {
                 try {
 
-                    // mCallAndConferenceCallbackHandler is a wrapper to handle CallCallbacks and ConferenceCallbacks
-                    mCallAndConferenceCallbackHandler = mDaemonService.getDaemonCallbackHandler(
-                            mCallService.getCallbackHandler(),
-                            mConferenceService.getCallbackHandler());
-                    mAccountAndContactCallbackHandler = mDaemonService.getDaemonConfigurationCallbackHandler(
-                            mAccountService.getCallbackHandler());
-                    mHardwareCallbackHandler = mHardwareService.getCallbackHandler();
-                    mPresenceCallbackHandler = mPresenceService.getCallbackHandler();
-
-                    mDaemonService.startDaemon(
-                            mCallAndConferenceCallbackHandler,
-                            mAccountAndContactCallbackHandler,
-                            mPresenceCallbackHandler,
-                            mHardwareCallbackHandler);
+                    mDaemonService.startDaemon();
 
                     // Check if the camera hardware feature is available.
                     if (mDeviceRuntimeService.hasVideoPermission() && mHardwareService.isVideoAvailable()) {
