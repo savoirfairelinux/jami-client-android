@@ -59,7 +59,6 @@ import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
-import cx.ring.service.CallManagerCallBack;
 import cx.ring.service.DRingService;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.Log;
@@ -155,7 +154,6 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         } else if (conference.isRinging()) {
             if (conference.isIncoming()) {
                 Bundle extras = new Bundle();
-                extras.putBoolean(CallManagerCallBack.INCOMING_CALL, true);
                 messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_call_title, contact.getRingUsername()))
                         .setPriority(NotificationCompat.PRIORITY_MAX)
                         .setContentText(mContext.getText(R.string.notif_incoming_call))
