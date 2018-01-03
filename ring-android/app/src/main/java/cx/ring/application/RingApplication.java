@@ -49,8 +49,6 @@ import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionModule;
 import cx.ring.dependencyinjection.ServiceInjectionModule;
-import cx.ring.service.CallManagerCallBack;
-import cx.ring.service.ConfigurationManagerCallback;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
@@ -102,9 +100,7 @@ public class RingApplication extends Application {
     PresenceService mPresenceService;
     private RingInjectionComponent mRingInjectionComponent;
     private Map<String, Boolean> mPermissionsBeingAsked;
-    // Android Specific callbacks handlers. They rely on low level services notifications
-    private ConfigurationManagerCallback mConfigurationCallback;
-    private CallManagerCallBack mCallManagerCallBack;
+
     // true Daemon callbacks handlers. The notify the Android ones
     private Callback mCallAndConferenceCallbackHandler;
     private ConfigurationCallback mAccountAndContactCallbackHandler;
@@ -156,10 +152,6 @@ public class RingApplication extends Application {
             @Override
             public Boolean call() {
                 try {
-                    // Android specific callbacks handlers (rely on pure Java low level Services callbacks handlers as they
-                    // observe them)
-                    mConfigurationCallback = new ConfigurationManagerCallback(getApplicationContext());
-                    mCallManagerCallBack = new CallManagerCallBack(getApplicationContext());
 
                     // mCallAndConferenceCallbackHandler is a wrapper to handle CallCallbacks and ConferenceCallbacks
                     mCallAndConferenceCallbackHandler = mDaemonService.getDaemonCallbackHandler(
@@ -169,12 +161,6 @@ public class RingApplication extends Application {
                             mAccountService.getCallbackHandler());
                     mHardwareCallbackHandler = mHardwareService.getCallbackHandler();
                     mPresenceCallbackHandler = mPresenceService.getCallbackHandler();
-
-                    // Android specific Low level Services observers
-                    mCallService.addObserver(mCallManagerCallBack);
-                    mConferenceService.addObserver(mCallManagerCallBack);
-                    mAccountService.addObserver(mConfigurationCallback);
-                    mContactService.addObserver(mConfigurationCallback);
 
                     mDaemonService.startDaemon(
                             mCallAndConferenceCallbackHandler,
@@ -216,8 +202,6 @@ public class RingApplication extends Application {
             public Boolean call() throws Exception {
                 unregisterReceiver(ringerModeListener);
                 mDaemonService.stopDaemon();
-                mConfigurationCallback = null;
-                mCallManagerCallBack = null;
                 Intent intent = new Intent(DRING_CONNECTION_CHANGED);
                 intent.putExtra("connected", mDaemonService.isStarted());
                 sendBroadcast(intent);
