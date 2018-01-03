@@ -93,7 +93,12 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> i
 
     public void removeAccount() {
         mAccountService.removeAccount(mAccount.getAccountID());
-        getView().exit();
+
+        if (mAccountService.getAccountList().size() == 0) {
+            getView().goToWizardActivity();
+        } else {
+            getView().exit();
+        }
     }
 
     public void prepareOptionsMenu() {

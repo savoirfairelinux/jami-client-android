@@ -264,6 +264,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     }
 
     private void loadConversations() {
+        if (mAccountService.getCurrentAccount() == null) {
+            Log.w(TAG, "loadConversations: Not able to get current account");
+            return;
+        }
+
         getView().setLoading(true);
         Account currentAccount = mAccountService.getCurrentAccount();
         if (currentAccount == null) {

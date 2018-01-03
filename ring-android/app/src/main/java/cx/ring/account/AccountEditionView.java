@@ -20,6 +20,8 @@ package cx.ring.account;
 
 public interface AccountEditionView {
 
+    void goToWizardActivity();
+
     void exit();
 
     void displayAccountName(String name);

@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cx.ring.R;
+import cx.ring.account.AccountWizard;
 import cx.ring.adapters.SmartListAdapter;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
