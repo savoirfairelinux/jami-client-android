@@ -60,7 +60,6 @@ public class ContactRequestsAdapter extends RecyclerView.Adapter<ContactRequestV
     @Override
     public void onBindViewHolder(ContactRequestViewHolder holder, int position) {
         final PendingContactRequestsViewModel viewModel = mContactRequestsViewModels.get(position);
-
         VCard vcard = viewModel.getVCard();
         if (vcard != null) {
             if (!vcard.getPhotos().isEmpty()) {

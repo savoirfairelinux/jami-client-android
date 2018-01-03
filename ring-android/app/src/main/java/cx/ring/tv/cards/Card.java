@@ -132,6 +132,8 @@ public class Card {
         CONTACT_ONLINE,
         CONTACT_WITH_USERNAME,
         CONTACT_WITH_USERNAME_ONLINE,
+        CONTACT_REQUEST,
+        CONTACT_REQUEST_WITH_USERNAME
     }
 
 }

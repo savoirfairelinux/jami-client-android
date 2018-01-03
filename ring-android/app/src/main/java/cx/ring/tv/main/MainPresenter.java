@@ -22,10 +22,9 @@ package cx.ring.tv.main;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
@@ -33,6 +32,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
+import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.navigation.RingNavigationViewModel;
@@ -40,9 +40,16 @@ import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PresenceService;
+import cx.ring.tv.model.TVContactRequestViewModel;
 import cx.ring.tv.model.TVListViewModel;
+import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.observers.ResourceSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class MainPresenter extends RootPresenter<MainView> implements Observer<ServiceEvent> {
@@ -54,23 +61,24 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     private ContactService mContactService;
     private PresenceService mPresenceService;
     private HardwareService mHardwareService;
-    private ExecutorService mExecutor;
+    private Scheduler mMainScheduler;
     private ArrayList<Conversation> mConversations;
+    private ArrayList<TVContactRequestViewModel> mContactRequestViewModels;
 
     @Inject
     public MainPresenter(AccountService accountService,
                          ContactService contactService,
                          PresenceService presenceService,
                          HardwareService hardwareService,
-                         @Named("ApplicationExecutor") ExecutorService executor,
+                         Scheduler mainScheduler,
                          ConversationFacade conversationfacade) {
         mAccountService = accountService;
         mContactService = contactService;
         mPresenceService = presenceService;
         mConversationFacade = conversationfacade;
-        this.mHardwareService = hardwareService;
-        mExecutor = executor;
+        mHardwareService = hardwareService;
         mConversations = new ArrayList<>();
+        mMainScheduler = mainScheduler;
     }
 
     @Override
@@ -104,6 +112,9 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
                 reloadConversations();
                 reloadAccountInfos();
                 break;
+            case INCOMING_TRUST_REQUEST:
+                loadContactRequest();
+                break;
         }
         if (observable instanceof PresenceService) {
             switch (event.getEventType()) {
@@ -129,9 +140,9 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
 
     public void reloadConversations() {
         getView().showLoading(true);
-        mExecutor.submit(new Runnable() {
+        mCompositeDisposable.add(Single.fromCallable(new Callable<ArrayList<TVListViewModel>>() {
             @Override
-            public void run() {
+            public ArrayList<TVListViewModel> call() throws Exception {
                 mConversations.clear();
                 mConversations.addAll(mConversationFacade.getConversationsList());
                 ArrayList<TVListViewModel> contacts = new ArrayList<>();
@@ -147,12 +158,75 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
                         contacts.add(smartListViewModel);
                     }
                 }
-                getView().showLoading(false);
-                getView().showContacts(contacts);
+                return contacts;
             }
-        });
+        }).subscribeOn(Schedulers.computation())
+                .observeOn(mMainScheduler)
+                .subscribeWith(new ResourceSingleObserver<ArrayList<TVListViewModel>>() {
+                    @Override
+                    public void onSuccess(@NonNull ArrayList<TVListViewModel> contacts) {
+                        getView().showLoading(false);
+                        getView().showContacts(contacts);
+                    }
 
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e(TAG, e.toString());
+                    }
+                }));
         subscribePresence();
+    }
+
+    public void loadContactRequest() {
+        mCompositeDisposable.add(Single.fromCallable(new Callable<ArrayList<TVContactRequestViewModel>>() {
+            @Override
+            public ArrayList<TVContactRequestViewModel> call() throws Exception {
+
+                List<TrustRequest> requests = mAccountService.getCurrentAccount().getRequests();
+                ArrayList<TVContactRequestViewModel> contactRequestViewModels = new ArrayList<>();
+
+                for (TrustRequest request : requests) {
+
+                    byte[] photo;
+                    if (request.getVCard().getPhotos().isEmpty()) {
+                        photo = null;
+                    } else {
+                        photo = request.getVCard().getPhotos().get(0).getData();
+                    }
+
+                    TVContactRequestViewModel tvContactRequestVM = new TVContactRequestViewModel(request.getContactId(),
+                            request.getDisplayname(),
+                            request.getFullname(),
+                            photo,
+                            request.getMessage());
+                    contactRequestViewModels.add(tvContactRequestVM);
+                }
+                return contactRequestViewModels;
+            }
+        }).subscribeOn(Schedulers.computation())
+                .observeOn(mMainScheduler)
+                .subscribeWith(new ResourceSingleObserver<ArrayList<TVContactRequestViewModel>>() {
+                    @Override
+                    public void onSuccess(@NonNull ArrayList<TVContactRequestViewModel> contactRequestViewModels) {
+                        mContactRequestViewModels = contactRequestViewModels;
+
+                        if (mContactRequestViewModels.isEmpty()) {
+                            getView().showContactRequestsRow(false);
+                        } else {
+                            getView().showContactRequestsRow(true);
+                            getView().showContactRequests(mContactRequestViewModels);
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.e(TAG, e.toString());
+                    }
+                }));
+
+
     }
 
     public void contactClicked(TVListViewModel item) {
