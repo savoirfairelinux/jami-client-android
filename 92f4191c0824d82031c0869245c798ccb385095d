@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a42497e_42c1967f",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVProfileEditingFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-01-04T21:03:47Z",
+      "side": 1,
+      "message": "Can I improve this?",
+      "range": {
+        "startLine": 166,
+        "startChar": 16,
+        "endLine": 166,
+        "endChar": 35
+      },
+      "revId": "92f4191c0824d82031c0869245c798ccb385095d",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
