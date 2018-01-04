@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a42497e_a29fba5e",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/contactrequest/TVContactRequestDetailPresenter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-01-04T22:02:54Z",
+      "side": 1,
+      "message": "Could be null",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 33
+      },
+      "revId": "7cf0b87c1edde941753716edba4089c21495dad2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_829c3e6b",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/contactrequest/TVContactRequestDetailPresenter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-01-04T22:02:54Z",
+      "side": 1,
+      "message": "Could be null",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "7cf0b87c1edde941753716edba4089c21495dad2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_e288a224",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/contactrequest/TVContactRequestDetailPresenter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-01-04T22:02:54Z",
+      "side": 1,
+      "message": "Could be null",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 32
+      },
+      "revId": "7cf0b87c1edde941753716edba4089c21495dad2",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
