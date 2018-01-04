@@ -102,17 +102,6 @@ public class HistoryText
     public HistoryText() {
     }
 
-    public String getDirection() {
-        switch (direction) {
-            case TextMessage.direction.INCOMING:
-                return "INCOMING";
-            case TextMessage.direction.OUTGOING:
-                return "OUTGOING";
-            default:
-                return "CALL_TYPE_UNDETERMINED";
-        }
-    }
-
     public Date getDate() {
         return new Date(time);
     }
@@ -124,7 +113,6 @@ public class HistoryText
     public String getMessage() {
         return message;
     }
-
 
     public boolean isIncoming() {
         return direction == TextMessage.direction.INCOMING;

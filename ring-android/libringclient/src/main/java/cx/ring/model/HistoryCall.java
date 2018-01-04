@@ -26,11 +26,8 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 @DatabaseTable(tableName = HistoryCall.TABLE_NAME)
 public class HistoryCall implements Serializable {
@@ -97,35 +94,12 @@ public class HistoryCall implements Serializable {
     public HistoryCall() {
     }
 
-    public String getDirection() {
-        switch (direction) {
-            case SipCall.Direction.INCOMING:
-                return "INCOMING";
-            case SipCall.Direction.OUTGOING:
-                return "OUTGOING";
-            default:
-                return "CALL_TYPE_UNDETERMINED";
-        }
-    }
-
-    public String getDate() {
-        return HistoryTimeModel.timeToHistoryConst(call_start);
-    }
-
     public Date getStartDate() {
         return new Date(call_start);
     }
 
     public Date getEndDate() {
         return new Date(call_end);
-    }
-
-    public String getStartString(String format) {
-        Timestamp stamp = new Timestamp(call_start); // in milliseconds
-        Date date = new Date(stamp.getTime());
-        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.getDefault());
-        sdf.setTimeZone(TimeZone.getDefault());
-        return sdf.format(date);
     }
 
     public String getDurationString() {
@@ -145,16 +119,8 @@ public class HistoryCall implements Serializable {
         return call_end - call_start;
     }
 
-    public String getRecordPath() {
-        return recordPath;
-    }
-
     public String getNumber() {
         return number;
-    }
-
-    public boolean hasRecord() {
-        return recordPath.length() > 0;
     }
 
     public boolean isIncoming() {
