@@ -112,9 +112,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
         String title = getString(R.string.profile);
         String breadcrumb = "";
         String description = getString(R.string.profile_message_warning);
-
         Drawable icon = getActivity().getResources().getDrawable(R.drawable.ic_contact_picture);
-
         return new GuidanceStylist.Guidance(title, description, breadcrumb, icon);
     }
 
@@ -218,7 +216,10 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         BitmapUtils.reduceBitmap(image, VCardUtils.VCARD_PHOTO_SIZE);
-        image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        image = BitmapUtils.cropImageToCircle(image);
+        if (image != null) {
+            image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        }
         Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
 
         presenter.saveVCardPhoto(photo);
