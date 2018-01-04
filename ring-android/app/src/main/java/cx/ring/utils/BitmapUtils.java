@@ -52,7 +52,6 @@ public final class BitmapUtils {
         return null;
     }
 
-    @Nullable
     public static Bitmap cropImageToCircle(@NonNull Bitmap image) {
         int side = Math.min(image.getWidth(), image.getHeight());
 
