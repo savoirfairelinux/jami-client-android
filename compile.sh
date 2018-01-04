@@ -30,7 +30,6 @@ done
 export RELEASE
 export DAEMON_ONLY
 
-ANDROID_ABIS=""
 ANDROID_ABI_LIST="${ANDROID_ABI}"
 echo "Building ABIs: ${ANDROID_ABI_LIST}"
 for i in ${ANDROID_ABI_LIST}; do
