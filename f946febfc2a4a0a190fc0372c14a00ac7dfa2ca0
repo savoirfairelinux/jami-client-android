@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a42497e_c2364603",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/main/MainPresenter.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2018-01-05T16:43:28Z",
+      "side": 1,
+      "message": "IconCard extends Card and its part of the android sdk. If possible, this should not be in a presenter as we try to make them android independent",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 262,
+        "endChar": 5
+      },
+      "revId": "f946febfc2a4a0a190fc0372c14a00ac7dfa2ca0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a42497e_223c4ae2",
+        "filename": "ring-android/app/src/main/res/layout-w960dp-land/tv_activity_profile_editing.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2018-01-05T16:43:28Z",
+      "side": 1,
+      "message": "You should update the copyright with the right date and your name as you are the author of this file",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 58
+      },
+      "revId": "f946febfc2a4a0a190fc0372c14a00ac7dfa2ca0",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
