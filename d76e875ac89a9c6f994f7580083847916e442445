@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a42497e_456520e0",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVProfileEditingFragment.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 226
+      },
+      "writtenOn": "2018-01-05T20:15:42Z",
+      "side": 1,
+      "message": "At this point, cropImageToCircle would have crashed if image was null",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 28
+      },
+      "revId": "d76e875ac89a9c6f994f7580083847916e442445",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
