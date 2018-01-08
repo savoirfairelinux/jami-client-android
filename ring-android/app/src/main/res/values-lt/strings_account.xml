@@ -135,7 +135,6 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_link_prompt_pin">Įveskite PIN</string>
   <string name="account_new_button">Sukurti Ring paskyrą</string>
   <string name="account_link_export_button">Susieti kitą įrenginį su šia paskyra</string>
-  <string name="account_start_export_button">Sukurti Pin</string>
   <string name="account_end_export_button">užverti</string>
   <!--Name registration-->
   <string name="error_username_empty">Įveskite naudotojo vardą</string>
@@ -152,6 +151,7 @@ Vėliau, galėsite pataisyti savo paskyros informaciją</string>
   <string name="account_creation_home">Sveiki atvykę į Ring</string>
   <string name="account_creation_profile">Susikurkite savo profilį</string>
   <string name="account_sip_cannot_be_registered">Nepavyksta užregistruoti paskyros</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Norėdami patvirtinti, įveskite slaptažodį</string>
   <string name="enter_password">Įveskite slaptažodį</string>

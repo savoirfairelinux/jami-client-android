@@ -6,7 +6,7 @@
   <string name="contribute_section">Contribuer</string>
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Aucun logiciel de messagerie n\'a été trouvé, merci d\'installer un logiciel de messagerie pour nous envoyer un rapport</string>
-  <string name="email_chooser_title">Envoyer un courriel en utilisant&#8230;</string>
+  <string name="email_chooser_title">Envoyer un courriel en utilisant...</string>
   <!--About dialog-->
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
@@ -21,10 +21,9 @@
   <!--Sections-->
   <string name="menu_item_home">Accueil</string>
   <string name="menu_item_accounts">Gérer des comptes</string>
-  <string name="menu_item_account">Gérer mon compte</string>
   <string name="menu_item_settings">Réglages</string>
   <string name="menu_item_share">Partager mes contacts</string>
-  <string name="menu_item_about">À propos de Ring</string>
+  <string name="menu_item_about">A propos de Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Composer un numéro </string>
   <!--History Fragment-->

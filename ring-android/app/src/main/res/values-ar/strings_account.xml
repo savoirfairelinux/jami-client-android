@@ -75,5 +75,6 @@
   <string name="account_status_unknown">مجهول</string>
   <!--Create account-->
   <string name="account_creation_home">مرحبا بك في Ring</string>
+  <!--Edit profile-->
   <!--Devices-->
 </resources>

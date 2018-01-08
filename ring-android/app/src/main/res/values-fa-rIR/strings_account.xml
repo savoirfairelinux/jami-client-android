@@ -141,9 +141,7 @@
   <string name="account_link_prompt_pin">پین را وارد کنید</string>
   <string name="account_new_button">ساخت یک حساب رینگ</string>
   <string name="account_link_export_button">پیوند افزاره‌ای دیگر به این حساب</string>
-  <string name="account_start_export_button">تولید پین</string>
   <string name="account_end_export_button">بستن</string>
-  <string name="account_end_export_infos">پین شما:\n\n%%\n\nبرای کامل کردن فرایند، باید رینگ را روی افزارهٔ نو گشوده و حساب جدیدی را با انتخاب «پیوند این افزاره به یک حساب» ایجاد کنید. پینتان برای ۱۰ دقیقه معتبر است.</string>
   <!--Name registration-->
   <string name="error_username_empty">یک نام کاربری وارد کنید</string>
   <string name="no_registered_name_for_account">هیچ نام ثبت‌شده‌ای برای این حساب پیدا نشد</string>
@@ -164,6 +162,7 @@
   <string name="account_creation_ring">حساب کاربری رینگ خود را بسازید</string>
   <string name="account_link_title">پیوند این افزاره</string>
   <string name="account_sip_cannot_be_registered">نمی‌توان حساب را ثبت کرد</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">رمز عبور خود را مجددا وارد نمایید</string>
   <string name="enter_password">گذرواژه را وارد کنید</string>

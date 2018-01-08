@@ -105,7 +105,6 @@
   <string name="account_link_button">Dieses Gerät mit einem Ring-Konto verknüpfen</string>
   <string name="account_link_prompt_pin">PIN eingeben</string>
   <string name="account_new_button">Ring-Konto erstellen</string>
-  <string name="account_start_export_button">PIN generieren</string>
   <!--Name registration-->
   <string name="error_username_empty">Einen Benutzernamen eingeben</string>
   <string name="username_already_taken">Benutzername bereits vergeben</string>
@@ -116,6 +115,7 @@
   <string name="account_status_offline">Offline</string>
   <!--Create account-->
   <string name="account_creation_home">Willkommen bei Ring</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="enter_password">Passwort eingeben</string>
   <string name="revoke_device_title">Gerät widerrufen</string>

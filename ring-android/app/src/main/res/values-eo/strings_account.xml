@@ -96,6 +96,7 @@
   <string name="account_status_unknown">Nekonata</string>
   <!--Create account-->
   <string name="account_creation_home">Bonvenu al Ring</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="revoke_device_wait_title">Bonvole atendu…</string>
 </resources>

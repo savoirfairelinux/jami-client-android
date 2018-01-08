@@ -144,9 +144,7 @@ Você pode editar sua conta depois.</string>
   <string name="account_new_button">Criar uma conta no Ring</string>
   <string name="account_link_export_button">Associar outro dispositivo à esta conta.</string>
   <string name="account_link_export_info">Para usar esta conta em outros dispositivos, você precisa primeiro expo-lo ao Ring. Isto irá gerar um código PIN que você precisa introduzir no novo dispositivo para configurar sua conta. o PIN é válido por apenas 10 minutos.</string>
-  <string name="account_start_export_button">Gerar PIN</string>
   <string name="account_end_export_button">fechar</string>
-  <string name="account_end_export_infos">Seu PIN é:\n\n%%\n\nPara completar o processo, você deve abrir o Ring no novo dispositivo. Crie uma nova conta com \"Associar este dispositivo à uma conta\". Seu PIN é válido por 10 minutos.</string>
   <string name="account_link_export_info_light">Para usar esta conta em outros dispositivos, você precisa primeiro expo-lo ao Ring. Isto irá gerar um código PIN que você precisa introduzir no novo dispositivo para configurar sua conta. o PIN é válido por apenas 10 minutos.</string>
   <string name="account_export_title">Adicionar dispositivos</string>
   <!--Name registration-->
@@ -170,6 +168,7 @@ Você pode editar sua conta depois.</string>
   <string name="account_creation_ring">Criar sua conta Ring</string>
   <string name="account_link_title">Conectar este dispositivo</string>
   <string name="account_sip_cannot_be_registered">Impossível registrar conta.</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Digite senha para confirmar</string>
   <string name="enter_password">Entre a senha</string>

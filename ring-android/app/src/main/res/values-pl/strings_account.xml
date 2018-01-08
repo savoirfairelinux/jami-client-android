@@ -143,9 +143,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_link_prompt_pin">Wprowadź PIN</string>
   <string name="account_new_button">Stwórz konto Ring</string>
   <string name="account_link_export_button">Połącz kolejne urządzenie z tym kontem</string>
-  <string name="account_start_export_button">Generuj PIN</string>
   <string name="account_end_export_button">zamknij</string>
-  <string name="account_end_export_infos">Twój PIN to:\n\n%%\n\nAby dokończyć proces, musisz otworzyć Ring na nowym urządzeniu. Stwórz nowe konto przez \"Połącz to urządzenie z kontem\". Twój PIN jest aktywny przez 10 minut.</string>
   <!--Name registration-->
   <string name="error_username_empty">Wprowadź nazwę użytkownika</string>
   <string name="no_registered_name_for_account">Nie znaleziono żadnej nazwy zarejestrowanej dla tego konta </string>
@@ -166,6 +164,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_creation_ring">Stwórz swoje konto Ring</string>
   <string name="account_link_title">Połącz to urządzenie</string>
   <string name="account_sip_cannot_be_registered">Nie można zarejestrować konta</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Wprowadź hasło aby potwierdzić</string>
   <string name="enter_password">Wprowadź hasło</string>

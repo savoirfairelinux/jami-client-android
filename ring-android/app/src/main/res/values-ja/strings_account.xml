@@ -142,9 +142,7 @@
   <string name="account_link_prompt_pin">PINを入力してください</string>
   <string name="account_new_button">Ringアカウントを作成</string>
   <string name="account_link_export_button">別のデバイスをこのアカウントへリンク</string>
-  <string name="account_start_export_button">PINを生成</string>
   <string name="account_end_export_button">閉じる</string>
-  <string name="account_end_export_infos">あなたのPINは:\n\n%%\n\nプロセスを完了するには、新しいデバイスでRingを開く必要があります。 「このデバイスをアカウントにリンク」で、新しいアカウントを作成します。 あなたのPINは10分間有効です。</string>
   <!--Name registration-->
   <string name="error_username_empty">ユーザー名を入力してください</string>
   <string name="no_registered_name_for_account">このアカウントの登録名が見つかりません</string>
@@ -165,6 +163,7 @@
   <string name="account_creation_ring">Ringアカウントを作成</string>
   <string name="account_link_title">このデバイスをリンク</string>
   <string name="account_sip_cannot_be_registered">アカウントを登録できません</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">確認のパスワードを入力</string>
   <string name="enter_password">パスワードを入力してください</string>

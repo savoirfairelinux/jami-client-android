@@ -96,6 +96,7 @@
   <string name="account_status_unknown">Невідомий</string>
   <!--Create account-->
   <string name="account_creation_home">Вітаємо у Ring</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="revoke_device_wait_title">Будь ласка зачекайте</string>
 </resources>

@@ -60,6 +60,8 @@
   <string name="notif_current_call_title">Aktueller Anruf mit %1$s</string>
   <string name="notif_current_call">Aktueller Anruf</string>
   <string name="notif_channel_calls">Anrufe</string>
+  <string name="notif_channel_messages">Nachrichten</string>
+  <string name="notif_channel_requests">Anfragen</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
   <string name="action_call_hangup">Auflegen</string>
@@ -153,4 +155,5 @@
   <string name="tv_contact_row_header">Kontakte</string>
   <string name="gallery_error_title">Keine Galerie App gefunden</string>
   <string name="gallery_error_message">Auf dem Gerät wurde keine Applikation gefunden um die Galerie zu öffnen</string>
+  <string name="generic_error">Ein unbekannter Fehler ist aufgetreten</string>
 </resources>

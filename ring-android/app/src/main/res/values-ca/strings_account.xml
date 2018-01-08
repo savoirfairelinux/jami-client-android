@@ -140,7 +140,6 @@ Podeu editar el vostre compte més endavant.</string>
   <string name="account_link_button">Enllaça aquest dispositiu a un compte</string>
   <string name="account_link_prompt_pin">Introdueix PIN</string>
   <string name="account_new_button">Crear un compte de Ring</string>
-  <string name="account_start_export_button">Genera PIN</string>
   <string name="account_end_export_button">tanca</string>
   <!--Name registration-->
   <string name="register_name">Registrar nom</string>
@@ -152,6 +151,7 @@ Podeu editar el vostre compte més endavant.</string>
   <!--Create account-->
   <string name="account_creation_home">Benvigut a Ring</string>
   <string name="account_creation_profile">Crei el seu perfil</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Introduïu la contrasenya per confirmar</string>
   <string name="enter_password">Introduïu la contrasenya</string>

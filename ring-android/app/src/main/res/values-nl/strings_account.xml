@@ -144,9 +144,7 @@ Je kan je account later bewerken</string>
   <string name="account_new_button">Een Ring-account aanmaken</string>
   <string name="account_link_export_button">Een ander apparaat aan deze account koppelen</string>
   <string name="account_link_export_info">Om deze account op andere apparaten te gebruiken moet je deze eerst op Ring blootstellen. Er zal een pincode gegenereerd worden die je op het nieuwe apparaat invoert om de account in te stellen. De pincode is 10 minuten geldig.</string>
-  <string name="account_start_export_button">Pincode genereren</string>
   <string name="account_end_export_button">sluiten</string>
-  <string name="account_end_export_infos">Je pincode is:\n\n%%\n\nOm het proces te voltooien open je Ring op het nieuwe apparaat. Maak een account aan met \"Dit apparaat aan een account koppelen\". De pincode is 10 minuten geldig.</string>
   <string name="account_link_export_info_light">Om deze account op andere apparaten te gebruiken moet je deze eerst op Ring blootstellen. Er zal een pincode gegenereerd worden die je op het nieuwe apparaat invoert om de account in te stellen. De pincode is 10 minuten geldig.</string>
   <string name="account_export_title">Apparaten toevoegen</string>
   <!--Name registration-->
@@ -170,6 +168,7 @@ Je kan je account later bewerken</string>
   <string name="account_creation_ring">Je Ring-account aanmaken</string>
   <string name="account_link_title">Dit apparaat koppelen</string>
   <string name="account_sip_cannot_be_registered">Account kan niet geregistreerd worden</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Voer wachtwoord in om te bevestigen</string>
   <string name="enter_password">Voer wachtwoord in</string>

@@ -110,6 +110,7 @@ Si potra modificare questo account più tardi.</string>
   <string name="account_status_unknown">Sconosciuto</string>
   <!--Create account-->
   <string name="account_creation_home">Benvenuto in Ring</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="revoke_device_title">Revoca dispositivo</string>
   <string name="revoke_device_wait_title">Aspettare</string>

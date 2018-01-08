@@ -33,5 +33,6 @@
   <!--Name registration-->
   <!--Create account-->
   <string name="account_creation_profile">프로필 만들기</string>
+  <!--Edit profile-->
   <!--Devices-->
 </resources>

@@ -143,9 +143,7 @@
   <string name="account_new_button">Krijoni një llogari Ring</string>
   <string name="account_link_export_button">Lidhni te kjo llogari një pajisje tjetër</string>
   <string name="account_link_export_info">Që të përdorni këtë llogari në pajisje të tjera, së pari duhet t\ia ekspozoni atë Ring-ut. Kështu do të prodhohet një kod PIN që duhet ta jepni te pajisja e re për të rregulluar llogarinë. PIN-i vlen për 10 minuta.</string>
-  <string name="account_start_export_button">Prodhoje PIN-in</string>
   <string name="account_end_export_button">mbylle</string>
-  <string name="account_end_export_infos">PIN-i juaj është:\n\n%%\n\nQë të plotësoni procesin, duhet të hapni Ring-un në pajisjen e re. Krijoni një llogari të re përmes \"Lidhe këtë pajisje me një llogari\". PIN-i juaj vlen për 10 minuta.</string>
   <string name="account_link_export_info_light">Që të përdorni këtë llogari në pajisje të tjera, së pari duhet t\ia ekspozoni atë Ring-ut. Kështu do të prodhohet një kod PIN që duhet ta jepni te pajisja e re për të rregulluar llogarinë. PIN-i vlen për 10 minuta.</string>
   <string name="account_export_title">Shtoni pajisje</string>
   <!--Name registration-->
@@ -169,6 +167,7 @@
   <string name="account_creation_ring">Krijoni llogarinë tuaj Ring</string>
   <string name="account_link_title">Lidhe këtë pajisje</string>
   <string name="account_sip_cannot_be_registered">S\’regjistrohet dot llogaria</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Jepni fjalëkalimin që ta ripohoni</string>
   <string name="enter_password">Jepni fjalëkalimin</string>

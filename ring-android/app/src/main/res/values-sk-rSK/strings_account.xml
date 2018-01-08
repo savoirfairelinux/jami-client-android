@@ -32,6 +32,7 @@
   <!--Name registration-->
   <string name="account_status_unknown">Neznámy</string>
   <!--Create account-->
+  <!--Edit profile-->
   <!--Devices-->
   <string name="enter_password">Zadaj heslo</string>
 </resources>

@@ -144,9 +144,7 @@ Du kan rette din konto senere</string>
   <string name="account_new_button">Opret en Ring-konto</string>
   <string name="account_link_export_button">Tilknyt en anden enhed til denne konto</string>
   <string name="account_link_export_info">For at bruge denne konto på andre enheder, skal du først gøre den tilgængelig for Ring. Dette vil generere en PIN-kode som skal indtastes på den nye enhed for at opsætte kontoen. PIN-koden er gyldig i 10 minutter.</string>
-  <string name="account_start_export_button">Generer PIN-kode</string>
   <string name="account_end_export_button">luk</string>
-  <string name="account_end_export_infos">Din PIN-kode er:\n\n%%\n\nFor at afslutte processen skal du åbne Ring på den nye enhed, og oprette en ny konto med \"Tilknyt denne enhed til en konto\". PIN-koden er gyldig i 10 minutter.</string>
   <string name="account_link_export_info_light">For at bruge denne konto på andre enheder, skal du først gøre den tilgængelig for Ring. Dette vil generere en PIN-kode som skal indtastes på den nye enhed for at opsætte kontoen. PIN-koden er gyldig i 10 minutter.</string>
   <string name="account_export_title">Tilføj enheder</string>
   <!--Name registration-->
@@ -170,6 +168,7 @@ Du kan rette din konto senere</string>
   <string name="account_creation_ring">Opret din Ring-konto</string>
   <string name="account_link_title">Tilknyt denne enhed</string>
   <string name="account_sip_cannot_be_registered">Kan ikke registrere konto</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Indtast adgangskode for at bekræfte</string>
   <string name="enter_password">Indtast adgangskode</string>

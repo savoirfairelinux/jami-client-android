@@ -143,9 +143,7 @@
   <string name="account_link_prompt_pin">输入PIN</string>
   <string name="account_new_button">创建Ring帐户</string>
   <string name="account_link_export_button">将另一设备与该帐户进行连接</string>
-  <string name="account_start_export_button">生成PIN</string>
   <string name="account_end_export_button">关闭</string>
-  <string name="account_end_export_infos">您的PIN是：\n\n%%\n\n要继续，请在新设备上打开Ring，点击“将此设备与一个帐户进行连接”。您的PIN将在10分钟内有效。</string>
   <!--Name registration-->
   <string name="error_username_empty">输入用户名</string>
   <string name="no_registered_name_for_account">该帐户尚未注册用户名</string>
@@ -166,6 +164,7 @@
   <string name="account_creation_ring">创建您的Ring帐户</string>
   <string name="account_link_title">连接此设备</string>
   <string name="account_sip_cannot_be_registered">无法注册帐户</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">输入密码以确认</string>
   <string name="enter_password">输入密码</string>

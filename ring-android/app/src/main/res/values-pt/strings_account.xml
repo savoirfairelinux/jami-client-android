@@ -39,5 +39,6 @@
   <!--Name registration-->
   <string name="account_status_unknown">Desconhecido</string>
   <!--Create account-->
+  <!--Edit profile-->
   <!--Devices-->
 </resources>

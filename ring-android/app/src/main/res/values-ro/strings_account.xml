@@ -57,6 +57,7 @@
   <!--Name registration-->
   <string name="account_status_unknown">Necunoscut</string>
   <!--Create account-->
+  <!--Edit profile-->
   <!--Devices-->
   <string name="revoke_device_wait_title">Așteptați vă rog...</string>
 </resources>

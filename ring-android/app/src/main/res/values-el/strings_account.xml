@@ -63,5 +63,6 @@
   <string name="account_status_unknown">Άγνωστοι</string>
   <!--Create account-->
   <string name="account_creation_home">Καλώς ήλθατε στο Ring</string>
+  <!--Edit profile-->
   <!--Devices-->
 </resources>

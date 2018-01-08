@@ -141,9 +141,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_link_prompt_pin">Inserisci il PIN</string>
   <string name="account_new_button">Crea un account Ring</string>
   <string name="account_link_export_button">Collega un altro dispositivo a questo account</string>
-  <string name="account_start_export_button">Genera Pin</string>
   <string name="account_end_export_button">chiudi</string>
-  <string name="account_end_export_infos">Il tuo Pin è:\n\n%%\n\nPer completare la procedura, devi aprire Ring nel nuovo dispositivo. Crea un nuovo account con \"Collega questo dispositivo con un account\". Il tuo pin è valido per 10 minuti.</string>
   <!--Name registration-->
   <string name="error_username_empty">Inserire un nome utente</string>
   <string name="no_registered_name_for_account">Nessun nome registrato è stato trovato per questo account</string>
@@ -164,6 +162,7 @@ Potrai modificare il tuo account successivamente</string>
   <string name="account_creation_ring">Crea il tuo account Ring</string>
   <string name="account_link_title">Collega il dispositivo</string>
   <string name="account_sip_cannot_be_registered">Impossibile registrare l\'account</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="account_revoke_device_hint">Inserire la password per confermare</string>
   <string name="enter_password">Inserire password</string>

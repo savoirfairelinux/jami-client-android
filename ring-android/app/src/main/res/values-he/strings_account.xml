@@ -66,5 +66,6 @@
   <string name="account_status_connecting">מתחבר</string>
   <string name="account_status_unknown">לא מוכר</string>
   <!--Create account-->
+  <!--Edit profile-->
   <!--Devices-->
 </resources>

@@ -81,6 +81,7 @@
   <string name="account_status_unknown">Tuntematon</string>
   <!--Create account-->
   <string name="account_creation_home">Tervetuloa Ringiin</string>
+  <!--Edit profile-->
   <!--Devices-->
   <string name="revoke_device_wait_title">Odota hetki...</string>
 </resources>
