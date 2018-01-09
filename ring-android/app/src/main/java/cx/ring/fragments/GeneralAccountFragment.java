@@ -87,6 +87,7 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
     @Override
     public void accountChanged(Account account) {
         if (account == null) {
+            Log.d(TAG, "accountChanged: Null account");
             return;
         }
 

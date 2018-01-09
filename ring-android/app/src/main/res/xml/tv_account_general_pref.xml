@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/account_basic_category">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="Account.autoAnswer"
+            android:persistent="false"
+            android:title="@string/account_autoanswer_label" />
+    </PreferenceCategory>
+</PreferenceScreen>
