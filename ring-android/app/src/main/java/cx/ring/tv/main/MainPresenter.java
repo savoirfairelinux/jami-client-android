@@ -276,6 +276,10 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
         getView().showProfileEditing();
     }
 
+    public void onSettingsClicked() {
+        getView().showSettings();
+    }
+
     private void subscribePresence() {
         if (mAccountService.getCurrentAccount() == null || mTvListViewModels == null || mTvListViewModels.isEmpty()) {
             return;
