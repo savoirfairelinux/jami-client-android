@@ -49,4 +49,6 @@ public interface MainView {
     void showProfileEditing();
 
     void showLicence(int aboutType);
+
+    void showSettings();
 }
