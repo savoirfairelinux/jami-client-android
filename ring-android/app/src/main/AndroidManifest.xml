@@ -128,9 +128,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".account.AccountWizard"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
-
             android:screenOrientation="fullUser"
-            android:theme="@style/AppThemeBase"></activity>
+            android:theme="@style/AppThemeBase" />
         <activity
             android:name=".account.AccountEditionActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
@@ -272,8 +271,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name="cx.ring.tv.about.AboutActivity"
             android:theme="@style/Theme.Leanback" />
 
-        <activity android:name="cx.ring.tv.account.TVProfileEditingActivity"
-            android:theme="@style/Theme.Leanback"/>
+        <activity
+            android:name="cx.ring.tv.account.TVProfileEditingActivity"
+            android:theme="@style/Theme.Leanback" />
 
         <activity
             android:name="cx.ring.tv.call.TVCallActivity"
@@ -296,6 +296,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name=".tv.contactrequest.TVContactRequestActivity"
             android:theme="@style/Theme.Leanback.Details" />
+        <activity
+            android:name=".tv.account.TVSettingsActivity"
+            android:theme="@style/LeanbackPreferences" />
 
     </application>
 

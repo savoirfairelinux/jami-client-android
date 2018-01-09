@@ -19,6 +19,8 @@
  */
 package cx.ring.fragments;
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
 import cx.ring.model.Account;
@@ -30,6 +32,8 @@ import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
 public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> implements Observer<ServiceEvent> {
+
+    private static final String TAG = GeneralAccountPresenter.class.getSimpleName();
 
     protected AccountService mAccountService;
 
@@ -52,6 +56,16 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> i
         mAccountService.addObserver(this);
     }
 
+    // Init with current account
+    public void init() {
+        Account currentAccount = mAccountService.getCurrentAccount();
+        if (currentAccount == null) {
+            Log.e(TAG, "init: No currentAccount available");
+            return;
+        }
+        init(currentAccount.getAccountID());
+    }
+
     void init(String accountId) {
         mAccount = mAccountService.getAccount(accountId);
         if (mAccount != null) {
@@ -69,7 +83,7 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> i
         updateAccount();
     }
 
-    void twoStatePreferenceChanged(ConfigKey configKey, Object newValue) {
+    public void twoStatePreferenceChanged(ConfigKey configKey, Object newValue) {
         mAccount.setDetail(configKey, newValue.toString());
         updateAccount();
     }

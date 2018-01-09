@@ -15,6 +15,7 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$android_support_version"
     implementation "com.android.support:appcompat-v7:$android_support_version"
     implementation "com.android.support:leanback-v17:$android_support_version"
+    implementation "com.android.support:preference-leanback-v17:$android_support_version"
 
     // ORM
     implementation 'com.j256.ormlite:ormlite-android:4.48'
