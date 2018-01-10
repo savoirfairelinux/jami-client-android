@@ -208,19 +208,13 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     }
 
     @Override
-    public void refreshContact(final TVListViewModel contact) {
+    public void refreshContact(final int index, final TVListViewModel contact) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ContactCard updatedCard = new ContactCard(contact);
-                int pos = cardRowAdapter.indexOf(updatedCard);
-                if (pos > -1) {
-                    ContactCard previousCard = (ContactCard) cardRowAdapter.get(pos);
-                    if (previousCard.getModel().isOnline() != updatedCard.getModel().isOnline()) {
-                        cardRowAdapter.replace(pos, updatedCard);
-                        cardRowAdapter.notifyArrayItemRangeChanged(pos, 1);
-                    }
-                }
+                ContactCard contactCard = (ContactCard) cardRowAdapter.get(index);
+                contactCard.setModel(contact);
+                cardRowAdapter.notifyArrayItemRangeChanged(index, 1);
             }
         });
     }
@@ -251,7 +245,6 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         } else if (!display && isContactRequestRowDisplayed) {
             mRowsAdapter.removeItems(2, 1);
         }
-
     }
 
     @Override

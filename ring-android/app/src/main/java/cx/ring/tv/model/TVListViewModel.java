@@ -54,7 +54,21 @@ public class TVListViewModel implements Comparable<TVListViewModel> {
     }
 
     @Override
+    public boolean equals(Object pO) {
+        if (this == pO) return true;
+        if (pO == null || getClass() != pO.getClass()) return false;
+
+        TVListViewModel tvListViewModel = (TVListViewModel) pO;
+        return tvListViewModel.mCallContact.equals(mCallContact) && tvListViewModel.isOnline == isOnline;
+    }
+
+    @Override
     public int compareTo(@NonNull TVListViewModel o) {
         return mCallContact.getDisplayName().compareTo(o.getCallContact().getDisplayName());
+    }
+
+    @Override
+    public String toString() {
+        return mCallContact.toString() + " " + isOnline;
     }
 }

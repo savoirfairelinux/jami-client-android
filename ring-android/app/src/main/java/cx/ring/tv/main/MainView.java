@@ -30,7 +30,7 @@ public interface MainView {
 
     void showLoading(boolean show);
 
-    void refreshContact(TVListViewModel contact);
+    void refreshContact(int index, TVListViewModel contact);
 
     void showContacts(List<TVListViewModel> contacts);
 

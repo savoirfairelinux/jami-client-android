@@ -26,7 +26,7 @@ import cx.ring.tv.cards.Card;
 import cx.ring.tv.model.TVListViewModel;
 
 public class ContactCard extends Card {
-    TVListViewModel mModel = null;
+    private TVListViewModel mModel = null;
     private byte[] mPhoto = null;
 
     public ContactCard(CallContact pCallContact, Type type) {
@@ -62,6 +62,27 @@ public class ContactCard extends Card {
         }
     }
 
+    public void setModel(TVListViewModel model) {
+        if (model == null || model.equals(this.mModel)) {
+            return;
+        }
+
+        mModel = model;
+
+        setTitle(model.getCallContact().getDisplayName());
+        setDescription(model.getCallContact().getRingUsername());
+
+        if (model.isOnline()) {
+            setType(Type.CONTACT_WITH_USERNAME_ONLINE);
+        } else {
+            setType(Type.CONTACT_WITH_USERNAME);
+        }
+
+        if (model.getCallContact().getPhoto() != null && !Arrays.equals(mPhoto, model.getCallContact().getPhoto())) {
+            mPhoto = model.getCallContact().getPhoto();
+        }
+    }
+
     public TVListViewModel getModel() {
         return mModel;
     }
@@ -78,10 +99,10 @@ public class ContactCard extends Card {
 
         ContactCard that = (ContactCard) pO;
 
-        if (mModel != null )
-            return mModel.getCallContact().getId() == that.mModel.getCallContact().getId();
+        if (mModel != null) {
+            return mModel.getCallContact().equals(that.mModel.getCallContact());
+        }
         return Arrays.equals(mPhoto, that.mPhoto);
-
     }
 
 }

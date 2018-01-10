@@ -38,7 +38,6 @@ import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PresenceService;
-import cx.ring.tv.cards.iconcards.IconCard;
 import cx.ring.tv.model.TVContactRequestViewModel;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.Log;
@@ -124,13 +123,18 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     }
 
     private void refreshContact(String buddy) {
-        for (TVListViewModel tvListViewModel : mTvListViewModels) {
+        for (int i = 0; i < mTvListViewModels.size(); i++) {
+            TVListViewModel tvListViewModel = mTvListViewModels.get(i);
             CallContact callContact = tvListViewModel.getCallContact();
+
             if (callContact.getIds().get(0).equals("ring:" + buddy)) {
-                TVListViewModel smartListViewModel = new TVListViewModel(
+                TVListViewModel updatedTvListViewModel = new TVListViewModel(
                         callContact,
                         mPresenceService.isBuddyOnline(callContact.getIds().get(0)));
-                getView().refreshContact(smartListViewModel);
+
+                if (!updatedTvListViewModel.equals(tvListViewModel)) {
+                    getView().refreshContact(i, updatedTvListViewModel);
+                }
             }
         }
     }
@@ -139,7 +143,7 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
         getView().showLoading(true);
         Account currentAccount = mAccountService.getCurrentAccount();
         if (currentAccount == null) {
-            android.util.Log.e(TAG, "reloadConversations: Not able to get currentAccount");
+            Log.e(TAG, "reloadConversations: Not able to get currentAccount");
             return;
         }
 
@@ -178,8 +182,6 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
                         getView().showLoading(false);
                     }
                 }));
-
-
     }
 
     public void loadContactRequest() {
@@ -252,6 +254,7 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
 
     public void reloadAccountInfos() {
         if (mAccountService == null) {
+            Log.e(TAG, "reloadAccountInfos: No account service available");
             return;
         }
         String displayableAddress = null;
