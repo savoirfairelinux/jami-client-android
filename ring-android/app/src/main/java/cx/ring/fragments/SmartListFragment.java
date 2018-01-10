@@ -391,6 +391,9 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (mNewContact == null) {
+                    return;
+                }
                 ((TextView) mNewContact.findViewById(R.id.display_name)).setText(name);
                 mNewContact.setVisibility(View.VISIBLE);
             }
@@ -466,6 +469,9 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (mNewContact == null) {
+                    return;
+                }
                 mNewContact.setVisibility(View.GONE);
             }
         });
@@ -476,6 +482,9 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (mErrorMessagePane == null) {
+                    return;
+                }
                 mErrorMessagePane.setVisibility(View.GONE);
             }
         });
@@ -555,6 +564,9 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (mRecyclerView == null) {
+                    return;
+                }
                 mRecyclerView.scrollToPosition(0);
             }
         });
