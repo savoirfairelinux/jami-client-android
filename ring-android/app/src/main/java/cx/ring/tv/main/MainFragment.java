@@ -251,7 +251,6 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         } else if (!display && isContactRequestRowDisplayed) {
             mRowsAdapter.removeItems(2, 1);
         }
-
     }
 
     @Override

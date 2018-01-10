@@ -38,7 +38,6 @@ import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PresenceService;
-import cx.ring.tv.cards.iconcards.IconCard;
 import cx.ring.tv.model.TVContactRequestViewModel;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.Log;
@@ -133,13 +132,29 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
                 getView().refreshContact(smartListViewModel);
             }
         }
+        
+        if (!isOk()) {
+            android.util.Log.d(TAG, "refreshContact: ");
+        }
+    }
+
+    public boolean isOk() {
+        for (int i = 0; i < mTvListViewModels.size(); i++) {
+            TVListViewModel contact = mTvListViewModels.get(i);
+            for (int j = i + 1; j < mTvListViewModels.size(); j++) {
+                if (contact.equals(mTvListViewModels.get(j))) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void reloadConversations() {
         getView().showLoading(true);
         Account currentAccount = mAccountService.getCurrentAccount();
         if (currentAccount == null) {
-            android.util.Log.e(TAG, "reloadConversations: Not able to get currentAccount");
+            Log.e(TAG, "reloadConversations: Not able to get currentAccount");
             return;
         }
 
@@ -178,8 +193,6 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
                         getView().showLoading(false);
                     }
                 }));
-
-
     }
 
     public void loadContactRequest() {
@@ -252,6 +265,7 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
 
     public void reloadAccountInfos() {
         if (mAccountService == null) {
+            Log.e(TAG, "reloadAccountInfos: No account service available");
             return;
         }
         String displayableAddress = null;

@@ -57,4 +57,9 @@ public class TVListViewModel implements Comparable<TVListViewModel> {
     public int compareTo(@NonNull TVListViewModel o) {
         return mCallContact.getDisplayName().compareTo(o.getCallContact().getDisplayName());
     }
+
+    @Override
+    public String toString() {
+        return mCallContact.toString() + " " + isOnline;
+    }
 }
