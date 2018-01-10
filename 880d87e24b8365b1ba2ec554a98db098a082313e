@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_e35e0612",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/call/TVCallFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-01-10T18:57:21Z",
+      "side": 1,
+      "message": "Maybe instantiate the Animation and AnimationSet once in constructor ?",
+      "range": {
+        "startLine": 295,
+        "startChar": 0,
+        "endLine": 301,
+        "endChar": 44
+      },
+      "revId": "880d87e24b8365b1ba2ec554a98db098a082313e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
