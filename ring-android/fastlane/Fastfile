@@ -35,7 +35,8 @@ platform :android do
     supply(
       apk: options[:signed_apk_path],
       track: "beta",
-      json_key: options[:json_key]
+      json_key: options[:json_key],
+      mapping: options[:mapping]
     )
   end
 
