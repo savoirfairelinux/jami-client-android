@@ -754,14 +754,14 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 case INCOMING_CALL:
 
                     SipCall call = arg.getEventInput(ServiceEvent.EventInput.CALL, SipCall.class);
-                    if (call != null && isTv()) {
+                    if (call != null) {
                         Log.d(TAG, "call id : " + call.getCallId());
                         Bundle extras = new Bundle();
                         extras.putString("account", mAccountService.getCurrentAccount().getAccountID());
                         extras.putString("callId", call.getCallId());
                         startActivity(new Intent(Intent.ACTION_VIEW)
                                 .putExtras(extras)
-                                .setClass(getApplicationContext(), TVCallActivity.class)
+                                .setClass(getApplicationContext(), isTv() ? TVCallActivity.class : CallActivity.class)
                                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                     }
                     break;
