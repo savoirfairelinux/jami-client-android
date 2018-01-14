@@ -1177,6 +1177,38 @@ public class AccountService extends Observable {
         );
     }
 
+    public void pushNotificationReceived(final String from, final Map<String, String> data) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "pushNotificationReceived() " + from + " " + data.size());
+                        Ringservice.pushNotificationReceived(from, StringMap.toSwig(data));
+                        return true;
+                    }
+                }
+        );
+    }
+
+    public void setPushNotificationToken(final String pushNotificationToken) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                new Callable<Void>() {
+                    @Override
+                    public Void call() throws Exception {
+                        Log.i(TAG, "setPushNotificationToken() " + pushNotificationToken);
+                        Ringservice.setPushNotificationToken(pushNotificationToken);
+                        return null;
+                    }
+                }
+        );
+    }
+
     public void volumeChanged(String device, int value) {
         setChanged();
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VOLUME_CHANGED);
