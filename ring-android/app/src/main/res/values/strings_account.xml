@@ -115,6 +115,10 @@ along with this program; if not, write to the Free Software
     <string name="account_published_port_label">Published Port</string>
     <string name="account_published_address_label">Published Address</string>
 
+    <string name="account_proxy_label">DHT proxy</string>
+    <string name="account_proxy_enable_label">Use DHT proxy</string>
+    <string name="account_proxy_server_label">DHT proxy address</string>
+
     <!-- Security Details -->
     <string name="account_credentials_label">Credentials</string>
     <string name="account_credentials_edit">Edit credentials</string>
