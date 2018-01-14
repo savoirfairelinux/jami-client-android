@@ -21,10 +21,12 @@ package cx.ring.tv.call;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
@@ -39,6 +41,14 @@ public class TVCallActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setTurnScreenOn(true);
+            setShowWhenLocked(true);
+        } else {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED|
+                    WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        }
         setContentView(R.layout.tv_activity_call);
 
         // dependency injection
