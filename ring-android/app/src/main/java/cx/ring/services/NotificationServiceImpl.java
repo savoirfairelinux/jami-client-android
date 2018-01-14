@@ -29,6 +29,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioAttributes;
+import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -74,8 +76,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     private static final String NOTIF_TRUST_REQUEST = "TRUST REQUEST";
 
     private static final String NOTIF_CHANNEL_CALL = "call";
-    private static final String NOTIF_CHANNEL_MESSAGE = "message";
-    private static final String NOTIF_CHANNEL_REQUEST = "request";
+    private static final String NOTIF_CHANNEL_MESSAGE = "messages";
+    private static final String NOTIF_CHANNEL_REQUEST = "requests";
 
     private final SparseArray<NotificationCompat.Builder> mNotificationBuilders = new SparseArray<>();
     @Inject
@@ -111,15 +113,22 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         notificationManager.createNotificationChannel(callChannel);
 
         // Text messages channel
+        AudioAttributes soundAttributes = new AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION_COMMUNICATION_INSTANT)
+                .build();
+
         NotificationChannel messageChannel = new NotificationChannel(NOTIF_CHANNEL_MESSAGE, mContext.getString(R.string.notif_channel_messages), NotificationManager.IMPORTANCE_HIGH);
         messageChannel.enableVibration(true);
-        messageChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        messageChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        messageChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes);
         notificationManager.createNotificationChannel(messageChannel);
 
         // Contact requests
         NotificationChannel requestsChannel = new NotificationChannel(NOTIF_CHANNEL_REQUEST, mContext.getString(R.string.notif_channel_requests), NotificationManager.IMPORTANCE_DEFAULT);
         messageChannel.enableVibration(true);
-        messageChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        messageChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        messageChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes);
         notificationManager.createNotificationChannel(requestsChannel);
     }
 
@@ -210,13 +219,6 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     @Override
     public void showTextNotification(CallContact contact, Conversation conversation, TreeMap<Long, TextMessage> texts) {
-        NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE);
-
-        messageNotificationBuilder.setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setSmallIcon(R.drawable.ic_ring_logo_white);
-        messageNotificationBuilder.setContentTitle(contact.getDisplayName());
 
         Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
                 .setClass(mContext, DRingService.class)
@@ -228,7 +230,13 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPhones().get(0).getNumber().toString());
 
-        messageNotificationBuilder.setContentIntent(PendingIntent.getService(mContext, new Random().nextInt(), intentConversation, 0))
+        NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setSmallIcon(R.drawable.ic_ring_logo_white)
+                .setContentTitle(contact.getDisplayName())
+                .setContentIntent(PendingIntent.getService(mContext, new Random().nextInt(), intentConversation, 0))
                 .setDeleteIntent(PendingIntent.getService(mContext, new Random().nextInt(), intentDelete, 0))
                 .setAutoCancel(true);
 
