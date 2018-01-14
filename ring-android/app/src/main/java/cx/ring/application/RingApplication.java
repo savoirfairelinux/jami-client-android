@@ -216,10 +216,15 @@ public class RingApplication extends Application {
         // we can now inject in our self whatever modules define
         mRingInjectionComponent.inject(this);
 
-        // to bootstrap the daemon
-        Intent intent = new Intent(this, DRingService.class);
-        startService(intent);
-        bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
+    }
+
+    public void startDaemon() {
+        if (!DRingService.isRunning) {
+            // to bootstrap the daemon
+            Intent intent = new Intent(this, DRingService.class);
+            startService(intent);
+            bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
+        }
     }
 
     @Override
