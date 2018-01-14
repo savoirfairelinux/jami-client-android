@@ -92,6 +92,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     static public final String ACTION_CALL_VIEW = BuildConfig.APPLICATION_ID + ".action.CALL_VIEW";
 
     static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
+    static public final String ACTION_CONV_DISMISS = BuildConfig.APPLICATION_ID + ".action.CONV_DISMISS";
     static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
 
     private static final String TAG = DRingService.class.getName();
@@ -617,6 +618,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 break;
             case ACTION_CONV_READ:
             case ACTION_CONV_ACCEPT:
+            case ACTION_CONV_DISMISS:
                 extras = intent.getExtras();
                 if (extras != null) {
                     handleConvAction(intent.getAction(), intent.getExtras());
@@ -705,6 +707,8 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                     mHistoryService.readMessages(conversation);
                     mNotificationService.cancelTextNotification(ringId);
                 }
+                break;
+            case ACTION_CONV_DISMISS:
                 break;
             case ACTION_CONV_ACCEPT:
                 startActivity(new Intent(Intent.ACTION_VIEW)

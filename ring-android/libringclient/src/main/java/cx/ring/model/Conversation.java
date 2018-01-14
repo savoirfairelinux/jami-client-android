@@ -187,6 +187,9 @@ public class Conversation {
     }
 
     public void addTextMessage(TextMessage txt) {
+        if (mVisible) {
+            txt.read();
+        }
         if (txt.getContact() == null) {
             txt.setContact(getContact());
         }
