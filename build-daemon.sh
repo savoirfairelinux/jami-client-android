@@ -282,7 +282,7 @@ ${NDK_TOOLCHAIN_PATH}/clang++ \
                 ${JNIDIR}/ring_wrapper.cpp \
                 ${RING_BUILD_DIR}/src/.libs/libring.a \
                 -static-libstdc++ \
-                -I${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include \
+                -isystem ${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/include \
                 -I${RING_SRC_DIR}/src \
                 -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib \
                 ${STATIC_LIBS_ALL} \
