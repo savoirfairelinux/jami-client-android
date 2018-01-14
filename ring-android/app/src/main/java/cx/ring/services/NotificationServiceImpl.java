@@ -38,9 +38,11 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Html;
+import android.text.Spanned;
 import android.text.format.DateUtils;
 import android.util.SparseArray;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -89,6 +91,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
     private NotificationManagerCompat notificationManager;
+    private Random random;
 
     public void initHelper() {
         if (notificationManager == null) {
@@ -98,6 +101,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             registerNotificationChannels();
         }
+        random = new Random();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -144,7 +148,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         notificationManager.cancel(notificationId);
 
         PendingIntent gotoIntent = PendingIntent.getService(mContext,
-                new Random().nextInt(),
+                random.nextInt(),
                 new Intent(DRingService.ACTION_CALL_VIEW)
                         .setClass(mContext, DRingService.class)
                         .putExtra(KEY_CALL_ID, call.getCallId()), 0);
@@ -155,7 +159,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                     .setContentText(mContext.getText(R.string.notif_current_call))
                     .setContentIntent(gotoIntent)
                     .addAction(R.drawable.ic_call_end_white, mContext.getText(R.string.action_call_hangup),
-                            PendingIntent.getService(mContext, new Random().nextInt(),
+                            PendingIntent.getService(mContext, random.nextInt(),
                                     new Intent(DRingService.ACTION_CALL_END)
                                             .setClass(mContext, DRingService.class)
                                             .putExtra(KEY_CALL_ID, call.getCallId()),
@@ -169,13 +173,13 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                         .setContentIntent(gotoIntent)
                         .setFullScreenIntent(gotoIntent, true)
                         .addAction(R.drawable.ic_call_end_white, mContext.getText(R.string.action_call_decline),
-                                PendingIntent.getService(mContext, new Random().nextInt(),
+                                PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(DRingService.ACTION_CALL_REFUSE)
                                                 .setClass(mContext, DRingService.class)
                                                 .putExtra(KEY_CALL_ID, call.getCallId()),
                                         PendingIntent.FLAG_ONE_SHOT))
                         .addAction(R.drawable.ic_action_accept, mContext.getText(R.string.action_call_accept),
-                                PendingIntent.getService(mContext, new Random().nextInt(),
+                                PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(DRingService.ACTION_CALL_ACCEPT)
                                                 .setClass(mContext, DRingService.class)
                                                 .putExtra(KEY_CALL_ID, call.getCallId()),
@@ -186,7 +190,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                         .setContentText(mContext.getText(R.string.notif_outgoing_call))
                         .setContentIntent(gotoIntent)
                         .addAction(R.drawable.ic_call_end_white, mContext.getText(R.string.action_call_hangup),
-                                PendingIntent.getService(mContext, new Random().nextInt(),
+                                PendingIntent.getService(mContext, random.nextInt(),
                                         new Intent(DRingService.ACTION_CALL_END)
                                                 .setClass(mContext, DRingService.class)
                                                 .putExtra(KEY_CALL_ID, call.getCallId()),
@@ -219,13 +223,18 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     @Override
     public void showTextNotification(CallContact contact, Conversation conversation, TreeMap<Long, TextMessage> texts) {
+        if (texts.isEmpty()) {
+            cancelTextNotification(contact);
+            return;
+        }
+        TextMessage last = texts.lastEntry().getValue();
 
         Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPhones().get(0).getNumber().toString());
 
-        Intent intentDelete = new Intent(DRingService.ACTION_CONV_READ)
+        Intent intentDelete = new Intent(DRingService.ACTION_CONV_DISMISS)
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPhones().get(0).getNumber().toString());
@@ -236,9 +245,12 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setContentTitle(contact.getDisplayName())
-                .setContentIntent(PendingIntent.getService(mContext, new Random().nextInt(), intentConversation, 0))
-                .setDeleteIntent(PendingIntent.getService(mContext, new Random().nextInt(), intentDelete, 0))
-                .setAutoCancel(true);
+                .setContentText(last.getMessage())
+                .setWhen(last.getTimestamp())
+                .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
+                .setDeleteIntent(PendingIntent.getService(mContext, random.nextInt(), intentDelete, 0))
+                .setAutoCancel(true)
+                .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
 
         if (contact.getPhoto() != null) {
             Resources res = mContext.getResources();
@@ -251,29 +263,31 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             }
         }
         if (texts.size() == 1) {
-            TextMessage txt = texts.firstEntry().getValue();
-            txt.setNotified(true);
-            messageNotificationBuilder.setContentText(txt.getMessage());
+            last.setNotified(true);
             messageNotificationBuilder.setStyle(null);
-            messageNotificationBuilder.setWhen(txt.getTimestamp());
         } else {
-            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-            for (TextMessage s : texts.values()) {
-                inboxStyle.addLine(Html.fromHtml("<b>" + DateUtils.formatDateTime(mContext, s.getTimestamp(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL) + "</b> " + s.getMessage()));
-                s.setNotified(true);
+            ArrayList<Spanned> txts = new ArrayList<>(3);
+            int i = 0;
+            for (TextMessage textMessage : texts.descendingMap().values()) {
+                if (i == 5)
+                    break;
+                txts.add(0, Html.fromHtml("<b>" + DateUtils.formatDateTime(mContext, textMessage.getTimestamp(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL) + "</b> " + textMessage.getMessage()));
+                textMessage.setNotified(true);
+                i++;
             }
-            messageNotificationBuilder.setContentText(texts.lastEntry().getValue().getMessage());
+            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+            for (Spanned spanned : txts) {
+                inboxStyle.addLine(spanned);
+            }
             messageNotificationBuilder.setStyle(inboxStyle);
-            messageNotificationBuilder.setWhen(texts.lastEntry().getValue().getTimestamp());
         }
 
-        messageNotificationBuilder.setColor(ResourcesCompat.getColor(mContext.getResources(),
-                R.color.color_primary_dark, null));
+        Intent intentRead = new Intent(DRingService.ACTION_CONV_READ)
+                .setClass(mContext, DRingService.class)
+                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
+                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPhones().get(0).getNumber().toString());
 
-        // Reuse intentDelete for the 'Mark as read' action
-        PendingIntent pIntent = PendingIntent.getService(mContext, (int) System.currentTimeMillis(), intentDelete, 0);
-        messageNotificationBuilder.addAction(0, mContext.getString(R.string.notif_mark_as_read), pIntent);
-
+        messageNotificationBuilder.addAction(0, mContext.getString(R.string.notif_mark_as_read), PendingIntent.getService(mContext, Long.valueOf(System.currentTimeMillis()).intValue(), intentRead, 0));
         int notificationId = getTextNotificationId(contact);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
@@ -301,19 +315,19 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             info.putString(TRUST_REQUEST_NOTIFICATION_FROM, request.getContactId());
             messageNotificationBuilder.setContentText(request.getDisplayname())
                     .addAction(R.drawable.ic_action_accept, mContext.getText(R.string.accept),
-                            PendingIntent.getService(mContext, new Random().nextInt(),
+                            PendingIntent.getService(mContext, random.nextInt(),
                                     new Intent(DRingService.ACTION_TRUST_REQUEST_ACCEPT)
                                             .setClass(mContext, DRingService.class)
                                             .putExtras(info),
                                     PendingIntent.FLAG_ONE_SHOT))
                     .addAction(R.drawable.ic_delete_white, mContext.getText(R.string.refuse),
-                            PendingIntent.getService(mContext, new Random().nextInt(),
+                            PendingIntent.getService(mContext, random.nextInt(),
                                     new Intent(DRingService.ACTION_TRUST_REQUEST_REFUSE)
                                             .setClass(mContext, DRingService.class)
                                             .putExtras(info),
                                     PendingIntent.FLAG_ONE_SHOT))
                     .addAction(R.drawable.ic_close_white, mContext.getText(R.string.block),
-                            PendingIntent.getService(mContext, new Random().nextInt(),
+                            PendingIntent.getService(mContext, random.nextInt(),
                                     new Intent(DRingService.ACTION_TRUST_REQUEST_BLOCK)
                                             .setClass(mContext, DRingService.class)
                                             .putExtras(info),
@@ -349,7 +363,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 .setClass(mContext, HomeActivity.class)
                 .putExtra(ContactRequestsFragment.ACCOUNT_ID, account.getAccountID());
         messageNotificationBuilder.setContentIntent(PendingIntent.getActivity(mContext,
-                new Random().nextInt(), intentOpenTrustRequestFragment, PendingIntent.FLAG_ONE_SHOT));
+                random.nextInt(), intentOpenTrustRequestFragment, PendingIntent.FLAG_ONE_SHOT));
 
         messageNotificationBuilder.setColor(ResourcesCompat.getColor(mContext.getResources(),
                 R.color.color_primary_dark, null));
