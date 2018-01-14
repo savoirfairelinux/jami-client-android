@@ -25,7 +25,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NavigableMap;
 import java.util.TreeMap;
 
 import javax.inject.Inject;
@@ -36,7 +35,6 @@ import cx.ring.model.Conference;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.Conversation;
 import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryEntry;
 import cx.ring.model.HistoryText;
 import cx.ring.model.SecureSipCall;
 import cx.ring.model.ServiceEvent;
@@ -228,18 +226,15 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         Log.d(TAG, "updateTextNotifications()");
 
         for (Conversation conversation : mConversationMap.values()) {
-
-            if (conversation.isVisible()) {
-                mNotificationService.cancelTextNotification(conversation.getContact());
-                continue;
-            }
             TreeMap<Long, TextMessage> texts = conversation.getUnreadTextMessages();
-            if (texts.isEmpty() || texts.lastEntry().getValue().isNotified()) {
-                continue;
-            } else {
-                mNotificationService.cancelTextNotification(conversation.getContact());
-            }
 
+            if (texts.isEmpty() || conversation.isVisible()) {
+                mNotificationService.cancelTextNotification(conversation.getContact());
+                continue;
+            }
+            if (texts.lastEntry().getValue().isNotified()) {
+                continue;
+            }
             CallContact contact = conversation.getContact();
             mNotificationService.showTextNotification(contact, conversation, texts);
         }
@@ -265,6 +260,9 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
 
         conversation.addTextMessage(txt);
+        if (txt.isRead()) {
+            mHistoryService.updateTextMessage(new HistoryText(txt));
+        }
     }
 
     private void parseHistoryCalls(List<HistoryCall> historyCalls, boolean acceptAllMessages) {

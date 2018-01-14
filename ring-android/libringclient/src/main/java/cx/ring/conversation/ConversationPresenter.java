@@ -114,10 +114,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
     public void pause() {
         if (mConversation != null) {
-            mHistoryService.readMessages(mConversation);
             Conversation localConversation = mConversationFacade.getConversationByContact(mContactService.getContact(new Uri(mContactRingId)));
             if (localConversation != null) {
-                localConversation.setVisible(true);
+                localConversation.setVisible(false);
             }
         }
     }

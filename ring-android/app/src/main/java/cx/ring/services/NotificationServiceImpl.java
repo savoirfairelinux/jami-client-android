@@ -38,9 +38,11 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Html;
+import android.text.Spanned;
 import android.text.format.DateUtils;
 import android.util.SparseArray;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -219,13 +221,18 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     @Override
     public void showTextNotification(CallContact contact, Conversation conversation, TreeMap<Long, TextMessage> texts) {
+        if (texts.isEmpty()) {
+            cancelTextNotification(contact);
+            return;
+        }
+        TextMessage last = texts.lastEntry().getValue();
 
         Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPhones().get(0).getNumber().toString());
 
-        Intent intentDelete = new Intent(DRingService.ACTION_CONV_READ)
+        Intent intentDelete = new Intent(DRingService.ACTION_CONV_DISMISS)
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPhones().get(0).getNumber().toString());
@@ -236,9 +243,12 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setContentTitle(contact.getDisplayName())
+                .setContentText(last.getMessage())
+                .setWhen(last.getTimestamp())
                 .setContentIntent(PendingIntent.getService(mContext, new Random().nextInt(), intentConversation, 0))
                 .setDeleteIntent(PendingIntent.getService(mContext, new Random().nextInt(), intentDelete, 0))
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
 
         if (contact.getPhoto() != null) {
             Resources res = mContext.getResources();
@@ -251,29 +261,31 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             }
         }
         if (texts.size() == 1) {
-            TextMessage txt = texts.firstEntry().getValue();
-            txt.setNotified(true);
-            messageNotificationBuilder.setContentText(txt.getMessage());
+            last.setNotified(true);
             messageNotificationBuilder.setStyle(null);
-            messageNotificationBuilder.setWhen(txt.getTimestamp());
         } else {
-            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-            for (TextMessage s : texts.values()) {
-                inboxStyle.addLine(Html.fromHtml("<b>" + DateUtils.formatDateTime(mContext, s.getTimestamp(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL) + "</b> " + s.getMessage()));
+            ArrayList<Spanned> txts = new ArrayList<>(3);
+            int i = 0;
+            for (TextMessage s : texts.descendingMap().values()) {
+                if (i == 5)
+                    break;
+                txts.add(0, Html.fromHtml("<b>" + DateUtils.formatDateTime(mContext, s.getTimestamp(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL) + "</b> " + s.getMessage()));
                 s.setNotified(true);
+                i++;
             }
-            messageNotificationBuilder.setContentText(texts.lastEntry().getValue().getMessage());
+            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+            for (Spanned s : txts) {
+                inboxStyle.addLine(s);
+            }
             messageNotificationBuilder.setStyle(inboxStyle);
-            messageNotificationBuilder.setWhen(texts.lastEntry().getValue().getTimestamp());
         }
 
-        messageNotificationBuilder.setColor(ResourcesCompat.getColor(mContext.getResources(),
-                R.color.color_primary_dark, null));
+        Intent intentRead = new Intent(DRingService.ACTION_CONV_READ)
+                .setClass(mContext, DRingService.class)
+                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
+                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPhones().get(0).getNumber().toString());
 
-        // Reuse intentDelete for the 'Mark as read' action
-        PendingIntent pIntent = PendingIntent.getService(mContext, (int) System.currentTimeMillis(), intentDelete, 0);
-        messageNotificationBuilder.addAction(0, mContext.getString(R.string.notif_mark_as_read), pIntent);
-
+        messageNotificationBuilder.addAction(0, mContext.getString(R.string.notif_mark_as_read), PendingIntent.getService(mContext, (int) System.currentTimeMillis(), intentRead, 0));
         int notificationId = getTextNotificationId(contact);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
