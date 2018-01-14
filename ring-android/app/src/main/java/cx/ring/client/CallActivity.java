@@ -33,6 +33,7 @@ import android.view.View;
 
 import cx.ring.BuildConfig;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.services.NotificationService;
@@ -53,6 +54,7 @@ public class CallActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((RingApplication) getApplication()).startDaemon();
 
         setContentView(R.layout.activity_call_layout);
 

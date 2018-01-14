@@ -524,6 +524,8 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     @Named("DaemonExecutor")
     protected ExecutorService mExecutor;
 
+    public static boolean isRunning = false;
+
     @Override
     public void onCreate() {
         Log.i(TAG, "onCreated");
@@ -531,6 +533,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
         // dependency injection
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        isRunning = true;
 
         if (mDeviceRuntimeService.hasContactPermission()) {
             getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver);
@@ -562,6 +565,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         mAccountService.removeObserver(this);
         mConversationFacade.removeObserver(this);
         mCallService.removeObserver(this);
+        isRunning = false;
     }
 
     @Override
