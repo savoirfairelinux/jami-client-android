@@ -4,7 +4,7 @@
   <string name="feedback_section">بازخورد</string>
   <string name="report">برایمان رایانامه‌ای بفرستید</string>
   <string name="section_license">مجوز</string>
-  <string name="sponsor_section">رینگ نرم‌افزاری آزاد است که توسعه داده و پشتیبانی می‌شود توسّط</string>
+  <string name="sponsor_section">رینگ نرم‌افزاری آزاد است که توسعه داده و پشتیبانی می‌شود توسط</string>
   <string name="copyright_section">حق رونوشت</string>
   <string name="contribute_section">مشارکت</string>
   <string name="version_section">نگارش</string>
@@ -109,11 +109,12 @@
   <string name="conversation_action_block_this">مسدود کردن این مخاطب</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">افزودن%1$s؟</string>
-  <string name="prompt_new_password">گذرواژهٔ نو</string>
-  <string name="prompt_new_password_repeat">گذرواژهٔ نو را تکرار کنید</string>
+  <string name="prompt_new_password">گذرواژه جدید</string>
+  <string name="prompt_new_password_optional">گذرواژه جدید (اختیاری)</string>
+  <string name="prompt_new_password_repeat">گذرواژه جدید را تکرار کنید</string>
   <string name="account_create_title">ساخت یک حساب رینگ</string>
-  <string name="prompt_new_username">نام کاربری نو را وارد کنید</string>
-  <string name="help_password_choose">برای محافظت از حساب رینگتان، گذرواژه‌ای قوی که به خاطر خواهید سپرد را برگزینید.</string>
+  <string name="prompt_new_username">نام کاربری جدید را وارد کنید</string>
+  <string name="help_password_choose">برای محافظت از حساب رینگ‌تان، گذرواژه‌ای قوی که به خاطر خواهید سپرد را برگزینید.</string>
   <string name="help_password_enter">گذرواژهٔ حساب رینگ اصلیتان را وارد کنید</string>
   <string name="help_pin_enter">پین را از دیگر حساب رینگ پیکربندی‌شده وارد کنید. برای به دست آوردن یک پین، از ویژگی «برون‌ریزی حساب روی رینگ» استفاده کنید.</string>
   <string name="wizard_next">بعدی</string>
@@ -121,7 +122,7 @@
   <!--MenuHeaderView-->
   <string name="profile">نمایهٔ من</string>
   <string name="profile_message_warning">نمایه‌تان تنها با مخاطبانتان هم‌رسانی می‌شود</string>
-  <string name="open_the_gallery">گشودن جُنگ</string>
+  <string name="open_the_gallery">گالری را باز کنید</string>
   <string name="take_a_photo">گرفتن عکس</string>
   <string name="profile_name_hint">نامتان را وارد کنید (اختیاری)</string>
   <!--Share fragment-->

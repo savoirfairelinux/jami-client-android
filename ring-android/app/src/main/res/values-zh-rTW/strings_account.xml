@@ -144,7 +144,9 @@
   <string name="account_new_button">建立一個 Ring 帳號</string>
   <string name="account_link_export_button">連結其他裝置到這個帳號</string>
   <string name="account_link_export_info">要在其他裝置上使用這個帳號，您必須先在 Ring 上揭露它。這將會生成一個您必須在新裝置上輸入以設定帳號的 PIN 碼。PIN 碼在 10 分鐘內有效。</string>
+  <string name="account_start_export_button">生成 PIN 碼</string>
   <string name="account_end_export_button">關閉</string>
+  <string name="account_end_export_infos">您的 PIN 碼是：\n\n%%\n\n要完成此程序，您需要在新裝置上開啟 Ring。以「連結此裝置到帳號」來建立新帳號。您的 PIN 碼的有效時間是10分鐘。</string>
   <string name="account_link_export_info_light">要在其他裝置上使用這個帳號，您必須先在 Ring 上揭露它。這將會生成一個您必須在新裝置上輸入以設定帳號的 PIN 碼。PIN 碼在 10 分鐘內有效。</string>
   <string name="account_export_title">新增裝置</string>
   <!--Name registration-->
@@ -169,6 +171,7 @@
   <string name="account_link_title">連結此裝置</string>
   <string name="account_sip_cannot_be_registered">無法註冊帳號</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">編輯您的檔案</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">輸入密碼以確認</string>
   <string name="enter_password">輸入密碼</string>

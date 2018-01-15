@@ -33,6 +33,7 @@
   <string name="menu_item_home">Start</string>
   <string name="menu_item_contact_request">Kontaktanfragen</string>
   <string name="menu_item_accounts">Konten verwalten</string>
+  <string name="menu_item_account">Konto verwalten</string>
   <string name="menu_item_settings">Einstellungen</string>
   <string name="menu_item_share">Meinen Kontakt teilen</string>
   <string name="menu_item_about">Über Ring</string>
@@ -62,6 +63,7 @@
   <string name="notif_channel_calls">Anrufe</string>
   <string name="notif_channel_messages">Nachrichten</string>
   <string name="notif_channel_requests">Anfragen</string>
+  <string name="notif_mark_as_read">Als gelesen markieren</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
   <string name="action_call_hangup">Auflegen</string>

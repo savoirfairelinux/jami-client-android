@@ -33,6 +33,7 @@
   <string name="menu_item_home">Hem</string>
   <string name="menu_item_contact_request">Kontaktförfrågningar</string>
   <string name="menu_item_accounts">Hantera konton</string>
+  <string name="menu_item_account">Hantera konto</string>
   <string name="menu_item_settings">Inställningar</string>
   <string name="menu_item_share">Dela min kontakt</string>
   <string name="menu_item_about">Om Ring</string>
@@ -62,6 +63,7 @@
   <string name="notif_channel_calls">Samtal</string>
   <string name="notif_channel_messages">Meddelanden</string>
   <string name="notif_channel_requests">Förfrågningar</string>
+  <string name="notif_mark_as_read">Markera som läst</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
   <string name="action_call_hangup">Lägg på</string>

@@ -33,6 +33,7 @@
   <string name="menu_item_home">Accueil</string>
   <string name="menu_item_contact_request">Invitations</string>
   <string name="menu_item_accounts">Gérer les comptes</string>
+  <string name="menu_item_account">Gestion du compte</string>
   <string name="menu_item_settings">Paramètres</string>
   <string name="menu_item_share">Partager mon contact</string>
   <string name="menu_item_about">À propos de Ring</string>
@@ -52,7 +53,7 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Appel entrant manqué</string>
-  <string name="notif_missed_outgoing_call">Appel sortant raté</string>
+  <string name="notif_missed_outgoing_call">Appel sortant manqué</string>
   <string name="notif_incoming_call_title">Appel entrant de %1$s</string>
   <string name="notif_incoming_call">Appel entrant</string>
   <string name="notif_outgoing_call_title">Appel sortant vers %1$s</string>
@@ -62,6 +63,7 @@
   <string name="notif_channel_calls">Appels</string>
   <string name="notif_channel_messages">Messages</string>
   <string name="notif_channel_requests">Sollicitations</string>
+  <string name="notif_mark_as_read">Marquer comme lu</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vous :</string>
   <string name="action_call_hangup">Raccrocher</string>
@@ -138,7 +140,7 @@
   <string name="accept">Accepter</string>
   <string name="refuse">Refuser</string>
   <string name="block">Bloquer</string>
-  <string name="contact_request_title">Nouvelle sollicitation  </string>
+  <string name="contact_request_title">Nouvelle demande de contact  </string>
   <string name="contact_request_msg">Vous avez %1$s demande(s) d\'ajout</string>
   <string name="contact_request_account">Pour %1$s</string>
   <string name="no_requests">Aucune demande de contact</string>

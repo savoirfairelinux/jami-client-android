@@ -33,6 +33,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="menu_item_home">Início</string>
   <string name="menu_item_contact_request">Solicitações de contatos</string>
   <string name="menu_item_accounts">Gerenciar contas</string>
+  <string name="menu_item_account">Administrar conta</string>
   <string name="menu_item_settings">Configurações</string>
   <string name="menu_item_share">Compartilhar meu contato</string>
   <string name="menu_item_about">Sobre o Ring</string>
@@ -62,6 +63,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="notif_channel_calls">Chamadas</string>
   <string name="notif_channel_messages">Mensagens</string>
   <string name="notif_channel_requests">Solicitações</string>
+  <string name="notif_mark_as_read">Marcar como lida</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Você:</string>
   <string name="action_call_hangup">Desligar</string>
@@ -155,4 +157,5 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="tv_contact_row_header">Contatos</string>
   <string name="gallery_error_title">Galeria de aplicativos não encontrada</string>
   <string name="gallery_error_message">Aplicativo não encontrado no dispositivo para abrir a Galeria</string>
+  <string name="generic_error">Um erro desconhecido ocorreu</string>
 </resources>

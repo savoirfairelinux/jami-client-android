@@ -33,6 +33,7 @@
   <string name="menu_item_home">Hjem</string>
   <string name="menu_item_contact_request">Kontaktforespørsler</string>
   <string name="menu_item_accounts">Styr kontoer</string>
+  <string name="menu_item_account">Behandle konto</string>
   <string name="menu_item_settings">Innstillinger</string>
   <string name="menu_item_share">Del min kontakt</string>
   <string name="menu_item_about">Om Ring</string>
@@ -60,6 +61,9 @@
   <string name="notif_current_call_title">Pågående samtale med %1$s</string>
   <string name="notif_current_call">Pågående samtale</string>
   <string name="notif_channel_calls">Samtaler</string>
+  <string name="notif_channel_messages">Meldinger</string>
+  <string name="notif_channel_requests">Forespørsler</string>
+  <string name="notif_mark_as_read">Merk som lest</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Deg:</string>
   <string name="action_call_hangup">Legg på</string>
@@ -151,4 +155,7 @@
   <string name="contact_request_sent">Kontaktforespørsel sendt</string>
   <string name="search_results">Søkeresultater</string>
   <string name="tv_contact_row_header">Kontakter</string>
+  <string name="gallery_error_title">Fant ingen galleriprogrammer</string>
+  <string name="gallery_error_message">Fant ingen programmer på enheten for åpning av galleri</string>
+  <string name="generic_error">En ukjent feil inntraff</string>
 </resources>

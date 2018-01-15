@@ -144,6 +144,7 @@ Du kan endre kontoen din senere</string>
   <string name="account_new_button">Opprett en Ring-konto</string>
   <string name="account_link_export_button">Lenk en annen enhet til denne kontoen</string>
   <string name="account_link_export_info">For å bruke denne kontoen på andre enheter, må du først synliggjøre den på Ring. Dette vil generere en PIN-kode som du må skrive inn på den nye enheten for å sette opp en konto. PIN-koden er gyldig i 10 minutter.</string>
+  <string name="account_start_export_button">Oppretter PIN</string>
   <string name="account_end_export_button">lukk</string>
   <string name="account_link_export_info_light">For å bruke denne kontoen på andre enheter, må du først synliggjøre den på Ring. Dette vil generere en PIN-kode som du må skrive inn på den nye enheten for å sette opp en konto. PIN-koden er gyldig i 10 minutter.</string>
   <string name="account_export_title">Legg til enheter</string>
@@ -168,6 +169,7 @@ Du kan endre kontoen din senere</string>
   <string name="account_link_title">Lenk denne enheten</string>
   <string name="account_sip_cannot_be_registered">Kan ikke registrere konto</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Rediger profilen din</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Skriv inn passord for å bekrefte</string>
   <string name="enter_password">Skriv inn passord</string>

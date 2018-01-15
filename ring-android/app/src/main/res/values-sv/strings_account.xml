@@ -144,7 +144,9 @@ Du kan ändra kontot senare.</string>
   <string name="account_new_button">Skapa ett Ring-konto</string>
   <string name="account_link_export_button">Koppla en annan enhet till detta konto</string>
   <string name="account_link_export_info">För att använda detta konto på en annan enhet, måste du först exponera det på Ring. Detta genererar en PIN-kod som du måste ange på den nya enheten för att öppna kontot. Pin-koden är giltig i 10 minuter.</string>
+  <string name="account_start_export_button">Generera PIN-kod</string>
   <string name="account_end_export_button">stäng</string>
+  <string name="account_end_export_infos">Din PIN-kod är:\n\n%%\n\nFör att slutföra processen måste du starta Ring på den nya enheten. Skapa ett nytt konto med \"Koppla denna enhet till ett konto\". Din PIN-kod är giltig i 10 minuter.</string>
   <string name="account_link_export_info_light">För att använda detta konto på en annan enhet, måste du först exponera det på Ring. Detta genererar en PIN-kod som du måste ange på den nya enheten för att öppna kontot. Pin-koden är giltig i 10 minuter.</string>
   <string name="account_export_title">Lägg till enheter</string>
   <!--Name registration-->
@@ -169,6 +171,7 @@ Du kan ändra kontot senare.</string>
   <string name="account_link_title">Länka den här enheten</string>
   <string name="account_sip_cannot_be_registered">Kan inte registrera konto</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Redigera din profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Ange lösenord för att bekräfta</string>
   <string name="enter_password">Ange lösenord</string>

@@ -33,6 +33,7 @@
   <string name="menu_item_home">首頁</string>
   <string name="menu_item_contact_request">加好友請求</string>
   <string name="menu_item_accounts">管理帳號</string>
+  <string name="menu_item_account">管理帳號</string>
   <string name="menu_item_settings">設定</string>
   <string name="menu_item_share">分享我的聯絡人</string>
   <string name="menu_item_about">關於 Ring</string>
@@ -61,6 +62,7 @@
   <string name="notif_channel_calls">通話</string>
   <string name="notif_channel_messages">訊息</string>
   <string name="notif_channel_requests">請求</string>
+  <string name="notif_mark_as_read">標示為已讀</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">你：</string>
   <string name="action_call_hangup">掛斷</string>
