@@ -41,7 +41,6 @@ import cx.ring.utils.MediaButtonsHelper;
 public class CallActivity extends AppCompatActivity {
     public static final String ACTION_CALL = BuildConfig.APPLICATION_ID + ".action.call";
 
-    private static final String TAG = CallActivity.class.getSimpleName();
     private static final String CALL_FRAGMENT_TAG = "CALL_FRAGMENT_TAG";
 
     /* result code sent in case of call failure */
@@ -57,15 +56,12 @@ public class CallActivity extends AppCompatActivity {
         setContentView(R.layout.activity_call_layout);
 
         mMainView = findViewById(R.id.main_call_layout);
-        mMainView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dimmed = !dimmed;
-                if (dimmed) {
-                    hideSystemUI();
-                } else {
-                    showSystemUI();
-                }
+        mMainView.setOnClickListener(v -> {
+            dimmed = !dimmed;
+            if (dimmed) {
+                hideSystemUI();
+            } else {
+                showSystemUI();
             }
         });
 

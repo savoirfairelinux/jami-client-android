@@ -29,7 +29,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ListView;
 
 import java.util.HashMap;
@@ -101,12 +100,7 @@ public class AccountsManagementFragment extends BaseFragment<AccountsManagementP
         ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
         FloatingActionButton button = ((HomeActivity) getActivity()).getActionButton();
         button.setImageResource(R.drawable.ic_add_white);
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.addClicked();
-            }
-        });
+        button.setOnClickListener(v -> presenter.addClicked());
     }
 
     @Override
@@ -153,15 +147,12 @@ public class AccountsManagementFragment extends BaseFragment<AccountsManagementP
 
     @Override
     public void refresh(final List<Account> accounts) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mAccountsAdapter.replaceAll(accounts);
-                if (mAccountsAdapter.isEmpty() && mDnDListView != null) {
-                    mDnDListView.setEmptyView(mEmptyView);
-                }
-                mAccountsAdapter.notifyDataSetChanged();
+        getActivity().runOnUiThread(() -> {
+            mAccountsAdapter.replaceAll(accounts);
+            if (mAccountsAdapter.isEmpty() && mDnDListView != null) {
+                mDnDListView.setEmptyView(mEmptyView);
             }
+            mAccountsAdapter.notifyDataSetChanged();
         });
     }
 

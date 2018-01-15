@@ -153,27 +153,22 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
 
     @OnClick(R.id.settings_clear_history)
     public void onClearHistoryClick() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getString(R.string.clear_history_dialog_title))
+        new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.clear_history_dialog_title))
                 .setMessage(getString(R.string.clear_history_dialog_message))
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                .setPositiveButton(android.R.string.ok, (dialog, id) -> {
 
-                        // ask the presenter to clear history
-                        presenter.clearHistory();
+                    // ask the presenter to clear history
+                    presenter.clearHistory();
 
-                        Snackbar.make(getView(),
-                                getString(R.string.clear_history_completed),
-                                Snackbar.LENGTH_SHORT).show();
-                    }
+                    Snackbar.make(getView(),
+                            getString(R.string.clear_history_completed),
+                            Snackbar.LENGTH_SHORT).show();
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //~ Empty
-                    }
-                });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+                .setNegativeButton(android.R.string.cancel, (dialog, id) -> {
+                    //~ Empty
+                })
+                .show();
     }
 
     @Override

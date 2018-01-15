@@ -132,13 +132,9 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         setAdapter(mRowsAdapter);
 
         // listeners
-        setOnSearchClickedListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SearchActivity.class);
-                startActivity(intent);
-            }
+        setOnSearchClickedListener(view -> {
+            Intent intent = new Intent(getActivity(), SearchActivity.class);
+            startActivity(intent);
         });
 
         setOnItemViewClickedListener(new ItemViewClickedListener());
@@ -194,43 +190,34 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public void showLoading(final boolean show) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (show) {
-                    mSpinnerFragment = new SpinnerFragment();
-                    getFragmentManager().beginTransaction().replace(R.id.main_browse_fragment, mSpinnerFragment).commitAllowingStateLoss();
-                } else {
-                    getFragmentManager().beginTransaction().remove(mSpinnerFragment).commitAllowingStateLoss();
-                }
+        getActivity().runOnUiThread(() -> {
+            if (show) {
+                mSpinnerFragment = new SpinnerFragment();
+                getFragmentManager().beginTransaction().replace(R.id.main_browse_fragment, mSpinnerFragment).commitAllowingStateLoss();
+            } else {
+                getFragmentManager().beginTransaction().remove(mSpinnerFragment).commitAllowingStateLoss();
             }
         });
     }
 
     @Override
     public void refreshContact(final int index, final TVListViewModel contact) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ContactCard contactCard = (ContactCard) cardRowAdapter.get(index);
-                contactCard.setModel(contact);
-                cardRowAdapter.notifyArrayItemRangeChanged(index, 1);
-            }
+        getActivity().runOnUiThread(() -> {
+            ContactCard contactCard = (ContactCard) cardRowAdapter.get(index);
+            contactCard.setModel(contact);
+            cardRowAdapter.notifyArrayItemRangeChanged(index, 1);
         });
     }
 
     @Override
     public void showContacts(final List<TVListViewModel> contacts) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                cardRowAdapter.clear();
-                if (!contacts.isEmpty()) {
-                    for (TVListViewModel contact : contacts) {
-                        cardRowAdapter.add(new ContactCard(contact));
-                    }
-                    cardRowAdapter.notifyArrayItemRangeChanged(0, contacts.size());
+        getActivity().runOnUiThread(() -> {
+            cardRowAdapter.clear();
+            if (!contacts.isEmpty()) {
+                for (TVListViewModel contact : contacts) {
+                    cardRowAdapter.add(new ContactCard(contact));
                 }
+                cardRowAdapter.notifyArrayItemRangeChanged(0, contacts.size());
             }
         });
     }
@@ -267,35 +254,32 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public void displayAccountInfos(final String address, final RingNavigationViewModel viewModel) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (address != null) {
-                    setTitle(address);
-                } else {
-                    setTitle("");
-                }
+        getActivity().runOnUiThread(() -> {
+            if (address != null) {
+                setTitle(address);
+            } else {
+                setTitle("");
+            }
 
-                if (getActivity() == null) {
-                    Log.e(TAG, "displayAccountInfos: Not able to get activity");
-                    return;
-                }
+            if (getActivity() == null) {
+                Log.e(TAG, "displayAccountInfos: Not able to get activity");
+                return;
+            }
 
-                VCard vcard = viewModel.getVcard(getActivity().getFilesDir());
-                if (vcard == null) {
-                    Log.e(TAG, "displayAccountInfos: Not able to get vcard");
-                    return;
-                }
+            VCard vcard = viewModel.getVcard(getActivity().getFilesDir());
+            if (vcard == null) {
+                Log.e(TAG, "displayAccountInfos: Not able to get vcard");
+                return;
+            }
 
-                FormattedName formattedName = vcard.getFormattedName();
-                if (formattedName != null) {
-                    titleView.setAlias(formattedName.getValue());
-                }
+            FormattedName formattedName = vcard.getFormattedName();
+            if (formattedName != null) {
+                titleView.setAlias(formattedName.getValue());
+            }
 
-                List<Photo> photos = vcard.getPhotos();
-                if (!photos.isEmpty() && photos.get(0) != null) {
-                    titleView.setCurrentAccountPhoto(photos.get(0).getData());
-                }
+            List<Photo> photos = vcard.getPhotos();
+            if (!photos.isEmpty() && photos.get(0) != null) {
+                titleView.setCurrentAccountPhoto(photos.get(0).getData());
             }
         });
     }

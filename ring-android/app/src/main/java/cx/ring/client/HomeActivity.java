@@ -37,6 +37,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -213,8 +214,11 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
         if (!isDrawerLocked) {
             mNavigationDrawer.addDrawerListener(mDrawerToggle);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
+            ActionBar supportActionBar = getSupportActionBar();
+            if (supportActionBar != null) {
+                supportActionBar.setDisplayHomeAsUpEnabled(true);
+                supportActionBar.setHomeButtonEnabled(true);
+            }
         }
 
         if (fNavigation == null && savedInstanceState == null) {
@@ -296,31 +300,13 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
                 .setMessage(R.string.account_migration_message_dialog)
                 .setIcon(R.drawable.ic_warning)
                 .setCancelable(true)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        fNavigation.selectSection(RingNavigationFragment.Section.MANAGE);
-                    }
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    dialog.dismiss();
+                    fNavigation.selectSection(RingNavigationFragment.Section.MANAGE);
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        dialog.dismiss();
-                    }
-                })
-                .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        dialog.dismiss();
-                    }
-                })
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.dismiss())
+                .setOnCancelListener(DialogInterface::dismiss)
+                .setOnDismissListener(DialogInterface::dismiss)
                 .show();
     }
 

@@ -42,7 +42,6 @@ public class AboutDetailsFragment extends DetailsFragment {
     private static final String TAG = "AboutDetailsFragment";
     private final DetailsFragmentBackgroundController mDetailsBackground =
             new DetailsFragmentBackgroundController(this);
-    private ArrayObjectAdapter mRowsAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +84,7 @@ public class AboutDetailsFragment extends DetailsFragment {
         selector.addClassPresenter(DetailsOverviewRow.class, rowPresenter);
         selector.addClassPresenter(ListRow.class,
                 new ListRowPresenter());
-        mRowsAdapter = new ArrayObjectAdapter(selector);
+        ArrayObjectAdapter mRowsAdapter = new ArrayObjectAdapter(selector);
 
         Resources res = getActivity().getResources();
         DetailsOverviewRow detailsOverview = new DetailsOverviewRow(

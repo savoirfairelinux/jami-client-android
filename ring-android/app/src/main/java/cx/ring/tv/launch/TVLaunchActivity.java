@@ -21,7 +21,6 @@ package cx.ring.tv.launch;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -76,30 +75,14 @@ public class TVLaunchActivity extends BaseActivity<LaunchPresenter> implements L
     @Override
     public void displayAudioPermissionDialog() {
         Log.e(TAG, "Missing required permission RECORD_AUDIO");
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this)
                 .setTitle(R.string.start_error_title)
                 .setMessage(R.string.start_error_mic_required)
                 .setIcon(R.drawable.ic_mic_black)
                 .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                }).setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        finish();
-                    }
-                });
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                finish();
-            }
-        });
-
-        builder.show();
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> finish()).setOnCancelListener(dialog -> finish())
+                .setOnDismissListener(dialog -> finish())
+                .show();
     }
 
     @Override

@@ -65,10 +65,6 @@ public class CredentialPreferenceDialog extends PreferenceDialogFragment {
 
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
         super.onPrepareDialogBuilder(builder);
-
-        //builder.setPositiveButton(android.R.string.ok, null);
-        //builder.setNegativeButton(android.R.string.cancel, null);
-        //builder.setMessage(R.string.account_credentials_dialog_mesage);
     }
 
     @Override

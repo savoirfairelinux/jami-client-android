@@ -43,7 +43,11 @@ public class RingNavigationViewModel {
     }
 
     public VCard getVcard(File filesDir) {
-        String accountId = isAccountValid() ? mAccount.get().getAccountID() : null;
+        Account account = mAccount.get();
+        if (account == null) {
+            return null;
+        }
+        String accountId = isAccountValid() ? account.getAccountID() : null;
         return VCardUtils.loadLocalProfileFromDisk(filesDir, accountId);
     }
 
