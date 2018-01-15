@@ -67,12 +67,7 @@ public class BlackListViewHolder extends RecyclerView.ViewHolder {
 
         mDisplayname.setText(contact.getRingUsername());
 
-        mButtonUnblock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickListener.onUnblockClicked(contact);
-            }
-        });
+        mButtonUnblock.setOnClickListener(view -> clickListener.onUnblockClicked(contact));
     }
 
     public interface BlackListListeners {

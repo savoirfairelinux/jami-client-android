@@ -28,7 +28,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -45,10 +44,6 @@ class CodecPreference extends Preference {
     private static final String TAG = CodecPreference.class.getSimpleName();
 
     private CodecAdapter listAdapter;
-
-    public CodecPreference(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
 
     public CodecPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -86,14 +81,10 @@ class CodecPreference extends Preference {
         ListView mCodecList = (ListView) holder.findViewById(R.id.dndlistview);
         if (mCodecList.getAdapter() != listAdapter)
             mCodecList.setAdapter(listAdapter);
-        mCodecList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
-                listAdapter.getItem(pos).toggleState();
-                listAdapter.notifyDataSetChanged();
-                callChangeListener(getActiveCodecList());
-            }
+        mCodecList.setOnItemClickListener((arg0, arg1, pos, arg3) -> {
+            listAdapter.getItem(pos).toggleState();
+            listAdapter.notifyDataSetChanged();
+            callChangeListener(getActiveCodecList());
         });
 
         setListViewHeight(mCodecList, (LinearLayout) mCodecList.getParent());
@@ -159,9 +150,9 @@ class CodecPreference extends Preference {
                 rowView = inflater.inflate(R.layout.item_codec, parent, false);
 
                 entryView = new CodecView();
-                entryView.name = (TextView) rowView.findViewById(R.id.codec_name);
-                entryView.samplerate = (TextView) rowView.findViewById(R.id.codec_samplerate);
-                entryView.enabled = (CheckBox) rowView.findViewById(R.id.codec_checked);
+                entryView.name = rowView.findViewById(R.id.codec_name);
+                entryView.samplerate = rowView.findViewById(R.id.codec_samplerate);
+                entryView.enabled = rowView.findViewById(R.id.codec_checked);
                 rowView.setTag(entryView);
             } else {
                 entryView = (CodecView) rowView.getTag();
@@ -208,8 +199,7 @@ class CodecPreference extends Preference {
 
         void setDataset(ArrayList<Codec> codecs) {
             items = new ArrayList<>(codecs.size());
-            for (Codec c : codecs)
-                items.add(c);
+            items.addAll(codecs);
         }
 
         class CodecView {

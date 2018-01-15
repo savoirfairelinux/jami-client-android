@@ -43,37 +43,30 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
 
     private static final String TAG = GeneralAccountFragment.class.getSimpleName();
     private static final String DIALOG_FRAGMENT_TAG = "android.support.v14.preference.PreferenceFragment.DIALOG";
-    private final Preference.OnPreferenceChangeListener changeAccountStatusListener = new Preference.OnPreferenceChangeListener() {
-
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            presenter.accountChanged(newValue);
-            return false;
-        }
+    private final Preference.OnPreferenceChangeListener changeAccountStatusListener = (preference, newValue) -> {
+        presenter.accountChanged(newValue);
+        return false;
     };
-    private final Preference.OnPreferenceChangeListener changeBasicPreferenceListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Log.i(TAG, "Changing preference " + preference.getKey() + " to value:" + newValue);
-            final ConfigKey key = ConfigKey.fromString(preference.getKey());
-            if (preference instanceof TwoStatePreference) {
-                presenter.twoStatePreferenceChanged(key, newValue);
-            } else if (preference instanceof PasswordPreference) {
-                String tmp = "";
-                for (int i = 0; i < ((String) newValue).length(); ++i) {
-                    tmp += "*";
-                }
-                preference.setSummary(tmp);
-                presenter.passwordPreferenceChanged(key, newValue);
-            } else if (key == ConfigKey.ACCOUNT_USERNAME) {
-                presenter.userNameChanged(key, newValue);
-                preference.setSummary((CharSequence) newValue);
-            } else {
-                preference.setSummary((CharSequence) newValue);
-                presenter.preferenceChanged(key, newValue);
+    private final Preference.OnPreferenceChangeListener changeBasicPreferenceListener = (preference, newValue) -> {
+        Log.i(TAG, "Changing preference " + preference.getKey() + " to value:" + newValue);
+        final ConfigKey key = ConfigKey.fromString(preference.getKey());
+        if (preference instanceof TwoStatePreference) {
+            presenter.twoStatePreferenceChanged(key, newValue);
+        } else if (preference instanceof PasswordPreference) {
+            StringBuilder tmp = new StringBuilder();
+            for (int i = 0; i < ((String) newValue).length(); ++i) {
+                tmp.append("*");
             }
-            return true;
+            preference.setSummary(tmp.toString());
+            presenter.passwordPreferenceChanged(key, newValue);
+        } else if (key == ConfigKey.ACCOUNT_USERNAME) {
+            presenter.userNameChanged(key, newValue);
+            preference.setSummary((CharSequence) newValue);
+        } else {
+            preference.setSummary((CharSequence) newValue);
+            presenter.preferenceChanged(key, newValue);
         }
+        return true;
     };
 
     public static GeneralAccountFragment newInstance(@NonNull String accountId) {
@@ -160,11 +153,11 @@ public class GeneralAccountFragment extends BasePreferenceFragment<GeneralAccoun
                 String val = details.get(confKey);
                 ((EditTextPreference) pref).setText(val);
                 if (pref instanceof PasswordPreference) {
-                    String tmp = "";
+                    StringBuilder tmp = new StringBuilder();
                     for (int i = 0; i < val.length(); ++i) {
-                        tmp += "*";
+                        tmp.append("*");
                     }
-                    pref.setSummary(tmp);
+                    pref.setSummary(tmp.toString());
                 } else {
                     pref.setSummary(val);
                 }

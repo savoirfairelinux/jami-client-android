@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2016-2017 by Savoir-faire Linux
  * Author : Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  * <p>
@@ -63,9 +63,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private void setAccounts(List<Account> results) {
         mDataset.clear();
-        for (Account account : results) {
-            mDataset.add(account);
-        }
+        mDataset.addAll(results);
     }
 
     @Override

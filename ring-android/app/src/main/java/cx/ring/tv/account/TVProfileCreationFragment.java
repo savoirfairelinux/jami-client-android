@@ -99,7 +99,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
         RingAccountViewModelImpl ringAccountViewModel = (RingAccountViewModelImpl) getArguments().get(RingAccountCreationFragment.KEY_RING_ACCOUNT);
         presenter.initPresenter(ringAccountViewModel);
 
-        if (ringAccountViewModel.getPhoto() != null) {
+        if (ringAccountViewModel != null && ringAccountViewModel.getPhoto() != null) {
             getGuidanceStylist().getIconView().setImageBitmap(ringAccountViewModel.getPhoto());
         }
     }

@@ -597,31 +597,35 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     }
 
     private void parseIntent(Intent intent) {
-        Bundle extras;
-        switch (intent.getAction()) {
+        if (intent == null) {
+            return;
+        }
+        String action = intent.getAction();
+        if (action == null) {
+            return;
+        }
+        Bundle extras = intent.getExtras();
+        switch (action) {
             case ACTION_TRUST_REQUEST_ACCEPT:
             case ACTION_TRUST_REQUEST_REFUSE:
             case ACTION_TRUST_REQUEST_BLOCK:
-                extras = intent.getExtras();
                 if (extras != null) {
-                    handleTrustRequestAction(intent.getAction(), extras);
+                    handleTrustRequestAction(action, extras);
                 }
                 break;
             case ACTION_CALL_ACCEPT:
             case ACTION_CALL_REFUSE:
             case ACTION_CALL_END:
             case ACTION_CALL_VIEW:
-                extras = intent.getExtras();
                 if (extras != null) {
-                    handleCallAction(intent.getAction(), extras);
+                    handleCallAction(action, extras);
                 }
                 break;
             case ACTION_CONV_READ:
             case ACTION_CONV_ACCEPT:
             case ACTION_CONV_DISMISS:
-                extras = intent.getExtras();
                 if (extras != null) {
-                    handleConvAction(intent.getAction(), intent.getExtras());
+                    handleConvAction(action, intent.getExtras());
                 }
                 break;
             default:
@@ -723,7 +727,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
     private boolean isTv() {
         UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
-        return (uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION);
+        return (uiModeManager != null && uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION);
     }
 
     public void refreshContacts() {

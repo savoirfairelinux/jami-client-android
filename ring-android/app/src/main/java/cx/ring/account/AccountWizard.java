@@ -121,24 +121,21 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
 
     @Override
     public void saveProfile(final String accountID, final RingAccountViewModel ringAccountViewModel) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                RingAccountViewModelImpl ringAccountViewModelImpl = (RingAccountViewModelImpl) ringAccountViewModel;
+        runOnUiThread(() -> {
+            RingAccountViewModelImpl ringAccountViewModelImpl = (RingAccountViewModelImpl) ringAccountViewModel;
 
-                VCard vcard = new VCard();
-                vcard.setFormattedName(new FormattedName(ringAccountViewModelImpl.getFullName()));
-                vcard.setUid(new Uid(ringAccountViewModelImpl.getUsername()));
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                if (ringAccountViewModelImpl.getPhoto() != null) {
-                    ringAccountViewModelImpl.getPhoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
-                    vcard.removeProperties(Photo.class);
-                    vcard.addPhoto(photoVCard);
-                }
-                vcard.removeProperties(RawProperty.class);
-                VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir());
+            VCard vcard = new VCard();
+            vcard.setFormattedName(new FormattedName(ringAccountViewModelImpl.getFullName()));
+            vcard.setUid(new Uid(ringAccountViewModelImpl.getUsername()));
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            if (ringAccountViewModelImpl.getPhoto() != null) {
+                ringAccountViewModelImpl.getPhoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
+                Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
+                vcard.removeProperties(Photo.class);
+                vcard.addPhoto(photoVCard);
             }
+            vcard.removeProperties(RawProperty.class);
+            VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir());
         });
     }
 
@@ -172,23 +169,20 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
 
     @Override
     public void displayProgress(final boolean display) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (display) {
-                    mProgress = new ProgressDialog(AccountWizard.this);
-                    mProgress.setTitle(R.string.dialog_wait_create);
-                    mProgress.setMessage(getString(R.string.dialog_wait_create_details));
-                    mProgress.setCancelable(false);
-                    mProgress.setCanceledOnTouchOutside(false);
-                    mProgress.show();
-                } else {
-                    if (mProgress != null) {
-                        if (mProgress.isShowing()) {
-                            mProgress.dismiss();
-                        }
-                        mProgress = null;
+        runOnUiThread(() -> {
+            if (display) {
+                mProgress = new ProgressDialog(AccountWizard.this);
+                mProgress.setTitle(R.string.dialog_wait_create);
+                mProgress.setMessage(getString(R.string.dialog_wait_create_details));
+                mProgress.setCancelable(false);
+                mProgress.setCanceledOnTouchOutside(false);
+                mProgress.show();
+            } else {
+                if (mProgress != null) {
+                    if (mProgress.isShowing()) {
+                        mProgress.dismiss();
                     }
+                    mProgress = null;
                 }
             }
         });
@@ -196,115 +190,86 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
 
     @Override
     public void displayCreationError() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(AccountWizard.this, "Error creating account", Toast.LENGTH_SHORT).show();
-            }
-        });
+        runOnUiThread(() -> Toast.makeText(AccountWizard.this, "Error creating account", Toast.LENGTH_SHORT).show());
     }
 
     @Override
     public void blockOrientation() {
         //orientation is locked during the create of account to avoid the destruction of the thread
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-            }
-        });
+        runOnUiThread(() -> setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED));
     }
 
     @Override
     public void finish(final boolean affinity) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (affinity) {
-                    startActivity(new Intent(AccountWizard.this, HomeActivity.class));
-                    finish();
-                } else {
-                    finishAffinity();
-                }
+        runOnUiThread(() -> {
+            if (affinity) {
+                startActivity(new Intent(AccountWizard.this, HomeActivity.class));
+                finish();
+            } else {
+                finishAffinity();
             }
         });
     }
 
     @Override
     public void displayGenericError() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                    return;
-                }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AccountWizard.this);
-                dialogBuilder.setPositiveButton(android.R.string.ok, null);
-                dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
-                        .setMessage(R.string.account_cannot_be_found_message);
-                mAlertDialog = dialogBuilder.show();
+        runOnUiThread(() -> {
+            if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                return;
             }
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AccountWizard.this);
+            dialogBuilder.setPositiveButton(android.R.string.ok, null);
+            dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
+                    .setMessage(R.string.account_cannot_be_found_message);
+            mAlertDialog = dialogBuilder.show();
         });
     }
 
     @Override
     public void displayNetworkError() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                    return;
-                }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AccountWizard.this);
-                dialogBuilder.setPositiveButton(android.R.string.ok, null);
-                dialogBuilder.setTitle(R.string.account_no_network_title)
-                        .setMessage(R.string.account_no_network_message);
-                mAlertDialog = dialogBuilder.show();
+        runOnUiThread(() -> {
+            if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                return;
             }
+            mAlertDialog = new AlertDialog.Builder(AccountWizard.this)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setTitle(R.string.account_no_network_title)
+                    .setMessage(R.string.account_no_network_message)
+                    .show();
         });
     }
 
     @Override
     public void displayCannotBeFoundError() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                    return;
-                }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AccountWizard.this);
-                dialogBuilder.setPositiveButton(android.R.string.ok, null);
-                dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
-                        .setMessage(R.string.account_cannot_be_found_message);
-                mAlertDialog = dialogBuilder.show();
+        runOnUiThread(() -> {
+            if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                return;
             }
+            mAlertDialog = new AlertDialog.Builder(AccountWizard.this)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setTitle(R.string.account_cannot_be_found_title)
+                    .setMessage(R.string.account_cannot_be_found_message)
+                    .show();
         });
     }
 
     @Override
     public void displaySuccessDialog() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                    return;
-                }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AccountWizard.this);
-                dialogBuilder.setPositiveButton(android.R.string.ok, null);
-                dialogBuilder.setTitle(R.string.account_device_added_title)
-                        .setMessage(R.string.account_device_added_message);
-                mAlertDialog = dialogBuilder.show();
-                mAlertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
+        runOnUiThread(() -> {
+            if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                return;
+            }
+            mAlertDialog = new AlertDialog.Builder(AccountWizard.this)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setTitle(R.string.account_device_added_title)
+                    .setMessage(R.string.account_device_added_message)
+                    .setOnDismissListener(dialogInterface -> {
                         setResult(Activity.RESULT_OK, new Intent());
                         //unlock the screen orientation
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
                         presenter.successDialogClosed();
-                    }
-                });
-
-            }
+                    })
+                    .show();
         });
     }
 }
