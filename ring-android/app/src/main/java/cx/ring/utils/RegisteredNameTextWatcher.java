@@ -32,8 +32,6 @@ import cx.ring.services.AccountService;
 
 public class RegisteredNameTextWatcher implements TextWatcher {
 
-    private static final String TAG = RegisteredNameTextWatcher.class.getName();
-
     private WeakReference<TextInputLayout> mInputLayout;
     private WeakReference<EditText> mInputText;
     private NameLookupInputHandler mNameLookupInputHandler;

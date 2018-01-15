@@ -75,11 +75,11 @@ public class AccountsAdapter extends BaseAdapter {
             rowView = inflater.inflate(R.layout.item_account_pref, parent, false);
 
             entryView = new AccountView();
-            entryView.alias = (TextView) rowView.findViewById(R.id.account_alias);
-            entryView.host = (TextView) rowView.findViewById(R.id.account_host);
+            entryView.alias = rowView.findViewById(R.id.account_alias);
+            entryView.host = rowView.findViewById(R.id.account_host);
             entryView.loadingIndicator = rowView.findViewById(R.id.loading_indicator);
-            entryView.errorIndicator = (ImageView) rowView.findViewById(R.id.error_indicator);
-            entryView.enabled = (CheckBox) rowView.findViewById(R.id.account_checked);
+            entryView.errorIndicator = rowView.findViewById(R.id.error_indicator);
+            entryView.enabled = rowView.findViewById(R.id.account_checked);
             entryView.errorIndicator.setColorFilter(parent.getContext().getResources().getColor(R.color.error_red));
             entryView.errorIndicator.setVisibility(View.GONE);
             entryView.loadingIndicator.setVisibility(View.GONE);
@@ -101,13 +101,9 @@ public class AccountsAdapter extends BaseAdapter {
         }
 
         entryView.enabled.setChecked(item.isEnabled());
-        entryView.enabled.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                item.setEnabled(!item.isEnabled());
-                mListeners.onItemClicked(item.getAccountID(), item.getDetails());
-            }
+        entryView.enabled.setOnClickListener(v -> {
+            item.setEnabled(!item.isEnabled());
+            mListeners.onItemClicked(item.getAccountID(), item.getDetails());
         });
 
         if (item.isEnabled()) {

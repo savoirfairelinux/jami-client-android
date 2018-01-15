@@ -33,20 +33,17 @@ public class CustomCameraActivity extends Activity {
     int cameraFront;
     int cameraBack;
     int currentCamera;
-    Camera.PictureCallback mPicture = new Camera.PictureCallback() {
-        @Override
-        public void onPictureTaken(byte[] input, Camera camera) {
-            Bundle conData = new Bundle();
-            conData.putByteArray("data", input);
-            Intent intent = new Intent();
-            intent.putExtras(conData);
-            if (getParent() == null) {
-                setResult(RESULT_OK, intent);
-            } else {
-                getParent().setResult(RESULT_OK, intent);
-            }
-            finish();
+    Camera.PictureCallback mPicture = (input, camera) -> {
+        Bundle conData = new Bundle();
+        conData.putByteArray("data", input);
+        Intent intent = new Intent();
+        intent.putExtras(conData);
+        if (getParent() == null) {
+            setResult(RESULT_OK, intent);
+        } else {
+            getParent().setResult(RESULT_OK, intent);
         }
+        finish();
     };
     private Camera mCamera;
     private CameraPreview mCameraPreview;
@@ -88,8 +85,6 @@ public class CustomCameraActivity extends Activity {
     /**
      * Helper method to access the camera returns null if it cannot get the
      * camera or does not exist
-     *
-     * @return
      */
     private Camera getCameraInstance() {
         initVideo();

@@ -37,7 +37,7 @@ public class EditTextPreferenceDialog extends EditTextPreferenceDialogFragment {
     @Override
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
-        EditText text = (EditText) view.findViewById(android.R.id.edit);
+        EditText text = view.findViewById(android.R.id.edit);
         text.setInputType(getArguments().getInt(ARG_TYPE));
     }
 }

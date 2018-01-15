@@ -86,16 +86,4 @@ public abstract class OpenSlParams {
         }
     }
 
-    // Default factory for Jelly Bean or older.
-    private static class DefaultOpenSlParams extends OpenSlParams {
-        @Override
-        public int getSampleRate() {
-            return 44100;
-        }
-
-        @Override
-        public int getBufferSize() {
-            return 64;
-        }
-    }
 }

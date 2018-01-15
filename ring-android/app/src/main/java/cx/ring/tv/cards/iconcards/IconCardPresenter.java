@@ -25,7 +25,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v4.content.ContextCompat;
 import android.view.ContextThemeWrapper;
-import android.view.View;
 import android.widget.ImageView;
 
 import cx.ring.R;
@@ -46,12 +45,7 @@ public class IconCardPresenter extends AbstractCardPresenter<ImageCardView> {
         final ImageView image = imageCardView.getMainImageView();
         image.setBackgroundResource(R.drawable.icon_focused);
         image.getBackground().setAlpha(0);
-        imageCardView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                animateIconBackground(image.getBackground(), hasFocus);
-            }
-        });
+        imageCardView.setOnFocusChangeListener((v, hasFocus) -> animateIconBackground(image.getBackground(), hasFocus));
         return imageCardView;
     }
 

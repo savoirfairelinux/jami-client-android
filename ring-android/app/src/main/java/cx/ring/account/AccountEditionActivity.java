@@ -27,7 +27,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -210,17 +209,12 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
     @NonNull
     private AlertDialog createDeleteDialog() {
         Activity ownerActivity = this;
-        AlertDialog.Builder builder = new AlertDialog.Builder(ownerActivity);
-        builder.setMessage(R.string.account_delete_dialog_message).setTitle(R.string.account_delete_dialog_title)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        mEditionPresenter.removeAccount();
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, null);
-
-        AlertDialog alertDialog = builder.create();
+        AlertDialog alertDialog = new AlertDialog.Builder(ownerActivity)
+                .setMessage(R.string.account_delete_dialog_message)
+                .setTitle(R.string.account_delete_dialog_title)
+                .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> mEditionPresenter.removeAccount())
+                .setNegativeButton(android.R.string.cancel, null)
+                .create();
         alertDialog.setOwnerActivity(ownerActivity);
         return alertDialog;
     }
@@ -240,16 +234,13 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @Override
     public void displayAccountName(final String name) {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-                setSupportActionBar(toolbar);
-                ActionBar actionBar = getSupportActionBar();
-                if (actionBar != null) {
-                    actionBar.setDisplayHomeAsUpEnabled(true);
-                    actionBar.setTitle(name);
-                }
+        RingApplication.uiHandler.post(() -> {
+            Toolbar toolbar = findViewById(R.id.main_toolbar);
+            setSupportActionBar(toolbar);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setTitle(name);
             }
         });
 

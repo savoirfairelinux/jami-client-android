@@ -113,7 +113,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         Set<String> requests = mNotifiedRequests.get(accountId);
         if (requests == null) {
             SharedPreferences preferences = mContext.getSharedPreferences(RING_REQUESTS, Context.MODE_PRIVATE);
-            requests = new HashSet<>(preferences.getStringSet(accountId, new HashSet<String>()));
+            requests = new HashSet<>(preferences.getStringSet(accountId, new HashSet<>()));
             mNotifiedRequests.put(accountId, requests);
         }
         return requests;

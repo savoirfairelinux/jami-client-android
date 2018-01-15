@@ -219,7 +219,7 @@ public class HardwareServiceImpl extends HardwareService {
         final boolean useLargerSize = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.SUPPORTED_64_BIT_ABIS.length > 0;
         int MIN_WIDTH = useLargerSize ? VIDEO_WIDTH : MIN_VIDEO_WIDTH;
         Point size = new Point(0, 0);
-        /** {@link Camera.Parameters#getSupportedPreviewSizes} :
+        /* {@link Camera.Parameters#getSupportedPreviewSizes} :
          * "This method will always return a list with at least one element."
          * Attempt to find the size with width closest (but above) MIN_WIDTH. */
         for (Camera.Size s : param.getSupportedPreviewSizes()) {
@@ -318,7 +318,6 @@ public class HardwareServiceImpl extends HardwareService {
         }
 
         try {
-            surface.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
             preview.setPreviewDisplay(surface);
         } catch (IOException e) {
             Log.e(TAG, "setPreviewDisplay: " + e.getMessage());
@@ -348,25 +347,19 @@ public class HardwareServiceImpl extends HardwareService {
         final int heigth = videoParams.height;
         final int rotation = videoParams.rotation;
 
-        preview.setPreviewCallbackWithBuffer(new Camera.PreviewCallback() {
-            @Override
-            public void onPreviewFrame(byte[] data, Camera camera) {
-                setVideoFrame(data, videoWidth, heigth, rotation);
-                preview.addCallbackBuffer(data);
-            }
+        preview.setPreviewCallbackWithBuffer((data, camera) -> {
+            setVideoFrame(data, videoWidth, heigth, rotation);
+            preview.addCallbackBuffer(data);
         });
 
         // enqueue first buffer
         int bufferSize = parameters.getPreviewSize().width * parameters.getPreviewSize().height * ImageFormat.getBitsPerPixel(parameters.getPreviewFormat()) / 8;
         preview.addCallbackBuffer(new byte[bufferSize]);
 
-        preview.setErrorCallback(new Camera.ErrorCallback() {
-            @Override
-            public void onError(int error, Camera cam) {
-                Log.w(TAG, "Camera onError " + error);
-                if (preview == cam) {
-                    stopCapture();
-                }
+        preview.setErrorCallback((error, cam) -> {
+            Log.w(TAG, "Camera onError " + error);
+            if (preview == cam) {
+                stopCapture();
             }
         });
         try {

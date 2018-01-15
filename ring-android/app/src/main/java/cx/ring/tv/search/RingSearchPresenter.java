@@ -40,8 +40,6 @@ import ezvcard.VCard;
 
 public class RingSearchPresenter extends RootPresenter<RingSearchView> implements Observer<ServiceEvent> {
 
-    private static final String TAG = RingSearchPresenter.class.getSimpleName();
-
     private AccountService mAccountService;
     private HardwareService mHardwareService;
     private VCardService mVCardService;

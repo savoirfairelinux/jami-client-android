@@ -106,7 +106,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService implements Au
         });
 
         try {
-            boolean loaded = result.get();
+            result.get();
             Log.i(TAG, "Ring library has been successfully loaded");
         } catch (Exception e) {
             Log.e(TAG, "Could not load Ring library", e);

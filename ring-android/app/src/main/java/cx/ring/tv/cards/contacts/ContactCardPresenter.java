@@ -38,8 +38,7 @@ public class ContactCardPresenter extends AbstractCardPresenter<ImageCardView> {
 
     @Override
     protected ImageCardView onCreateView() {
-        ImageCardView imageCardView = new ImageCardView(getContext());
-        return imageCardView;
+        return new ImageCardView(getContext());
     }
 
     @Override

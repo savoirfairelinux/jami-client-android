@@ -21,7 +21,6 @@ package cx.ring.tv.account;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -165,13 +164,7 @@ public class TVAccountWizard
 
     @Override
     public void displayCreationError() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(TVAccountWizard.this, "Error creating account", Toast.LENGTH_SHORT).show();
-
-            }
-        });
+        runOnUiThread(() -> Toast.makeText(TVAccountWizard.this, "Error creating account", Toast.LENGTH_SHORT).show());
     }
 
     @Override
@@ -182,126 +175,103 @@ public class TVAccountWizard
 
     @Override
     public void finish(final boolean affinity) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (affinity) {
-                    FragmentManager fm = getFragmentManager();
-                    if (fm.getBackStackEntryCount() >= 1) {
-                        fm.popBackStack();
-                    } else {
-                        finish();
-                    }
+        runOnUiThread(() -> {
+            if (affinity) {
+                FragmentManager fm = getFragmentManager();
+                if (fm.getBackStackEntryCount() >= 1) {
+                    fm.popBackStack();
                 } else {
-                    finishAffinity();
+                    finish();
                 }
+            } else {
+                finishAffinity();
             }
         });
     }
 
     @Override
     public void saveProfile(final String accountID, final RingAccountViewModel ringAccountViewModel) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                RingAccountViewModelImpl ringAccountViewModelImpl = (RingAccountViewModelImpl) ringAccountViewModel;
+        runOnUiThread(() -> {
+            RingAccountViewModelImpl ringAccountViewModelImpl = (RingAccountViewModelImpl) ringAccountViewModel;
 
-                VCard vcard = new VCard();
-                vcard.setFormattedName(new FormattedName(ringAccountViewModelImpl.getFullName()));
-                vcard.setUid(new Uid(ringAccountViewModelImpl.getUsername()));
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                if (ringAccountViewModelImpl.getPhoto() != null) {
-                    Bitmap reduced = BitmapUtils.reduceBitmap(ringAccountViewModelImpl.getPhoto(), VCardUtils.VCARD_PHOTO_SIZE);
-                    reduced.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
-                    vcard.removeProperties(Photo.class);
-                    vcard.addPhoto(photoVCard);
-                }
-                vcard.removeProperties(RawProperty.class);
-                VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir());
+            VCard vcard = new VCard();
+            vcard.setFormattedName(new FormattedName(ringAccountViewModelImpl.getFullName()));
+            vcard.setUid(new Uid(ringAccountViewModelImpl.getUsername()));
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            if (ringAccountViewModelImpl.getPhoto() != null) {
+                Bitmap reduced = BitmapUtils.reduceBitmap(ringAccountViewModelImpl.getPhoto(), VCardUtils.VCARD_PHOTO_SIZE);
+                reduced.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
+                vcard.removeProperties(Photo.class);
+                vcard.addPhoto(photoVCard);
             }
+            vcard.removeProperties(RawProperty.class);
+            VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir());
         });
     }
 
     @Override
     public void displayGenericError() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        runOnUiThread(() -> {
 
-                if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                    return;
-                }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TVAccountWizard.this);
-                dialogBuilder.setPositiveButton(android.R.string.ok, null);
-                dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
-                        .setMessage(R.string.account_cannot_be_found_message);
-                mAlertDialog = dialogBuilder.show();
+            if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                return;
             }
+            mAlertDialog = new AlertDialog.Builder(TVAccountWizard.this)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setTitle(R.string.account_cannot_be_found_title)
+                    .setMessage(R.string.account_cannot_be_found_message)
+                    .show();
         });
     }
 
     @Override
     public void displayNetworkError() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        runOnUiThread(() -> {
 
-                if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                    return;
-                }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TVAccountWizard.this);
-                dialogBuilder.setPositiveButton(android.R.string.ok, null);
-                dialogBuilder.setTitle(R.string.account_no_network_title)
-                        .setMessage(R.string.account_no_network_message);
-                mAlertDialog = dialogBuilder.show();
+            if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                return;
             }
+            mAlertDialog = new AlertDialog.Builder(TVAccountWizard.this)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setTitle(R.string.account_no_network_title)
+                    .setMessage(R.string.account_no_network_message)
+                    .show();
         });
     }
 
     @Override
     public void displayCannotBeFoundError() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                    return;
-                }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TVAccountWizard.this);
-                dialogBuilder.setPositiveButton(android.R.string.ok, null);
-                dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
-                        .setMessage(R.string.account_cannot_be_found_message);
-                mAlertDialog = dialogBuilder.show();
+        runOnUiThread(() -> {
+            if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                return;
             }
+            mAlertDialog = new AlertDialog.Builder(TVAccountWizard.this)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setTitle(R.string.account_cannot_be_found_title)
+                    .setMessage(R.string.account_cannot_be_found_message)
+                    .show();
         });
     }
 
     @Override
     public void displaySuccessDialog() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mAlertDialog != null && mAlertDialog.isShowing()) {
-                    return;
-                }
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(TVAccountWizard.this);
-                dialogBuilder.setPositiveButton(android.R.string.ok, null);
-                dialogBuilder.setTitle(R.string.account_device_added_title)
-                        .setMessage(R.string.account_device_added_message);
-                mAlertDialog = dialogBuilder.show();
-                mAlertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
+        runOnUiThread(() -> {
+            if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                return;
+            }
+            mAlertDialog = new AlertDialog.Builder(TVAccountWizard.this)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setTitle(R.string.account_device_added_title)
+                    .setMessage(R.string.account_device_added_message)
+                    .setOnDismissListener(dialogInterface -> {
                         setResult(Activity.RESULT_OK, new Intent());
                         //unlock the screen orientation
                         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
                         startActivity(new Intent(TVAccountWizard.this, HomeActivity.class));
                         finish();
-                    }
-                });
-            }
+                    })
+                    .show();
         });
-
     }
-
 }
