@@ -22,6 +22,7 @@ package cx.ring.launch;
 import android.Manifest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -63,9 +64,7 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
         String[] toRequest = buildPermissionsToAsk();
         ArrayList<String> permissionsWeCanAsk = new ArrayList<>();
 
-        for (String permission : toRequest) {
-            permissionsWeCanAsk.add(permission);
-        }
+        permissionsWeCanAsk.addAll(Arrays.asList(toRequest));
 
         if (!permissionsWeCanAsk.isEmpty()) {
             getView().askPermissions(permissionsWeCanAsk);

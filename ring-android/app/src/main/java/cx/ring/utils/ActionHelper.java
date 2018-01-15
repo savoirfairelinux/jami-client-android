@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2016 by Savoir-faire Linux
  * Author : Alexandre Lision <alexandre.lision@savoirfairelinux.com>
  * <p>
@@ -20,7 +20,6 @@ package cx.ring.utils;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
@@ -57,27 +56,18 @@ public class ActionHelper {
             return null;
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(R.string.conversation_action_delete_this_title)
+        return new AlertDialog.Builder(context)
+                .setTitle(R.string.conversation_action_delete_this_title)
                 .setMessage(R.string.conversation_action_delete_this_message)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        if (callback != null) {
-                            callback.deleteConversation(callContact);
-                        }
+                .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
+                    if (callback != null) {
+                        callback.deleteConversation(callContact);
                     }
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        /* Terminate with no action */
-                    }
-                });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-        return alertDialog;
+                .setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
+                    /* Terminate with no action */
+                })
+                .show();
     }
 
     public static void launchCopyNumberToClipboardFromContact(final Context context,
@@ -103,23 +93,20 @@ public class ActionHelper {
             callback.copyContactNumberToClipboard(number);
         } else {
             final NumberAdapter adapter = new NumberAdapter(context, callContact, true);
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(R.string.conversation_action_select_peer_number);
-            builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (callback != null) {
-                        Phone selectedPhone = (Phone) adapter.getItem(which);
-                        callback.copyContactNumberToClipboard(selectedPhone.getNumber().toString());
-                    }
-                }
-            });
-            AlertDialog dialog = builder.create();
+            AlertDialog alertDialog = new AlertDialog.Builder(context)
+                    .setTitle(R.string.conversation_action_select_peer_number)
+                    .setAdapter(adapter, (dialog, which) -> {
+                        if (callback != null) {
+                            Phone selectedPhone = (Phone) adapter.getItem(which);
+                            callback.copyContactNumberToClipboard(selectedPhone.getNumber().toString());
+                        }
+                    })
+                    .create();
             final int listViewSidePadding = (int) context
                     .getResources()
                     .getDimension(R.dimen.alert_dialog_side_padding_list_view);
-            dialog.getListView().setPadding(listViewSidePadding, 0, listViewSidePadding, 0);
-            dialog.show();
+            alertDialog.getListView().setPadding(listViewSidePadding, 0, listViewSidePadding, 0);
+            alertDialog.show();
         }
     }
 
@@ -129,26 +116,18 @@ public class ActionHelper {
             return;
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(R.string.ab_action_contact_add_question)
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.ab_action_contact_add_question)
                 .setMessage(context.getString(R.string.add_call_contact_number_to_contacts,
                         contact.getDisplayName()))
-                .setPositiveButton(R.string.ab_action_contact_add, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        Intent intent = getAddNumberIntentForContact(contact);
-                        context.startActivity(intent);
-                    }
+                .setPositiveButton(R.string.ab_action_contact_add, (dialog, whichButton) -> {
+                    Intent intent = getAddNumberIntentForContact(contact);
+                    context.startActivity(intent);
                 })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        /* Terminate with no action */
-                    }
-                });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+                .setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
+                    /* Terminate with no action */
+                })
+                .show();
     }
 
     public static Intent getAddNumberIntentForContact(CallContact contact) {

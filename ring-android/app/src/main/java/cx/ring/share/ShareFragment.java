@@ -83,14 +83,11 @@ public class ShareFragment extends BaseFragment<SharePresenter> implements Gener
 
         setHasOptionsMenu(true);
 
-        mQrImage.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                mQRCodeSize = mQrImage.getMeasuredWidth();
+        mQrImage.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            mQRCodeSize = mQrImage.getMeasuredWidth();
 
-                // when view is ready, we search for contact infos to display
-                presenter.loadContactInformation();
-            }
+            // when view is ready, we search for contact infos to display
+            presenter.loadContactInformation();
         });
     }
 
@@ -130,26 +127,23 @@ public class ShareFragment extends BaseFragment<SharePresenter> implements Gener
             return;
         }
 
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (qrCodeData == null || mQRCodeSize <= 0) {
-                    mQrImage.setVisibility(View.INVISIBLE);
-                    mShareInstruction.setText(mShareMessageNoAccount);
-                } else {
-                    Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
-                    bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
-                    mQrImage.setImageBitmap(bitmap);
-                    mShareInstruction.setText(mShareMessage);
-                    mQrImage.setVisibility(View.VISIBLE);
-                }
+        RingApplication.uiHandler.post(() -> {
+            if (qrCodeData == null || mQRCodeSize <= 0) {
+                mQrImage.setVisibility(View.INVISIBLE);
+                mShareInstruction.setText(mShareMessageNoAccount);
+            } else {
+                Bitmap bitmap = Bitmap.createBitmap(qrCodeData.getWidth(), qrCodeData.getHeight(), Bitmap.Config.ARGB_8888);
+                bitmap.setPixels(qrCodeData.getData(), 0, qrCodeData.getWidth(), 0, 0, qrCodeData.getWidth(), qrCodeData.getHeight());
+                mQrImage.setImageBitmap(bitmap);
+                mShareInstruction.setText(mShareMessage);
+                mQrImage.setVisibility(View.VISIBLE);
+            }
 
-                mUriToShow = viewModel.getAccountShareUri();
-                if (TextUtils.isEmpty(mUriToShow)) {
-                    mShareButton.setEnabled(false);
-                } else {
-                    mShareButton.setEnabled(true);
-                }
+            mUriToShow = viewModel.getAccountShareUri();
+            if (TextUtils.isEmpty(mUriToShow)) {
+                mShareButton.setEnabled(false);
+            } else {
+                mShareButton.setEnabled(true);
             }
         });
     }

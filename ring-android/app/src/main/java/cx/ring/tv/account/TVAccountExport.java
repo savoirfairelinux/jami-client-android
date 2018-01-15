@@ -20,7 +20,6 @@ package cx.ring.tv.account;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -111,71 +110,55 @@ public class TVAccountExport
 
     @Override
     public void showNetworkError() {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mWaitDialog.dismiss();
-                AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
-                errorDialog.setTitle(R.string.account_export_end_network_title)
-                        .setMessage(R.string.account_export_end_network_message);
-                errorDialog.setPositiveButton(android.R.string.ok, null);
-                errorDialog.show();
-            }
+        RingApplication.uiHandler.post(() -> {
+            mWaitDialog.dismiss();
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.account_export_end_network_title)
+                    .setMessage(R.string.account_export_end_network_message)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
         });
     }
 
     @Override
     public void showPasswordError() {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mWaitDialog.dismiss();
-                AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
-                errorDialog.setTitle(R.string.account_export_end_error_title)
-                        .setMessage(R.string.account_export_end_decryption_message);
-                errorDialog.setPositiveButton(android.R.string.ok, null);
-                errorDialog.show();
-            }
+        RingApplication.uiHandler.post(() -> {
+            mWaitDialog.dismiss();
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.account_export_end_error_title)
+                    .setMessage(R.string.account_export_end_decryption_message)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
         });
     }
 
     @Override
     public void showGenericError() {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mWaitDialog.dismiss();
-                AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
-                errorDialog.setTitle(R.string.account_export_end_error_title)
-                        .setMessage(R.string.account_export_end_error_message);
-                errorDialog.setPositiveButton(android.R.string.ok, null);
-                errorDialog.show();
-            }
+        RingApplication.uiHandler.post(() -> {
+            mWaitDialog.dismiss();
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.account_export_end_error_title)
+                    .setMessage(R.string.account_export_end_error_message)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
         });
     }
 
     @Override
     public void showPIN(final String pin) {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mWaitDialog.dismiss();
-                String pined = getString(R.string.account_end_export_infos).replace("%%", pin);
-                final SpannableString styledResultText = new SpannableString(pined);
-                int pos = pined.lastIndexOf(pin);
-                styledResultText.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                styledResultText.setSpan(new StyleSpan(Typeface.BOLD), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                styledResultText.setSpan(new RelativeSizeSpan(2.8f), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                AlertDialog.Builder successDialog = new AlertDialog.Builder(getActivity());
-                successDialog.setMessage(styledResultText);
-                successDialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        getFragmentManager().popBackStack();
-                    }
-                });
-                successDialog.show();
-            }
+        RingApplication.uiHandler.post(() -> {
+            mWaitDialog.dismiss();
+            String pined = getString(R.string.account_end_export_infos).replace("%%", pin);
+            final SpannableString styledResultText = new SpannableString(pined);
+            int pos = pined.lastIndexOf(pin);
+            styledResultText.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_CENTER), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            styledResultText.setSpan(new StyleSpan(Typeface.BOLD), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            styledResultText.setSpan(new RelativeSizeSpan(2.8f), pos, (pos + pin.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            new AlertDialog.Builder(getActivity())
+                    .setMessage(styledResultText)
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> getFragmentManager().popBackStack())
+                    .show();
         });
     }
 

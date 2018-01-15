@@ -23,7 +23,6 @@ package cx.ring.fragments;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -53,62 +52,50 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
 
     public static final String TAG = MediaPreferenceFragment.class.getSimpleName();
     private static final int SELECT_RINGTONE_PATH = 40;
-    private final Preference.OnPreferenceChangeListener changeVideoPreferenceListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            final ConfigKey key = ConfigKey.fromString(preference.getKey());
-            boolean versionMOrSuperior = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
-            presenter.videoPreferenceChanged(key, newValue, versionMOrSuperior);
-            return true;
-        }
+    private final Preference.OnPreferenceChangeListener changeVideoPreferenceListener = (preference, newValue) -> {
+        final ConfigKey key = ConfigKey.fromString(preference.getKey());
+        boolean versionMOrSuperior = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+        presenter.videoPreferenceChanged(key, newValue, versionMOrSuperior);
+        return true;
     };
     private CodecPreference audioCodecsPref = null;
     private CodecPreference videoCodecsPref = null;
-    private final Preference.OnPreferenceChangeListener changeCodecListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object o) {
-            ArrayList<Long> audio = audioCodecsPref.getActiveCodecList();
-            ArrayList<Long> video = videoCodecsPref.getActiveCodecList();
-            ArrayList<Long> newOrder = new ArrayList<>(audio.size() + video.size());
-            newOrder.addAll(audio);
-            newOrder.addAll(video);
-            presenter.codecChanged(newOrder);
-            return true;
-        }
+    private final Preference.OnPreferenceChangeListener changeCodecListener = (preference, o) -> {
+        ArrayList<Long> audio = audioCodecsPref.getActiveCodecList();
+        ArrayList<Long> video = videoCodecsPref.getActiveCodecList();
+        ArrayList<Long> newOrder = new ArrayList<>(audio.size() + video.size());
+        newOrder.addAll(audio);
+        newOrder.addAll(video);
+        presenter.codecChanged(newOrder);
+        return true;
     };
     private SwitchPreference mRingtoneCustom = null;
-    private final Preference.OnPreferenceChangeListener changeAudioPreferenceListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object newValue) {
-            final ConfigKey key = ConfigKey.fromString(preference.getKey());
-            if (preference instanceof TwoStatePreference) {
-                if (key == ConfigKey.RINGTONE_ENABLED) {
-                    mRingtoneCustom.setEnabled((Boolean) newValue);
-                    Boolean isEnabled = (Boolean) newValue && mRingtoneCustom.isChecked();
-                    getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(isEnabled);
-                } else if (key == ConfigKey.RINGTONE_CUSTOM) {
-                    getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled((Boolean) newValue);
-                    if ((Boolean) newValue) {
-                        findPreference(ConfigKey.RINGTONE_PATH.key()).setSummary(
-                                new File(FileUtils.ringtonesPath(getActivity()) + File.separator + "default.wav").getName());
-                    }
+    private final Preference.OnPreferenceChangeListener changeAudioPreferenceListener = (preference, newValue) -> {
+        final ConfigKey key = ConfigKey.fromString(preference.getKey());
+        if (preference instanceof TwoStatePreference) {
+            if (key == ConfigKey.RINGTONE_ENABLED) {
+                mRingtoneCustom.setEnabled((Boolean) newValue);
+                Boolean isEnabled = (Boolean) newValue && mRingtoneCustom.isChecked();
+                getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(isEnabled);
+            } else if (key == ConfigKey.RINGTONE_CUSTOM) {
+                getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled((Boolean) newValue);
+                if ((Boolean) newValue) {
+                    findPreference(ConfigKey.RINGTONE_PATH.key()).setSummary(
+                            new File(FileUtils.ringtonesPath(getActivity()) + File.separator + "default.wav").getName());
                 }
-            } else if (key == ConfigKey.ACCOUNT_DTMF_TYPE) {
-                preference.setSummary(((String) newValue).contentEquals("overrtp") ? "RTP" : "SIP");
-            } else {
-                preference.setSummary((CharSequence) newValue);
             }
+        } else if (key == ConfigKey.ACCOUNT_DTMF_TYPE) {
+            preference.setSummary(((String) newValue).contentEquals("overrtp") ? "RTP" : "SIP");
+        } else {
+            preference.setSummary((CharSequence) newValue);
+        }
 
-            presenter.audioPreferenceChanged(key, newValue);
-            return true;
-        }
+        presenter.audioPreferenceChanged(key, newValue);
+        return true;
     };
-    private Preference.OnPreferenceClickListener filePickerListener = new Preference.OnPreferenceClickListener() {
-        @Override
-        public boolean onPreferenceClick(Preference preference) {
-            presenter.fileSearchClicked();
-            return true;
-        }
+    private Preference.OnPreferenceClickListener filePickerListener = preference -> {
+        presenter.fileSearchClicked();
+        return true;
     };
 
     public static MediaPreferenceFragment newInstance(@NonNull String accountId) {
@@ -153,35 +140,30 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
 
     @Override
     public void displayWrongFileFormatDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.ringtone_error_title);
-        builder.setMessage(R.string.ringtone_error_format_not_supported);
-        builder.setPositiveButton(android.R.string.ok, null);
-        builder.show();
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.ringtone_error_title)
+                .setMessage(R.string.ringtone_error_format_not_supported)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
     }
 
     @Override
     public void displayFileTooBigDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.ringtone_error_title);
-        builder.setMessage(getString(R.string.ringtone_error_size_too_big, MediaPreferencePresenter.MAX_SIZE_RINGTONE));
-        builder.setPositiveButton(android.R.string.ok, null);
-        builder.show();
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.ringtone_error_title)
+                .setMessage(getString(R.string.ringtone_error_size_too_big, MediaPreferencePresenter.MAX_SIZE_RINGTONE))
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
     }
 
     @Override
     public void displayPermissionCameraDenied() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.permission_dialog_camera_title)
                 .setMessage(R.string.permission_dialog_camera_message)
                 .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        builder.show();
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     @Override

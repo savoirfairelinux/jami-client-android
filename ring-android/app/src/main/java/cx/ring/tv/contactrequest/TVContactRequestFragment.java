@@ -33,7 +33,6 @@ import android.support.v17.leanback.widget.FullWidthDetailsOverviewRowPresenter;
 import android.support.v17.leanback.widget.FullWidthDetailsOverviewSharedElementHelper;
 import android.support.v17.leanback.widget.ListRow;
 import android.support.v17.leanback.widget.ListRowPresenter;
-import android.support.v17.leanback.widget.OnActionClickedListener;
 import android.support.v17.leanback.widget.Presenter;
 import android.support.v17.leanback.widget.SparseArrayObjectAdapter;
 import android.support.v4.content.ContextCompat;
@@ -84,12 +83,7 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
 
         // Override down navigation as we do not use it in this screen
         // Only the detailPresenter will be displayed
-        layout.setOnDispatchKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                return event.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN;
-            }
-        });
+        layout.setOnDispatchKeyListener((v, keyCode, event) -> event.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN);
     }
 
     private void prepareBackgroundManager() {
@@ -117,16 +111,13 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
         detailsPresenter.setParticipatingEntranceTransition(false);
         prepareEntranceTransition();
 
-        detailsPresenter.setOnActionClickedListener(new OnActionClickedListener() {
-            @Override
-            public void onActionClicked(Action action) {
-                if (action.getId() == ACTION_ACCEPT) {
-                    presenter.acceptTrustRequest(mSelectedContactRequest);
-                } else if (action.getId() == ACTION_REFUSE) {
-                    presenter.refuseTrustRequest(mSelectedContactRequest);
-                } else if (action.getId() == ACTION_BLOCK) {
-                    presenter.blockTrustRequest(mSelectedContactRequest);
-                }
+        detailsPresenter.setOnActionClickedListener(action -> {
+            if (action.getId() == ACTION_ACCEPT) {
+                presenter.acceptTrustRequest(mSelectedContactRequest);
+            } else if (action.getId() == ACTION_REFUSE) {
+                presenter.refuseTrustRequest(mSelectedContactRequest);
+            } else if (action.getId() == ACTION_BLOCK) {
+                presenter.blockTrustRequest(mSelectedContactRequest);
             }
         });
 

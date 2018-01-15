@@ -113,26 +113,18 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
 
     @Override
     public void displayContact(final CallContact contact) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mRowsAdapter.clear();
-                ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenterSelector(getActivity()));
-                listRowAdapter.add(new ContactCard(contact, Card.Type.SEARCH_RESULT));
-                HeaderItem header = new HeaderItem(getActivity().getResources().getString(R.string.search_results));
-                mRowsAdapter.add(new ListRow(header, listRowAdapter));
-            }
+        getActivity().runOnUiThread(() -> {
+            mRowsAdapter.clear();
+            ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenterSelector(getActivity()));
+            listRowAdapter.add(new ContactCard(contact, Card.Type.SEARCH_RESULT));
+            HeaderItem header = new HeaderItem(getActivity().getResources().getString(R.string.search_results));
+            mRowsAdapter.add(new ListRow(header, listRowAdapter));
         });
     }
 
     @Override
     public void clearSearch() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mRowsAdapter.clear();
-            }
-        });
+        getActivity().runOnUiThread(() -> mRowsAdapter.clear());
     }
 
     @Override

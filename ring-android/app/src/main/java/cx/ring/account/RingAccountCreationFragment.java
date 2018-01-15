@@ -150,95 +150,67 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
 
     @Override
     public void enableTextError() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mUsernameTxtBox.setErrorEnabled(true);
-                mUsernameTxtBox.setError(getString(R.string.looking_for_username_availability));
+        getActivity().runOnUiThread(() -> {
+            mUsernameTxtBox.setErrorEnabled(true);
+            mUsernameTxtBox.setError(getString(R.string.looking_for_username_availability));
 
-            }
         });
     }
 
     @Override
     public void disableTextError() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mUsernameTxtBox.setErrorEnabled(false);
-                mUsernameTxtBox.setError(null);
-            }
+        getActivity().runOnUiThread(() -> {
+            mUsernameTxtBox.setErrorEnabled(false);
+            mUsernameTxtBox.setError(null);
         });
     }
 
     @Override
     public void showExistingNameError() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mUsernameTxtBox.setErrorEnabled(true);
-                mUsernameTxtBox.setError(getString(R.string.username_already_taken));
-            }
+        getActivity().runOnUiThread(() -> {
+            mUsernameTxtBox.setErrorEnabled(true);
+            mUsernameTxtBox.setError(getString(R.string.username_already_taken));
         });
     }
 
     @Override
     public void showInvalidNameError() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mUsernameTxtBox.setErrorEnabled(true);
-                mUsernameTxtBox.setError(getString(R.string.invalid_username));
-            }
+        getActivity().runOnUiThread(() -> {
+            mUsernameTxtBox.setErrorEnabled(true);
+            mUsernameTxtBox.setError(getString(R.string.invalid_username));
         });
     }
 
     @Override
     public void showInvalidPasswordError(final boolean display) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (display) {
-                    mPasswordTxtBox.setError(getString(R.string.error_password_char_count));
-                } else {
-                    mPasswordTxtBox.setError(null);
-                }
+        getActivity().runOnUiThread(() -> {
+            if (display) {
+                mPasswordTxtBox.setError(getString(R.string.error_password_char_count));
+            } else {
+                mPasswordTxtBox.setError(null);
             }
         });
     }
 
     @Override
     public void showNonMatchingPasswordError(final boolean display) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (display) {
-                    mPasswordRepeatTxtBox.setError(getString(R.string.error_passwords_not_equals));
-                } else {
-                    mPasswordRepeatTxtBox.setError(null);
-                }
+        getActivity().runOnUiThread(() -> {
+            if (display) {
+                mPasswordRepeatTxtBox.setError(getString(R.string.error_passwords_not_equals));
+            } else {
+                mPasswordRepeatTxtBox.setError(null);
             }
         });
     }
 
     @Override
     public void displayUsernameBox(final boolean display) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mUsernameBox.setVisibility(display ? View.VISIBLE : View.GONE);
-            }
-        });
+        getActivity().runOnUiThread(() -> mUsernameBox.setVisibility(display ? View.VISIBLE : View.GONE));
     }
 
     @Override
     public void enableNextButton(final boolean enabled) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mCreateAccountButton.setEnabled(enabled);
-            }
-        });
+        getActivity().runOnUiThread(() -> mCreateAccountButton.setEnabled(enabled));
     }
 
     @Override

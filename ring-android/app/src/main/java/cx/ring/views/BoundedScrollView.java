@@ -38,10 +38,10 @@ public class BoundedScrollView extends ScrollView {
 
     public BoundedScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BoundedScrollView);
-        mBoundedWidth = a.getDimensionPixelSize(R.styleable.BoundedScrollView_bounded_width, 0);
-        mBoundedHeight = a.getDimensionPixelSize(R.styleable.BoundedScrollView_bounded_height, 0);
-        a.recycle();
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.BoundedScrollView);
+        mBoundedWidth = typedArray.getDimensionPixelSize(R.styleable.BoundedScrollView_bounded_width, 0);
+        mBoundedHeight = typedArray.getDimensionPixelSize(R.styleable.BoundedScrollView_bounded_height, 0);
+        typedArray.recycle();
     }
 
     @Override

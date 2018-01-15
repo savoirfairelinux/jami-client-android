@@ -43,7 +43,7 @@ public class NumberAdapter extends BaseAdapter {
     public NumberAdapter(Context context, CallContact c, boolean useFullCellForGetView) {
         mContext = context;
         mNumbers = (c != null && c.getPhones() != null) ?
-                c.getPhones() : new ArrayList<Phone>();
+                c.getPhones() : new ArrayList<>();
         mUseFullCellForGetView = useFullCellForGetView;
     }
 
