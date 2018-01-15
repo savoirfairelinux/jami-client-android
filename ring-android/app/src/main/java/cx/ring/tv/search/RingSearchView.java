@@ -20,7 +20,6 @@
 package cx.ring.tv.search;
 
 import cx.ring.model.CallContact;
-import cx.ring.model.RingError;
 
 public interface RingSearchView {
 

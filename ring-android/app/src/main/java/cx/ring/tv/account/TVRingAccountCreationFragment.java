@@ -124,7 +124,7 @@ public class TVRingAccountCreationFragment
     public void onGuidedActionFocused(GuidedAction action) {
         if (action.getId() == USERNAME) {
             ViewGroup view = (ViewGroup) getActionItemView(findActionPositionById(USERNAME));
-            EditText text = (EditText) view.findViewById(R.id.guidedactions_item_description);
+            EditText text = view.findViewById(R.id.guidedactions_item_description);
             text.removeTextChangedListener(mUsernameWatcher);
             text.addTextChangedListener(mUsernameWatcher);
         }

@@ -33,7 +33,6 @@ import android.os.Looper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -41,10 +40,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.BuildConfig;
-import cx.ring.daemon.Callback;
-import cx.ring.daemon.ConfigurationCallback;
-import cx.ring.daemon.PresenceCallback;
-import cx.ring.daemon.VideoCallback;
 import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionModule;
@@ -124,13 +119,10 @@ public class RingApplication extends Application {
 
     private void setDefaultUncaughtExceptionHandler() {
         try {
-            Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-                @Override
-                public void uncaughtException(Thread t, Throwable e) {
-                    Log.e(TAG, "Uncaught Exception detected in thread ", e);
-                    android.os.Process.killProcess(android.os.Process.myPid());
-                    System.exit(2);
-                }
+            Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+                Log.e(TAG, "Uncaught Exception detected in thread ", e);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(2);
             });
         } catch (SecurityException e) {
             Log.e(TAG, "Could not set the Default Uncaught Exception Handler", e);
@@ -143,53 +135,47 @@ public class RingApplication extends Application {
             return;
         }
 
-        mExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() {
-                try {
+        mExecutor.submit(() -> {
+            try {
 
-                    mDaemonService.startDaemon();
+                mDaemonService.startDaemon();
 
-                    // Check if the camera hardware feature is available.
-                    if (mDeviceRuntimeService.hasVideoPermission() && mHardwareService.isVideoAvailable()) {
-                        //initVideo is called here to give time to the application to initialize hardware cameras
-                        Log.d(TAG, "At least one camera available. Initializing video...");
-                        mHardwareService.initVideo();
-                    } else {
-                        Log.d(TAG, "No camera available");
-                    }
-
-                    ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
-                    registerReceiver(ringerModeListener, RINGER_FILTER);
-
-                    // load accounts from Daemon
-                    mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected());
-
-                    Intent intent = new Intent(DRING_CONNECTION_CHANGED);
-                    intent.putExtra("connected", mDaemonService.isStarted());
-                    sendBroadcast(intent);
-                } catch (Exception e) {
-                    Log.e(TAG, "DRingService start failed", e);
+                // Check if the camera hardware feature is available.
+                if (mDeviceRuntimeService.hasVideoPermission() && mHardwareService.isVideoAvailable()) {
+                    //initVideo is called here to give time to the application to initialize hardware cameras
+                    Log.d(TAG, "At least one camera available. Initializing video...");
+                    mHardwareService.initVideo();
+                } else {
+                    Log.d(TAG, "No camera available");
                 }
 
-                return true;
+                ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
+                registerReceiver(ringerModeListener, RINGER_FILTER);
+
+                // load accounts from Daemon
+                mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected());
+
+                Intent intent = new Intent(DRING_CONNECTION_CHANGED);
+                intent.putExtra("connected", mDaemonService.isStarted());
+                sendBroadcast(intent);
+            } catch (Exception e) {
+                Log.e(TAG, "DRingService start failed", e);
             }
+
+            return true;
         });
 
     }
 
     public void terminateDaemon() {
-        Future<Boolean> stopResult = mExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                unregisterReceiver(ringerModeListener);
-                mDaemonService.stopDaemon();
-                Intent intent = new Intent(DRING_CONNECTION_CHANGED);
-                intent.putExtra("connected", mDaemonService.isStarted());
-                sendBroadcast(intent);
+        Future<Boolean> stopResult = mExecutor.submit(() -> {
+            unregisterReceiver(ringerModeListener);
+            mDaemonService.stopDaemon();
+            Intent intent = new Intent(DRING_CONNECTION_CHANGED);
+            intent.putExtra("connected", mDaemonService.isStarted());
+            sendBroadcast(intent);
 
-                return true;
-            }
+            return true;
         });
 
         try {

@@ -99,7 +99,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
         RingAccountViewModelImpl ringAccountViewModel = (RingAccountViewModelImpl) getArguments().get(RingAccountCreationFragment.KEY_RING_ACCOUNT);
         presenter.initPresenter(ringAccountViewModel);
 
-        if (ringAccountViewModel.getPhoto() != null) {
+        if (ringAccountViewModel != null && ringAccountViewModel.getPhoto() != null) {
             getGuidanceStylist().getIconView().setImageBitmap(ringAccountViewModel.getPhoto());
         }
     }
@@ -152,11 +152,11 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, REQUEST_CODE_GALLERY);
         } catch (ActivityNotFoundException e) {
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-            dialogBuilder.setPositiveButton(android.R.string.ok, null);
-            dialogBuilder.setTitle(R.string.gallery_error_title)
-                    .setMessage(R.string.gallery_error_message);
-            dialogBuilder.show();
+            new AlertDialog.Builder(getActivity())
+                    .setPositiveButton(android.R.string.ok, null)
+                    .setTitle(R.string.gallery_error_title)
+                    .setMessage(R.string.gallery_error_message)
+                    .show();
         }
     }
 

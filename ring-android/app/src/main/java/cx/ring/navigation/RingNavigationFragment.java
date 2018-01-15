@@ -21,7 +21,6 @@ package cx.ring.navigation;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -312,47 +311,29 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         mProfilePhoto.setImageDrawable(mUserImage.getDrawable());
 
         ImageButton cameraView = view.findViewById(R.id.camera);
-        cameraView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.cameraClicked();
-            }
-        });
+        cameraView.setOnClickListener(v -> presenter.cameraClicked());
 
         ImageButton gallery = view.findViewById(R.id.gallery);
-        gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.galleryClicked();
-            }
-        });
+        gallery.setOnClickListener(v -> presenter.galleryClicked());
 
         builder.setView(view);
 
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel());
 
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
 
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null)) {
-                    //FIXME: Reduce the bitmap but not use it.
-                    BitmapUtils.reduceBitmap(mSourcePhoto, VCardUtils.VCARD_PHOTO_SIZE);
-                    mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null)) {
+                //FIXME: Reduce the bitmap but not use it.
+                BitmapUtils.reduceBitmap(mSourcePhoto, VCardUtils.VCARD_PHOTO_SIZE);
+                mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
 
-                    presenter.saveVCardFormattedName(editText.getText().toString().trim());
-                    presenter.saveVCardPhoto(photo);
-                    mSourcePhoto = null;
-                } else {
-                    presenter.saveVCardFormattedName(editText.getText().toString().trim());
-                }
+                presenter.saveVCardFormattedName(editText.getText().toString().trim());
+                presenter.saveVCardPhoto(photo);
+                mSourcePhoto = null;
+            } else {
+                presenter.saveVCardFormattedName(editText.getText().toString().trim());
             }
         });
 
@@ -399,20 +380,17 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
 
     @Override
     public void showViewModel(final RingNavigationViewModel viewModel) {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mAccountAdapter.replaceAll(viewModel.getAccounts());
-                updateUserView(viewModel.getVcard(getActivity().getFilesDir()));
-                updateSelectedAccountView(viewModel.getAccount());
+        RingApplication.uiHandler.post(() -> {
+            mAccountAdapter.replaceAll(viewModel.getAccounts());
+            updateUserView(viewModel.getVcard(getActivity().getFilesDir()));
+            updateSelectedAccountView(viewModel.getAccount());
 
-                if (viewModel.getAccounts().isEmpty()) {
-                    mNewAccountBtn.setVisibility(View.VISIBLE);
-                    mSelectedAccountLayout.setVisibility(View.GONE);
-                } else {
-                    mNewAccountBtn.setVisibility(View.GONE);
-                    mSelectedAccountLayout.setVisibility(View.VISIBLE);
-                }
+            if (viewModel.getAccounts().isEmpty()) {
+                mNewAccountBtn.setVisibility(View.VISIBLE);
+                mSelectedAccountLayout.setVisibility(View.GONE);
+            } else {
+                mNewAccountBtn.setVisibility(View.GONE);
+                mSelectedAccountLayout.setVisibility(View.VISIBLE);
             }
         });
     }
