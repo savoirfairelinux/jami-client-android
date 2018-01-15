@@ -17,8 +17,8 @@
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/action_call_decline"
         android:padding="16dp"
-        android:src="@drawable/ic_photo_camera"
         app:backgroundTint="@color/holo_green_dark"
         app:rippleColor="@android:color/white"
+        app:srcCompat="@drawable/ic_photo_camera"
         app:useCompatPadding="true" />
 </RelativeLayout>

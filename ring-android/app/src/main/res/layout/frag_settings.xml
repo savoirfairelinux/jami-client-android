@@ -65,7 +65,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
                             android:contentDescription="@string/pref_mobileData_summary"
-                            android:src="@drawable/ic_perm_data_setting_black_24dp" />
+                            app:srcCompat="@drawable/ic_perm_data_setting_black_24dp" />
 
                     </LinearLayout>
 

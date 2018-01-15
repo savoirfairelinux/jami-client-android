@@ -19,6 +19,7 @@ along with this program; if not, write to the Free Software
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/call_entry"
     android:layout_width="match_parent"
@@ -41,7 +42,7 @@ along with this program; if not, write to the Free Software
         android:paddingEnd="4dp"
         android:paddingStart="0dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_contact_picture" />
+        app:srcCompat="@drawable/ic_contact_picture" />
 
     <ImageView
         android:id="@+id/online"
@@ -49,7 +50,7 @@ along with this program; if not, write to the Free Software
         android:layout_height="22dp"
         android:layout_alignBottom="@+id/photo"
         android:layout_alignEnd="@+id/photo"
-        android:src="@drawable/ic_online_indicator" />
+        app:srcCompat="@drawable/ic_online_indicator" />
 
     <RelativeLayout
         android:layout_width="match_parent"
