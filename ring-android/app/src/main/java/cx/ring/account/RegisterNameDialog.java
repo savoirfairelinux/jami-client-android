@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.text.InputFilter;
@@ -100,34 +99,31 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
     }
 
     private void handleBlockchainResult(final int state, final String name) {
-        RingApplication.uiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                String actualName = mUsernameTxt.getText().toString();
-                if (actualName.isEmpty()) {
-                    mUsernameTxtBox.setErrorEnabled(false);
-                    mUsernameTxtBox.setError(null);
-                    return;
-                }
+        RingApplication.uiHandler.post(() -> {
+            String actualName = mUsernameTxt.getText().toString();
+            if (actualName.isEmpty()) {
+                mUsernameTxtBox.setErrorEnabled(false);
+                mUsernameTxtBox.setError(null);
+                return;
+            }
 
-                if (actualName.equals(name)) {
-                    switch (state) {
-                        case 0:
-                            // on found
-                            mUsernameTxtBox.setErrorEnabled(true);
-                            mUsernameTxtBox.setError(mUserNameAlreadyTaken);
-                            break;
-                        case 1:
-                            // invalid name
-                            mUsernameTxtBox.setErrorEnabled(true);
-                            mUsernameTxtBox.setError(mInvalidUsername);
-                            break;
-                        default:
-                            // on error
-                            mUsernameTxtBox.setErrorEnabled(false);
-                            mUsernameTxtBox.setError(null);
-                            break;
-                    }
+            if (actualName.equals(name)) {
+                switch (state) {
+                    case 0:
+                        // on found
+                        mUsernameTxtBox.setErrorEnabled(true);
+                        mUsernameTxtBox.setError(mUserNameAlreadyTaken);
+                        break;
+                    case 1:
+                        // invalid name
+                        mUsernameTxtBox.setErrorEnabled(true);
+                        mUsernameTxtBox.setError(mInvalidUsername);
+                        break;
+                    default:
+                        // on error
+                        mUsernameTxtBox.setErrorEnabled(false);
+                        mUsernameTxtBox.setError(null);
+                        break;
                 }
             }
         });
@@ -164,37 +160,24 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
             dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         }
 
-        builder.setView(view);
-
-        builder.setMessage(mRegisterMessage)
+        builder.setView(view)
+                .setMessage(mRegisterMessage)
                 .setTitle(mRegisterTitle)
                 .setPositiveButton(android.R.string.ok, null) //Set to null. We override the onclick
                 .setNegativeButton(android.R.string.cancel,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                dismiss();
-                            }
-                        }
+                        (dialog1, whichButton) -> dismiss()
                 );
 
         AlertDialog result = builder.create();
 
-        result.setOnShowListener(new DialogInterface.OnShowListener() {
+        result.setOnShowListener(dialog12 -> {
 
-            @Override
-            public void onShow(DialogInterface dialog) {
-
-                Button positiveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
-                positiveButton.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-                        if (validate()) {
-                            dismiss();
-                        }
-                    }
-                });
-            }
+            Button positiveButton = ((AlertDialog) dialog12).getButton(AlertDialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(view1 -> {
+                if (validate()) {
+                    dismiss();
+                }
+            });
         });
 
         return result;

@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryText;
 
-/**
+/*
  * Database History Version
  * 7 : changing columns names. See https://gerrit-ring.savoirfairelinux.com/#/c/4297
  */
@@ -123,7 +123,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      *
      * @param fromDatabaseVersion the old version of the database
      * @param db                  the SQLiteDatabase to work with
-     * @throws SQLiteException
+     * @throws SQLiteException    database has failed to update to the last version
      */
     private void updateDatabase(int fromDatabaseVersion, SQLiteDatabase db) throws SQLiteException {
         try {
@@ -149,7 +149,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      * Executes the migration from the database version 6 to the next
      *
      * @param db the SQLiteDatabase to work with
-     * @throws SQLiteException
+     * @throws SQLiteException migration from database version 6 to next, failed
      */
     private void updateDatabaseFrom6(SQLiteDatabase db) throws SQLiteException {
         if (db != null && db.isOpen()) {

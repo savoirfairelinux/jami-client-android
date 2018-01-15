@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import cx.ring.daemon.Blob;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.VectMap;
@@ -43,9 +42,7 @@ public class SwigNativeConverter {
 
     public static ArrayList<String> convertSwigToNative(StringVect vector) {
         ArrayList<String> toReturn = new ArrayList<>();
-        for (int i = 0; i < vector.size(); ++i) {
-            toReturn.add(vector.get(i));
-        }
+        toReturn.addAll(vector);
         return toReturn;
     }
 }

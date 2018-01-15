@@ -22,7 +22,6 @@ package cx.ring.tv.main;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 
@@ -46,8 +45,6 @@ import cx.ring.utils.Observer;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.observers.ResourceSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -151,18 +148,8 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
 
         //Get all non-ban contact and then get last message and last call to create a smartList entry
         mCompositeDisposable.add(io.reactivex.Observable.fromIterable(contacts)
-                .filter(new Predicate<CallContact>() {
-                    @Override
-                    public boolean test(CallContact callContact) throws Exception {
-                        return !callContact.isBanned();
-                    }
-                })
-                .map(new Function<CallContact, TVListViewModel>() {
-                    @Override
-                    public TVListViewModel apply(CallContact callContact) throws Exception {
-                        return modelToViewModel(callContact);
-                    }
-                })
+                .filter(callContact -> !callContact.isBanned())
+                .map(this::modelToViewModel)
                 .toSortedList()
                 .subscribeOn(Schedulers.computation())
                 .observeOn(mMainScheduler)
@@ -185,31 +172,28 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     }
 
     public void loadContactRequest() {
-        mCompositeDisposable.add(Single.fromCallable(new Callable<ArrayList<TVContactRequestViewModel>>() {
-            @Override
-            public ArrayList<TVContactRequestViewModel> call() throws Exception {
+        mCompositeDisposable.add(Single.fromCallable(() -> {
 
-                List<TrustRequest> requests = mAccountService.getCurrentAccount().getRequests();
-                ArrayList<TVContactRequestViewModel> contactRequestViewModels = new ArrayList<>();
+            List<TrustRequest> requests = mAccountService.getCurrentAccount().getRequests();
+            ArrayList<TVContactRequestViewModel> contactRequestViewModels = new ArrayList<>();
 
-                for (TrustRequest request : requests) {
+            for (TrustRequest request : requests) {
 
-                    byte[] photo;
-                    if (request.getVCard().getPhotos().isEmpty()) {
-                        photo = null;
-                    } else {
-                        photo = request.getVCard().getPhotos().get(0).getData();
-                    }
-
-                    TVContactRequestViewModel tvContactRequestVM = new TVContactRequestViewModel(request.getContactId(),
-                            request.getDisplayname(),
-                            request.getFullname(),
-                            photo,
-                            request.getMessage());
-                    contactRequestViewModels.add(tvContactRequestVM);
+                byte[] photo;
+                if (request.getVCard().getPhotos().isEmpty()) {
+                    photo = null;
+                } else {
+                    photo = request.getVCard().getPhotos().get(0).getData();
                 }
-                return contactRequestViewModels;
+
+                TVContactRequestViewModel tvContactRequestVM = new TVContactRequestViewModel(request.getContactId(),
+                        request.getDisplayname(),
+                        request.getFullname(),
+                        photo,
+                        request.getMessage());
+                contactRequestViewModels.add(tvContactRequestVM);
             }
+            return contactRequestViewModels;
         }).subscribeOn(Schedulers.computation())
                 .observeOn(mMainScheduler)
                 .subscribeWith(new ResourceSingleObserver<ArrayList<TVContactRequestViewModel>>() {
