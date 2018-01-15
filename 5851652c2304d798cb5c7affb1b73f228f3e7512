@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_d1f8f4c6",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVSettingsActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-01-15T16:31:17Z",
+      "side": 1,
+      "message": "activity_settings_tv",
+      "range": {
+        "startLine": 32,
+        "startChar": 32,
+        "endLine": 32,
+        "endChar": 49
+      },
+      "revId": "5851652c2304d798cb5c7affb1b73f228f3e7512",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
