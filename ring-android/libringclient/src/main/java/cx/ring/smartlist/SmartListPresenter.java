@@ -651,6 +651,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 case NEW_BUDDY_NOTIFICATION:
                     updatePresence();
                     return;
+                default:
             }
         }
     }

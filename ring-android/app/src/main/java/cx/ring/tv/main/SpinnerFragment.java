@@ -36,8 +36,6 @@ import android.widget.ProgressBar;
  */
 public class SpinnerFragment extends Fragment {
 
-    private static final String TAG = SpinnerFragment.class.getSimpleName();
-
     private static final int SPINNER_WIDTH = 100;
     private static final int SPINNER_HEIGHT = 100;
 

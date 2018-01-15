@@ -103,8 +103,8 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment imp
     }
 
     protected void replaceFragmentWithSlide(Fragment fragment, @IdRes int content) {
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
+        getFragmentManager()
+                .beginTransaction()
                 .setCustomAnimations(R.animator.slide_in_left,
                         R.animator.slide_out_right, R.animator.slide_in_right, R.animator.slide_out_left)
                 .replace(content, fragment, RingAccountCreationFragment.TAG)
@@ -113,8 +113,8 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment imp
     }
 
     protected void replaceFragment(Fragment fragment, @IdRes int content) {
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
+        getFragmentManager()
+                .beginTransaction()
                 .replace(content, fragment, RingAccountCreationFragment.TAG)
                 .addToBackStack(RingAccountCreationFragment.TAG)
                 .commit();

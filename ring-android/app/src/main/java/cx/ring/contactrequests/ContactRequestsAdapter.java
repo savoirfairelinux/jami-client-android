@@ -33,7 +33,6 @@ import cx.ring.utils.CircleTransform;
 import ezvcard.VCard;
 
 public class ContactRequestsAdapter extends RecyclerView.Adapter<ContactRequestViewHolder> {
-    static final String TAG = ContactRequestsAdapter.class.getSimpleName();
 
     private ArrayList<PendingContactRequestsViewModel> mContactRequestsViewModels;
     private ContactRequestViewHolder.ContactRequestListeners mListener;

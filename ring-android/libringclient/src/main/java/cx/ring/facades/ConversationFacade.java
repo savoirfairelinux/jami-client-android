@@ -120,10 +120,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         return mConversationMap;
     }
 
-    /**
-     * @param contact
-     * @return
-     */
     public Conversation getConversationByContact(CallContact contact) {
         if (contact != null) {
             ArrayList<String> keys = contact.getIds();
@@ -137,10 +133,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         return null;
     }
 
-    /**
-     * @param callId
-     * @return
-     */
     public Conversation getConversationByCallId(String callId) {
         for (Conversation conversation : mConversationMap.values()) {
             Conference conf = conversation.getConference(callId);
@@ -193,7 +185,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
     }
 
     /**
-     * @param id
      * @return the conversation from the local cache
      */
     public Conversation getConversationById(String id) {

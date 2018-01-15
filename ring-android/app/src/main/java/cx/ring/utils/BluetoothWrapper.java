@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2010-2012 Regis Montoya (aka r3gis - www.r3gis.fr)
  * This file is part of CSipSimple.
  * <p>

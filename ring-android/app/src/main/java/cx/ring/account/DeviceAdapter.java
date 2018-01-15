@@ -50,9 +50,7 @@ public class DeviceAdapter extends BaseAdapter {
         mCurrentDeviceId = currentDeviceId;
         if (devices != null && !devices.isEmpty()) {
             mDevices.ensureCapacity(devices.size());
-            for (Map.Entry<String, String> e : devices.entrySet()) {
-                mDevices.add(e);
-            }
+            mDevices.addAll(devices.entrySet());
         }
         notifyDataSetChanged();
     }
@@ -79,34 +77,28 @@ public class DeviceAdapter extends BaseAdapter {
         }
         boolean isCurrentDevice = mDevices.get(i).getKey().contentEquals(mCurrentDeviceId);
 
-        TextView devId = (TextView) view.findViewById(R.id.txt_device_id);
+        TextView devId = view.findViewById(R.id.txt_device_id);
         devId.setText(mDevices.get(i).getKey());
 
-        TextView devName = (TextView) view.findViewById(R.id.txt_device_label);
+        TextView devName = view.findViewById(R.id.txt_device_label);
         devName.setText(mDevices.get(i).getValue());
-        ImageButton revokeButton = (ImageButton) view.findViewById(R.id.revoke_button);
-        ImageButton editButton = (ImageButton) view.findViewById(R.id.rename_button);
+        ImageButton revokeButton = view.findViewById(R.id.revoke_button);
+        ImageButton editButton = view.findViewById(R.id.rename_button);
         revokeButton.setVisibility(isCurrentDevice ? View.GONE : View.VISIBLE);
         editButton.setVisibility(isCurrentDevice ? View.VISIBLE : View.GONE);
-        TextView thisDeviceText = (TextView) view.findViewById(R.id.txt_device_thisflag);
+        TextView thisDeviceText = view.findViewById(R.id.txt_device_thisflag);
         thisDeviceText.setVisibility(isCurrentDevice ? View.VISIBLE : View.GONE);
         if (isCurrentDevice) {
-            editButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mListener != null) {
-                        mListener.onDeviceRename();
-                    }
+            editButton.setOnClickListener(view1 -> {
+                if (mListener != null) {
+                    mListener.onDeviceRename();
                 }
             });
         }
 
-        revokeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mListener != null) {
-                    mListener.onDeviceRevocationAsked(mDevices.get(i).getKey());
-                }
+        revokeButton.setOnClickListener(view12 -> {
+            if (mListener != null) {
+                mListener.onDeviceRevocationAsked(mDevices.get(i).getKey());
             }
         });
 

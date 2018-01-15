@@ -26,9 +26,6 @@ import android.net.NetworkInfo;
 public final class NetworkUtils {
     /**
      * Get the network info
-     *
-     * @param context
-     * @return
      */
     public static NetworkInfo getNetworkInfo(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
