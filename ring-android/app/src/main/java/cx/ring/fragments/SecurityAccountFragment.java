@@ -213,9 +213,9 @@ public class SecurityAccountFragment extends BasePreferenceFragment<SecurityAcco
 
     private void setFeedbackIcon(Preference current) {
         if (!checkCertificate()) {
-            current.setIcon(R.drawable.ic_error);
+            current.setIcon(R.drawable.ic_error_red);
         } else {
-            current.setIcon(R.drawable.ic_good);
+            current.setIcon(R.drawable.ic_good_green);
         }
     }
 
