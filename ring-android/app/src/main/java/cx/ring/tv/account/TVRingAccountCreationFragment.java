@@ -189,7 +189,7 @@ public class TVRingAccountCreationFragment
     @Override
     public void showExistingNameError() {
         Log.d(TAG, "showExistingNameError");
-        findActionById(CHECK).setIcon(getResources().getDrawable(R.drawable.ic_error));
+        findActionById(CHECK).setIcon(getResources().getDrawable(R.drawable.ic_error_red));
         findActionById(CHECK).setDescription(getString(R.string.username_already_taken));
 
         notifyActionChanged(findActionPositionById(CHECK));
@@ -198,7 +198,7 @@ public class TVRingAccountCreationFragment
     @Override
     public void showInvalidNameError() {
         Log.d(TAG, "showInvalidNameError");
-        findActionById(CHECK).setIcon(getResources().getDrawable(R.drawable.ic_error));
+        findActionById(CHECK).setIcon(getResources().getDrawable(R.drawable.ic_error_red));
         findActionById(CHECK).setDescription(getString(R.string.invalid_username));
         notifyActionChanged(findActionPositionById(CHECK));
     }
@@ -207,7 +207,7 @@ public class TVRingAccountCreationFragment
     public void showInvalidPasswordError(boolean display) {
         Log.d(TAG, "showInvalidPasswordError");
         if (display) {
-            findActionById(CONTINUE).setIcon(getResources().getDrawable(R.drawable.ic_error));
+            findActionById(CONTINUE).setIcon(getResources().getDrawable(R.drawable.ic_error_red));
             findActionById(CONTINUE).setDescription(getString(R.string.error_password_char_count));
             findActionById(CONTINUE).setEnabled(false);
         }
@@ -218,7 +218,7 @@ public class TVRingAccountCreationFragment
     public void showNonMatchingPasswordError(boolean display) {
         Log.d(TAG, "showNonMatchingPasswordError");
         if (display) {
-            findActionById(CONTINUE).setIcon(getResources().getDrawable(R.drawable.ic_error));
+            findActionById(CONTINUE).setIcon(getResources().getDrawable(R.drawable.ic_error_red));
             findActionById(CONTINUE).setDescription(getString(R.string.error_passwords_not_equals));
             findActionById(CONTINUE).setEnabled(false);
         }
@@ -236,7 +236,7 @@ public class TVRingAccountCreationFragment
         GuidedAction actionContinue = findActionById(CONTINUE);
 
         if (enabled) {
-            actionCheck.setIcon(getResources().getDrawable(R.drawable.ic_good));
+            actionCheck.setIcon(getResources().getDrawable(R.drawable.ic_good_green));
             actionCheck.setTitle(getString(R.string.no_registered_name_for_account));
             actionCheck.setDescription("");
             actionContinue.setIcon(null);
