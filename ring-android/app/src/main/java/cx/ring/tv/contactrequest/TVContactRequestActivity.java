@@ -34,6 +34,6 @@ public class TVContactRequestActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.frag_tv_contact_request);
+        setContentView(R.layout.tv_frag_contact_request);
     }
 }
