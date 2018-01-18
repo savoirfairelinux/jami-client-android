@@ -20,7 +20,6 @@
 package cx.ring.contactrequests;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -28,16 +27,13 @@ import javax.inject.Inject;
 import cx.ring.model.Account;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.TrustRequest;
+import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
-import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.NotificationService;
-import cx.ring.services.PreferencesService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
-import cx.ring.utils.VCardUtils;
-import ezvcard.VCard;
 
 public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView> implements Observer<ServiceEvent> {
 
@@ -45,21 +41,15 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
 
     private AccountService mAccountService;
     private NotificationService mNotificationService;
-    private DeviceRuntimeService mDeviceRuntimeService;
-    private PreferencesService mPreferencesService;
 
     private String mAccountID;
     private ArrayList<PendingContactRequestsViewModel> mContactRequestsViewModels;
 
     @Inject
     public ContactRequestsPresenter(AccountService accountService,
-                                    NotificationService notificationService,
-                                    DeviceRuntimeService deviceRuntimeService,
-                                    PreferencesService sharedPreferencesService) {
+                                    NotificationService notificationService) {
         mAccountService = accountService;
         mNotificationService = notificationService;
-        mDeviceRuntimeService = deviceRuntimeService;
-        mPreferencesService = sharedPreferencesService;
     }
 
     final private List<TrustRequest> mTrustRequests = new ArrayList<>();
@@ -84,7 +74,7 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
         super.unbindView();
     }
 
-    public void updateList(Boolean clear) {
+    public void updateList(boolean clear) {
         if (getView() == null) {
             return;
         }
@@ -114,41 +104,9 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
         mNotificationService.cancelTrustRequestNotification(currentAccount.getAccountID());
     }
 
-    public void acceptTrustRequest(PendingContactRequestsViewModel viewModel) {
-        String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
-        String contactId = viewModel.getContactId();
-        mAccountService.acceptTrustRequest(accountId, contactId);
-
-        for (Iterator<TrustRequest> it = mTrustRequests.iterator(); it.hasNext(); ) {
-            TrustRequest request = it.next();
-            if (accountId.equals(request.getAccountId()) && contactId.equals(request.getContactId())) {
-                VCard vCard = request.getVCard();
-                if (vCard != null) {
-                    VCardUtils.savePeerProfileToDisk(vCard, contactId + ".vcf", mDeviceRuntimeService.provideFilesDir());
-                }
-                it.remove();
-            }
-        }
-
-        mPreferencesService.removeRequestPreferences(accountId, contactId);
-        updateList(false);
-    }
-
-    public void refuseTrustRequest(PendingContactRequestsViewModel viewModel) {
-        String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
-        String contactId = viewModel.getContactId();
-        mAccountService.discardTrustRequest(accountId, contactId);
-        mPreferencesService.removeRequestPreferences(accountId, contactId);
-        updateList(true);
-    }
-
-    public void blockTrustRequest(PendingContactRequestsViewModel viewModel) {
-        String accountId = mAccountID == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountID;
-        String contactId = viewModel.getContactId();
-        mAccountService.discardTrustRequest(accountId, contactId);
-        mAccountService.removeContact(accountId, contactId, true);
-        mPreferencesService.removeRequestPreferences(accountId, contactId);
-        updateList(true);
+    public void contactRequestClicked(String contactId) {
+        String rawUriString = new Uri(contactId).getRawUriString();
+        getView().goToConversation(mAccountService.getCurrentAccount().getAccountID(), rawUriString);
     }
 
     @Override
@@ -162,6 +120,8 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
             case INCOMING_TRUST_REQUEST:
                 updateList(false);
                 break;
+            case INCOMING_CALL:
+            case INCOMING_MESSAGE:
             case ACCOUNTS_CHANGED:
                 updateList(true);
                 break;
