@@ -313,6 +313,7 @@ public class Account {
             callContact.setStatus(CallContact.Status.REQUEST_SENT);
         }
     }
+
     public void removeContact(String id, boolean banned) {
         if (banned) {
             CallContact callContact = mContacts.get(id);
@@ -326,7 +327,7 @@ public class Account {
         }
     }
 
-    public void addContact(Map<String,String> contact) {
+    public void addContact(Map<String, String> contact) {
         String contactId = contact.get(CONTACT_ID);
         CallContact callContact = mContacts.get(contactId);
         if (callContact == null) {
@@ -335,7 +336,7 @@ public class Account {
         String addedStr = contact.get(CONTACT_ADDED);
         if (!StringUtils.isEmpty(addedStr)) {
             long added = Long.valueOf(contact.get(CONTACT_ADDED));
-            callContact.setAddedDate(new Date(added*1000));
+            callContact.setAddedDate(new Date(added * 1000));
         }
         if (contact.containsKey(CONTACT_BANNED) && contact.get(CONTACT_BANNED).equals("true")) {
             callContact.setStatus(CallContact.Status.BANNED);
@@ -347,7 +348,7 @@ public class Account {
         mContacts.put(contactId, callContact);
     }
 
-    public void setContacts(List<Map<String,String>> contacts) {
+    public void setContacts(List<Map<String, String>> contacts) {
         for (Map<String, String> contact : contacts) {
             addContact(contact);
         }
@@ -363,8 +364,8 @@ public class Account {
         return requests;
     }
 
-    public TrustRequest getRequest(String id) {
-        return mRequests.get(id);
+    public TrustRequest getRequest(String contactId) {
+        return mRequests.get(contactId);
     }
 
     public void addRequest(TrustRequest request) {
@@ -376,7 +377,7 @@ public class Account {
             addRequest(request);
     }
 
-    public void removeRequest(String id) {
-        mRequests.remove(id);
+    public void removeRequest(String contactId) {
+        mRequests.remove(contactId);
     }
 }

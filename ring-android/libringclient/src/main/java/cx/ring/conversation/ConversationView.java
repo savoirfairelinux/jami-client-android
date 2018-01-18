@@ -44,8 +44,6 @@ public interface ConversationView extends BaseView {
 
     void displayCopyToClipboard(CallContact callContact);
 
-    void displaySendTrustRequest(String accountId);
-
     void displayErrorToast(int error);
 
     void hideNumberSpinner();
@@ -59,6 +57,16 @@ public interface ConversationView extends BaseView {
     void goToCallActivity(String conferenceId);
 
     void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly);
+
+    void blockContactRequest();
+
+    void refuseContactRequest();
+
+    void acceptContactRequest();
+
+    void switchToIncomingTrustRequestView(String message);
+
+    void switchToConversationView();
 
     void askWriteExternalStoragePermission();
 

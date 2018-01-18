@@ -13,7 +13,7 @@ public class MediaButtonsHelper {
             case KeyEvent.KEYCODE_ENTER:
             case KeyEvent.KEYCODE_BUTTON_A:
             case KeyEvent.KEYCODE_HOME:
-                mediaButtonsHelperCallback.positiveButtonClicked();
+                mediaButtonsHelperCallback.positiveMediaButtonClicked();
                 isHandledKey = true;
                 break;
             case KeyEvent.KEYCODE_ENDCALL:
@@ -21,12 +21,12 @@ public class MediaButtonsHelper {
             case KeyEvent.KEYCODE_DEL:
             case KeyEvent.KEYCODE_BUTTON_B:
             case KeyEvent.KEYCODE_MEDIA_STOP:
-                mediaButtonsHelperCallback.negativeButtonClicked();
+                mediaButtonsHelperCallback.negativeMediaButtonClicked();
                 isHandledKey = true;
                 break;
             case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
             case KeyEvent.KEYCODE_HEADSETHOOK:
-                mediaButtonsHelperCallback.toggleButtonClicked();
+                mediaButtonsHelperCallback.toggleMediaButtonClicked();
                 isHandledKey = true;
                 break;
         }
@@ -45,10 +45,10 @@ public class MediaButtonsHelper {
      */
 
     public interface MediaButtonsHelperCallback {
-        void positiveButtonClicked();
+        void positiveMediaButtonClicked();
 
-        void negativeButtonClicked();
+        void negativeMediaButtonClicked();
 
-        void toggleButtonClicked();
+        void toggleMediaButtonClicked();
     }
 }

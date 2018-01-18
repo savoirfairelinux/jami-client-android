@@ -240,18 +240,21 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
             return;
         }
 
-        if (!vcard.getPhotos().isEmpty()) {
+        if (vcard != null && !vcard.getPhotos().isEmpty()) {
             Photo tmp = vcard.getPhotos().get(0);
             Bitmap bitmap = BitmapFactory.decodeByteArray(tmp.getData(), 0, tmp.getData().length);
             mUserImage.setImageBitmap(BitmapUtils.cropImageToCircle(bitmap));
         } else {
             mUserImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null));
         }
-        FormattedName name = vcard.getFormattedName();
-        if (name != null) {
-            String name_value = name.getValue();
-            if (!TextUtils.isEmpty(name_value)) {
-                mSelectedAccountAlias.setText(name_value);
+
+        if (vcard != null) {
+            FormattedName name = vcard.getFormattedName();
+            if (name != null) {
+                String name_value = name.getValue();
+                if (!TextUtils.isEmpty(name_value)) {
+                    mSelectedAccountAlias.setText(name_value);
+                }
             }
         }
         Log.d(TAG, "updateUserView: User did change, updating user view.");

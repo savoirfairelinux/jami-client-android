@@ -1379,12 +1379,12 @@ public class AccountService extends Observable {
         notifyObservers(event);
     }
 
-    public void incomingTrustRequest(String accountId, String from, Blob message, long received) {
+    public void incomingTrustRequest(String accountId, String from, String message, long received) {
         Log.d(TAG, "incomingTrustRequest: " + accountId + ", " + from + ", " + message + ", " + received);
 
         Account account = getAccount(accountId);
         if (account != null) {
-            TrustRequest request = new TrustRequest(accountId, from, received, message.toJavaString());
+            TrustRequest request = new TrustRequest(accountId, from, received, message);
             account.addRequest(request);
             lookupAddress(accountId, "", from);
         }
