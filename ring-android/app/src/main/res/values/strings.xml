@@ -207,7 +207,7 @@ along with this program; if not, write to the Free Software
     <!-- Send contact requests -->
     <string name="send_request_button">Send</string>
     <string name="send_request_title">Send a contact request</string>
-    <string name="send_request_msg">You must send a contact request to communicate with this user. As long as your contact has not accepted the request, you can send messages but your contact can\'t read them.</string>
+    <string name="send_request_msg">You must send a contact request to communicate with this user. As long as your contact has not accepted the request, you can send messages but he won\'t be able to answer.</string>
 
     <!-- Blacklist -->
     <string name="no_blocked_contact">0 blocked contacts</string>
@@ -222,6 +222,7 @@ along with this program; if not, write to the Free Software
     <string name="gallery_error_message">No application found on device to open Gallery</string>
 
     <string name="generic_error">An unknown error occurred</string>
+    <string name="message_contact_not_trusted_yet">%s is not in your contacts yet.\nDo you accept or refuse this contact request?</string>
 
     <!--File Transfer-->
     <string name="invalid_file">Invalid file</string>

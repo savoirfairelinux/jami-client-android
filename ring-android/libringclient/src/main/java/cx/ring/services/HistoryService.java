@@ -57,7 +57,7 @@ import io.reactivex.functions.Action;
 
 /**
  * A service managing all history related tasks.
- * Its responsabilities:
+ * Its responsibilities:
  * - inserting new entries (text or call)
  * - deleting conversations
  * - notifying Observers when history changes
@@ -198,24 +198,32 @@ public abstract class HistoryService extends Observable {
         return Single.fromCallable(new Callable<List<HistoryText>>() {
             @Override
             public List<HistoryText> call() throws Exception {
-                QueryBuilder<HistoryText, Long> queryBuilder = getTextHistoryDao().queryBuilder();
-                queryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryText.COLUMN_NUMBER_NAME, contactRingId);
-                queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, true);
-                return getTextHistoryDao().query(queryBuilder.prepare());
+                return getHistoryTexts(accountId, contactRingId);
             }
         });
+    }
+
+    private List<HistoryText> getHistoryTexts(String accountId, String contactRingId) throws SQLException {
+        QueryBuilder<HistoryText, Long> queryBuilder = getTextHistoryDao().queryBuilder();
+        queryBuilder.where().eq(HistoryText.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryText.COLUMN_NUMBER_NAME, contactRingId);
+        queryBuilder.orderBy(HistoryText.COLUMN_TIMESTAMP_NAME, true);
+        return getTextHistoryDao().query(queryBuilder.prepare());
     }
 
     public Single<List<HistoryCall>> getAllCallsForAccountAndContactRingId(final String accountId, final String contactRingId) {
         return Single.fromCallable(new Callable<List<HistoryCall>>() {
             @Override
             public List<HistoryCall> call() throws Exception {
-                QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
-                queryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryCall.COLUMN_NUMBER_NAME, contactRingId);
-                queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, true);
-                return getCallHistoryDao().query(queryBuilder.prepare());
+                return getHistoryCalls(accountId, contactRingId);
             }
         });
+    }
+
+    private List<HistoryCall> getHistoryCalls(String accountId, String contactRingId) throws SQLException {
+        QueryBuilder<HistoryCall, Integer> queryBuilder = getCallHistoryDao().queryBuilder();
+        queryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryCall.COLUMN_NUMBER_NAME, contactRingId);
+        queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, true);
+        return getCallHistoryDao().query(queryBuilder.prepare());
     }
 
     public Single<List<HistoryFileTransfer>> getAllFilesForAccountAndContactRingId(final String accountId, final String contactRingId) {
@@ -381,6 +389,7 @@ public abstract class HistoryService extends Observable {
         notifyObservers(event);
     }
 
+    // todo insert in db
     private List<HistoryFileTransfer> fileTransfers = new ArrayList<>();
 
     public List<HistoryFileTransfer> getFileTransfers(String accountId, String contactRingId) {
@@ -416,5 +425,28 @@ public abstract class HistoryService extends Observable {
             }
         }
         return result;
+    }
+
+    public boolean hasAnHistory(String accountId, String contactRingId) {
+        List<HistoryFileTransfer> fileTransfers = getFileTransfers(accountId, contactRingId);
+        if (!fileTransfers.isEmpty()) {
+            return true;
+        }
+
+        try {
+            List<HistoryCall> historyCalls = getHistoryCalls(accountId, contactRingId);
+            if (!historyCalls.isEmpty()) {
+                return true;
+            }
+
+            List<HistoryText> historyTexts = getHistoryTexts(accountId, contactRingId);
+            if (!historyTexts.isEmpty()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            //ignored
+        }
+
+        return false;
     }
 }
