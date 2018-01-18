@@ -59,4 +59,14 @@ public interface ConversationView extends BaseView {
     void goToCallActivity(String conferenceId);
 
     void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly);
+
+    void blockContactRequest();
+
+    void refuseContactRequest();
+
+    void acceptContactRequest();
+
+    void switchToIncomingTrustRequestView(String message);
+
+    void switchToConversationView();
 }
