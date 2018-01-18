@@ -18,6 +18,7 @@
  */
 package cx.ring.contactrequests;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,8 +34,10 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.fragments.ConversationFragment;
 import cx.ring.mvp.BaseFragment;
 
 public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresenter> implements ContactRequestsView,
@@ -85,7 +88,7 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
 
         Bundle arguments = getArguments();
         if (arguments != null && arguments.containsKey(ACCOUNT_ID)) {
-            presenter.updateAccount(getArguments().getString(ACCOUNT_ID), false);
+            presenter.updateAccount(getArguments().getString(ACCOUNT_ID), true);
         }
     }
 
@@ -100,18 +103,8 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
     }
 
     @Override
-    public void onAcceptClick(PendingContactRequestsViewModel viewModel) {
-        presenter.acceptTrustRequest(viewModel);
-    }
-
-    @Override
-    public void onRefuseClick(PendingContactRequestsViewModel viewModel) {
-        presenter.refuseTrustRequest(viewModel);
-    }
-
-    @Override
-    public void onBlockClick(PendingContactRequestsViewModel viewModel) {
-        presenter.blockTrustRequest(viewModel);
+    public void onContactRequestClick(PendingContactRequestsViewModel viewModel) {
+        presenter.contactRequestClicked(viewModel.getContactId());
     }
 
     @Override
@@ -142,5 +135,20 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
         });
     }
 
-
+    @Override
+    public void goToConversation(String accountId, String contactId) {
+        if (ConversationFragment.isTabletMode(getActivity())) {
+            Bundle bundle = new Bundle();
+            bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+            bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
+            ((HomeActivity) getActivity()).startConversationTablet(bundle);
+        } else {
+            Intent intent = new Intent()
+                    .setClass(getActivity(), ConversationActivity.class)
+                    .setAction(Intent.ACTION_VIEW)
+                    .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
+                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+            startActivity(intent);
+        }
+    }
 }

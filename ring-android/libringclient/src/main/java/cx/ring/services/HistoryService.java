@@ -57,7 +57,7 @@ import io.reactivex.functions.Action;
 
 /**
  * A service managing all history related tasks.
- * Its responsabilities:
+ * Its responsibilities:
  * - inserting new entries (text or call)
  * - deleting conversations
  * - notifying Observers when history changes
