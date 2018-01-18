@@ -217,5 +217,6 @@ along with this program; if not, write to the Free Software
     <string name="gallery_error_message">No application found on device to open Gallery</string>
 
     <string name="generic_error">An unknown error occurred</string>
+    <string name="message_contact_not_trusted_yet">%s is not in your contacts yet.\nDo you accept or refuse this contact request?</string>
 
 </resources>
