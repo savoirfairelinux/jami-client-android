@@ -601,17 +601,17 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     }
 
     @Override
-    public void positiveButtonClicked() {
+    public void positiveMediaButtonClicked() {
         presenter.positiveButtonClicked();
     }
 
     @Override
-    public void negativeButtonClicked() {
+    public void negativeMediaButtonClicked() {
         presenter.negativeButtonClicked();
     }
 
     @Override
-    public void toggleButtonClicked() {
+    public void toggleMediaButtonClicked() {
         presenter.toggleButtonClicked();
     }
 }

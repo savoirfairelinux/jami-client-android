@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/llTrustRequestMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/tvTrustRequestMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="30dp"
+            tools:text="Jean is not in your contacts yet" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lighter_gray" />
+
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/hist_list"
@@ -11,42 +37,105 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/llTrustRequestMessage"
         android:clipToPadding="false"
         android:divider="@null"
-        android:listSelector="@android:color/transparent"
+        android:listSelector="@color/transparent"
         android:paddingBottom="60dp"
         android:paddingTop="8dp"
         tools:listitem="@layout/item_conv_msg_peer" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/ongoingcall_pane"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_below="@id/main_toolbar"
-        android:background="#e3c1c1">
+        android:background="#e3c1c1"
+        android:gravity="center"
+        tools:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:layout_margin="10dp"
             android:text="@string/ongoing_call"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/text_color_primary" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
+    <LinearLayout
+        android:id="@+id/llTrustRequestPrompt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lighter_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/btnBlock"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.33"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:text="@string/block"
+                android:textColor="@color/color_primary_dark" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lighter_gray" />
+
+            <Button
+                android:id="@+id/btnRefuse"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.33"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:text="@string/refuse"
+                android:textColor="@color/color_primary_dark" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lighter_gray" />
+
+            <Button
+                android:id="@+id/btnAccept"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.33"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:text="@string/accept"
+                android:textColor="@color/color_primary_dark" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cvMessageInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        card_view:cardCornerRadius="2dp">
+        app:cardCornerRadius="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,12 +165,12 @@
                 android:id="@+id/file_send"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
                 android:background="?selectableItemBackgroundBorderless"
                 android:contentDescription="@string/send_file"
-                android:layout_marginEnd="5dp"
                 android:padding="8dp"
                 android:tint="@android:color/darker_gray"
-                card_view:srcCompat="@drawable/ic_upload_black" />
+                app:srcCompat="@drawable/ic_upload_black" />
 
             <ImageButton
                 android:id="@+id/msg_send"
@@ -91,7 +180,7 @@
                 android:contentDescription="@string/send_message"
                 android:padding="8dp"
                 android:tint="@android:color/darker_gray"
-                card_view:srcCompat="@drawable/ic_send_black" />
+                app:srcCompat="@drawable/ic_send_black" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>
