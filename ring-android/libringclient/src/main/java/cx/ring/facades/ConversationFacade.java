@@ -40,6 +40,7 @@ import cx.ring.model.SecureSipCall;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
+import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
@@ -417,6 +418,22 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             switch (event.getEventType()) {
                 case INCOMING_MESSAGE: {
                     TextMessage txt = event.getEventInput(ServiceEvent.EventInput.MESSAGE, TextMessage.class);
+                    if (txt == null) {
+                        Log.d(TAG, "Received a null text message");
+                        return;
+                    }
+
+                    // if we receive a text message from someone which is not blocked and not in
+                    // contact list, then we consider it as a trust request
+                    // (may occur when a contact request have already been refused)
+                    Account account = mAccountService.getAccount(txt.getAccount());
+                    String number = txt.getNumber();
+                    Uri contactUri = new Uri(number);
+
+                    CallContact contact = account.getContacts().get(contactUri.getHost());
+                    if (contact != null && !contact.isBanned()) {
+                        account.addRequest(new TrustRequest(account.getAccountID(), contactUri.getHost(), 0L, ""));
+                    }
 
                     parseNewMessage(txt);
                     updateTextNotifications();
