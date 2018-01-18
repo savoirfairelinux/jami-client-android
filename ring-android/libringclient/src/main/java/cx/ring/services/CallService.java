@@ -57,6 +57,9 @@ public class CallService extends Observable {
     HistoryService mHistoryService;
 
     @Inject
+    AccountService mAccountService;
+
+    @Inject
     DeviceRuntimeService mDeviceRuntimeService;
 
     private Map<String, SipCall> currentCalls = new HashMap<>();
@@ -408,8 +411,7 @@ public class CallService extends Observable {
         );
     }
 
-    @SuppressWarnings("ConstantConditions")
-    public long sendAccountTextMessage(final String accountId, final String to, final String msg) {
+    public Long sendAccountTextMessage(final String accountId, final String to, final String msg) {
         return FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
@@ -464,7 +466,7 @@ public class CallService extends Observable {
                 new Callable<Boolean>() {
                     @Override
                     public Boolean call() throws Exception {
-                        Log.i(TAG, "acceptFileTransfer() thread running... dataTransferId=" + dataTransferId + ", filePath=" + filePath + ", offset=" + offset);
+                        Log.i(TAG, "acceptDataTransfer() thread running... dataTransferId=" + dataTransferId + ", filePath=" + filePath + ", offset=" + offset);
                         Ringservice.acceptFileTransfer(dataTransferId, filePath, offset);
                         return true;
                     }
@@ -566,6 +568,7 @@ public class CallService extends Observable {
 
         SipCall call = addCall(accountId, callId, from, SipCall.Direction.INCOMING);
         setChanged();
+
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
         event.addEventInput(ServiceEvent.EventInput.CALL, call);
         notifyObservers(event);
@@ -582,6 +585,16 @@ public class CallService extends Observable {
         }
         if (messages.has_key(MIME_TEXT_PLAIN)) {
             mHistoryService.incomingMessage(sipCall.getAccount(), callId, from, messages);
+        }
+    }
+
+    public void incomingAccountMessage(String accountId, String from, StringMap messages) {
+
+        mHistoryService.incomingMessage(accountId, null, from, messages);
+
+        CallContact contact = mAccountService.getCurrentAccount().getContact(from);
+        if (!mHistoryService.hasAnHistory(accountId, from) && contact == null) {
+            mAccountService.incomingTrustRequest(accountId, from, "", System.currentTimeMillis());
         }
     }
 

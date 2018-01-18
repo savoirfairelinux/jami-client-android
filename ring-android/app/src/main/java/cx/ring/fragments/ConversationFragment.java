@@ -40,6 +40,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -100,6 +101,18 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @BindView(R.id.number_selector)
     protected Spinner mNumberSpinner;
 
+    @BindView(R.id.cvMessageInput)
+    protected View mMessageInput;
+
+    @BindView(R.id.llTrustRequestPrompt)
+    protected View mTrustRequestPrompt;
+
+    @BindView(R.id.llTrustRequestMessage)
+    protected View mLlTrustRequestMessage;
+
+    @BindView(R.id.tvTrustRequestMessage)
+    protected TextView mTvTrustRequestMessage;
+
     private AlertDialog mDeleteDialog;
     private boolean mDeleteConversation = false;
 
@@ -108,12 +121,12 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     private ConversationAdapter mAdapter = null;
     private NumberAdapter mNumberAdapter = null;
 
-    public static Boolean isTabletMode(Context context) {
+    public static boolean isTabletMode(Context context) {
         return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
                 && context.getResources().getConfiguration().screenWidthDp >= MIN_SIZE_TABLET;
     }
 
-    static private int getIndex(Spinner spinner, Uri myString) {
+    private static int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
             if (((Phone) spinner.getItemAtPosition(i)).getNumber().equals(myString)) {
                 return i;
@@ -127,6 +140,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             if (mAdapter != null) {
                 mAdapter.updateDataset(conversation.getAggregateHistory());
 
+                // moves to last message
                 if (mAdapter.getItemCount() > 0) {
                     mHistList.smoothScrollToPosition(mAdapter.getItemCount() - 1);
                 }
@@ -176,16 +190,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         if (mDeleteConversation) {
             presenter.deleteAction();
         }
-    }
-
-    @Override
-    public void displaySendTrustRequest(final String accountId) {
-        new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.send_request_title)
-                .setMessage(R.string.send_request_msg)
-                .setNegativeButton(android.R.string.cancel, (dialogInterface, i) -> dialogInterface.cancel())
-                .setPositiveButton(R.string.send_request_button, (dialogInterface, i) -> presenter.sendTrustRequest())
-                .show();
     }
 
     @OnClick(R.id.msg_send)
@@ -487,17 +491,50 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void positiveButtonClicked() {
+    @OnClick(R.id.btnBlock)
+    public void blockContactRequest() {
+        presenter.onBlockIncomingContactRequest();
+    }
+
+    @Override
+    @OnClick(R.id.btnRefuse)
+    public void refuseContactRequest() {
+        presenter.onRefuseIncomingContactRequest();
+    }
+
+    @Override
+    @OnClick(R.id.btnAccept)
+    public void acceptContactRequest() {
+        presenter.onAcceptIncomingContactRequest();
+    }
+
+    @Override
+    public void switchToIncomingTrustRequestView(String contactDisplayName) {
+        mMessageInput.setVisibility(View.GONE);
+        mTvTrustRequestMessage.setText(String.format(getString(R.string.message_contact_not_trusted_yet), contactDisplayName));
+        mTrustRequestPrompt.setVisibility(View.VISIBLE);
+        mLlTrustRequestMessage.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void switchToConversationView() {
+        mMessageInput.setVisibility(View.VISIBLE);
+        mTrustRequestPrompt.setVisibility(View.GONE);
+        mLlTrustRequestMessage.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void positiveMediaButtonClicked() {
         presenter.clickOnGoingPane();
     }
 
     @Override
-    public void negativeButtonClicked() {
+    public void negativeMediaButtonClicked() {
         presenter.clickOnGoingPane();
     }
 
     @Override
-    public void toggleButtonClicked() {
+    public void toggleMediaButtonClicked() {
         presenter.clickOnGoingPane();
     }
 }
