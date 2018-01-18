@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlContactRequest"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:paddingBottom="8dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="8dp">
 
-    <android.support.v7.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/photo"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:scaleType="centerCrop"
-        tools:src="@drawable/ic_contact_picture" />
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp"
+        android:background="@null"
+        android:paddingBottom="4dp"
+        android:paddingEnd="4dp"
+        android:paddingStart="0dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ic_contact_picture" />
 
     <TextView
         android:id="@+id/display_name"
@@ -41,56 +50,30 @@
 
         <TextView
             android:id="@+id/fullname"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:gravity="start"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
             android:singleLine="true"
+            android:textAlignment="viewStart"
             android:textColor="@color/text_color_primary"
-            android:textIsSelectable="false"
             android:textSize="16sp"
             tools:text="fullname" />
 
         <TextView
             android:id="@+id/username"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="middle"
-            android:singleLine="true"
-            android:textColor="@color/text_color_primary"
-            android:textIsSelectable="false"
-            android:textSize="12sp"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:textAlignment="viewStart"
+            android:textColor="@color/text_color_secondary"
+            android:textSize="14sp"
             tools:text="username" />
 
     </LinearLayout>
-
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/button_accept"
-        style="@style/ButtonColored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/photo"
-        android:drawableStart="@drawable/ic_action_accept"
-        android:text="@string/accept" />
-
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/button_refuse"
-        style="@style/ButtonColored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/photo"
-        android:layout_centerHorizontal="true"
-        android:drawableStart="@drawable/ic_delete_white"
-        android:text="@string/refuse" />
-
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/button_block"
-        style="@style/ButtonColored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/photo"
-        android:drawableStart="@drawable/ic_close_white"
-        android:text="@string/block" />
 
 </RelativeLayout>

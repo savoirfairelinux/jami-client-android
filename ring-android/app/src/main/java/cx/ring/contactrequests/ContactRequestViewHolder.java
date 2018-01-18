@@ -18,29 +18,28 @@
  */
 package cx.ring.contactrequests;
 
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cx.ring.R;
 
 public class ContactRequestViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.button_accept)
-    protected AppCompatButton mButtonAccept;
 
-    @BindView(R.id.button_refuse)
-    protected AppCompatButton mButtonRefuse;
+    private ContactRequestListeners clickListener;
+    private PendingContactRequestsViewModel viewModel;
 
-    @BindView(R.id.button_block)
-    protected AppCompatButton mButtonBlock;
+    @BindView(R.id.rlContactRequest)
+    protected RelativeLayout rlContactRequest;
 
     @BindView(R.id.photo)
-    protected AppCompatImageView mPhoto;
+    protected ImageView mPhoto;
 
     @BindView(R.id.display_name)
     protected TextView mDisplayname;
@@ -59,19 +58,17 @@ public class ContactRequestViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, view);
     }
 
-    public void bind(final ContactRequestListeners clickListerner, final PendingContactRequestsViewModel viewModel) {
-        mButtonAccept.setOnClickListener(v -> clickListerner.onAcceptClick(viewModel));
+    public void bind(final ContactRequestListeners clickListener, final PendingContactRequestsViewModel viewModel) {
+        this.clickListener = clickListener;
+        this.viewModel = viewModel;
+    }
 
-        mButtonRefuse.setOnClickListener(v -> clickListerner.onRefuseClick(viewModel));
-
-        mButtonBlock.setOnClickListener(v -> clickListerner.onBlockClick(viewModel));
+    @OnClick(R.id.rlContactRequest)
+    public void rlContactRequestClick() {
+        clickListener.onContactRequestClick(viewModel);
     }
 
     public interface ContactRequestListeners {
-        void onAcceptClick(PendingContactRequestsViewModel viewModel);
-
-        void onRefuseClick(PendingContactRequestsViewModel viewModel);
-
-        void onBlockClick(PendingContactRequestsViewModel viewModel);
+        void onContactRequestClick(PendingContactRequestsViewModel viewModel);
     }
 }

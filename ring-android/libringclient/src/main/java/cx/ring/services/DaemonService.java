@@ -164,7 +164,7 @@ public class DaemonService {
 
         @Override
         public void incomingAccountMessage(String accountId, String from, StringMap messages) {
-            mHistoryService.incomingMessage(accountId, null, from, messages);
+            mCallService.incomingAccountMessage(accountId, from, messages);
         }
 
         @Override
@@ -224,7 +224,7 @@ public class DaemonService {
 
         @Override
         public void incomingTrustRequest(String accountId, String from, Blob message, long received) {
-            mAccountService.incomingTrustRequest(accountId, from, message, received);
+            mAccountService.incomingTrustRequest(accountId, from, message.toJavaString(), received);
         }
 
         @Override

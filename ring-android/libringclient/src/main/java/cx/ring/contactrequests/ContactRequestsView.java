@@ -24,4 +24,6 @@ import java.util.ArrayList;
 public interface ContactRequestsView {
 
     void updateView(ArrayList<PendingContactRequestsViewModel> list);
+
+    void goToConversation(String accountId, String contactId);
 }
