@@ -417,6 +417,10 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             switch (event.getEventType()) {
                 case INCOMING_MESSAGE: {
                     TextMessage txt = event.getEventInput(ServiceEvent.EventInput.MESSAGE, TextMessage.class);
+                    if (txt == null) {
+                        Log.d(TAG, "Received a null text message");
+                        return;
+                    }
 
                     parseNewMessage(txt);
                     updateTextNotifications();
