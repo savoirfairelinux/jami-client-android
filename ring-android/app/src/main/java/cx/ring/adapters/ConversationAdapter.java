@@ -211,11 +211,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
                 Log.d(TAG, "configureForFileInfoTextMessage: cacheFile=" + cacheFile + ",exists=" + cacheFile.exists());
 
-                presenter.acceptTransfer(file.getDataTransferId(), cacheFile.toString());
+                presenter.acceptDataTransfer(file.getDataTransferId(), cacheFile.toString());
             });
             conversationViewHolder.btnRefuse.setOnClickListener(v -> {
                 conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
-                presenter.cancelTransfer(file.getDataTransferId());
+                presenter.cancelDataTransfer(file.getDataTransferId());
             });
         } else {
             conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
