@@ -70,7 +70,7 @@ public class TVAccountWizard
     public void onCreate(Bundle savedInstanceState) {
 
         // dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        RingApplication.getInstance().getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 

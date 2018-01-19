@@ -63,7 +63,7 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.tv_activity_home);
 
         // dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        RingApplication.getInstance().getRingInjectionComponent().inject(this);
     }
 
     @Override

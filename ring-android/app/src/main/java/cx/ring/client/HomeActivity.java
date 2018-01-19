@@ -178,7 +178,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         ButterKnife.bind(this);
 
         // dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        RingApplication.getInstance().getRingInjectionComponent().inject(this);
 
         setSupportActionBar(mToolbar);
 
