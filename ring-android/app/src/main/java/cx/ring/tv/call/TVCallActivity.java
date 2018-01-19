@@ -52,7 +52,7 @@ public class TVCallActivity extends Activity {
         setContentView(R.layout.tv_activity_call);
 
         // dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        RingApplication.getInstance().getRingInjectionComponent().inject(this);
 
         android.net.Uri u = getIntent().getData();
 

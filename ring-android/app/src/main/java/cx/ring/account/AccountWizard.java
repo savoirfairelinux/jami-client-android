@@ -63,7 +63,7 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        RingApplication.getInstance().getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_wizard);

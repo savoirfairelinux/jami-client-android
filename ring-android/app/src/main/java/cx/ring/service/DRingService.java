@@ -25,6 +25,7 @@
  */
 package cx.ring.service;
 
+import android.app.Application;
 import android.app.Service;
 import android.app.UiModeManager;
 import android.content.BroadcastReceiver;
@@ -531,7 +532,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         super.onCreate();
 
         // dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        RingApplication.getInstance().getRingInjectionComponent().inject(this);
 
         if (mDeviceRuntimeService.hasContactPermission()) {
             getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver);

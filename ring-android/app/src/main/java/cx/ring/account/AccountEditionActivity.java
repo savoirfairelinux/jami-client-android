@@ -87,7 +87,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
         ButterKnife.bind(this);
 
         // dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        RingApplication.getInstance().getRingInjectionComponent().inject(this);
         mEditionPresenter.bindView(this);
         String accountId = getIntent().getData().getLastPathSegment();
         mEditionPresenter.init(accountId);
