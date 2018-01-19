@@ -41,7 +41,7 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // dependency injection
-        ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        RingApplication.getInstance().getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
 
@@ -92,7 +92,7 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
                 boolean isAudioGranted = false;
                 for (int i = 0, n = permissions.length; i < n; i++) {
                     String permission = permissions[i];
-                    ((RingApplication) getApplication()).permissionHasBeenAsked(permission);
+                    RingApplication.getInstance().permissionHasBeenAsked(permission);
                     switch (permission) {
                         case Manifest.permission.RECORD_AUDIO:
                             isAudioGranted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
