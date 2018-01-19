@@ -66,6 +66,7 @@ public class RingApplication extends Application {
     public static final Handler uiHandler = new Handler(Looper.getMainLooper());
     private final static String TAG = RingApplication.class.getName();
     static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
+    private static RingApplication sInstance;
     @Inject
     @Named("DaemonExecutor")
     ExecutorService mExecutor;
@@ -189,6 +190,8 @@ public class RingApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        sInstance = this;
+
         setDefaultUncaughtExceptionHandler();
 
         mPermissionsBeingAsked = new HashMap<>();
@@ -208,12 +211,17 @@ public class RingApplication extends Application {
         bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
     }
 
+    public static RingApplication getInstance() {
+        return sInstance;
+    }
+
     @Override
     public void onTerminate() {
         super.onTerminate();
 
         // todo decide when to stop the daemon
         terminateDaemon();
+        sInstance = null;
     }
 
     public RingInjectionComponent getRingInjectionComponent() {
