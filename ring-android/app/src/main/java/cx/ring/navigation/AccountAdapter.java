@@ -192,7 +192,12 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             disabled_flag.setVisibility(account.isEnabled() ? View.GONE : View.VISIBLE);
             if (account.isEnabled()) {
                 this.alias.setTextColor(context.getResources().getColor(R.color.text_color_primary));
-                if (account.isTrying()) {
+                if (!account.isActive()) {
+                    error.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
+                    error.setColorFilter(Color.BLACK);
+                    error.setVisibility(View.VISIBLE);
+                    loading.setVisibility(View.GONE);
+                } else if (account.isTrying()) {
                     error.setVisibility(View.GONE);
                     loading.setVisibility(View.VISIBLE);
                 } else if (account.needsMigration()) {
@@ -201,14 +206,9 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     error.setImageResource(R.drawable.ic_warning);
                     error.setColorFilter(Color.RED);
                     error.setVisibility(View.VISIBLE);
-                } else if (account.isInError()) {
+                } else if (account.isInError() || !account.isRegistered()) {
                     error.setImageResource(R.drawable.ic_error_white);
                     error.setColorFilter(Color.RED);
-                    error.setVisibility(View.VISIBLE);
-                    loading.setVisibility(View.GONE);
-                } else if (!account.isRegistered()) {
-                    error.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
-                    error.setColorFilter(Color.BLACK);
                     error.setVisibility(View.VISIBLE);
                     loading.setVisibility(View.GONE);
                 } else {

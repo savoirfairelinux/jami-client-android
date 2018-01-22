@@ -1245,6 +1245,15 @@ public class AccountService extends Observable {
         }
     }
 
+    public void volatileAccountDetailsChanged(String accountId, StringMap details) {
+        Account account = getAccount(accountId);
+        if (account == null) {
+            return;
+        }
+        Log.d(TAG, "volatileAccountDetailsChanged: " + accountId + " " + details.size());
+        account.setVolatileDetails(details.toNative());
+    }
+
     public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
         Log.d(TAG, "accountMessageStatusChanged: " + accountId + ", " + messageId + ", " + to + ", " + status);
 
