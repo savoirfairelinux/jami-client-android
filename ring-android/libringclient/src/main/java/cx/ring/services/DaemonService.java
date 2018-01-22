@@ -158,6 +158,11 @@ public class DaemonService {
         }
 
         @Override
+        public void volatileAccountDetailsChanged(String account_id, StringMap details) {
+            mAccountService.volatileAccountDetailsChanged(account_id, details);
+        }
+
+        @Override
         public void incomingAccountMessage(String accountId, String from, StringMap messages) {
             mHistoryService.incomingMessage(accountId, null, from, messages);
         }

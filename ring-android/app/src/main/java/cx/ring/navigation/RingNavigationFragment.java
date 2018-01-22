@@ -349,7 +349,12 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         mSelectedAccountHost.setText(presenter.getUri(selectedAccount, getString(R.string.account_type_ip2ip)));
         mSelectedAccountDisabled.setVisibility(selectedAccount.isEnabled() ? View.GONE : View.VISIBLE);
         if (selectedAccount.isEnabled()) {
-            if (selectedAccount.isTrying()) {
+            if (!selectedAccount.isEnabled()) {
+                mSelectedAccountError.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
+                mSelectedAccountError.setColorFilter(Color.BLACK);
+                mSelectedAccountError.setVisibility(View.VISIBLE);
+                mSelectedAccountLoading.setVisibility(View.GONE);
+            } else if (selectedAccount.isTrying()) {
                 mSelectedAccountError.setVisibility(View.GONE);
                 mSelectedAccountLoading.setVisibility(View.VISIBLE);
             } else if (selectedAccount.needsMigration()) {
@@ -358,14 +363,9 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
                 mSelectedAccountError.setImageResource(R.drawable.ic_warning);
                 mSelectedAccountError.setColorFilter(Color.RED);
                 mSelectedAccountError.setVisibility(View.VISIBLE);
-            } else if (selectedAccount.isInError()) {
+            } else if (selectedAccount.isInError() || !selectedAccount.isRegistered()) {
                 mSelectedAccountError.setImageResource(R.drawable.ic_error_white);
                 mSelectedAccountError.setColorFilter(Color.RED);
-                mSelectedAccountError.setVisibility(View.VISIBLE);
-                mSelectedAccountLoading.setVisibility(View.GONE);
-            } else if (!selectedAccount.isRegistered()) {
-                mSelectedAccountError.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
-                mSelectedAccountError.setColorFilter(Color.WHITE);
                 mSelectedAccountError.setVisibility(View.VISIBLE);
                 mSelectedAccountLoading.setVisibility(View.GONE);
             } else {
