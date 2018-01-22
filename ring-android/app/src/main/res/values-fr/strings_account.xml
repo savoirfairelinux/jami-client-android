@@ -171,7 +171,7 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_link_title">Lier cet appareil</string>
   <string name="account_sip_cannot_be_registered">Impossible d\'enregistrer le compte</string>
   <!--Edit profile-->
-  <string name="account_edit_profile">Éditer votre profile</string>
+  <string name="account_edit_profile">Éditer votre profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Entrer le mot de passe pour confirmer</string>
   <string name="enter_password">Entrez votre mot de passe</string>
