@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2015-2017 Savoir-faire Linux Inc.
+ *  Copyright (C) 2015-2018 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
@@ -43,13 +43,19 @@ import cx.ring.model.Codec;
 class CodecPreference extends Preference {
     private static final String TAG = CodecPreference.class.getSimpleName();
 
-    private CodecAdapter listAdapter;
+    private final CodecAdapter listAdapter;
+
+    public CodecPreference(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        setWidgetLayoutResource(R.layout.frag_audio_mgmt);
+        listAdapter = new CodecAdapter(getContext());
+
+    }
 
     public CodecPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setWidgetLayoutResource(R.layout.frag_audio_mgmt);
-        listAdapter = new CodecAdapter(context);
-        Log.w(TAG, "CodecPreference create");
+        listAdapter = new CodecAdapter(getContext());
     }
 
     private void setListViewHeight(ListView listView, LinearLayout llMain) {
@@ -112,11 +118,10 @@ class CodecPreference extends Preference {
 
     private static class CodecAdapter extends BaseAdapter {
 
-        ArrayList<Codec> items;
+        private final ArrayList<Codec> items = new ArrayList<>();
         private Context mContext;
 
         CodecAdapter(Context context) {
-            items = new ArrayList<>();
             mContext = context;
         }
 
@@ -198,7 +203,7 @@ class CodecPreference extends Preference {
         }
 
         void setDataset(ArrayList<Codec> codecs) {
-            items = new ArrayList<>(codecs.size());
+            items.clear();
             items.addAll(codecs);
         }
 

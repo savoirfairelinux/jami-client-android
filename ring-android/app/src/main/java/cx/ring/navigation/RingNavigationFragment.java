@@ -238,7 +238,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
     public void updateUserView(VCard vcard) {
         Log.d(TAG, "updateUserView");
 
-        if (getActivity() == null) {
+        if (getActivity() == null || vcard == null) {
             return;
         }
 
