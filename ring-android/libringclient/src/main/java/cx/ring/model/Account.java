@@ -147,7 +147,7 @@ public class Account {
     }
 
     public void setVolatileDetails(Map<String, String> volatileDetails) {
-        this.mVolatileDetails = new AccountConfig(volatileDetails);
+        mVolatileDetails = new AccountConfig(volatileDetails);
     }
 
     public String getRegisteredName() {
@@ -180,6 +180,10 @@ public class Account {
 
     public boolean isEnabled() {
         return mDetails.getBool(ConfigKey.ACCOUNT_ENABLE);
+    }
+
+    public boolean isActive() {
+        return mVolatileDetails.getBool(ConfigKey.ACCOUNT_ACTIVE);
     }
 
     public void setEnabled(boolean isChecked) {

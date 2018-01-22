@@ -97,6 +97,7 @@ public enum ConfigKey {
 
     private static final Set<ConfigKey> TWO_STATES = new HashSet<>(Arrays.asList(
             ACCOUNT_ENABLE,
+            ACCOUNT_ACTIVE,
             VIDEO_ENABLED,
             RINGTONE_ENABLED,
             KEEP_ALIVE_ENABLED,
