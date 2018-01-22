@@ -54,6 +54,8 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
 
     @BindView(R.id.settings_mobile_data)
     Switch mViewMobileData;
+    @BindView(R.id.settings_push_notifications)
+    Switch mViewPushNotifications;
     @BindView(R.id.settings_contacts)
     Switch mViewContacts;
     @BindView(R.id.settings_place_call)
@@ -145,6 +147,7 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
         newSettings.setAllowSystemContacts(mViewContacts.isChecked());
         newSettings.setAllowPlaceSystemCalls(mViewPlaceCall.isChecked());
         newSettings.setAllowRingOnStartup(mViewStartup.isChecked());
+        newSettings.setAllowPushNotifications(mViewPushNotifications.isChecked());
 
         // save settings according to UI inputs
         presenter.saveSettings(newSettings);
