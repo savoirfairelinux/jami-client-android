@@ -61,6 +61,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         edit.putBoolean(RING_ON_STARTUP, settings.isAllowRingOnStartup());
 
         edit.apply();
+        mUserSettings = settings;
 
         // notify the observers
         setChanged();

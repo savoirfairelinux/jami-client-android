@@ -107,7 +107,12 @@ public class AccountsAdapter extends BaseAdapter {
         });
 
         if (item.isEnabled()) {
-            if (item.isTrying()) {
+            if (!item.isActive()) {
+                entryView.errorIndicator.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
+                entryView.errorIndicator.setColorFilter(Color.BLACK);
+                entryView.errorIndicator.setVisibility(View.VISIBLE);
+                entryView.loadingIndicator.setVisibility(View.GONE);
+            } else if (item.isTrying()) {
                 entryView.errorIndicator.setVisibility(View.GONE);
                 entryView.loadingIndicator.setVisibility(View.VISIBLE);
             } else if (item.needsMigration()) {
@@ -116,14 +121,9 @@ public class AccountsAdapter extends BaseAdapter {
                 entryView.errorIndicator.setImageResource(R.drawable.ic_warning);
                 entryView.errorIndicator.setColorFilter(Color.RED);
                 entryView.errorIndicator.setVisibility(View.VISIBLE);
-            } else if (item.isInError()) {
+            } else if (item.isInError() || !item.isRegistered()) {
                 entryView.errorIndicator.setImageResource(R.drawable.ic_error_white);
                 entryView.errorIndicator.setColorFilter(Color.RED);
-                entryView.errorIndicator.setVisibility(View.VISIBLE);
-                entryView.loadingIndicator.setVisibility(View.GONE);
-            } else if (!item.isRegistered()) {
-                entryView.errorIndicator.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
-                entryView.errorIndicator.setColorFilter(Color.BLACK);
                 entryView.errorIndicator.setVisibility(View.VISIBLE);
                 entryView.loadingIndicator.setVisibility(View.GONE);
             } else {
