@@ -67,6 +67,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     // Sections headers ids
     private static final long HEADER_CONTACTS = 0;
     private static final long HEADER_MISC = 1;
+    private static final int TRUST_REQUEST_ROW_POSITION = 1;
     SpinnerFragment mSpinnerFragment;
     private ArrayObjectAdapter mRowsAdapter;
     private DisplayMetrics mMetrics;
@@ -226,13 +227,13 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public void showContactRequestsRow(boolean display) {
-        CardListRow row = (CardListRow) mRowsAdapter.get(2);
+        CardListRow row = (CardListRow) mRowsAdapter.get(TRUST_REQUEST_ROW_POSITION);
         boolean isContactRequestRowDisplayed = row.getCardRow().getTitle().equals(getString(R.string.menu_item_contact_request));
 
         if (display && !isContactRequestRowDisplayed) {
-            mRowsAdapter.add(2, createContactRequestRow());
+            mRowsAdapter.add(TRUST_REQUEST_ROW_POSITION, createContactRequestRow());
         } else if (!display && isContactRequestRowDisplayed) {
-            mRowsAdapter.removeItems(2, 1);
+            mRowsAdapter.removeItems(TRUST_REQUEST_ROW_POSITION, 1);
         }
     }
 
