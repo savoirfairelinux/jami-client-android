@@ -30,7 +30,7 @@ import cx.ring.services.PreferencesService;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
-public class SettingsPresenter extends RootPresenter<GenericView<SettingsViewModel>> implements Observer<ServiceEvent> {
+public class SettingsPresenter extends RootPresenter<GenericView<Settings>> implements Observer<ServiceEvent> {
 
     private PreferencesService mPreferencesService;
     private HistoryService mHistoryService;
@@ -42,7 +42,7 @@ public class SettingsPresenter extends RootPresenter<GenericView<SettingsViewMod
     }
 
     @Override
-    public void bindView(GenericView<SettingsViewModel> view) {
+    public void bindView(GenericView<Settings> view) {
         super.bindView(view);
         mPreferencesService.addObserver(this);
     }
@@ -62,7 +62,7 @@ public class SettingsPresenter extends RootPresenter<GenericView<SettingsViewMod
         Settings settings = mPreferencesService.loadSettings();
 
         // let the view display the associated ViewModel
-        getView().showViewModel(new SettingsViewModel(settings));
+        getView().showViewModel(settings);
     }
 
     public void saveSettings(Settings settings) {

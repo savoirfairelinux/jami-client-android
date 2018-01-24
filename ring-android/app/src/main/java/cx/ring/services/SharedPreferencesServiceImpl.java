@@ -39,6 +39,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     private static final String RING_SETTINGS = "ring_settings";
     private static final String RING_REQUESTS = "ring_requests";
     private static final String RING_MOBILE_DATA = "mobile_data";
+    private static final String RING_PUSH_NOTIFICATIONS = "push_notifs";
     private static final String RING_SYSTEM_CONTACTS = "system_contacts";
     private static final String RING_PLACE_CALLS = "place_calls";
     private static final String RING_ON_STARTUP = "on_startup";
@@ -59,6 +60,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         edit.putBoolean(RING_SYSTEM_CONTACTS, settings.isAllowSystemContacts());
         edit.putBoolean(RING_PLACE_CALLS, settings.isAllowPlaceSystemCalls());
         edit.putBoolean(RING_ON_STARTUP, settings.isAllowRingOnStartup());
+        edit.putBoolean(RING_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications());
 
         edit.apply();
 
@@ -81,6 +83,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         mUserSettings.setAllowSystemContacts(appPrefs.getBoolean(RING_SYSTEM_CONTACTS, false));
         mUserSettings.setAllowPlaceSystemCalls(appPrefs.getBoolean(RING_PLACE_CALLS, false));
         mUserSettings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
+        mUserSettings.setAllowPushNotifications(appPrefs.getBoolean(RING_PUSH_NOTIFICATIONS, false));
 
         return mUserSettings;
     }
