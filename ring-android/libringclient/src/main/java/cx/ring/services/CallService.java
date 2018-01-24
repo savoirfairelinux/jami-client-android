@@ -613,8 +613,4 @@ public class CallService extends Observable {
         event.addEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, dataTransferEventCode);
         notifyObservers(event);
     }
-
-    public interface DaemonCallback {
-        void fileWritten();
-    }
 }

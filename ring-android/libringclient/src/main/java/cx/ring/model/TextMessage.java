@@ -19,6 +19,8 @@
  */
 package cx.ring.model;
 
+import cx.ring.utils.Log;
+
 public class TextMessage {
     private static final String TAG = TextMessage.class.getSimpleName();
 
@@ -76,7 +78,7 @@ public class TextMessage {
         }
 
         public String toString() {
-            switch (s){
+            switch (s) {
                 case 1:
                     return "SENDING";
                 case 2:
@@ -102,6 +104,10 @@ public class TextMessage {
     }
 
     public TextMessage(HistoryText h) {
+        if (h == null) {
+            Log.e(TAG, "TextMessage: received invalid text message");
+            return;
+        }
         mID = h.id;
         mAccount = h.getAccountID();
         mNumber = new Uri(h.getNumber());
@@ -148,6 +154,7 @@ public class TextMessage {
     public void setStatus(int status) {
         mState = Status.fromInt(status);
     }
+
     public void setStatus(Status status) {
         mState = status;
     }
