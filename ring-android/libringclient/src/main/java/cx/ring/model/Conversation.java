@@ -40,40 +40,26 @@ public class Conversation {
     private CallContact mContact;
     private String uuid;
 
-    private final Map<String, HistoryEntry> mHistory = new HashMap<>();
+    private final Map<String, HistoryEntry> mHistory;
     private final ArrayList<Conference> mCurrentCalls;
-    private final ArrayList<ConversationElement> mAggregateHistory = new ArrayList<>(32);
+    private final ArrayList<ConversationElement> fileTransfers;
+    private final ArrayList<ConversationElement> mAggregateHistory;
 
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
-
     private long mLastContactRequest = 0L;
     public static final long PERIOD = 10L * 60L * 1000L; //10 minutes
 
     public Conversation(CallContact contact) {
         setContact(contact);
+        mHistory = new HashMap<>();
         mCurrentCalls = new ArrayList<>();
+        fileTransfers = new ArrayList<>();
+        mAggregateHistory = new ArrayList<>(32);
     }
 
-    public class ConversationElement {
-        public HistoryCall call = null;
-        public TextMessage text = null;
-
-        ConversationElement(HistoryCall c) {
-            call = c;
-        }
-
-        ConversationElement(TextMessage t) {
-            text = t;
-        }
-
-        long getDate() {
-            if (text != null)
-                return text.getTimestamp();
-            else if (call != null)
-                return call.call_start;
-            return 0;
-        }
+    public ArrayList<ConversationElement> getFileTransfers() {
+        return fileTransfers;
     }
 
     public boolean hasCurrentCall() {
@@ -82,15 +68,17 @@ public class Conversation {
 
     public String getLastNumberUsed(String accountID) {
         HistoryEntry he = mHistory.get(accountID);
-        if (he == null)
+        if (he == null) {
             return null;
+        }
         return he.getLastNumberUsed();
     }
 
     public Conference getConference(String id) {
         for (Conference c : mCurrentCalls)
-            if (c.getId().contentEquals(id) || c.getCallById(id) != null)
+            if (c.getId().contentEquals(id) || c.getCallById(id) != null) {
                 return c;
+            }
         return null;
     }
 
@@ -118,8 +106,9 @@ public class Conversation {
     public Tuple<HistoryEntry, HistoryCall> findHistoryByCallId(String id) {
         for (HistoryEntry e : mHistory.values()) {
             for (HistoryCall c : e.getCalls().values()) {
-                if (c.getCallId().equals(id))
+                if (c.getCallId().equals(id)) {
                     return new Tuple<>(e, c);
+                }
             }
         }
         return null;
@@ -212,6 +201,15 @@ public class Conversation {
         }
     }
 
+    public void addFileTransfer(HistoryFile historyFile) {
+        ConversationElement conversationElement = new ConversationElement(historyFile);
+        if (getFileTransfers().contains(conversationElement)) {
+            return;
+        }
+        fileTransfers.add(conversationElement);
+        mAggregateHistory.add(conversationElement);
+    }
+
     public Map<String, HistoryEntry> getHistory() {
         return mHistory;
     }
@@ -245,8 +243,9 @@ public class Conversation {
     }
 
     public Conference getCurrentCall() {
-        if (mCurrentCalls.isEmpty())
+        if (mCurrentCalls.isEmpty()) {
             return null;
+        }
         return mCurrentCalls.get(0);
     }
 
@@ -315,9 +314,48 @@ public class Conversation {
         mLastContactRequest = timestamp;
     }
 
+    public void removeAllButFileTransfers() {
+        for (ConversationElement ce : mAggregateHistory) {
+            if (ce.file == null) {
+                mAggregateHistory.remove(ce);
+            }
+        }
+    }
+
     public interface ConversationActionCallback {
+
         void deleteConversation(CallContact callContact);
 
         void copyContactNumberToClipboard(String contactNumber);
+
+    }
+
+    public class ConversationElement {
+        public HistoryCall call = null;
+        public TextMessage text = null;
+        public HistoryFile file = null;
+
+        ConversationElement(HistoryCall c) {
+            call = c;
+        }
+
+        ConversationElement(TextMessage t) {
+            text = t;
+        }
+
+        ConversationElement(HistoryFile f) {
+            file = f;
+        }
+
+        long getDate() {
+            if (text != null) {
+                return text.getTimestamp();
+            } else if (call != null) {
+                return call.call_start;
+            } else if (file != null) {
+                return file.getTimestamp();
+            }
+            return 0;
+        }
     }
 }
