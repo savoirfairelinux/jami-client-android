@@ -50,10 +50,12 @@ import cx.ring.mvp.GenericView;
 /**
  * TODO: improvements : handle multiples permissions for feature.
  */
-public class SettingsFragment extends BaseFragment<SettingsPresenter> implements GenericView<SettingsViewModel> {
+public class SettingsFragment extends BaseFragment<SettingsPresenter> implements GenericView<Settings> {
 
     @BindView(R.id.settings_mobile_data)
     Switch mViewMobileData;
+    @BindView(R.id.settings_push_notifications)
+    Switch mViewPushNotifications;
     @BindView(R.id.settings_contacts)
     Switch mViewContacts;
     @BindView(R.id.settings_place_call)
@@ -97,7 +99,7 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
         menu.clear();
     }
 
-    @OnCheckedChanged({R.id.settings_mobile_data, R.id.settings_contacts, R.id.settings_place_call, R.id.settings_startup})
+    @OnCheckedChanged({R.id.settings_mobile_data, R.id.settings_push_notifications, R.id.settings_contacts, R.id.settings_place_call, R.id.settings_startup})
     public void onSettingsCheckedChanged(CompoundButton button, boolean isChecked) {
 
         String neededPermission = null;
@@ -145,6 +147,7 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
         newSettings.setAllowSystemContacts(mViewContacts.isChecked());
         newSettings.setAllowPlaceSystemCalls(mViewPlaceCall.isChecked());
         newSettings.setAllowRingOnStartup(mViewStartup.isChecked());
+        newSettings.setAllowPushNotifications(mViewPushNotifications.isChecked());
 
         // save settings according to UI inputs
         presenter.saveSettings(newSettings);
@@ -221,9 +224,10 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
 
     //region View Methods Implementation
     @Override
-    public void showViewModel(SettingsViewModel viewModel) {
+    public void showViewModel(Settings viewModel) {
         mIsRefreshingViewFromPresenter = true;
         mViewMobileData.setChecked(viewModel.isAllowMobileData());
+        mViewPushNotifications.setChecked(viewModel.isAllowPushNotifications());
         mViewContacts.setChecked(viewModel.isAllowSystemContacts());
         mViewPlaceCall.setChecked(viewModel.isAllowPlaceSystemCalls());
         mViewStartup.setChecked(viewModel.isAllowRingOnStartup());

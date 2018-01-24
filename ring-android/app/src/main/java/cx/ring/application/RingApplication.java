@@ -159,9 +159,13 @@ public class RingApplication extends Application {
                 // load accounts from Daemon
                 mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected());
 
-                String token = FirebaseInstanceId.getInstance().getToken();
-                Log.w(TAG, "Setting Firebase push token: " + token);
-                Ringservice.setPushNotificationToken(token);
+                if (mPreferencesService.getUserSettings().isAllowPushNotifications()) {
+                    String token = FirebaseInstanceId.getInstance().getToken();
+                    Log.w(TAG, "Setting Firebase push token: " + token);
+                    Ringservice.setPushNotificationToken(token);
+                } else {
+                    Ringservice.setPushNotificationToken("");
+                }
 
                 Intent intent = new Intent(DRING_CONNECTION_CHANGED);
                 intent.putExtra("connected", mDaemonService.isStarted());
