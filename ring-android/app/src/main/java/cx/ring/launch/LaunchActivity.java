@@ -44,6 +44,7 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
+        ((RingApplication) getApplication()).startDaemon();
 
         setContentView(R.layout.activity_launch);
 

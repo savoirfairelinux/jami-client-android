@@ -35,6 +35,7 @@ import android.view.WindowManager;
 
 import cx.ring.BuildConfig;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.fragments.CallFragment;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.services.NotificationService;
@@ -54,6 +55,7 @@ public class CallActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((RingApplication) getApplication()).startDaemon();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setTurnScreenOn(true);
