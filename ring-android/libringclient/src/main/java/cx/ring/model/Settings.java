@@ -22,6 +22,7 @@ package cx.ring.model;
 public class Settings {
 
     private boolean mAllowMobileData;
+    private boolean mAllowPushNotifications;
     private boolean mAllowSystemContacts;
     private boolean mAllowPlaceSystemCalls;
     private boolean mAllowRingOnStartup;
@@ -32,6 +33,13 @@ public class Settings {
 
     public void setAllowMobileData(boolean allowMobileData) {
         this.mAllowMobileData = allowMobileData;
+    }
+    public boolean isAllowPushNotifications() {
+        return mAllowPushNotifications;
+    }
+
+    public void setAllowPushNotifications(boolean push) {
+        this.mAllowPushNotifications = push;
     }
 
     public boolean isAllowSystemContacts() {
