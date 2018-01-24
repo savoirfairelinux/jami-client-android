@@ -1,4 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+ext {
+    useFirebase = true
+}
 buildscript {
     repositories {
         jcenter()
@@ -6,6 +9,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.google.gms:google-services:3.1.0'
     }
 }
 allprojects {
