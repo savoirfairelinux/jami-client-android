@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 def android_support_version = "27.0.2"
 def butterknife_version = "8.8.1"
 def dagger_version = "2.12"
+def useFirebase = rootProject.useFirebase
 
 dependencies {
     implementation fileTree(include: '*.jar', dir: 'libs')
@@ -39,6 +40,11 @@ dependencies {
 
     // RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
+    if (useFirebase) {
+        compile 'com.google.firebase:firebase-messaging:11.8.0'
+    }
+
 }
 
 android {
@@ -53,6 +59,10 @@ android {
 
     sourceSets {
         main {
+            java.srcDirs = ['src/main/java']
+            if (useFirebase) {
+                java.srcDirs += 'src/main/javaFirebase'
+            }
             aidl.srcDirs = ['src/main/java']
             jniLibs.srcDir 'src/main/libs'
             jni.srcDirs = []
@@ -98,4 +108,8 @@ android {
             universalApk true
         }
     }
+}
+
+if (useFirebase) {
+    apply plugin: 'com.google.gms.google-services'
 }
