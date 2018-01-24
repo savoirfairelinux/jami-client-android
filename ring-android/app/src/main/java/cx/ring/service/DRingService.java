@@ -95,7 +95,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     static public final String ACTION_CONV_DISMISS = BuildConfig.APPLICATION_ID + ".action.CONV_DISMISS";
     static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
 
-    private static final String TAG = DRingService.class.getName();
+    private static final String TAG = DRingService.class.getSimpleName();
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
     @Inject
     protected DaemonService mDaemonService;
@@ -525,6 +525,8 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     @Named("DaemonExecutor")
     protected ExecutorService mExecutor;
 
+    public static boolean isRunning = false;
+
     @Override
     public void onCreate() {
         Log.i(TAG, "onCreated");
@@ -532,6 +534,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
         // dependency injection
         ((RingApplication) getApplication()).getRingInjectionComponent().inject(this);
+        isRunning = true;
 
         if (mDeviceRuntimeService.hasContactPermission()) {
             getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, contactContentObserver);
@@ -551,6 +554,8 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
         mCallService.addObserver(this);
+
+        ((RingApplication) getApplication()).bindDaemon();
     }
 
     @Override
@@ -563,6 +568,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         mAccountService.removeObserver(this);
         mConversationFacade.removeObserver(this);
         mCallService.removeObserver(this);
+        isRunning = false;
     }
 
     @Override

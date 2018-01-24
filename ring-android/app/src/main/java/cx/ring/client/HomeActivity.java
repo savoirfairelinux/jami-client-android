@@ -167,6 +167,8 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((RingApplication) getApplication()).startDaemon();
+
         Log.d(TAG, "onCreate");
         mToolbarSize = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
 

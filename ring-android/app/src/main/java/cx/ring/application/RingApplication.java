@@ -64,7 +64,7 @@ public class RingApplication extends Application {
      * Handler to run tasks that needs to be on main thread (UI updates)
      */
     public static final Handler uiHandler = new Handler(Looper.getMainLooper());
-    private final static String TAG = RingApplication.class.getName();
+    private final static String TAG = RingApplication.class.getSimpleName();
     static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
     @Inject
     @Named("DaemonExecutor")
@@ -96,12 +96,13 @@ public class RingApplication extends Application {
     private RingInjectionComponent mRingInjectionComponent;
     private Map<String, Boolean> mPermissionsBeingAsked;
 
+    private boolean mBound = false;
     private final ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder s) {
             Log.d(TAG, "onServiceConnected " + className.getClassName());
-
+            mBound = true;
             // bootstrap Daemon
             bootstrapDaemon();
         }
@@ -109,6 +110,7 @@ public class RingApplication extends Application {
         @Override
         public void onServiceDisconnected(ComponentName className) {
             Log.d(TAG, "onServiceDisconnected " + className.getClassName());
+            mBound = false;
         }
     };
 
@@ -202,10 +204,19 @@ public class RingApplication extends Application {
         // we can now inject in our self whatever modules define
         mRingInjectionComponent.inject(this);
 
-        // to bootstrap the daemon
-        Intent intent = new Intent(this, DRingService.class);
-        startService(intent);
-        bindService(intent, mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
+    }
+
+    public void startDaemon() {
+        if (!DRingService.isRunning) {
+            startService(new Intent(this, DRingService.class));
+        }
+        bindDaemon();
+    }
+
+    public void bindDaemon() {
+        if (!mBound) {
+            bindService(new Intent(this, DRingService.class), mConnection, BIND_AUTO_CREATE | BIND_IMPORTANT | BIND_ABOVE_CLIENT);
+        }
     }
 
     @Override
