@@ -1,0 +1,52 @@
+/*
+ * Copyright (C) 2004-2018 Savoir-faire Linux Inc.
+ *
+ * Author: Pierre Duchemin <pierre.duchemin@savoirfairelinux.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */
+
+package cx.ring.model;
+
+public class HistoryFile {
+
+    private final long timestamp;
+    private String displayName;
+    private boolean isOutgoing;
+    private DataTransferEventCode dataTransferEventCode;
+
+    public HistoryFile() {
+        timestamp = System.currentTimeMillis();
+    }
+
+    public HistoryFile(String displayName, boolean isOutgoing, DataTransferEventCode dataTransferEventCode) {
+        this.timestamp = System.currentTimeMillis();
+        this.displayName = displayName;
+        this.isOutgoing = isOutgoing;
+        this.dataTransferEventCode = dataTransferEventCode;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public enum DataTransferEventCode {
+        CREATED, UNSUPPORTED, WAIT_PEER_ACCEPTANCE, WAIT_HOST_ACCEPTANCE, ONGOING, FINISHED, CLOSED_BY_HOST, CLOSED_BY_PEER, INVALID_PATHNAME, UNJOINABLE_PEER
+    }
+}

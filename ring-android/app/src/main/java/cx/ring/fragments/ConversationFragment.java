@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -28,6 +29,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,6 +38,11 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,7 +64,10 @@ import cx.ring.mvp.BaseFragment;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
+import cx.ring.utils.FileUtils;
 import cx.ring.utils.MediaButtonsHelper;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ConversationFragment extends BaseFragment<ConversationPresenter> implements
         Conversation.ConversationActionCallback,
@@ -72,6 +82,9 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
     private static final int MIN_SIZE_TABLET = 960;
+
+    private static final int REQUEST_CODE_FILE_PICKER = 1000;
+    public static final String RINGTRANSFERFILE_CACHE = "ringtransferfile.cache";
 
     @BindView(R.id.msg_input_txt)
     protected EditText mMsgEditTxt;
@@ -176,6 +189,55 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @OnClick(R.id.msg_send)
     public void sendMessageText() {
         presenter.sendTextMessage(mMsgEditTxt.getText().toString());
+    }
+
+    @OnClick(R.id.file_send)
+    public void selectFile() {
+        presenter.selectFile();
+    }
+
+    @Override
+    public void openFilePicker() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+
+        startActivityForResult(intent, REQUEST_CODE_FILE_PICKER);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        super.onActivityResult(requestCode, resultCode, resultData);
+
+        if (requestCode == REQUEST_CODE_FILE_PICKER && resultCode == RESULT_OK) {
+            android.net.Uri uri;
+            if (resultData != null) {
+                uri = resultData.getData();
+                if (uri == null) {
+                    return;
+                }
+
+//                File file = getCacheFile(uri);
+
+                presenter.sendFile(FileUtils.getRealPathFromURI(getActivity(), uri));
+//                presenter.sendFile(uri.toString());
+//                presenter.sendFile(uri.getPath());
+//                presenter.sendFile(file.toString());
+            }
+        }
+    }
+
+    @NonNull
+    private File getCacheFile(android.net.Uri uri) {
+        File file = new File(getActivity().getCacheDir(), RINGTRANSFERFILE_CACHE);
+        try {
+            FileOutputStream output = new FileOutputStream(file);
+            InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
+            FileUtils.copyFile(inputStream, output);
+        } catch (IOException e) {
+            Log.e(TAG, "getCacheFile: not able to create cache file");
+        }
+        return file;
     }
 
     @OnEditorAction(R.id.msg_input_txt)
