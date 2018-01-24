@@ -42,6 +42,7 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryEntry;
+import cx.ring.model.HistoryFile;
 import cx.ring.model.HistoryText;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
@@ -212,6 +213,16 @@ public abstract class HistoryService extends Observable {
                 queryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryCall.COLUMN_NUMBER_NAME, contactRingId);
                 queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, true);
                 return getCallHistoryDao().query(queryBuilder.prepare());
+            }
+        });
+    }
+
+    public Single<List<HistoryFile>> getAllFilesForAccountAndContactRingId(final String accountId, final String contactRingId) {
+        return Single.fromCallable(new Callable<List<HistoryFile>>() {
+            @Override
+            public List<HistoryFile> call() throws Exception {
+                // todo: implement a new table in db
+                return new ArrayList<>();
             }
         });
     }

@@ -424,6 +424,21 @@ public class CallService extends Observable {
         );
     }
 
+    public Long sendFile(final String accountId, final String to, final String filePath) {
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Long>() {
+                    @Override
+                    public Long call() throws Exception {
+                        Log.i(TAG, "sendFile() thread running... " + accountId + " " + to + " " + filePath);
+                        return Ringservice.sendFile(accountId, to, filePath, "");
+                    }
+                }
+        );
+    }
+
     public SipCall getCurrentCallForId(String callId) {
         return currentCalls.get(callId);
     }

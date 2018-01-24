@@ -48,7 +48,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private static final double MINUTE = 60L * 1000L;
     private static final double HOUR = 3600L * 1000L;
 
-    private final ArrayList<Conversation.ConversationElement> mTexts = new ArrayList<>();
+    private final ArrayList<Conversation.ConversationElement> mConversationElements = new ArrayList<>();
     private byte[] mPhoto;
 
     /**
@@ -59,14 +59,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      */
     public void updateDataset(final ArrayList<Conversation.ConversationElement> list, long id) {
         Log.d(TAG, "updateDataset, list size: " + list.size() + " - mId: " + id);
-        if (list.size() == mTexts.size()) {
+        if (list.size() == mConversationElements.size()) {
             if (id != 0) {
                 notifyDataSetChanged();
             }
             return;
         }
-        mTexts.clear();
-        mTexts.addAll(list);
+        mConversationElements.clear();
+        mConversationElements.addAll(list);
         notifyDataSetChanged();
     }
 
@@ -82,7 +82,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     @Override
     public int getItemCount() {
-        return mTexts.size();
+        return mConversationElements.size();
     }
 
     @Override
@@ -92,12 +92,16 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     @Override
     public int getItemViewType(int position) {
-        Conversation.ConversationElement txt = mTexts.get(position);
-        if (txt.text != null) {
-            if (txt.text.isIncoming())
+        Conversation.ConversationElement conversationElement = mConversationElements.get(position);
+        if (conversationElement.text != null) {
+            if (conversationElement.text.isIncoming()) {
                 return ConversationMessageType.INCOMING_TEXT_MESSAGE.getType();
-            else
+            } else {
                 return ConversationMessageType.OUTGOING_TEXT_MESSAGE.getType();
+            }
+        }
+        if (conversationElement.file != null) {
+            return ConversationMessageType.FILE_TRANSFER_TEXT_MESSAGE.getType();
         }
         return ConversationMessageType.CALL_INFORMATION_TEXT_MESSAGE.getType();
     }
@@ -109,6 +113,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             res = R.layout.item_conv_msg_peer;
         } else if (viewType == ConversationMessageType.OUTGOING_TEXT_MESSAGE.getType()) {
             res = R.layout.item_conv_msg_me;
+        } else if (viewType == ConversationMessageType.FILE_TRANSFER_TEXT_MESSAGE.getType()) {
+            res = R.layout.item_conv_file;
         } else {
             res = R.layout.item_conv_call;
         }
@@ -118,12 +124,22 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     @Override
     public void onBindViewHolder(ConversationViewHolder conversationViewHolder, int position) {
-        Conversation.ConversationElement textElement = mTexts.get(position);
+        Conversation.ConversationElement textElement = mConversationElements.get(position);
         if (textElement.text != null) {
             this.configureForTextMessage(conversationViewHolder, textElement, position);
-        } else {
+        } else if (textElement.file != null) {
+            this.configureForFileInfoTextMessage(conversationViewHolder, textElement);
+        } else if (textElement.call != null) {
             this.configureForCallInfoTextMessage(conversationViewHolder, textElement);
         }
+    }
+
+    private void configureForFileInfoTextMessage(final ConversationViewHolder conversationViewHolder,
+                                                 final Conversation.ConversationElement conversationElement) {
+        if (conversationViewHolder == null || conversationElement == null) {
+            return;
+        }
+        conversationViewHolder.mMsgTxt.setText(conversationElement.file.getDisplayName());
     }
 
     /**
@@ -247,8 +263,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      */
     @Nullable
     private TextMessage getPreviousMessageFromPosition(int position) {
-        if (!mTexts.isEmpty() && position > 0) {
-            return mTexts.get(position - 1).text;
+        if (!mConversationElements.isEmpty() && position > 0) {
+            return mConversationElements.get(position - 1).text;
         }
         return null;
     }
@@ -261,8 +277,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      */
     @Nullable
     private TextMessage getNextMessageFromPosition(int position) {
-        if (!mTexts.isEmpty() && position < mTexts.size() - 1) {
-            return mTexts.get(position + 1).text;
+        if (!mConversationElements.isEmpty() && position < mConversationElements.size() - 1) {
+            return mConversationElements.get(position + 1).text;
         }
         return null;
     }
@@ -324,7 +340,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     public enum ConversationMessageType {
         INCOMING_TEXT_MESSAGE(0),
         OUTGOING_TEXT_MESSAGE(1),
-        CALL_INFORMATION_TEXT_MESSAGE(2);
+        CALL_INFORMATION_TEXT_MESSAGE(2),
+        FILE_TRANSFER_TEXT_MESSAGE(3);
 
         int type;
 
