@@ -29,6 +29,7 @@ import android.view.KeyEvent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
+import cx.ring.application.RingApplication;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.utils.MediaButtonsHelper;
 
@@ -42,6 +43,8 @@ public class ConversationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RingApplication.getInstance().startDaemon();
+
         setContentView(R.layout.activity_conversation);
 
         ButterKnife.bind(this);
