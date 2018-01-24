@@ -19,6 +19,7 @@
  */
 package cx.ring.conversation;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,6 +30,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.HistoryCall;
+import cx.ring.model.HistoryFile;
 import cx.ring.model.HistoryText;
 import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
@@ -107,6 +109,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         mContactRingId = contactRingId;
         mAccountId = accountId;
 
+        CallContact callContact = mContactService.getContact(new Uri(mContactRingId));
+        this.mConversation = new Conversation(callContact);
+
         mAccountService.addObserver(this);
         mHistoryService.addObserver(this);
         mCallService.addObserver(this);
@@ -167,6 +172,43 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         }
     }
 
+    public void selectFile() {
+        getView().openFilePicker();
+    }
+
+    public void sendFile(String filePath) {
+        Log.d(TAG, "sendFile: sending file at " + filePath + " from accountId " + mAccountId + " to " + mContactRingId);
+
+        if (filePath == null) {
+            return;
+        }
+
+        // check file
+        File file = new File(filePath);
+        if (!file.exists()) {
+            Log.d(TAG, "sendFile: file not found");
+            return;
+        }
+
+        if (!file.canRead()) {
+            Log.d(TAG, "sendFile: file not readable");
+            return;
+        }
+
+        if (file.length() > 1000000) {
+            Log.w(TAG, "sendFile: large file. File transfer may not work, depending on network.");
+        }
+
+        Uri uri = new Uri(mContactRingId);
+
+        // send file
+        mCallService.sendFile(mAccountId, uri.getHost(), filePath);
+
+        // append item to ConversationAdapter
+        mConversation.addFileTransfer(new HistoryFile());
+        getView().refreshView(mConversation);
+    }
+
     public void sendTrustRequest() {
         VCard vCard = mVCardService.loadSmallVCard(mAccountId);
         mAccountService.sendTrustRequest(mAccountId, new Uri(mContactRingId).getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard)));
@@ -219,20 +261,22 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                 .zipWith(mHistoryService.getAllCallsForAccountAndContactRingId(mAccountId, mContactRingId),
                         new BiFunction<List<HistoryText>, List<HistoryCall>, Conversation>() {
                             @Override
-                            public Conversation apply(@NonNull List<HistoryText> historyTexts, @NonNull List<HistoryCall> historyCalls) throws Exception {
-                                CallContact callContact = mContactService.getContact(new Uri(mContactRingId));
-                                Conversation conversation = new Conversation(callContact);
+                            public Conversation apply(@NonNull List<HistoryText> historyTexts,
+                                                      @NonNull List<HistoryCall> historyCalls) throws Exception {
+
+                                // todo: remove when file transfer will be in db
+                                mConversation.removeAllButFileTransfers();
 
                                 for (HistoryCall call : historyCalls) {
-                                    conversation.addHistoryCall(call);
+                                    mConversation.addHistoryCall(call);
                                 }
 
                                 for (HistoryText htext : historyTexts) {
                                     TextMessage msg = new TextMessage(htext);
-                                    conversation.addTextMessage(msg);
+                                    mConversation.addTextMessage(msg);
                                 }
 
-                                return conversation;
+                                return mConversation;
                             }
                         })
                 .subscribeOn(Schedulers.computation())
