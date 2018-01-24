@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_centerInParent="true"
             app:bounded_width="600dp">
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -53,21 +53,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:orientation="horizontal"
                     android:padding="8dp">
 
-                    <LinearLayout
+
+                    <ImageView
                         android:id="@+id/network_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true">
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="start"
+                        android:contentDescription="@string/pref_mobileData_summary"
+                        app:srcCompat="@drawable/ic_perm_data_setting_black_24dp" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:contentDescription="@string/pref_mobileData_summary"
-                            app:srcCompat="@drawable/ic_perm_data_setting_black_24dp" />
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -101,6 +97,57 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:checked="false" />
 
                 </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/push_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="start"
+                        android:contentDescription="@string/pref_pushNotifications_summary"
+                        app:srcCompat="@drawable/ic_priority_high_black_24dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/push_image"
+                        android:layout_toStartOf="@+id/settings_push_notifications"
+                        android:orientation="vertical"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <TextView
+                            style="@style/ListPrimary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lines="1"
+                            android:text="@string/pref_pushNotifications_title" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/pref_pushNotifications_summary" />
+
+                    </LinearLayout>
+
+                    <Switch
+                        android:id="@+id/settings_push_notifications"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:checked="false" />
+
+                </RelativeLayout>
+
 
                 <!-- Contacts settings -->
 
