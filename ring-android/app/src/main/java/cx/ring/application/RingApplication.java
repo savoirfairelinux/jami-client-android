@@ -31,6 +31,8 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -40,6 +42,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.BuildConfig;
+import cx.ring.daemon.Ringservice;
 import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionModule;
@@ -155,6 +158,10 @@ public class RingApplication extends Application {
 
                 // load accounts from Daemon
                 mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected());
+
+                String token = FirebaseInstanceId.getInstance().getToken();
+                Log.w(TAG, "Setting Firebase push token: " + token);
+                Ringservice.setPushNotificationToken(token);
 
                 Intent intent = new Intent(DRING_CONNECTION_CHANGED);
                 intent.putExtra("connected", mDaemonService.isStarted());
