@@ -59,4 +59,6 @@ public interface ConversationView extends BaseView {
     void goToCallActivity(String conferenceId);
 
     void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly);
+
+    void openFilePicker();
 }

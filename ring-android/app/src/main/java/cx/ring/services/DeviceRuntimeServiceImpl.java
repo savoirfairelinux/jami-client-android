@@ -91,17 +91,14 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService implements Au
         mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mRinger = new Ringer(mContext);
 
-        Future<Boolean> result = mExecutor.submit(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                try {
-                    mDaemonThreadId = Thread.currentThread().getId();
-                    System.loadLibrary("ring");
-                    return true;
-                } catch (Exception e) {
-                    Log.e(TAG, "Could not load Ring library", e);
-                    return false;
-                }
+        Future<Boolean> result = mExecutor.submit(() -> {
+            try {
+                mDaemonThreadId = Thread.currentThread().getId();
+                System.loadLibrary("ring");
+                return true;
+            } catch (Exception e) {
+                Log.e(TAG, "Could not load Ring library", e);
+                return false;
             }
         });
 
@@ -117,24 +114,21 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService implements Au
     public void updateAudioState(final boolean isRinging) {
         Handler mainHandler = new Handler(mContext.getMainLooper());
 
-        mainHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (mBluetoothWrapper == null) {
-                    mBluetoothWrapper = new BluetoothWrapper(mContext);
-                    mBluetoothWrapper.registerScoUpdate();
-                    mBluetoothWrapper.registerBtConnection();
-                    mBluetoothWrapper.setBluetoothChangeListener(DeviceRuntimeServiceImpl.this);
-                }
+        mainHandler.post(() -> {
+            if (mBluetoothWrapper == null) {
+                mBluetoothWrapper = new BluetoothWrapper(mContext);
+                mBluetoothWrapper.registerScoUpdate();
+                mBluetoothWrapper.registerBtConnection();
+                mBluetoothWrapper.setBluetoothChangeListener(DeviceRuntimeServiceImpl.this);
+            }
 
-                obtainAudioFocus(isRinging);
-                if (isRinging) {
-                    mAudioManager.setMode(AudioManager.MODE_RINGTONE);
-                    startRinging();
-                } else {
-                    stopRinging();
-                    mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
-                }
+            obtainAudioFocus(isRinging);
+            if (isRinging) {
+                mAudioManager.setMode(AudioManager.MODE_RINGTONE);
+                startRinging();
+            } else {
+                stopRinging();
+                mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
             }
         });
     }

@@ -132,6 +132,7 @@ along with this program; if not, write to the Free Software
     <string name="send_message">Send message</string>
     <string name="message_sending">Sending message…</string>
     <string name="time_just_now">Just now</string>
+    <string name="send_file">Send file</string>
 
     <!-- MediaPreferenceFragment -->
     <string name="permission_dialog_camera_title">Camera permission</string>
