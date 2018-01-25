@@ -93,7 +93,10 @@ public enum ConfigKey {
     RINGNS_ACCOUNT("RingNS.account"),
     RINGNS_HOST("RingNS.host"),
     DHT_PORT("DHT.port"),
-    DHT_PUBLIC_IN("DHT.PublicInCalls");
+    DHT_PUBLIC_IN("DHT.PublicInCalls"),
+    PROXY_ENABLED("Account.proxyEnabled"),
+    PROXY_SERVER("Account.proxyServer"),
+    PROXY_DEVICE_KEY("Account.proxyPushServer");
 
     private static final Set<ConfigKey> TWO_STATES = new HashSet<>(Arrays.asList(
             ACCOUNT_ENABLE,
@@ -104,7 +107,8 @@ public enum ConfigKey {
             STUN_ENABLE, TURN_ENABLE,
             ACCOUNT_AUTOANSWER,
             ACCOUNT_UPNP_ENABLE,
-            DHT_PUBLIC_IN));
+            DHT_PUBLIC_IN,
+            PROXY_ENABLED));
 
     private final String mKey;
 
