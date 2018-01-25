@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_324f9694",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-01-25T19:09:26Z",
+      "side": 1,
+      "message": "Prefer getRawRingID(): a RingID could be encoded as a username in a URI: \n\nring:54eefa6738e23d138ef6f0d835f8b8f036713184@192.168.56.87:4234\n\n, or as a host when used alone:\n\nring:54eefa6738e23d138ef6f0d835f8b8f036713184",
+      "revId": "c850931e57ff6cb84fa84ee70bd807ee316f2502",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_e9954089",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-01-25T19:09:26Z",
+      "side": 1,
+      "message": "- should be stateless: after restart the text message won\u0027t appear as a request\n- the source for contact requests should be :\n  * any contact with an history (request/text/message) that is not in our account contact list",
+      "range": {
+        "startLine": 416,
+        "startChar": 106,
+        "endLine": 416,
+        "endChar": 108
+      },
+      "revId": "c850931e57ff6cb84fa84ee70bd807ee316f2502",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
