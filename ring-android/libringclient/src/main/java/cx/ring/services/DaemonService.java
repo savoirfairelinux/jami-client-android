@@ -1,7 +1,8 @@
 /*
- *  Copyright (C) 2016 Savoir-faire Linux Inc.
+ *  Copyright (C) 2018 Savoir-faire Linux Inc.
  *
  *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,8 +15,7 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 package cx.ring.services;
 
@@ -29,6 +29,7 @@ import javax.inject.Named;
 import cx.ring.daemon.Blob;
 import cx.ring.daemon.Callback;
 import cx.ring.daemon.ConfigurationCallback;
+import cx.ring.daemon.DataTransferCallback;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.PresenceCallback;
@@ -75,6 +76,7 @@ public class DaemonService {
     private DaemonPresenceCallback mPresenceCallback;
     private DaemonCallAndConferenceCallback mCallAndConferenceCallback;
     private DaemonConfigurationCallback mConfigurationCallback;
+    private DaemonDataTransferCallback mDataCallback;
     private boolean mDaemonStarted = false;
 
     public DaemonService(SystemInfoCallbacks systemInfoCallbacks) {
@@ -94,15 +96,14 @@ public class DaemonService {
     }
 
     public void startDaemon() {
-
-        mCallAndConferenceCallback = new DaemonCallAndConferenceCallback();
-        mHardwareCallback = new DaemonVideoCallback();
-        mPresenceCallback = new DaemonPresenceCallback();
-        mConfigurationCallback = new DaemonConfigurationCallback();
-
         if (!mDaemonStarted) {
             Log.i(TAG, "Starting daemon ...");
-            Ringservice.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mHardwareCallback);
+            mHardwareCallback = new DaemonVideoCallback();
+            mPresenceCallback = new DaemonPresenceCallback();
+            mCallAndConferenceCallback = new DaemonCallAndConferenceCallback();
+            mConfigurationCallback = new DaemonConfigurationCallback();
+            mDataCallback = new DaemonDataTransferCallback();
+            Ringservice.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mDataCallback, mHardwareCallback);
             startRingServicePolling();
             mDaemonStarted = true;
             Log.i(TAG, "DaemonService started");
@@ -274,6 +275,13 @@ public class DaemonService {
             mCallService.onRtcpReportReceived(callId, stats);
         }
 
+    }
+
+    class DaemonDataTransferCallback extends DataTransferCallback {
+        @Override
+        public void dataTransferEvent(long transferId, int eventCode) {
+            Log.d(TAG, "dataTransferEvent: " + transferId + " -> " + eventCode);
+        }
     }
 
     class DaemonPresenceCallback extends PresenceCallback {
