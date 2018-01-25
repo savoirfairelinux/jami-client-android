@@ -42,7 +42,6 @@ public class Conversation {
 
     private final Map<String, HistoryEntry> mHistory;
     private final ArrayList<Conference> mCurrentCalls;
-    private final ArrayList<ConversationElement> fileTransfers;
     private final ArrayList<ConversationElement> mAggregateHistory;
 
     // runtime flag set to true if the user is currently viewing this conversation
@@ -54,12 +53,7 @@ public class Conversation {
         setContact(contact);
         mHistory = new HashMap<>();
         mCurrentCalls = new ArrayList<>();
-        fileTransfers = new ArrayList<>();
         mAggregateHistory = new ArrayList<>(32);
-    }
-
-    public ArrayList<ConversationElement> getFileTransfers() {
-        return fileTransfers;
     }
 
     public boolean hasCurrentCall() {
@@ -201,12 +195,11 @@ public class Conversation {
         }
     }
 
-    public void addFileTransfer(HistoryFile historyFile) {
-        ConversationElement conversationElement = new ConversationElement(historyFile);
-        if (getFileTransfers().contains(conversationElement)) {
+    public void addFileTransfer(HistoryFileTransfer historyFileTransfer) {
+        ConversationElement conversationElement = new ConversationElement(historyFileTransfer);
+        if (mAggregateHistory.contains(conversationElement)) {
             return;
         }
-        fileTransfers.add(conversationElement);
         mAggregateHistory.add(conversationElement);
     }
 
@@ -322,6 +315,22 @@ public class Conversation {
         }
     }
 
+    public void updateFileTransfer(HistoryFileTransfer historyFileTransfer) {
+        ConversationElement conversationElement = findConversationElement(historyFileTransfer);
+        if (conversationElement != null) {
+            conversationElement.file = historyFileTransfer;
+        }
+    }
+
+    private ConversationElement findConversationElement(HistoryFileTransfer historyFileTransfer) {
+        for (ConversationElement ce : mAggregateHistory) {
+            if (historyFileTransfer.equals(ce.file)) {
+                return ce;
+            }
+        }
+        return null;
+    }
+
     public interface ConversationActionCallback {
 
         void deleteConversation(CallContact callContact);
@@ -333,7 +342,7 @@ public class Conversation {
     public class ConversationElement {
         public HistoryCall call = null;
         public TextMessage text = null;
-        public HistoryFile file = null;
+        public HistoryFileTransfer file = null;
 
         ConversationElement(HistoryCall c) {
             call = c;
@@ -343,7 +352,7 @@ public class Conversation {
             text = t;
         }
 
-        ConversationElement(HistoryFile f) {
+        ConversationElement(HistoryFileTransfer f) {
             file = f;
         }
 
@@ -356,6 +365,26 @@ public class Conversation {
                 return file.getTimestamp();
             }
             return 0;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ConversationElement that = (ConversationElement) o;
+
+            if (call != null ? !call.equals(that.call) : that.call != null) return false;
+            if (text != null ? !text.equals(that.text) : that.text != null) return false;
+            return file != null ? file.equals(that.file) : that.file == null;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = call != null ? call.hashCode() : 0;
+            result = 31 * result + (text != null ? text.hashCode() : 0);
+            result = 31 * result + (file != null ? file.hashCode() : 0);
+            return result;
         }
     }
 }
