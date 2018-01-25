@@ -20,22 +20,20 @@
 
 package cx.ring.model;
 
-public class HistoryFile {
+public class HistoryFileTransfer {
 
+    private Long dataTransferId;
     private final long timestamp;
     private String displayName;
     private boolean isOutgoing;
     private DataTransferEventCode dataTransferEventCode;
 
-    public HistoryFile() {
-        timestamp = System.currentTimeMillis();
-    }
-
-    public HistoryFile(String displayName, boolean isOutgoing, DataTransferEventCode dataTransferEventCode) {
+    public HistoryFileTransfer(String displayName, boolean isOutgoing) {
+        this.dataTransferId = 0L;
         this.timestamp = System.currentTimeMillis();
         this.displayName = displayName;
         this.isOutgoing = isOutgoing;
-        this.dataTransferEventCode = dataTransferEventCode;
+        this.dataTransferEventCode = DataTransferEventCode.CREATED;
     }
 
     public long getTimestamp() {
@@ -46,7 +44,31 @@ public class HistoryFile {
         return displayName;
     }
 
+    public void setDataTransferId(Long dataTransferId) {
+        this.dataTransferId = dataTransferId;
+    }
+
     public enum DataTransferEventCode {
         CREATED, UNSUPPORTED, WAIT_PEER_ACCEPTANCE, WAIT_HOST_ACCEPTANCE, ONGOING, FINISHED, CLOSED_BY_HOST, CLOSED_BY_PEER, INVALID_PATHNAME, UNJOINABLE_PEER
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HistoryFileTransfer that = (HistoryFileTransfer) o;
+
+        if (timestamp != that.timestamp) return false;
+        if (isOutgoing != that.isOutgoing) return false;
+        return displayName != null ? displayName.equals(that.displayName) : that.displayName == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (timestamp ^ (timestamp >>> 32));
+        result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
+        result = 31 * result + (isOutgoing ? 1 : 0);
+        return result;
     }
 }

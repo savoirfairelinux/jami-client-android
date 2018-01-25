@@ -55,18 +55,16 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * Refreshes the data and notifies the changes
      *
      * @param list an arraylist of ConversationElement
-     * @param id   the message id initiating the update, 0 if full refresh
      */
-    public void updateDataset(final ArrayList<Conversation.ConversationElement> list, long id) {
-        Log.d(TAG, "updateDataset, list size: " + list.size() + " - mId: " + id);
-        if (list.size() == mConversationElements.size()) {
-            if (id != 0) {
-                notifyDataSetChanged();
-            }
-            return;
+    public void updateDataset(final ArrayList<Conversation.ConversationElement> list) {
+        Log.d(TAG, "updateDataset, list size: " + list.size());
+
+        if (list.size() > mConversationElements.size()) {
+            mConversationElements.addAll(list.subList(mConversationElements.size(), list.size()));
+        } else {
+            mConversationElements.clear();
+            mConversationElements.addAll(list);
         }
-        mConversationElements.clear();
-        mConversationElements.addAll(list);
         notifyDataSetChanged();
     }
 

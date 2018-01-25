@@ -42,7 +42,7 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryEntry;
-import cx.ring.model.HistoryFile;
+import cx.ring.model.HistoryFileTransfer;
 import cx.ring.model.HistoryText;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
@@ -217,10 +217,10 @@ public abstract class HistoryService extends Observable {
         });
     }
 
-    public Single<List<HistoryFile>> getAllFilesForAccountAndContactRingId(final String accountId, final String contactRingId) {
-        return Single.fromCallable(new Callable<List<HistoryFile>>() {
+    public Single<List<HistoryFileTransfer>> getAllFilesForAccountAndContactRingId(final String accountId, final String contactRingId) {
+        return Single.fromCallable(new Callable<List<HistoryFileTransfer>>() {
             @Override
-            public List<HistoryFile> call() throws Exception {
+            public List<HistoryFileTransfer> call() throws Exception {
                 // todo: implement a new table in db
                 return new ArrayList<>();
             }

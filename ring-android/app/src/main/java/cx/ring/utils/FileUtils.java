@@ -18,6 +18,7 @@
  */
 package cx.ring.utils;
 
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -27,6 +28,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.util.Log;
 
 import java.io.File;
@@ -126,6 +128,34 @@ public class FileUtils {
             path = uri.getPath();
         }
         return path;
+    }
+
+    public static String getFilename(Context context, Uri uri) {
+        String result = null;
+        if ("content".equals(uri.getScheme())) {
+            try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
+    }
+
+    public static File getCacheFile(Activity activity, android.net.Uri uri) throws IOException {
+        String filename = FileUtils.getFilename(activity, uri);
+        File file = new File(activity.getCacheDir(), filename);
+        FileOutputStream output = new FileOutputStream(file);
+        InputStream inputStream = activity.getContentResolver().openInputStream(uri);
+        FileUtils.copyFile(inputStream, output);
+        return file;
     }
 
     private static boolean isExternalStorageDocument(Uri uri) {

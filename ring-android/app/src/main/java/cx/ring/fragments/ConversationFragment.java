@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -38,11 +37,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -84,7 +82,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     private static final int MIN_SIZE_TABLET = 960;
 
     private static final int REQUEST_CODE_FILE_PICKER = 1000;
-    public static final String RINGTRANSFERFILE_CACHE = "ringtransferfile.cache";
 
     @BindView(R.id.msg_input_txt)
     protected EditText mMsgEditTxt;
@@ -123,7 +120,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     public void refreshView(final Conversation conversation) {
         getActivity().runOnUiThread(() -> {
             if (mAdapter != null) {
-                mAdapter.updateDataset(conversation.getAggregateHistory(), 0);
+                mAdapter.updateDataset(conversation.getAggregateHistory());
 
                 if (mAdapter.getItemCount() > 0) {
                     mHistList.smoothScrollToPosition(mAdapter.getItemCount() - 1);
@@ -206,38 +203,29 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
+    public void fileSizeAlert() {
+        Toast.makeText(getActivity(), R.string.warning_file_too_big, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         super.onActivityResult(requestCode, resultCode, resultData);
 
         if (requestCode == REQUEST_CODE_FILE_PICKER && resultCode == RESULT_OK) {
-            android.net.Uri uri;
             if (resultData != null) {
-                uri = resultData.getData();
+                android.net.Uri uri = resultData.getData();
                 if (uri == null) {
                     return;
                 }
 
-//                File file = getCacheFile(uri);
-
-                presenter.sendFile(FileUtils.getRealPathFromURI(getActivity(), uri));
-//                presenter.sendFile(uri.toString());
-//                presenter.sendFile(uri.getPath());
-//                presenter.sendFile(file.toString());
+                try {
+                    File cacheFile = FileUtils.getCacheFile(getActivity(), uri);
+                    presenter.sendFile(cacheFile.toString());
+                } catch (IOException e) {
+                    Log.e(TAG, "onActivityResult: not able to create cache file");
+                }
             }
         }
-    }
-
-    @NonNull
-    private File getCacheFile(android.net.Uri uri) {
-        File file = new File(getActivity().getCacheDir(), RINGTRANSFERFILE_CACHE);
-        try {
-            FileOutputStream output = new FileOutputStream(file);
-            InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
-            FileUtils.copyFile(inputStream, output);
-        } catch (IOException e) {
-            Log.e(TAG, "getCacheFile: not able to create cache file");
-        }
-        return file;
     }
 
     @OnEditorAction(R.id.msg_input_txt)

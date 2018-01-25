@@ -30,7 +30,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryFile;
+import cx.ring.model.HistoryFileTransfer;
 import cx.ring.model.HistoryText;
 import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
@@ -197,15 +197,19 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
         if (file.length() > 1000000) {
             Log.w(TAG, "sendFile: large file. File transfer may not work, depending on network.");
+            getView().fileSizeAlert();
         }
 
-        Uri uri = new Uri(mContactRingId);
+        // append item to Conversation
+        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(file.getName(), true);
+        mConversation.addFileTransfer(historyFileTransfer);
 
         // send file
-        mCallService.sendFile(mAccountId, uri.getHost(), filePath);
+        Uri uri = new Uri(mContactRingId);
+        Long dataTransferId = mCallService.sendFile(mAccountId, uri.getHost(), filePath);
+        historyFileTransfer.setDataTransferId(dataTransferId);
+        mConversation.updateFileTransfer(historyFileTransfer);
 
-        // append item to ConversationAdapter
-        mConversation.addFileTransfer(new HistoryFile());
         getView().refreshView(mConversation);
     }
 
