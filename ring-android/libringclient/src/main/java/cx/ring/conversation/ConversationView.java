@@ -61,6 +61,4 @@ public interface ConversationView extends BaseView {
     void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly);
 
     void openFilePicker();
-
-    void fileSizeAlert();
 }

@@ -203,11 +203,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void fileSizeAlert() {
-        Toast.makeText(getActivity(), R.string.warning_file_too_big, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         super.onActivityResult(requestCode, resultCode, resultData);
 

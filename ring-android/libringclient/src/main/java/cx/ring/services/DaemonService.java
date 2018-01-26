@@ -29,6 +29,7 @@ import javax.inject.Named;
 import cx.ring.daemon.Blob;
 import cx.ring.daemon.Callback;
 import cx.ring.daemon.ConfigurationCallback;
+import cx.ring.daemon.DataTransferCallback;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.PresenceCallback;
@@ -71,10 +72,11 @@ public class DaemonService {
     protected AccountService mAccountService;
 
     private final SystemInfoCallbacks mSystemInfoCallbacks;
-    private DaemonVideoCallback mHardwareCallback;
-    private DaemonPresenceCallback mPresenceCallback;
-    private DaemonCallAndConferenceCallback mCallAndConferenceCallback;
     private DaemonConfigurationCallback mConfigurationCallback;
+    private DaemonCallAndConferenceCallback mCallAndConferenceCallback;
+    private DaemonPresenceCallback mPresenceCallback;
+    private DaemonDataTransferCallback mDataTransferCallback;
+    private DaemonVideoCallback mHardwareCallback;
     private boolean mDaemonStarted = false;
 
     public DaemonService(SystemInfoCallbacks systemInfoCallbacks) {
@@ -95,14 +97,15 @@ public class DaemonService {
 
     public void startDaemon() {
 
-        mCallAndConferenceCallback = new DaemonCallAndConferenceCallback();
-        mHardwareCallback = new DaemonVideoCallback();
-        mPresenceCallback = new DaemonPresenceCallback();
         mConfigurationCallback = new DaemonConfigurationCallback();
+        mCallAndConferenceCallback = new DaemonCallAndConferenceCallback();
+        mPresenceCallback = new DaemonPresenceCallback();
+        mDataTransferCallback = new DaemonDataTransferCallback();
+        mHardwareCallback = new DaemonVideoCallback();
 
         if (!mDaemonStarted) {
             Log.i(TAG, "Starting daemon ...");
-            Ringservice.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mHardwareCallback);
+            Ringservice.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mDataTransferCallback, mHardwareCallback);
             startRingServicePolling();
             mDaemonStarted = true;
             Log.i(TAG, "DaemonService started");
@@ -330,6 +333,15 @@ public class DaemonService {
         @Override
         public void stopCapture() {
             mHardwareService.stopCapture();
+        }
+    }
+
+    class DaemonDataTransferCallback extends DataTransferCallback {
+
+        @Override
+        public void dataTransferEvent(long transferId, int eventCode) {
+            Log.d(TAG, "dataTransferEvent: transferId=" + transferId + ", eventCode=" + eventCode);
+            mCallService.dataTransferEvent(transferId, eventCode);
         }
     }
 }

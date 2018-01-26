@@ -195,22 +195,21 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             return;
         }
 
-        if (file.length() > 1000000) {
-            Log.w(TAG, "sendFile: large file. File transfer may not work, depending on network.");
-            getView().fileSizeAlert();
-        }
-
         // append item to Conversation
         HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(file.getName(), true);
         mConversation.addFileTransfer(historyFileTransfer);
 
         // send file
         Uri uri = new Uri(mContactRingId);
-        Long dataTransferId = mCallService.sendFile(mAccountId, uri.getHost(), filePath);
+        Long dataTransferId = mCallService.sendFile(mAccountId, uri.getHost(), filePath, file.getName());
         historyFileTransfer.setDataTransferId(dataTransferId);
         mConversation.updateFileTransfer(historyFileTransfer);
 
         getView().refreshView(mConversation);
+    }
+
+    private void receiveFile() {
+
     }
 
     public void sendTrustRequest() {
@@ -355,6 +354,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             }
         } else if (observable instanceof CallService && event != null) {
             switch (event.getEventType()) {
+                case DATA_TRANSFER:
+                    Log.d(TAG, "update: data transfer callback received");
+                    break;
                 case INCOMING_CALL:
                 case CALL_STATE_CHANGED:
                     loadHistory();

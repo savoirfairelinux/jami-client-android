@@ -386,7 +386,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     @Override
     public void update(Observable observable, ServiceEvent event) {
-
         if (event == null) {
             return;
         }
@@ -529,8 +528,11 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                             && currenConf.isIncoming());
 
                     setChanged();
-                    ServiceEvent event1 = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
-                    notifyObservers(event1);
+                    ServiceEvent serviceEvent = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
+                    notifyObservers(serviceEvent);
+                    break;
+                case DATA_TRANSFER:
+                    Log.d(TAG, "update: data transfer callback received");
                     break;
             }
         } else if (observable instanceof ContactService) {

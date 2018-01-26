@@ -424,7 +424,7 @@ public class CallService extends Observable {
         );
     }
 
-    public Long sendFile(final String accountId, final String to, final String filePath) {
+    public Long sendFile(final String accountId, final String to, final String filePath, final String displayName) {
         return FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
@@ -433,7 +433,7 @@ public class CallService extends Observable {
                     @Override
                     public Long call() throws Exception {
                         Log.i(TAG, "sendFile() thread running... " + accountId + " " + to + " " + filePath);
-                        return Ringservice.sendFile(accountId, to, filePath, "");
+                        return Ringservice.sendFile(accountId, to, filePath, displayName);
                     }
                 }
         );
@@ -547,6 +547,13 @@ public class CallService extends Observable {
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_CHANGED);
         event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
         event.addEventInput(ServiceEvent.EventInput.STATS, stats);
+        notifyObservers(event);
+    }
+
+    public void dataTransferEvent(long transferId, int eventCode) {
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DATA_TRANSFER);
+        event.addEventInput(ServiceEvent.EventInput.TRANSFER_ID, transferId);
+        event.addEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, eventCode);
         notifyObservers(event);
     }
 }

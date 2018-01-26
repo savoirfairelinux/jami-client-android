@@ -38,6 +38,7 @@ import java.util.Date;
 
 import cx.ring.R;
 import cx.ring.model.Conversation;
+import cx.ring.model.HistoryFileTransfer;
 import cx.ring.model.TextMessage;
 import cx.ring.utils.CircleTransform;
 import cx.ring.views.ConversationViewHolder;
@@ -137,7 +138,23 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         if (conversationViewHolder == null || conversationElement == null) {
             return;
         }
-        conversationViewHolder.mMsgTxt.setText(conversationElement.file.getDisplayName());
+        HistoryFileTransfer file = conversationElement.file;
+        if (file == null) {
+            Log.d(TAG, "configureForFileInfoTextMessage: not able to get file from conversationElement");
+            return;
+        }
+        conversationViewHolder.mMsgTxt.setText(file.getDisplayName());
+
+        String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
+                conversationViewHolder.itemView.getContext(),
+                conversationElement.text.getTimestamp());
+        conversationViewHolder.mHistDetailTxt.setText(String.format("%s - %s", timeSeparationString, file.getDataTransferEventCode().name()));
+        if (file.isOutgoing()) {
+            conversationViewHolder.mPhoto.setImageResource(R.drawable.ic_outgoing_black);
+        } else {
+            conversationViewHolder.mPhoto.setImageResource(R.drawable.ic_incoming_black);
+            conversationViewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -209,7 +226,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         if (convElement.call.isMissed()) {
             if (convElement.call.isIncoming()) {
-                pictureResID = R.drawable.ic_call_missed_black;
+                pictureResID = R.drawable.ic_call_missed_incoming_black;
             } else {
                 pictureResID = R.drawable.ic_call_missed_outgoing_black;
                 // Flip the photo upside down to show a "missed outgoing call"
@@ -220,8 +237,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     context.getString(R.string.notif_missed_outgoing_call);
         } else {
             pictureResID = (convElement.call.isIncoming()) ?
-                    R.drawable.ic_call_received_black :
-                    R.drawable.ic_call_made_black;
+                    R.drawable.ic_incoming_black :
+                    R.drawable.ic_outgoing_black;
             historyTxt = convElement.call.isIncoming() ?
                     context.getString(R.string.notif_incoming_call) :
                     context.getString(R.string.notif_outgoing_call);
