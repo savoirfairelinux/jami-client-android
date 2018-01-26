@@ -315,20 +315,26 @@ public class Conversation {
         }
     }
 
-    public void updateFileTransfer(HistoryFileTransfer historyFileTransfer) {
-        ConversationElement conversationElement = findConversationElement(historyFileTransfer);
+    public void updateFileTransfer(long transferId, DataTransferEventCode eventCode) {
+        ConversationElement conversationElement = findConversationElement(transferId);
         if (conversationElement != null) {
-            conversationElement.file = historyFileTransfer;
+            conversationElement.file.setDataTransferEventCode(eventCode);
         }
     }
 
-    private ConversationElement findConversationElement(HistoryFileTransfer historyFileTransfer) {
+    private ConversationElement findConversationElement(long transferId) {
         for (ConversationElement ce : mAggregateHistory) {
-            if (historyFileTransfer.equals(ce.file)) {
+            if (ce.file != null && transferId == ce.file.getDataTransferId()) {
                 return ce;
             }
         }
         return null;
+    }
+
+    public void addFileTransfer(String filename, boolean isOutgoing) {
+        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(filename, isOutgoing);
+        ConversationElement conversationElement = new ConversationElement(historyFileTransfer);
+        mAggregateHistory.add(conversationElement);
     }
 
     public interface ConversationActionCallback {

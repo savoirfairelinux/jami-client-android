@@ -37,7 +37,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -200,11 +199,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         intent.setType("*/*");
 
         startActivityForResult(intent, REQUEST_CODE_FILE_PICKER);
-    }
-
-    @Override
-    public void fileSizeAlert() {
-        Toast.makeText(getActivity(), R.string.warning_file_too_big, Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -29,8 +29,8 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryFileTransfer;
 import cx.ring.model.HistoryText;
 import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
@@ -195,22 +195,23 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             return;
         }
 
-        if (file.length() > 1000000) {
-            Log.w(TAG, "sendFile: large file. File transfer may not work, depending on network.");
-            getView().fileSizeAlert();
-        }
-
         // append item to Conversation
-        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(file.getName(), true);
-        mConversation.addFileTransfer(historyFileTransfer);
+        mConversation.addFileTransfer(file.getName(), true);
 
         // send file
         Uri uri = new Uri(mContactRingId);
-        Long dataTransferId = mCallService.sendFile(mAccountId, uri.getHost(), filePath);
-        historyFileTransfer.setDataTransferId(dataTransferId);
-        mConversation.updateFileTransfer(historyFileTransfer);
+        Long dataTransferId = mCallService.sendFile(mAccountId, uri.getHost(), filePath, file.getName());
+        mConversation.updateFileTransfer(dataTransferId, DataTransferEventCode.CREATED);
 
         getView().refreshView(mConversation);
+    }
+
+    private void showFilePrompt(Long transferId, DataTransferEventCode transferEventCode) {
+
+    }
+
+    private void receiveFile() {
+        Log.d(TAG, "receiveFile: ");
     }
 
     public void sendTrustRequest() {
@@ -325,7 +326,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     private void checkContact() {
-
         CallContact contact = mContactService.findContact(new Uri(mContactRingId));
         if (contact != null && CallContact.Status.CONFIRMED.equals(contact.getStatus())) {
             return;
@@ -355,11 +355,49 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             }
         } else if (observable instanceof CallService && event != null) {
             switch (event.getEventType()) {
+                case DATA_TRANSFER:
+                    Log.d(TAG, "update: data transfer callback received");
+
+                    Long transferId = event.getEventInput(ServiceEvent.EventInput.TRANSFER_ID, Long.class);
+                    DataTransferEventCode transferEventCode = event.getEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, DataTransferEventCode.class);
+
+                    handleDataTransferEvent(transferId, transferEventCode);
+                    break;
                 case INCOMING_CALL:
                 case CALL_STATE_CHANGED:
                     loadHistory();
                     break;
             }
         }
+    }
+
+    private void handleDataTransferEvent(Long transferId, DataTransferEventCode transferEventCode) {
+
+        // find corresponding transfer
+        mConversation.updateFileTransfer(transferId, transferEventCode);
+
+        switch (transferEventCode) {
+            case CREATED:
+            case UNSUPPORTED:
+                Log.e(TAG, "handleDataTransferEvent: UNSUPPORTED");
+                break;
+            case WAIT_PEER_ACCEPTANCE:
+                break;
+            case WAIT_HOST_ACCEPTANCE:
+                showFilePrompt(transferId, transferEventCode);
+                break;
+            case ONGOING:
+            case FINISHED:
+            case CLOSED_BY_HOST:
+                Log.e(TAG, "handleDataTransferEvent: CLOSED_BY_HOST");
+                break;
+            case CLOSED_BY_PEER:
+                Log.e(TAG, "handleDataTransferEvent: CLOSED_BY_PEER");
+                break;
+            case INVALID_PATHNAME:
+            case UNJOINABLE_PEER:
+        }
+
+        getView().refreshView(mConversation);
     }
 }

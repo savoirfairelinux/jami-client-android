@@ -48,8 +48,28 @@ public class HistoryFileTransfer {
         this.dataTransferId = dataTransferId;
     }
 
-    public enum DataTransferEventCode {
-        CREATED, UNSUPPORTED, WAIT_PEER_ACCEPTANCE, WAIT_HOST_ACCEPTANCE, ONGOING, FINISHED, CLOSED_BY_HOST, CLOSED_BY_PEER, INVALID_PATHNAME, UNJOINABLE_PEER
+    public Long getDataTransferId() {
+        return dataTransferId;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public boolean isOutgoing() {
+        return isOutgoing;
+    }
+
+    public void setOutgoing(boolean outgoing) {
+        isOutgoing = outgoing;
+    }
+
+    public DataTransferEventCode getDataTransferEventCode() {
+        return dataTransferEventCode;
+    }
+
+    public void setDataTransferEventCode(DataTransferEventCode dataTransferEventCode) {
+        this.dataTransferEventCode = dataTransferEventCode;
     }
 
     @Override
