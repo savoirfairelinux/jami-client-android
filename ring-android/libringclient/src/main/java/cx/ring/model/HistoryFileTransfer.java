@@ -28,8 +28,8 @@ public class HistoryFileTransfer {
     private boolean isOutgoing;
     private DataTransferEventCode dataTransferEventCode;
 
-    public HistoryFileTransfer(String displayName, boolean isOutgoing) {
-        this.dataTransferId = 0L;
+    public HistoryFileTransfer(Long dataTransferId, String displayName, boolean isOutgoing) {
+        this.dataTransferId = dataTransferId;
         this.timestamp = System.currentTimeMillis();
         this.displayName = displayName;
         this.isOutgoing = isOutgoing;

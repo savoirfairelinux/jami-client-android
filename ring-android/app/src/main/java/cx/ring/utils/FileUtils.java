@@ -158,6 +158,26 @@ public class FileUtils {
         return file;
     }
 
+    public static String writeCacheFileToExtStorage(Activity activity, Uri cacheFile, String targetFilename) throws IOException {
+        File downloadsDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+        int fileCount = 0;
+        File finalFile = new File(downloadsDirectory, targetFilename);
+        int lastDotIndex = targetFilename.lastIndexOf('.');
+        String filename = targetFilename.substring(0, lastDotIndex);
+        String extension = targetFilename.substring(lastDotIndex + 1);
+        while (finalFile.exists()) {
+            finalFile = new File(downloadsDirectory, filename + "-" + fileCount + '.' + extension);
+            fileCount++;
+        }
+
+        Log.d(TAG, "writeCacheFileToExtStorage: finalFile=" + finalFile + ",exists=" + finalFile.exists());
+        InputStream inputStream = activity.getContentResolver().openInputStream(cacheFile);
+        FileOutputStream output = new FileOutputStream(finalFile);
+        FileUtils.copyFile(inputStream, output);
+        return finalFile.toString();
+    }
+
     private static boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }

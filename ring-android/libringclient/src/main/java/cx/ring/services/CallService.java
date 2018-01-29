@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.daemon.Blob;
+import cx.ring.daemon.DataTransferInfo;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
@@ -425,6 +426,21 @@ public class CallService extends Observable {
         );
     }
 
+    public DataTransferInfo dataTransferInfo(final Long dataTransferId) {
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<DataTransferInfo>() {
+                    @Override
+                    public DataTransferInfo call() throws Exception {
+                        Log.i(TAG, "dataTransferInfo() thread running... dataTransferId=" + dataTransferId);
+                        return Ringservice.dataTransferInfo(dataTransferId);
+                    }
+                }
+        );
+    }
+
     public Long sendFile(final String accountId, final String to, final String filePath, final String displayName) {
         return FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
@@ -433,8 +449,40 @@ public class CallService extends Observable {
                 new Callable<Long>() {
                     @Override
                     public Long call() throws Exception {
-                        Log.i(TAG, "sendFile() thread running... " + accountId + " " + to + " " + filePath);
+                        Log.i(TAG, "sendFile() thread running... accountId=" + accountId + ", to=" + to + ", filePath=" + filePath);
                         return Ringservice.sendFile(accountId, to, filePath, displayName);
+                    }
+                }
+        );
+    }
+
+    public void acceptFileTransfer(final Long dataTransferId, final String filePath, final long offset) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "acceptFileTransfer() thread running... dataTransferId=" + dataTransferId + ", filePath=" + filePath + ", offset=" + offset);
+                        Ringservice.acceptFileTransfer(dataTransferId, filePath, offset);
+                        return true;
+                    }
+                }
+        );
+    }
+
+    public void cancelDataTransfer(final Long dataTransferId) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "cancelDataTransfer() thread running... dataTransferId=" + dataTransferId);
+                        Ringservice.cancelDataTransfer(dataTransferId);
+                        return true;
                     }
                 }
         );

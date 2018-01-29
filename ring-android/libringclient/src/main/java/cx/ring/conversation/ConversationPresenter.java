@@ -25,6 +25,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cx.ring.daemon.Blob;
+import cx.ring.daemon.DataTransferInfo;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
@@ -75,6 +76,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     private String mAccountId;
 
     private boolean hasContactRequestPopupShown = false;
+    private File file;
 
     @Inject
     public ConversationPresenter(ContactService mContactService,
@@ -184,7 +186,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         }
 
         // check file
-        File file = new File(filePath);
+        file = new File(filePath);
         if (!file.exists()) {
             Log.d(TAG, "sendFile: file not found");
             return;
@@ -195,19 +197,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             return;
         }
 
-        // append item to Conversation
-        mConversation.addFileTransfer(file.getName(), true);
-
         // send file
         Uri uri = new Uri(mContactRingId);
-        Long dataTransferId = mCallService.sendFile(mAccountId, uri.getHost(), filePath, file.getName());
-        mConversation.updateFileTransfer(dataTransferId, DataTransferEventCode.CREATED);
+        Long sentDataTransferId = mCallService.sendFile(mAccountId, uri.getHost(), filePath, file.getName());
 
         getView().refreshView(mConversation);
-    }
-
-    private void showFilePrompt(Long transferId, DataTransferEventCode transferEventCode) {
-
     }
 
     private void receiveFile() {
@@ -378,16 +372,28 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
         switch (transferEventCode) {
             case CREATED:
+                Log.i(TAG, "handleDataTransferEvent: CREATED");
+
+                DataTransferInfo dataTransferInfo = mCallService.dataTransferInfo(transferId);
+                if (dataTransferInfo != null) {
+                    mConversation.addFileTransfer(transferId, dataTransferInfo.getDisplayName(), dataTransferInfo.getIsOutgoing());
+                }
+                break;
             case UNSUPPORTED:
                 Log.e(TAG, "handleDataTransferEvent: UNSUPPORTED");
                 break;
             case WAIT_PEER_ACCEPTANCE:
+                Log.i(TAG, "handleDataTransferEvent: WAIT_PEER_ACCEPTANCE");
                 break;
             case WAIT_HOST_ACCEPTANCE:
-                showFilePrompt(transferId, transferEventCode);
+                Log.i(TAG, "handleDataTransferEvent: WAIT_HOST_ACCEPTANCE");
                 break;
             case ONGOING:
+                Log.i(TAG, "handleDataTransferEvent: ONGOING");
+                break;
             case FINISHED:
+                Log.i(TAG, "handleDataTransferEvent: FINISHED");
+                break;
             case CLOSED_BY_HOST:
                 Log.e(TAG, "handleDataTransferEvent: CLOSED_BY_HOST");
                 break;
@@ -395,9 +401,23 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                 Log.e(TAG, "handleDataTransferEvent: CLOSED_BY_PEER");
                 break;
             case INVALID_PATHNAME:
+                Log.e(TAG, "handleDataTransferEvent: INVALID_PATHNAME");
+                break;
             case UNJOINABLE_PEER:
+                Log.e(TAG, "handleDataTransferEvent: UNJOINABLE_PEER");
+                break;
         }
 
         getView().refreshView(mConversation);
+    }
+
+    public void acceptTransfer(Long dataTransferId, String filePath) {
+        Log.d(TAG, "acceptTransfer: dataTransferId=" + dataTransferId);
+        mCallService.acceptFileTransfer(dataTransferId, filePath, 0);
+    }
+
+    public void cancelTransfer(Long dataTransferId) {
+        Log.d(TAG, "cancelTransfer: dataTransferId=" + dataTransferId);
+        mCallService.cancelDataTransfer(dataTransferId);
     }
 }

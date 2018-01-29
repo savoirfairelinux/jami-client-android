@@ -161,7 +161,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
         setHasOptionsMenu(true);
 
-        mAdapter = new ConversationAdapter();
+        mAdapter = new ConversationAdapter(getActivity(), presenter);
 
         if (mHistList != null) {
             mHistList.setAdapter(mAdapter);
@@ -217,6 +217,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
                     presenter.sendFile(cacheFile.toString());
                 } catch (IOException e) {
                     Log.e(TAG, "onActivityResult: not able to create cache file");
+                    // display error message to user
                 }
             }
         }

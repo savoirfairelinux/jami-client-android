@@ -36,6 +36,8 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public TextView mHistTxt;
     public TextView mHistDetailTxt;
     public View mAnswerLayout;
+    public View btnAccept;
+    public View btnRefuse;
     public long mCid = -1;
 
     public ConversationViewHolder(ViewGroup v, int type) {
@@ -49,6 +51,8 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             mMsgDetailTxt = v.findViewById(R.id.file_details_txt);
             mPhoto = v.findViewById(R.id.direction_icon);
             mAnswerLayout = v.findViewById(R.id.llAnswer);
+            btnAccept = v.findViewById(R.id.btnAccept);
+            btnRefuse = v.findViewById(R.id.btnRefuse);
         } else {
             mMsgTxt = v.findViewById(R.id.msg_txt);
             mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);

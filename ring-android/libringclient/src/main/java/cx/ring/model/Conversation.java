@@ -307,12 +307,20 @@ public class Conversation {
         mLastContactRequest = timestamp;
     }
 
-    public void removeAllButFileTransfers() {
+    public ConversationElement findConversationElement(Long transferId) {
         for (ConversationElement ce : mAggregateHistory) {
-            if (ce.file == null) {
-                mAggregateHistory.remove(ce);
+            if (ce.file != null && transferId.equals(ce.file.getDataTransferId())) {
+                return ce;
             }
         }
+        return null;
+    }
+
+    public ConversationElement addFileTransfer(Long transferId, String filename, boolean isOutgoing) {
+        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, filename, isOutgoing);
+        ConversationElement conversationElement = new ConversationElement(historyFileTransfer);
+        mAggregateHistory.add(conversationElement);
+        return conversationElement;
     }
 
     public void updateFileTransfer(long transferId, DataTransferEventCode eventCode) {
@@ -322,19 +330,12 @@ public class Conversation {
         }
     }
 
-    private ConversationElement findConversationElement(long transferId) {
+    public void removeAllButFileTransfers() {
         for (ConversationElement ce : mAggregateHistory) {
-            if (ce.file != null && transferId == ce.file.getDataTransferId()) {
-                return ce;
+            if (ce.file == null) {
+                mAggregateHistory.remove(ce);
             }
         }
-        return null;
-    }
-
-    public void addFileTransfer(String filename, boolean isOutgoing) {
-        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(filename, isOutgoing);
-        ConversationElement conversationElement = new ConversationElement(historyFileTransfer);
-        mAggregateHistory.add(conversationElement);
     }
 
     public interface ConversationActionCallback {

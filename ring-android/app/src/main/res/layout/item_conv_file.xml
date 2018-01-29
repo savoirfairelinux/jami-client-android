@@ -68,14 +68,14 @@
                 android:id="@+id/call_hist_filename"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="middle"
                 android:gravity="center"
-                android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
-                android:singleLine="false"
+                android:singleLine="true"
                 android:textColor="@color/text_color_primary"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                tools:text="any_filename.jpg" />
+                tools:text="a_very_very_very_long_filename.jpg" />
 
             <TextView
                 android:id="@+id/file_details_txt"

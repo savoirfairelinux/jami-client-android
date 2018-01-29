@@ -20,7 +20,11 @@
  */
 package cx.ring.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -32,15 +36,20 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import cx.ring.R;
+import cx.ring.conversation.ConversationPresenter;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryFileTransfer;
 import cx.ring.model.TextMessage;
 import cx.ring.utils.CircleTransform;
+import cx.ring.utils.FileUtils;
 import cx.ring.views.ConversationViewHolder;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
@@ -50,7 +59,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private static final double HOUR = 3600L * 1000L;
 
     private final ArrayList<Conversation.ConversationElement> mConversationElements = new ArrayList<>();
+    private final ConversationPresenter presenter;
+    private final Activity activity;
     private byte[] mPhoto;
+
+    public ConversationAdapter(Activity activity, ConversationPresenter presenter) {
+        this.activity = activity;
+        this.presenter = presenter;
+    }
 
     /**
      * Refreshes the data and notifies the changes
@@ -145,16 +161,68 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
         conversationViewHolder.mMsgTxt.setText(file.getDisplayName());
 
-//        String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
-//                conversationViewHolder.itemView.getContext(),
-//                conversationElement.text.getTimestamp());
-        conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s", file.getTimestamp(), file.getDataTransferEventCode().name()));
+        String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
+                conversationViewHolder.itemView.getContext(),
+                file.getTimestamp());
+        conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s", timeSeparationString, file.getDataTransferEventCode().name()));
         if (file.isOutgoing()) {
             conversationViewHolder.mPhoto.setImageResource(R.drawable.ic_outgoing_black);
         } else {
             conversationViewHolder.mPhoto.setImageResource(R.drawable.ic_incoming_black);
-            conversationViewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
         }
+
+        if (conversationElement.file.getDataTransferEventCode() == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
+            conversationViewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
+            conversationViewHolder.btnAccept.setOnClickListener(v -> {
+                conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
+
+                if (!isExternalStorageWritable()) {
+                    Log.e(TAG, "configureForFileInfoTextMessage: external storage is not writable");
+                    return;
+                }
+
+                File cacheDir = activity.getCacheDir();
+                if (!cacheDir.exists()) {
+                    boolean mkdirs = cacheDir.mkdirs();
+                    if (!mkdirs) {
+                        Log.e(TAG, "configureForFileInfoTextMessage: not able to create directory at " + cacheDir.toString());
+                        return;
+                    }
+                }
+
+                File cacheFile = new File(cacheDir, conversationElement.file.getDisplayName());
+                if (cacheFile.exists()) {
+                    boolean delete = cacheFile.delete();
+                    if (!delete) {
+                        Log.e(TAG, "configureForFileInfoTextMessage: not able to delete cache file at " + cacheFile.toString());
+                        return;
+                    }
+                }
+
+                Log.d(TAG, "configureForFileInfoTextMessage: cacheFile=" + cacheFile + ",exists=" + cacheFile.exists());
+                presenter.acceptTransfer(conversationElement.file.getDataTransferId(), cacheFile.toString());
+
+                try {
+                    String finalFilename = FileUtils.writeCacheFileToExtStorage(activity, Uri.fromFile(cacheFile), cacheFile.getName());
+
+                    // Tell the media scanner about the new file so that it is immediately available to the user
+                    MediaScannerConnection.scanFile(activity, new String[]{finalFilename}, null, null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            conversationViewHolder.btnRefuse.setOnClickListener(v -> {
+                conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
+                presenter.cancelTransfer(conversationElement.file.getDataTransferId());
+            });
+        } else {
+            conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
+        }
+    }
+
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
     /**
