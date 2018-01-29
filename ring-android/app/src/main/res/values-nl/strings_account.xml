@@ -117,7 +117,7 @@ Je kan je account later bewerken</string>
   <string name="account_export_end_error_message">Kon account niet exporteren. Er is een onbekende fout opgetreden.</string>
   <string name="account_enter_password">Voer wachtwoord in</string>
   <string name="account_share_body">Contacteer mij met ‘%1$s’ op Ring, het gedistribueerde communicatieplatform: https://ring.cx</string>
-  <string name="account_share_body_with_username">Contacteer mij met ‘%1$s’ of mijn publieke gebruikersnaam ‘%2$s’ op Ring, het gedistribueerde communicatieplatform: https://ring.cx</string>
+  <string name="account_share_body_with_username">Contacteer mij met ‘%1$s’ of mijn openbare gebruikersnaam ‘%2$s’ op Ring, het gedistribueerde communicatieplatform: https://ring.cx</string>
   <string name="account_contact_me">Contacteer mij op Ring!</string>
   <string name="update_account">Account bijwerken</string>
   <string name="account_migration">Je Ring-account kan bijgewerkt worden.\nVoer je wachtwoord in.</string>
@@ -155,7 +155,7 @@ Je kan je account later bewerken</string>
   <string name="register_name">Naam registreren</string>
   <string name="trying_to_register_name">Naam wordt geregistreerd</string>
   <string name="registered_username">Geregistreerde gebruikersnaam</string>
-  <string name="register_username">Registreer een publieke gebruikersnaam (aanbevolen)</string>
+  <string name="register_username">Registreer een openbare gebruikersnaam (aanbevolen)</string>
   <string name="username_already_taken">Gebruikersnaam reeds in gebruik</string>
   <string name="invalid_username">Ongeldige gebruikersnaam</string>
   <string name="looking_for_username_availability">Beschikbaarheid van gebruikersnaam wordt gecontroleerd…</string>

@@ -33,6 +33,7 @@
   <string name="menu_item_home">Accueil</string>
   <string name="menu_item_contact_request">Demandes de contact</string>
   <string name="menu_item_accounts">Gérer les comptes</string>
+  <string name="menu_item_account">Gérer le compte</string>
   <string name="menu_item_settings">Réglages</string>
   <string name="menu_item_share">Partager mes informations de contact</string>
   <string name="menu_item_about">A propos de Ring</string>
@@ -60,6 +61,9 @@
   <string name="notif_current_call_title">Appel en cours avec %1$s</string>
   <string name="notif_current_call">Appel en cours</string>
   <string name="notif_channel_calls">Appels</string>
+  <string name="notif_channel_messages">Messages</string>
+  <string name="notif_channel_requests">Sollicitations</string>
+  <string name="notif_mark_as_read">Marqué comme lu</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Toi:</string>
   <string name="action_call_hangup">Raccrocher</string>
@@ -153,4 +157,5 @@
   <string name="tv_contact_row_header">Contacts</string>
   <string name="gallery_error_title">Pas d\'application de Galleries trouvé</string>
   <string name="gallery_error_message">Pas d\'application trouvé dans l\'appareil pour ouvrir Galleries</string>
+  <string name="generic_error">Une erreur inconnue s\'est produite</string>
 </resources>

@@ -77,8 +77,8 @@
   <string name="ab_action_speakerphone">Luidspreker inschakelen</string>
   <string name="ab_action_contact_add">Aan contacten toevoegen</string>
   <string name="ab_action_contact_add_question">Aan contacten toevoegen?</string>
-  <string name="ab_action_audio_call">Audiogesprek</string>
-  <string name="ab_action_video_call">Videogesprek</string>
+  <string name="ab_action_audio_call">Audio-oproep</string>
+  <string name="ab_action_video_call">Video-oproep</string>
   <string name="ab_action_change_screen_orientation">Schermoriëntatie aanpassen</string>
   <string name="share_via">Delen via</string>
   <string name="write_a_message">Schrijf een bericht</string>
@@ -97,7 +97,7 @@
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring vereist de \"Lees Contacten\" machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
   <!--Write call log permission-->
-  <string name="permission_dialog_write_call_log_message">Ring vereist de \"Oproepgeschiedenis\"-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
+  <string name="permission_dialog_write_call_log_message">Ring vereist de ‘Oproepgeschiedenis’-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
   <!--QRCode Scan-->
   <string name="scan_qr_account_message">Scan de QR-code van het toe te voegen account.</string>
   <!--Settings-->
