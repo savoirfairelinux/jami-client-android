@@ -27,13 +27,17 @@ public class HistoryFileTransfer {
     private String displayName;
     private boolean isOutgoing;
     private DataTransferEventCode dataTransferEventCode;
+    private long totalSize;
+    private long bytesProgress;
 
-    public HistoryFileTransfer(Long dataTransferId, String displayName, boolean isOutgoing) {
+    public HistoryFileTransfer(Long dataTransferId, String displayName, boolean isOutgoing, long totalSize, long bytesProgress) {
         this.dataTransferId = dataTransferId;
         this.timestamp = System.currentTimeMillis();
         this.displayName = displayName;
         this.isOutgoing = isOutgoing;
         this.dataTransferEventCode = DataTransferEventCode.CREATED;
+        this.totalSize = totalSize;
+        this.bytesProgress = bytesProgress;
     }
 
     public long getTimestamp() {
@@ -44,24 +48,12 @@ public class HistoryFileTransfer {
         return displayName;
     }
 
-    public void setDataTransferId(Long dataTransferId) {
-        this.dataTransferId = dataTransferId;
-    }
-
     public Long getDataTransferId() {
         return dataTransferId;
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
     public boolean isOutgoing() {
         return isOutgoing;
-    }
-
-    public void setOutgoing(boolean outgoing) {
-        isOutgoing = outgoing;
     }
 
     public DataTransferEventCode getDataTransferEventCode() {
@@ -70,6 +62,14 @@ public class HistoryFileTransfer {
 
     public void setDataTransferEventCode(DataTransferEventCode dataTransferEventCode) {
         this.dataTransferEventCode = dataTransferEventCode;
+    }
+
+    public long getTotalSize() {
+        return totalSize;
+    }
+
+    public long getBytesProgress() {
+        return bytesProgress;
     }
 
     @Override

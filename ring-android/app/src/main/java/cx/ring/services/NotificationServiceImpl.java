@@ -54,15 +54,18 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.ContactRequestsFragment;
+import cx.ring.daemon.DataTransferInfo;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
+import cx.ring.model.Uri;
 import cx.ring.service.DRingService;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.Log;
@@ -76,16 +79,20 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     private static final String NOTIF_MSG = "MESSAGE";
     private static final String NOTIF_TRUST_REQUEST = "TRUST REQUEST";
+    private static final String NOTIF_FILE_TRANSFER = "FILE_TRANSFER";
 
     private static final String NOTIF_CHANNEL_CALL = "call";
     private static final String NOTIF_CHANNEL_MESSAGE = "messages";
     private static final String NOTIF_CHANNEL_REQUEST = "requests";
+    private static final String NOTIF_CHANNEL_FILE_TRANSFER = "file_transfer";
 
     private final SparseArray<NotificationCompat.Builder> mNotificationBuilders = new SparseArray<>();
     @Inject
     protected Context mContext;
     @Inject
     protected AccountService mAccountService;
+    @Inject
+    protected CallService mCallService;
     @Inject
     protected PreferencesService mPreferencesService;
     @Inject
@@ -98,6 +105,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             notificationManager = NotificationManagerCompat.from(mContext);
         }
         mAccountService.addObserver(this);
+        mCallService.addObserver(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             registerNotificationChannels();
         }
@@ -130,10 +138,17 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
         // Contact requests
         NotificationChannel requestsChannel = new NotificationChannel(NOTIF_CHANNEL_REQUEST, mContext.getString(R.string.notif_channel_requests), NotificationManager.IMPORTANCE_DEFAULT);
-        messageChannel.enableVibration(true);
-        messageChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-        messageChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes);
+        requestsChannel.enableVibration(true);
+        requestsChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        requestsChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes);
         notificationManager.createNotificationChannel(requestsChannel);
+
+        // File transfer requests
+        NotificationChannel fileTransferChannel = new NotificationChannel(NOTIF_CHANNEL_FILE_TRANSFER, mContext.getString(R.string.notif_channel_file_transfer), NotificationManager.IMPORTANCE_DEFAULT);
+        fileTransferChannel.enableVibration(true);
+        fileTransferChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        fileTransferChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes);
+        notificationManager.createNotificationChannel(fileTransferChannel);
     }
 
     @Override
@@ -373,6 +388,42 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     }
 
     @Override
+    public void showFileTransferNotification(Long dataTransferId, String contactAccountId) {
+        if (dataTransferId == null || contactAccountId == null) {
+            return;
+        }
+
+        String contactUri = new Uri(contactAccountId).getRawUriString();
+
+        Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
+                .setClass(mContext, DRingService.class)
+                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID())
+                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
+
+        int notificationId = getFileTransferNotificationId(dataTransferId);
+        NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
+
+        if (messageNotificationBuilder == null) {
+            messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_FILE_TRANSFER);
+        } else {
+            notificationManager.cancel(notificationId);
+        }
+
+        messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_file_transfer_title))
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.ic_ring_logo_white)
+                .setCategory(NotificationCompat.CATEGORY_SOCIAL)
+                .setContentText(mContext.getString(R.string.notif_incoming_file_transfer))
+                .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
+                .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
+
+        mNotificationBuilders.put(notificationId, messageNotificationBuilder);
+        notificationManager.notify(notificationId, messageNotificationBuilder.build());
+    }
+
+    @Override
     public void cancelTextNotification(CallContact contact) {
         if (contact == null) {
             return;
@@ -387,7 +438,6 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         notificationManager.cancel(notificationId);
         mNotificationBuilders.remove(notificationId);
     }
-
 
     @Override
     public void cancelTrustRequestNotification(String accountID) {
@@ -419,13 +469,17 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         return (NOTIF_MSG + contact.getPhones().get(0).getNumber().toString()).hashCode();
     }
 
+    private int getFileTransferNotificationId(Long dataTransferId) {
+        return (NOTIF_FILE_TRANSFER + dataTransferId).hashCode();
+    }
+
     @Override
-    public void update(Observable observable, ServiceEvent arg) {
-        if (observable instanceof AccountService && arg != null) {
-            switch (arg.getEventType()) {
+    public void update(Observable observable, ServiceEvent event) {
+        if (observable instanceof AccountService && event != null) {
+            switch (event.getEventType()) {
                 case INCOMING_TRUST_REQUEST: {
-                    final String accountID = arg.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
-                    final String from = arg.getEventInput(ServiceEvent.EventInput.FROM, String.class);
+                    final String accountID = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
+                    final String from = event.getEventInput(ServiceEvent.EventInput.FROM, String.class);
                     Log.d(TAG, "INCOMING_TRUST_REQUEST " + accountID + " " + from);
                     Account account = mAccountService.getAccount(accountID);
                     Set<String> notifiedRequests = mPreferencesService.loadRequestsPreferences(accountID);
@@ -434,6 +488,21 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                         mPreferencesService.saveRequestPreferences(accountID, from);
                     } else {
                         Log.d(TAG, "INCOMING_TRUST_REQUEST: already notified for " + from);
+                    }
+                    break;
+                }
+            }
+        } else if (observable instanceof CallService && event != null) {
+            switch (event.getEventType()) {
+                case DATA_TRANSFER: {
+                    Long transferId = event.getEventInput(ServiceEvent.EventInput.TRANSFER_ID, Long.class);
+                    DataTransferEventCode transferEventCode = event.getEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, DataTransferEventCode.class);
+                    if (transferEventCode == DataTransferEventCode.CREATED) {
+
+                        DataTransferInfo dataTransferInfo = mCallService.dataTransferInfo(transferId);
+                        if (!dataTransferInfo.getIsOutgoing()) {
+                            showFileTransferNotification(transferId, dataTransferInfo.getPeer());
+                        }
                     }
                     break;
                 }

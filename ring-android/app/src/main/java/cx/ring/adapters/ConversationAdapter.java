@@ -24,7 +24,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -159,24 +158,30 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             Log.d(TAG, "configureForFileInfoTextMessage: not able to get file from conversationElement");
             return;
         }
+
+        if (file.getDataTransferEventCode().isError()) {
+            conversationViewHolder.icon.setImageResource(R.drawable.ic_warning);
+        }
+
         conversationViewHolder.mMsgTxt.setText(file.getDisplayName());
 
         String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
                 conversationViewHolder.itemView.getContext(),
                 file.getTimestamp());
-        conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s", timeSeparationString, file.getDataTransferEventCode().name()));
+        conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
+                timeSeparationString, FileUtils.readableFileSize(file.getTotalSize()), file.getDataTransferEventCode().name()));
         if (file.isOutgoing()) {
             conversationViewHolder.mPhoto.setImageResource(R.drawable.ic_outgoing_black);
         } else {
             conversationViewHolder.mPhoto.setImageResource(R.drawable.ic_incoming_black);
         }
 
-        if (conversationElement.file.getDataTransferEventCode() == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
+        if (file.getDataTransferEventCode() == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
             conversationViewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
             conversationViewHolder.btnAccept.setOnClickListener(v -> {
                 conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
 
-                if (!isExternalStorageWritable()) {
+                if (!FileUtils.isExternalStorageWritable()) {
                     Log.e(TAG, "configureForFileInfoTextMessage: external storage is not writable");
                     return;
                 }
@@ -190,7 +195,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     }
                 }
 
-                File cacheFile = new File(cacheDir, conversationElement.file.getDisplayName());
+                File cacheFile = new File(cacheDir, file.getDisplayName());
                 if (cacheFile.exists()) {
                     boolean delete = cacheFile.delete();
                     if (!delete) {
@@ -200,7 +205,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 }
 
                 Log.d(TAG, "configureForFileInfoTextMessage: cacheFile=" + cacheFile + ",exists=" + cacheFile.exists());
-                presenter.acceptTransfer(conversationElement.file.getDataTransferId(), cacheFile.toString());
+                presenter.acceptTransfer(file.getDataTransferId(), cacheFile.toString());
 
                 try {
                     String finalFilename = FileUtils.writeCacheFileToExtStorage(activity, Uri.fromFile(cacheFile), cacheFile.getName());
@@ -213,16 +218,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             });
             conversationViewHolder.btnRefuse.setOnClickListener(v -> {
                 conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
-                presenter.cancelTransfer(conversationElement.file.getDataTransferId());
+                presenter.cancelTransfer(file.getDataTransferId());
             });
         } else {
             conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
         }
-    }
-
-    public boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
     /**

@@ -19,6 +19,7 @@
 package cx.ring.utils;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -30,12 +31,14 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
 
 public class FileUtils {
 
@@ -132,7 +135,7 @@ public class FileUtils {
 
     public static String getFilename(Context context, Uri uri) {
         String result = null;
-        if ("content".equals(uri.getScheme())) {
+        if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
             try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
                 if (cursor != null && cursor.moveToFirst()) {
                     result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
@@ -146,7 +149,26 @@ public class FileUtils {
                 result = result.substring(cut + 1);
             }
         }
+        if (result.lastIndexOf('.') == -1) {
+            String mimeType = getMimeType(context, uri);
+            String extensionFromMimeType = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType);
+            if (extensionFromMimeType != null) {
+                result += '.' + extensionFromMimeType;
+            }
+        }
         return result;
+    }
+
+    public static String getMimeType(Context context, Uri uri) {
+        String mimeType;
+        if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
+            ContentResolver cr = context.getContentResolver();
+            mimeType = cr.getType(uri);
+        } else {
+            String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uri.toString());
+            mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension.toLowerCase());
+        }
+        return mimeType;
     }
 
     public static File getCacheFile(Activity activity, android.net.Uri uri) throws IOException {
@@ -167,7 +189,7 @@ public class FileUtils {
         String filename = targetFilename.substring(0, lastDotIndex);
         String extension = targetFilename.substring(lastDotIndex + 1);
         while (finalFile.exists()) {
-            finalFile = new File(downloadsDirectory, filename + "-" + fileCount + '.' + extension);
+            finalFile = new File(downloadsDirectory, filename + "_" + fileCount + '.' + extension);
             fileCount++;
         }
 
@@ -176,6 +198,20 @@ public class FileUtils {
         FileOutputStream output = new FileOutputStream(finalFile);
         FileUtils.copyFile(inputStream, output);
         return finalFile.toString();
+    }
+
+    public static boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
+    }
+
+    public static String readableFileSize(long size) {
+        if (size <= 0) {
+            return "0";
+        }
+        final String[] units = new String[]{"B", "kB", "MB", "GB", "TB"};
+        int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+        return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
     }
 
     private static boolean isExternalStorageDocument(Uri uri) {

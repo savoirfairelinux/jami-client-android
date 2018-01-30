@@ -46,7 +46,7 @@
             android:layout_marginEnd="0dp"
             android:layout_marginStart="12dp"
             android:alpha="0.75"
-            app:srcCompat="@drawable/ic_file_black" />
+            app:srcCompat="@drawable/ic_upload_black" />
 
         <ImageView
             android:id="@+id/direction_icon"
@@ -84,6 +84,13 @@
                 android:textColor="@color/text_color_secondary"
                 android:textSize="12sp"
                 tools:text="1 mo - 12 mars - En attente" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="false"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/llAnswer"

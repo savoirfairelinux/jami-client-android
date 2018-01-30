@@ -316,8 +316,8 @@ public class Conversation {
         return null;
     }
 
-    public ConversationElement addFileTransfer(Long transferId, String filename, boolean isOutgoing) {
-        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, filename, isOutgoing);
+    public ConversationElement addFileTransfer(Long transferId, String filename, boolean isOutgoing, long totalSize, long bytesProgress) {
+        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, filename, isOutgoing, totalSize, bytesProgress);
         ConversationElement conversationElement = new ConversationElement(historyFileTransfer);
         mAggregateHistory.add(conversationElement);
         return conversationElement;

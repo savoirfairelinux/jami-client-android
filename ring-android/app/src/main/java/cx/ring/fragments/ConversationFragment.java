@@ -56,6 +56,7 @@ import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
+import cx.ring.model.RingError;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.services.NotificationService;
@@ -217,7 +218,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
                     presenter.sendFile(cacheFile.toString());
                 } catch (IOException e) {
                     Log.e(TAG, "onActivityResult: not able to create cache file");
-                    // display error message to user
+                    displayErrorToast(RingError.INVALID_FILE);
                 }
             }
         }

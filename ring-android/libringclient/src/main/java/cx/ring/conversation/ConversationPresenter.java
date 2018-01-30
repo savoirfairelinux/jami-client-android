@@ -76,7 +76,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     private String mAccountId;
 
     private boolean hasContactRequestPopupShown = false;
-    private File file;
+    private CallContact mCurrentContact;
 
     @Inject
     public ConversationPresenter(ContactService mContactService,
@@ -111,8 +111,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         mContactRingId = contactRingId;
         mAccountId = accountId;
 
-        CallContact callContact = mContactService.getContact(new Uri(mContactRingId));
-        this.mConversation = new Conversation(callContact);
+        mCurrentContact = mContactService.getContact(new Uri(mContactRingId));
+        this.mConversation = new Conversation(mCurrentContact);
 
         mAccountService.addObserver(this);
         mHistoryService.addObserver(this);
@@ -121,7 +121,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
     public void pause() {
         if (mConversation != null) {
-            Conversation localConversation = mConversationFacade.getConversationByContact(mContactService.getContact(new Uri(mContactRingId)));
+            Conversation localConversation = mConversationFacade.getConversationByContact(mCurrentContact);
             if (localConversation != null) {
                 localConversation.setVisible(false);
             }
@@ -166,7 +166,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             mHistoryService.insertNewTextMessage(txtMessage);
             mConversation.addTextMessage(txtMessage);
 
-            if (mContactService.getContact(new Uri(mContactRingId)).getStatus() == CallContact.Status.NO_REQUEST) {
+            if (mCurrentContact.getStatus() == CallContact.Status.NO_REQUEST) {
                 sendTrustRequest();
             }
 
@@ -186,7 +186,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         }
 
         // check file
-        file = new File(filePath);
+        File file = new File(filePath);
         if (!file.exists()) {
             Log.d(TAG, "sendFile: file not found");
             return;
@@ -199,13 +199,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
         // send file
         Uri uri = new Uri(mContactRingId);
-        Long sentDataTransferId = mCallService.sendFile(mAccountId, uri.getHost(), filePath, file.getName());
+        mCallService.sendFile(mAccountId, uri.getHost(), filePath, file.getName());
 
         getView().refreshView(mConversation);
-    }
-
-    private void receiveFile() {
-        Log.d(TAG, "receiveFile: ");
     }
 
     public void sendTrustRequest() {
@@ -302,7 +298,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                         }
 
                         mHistoryService.readMessages(mConversation);
-                        Conversation localConversation = mConversationFacade.getConversationByContact(mContactService.getContact(new Uri(mContactRingId)));
+                        Conversation localConversation = mConversationFacade.getConversationByContact(mCurrentContact);
                         if (localConversation != null) {
                             localConversation.setVisible(true);
                         }
@@ -376,7 +372,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
                 DataTransferInfo dataTransferInfo = mCallService.dataTransferInfo(transferId);
                 if (dataTransferInfo != null) {
-                    mConversation.addFileTransfer(transferId, dataTransferInfo.getDisplayName(), dataTransferInfo.getIsOutgoing());
+                    mConversation.addFileTransfer(transferId, dataTransferInfo.getDisplayName(), dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(), dataTransferInfo.getBytesProgress());
                 }
                 break;
             case UNSUPPORTED:
