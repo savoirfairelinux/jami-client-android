@@ -22,15 +22,16 @@ package cx.ring.model;
 
 public class HistoryFileTransfer {
 
-    private Long dataTransferId;
+    private final Long dataTransferId;
     private final long timestamp;
-    private String displayName;
-    private boolean isOutgoing;
+    private final String displayName;
+    private final boolean isOutgoing;
+    private final long totalSize;
+    private final String peerId;
     private DataTransferEventCode dataTransferEventCode;
-    private long totalSize;
     private long bytesProgress;
 
-    public HistoryFileTransfer(Long dataTransferId, String displayName, boolean isOutgoing, long totalSize, long bytesProgress) {
+    public HistoryFileTransfer(Long dataTransferId, String displayName, boolean isOutgoing, long totalSize, long bytesProgress, String peerId) {
         this.dataTransferId = dataTransferId;
         this.timestamp = System.currentTimeMillis();
         this.displayName = displayName;
@@ -38,6 +39,7 @@ public class HistoryFileTransfer {
         this.dataTransferEventCode = DataTransferEventCode.CREATED;
         this.totalSize = totalSize;
         this.bytesProgress = bytesProgress;
+        this.peerId = peerId;
     }
 
     public long getTimestamp() {
@@ -70,6 +72,14 @@ public class HistoryFileTransfer {
 
     public long getBytesProgress() {
         return bytesProgress;
+    }
+
+    public void setBytesProgress(long bytesProgress) {
+        this.bytesProgress = bytesProgress;
+    }
+
+    public String getPeerId() {
+        return peerId;
     }
 
     @Override

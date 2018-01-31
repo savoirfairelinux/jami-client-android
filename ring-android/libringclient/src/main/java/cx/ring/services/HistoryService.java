@@ -40,6 +40,7 @@ import cx.ring.daemon.StringMap;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryEntry;
 import cx.ring.model.HistoryFileTransfer;
@@ -369,4 +370,30 @@ public abstract class HistoryService extends Observable {
         notifyObservers(event);
     }
 
+    private List<HistoryFileTransfer> fileTransfers = new ArrayList<>();
+
+    public HistoryFileTransfer getLastFileTransfer(String contactRingId) {
+        HistoryFileTransfer result = null;
+        for (HistoryFileTransfer historyFileTransfer : fileTransfers) {
+            if (historyFileTransfer.getPeerId().equals(contactRingId)) {
+                result = historyFileTransfer;
+            }
+        }
+        return result;
+    }
+
+    public void addFileTransfer(HistoryFileTransfer historyFileTransfer) {
+        HistoryFileTransfer lastFileTransfer = getLastFileTransfer(historyFileTransfer.getPeerId());
+        if (lastFileTransfer != null) {
+            fileTransfers.remove(lastFileTransfer);
+        }
+        fileTransfers.add(historyFileTransfer);
+    }
+
+    public void updateFileTransferStatus(String contactRingId, DataTransferEventCode dataTransferEventCode) {
+        HistoryFileTransfer lastFileTransfer = getLastFileTransfer(contactRingId);
+        if (contactRingId != null) {
+            lastFileTransfer.setDataTransferEventCode(dataTransferEventCode);
+        }
+    }
 }
