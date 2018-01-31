@@ -32,6 +32,7 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
+import cx.ring.model.HistoryFileTransfer;
 import cx.ring.model.HistoryText;
 import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
@@ -271,6 +272,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                                     mConversation.addTextMessage(msg);
                                 }
 
+                                Uri uri = new Uri(mContactRingId);
+                                HistoryFileTransfer lastFileTransfer = mHistoryService.getLastFileTransfer(uri.getRawRingId());
+                                if (lastFileTransfer != null) {
+                                    mConversation.addFileTransfer(lastFileTransfer);
+                                }
+
                                 return mConversation;
                             }
                         })
@@ -372,36 +379,13 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
                 DataTransferInfo dataTransferInfo = mCallService.dataTransferInfo(transferId);
                 if (dataTransferInfo != null) {
-                    mConversation.addFileTransfer(transferId, dataTransferInfo.getDisplayName(), dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(), dataTransferInfo.getBytesProgress());
+                    mConversation.addFileTransfer(transferId, dataTransferInfo.getDisplayName(),
+                            dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(),
+                            dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer());
                 }
                 break;
-            case UNSUPPORTED:
-                Log.e(TAG, "handleDataTransferEvent: UNSUPPORTED");
-                break;
-            case WAIT_PEER_ACCEPTANCE:
-                Log.i(TAG, "handleDataTransferEvent: WAIT_PEER_ACCEPTANCE");
-                break;
-            case WAIT_HOST_ACCEPTANCE:
-                Log.i(TAG, "handleDataTransferEvent: WAIT_HOST_ACCEPTANCE");
-                break;
-            case ONGOING:
-                Log.i(TAG, "handleDataTransferEvent: ONGOING");
-                break;
-            case FINISHED:
-                Log.i(TAG, "handleDataTransferEvent: FINISHED");
-                break;
-            case CLOSED_BY_HOST:
-                Log.e(TAG, "handleDataTransferEvent: CLOSED_BY_HOST");
-                break;
-            case CLOSED_BY_PEER:
-                Log.e(TAG, "handleDataTransferEvent: CLOSED_BY_PEER");
-                break;
-            case INVALID_PATHNAME:
-                Log.e(TAG, "handleDataTransferEvent: INVALID_PATHNAME");
-                break;
-            case UNJOINABLE_PEER:
-                Log.e(TAG, "handleDataTransferEvent: UNJOINABLE_PEER");
-                break;
+            default:
+                Log.d(TAG, "handleDataTransferEvent: " + transferEventCode.name());
         }
 
         getView().refreshView(mConversation);

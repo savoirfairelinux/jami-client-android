@@ -61,6 +61,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransferEventCode;
+import cx.ring.model.HistoryFileTransfer;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
@@ -96,7 +97,9 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     @Inject
     protected PreferencesService mPreferencesService;
     @Inject
-    DeviceRuntimeService mDeviceRuntimeService;
+    protected HistoryService mHistoryService;
+    @Inject
+    protected DeviceRuntimeService mDeviceRuntimeService;
     private NotificationManagerCompat notificationManager;
     private Random random;
 
@@ -413,6 +416,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
+                .setOngoing(true)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setCategory(NotificationCompat.CATEGORY_SOCIAL)
                 .setContentText(mContext.getString(R.string.notif_incoming_file_transfer))
@@ -497,12 +501,22 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 case DATA_TRANSFER: {
                     Long transferId = event.getEventInput(ServiceEvent.EventInput.TRANSFER_ID, Long.class);
                     DataTransferEventCode transferEventCode = event.getEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, DataTransferEventCode.class);
-                    if (transferEventCode == DataTransferEventCode.CREATED) {
+                    DataTransferInfo dataTransferInfo = mCallService.dataTransferInfo(transferId);
 
-                        DataTransferInfo dataTransferInfo = mCallService.dataTransferInfo(transferId);
+                    if (transferEventCode == DataTransferEventCode.CREATED) {
                         if (!dataTransferInfo.getIsOutgoing()) {
+
+                            HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, dataTransferInfo.getDisplayName(),
+                                    dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(),
+                                    dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer());
+                            mHistoryService.addFileTransfer(historyFileTransfer);
+
                             showFileTransferNotification(transferId, dataTransferInfo.getPeer());
                         }
+                    }
+
+                    if (!dataTransferInfo.getIsOutgoing()) {
+                        mHistoryService.updateFileTransferStatus(dataTransferInfo.getPeer(), transferEventCode);
                     }
                     break;
                 }

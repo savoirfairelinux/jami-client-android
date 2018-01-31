@@ -108,7 +108,7 @@ along with this program; if not, write to the Free Software
     <string name="notif_channel_file_transfer">File transfer</string>
     <string name="notif_mark_as_read">Mark as read</string>
     <string name="notif_incoming_file_transfer_title">Incoming file transfer</string>
-    <string name="notif_incoming_file_transfer">%s wants to send you a file</string>
+    <string name="notif_incoming_file_transfer">Someone wants to send you a file</string>
     <string name="action_open">Open</string>
 
     <!-- Call Fragment -->
