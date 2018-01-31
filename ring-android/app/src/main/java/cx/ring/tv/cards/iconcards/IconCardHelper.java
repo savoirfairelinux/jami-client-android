@@ -67,7 +67,7 @@ public final class IconCardHelper {
     }
 
     public static IconCard getVersionCard(Context pContext) {
-        return new IconCard(Card.Type.ABOUT_VERSION, pContext.getString(R.string.version_section) + " 1.0" + " " + BuildConfig.VERSION_NAME, "", R.drawable.ic_ring_logo_white);
+        return new IconCard(Card.Type.ABOUT_VERSION, pContext.getString(R.string.version_section) + " 1.0" + " " + BuildConfig.VERSION_NAME, "", R.drawable.ic_ring_logo_white_vd);
     }
 
     public static IconCard getLicencesCard(Context pContext) {

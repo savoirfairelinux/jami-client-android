@@ -11,7 +11,7 @@
         android:layout_centerVertical="true"
         android:layout_margin="36dp"
         android:contentDescription="@string/app_name"
-        app:srcCompat="@drawable/ic_ring_logo_white" />
+        app:srcCompat="@drawable/ic_ring_logo_white_vd" />
 
     <TextView
         android:id="@+id/ring_acc_title_txt"
