@@ -40,8 +40,10 @@ import cx.ring.daemon.StringMap;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryEntry;
+import cx.ring.model.HistoryFileTransfer;
 import cx.ring.model.HistoryText;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
@@ -216,6 +218,16 @@ public abstract class HistoryService extends Observable {
         });
     }
 
+    public Single<List<HistoryFileTransfer>> getAllFilesForAccountAndContactRingId(final String accountId, final String contactRingId) {
+        return Single.fromCallable(new Callable<List<HistoryFileTransfer>>() {
+            @Override
+            public List<HistoryFileTransfer> call() throws Exception {
+                // todo: implement a new table in db
+                return new ArrayList<>();
+            }
+        });
+    }
+
     public Completable clearHistoryForContactAndAccount(final String contactId, final String accoundId) {
         return Completable.fromAction(new Action() {
             @Override
@@ -358,4 +370,40 @@ public abstract class HistoryService extends Observable {
         notifyObservers(event);
     }
 
+    private List<HistoryFileTransfer> fileTransfers = new ArrayList<>();
+
+    public List<HistoryFileTransfer> getFileTransfers(String accountId, String contactRingId) {
+        List<HistoryFileTransfer> result = new ArrayList<>();
+        for (HistoryFileTransfer historyFileTransfer : fileTransfers) {
+            if (historyFileTransfer.getAccountId().equals(accountId) && historyFileTransfer.getPeerId().equals(contactRingId)) {
+                result.add(historyFileTransfer);
+            }
+        }
+        return result;
+    }
+
+    public void addFileTransfer(HistoryFileTransfer historyFileTransfer) {
+        HistoryFileTransfer lastFileTransfer = getFileTransfer(historyFileTransfer.getDataTransferId());
+        if (lastFileTransfer != null) {
+            fileTransfers.remove(lastFileTransfer);
+        }
+        fileTransfers.add(historyFileTransfer);
+    }
+
+    public void updateFileTransferStatus(Long transferId, DataTransferEventCode dataTransferEventCode) {
+        HistoryFileTransfer lastFileTransfer = getFileTransfer(transferId);
+        if (lastFileTransfer != null) {
+            lastFileTransfer.setDataTransferEventCode(dataTransferEventCode);
+        }
+    }
+
+    private HistoryFileTransfer getFileTransfer(Long transferId) {
+        HistoryFileTransfer result = null;
+        for (HistoryFileTransfer historyFileTransfer : fileTransfers) {
+            if (historyFileTransfer.getDataTransferId().equals(transferId)) {
+                result = historyFileTransfer;
+            }
+        }
+        return result;
+    }
 }

@@ -124,6 +124,9 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
             perms.add(Manifest.permission.WRITE_CALL_LOG);
         }
 
+        perms.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        perms.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
         return perms.toArray(new String[perms.size()]);
     }
 

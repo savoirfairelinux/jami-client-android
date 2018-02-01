@@ -21,8 +21,10 @@
 package cx.ring.views;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import cx.ring.R;
@@ -34,6 +36,11 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
     public ImageView mPhoto;
     public TextView mHistTxt;
     public TextView mHistDetailTxt;
+    public View mAnswerLayout;
+    public View btnAccept;
+    public View btnRefuse;
+    public ImageView icon;
+    public ProgressBar progress;
     public long mCid = -1;
 
     public ConversationViewHolder(ViewGroup v, int type) {
@@ -42,6 +49,15 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             mHistTxt = v.findViewById(R.id.call_hist_txt);
             mHistDetailTxt = v.findViewById(R.id.call_details_txt);
             mPhoto = v.findViewById(R.id.call_icon);
+        } else if (type == ConversationAdapter.ConversationMessageType.FILE_TRANSFER_TEXT_MESSAGE.getType()) {
+            mMsgTxt = v.findViewById(R.id.call_hist_filename);
+            mMsgDetailTxt = v.findViewById(R.id.file_details_txt);
+            mPhoto = v.findViewById(R.id.direction_icon);
+            mAnswerLayout = v.findViewById(R.id.llAnswer);
+            btnAccept = v.findViewById(R.id.btnAccept);
+            btnRefuse = v.findViewById(R.id.btnRefuse);
+            progress = v.findViewById(R.id.progress);
+            icon = v.findViewById(R.id.file_icon);
         } else {
             mMsgTxt = v.findViewById(R.id.msg_txt);
             mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);

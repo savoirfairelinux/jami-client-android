@@ -31,6 +31,7 @@ public class ServiceEvent {
         CONFERENCE_CREATED,
         CONFERENCE_REMOVED,
         CONFERENCE_CHANGED,
+        DATA_TRANSFER,
         RECORD_PLAYBACK_FILEPATH,
         RTCP_REPORT_RECEIVED,
         VOLUME_CHANGED,
@@ -113,6 +114,8 @@ public class ServiceEvent {
         VIDEO_STARTED,
         VIDEO_WIDTH,
         VIDEO_HEIGHT,
+        TRANSFER_ID,
+        TRANSFER_EVENT_CODE,
         VIDEO_CALL
     }
 

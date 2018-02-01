@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -40,40 +41,20 @@ public class Conversation {
     private CallContact mContact;
     private String uuid;
 
-    private final Map<String, HistoryEntry> mHistory = new HashMap<>();
+    private final Map<String, HistoryEntry> mHistory;
     private final ArrayList<Conference> mCurrentCalls;
-    private final ArrayList<ConversationElement> mAggregateHistory = new ArrayList<>(32);
+    private final ArrayList<ConversationElement> mAggregateHistory;
 
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
-
     private long mLastContactRequest = 0L;
     public static final long PERIOD = 10L * 60L * 1000L; //10 minutes
 
     public Conversation(CallContact contact) {
         setContact(contact);
+        mHistory = new HashMap<>();
         mCurrentCalls = new ArrayList<>();
-    }
-
-    public class ConversationElement {
-        public HistoryCall call = null;
-        public TextMessage text = null;
-
-        ConversationElement(HistoryCall c) {
-            call = c;
-        }
-
-        ConversationElement(TextMessage t) {
-            text = t;
-        }
-
-        long getDate() {
-            if (text != null)
-                return text.getTimestamp();
-            else if (call != null)
-                return call.call_start;
-            return 0;
-        }
+        mAggregateHistory = new ArrayList<>(32);
     }
 
     public boolean hasCurrentCall() {
@@ -82,15 +63,17 @@ public class Conversation {
 
     public String getLastNumberUsed(String accountID) {
         HistoryEntry he = mHistory.get(accountID);
-        if (he == null)
+        if (he == null) {
             return null;
+        }
         return he.getLastNumberUsed();
     }
 
     public Conference getConference(String id) {
         for (Conference c : mCurrentCalls)
-            if (c.getId().contentEquals(id) || c.getCallById(id) != null)
+            if (c.getId().contentEquals(id) || c.getCallById(id) != null) {
                 return c;
+            }
         return null;
     }
 
@@ -118,8 +101,9 @@ public class Conversation {
     public Tuple<HistoryEntry, HistoryCall> findHistoryByCallId(String id) {
         for (HistoryEntry e : mHistory.values()) {
             for (HistoryCall c : e.getCalls().values()) {
-                if (c.getCallId().equals(id))
+                if (c.getCallId().equals(id)) {
                     return new Tuple<>(e, c);
+                }
             }
         }
         return null;
@@ -245,8 +229,9 @@ public class Conversation {
     }
 
     public Conference getCurrentCall() {
-        if (mCurrentCalls.isEmpty())
+        if (mCurrentCalls.isEmpty()) {
             return null;
+        }
         return mCurrentCalls.get(0);
     }
 
@@ -315,9 +300,107 @@ public class Conversation {
         mLastContactRequest = timestamp;
     }
 
+    public ConversationElement findConversationElement(Long transferId) {
+        for (ConversationElement ce : mAggregateHistory) {
+            if (ce.file != null && transferId.equals(ce.file.getDataTransferId())) {
+                return ce;
+            }
+        }
+        return null;
+    }
+
+    public void addFileTransfer(Long transferId, String filename, boolean isOutgoing, long totalSize, long bytesProgress, String peerId, String accountId) {
+        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, filename, isOutgoing, totalSize, bytesProgress, peerId, accountId);
+        addFileTransfer(historyFileTransfer);
+    }
+
+    public void addFileTransfer(HistoryFileTransfer historyFileTransfer) {
+        ConversationElement conversationElement = new ConversationElement(historyFileTransfer);
+        if (mAggregateHistory.contains(conversationElement)) {
+            return;
+        }
+        mAggregateHistory.add(conversationElement);
+    }
+
+    public void addFileTransfers(List<HistoryFileTransfer> historyFileTransfers) {
+        for (HistoryFileTransfer historyFileTransfer : historyFileTransfers) {
+            addFileTransfer(historyFileTransfer);
+        }
+    }
+
+    public void updateFileTransfer(long transferId, DataTransferEventCode eventCode) {
+        ConversationElement conversationElement = findConversationElement(transferId);
+        if (conversationElement != null) {
+            conversationElement.file.setDataTransferEventCode(eventCode);
+        }
+    }
+
+    public void removeAllButFileTransfers() {
+        for (ConversationElement ce : mAggregateHistory) {
+            if (ce.file == null) {
+                mAggregateHistory.remove(ce);
+            }
+        }
+    }
+
+    public void removeAll() {
+        mAggregateHistory.clear();
+    }
+
     public interface ConversationActionCallback {
+
         void deleteConversation(CallContact callContact);
 
         void copyContactNumberToClipboard(String contactNumber);
+
+    }
+
+    public class ConversationElement {
+        public HistoryCall call = null;
+        public TextMessage text = null;
+        public HistoryFileTransfer file = null;
+
+        ConversationElement(HistoryCall c) {
+            call = c;
+        }
+
+        ConversationElement(TextMessage t) {
+            text = t;
+        }
+
+        ConversationElement(HistoryFileTransfer f) {
+            file = f;
+        }
+
+        long getDate() {
+            if (text != null) {
+                return text.getTimestamp();
+            } else if (call != null) {
+                return call.call_start;
+            } else if (file != null) {
+                return file.getTimestamp();
+            }
+            return 0;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ConversationElement that = (ConversationElement) o;
+
+            if (call != null ? !call.equals(that.call) : that.call != null) return false;
+            if (text != null ? !text.equals(that.text) : that.text != null) return false;
+            return file != null ? file.equals(that.file) : that.file == null;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = call != null ? call.hashCode() : 0;
+            result = 31 * result + (text != null ? text.hashCode() : 0);
+            result = 31 * result + (file != null ? file.hashCode() : 0);
+            return result;
+        }
     }
 }
