@@ -19,16 +19,20 @@
  */
 package cx.ring.conversation;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import cx.ring.daemon.Blob;
+import cx.ring.daemon.DataTransferInfo;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
+import cx.ring.model.HistoryFileTransfer;
 import cx.ring.model.HistoryText;
 import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
@@ -73,6 +77,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     private String mAccountId;
 
     private boolean hasContactRequestPopupShown = false;
+    private CallContact mCurrentContact;
 
     @Inject
     public ConversationPresenter(ContactService mContactService,
@@ -107,6 +112,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         mContactRingId = contactRingId;
         mAccountId = accountId;
 
+        mCurrentContact = mContactService.getContact(new Uri(mContactRingId));
+        this.mConversation = new Conversation(mCurrentContact);
+
         mAccountService.addObserver(this);
         mHistoryService.addObserver(this);
         mCallService.addObserver(this);
@@ -114,7 +122,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
     public void pause() {
         if (mConversation != null) {
-            Conversation localConversation = mConversationFacade.getConversationByContact(mContactService.getContact(new Uri(mContactRingId)));
+            Conversation localConversation = mConversationFacade.getConversationByContact(mCurrentContact);
             if (localConversation != null) {
                 localConversation.setVisible(false);
             }
@@ -159,12 +167,41 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
             mHistoryService.insertNewTextMessage(txtMessage);
             mConversation.addTextMessage(txtMessage);
 
-            if (mContactService.getContact(new Uri(mContactRingId)).getStatus() == CallContact.Status.NO_REQUEST) {
+            if (mCurrentContact.getStatus() == CallContact.Status.NO_REQUEST) {
                 sendTrustRequest();
             }
 
+            Log.d(TAG, "sendTextMessage: AggregateHistorySize=" + mConversation.getAggregateHistory().size());
             getView().refreshView(mConversation);
         }
+    }
+
+    public void selectFile() {
+        getView().openFilePicker();
+    }
+
+    public void sendFile(String filePath) {
+        Log.d(TAG, "sendFile: sending file at " + filePath + " from accountId " + mAccountId + " to " + mContactRingId);
+
+        if (filePath == null) {
+            return;
+        }
+
+        // check file
+        File file = new File(filePath);
+        if (!file.exists()) {
+            Log.d(TAG, "sendFile: file not found");
+            return;
+        }
+
+        if (!file.canRead()) {
+            Log.d(TAG, "sendFile: file not readable");
+            return;
+        }
+
+        // send file
+        Uri uri = new Uri(mContactRingId);
+        mCallService.sendFile(mAccountId, uri.getHost(), filePath, file.getName());
     }
 
     public void sendTrustRequest() {
@@ -219,20 +256,25 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                 .zipWith(mHistoryService.getAllCallsForAccountAndContactRingId(mAccountId, mContactRingId),
                         new BiFunction<List<HistoryText>, List<HistoryCall>, Conversation>() {
                             @Override
-                            public Conversation apply(@NonNull List<HistoryText> historyTexts, @NonNull List<HistoryCall> historyCalls) throws Exception {
-                                CallContact callContact = mContactService.getContact(new Uri(mContactRingId));
-                                Conversation conversation = new Conversation(callContact);
+                            public Conversation apply(@NonNull List<HistoryText> historyTexts,
+                                                      @NonNull List<HistoryCall> historyCalls) throws Exception {
+
+                                mConversation.removeAll();
 
                                 for (HistoryCall call : historyCalls) {
-                                    conversation.addHistoryCall(call);
+                                    mConversation.addHistoryCall(call);
                                 }
 
                                 for (HistoryText htext : historyTexts) {
                                     TextMessage msg = new TextMessage(htext);
-                                    conversation.addTextMessage(msg);
+                                    mConversation.addTextMessage(msg);
                                 }
 
-                                return conversation;
+                                Uri uri = new Uri(mContactRingId);
+                                List<HistoryFileTransfer> historyFileTransfers = mHistoryService.getFileTransfers(mAccountId, uri.getRawRingId());
+                                mConversation.addFileTransfers(historyFileTransfers);
+
+                                return mConversation;
                             }
                         })
                 .subscribeOn(Schedulers.computation())
@@ -252,14 +294,15 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                         }
 
                         getView().hideNumberSpinner();
-                        getView().refreshView(conversation);
+                        Log.d(TAG, "loadHistory: AggregateHistorySize=" + mConversation.getAggregateHistory().size());
+                        getView().refreshView(mConversation);
                         if (!hasContactRequestPopupShown) {
                             checkContact();
                             hasContactRequestPopupShown = true;
                         }
 
                         mHistoryService.readMessages(mConversation);
-                        Conversation localConversation = mConversationFacade.getConversationByContact(mContactService.getContact(new Uri(mContactRingId)));
+                        Conversation localConversation = mConversationFacade.getConversationByContact(mCurrentContact);
                         if (localConversation != null) {
                             localConversation.setVisible(true);
                         }
@@ -277,7 +320,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     private void checkContact() {
-
         CallContact contact = mContactService.findContact(new Uri(mContactRingId));
         if (contact != null && CallContact.Status.CONFIRMED.equals(contact.getStatus())) {
             return;
@@ -302,16 +344,71 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                     TextMessage txt = event.getEventInput(ServiceEvent.EventInput.MESSAGE, TextMessage.class);
                     mConversation.addTextMessage(txt);
                     mHistoryService.readMessages(mConversation);
+                    Log.d(TAG, "update: AggregateHistorySize=" + mConversation.getAggregateHistory().size());
                     getView().refreshView(mConversation);
                     break;
             }
         } else if (observable instanceof CallService && event != null) {
             switch (event.getEventType()) {
+                case DATA_TRANSFER:
+                    Log.d(TAG, "update: data transfer callback received");
+
+                    Long transferId = event.getEventInput(ServiceEvent.EventInput.TRANSFER_ID, Long.class);
+                    DataTransferEventCode transferEventCode = event.getEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, DataTransferEventCode.class);
+
+                    handleDataTransferEvent(transferId, transferEventCode);
+                    break;
                 case INCOMING_CALL:
                 case CALL_STATE_CHANGED:
                     loadHistory();
                     break;
             }
         }
+    }
+
+    private void handleDataTransferEvent(Long transferId, DataTransferEventCode transferEventCode) {
+
+        // find corresponding transfer
+        mConversation.updateFileTransfer(transferId, transferEventCode);
+
+        DataTransferInfo dataTransferInfo = null;
+        if (transferEventCode == DataTransferEventCode.CREATED || transferEventCode == DataTransferEventCode.FINISHED) {
+            dataTransferInfo = mCallService.dataTransferInfo(transferId);
+        }
+
+        switch (transferEventCode) {
+            case CREATED:
+                Log.i(TAG, "handleDataTransferEvent: CREATED");
+
+                if (dataTransferInfo != null) {
+                    mConversation.addFileTransfer(transferId, dataTransferInfo.getDisplayName(),
+                            dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(),
+                            dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
+                            dataTransferInfo.getAccountId());
+                }
+                break;
+            case FINISHED:
+                if (dataTransferInfo != null) {
+                    if (!dataTransferInfo.getIsOutgoing()) {
+                        getView().writeCacheFile(dataTransferInfo.getDisplayName());
+                    }
+                }
+                break;
+            default:
+                Log.d(TAG, "handleDataTransferEvent: " + transferEventCode.name());
+        }
+
+        Log.d(TAG, "handleDataTransferEvent: AggregateHistorySize=" + mConversation.getAggregateHistory().size() + ", transferEventCode=" + transferEventCode);
+        getView().refreshView(mConversation);
+    }
+
+    public void acceptTransfer(Long dataTransferId, String filePath) {
+        Log.d(TAG, "acceptTransfer: dataTransferId=" + dataTransferId);
+        mCallService.acceptFileTransfer(dataTransferId, filePath, 0);
+    }
+
+    public void cancelTransfer(Long dataTransferId) {
+        Log.d(TAG, "cancelTransfer: dataTransferId=" + dataTransferId);
+        mCallService.cancelDataTransfer(dataTransferId);
     }
 }

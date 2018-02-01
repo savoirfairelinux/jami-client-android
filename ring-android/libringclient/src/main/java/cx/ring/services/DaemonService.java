@@ -282,13 +282,6 @@ public class DaemonService {
 
     }
 
-    class DaemonDataTransferCallback extends DataTransferCallback {
-        @Override
-        public void dataTransferEvent(long transferId, int eventCode) {
-            Log.d(TAG, "dataTransferEvent: " + transferId + " -> " + eventCode);
-        }
-    }
-
     class DaemonPresenceCallback extends PresenceCallback {
 
         @Override
@@ -343,6 +336,15 @@ public class DaemonService {
         @Override
         public void stopCapture() {
             mHardwareService.stopCapture();
+        }
+    }
+
+    class DaemonDataTransferCallback extends DataTransferCallback {
+
+        @Override
+        public void dataTransferEvent(long transferId, int eventCode) {
+            Log.d(TAG, "dataTransferEvent: transferId=" + transferId + ", eventCode=" + eventCode);
+            mCallService.dataTransferEvent(transferId, eventCode);
         }
     }
 }

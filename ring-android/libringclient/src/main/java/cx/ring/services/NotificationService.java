@@ -51,4 +51,6 @@ public abstract class NotificationService {
 
     public abstract void cancelTrustRequestNotification(String accountID);
 
+    public abstract void showFileTransferNotification(Long dataTransferId, String accountId);
+
 }

@@ -288,7 +288,8 @@ public class AccountService extends Observable {
      */
     public Account getAccount(String accountId) {
         for (Account account : mAccountList) {
-            if (account.getAccountID().equals(accountId)) {
+            String accountID = account.getAccountID();
+            if (accountID != null && accountID.equals(accountId)) {
                 return account;
             }
         }

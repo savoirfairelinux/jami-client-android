@@ -20,6 +20,7 @@
  */
 package cx.ring.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -32,14 +33,20 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import cx.ring.R;
+import cx.ring.conversation.ConversationPresenter;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransferEventCode;
+import cx.ring.model.HistoryFileTransfer;
 import cx.ring.model.TextMessage;
 import cx.ring.utils.CircleTransform;
+import cx.ring.utils.FileUtils;
+import cx.ring.utils.ResourceMapper;
 import cx.ring.views.ConversationViewHolder;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
@@ -48,25 +55,30 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private static final double MINUTE = 60L * 1000L;
     private static final double HOUR = 3600L * 1000L;
 
-    private final ArrayList<Conversation.ConversationElement> mTexts = new ArrayList<>();
+    private final ArrayList<Conversation.ConversationElement> mConversationElements = new ArrayList<>();
+    private final ConversationPresenter presenter;
+    private final Activity activity;
     private byte[] mPhoto;
+
+    public ConversationAdapter(Activity activity, ConversationPresenter presenter) {
+        this.activity = activity;
+        this.presenter = presenter;
+    }
 
     /**
      * Refreshes the data and notifies the changes
      *
      * @param list an arraylist of ConversationElement
-     * @param id   the message id initiating the update, 0 if full refresh
      */
-    public void updateDataset(final ArrayList<Conversation.ConversationElement> list, long id) {
-        Log.d(TAG, "updateDataset, list size: " + list.size() + " - mId: " + id);
-        if (list.size() == mTexts.size()) {
-            if (id != 0) {
-                notifyDataSetChanged();
-            }
-            return;
+    public void updateDataset(final ArrayList<Conversation.ConversationElement> list) {
+        Log.d(TAG, "updateDataset: list size=" + list.size());
+
+        if (list.size() > mConversationElements.size()) {
+            mConversationElements.addAll(list.subList(mConversationElements.size(), list.size()));
+        } else {
+            mConversationElements.clear();
+            mConversationElements.addAll(list);
         }
-        mTexts.clear();
-        mTexts.addAll(list);
         notifyDataSetChanged();
     }
 
@@ -82,22 +94,26 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     @Override
     public int getItemCount() {
-        return mTexts.size();
+        return mConversationElements.size();
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return mConversationElements.get(position).hashCode();
     }
 
     @Override
     public int getItemViewType(int position) {
-        Conversation.ConversationElement txt = mTexts.get(position);
-        if (txt.text != null) {
-            if (txt.text.isIncoming())
+        Conversation.ConversationElement conversationElement = mConversationElements.get(position);
+        if (conversationElement.text != null) {
+            if (conversationElement.text.isIncoming()) {
                 return ConversationMessageType.INCOMING_TEXT_MESSAGE.getType();
-            else
+            } else {
                 return ConversationMessageType.OUTGOING_TEXT_MESSAGE.getType();
+            }
+        }
+        if (conversationElement.file != null) {
+            return ConversationMessageType.FILE_TRANSFER_TEXT_MESSAGE.getType();
         }
         return ConversationMessageType.CALL_INFORMATION_TEXT_MESSAGE.getType();
     }
@@ -109,6 +125,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             res = R.layout.item_conv_msg_peer;
         } else if (viewType == ConversationMessageType.OUTGOING_TEXT_MESSAGE.getType()) {
             res = R.layout.item_conv_msg_me;
+        } else if (viewType == ConversationMessageType.FILE_TRANSFER_TEXT_MESSAGE.getType()) {
+            res = R.layout.item_conv_file;
         } else {
             res = R.layout.item_conv_call;
         }
@@ -118,11 +136,83 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     @Override
     public void onBindViewHolder(ConversationViewHolder conversationViewHolder, int position) {
-        Conversation.ConversationElement textElement = mTexts.get(position);
+        Conversation.ConversationElement textElement = mConversationElements.get(position);
         if (textElement.text != null) {
             this.configureForTextMessage(conversationViewHolder, textElement, position);
-        } else {
+        } else if (textElement.file != null) {
+            this.configureForFileInfoTextMessage(conversationViewHolder, textElement);
+        } else if (textElement.call != null) {
             this.configureForCallInfoTextMessage(conversationViewHolder, textElement);
+        }
+    }
+
+    private void configureForFileInfoTextMessage(final ConversationViewHolder conversationViewHolder,
+                                                 final Conversation.ConversationElement conversationElement) {
+        if (conversationViewHolder == null || conversationElement == null) {
+            return;
+        }
+        HistoryFileTransfer file = conversationElement.file;
+        if (file == null) {
+            Log.d(TAG, "configureForFileInfoTextMessage: not able to get file from conversationElement");
+            return;
+        }
+
+        if (file.getDataTransferEventCode().isError()) {
+            conversationViewHolder.icon.setImageResource(R.drawable.ic_warning);
+        }
+
+        conversationViewHolder.mMsgTxt.setText(file.getDisplayName());
+
+        String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
+                conversationViewHolder.itemView.getContext(),
+                file.getTimestamp());
+        conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
+                timeSeparationString, FileUtils.readableFileSize(file.getTotalSize()),
+                ResourceMapper.getReadableFileTransferStatus(activity, file.getDataTransferEventCode())));
+        if (file.isOutgoing()) {
+            conversationViewHolder.mPhoto.setImageResource(R.drawable.ic_outgoing_black);
+        } else {
+            conversationViewHolder.mPhoto.setImageResource(R.drawable.ic_incoming_black);
+        }
+
+        if (file.getDataTransferEventCode() == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
+            conversationViewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
+            conversationViewHolder.btnAccept.setOnClickListener(v -> {
+                conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
+
+                if (!FileUtils.isExternalStorageWritable()) {
+                    Log.e(TAG, "configureForFileInfoTextMessage: external storage is not writable");
+                    return;
+                }
+
+                File cacheDir = activity.getCacheDir();
+                if (!cacheDir.exists()) {
+                    boolean mkdirs = cacheDir.mkdirs();
+                    if (!mkdirs) {
+                        Log.e(TAG, "configureForFileInfoTextMessage: not able to create directory at " + cacheDir.toString());
+                        return;
+                    }
+                }
+
+                File cacheFile = new File(cacheDir, file.getDisplayName());
+                if (cacheFile.exists()) {
+                    boolean delete = cacheFile.delete();
+                    if (!delete) {
+                        Log.e(TAG, "configureForFileInfoTextMessage: not able to delete cache file at " + cacheFile.toString());
+                        return;
+                    }
+                }
+
+                Log.d(TAG, "configureForFileInfoTextMessage: cacheFile=" + cacheFile + ",exists=" + cacheFile.exists());
+
+                presenter.acceptTransfer(file.getDataTransferId(), cacheFile.toString());
+            });
+            conversationViewHolder.btnRefuse.setOnClickListener(v -> {
+                conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
+                presenter.cancelTransfer(file.getDataTransferId());
+            });
+        } else {
+            conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
         }
     }
 
@@ -195,7 +285,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         if (convElement.call.isMissed()) {
             if (convElement.call.isIncoming()) {
-                pictureResID = R.drawable.ic_call_missed_black;
+                pictureResID = R.drawable.ic_call_missed_incoming_black;
             } else {
                 pictureResID = R.drawable.ic_call_missed_outgoing_black;
                 // Flip the photo upside down to show a "missed outgoing call"
@@ -206,8 +296,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     context.getString(R.string.notif_missed_outgoing_call);
         } else {
             pictureResID = (convElement.call.isIncoming()) ?
-                    R.drawable.ic_call_received_black :
-                    R.drawable.ic_call_made_black;
+                    R.drawable.ic_incoming_black :
+                    R.drawable.ic_outgoing_black;
             historyTxt = convElement.call.isIncoming() ?
                     context.getString(R.string.notif_incoming_call) :
                     context.getString(R.string.notif_outgoing_call);
@@ -247,8 +337,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      */
     @Nullable
     private TextMessage getPreviousMessageFromPosition(int position) {
-        if (!mTexts.isEmpty() && position > 0) {
-            return mTexts.get(position - 1).text;
+        if (!mConversationElements.isEmpty() && position > 0) {
+            return mConversationElements.get(position - 1).text;
         }
         return null;
     }
@@ -261,8 +351,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      */
     @Nullable
     private TextMessage getNextMessageFromPosition(int position) {
-        if (!mTexts.isEmpty() && position < mTexts.size() - 1) {
-            return mTexts.get(position + 1).text;
+        if (!mConversationElements.isEmpty() && position < mConversationElements.size() - 1) {
+            return mConversationElements.get(position + 1).text;
         }
         return null;
     }
@@ -324,7 +414,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     public enum ConversationMessageType {
         INCOMING_TEXT_MESSAGE(0),
         OUTGOING_TEXT_MESSAGE(1),
-        CALL_INFORMATION_TEXT_MESSAGE(2);
+        CALL_INFORMATION_TEXT_MESSAGE(2),
+        FILE_TRANSFER_TEXT_MESSAGE(3);
 
         int type;
 
