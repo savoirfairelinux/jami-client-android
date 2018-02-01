@@ -195,14 +195,6 @@ public class Conversation {
         }
     }
 
-    public void addFileTransfer(HistoryFileTransfer historyFileTransfer) {
-        ConversationElement conversationElement = new ConversationElement(historyFileTransfer);
-        if (mAggregateHistory.contains(conversationElement)) {
-            return;
-        }
-        mAggregateHistory.add(conversationElement);
-    }
-
     public Map<String, HistoryEntry> getHistory() {
         return mHistory;
     }
@@ -316,11 +308,17 @@ public class Conversation {
         return null;
     }
 
-    public ConversationElement addFileTransfer(Long transferId, String filename, boolean isOutgoing, long totalSize, long bytesProgress, String peerId) {
+    public void addFileTransfer(Long transferId, String filename, boolean isOutgoing, long totalSize, long bytesProgress, String peerId) {
         HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, filename, isOutgoing, totalSize, bytesProgress, peerId);
+        addFileTransfer(historyFileTransfer);
+    }
+
+    public void addFileTransfer(HistoryFileTransfer historyFileTransfer) {
         ConversationElement conversationElement = new ConversationElement(historyFileTransfer);
+        if (mAggregateHistory.contains(conversationElement)) {
+            return;
+        }
         mAggregateHistory.add(conversationElement);
-        return conversationElement;
     }
 
     public void updateFileTransfer(long transferId, DataTransferEventCode eventCode) {
@@ -336,6 +334,10 @@ public class Conversation {
                 mAggregateHistory.remove(ce);
             }
         }
+    }
+
+    public void removeAll() {
+        mAggregateHistory.clear();
     }
 
     public interface ConversationActionCallback {

@@ -73,7 +73,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * @param list an arraylist of ConversationElement
      */
     public void updateDataset(final ArrayList<Conversation.ConversationElement> list) {
-        Log.d(TAG, "updateDataset, list size: " + list.size());
+        Log.d(TAG, "updateDataset: list size=" + list.size());
 
         if (list.size() > mConversationElements.size()) {
             mConversationElements.addAll(list.subList(mConversationElements.size(), list.size()));
@@ -101,7 +101,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return mConversationElements.get(position).hashCode();
     }
 
     @Override
