@@ -26,7 +26,6 @@ import java.util.Map;
 
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
-import cx.ring.utils.Log;
 import cx.ring.utils.ProfileChunk;
 import cx.ring.utils.VCardUtils;
 import ezvcard.Ezvcard;

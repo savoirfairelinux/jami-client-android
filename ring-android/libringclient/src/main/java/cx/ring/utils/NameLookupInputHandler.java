@@ -21,6 +21,7 @@ package cx.ring.utils;
 import java.lang.ref.WeakReference;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import cx.ring.services.AccountService;
 
 public class NameLookupInputHandler {

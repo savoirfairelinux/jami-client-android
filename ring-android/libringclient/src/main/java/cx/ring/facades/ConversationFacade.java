@@ -133,10 +133,30 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         return null;
     }
 
+    public Conversation getConversationByContactId(String contactId) {
+        if (contactId != null) {
+            Conversation conversation = mConversationMap.get(contactId);
+            if (conversation != null) {
+                return conversation;
+            }
+        }
+        return null;
+    }
+
     public Conversation getConversationByCallId(String callId) {
         for (Conversation conversation : mConversationMap.values()) {
             Conference conf = conversation.getConference(callId);
             if (conf != null) {
+                return conversation;
+            }
+        }
+        return null;
+    }
+
+    public Conversation getConversationByTransferId(long transferId) {
+        for (Conversation conversation : mConversationMap.values()) {
+            Conversation.ConversationElement conversationElement = conversation.findConversationElement(transferId);
+            if (conversationElement != null) {
                 return conversation;
             }
         }
@@ -386,7 +406,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
     @Override
     public void update(Observable observable, ServiceEvent event) {
-
         if (event == null) {
             return;
         }
@@ -529,8 +548,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                             && currenConf.isIncoming());
 
                     setChanged();
-                    ServiceEvent event1 = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
-                    notifyObservers(event1);
+                    ServiceEvent serviceEvent = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
+                    notifyObservers(serviceEvent);
                     break;
             }
         } else if (observable instanceof ContactService) {

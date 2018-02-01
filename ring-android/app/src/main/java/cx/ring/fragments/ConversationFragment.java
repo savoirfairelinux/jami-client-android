@@ -20,6 +20,7 @@ package cx.ring.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -28,6 +29,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,6 +38,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -52,12 +58,16 @@ import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
+import cx.ring.model.RingError;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
+import cx.ring.utils.FileUtils;
 import cx.ring.utils.MediaButtonsHelper;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ConversationFragment extends BaseFragment<ConversationPresenter> implements
         Conversation.ConversationActionCallback,
@@ -72,6 +82,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
     private static final int MIN_SIZE_TABLET = 960;
+
+    private static final int REQUEST_CODE_FILE_PICKER = 1000;
 
     @BindView(R.id.msg_input_txt)
     protected EditText mMsgEditTxt;
@@ -110,7 +122,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     public void refreshView(final Conversation conversation) {
         getActivity().runOnUiThread(() -> {
             if (mAdapter != null) {
-                mAdapter.updateDataset(conversation.getAggregateHistory(), 0);
+                mAdapter.updateDataset(conversation.getAggregateHistory());
 
                 if (mAdapter.getItemCount() > 0) {
                     mHistList.smoothScrollToPosition(mAdapter.getItemCount() - 1);
@@ -152,7 +164,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
         setHasOptionsMenu(true);
 
-        mAdapter = new ConversationAdapter();
+        mAdapter = new ConversationAdapter(getActivity(), presenter);
 
         if (mHistList != null) {
             mHistList.setAdapter(mAdapter);
@@ -176,6 +188,58 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @OnClick(R.id.msg_send)
     public void sendMessageText() {
         presenter.sendTextMessage(mMsgEditTxt.getText().toString());
+    }
+
+    @OnClick(R.id.file_send)
+    public void selectFile() {
+        presenter.selectFile();
+    }
+
+    @Override
+    public void openFilePicker() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+
+        startActivityForResult(intent, REQUEST_CODE_FILE_PICKER);
+    }
+
+    @Override
+    public void writeCacheFile(String cacheFilename) {
+        File cacheFile = new File(getActivity().getCacheDir(), cacheFilename);
+        try {
+            String finalFilePath = FileUtils.writeCacheFileToExtStorage(getActivity(), android.net.Uri.fromFile(cacheFile), cacheFile.getName());
+
+            // Tell the media scanner about the new file so that it is immediately available to the user
+            MediaScannerConnection.scanFile(getActivity(), new String[]{finalFilePath}, null, null);
+
+            getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), getActivity().getString(R.string.file_saved_in, finalFilePath), Toast.LENGTH_LONG).show());
+        } catch (IOException e) {
+            Log.e(TAG, "writeCacheFile: ", e);
+            getActivity().runOnUiThread(() -> displayErrorToast(RingError.NOT_ABLE_TO_WRITE_FILE));
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        super.onActivityResult(requestCode, resultCode, resultData);
+
+        if (requestCode == REQUEST_CODE_FILE_PICKER && resultCode == RESULT_OK) {
+            if (resultData != null) {
+                android.net.Uri uri = resultData.getData();
+                if (uri == null) {
+                    return;
+                }
+
+                try {
+                    File cacheFile = FileUtils.getCacheFile(getActivity(), uri);
+                    presenter.sendFile(cacheFile.toString());
+                } catch (IOException e) {
+                    Log.e(TAG, "onActivityResult: not able to create cache file");
+                    displayErrorToast(RingError.INVALID_FILE);
+                }
+            }
+        }
     }
 
     @OnEditorAction(R.id.msg_input_txt)

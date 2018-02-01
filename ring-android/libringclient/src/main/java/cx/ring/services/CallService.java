@@ -28,10 +28,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.daemon.Blob;
+import cx.ring.daemon.DataTransferInfo;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.CallContact;
+import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
@@ -424,6 +426,68 @@ public class CallService extends Observable {
         );
     }
 
+    public DataTransferInfo dataTransferInfo(final Long dataTransferId) {
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<DataTransferInfo>() {
+                    @Override
+                    public DataTransferInfo call() throws Exception {
+                        Log.i(TAG, "dataTransferInfo() thread running... dataTransferId=" + dataTransferId);
+                        return Ringservice.dataTransferInfo(dataTransferId);
+                    }
+                }
+        );
+    }
+
+    public Long sendFile(final String accountId, final String to, final String filePath, final String displayName) {
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Long>() {
+                    @Override
+                    public Long call() throws Exception {
+                        Log.i(TAG, "sendFile() thread running... accountId=" + accountId + ", to=" + to + ", filePath=" + filePath);
+                        return Ringservice.sendFile(accountId, to, filePath, displayName);
+                    }
+                }
+        );
+    }
+
+    public void acceptFileTransfer(final Long dataTransferId, final String filePath, final long offset) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "acceptFileTransfer() thread running... dataTransferId=" + dataTransferId + ", filePath=" + filePath + ", offset=" + offset);
+                        Ringservice.acceptFileTransfer(dataTransferId, filePath, offset);
+                        return true;
+                    }
+                }
+        );
+    }
+
+    public void cancelDataTransfer(final Long dataTransferId) {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<Boolean>() {
+                    @Override
+                    public Boolean call() throws Exception {
+                        Log.i(TAG, "cancelDataTransfer() thread running... dataTransferId=" + dataTransferId);
+                        Ringservice.cancelDataTransfer(dataTransferId);
+                        return true;
+                    }
+                }
+        );
+    }
+
     public SipCall getCurrentCallForId(String callId) {
         return currentCalls.get(callId);
     }
@@ -533,5 +597,24 @@ public class CallService extends Observable {
         event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
         event.addEventInput(ServiceEvent.EventInput.STATS, stats);
         notifyObservers(event);
+    }
+
+    public void dataTransferEvent(long transferId, int eventCode) {
+        DataTransferEventCode dataTransferEventCode = DataTransferEventCode.UNSUPPORTED;
+        try {
+            dataTransferEventCode = DataTransferEventCode.values()[eventCode];
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+            Log.e(TAG, "dataTransferEvent: invalid data transfer status from daemon");
+        }
+
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DATA_TRANSFER);
+        event.addEventInput(ServiceEvent.EventInput.TRANSFER_ID, transferId);
+        event.addEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, dataTransferEventCode);
+        notifyObservers(event);
+    }
+
+    public interface DaemonCallback {
+        void fileWritten();
     }
 }

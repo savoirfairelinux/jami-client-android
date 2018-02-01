@@ -105,7 +105,11 @@ along with this program; if not, write to the Free Software
     <string name="notif_channel_calls">Calls</string>
     <string name="notif_channel_messages">Messages</string>
     <string name="notif_channel_requests">Requests</string>
+    <string name="notif_channel_file_transfer">File transfer</string>
     <string name="notif_mark_as_read">Mark as read</string>
+    <string name="notif_incoming_file_transfer_title">Incoming file transfer</string>
+    <string name="notif_incoming_file_transfer">Someone wants to send you a file</string>
+    <string name="action_open">Open</string>
 
     <!-- Call Fragment -->
     <string name="you_txt_prefix">You:</string>
@@ -132,6 +136,7 @@ along with this program; if not, write to the Free Software
     <string name="send_message">Send message</string>
     <string name="message_sending">Sending message…</string>
     <string name="time_just_now">Just now</string>
+    <string name="send_file">Send file</string>
 
     <!-- MediaPreferenceFragment -->
     <string name="permission_dialog_camera_title">Camera permission</string>
@@ -217,5 +222,20 @@ along with this program; if not, write to the Free Software
     <string name="gallery_error_message">No application found on device to open Gallery</string>
 
     <string name="generic_error">An unknown error occurred</string>
+
+    <!--File Transfer-->
+    <string name="invalid_file">Invalid file</string>
+    <string name="not_able_to_write_file">Not able to write file</string>
+    <string name="file_transfer_status_created">initializing transfer</string>
+    <string name="file_transfer_status_unsupported">unsupported</string>
+    <string name="file_transfer_status_wait_peer_acceptance">waiting peer acceptance</string>
+    <string name="file_transfer_status_wait_host_acceptance">waiting host acceptance</string>
+    <string name="file_transfer_status_ongoing">ongoing</string>
+    <string name="file_transfer_status_finished">finished</string>
+    <string name="file_transfer_status_closed_by_host">closed by host</string>
+    <string name="file_transfer_status_closed_by_peer">close by peer</string>
+    <string name="file_transfer_status_invalid_pathname">invalid pathname</string>
+    <string name="file_transfer_status_unjoinable_peer">unjoinable peer</string>
+    <string name="file_saved_in">File saved in %s</string>
 
 </resources>
