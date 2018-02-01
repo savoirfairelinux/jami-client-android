@@ -19,6 +19,7 @@
  */
 package cx.ring.services;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -612,5 +613,9 @@ public class CallService extends Observable {
         event.addEventInput(ServiceEvent.EventInput.TRANSFER_ID, transferId);
         event.addEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, dataTransferEventCode);
         notifyObservers(event);
+    }
+
+    public interface DaemonCallback {
+        void fileWritten();
     }
 }

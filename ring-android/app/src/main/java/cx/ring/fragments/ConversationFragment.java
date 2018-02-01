@@ -20,6 +20,7 @@ package cx.ring.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -37,6 +38,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -200,6 +202,21 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         intent.setType("*/*");
 
         startActivityForResult(intent, REQUEST_CODE_FILE_PICKER);
+    }
+
+    @Override
+    public void writeCacheFile(String cacheFilename) {
+        File cacheFile = new File(getActivity().getCacheDir(), cacheFilename);
+        try {
+            String finalFilePath = FileUtils.writeCacheFileToExtStorage(getActivity(), android.net.Uri.fromFile(cacheFile), cacheFile.getName());
+
+            // Tell the media scanner about the new file so that it is immediately available to the user
+            MediaScannerConnection.scanFile(getActivity(), new String[]{finalFilePath}, null, null);
+
+            getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), getActivity().getString(R.string.file_saved_in, finalFilePath), Toast.LENGTH_LONG).show());
+        } catch (IOException e) {
+            displayErrorToast(RingError.NOT_ABLE_TO_WRITE_FILE);
+        }
     }
 
     @Override

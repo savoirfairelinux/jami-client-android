@@ -371,16 +371,27 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         // find corresponding transfer
         mConversation.updateFileTransfer(transferId, transferEventCode);
 
+        DataTransferInfo dataTransferInfo = null;
+        if (transferEventCode == DataTransferEventCode.CREATED || transferEventCode == DataTransferEventCode.FINISHED) {
+            dataTransferInfo = mCallService.dataTransferInfo(transferId);
+        }
+
         switch (transferEventCode) {
             case CREATED:
                 Log.i(TAG, "handleDataTransferEvent: CREATED");
 
-                DataTransferInfo dataTransferInfo = mCallService.dataTransferInfo(transferId);
                 if (dataTransferInfo != null) {
                     mConversation.addFileTransfer(transferId, dataTransferInfo.getDisplayName(),
                             dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(),
                             dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
                             dataTransferInfo.getAccountId());
+                }
+                break;
+            case FINISHED:
+                if (dataTransferInfo != null) {
+                    if (!dataTransferInfo.getIsOutgoing()) {
+                        getView().writeCacheFile(dataTransferInfo.getDisplayName());
+                    }
                 }
                 break;
             default:

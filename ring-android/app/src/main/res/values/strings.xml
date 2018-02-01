@@ -222,7 +222,20 @@ along with this program; if not, write to the Free Software
     <string name="gallery_error_message">No application found on device to open Gallery</string>
 
     <string name="generic_error">An unknown error occurred</string>
-    <string name="warning_big_file">This file is big. Transfer may fail depending on network reliability.</string>
+
+    <!--File Transfer-->
     <string name="invalid_file">Invalid file</string>
+    <string name="not_able_to_write_file">Not able to write file</string>
+    <string name="file_transfer_status_created">initializing transfer</string>
+    <string name="file_transfer_status_unsupported">unsupported</string>
+    <string name="file_transfer_status_wait_peer_acceptance">waiting peer acceptance</string>
+    <string name="file_transfer_status_wait_host_acceptance">waiting host acceptance</string>
+    <string name="file_transfer_status_ongoing">ongoing</string>
+    <string name="file_transfer_status_finished">finished</string>
+    <string name="file_transfer_status_closed_by_host">closed by host</string>
+    <string name="file_transfer_status_closed_by_peer">close by peer</string>
+    <string name="file_transfer_status_invalid_pathname">invalid pathname</string>
+    <string name="file_transfer_status_unjoinable_peer">unjoinable peer</string>
+    <string name="file_saved_in">File saved in %s</string>
 
 </resources>
