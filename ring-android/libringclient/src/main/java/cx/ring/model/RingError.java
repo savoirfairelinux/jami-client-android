@@ -26,5 +26,5 @@ public abstract class RingError {
     public static final int NO_MICROPHONE = 1;
     public static final int NO_INPUT = 2;
     public static final int INVALID_FILE = 3;
-
+    public static final int NOT_ABLE_TO_WRITE_FILE = 4;
 }

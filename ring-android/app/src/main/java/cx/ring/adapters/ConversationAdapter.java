@@ -22,8 +22,6 @@ package cx.ring.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.MediaScannerConnection;
-import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -36,7 +34,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,6 +46,7 @@ import cx.ring.model.HistoryFileTransfer;
 import cx.ring.model.TextMessage;
 import cx.ring.utils.CircleTransform;
 import cx.ring.utils.FileUtils;
+import cx.ring.utils.ResourceMapper;
 import cx.ring.views.ConversationViewHolder;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
@@ -169,7 +167,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 conversationViewHolder.itemView.getContext(),
                 file.getTimestamp());
         conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
-                timeSeparationString, FileUtils.readableFileSize(file.getTotalSize()), file.getDataTransferEventCode().name()));
+                timeSeparationString, FileUtils.readableFileSize(file.getTotalSize()),
+                ResourceMapper.getReadableFileTransferStatus(activity, file.getDataTransferEventCode())));
         if (file.isOutgoing()) {
             conversationViewHolder.mPhoto.setImageResource(R.drawable.ic_outgoing_black);
         } else {
@@ -205,16 +204,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 }
 
                 Log.d(TAG, "configureForFileInfoTextMessage: cacheFile=" + cacheFile + ",exists=" + cacheFile.exists());
+
                 presenter.acceptTransfer(file.getDataTransferId(), cacheFile.toString());
-
-                try {
-                    String finalFilename = FileUtils.writeCacheFileToExtStorage(activity, Uri.fromFile(cacheFile), cacheFile.getName());
-
-                    // Tell the media scanner about the new file so that it is immediately available to the user
-                    MediaScannerConnection.scanFile(activity, new String[]{finalFilename}, null, null);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             });
             conversationViewHolder.btnRefuse.setOnClickListener(v -> {
                 conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);

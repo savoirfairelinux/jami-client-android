@@ -92,6 +92,9 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment imp
             case RingError.INVALID_FILE:
                 errorString = getString(R.string.invalid_file);
                 break;
+            case RingError.NOT_ABLE_TO_WRITE_FILE:
+                errorString = getString(R.string.not_able_to_write_file);
+                break;
             default:
                 errorString = getString(R.string.generic_error);
                 break;

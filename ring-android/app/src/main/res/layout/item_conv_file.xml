@@ -46,7 +46,7 @@
             android:layout_marginEnd="0dp"
             android:layout_marginStart="12dp"
             android:alpha="0.75"
-            app:srcCompat="@drawable/ic_upload_black" />
+            app:srcCompat="@drawable/ic_clip_black" />
 
         <ImageView
             android:id="@+id/direction_icon"
