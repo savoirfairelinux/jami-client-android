@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -195,14 +196,6 @@ public class Conversation {
         }
     }
 
-    public void addFileTransfer(HistoryFileTransfer historyFileTransfer) {
-        ConversationElement conversationElement = new ConversationElement(historyFileTransfer);
-        if (mAggregateHistory.contains(conversationElement)) {
-            return;
-        }
-        mAggregateHistory.add(conversationElement);
-    }
-
     public Map<String, HistoryEntry> getHistory() {
         return mHistory;
     }
@@ -316,11 +309,23 @@ public class Conversation {
         return null;
     }
 
-    public ConversationElement addFileTransfer(Long transferId, String filename, boolean isOutgoing, long totalSize, long bytesProgress, String peerId) {
-        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, filename, isOutgoing, totalSize, bytesProgress, peerId);
+    public void addFileTransfer(Long transferId, String filename, boolean isOutgoing, long totalSize, long bytesProgress, String peerId, String accountId) {
+        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, filename, isOutgoing, totalSize, bytesProgress, peerId, accountId);
+        addFileTransfer(historyFileTransfer);
+    }
+
+    public void addFileTransfer(HistoryFileTransfer historyFileTransfer) {
         ConversationElement conversationElement = new ConversationElement(historyFileTransfer);
+        if (mAggregateHistory.contains(conversationElement)) {
+            return;
+        }
         mAggregateHistory.add(conversationElement);
-        return conversationElement;
+    }
+
+    public void addFileTransfers(List<HistoryFileTransfer> historyFileTransfers) {
+        for (HistoryFileTransfer historyFileTransfer : historyFileTransfers) {
+            addFileTransfer(historyFileTransfer);
+        }
     }
 
     public void updateFileTransfer(long transferId, DataTransferEventCode eventCode) {
@@ -336,6 +341,10 @@ public class Conversation {
                 mAggregateHistory.remove(ce);
             }
         }
+    }
+
+    public void removeAll() {
+        mAggregateHistory.clear();
     }
 
     public interface ConversationActionCallback {

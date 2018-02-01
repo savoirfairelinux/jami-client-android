@@ -507,7 +507,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
                         HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, dataTransferInfo.getDisplayName(),
                                 dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(),
-                                dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer());
+                                dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
+                                dataTransferInfo.getAccountId());
                         mHistoryService.addFileTransfer(historyFileTransfer);
 
                         if (!dataTransferInfo.getIsOutgoing()) {
@@ -516,7 +517,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                     }
 
                     if (!dataTransferInfo.getIsOutgoing()) {
-                        mHistoryService.updateFileTransferStatus(dataTransferInfo.getPeer(), transferEventCode);
+                        mHistoryService.updateFileTransferStatus(transferId, transferEventCode);
                     }
 
                     if (transferEventCode == DataTransferEventCode.FINISHED) {

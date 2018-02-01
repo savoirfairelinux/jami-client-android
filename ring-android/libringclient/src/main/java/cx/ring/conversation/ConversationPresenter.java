@@ -171,6 +171,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                 sendTrustRequest();
             }
 
+            Log.d(TAG, "sendTextMessage: AggregateHistorySize=" + mConversation.getAggregateHistory().size());
             getView().refreshView(mConversation);
         }
     }
@@ -201,8 +202,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         // send file
         Uri uri = new Uri(mContactRingId);
         mCallService.sendFile(mAccountId, uri.getHost(), filePath, file.getName());
-
-        getView().refreshView(mConversation);
     }
 
     public void sendTrustRequest() {
@@ -260,8 +259,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                             public Conversation apply(@NonNull List<HistoryText> historyTexts,
                                                       @NonNull List<HistoryCall> historyCalls) throws Exception {
 
-                                // todo: remove when file transfer will be in db
-                                mConversation.removeAllButFileTransfers();
+                                mConversation.removeAll();
 
                                 for (HistoryCall call : historyCalls) {
                                     mConversation.addHistoryCall(call);
@@ -273,10 +271,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                                 }
 
                                 Uri uri = new Uri(mContactRingId);
-                                HistoryFileTransfer lastFileTransfer = mHistoryService.getLastFileTransfer(uri.getRawRingId());
-                                if (lastFileTransfer != null) {
-                                    mConversation.addFileTransfer(lastFileTransfer);
-                                }
+                                List<HistoryFileTransfer> historyFileTransfers = mHistoryService.getFileTransfers(mAccountId, uri.getRawRingId());
+                                mConversation.addFileTransfers(historyFileTransfers);
 
                                 return mConversation;
                             }
@@ -298,7 +294,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                         }
 
                         getView().hideNumberSpinner();
-                        getView().refreshView(conversation);
+                        Log.d(TAG, "loadHistory: AggregateHistorySize=" + mConversation.getAggregateHistory().size());
+                        getView().refreshView(mConversation);
                         if (!hasContactRequestPopupShown) {
                             checkContact();
                             hasContactRequestPopupShown = true;
@@ -347,6 +344,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                     TextMessage txt = event.getEventInput(ServiceEvent.EventInput.MESSAGE, TextMessage.class);
                     mConversation.addTextMessage(txt);
                     mHistoryService.readMessages(mConversation);
+                    Log.d(TAG, "update: AggregateHistorySize=" + mConversation.getAggregateHistory().size());
                     getView().refreshView(mConversation);
                     break;
             }
@@ -381,13 +379,15 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                 if (dataTransferInfo != null) {
                     mConversation.addFileTransfer(transferId, dataTransferInfo.getDisplayName(),
                             dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(),
-                            dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer());
+                            dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
+                            dataTransferInfo.getAccountId());
                 }
                 break;
             default:
                 Log.d(TAG, "handleDataTransferEvent: " + transferEventCode.name());
         }
 
+        Log.d(TAG, "handleDataTransferEvent: AggregateHistorySize=" + mConversation.getAggregateHistory().size() + ", transferEventCode=" + transferEventCode);
         getView().refreshView(mConversation);
     }
 

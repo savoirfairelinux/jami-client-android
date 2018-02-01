@@ -372,28 +372,38 @@ public abstract class HistoryService extends Observable {
 
     private List<HistoryFileTransfer> fileTransfers = new ArrayList<>();
 
-    public HistoryFileTransfer getLastFileTransfer(String contactRingId) {
-        HistoryFileTransfer result = null;
+    public List<HistoryFileTransfer> getFileTransfers(String accountId, String contactRingId) {
+        List<HistoryFileTransfer> result = new ArrayList<>();
         for (HistoryFileTransfer historyFileTransfer : fileTransfers) {
-            if (historyFileTransfer.getPeerId().equals(contactRingId)) {
-                result = historyFileTransfer;
+            if (historyFileTransfer.getAccountId().equals(accountId) && historyFileTransfer.getPeerId().equals(contactRingId)) {
+                result.add(historyFileTransfer);
             }
         }
         return result;
     }
 
     public void addFileTransfer(HistoryFileTransfer historyFileTransfer) {
-        HistoryFileTransfer lastFileTransfer = getLastFileTransfer(historyFileTransfer.getPeerId());
+        HistoryFileTransfer lastFileTransfer = getFileTransfer(historyFileTransfer.getDataTransferId());
         if (lastFileTransfer != null) {
             fileTransfers.remove(lastFileTransfer);
         }
         fileTransfers.add(historyFileTransfer);
     }
 
-    public void updateFileTransferStatus(String contactRingId, DataTransferEventCode dataTransferEventCode) {
-        HistoryFileTransfer lastFileTransfer = getLastFileTransfer(contactRingId);
-        if (contactRingId != null) {
+    public void updateFileTransferStatus(Long transferId, DataTransferEventCode dataTransferEventCode) {
+        HistoryFileTransfer lastFileTransfer = getFileTransfer(transferId);
+        if (lastFileTransfer != null) {
             lastFileTransfer.setDataTransferEventCode(dataTransferEventCode);
         }
+    }
+
+    private HistoryFileTransfer getFileTransfer(Long transferId) {
+        HistoryFileTransfer result = null;
+        for (HistoryFileTransfer historyFileTransfer : fileTransfers) {
+            if (historyFileTransfer.getDataTransferId().equals(transferId)) {
+                result = historyFileTransfer;
+            }
+        }
+        return result;
     }
 }

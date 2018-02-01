@@ -28,10 +28,11 @@ public class HistoryFileTransfer {
     private final boolean isOutgoing;
     private final long totalSize;
     private final String peerId;
+    private final String accountId;
     private DataTransferEventCode dataTransferEventCode;
     private long bytesProgress;
 
-    public HistoryFileTransfer(Long dataTransferId, String displayName, boolean isOutgoing, long totalSize, long bytesProgress, String peerId) {
+    public HistoryFileTransfer(Long dataTransferId, String displayName, boolean isOutgoing, long totalSize, long bytesProgress, String peerId, String accountId) {
         this.dataTransferId = dataTransferId;
         this.timestamp = System.currentTimeMillis();
         this.displayName = displayName;
@@ -40,6 +41,7 @@ public class HistoryFileTransfer {
         this.totalSize = totalSize;
         this.bytesProgress = bytesProgress;
         this.peerId = peerId;
+        this.accountId = accountId;
     }
 
     public long getTimestamp() {
@@ -80,6 +82,10 @@ public class HistoryFileTransfer {
 
     public String getPeerId() {
         return peerId;
+    }
+
+    public String getAccountId() {
+        return accountId;
     }
 
     @Override
