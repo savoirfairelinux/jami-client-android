@@ -43,6 +43,7 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
+import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
@@ -61,8 +62,8 @@ import io.reactivex.schedulers.Schedulers;
 public class ConversationPresenter extends RootPresenter<ConversationView> implements Observer<ServiceEvent> {
 
     private static final String TAG = ConversationPresenter.class.getSimpleName();
-
     private ContactService mContactService;
+
     private AccountService mAccountService;
     private HistoryService mHistoryService;
     private NotificationService mNotificationService;
@@ -71,6 +72,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     private CallService mCallService;
     private Scheduler mMainScheduler;
     private VCardService mVCardService;
+    private DeviceRuntimeService mDeviceRuntimeService;
 
     private Conversation mConversation;
     private String mContactRingId;
@@ -88,6 +90,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                                  HardwareService hardwareService,
                                  ConversationFacade conversationFacade,
                                  VCardService vCardService,
+                                 DeviceRuntimeService mDeviceRuntimeService,
                                  Scheduler mainScheduler) {
         this.mContactService = mContactService;
         this.mAccountService = mAccountService;
@@ -98,6 +101,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         this.mHardwareService = hardwareService;
         this.mConversationFacade = conversationFacade;
         this.mVCardService = vCardService;
+        this.mDeviceRuntimeService = mDeviceRuntimeService;
     }
 
     @Override
@@ -410,5 +414,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     public void cancelTransfer(Long dataTransferId) {
         Log.d(TAG, "cancelTransfer: dataTransferId=" + dataTransferId);
         mCallService.cancelDataTransfer(dataTransferId);
+    }
+
+    public DeviceRuntimeService getDeviceRuntimeService() {
+        return mDeviceRuntimeService;
     }
 }

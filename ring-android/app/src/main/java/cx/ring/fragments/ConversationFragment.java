@@ -17,12 +17,14 @@
  */
 package cx.ring.fragments;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -84,6 +86,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     private static final int MIN_SIZE_TABLET = 960;
 
     private static final int REQUEST_CODE_FILE_PICKER = 1000;
+    private static final int REQUEST_PERMISSION_CAMERA = 1001;
 
     @BindView(R.id.msg_input_txt)
     protected EditText mMsgEditTxt;
@@ -164,7 +167,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
         setHasOptionsMenu(true);
 
-        mAdapter = new ConversationAdapter(getActivity(), presenter);
+        mAdapter = new ConversationAdapter(this, presenter);
 
         if (mHistList != null) {
             mHistList.setAdapter(mAdapter);
@@ -193,6 +196,13 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @OnClick(R.id.file_send)
     public void selectFile() {
         presenter.selectFile();
+    }
+
+    @Override
+    public void askWriteExternalStoragePermission() {
+        ActivityCompat.requestPermissions(getActivity(),
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                REQUEST_PERMISSION_CAMERA);
     }
 
     @Override

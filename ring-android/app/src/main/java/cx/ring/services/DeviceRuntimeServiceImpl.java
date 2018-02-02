@@ -194,7 +194,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService implements Au
     }
 
     @Override
-    public boolean hasPhotoPermission() {
+    public boolean hasWriteExternalStoragePermission() {
         return checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
