@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a3f45e8_da912454",
+        "filename": "ring-android/app/src/main/javaFirebase/cx/ring/services/RingFirebaseInstanceIdService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-02T17:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3f45e8_7ad3b038",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 86
+      },
+      "revId": "5727023f490a4e50fb7d6d3c7369f1b38eb54aae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3f45e8_dae3e403",
         "filename": "ring-android/app/src/main/javaFirebase/cx/ring/services/RingFirebaseMessagingService.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2018-02-02T16:54:55Z",
       "side": 1,
       "message": "Can be replaced by \n\nRingApplication.getInstance().getRingInjectionComponent().inject(this);\n\nafter a rebase on master.",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 86
+      },
+      "revId": "5727023f490a4e50fb7d6d3c7369f1b38eb54aae",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_3a9f6861",
+        "filename": "ring-android/app/src/main/javaFirebase/cx/ring/services/RingFirebaseMessagingService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-02T17:26:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3f45e8_dae3e403",
       "range": {
         "startLine": 41,
         "startChar": 8,
