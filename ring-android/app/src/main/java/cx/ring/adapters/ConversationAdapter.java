@@ -20,7 +20,6 @@
  */
 package cx.ring.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -40,6 +39,7 @@ import java.util.Date;
 
 import cx.ring.R;
 import cx.ring.conversation.ConversationPresenter;
+import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryFileTransfer;
@@ -57,11 +57,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     private final ArrayList<Conversation.ConversationElement> mConversationElements = new ArrayList<>();
     private final ConversationPresenter presenter;
-    private final Activity activity;
+    private final ConversationFragment conversationFragment;
     private byte[] mPhoto;
 
-    public ConversationAdapter(Activity activity, ConversationPresenter presenter) {
-        this.activity = activity;
+    public ConversationAdapter(ConversationFragment conversationFragment, ConversationPresenter presenter) {
+        this.conversationFragment = conversationFragment;
         this.presenter = presenter;
     }
 
@@ -168,7 +168,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 file.getTimestamp());
         conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
                 timeSeparationString, FileUtils.readableFileSize(file.getTotalSize()),
-                ResourceMapper.getReadableFileTransferStatus(activity, file.getDataTransferEventCode())));
+                ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getDataTransferEventCode())));
         if (file.isOutgoing()) {
             conversationViewHolder.mPhoto.setImageResource(R.drawable.ic_outgoing_black);
         } else {
@@ -178,6 +178,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         if (file.getDataTransferEventCode() == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
             conversationViewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
             conversationViewHolder.btnAccept.setOnClickListener(v -> {
+
+                if (!presenter.getDeviceRuntimeService().hasWriteExternalStoragePermission()) {
+                    conversationFragment.askWriteExternalStoragePermission();
+                    return;
+                }
+
                 conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
 
                 if (!FileUtils.isExternalStorageWritable()) {
@@ -185,7 +191,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     return;
                 }
 
-                File cacheDir = activity.getCacheDir();
+                File cacheDir = conversationFragment.getActivity().getCacheDir();
                 if (!cacheDir.exists()) {
                     boolean mkdirs = cacheDir.mkdirs();
                     if (!mkdirs) {

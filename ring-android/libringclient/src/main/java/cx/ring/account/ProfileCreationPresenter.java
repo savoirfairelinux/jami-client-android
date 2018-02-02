@@ -70,7 +70,7 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
 
     public void cameraClick() {
         boolean hasPermission = mDeviceRuntimeService.hasVideoPermission() &&
-                mDeviceRuntimeService.hasPhotoPermission();
+                mDeviceRuntimeService.hasWriteExternalStoragePermission();
         if (hasPermission) {
             getView().goToPhotoCapture();
         } else {

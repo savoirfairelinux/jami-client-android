@@ -49,9 +49,9 @@ public abstract class DeviceRuntimeService implements DaemonService.SystemInfoCa
 
     public abstract boolean hasCallLogPermission();
 
-    public abstract boolean hasPhotoPermission();
-
     public abstract boolean hasGalleryPermission();
+
+    public abstract boolean hasWriteExternalStoragePermission();
 
     public abstract String getProfileName();
 
