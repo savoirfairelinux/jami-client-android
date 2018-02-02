@@ -136,7 +136,7 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> i
 
     public void cameraClicked() {
         boolean hasPermission = mDeviceRuntimeService.hasVideoPermission() &&
-                mDeviceRuntimeService.hasPhotoPermission();
+                mDeviceRuntimeService.hasWriteExternalStoragePermission();
         if (hasPermission) {
             getView().gotToImageCapture();
         } else {

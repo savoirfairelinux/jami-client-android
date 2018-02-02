@@ -60,6 +60,8 @@ public interface ConversationView extends BaseView {
 
     void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly);
 
+    void askWriteExternalStoragePermission();
+
     void openFilePicker();
 
     void writeCacheFile(String cacheFile);
