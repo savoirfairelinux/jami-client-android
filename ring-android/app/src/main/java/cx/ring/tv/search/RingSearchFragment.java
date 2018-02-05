@@ -66,7 +66,7 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         setOnItemViewClickedListener(new ItemViewClickedListener());
 
-        setBadgeDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_launcher));
+        setBadgeDrawable(ContextCompat.getDrawable(getActivity(), R.mipmap.ic_launcher));
     }
 
     @Override
