@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.Locale;
 
 @DatabaseTable(tableName = HistoryCall.TABLE_NAME)
-public class HistoryCall implements Serializable {
+public class HistoryCall extends ConversationElement implements Serializable {
 
     public static final String TABLE_NAME = "historycall";
     public static final String COLUMN_TIMESTAMP_START_NAME = "TIMESTAMP_START";
@@ -160,5 +160,15 @@ public class HistoryCall implements Serializable {
         result = 31 * result + (int) (contactID ^ (contactID >>> 32));
         result = 31 * result + (callID != null ? callID.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public CEType getType() {
+        return CEType.CALL;
+    }
+
+    @Override
+    public long getDate() {
+        return call_start;
     }
 }
