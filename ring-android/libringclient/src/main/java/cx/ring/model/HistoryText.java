@@ -24,7 +24,6 @@ package cx.ring.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.Date;
 import java.util.Random;
 
 @DatabaseTable(tableName = HistoryText.TABLE_NAME)
@@ -69,9 +68,10 @@ public class HistoryText {
 
     public HistoryText(TextMessage txt) {
         id = txt.getId();
-        if (id == 0)
+        if (id == 0) {
             id = R.nextLong();
-        time = txt.getTimestamp();
+        }
+        time = txt.getDate();
         accountID = txt.getAccount();
         number = txt.getNumber();
         direction = txt.getCallType();
@@ -97,12 +97,12 @@ public class HistoryText {
         return contactKey;
     }
 
-    /* Needed by ORMLite */
+    // Needed by ORMLite
     public HistoryText() {
     }
 
-    public Date getDate() {
-        return new Date(time);
+    public long getDate() {
+        return time;
     }
 
     public String getNumber() {
