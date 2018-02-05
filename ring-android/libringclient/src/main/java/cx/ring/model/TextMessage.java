@@ -21,7 +21,7 @@ package cx.ring.model;
 
 import cx.ring.utils.Log;
 
-public class TextMessage {
+public class TextMessage extends ConversationElement {
     private static final String TAG = TextMessage.class.getSimpleName();
 
     private long mID = 0;
@@ -49,10 +49,6 @@ public class TextMessage {
 
         Status(int n) {
             s = n;
-        }
-
-        public int toInt() {
-            return s;
         }
 
         private static final Status[] values = Status.values();
@@ -111,7 +107,7 @@ public class TextMessage {
         mID = h.id;
         mAccount = h.getAccountID();
         mNumber = new Uri(h.getNumber());
-        mTimestamp = h.getDate().getTime();
+        mTimestamp = h.getDate();
         mType = h.isIncoming() ? direction.INCOMING : direction.OUTGOING;
         mMessage = h.getMessage();
         mCallID = h.getCallId();
@@ -172,12 +168,14 @@ public class TextMessage {
         return mID;
     }
 
-    public long getTimestamp() {
-        return mTimestamp;
+    @Override
+    public CEType getType() {
+        return CEType.TEXT;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.mTimestamp = timestamp;
+    @Override
+    public long getDate() {
+        return mTimestamp;
     }
 
     public void setAccount(String account) {
@@ -186,17 +184,6 @@ public class TextMessage {
 
     public String getAccount() {
         return mAccount;
-    }
-
-    public String getTypeString() {
-        switch (mType) {
-            case direction.INCOMING:
-                return "INCOMING";
-            case direction.OUTGOING:
-                return "OUTGOING";
-            default:
-                return "UNDETERMINED";
-        }
     }
 
     public void setState(int callState) {
@@ -213,10 +200,6 @@ public class TextMessage {
 
     public Uri getNumberUri() {
         return mNumber;
-    }
-
-    public boolean isOutgoing() {
-        return mType == direction.OUTGOING;
     }
 
     public boolean isIncoming() {

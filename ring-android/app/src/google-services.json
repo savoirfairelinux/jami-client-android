@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "46459832812",
+    "firebase_url": "https://gnu-ring.firebaseio.com",
+    "project_id": "gnu-ring",
+    "storage_bucket": "gnu-ring.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46459832812:android:e3ff7f02d31c42d7",
+        "android_client_info": {
+          "package_name": "cx.ring"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "46459832812-d4g16hno95kq40h8b4g8kflqpbr0hq3u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1yIHNA5jNd6RkGQngEwzDSh91lUQJSR0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -96,7 +96,7 @@ public abstract class HistoryService extends Observable {
 
     private boolean insertNewTextMessage(HistoryText txt) {
         try {
-            Log.d(TAG, "HistoryDao().create() id:" + txt.id + " acc:" + txt.getAccountID() + " num:" + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage());
+            Log.d(TAG, "HistoryDao().create() id:" + txt.id + " acc:" + txt.getAccountID() + " num:" + txt.getNumber() + " date:" + txt.getDate() + " msg:" + txt.getMessage());
             getTextHistoryDao().create(txt);
         } catch (SQLException e) {
             Log.e(TAG, "Error while inserting text message", e);
@@ -119,7 +119,7 @@ public abstract class HistoryService extends Observable {
     public boolean updateTextMessage(HistoryText txt) {
         try {
             Log.d(TAG, "HistoryDao().update() id:" + txt.id + " acc:" + txt.getAccountID() + " num:"
-                    + txt.getNumber() + " date:" + txt.getDate().toString() + " msg:" + txt.getMessage() + " status:" + txt.getStatus());
+                    + txt.getNumber() + " date:" + txt.getDate() + " msg:" + txt.getMessage() + " status:" + txt.getStatus());
             getTextHistoryDao().update(txt);
         } catch (SQLException e) {
             Log.e(TAG, "Error while updating text message", e);
@@ -356,6 +356,7 @@ public abstract class HistoryService extends Observable {
         try {
             msg = new TextMessage(getTextMessage(messageId));
             if (!msg.getAccount().equals(accountId)) {
+                // todo: fix exception
                 throw new Exception("Wrong message account");
             }
         } catch (Exception e) {
