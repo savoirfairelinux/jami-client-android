@@ -396,7 +396,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         String lastInteraction = "";
         boolean hasUnreadMessage = lastText != null && !lastText.isRead();
 
-        long lastTextTimestamp = lastText != null ? lastText.getDate().getTime() : 0;
+        long lastTextTimestamp = lastText != null ? lastText.getDate() : 0;
         long lastCallTimestamp = lastCall != null ? lastCall.getEndDate().getTime() : 0;
         if (lastTextTimestamp > 0 && lastTextTimestamp > lastCallTimestamp) {
             String msgString = lastText.getMessage();

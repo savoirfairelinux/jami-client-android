@@ -21,10 +21,8 @@
 
 package cx.ring.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.NavigableMap;
-import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class HistoryEntry {
@@ -59,10 +57,6 @@ public class HistoryEntry {
         return mTextMessages;
     }
 
-    public SortedMap<Long, TextMessage> getTextMessages(long since) {
-        return mTextMessages.tailMap(since);
-    }
-
     public CallContact getContact() {
         return mContact;
     }
@@ -73,7 +67,7 @@ public class HistoryEntry {
 
     /**
      * Each call is associated with a mContact.
-     * When adding a call to an HIstoryEntry, this methods also verifies if we can update
+     * When adding a call to an HistoryEntry, this methods also verifies if we can update
      * the mContact (if mContact is Unknown, replace it)
      *
      * @param historyCall The call to put in this HistoryEntry
@@ -96,14 +90,14 @@ public class HistoryEntry {
     }
 
     public void addTextMessage(TextMessage text) {
-        mTextMessages.put(text.getTimestamp(), text);
+        mTextMessages.put(text.getDate(), text);
         if (mContact.isUnknown() && !text.getContact().isUnknown()) {
             setContact(text.getContact());
         }
     }
 
     public void updateTextMessage(TextMessage text) {
-        long time = text.getTimestamp();
+        long time = text.getDate();
         NavigableMap<Long, TextMessage> msgs = mTextMessages.subMap(time, true, time, true);
         for (TextMessage txt : msgs.values()) {
             if (txt.equals(text)) {
@@ -117,88 +111,8 @@ public class HistoryEntry {
         return mCalls.lastEntry().getValue().number;
     }
 
-    public String getTotalDuration() {
-        int duration = 0;
-        ArrayList<HistoryCall> allCalls = new ArrayList<>(mCalls.values());
-        for (HistoryCall call : allCalls) {
-            duration += call.getDuration();
-        }
-
-        if (duration < 60) {
-            return duration + "s";
-        }
-
-        return duration / 60 + "min";
-    }
-
-    public Date getLastCallDate() {
-        return new Date(mCalls.isEmpty() ? 0 : mCalls.lastEntry().getKey());
-    }
-
-    public Date getLastTextDate() {
-        return new Date(mTextMessages.isEmpty() ? 0 : mTextMessages.lastEntry().getKey());
-    }
-
     public Date getLastInteractionDate() {
         return new Date(Math.max(mCalls.isEmpty() ? 0 : mCalls.lastEntry().getKey(), mTextMessages.isEmpty() ? 0 : mTextMessages.lastEntry().getKey()));
     }
 
-    public HistoryCall getLastOutgoingCall() {
-        for (HistoryCall c : mCalls.descendingMap().values()) {
-            if (!c.isIncoming()) {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    public TextMessage getLastOutgoingText() {
-        for (TextMessage c : mTextMessages.descendingMap().values()) {
-            if (c.isOutgoing()) {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    public HistoryCall getLastIncomingCall() {
-        for (HistoryCall c : mCalls.descendingMap().values()) {
-            if (c.isIncoming()) {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    public TextMessage getLastIncomingText() {
-        for (TextMessage c : mTextMessages.descendingMap().values()) {
-            if (c.isIncoming()) {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    public String getLastNumberUsed() {
-        HistoryCall call = getLastOutgoingCall();
-        TextMessage text = getLastOutgoingText();
-        if (call == null && text == null) {
-            call = getLastIncomingCall();
-            text = getLastIncomingText();
-            if (call == null && text == null) {
-                return null;
-            }
-        }
-        if (call == null) {
-            return text.getNumber();
-        }
-        if (text == null) {
-            return call.getNumber();
-        }
-        if (call.call_start < text.getTimestamp()) {
-            return text.getNumber();
-        } else {
-            return call.getNumber();
-        }
-    }
 }

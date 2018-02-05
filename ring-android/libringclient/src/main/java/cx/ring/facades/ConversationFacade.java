@@ -20,8 +20,6 @@
 package cx.ring.facades;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -133,16 +131,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         return null;
     }
 
-    public Conversation getConversationByContactId(String contactId) {
-        if (contactId != null) {
-            Conversation conversation = mConversationMap.get(contactId);
-            if (conversation != null) {
-                return conversation;
-            }
-        }
-        return null;
-    }
-
     public Conversation getConversationByCallId(String callId) {
         for (Conversation conversation : mConversationMap.values()) {
             Conference conf = conversation.getConference(callId);
@@ -153,18 +141,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         return null;
     }
 
-    public Conversation getConversationByTransferId(long transferId) {
-        for (Conversation conversation : mConversationMap.values()) {
-            Conversation.ConversationElement conversationElement = conversation.findConversationElement(transferId);
-            if (conversationElement != null) {
-                return conversation;
-            }
-        }
-        return null;
-    }
-
     /**
-     * @param contact
      * @return the started new conversation
      */
     public Conversation startConversation(CallContact contact) {
@@ -188,20 +165,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             updateTextNotifications();
         }
         return conversation;
-    }
-
-    /**
-     * @return the conversation local cache in a List
-     */
-    public ArrayList<Conversation> getConversationsList() {
-        ArrayList<Conversation> convs = new ArrayList<>(mConversationMap.values());
-        Collections.sort(convs, new Comparator<Conversation>() {
-            @Override
-            public int compare(Conversation lhs, Conversation rhs) {
-                return (int) ((rhs.getLastInteraction().getTime() - lhs.getLastInteraction().getTime()) / 1000L);
-            }
-        });
-        return convs;
     }
 
     /**
