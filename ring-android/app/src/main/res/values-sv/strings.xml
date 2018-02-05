@@ -158,4 +158,5 @@
   <string name="gallery_error_title">Ingen galleriapp hittades</string>
   <string name="gallery_error_message">Ingen app hittades på enheten, för att öppna Galleri</string>
   <string name="generic_error">Ett okänt fel inträffade</string>
+  <!--File Transfer-->
 </resources>

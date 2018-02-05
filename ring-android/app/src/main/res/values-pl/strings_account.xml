@@ -143,13 +143,19 @@ Możesz edytować swoje konto później</string>
   <string name="account_link_prompt_pin">Wprowadź PIN</string>
   <string name="account_new_button">Stwórz konto Ring</string>
   <string name="account_link_export_button">Połącz kolejne urządzenie z tym kontem</string>
+  <string name="account_link_export_info">Aby korzystać z tego konta na innych urządzeniach, musisz najpierw ujawnić je w Ring. To wygeneruje kod PIN, który musisz wprowadzić na nowym urządzeniu aby utworzyć konto. PIN jest ważny przez 10 minut. </string>
+  <string name="account_start_export_button">Generuj PIN</string>
   <string name="account_end_export_button">zamknij</string>
+  <string name="account_end_export_infos"> Twój PIN to:\n\n%%\n\nAby dokończyć proces, musisz otworzyć Ring na nowym urządzeniu. Stwórz nowe konto przez \"Połącz to urządzenie z kontem\". Twój PIN jest aktywny przez 10 minut. </string>
+  <string name="account_link_export_info_light">Aby korzystać z tego konta na innych urządzeniach, musisz najpierw ujawnić je w Ring. To wygeneruje kod PIN, który musisz wprowadzić na nowym urządzeniu aby utworzyć konto. PIN jest ważny przez 10 minut. </string>
+  <string name="account_export_title">Dodaj urządzenia</string>
   <!--Name registration-->
   <string name="error_username_empty">Wprowadź nazwę użytkownika</string>
   <string name="no_registered_name_for_account">Nie znaleziono żadnej nazwy zarejestrowanej dla tego konta </string>
   <string name="register_name">Zarejestruj nazwę</string>
   <string name="trying_to_register_name">Trwa próba rejestracji nazwy</string>
   <string name="registered_username">Zarejestruj nazwę użytkownika</string>
+  <string name="register_username">Zarejestruj publiczny login (zalecane)</string>
   <string name="username_already_taken">Nazwa użytkownika zajęta</string>
   <string name="invalid_username">Nieprawidłowa nazwa użytkownika</string>
   <string name="looking_for_username_availability">Sprawdzanie dostępności nazwy użytkownika...</string>
@@ -165,6 +171,7 @@ Możesz edytować swoje konto później</string>
   <string name="account_link_title">Połącz to urządzenie</string>
   <string name="account_sip_cannot_be_registered">Nie można zarejestrować konta</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Edytuj swój profil</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Wprowadź hasło aby potwierdzić</string>
   <string name="enter_password">Wprowadź hasło</string>

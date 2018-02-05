@@ -158,4 +158,5 @@
   <string name="gallery_error_title">Geen Galerij-app gevonden</string>
   <string name="gallery_error_message">Geen app gevonden op dit apparaat om Galerij te openen</string>
   <string name="generic_error">Er is een onbekende fout opgetreden</string>
+  <!--File Transfer-->
 </resources>

@@ -157,4 +157,5 @@
   <string name="gallery_error_title">找不到相簿應用程式</string>
   <string name="gallery_error_message">在裝置上找不到可以開啟相簿的應用程式</string>
   <string name="generic_error">遇到未知的錯誤</string>
+  <!--File Transfer-->
 </resources>

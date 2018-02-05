@@ -150,4 +150,5 @@
   <string name="contact_request_sent">Заявката за свързване с нов контакт е изпратена</string>
   <string name="search_results">Резултати от търсенето</string>
   <string name="tv_contact_row_header">Контакти</string>
+  <!--File Transfer-->
 </resources>
