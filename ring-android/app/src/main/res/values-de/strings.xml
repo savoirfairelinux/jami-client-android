@@ -158,4 +158,5 @@
   <string name="gallery_error_title">Keine Galerie App gefunden</string>
   <string name="gallery_error_message">Auf dem Gerät wurde keine Applikation gefunden um die Galerie zu öffnen</string>
   <string name="generic_error">Ein unbekannter Fehler ist aufgetreten</string>
+  <!--File Transfer-->
 </resources>

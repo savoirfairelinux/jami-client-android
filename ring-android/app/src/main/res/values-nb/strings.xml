@@ -158,4 +158,5 @@
   <string name="gallery_error_title">Fant ingen galleriprogrammer</string>
   <string name="gallery_error_message">Fant ingen programmer på enheten for åpning av galleri</string>
   <string name="generic_error">En ukjent feil inntraff</string>
+  <!--File Transfer-->
 </resources>

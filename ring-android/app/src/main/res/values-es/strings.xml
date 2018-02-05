@@ -33,6 +33,7 @@
   <string name="menu_item_home">Inicio</string>
   <string name="menu_item_contact_request">Solicitudes de contacto</string>
   <string name="menu_item_accounts">Administrar cuentas</string>
+  <string name="menu_item_account">Administrar cuenta</string>
   <string name="menu_item_settings">Configuración</string>
   <string name="menu_item_share">Compartir mi contacto</string>
   <string name="menu_item_about">Acerca de Ring</string>
@@ -60,6 +61,9 @@
   <string name="notif_current_call_title">Llamada en curso con %1$s</string>
   <string name="notif_current_call">Llamada en curso</string>
   <string name="notif_channel_calls">Llamadas</string>
+  <string name="notif_channel_messages">Mensajes</string>
+  <string name="notif_channel_requests">Solicitudes</string>
+  <string name="notif_mark_as_read">Marcar como leído</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tú:</string>
   <string name="action_call_hangup">Colgar</string>
@@ -111,6 +115,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">¿Añadir %1$s ?</string>
   <string name="prompt_new_password">Contraseña nueva</string>
+  <string name="prompt_new_password_optional">Contraseña nueva (opcional)</string>
   <string name="prompt_new_password_repeat">Repite la nueva contraseña</string>
   <string name="account_create_title">Crear una cuenta en Ring</string>
   <string name="prompt_new_username">Ingresa un nuevo nombre de usuario</string>
@@ -150,4 +155,8 @@
   <string name="contact_request_sent">Solicitud de contacto enviada</string>
   <string name="search_results">Resultados de búsqueda</string>
   <string name="tv_contact_row_header">Contactos</string>
+  <string name="gallery_error_title">No se encontró una aplicación de galería</string>
+  <string name="gallery_error_message">No se encontró una aplicación en el dispositivo para abrir la galería</string>
+  <string name="generic_error">Ocurrió un error desconocido</string>
+  <!--File Transfer-->
 </resources>

@@ -154,4 +154,5 @@
   <string name="tv_contact_row_header">Kontakte</string>
   <string name="gallery_error_title">S\’u gjet aplikacion galerie</string>
   <string name="gallery_error_message">Në këtë pajisje s\’u gjet aplikacion për të hapur Galerinë</string>
+  <!--File Transfer-->
 </resources>
