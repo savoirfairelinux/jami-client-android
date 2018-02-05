@@ -264,7 +264,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setContentTitle(contact.getDisplayName())
                 .setContentText(last.getMessage())
-                .setWhen(last.getTimestamp())
+                .setWhen(last.getDate())
                 .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
                 .setDeleteIntent(PendingIntent.getService(mContext, random.nextInt(), intentDelete, 0))
                 .setAutoCancel(true)
@@ -289,7 +289,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             for (TextMessage textMessage : texts.descendingMap().values()) {
                 if (i == 5)
                     break;
-                txts.add(0, Html.fromHtml("<b>" + DateUtils.formatDateTime(mContext, textMessage.getTimestamp(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL) + "</b> " + textMessage.getMessage()));
+                txts.add(0, Html.fromHtml("<b>" + DateUtils.formatDateTime(mContext, textMessage.getDate(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL) + "</b> " + textMessage.getMessage()));
                 textMessage.setNotified(true);
                 i++;
             }
