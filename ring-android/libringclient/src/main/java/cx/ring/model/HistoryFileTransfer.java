@@ -20,7 +20,7 @@
 
 package cx.ring.model;
 
-public class HistoryFileTransfer {
+public class HistoryFileTransfer extends ConversationElement {
 
     private final Long dataTransferId;
     private final long timestamp;
@@ -44,7 +44,13 @@ public class HistoryFileTransfer {
         this.accountId = accountId;
     }
 
-    public long getTimestamp() {
+    @Override
+    public CEType getType() {
+        return CEType.FILE;
+    }
+
+    @Override
+    public long getDate() {
         return timestamp;
     }
 
