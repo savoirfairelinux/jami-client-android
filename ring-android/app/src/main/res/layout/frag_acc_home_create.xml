@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_primary_light"
-    tools:context=".account.AccountWizard">
+    tools:context=".account.AccountWizardActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -51,7 +51,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cx.ring.R;
-import cx.ring.account.AccountWizard;
+import cx.ring.account.AccountWizardActivity;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
@@ -271,7 +271,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
 
     @OnClick(R.id.addaccount_btn)
     public void addNewAccount() {
-        getActivity().startActivity(new Intent(getActivity(), AccountWizard.class));
+        getActivity().startActivity(new Intent(getActivity(), AccountWizardActivity.class));
     }
 
     private void setupNavigationMenu() {

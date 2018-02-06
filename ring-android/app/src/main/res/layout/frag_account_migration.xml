@@ -23,7 +23,7 @@ along with this program; if not, write to the Free Software
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".account.AccountWizard">
+    tools:context=".account.AccountWizardActivity">
 
     <cx.ring.views.BoundedLinearLayout
         style="@style/AccountFormContainer"

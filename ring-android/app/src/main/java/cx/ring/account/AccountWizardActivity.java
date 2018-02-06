@@ -53,8 +53,8 @@ import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
 
-public class AccountWizard extends BaseActivity<AccountWizardPresenter> implements AccountWizardView {
-    static final String TAG = AccountWizard.class.getName();
+public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> implements AccountWizardView {
+    static final String TAG = AccountWizardActivity.class.getName();
 
     private ProgressDialog mProgress = null;
     private String mAccountType;
@@ -170,7 +170,7 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
     public void displayProgress(final boolean display) {
         runOnUiThread(() -> {
             if (display) {
-                mProgress = new ProgressDialog(AccountWizard.this);
+                mProgress = new ProgressDialog(AccountWizardActivity.this);
                 mProgress.setTitle(R.string.dialog_wait_create);
                 mProgress.setMessage(getString(R.string.dialog_wait_create_details));
                 mProgress.setCancelable(false);
@@ -189,7 +189,7 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
 
     @Override
     public void displayCreationError() {
-        runOnUiThread(() -> Toast.makeText(AccountWizard.this, "Error creating account", Toast.LENGTH_SHORT).show());
+        runOnUiThread(() -> Toast.makeText(AccountWizardActivity.this, "Error creating account", Toast.LENGTH_SHORT).show());
     }
 
     @Override
@@ -202,7 +202,7 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
     public void finish(final boolean affinity) {
         runOnUiThread(() -> {
             if (affinity) {
-                startActivity(new Intent(AccountWizard.this, HomeActivity.class));
+                startActivity(new Intent(AccountWizardActivity.this, HomeActivity.class));
                 finish();
             } else {
                 finishAffinity();
@@ -216,7 +216,7 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
             if (mAlertDialog != null && mAlertDialog.isShowing()) {
                 return;
             }
-            mAlertDialog = new AlertDialog.Builder(AccountWizard.this)
+            mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
                     .setPositiveButton(android.R.string.ok, null)
                     .setTitle(R.string.account_cannot_be_found_title)
                     .setMessage(R.string.account_cannot_be_found_message)
@@ -230,7 +230,7 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
             if (mAlertDialog != null && mAlertDialog.isShowing()) {
                 return;
             }
-            mAlertDialog = new AlertDialog.Builder(AccountWizard.this)
+            mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
                     .setPositiveButton(android.R.string.ok, null)
                     .setTitle(R.string.account_no_network_title)
                     .setMessage(R.string.account_no_network_message)
@@ -244,7 +244,7 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
             if (mAlertDialog != null && mAlertDialog.isShowing()) {
                 return;
             }
-            mAlertDialog = new AlertDialog.Builder(AccountWizard.this)
+            mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
                     .setPositiveButton(android.R.string.ok, null)
                     .setTitle(R.string.account_cannot_be_found_title)
                     .setMessage(R.string.account_cannot_be_found_message)
@@ -258,7 +258,7 @@ public class AccountWizard extends BaseActivity<AccountWizardPresenter> implemen
             if (mAlertDialog != null && mAlertDialog.isShowing()) {
                 return;
             }
-            mAlertDialog = new AlertDialog.Builder(AccountWizard.this)
+            mAlertDialog = new AlertDialog.Builder(AccountWizardActivity.this)
                     .setPositiveButton(android.R.string.ok, null)
                     .setTitle(R.string.account_device_added_title)
                     .setMessage(R.string.account_device_added_message)

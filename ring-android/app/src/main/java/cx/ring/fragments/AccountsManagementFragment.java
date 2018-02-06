@@ -38,7 +38,7 @@ import butterknife.BindView;
 import butterknife.OnItemClick;
 import cx.ring.R;
 import cx.ring.account.AccountEditionActivity;
-import cx.ring.account.AccountWizard;
+import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.AccountsAdapter;
 import cx.ring.account.AccountsManagementPresenter;
 import cx.ring.account.AccountsManagementView;
@@ -128,14 +128,14 @@ public class AccountsManagementFragment extends BaseFragment<AccountsManagementP
         Log.d(TAG, "Launch account migration activity");
 
         Intent intent = new Intent()
-                .setClass(getActivity(), AccountWizard.class)
+                .setClass(getActivity(), AccountWizardActivity.class)
                 .setData(Uri.withAppendedPath(ContentUriHandler.ACCOUNTS_CONTENT_URI, account.getAccountID()));
         startActivityForResult(intent, ACCOUNT_EDIT_REQUEST);
     }
 
     @Override
     public void launchWizardActivity() {
-        Intent intent = new Intent(getActivity(), AccountWizard.class);
+        Intent intent = new Intent(getActivity(), AccountWizardActivity.class);
         startActivityForResult(intent, ACCOUNT_CREATE_REQUEST);
     }
 

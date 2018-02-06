@@ -54,7 +54,7 @@ import butterknife.ButterKnife;
 import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.about.AboutFragment;
-import cx.ring.account.AccountWizard;
+import cx.ring.account.AccountWizardActivity;
 import cx.ring.application.RingApplication;
 import cx.ring.contactrequests.ContactRequestsFragment;
 import cx.ring.fragments.AccountsManagementFragment;
@@ -535,7 +535,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         if (!isDrawerLocked) {
             mNavigationDrawer.closeDrawers();
         }
-        Intent intent = new Intent(HomeActivity.this, AccountWizard.class);
+        Intent intent = new Intent(HomeActivity.this, AccountWizardActivity.class);
         intent.setAction(AccountConfig.ACCOUNT_TYPE_SIP);
         startActivityForResult(intent, AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
     }
@@ -545,7 +545,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         if (!isDrawerLocked) {
             mNavigationDrawer.closeDrawers();
         }
-        Intent intent = new Intent(HomeActivity.this, AccountWizard.class);
+        Intent intent = new Intent(HomeActivity.this, AccountWizardActivity.class);
         intent.setAction(AccountConfig.ACCOUNT_TYPE_RING);
         startActivityForResult(intent, AccountsManagementFragment.ACCOUNT_CREATE_REQUEST);
     }
