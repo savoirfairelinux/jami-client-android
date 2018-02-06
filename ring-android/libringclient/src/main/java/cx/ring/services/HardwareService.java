@@ -54,6 +54,8 @@ public abstract class HardwareService extends Observable {
 
     public abstract void switchSpeakerPhone();
 
+    public abstract void setSpeakerPhone(boolean activateSpeaker);
+
     public abstract void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer);
 
     public abstract void decodingStopped(String id, String shmPath, boolean isMixer);

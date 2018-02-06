@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.ServiceEvent;
@@ -51,6 +52,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     protected CallService mCallService;
     protected ContactService mContactService;
     protected HistoryService mHistoryService;
+    private ConversationFacade mConversationFacade;
 
     private SipCall mSipCall;
     private boolean mOnGoingCall = false;
@@ -74,13 +76,15 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
                          HardwareService hardwareService,
                          CallService callService,
                          ContactService contactService,
-                         HistoryService mHistoryService) {
+                         HistoryService historyService,
+                         ConversationFacade conversationFacade) {
         this.mAccountService = accountService;
         this.mNotificationService = notificationService;
         this.mHardwareService = hardwareService;
         this.mCallService = callService;
         this.mContactService = contactService;
-        this.mHistoryService = mHistoryService;
+        this.mHistoryService = historyService;
+        this.mConversationFacade = conversationFacade;
     }
 
     @Override
@@ -90,7 +94,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         mCallService.removeObserver(this);
         mHardwareService.removeObserver(this);
 
-        if (!mAudioOnly) {
+        if (!mSipCall.isAudioOnly()) {
             mHardwareService.stopCapture();
         }
     }
@@ -104,17 +108,22 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     }
 
     public void initOutGoing(String accountId, String contactRingId, boolean audioOnly) {
-        mAudioOnly = audioOnly;
-
         if (mHardwareService.getCameraCount() == 0) {
-            mAudioOnly = true;
+            audioOnly = true;
         }
 
         mSipCall = mCallService.placeCall(accountId, StringUtils.toNumber(contactRingId), audioOnly);
         if (mSipCall == null) {
+            Log.w(TAG, "initOutGoing: null Call");
             finish();
             return;
         }
+
+        mAudioOnly = mSipCall.isAudioOnly();
+
+        mConversationFacade.setHardwareBeforeCall(mSipCall);
+        getView().updateMenu();
+
         confUpdate();
         getContactDetails();
         getView().blockScreenRotation();
@@ -127,6 +136,10 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
             finish();
             return;
         }
+
+        mConversationFacade.setHardwareBeforeCall(mSipCall);
+        getView().updateMenu();
+
         mAudioOnly = mSipCall.isAudioOnly();
         confUpdate();
         getContactDetails();
@@ -252,9 +265,9 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         }
         if (mSipCall.isOnGoing()) {
             mOnGoingCall = true;
-            getView().initNormalStateDisplay(mAudioOnly);
+            getView().initNormalStateDisplay(mSipCall.isAudioOnly());
             getView().updateContactBubble(mSipCall.getContact());
-            if (!mAudioOnly) {
+            if (!mSipCall.isAudioOnly()) {
                 mHardwareService.setPreviewSettings();
                 getView().displayVideoSurface(true);
             }

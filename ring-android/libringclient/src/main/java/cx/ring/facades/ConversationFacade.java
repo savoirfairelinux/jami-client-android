@@ -307,7 +307,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
-
     private void addContacts(boolean acceptAllMessages) {
         ArrayList<CallContact> contacts;
         if (acceptAllMessages) {
@@ -402,6 +401,14 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                 mAccountService.lookupAddress(currentAccountId, "", contactUri.getRawRingId());
             }
         }
+    }
+
+    public void setHardwareBeforeCall(SipCall sipCall) {
+        if (sipCall == null) {
+            Log.d(TAG, "setHardwareBeforeCall: invalid sipCall");
+            return;
+        }
+        mHardwareService.setSpeakerPhone(!sipCall.isAudioOnly());
     }
 
     @Override
