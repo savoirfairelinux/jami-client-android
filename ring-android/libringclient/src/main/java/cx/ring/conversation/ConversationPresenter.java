@@ -228,7 +228,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     public void callWithAudioOnly(boolean audioOnly) {
-        if (!mHardwareService.hasMicrophone()) {
+        if (audioOnly && !mHardwareService.hasMicrophone()) {
             getView().displayErrorToast(RingError.NO_MICROPHONE);
             return;
         }
