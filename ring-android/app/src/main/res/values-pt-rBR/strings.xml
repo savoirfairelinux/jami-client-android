@@ -158,4 +158,5 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="gallery_error_title">Galeria de aplicativos não encontrada</string>
   <string name="gallery_error_message">Aplicativo não encontrado no dispositivo para abrir a Galeria</string>
   <string name="generic_error">Um erro desconhecido ocorreu</string>
+  <!--File Transfer-->
 </resources>

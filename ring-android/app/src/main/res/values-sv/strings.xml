@@ -63,7 +63,11 @@
   <string name="notif_channel_calls">Samtal</string>
   <string name="notif_channel_messages">Meddelanden</string>
   <string name="notif_channel_requests">Förfrågningar</string>
+  <string name="notif_channel_file_transfer">Filöverföring</string>
   <string name="notif_mark_as_read">Markera som läst</string>
+  <string name="notif_incoming_file_transfer_title">Inkommande filöverföring</string>
+  <string name="notif_incoming_file_transfer">Någon vill skicka en fil till dig</string>
+  <string name="action_open">Oppna</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
   <string name="action_call_hangup">Lägg på</string>
@@ -88,6 +92,7 @@
   <string name="send_message">Skicka meddelande</string>
   <string name="message_sending">Skickar meddelande...</string>
   <string name="time_just_now">Just nu</string>
+  <string name="send_file">Skicka fil</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarättighet</string>
   <string name="permission_dialog_camera_message">Videokonversationer kräver kamerarättigheter. Överväg att aktivera det.</string>
@@ -158,4 +163,18 @@
   <string name="gallery_error_title">Ingen galleriapp hittades</string>
   <string name="gallery_error_message">Ingen app hittades på enheten, för att öppna Galleri</string>
   <string name="generic_error">Ett okänt fel inträffade</string>
+  <!--File Transfer-->
+  <string name="invalid_file">Ogiltig fil</string>
+  <string name="not_able_to_write_file">Kunde inte skriva fil</string>
+  <string name="file_transfer_status_created">Startar överföring</string>
+  <string name="file_transfer_status_unsupported">saknar stöd</string>
+  <string name="file_transfer_status_wait_peer_acceptance">väntar på motparts godkännande</string>
+  <string name="file_transfer_status_wait_host_acceptance">väntar på värddators godkännande</string>
+  <string name="file_transfer_status_ongoing">pågående</string>
+  <string name="file_transfer_status_finished">slutförd</string>
+  <string name="file_transfer_status_closed_by_host">stängd av värddatorn</string>
+  <string name="file_transfer_status_closed_by_peer">stängd av motpart</string>
+  <string name="file_transfer_status_invalid_pathname">ogiltigt sökvägsnamn</string>
+  <string name="file_transfer_status_unjoinable_peer">oanslutbar motpart</string>
+  <string name="file_saved_in">Fil sparad i %s</string>
 </resources>

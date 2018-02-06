@@ -17,9 +17,9 @@
   <string name="action_register">Registreren</string>
   <string name="error_field_required">Dit veld is verplicht</string>
   <string name="dialog_wait_create">Account wordt toegevoegd</string>
-  <string name="dialog_wait_create_details">Je nieuwe account wordt toegevoegd, even geduld...</string>
+  <string name="dialog_wait_create_details">Je nieuwe account wordt toegevoegd, even geduld…</string>
   <string name="dialog_wait_update">Account wordt bijgewerkt</string>
-  <string name="dialog_wait_update_details">Je account wordt bijgewerkt, even geduld...</string>
+  <string name="dialog_wait_update_details">Je account wordt bijgewerkt, even geduld…</string>
   <string name="dialog_warn_ip2ip_account_title">Lege SIP-account aanmaken?</string>
   <string name="dialog_warn_ip2ip_account_message">Je staat op het punt een SIP-account zonder geldige hostnaam toe te voegen.
 Je zal er enkel directe IP-oproepen mee kunnen maken en ontvangen.
@@ -81,6 +81,9 @@ Je kan je account later bewerken</string>
   <string name="account_published_same_as_local_label">Gepubliceerd gelijk aan lokaal</string>
   <string name="account_published_port_label">Gepubliceerde poort</string>
   <string name="account_published_address_label">Gepubliceerd adres</string>
+  <string name="account_proxy_label">DHT-proxy</string>
+  <string name="account_proxy_enable_label">DHT-proxy gebruiken</string>
+  <string name="account_proxy_server_label">DHT-proxyadres</string>
   <!--Security Details-->
   <string name="account_credentials_label">Legitimatie</string>
   <string name="account_credentials_edit">Legitimatie wijzigen</string>
@@ -108,7 +111,7 @@ Je kan je account later bewerken</string>
   <string name="account_new_device_password">Voer hoofdwachtwoord in om account te ontgrendelen</string>
   <string name="error_password_char_count">Minimaal 6 tekens</string>
   <string name="error_passwords_not_equals">Wachtwoorden komen niet overeen</string>
-  <string name="export_account_wait_title">Even geduld...</string>
+  <string name="export_account_wait_title">Even geduld…</string>
   <string name="export_account_wait_message">Nieuwe accountinformatie wordt gepubliceerd</string>
   <string name="account_export_end_decryption_message">Kon je account niet ontgrendelen met het opgegeven wachtwoord.</string>
   <string name="account_export_end_network_title">Netwerkfout</string>
@@ -146,7 +149,7 @@ Je kan je account later bewerken</string>
   <string name="account_link_export_info">Om deze account op andere apparaten te gebruiken moet je deze eerst op Ring blootstellen. Er zal een pincode gegenereerd worden die je op het nieuwe apparaat invoert om de account in te stellen. De pincode is 10 minuten geldig.</string>
   <string name="account_start_export_button">Pincode genereren</string>
   <string name="account_end_export_button">sluiten</string>
-  <string name="account_end_export_infos">Je pincode is:\n\n%%\n\nOm het proces te voltooien open je Ring op het nieuwe apparaat. Maak een nieuwe account aan met \"Dit apparaat aan een account koppelen\". Je pincode is 10 minuten geldig.</string>
+  <string name="account_end_export_infos">Je pincode is:\n\n%%\n\nOm het proces te voltooien open je Ring op het nieuwe apparaat. Maak een nieuwe account aan met ‘Dit apparaat aan een account koppelen’. Je pincode is 10 minuten geldig.</string>
   <string name="account_link_export_info_light">Om deze account op andere apparaten te gebruiken moet je deze eerst op Ring blootstellen. Er zal een pincode gegenereerd worden die je op het nieuwe apparaat invoert om de account in te stellen. De pincode is 10 minuten geldig.</string>
   <string name="account_export_title">Apparaten toevoegen</string>
   <!--Name registration-->
@@ -177,7 +180,7 @@ Je kan je account later bewerken</string>
   <string name="enter_password">Voer wachtwoord in</string>
   <string name="revoke_device_title">Apparaat terugtrekken</string>
   <string name="revoke_device_message">Weet je zeker dat je %1$s wil terugtrekken?</string>
-  <string name="revoke_device_wait_title">Even geduld...</string>
+  <string name="revoke_device_wait_title">Even geduld…</string>
   <string name="revoke_device_wait_message">Apparaat wordt teruggetrokken</string>
   <string name="rename_device_title">Dit apparaat hernoemen</string>
   <string name="rename_device_message">Kies een nieuwe naam om dit apparaat te identificeren in je Ring-account</string>

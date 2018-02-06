@@ -63,10 +63,14 @@
   <string name="notif_channel_calls">Appels</string>
   <string name="notif_channel_messages">Messages</string>
   <string name="notif_channel_requests">Sollicitations</string>
+  <string name="notif_channel_file_transfer">Transfert de fichier</string>
   <string name="notif_mark_as_read">Marquer comme lu</string>
+  <string name="notif_incoming_file_transfer_title">Transfert de fichier entrant</string>
+  <string name="notif_incoming_file_transfer">Quelqu\'un souhaite vous envoyer un fichier</string>
+  <string name="action_open">Ouvrir</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vous :</string>
-  <string name="action_call_hangup">Raccrocher</string>
+  <string name="action_call_hangup">Raccrochez</string>
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
@@ -74,7 +78,7 @@
   <string name="start_error_mic_required">Ring nécessite les permissions d\'accès au micro pour fonctionner.</string>
   <string name="action_call_accept">Répondre</string>
   <string name="action_call_decline">Décliner</string>
-  <string name="ab_action_speakerphone">Activer haut-parleur</string>
+  <string name="ab_action_speakerphone">Activer le haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
   <string name="ab_action_contact_add_question">Ajouter aux contacts ?</string>
   <string name="ab_action_audio_call">Appel audio</string>
@@ -88,11 +92,12 @@
   <string name="send_message">Envoyer le message</string>
   <string name="message_sending">Envoi du message</string>
   <string name="time_just_now">À l\'instant</string>
+  <string name="send_file">Envoyez un fichier</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permission d\'accès à la caméra</string>
   <string name="permission_dialog_camera_message">Les conversation vidéo nécessitent la permission d\'utiliser l\'objectif. Merci de l\'autoriser.</string>
   <string name="ringtone_error_title">Erreur</string>
-  <string name="ringtone_error_format_not_supported">Cette extension de fichier n\'est pas supportée.</string>
+  <string name="ringtone_error_format_not_supported">Ce format de fichier n\'est pas supporté.</string>
   <string name="ringtone_error_size_too_big">Ce fichier est trop gros. La taille maximale est de %1$iko.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring a besoin d\'accéder en lecture à votre liste de contact. SVP autorisez-le.</string>
@@ -158,4 +163,18 @@
   <string name="gallery_error_title">Aucune application Gallery sur l\'appareil</string>
   <string name="gallery_error_message">Aucune application trouvé sur l\'appareil pour ouvrir Gallery</string>
   <string name="generic_error">Une étrange erreur s\'est produite</string>
+  <!--File Transfer-->
+  <string name="invalid_file">Fichier invalide</string>
+  <string name="not_able_to_write_file">Impossible d\'écrire le fichier</string>
+  <string name="file_transfer_status_created">Initialisation du transfert</string>
+  <string name="file_transfer_status_unsupported">Non supporté</string>
+  <string name="file_transfer_status_wait_peer_acceptance">Attente de l\'autorisation du destinataire </string>
+  <string name="file_transfer_status_wait_host_acceptance">Attente de l\'autorisation de l\'appareil</string>
+  <string name="file_transfer_status_ongoing">en cours</string>
+  <string name="file_transfer_status_finished">terminé</string>
+  <string name="file_transfer_status_closed_by_host">fermé par l\'appareil</string>
+  <string name="file_transfer_status_closed_by_peer">fermé par l\'interlocuteur</string>
+  <string name="file_transfer_status_invalid_pathname">Chemin d\'accès invalide</string>
+  <string name="file_transfer_status_unjoinable_peer">interlocuteur injoignable</string>
+  <string name="file_saved_in">Fichier sauvegardé dans %s</string>
 </resources>

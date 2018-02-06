@@ -6,6 +6,8 @@
   <string name="pref_category_privacy">Privacy</string>
   <string name="pref_mobileData_title">Mobiele data</string>
   <string name="pref_mobileData_summary">Ring toestaan om 3G/LTE-netwerken te gebruiken naast Wi-Fi</string>
+  <string name="pref_pushNotifications_title">Pushmeldingen</string>
+  <string name="pref_pushNotifications_summary">Gebruik de servers van Google om oproepen/berichten in de achtergrond te kunnen ontvangen</string>
   <string name="pref_systemContacts_title">Systeemcontacten gebruiken</string>
   <string name="pref_systemContacts_summary">Systeemcontacten gebruiken om details beller te tonen</string>
   <string name="pref_systemDialer_title">Systeemoproepen plaatsen met Ring</string>

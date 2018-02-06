@@ -62,7 +62,11 @@
   <string name="notif_channel_calls">通話</string>
   <string name="notif_channel_messages">訊息</string>
   <string name="notif_channel_requests">請求</string>
+  <string name="notif_channel_file_transfer">檔案傳輸</string>
   <string name="notif_mark_as_read">標示為已讀</string>
+  <string name="notif_incoming_file_transfer_title">檔案傳入</string>
+  <string name="notif_incoming_file_transfer">有人想要傳送檔案給您</string>
+  <string name="action_open">開啟</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">你：</string>
   <string name="action_call_hangup">掛斷</string>
@@ -87,6 +91,7 @@
   <string name="send_message">傳送訊息</string>
   <string name="message_sending">正在傳送訊息...</string>
   <string name="time_just_now">剛剛</string>
+  <string name="send_file">傳送檔案</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">攝影機權限</string>
   <string name="permission_dialog_camera_message">視訊通話需要攝影機權限以正常運作。請考慮啟用它。</string>
@@ -157,4 +162,18 @@
   <string name="gallery_error_title">找不到相簿應用程式</string>
   <string name="gallery_error_message">在裝置上找不到可以開啟相簿的應用程式</string>
   <string name="generic_error">遇到未知的錯誤</string>
+  <!--File Transfer-->
+  <string name="invalid_file">無效的檔案</string>
+  <string name="not_able_to_write_file">無法寫入檔案</string>
+  <string name="file_transfer_status_created">正在初始化傳輸</string>
+  <string name="file_transfer_status_unsupported">不支援</string>
+  <string name="file_transfer_status_wait_peer_acceptance">正在等待對方接受</string>
+  <string name="file_transfer_status_wait_host_acceptance">正在等待主機接受</string>
+  <string name="file_transfer_status_ongoing">進行中</string>
+  <string name="file_transfer_status_finished">已結束</string>
+  <string name="file_transfer_status_closed_by_host">由主機關閉</string>
+  <string name="file_transfer_status_closed_by_peer">由對方關閉</string>
+  <string name="file_transfer_status_invalid_pathname">無效的路徑名稱</string>
+  <string name="file_transfer_status_unjoinable_peer">對方無法加入</string>
+  <string name="file_saved_in">檔案儲存在 %s</string>
 </resources>

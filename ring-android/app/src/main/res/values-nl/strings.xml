@@ -10,9 +10,9 @@
   <string name="version_section">Versie</string>
   <string name="no_email_app_installed">Geen e-mailapplicatie gevonden, installeer er een om ons een rapport te kunnen sturen</string>
   <string name="no_browser_app_installed">Geen webbrowsertoepassing gevonden, installeer er een om deze pagina te bekijken</string>
-  <string name="email_chooser_title">E-mail versturen met...</string>
-  <string name="website_chooser_title">Website bekijken met...</string>
-  <string name="license">Deze software wordt \"als zodanig\" aangeboden zonder enige garantie. Bekijk voor meer informatie
+  <string name="email_chooser_title">E-mail versturen met…</string>
+  <string name="website_chooser_title">Website bekijken met…</string>
+  <string name="license">Deze software wordt ‘als zodanig’ aangeboden zonder enige garantie. Bekijk voor meer informatie
 &lt;u&gt;GNU General Public License versie 3 of later&lt;/u&gt;</string>
   <string name="description">Ring is vrije software voor universele communicatie, die de vrijheden en privacy van haar gebruikers eerbiedigt.</string>
   <string name="credits">Credits</string>
@@ -22,7 +22,7 @@
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Geen netwerkverbinding</string>
-  <string name="error_mobile_network_available_but_disabled">Graag toegang geven tot mobiel netwerk in de instellingen.</string>
+  <string name="error_mobile_network_available_but_disabled">Geef toegang tot mobiel netwerk in de instellingen.</string>
   <!--AB menus-->
   <string name="ab_action_chat">Tekstberichten</string>
   <!--Left Drawer-->
@@ -47,7 +47,7 @@
     <item quantity="other">%d gesprekken</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Voer een naam of telefoonnummer in...</string>
+  <string name="searchbar_hint">Voer een naam of telefoonnummer in…</string>
   <string name="choose_number">Kies een nummer</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -63,7 +63,11 @@
   <string name="notif_channel_calls">Oproepen</string>
   <string name="notif_channel_messages">Berichten</string>
   <string name="notif_channel_requests">Verzoeken</string>
+  <string name="notif_channel_file_transfer">Bestandsoverdracht</string>
   <string name="notif_mark_as_read">Markeren als gelezen</string>
+  <string name="notif_incoming_file_transfer_title">Inkomende bestandsoverdracht</string>
+  <string name="notif_incoming_file_transfer">Iemand wil je een bestand sturen</string>
+  <string name="action_open">Openen</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Jij:</string>
   <string name="action_call_hangup">Ophangen</string>
@@ -86,8 +90,9 @@
   <string name="ab_action_flipcamera">Camera draaien</string>
   <!--Text messages-->
   <string name="send_message">Bericht versturen</string>
-  <string name="message_sending">Bericht wordt verstuurd...</string>
+  <string name="message_sending">Bericht wordt verstuurd…</string>
   <string name="time_just_now">Zojuist</string>
+  <string name="send_file">Bestand versturen</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Cameramachtiging</string>
   <string name="permission_dialog_camera_message">Videogesprekken vereisen machtiging voor gebruik van de camera. Gelieve te overwegen deze machtiging alsnog toe te kennen.</string>
@@ -95,7 +100,7 @@
   <string name="ringtone_error_format_not_supported">Dit formaat wordt niet ondersteund.</string>
   <string name="ringtone_error_size_too_big">Dit bestand is te groot. De maximale grootte is %1$ikB.</string>
   <!--Read contacts permission-->
-  <string name="permission_dialog_read_contacts_message">Ring vereist de \"Lees Contacten\" machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
+  <string name="permission_dialog_read_contacts_message">Ring vereist de ‘Contacten lezen’-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
   <!--Write call log permission-->
   <string name="permission_dialog_write_call_log_message">Ring vereist de ‘Oproepgeschiedenis’-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
   <!--QRCode Scan-->
@@ -121,7 +126,7 @@
   <string name="prompt_new_username">Voer nieuwe gebruikersnaam in</string>
   <string name="help_password_choose">Kies een sterk wachtwoord om je Ring-account te beschermen.</string>
   <string name="help_password_enter">Voer het hoofdwachtwoord van je Ring-account in</string>
-  <string name="help_pin_enter">Voer de pincode in vanuit je Ring-account die al is geconfigureerd op een ander apparaat. Gebruik de functie \"account exporteren naar de Ring\" om een pincode te verkrijgen.</string>
+  <string name="help_pin_enter">Voer de pincode in vanuit je Ring-account die al is geconfigureerd op een ander apparaat. Gebruik de functie ‘account exporteren naar de Ring’ om een pincode te verkrijgen.</string>
   <string name="wizard_next">Volgende</string>
   <string name="wizard_back">Terug</string>
   <!--MenuHeaderView-->
@@ -146,16 +151,30 @@
   <string name="no_requests">0 contactverzoeken</string>
   <!--Send contact requests-->
   <string name="send_request_button">Versturen</string>
-  <string name="send_request_title">Contactverzoek verzenden</string>
-  <string name="send_request_msg">Je moet een contactverzoek verzenden om met deze gebruiker te communiceren. Je kunt berichten versturen maar zolang de ander het verzoek niet aanvaardt zal deze ze niet kunnen lezen.</string>
+  <string name="send_request_title">Contactverzoek versturen</string>
+  <string name="send_request_msg">Je moet een contactverzoek versturen om met deze gebruiker te communiceren. Je kunt berichten versturen, maar zolang de ander het verzoek niet aanvaardt zal hij/zij deze niet kunnen lezen.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 geblokkeerde contacten</string>
   <!--Smartlist-->
-  <string name="no_contact_request">Geen contactverzoek verzonden</string>
-  <string name="contact_request_sent">Contactverzoek verzonden</string>
+  <string name="no_contact_request">Geen contactverzoek verstuurd</string>
+  <string name="contact_request_sent">Contactverzoek verstuurd</string>
   <string name="search_results">Zoekresultaten</string>
   <string name="tv_contact_row_header">Contacten</string>
   <string name="gallery_error_title">Geen Galerij-app gevonden</string>
   <string name="gallery_error_message">Geen app gevonden op dit apparaat om Galerij te openen</string>
   <string name="generic_error">Er is een onbekende fout opgetreden</string>
+  <!--File Transfer-->
+  <string name="invalid_file">Ongeldig bestand</string>
+  <string name="not_able_to_write_file">Kan bestand niet schrijven</string>
+  <string name="file_transfer_status_created">overdracht initialiseren</string>
+  <string name="file_transfer_status_unsupported">niet ondersteund</string>
+  <string name="file_transfer_status_wait_peer_acceptance">wachten op aanvaarding door peer</string>
+  <string name="file_transfer_status_wait_host_acceptance">wachten op aanvaarding door host</string>
+  <string name="file_transfer_status_ongoing">bezig</string>
+  <string name="file_transfer_status_finished">voltooid</string>
+  <string name="file_transfer_status_closed_by_host">gesloten door host</string>
+  <string name="file_transfer_status_closed_by_peer">gesloten door peer</string>
+  <string name="file_transfer_status_invalid_pathname">ongeldige padnaam</string>
+  <string name="file_transfer_status_unjoinable_peer">peer kan niet deelnemen</string>
+  <string name="file_saved_in">Bestand opgeslagen in %s</string>
 </resources>

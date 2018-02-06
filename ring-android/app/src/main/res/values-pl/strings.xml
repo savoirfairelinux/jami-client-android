@@ -33,6 +33,7 @@
   <string name="menu_item_home">Ekran główny</string>
   <string name="menu_item_contact_request">Zaproszenia</string>
   <string name="menu_item_accounts">Ustawienia kont</string>
+  <string name="menu_item_account">Zarządzaj kontem</string>
   <string name="menu_item_settings">Ustawienia</string>
   <string name="menu_item_share">Udostępnij mój kontakt</string>
   <string name="menu_item_about">O Ring</string>
@@ -62,6 +63,7 @@
   <string name="notif_current_call_title">Aktualna rozmowa z %1$s</string>
   <string name="notif_current_call">Aktualna rozmowa</string>
   <string name="notif_channel_calls">Rozmowy</string>
+  <string name="notif_channel_messages">Wiadomości</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ty:</string>
   <string name="action_call_hangup">Rozłącz się</string>
@@ -113,6 +115,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Dodać %1$s ?</string>
   <string name="prompt_new_password">Nowe hasło</string>
+  <string name="prompt_new_password_optional">Nowe hasło (opcjonalnie)</string>
   <string name="prompt_new_password_repeat">Powtórz nowe hasło</string>
   <string name="account_create_title">Stwórz konto Ring</string>
   <string name="prompt_new_username">Wprowadź nową nazwę użytkownika</string>
@@ -152,4 +155,5 @@
   <string name="contact_request_sent">Wysłano zaproszenie</string>
   <string name="search_results">Wyniki wyszukiwania</string>
   <string name="tv_contact_row_header">Kontakty</string>
+  <!--File Transfer-->
 </resources>

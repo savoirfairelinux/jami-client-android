@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--About-->
+  <string name="feedback_section">Retroalimentación</string>
+  <string name="report">&lt;u&gt;Envianos un email&lt;/u&gt;</string>
+  <string name="section_license">Licencia</string>
+  <string name="sponsor_section">Ring es software libre desarrollado y soportado por</string>
+  <string name="copyright_section">Copyright</string>
+  <string name="contribute_section">Contribuya</string>
+  <string name="version_section">Versión</string>
+  <string name="no_email_app_installed">No se detectó una app de email, instale una para enviarnos un reporte</string>
+  <string name="no_browser_app_installed">No se detectó ningún navegador, instale uno para ver esta página</string>
+  <string name="email_chooser_title">Enviar mail con...</string>
+  <string name="website_chooser_title">Ver página con...</string>
+  <string name="license">Este programa se ofrece \"como es\", sin ningún tipo de garantía. Para detalles, vea
+&lt;u&gt;GNU General Public License versión 3 o posterior&lt;/u&gt;</string>
+  <string name="description">Ring es software libre para comunicación universal que respeta las libertades y privacidad de sus usuarios.</string>
+  <string name="credits">Créditos</string>
+  <!--About dialog-->
+  <string name="developed_by">Desarrollado por</string>
+  <string name="designed_by">Diseñado por</string>
+  <!--RingActivity-->
+  <string name="title_activity_sflphone_home">Ring</string>
+  <string name="error_no_network">Sin conexión a red</string>
+  <string name="error_mobile_network_available_but_disabled">Por favor permita el acceso a la red celular en el menú de opciones.</string>
+  <!--AB menus-->
+  <string name="ab_action_chat">Mensajes de texto</string>
+  <!--Left Drawer-->
+  <!--Accessibility-->
+  <!--Sections-->
+  <!--Dialing Fragment-->
+  <!--History Fragment-->
+  <!--DetailsHistory Fragment-->
+  <!--Home Fragment-->
+  <!--ContactList Fragment-->
+  <!--FileExplorerDFragement-->
+  <!--TransferDFragment-->
+  <!--Notifications-->
+  <!--Call Fragment-->
+  <!--Text messages-->
+  <!--MediaPreferenceFragment-->
+  <!--Read contacts permission-->
+  <!--Write call log permission-->
+  <!--QRCode Scan-->
+  <!--Settings-->
+  <string name="clear_history_dialog_message">Esta acción no puede deshacerse.</string>
+  <!--Conversation-->
+  <string name="conversation_action_delete_this_message">Esta acción no puede deshacerse.</string>
+  <!--Contacts-->
+  <!--MenuHeaderView-->
+  <!--Share fragment-->
+  <!--Pending contact requests-->
+  <!--Send contact requests-->
+  <!--Blacklist-->
+  <!--Smartlist-->
+  <!--File Transfer-->
+</resources>
