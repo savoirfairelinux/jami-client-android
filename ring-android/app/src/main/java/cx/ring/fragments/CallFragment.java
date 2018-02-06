@@ -77,7 +77,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     public static final String KEY_ACTION = "action";
     public static final String KEY_ACCOUNT_ID = "accountId";
     public static final String KEY_CONF_ID = "confId";
-    public static final String KEY_NUMBER = "number";
     public static final String KEY_AUDIO_ONLY = "AUDIO_ONLY";
 
     @BindView(R.id.contact_bubble_layout)
@@ -274,7 +273,9 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         super.onStop();
 
         DisplayManager displayManager = (DisplayManager) getActivity().getSystemService(Context.DISPLAY_SERVICE);
-        displayManager.unregisterDisplayListener(displayListener);
+        if (displayManager != null) {
+            displayManager.unregisterDisplayListener(displayListener);
+        }
 
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
@@ -374,6 +375,11 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     @Override
     public void switchCameraIcon(boolean isFront) {
         flipCameraBtn.setIcon(isFront ? R.drawable.ic_camera_front_white : R.drawable.ic_camera_rear_white);
+    }
+
+    @Override
+    public void updateMenu() {
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override

@@ -471,9 +471,10 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public void goToCallActivity(String conferenceId) {
-        startActivity(new Intent(Intent.ACTION_VIEW)
+        Intent intent = new Intent(Intent.ACTION_VIEW)
                 .setClass(getActivity().getApplicationContext(), CallActivity.class)
-                .putExtra(NotificationService.KEY_CALL_ID, conferenceId));
+                .putExtra(NotificationService.KEY_CALL_ID, conferenceId);
+        startActivity(intent);
     }
 
     @Override
