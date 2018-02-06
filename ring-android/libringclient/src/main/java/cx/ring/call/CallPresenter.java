@@ -110,6 +110,11 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
             mAudioOnly = true;
         }
 
+        if (!mAudioOnly) {
+            mHardwareService.switchSpeakerPhone();
+            getView().updateMenu();
+        }
+
         mSipCall = mCallService.placeCall(accountId, StringUtils.toNumber(contactRingId), audioOnly);
         if (mSipCall == null) {
             finish();
