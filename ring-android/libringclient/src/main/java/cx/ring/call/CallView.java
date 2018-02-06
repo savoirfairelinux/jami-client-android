@@ -35,6 +35,8 @@ public interface CallView {
 
     void switchCameraIcon(boolean isFront);
 
+    void updateMenu();
+
     void changeScreenRotation();
 
     void updateTime(long duration);
