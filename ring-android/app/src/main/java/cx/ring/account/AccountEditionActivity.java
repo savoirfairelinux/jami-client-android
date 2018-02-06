@@ -221,7 +221,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @Override
     public void goToWizardActivity() {
-        Intent intent = new Intent(this, AccountWizard.class);
+        Intent intent = new Intent(this, AccountWizardActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

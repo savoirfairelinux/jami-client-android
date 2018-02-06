@@ -23,7 +23,7 @@ import javax.inject.Singleton;
 
 import cx.ring.about.AboutFragment;
 import cx.ring.account.AccountEditionActivity;
-import cx.ring.account.AccountWizard;
+import cx.ring.account.AccountWizardActivity;
 import cx.ring.account.HomeAccountCreationFragment;
 import cx.ring.account.ProfileCreationFragment;
 import cx.ring.account.RegisterNameDialog;
@@ -87,7 +87,7 @@ public interface RingInjectionComponent {
 
     void inject(HomeActivity activity);
 
-    void inject(AccountWizard activity);
+    void inject(AccountWizardActivity activity);
 
     void inject(AccountEditionActivity activity);
 

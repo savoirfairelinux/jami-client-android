@@ -114,7 +114,7 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ActionBar ab = ((AccountWizard) getActivity()).getSupportActionBar();
+        ActionBar ab = ((AccountWizardActivity) getActivity()).getSupportActionBar();
         if (ab != null) {
             ab.setTitle(R.string.account_create_title);
         }
@@ -216,8 +216,8 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
     @Override
     public void goToAccountCreation(RingAccountViewModel ringAccountViewModel) {
         Activity wizardActivity = getActivity();
-        if (wizardActivity != null && wizardActivity instanceof AccountWizard) {
-            AccountWizard wizard = (AccountWizard) wizardActivity;
+        if (wizardActivity != null && wizardActivity instanceof AccountWizardActivity) {
+            AccountWizardActivity wizard = (AccountWizardActivity) wizardActivity;
             wizard.createAccount(ringAccountViewModel);
         }
     }

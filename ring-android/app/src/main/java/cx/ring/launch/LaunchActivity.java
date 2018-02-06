@@ -31,7 +31,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import cx.ring.R;
-import cx.ring.account.AccountWizard;
+import cx.ring.account.AccountWizardActivity;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.mvp.BaseActivity;
@@ -63,7 +63,7 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
 
     @Override
     public void goToAccountCreation() {
-        startActivity(new Intent(LaunchActivity.this, AccountWizard.class));
+        startActivity(new Intent(LaunchActivity.this, AccountWizardActivity.class));
         finish();
     }
 

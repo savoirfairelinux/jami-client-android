@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:theme="@style/Wizard"
     tools:background="@color/color_primary_dark"
-    tools:context="cx.ring.account.AccountWizard">
+    tools:context="cx.ring.account.AccountWizardActivity">
 
     <cx.ring.views.BoundedScrollView
         android:layout_width="match_parent"

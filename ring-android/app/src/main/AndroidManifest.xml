@@ -128,7 +128,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </intent-filter>
         </activity>
         <activity
-            android:name=".account.AccountWizard"
+            android:name=".account.AccountWizardActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
             android:screenOrientation="fullUser"
             android:theme="@style/AppThemeBase" />

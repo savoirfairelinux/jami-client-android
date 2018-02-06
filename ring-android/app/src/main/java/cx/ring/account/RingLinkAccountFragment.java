@@ -103,6 +103,6 @@ public class RingLinkAccountFragment extends BaseFragment<RingLinkAccountPresent
 
     @Override
     public void createAccount(RingAccountViewModel ringAccountViewModel) {
-        ((AccountWizard) getActivity()).createAccount(ringAccountViewModel);
+        ((AccountWizardActivity) getActivity()).createAccount(ringAccountViewModel);
     }
 }
