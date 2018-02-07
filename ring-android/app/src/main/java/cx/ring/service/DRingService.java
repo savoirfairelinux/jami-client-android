@@ -25,7 +25,6 @@
  */
 package cx.ring.service;
 
-import android.app.Application;
 import android.app.Service;
 import android.app.UiModeManager;
 import android.content.BroadcastReceiver;
@@ -555,6 +554,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
         mCallService.addObserver(this);
+        mHistoryService.addObserver(this);
 
         RingApplication.getInstance().bindDaemon();
     }
@@ -569,6 +569,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         mAccountService.removeObserver(this);
         mConversationFacade.removeObserver(this);
         mCallService.removeObserver(this);
+        mHistoryService.removeObserver(this);
         isRunning = false;
     }
 

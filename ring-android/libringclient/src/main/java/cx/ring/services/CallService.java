@@ -577,6 +577,7 @@ public class CallService extends Observable {
             Log.w(TAG, "incomingMessage: unknown call or no message: " + callId + " " + from);
             return;
         }
+
         if (sipCall.appendToVCard(messages)) {
             mContactService.saveVCardContactData(sipCall.getContact());
         }
