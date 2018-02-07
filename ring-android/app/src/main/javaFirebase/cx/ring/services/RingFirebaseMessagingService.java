@@ -27,9 +27,11 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import cx.ring.BuildConfig;
 import cx.ring.application.RingApplication;
 
 public class RingFirebaseMessagingService extends FirebaseMessagingService {
+
     private static final String TAG = RingFirebaseMessagingService.class.getSimpleName();
 
     @Inject
@@ -45,8 +47,11 @@ public class RingFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.d(TAG, "onMessageReceived: " + remoteMessage.getFrom());
         Map<String, String> data = remoteMessage.getData();
-        for (Map.Entry<String, String> e : data.entrySet()) {
-            Log.d(TAG, "entry: " + e.getKey() + " -> " + e.getValue());
+
+        if (BuildConfig.DEBUG) {
+            for (Map.Entry<String, String> e : data.entrySet()) {
+                Log.d(TAG, "entry: " + e.getKey() + " -> " + e.getValue());
+            }
         }
 
         mAccountService.pushNotificationReceived(remoteMessage.getFrom(), data);

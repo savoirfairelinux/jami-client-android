@@ -25,7 +25,6 @@
  */
 package cx.ring.service;
 
-import android.app.Application;
 import android.app.Service;
 import android.app.UiModeManager;
 import android.content.BroadcastReceiver;
@@ -80,6 +79,7 @@ import cx.ring.services.PreferencesService;
 import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.SystemServiceUtils;
 
 public class DRingService extends Service implements Observer<ServiceEvent> {
 
@@ -552,6 +552,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
         mCallService.addObserver(this);
+        mHistoryService.addObserver(this);
     }
 
     @Override
@@ -564,6 +565,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         mAccountService.removeObserver(this);
         mConversationFacade.removeObserver(this);
         mCallService.removeObserver(this);
+        mHistoryService.removeObserver(this);
     }
 
     @Override
@@ -773,6 +775,17 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                                 .setClass(getApplicationContext(), isTv() ? TVCallActivity.class : CallActivity.class)
                                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                     }
+                    break;
+                case WAKE_UP:
+                    SystemServiceUtils.wakeUpDevice(getApplicationContext());
+                    SystemServiceUtils.disableKeyguard(getApplicationContext());
+                    break;
+            }
+        } else if (observable instanceof HistoryService && arg != null) {
+            switch (arg.getEventType()) {
+                case WAKE_UP:
+                    SystemServiceUtils.wakeUpDevice(getApplicationContext());
+                    SystemServiceUtils.disableKeyguard(getApplicationContext());
                     break;
             }
         }

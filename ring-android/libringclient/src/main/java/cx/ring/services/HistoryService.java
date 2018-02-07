@@ -349,6 +349,8 @@ public abstract class HistoryService extends Observable {
         event.addEventInput(ServiceEvent.EventInput.MESSAGE, txt);
         setChanged();
         notifyObservers(event);
+
+        wakeDevice();
     }
 
     public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
@@ -405,5 +407,11 @@ public abstract class HistoryService extends Observable {
             }
         }
         return result;
+    }
+
+    private void wakeDevice() {
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.WAKE_UP);
+        setChanged();
+        notifyObservers(event);
     }
 }

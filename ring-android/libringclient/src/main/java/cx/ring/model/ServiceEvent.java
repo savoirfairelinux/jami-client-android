@@ -66,6 +66,7 @@ public class ServiceEvent {
         NEW_BUDDY_NOTIFICATION,
         SUBSCRIPTION_STATE_CHANGED,
         USERNAME_CHANGED,
+        WAKE_UP,
         VIDEO_EVENT
     }
 

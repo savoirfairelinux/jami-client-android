@@ -569,6 +569,8 @@ public class CallService extends Observable {
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
         event.addEventInput(ServiceEvent.EventInput.CALL, call);
         notifyObservers(event);
+
+        wakeDevice();
     }
 
     public void incomingMessage(String callId, String from, StringMap messages) {
@@ -577,11 +579,13 @@ public class CallService extends Observable {
             Log.w(TAG, "incomingMessage: unknown call or no message: " + callId + " " + from);
             return;
         }
+
         if (sipCall.appendToVCard(messages)) {
             mContactService.saveVCardContactData(sipCall.getContact());
         }
         if (messages.has_key(MIME_TEXT_PLAIN)) {
             mHistoryService.incomingMessage(sipCall.getAccount(), callId, from, messages);
+            wakeDevice();
         }
     }
 
@@ -611,6 +615,12 @@ public class CallService extends Observable {
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DATA_TRANSFER);
         event.addEventInput(ServiceEvent.EventInput.TRANSFER_ID, transferId);
         event.addEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, dataTransferEventCode);
+        notifyObservers(event);
+    }
+
+    private void wakeDevice() {
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.WAKE_UP);
+        setChanged();
         notifyObservers(event);
     }
 }
