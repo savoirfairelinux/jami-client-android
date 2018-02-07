@@ -26,7 +26,6 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import javax.inject.Inject;
 
 import cx.ring.application.RingApplication;
-import dagger.Lazy;
 
 public class RingFirebaseInstanceIdService extends FirebaseInstanceIdService {
     private static final String TAG = RingFirebaseInstanceIdService.class.getSimpleName();
