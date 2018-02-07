@@ -72,6 +72,7 @@ import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.SystemServiceUtils;
 import ezvcard.property.Photo;
 
 public class NotificationServiceImpl extends NotificationService implements Observer<ServiceEvent> {
@@ -260,6 +261,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setPriority(Notification.PRIORITY_HIGH)
+                .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setContentTitle(contact.getDisplayName())
@@ -309,6 +311,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         int notificationId = getTextNotificationId(contact);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
+
+        SystemServiceUtils.wakeUpDevice(mContext);
     }
 
     @Override
@@ -373,6 +377,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         messageNotificationBuilder
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setCategory(NotificationCompat.CATEGORY_SOCIAL)
@@ -388,6 +393,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
+
+        SystemServiceUtils.wakeUpDevice(mContext);
     }
 
     @Override
@@ -415,6 +422,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_file_transfer_title))
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
                 .setAutoCancel(true)
                 .setOngoing(true)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
@@ -425,6 +433,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
+
+        SystemServiceUtils.wakeUpDevice(mContext);
     }
 
     @Override
