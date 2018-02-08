@@ -125,16 +125,19 @@ along with this program; if not, write to the Free Software
                     android:typeface="monospace" />
             </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:id="@+id/create_sip_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/create_sip_account"
-                android:theme="@style/ButtonColoredInverse" />
-
         </LinearLayout>
 
     </cx.ring.views.BoundedScrollView>
+
+    <Button
+        android:id="@+id/create_sip_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:background="@color/color_primary_light"
+        android:text="@string/create_sip_account"
+        android:theme="@style/ButtonColoredInverse" />
 
 </RelativeLayout>
