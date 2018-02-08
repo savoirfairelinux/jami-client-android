@@ -86,6 +86,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:supportsRtl="true"
         tools:ignore="UnusedAttribute">
 
+        <meta-data
+            android:name="firebase_analytics_collection_deactivated"
+            android:value="true" />
+        <meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="false" />
+
         <activity
             android:name=".launch.LaunchActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"

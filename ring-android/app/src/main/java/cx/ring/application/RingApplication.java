@@ -31,8 +31,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -69,7 +67,7 @@ public class RingApplication extends Application {
     public static final Handler uiHandler = new Handler(Looper.getMainLooper());
     private final static String TAG = RingApplication.class.getName();
     static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
-    private static RingApplication sInstance;
+    private static RingApplication sInstance = null;
     @Inject
     @Named("DaemonExecutor")
     ExecutorService mExecutor;
@@ -99,6 +97,11 @@ public class RingApplication extends Application {
     PresenceService mPresenceService;
     private RingInjectionComponent mRingInjectionComponent;
     private Map<String, Boolean> mPermissionsBeingAsked;
+
+    public interface PushIDService {
+        String getPushToken();
+    }
+    public static PushIDService mPushIDService = null;
 
     private final ServiceConnection mConnection = new ServiceConnection() {
 
@@ -159,8 +162,8 @@ public class RingApplication extends Application {
                 // load accounts from Daemon
                 mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected());
 
-                if (mPreferencesService.getUserSettings().isAllowPushNotifications()) {
-                    String token = FirebaseInstanceId.getInstance().getToken();
+                if (mPreferencesService.getUserSettings().isAllowPushNotifications() && mPushIDService != null) {
+                    String token = mPushIDService.getPushToken();
                     Log.w(TAG, "Setting Firebase push token: " + token);
                     Ringservice.setPushNotificationToken(token);
                 } else {

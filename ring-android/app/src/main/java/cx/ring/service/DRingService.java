@@ -25,7 +25,6 @@
  */
 package cx.ring.service;
 
-import android.app.Application;
 import android.app.Service;
 import android.app.UiModeManager;
 import android.content.BroadcastReceiver;
@@ -49,6 +48,7 @@ import android.util.Log;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -87,14 +87,16 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     public static final String ACTION_TRUST_REQUEST_REFUSE = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_REFUSE";
     public static final String ACTION_TRUST_REQUEST_BLOCK = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_BLOCK";
 
-    static public final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
-    static public final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
-    static public final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
-    static public final String ACTION_CALL_VIEW = BuildConfig.APPLICATION_ID + ".action.CALL_VIEW";
+    public static final String ACTION_CALL_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CALL_ACCEPT";
+    public static final String ACTION_CALL_REFUSE = BuildConfig.APPLICATION_ID + ".action.CALL_REFUSE";
+    public static final String ACTION_CALL_END = BuildConfig.APPLICATION_ID + ".action.CALL_END";
+    public static final String ACTION_CALL_VIEW = BuildConfig.APPLICATION_ID + ".action.CALL_VIEW";
 
-    static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
-    static public final String ACTION_CONV_DISMISS = BuildConfig.APPLICATION_ID + ".action.CONV_DISMISS";
-    static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
+    public static final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
+    public static final String ACTION_CONV_DISMISS = BuildConfig.APPLICATION_ID + ".action.CONV_DISMISS";
+    public static final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
+    public static final String ACTION_PUSH_RECEIVED = BuildConfig.APPLICATION_ID + ".action.PUSH_RECEIVED";
+    public static final String ACTION_PUSH_TOKEN_CHANGED = BuildConfig.APPLICATION_ID + ".push.PUSH_TOKEN_CHANGED";
 
     private static final String TAG = DRingService.class.getName();
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
@@ -626,12 +628,39 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
             case ACTION_CONV_ACCEPT:
             case ACTION_CONV_DISMISS:
                 if (extras != null) {
-                    handleConvAction(action, intent.getExtras());
+                    handleConvAction(action, extras);
+                }
+                break;
+            case ACTION_PUSH_TOKEN_CHANGED:
+                if (extras != null) {
+                    handlePushTokenChanged(extras);
+                }
+                break;
+            case ACTION_PUSH_RECEIVED:
+                if (extras != null) {
+                    handlePushReceived(extras);
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    private void handlePushReceived(Bundle extras) {
+        String from = extras.getString("from");
+        Bundle data = extras.getBundle("data");
+        if (from == null || data == null) {
+            return;
+        }
+        Map<String, String> map = new HashMap<>(data.size());
+        for (String key : data.keySet()) {
+            map.put(key, data.get(key).toString());
+        }
+        mAccountService.pushNotificationReceived(from, map);
+    }
+
+    private void handlePushTokenChanged(Bundle extras) {
+        mAccountService.setPushNotificationToken(extras.getString("token", ""));
     }
 
     private void handleTrustRequestAction(String action, Bundle extras) {
