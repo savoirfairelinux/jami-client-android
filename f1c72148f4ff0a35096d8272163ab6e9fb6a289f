@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_95112faf",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-08T17:11:19Z",
+      "side": 1,
+      "message": "not needed",
+      "range": {
+        "startLine": 779,
+        "startChar": 0,
+        "endLine": 789,
+        "endChar": 26
+      },
+      "revId": "f1c72148f4ff0a35096d8272163ab6e9fb6a289f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_7512a3b5",
+        "filename": "ring-android/app/src/main/javaFirebase/cx/ring/services/RingFirebaseMessagingService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-08T17:11:19Z",
+      "side": 1,
+      "message": "unrelated change",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 13
+      },
+      "revId": "f1c72148f4ff0a35096d8272163ab6e9fb6a289f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_d53bb736",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/ServiceEvent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-08T17:11:19Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 16
+      },
+      "revId": "f1c72148f4ff0a35096d8272163ab6e9fb6a289f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_b5354b48",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/CallService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-08T17:11:19Z",
+      "side": 1,
+      "message": "This should happen when the notification is displayed, and it\u0027s Android specific, so it should be in NotificationManagerImpl",
+      "range": {
+        "startLine": 573,
+        "startChar": 8,
+        "endLine": 573,
+        "endChar": 21
+      },
+      "revId": "f1c72148f4ff0a35096d8272163ab6e9fb6a289f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_953acf34",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/CallService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-08T17:11:19Z",
+      "side": 1,
+      "message": "Should be in NotificationManagerImpl",
+      "range": {
+        "startLine": 588,
+        "startChar": 12,
+        "endLine": 588,
+        "endChar": 25
+      },
+      "revId": "f1c72148f4ff0a35096d8272163ab6e9fb6a289f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_f53eb328",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/HistoryService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-08T17:11:19Z",
+      "side": 1,
+      "message": "Should be in NotificationManagerImpl",
+      "range": {
+        "startLine": 353,
+        "startChar": 0,
+        "endLine": 353,
+        "endChar": 21
+      },
+      "revId": "f1c72148f4ff0a35096d8272163ab6e9fb6a289f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
