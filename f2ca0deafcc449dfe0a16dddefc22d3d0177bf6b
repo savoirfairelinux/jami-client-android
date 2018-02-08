@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_559a0715",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/SystemServiceUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-08T20:50:24Z",
+      "side": 1,
+      "message": "At the moment, I\u0027m not able to find any resource on how to find if a device is impacted or not.\nThis method will allow us to filter out devices that already wake up on notifications.",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 58,
+        "endChar": 5
+      },
+      "revId": "f2ca0deafcc449dfe0a16dddefc22d3d0177bf6b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
