@@ -31,6 +31,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import cx.ring.BuildConfig;
 import cx.ring.model.Settings;
 import cx.ring.utils.NetworkUtils;
 
@@ -84,7 +85,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         mUserSettings.setAllowSystemContacts(appPrefs.getBoolean(RING_SYSTEM_CONTACTS, false));
         mUserSettings.setAllowPlaceSystemCalls(appPrefs.getBoolean(RING_PLACE_CALLS, false));
         mUserSettings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
-        mUserSettings.setAllowPushNotifications(appPrefs.getBoolean(RING_PUSH_NOTIFICATIONS, false));
+        mUserSettings.setAllowPushNotifications(BuildConfig.BUILD_FIREBASE && appPrefs.getBoolean(RING_PUSH_NOTIFICATIONS, false));
 
         return mUserSettings;
     }

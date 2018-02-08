@@ -228,6 +228,7 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
         mIsRefreshingViewFromPresenter = true;
         mViewMobileData.setChecked(viewModel.isAllowMobileData());
         mViewPushNotifications.setChecked(viewModel.isAllowPushNotifications());
+        mViewPushNotifications.setEnabled(viewModel.isAllowPushNotifications());
         mViewContacts.setChecked(viewModel.isAllowSystemContacts());
         mViewPlaceCall.setChecked(viewModel.isAllowPlaceSystemCalls());
         mViewStartup.setChecked(viewModel.isAllowRingOnStartup());

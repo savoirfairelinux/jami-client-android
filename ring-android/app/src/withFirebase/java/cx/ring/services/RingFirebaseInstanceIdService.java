@@ -18,38 +18,31 @@
  */
 package cx.ring.services;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
-import javax.inject.Inject;
-
 import cx.ring.application.RingApplication;
-import dagger.Lazy;
+import cx.ring.service.DRingService;
 
 public class RingFirebaseInstanceIdService extends FirebaseInstanceIdService {
+
     private static final String TAG = RingFirebaseInstanceIdService.class.getSimpleName();
 
-    public RingFirebaseInstanceIdService() {
-        onTokenRefresh();
-    }
-
-    @Inject
-    protected AccountService mAccountService;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
+    static {
+        RingApplication.mPushIDService = () -> FirebaseInstanceId.getInstance().getToken();
     }
 
     @Override
     public void onTokenRefresh() {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.w(TAG, "Refreshed token: " + refreshedToken);
-        if (mAccountService != null)
-            mAccountService.setPushNotificationToken(FirebaseInstanceId.getInstance().getToken());
+        startService(new Intent(DRingService.ACTION_PUSH_TOKEN_CHANGED)
+                .setClass(this, DRingService.class)
+                .putExtra("token", refreshedToken));
+
     }
 
 }

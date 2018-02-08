@@ -92,7 +92,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     public static final String ABOUT_TAG = "About";
     public static final String SETTINGS_TAG = "Prefs";
     public static final String SHARE_TAG = "Share";
-    static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
+    public static final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
     static final String TAG = HomeActivity.class.getSimpleName();
     private static final String NAVIGATION_TAG = "Navigation";
     private final Handler mHandler = new Handler();
