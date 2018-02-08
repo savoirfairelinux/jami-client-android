@@ -57,6 +57,6 @@ public class RingLinkAccountPresenter extends RootPresenter<RingLinkAccountView>
     }
 
     private boolean isFormValid() {
-        return !mRingAccountViewModel.getPin().isEmpty() && !mRingAccountViewModel.getPassword().isEmpty();
+        return !mRingAccountViewModel.getPin().isEmpty();
     }
 }
