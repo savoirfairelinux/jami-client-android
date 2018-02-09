@@ -95,6 +95,9 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment imp
             case RingError.NOT_ABLE_TO_WRITE_FILE:
                 errorString = getString(R.string.not_able_to_write_file);
                 break;
+            case RingError.NO_SPACE_LEFT:
+                errorString = getString(R.string.no_space_left_on_device);
+                break;
             default:
                 errorString = getString(R.string.generic_error);
                 break;
