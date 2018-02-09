@@ -184,8 +184,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     return;
                 }
 
-                conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
-
                 if (!FileUtils.isExternalStorageWritable()) {
                     Log.e(TAG, "configureForFileInfoTextMessage: external storage is not writable");
                     return;
@@ -200,6 +198,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     }
                 }
 
+                long spaceLeft = FileUtils.getSpaceLeft(cacheDir.toString());
+                if (spaceLeft == -1L || file.getTotalSize() > spaceLeft) {
+                    presenter.noSpaceLeft();
+                    return;
+                }
+
                 File cacheFile = new File(cacheDir, file.getDisplayName());
                 if (cacheFile.exists()) {
                     boolean delete = cacheFile.delete();
@@ -211,6 +215,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
                 Log.d(TAG, "configureForFileInfoTextMessage: cacheFile=" + cacheFile + ",exists=" + cacheFile.exists());
 
+                conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
                 presenter.acceptTransfer(file.getDataTransferId(), cacheFile.toString());
             });
             conversationViewHolder.btnRefuse.setOnClickListener(v -> {
