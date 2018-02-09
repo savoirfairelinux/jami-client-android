@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_35065b21",
+        "filename": "ring-android/app/src/main/java/cx/ring/application/RingApplication.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-09T15:34:33Z",
+      "side": 1,
+      "message": "We use \"public static\" in the rest of the app",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 17
+      },
+      "revId": "1baff573ddd7d2992a748879b472791b7a0e1b9b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_f50b5329",
+        "filename": "ring-android/app/src/withFirebase/java/cx/ring/services/RingFirebaseInstanceIdService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-09T15:34:33Z",
+      "side": 1,
+      "message": "Useless",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 40,
+        "endChar": 5
+      },
+      "revId": "1baff573ddd7d2992a748879b472791b7a0e1b9b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_95176f51",
+        "filename": "ring-android/build.gradle",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-09T15:34:33Z",
+      "side": 1,
+      "message": "This variable is not used here, would be more relevant in app/build.gradle",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 1
+      },
+      "revId": "1baff573ddd7d2992a748879b472791b7a0e1b9b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
