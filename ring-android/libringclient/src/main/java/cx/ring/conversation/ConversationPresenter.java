@@ -419,4 +419,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     public DeviceRuntimeService getDeviceRuntimeService() {
         return mDeviceRuntimeService;
     }
+
+    public void noSpaceLeft() {
+        Log.e(TAG, "configureForFileInfoTextMessage: no space left on device");
+        getView().displayErrorToast(RingError.NO_SPACE_LEFT);
+    }
 }
