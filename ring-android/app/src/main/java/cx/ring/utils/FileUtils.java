@@ -27,6 +27,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.StatFs;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
@@ -62,7 +63,7 @@ public class FileUtils {
                     res &= copyAssetFolder(assetManager, fromAssetPath + "/" + file, toPath + "/" + file);
                 }
             return res;
-        } catch (Exception e) {
+        } catch (IOException e) {
             Log.e(TAG, "Error while copying asset folder", e);
             return false;
         }
@@ -80,7 +81,7 @@ public class FileUtils {
             out.flush();
             out.close();
             return true;
-        } catch (Exception e) {
+        } catch (IOException e) {
             Log.e(TAG, "Error while copying asset", e);
             return false;
         }
@@ -248,5 +249,20 @@ public class FileUtils {
 
     public static String ringtonesPath(Context context) {
         return context.getFilesDir().getAbsolutePath() + File.separator + "ringtones";
+    }
+
+    /**
+     * Get space left in a specific path
+     *
+     * @return -1L if an error occurred, size otherwise
+     */
+    public static long getSpaceLeft(String path) {
+        try {
+            StatFs statfs = new StatFs(path);
+            return statfs.getAvailableBytes();
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "getSpaceLeft: not able to access path on " + path);
+            return -1L;
+        }
     }
 }
