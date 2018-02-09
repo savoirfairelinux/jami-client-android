@@ -186,13 +186,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     return;
                 }
 
-                conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
-
-                if (!FileUtils.isExternalStorageWritable()) {
-                    Log.e(TAG, "configureForFileInfoTextMessage: external storage is not writable");
-                    return;
-                }
-
                 File cacheDir = conversationFragment.getActivity().getCacheDir();
                 if (!cacheDir.exists()) {
                     boolean mkdirs = cacheDir.mkdirs();
@@ -200,6 +193,12 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                         Log.e(TAG, "configureForFileInfoTextMessage: not able to create directory at " + cacheDir.toString());
                         return;
                     }
+                }
+
+                long spaceLeft = FileUtils.getSpaceLeft(cacheDir.toString());
+                if (spaceLeft == -1L || file.getTotalSize() > spaceLeft) {
+                    presenter.noSpaceLeft();
+                    return;
                 }
 
                 File cacheFile = new File(cacheDir, file.getDisplayName());
@@ -213,6 +212,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
                 Log.d(TAG, "configureForFileInfoTextMessage: cacheFile=" + cacheFile + ",exists=" + cacheFile.exists());
 
+                conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
                 presenter.acceptTransfer(file.getDataTransferId(), cacheFile.toString());
             });
             conversationViewHolder.btnRefuse.setOnClickListener(v -> {
