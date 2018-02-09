@@ -43,7 +43,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     private boolean isRingUserNameCorrect = false;
     private boolean isPasswordCorrect = true;
     private boolean isConfirmCorrect = true;
-    private boolean isRingUsernameCheck = true;
+    private boolean isRegisterUsernameChecked = true;
     private String mPasswordConfirm = "";
 
     @Inject
@@ -84,7 +84,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
 
     public void ringCheckChanged(boolean isChecked) {
         getView().displayUsernameBox(isChecked);
-        isRingUsernameCheck = isChecked;
+        isRegisterUsernameChecked = isChecked;
         if (!isChecked) {
             mRingAccountViewModel.setUsername("");
         }
@@ -116,9 +116,9 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
             isConfirmCorrect = false;
         } else {
             getView().showNonMatchingPasswordError(false);
-            mPasswordConfirm = passwordConfirm;
             isConfirmCorrect = true;
         }
+        mPasswordConfirm = passwordConfirm;
         checkForms();
     }
 
@@ -127,7 +127,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     }
 
     private void checkForms() {
-        if (isRingUsernameCheck) {
+        if (isRegisterUsernameChecked) {
             getView().enableNextButton(isRingUserNameCorrect && isPasswordCorrect && isConfirmCorrect);
         } else {
             getView().enableNextButton(isPasswordCorrect && isConfirmCorrect);
