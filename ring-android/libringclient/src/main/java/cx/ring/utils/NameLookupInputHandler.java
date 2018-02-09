@@ -37,17 +37,20 @@ public class NameLookupInputHandler {
     }
 
     public void enqueueNextLookup(String text) {
-        if (lastTask != null)
+        if (lastTask != null) {
             lastTask.cancel();
+        }
         lastTask = new NameTask(text);
         timer.schedule(lastTask, WAIT_DELAY);
     }
 
     private class NameTask extends TimerTask {
         private final String mTextToLookup;
+
         NameTask(String name) {
             mTextToLookup = name;
         }
+
         @Override
         public void run() {
             final AccountService accountService = mAccountService.get();
