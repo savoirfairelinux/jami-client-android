@@ -178,13 +178,12 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> imp
 
         String stateAccountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
 
-        getView().displayProgress(false);
-
         if (!stateAccountId.isEmpty() && stateAccountId.equals(mCreatedAccountId)) {
             String newState = event.getEventInput(ServiceEvent.EventInput.STATE, String.class);
 
             mAccount = mAccountService.getAccount(mCreatedAccountId);
             if (mAccount == null) {
+                getView().displayProgress(false);
                 getView().displayCannotBeFoundError();
                 return;
             }
@@ -192,6 +191,7 @@ public class AccountWizardPresenter extends RootPresenter<AccountWizardView> imp
             if (mAccount.isRing() && (newState.isEmpty() || newState.contentEquals(AccountConfig.STATE_INITIALIZING))) {
                 return;
             }
+            getView().displayProgress(false);
 
             if (!mCreationError) {
                 switch (newState) {
