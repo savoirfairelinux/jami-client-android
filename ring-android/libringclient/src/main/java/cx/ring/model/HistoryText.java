@@ -65,12 +65,17 @@ public class HistoryText {
     @DatabaseField(columnName = COLUMN_STATE_NAME)
     String state;
 
-    static private final Random R = new Random();
+    private static final Random R = new Random();
+
+    /* Needed by ORMLite */
+    public HistoryText() {
+    }
 
     public HistoryText(TextMessage txt) {
         id = txt.getId();
-        if (id == 0)
+        if (id == 0) {
             id = R.nextLong();
+        }
         time = txt.getTimestamp();
         accountID = txt.getAccount();
         number = txt.getNumber();
@@ -95,10 +100,6 @@ public class HistoryText {
 
     public String getContactKey() {
         return contactKey;
-    }
-
-    /* Needed by ORMLite */
-    public HistoryText() {
     }
 
     public Date getDate() {

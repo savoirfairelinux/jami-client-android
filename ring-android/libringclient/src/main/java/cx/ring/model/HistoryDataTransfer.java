@@ -20,24 +20,49 @@
 
 package cx.ring.model;
 
-public class HistoryFileTransfer {
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
-    private final Long dataTransferId;
-    private final long timestamp;
-    private final String displayName;
-    private final boolean isOutgoing;
-    private final long totalSize;
-    private final String peerId;
-    private final String accountId;
-    private DataTransferEventCode dataTransferEventCode;
-    private long bytesProgress;
+@DatabaseTable(tableName = HistoryDataTransfer.TABLE_NAME)
+public class HistoryDataTransfer {
+    public static final String TABLE_NAME = "historydata";
+    public static final String COLUMN_ID_NAME = "id";
+    public static final String COLUMN_TIMESTAMP_NAME = "TIMESTAMP";
+    public static final String COLUMN_DISPLAY_NAME_NAME = "displayName";
+    public static final String COLUMN_IS_OUTGOING_NAME = "isOutgoing";
+    public static final String COLUMN_TOTAL_SIZE_NAME = "totalSize";
+    public static final String COLUMN_PEER_ID_NAME = "peerId";
+    public static final String COLUMN_ACCOUNT_ID_NAME = "accountId";
+    public static final String COLUMN_DATA_TRANSFER_EVENT_CODE_NAME = "dataTransferEventCode";
 
-    public HistoryFileTransfer(Long dataTransferId, String displayName, boolean isOutgoing, long totalSize, long bytesProgress, String peerId, String accountId) {
+    @DatabaseField(index = true, columnName = COLUMN_ID_NAME, id = true)
+    Long dataTransferId;
+    @DatabaseField(index = true, columnName = COLUMN_TIMESTAMP_NAME)
+    long timestamp;
+    @DatabaseField(columnName = COLUMN_DISPLAY_NAME_NAME)
+    String displayName;
+    @DatabaseField(columnName = COLUMN_IS_OUTGOING_NAME)
+    boolean isOutgoing;
+    @DatabaseField(columnName = COLUMN_TOTAL_SIZE_NAME)
+    long totalSize;
+    @DatabaseField(columnName = COLUMN_PEER_ID_NAME)
+    String peerId;
+    @DatabaseField(columnName = COLUMN_ACCOUNT_ID_NAME)
+    String accountId;
+    @DatabaseField(columnName = COLUMN_DATA_TRANSFER_EVENT_CODE_NAME)
+    String dataTransferEventCode;
+    long bytesProgress;
+
+    /* Needed by ORMLite */
+    public HistoryDataTransfer() {
+    }
+
+    public HistoryDataTransfer(Long dataTransferId, String displayName, boolean isOutgoing, long totalSize, long bytesProgress, String peerId, String accountId) {
         this.dataTransferId = dataTransferId;
         this.timestamp = System.currentTimeMillis();
         this.displayName = displayName;
         this.isOutgoing = isOutgoing;
-        this.dataTransferEventCode = DataTransferEventCode.CREATED;
+        this.dataTransferEventCode = DataTransferEventCode.CREATED.name();
         this.totalSize = totalSize;
         this.bytesProgress = bytesProgress;
         this.peerId = peerId;
@@ -61,11 +86,11 @@ public class HistoryFileTransfer {
     }
 
     public DataTransferEventCode getDataTransferEventCode() {
-        return dataTransferEventCode;
+        return DataTransferEventCode.valueOf(dataTransferEventCode);
     }
 
     public void setDataTransferEventCode(DataTransferEventCode dataTransferEventCode) {
-        this.dataTransferEventCode = dataTransferEventCode;
+        this.dataTransferEventCode = dataTransferEventCode.name();
     }
 
     public long getTotalSize() {
@@ -93,7 +118,7 @@ public class HistoryFileTransfer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        HistoryFileTransfer that = (HistoryFileTransfer) o;
+        HistoryDataTransfer that = (HistoryDataTransfer) o;
 
         if (timestamp != that.timestamp) return false;
         if (isOutgoing != that.isOutgoing) return false;

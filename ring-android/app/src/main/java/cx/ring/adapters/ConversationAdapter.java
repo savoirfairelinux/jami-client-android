@@ -42,7 +42,7 @@ import cx.ring.conversation.ConversationPresenter;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransferEventCode;
-import cx.ring.model.HistoryFileTransfer;
+import cx.ring.model.HistoryDataTransfer;
 import cx.ring.model.TextMessage;
 import cx.ring.utils.CircleTransform;
 import cx.ring.utils.FileUtils;
@@ -151,7 +151,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         if (conversationViewHolder == null || conversationElement == null) {
             return;
         }
-        HistoryFileTransfer file = conversationElement.file;
+        HistoryDataTransfer file = conversationElement.file;
         if (file == null) {
             Log.d(TAG, "configureForFileInfoTextMessage: not able to get file from conversationElement");
             return;
