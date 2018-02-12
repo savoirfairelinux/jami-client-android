@@ -34,6 +34,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import cx.ring.model.HistoryCall;
+import cx.ring.model.HistoryDataTransfer;
 import cx.ring.model.HistoryText;
 
 /*
@@ -49,10 +50,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
     private static final String DATABASE_NAME = "history.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     private Dao<HistoryCall, Integer> historyDao = null;
     private Dao<HistoryText, Long> historyTextDao = null;
+    private Dao<HistoryDataTransfer, Long> historyDataDao = null;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -67,6 +69,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.createTable(connectionSource, HistoryCall.class);
             TableUtils.createTable(connectionSource, HistoryText.class);
+            TableUtils.createTable(connectionSource, HistoryDataTransfer.class);
         } catch (SQLException e) {
             Log.e(TAG, "Can't create database", e);
             throw new RuntimeException(e);
@@ -107,6 +110,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return historyTextDao;
     }
 
+    public Dao<HistoryDataTransfer, Long> getDataHistoryDao() throws SQLException {
+        if (historyDataDao == null) {
+            historyDataDao = getDao(HistoryDataTransfer.class);
+        }
+        return historyDataDao;
+    }
+
     /**
      * Close the database connections and clear any cached DAOs.
      */
@@ -122,7 +132,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      *
      * @param fromDatabaseVersion the old version of the database
      * @param db                  the SQLiteDatabase to work with
-     * @throws SQLiteException    database has failed to update to the last version
+     * @throws SQLiteException database has failed to update to the last version
      */
     private void updateDatabase(int fromDatabaseVersion, SQLiteDatabase db) throws SQLiteException {
         try {
@@ -133,6 +143,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                         break;
                     case 7:
                         updateDatabaseFrom7(db);
+                        break;
+                    case 8:
+                        updateDatabaseFrom8(db);
                         break;
                 }
                 fromDatabaseVersion++;
@@ -217,6 +230,24 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 Log.d(TAG, "updateDatabaseFrom7: Migration from database version 7 to next, done.");
             } catch (SQLiteException exception) {
                 Log.e(TAG, "updateDatabaseFrom7: Migration from database version 7 to next, failed.");
+                throw exception;
+            }
+        }
+    }
+
+    private void updateDatabaseFrom8(SQLiteDatabase db) throws SQLiteException {
+        if (db != null && db.isOpen()) {
+            try {
+                Log.d(TAG, "Will begin migration from database version 8 to next.");
+                db.beginTransaction();
+                db.execSQL("CREATE TABLE IF NOT EXISTS `historydata` (`id` BIGINT , `TIMESTAMP` BIGINT , " +
+                        "`displayName` VARCHAR , `isOutgoing` SMALLINT , `totalSize` BIGINT , " +
+                        "`peerId` VARCHAR , `accountId` VARCHAR , `dataTransferEventCode` VARCHAR ) ;");
+                db.setTransactionSuccessful();
+                db.endTransaction();
+                Log.d(TAG, "Migration from database version 8 to next, done.");
+            } catch (SQLiteException exception) {
+                Log.e(TAG, "Migration from database version 8 to next, failed.");
                 throw exception;
             }
         }

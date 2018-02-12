@@ -65,16 +65,8 @@ public class HistoryCall extends ConversationElement implements Serializable {
     @DatabaseField(columnName = COLUMN_CALL_ID_NAME)
     String callID;
 
-    public String getAccountID() {
-        return accountID;
-    }
-
-    public long getContactID() {
-        return contactID;
-    }
-
-    public String getContactKey() {
-        return contactKey;
+    /* Needed by ORMLite */
+    public HistoryCall() {
     }
 
     public HistoryCall(SipCall call) {
@@ -90,8 +82,16 @@ public class HistoryCall extends ConversationElement implements Serializable {
         callID = call.getCallId();
     }
 
-    /* Needed by ORMLite */
-    public HistoryCall() {
+    public String getAccountID() {
+        return accountID;
+    }
+
+    public long getContactID() {
+        return contactID;
+    }
+
+    public String getContactKey() {
+        return contactKey;
     }
 
     public Date getStartDate() {
