@@ -61,7 +61,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransferEventCode;
-import cx.ring.model.HistoryFileTransfer;
+import cx.ring.model.HistoryDataTransfer;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
@@ -505,11 +505,11 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
                     if (transferEventCode == DataTransferEventCode.CREATED) {
 
-                        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, dataTransferInfo.getDisplayName(),
+                        HistoryDataTransfer historyDataTransfer = new HistoryDataTransfer(transferId, dataTransferInfo.getDisplayName(),
                                 dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(),
                                 dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
                                 dataTransferInfo.getAccountId());
-                        mHistoryService.addFileTransfer(historyFileTransfer);
+                        mHistoryService.insertDataTransfer(historyDataTransfer);
 
                         if (!dataTransferInfo.getIsOutgoing()) {
                             showFileTransferNotification(transferId, dataTransferInfo.getPeer());

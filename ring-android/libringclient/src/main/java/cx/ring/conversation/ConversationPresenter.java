@@ -33,7 +33,7 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryFileTransfer;
+import cx.ring.model.HistoryDataTransfer;
 import cx.ring.model.HistoryText;
 import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
@@ -294,8 +294,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                                     mConversation.addTextMessage(msg);
                                 }
 
-                                List<HistoryFileTransfer> historyFileTransfers = mHistoryService.getFileTransfers(mAccountId, mContactRingId.getRawRingId());
-                                mConversation.addFileTransfers(historyFileTransfers);
+                                List<HistoryDataTransfer> historyDataTransfers = mHistoryService.getHistoryDataTransfers(mAccountId, mContactRingId.getRawRingId());
+                                mConversation.addDataTransfers(historyDataTransfers);
 
                                 return mConversation;
                             }
@@ -428,33 +428,30 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     private void handleDataTransferEvent(Long transferId, DataTransferEventCode transferEventCode) {
 
         // find corresponding transfer
-        mConversation.updateFileTransfer(transferId, transferEventCode);
+        mConversation.updateDataTransfer(transferId, transferEventCode);
 
-        DataTransferInfo dataTransferInfo = null;
-        if (transferEventCode == DataTransferEventCode.CREATED || transferEventCode == DataTransferEventCode.FINISHED) {
-            dataTransferInfo = mCallService.dataTransferInfo(transferId);
+        DataTransferInfo dataTransferInfo = mCallService.dataTransferInfo(transferId);
+        if (dataTransferInfo == null) {
+            Log.e(TAG, "handleDataTransferEvent: invalid dataTransferInfo");
+            return;
         }
 
-        switch (transferEventCode) {
-            case CREATED:
-                Log.i(TAG, "handleDataTransferEvent: CREATED");
+        HistoryDataTransfer historyDataTransfer = new HistoryDataTransfer(transferId, dataTransferInfo.getDisplayName(),
+                dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(),
+                dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
+                dataTransferInfo.getAccountId());
 
-                if (dataTransferInfo != null) {
-                    mConversation.addFileTransfer(transferId, dataTransferInfo.getDisplayName(),
-                            dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(),
-                            dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
-                            dataTransferInfo.getAccountId());
-                }
-                break;
-            case FINISHED:
-                if (dataTransferInfo != null) {
-                    if (!dataTransferInfo.getIsOutgoing()) {
-                        getView().writeCacheFile(dataTransferInfo.getDisplayName());
-                    }
-                }
-                break;
-            default:
-                Log.d(TAG, "handleDataTransferEvent: " + transferEventCode.name());
+
+        if (transferEventCode != DataTransferEventCode.CREATED) {
+            mHistoryService.updateDataTransfer(historyDataTransfer);
+        }
+
+        if (transferEventCode == DataTransferEventCode.CREATED) {
+            mConversation.addDataTransfer(historyDataTransfer);
+        } else if (transferEventCode == DataTransferEventCode.FINISHED && !dataTransferInfo.getIsOutgoing()) {
+            getView().writeCacheFile(dataTransferInfo.getDisplayName());
+        } else {
+            Log.d(TAG, "handleDataTransferEvent: " + transferEventCode.name());
         }
 
         Log.d(TAG, "handleDataTransferEvent: AggregateHistorySize=" + mConversation.getAggregateHistory().size() + ", transferEventCode=" + transferEventCode);

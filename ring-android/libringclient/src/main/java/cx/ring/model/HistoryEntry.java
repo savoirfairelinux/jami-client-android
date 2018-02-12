@@ -21,10 +21,8 @@
 
 package cx.ring.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.NavigableMap;
-import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class HistoryEntry {
@@ -32,6 +30,7 @@ public class HistoryEntry {
     private CallContact mContact;
     private final NavigableMap<Long, HistoryCall> mCalls = new TreeMap<>();
     private final NavigableMap<Long, TextMessage> mTextMessages = new TreeMap<>();
+    private final NavigableMap<Long, HistoryDataTransfer> mDataTransfers = new TreeMap<>();
     private String mAccountId;
     int mMissedCount;
     int mOutgoingCount;
@@ -59,8 +58,8 @@ public class HistoryEntry {
         return mTextMessages;
     }
 
-    public SortedMap<Long, TextMessage> getTextMessages(long since) {
-        return mTextMessages.tailMap(since);
+    public NavigableMap<Long, HistoryDataTransfer> getDataTransfers() {
+        return mDataTransfers;
     }
 
     public CallContact getContact() {
@@ -73,7 +72,7 @@ public class HistoryEntry {
 
     /**
      * Each call is associated with a mContact.
-     * When adding a call to an HIstoryEntry, this methods also verifies if we can update
+     * When adding a call to an HistoryEntry, this methods also verifies if we can update
      * the mContact (if mContact is Unknown, replace it)
      *
      * @param historyCall The call to put in this HistoryEntry
@@ -102,6 +101,10 @@ public class HistoryEntry {
         }
     }
 
+    public void addDatatransfer(HistoryDataTransfer dataTransfer) {
+        mDataTransfers.put(dataTransfer.getTimestamp(), dataTransfer);
+    }
+
     public void updateTextMessage(TextMessage text) {
         long time = text.getTimestamp();
         NavigableMap<Long, TextMessage> msgs = mTextMessages.subMap(time, true, time, true);
@@ -117,88 +120,12 @@ public class HistoryEntry {
         return mCalls.lastEntry().getValue().number;
     }
 
-    public String getTotalDuration() {
-        int duration = 0;
-        ArrayList<HistoryCall> allCalls = new ArrayList<>(mCalls.values());
-        for (HistoryCall call : allCalls) {
-            duration += call.getDuration();
-        }
-
-        if (duration < 60) {
-            return duration + "s";
-        }
-
-        return duration / 60 + "min";
-    }
-
-    public Date getLastCallDate() {
-        return new Date(mCalls.isEmpty() ? 0 : mCalls.lastEntry().getKey());
-    }
-
-    public Date getLastTextDate() {
-        return new Date(mTextMessages.isEmpty() ? 0 : mTextMessages.lastEntry().getKey());
-    }
-
     public Date getLastInteractionDate() {
-        return new Date(Math.max(mCalls.isEmpty() ? 0 : mCalls.lastEntry().getKey(), mTextMessages.isEmpty() ? 0 : mTextMessages.lastEntry().getKey()));
-    }
-
-    public HistoryCall getLastOutgoingCall() {
-        for (HistoryCall c : mCalls.descendingMap().values()) {
-            if (!c.isIncoming()) {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    public TextMessage getLastOutgoingText() {
-        for (TextMessage c : mTextMessages.descendingMap().values()) {
-            if (c.isOutgoing()) {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    public HistoryCall getLastIncomingCall() {
-        for (HistoryCall c : mCalls.descendingMap().values()) {
-            if (c.isIncoming()) {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    public TextMessage getLastIncomingText() {
-        for (TextMessage c : mTextMessages.descendingMap().values()) {
-            if (c.isIncoming()) {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    public String getLastNumberUsed() {
-        HistoryCall call = getLastOutgoingCall();
-        TextMessage text = getLastOutgoingText();
-        if (call == null && text == null) {
-            call = getLastIncomingCall();
-            text = getLastIncomingText();
-            if (call == null && text == null) {
-                return null;
-            }
-        }
-        if (call == null) {
-            return text.getNumber();
-        }
-        if (text == null) {
-            return call.getNumber();
-        }
-        if (call.call_start < text.getTimestamp()) {
-            return text.getNumber();
-        } else {
-            return call.getNumber();
-        }
+        long lastCall = mCalls.isEmpty() ? 0 : mCalls.lastEntry().getKey();
+        long lastTextMessage = mTextMessages.isEmpty() ? 0 : mTextMessages.lastEntry().getKey();
+        long lastInteraction = Math.max(lastCall, lastTextMessage);
+        long lastDataTransfer = mDataTransfers.isEmpty() ? 0 : mDataTransfers.lastEntry().getKey();
+        lastInteraction = Math.max(lastInteraction, lastDataTransfer);
+        return new Date(lastInteraction);
     }
 }
