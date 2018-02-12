@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_7063d11a",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/account/AccountWizardPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-12T19:56:56Z",
+      "side": 1,
+      "message": "misleading method name",
+      "range": {
+        "startLine": 177,
+        "startChar": 17,
+        "endLine": 177,
+        "endChar": 36
+      },
+      "revId": "a1a7105d5e34f4109575885130f1d3224024f0b5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_10a7ed50",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/account/AccountWizardPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-12T19:56:56Z",
+      "side": 1,
+      "message": "if true, then progress is still shown",
+      "range": {
+        "startLine": 191,
+        "startChar": 16,
+        "endLine": 191,
+        "endChar": 116
+      },
+      "revId": "a1a7105d5e34f4109575885130f1d3224024f0b5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
