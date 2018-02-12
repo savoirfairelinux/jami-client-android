@@ -127,10 +127,6 @@ public interface RingInjectionComponent {
 
     void inject(DRingService service);
 
-    void inject(cx.ring.services.RingFirebaseMessagingService service);
-
-    void inject(cx.ring.services.RingFirebaseInstanceIdService service);
-
     void inject(DeviceRuntimeServiceImpl service);
 
     void inject(DaemonService service);
