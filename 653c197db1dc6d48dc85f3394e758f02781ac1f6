@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_b06d5907",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-12T20:03:22Z",
+      "side": 1,
+      "message": "The contact request view should be presented for any contact not in the account contact list. For instance a new contact scanned by QR code or searched by name etc.\nThis can be known using mAccountService.getAccount(mAccountId).getContact(id) \u003d\u003d null",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 9
+      },
+      "revId": "653c197db1dc6d48dc85f3394e758f02781ac1f6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
