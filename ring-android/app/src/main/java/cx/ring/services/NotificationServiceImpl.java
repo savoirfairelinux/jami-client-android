@@ -513,6 +513,12 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
                         if (!dataTransferInfo.getIsOutgoing()) {
                             showFileTransferNotification(transferId, dataTransferInfo.getPeer());
+
+                            // if peer is unknown, add a trust request
+                            CallContact contact = mAccountService.getCurrentAccount().getContact(dataTransferInfo.getPeer());
+                            if (!mHistoryService.hasAnHistory(dataTransferInfo.getAccountId(), dataTransferInfo.getPeer()) && contact == null) {
+                                mAccountService.incomingTrustRequest(dataTransferInfo.getAccountId(), dataTransferInfo.getPeer(), "", System.currentTimeMillis());
+                            }
                         }
                     }
 
