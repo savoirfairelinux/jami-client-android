@@ -45,6 +45,30 @@
       "revId": "a1a7105d5e34f4109575885130f1d3224024f0b5",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_f02401c8",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/account/AccountWizardPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-12T22:06:53Z",
+      "side": 1,
+      "message": "That\u0027s on purpose: an account will go through the INITIALIZING state during account creation, before going to the REGISTERING/READY state or some error state.",
+      "parentUuid": "5a3f45e8_10a7ed50",
+      "range": {
+        "startLine": 191,
+        "startChar": 16,
+        "endLine": 191,
+        "endChar": 116
+      },
+      "revId": "a1a7105d5e34f4109575885130f1d3224024f0b5",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
