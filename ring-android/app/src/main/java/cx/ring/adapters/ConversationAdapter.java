@@ -159,6 +159,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         if (file.getDataTransferEventCode().isError()) {
             conversationViewHolder.icon.setImageResource(R.drawable.ic_warning);
+        } else {
+            conversationViewHolder.icon.setImageResource(R.drawable.ic_clip_black);
         }
 
         conversationViewHolder.mMsgTxt.setText(file.getDisplayName());
