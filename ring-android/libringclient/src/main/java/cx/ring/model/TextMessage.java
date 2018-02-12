@@ -51,10 +51,6 @@ public class TextMessage {
             s = n;
         }
 
-        public int toInt() {
-            return s;
-        }
-
         private static final Status[] values = Status.values();
 
         static Status fromString(String str) {
@@ -186,17 +182,6 @@ public class TextMessage {
 
     public String getAccount() {
         return mAccount;
-    }
-
-    public String getTypeString() {
-        switch (mType) {
-            case direction.INCOMING:
-                return "INCOMING";
-            case direction.OUTGOING:
-                return "OUTGOING";
-            default:
-                return "UNDETERMINED";
-        }
     }
 
     public void setState(int callState) {

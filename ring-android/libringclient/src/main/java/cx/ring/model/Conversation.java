@@ -32,14 +32,12 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import cx.ring.utils.Log;
-import cx.ring.utils.Tuple;
 
 public class Conversation {
 
     private static final String TAG = Conversation.class.getSimpleName();
 
     private CallContact mContact;
-    private String uuid;
 
     private final Map<String, HistoryEntry> mHistory;
     private final ArrayList<Conference> mCurrentCalls;
@@ -47,26 +45,12 @@ public class Conversation {
 
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
-    private long mLastContactRequest = 0L;
-    public static final long PERIOD = 10L * 60L * 1000L; //10 minutes
 
     public Conversation(CallContact contact) {
         setContact(contact);
         mHistory = new HashMap<>();
         mCurrentCalls = new ArrayList<>();
         mAggregateHistory = new ArrayList<>(32);
-    }
-
-    public boolean hasCurrentCall() {
-        return !mCurrentCalls.isEmpty();
-    }
-
-    public String getLastNumberUsed(String accountID) {
-        HistoryEntry he = mHistory.get(accountID);
-        if (he == null) {
-            return null;
-        }
-        return he.getLastNumberUsed();
     }
 
     public Conference getConference(String id) {
@@ -98,20 +82,8 @@ public class Conversation {
         mCurrentCalls.remove(c);
     }
 
-    public Tuple<HistoryEntry, HistoryCall> findHistoryByCallId(String id) {
-        for (HistoryEntry e : mHistory.values()) {
-            for (HistoryCall c : e.getCalls().values()) {
-                if (c.getCallId().equals(id)) {
-                    return new Tuple<>(e, c);
-                }
-            }
-        }
-        return null;
-    }
-
     public void setContact(CallContact contact) {
         mContact = contact;
-        uuid = contact.getIds().get(0);
     }
 
     public boolean isVisible() {
@@ -120,14 +92,6 @@ public class Conversation {
 
     public void setVisible(boolean mVisible) {
         this.mVisible = mVisible;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public CallContact getContact() {
@@ -239,22 +203,6 @@ public class Conversation {
         return mCurrentCalls;
     }
 
-    public Collection<TextMessage> getTextMessages() {
-        return getTextMessages(null);
-    }
-
-    public Collection<TextMessage> getTextMessages(Date since) {
-        TreeMap<Long, TextMessage> texts = new TreeMap<>();
-
-        for (HistoryEntry h : mHistory.values()) {
-            Map<Long, TextMessage> textMessages = since == null ? h.getTextMessages() : h.getTextMessages(since.getTime());
-            for (Map.Entry<Long, TextMessage> entry : textMessages.entrySet()) {
-                texts.put(entry.getKey(), entry.getValue());
-            }
-        }
-        return texts.values();
-    }
-
     public Collection<HistoryCall> getHistoryCalls() {
         TreeMap<Long, HistoryCall> calls = new TreeMap<>();
 
@@ -278,26 +226,8 @@ public class Conversation {
         return texts;
     }
 
-    public boolean hasUnreadTextMessages() {
-        for (HistoryEntry h : mHistory.values()) {
-            Map.Entry<Long, TextMessage> m = h.getTextMessages().lastEntry();
-            if (m != null && !m.getValue().isRead()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Map<String, HistoryEntry> getRawHistory() {
         return mHistory;
-    }
-
-    public long getLastContactRequest() {
-        return mLastContactRequest;
-    }
-
-    public void setLastContactRequest(long timestamp) {
-        mLastContactRequest = timestamp;
     }
 
     public ConversationElement findConversationElement(Long transferId) {
@@ -309,37 +239,33 @@ public class Conversation {
         return null;
     }
 
-    public void addFileTransfer(Long transferId, String filename, boolean isOutgoing, long totalSize, long bytesProgress, String peerId, String accountId) {
-        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, filename, isOutgoing, totalSize, bytesProgress, peerId, accountId);
-        addFileTransfer(historyFileTransfer);
-    }
-
-    public void addFileTransfer(HistoryFileTransfer historyFileTransfer) {
-        ConversationElement conversationElement = new ConversationElement(historyFileTransfer);
+    public void addDataTransfer(HistoryDataTransfer historyDataTransfer) {
+        ConversationElement conversationElement = new ConversationElement(historyDataTransfer);
         if (mAggregateHistory.contains(conversationElement)) {
             return;
         }
         mAggregateHistory.add(conversationElement);
-    }
 
-    public void addFileTransfers(List<HistoryFileTransfer> historyFileTransfers) {
-        for (HistoryFileTransfer historyFileTransfer : historyFileTransfers) {
-            addFileTransfer(historyFileTransfer);
+        HistoryEntry accountEntry = mHistory.get(historyDataTransfer.getPeerId());
+        if (accountEntry != null) {
+            accountEntry.addDatatransfer(historyDataTransfer);
+        } else {
+            accountEntry = new HistoryEntry(historyDataTransfer.getPeerId(), getContact());
+            accountEntry.addDatatransfer(historyDataTransfer);
+            mHistory.put(historyDataTransfer.getAccountId(), accountEntry);
         }
     }
 
-    public void updateFileTransfer(long transferId, DataTransferEventCode eventCode) {
+    public void addDataTransfers(List<HistoryDataTransfer> historyDataTransfers) {
+        for (HistoryDataTransfer historyDataTransfer : historyDataTransfers) {
+            addDataTransfer(historyDataTransfer);
+        }
+    }
+
+    public void updateDataTransfer(long transferId, DataTransferEventCode eventCode) {
         ConversationElement conversationElement = findConversationElement(transferId);
         if (conversationElement != null) {
             conversationElement.file.setDataTransferEventCode(eventCode);
-        }
-    }
-
-    public void removeAllButFileTransfers() {
-        for (ConversationElement ce : mAggregateHistory) {
-            if (ce.file == null) {
-                mAggregateHistory.remove(ce);
-            }
         }
     }
 
@@ -358,7 +284,7 @@ public class Conversation {
     public class ConversationElement {
         public HistoryCall call = null;
         public TextMessage text = null;
-        public HistoryFileTransfer file = null;
+        public HistoryDataTransfer file = null;
 
         ConversationElement(HistoryCall c) {
             call = c;
@@ -368,7 +294,7 @@ public class Conversation {
             text = t;
         }
 
-        ConversationElement(HistoryFileTransfer f) {
+        ConversationElement(HistoryDataTransfer f) {
             file = f;
         }
 
