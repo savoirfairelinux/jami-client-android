@@ -123,6 +123,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     }
 
     public void createAccount() {
+        getView().enableNextButton(false);
         getView().goToAccountCreation(mRingAccountViewModel);
     }
 
