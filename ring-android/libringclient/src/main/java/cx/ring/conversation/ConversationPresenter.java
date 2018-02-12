@@ -34,7 +34,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.DataTransferError;
 import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryFileTransfer;
+import cx.ring.model.HistoryDataTransfer;
 import cx.ring.model.HistoryText;
 import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
@@ -301,8 +301,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                                     mConversation.addTextMessage(msg);
                                 }
 
-                                List<HistoryFileTransfer> historyFileTransfers = mHistoryService.getFileTransfers(mAccountId, mContactRingId.getRawRingId());
-                                mConversation.addFileTransfers(historyFileTransfers);
+                                List<HistoryDataTransfer> historyDataTransfers = mHistoryService.getHistoryDataTransfers(mAccountId, mContactRingId.getRawRingId());
+                                mConversation.addDataTransfers(historyDataTransfers);
 
                                 return mConversation;
                             }

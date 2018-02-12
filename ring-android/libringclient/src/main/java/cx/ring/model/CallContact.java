@@ -41,7 +41,6 @@ public class CallContact {
     private String mKey;
     private String mDisplayName;
     private String mUsername = null;
-    private long mPhotoId;
     private final ArrayList<Phone> mPhones;
     private boolean isUser;
     private WeakReference<byte[]> mContactPhoto = new WeakReference<>(null);
@@ -66,7 +65,6 @@ public class CallContact {
         mKey = k;
         mDisplayName = displayName;
         mPhones = p;
-        mPhotoId = photoID;
         isUser = user;
         if (cID != UNKNOWN_ID && (displayName == null || !displayName.contains(PREFIX_RING))) {
             mStatus = Status.CONFIRMED;
@@ -97,12 +95,6 @@ public class CallContact {
         return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
     }
 
-    public static CallContact buildUnknown(String to, int type) {
-        ArrayList<Phone> phones = new ArrayList<>();
-        phones.add(new Phone(to, type));
-        return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
-    }
-
     public static CallContact buildRingContact(Uri ringId, String username) {
         CallContact contact = buildUnknown(ringId);
         contact.setUsername(username);
@@ -112,16 +104,9 @@ public class CallContact {
     public void setContactInfos(String k, String displayName, long photo_id) {
         mKey = k;
         mDisplayName = displayName;
-        this.mPhotoId = photo_id;
         if (mUsername == null && displayName.contains(PREFIX_RING)) {
             mUsername = displayName;
         }
-    }
-
-    public static String canonicalNumber(String number) {
-        if (number == null || number.isEmpty())
-            return null;
-        return new Uri(number).getRawUriString();
     }
 
     public ArrayList<String> getIds() {
@@ -133,26 +118,12 @@ public class CallContact {
         return ret;
     }
 
-    public static long contactIdFromId(String id) {
-        if (!id.startsWith("c:"))
-            return UNKNOWN_ID;
-        try {
-            return Long.parseLong(id.substring(2), 16);
-        } catch (Exception e) {
-            return UNKNOWN_ID;
-        }
-    }
-
     public long getId() {
         return mId;
     }
 
     public String getDisplayName() {
         return !StringUtils.isEmpty(mDisplayName) ? mDisplayName : getRingUsername();
-    }
-
-    public long getPhotoId() {
-        return mPhotoId;
     }
 
     public ArrayList<Phone> getPhones() {
@@ -189,10 +160,6 @@ public class CallContact {
         this.stared = true;
     }
 
-    public boolean isStared() {
-        return stared;
-    }
-
     public void addPhoneNumber(Uri uri) {
         if (!hasNumber(uri))
             mPhones.add(new Phone(uri, 0));
@@ -210,10 +177,6 @@ public class CallContact {
 
     public boolean isUser() {
         return isUser;
-    }
-
-    public boolean hasPhoto() {
-        return mContactPhoto.get() != null;
     }
 
     public byte[] getPhoto() {
@@ -245,6 +208,7 @@ public class CallContact {
     public void setAddedDate(Date addedDate) {
         mAddedDate = addedDate;
     }
+
     public Date getAddedDate() {
         return mAddedDate;
     }

@@ -202,10 +202,10 @@ public class Conversation {
         return mHistory;
     }
 
-    public HistoryFileTransfer findConversationElement(Long transferId) {
+    public HistoryDataTransfer findConversationElement(Long transferId) {
         for (IConversationElement iConversationElement : mAggregateHistory) {
             if (iConversationElement != null && iConversationElement.getType() == IConversationElement.CEType.FILE) {
-                HistoryFileTransfer hft = (HistoryFileTransfer) iConversationElement;
+                HistoryDataTransfer hft = (HistoryDataTransfer) iConversationElement;
                 if (transferId.equals(hft.getDataTransferId())) {
                     return hft;
                 }
@@ -215,27 +215,27 @@ public class Conversation {
     }
 
     public void addFileTransfer(Long transferId, String filename, boolean isOutgoing, long totalSize, long bytesProgress, String peerId, String accountId) {
-        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, filename, isOutgoing, totalSize, bytesProgress, peerId, accountId);
-        addFileTransfer(historyFileTransfer);
+        HistoryDataTransfer historyDataTransfer = new HistoryDataTransfer(transferId, filename, isOutgoing, totalSize, bytesProgress, peerId, accountId);
+        addFileTransfer(historyDataTransfer);
     }
 
-    public void addFileTransfer(HistoryFileTransfer historyFileTransfer) {
-        if (mAggregateHistory.contains(historyFileTransfer)) {
+    public void addFileTransfer(HistoryDataTransfer historyDataTransfer) {
+        if (mAggregateHistory.contains(historyDataTransfer)) {
             return;
         }
-        mAggregateHistory.add(historyFileTransfer);
+        mAggregateHistory.add(historyDataTransfer);
     }
 
-    public void addFileTransfers(List<HistoryFileTransfer> historyFileTransfers) {
-        for (HistoryFileTransfer historyFileTransfer : historyFileTransfers) {
-            addFileTransfer(historyFileTransfer);
+    public void addDataTransfers(List<HistoryDataTransfer> historyDataTransfers) {
+        for (HistoryDataTransfer historyDataTransfer : historyDataTransfers) {
+            addFileTransfer(historyDataTransfer);
         }
     }
 
     public void updateFileTransfer(long transferId, DataTransferEventCode eventCode) {
-        HistoryFileTransfer historyFileTransfer = findConversationElement(transferId);
-        if (historyFileTransfer != null) {
-            historyFileTransfer.setDataTransferEventCode(eventCode);
+        HistoryDataTransfer historyDataTransfer = findConversationElement(transferId);
+        if (historyDataTransfer != null) {
+            historyDataTransfer.setDataTransferEventCode(eventCode);
         }
     }
 
@@ -252,5 +252,4 @@ public class Conversation {
         void copyContactNumberToClipboard(String contactNumber);
 
     }
-
 }

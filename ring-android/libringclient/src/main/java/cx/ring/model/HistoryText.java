@@ -24,6 +24,7 @@ package cx.ring.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Date;
 import java.util.Random;
 
 @DatabaseTable(tableName = HistoryText.TABLE_NAME)
@@ -66,6 +67,10 @@ public class HistoryText {
     @DatabaseField(columnName = COLUMN_STATE_NAME)
     String status;
 
+    /* Needed by ORMLite */
+    public HistoryText() {
+    }
+
     public HistoryText(TextMessage txt) {
         id = txt.getId();
         if (id == 0) {
@@ -83,10 +88,6 @@ public class HistoryText {
         }
         read = txt.isRead();
         status = txt.getStatus().toString();
-    }
-
-    // Needed by ORMLite
-    public HistoryText() {
     }
 
     public String getAccountID() {

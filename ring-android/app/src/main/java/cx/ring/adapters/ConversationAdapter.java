@@ -42,7 +42,7 @@ import cx.ring.conversation.ConversationPresenter;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryFileTransfer;
+import cx.ring.model.HistoryDataTransfer;
 import cx.ring.model.IConversationElement;
 import cx.ring.model.TextMessage;
 import cx.ring.utils.CircleTransform;
@@ -160,7 +160,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         if (conversationViewHolder == null || conversationElement == null) {
             return;
         }
-        HistoryFileTransfer file = (HistoryFileTransfer) conversationElement;
+        HistoryDataTransfer file = (HistoryDataTransfer) conversationElement;
 
         if (file.getDataTransferEventCode().isError()) {
             conversationViewHolder.icon.setImageResource(R.drawable.ic_warning);

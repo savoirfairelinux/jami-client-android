@@ -256,6 +256,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public void writeCacheFile(String cacheFilename) {
+        // todo use rx + move to presenter
         File cacheFile = new File(getActivity().getCacheDir(), cacheFilename);
         try {
             String finalFilePath = FileUtils.writeCacheFileToExtStorage(getActivity(), android.net.Uri.fromFile(cacheFile), cacheFile.getName());
