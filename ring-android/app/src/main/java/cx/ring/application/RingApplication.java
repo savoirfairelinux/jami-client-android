@@ -31,8 +31,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -59,7 +57,7 @@ import cx.ring.services.PreferencesService;
 import cx.ring.services.PresenceService;
 import cx.ring.utils.Log;
 
-public class RingApplication extends Application {
+public abstract class RingApplication extends Application {
 
     public final static String DRING_CONNECTION_CHANGED = BuildConfig.APPLICATION_ID + ".event.DRING_CONNECTION_CHANGE";
     public static final int PERMISSIONS_REQUEST = 57;
@@ -69,7 +67,7 @@ public class RingApplication extends Application {
     public static final Handler uiHandler = new Handler(Looper.getMainLooper());
     private final static String TAG = RingApplication.class.getSimpleName();
     static private final IntentFilter RINGER_FILTER = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
-    private static RingApplication sInstance;
+    private static RingApplication sInstance = null;
     @Inject
     @Named("DaemonExecutor")
     ExecutorService mExecutor;
@@ -99,6 +97,8 @@ public class RingApplication extends Application {
     PresenceService mPresenceService;
     private RingInjectionComponent mRingInjectionComponent;
     private Map<String, Boolean> mPermissionsBeingAsked;
+
+    public abstract String getPushToken();
 
     private boolean mBound = false;
     private final ServiceConnection mConnection = new ServiceConnection() {
@@ -162,7 +162,7 @@ public class RingApplication extends Application {
                 mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected());
 
                 if (mPreferencesService.getUserSettings().isAllowPushNotifications()) {
-                    String token = FirebaseInstanceId.getInstance().getToken();
+                    String token = getPushToken();
                     Log.w(TAG, "Setting Firebase push token: " + token);
                     Ringservice.setPushNotificationToken(token);
                 } else {
