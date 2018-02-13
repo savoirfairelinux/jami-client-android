@@ -484,7 +484,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 case INCOMING_TRUST_REQUEST: {
                     final String accountID = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
                     final String from = event.getEventInput(ServiceEvent.EventInput.FROM, String.class);
-                    Log.d(TAG, "INCOMING_TRUST_REQUEST " + accountID + " " + from);
+                    Log.d(TAG, "update: INCOMING_TRUST_REQUEST " + accountID + " " + from);
                     Account account = mAccountService.getAccount(accountID);
                     Set<String> notifiedRequests = mPreferencesService.loadRequestsPreferences(accountID);
                     if (notifiedRequests == null || !notifiedRequests.contains(from)) {

@@ -139,7 +139,7 @@ public class AccountsAdapter extends BaseAdapter {
     }
 
     public void replaceAll(List<Account> results) {
-        Log.d(TAG, "AccountsAdapter replaceAll " + results.size());
+        Log.d(TAG, "replaceAll: AccountsAdapter replaceAll " + results.size());
         accounts.clear();
         accounts.addAll(results);
         notifyDataSetChanged();

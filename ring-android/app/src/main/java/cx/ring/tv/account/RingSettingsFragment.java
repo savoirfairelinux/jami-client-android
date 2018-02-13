@@ -26,7 +26,6 @@ import android.view.View;
 import javax.inject.Inject;
 
 import cx.ring.mvp.RootPresenter;
-import cx.ring.utils.Log;
 
 public abstract class RingSettingsFragment<T extends RootPresenter> extends LeanbackSettingsFragment {
 
@@ -46,7 +45,6 @@ public abstract class RingSettingsFragment<T extends RootPresenter> extends Lean
 
     @Override
     public void onDestroyView() {
-        Log.d(TAG, "onDestroyView");
         super.onDestroyView();
         presenter.unbindView();
     }

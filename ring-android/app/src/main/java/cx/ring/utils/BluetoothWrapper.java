@@ -48,12 +48,12 @@ public class BluetoothWrapper {
     // Create a BroadcastReceiver for ACTION_FOUND.
     private final BroadcastReceiver mBtReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "BT state changed");
+            Log.d(TAG, "mBtReceiver: BT state changed");
             String action = intent.getAction();
             if (BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED.equals(action)) {
                 int status = intent.getIntExtra(BluetoothHeadset.EXTRA_STATE, 0);
                 if (status == 2) {
-                    Log.d(TAG, "BT device found");
+                    Log.d(TAG, "mBtReceiver: BT device found");
                     // Discovery has found a device. Get the BluetoothDevice
                     // object and its info from the Intent.
                     if (btChangesListener != null) {
@@ -67,7 +67,6 @@ public class BluetoothWrapper {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            Log.d(TAG, ">>> BT SCO state changed !!! ");
             if (AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED.equals(action)) {
                 int status = intent.getIntExtra(AudioManager.EXTRA_SCO_AUDIO_STATE, AudioManager.SCO_AUDIO_STATE_ERROR);
                 Log.d(TAG, "BT SCO state changed : " + status + " target is " + targetBt);
@@ -135,12 +134,12 @@ public class BluetoothWrapper {
             }
         }
         boolean retVal = hasConnectedDevice && audioManager.isBluetoothScoAvailableOffCall();
-        Log.d(TAG, "Can I do BT ? " + retVal);
+        Log.d(TAG, "canBluetooth: Can I do BT ? " + retVal);
         return retVal;
     }
 
     public void setBluetoothOn(boolean on) {
-        Log.d(TAG, "Try to turn BT " + on);
+        Log.d(TAG, "setBluetoothOn: Try to turn BT " + on);
         cx.ring.utils.Log.i(TAG, "mAudioManager.isBluetoothA2dpOn():" + audioManager.isBluetoothA2dpOn());
         cx.ring.utils.Log.i(TAG, "mAudioManager.isBluetoothscoOn():" + audioManager.isBluetoothScoOn());
 
@@ -149,10 +148,8 @@ public class BluetoothWrapper {
             // BT SCO connection state is different from required activation
             if (on) {
                 // First we try to connect
-                Log.d(TAG, "BT SCO on >>>");
                 audioManager.startBluetoothSco();
             } else {
-                Log.d(TAG, "BT SCO off >>>");
                 // We stop to use BT SCO
                 audioManager.setBluetoothScoOn(false);
                 // And we stop BT SCO connection
@@ -166,18 +163,18 @@ public class BluetoothWrapper {
     }
 
     public void registerScoUpdate() {
-        Log.d(TAG, "Register BT media receiver");
+        Log.d(TAG, "registerScoUpdate: Register BT media receiver");
         mContext.registerReceiver(mediaStateReceiver, new IntentFilter(AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED));
     }
 
     public void registerBtConnection() {
-        Log.d(TAG, "Register BT connection");
+        Log.d(TAG, "registerBtConnection: Register BT connection");
         mContext.registerReceiver(mBtReceiver, new IntentFilter(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED));
     }
 
     public void unregister() {
         try {
-            Log.d(TAG, "Unregister BT media receiver");
+            Log.d(TAG, "unregister: Unregister BT media receiver");
             mContext.unregisterReceiver(mediaStateReceiver);
             mContext.unregisterReceiver(mBtReceiver);
         } catch (Exception e) {

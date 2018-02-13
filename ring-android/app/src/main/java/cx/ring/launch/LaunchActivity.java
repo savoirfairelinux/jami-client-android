@@ -43,7 +43,6 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
         // dependency injection
         RingApplication.getInstance().getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
         RingApplication.getInstance().startDaemon();
 
         setContentView(R.layout.activity_launch);
@@ -83,8 +82,6 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult");
-
         switch (requestCode) {
             case RingApplication.PERMISSIONS_REQUEST: {
                 if (grantResults.length == 0) {

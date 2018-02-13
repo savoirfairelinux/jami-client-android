@@ -247,11 +247,11 @@ public class ContactServiceImpl extends ContactService {
 
             result.close();
         } catch (Exception e) {
-            Log.d(TAG, "Error while searching for contact id=" + id, e);
+            Log.d(TAG, "findContactByIdFromSystem: Error while searching for contact id=" + id, e);
         }
 
         if (contact == null) {
-            Log.d(TAG, "findById " + id + " can't find contact.");
+            Log.d(TAG, "findContactByIdFromSystem: findById " + id + " can't find contact.");
         }
 
         return contact;
@@ -307,7 +307,7 @@ public class ContactServiceImpl extends ContactService {
                 cursorSip.close();
             }
         } catch (Exception e) {
-            Log.d(TAG, "Error while retrieving detail contact info", e);
+            Log.d(TAG, "fillContactDetails: Error while retrieving detail contact info", e);
         }
     }
 
@@ -322,7 +322,7 @@ public class ContactServiceImpl extends ContactService {
                     new String[]{number, ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE}, null);
 
             if (result == null) {
-                Log.d(TAG, "findContactBySipNumber " + number + " can't find contact.");
+                Log.d(TAG, "findContactBySipNumberFromSystem: " + number + " can't find contact.");
                 return CallContact.buildUnknown(number);
             }
 
@@ -348,7 +348,7 @@ public class ContactServiceImpl extends ContactService {
                 return null;
             }
         } catch (Exception e) {
-            Log.d(TAG, "Error while searching for contact number=" + number, e);
+            Log.d(TAG, "findContactBySipNumberFromSystem: Error while searching for contact number=" + number, e);
         }
 
         return contact;
@@ -362,7 +362,7 @@ public class ContactServiceImpl extends ContactService {
             android.net.Uri uri = android.net.Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, android.net.Uri.encode(number));
             Cursor result = contentResolver.query(uri, PHONELOOKUP_PROJECTION, null, null, null);
             if (result == null) {
-                Log.d(TAG, "findContactByNumber " + number + " can't find contact.");
+                Log.d(TAG, "findContactByNumberFromSystem: " + number + " can't find contact.");
                 return findContactBySipNumberFromSystem(number);
             }
             if (result.moveToFirst()) {
@@ -372,15 +372,15 @@ public class ContactServiceImpl extends ContactService {
                 int indexPhoto = result.getColumnIndex(ContactsContract.Contacts.PHOTO_ID);
                 callContact = new CallContact(result.getLong(indexId), result.getString(indexKey), result.getString(indexName), result.getLong(indexPhoto));
                 fillContactDetails(callContact);
-                Log.d(TAG, "findContactByNumber " + number + " found " + callContact.getDisplayName());
+                Log.d(TAG, "findContactByNumberFromSystem: " + number + " found " + callContact.getDisplayName());
             }
             result.close();
         } catch (Exception e) {
-            Log.d(TAG, "Error while searching for contact number=" + number, e);
+            Log.d(TAG, "findContactByNumber: Error while searching for contact number=" + number, e);
         }
 
         if (callContact == null) {
-            Log.d(TAG, "findContactByNumber " + number + " can't find contact.");
+            Log.d(TAG, "findContactByNumberFromSystem: " + number + " can't find contact.");
             callContact = findContactBySipNumberFromSystem(number);
         }
 

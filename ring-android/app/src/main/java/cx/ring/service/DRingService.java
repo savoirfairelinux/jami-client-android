@@ -25,7 +25,6 @@
  */
 package cx.ring.service;
 
-import android.app.Application;
 import android.app.Service;
 import android.app.UiModeManager;
 import android.content.BroadcastReceiver;
@@ -504,7 +503,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 Log.w(TAG, "onReceive: received a null action on broadcast receiver");
                 return;
             }
-            Log.d(TAG, "BroadcastReceiver onReceive " + action);
+            Log.d(TAG, "receiver.onReceive: " + action);
             switch (action) {
                 case PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED:
                 case ConnectivityManager.CONNECTIVITY_ACTION:
@@ -793,7 +792,6 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         @Override
         public void onChange(boolean selfChange, android.net.Uri uri) {
             super.onChange(selfChange, uri);
-            Log.d(TAG, "ContactsContentObserver.onChange");
             mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount());
         }
     }

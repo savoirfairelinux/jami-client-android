@@ -35,7 +35,6 @@ import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
-import cx.ring.utils.Log;
 
 public class HomeActivity extends Activity {
     public static final int REQUEST_CODE_PHOTO = 5;
@@ -68,8 +67,6 @@ public class HomeActivity extends Activity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult");
-
         switch (requestCode) {
             case REQUEST_PERMISSION_READ_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

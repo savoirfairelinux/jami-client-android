@@ -455,7 +455,7 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
 
     @Override
     public void onDeviceRename(String newName) {
-        Log.d(TAG, "onDeviceRename " + presenter.getDeviceName() + " -> " + newName);
+        Log.d(TAG, "onDeviceRename: " + presenter.getDeviceName() + " -> " + newName);
         presenter.renameDevice(newName);
     }
 }

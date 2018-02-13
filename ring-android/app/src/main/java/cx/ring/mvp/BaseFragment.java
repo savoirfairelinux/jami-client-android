@@ -38,7 +38,6 @@ import cx.ring.account.RingAccountCreationFragment;
 import cx.ring.application.RingApplication;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.RingError;
-import cx.ring.utils.Log;
 
 public abstract class BaseFragment<T extends RootPresenter> extends Fragment implements BaseView {
 
@@ -76,7 +75,6 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment imp
 
     @Override
     public void onDestroyView() {
-        Log.d(TAG, "onDestroyView");
         super.onDestroyView();
         presenter.unbindView();
         // Butterknife unbinding

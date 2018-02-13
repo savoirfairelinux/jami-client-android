@@ -105,7 +105,7 @@ public class RingApplication extends Application {
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder s) {
-            Log.d(TAG, "onServiceConnected " + className.getClassName());
+            Log.d(TAG, "onServiceConnected: " + className.getClassName());
             mBound = true;
             // bootstrap Daemon
             bootstrapDaemon();
@@ -113,7 +113,7 @@ public class RingApplication extends Application {
 
         @Override
         public void onServiceDisconnected(ComponentName className) {
-            Log.d(TAG, "onServiceDisconnected " + className.getClassName());
+            Log.d(TAG, "onServiceDisconnected: " + className.getClassName());
             mBound = false;
         }
     };
@@ -149,10 +149,10 @@ public class RingApplication extends Application {
                 // Check if the camera hardware feature is available.
                 if (mDeviceRuntimeService.hasVideoPermission() && mHardwareService.isVideoAvailable()) {
                     //initVideo is called here to give time to the application to initialize hardware cameras
-                    Log.d(TAG, "At least one camera available. Initializing video...");
+                    Log.d(TAG, "bootstrapDaemon: At least one camera available. Initializing video...");
                     mHardwareService.initVideo();
                 } else {
-                    Log.d(TAG, "No camera available");
+                    Log.d(TAG, "bootstrapDaemon: No camera available");
                 }
 
                 ringerModeChanged(((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode());

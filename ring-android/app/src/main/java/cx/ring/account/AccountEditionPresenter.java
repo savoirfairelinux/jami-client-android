@@ -55,7 +55,7 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> i
 
                 break;
             default:
-                Log.d(TAG, "Event " + event.getEventType() + " is not handled here");
+                Log.d(TAG, "update: Event " + event.getEventType() + " is not handled here");
                 break;
         }
     }

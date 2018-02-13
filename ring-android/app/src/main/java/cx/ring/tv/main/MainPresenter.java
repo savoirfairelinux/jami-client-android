@@ -165,7 +165,7 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
 
                     @Override
                     public void onError(Throwable throwable) {
-                        Log.d(TAG, throwable.toString());
+                        Log.e(TAG, throwable.toString());
                         getView().showLoading(false);
                     }
                 }));

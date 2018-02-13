@@ -45,7 +45,6 @@ public class TVLaunchActivity extends BaseActivity<LaunchPresenter> implements L
         // dependency injection
         RingApplication.getInstance().getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
 
         setContentView(R.layout.activity_launch);
 
@@ -87,8 +86,6 @@ public class TVLaunchActivity extends BaseActivity<LaunchPresenter> implements L
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        Log.d(TAG, "onRequestPermissionsResult");
-
         switch (requestCode) {
             case RingApplication.PERMISSIONS_REQUEST: {
                 if (grantResults.length == 0) {

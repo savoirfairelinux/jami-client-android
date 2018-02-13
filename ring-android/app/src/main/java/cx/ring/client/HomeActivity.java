@@ -169,7 +169,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         super.onCreate(savedInstanceState);
         RingApplication.getInstance().startDaemon();
 
-        Log.d(TAG, "onCreate");
         mToolbarSize = getResources().getDimension(R.dimen.abc_action_bar_default_height_material);
 
         if (savedInstanceState != null) {
@@ -261,7 +260,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.d(TAG, "onNewIntent " + intent);
+        Log.d(TAG, "onNewIntent: " + intent);
         if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(intent.getAction())) {
             Bundle extra = intent.getExtras();
             if (extra == null || extra.getString(ContactRequestsFragment.ACCOUNT_ID) == null) {
@@ -322,11 +321,9 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
     @Override
     protected void onStart() {
-        Log.d(TAG, "onStart");
-
         String path = FileUtils.ringtonesPath(this);
         if (!(new File(path + "/default.wav")).exists()) {
-            Log.d(TAG, "default.wav doesn't exist. Copying ringtones.");
+            Log.d(TAG, "onStart: default.wav doesn't exist. Copying ringtones.");
             FileUtils.copyAssetFolder(getAssets(), "ringtones", path);
         }
 

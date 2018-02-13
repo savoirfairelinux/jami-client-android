@@ -65,7 +65,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
         try {
-            Log.d(TAG, "onCreate");
             TableUtils.createTable(connectionSource, HistoryCall.class);
             TableUtils.createTable(connectionSource, HistoryText.class);
         } catch (SQLException e) {
@@ -138,9 +137,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 }
                 fromDatabaseVersion++;
             }
-            Log.d(TAG, "Database has been updated to the last version.");
+            Log.d(TAG, "updateDatabase: Database has been updated to the last version.");
         } catch (SQLiteException exc) {
-            Log.e(TAG, "Database has failed to update to the last version.");
+            Log.e(TAG, "updateDatabase: Database has failed to update to the last version.");
             throw exc;
         }
     }
@@ -154,7 +153,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private void updateDatabaseFrom6(SQLiteDatabase db) throws SQLiteException {
         if (db != null && db.isOpen()) {
             try {
-                Log.d(TAG, "Will begin migration from database version 6 to next.");
+                Log.d(TAG, "updateDatabaseFrom6: Will begin migration from database version 6 to next.");
                 db.beginTransaction();
                 //~ Create the new historyCall table and int index
                 db.execSQL("CREATE TABLE IF NOT EXISTS `historycall` (`accountID` VARCHAR , `callID` VARCHAR , " +
@@ -199,9 +198,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
                 db.setTransactionSuccessful();
                 db.endTransaction();
-                Log.d(TAG, "Migration from database version 6 to next, done.");
+                Log.d(TAG, "updateDatabaseFrom6: Migration from database version 6 to next, done.");
             } catch (SQLiteException exception) {
-                Log.e(TAG, "Migration from database version 6 to next, failed.");
+                Log.e(TAG, "updateDatabaseFrom6: Migration from database version 6 to next, failed.");
                 throw exception;
             }
         }
@@ -210,14 +209,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private void updateDatabaseFrom7(SQLiteDatabase db) throws SQLiteException {
         if (db != null && db.isOpen()) {
             try {
-                Log.d(TAG, "Will begin migration from database version 7 to next.");
+                Log.d(TAG, "updateDatabaseFrom7: Will begin migration from database version 7 to next.");
                 db.beginTransaction();
                 db.execSQL("ALTER TABLE historytext ADD COLUMN state VARCHAR DEFAULT ``");
                 db.setTransactionSuccessful();
                 db.endTransaction();
-                Log.d(TAG, "Migration from database version 7 to next, done.");
+                Log.d(TAG, "updateDatabaseFrom7: Migration from database version 7 to next, done.");
             } catch (SQLiteException exception) {
-                Log.e(TAG, "Migration from database version 7 to next, failed.");
+                Log.e(TAG, "updateDatabaseFrom7: Migration from database version 7 to next, failed.");
                 throw exception;
             }
         }
@@ -230,7 +229,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      */
     private void clearDatabase(SQLiteDatabase db) {
         if (db != null && db.isOpen()) {
-            Log.d(TAG, "Will clear database.");
+            Log.d(TAG, "clearDatabase: Will clear database.");
             ArrayList<String> tableNames = new ArrayList<>();
             Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
             if (c.moveToFirst()) {
@@ -248,7 +247,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 }
                 db.setTransactionSuccessful();
                 db.endTransaction();
-                Log.d(TAG, "Database is cleared");
+                Log.d(TAG, "clearDatabase: Database is cleared");
             } catch (SQLiteException exc) {
                 exc.printStackTrace();
             }

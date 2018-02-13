@@ -95,7 +95,7 @@ public class RingSearchFragment extends BaseSearchFragment<RingSearchPresenter>
 
     @Override
     public ObjectAdapter getResultsAdapter() {
-        Log.d(TAG, mRowsAdapter.toString());
+        Log.d(TAG, "getResultsAdapter: " + mRowsAdapter.toString());
         return mRowsAdapter;
     }
 
