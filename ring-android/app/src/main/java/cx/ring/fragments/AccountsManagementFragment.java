@@ -63,7 +63,7 @@ public class AccountsManagementFragment extends BaseFragment<AccountsManagementP
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "Create Account Management Fragment");
+        Log.d(TAG, "onCreate: Create Account Management Fragment");
 
         // dependency injection
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
@@ -115,7 +115,7 @@ public class AccountsManagementFragment extends BaseFragment<AccountsManagementP
 
     @Override
     public void launchAccountEditActivity(Account account) {
-        Log.d(TAG, "Launch account edit activity");
+        Log.d(TAG, "launchAccountEditActivity: Launch account edit activity");
 
         Intent intent = new Intent(getActivity(), AccountEditionActivity.class)
                 .setAction(Intent.ACTION_EDIT)
@@ -125,7 +125,7 @@ public class AccountsManagementFragment extends BaseFragment<AccountsManagementP
 
     @Override
     public void launchAccountMigrationActivity(Account account) {
-        Log.d(TAG, "Launch account migration activity");
+        Log.d(TAG, "launchAccountMigrationActivity: Launch account migration activity");
 
         Intent intent = new Intent()
                 .setClass(getActivity(), AccountWizardActivity.class)

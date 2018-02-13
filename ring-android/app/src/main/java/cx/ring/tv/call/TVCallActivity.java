@@ -56,7 +56,6 @@ public class TVCallActivity extends Activity {
 
         android.net.Uri u = getIntent().getData();
 
-        Log.d(TAG, "u >> " + u);
         boolean audioOnly = false;
         String accountId = getIntent().getStringExtra("account");
         String ringId = getIntent().getStringExtra("ringId");
@@ -64,19 +63,18 @@ public class TVCallActivity extends Activity {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        android.util.Log.d(TAG, "IN CALL ACTIVITY !");
         if (!TextUtils.isEmpty(ringId)) {
-            Log.d(TAG, " outgoing call");
+            Log.d(TAG, "onCreate: outgoing call");
             callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_PLACE_CALL,
                     accountId,
                     ringId,
                     audioOnly);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
         } else {
-            Log.d(TAG, "incoming call");
+            Log.d(TAG, "onCreate: incoming call");
 
             String confId = getIntent().getStringExtra(NotificationService.KEY_CALL_ID);
-            Log.d(TAG, "conf " + confId);
+            Log.d(TAG, "onCreate: conf " + confId);
 
             callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_GET_CALL,
                     confId);

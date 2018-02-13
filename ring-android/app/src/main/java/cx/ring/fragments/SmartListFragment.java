@@ -35,7 +35,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -115,7 +114,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     public void onResume() {
         super.onResume();
 
-        Log.d(TAG, "onResume");
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
 
         presenter.refresh();

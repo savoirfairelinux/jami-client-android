@@ -202,7 +202,7 @@ public class HardwareServiceImpl extends HardwareService {
         try {
             cam = Camera.open(id);
         } catch (Exception e) {
-            Log.d(TAG, e.getMessage());
+            Log.e(TAG, "An error occurred getting camera info", e);
             return;
         }
 
@@ -302,7 +302,7 @@ public class HardwareServiceImpl extends HardwareService {
             Log.w(TAG, "startCapture: no video parameters ");
             return;
         }
-        Log.d(TAG, "startCapture " + videoParams.id + " " + videoParams.width + "x" + videoParams.height + " rot" + videoParams.rotation);
+        Log.d(TAG, "startCapture: startCapture " + videoParams.id + " " + videoParams.width + "x" + videoParams.height + " rot" + videoParams.rotation);
 
         final Camera preview;
         try {
@@ -382,7 +382,7 @@ public class HardwareServiceImpl extends HardwareService {
 
     @Override
     public void stopCapture() {
-        Log.d(TAG, "stopCapture " + previewCamera);
+        Log.d(TAG, "stopCapture: " + previewCamera);
         if (previewCamera != null) {
             final Camera preview = previewCamera;
             final VideoParams params = previewParams;

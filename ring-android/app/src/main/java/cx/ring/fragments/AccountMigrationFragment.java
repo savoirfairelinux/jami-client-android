@@ -88,7 +88,7 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
 
     @OnEditorAction(R.id.ring_password)
     public boolean onPasswordEditorAction(TextView v, int actionId, KeyEvent event) {
-        Log.d(TAG, "onEditorAction " + actionId + " " + (event == null ? null : event.toString()));
+        Log.d(TAG, "onPasswordEditorAction: " + actionId + " " + (event == null ? null : event.toString()));
         return actionId == EditorInfo.IME_ACTION_NEXT && checkPassword(v, null);
     }
 
@@ -168,7 +168,7 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
                 handleMigrationState(event);
                 break;
             default:
-                Log.d(TAG, "This event " + event.getEventType() + " is not handled here");
+                Log.d(TAG, "update: This event " + event.getEventType() + " is not handled here");
                 break;
         }
     }
@@ -223,7 +223,6 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
         private final String mPassword;
 
         MigrateAccountTask(String accountId, String password) {
-            Log.d(TAG, "MigrateAccountTask");
             mAccountId = accountId;
             mPassword = password;
         }
@@ -249,7 +248,7 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
                         mProgress.dismiss();
                         mProgress = null;
                     }
-                    Log.e(TAG, "Error updating account, no account or remote service");
+                    Log.e(TAG, "doInBackground: Error updating account, no account or remote service");
                     new AlertDialog.Builder(getActivity())
                             .setPositiveButton(android.R.string.ok, null)
                             .setTitle(R.string.generic_error_migration)

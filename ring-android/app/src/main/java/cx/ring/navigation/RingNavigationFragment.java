@@ -236,8 +236,6 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
     }
 
     public void updateUserView(VCard vcard) {
-        Log.d(TAG, "updateUserView");
-
         if (getActivity() == null || vcard == null) {
             return;
         }
@@ -256,7 +254,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
                 mSelectedAccountAlias.setText(name_value);
             }
         }
-        Log.d(TAG, "User did change, updating user view.");
+        Log.d(TAG, "updateUserView: User did change, updating user view.");
     }
 
     public void updatePhoto(Uri uriImage) {
@@ -298,7 +296,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
 
     @OnClick(R.id.profile_container)
     public void profileContainerClicked() {
-        Log.d(TAG, "Click on the edit profile");
+        Log.d(TAG, "profileContainerClicked: Click on the edit profile");
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.profile);
 

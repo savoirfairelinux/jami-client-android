@@ -300,7 +300,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService implements Au
         mAudioManager.requestAudioFocus(this, getInCallStream(mAudioManager.isBluetoothA2dpOn()), AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
         if (mBluetoothWrapper != null && mBluetoothWrapper.canBluetooth()) {
-            Log.d(TAG, "Try to enable bluetooth");
+            Log.d(TAG, "obtainAudioFocus: Try to enable bluetooth");
             mBluetoothWrapper.setBluetoothOn(true);
         } else if (!mAudioManager.isWiredHeadsetOn()) {
             mAudioManager.setSpeakerphoneOn(requestSpeakerOn);
@@ -318,7 +318,7 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService implements Au
     }
 
     private void routeToBTHeadset() {
-        Log.d(TAG, "Try to enable bluetooth");
+        Log.d(TAG, "routeToBTHeadset: Try to enable bluetooth");
         mAudioManager.setSpeakerphoneOn(false);
         mAudioManager.setMode(AudioManager.MODE_NORMAL);
         mBluetoothWrapper.setBluetoothOn(true);

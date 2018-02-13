@@ -29,7 +29,6 @@ import cx.ring.R;
 import cx.ring.model.RingError;
 import cx.ring.mvp.BaseView;
 import cx.ring.mvp.RootPresenter;
-import cx.ring.utils.Log;
 
 public class BaseSearchFragment<T extends RootPresenter> extends android.support.v17.leanback.app.SearchFragment
         implements BaseView {
@@ -50,7 +49,6 @@ public class BaseSearchFragment<T extends RootPresenter> extends android.support
 
     @Override
     public void onDestroyView() {
-        Log.d(TAG, "onDestroyView");
         super.onDestroyView();
         presenter.unbindView();
     }

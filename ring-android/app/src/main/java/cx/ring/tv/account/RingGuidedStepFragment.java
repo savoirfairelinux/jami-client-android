@@ -29,7 +29,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cx.ring.mvp.RootPresenter;
-import cx.ring.utils.Log;
 
 public abstract class RingGuidedStepFragment<T extends RootPresenter> extends GuidedStepFragment {
 
@@ -120,7 +119,6 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
 
     @Override
     public void onDestroyView() {
-        Log.d(TAG, "onDestroyView");
         super.onDestroyView();
         presenter.unbindView();
     }

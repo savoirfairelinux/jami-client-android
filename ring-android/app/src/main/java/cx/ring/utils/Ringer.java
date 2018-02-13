@@ -51,7 +51,7 @@ public class Ringer {
      * Starts the ringtone and/or vibrator.
      */
     public void ring() {
-        Log.d(TAG, "==> ring() called...");
+        Log.d(TAG, "ring: called...");
 
         AudioManager audioManager =
                 (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
@@ -61,7 +61,7 @@ public class Ringer {
         int ringerMode = audioManager.getRingerMode();
         if (ringerMode == AudioManager.RINGER_MODE_SILENT) {
             //No ring no vibrate
-            Log.d(TAG, "skipping ring and vibrate because profile is Silent");
+            Log.d(TAG, "ring: skipping ring and vibrate because profile is Silent");
         } else if (ringerMode == AudioManager.RINGER_MODE_VIBRATE || ringerMode == AudioManager.RINGER_MODE_NORMAL) {
             // Vibrate
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -77,7 +77,7 @@ public class Ringer {
      * ringing/vibrating.
      */
     public void stopRing() {
-        Log.d(TAG, "==> stopRing() called...");
+        Log.d(TAG, "stopRing: called...");
         vibrator.cancel();
     }
 

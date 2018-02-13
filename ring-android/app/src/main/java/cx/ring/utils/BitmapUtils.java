@@ -92,7 +92,7 @@ public final class BitmapUtils {
     }
 
     public static Bitmap reduceBitmap(Bitmap bmp, int size) {
-        Log.d(TAG, "bitmap size before reduce " + bmp.getByteCount());
+        Log.d(TAG, "reduceBitmap: bitmap size before reduce " + bmp.getByteCount());
         int height = bmp.getHeight();
         int width = bmp.getWidth();
         while (bmp.getByteCount() > size) {
@@ -101,7 +101,7 @@ public final class BitmapUtils {
             bmp = Bitmap.createScaledBitmap(bmp, width, height, false);
         }
 
-        Log.d(TAG, "bitmap size after reduce " + bmp.getByteCount());
+        Log.d(TAG, "reduceBitmap: bitmap size after reduce " + bmp.getByteCount());
         return bmp;
     }
 }

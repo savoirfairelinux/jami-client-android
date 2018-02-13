@@ -93,7 +93,7 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
                 handleBlockchainResult(state, name);
                 break;
             default:
-                Log.d(TAG, "This event " + event.getEventType() + " is not handled here");
+                Log.d(TAG, "update: This event " + event.getEventType() + " is not handled here");
                 break;
         }
     }

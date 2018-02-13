@@ -25,8 +25,6 @@ import android.view.View;
 
 import javax.inject.Inject;
 
-import cx.ring.utils.Log;
-
 public abstract class BasePreferenceFragment<T extends RootPresenter> extends PreferenceFragment {
 
     protected static final String TAG = BaseFragment.class.getSimpleName();
@@ -50,7 +48,6 @@ public abstract class BasePreferenceFragment<T extends RootPresenter> extends Pr
 
     @Override
     public void onDestroyView() {
-        Log.d(TAG, "onDestroyView");
         super.onDestroyView();
         presenter.unbindView();
     }
