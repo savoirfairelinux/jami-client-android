@@ -18,6 +18,8 @@
  */
 package cx.ring.services;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -25,35 +27,22 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-import javax.inject.Inject;
-
-import cx.ring.application.RingApplication;
+import cx.ring.service.DRingService;
 
 public class RingFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = RingFirebaseMessagingService.class.getSimpleName();
-
-    @Inject
-    protected AccountService mAccountService;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        RingApplication.getInstance().getRingInjectionComponent().inject(this);
-    }
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.d(TAG, "onMessageReceived: " + remoteMessage.getFrom());
         Map<String, String> data = remoteMessage.getData();
-        for (Map.Entry<String, String> e : data.entrySet()) {
-            Log.d(TAG, "entry: " + e.getKey() + " -> " + e.getValue());
+        Bundle bundle = new Bundle();
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            bundle.putString(entry.getKey(), entry.getValue());
         }
-
-        mAccountService.pushNotificationReceived(remoteMessage.getFrom(), data);
-    }
-
-    @Override
-    public void onMessageSent(String s) {
-        Log.d(TAG, "onMessageSent: " + s);
+        startService(new Intent(DRingService.ACTION_PUSH_RECEIVED)
+                .setClass(this, DRingService.class)
+                .putExtra(DRingService.PUSH_RECEIVED_FIELD_FROM, remoteMessage.getFrom())
+                .putExtra(DRingService.PUSH_RECEIVED_FIELD_DATA, bundle));
     }
 }
