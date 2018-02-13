@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_4b79c492",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "Why not defining buildFirebase \u003d false here?",
+      "range": {
+        "startLine": 87,
+        "startChar": 16,
+        "endLine": 88,
+        "endChar": 28
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_ab6e88c7",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "Why not defining buildFirebase \u003d true here?",
+      "range": {
+        "startLine": 90,
+        "startChar": 22,
+        "endLine": 91,
+        "endChar": 28
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_eb39b0d9",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "Why a new \"dependencies\" block?\n\nShould be withFirebaseImplementation : https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#new_configurations",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 1
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_2b4b985a",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "This should use a constant",
+      "range": {
+        "startLine": 657,
+        "startChar": 39,
+        "endLine": 657,
+        "endChar": 45
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_0b485c5a",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "This should use a constant",
+      "range": {
+        "startLine": 658,
+        "startChar": 39,
+        "endLine": 658,
+        "endChar": 45
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_6b74809c",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "This should use a constant",
+      "range": {
+        "startLine": 670,
+        "startChar": 66,
+        "endLine": 670,
+        "endChar": 73
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_eb409037",
+        "filename": "ring-android/app/src/noPush/java/cx/ring/application/RingApplicationNoPush.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "Missing @Override annotation",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 5
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_cb3dd4bd",
+        "filename": "ring-android/app/src/withFirebase/java/cx/ring/application/RingApplicationFirebase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "Missing @Override annotation",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 5
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_2b3438dd",
+        "filename": "ring-android/app/src/withFirebase/java/cx/ring/services/RingFirebaseInstanceIdService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "Useless",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 5
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_cb3674e7",
+        "filename": "ring-android/app/src/withFirebase/java/cx/ring/services/RingFirebaseInstanceIdService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "This should be a constant",
+      "range": {
+        "startLine": 43,
+        "startChar": 26,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_0b317cec",
+        "filename": "ring-android/app/src/withFirebase/java/cx/ring/services/RingFirebaseMessagingService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "Useless",
+      "range": {
+        "startLine": 35,
+        "startChar": 3,
+        "endLine": 38,
+        "endChar": 5
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_4b526414",
+        "filename": "ring-android/app/src/withFirebase/java/cx/ring/services/RingFirebaseMessagingService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "This should be a constant",
+      "range": {
+        "startLine": 50,
+        "startChar": 26,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_6b4da072",
+        "filename": "ring-android/app/src/withFirebase/java/cx/ring/services/RingFirebaseMessagingService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "This should be a constant",
+      "range": {
+        "startLine": 51,
+        "startChar": 26,
+        "endLine": 51,
+        "endChar": 32
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_ab57a801",
+        "filename": "ring-android/app/src/withFirebase/java/cx/ring/services/RingFirebaseMessagingService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "Useless",
+      "range": {
+        "startLine": 54,
+        "startChar": 3,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_8b5c6c27",
+        "filename": "ring-android/build.gradle",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-13T14:12:12Z",
+      "side": 1,
+      "message": "Why is this variable declared at root level?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 1
+      },
+      "revId": "30b9f996b319ab8f7907838e3bbbfc6134c769cf",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
