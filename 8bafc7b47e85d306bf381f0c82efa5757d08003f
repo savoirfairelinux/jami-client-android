@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_0b697c8b",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-13T17:04:08Z",
+      "side": 1,
+      "message": "unrelated / pointless",
+      "revId": "8bafc7b47e85d306bf381f0c82efa5757d08003f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_6b05a0c1",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-13T17:04:08Z",
+      "side": 1,
+      "message": "* Should apply to incoming calls as well by checking the relevant call property\n* Should go to ConversationFacade (unrelated to the presentation/existence of the call activity)",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 9
+      },
+      "revId": "8bafc7b47e85d306bf381f0c82efa5757d08003f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
