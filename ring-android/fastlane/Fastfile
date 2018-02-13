@@ -1,3 +1,4 @@
+# -*- mode: ruby; -*-
 # Customise this file, documentation can be found here:
 # https://github.com/fastlane/fastlane/tree/master/fastlane/docs
 # All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
@@ -37,6 +38,22 @@ platform :android do
       track: "beta",
       json_key: options[:json_key],
       mapping: options[:mapping]
+    )
+  end
+
+  desc "So far, we just sign and align the APK"
+  lane :fdroid do |options|
+    sign_apk(
+      apk_path: options[:apk_path],
+      signed_apk_path: options[:signed_apk_path],
+      keystore_path: options[:keystore_path],
+      alias: options[:keyalias],
+      storepass: options[:storepass],
+      keypass: options[:keypass]
+    )
+
+    zipalign(
+        apk_path: options[:signed_apk_path]
     )
   end
 
