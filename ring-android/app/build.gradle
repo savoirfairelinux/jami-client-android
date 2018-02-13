@@ -3,7 +3,75 @@ apply plugin: 'com.android.application'
 def android_support_version = "27.0.2"
 def butterknife_version = "8.8.1"
 def dagger_version = "2.12"
-def useFirebase = rootProject.useFirebase
+def buildFirebase = project.hasProperty('buildFirebase')
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "26.0.3"
+
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 27
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    sourceSets {
+        main {
+            aidl.srcDirs = ['src/main/java']
+            jniLibs.srcDir 'src/main/libs'
+            jni.srcDirs = []
+        }
+
+        // Move the tests to tests/java, tests/res, etc...
+        instrumentTest.setRoot('tests')
+
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "push"
+    productFlavors {
+        noPush {
+            dimension "push"
+        }
+        withFirebase {
+            dimension "push"
+        }
+    }
+    signingConfigs {
+        config {
+            keyAlias 'ring'
+            storeFile file('../keystore.bin')
+        }
+    }
+    lintOptions {
+        disable 'MissingTranslation'
+    }
+    splits {
+        abi {
+            enable true
+            reset()
+            def sp = archs.split(',')
+            include(sp)
+            universalApk true
+        }
+    }
+}
 
 dependencies {
     implementation fileTree(include: '*.jar', dir: 'libs')
@@ -41,75 +109,10 @@ dependencies {
     // RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
-    if (useFirebase) {
-        compile 'com.google.firebase:firebase-messaging:11.8.0'
-    }
-
+    withFirebaseImplementation 'com.google.firebase:firebase-messaging:11.8.0'
 }
 
-android {
-    compileSdkVersion 27
-    buildToolsVersion "26.0.3"
-
-    defaultConfig {
-        minSdkVersion 18
-        targetSdkVersion 27
-        vectorDrawables.useSupportLibrary = true
-    }
-
-    sourceSets {
-        main {
-            java.srcDirs = ['src/main/java']
-            if (useFirebase) {
-                java.srcDirs += 'src/main/javaFirebase'
-            }
-            aidl.srcDirs = ['src/main/java']
-            jniLibs.srcDir 'src/main/libs'
-            jni.srcDirs = []
-        }
-
-        // Move the tests to tests/java, tests/res, etc...
-        instrumentTest.setRoot('tests')
-
-        // Move the build types to build-types/<type>
-        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
-        // This moves them out of them default location under src/<type>/... which would
-        // conflict with src/ being used by the main source set.
-        // Adding new build types or product flavors should be accompanied
-        // by a similar customization.
-        debug.setRoot('build-types/debug')
-        release.setRoot('build-types/release')
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    signingConfigs {
-        config {
-            keyAlias 'ring'
-            storeFile file('../keystore.bin')
-        }
-    }
-    lintOptions {
-        disable 'MissingTranslation'
-    }
-    splits {
-        abi {
-            enable true
-            reset()
-            def sp = archs.split(',')
-            include(sp)
-            universalApk true
-        }
-    }
-}
-
-if (useFirebase) {
+if (buildFirebase) {
+    println 'apply plugin ' + buildFirebase
     apply plugin: 'com.google.gms.google-services'
 }
