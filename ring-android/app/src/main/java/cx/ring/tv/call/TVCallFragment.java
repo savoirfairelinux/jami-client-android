@@ -306,6 +306,11 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
+    public void updateMenu() {
+
+    }
+
+    @Override
     public void changeScreenRotation() {
 
     }

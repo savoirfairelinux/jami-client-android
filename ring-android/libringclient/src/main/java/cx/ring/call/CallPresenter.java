@@ -74,13 +74,13 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
                          HardwareService hardwareService,
                          CallService callService,
                          ContactService contactService,
-                         HistoryService mHistoryService) {
+                         HistoryService historyService) {
         this.mAccountService = accountService;
         this.mNotificationService = notificationService;
         this.mHardwareService = hardwareService;
         this.mCallService = callService;
         this.mContactService = contactService;
-        this.mHistoryService = mHistoryService;
+        this.mHistoryService = historyService;
     }
 
     @Override
@@ -104,17 +104,21 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     }
 
     public void initOutGoing(String accountId, String contactRingId, boolean audioOnly) {
-        mAudioOnly = audioOnly;
-
         if (mHardwareService.getCameraCount() == 0) {
-            mAudioOnly = true;
+            audioOnly = true;
         }
 
         mSipCall = mCallService.placeCall(accountId, StringUtils.toNumber(contactRingId), audioOnly);
         if (mSipCall == null) {
+            Log.w(TAG, "initOutGoing: null Call");
             finish();
             return;
         }
+
+        mAudioOnly = mSipCall.isAudioOnly();
+
+        getView().updateMenu();
+
         confUpdate();
         getContactDetails();
         getView().blockScreenRotation();
@@ -250,10 +254,12 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         if (mSipCall == null) {
             return;
         }
+        mAudioOnly = mSipCall.isAudioOnly();
         if (mSipCall.isOnGoing()) {
             mOnGoingCall = true;
             getView().initNormalStateDisplay(mAudioOnly);
             getView().updateContactBubble(mSipCall.getContact());
+            getView().updateMenu();
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
                 getView().displayVideoSurface(true);

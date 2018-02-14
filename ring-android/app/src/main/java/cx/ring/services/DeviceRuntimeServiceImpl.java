@@ -111,25 +111,20 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService implements Au
 
     @Override
     public void updateAudioState(final boolean isRinging) {
-        Handler mainHandler = new Handler(mContext.getMainLooper());
-
-        mainHandler.post(() -> {
-            if (mBluetoothWrapper == null) {
-                mBluetoothWrapper = new BluetoothWrapper(mContext);
-                mBluetoothWrapper.registerScoUpdate();
-                mBluetoothWrapper.registerBtConnection();
-                mBluetoothWrapper.setBluetoothChangeListener(DeviceRuntimeServiceImpl.this);
-            }
-
-            obtainAudioFocus(isRinging);
-            if (isRinging) {
-                mAudioManager.setMode(AudioManager.MODE_RINGTONE);
-                startRinging();
-            } else {
-                stopRinging();
-                mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
-            }
-        });
+        if (mBluetoothWrapper == null) {
+            mBluetoothWrapper = new BluetoothWrapper(mContext);
+            mBluetoothWrapper.registerScoUpdate();
+            mBluetoothWrapper.registerBtConnection();
+            mBluetoothWrapper.setBluetoothChangeListener(DeviceRuntimeServiceImpl.this);
+        }
+        obtainAudioFocus(isRinging);
+        if (isRinging) {
+            mAudioManager.setMode(AudioManager.MODE_RINGTONE);
+            startRinging();
+        } else {
+            stopRinging();
+            mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+        }
     }
 
     @Override

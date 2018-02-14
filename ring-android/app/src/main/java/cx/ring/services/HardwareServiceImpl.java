@@ -135,7 +135,17 @@ public class HardwareServiceImpl extends HardwareService {
     @Override
     public void switchSpeakerPhone() {
         AudioManager audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setSpeakerphoneOn(!audioManager.isSpeakerphoneOn());
+        if (audioManager != null) {
+            audioManager.setSpeakerphoneOn(!audioManager.isSpeakerphoneOn());
+        }
+    }
+
+    @Override
+    public void setSpeakerPhone(boolean activateSpeaker) {
+        AudioManager audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager != null) {
+            audioManager.setSpeakerphoneOn(activateSpeaker);
+        }
     }
 
     public void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer) {
