@@ -18,13 +18,28 @@
  */
 package cx.ring.application;
 
+import android.util.Log;
+
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 public class RingApplicationFirebase extends RingApplication {
+    static private String TAG = RingApplicationFirebase.class.getSimpleName();
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        FirebaseApp.initializeApp(this);
+    }
 
     @Override
     public String getPushToken() {
-        return FirebaseInstanceId.getInstance().getToken();
+        try {
+            return FirebaseInstanceId.getInstance().getToken();
+        } catch (Exception e) {
+            Log.e(TAG, "Error retrieving Firebase token", e);
+            return "";
+        }
     }
 
 }
