@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_2b81d88f",
+        "filename": "ring-android/app/src/withFirebase/java/cx/ring/application/RingApplicationFirebase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-14T15:11:01Z",
+      "side": 1,
+      "message": "Catching Exception class is considered a bad practice. See https://www.javaworld.com/article/2073800/testing-debugging/beware-the-dangers-of-generic-exceptions.html",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "f450adfefbaea4f5d8637f1eeecb86e885d6ca96",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
