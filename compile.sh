@@ -39,7 +39,8 @@ for i in ${ANDROID_ABI_LIST}; do
     echo "$i build OK"
 done
 
-if [ -z "$RING_BUILD_FIREBASE" ]; then
+echo "RING_BUILD_FIREBASE: $RING_BUILD_FIREBASE, ${RING_BUILD_FIREBASE}"
+if [ -z "${RING_BUILD_FIREBASE}" ]; then
     echo "Building without Firebase support"
 else
     GRADLE_PROPERTIES="-PbuildFirebase"
