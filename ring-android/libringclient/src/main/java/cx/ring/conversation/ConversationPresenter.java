@@ -205,7 +205,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
         // send file
         Uri uri = new Uri(mContactRingId);
-        mCallService.sendFile(mAccountId, uri.getHost(), filePath, file.getName());
+        DataTransferInfo dataTransferInfo = new DataTransferInfo();
+        dataTransferInfo.setAccountId(mAccountId);
+        dataTransferInfo.setPeer(uri.getHost());
+        dataTransferInfo.setPath(filePath);
+        dataTransferInfo.setDisplayName(file.getName());
+        mCallService.sendFile(0L, dataTransferInfo);
     }
 
     public void sendTrustRequest() {
@@ -375,31 +380,31 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         // find corresponding transfer
         mConversation.updateFileTransfer(transferId, transferEventCode);
 
-        DataTransferInfo dataTransferInfo = null;
+        DataTransferInfo dataTransferInfo = new DataTransferInfo();
+        CallService.DataTransferWrapper dataTransferWrapper = null;
         if (transferEventCode == DataTransferEventCode.CREATED || transferEventCode == DataTransferEventCode.FINISHED) {
-            dataTransferInfo = mCallService.dataTransferInfo(transferId);
+            dataTransferWrapper = mCallService.dataTransferInfo(transferId, dataTransferInfo);
         }
 
+        Log.d(TAG, "handleDataTransferEvent: " + transferEventCode.name());
         switch (transferEventCode) {
             case CREATED:
-                Log.i(TAG, "handleDataTransferEvent: CREATED");
+                Log.i(TAG, "handleDataTransferEvent: flag=" + dataTransferInfo.getFlags());
 
-                if (dataTransferInfo != null) {
+                if (dataTransferWrapper != null) {
                     mConversation.addFileTransfer(transferId, dataTransferInfo.getDisplayName(),
-                            dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(),
+                            dataTransferInfo.getFlags() == 0, dataTransferInfo.getTotalSize(),
                             dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
                             dataTransferInfo.getAccountId());
                 }
                 break;
             case FINISHED:
-                if (dataTransferInfo != null) {
-                    if (!dataTransferInfo.getIsOutgoing()) {
+                if (dataTransferWrapper != null) {
+                    if (dataTransferInfo.getFlags() == 1) {
                         getView().writeCacheFile(dataTransferInfo.getDisplayName());
                     }
                 }
                 break;
-            default:
-                Log.d(TAG, "handleDataTransferEvent: " + transferEventCode.name());
         }
 
         Log.d(TAG, "handleDataTransferEvent: AggregateHistorySize=" + mConversation.getAggregateHistory().size() + ", transferEventCode=" + transferEventCode);

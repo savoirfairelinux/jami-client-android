@@ -42,7 +42,7 @@ import cx.ring.utils.Log;
 
 public class DaemonService {
 
-    private static final String TAG = DaemonService.class.getName();
+    private static final String TAG = DaemonService.class.getSimpleName();
 
     private static final int POLLING_TIMEOUT = 50;
 
