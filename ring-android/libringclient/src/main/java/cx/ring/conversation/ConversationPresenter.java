@@ -205,7 +205,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
         // send file
         Uri uri = new Uri(mContactRingId);
-        mCallService.sendFile(mAccountId, uri.getHost(), filePath, file.getName());
+        DataTransferInfo dataTransferInfo = new DataTransferInfo();
+        dataTransferInfo.setAccountId(mAccountId);
+        dataTransferInfo.setPeer(uri.getHost());
+        dataTransferInfo.setPath(filePath);
+        dataTransferInfo.setDisplayName(file.getName());
+        mCallService.sendFile(0L, dataTransferInfo);
     }
 
     public void sendTrustRequest() {
@@ -377,7 +382,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
         DataTransferInfo dataTransferInfo = null;
         if (transferEventCode == DataTransferEventCode.CREATED || transferEventCode == DataTransferEventCode.FINISHED) {
-            dataTransferInfo = mCallService.dataTransferInfo(transferId);
+            dataTransferInfo = new DataTransferInfo();
+            mCallService.dataTransferInfo(transferId, dataTransferInfo);
         }
 
         switch (transferEventCode) {
@@ -386,14 +392,14 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
                 if (dataTransferInfo != null) {
                     mConversation.addFileTransfer(transferId, dataTransferInfo.getDisplayName(),
-                            dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(),
+                            dataTransferInfo.getFlags().equals("1"), dataTransferInfo.getTotalSize(),
                             dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
                             dataTransferInfo.getAccountId());
                 }
                 break;
             case FINISHED:
                 if (dataTransferInfo != null) {
-                    if (!dataTransferInfo.getIsOutgoing()) {
+                    if (!dataTransferInfo.getFlags().equals("1")) {
                         getView().writeCacheFile(dataTransferInfo.getDisplayName());
                     }
                 }

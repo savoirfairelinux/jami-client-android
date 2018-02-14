@@ -501,22 +501,23 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 case DATA_TRANSFER: {
                     Long transferId = event.getEventInput(ServiceEvent.EventInput.TRANSFER_ID, Long.class);
                     DataTransferEventCode transferEventCode = event.getEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, DataTransferEventCode.class);
-                    DataTransferInfo dataTransferInfo = mCallService.dataTransferInfo(transferId);
+                    DataTransferInfo dataTransferInfo = new DataTransferInfo();
+                    mCallService.dataTransferInfo(transferId, dataTransferInfo);
 
                     if (transferEventCode == DataTransferEventCode.CREATED) {
 
                         HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, dataTransferInfo.getDisplayName(),
-                                dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(),
+                                dataTransferInfo.getFlags().equals("1"), dataTransferInfo.getTotalSize(),
                                 dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
                                 dataTransferInfo.getAccountId());
                         mHistoryService.addFileTransfer(historyFileTransfer);
 
-                        if (!dataTransferInfo.getIsOutgoing()) {
+                        if (!dataTransferInfo.getFlags().equals("1")){
                             showFileTransferNotification(transferId, dataTransferInfo.getPeer());
                         }
                     }
 
-                    if (!dataTransferInfo.getIsOutgoing()) {
+                    if (!dataTransferInfo.getFlags().equals("1")) {
                         mHistoryService.updateFileTransferStatus(transferId, transferEventCode);
                     }
 

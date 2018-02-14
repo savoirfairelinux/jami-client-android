@@ -20,30 +20,9 @@
 
 package cx.ring.model;
 
-public enum DataTransferEventCode {
-    INVALID,
-    CREATED,
-    UNSUPPORTED(true),
-    WAIT_PEER_ACCEPTANCE,
-    WAIT_HOST_ACCEPTANCE,
-    ONGOING,
-    FINISHED,
-    CLOSED_BY_HOST(true),
-    CLOSED_BY_PEER(true),
-    INVALID_PATHNAME(true),
-    UNJOINABLE_PEER(true);
-
-    private boolean isError;
-
-    DataTransferEventCode() {
-        isError = false;
-    }
-
-    DataTransferEventCode(boolean isError) {
-        this.isError = isError;
-    }
-
-    public boolean isError() {
-        return isError;
-    }
+public enum DataTransferError {
+    SUCCESS,
+    UNKNOWN,
+    IO,
+    INVALID_ARGUMENT
 }
