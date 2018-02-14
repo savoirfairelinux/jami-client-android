@@ -18,12 +18,14 @@
  */
 package cx.ring.application;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 public class RingApplicationFirebase extends RingApplication {
 
     @Override
     public String getPushToken() {
+        FirebaseApp.initializeApp(this);
         return FirebaseInstanceId.getInstance().getToken();
     }
 
