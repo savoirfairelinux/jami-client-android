@@ -39,6 +39,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -99,6 +101,12 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @BindView(R.id.number_selector)
     protected Spinner mNumberSpinner;
+
+    @BindView(R.id.pb_data_transfer)
+    protected ProgressBar pbDataTransfer;
+
+    @BindView(R.id.send_data)
+    protected ImageButton sendData;
 
     private AlertDialog mDeleteDialog;
     private boolean mDeleteConversation = false;
@@ -193,7 +201,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         presenter.sendTextMessage(mMsgEditTxt.getText().toString());
     }
 
-    @OnClick(R.id.file_send)
+    @OnClick(R.id.send_data)
     public void selectFile() {
         presenter.selectFile();
     }
@@ -215,6 +223,34 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        super.onActivityResult(requestCode, resultCode, resultData);
+
+        if (requestCode == REQUEST_CODE_FILE_PICKER && resultCode == RESULT_OK) {
+            if (resultData != null) {
+                android.net.Uri uri = resultData.getData();
+                if (uri == null) {
+                    return;
+                }
+
+                new Thread(() -> {
+                    getActivity().runOnUiThread(() -> setLoading(true));
+
+                    try {
+                        File cacheFile = FileUtils.getCacheFile(getActivity(), uri);
+                        presenter.sendFile(cacheFile.toString());
+                    } catch (IOException e) {
+                        Log.e(TAG, "onActivityResult: not able to create cache file");
+                        getActivity().runOnUiThread(() -> displayErrorToast(RingError.INVALID_FILE));
+                    }
+
+                    getActivity().runOnUiThread(() -> setLoading(false));
+                }).start();
+            }
+        }
+    }
+
+    @Override
     public void writeCacheFile(String cacheFilename) {
         File cacheFile = new File(getActivity().getCacheDir(), cacheFilename);
         try {
@@ -227,28 +263,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         } catch (IOException e) {
             Log.e(TAG, "writeCacheFile: ", e);
             getActivity().runOnUiThread(() -> displayErrorToast(RingError.NOT_ABLE_TO_WRITE_FILE));
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
-        super.onActivityResult(requestCode, resultCode, resultData);
-
-        if (requestCode == REQUEST_CODE_FILE_PICKER && resultCode == RESULT_OK) {
-            if (resultData != null) {
-                android.net.Uri uri = resultData.getData();
-                if (uri == null) {
-                    return;
-                }
-
-                try {
-                    File cacheFile = FileUtils.getCacheFile(getActivity(), uri);
-                    presenter.sendFile(cacheFile.toString());
-                } catch (IOException e) {
-                    Log.e(TAG, "onActivityResult: not able to create cache file");
-                    displayErrorToast(RingError.INVALID_FILE);
-                }
-            }
         }
     }
 
@@ -499,5 +513,15 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @Override
     public void toggleButtonClicked() {
         presenter.clickOnGoingPane();
+    }
+
+    private void setLoading(boolean isLoading) {
+        if (isLoading) {
+            sendData.setVisibility(View.GONE);
+            pbDataTransfer.setVisibility(View.VISIBLE);
+        } else {
+            sendData.setVisibility(View.VISIBLE);
+            pbDataTransfer.setVisibility(View.GONE);
+        }
     }
 }

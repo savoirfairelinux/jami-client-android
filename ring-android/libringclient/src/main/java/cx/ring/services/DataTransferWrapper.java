@@ -18,32 +18,30 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-package cx.ring.model;
+package cx.ring.services;
 
-public enum DataTransferEventCode {
-    INVALID,
-    CREATED,
-    UNSUPPORTED(true),
-    WAIT_PEER_ACCEPTANCE,
-    WAIT_HOST_ACCEPTANCE,
-    ONGOING,
-    FINISHED,
-    CLOSED_BY_HOST(true),
-    CLOSED_BY_PEER(true),
-    INVALID_PATHNAME(true),
-    UNJOINABLE_PEER(true);
+import cx.ring.daemon.DataTransferInfo;
+import cx.ring.model.DataTransferError;
 
-    private boolean isError;
+public class DataTransferWrapper {
 
-    DataTransferEventCode() {
-        isError = false;
+        private DataTransferInfo dataTransferInfo;
+        private DataTransferError dataTransferError;
+
+        public DataTransferWrapper(DataTransferInfo dataTransferInfo, DataTransferError dataTransferError) {
+            this.dataTransferInfo = dataTransferInfo;
+            this.dataTransferError = dataTransferError;
+        }
+
+        public DataTransferInfo getDataTransferInfo() {
+            return dataTransferInfo;
+        }
+
+        public DataTransferError getDataTransferError() {
+            return dataTransferError;
+        }
+
+        public boolean isOutgoing() {
+            return this.dataTransferInfo.getFlags() == 0;
+        }
     }
-
-    DataTransferEventCode(boolean isError) {
-        this.isError = isError;
-    }
-
-    public boolean isError() {
-        return isError;
-    }
-}

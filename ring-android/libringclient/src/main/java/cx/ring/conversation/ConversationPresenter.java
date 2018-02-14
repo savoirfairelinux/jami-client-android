@@ -30,6 +30,7 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransferError;
 import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryFileTransfer;
@@ -43,6 +44,7 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
+import cx.ring.services.DataTransferWrapper;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
@@ -205,7 +207,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
         // send file
         Uri uri = new Uri(mContactRingId);
-        mCallService.sendFile(mAccountId, uri.getHost(), filePath, file.getName());
+        DataTransferInfo dataTransferInfo = new DataTransferInfo();
+        dataTransferInfo.setAccountId(mAccountId);
+        dataTransferInfo.setPeer(uri.getHost());
+        dataTransferInfo.setPath(filePath);
+        dataTransferInfo.setDisplayName(file.getName());
+        mCallService.sendFile(0L, dataTransferInfo);
     }
 
     public void sendTrustRequest() {
@@ -375,31 +382,30 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         // find corresponding transfer
         mConversation.updateFileTransfer(transferId, transferEventCode);
 
-        DataTransferInfo dataTransferInfo = null;
+        DataTransferInfo dataTransferInfo = new DataTransferInfo();
+        DataTransferWrapper dataTransferWrapper = null;
         if (transferEventCode == DataTransferEventCode.CREATED || transferEventCode == DataTransferEventCode.FINISHED) {
-            dataTransferInfo = mCallService.dataTransferInfo(transferId);
+            dataTransferWrapper = mCallService.dataTransferInfo(transferId, dataTransferInfo);
+
+            if (dataTransferWrapper.getDataTransferError() != DataTransferError.SUCCESS) {
+                Log.e(TAG, "handleDataTransferEvent: an error occurred during data transfer " + dataTransferWrapper.getDataTransferError().name());
+                return;
+            }
         }
 
+        Log.d(TAG, "handleDataTransferEvent: " + transferEventCode.name());
         switch (transferEventCode) {
             case CREATED:
-                Log.i(TAG, "handleDataTransferEvent: CREATED");
-
-                if (dataTransferInfo != null) {
-                    mConversation.addFileTransfer(transferId, dataTransferInfo.getDisplayName(),
-                            dataTransferInfo.getIsOutgoing(), dataTransferInfo.getTotalSize(),
-                            dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
-                            dataTransferInfo.getAccountId());
-                }
+                mConversation.addFileTransfer(transferId, dataTransferInfo.getDisplayName(),
+                        dataTransferWrapper.isOutgoing(), dataTransferInfo.getTotalSize(),
+                        dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
+                        dataTransferInfo.getAccountId());
                 break;
             case FINISHED:
-                if (dataTransferInfo != null) {
-                    if (!dataTransferInfo.getIsOutgoing()) {
-                        getView().writeCacheFile(dataTransferInfo.getDisplayName());
-                    }
+                if (!dataTransferWrapper.isOutgoing()) {
+                    getView().writeCacheFile(dataTransferInfo.getDisplayName());
                 }
                 break;
-            default:
-                Log.d(TAG, "handleDataTransferEvent: " + transferEventCode.name());
         }
 
         Log.d(TAG, "handleDataTransferEvent: AggregateHistorySize=" + mConversation.getAggregateHistory().size() + ", transferEventCode=" + transferEventCode);
