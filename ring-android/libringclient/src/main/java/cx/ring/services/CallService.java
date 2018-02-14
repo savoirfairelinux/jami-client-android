@@ -33,6 +33,7 @@ import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.CallContact;
+import cx.ring.model.DataTransferError;
 import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
@@ -426,63 +427,65 @@ public class CallService extends Observable {
         );
     }
 
-    public DataTransferInfo dataTransferInfo(final Long dataTransferId) {
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                new Callable<DataTransferInfo>() {
-                    @Override
-                    public DataTransferInfo call() throws Exception {
-                        Log.i(TAG, "dataTransferInfo() thread running... dataTransferId=" + dataTransferId);
-                        return Ringservice.dataTransferInfo(dataTransferId);
-                    }
-                }
-        );
-    }
-
-    public Long sendFile(final String accountId, final String to, final String filePath, final String displayName) {
-        return FutureUtils.executeDaemonThreadCallable(
+    public DataTransferError sendFile(final Long dataTransferId, final DataTransferInfo dataTransferInfo) {
+        Long errorCode = FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
                 new Callable<Long>() {
                     @Override
                     public Long call() throws Exception {
-                        Log.i(TAG, "sendFile() thread running... accountId=" + accountId + ", to=" + to + ", filePath=" + filePath);
-                        return Ringservice.sendFile(accountId, to, filePath, displayName);
+                        Log.i(TAG, "sendFile() thread running... accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
+                        return Ringservice.sendFile(dataTransferInfo, dataTransferId);
                     }
                 }
         );
+        return getDataTransferError(errorCode);
     }
 
-    public void acceptFileTransfer(final Long dataTransferId, final String filePath, final long offset) {
-        FutureUtils.executeDaemonThreadCallable(
+    public DataTransferError acceptFileTransfer(final Long dataTransferId, final String filePath, final long offset) {
+        Long errorCode = FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Boolean>() {
+                new Callable<Long>() {
                     @Override
-                    public Boolean call() throws Exception {
+                    public Long call() throws Exception {
                         Log.i(TAG, "acceptFileTransfer() thread running... dataTransferId=" + dataTransferId + ", filePath=" + filePath + ", offset=" + offset);
-                        Ringservice.acceptFileTransfer(dataTransferId, filePath, offset);
-                        return true;
+                        return Ringservice.acceptFileTransfer(dataTransferId, filePath, offset);
                     }
                 }
         );
+        return getDataTransferError(errorCode);
     }
 
-    public void cancelDataTransfer(final Long dataTransferId) {
-        FutureUtils.executeDaemonThreadCallable(
+    public DataTransferError cancelDataTransfer(final Long dataTransferId) {
+        Long errorCode = FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Boolean>() {
+                new Callable<Long>() {
                     @Override
-                    public Boolean call() throws Exception {
+                    public Long call() throws Exception {
                         Log.i(TAG, "cancelDataTransfer() thread running... dataTransferId=" + dataTransferId);
-                        Ringservice.cancelDataTransfer(dataTransferId);
-                        return true;
+                        return Ringservice.cancelDataTransfer(dataTransferId);
+                    }
+                }
+        );
+        return getDataTransferError(errorCode);
+    }
+
+    public DataTransferWrapper dataTransferInfo(final Long dataTransferId, final DataTransferInfo dataTransferInfo) {
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                new Callable<DataTransferWrapper>() {
+                    @Override
+                    public DataTransferWrapper call() throws Exception {
+                        Log.i(TAG, "dataTransferInfo() thread running... dataTransferId=" + dataTransferId);
+                        long errorCode = Ringservice.dataTransferInfo(dataTransferId, dataTransferInfo);
+                        return new DataTransferWrapper(dataTransferInfo, getDataTransferError(errorCode));
                     }
                 }
         );
@@ -596,17 +599,36 @@ public class CallService extends Observable {
     }
 
     public void dataTransferEvent(long transferId, int eventCode) {
-        DataTransferEventCode dataTransferEventCode = DataTransferEventCode.UNSUPPORTED;
-        try {
-            dataTransferEventCode = DataTransferEventCode.values()[eventCode];
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-            Log.e(TAG, "dataTransferEvent: invalid data transfer status from daemon");
-        }
+        DataTransferEventCode dataTransferEventCode = getDataTransferEventCode(eventCode);
 
         setChanged();
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DATA_TRANSFER);
         event.addEventInput(ServiceEvent.EventInput.TRANSFER_ID, transferId);
         event.addEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, dataTransferEventCode);
         notifyObservers(event);
+    }
+
+    private static DataTransferEventCode getDataTransferEventCode(int eventCode) {
+        DataTransferEventCode dataTransferEventCode = DataTransferEventCode.INVALID;
+        try {
+            dataTransferEventCode = DataTransferEventCode.values()[eventCode];
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+            Log.e(TAG, "getDataTransferEventCode: invalid data transfer status from daemon");
+        }
+        return dataTransferEventCode;
+    }
+
+    private static DataTransferError getDataTransferError(Long errorCode) {
+        DataTransferError dataTransferError = DataTransferError.UNKNOWN;
+        if (errorCode == null) {
+            Log.e(TAG, "getDataTransferError: invalid error code");
+        } else {
+            try {
+                dataTransferError = DataTransferError.values()[errorCode.intValue()];
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+                Log.e(TAG, "getDataTransferError: invalid data transfer error from daemon");
+            }
+        }
+        return dataTransferError;
     }
 }

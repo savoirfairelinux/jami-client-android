@@ -51,6 +51,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <Spinner
@@ -73,15 +74,22 @@
                 android:padding="8dp" />
 
             <ImageButton
-                android:id="@+id/file_send"
+                android:id="@+id/send_data"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
                 android:background="?selectableItemBackgroundBorderless"
                 android:contentDescription="@string/send_file"
-                android:layout_marginEnd="5dp"
                 android:padding="8dp"
                 android:tint="@android:color/darker_gray"
                 card_view:srcCompat="@drawable/ic_upload_black" />
+
+            <ProgressBar
+                android:id="@+id/pb_data_transfer"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:indeterminate="true"
+                android:visibility="gone" />
 
             <ImageButton
                 android:id="@+id/msg_send"
