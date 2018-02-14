@@ -499,7 +499,9 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     if ((call.isRinging() || newState == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
                         call.setTimestampStart(System.currentTimeMillis());
                     }
-
+                    if (newState == SipCall.State.CURRENT && !call.isAudioOnly()) {
+                        mHardwareService.setSpeakerPhone(true);
+                    }
                     if ((newState == SipCall.State.CURRENT && call.isIncoming())
                             || newState == SipCall.State.RINGING && call.isOutGoing()) {
                         mAccountService.sendProfile(call.getCallId(), call.getAccount());

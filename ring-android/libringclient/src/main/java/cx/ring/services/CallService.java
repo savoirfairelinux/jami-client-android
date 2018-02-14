@@ -542,8 +542,6 @@ public class CallService extends Observable {
         try {
             SipCall call = parseCallState(callId, newState);
             if (call != null) {
-                mDeviceRuntimeService.updateAudioState(call.isRinging() && call.isIncoming());
-
                 setChanged();
 
                 ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CALL_STATE_CHANGED);
@@ -553,8 +551,6 @@ public class CallService extends Observable {
                 if (call.getCallState() == SipCall.State.OVER) {
                     currentCalls.remove(call.getCallId());
                 }
-            } else {
-                mDeviceRuntimeService.closeAudioState();
             }
         } catch (Exception e) {
             Log.w(TAG, "Exception during state change: ", e);
