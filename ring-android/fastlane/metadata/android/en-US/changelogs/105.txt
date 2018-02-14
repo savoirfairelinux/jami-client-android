@@ -1,0 +1,2 @@
+- fix 2038 bug on 32 bits devices
+- firebase is now optional

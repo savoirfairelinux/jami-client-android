@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     xmlns:tools="http://schemas.android.com/tools"
     package="cx.ring"
     android:installLocation="auto"
-    android:versionCode="104"
-    android:versionName="20180209">
+    android:versionCode="105"
+    android:versionName="20180214">
 
     <supports-screens
         android:anyDensity="true"
