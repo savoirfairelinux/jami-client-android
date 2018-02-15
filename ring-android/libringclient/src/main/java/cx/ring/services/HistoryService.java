@@ -201,11 +201,6 @@ public abstract class HistoryService extends Observable {
         });
     }
 
-    public Single<List<HistoryFileTransfer>> getAllFilesForAccountAndContactRingId(final String accountId, final String contactRingId) {
-        // todo: implement a new table in db
-        return Single.fromCallable(ArrayList::new);
-    }
-
     public Completable clearHistoryForContactAndAccount(final String contactId, final String accoundId) {
         return Completable.fromAction(() -> {
 

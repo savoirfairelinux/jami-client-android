@@ -72,11 +72,6 @@ public class DaemonService {
     protected AccountService mAccountService;
 
     private final SystemInfoCallbacks mSystemInfoCallbacks;
-    private DaemonVideoCallback mHardwareCallback;
-    private DaemonPresenceCallback mPresenceCallback;
-    private DaemonCallAndConferenceCallback mCallAndConferenceCallback;
-    private DaemonConfigurationCallback mConfigurationCallback;
-    private DaemonDataTransferCallback mDataCallback;
     private boolean mDaemonStarted = false;
 
     public DaemonService(SystemInfoCallbacks systemInfoCallbacks) {
@@ -98,11 +93,12 @@ public class DaemonService {
     public void startDaemon() {
         if (!mDaemonStarted) {
             Log.i(TAG, "Starting daemon ...");
-            mHardwareCallback = new DaemonVideoCallback();
-            mPresenceCallback = new DaemonPresenceCallback();
-            mCallAndConferenceCallback = new DaemonCallAndConferenceCallback();
-            mConfigurationCallback = new DaemonConfigurationCallback();
-            mDataCallback = new DaemonDataTransferCallback();
+            DaemonVideoCallback mHardwareCallback = new DaemonVideoCallback();
+            DaemonPresenceCallback mPresenceCallback = new DaemonPresenceCallback();
+            DaemonCallAndConferenceCallback mCallAndConferenceCallback = new DaemonCallAndConferenceCallback();
+            DaemonConfigurationCallback mConfigurationCallback = new DaemonConfigurationCallback();
+            DaemonDataTransferCallback mDataCallback = new DaemonDataTransferCallback();
+
             Ringservice.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mDataCallback, mHardwareCallback);
             startRingServicePolling();
             mDaemonStarted = true;
