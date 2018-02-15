@@ -62,11 +62,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     private int previewHeight = -1;
 
     private ScheduledExecutorService executor;
-    private Runnable timeRunnable = new Runnable() {
-        public void run() {
-            updateTime();
-        }
-    };
+    private Runnable timeRunnable = this::updateTime;
 
     @Inject
     public CallPresenter(AccountService accountService,
