@@ -24,8 +24,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
 
@@ -52,13 +50,9 @@ import cx.ring.utils.Log;
 import cx.ring.utils.NameLookupInputHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
-import io.reactivex.ObservableSource;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -291,25 +285,13 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
 
         //Get all non-ban contact and then get last message and last call to create a smartList entry
         mCompositeDisposable.add(io.reactivex.Observable.fromIterable(callContacts)
-                .filter(new Predicate<CallContact>() {
-                    @Override
-                    public boolean test(CallContact callContact) throws Exception {
-                        return !callContact.isBanned();
-                    }
-                }).flatMap(new Function<CallContact, io.reactivex.Observable<SmartListViewModel>>() {
-                    @Override
-                    public io.reactivex.Observable<SmartListViewModel> apply(final CallContact callContact) throws Exception {
-                        final String ringId = callContact.getPhones().get(0).getNumber().toString();
+                .filter(callContact -> !callContact.isBanned())
+                .flatMap(callContact -> {
+                    final String ringId = callContact.getPhones().get(0).getNumber().toString();
 
-                        return mHistoryService.getLastMessagesForAccountAndContactRingId(accountId, ringId)
-                                .zipWith(mHistoryService.getLastCallsForAccountAndContactRingId(accountId, ringId),
-                                        new BiFunction<List<HistoryText>, List<HistoryCall>, SmartListViewModel>() {
-                                            @Override
-                                            public SmartListViewModel apply(@NonNull List<HistoryText> lastTexts, @NonNull List<HistoryCall> lastCalls) throws Exception {
-                                                return modelToViewModel(ringId, callContact, lastTexts, lastCalls);
-                                            }
-                                        }).toObservable();
-                    }
+                    return mHistoryService.getLastMessagesForAccountAndContactRingId(accountId, ringId)
+                            .zipWith(mHistoryService.getLastCallsForAccountAndContactRingId(accountId, ringId),
+                                    (lastTexts, lastCalls) -> modelToViewModel(ringId, callContact, lastTexts, lastCalls)).toObservable();
                 }).subscribeOn(Schedulers.computation())
                 .observeOn(mMainScheduler)
                 .subscribeWith(new DisposableObserver<SmartListViewModel>() {
@@ -342,22 +324,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     private void loadContacts() {
         mSmartListViewModels = new ArrayList<>(mContactService.getContactsDaemon().size());
 
-        mCompositeDisposable.add(Single.fromCallable(new Callable<Map<Long, CallContact>>() {
-            @Override
-            public Map<Long, CallContact> call() throws Exception {
-                return mContactService.loadContactsFromSystem(false, true);
-            }
-        }).flatMapObservable(new Function<Map<Long, CallContact>, ObservableSource<CallContact>>() {
-            @Override
-            public ObservableSource<CallContact> apply(Map<Long, CallContact> longCallContactMap) throws Exception {
-                return io.reactivex.Observable.fromIterable(longCallContactMap.values());
-            }
-        }).map(new Function<CallContact, SmartListViewModel>() {
-            @Override
-            public SmartListViewModel apply(CallContact callContact) throws Exception {
-                return modelToViewModel(callContact);
-            }
-        }).subscribeOn(Schedulers.computation())
+        mCompositeDisposable.add(
+                Single.fromCallable(() -> mContactService.loadContactsFromSystem(false, true))
+                .flatMapObservable(longCallContactMap ->
+                        io.reactivex.Observable.fromIterable(longCallContactMap.values()))
+                        .map(this::modelToViewModel).subscribeOn(Schedulers.computation())
                 .observeOn(mMainScheduler)
                 .subscribeWith(new DisposableObserver<SmartListViewModel>() {
                     @Override

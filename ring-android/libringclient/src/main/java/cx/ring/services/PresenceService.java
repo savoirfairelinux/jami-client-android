@@ -21,7 +21,6 @@ package cx.ring.services;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
@@ -70,12 +69,9 @@ public class PresenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Ringservice.publish(accountID, status, note);
-                        return true;
-                    }
+                () -> {
+                    Ringservice.publish(accountID, status, note);
+                    return true;
                 }
         );
     }
@@ -85,12 +81,9 @@ public class PresenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Ringservice.answerServerRequest(uri, flag);
-                        return true;
-                    }
+                () -> {
+                    Ringservice.answerServerRequest(uri, flag);
+                    return true;
                 }
         );
     }
@@ -100,12 +93,9 @@ public class PresenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Ringservice.subscribeBuddy(accountID, uri, flag);
-                        return true;
-                    }
+                () -> {
+                    Ringservice.subscribeBuddy(accountID, uri, flag);
+                    return true;
                 }
         );
     }
@@ -115,12 +105,7 @@ public class PresenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<VectMap>() {
-                    @Override
-                    public VectMap call() throws Exception {
-                        return Ringservice.getSubscriptions(accountID);
-                    }
-                }
+                () -> Ringservice.getSubscriptions(accountID)
         );
     }
 
@@ -129,12 +114,9 @@ public class PresenceService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Ringservice.setSubscriptions(accountID, uris);
-                        return true;
-                    }
+                () -> {
+                    Ringservice.setSubscriptions(accountID, uris);
+                    return true;
                 }
         );
     }
