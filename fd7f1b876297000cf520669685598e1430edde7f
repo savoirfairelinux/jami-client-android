@@ -22,6 +22,30 @@
       "revId": "fd7f1b876297000cf520669685598e1430edde7f",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_cbb6738a",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/DaemonService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-15T21:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3f45e8_2b7437fc",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 49
+      },
+      "revId": "fd7f1b876297000cf520669685598e1430edde7f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
