@@ -20,7 +20,6 @@
 package cx.ring.services;
 
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import javax.inject.Inject;
@@ -93,13 +92,10 @@ public abstract class HardwareService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "connectivityChange() thread running...");
-                        Ringservice.connectivityChanged();
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "connectivityChange() thread running...");
+                    Ringservice.connectivityChanged();
+                    return true;
                 }
         );
     }
@@ -109,14 +105,11 @@ public abstract class HardwareService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "switchInput() thread running..." + uri);
-                        Ringservice.applySettings(id, map);
-                        Ringservice.switchInput(id, uri);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "switchInput() thread running..." + uri);
+                    Ringservice.applySettings(id, map);
+                    Ringservice.switchInput(id, uri);
+                    return true;
                 }
         );
     }
@@ -126,15 +119,12 @@ public abstract class HardwareService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "applySettings() thread running...");
-                        for (Map.Entry<String, StringMap> entry : cameraMaps.entrySet()) {
-                            Ringservice.applySettings(entry.getKey(), entry.getValue());
-                        }
-                        return true;
+                () -> {
+                    Log.i(TAG, "applySettings() thread running...");
+                    for (Map.Entry<String, StringMap> entry : cameraMaps.entrySet()) {
+                        Ringservice.applySettings(entry.getKey(), entry.getValue());
                     }
+                    return true;
                 }
         );
     }
@@ -164,16 +154,13 @@ public abstract class HardwareService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        long frame = RingserviceJNI.obtainFrame(data.length);
-                        if (frame != 0) {
-                            RingserviceJNI.setVideoFrame(data, data.length, frame, width, height, rotation);
-                        }
-                        RingserviceJNI.releaseFrame(frame);
-                        return true;
+                () -> {
+                    long frame = RingserviceJNI.obtainFrame(data.length);
+                    if (frame != 0) {
+                        RingserviceJNI.setVideoFrame(data, data.length, frame, width, height, rotation);
                     }
+                    RingserviceJNI.releaseFrame(frame);
+                    return true;
                 }
         );
     }
