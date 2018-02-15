@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 def android_support_version = "27.0.2"
 def butterknife_version = "8.8.1"
 def dagger_version = "2.12"
-def buildFirebase = project.hasProperty('buildFirebase')
+def buildFirebase = false
 
 android {
     compileSdkVersion 27
@@ -51,6 +51,7 @@ android {
         }
         withFirebase {
             dimension "push"
+            buildFirebase = true
         }
     }
     signingConfigs {
@@ -113,6 +114,6 @@ dependencies {
 }
 
 if (buildFirebase) {
-    println 'apply plugin ' + buildFirebase
+    println 'applying google-services plugin'
     apply plugin: 'com.google.gms.google-services'
 }
