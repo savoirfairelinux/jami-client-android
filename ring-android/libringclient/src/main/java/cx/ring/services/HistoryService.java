@@ -184,12 +184,7 @@ public abstract class HistoryService extends Observable {
     }
 
     public Single<List<HistoryText>> getAllTextMessagesForAccountAndContactRingId(final String accountId, final String contactRingId) {
-        return Single.fromCallable(new Callable<List<HistoryText>>() {
-            @Override
-            public List<HistoryText> call() throws Exception {
-                return getHistoryTexts(accountId, contactRingId);
-            }
-        });
+        return Single.fromCallable(() -> getHistoryTexts(accountId, contactRingId));
     }
 
     private List<HistoryText> getHistoryTexts(String accountId, String contactRingId) throws SQLException {
@@ -200,12 +195,7 @@ public abstract class HistoryService extends Observable {
     }
 
     public Single<List<HistoryCall>> getAllCallsForAccountAndContactRingId(final String accountId, final String contactRingId) {
-        return Single.fromCallable(new Callable<List<HistoryCall>>() {
-            @Override
-            public List<HistoryCall> call() throws Exception {
-                return getHistoryCalls(accountId, contactRingId);
-            }
-        });
+        return Single.fromCallable(() -> getHistoryCalls(accountId, contactRingId));
     }
 
     private List<HistoryCall> getHistoryCalls(String accountId, String contactRingId) throws SQLException {
@@ -213,11 +203,6 @@ public abstract class HistoryService extends Observable {
         queryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(HistoryCall.COLUMN_NUMBER_NAME, contactRingId);
         queryBuilder.orderBy(HistoryCall.COLUMN_TIMESTAMP_START_NAME, true);
         return getCallHistoryDao().query(queryBuilder.prepare());
-    }
-
-    public Single<List<HistoryFileTransfer>> getAllFilesForAccountAndContactRingId(final String accountId, final String contactRingId) {
-        // todo: implement a new table in db
-        return Single.fromCallable(ArrayList::new);
     }
 
     public Completable clearHistoryForContactAndAccount(final String contactId, final String accoundId) {

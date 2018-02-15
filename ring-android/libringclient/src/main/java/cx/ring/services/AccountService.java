@@ -257,8 +257,6 @@ public class AccountService extends Observable {
 
     /**
      * Sets the current Account in the local cache (also sends a ACCOUNTS_CHANGED event)
-     *
-     * @param currentAccount
      */
     public void setCurrentAccount(Account currentAccount) {
         mCurrentAccount = currentAccount;
@@ -280,7 +278,6 @@ public class AccountService extends Observable {
     }
 
     /**
-     * @param accountId
      * @return the Account from the local cache that matches the accountId
      */
     public Account getAccount(String accountId) {
@@ -302,9 +299,6 @@ public class AccountService extends Observable {
 
     /**
      * put VCard on the DHT
-     *
-     * @param callId
-     * @param accountId
      */
     public void sendProfile(final String callId, final String accountId) {
         mExecutor.submit(() -> {
@@ -377,7 +371,6 @@ public class AccountService extends Observable {
     }
 
     /**
-     * @param accountId
      * @return the account details from the Daemon
      */
     public Map<String, String> getAccountDetails(final String accountId) {
@@ -395,9 +388,6 @@ public class AccountService extends Observable {
 
     /**
      * Sets the account details in the Daemon
-     *
-     * @param accountId
-     * @param map
      */
     @SuppressWarnings("unchecked")
     // Hashmap runtime cast
@@ -420,9 +410,6 @@ public class AccountService extends Observable {
 
     /**
      * Sets the activation state of the account in the Daemon
-     *
-     * @param accountId
-     * @param active
      */
     public void setAccountActive(final String accountId, final boolean active) {
 
@@ -440,8 +427,6 @@ public class AccountService extends Observable {
 
     /**
      * Sets the activation state of all the accounts in the Daemon
-     *
-     * @param active
      */
     public void setAccountsActive(final boolean active, final boolean allowProxy) {
 
@@ -467,8 +452,6 @@ public class AccountService extends Observable {
 
     /**
      * Sets the video activation state of all the accounts in the local cache
-     *
-     * @param isEnabled
      */
     public void setAccountsVideoEnabled(boolean isEnabled) {
         for (Account account : mAccountList) {
@@ -481,7 +464,6 @@ public class AccountService extends Observable {
     }
 
     /**
-     * @param accountId
      * @return the account volatile details from the Daemon
      */
     public Map<String, String> getVolatileAccountDetails(final String accountId) {
@@ -498,7 +480,6 @@ public class AccountService extends Observable {
     }
 
     /**
-     * @param accountType
      * @return the default template (account details) for a type of account
      */
     public Map<String, String> getAccountTemplate(final String accountType) {
@@ -508,8 +489,6 @@ public class AccountService extends Observable {
 
     /**
      * Removes the account in the Daemon
-     *
-     * @param accountId
      */
     public void removeAccount(final String accountId) {
 
@@ -528,8 +507,6 @@ public class AccountService extends Observable {
     /**
      * Exports the account on the DHT (used for multidevices feature)
      *
-     * @param accountId
-     * @param password
      * @return the generated pin
      */
     public String exportOnRing(final String accountId, final String password) {
@@ -546,7 +523,6 @@ public class AccountService extends Observable {
     }
 
     /**
-     * @param accountId
      * @return the list of the account's devices from the Daemon
      */
     public Map<String, String> getKnownRingDevices(final String accountId) {
@@ -602,9 +578,6 @@ public class AccountService extends Observable {
 
     /**
      * Sets the active codecs list of the account in the Daemon
-     *
-     * @param codecs
-     * @param accountId
      */
     public void setActiveCodecList(final List codecs, final String accountId) {
 
@@ -626,7 +599,6 @@ public class AccountService extends Observable {
     }
 
     /**
-     * @param accountId
      * @return The account's codecs list from the Daemon
      */
     public List<Codec> getCodecList(final String accountId) {
@@ -666,13 +638,6 @@ public class AccountService extends Observable {
         );
     }
 
-    /**
-     * @param accountID
-     * @param certificatePath
-     * @param privateKeyPath
-     * @param privateKeyPass
-     * @return
-     */
     public Map<String, String> validateCertificatePath(final String accountID, final String certificatePath, final String privateKeyPath, final String privateKeyPass) {
 
         return FutureUtils.executeDaemonThreadCallable(
@@ -686,11 +651,6 @@ public class AccountService extends Observable {
         );
     }
 
-    /**
-     * @param accountId
-     * @param certificate
-     * @return
-     */
     public Map<String, String> validateCertificate(final String accountId, final String certificate) {
 
         return FutureUtils.executeDaemonThreadCallable(
@@ -704,10 +664,6 @@ public class AccountService extends Observable {
         );
     }
 
-    /**
-     * @param certificatePath
-     * @return
-     */
     public Map<String, String> getCertificateDetailsPath(final String certificatePath) {
 
         return FutureUtils.executeDaemonThreadCallable(
@@ -721,10 +677,6 @@ public class AccountService extends Observable {
         );
     }
 
-    /**
-     * @param certificateRaw
-     * @return
-     */
     public Map<String, String> getCertificateDetails(final String certificateRaw) {
 
         return FutureUtils.executeDaemonThreadCallable(
@@ -747,7 +699,6 @@ public class AccountService extends Observable {
     }
 
     /**
-     * @param accountId
      * @return the account's credentials from the Daemon
      */
     public List<Map<String, String>> getCredentials(final String accountId) {
@@ -765,9 +716,6 @@ public class AccountService extends Observable {
 
     /**
      * Sets the account's credentials in the Daemon
-     *
-     * @param accountId
-     * @param creds
      */
     public void setCredentials(final String accountId, final List creds) {
 
@@ -802,11 +750,6 @@ public class AccountService extends Observable {
 
     /**
      * Backs  up all the accounts into to an archive in the path
-     *
-     * @param accountIds
-     * @param toDir
-     * @param password
-     * @return
      */
     public int backupAccounts(final List accountIds, final String toDir, final String password) {
 
@@ -827,13 +770,8 @@ public class AccountService extends Observable {
 
     /**
      * Restores the saved accounts from a path
-     *
-     * @param archivePath
-     * @param password
-     * @return
      */
     public int restoreAccounts(final String archivePath, final String password) {
-
         //noinspection ConstantConditions
         return FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
@@ -845,10 +783,6 @@ public class AccountService extends Observable {
 
     /**
      * Registers a new name on the blockchain for the account
-     *
-     * @param account
-     * @param password
-     * @param name
      */
     public void registerName(final Account account, final String password, final String name) {
 
@@ -862,10 +796,6 @@ public class AccountService extends Observable {
 
     /**
      * Register a new name on the blockchain for the account Id
-     *
-     * @param account
-     * @param password
-     * @param name
      */
     public void registerName(final String account, final String password, final String name) {
 
@@ -884,7 +814,6 @@ public class AccountService extends Observable {
     /* contact requests */
 
     /**
-     * @param accountId
      * @return all trust requests from the daemon for the account Id
      */
     public List<Map<String, String>> getTrustRequests(final String accountId) {
@@ -902,10 +831,6 @@ public class AccountService extends Observable {
 
     /**
      * Accepts a pending trust request
-     *
-     * @param accountId
-     * @param from
-     * @return
      */
     public Boolean acceptTrustRequest(final String accountId, final String from) {
         Account account = getAccount(accountId);
@@ -929,10 +854,6 @@ public class AccountService extends Observable {
 
     /**
      * Refuses and blocks a pending trust request
-     *
-     * @param accountId
-     * @param from
-     * @return
      */
     public void discardTrustRequest(final String accountId, final String from) {
         Account account = getAccount(accountId);
@@ -957,10 +878,6 @@ public class AccountService extends Observable {
 
     /**
      * Sends a new trust request
-     *
-     * @param accountId
-     * @param to
-     * @param message
      */
     public void sendTrustRequest(final String accountId, final String to, final Blob message) {
 
@@ -979,9 +896,6 @@ public class AccountService extends Observable {
 
     /**
      * Add a new contact for the account Id on the Daemon
-     *
-     * @param accountId
-     * @param uri
      */
     public void addContact(final String accountId, final String uri) {
 
@@ -999,9 +913,6 @@ public class AccountService extends Observable {
 
     /**
      * Remove an existing contact for the account Id on the Daemon
-     *
-     * @param accountId
-     * @param uri
      */
     public void removeContact(final String accountId, final String uri, final boolean ban) {
 
@@ -1018,7 +929,6 @@ public class AccountService extends Observable {
     }
 
     /**
-     * @param accountId
      * @return the contacts list from the daemon
      */
     public List<Map<String, String>> getContacts(final String accountId) {
@@ -1036,10 +946,6 @@ public class AccountService extends Observable {
 
     /**
      * Looks up for the availibility of the name on the blockchain
-     *
-     * @param account
-     * @param nameserver
-     * @param name
      */
     public void lookupName(final String account, final String nameserver, final String name) {
 
@@ -1057,10 +963,6 @@ public class AccountService extends Observable {
 
     /**
      * Reverse looks up the address in the blockchain to find the name
-     *
-     * @param account
-     * @param nameserver
-     * @param address
      */
     public void lookupAddress(final String account, final String nameserver, final String address) {
 

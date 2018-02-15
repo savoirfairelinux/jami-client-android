@@ -72,11 +72,14 @@ public class DaemonService {
     protected AccountService mAccountService;
 
     private final SystemInfoCallbacks mSystemInfoCallbacks;
+
+    // references must be kept to avoid garbage collection while pointers are stored in the daemon.
     private DaemonVideoCallback mHardwareCallback;
     private DaemonPresenceCallback mPresenceCallback;
     private DaemonCallAndConferenceCallback mCallAndConferenceCallback;
     private DaemonConfigurationCallback mConfigurationCallback;
     private DaemonDataTransferCallback mDataCallback;
+
     private boolean mDaemonStarted = false;
 
     public DaemonService(SystemInfoCallbacks systemInfoCallbacks) {
