@@ -21,7 +21,6 @@ package cx.ring.facades;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -195,12 +194,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
      */
     public ArrayList<Conversation> getConversationsList() {
         ArrayList<Conversation> convs = new ArrayList<>(mConversationMap.values());
-        Collections.sort(convs, new Comparator<Conversation>() {
-            @Override
-            public int compare(Conversation lhs, Conversation rhs) {
-                return (int) ((rhs.getLastInteraction().getTime() - lhs.getLastInteraction().getTime()) / 1000L);
-            }
-        });
+        Collections.sort(convs, (lhs, rhs) -> (int) ((rhs.getLastInteraction().getTime() - lhs.getLastInteraction().getTime()) / 1000L));
         return convs;
     }
 

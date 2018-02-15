@@ -55,7 +55,6 @@ import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import io.reactivex.Scheduler;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.BiFunction;
 import io.reactivex.observers.ResourceSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -258,28 +257,24 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         //Get all messages and calls to create a conversation
         mCompositeDisposable.add(mHistoryService.getAllTextMessagesForAccountAndContactRingId(mAccountId, mContactRingId)
                 .zipWith(mHistoryService.getAllCallsForAccountAndContactRingId(mAccountId, mContactRingId),
-                        new BiFunction<List<HistoryText>, List<HistoryCall>, Conversation>() {
-                            @Override
-                            public Conversation apply(@NonNull List<HistoryText> historyTexts,
-                                                      @NonNull List<HistoryCall> historyCalls) throws Exception {
+                        (historyTexts, historyCalls) -> {
 
-                                mConversation.removeAll();
+                            mConversation.removeAll();
 
-                                for (HistoryCall call : historyCalls) {
-                                    mConversation.addHistoryCall(call);
-                                }
-
-                                for (HistoryText htext : historyTexts) {
-                                    TextMessage msg = new TextMessage(htext);
-                                    mConversation.addTextMessage(msg);
-                                }
-
-                                Uri uri = new Uri(mContactRingId);
-                                List<HistoryFileTransfer> historyFileTransfers = mHistoryService.getFileTransfers(mAccountId, uri.getRawRingId());
-                                mConversation.addFileTransfers(historyFileTransfers);
-
-                                return mConversation;
+                            for (HistoryCall call : historyCalls) {
+                                mConversation.addHistoryCall(call);
                             }
+
+                            for (HistoryText htext : historyTexts) {
+                                TextMessage msg = new TextMessage(htext);
+                                mConversation.addTextMessage(msg);
+                            }
+
+                            Uri uri = new Uri(mContactRingId);
+                            List<HistoryFileTransfer> historyFileTransfers = mHistoryService.getFileTransfers(mAccountId, uri.getRawRingId());
+                            mConversation.addFileTransfers(historyFileTransfers);
+
+                            return mConversation;
                         })
                 .subscribeOn(Schedulers.computation())
                 .observeOn(mMainScheduler)
