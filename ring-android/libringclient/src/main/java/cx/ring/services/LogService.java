@@ -36,6 +36,4 @@ public interface LogService {
     void w(String tag, String message, Throwable e);
 
     void i(String tag, String message, Throwable e);
-
-
 }

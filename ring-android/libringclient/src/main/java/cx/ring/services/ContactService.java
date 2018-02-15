@@ -115,8 +115,6 @@ public abstract class ContactService extends Observable {
 
     /**
      * Add a contact to the local cache
-     *
-     * @param contact
      */
     public void addContact(CallContact contact) {
         if (contact == null) {
@@ -133,8 +131,6 @@ public abstract class ContactService extends Observable {
 
     /**
      * Get a contact from the local cache
-     *
-     * @param uri
      * @return null if contact does not exist in the cache
      */
     public CallContact getContact(Uri uri) {
@@ -209,7 +205,6 @@ public abstract class ContactService extends Observable {
      * Searches a contact in the local cache and then in the system repository
      * In the last case, the contact is created and added to the local cache
      *
-     * @param id
      * @return The found/created contact
      */
     public CallContact findContactById(long id) {
@@ -220,8 +215,6 @@ public abstract class ContactService extends Observable {
      * Searches a contact in the local cache and then in the system repository
      * In the last case, the contact is created and added to the local cache
      *
-     * @param id
-     * @param key
      * @return The found/created contact
      */
     public CallContact findContactById(long id, String key) {
@@ -247,7 +240,6 @@ public abstract class ContactService extends Observable {
      * Searches a contact in the local cache and then in the system repository
      * In the last case, the contact is created and added to the local cache
      *
-     * @param number
      * @return The found/created contact
      */
     public CallContact findContactByNumber(String number) {
@@ -297,9 +289,6 @@ public abstract class ContactService extends Observable {
      * Searches a contact by Id and then number in the local cache
      * In the contact is not found in the cache, it is created and added to the local cache
      *
-     * @param contactId
-     * @param contactKey
-     * @param contactNumber
      * @return The found/created contact
      */
     public CallContact findContact(long contactId, String contactKey, Uri contactNumber) {
