@@ -1,8 +1,5 @@
 apply plugin: 'com.android.application'
 
-def android_support_version = "27.0.2"
-def butterknife_version = "8.8.1"
-def dagger_version = "2.12"
 def buildFirebase = false
 
 android {
@@ -75,6 +72,10 @@ android {
 }
 
 dependencies {
+    def android_support_version = "27.0.2"
+    def butterknife_version = "8.8.1"
+    def dagger_version = "2.12"
+
     implementation fileTree(include: '*.jar', dir: 'libs')
     implementation project(':libringclient')
 
