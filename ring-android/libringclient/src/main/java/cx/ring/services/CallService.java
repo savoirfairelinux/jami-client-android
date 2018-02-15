@@ -67,26 +67,23 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<SipCall>() {
-                    @Override
-                    public SipCall call() throws Exception {
-                        Log.i(TAG, "placeCall() thread running... " + number + " audioOnly: " + audioOnly);
+                () -> {
+                    Log.i(TAG, "placeCall() thread running... " + number + " audioOnly: " + audioOnly);
 
-                        HashMap<String, String> volatileDetails = new HashMap<>();
-                        volatileDetails.put(SipCall.KEY_AUDIO_ONLY, String.valueOf(audioOnly));
+                    HashMap<String, String> volatileDetails = new HashMap<>();
+                    volatileDetails.put(SipCall.KEY_AUDIO_ONLY, String.valueOf(audioOnly));
 
-                        String callId = Ringservice.placeCall(account, number, StringMap.toSwig(volatileDetails));
-                        if (callId == null || callId.isEmpty())
-                            return null;
-                        if (audioOnly) {
-                            Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
-                        }
-                        CallContact contact = mContactService.findContactByNumber(number);
-                        SipCall call = addCall(account, callId, number, SipCall.Direction.OUTGOING);
-                        call.muteVideo(audioOnly);
-                        call.setContact(contact);
-                        return call;
+                    String callId = Ringservice.placeCall(account, number, StringMap.toSwig(volatileDetails));
+                    if (callId == null || callId.isEmpty())
+                        return null;
+                    if (audioOnly) {
+                        Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
                     }
+                    CallContact contact = mContactService.findContactByNumber(number);
+                    SipCall call = addCall(account, callId, number, SipCall.Direction.OUTGOING);
+                    call.muteVideo(audioOnly);
+                    call.setContact(contact);
+                    return call;
                 }
         );
     }
@@ -96,14 +93,11 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "refuse() thread running...");
-                        Ringservice.refuse(callId);
-                        Ringservice.hangUp(callId);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "refuse() thread running...");
+                    Ringservice.refuse(callId);
+                    Ringservice.hangUp(callId);
+                    return true;
                 }
         );
     }
@@ -113,13 +107,10 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "accept() thread running...");
-                        Ringservice.accept(callId);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "accept() thread running...");
+                    Ringservice.accept(callId);
+                    return true;
                 }
         );
     }
@@ -129,13 +120,10 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "hangUp() thread running...");
-                        Ringservice.hangUp(callId);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "hangUp() thread running...");
+                    Ringservice.hangUp(callId);
+                    return true;
                 }
         );
     }
@@ -145,13 +133,10 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "hold() thread running...");
-                        Ringservice.hold(callId);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "hold() thread running...");
+                    Ringservice.hold(callId);
+                    return true;
                 }
         );
     }
@@ -161,13 +146,10 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "unhold() thread running...");
-                        Ringservice.unhold(callId);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "unhold() thread running...");
+                    Ringservice.unhold(callId);
+                    return true;
                 }
         );
     }
@@ -177,12 +159,9 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Map<String, String>>() {
-                    @Override
-                    public Map<String, String> call() throws Exception {
-                        Log.i(TAG, "getCallDetails() thread running...");
-                        return Ringservice.getCallDetails(callId).toNative();
-                    }
+                (Callable<Map<String, String>>) () -> {
+                    Log.i(TAG, "getCallDetails() thread running...");
+                    return Ringservice.getCallDetails(callId).toNative();
                 }
         );
     }
@@ -197,13 +176,10 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "setAudioPlugin() thread running...");
-                        Ringservice.setAudioPlugin(audioPlugin);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "setAudioPlugin() thread running...");
+                    Ringservice.setAudioPlugin(audioPlugin);
+                    return true;
                 }
         );
     }
@@ -213,12 +189,9 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<String>() {
-                    @Override
-                    public String call() throws Exception {
-                        Log.i(TAG, "getCurrentAudioOutputPlugin() thread running...");
-                        return Ringservice.getCurrentAudioOutputPlugin();
-                    }
+                () -> {
+                    Log.i(TAG, "getCurrentAudioOutputPlugin() thread running...");
+                    return Ringservice.getCurrentAudioOutputPlugin();
                 }
         );
     }
@@ -228,13 +201,10 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "playDtmf() thread running...");
-                        Ringservice.playDTMF(key);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "playDtmf() thread running...");
+                    Ringservice.playDTMF(key);
+                    return true;
                 }
         );
     }
@@ -244,13 +214,10 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "setMuted() thread running...");
-                        Ringservice.muteCapture(mute);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "setMuted() thread running...");
+                    Ringservice.muteCapture(mute);
+                    return true;
                 }
         );
     }
@@ -261,12 +228,9 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "isCaptureMuted() thread running...");
-                        return Ringservice.isCaptureMuted();
-                    }
+                () -> {
+                    Log.i(TAG, "isCaptureMuted() thread running...");
+                    return Ringservice.isCaptureMuted();
                 }
         );
     }
@@ -276,17 +240,14 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "transfer() thread running...");
-                        if (Ringservice.transfer(callId, to)) {
-                            Log.i(TAG, "OK");
-                        } else {
-                            Log.i(TAG, "NOT OK");
-                        }
-                        return true;
+                () -> {
+                    Log.i(TAG, "transfer() thread running...");
+                    if (Ringservice.transfer(callId, to)) {
+                        Log.i(TAG, "OK");
+                    } else {
+                        Log.i(TAG, "NOT OK");
                     }
+                    return true;
                 }
         );
     }
@@ -296,17 +257,14 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "attendedTransfer() thread running...");
-                        if (Ringservice.attendedTransfer(transferId, targetID)) {
-                            Log.i(TAG, "OK");
-                        } else {
-                            Log.i(TAG, "NOT OK");
-                        }
-                        return true;
+                () -> {
+                    Log.i(TAG, "attendedTransfer() thread running...");
+                    if (Ringservice.attendedTransfer(transferId, targetID)) {
+                        Log.i(TAG, "OK");
+                    } else {
+                        Log.i(TAG, "NOT OK");
                     }
+                    return true;
                 }
         );
     }
@@ -316,12 +274,9 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<String>() {
-                    @Override
-                    public String call() throws Exception {
-                        Log.i(TAG, "getRecordPath() thread running...");
-                        return Ringservice.getRecordPath();
-                    }
+                () -> {
+                    Log.i(TAG, "getRecordPath() thread running...");
+                    return Ringservice.getRecordPath();
                 }
         );
     }
@@ -332,12 +287,9 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "toggleRecordingCall() thread running...");
-                        return Ringservice.toggleRecording(id);
-                    }
+                () -> {
+                    Log.i(TAG, "toggleRecordingCall() thread running...");
+                    return Ringservice.toggleRecording(id);
                 }
         );
     }
@@ -347,13 +299,10 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "setRecordingCall() thread running...");
-                        Ringservice.startRecordedFilePlayback(filepath);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "setRecordingCall() thread running...");
+                    Ringservice.startRecordedFilePlayback(filepath);
+                    return true;
                 }
         );
         return false;
@@ -364,13 +313,10 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "stopRecordedFilePlayback() thread running...");
-                        Ringservice.stopRecordedFilePlayback();
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "stopRecordedFilePlayback() thread running...");
+                    Ringservice.stopRecordedFilePlayback();
+                    return true;
                 }
         );
     }
@@ -380,13 +326,10 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "setRecordPath() " + path + " thread running...");
-                        Ringservice.setRecordPath(path);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "setRecordPath() " + path + " thread running...");
+                    Ringservice.setRecordPath(path);
+                    return true;
                 }
         );
     }
@@ -396,15 +339,12 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "DsendTextMessage() thread running...");
-                        StringMap messages = new StringMap();
-                        messages.setRaw("text/plain", Blob.fromString(msg));
-                        Ringservice.sendTextMessage(callId, messages, "", false);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "sendTextMessage() thread running...");
+                    StringMap messages = new StringMap();
+                    messages.setRaw("text/plain", Blob.fromString(msg));
+                    Ringservice.sendTextMessage(callId, messages, "", false);
+                    return true;
                 }
         );
     }
@@ -415,14 +355,11 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Long>() {
-                    @Override
-                    public Long call() throws Exception {
-                        Log.i(TAG, "sendAccountTextMessage() thread running... " + accountId + " " + to + " " + msg);
-                        StringMap msgs = new StringMap();
-                        msgs.setRaw("text/plain", Blob.fromString(msg));
-                        return Ringservice.sendAccountTextMessage(accountId, to, msgs);
-                    }
+                () -> {
+                    Log.i(TAG, "sendAccountTextMessage() thread running... " + accountId + " " + to + " " + msg);
+                    StringMap msgs = new StringMap();
+                    msgs.setRaw("text/plain", Blob.fromString(msg));
+                    return Ringservice.sendAccountTextMessage(accountId, to, msgs);
                 }
         );
     }
@@ -432,12 +369,9 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Long>() {
-                    @Override
-                    public Long call() throws Exception {
-                        Log.i(TAG, "sendFile() thread running... accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
-                        return Ringservice.sendFile(dataTransferInfo, dataTransferId);
-                    }
+                () -> {
+                    Log.i(TAG, "sendFile() thread running... accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
+                    return Ringservice.sendFile(dataTransferInfo, dataTransferId);
                 }
         );
         return getDataTransferError(errorCode);
@@ -448,12 +382,9 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Long>() {
-                    @Override
-                    public Long call() throws Exception {
-                        Log.i(TAG, "acceptFileTransfer() thread running... dataTransferId=" + dataTransferId + ", filePath=" + filePath + ", offset=" + offset);
-                        return Ringservice.acceptFileTransfer(dataTransferId, filePath, offset);
-                    }
+                () -> {
+                    Log.i(TAG, "acceptFileTransfer() thread running... dataTransferId=" + dataTransferId + ", filePath=" + filePath + ", offset=" + offset);
+                    return Ringservice.acceptFileTransfer(dataTransferId, filePath, offset);
                 }
         );
         return getDataTransferError(errorCode);
@@ -464,12 +395,9 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Long>() {
-                    @Override
-                    public Long call() throws Exception {
-                        Log.i(TAG, "cancelDataTransfer() thread running... dataTransferId=" + dataTransferId);
-                        return Ringservice.cancelDataTransfer(dataTransferId);
-                    }
+                () -> {
+                    Log.i(TAG, "cancelDataTransfer() thread running... dataTransferId=" + dataTransferId);
+                    return Ringservice.cancelDataTransfer(dataTransferId);
                 }
         );
         return getDataTransferError(errorCode);
@@ -480,13 +408,10 @@ public class CallService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<DataTransferWrapper>() {
-                    @Override
-                    public DataTransferWrapper call() throws Exception {
-                        Log.i(TAG, "dataTransferInfo() thread running... dataTransferId=" + dataTransferId);
-                        long errorCode = Ringservice.dataTransferInfo(dataTransferId, dataTransferInfo);
-                        return new DataTransferWrapper(dataTransferInfo, getDataTransferError(errorCode));
-                    }
+                () -> {
+                    Log.i(TAG, "dataTransferInfo() thread running... dataTransferId=" + dataTransferId);
+                    long errorCode = Ringservice.dataTransferInfo(dataTransferId, dataTransferInfo);
+                    return new DataTransferWrapper(dataTransferInfo, getDataTransferError(errorCode));
                 }
         );
     }
