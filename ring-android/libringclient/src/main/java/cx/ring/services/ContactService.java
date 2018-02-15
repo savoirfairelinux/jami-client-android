@@ -91,23 +91,20 @@ public abstract class ContactService extends Observable {
      * @param loadSipContacts  if true, sip contacts will be taken care of
      */
     public void loadContacts(final boolean loadRingContacts, final boolean loadSipContacts, final Account account) {
-        mApplicationExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                Settings settings = mPreferencesService.loadSettings();
-                if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
-                    mContactList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
-                }
-                mContactsRing.clear();
-                mAccountId = account.getAccountID();
-                Map<String, CallContact> ringContacts = account.getContacts();
-                for (CallContact contact : ringContacts.values()) {
-                    mContactsRing.put(contact.getPhones().get(0).getNumber().getRawUriString(), contact);
-                }
-                setChanged();
-                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACTS_CHANGED);
-                notifyObservers(event);
+        mApplicationExecutor.submit(() -> {
+            Settings settings = mPreferencesService.loadSettings();
+            if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
+                mContactList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
             }
+            mContactsRing.clear();
+            mAccountId = account.getAccountID();
+            Map<String, CallContact> ringContacts = account.getContacts();
+            for (CallContact contact : ringContacts.values()) {
+                mContactsRing.put(contact.getPhones().get(0).getNumber().getRawUriString(), contact);
+            }
+            setChanged();
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACTS_CHANGED);
+            notifyObservers(event);
         });
     }
 

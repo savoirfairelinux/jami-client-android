@@ -212,12 +212,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<String>() {
-                    @Override
-                    public String call() throws Exception {
-                        Log.i(TAG, "addAccount() thread running...");
-                        return Ringservice.addAccount(StringMap.toSwig(map));
-                    }
+                () -> {
+                    Log.i(TAG, "addAccount() thread running...");
+                    return Ringservice.addAccount(StringMap.toSwig(map));
                 }
         );
 
@@ -310,33 +307,30 @@ public class AccountService extends Observable {
      * @param accountId
      */
     public void sendProfile(final String callId, final String accountId) {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                VCard vcard = VCardUtils.loadLocalProfileFromDisk(
-                        mDeviceRuntimeService.provideFilesDir(),
-                        accountId);
-                String stringVCard = VCardUtils.vcardToString(vcard);
+        mExecutor.submit(() -> {
+            VCard vcard = VCardUtils.loadLocalProfileFromDisk(
+                    mDeviceRuntimeService.provideFilesDir(),
+                    accountId);
+            String stringVCard = VCardUtils.vcardToString(vcard);
 
-                int nbTotal = stringVCard.length() / VCARD_CHUNK_SIZE + (stringVCard.length() % VCARD_CHUNK_SIZE != 0 ? 1 : 0);
-                int i = 1;
-                Random r = new Random(System.currentTimeMillis());
-                int key = r.nextInt();
+            int nbTotal = stringVCard.length() / VCARD_CHUNK_SIZE + (stringVCard.length() % VCARD_CHUNK_SIZE != 0 ? 1 : 0);
+            int i = 1;
+            Random r = new Random(System.currentTimeMillis());
+            int key = r.nextInt();
 
-                Log.d(TAG, "sendProfile, vcard " + stringVCard);
+            Log.d(TAG, "sendProfile, vcard " + stringVCard);
 
-                while (i <= nbTotal) {
-                    HashMap<String, String> chunk = new HashMap<>();
-                    Log.d(TAG, "length vcard " + stringVCard.length() + " id " + key + " part " + i + " nbTotal " + nbTotal);
-                    String keyHashMap = VCardUtils.MIME_RING_PROFILE_VCARD + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
-                    String message = stringVCard.substring(0, Math.min(VCARD_CHUNK_SIZE, stringVCard.length()));
-                    chunk.put(keyHashMap, message);
-                    if (stringVCard.length() > VCARD_CHUNK_SIZE) {
-                        stringVCard = stringVCard.substring(VCARD_CHUNK_SIZE);
-                    }
-                    i++;
-                    Ringservice.sendTextMessage(callId, StringMap.toSwig(chunk), "Me", false);
+            while (i <= nbTotal) {
+                HashMap<String, String> chunk = new HashMap<>();
+                Log.d(TAG, "length vcard " + stringVCard.length() + " id " + key + " part " + i + " nbTotal " + nbTotal);
+                String keyHashMap = VCardUtils.MIME_RING_PROFILE_VCARD + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
+                String message = stringVCard.substring(0, Math.min(VCARD_CHUNK_SIZE, stringVCard.length()));
+                chunk.put(keyHashMap, message);
+                if (stringVCard.length() > VCARD_CHUNK_SIZE) {
+                    stringVCard = stringVCard.substring(VCARD_CHUNK_SIZE);
                 }
+                i++;
+                Ringservice.sendTextMessage(callId, StringMap.toSwig(chunk), "Me", false);
             }
         });
     }
@@ -350,12 +344,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<List<String>>() {
-                    @Override
-                    public List<String> call() throws Exception {
-                        Log.i(TAG, "getAccountList() thread running...");
-                        return new ArrayList<>(Ringservice.getAccountList());
-                    }
+                (Callable<List<String>>) () -> {
+                    Log.i(TAG, "getAccountList() thread running...");
+                    return new ArrayList<>(Ringservice.getAccountList());
                 }
         );
     }
@@ -377,13 +368,10 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "setAccountsOrder() " + orderForDaemon + " thread running...");
-                        Ringservice.setAccountsOrder(orderForDaemon);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "setAccountsOrder() " + orderForDaemon + " thread running...");
+                    Ringservice.setAccountsOrder(orderForDaemon);
+                    return true;
                 }
         );
     }
@@ -398,12 +386,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Map<String, String>>() {
-                    @Override
-                    public Map<String, String> call() throws Exception {
-                        Log.i(TAG, "getAccountDetails() thread running...");
-                        return Ringservice.getAccountDetails(accountId).toNative();
-                    }
+                (Callable<Map<String, String>>) () -> {
+                    Log.i(TAG, "getAccountDetails() thread running...");
+                    return Ringservice.getAccountDetails(accountId).toNative();
                 }
         );
     }
@@ -424,13 +409,10 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Ringservice.setAccountDetails(accountId, swigmap);
-                        Log.i(TAG, "setAccountDetails() thread running... " + swigmap.get("Account.hostname"));
-                        return true;
-                    }
+                () -> {
+                    Ringservice.setAccountDetails(accountId, swigmap);
+                    Log.i(TAG, "setAccountDetails() thread running... " + swigmap.get("Account.hostname"));
+                    return true;
                 }
         );
 
@@ -448,13 +430,10 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "setAccountActive() thread running... " + accountId + " -> " + active);
-                        Ringservice.setAccountActive(accountId, active);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "setAccountActive() thread running... " + accountId + " -> " + active);
+                    Ringservice.setAccountActive(accountId, active);
+                    return true;
                 }
         );
     }
@@ -470,20 +449,18 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
+                () -> {
                         Log.i(TAG, "setAccountsActive() thread running... " + active);
                         StringVect list = Ringservice.getAccountList();
                         for (int i = 0, n = list.size(); i < n; i++) {
-                            String accountId = list.get(i);
+                            String accountId =list.get(i);
                             Account a = getAccount(accountId);
-                            if (!allowProxy || active || a == null || !a.isDHTProxyEnabled()) {
+                            if (!allowProxy || active|| a == null || !a.isDHTProxyEnabled()) {
                                 Ringservice.setAccountActive(accountId, active);
                             }
                         }
                         return true;
-                    }
+
                 }
         );
     }
@@ -513,12 +490,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Map<String, String>>() {
-                    @Override
-                    public Map<String, String> call() throws Exception {
-                        Log.i(TAG, "getVolatileAccountDetails() thread running...");
-                        return Ringservice.getVolatileAccountDetails(accountId).toNative();
-                    }
+                (Callable<Map<String, String>>) () -> {
+                    Log.i(TAG, "getVolatileAccountDetails() thread running...");
+                    return Ringservice.getVolatileAccountDetails(accountId).toNative();
                 }
         );
     }
@@ -543,13 +517,10 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "removeAccount() thread running...");
-                        Ringservice.removeAccount(accountId);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "removeAccount() thread running...");
+                    Ringservice.removeAccount(accountId);
+                    return true;
                 }
         );
     }
@@ -567,12 +538,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<String>() {
-                    @Override
-                    public String call() throws Exception {
-                        Log.i(TAG, "exportOnRing() thread running...");
-                        return Ringservice.exportOnRing(accountId, password);
-                    }
+                () -> {
+                    Log.i(TAG, "exportOnRing() thread running...");
+                    return Ringservice.exportOnRing(accountId, password);
                 }
         );
     }
@@ -587,12 +555,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Map<String, String>>() {
-                    @Override
-                    public Map<String, String> call() throws Exception {
-                        Log.i(TAG, "getKnownRingDevices() thread running...");
-                        return Ringservice.getKnownRingDevices(accountId).toNative();
-                    }
+                (Callable<Map<String, String>>) () -> {
+                    Log.i(TAG, "getKnownRingDevices() thread running...");
+                    return Ringservice.getKnownRingDevices(accountId).toNative();
                 }
         );
     }
@@ -607,12 +572,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "revokeDevice() thread running...");
-                        return Ringservice.revokeDevice(accountId, password, deviceId);
-                    }
+                () -> {
+                    Log.i(TAG, "revokeDevice() thread running...");
+                    return Ringservice.revokeDevice(accountId, password, deviceId);
                 }
         );
     }
@@ -627,15 +589,12 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Map<String, String>>() {
-                    @Override
-                    public Map<String, String> call() throws Exception {
-                        Log.i(TAG, "renameDevice() thread running... " + newName);
-                        StringMap details = Ringservice.getAccountDetails(accountId);
-                        details.set(ConfigKey.ACCOUNT_DEVICE_NAME.key(), newName);
-                        Ringservice.setAccountDetails(accountId, details);
-                        return Ringservice.getKnownRingDevices(accountId).toNative();
-                    }
+                (Callable<Map<String, String>>) () -> {
+                    Log.i(TAG, "renameDevice() thread running... " + newName);
+                    StringMap details = Ringservice.getAccountDetails(accountId);
+                    details.set(ConfigKey.ACCOUNT_DEVICE_NAME.key(), newName);
+                    Ringservice.setAccountDetails(accountId, details);
+                    return Ringservice.getKnownRingDevices(accountId).toNative();
                 }
         ));
         account.setDetail(ConfigKey.ACCOUNT_DEVICE_NAME, newName);
@@ -653,18 +612,15 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "setActiveCodecList() thread running...");
-                        UintVect list = new UintVect(codecs.size());
-                        for (Object codec : codecs) {
-                            list.add((Long) codec);
-                        }
-                        Ringservice.setActiveCodecList(accountId, list);
-
-                        return true;
+                () -> {
+                    Log.i(TAG, "setActiveCodecList() thread running...");
+                    UintVect list = new UintVect(codecs.size());
+                    for (Object codec : codecs) {
+                        list.add((Long) codec);
                     }
+                    Ringservice.setActiveCodecList(accountId, list);
+
+                    return true;
                 }
         );
     }
@@ -679,36 +635,33 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<List<Codec>>() {
-                    @Override
-                    public List<Codec> call() throws Exception {
-                        Log.i(TAG, "getCodecList() thread running...");
-                        ArrayList<Codec> results = new ArrayList<>();
+                (Callable<List<Codec>>) () -> {
+                    Log.i(TAG, "getCodecList() thread running...");
+                    ArrayList<Codec> results = new ArrayList<>();
 
-                        UintVect activePayloads = Ringservice.getActiveCodecList(accountId);
-                        for (int i = 0; i < activePayloads.size(); ++i) {
-                            Log.i(TAG, "getCodecDetails(" + accountId + ", " + activePayloads.get(i) + ")");
-                            StringMap codecsDetails = Ringservice.getCodecDetails(accountId, activePayloads.get(i));
-                            results.add(new Codec(activePayloads.get(i), codecsDetails.toNative(), true));
-                        }
-                        UintVect payloads = Ringservice.getCodecList();
-
-                        cl:
-                        for (int i = 0; i < payloads.size(); ++i) {
-                            for (Codec co : results) {
-                                if (co.getPayload() == payloads.get(i)) {
-                                    continue cl;
-                                }
-                            }
-                            StringMap details = Ringservice.getCodecDetails(accountId, payloads.get(i));
-                            if (details.size() > 1) {
-                                results.add(new Codec(payloads.get(i), details.toNative(), false));
-                            } else {
-                                Log.i(TAG, "Error loading codec " + i);
-                            }
-                        }
-                        return results;
+                    UintVect activePayloads = Ringservice.getActiveCodecList(accountId);
+                    for (int i = 0; i < activePayloads.size(); ++i) {
+                        Log.i(TAG, "getCodecDetails(" + accountId + ", " + activePayloads.get(i) + ")");
+                        StringMap codecsDetails = Ringservice.getCodecDetails(accountId, activePayloads.get(i));
+                        results.add(new Codec(activePayloads.get(i), codecsDetails.toNative(), true));
                     }
+                    UintVect payloads = Ringservice.getCodecList();
+
+                    cl:
+                    for (int i = 0; i < payloads.size(); ++i) {
+                        for (Codec co : results) {
+                            if (co.getPayload() == payloads.get(i)) {
+                                continue cl;
+                            }
+                        }
+                        StringMap details = Ringservice.getCodecDetails(accountId, payloads.get(i));
+                        if (details.size() > 1) {
+                            results.add(new Codec(payloads.get(i), details.toNative(), false));
+                        } else {
+                            Log.i(TAG, "Error loading codec " + i);
+                        }
+                    }
+                    return results;
                 }
         );
     }
@@ -726,12 +679,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Map<String, String>>() {
-                    @Override
-                    public Map<String, String> call() throws Exception {
-                        Log.i(TAG, "validateCertificatePath() thread running...");
-                        return Ringservice.validateCertificatePath(accountID, certificatePath, privateKeyPath, "", "").toNative();
-                    }
+                (Callable<Map<String, String>>) () -> {
+                    Log.i(TAG, "validateCertificatePath() thread running...");
+                    return Ringservice.validateCertificatePath(accountID, certificatePath, privateKeyPath, "", "").toNative();
                 }
         );
     }
@@ -747,12 +697,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Map<String, String>>() {
-                    @Override
-                    public Map<String, String> call() throws Exception {
-                        Log.i(TAG, "validateCertificate() thread running...");
-                        return Ringservice.validateCertificate(accountId, certificate).toNative();
-                    }
+                (Callable<Map<String, String>>) () -> {
+                    Log.i(TAG, "validateCertificate() thread running...");
+                    return Ringservice.validateCertificate(accountId, certificate).toNative();
                 }
         );
     }
@@ -767,12 +714,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Map<String, String>>() {
-                    @Override
-                    public Map<String, String> call() throws Exception {
-                        Log.i(TAG, "getCertificateDetailsPath() thread running...");
-                        return Ringservice.getCertificateDetails(certificatePath).toNative();
-                    }
+                (Callable<Map<String, String>>) () -> {
+                    Log.i(TAG, "getCertificateDetailsPath() thread running...");
+                    return Ringservice.getCertificateDetails(certificatePath).toNative();
                 }
         );
     }
@@ -787,12 +731,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Map<String, String>>() {
-                    @Override
-                    public Map<String, String> call() throws Exception {
-                        Log.i(TAG, "getCertificateDetails() thread running...");
-                        return Ringservice.getCertificateDetails(certificateRaw).toNative();
-                    }
+                (Callable<Map<String, String>>) () -> {
+                    Log.i(TAG, "getCertificateDetails() thread running...");
+                    return Ringservice.getCertificateDetails(certificateRaw).toNative();
                 }
         );
     }
@@ -815,12 +756,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<List<Map<String, String>>>() {
-                    @Override
-                    public List<Map<String, String>> call() throws Exception {
-                        Log.i(TAG, "getCredentials() thread running...");
-                        return Ringservice.getCredentials(accountId).toNative();
-                    }
+                (Callable<List<Map<String, String>>>) () -> {
+                    Log.i(TAG, "getCredentials() thread running...");
+                    return Ringservice.getCredentials(accountId).toNative();
                 }
         );
     }
@@ -837,13 +775,10 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "setCredentials() thread running...");
-                        Ringservice.setCredentials(accountId, SwigNativeConverter.convertFromNativeToSwig(creds));
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "setCredentials() thread running...");
+                    Ringservice.setCredentials(accountId, SwigNativeConverter.convertFromNativeToSwig(creds));
+                    return true;
                 }
         );
     }
@@ -857,13 +792,10 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "registerAllAccounts() thread running...");
-                        Ringservice.registerAllAccounts();
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "registerAllAccounts() thread running...");
+                    Ringservice.registerAllAccounts();
+                    return true;
                 }
         );
     }
@@ -883,15 +815,12 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Integer>() {
-                    @Override
-                    public Integer call() throws Exception {
-                        StringVect ids = new StringVect();
-                        for (Object s : accountIds) {
-                            ids.add((String) s);
-                        }
-                        return Ringservice.exportAccounts(ids, toDir, password);
+                () -> {
+                    StringVect ids = new StringVect();
+                    for (Object s : accountIds) {
+                        ids.add((String) s);
                     }
+                    return Ringservice.exportAccounts(ids, toDir, password);
                 }
         );
     }
@@ -910,12 +839,7 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<Integer>() {
-                    @Override
-                    public Integer call() throws Exception {
-                        return Ringservice.importAccounts(archivePath, password);
-                    }
-                }
+                () -> Ringservice.importAccounts(archivePath, password)
         );
     }
 
@@ -949,13 +873,10 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "registerName() thread running...");
-                        Ringservice.registerName(account, password, name);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "registerName() thread running...");
+                    Ringservice.registerName(account, password, name);
+                    return true;
                 }
         );
     }
@@ -972,12 +893,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<List<Map<String, String>>>() {
-                    @Override
-                    public List<Map<String, String>> call() throws Exception {
-                        Log.i(TAG, "getTrustRequests() thread running...");
-                        return Ringservice.getTrustRequests(accountId).toNative();
-                    }
+                (Callable<List<Map<String, String>>>) () -> {
+                    Log.i(TAG, "getTrustRequests() thread running...");
+                    return Ringservice.getTrustRequests(accountId).toNative();
                 }
         );
     }
@@ -996,18 +914,15 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "acceptTrustRequest() thread running...");
-                        boolean ok = Ringservice.acceptTrustRequest(accountId, from);
-                        if (ok) {
-                            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
-                            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-                            notifyObservers(event);
-                        }
-                        return ok;
+                () -> {
+                    Log.i(TAG, "acceptTrustRequest() thread running...");
+                    boolean ok = Ringservice.acceptTrustRequest(accountId, from);
+                    if (ok) {
+                        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
+                        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+                        notifyObservers(event);
                     }
+                    return ok;
                 }
         );
     }
@@ -1026,19 +941,16 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Void>() {
-                    @Override
-                    public Void call() throws Exception {
-                        Log.i(TAG, "discardTrustRequest() " + accountId + " " + from);
-                        boolean ok = Ringservice.discardTrustRequest(accountId, from);
-                        if (ok) {
-                            setChanged();
-                            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
-                            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-                            notifyObservers(event);
-                        }
-                        return null;
+                (Callable<Void>) () -> {
+                    Log.i(TAG, "discardTrustRequest() " + accountId + " " + from);
+                    boolean ok = Ringservice.discardTrustRequest(accountId, from);
+                    if (ok) {
+                        setChanged();
+                        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
+                        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+                        notifyObservers(event);
                     }
+                    return null;
                 }
         );
     }
@@ -1056,13 +968,10 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "sendTrustRequest() thread running...");
-                        Ringservice.sendTrustRequest(accountId, to, message);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "sendTrustRequest() thread running...");
+                    Ringservice.sendTrustRequest(accountId, to, message);
+                    return true;
                 }
         );
     }
@@ -1080,13 +989,10 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "addContact() thread running...");
-                        Ringservice.addContact(accountId, uri);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "addContact() thread running...");
+                    Ringservice.addContact(accountId, uri);
+                    return true;
                 }
         );
     }
@@ -1103,13 +1009,10 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "removeContact() thread running...");
-                        Ringservice.removeContact(accountId, uri, ban);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "removeContact() thread running...");
+                    Ringservice.removeContact(accountId, uri, ban);
+                    return true;
                 }
         );
     }
@@ -1124,12 +1027,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
-                new Callable<List<Map<String, String>>>() {
-                    @Override
-                    public List<Map<String, String>> call() throws Exception {
-                        Log.i(TAG, "getContacts() thread running...");
-                        return Ringservice.getContacts(accountId).toNative();
-                    }
+                (Callable<List<Map<String, String>>>) () -> {
+                    Log.i(TAG, "getContacts() thread running...");
+                    return Ringservice.getContacts(accountId).toNative();
                 }
         );
     }
@@ -1147,13 +1047,10 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "lookupName() thread running...");
-                        Ringservice.lookupName(account, nameserver, name);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "lookupName() thread running...");
+                    Ringservice.lookupName(account, nameserver, name);
+                    return true;
                 }
         );
     }
@@ -1171,13 +1068,10 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "lookupAddress() " + address);
-                        Ringservice.lookupAddress(account, nameserver, address);
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "lookupAddress() " + address);
+                    Ringservice.lookupAddress(account, nameserver, address);
+                    return true;
                 }
         );
     }
@@ -1187,13 +1081,10 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Boolean>() {
-                    @Override
-                    public Boolean call() throws Exception {
-                        Log.i(TAG, "pushNotificationReceived() " + from + " " + data.size());
-                        Ringservice.pushNotificationReceived(from, StringMap.toSwig(data));
-                        return true;
-                    }
+                () -> {
+                    Log.i(TAG, "pushNotificationReceived() " + from + " " + data.size());
+                    Ringservice.pushNotificationReceived(from, StringMap.toSwig(data));
+                    return true;
                 }
         );
     }
@@ -1203,13 +1094,10 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                new Callable<Void>() {
-                    @Override
-                    public Void call() throws Exception {
-                        Log.i(TAG, "setPushNotificationToken()");
-                        Ringservice.setPushNotificationToken(pushNotificationToken);
-                        return null;
-                    }
+                (Callable<Void>) () -> {
+                    Log.i(TAG, "setPushNotificationToken()");
+                    Ringservice.setPushNotificationToken(pushNotificationToken);
+                    return null;
                 }
         );
     }

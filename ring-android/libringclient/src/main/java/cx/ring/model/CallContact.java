@@ -58,7 +58,7 @@ public class CallContact {
     }
 
     public CallContact(long cID, String k, String displayName, long photoID) {
-        this(cID, k, displayName, photoID, new ArrayList<Phone>(), null, false);
+        this(cID, k, displayName, photoID, new ArrayList<>(), null, false);
     }
 
     public CallContact(long cID, String k, String displayName, long photoID, ArrayList<Phone> p, String mail, boolean user) {
