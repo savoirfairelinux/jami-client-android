@@ -19,8 +19,6 @@
  */
 package cx.ring.model;
 
-import cx.ring.utils.Log;
-
 public class TextMessage extends ConversationElement {
     private static final String TAG = TextMessage.class.getSimpleName();
 
@@ -101,8 +99,7 @@ public class TextMessage extends ConversationElement {
 
     public TextMessage(HistoryText h) {
         if (h == null) {
-            Log.e(TAG, "TextMessage: received invalid text message");
-            return;
+            throw new IllegalArgumentException("not able to create TextMessage from null HistoryText");
         }
         mID = h.id;
         mAccount = h.getAccountID();

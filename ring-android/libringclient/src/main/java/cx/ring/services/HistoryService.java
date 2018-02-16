@@ -352,21 +352,31 @@ public abstract class HistoryService extends Observable {
     }
 
     public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
-        TextMessage msg;
+        TextMessage textMessage;
+        HistoryText historyText;
         try {
-            msg = new TextMessage(getTextMessage(messageId));
-            if (!msg.getAccount().equals(accountId)) {
-                // todo: fix exception
-                throw new Exception("Wrong message account");
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error while updating text message status", e);
+            historyText = getTextMessage(messageId);
+        } catch (SQLException e) {
+            Log.e(TAG, "accountMessageStatusChanged: a sql error occurred while getting message with id=" + messageId, e);
             return;
         }
-        msg.setStatus(status);
-        updateTextMessage(new HistoryText(msg));
+
+        if (historyText == null) {
+            Log.e(TAG, "accountMessageStatusChanged: not able to find message with id " + messageId + " in database");
+            return;
+        }
+
+        textMessage = new TextMessage(historyText);
+        if (!textMessage.getAccount().equals(accountId)) {
+            Log.e(TAG, "accountMessageStatusChanged: received an invalid text message");
+            return;
+        }
+
+        textMessage.setStatus(status);
+        updateTextMessage(new HistoryText(textMessage));
+
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNT_MESSAGE_STATUS_CHANGED);
-        event.addEventInput(ServiceEvent.EventInput.MESSAGE, msg);
+        event.addEventInput(ServiceEvent.EventInput.MESSAGE, textMessage);
         setChanged();
         notifyObservers(event);
     }
