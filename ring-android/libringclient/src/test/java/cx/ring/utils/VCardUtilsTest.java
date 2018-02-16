@@ -15,10 +15,10 @@ public class VCardUtilsTest {
         vcard.addFormattedName(new FormattedName("SFL Test"));
 
         String result = VCardUtils.vcardToString(vcard);
-        assertTrue(result.contentEquals("BEGIN:VCARD\n" +
-                "VERSION:2.1\n" +
-                "X-PRODID:ez-vcard 0.9.10\n" +
-                "FN:SFL Test\n" +
-                "END:VCARD\n"));
+        assertTrue(result.contentEquals("BEGIN:VCARD\r\n" +
+                "VERSION:2.1\r\n" +
+                "X-PRODID:ez-vcard 0.10.2\r\n" +
+                "FN:SFL Test\r\n" +
+                "END:VCARD\r\n"));
     }
 }

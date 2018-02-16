@@ -41,6 +41,8 @@ public class HistoryText {
     public static final String COLUMN_READ_NAME = "read";
     public static final String COLUMN_STATE_NAME = "state";
 
+    private static final Random random = new Random();
+
     @DatabaseField(index = true, columnName = COLUMN_ID_NAME, id = true)
     public long id;
     @DatabaseField(index = true, columnName = COLUMN_TIMESTAMP_NAME)
@@ -62,14 +64,12 @@ public class HistoryText {
     @DatabaseField(columnName = COLUMN_READ_NAME)
     boolean read;
     @DatabaseField(columnName = COLUMN_STATE_NAME)
-    String state;
-
-    static private final Random R = new Random();
+    String status;
 
     public HistoryText(TextMessage txt) {
         id = txt.getId();
         if (id == 0) {
-            id = R.nextLong();
+            id = random.nextLong();
         }
         time = txt.getDate();
         accountID = txt.getAccount();
@@ -82,7 +82,11 @@ public class HistoryText {
             contactKey = txt.getContact().getKey();
         }
         read = txt.isRead();
-        state = txt.getStatus().toString();
+        status = txt.getStatus().toString();
+    }
+
+    // Needed by ORMLite
+    public HistoryText() {
     }
 
     public String getAccountID() {
@@ -95,10 +99,6 @@ public class HistoryText {
 
     public String getContactKey() {
         return contactKey;
-    }
-
-    // Needed by ORMLite
-    public HistoryText() {
     }
 
     public long getDate() {
@@ -126,6 +126,6 @@ public class HistoryText {
     }
 
     public TextMessage.Status getStatus() {
-        return TextMessage.Status.fromString(state);
+        return TextMessage.Status.fromString(status);
     }
 }

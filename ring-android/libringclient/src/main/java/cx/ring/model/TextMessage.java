@@ -20,7 +20,6 @@
 package cx.ring.model;
 
 public class TextMessage extends ConversationElement {
-    private static final String TAG = TextMessage.class.getSimpleName();
 
     private long mID = 0;
     private String mAccount = null;
@@ -41,49 +40,22 @@ public class TextMessage extends ConversationElement {
     }
 
     public enum Status {
-        UNKNOWN(0), SENDING(1), SENT(2), READ(3), FAILURE(4);
-
-        private final int s;
-
-        Status(int n) {
-            s = n;
-        }
-
-        private static final Status[] values = Status.values();
+        UNKNOWN, SENDING, SENT, READ, FAILURE;
 
         static Status fromString(String str) {
-            switch (str) {
-                case "SENDING":
-                    return SENDING;
-                case "SENT":
-                    return SENT;
-                case "READ":
-                    return READ;
-                case "FAILURE":
-                    return FAILURE;
-                case "UNKNOWN":
-                default:
-                    return UNKNOWN;
+            for (Status s : values()) {
+                if (s.name().equals(str)) {
+                    return s;
+                }
             }
+            return UNKNOWN;
         }
 
         static Status fromInt(int n) {
-            return values[n];
-        }
-
-        public String toString() {
-            switch (s) {
-                case 1:
-                    return "SENDING";
-                case 2:
-                    return "SENT";
-                case 3:
-                    return "READ";
-                case 4:
-                    return "FAILURE";
-                case 0:
-                default:
-                    return "UNKNOWN";
+            try {
+                return values()[n];
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return UNKNOWN;
             }
         }
     }
