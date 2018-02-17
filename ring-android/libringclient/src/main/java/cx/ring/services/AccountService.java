@@ -476,7 +476,10 @@ public class AccountService extends Observable {
                         Log.i(TAG, "setAccountsActive() thread running... " + active);
                         StringVect list = Ringservice.getAccountList();
                         for (int i = 0, n = list.size(); i < n; i++) {
-                            Ringservice.setAccountActive(list.get(i), active);
+                            String accountId = list.get(i);
+                            Account a = getAccount(accountId);
+                            if (a == null || !a.isDHTProxyEnabled())
+                                Ringservice.setAccountActive(accountId, active);
                         }
                         return true;
                     }
