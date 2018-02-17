@@ -164,6 +164,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:label="@string/app_name"
             android:screenOrientation="fullUser"
             android:showOnLockScreen="true"
+            android:resizeableActivity="true"
+            android:supportsPictureInPicture="true"
             android:theme="@style/AppTheme.ActionBar.Transparent"
             android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
