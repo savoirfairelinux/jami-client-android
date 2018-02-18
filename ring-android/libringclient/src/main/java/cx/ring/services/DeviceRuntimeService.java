@@ -25,10 +25,6 @@ public abstract class DeviceRuntimeService implements DaemonService.SystemInfoCa
 
     public abstract void loadNativeLibrary();
 
-    public abstract void updateAudioState(boolean isRinging);
-
-    public abstract void closeAudioState();
-
     public abstract File provideFilesDir();
 
     public abstract boolean isConnectedMobile();
@@ -55,17 +51,4 @@ public abstract class DeviceRuntimeService implements DaemonService.SystemInfoCa
 
     public abstract String getProfileName();
 
-    public abstract void startRinging();
-
-    public abstract boolean isSpeakerOn();
-
-    public abstract void stopRinging();
-
-    public abstract void abandonAudioFocus();
-
-    public abstract void obtainAudioFocus(boolean requesSpeakerOn);
-
-    public abstract void switchAudioToCurrentMode();
-
-    public abstract void toggleSpeakerphone();
 }

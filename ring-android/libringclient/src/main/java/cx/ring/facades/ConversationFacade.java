@@ -441,7 +441,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                         return;
                     }
                     int newState = call.getCallState();
-                    mDeviceRuntimeService.updateAudioState(call.isRinging() && call.isIncoming());
+                    mHardwareService.updateAudioState(call.isRinging() && call.isIncoming(), call.isOnGoing() && !call.isAudioOnly());
 
                     for (Conversation conv : mConversationMap.values()) {
                         conference = conv.getConference(call.getCallId());
@@ -462,9 +462,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     if ((call.isRinging() || newState == SipCall.State.CURRENT) && call.getTimestampStart() == 0) {
                         call.setTimestampStart(System.currentTimeMillis());
                     }
-                    if (newState == SipCall.State.CURRENT && !call.isAudioOnly()) {
-                        mHardwareService.setSpeakerPhone(true);
-                    }
                     if ((newState == SipCall.State.CURRENT && call.isIncoming())
                             || newState == SipCall.State.RINGING && call.isOutGoing()) {
                         mAccountService.sendProfile(call.getCallId(), call.getAccount());
@@ -473,7 +470,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                             || newState == SipCall.State.FAILURE
                             || newState == SipCall.State.OVER) {
                         mNotificationService.cancelCallNotification(call.getCallId().hashCode());
-                        mDeviceRuntimeService.closeAudioState();
+                        mHardwareService.closeAudioState();
 
                         if (newState == SipCall.State.HUNGUP) {
                             call.setTimestampEnd(System.currentTimeMillis());
@@ -509,8 +506,8 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     mHardwareService.setPreviewSettings();
 
                     Conference currenConf = getCurrentCallingConf();
-                    mDeviceRuntimeService.updateAudioState(currenConf.isRinging()
-                            && currenConf.isIncoming());
+                    mHardwareService.updateAudioState(currenConf.isRinging()
+                            && currenConf.isIncoming(), false);
 
                     setChanged();
                     ServiceEvent serviceEvent = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
