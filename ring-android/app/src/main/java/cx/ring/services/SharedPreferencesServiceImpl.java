@@ -31,6 +31,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import cx.ring.application.RingApplication;
 import cx.ring.model.Settings;
 import cx.ring.utils.NetworkUtils;
 
@@ -135,4 +136,9 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         return NetworkUtils.isConnectivityAllowed(mContext, getUserSettings().isAllowMobileData());
     }
 
+    @Override
+    public boolean isPushAllowed() {
+        String token = RingApplication.getInstance().getPushToken();
+        return getUserSettings().isAllowPushNotifications() && !token.isEmpty() && NetworkUtils.isPushAllowed(mContext, getUserSettings().isAllowMobileData());
+    }
 }
