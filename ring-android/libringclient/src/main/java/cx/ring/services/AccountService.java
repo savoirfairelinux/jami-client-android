@@ -122,7 +122,7 @@ public class AccountService extends Observable {
      *
      * @param isConnected sets the initial connection state of the accounts
      */
-    public void loadAccountsFromDaemon(final boolean isConnected) {
+    public void loadAccountsFromDaemon(final boolean isConnected, final boolean pushAllowed) {
 
         mApplicationExecutor.submit(new Runnable() {
             @Override
@@ -137,7 +137,7 @@ public class AccountService extends Observable {
                     notifyObservers(event);
                 }
 
-                setAccountsActive(isConnected);
+                setAccountsActive(isConnected, pushAllowed);
                 Ringservice.connectivityChanged();
             }
         });
@@ -464,7 +464,7 @@ public class AccountService extends Observable {
      *
      * @param active
      */
-    public void setAccountsActive(final boolean active) {
+    public void setAccountsActive(final boolean active, final boolean allowProxy) {
 
         FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
@@ -476,7 +476,11 @@ public class AccountService extends Observable {
                         Log.i(TAG, "setAccountsActive() thread running... " + active);
                         StringVect list = Ringservice.getAccountList();
                         for (int i = 0, n = list.size(); i < n; i++) {
-                            Ringservice.setAccountActive(list.get(i), active);
+                            String accountId = list.get(i);
+                            Account a = getAccount(accountId);
+                            if (!allowProxy || active || a == null || !a.isDHTProxyEnabled()) {
+                                Ringservice.setAccountActive(accountId, active);
+                            }
                         }
                         return true;
                     }
