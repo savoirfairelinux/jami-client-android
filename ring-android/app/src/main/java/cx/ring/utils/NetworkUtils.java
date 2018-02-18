@@ -29,12 +29,18 @@ public final class NetworkUtils {
      */
     public static NetworkInfo getNetworkInfo(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return connectivityManager.getActiveNetworkInfo();
+        if (connectivityManager != null) {
+            return connectivityManager.getActiveNetworkInfo();
+        }
+        return null;
     }
 
     public static boolean isConnectivityAllowed(Context context, boolean allowMobile) {
         NetworkInfo info = NetworkUtils.getNetworkInfo(context);
         return info != null && info.isConnected() && (info.getType() != ConnectivityManager.TYPE_MOBILE || allowMobile);
     }
-
+    public static boolean isPushAllowed(Context context, boolean allowMobile) {
+        NetworkInfo info = NetworkUtils.getNetworkInfo(context);
+        return info != null && (info.getType() != ConnectivityManager.TYPE_MOBILE || allowMobile);
+    }
 }

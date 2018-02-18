@@ -38,6 +38,8 @@ public abstract class PreferencesService extends Observable {
 
     public abstract boolean hasNetworkConnected();
 
+    public abstract boolean isPushAllowed();
+
     public abstract void saveRequestPreferences(String accountId, String contactId);
 
     public abstract Set<String> loadRequestsPreferences(String accountId);
