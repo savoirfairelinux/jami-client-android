@@ -711,12 +711,12 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 break;
             case ACTION_CALL_REFUSE:
                 mCallService.refuse(callId);
-                mDeviceRuntimeService.closeAudioState();
+                mHardwareService.closeAudioState();
                 mNotificationService.cancelCallNotification(callId.hashCode());
                 break;
             case ACTION_CALL_END:
                 mCallService.hangUp(callId);
-                mDeviceRuntimeService.closeAudioState();
+                mHardwareService.closeAudioState();
                 mNotificationService.cancelCallNotification(callId.hashCode());
                 break;
             case ACTION_CALL_VIEW:
