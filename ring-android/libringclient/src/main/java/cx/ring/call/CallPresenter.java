@@ -163,7 +163,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     }
 
     public void speakerClick() {
-        mHardwareService.switchSpeakerPhone();
+        mHardwareService.toggleSpeakerphone();
     }
 
     public void switchVideoInputClick() {
