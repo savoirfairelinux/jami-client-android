@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_4e771103",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/DeviceRuntimeServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-19T20:13:23Z",
+      "side": 1,
+      "message": "There are some remaining unused imports here",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "3c28c91a075ae37df22f8e279b6872b5e91551fe",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_6ecc8d36",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-19T20:13:23Z",
+      "side": 1,
+      "message": "Is there only one device in this case?",
+      "range": {
+        "startLine": 156,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 9
+      },
+      "revId": "3c28c91a075ae37df22f8e279b6872b5e91551fe",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
