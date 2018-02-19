@@ -238,10 +238,6 @@ fi
 echo "Building dring ${MAKEFLAGS}"
 V=99 make $MAKEFLAGS
 
-if [[ $DAEMON_ONLY -eq 1 ]]; then
-    exit 0
-fi
-
 ######################
 # Building JNI library
 ######################
