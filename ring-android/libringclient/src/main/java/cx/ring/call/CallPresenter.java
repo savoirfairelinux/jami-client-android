@@ -391,4 +391,19 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
             hangupCall();
         }
     }
+
+    public void requestPipMode() {
+        if (mSipCall.isOnGoing() && !mSipCall.isAudioOnly()) {
+            getView().enterPipMode(mSipCall);
+        }
+    }
+
+    public void pipModeChanged(boolean pip) {
+        if (pip) {
+            getView().displayHangupButton(false);
+            getView().displayPreviewSurface(false);
+        } else {
+            getView().displayPreviewSurface(true);
+        }
+    }
 }
