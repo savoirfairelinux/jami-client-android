@@ -19,6 +19,7 @@
 package cx.ring.tv.call;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Build;
@@ -30,12 +31,15 @@ import android.view.WindowManager;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.call.CallView;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
 
 public class TVCallActivity extends Activity {
 
     static final String TAG = TVCallActivity.class.getSimpleName();
+    private static final String CALL_FRAGMENT_TAG = "CALL_FRAGMENT_TAG";
+
     private TVCallFragment callFragment;
 
     @Override
@@ -70,7 +74,7 @@ public class TVCallActivity extends Activity {
                     accountId,
                     ringId,
                     audioOnly);
-            fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
+            fragmentTransaction.replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
         } else {
             Log.d(TAG, "onCreate: incoming call");
 
@@ -79,7 +83,17 @@ public class TVCallActivity extends Activity {
 
             callFragment = TVCallFragment.newInstance(TVCallFragment.ACTION_GET_CALL,
                     confId);
-            fragmentTransaction.replace(R.id.main_call_layout, callFragment).commit();
+            fragmentTransaction.replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
+        }
+    }
+
+
+    @Override
+    public void onUserLeaveHint () {
+        Fragment fragment = getFragmentManager().findFragmentByTag(CALL_FRAGMENT_TAG);
+        if (fragment instanceof CallView) {
+            CallView callFragment = (CallView) fragment;
+            callFragment.onUserLeave();
         }
     }
 

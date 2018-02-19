@@ -20,6 +20,7 @@
 package cx.ring.call;
 
 import cx.ring.model.CallContact;
+import cx.ring.model.SipCall;
 
 public interface CallView {
 
@@ -28,6 +29,8 @@ public interface CallView {
     void displayContactBubble(boolean display);
 
     void displayVideoSurface(boolean display);
+
+    void displayPreviewSurface(boolean display);
 
     void displayHangupButton(boolean display);
 
@@ -60,4 +63,8 @@ public interface CallView {
     void goToAddContact(CallContact callContact);
 
     void finish();
+
+    void onUserLeave();
+
+    void enterPipMode(SipCall sipCall);
 }
