@@ -6,6 +6,8 @@
   <string name="pref_category_privacy">Personvern</string>
   <string name="pref_mobileData_title">Mobildata</string>
   <string name="pref_mobileData_summary">Tillat Ring på 3G/LTE-nettverk i tillegg til Wi-Fi</string>
+  <string name="pref_pushNotifications_title">Push-merknader</string>
+  <string name="pref_pushNotifications_summary">Bruk Google-tjenere til å tillate mottak av samtaler/meldinger i bakgrunnen</string>
   <string name="pref_systemContacts_title">Bruk systemkontakter</string>
   <string name="pref_systemContacts_summary">Bruk systemkontakter for å vise innringerdetaljer</string>
   <string name="pref_systemDialer_title">Gjennomfør systemsamtaler ved hjelp av Ring</string>

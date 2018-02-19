@@ -63,7 +63,11 @@
   <string name="notif_channel_calls">Samtaler</string>
   <string name="notif_channel_messages">Meldinger</string>
   <string name="notif_channel_requests">Forespørsler</string>
+  <string name="notif_channel_file_transfer">Filoverføring</string>
   <string name="notif_mark_as_read">Merk som lest</string>
+  <string name="notif_incoming_file_transfer_title">Innkommende filoverføring</string>
+  <string name="notif_incoming_file_transfer">Noen ønsker å sende deg ei fil</string>
+  <string name="action_open">Åpne</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Deg:</string>
   <string name="action_call_hangup">Legg på</string>
@@ -88,6 +92,7 @@
   <string name="send_message">Send melding</string>
   <string name="message_sending">Sender melding…</string>
   <string name="time_just_now">Akkurat nå</string>
+  <string name="send_file">Send fil</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarettigheter</string>
   <string name="permission_dialog_camera_message">Videosamtaler krever tilgang til kameraet for å virke.  Vurder å aktivere det.</string>
@@ -159,4 +164,17 @@
   <string name="gallery_error_message">Fant ingen programmer på enheten for åpning av galleri</string>
   <string name="generic_error">En ukjent feil inntraff</string>
   <!--File Transfer-->
+  <string name="invalid_file">Ugyldig fil</string>
+  <string name="not_able_to_write_file">Kunne ikke skrive fil</string>
+  <string name="file_transfer_status_created">igangsetter overføring</string>
+  <string name="file_transfer_status_unsupported">ustøttet</string>
+  <string name="file_transfer_status_wait_peer_acceptance">venter på godkjenning fra likemann</string>
+  <string name="file_transfer_status_wait_host_acceptance">venter på godkjenning fra vert</string>
+  <string name="file_transfer_status_ongoing">pågår</string>
+  <string name="file_transfer_status_finished">fullført</string>
+  <string name="file_transfer_status_closed_by_host">lukket av vert</string>
+  <string name="file_transfer_status_closed_by_peer">lukket av likemann</string>
+  <string name="file_transfer_status_invalid_pathname">ugyldig stinavn</string>
+  <string name="file_transfer_status_unjoinable_peer">likemann det ikke går an å koble til</string>
+  <string name="file_saved_in">Fil lagret i %s</string>
 </resources>

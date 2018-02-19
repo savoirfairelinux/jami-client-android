@@ -63,7 +63,9 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="notif_channel_calls">Chamadas</string>
   <string name="notif_channel_messages">Mensagens</string>
   <string name="notif_channel_requests">Solicitações</string>
+  <string name="notif_channel_file_transfer">Transferência de arquivo</string>
   <string name="notif_mark_as_read">Marcar como lida</string>
+  <string name="action_open">Abrir</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Você:</string>
   <string name="action_call_hangup">Desligar</string>
@@ -88,6 +90,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="send_message">Enviar mensagem</string>
   <string name="message_sending">Enviando mensagem...</string>
   <string name="time_just_now">Agora há pouco</string>
+  <string name="send_file">Enviar arquivo</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permissão de câmera</string>
   <string name="permission_dialog_camera_message">Conversas de vídeo requerem permissão para acesso à câmera. Considere habilitá-la.</string>
@@ -159,4 +162,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="gallery_error_message">Aplicativo não encontrado no dispositivo para abrir a Galeria</string>
   <string name="generic_error">Um erro desconhecido ocorreu</string>
   <!--File Transfer-->
+  <string name="invalid_file">Arquivo inválido</string>
+  <string name="file_transfer_status_ongoing">em andamento</string>
+  <string name="file_transfer_status_finished">concluído</string>
 </resources>
