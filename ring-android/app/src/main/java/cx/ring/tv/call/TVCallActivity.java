@@ -53,6 +53,7 @@ public class TVCallActivity extends Activity {
 
         // dependency injection
         RingApplication.getInstance().getRingInjectionComponent().inject(this);
+        RingApplication.getInstance().startDaemon();
 
         android.net.Uri u = getIntent().getData();
 

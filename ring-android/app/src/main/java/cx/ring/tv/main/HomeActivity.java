@@ -58,6 +58,7 @@ public class HomeActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RingApplication.getInstance().startDaemon();
 
         setContentView(R.layout.tv_activity_home);
 
