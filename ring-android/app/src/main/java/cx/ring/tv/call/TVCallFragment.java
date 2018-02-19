@@ -20,8 +20,8 @@
 package cx.ring.tv.call;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
@@ -252,12 +252,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        presenter.configurationChanged();
-    }
-
-    @Override
     public void blockScreenRotation() {
 
     }
@@ -273,6 +267,17 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
             mVideoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
             mVideoPreview.setVisibility(display ? View.VISIBLE : View.GONE);
         });
+    }
+
+    @Override
+    public void displayPreviewSurface(boolean display) {
+        if (display) {
+            mVideoPreview.setZOrderMediaOverlay(true);
+            mVideoSurface.setZOrderMediaOverlay(false);
+        } else {
+            mVideoPreview.setZOrderMediaOverlay(false);
+            mVideoSurface.setZOrderMediaOverlay(true);
+        }
     }
 
     @Override
@@ -463,6 +468,18 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @Override
     public void finish() {
         getActivity().finish();
+    }
+
+    @Override
+    public void onUserLeave() {
+        presenter.requestPipMode();
+    }
+
+    @Override
+    public void enterPipMode(SipCall sipCall) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            getActivity().enterPictureInPictureMode();
+        }
     }
 
     @OnClick({R.id.call_hangup_btn})

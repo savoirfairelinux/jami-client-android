@@ -19,11 +19,16 @@
  */
 package cx.ring.fragments;
 
+import android.app.PendingIntent;
+import android.app.PictureInPictureParams;
+import android.app.RemoteAction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
+import android.graphics.drawable.Icon;
 import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,6 +36,8 @@ import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.Rational;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -47,7 +54,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.skyfishjy.library.RippleBackground;
 
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -62,6 +71,7 @@ import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.service.DRingService;
 import cx.ring.services.HardwareServiceImpl;
+import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.CircleTransform;
 import cx.ring.utils.KeyboardVisibilityManager;
@@ -123,6 +133,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     private PowerManager.WakeLock mScreenWakeLock;
     private DisplayManager.DisplayListener displayListener;
+    private int mCurrentOrientation = Configuration.ORIENTATION_UNDEFINED;
 
     public static CallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean audioOnly) {
         Bundle bundle = new Bundle();
@@ -188,6 +199,44 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         }
     }
 
+    public void onUserLeave() {
+        presenter.requestPipMode();
+    }
+
+    @Override
+    public void enterPipMode(SipCall sipCall) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            return;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            PictureInPictureParams.Builder paramBuilder = new PictureInPictureParams.Builder();
+            if (mVideoSurface.getVisibility() == View.VISIBLE) {
+                int[] l = new int[2];
+                mVideoSurface.getLocationInWindow(l);
+                int x = l[0];
+                int y = l[1];
+                int w = mVideoSurface.getWidth();
+                int h = mVideoSurface.getHeight();
+                Rect videoBounds = new Rect(x, y, x + w, y + h);
+                paramBuilder.setAspectRatio(new Rational(w, h));
+                paramBuilder.setSourceRectHint(videoBounds);
+            }
+            ArrayList<RemoteAction> actions = new ArrayList<>(1);
+            actions.add(new RemoteAction(
+                    Icon.createWithResource(getContext(), R.drawable.ic_call_end_white),
+                    getString(R.string.action_call_hangup),
+                    getString(R.string.action_call_hangup),
+                    PendingIntent.getService(getContext(), new Random().nextInt(),
+                            new Intent(DRingService.ACTION_CALL_END)
+                                    .setClass(getContext(), DRingService.class)
+                                    .putExtra(NotificationService.KEY_CALL_ID, sipCall.getCallId()), PendingIntent.FLAG_ONE_SHOT)));
+            paramBuilder.setActions(actions);
+            getActivity().enterPictureInPictureMode(paramBuilder.build());
+        } else {
+            getActivity().enterPictureInPictureMode();
+        }
+    }
+
     @Override
     public int getLayout() {
         return R.layout.frag_call;
@@ -202,6 +251,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     public void onViewCreated(View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
+        mCurrentOrientation = getResources().getConfiguration().orientation;
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
         mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "cx.ring.onIncomingCall");
         mScreenWakeLock.setReferenceCounted(false);
@@ -285,6 +335,15 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        int newOrientation = newConfig.orientation;
+        if (newOrientation == mCurrentOrientation) {
+            return;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && getActivity().isInPictureInPictureMode()) {
+            // avoid restarting the camera when entering PIP mode
+            return;
+        }
+        mCurrentOrientation = newOrientation;
         presenter.configurationChanged();
     }
 
@@ -333,14 +392,19 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         return true;
     }
 
+
+    @Override
+    public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
+        presenter.pipModeChanged(isInPictureInPictureMode);
+    }
+
     @Override
     public void blockScreenRotation() {
-        int currentOrientation = getResources().getConfiguration().orientation;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
             return;
         }
-        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         } else {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -358,6 +422,17 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             mVideoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
             mVideoPreview.setVisibility(display ? View.VISIBLE : View.GONE);
         });
+    }
+
+    @Override
+    public void displayPreviewSurface(final boolean display) {
+        if (display) {
+            mVideoPreview.setZOrderMediaOverlay(true);
+            mVideoSurface.setZOrderMediaOverlay(false);
+        } else {
+            mVideoPreview.setZOrderMediaOverlay(false);
+            mVideoSurface.setZOrderMediaOverlay(true);
+        }
     }
 
     @Override
@@ -384,8 +459,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void changeScreenRotation() {
-        int currentOrientation = getResources().getConfiguration().orientation;
-        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+        if (mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -533,7 +607,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             final int mPreviewWidth;
             final int mPreviewHeight;
 
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            if (mCurrentOrientation == Configuration.ORIENTATION_PORTRAIT) {
                 mPreviewWidth = HardwareServiceImpl.VIDEO_HEIGHT;
                 mPreviewHeight = HardwareServiceImpl.VIDEO_WIDTH;
             } else {
