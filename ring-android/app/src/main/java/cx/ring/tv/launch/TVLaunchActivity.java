@@ -45,6 +45,7 @@ public class TVLaunchActivity extends BaseActivity<LaunchPresenter> implements L
         // dependency injection
         RingApplication.getInstance().getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
+        RingApplication.getInstance().startDaemon();
 
         setContentView(R.layout.activity_launch);
 
