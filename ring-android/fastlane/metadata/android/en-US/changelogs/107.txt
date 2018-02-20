@@ -1,0 +1,3 @@
+- fix android tv client
+- fix crash in landscape mode on tablets
+- update file transfer api
