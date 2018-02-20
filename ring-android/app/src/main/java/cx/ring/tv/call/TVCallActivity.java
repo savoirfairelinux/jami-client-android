@@ -59,8 +59,6 @@ public class TVCallActivity extends Activity {
         RingApplication.getInstance().getRingInjectionComponent().inject(this);
         RingApplication.getInstance().startDaemon();
 
-        android.net.Uri u = getIntent().getData();
-
         boolean audioOnly = false;
         String accountId = getIntent().getStringExtra("account");
         String ringId = getIntent().getStringExtra("ringId");

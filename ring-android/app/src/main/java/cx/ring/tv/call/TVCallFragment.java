@@ -35,8 +35,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationSet;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -57,7 +55,6 @@ import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.services.HardwareServiceImpl;
 import cx.ring.utils.CircleTransform;
-import cx.ring.utils.KeyboardVisibilityManager;
 
 public class TVCallFragment extends BaseFragment<CallPresenter> implements CallView {
 
@@ -95,9 +92,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @BindView(R.id.call_status_txt)
     protected TextView mCallStatusTxt;
-
-    @BindView(R.id.dialpad_edit_text)
-    protected EditText mNumeralDialEditText;
 
     @BindView(R.id.ripple_animation)
     protected RippleBackground mPulseAnimation;
@@ -300,9 +294,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void displayDialPadKeyboard() {
-        KeyboardVisibilityManager.showKeyboard(getActivity(),
-                mNumeralDialEditText,
-                InputMethodManager.SHOW_IMPLICIT);
     }
 
     @Override
