@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_b19efa54",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 90
+      },
+      "writtenOn": "2018-02-20T22:04:27Z",
+      "side": 1,
+      "message": "maybe this can reduce function calls during benign state changes ?\nif (isRinging) {\n    obtainAudioFocus(true);\n    mAudioManager.setMode(AudioManager.MODE_RINGTONE);\n    startRinging();\n} else if (isOngoingVideo) {\n    obtainAudioFocus(true);\n    stopRinging();\n    mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);\n}",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 186,
+        "endChar": 9
+      },
+      "revId": "3f6ac34c25b86c8cccb283895e034ec021f7851f",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
