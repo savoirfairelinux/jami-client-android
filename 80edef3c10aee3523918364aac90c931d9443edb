@@ -45,6 +45,30 @@
       "revId": "80edef3c10aee3523918364aac90c931d9443edb",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_51db361b",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-20T23:30:31Z",
+      "side": 1,
+      "message": "3 times is not a high number. There is no performance or logic issue with this.",
+      "parentUuid": "5a3f45e8_d182a6ff",
+      "range": {
+        "startLine": 444,
+        "startChar": 20,
+        "endLine": 444,
+        "endChar": 134
+      },
+      "revId": "80edef3c10aee3523918364aac90c931d9443edb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
