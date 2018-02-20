@@ -164,12 +164,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         app:srcCompat="@drawable/ic_call_end_white"
         app:useCompatPadding="true" />
 
-    <EditText
-        android:id="@+id/dialpad_edit_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="phone"
-        android:visibility="visible" />
-
 </RelativeLayout>
