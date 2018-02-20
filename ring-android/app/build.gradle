@@ -4,7 +4,7 @@ def buildFirebase = project.hasProperty('buildFirebase')
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "26.0.3"
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 18
@@ -36,6 +36,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
+        debug {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -108,7 +112,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.8.0'
 
     // RxAndroid
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
     withFirebaseImplementation 'com.google.firebase:firebase-messaging:11.8.0'
 }
