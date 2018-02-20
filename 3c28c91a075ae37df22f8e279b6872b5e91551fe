@@ -45,6 +45,30 @@
       "revId": "3c28c91a075ae37df22f8e279b6872b5e91551fe",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_f1cd225f",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-20T23:30:31Z",
+      "side": 1,
+      "message": "Not sure, code was simply moved from elsewhere",
+      "parentUuid": "5a3f45e8_6ecc8d36",
+      "range": {
+        "startLine": 156,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 9
+      },
+      "revId": "3c28c91a075ae37df22f8e279b6872b5e91551fe",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
