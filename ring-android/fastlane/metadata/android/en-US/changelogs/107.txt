@@ -1,0 +1,5 @@
+- fix android tv client
+- fix crash in landscape mode on tablets
+- update contact requests management
+- auto switch to speaker mode during video calls
+- improve connection stability when using DHT proxy
