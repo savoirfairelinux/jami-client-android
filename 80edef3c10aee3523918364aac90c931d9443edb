@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_b1b0baf5",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/HardwareServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-20T21:49:26Z",
+      "side": 1,
+      "message": "Could be null",
+      "range": {
+        "startLine": 242,
+        "startChar": 17,
+        "endLine": 242,
+        "endChar": 31
+      },
+      "revId": "80edef3c10aee3523918364aac90c931d9443edb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_d182a6ff",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-02-20T21:49:26Z",
+      "side": 1,
+      "message": "There is a high number of CALL_STATE_CHANGED events emitted. As a result this method is called at least 3 times.\n\nCould there be a way to filter these calls?\n\nI think using rx instead of the Observable class would be the best answer to this problem on the long term.",
+      "range": {
+        "startLine": 444,
+        "startChar": 20,
+        "endLine": 444,
+        "endChar": 134
+      },
+      "revId": "80edef3c10aee3523918364aac90c931d9443edb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
