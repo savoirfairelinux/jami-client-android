@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2015-2018 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
@@ -15,7 +15,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 package cx.ring.fragments;
 
@@ -24,7 +25,6 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceViewHolder;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

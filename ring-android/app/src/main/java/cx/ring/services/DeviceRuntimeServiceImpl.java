@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016-2017 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
  *
@@ -27,7 +27,6 @@ import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
 
