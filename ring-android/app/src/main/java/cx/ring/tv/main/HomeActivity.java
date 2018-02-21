@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 Savoir-faire Linux Inc.
+ *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Michel Schmit <michel.schmit@savoirfairelinux.com>
  *  Aline Bonnet <aline.bonnet@savoirfairelinux.com>
