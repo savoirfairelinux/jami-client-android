@@ -28,6 +28,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.hardware.display.DisplayManager;
 import android.os.Build;
@@ -36,7 +37,6 @@ import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.Rational;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,6 +52,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.skyfishjy.library.RippleBackground;
 
 import java.util.ArrayList;
@@ -65,9 +67,11 @@ import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
+import cx.ring.contacts.ContactPictureFactory;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
+import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.service.DRingService;
 import cx.ring.services.HardwareServiceImpl;
@@ -473,19 +477,31 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void updateContactBubble(@NonNull final CallContact contact) {
-        getActivity().runOnUiThread(() -> {
-            byte[] photo = contact.getPhoto();
-            if (photo != null && photo.length > 0) {
-                Glide.with(getActivity())
-                        .load(photo)
-                        .transform(new CircleTransform(getActivity()))
-                        .error(R.drawable.ic_contact_picture)
-                        .into(contactBubbleView);
-            } else {
-                Glide.with(getActivity())
-                        .load(R.drawable.ic_contact_picture)
-                        .into(contactBubbleView);
+        String uuid = "";
+        if (!contact.getPhones().isEmpty()) {
+            Uri number = contact.getPhones().get(0).getNumber();
+            if (number != null) {
+                uuid = number.getHost();
             }
+        }
+
+        Drawable contactPicture = ContactPictureFactory.getContactPicture(
+                getActivity(),
+                contact.getPhoto(), contact.getUsername(),
+                uuid);
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.ic_contact_picture)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false)
+                .transform(new CircleTransform());
+
+        getActivity().runOnUiThread(() -> {
+            Glide.with(getActivity())
+                    .load(contactPicture)
+                    .apply(options)
+                    .into(contactBubbleView);
 
             String username = contact.getRingUsername();
             String displayName = contact.getDisplayName();

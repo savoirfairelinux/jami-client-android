@@ -21,6 +21,7 @@ package cx.ring.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -30,12 +31,13 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.signature.StringSignature;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import cx.ring.R;
+import cx.ring.contacts.ContactPictureFactory;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.CircleTransform;
 import cx.ring.viewholders.SmartListViewHolder;
@@ -89,26 +91,24 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
             holder.convStatus.setTypeface(null, Typeface.NORMAL);
         }
 
-        if (smartListViewModel.getPhotoData() != null) {
-            Glide.with(holder.itemView.getContext())
-                    .fromBytes()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(false)
-                    .load(smartListViewModel.getPhotoData())
-                    .crossFade()
-                    .signature(new StringSignature(String.valueOf(Arrays.hashCode(smartListViewModel.getPhotoData()))))
-                    .placeholder(R.drawable.ic_contact_picture)
-                    .transform(new CircleTransform(holder.itemView.getContext()))
-                    .error(R.drawable.ic_contact_picture)
-                    .into(holder.photo);
-        } else {
-            Glide.with(holder.itemView.getContext())
-                    .load(R.drawable.ic_contact_picture)
-                    .crossFade()
-                    .signature(new StringSignature(smartListViewModel.getUuid()))
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(holder.photo);
-        }
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.ic_contact_picture)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false)
+                .transform(new CircleTransform());
+
+        Drawable contactPicture = ContactPictureFactory.getContactPicture(
+                holder.itemView.getContext(),
+                smartListViewModel.getPhotoData(),
+                smartListViewModel.getContactName(),
+                smartListViewModel.getUuid());
+
+        Glide.with(holder.itemView.getContext())
+                .load(contactPicture)
+                .apply(options)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(holder.photo);
 
         holder.online.setVisibility(smartListViewModel.isOnline() ? View.VISIBLE : View.GONE);
 
@@ -128,7 +128,6 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
 
         diffResult.dispatchUpdatesTo(this);
     }
-
 
     private String getLastInteractionSummary(int type, String lastInteraction, Context context) {
         switch (type) {

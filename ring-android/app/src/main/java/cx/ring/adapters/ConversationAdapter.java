@@ -21,6 +21,7 @@
 package cx.ring.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -31,6 +32,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -38,8 +40,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import cx.ring.R;
+import cx.ring.contacts.ContactPictureFactory;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.model.CallContact;
 import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryFileTransfer;
@@ -243,38 +247,52 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             return;
         }
 
-        TextMessage ht = (TextMessage) convElement;
+        TextMessage textMessage = (TextMessage) convElement;
 
-        convViewHolder.mCid = ht.getContact().getId();
-        convViewHolder.mMsgTxt.setText(ht.getMessage());
+        CallContact contact = textMessage.getContact();
+        if (contact == null) {
+            Log.e(TAG, "Invalid contact, not able to display message correctly");
+            return;
+        }
+
+        convViewHolder.mCid = contact.getId();
+        convViewHolder.mMsgTxt.setText(textMessage.getMessage());
         if (convViewHolder.mPhoto != null) {
             convViewHolder.mPhoto.setImageBitmap(null);
         }
 
-        boolean shouldSeparateByDetails = this.shouldSeparateByDetails(ht, position);
-        boolean isConfigSameAsPreviousMsg = this.isMessageConfigSameAsPrevious(ht, position);
+        boolean shouldSeparateByDetails = this.shouldSeparateByDetails(textMessage, position);
+        boolean isConfigSameAsPreviousMsg = this.isMessageConfigSameAsPrevious(textMessage, position);
 
-        if (ht.isIncoming() && !isConfigSameAsPreviousMsg) {
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.ic_contact_picture)
+                .error(R.drawable.ic_contact_picture)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false)
+                .transform(new CircleTransform());
+
+        if (textMessage.isIncoming() && !isConfigSameAsPreviousMsg) {
+            Drawable contactPicture = ContactPictureFactory.getContactPicture(
+                    convViewHolder.itemView.getContext(),
+                    mPhoto,
+                    contact.getUsername(),
+                    textMessage.getNumberUri().getHost());
+
             Glide.with(convViewHolder.itemView.getContext())
-                    .fromBytes()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .skipMemoryCache(false)
-                    .load(mPhoto)
-                    .crossFade()
-                    .placeholder(R.drawable.ic_contact_picture)
-                    .transform(new CircleTransform(convViewHolder.itemView.getContext()))
-                    .error(R.drawable.ic_contact_picture)
+                    .load(contactPicture)
+                    .apply(options)
                     .into(convViewHolder.mPhoto);
         }
 
-        if (ht.getStatus() == TextMessage.Status.SENDING) {
+        if (textMessage.getStatus() == TextMessage.Status.SENDING) {
             convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
             convViewHolder.mMsgDetailTxt.setText(R.string.message_sending);
         } else if (shouldSeparateByDetails) {
             convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
             String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
                     convViewHolder.itemView.getContext(),
-                    ht.getDate());
+                    textMessage.getDate());
             convViewHolder.mMsgDetailTxt.setText(timeSeparationString);
         } else {
             convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
@@ -412,8 +430,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * Helper method determining if a given conversationElement should be distinguished from the
      * previous ie. if their configuration is not the same.
      *
-     * @param textMessage       The conversationElement at the given position
-     * @param position The position of the current message
+     * @param textMessage The conversationElement at the given position
+     * @param position    The position of the current message
      * @return true if the configuration is the same as the previous message, false otherwise.
      */
     private boolean isMessageConfigSameAsPrevious(final TextMessage textMessage,
