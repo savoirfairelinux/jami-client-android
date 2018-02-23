@@ -20,7 +20,6 @@
 package cx.ring.tv.contactrequest;
 
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v17.leanback.app.BackgroundManager;
 import android.support.v17.leanback.widget.Action;
@@ -43,9 +42,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.request.RequestOptions;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
@@ -133,35 +131,32 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
 
         byte[] photo = mSelectedContactRequest.getPhoto();
 
-        if (photo != null && photo.length > 0) {
-            Glide.with(this)
-                    .load(mSelectedContactRequest.getPhoto())
-                    .asBitmap()
-                    .dontAnimate()
-                    .error(R.drawable.ic_contact_picture)
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(final Bitmap resource,
-                                                    GlideAnimation glideAnimation) {
-                            row.setImageBitmap(getActivity(), resource);
-                            startEntranceTransition();
-                        }
-                    });
-        } else {
-            Glide.with(this)
-                    .load(R.drawable.ic_contact_picture)
-                    .asBitmap()
-                    .dontAnimate()
-                    .error(R.drawable.ic_contact_picture)
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(final Bitmap resource,
-                                                    GlideAnimation glideAnimation) {
-                            row.setImageBitmap(getActivity(), resource);
-                            startEntranceTransition();
-                        }
-                    });
-        }
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.ic_contact_picture)
+                .error(R.drawable.ic_contact_picture)
+                .priority(Priority.HIGH);
+
+//        if (photo != null && photo.length > 0) {
+//            Glide.with(this)
+//                    .load(mSelectedContactRequest.getPhoto())
+//                    .apply(options)
+//                    .into(row.);
+//        } else {
+//            Glide.with(this)
+//                    .load(R.drawable.ic_contact_picture)
+//                    .asBitmap()
+//                    .dontAnimate()
+//                    .error(R.drawable.ic_contact_picture)
+//                    .into(new SimpleTarget<Bitmap>() {
+//                        @Override
+//                        public void onResourceReady(final Bitmap resource,
+//                                                    GlideAnimation glideAnimation) {
+//                            row.setImageBitmap(getActivity(), resource);
+//                            startEntranceTransition();
+//                        }
+//                    });
+//        }
 
         SparseArrayObjectAdapter adapter = new SparseArrayObjectAdapter();
 
