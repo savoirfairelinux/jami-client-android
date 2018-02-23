@@ -29,6 +29,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+
 import java.util.List;
 
 import cx.ring.R;
@@ -37,6 +40,7 @@ import cx.ring.account.RingAccountCreationPresenter;
 import cx.ring.account.RingAccountCreationView;
 import cx.ring.account.RingAccountViewModelImpl;
 import cx.ring.application.RingApplication;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
@@ -93,11 +97,19 @@ public class TVRingAccountCreationFragment
         super.onViewCreated(view, savedInstanceState);
 
         RingAccountViewModelImpl ringAccountViewModel = getArguments().getParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT);
+        if (ringAccountViewModel == null) {
+            Log.e(TAG, "Not able to get model");
+            return;
+        }
+
         presenter.init(ringAccountViewModel);
         presenter.ringCheckChanged(false);
-        if (ringAccountViewModel.getPhoto() != null) {
-            getGuidanceStylist().getIconView().setImageBitmap(ringAccountViewModel.getPhoto());
-        }
+
+        Glide.with(getActivity())
+                .load(ringAccountViewModel.getPhoto())
+                .apply(AvatarFactory.getGlideOptions(true, false))
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(getGuidanceStylist().getIconView());
     }
 
     @Override
@@ -107,7 +119,7 @@ public class TVRingAccountCreationFragment
         String breadcrumb = "";
         String description = getString(R.string.help_ring);
 
-        Drawable icon = getActivity().getResources().getDrawable(R.drawable.ic_contact_picture);
+        Drawable icon = getActivity().getResources().getDrawable(R.drawable.ic_contact_picture_fallback);
         return new GuidanceStylist.Guidance(title, description, breadcrumb, icon);
     }
 
