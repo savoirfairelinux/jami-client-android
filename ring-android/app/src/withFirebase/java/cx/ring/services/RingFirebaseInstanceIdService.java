@@ -32,7 +32,7 @@ public class RingFirebaseInstanceIdService extends FirebaseInstanceIdService {
     @Override
     public void onTokenRefresh() {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.w(TAG, "Refreshed token: " + refreshedToken);
+        Log.d(TAG, "onTokenRefresh: refreshed token: " + refreshedToken);
         startService(new Intent(DRingService.ACTION_PUSH_TOKEN_CHANGED)
                 .setClass(this, DRingService.class)
                 .putExtra(DRingService.PUSH_TOKEN_FIELD_TOKEN, refreshedToken));
