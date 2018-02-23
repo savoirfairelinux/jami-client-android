@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import cx.ring.R;
+import cx.ring.contacts.AvatarFactory;
 
 /**
  * Custom title view to be used in {@link android.support.v17.leanback.app.BrowseFragment}.
@@ -101,17 +102,12 @@ public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.
         }
     }
 
-    public void setCurrentAccountPhoto(byte[] photo) {
-        if (photo != null && photo.length > 0) {
-            Glide.with(getContext())
-                    .load(photo)
-                    .error(R.drawable.ic_contact_picture)
-                    .into(mLogoView);
-        } else {
-            Glide.with(getContext())
-                    .load(R.drawable.ic_contact_picture)
-                    .into(mLogoView);
-        }
+    public void setCurrentAccountPhoto(Drawable photo) {
+        Glide.with(getContext())
+                .load(photo)
+                .apply(AvatarFactory.getGlideOptions(true, true))
+                .into(mLogoView);
+
         mLogoView.setVisibility(View.VISIBLE);
     }
 

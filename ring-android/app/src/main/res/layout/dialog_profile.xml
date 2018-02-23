@@ -35,7 +35,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_margin="15dp"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/ic_contact_picture" />
+                app:srcCompat="@drawable/ic_contact_picture_fallback" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/gallery"
