@@ -65,7 +65,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_margin="10dp"
                         android:scaleType="fitCenter"
-                        tools:src="@drawable/ic_contact_picture" />
+                        tools:src="@drawable/ic_contact_picture_fallback" />
 
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/camera"

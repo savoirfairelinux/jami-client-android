@@ -71,7 +71,7 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
         String breadcrumb = "";
         String description = getString(R.string.help_password_enter) + "\n" + getString(R.string.help_pin_enter);
 
-        Drawable icon = getActivity().getResources().getDrawable(R.drawable.ic_contact_picture);
+        Drawable icon = getActivity().getResources().getDrawable(R.drawable.ic_contact_picture_fallback);
         return new GuidanceStylist.Guidance(title, description, breadcrumb, icon);
     }
 

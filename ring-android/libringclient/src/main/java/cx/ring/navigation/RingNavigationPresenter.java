@@ -30,6 +30,7 @@ import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
+import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.VCardUtils;
@@ -40,6 +41,8 @@ import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
 
 public class RingNavigationPresenter extends RootPresenter<RingNavigationView> implements Observer<ServiceEvent> {
+
+    private static final String TAG = RingNavigationPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
     private DeviceRuntimeService mDeviceRuntimeService;
@@ -111,6 +114,10 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> i
     }
 
     public String getAlias(Account account) {
+        if (account == null) {
+            Log.e(TAG, "Not able to get alias");
+            return null;
+        }
         VCard vcard = VCardUtils.loadLocalProfileFromDisk(mDeviceRuntimeService.provideFilesDir(), account.getAccountID());
         FormattedName name = vcard.getFormattedName();
         if (name != null) {
@@ -123,6 +130,10 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> i
     }
 
     public String getAccountAlias(Account account) {
+        if (account == null) {
+            Log.e(TAG, "Not able to get account alias");
+            return null;
+        }
         String alias = getAlias(account);
         return (alias == null) ? account.getAlias() : alias;
     }
