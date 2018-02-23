@@ -26,9 +26,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
 import android.media.RingtoneManager;
 import android.os.Build;
@@ -54,6 +53,7 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.ContactRequestsFragment;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Account;
@@ -72,6 +72,7 @@ import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import ezvcard.VCard;
 import ezvcard.property.Photo;
 
 public class NotificationServiceImpl extends NotificationService implements Observer<ServiceEvent> {
@@ -156,7 +157,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     @Override
     public void showCallNotification(Conference conference) {
-        if (conference.getParticipants().isEmpty()) {
+        if (conference == null || conference.getParticipants().isEmpty() || !(conference.isOnGoing() || conference.isRinging())) {
             return;
         }
 
@@ -214,23 +215,13 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                                                 .putExtra(KEY_CALL_ID, call.getCallId()),
                                         PendingIntent.FLAG_ONE_SHOT));
             }
-        } else {
-            return;
         }
 
         messageNotificationBuilder.setOngoing(true)
                 .setCategory(NotificationCompat.CATEGORY_CALL)
                 .setSmallIcon(R.drawable.ic_ring_logo_white);
 
-        if (contact.getPhoto() != null) {
-            Resources res = mContext.getResources();
-            int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
-            int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
-            Bitmap bmp = BitmapUtils.bytesToBitmap(contact.getPhoto());
-            if (bmp != null) {
-                messageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
-            }
-        }
+        setContactPicture(contact, messageNotificationBuilder);
 
         messageNotificationBuilder.setColor(ResourcesCompat.getColor(mContext.getResources(),
                 R.color.color_primary_dark, null));
@@ -270,16 +261,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 .setAutoCancel(true)
                 .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
 
-        if (contact.getPhoto() != null) {
-            Resources res = mContext.getResources();
-            int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
-            int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
+        setContactPicture(contact, messageNotificationBuilder);
 
-            Bitmap bmp = BitmapUtils.bytesToBitmap(contact.getPhoto());
-            if (bmp != null) {
-                messageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
-            }
-        }
         if (texts.size() == 1) {
             last.setNotified(true);
             messageNotificationBuilder.setStyle(null);
@@ -350,20 +333,15 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                                             .setClass(mContext, DRingService.class)
                                             .putExtras(info),
                                     PendingIntent.FLAG_ONE_SHOT));
-            Resources res = mContext.getResources();
-            int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
-            int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
-            List<Photo> photos = request.getVCard().getPhotos();
+
+
+            VCard vCard = request.getVCard();
+            List<Photo> photos = vCard.getPhotos();
+            byte[] data = null;
             if (photos != null && !photos.isEmpty()) {
-                Photo photo = photos.get(0);
-                messageNotificationBuilder.setLargeIcon(BitmapUtils.bytesToBitmap(photo.getData()));
-            } else {
-                Bitmap bmp;
-                bmp = BitmapFactory.decodeResource(res, R.drawable.ic_contact_picture);
-                if (bmp != null) {
-                    messageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
-                }
+                data = photos.get(0).getData();
             }
+            setContactPicture(data, request.getDisplayname(), request.getContactId(), messageNotificationBuilder);
         } else {
             messageNotificationBuilder.setContentText(String.format(mContext.getString(R.string.contact_request_msg), Integer.toString(requests.size())));
             messageNotificationBuilder.setLargeIcon(null);
@@ -517,6 +495,27 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         return (NOTIF_FILE_TRANSFER + dataTransferId).hashCode();
     }
 
+    private void setContactPicture(CallContact contact, NotificationCompat.Builder messageNotificationBuilder) {
+        setContactPicture(contact.getPhoto(), contact.getUsername(),
+                contact.getPhones().get(0).getNumber().getHost(), messageNotificationBuilder);
+    }
+
+    private void setContactPicture(byte[] photo, String username, String ringId, NotificationCompat.Builder messageNotificationBuilder) {
+        Drawable contactPicture = AvatarFactory.getAvatar(mContext, photo, username, ringId);
+
+        Bitmap contactBitmap = BitmapUtils.drawableToBitmap(contactPicture);
+        if (contactBitmap == null) {
+            Log.d(TAG, "showCallNotification: not able to generate contactBitmap");
+            return;
+        }
+        Bitmap circleBitmap = BitmapUtils.cropImageToCircle(contactBitmap);
+        if (circleBitmap == null) {
+            Log.d(TAG, "showCallNotification: not able to generate circleBitmap");
+            return;
+        }
+        messageNotificationBuilder.setLargeIcon(circleBitmap);
+    }
+
     @Override
     public void update(Observable observable, ServiceEvent event) {
         if (observable instanceof AccountService && event != null) {
@@ -532,6 +531,37 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                         mPreferencesService.saveRequestPreferences(accountID, from);
                     } else {
                         Log.d(TAG, "INCOMING_TRUST_REQUEST: already notified for " + from);
+                    }
+                    break;
+                }
+            }
+        } else if (observable instanceof CallService && event != null) {
+            switch (event.getEventType()) {
+                case DATA_TRANSFER: {
+                    Long transferId = event.getEventInput(ServiceEvent.EventInput.TRANSFER_ID, Long.class);
+                    DataTransferEventCode transferEventCode = event.getEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, DataTransferEventCode.class);
+                    DataTransferInfo dataTransferInfo = new DataTransferInfo();
+                    mCallService.dataTransferInfo(transferId, dataTransferInfo);
+
+                    if (transferEventCode == DataTransferEventCode.CREATED) {
+
+                        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, dataTransferInfo.getDisplayName(),
+                                dataTransferInfo.getFlags() == 0, dataTransferInfo.getTotalSize(),
+                                dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
+                                dataTransferInfo.getAccountId());
+                        mHistoryService.addFileTransfer(historyFileTransfer);
+
+                        if (dataTransferInfo.getFlags() == 1) {
+                            showFileTransferNotification(transferId, dataTransferInfo.getPeer());
+                        }
+                    }
+
+                    if (dataTransferInfo.getFlags() == 1) {
+                        mHistoryService.updateFileTransferStatus(transferId, transferEventCode);
+                    }
+
+                    if (transferEventCode == DataTransferEventCode.FINISHED) {
+                        notificationManager.cancel(getFileTransferNotificationId(transferId));
                     }
                     break;
                 }

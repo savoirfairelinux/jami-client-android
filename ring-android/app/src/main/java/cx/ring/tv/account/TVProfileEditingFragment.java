@@ -36,6 +36,11 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
@@ -43,11 +48,14 @@ import cx.ring.R;
 import cx.ring.account.ProfileCreationFragment;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.application.RingApplication;
+import cx.ring.contacts.AvatarFactory;
+import cx.ring.model.Account;
 import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.navigation.RingNavigationView;
 import cx.ring.navigation.RingNavigationViewModel;
 import cx.ring.tv.camera.CustomCameraActivity;
 import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.CircleTransform;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
@@ -112,7 +120,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
         String title = getString(R.string.profile);
         String breadcrumb = "";
         String description = getString(R.string.profile_message_warning);
-        Drawable icon = getActivity().getResources().getDrawable(R.drawable.ic_contact_picture);
+        Drawable icon = getActivity().getResources().getDrawable(R.drawable.ic_contact_picture_fallback);
         return new GuidanceStylist.Guidance(title, description, breadcrumb, icon);
     }
 
@@ -157,17 +165,39 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
     public void showViewModel(RingNavigationViewModel viewModel) {
         // displays account available info
         VCard vcard = viewModel.getVcard(getActivity().getFilesDir());
-        if (vcard == null || vcard.getPhotos().isEmpty()) {
-            getGuidanceStylist().getIconView().setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_contact_picture));
-        } else {
-            if (!this.actions.isEmpty() && this.actions.get(0).getId() == USER_NAME) {
-                this.actions.get(0).setEditDescription(vcard.getFormattedName().getValue());
-            }
-
-            Photo tmp = vcard.getPhotos().get(0);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(tmp.getData(), 0, tmp.getData().length);
-            getGuidanceStylist().getIconView().setImageBitmap(bitmap);
+        Account account = viewModel.getAccount();
+        if (account == null) {
+            Log.e(TAG, "Not able to get current account");
+            return;
         }
+
+        if (!this.actions.isEmpty() && this.actions.get(0).getId() == USER_NAME) {
+            this.actions.get(0).setEditDescription(account.getAlias());
+        }
+
+        if (vcard == null || vcard.getPhotos().isEmpty()) {
+            getGuidanceStylist().getIconView().setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_contact_picture_fallback));
+            return;
+        }
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.ic_contact_picture_fallback)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false)
+                .transform(new CircleTransform());
+
+        Drawable contactPicture = AvatarFactory.getAvatar(
+                getActivity(),
+                vcard.getPhotos().get(0).getData(),
+                account.getDisplayUsername(),
+                account.getUri());
+
+        Glide.with(getActivity())
+                .load(contactPicture)
+                .apply(options)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(getGuidanceStylist().getIconView());
     }
 
     @Override

@@ -30,7 +30,7 @@ public interface SmartListView extends BaseView {
 
     void displayMobileDataPanel();
 
-    void displayNewContactRowWithName(String name);
+    void displayContact(CallContact contact);
 
     void displayChooseNumberDialog(CharSequence numbers[]);
 

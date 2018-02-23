@@ -151,12 +151,12 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
             if (currentAccount.isSip()) {
                 // sip search
                 mCallContact = CallContact.buildUnknown(query, null);
-                getView().displayNewContactRowWithName(query);
+                getView().displayContact(mCallContact);
             } else {
                 Uri uri = new Uri(query);
                 if (uri.isRingId()) {
                     mCallContact = CallContact.buildUnknown(uri);
-                    getView().displayNewContactRowWithName(query);
+                    getView().displayContact(mCallContact);
                 } else {
                     getView().hideSearchRow();
 
@@ -501,7 +501,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                 // on found
                 if (mLastBlockchainQuery != null && mLastBlockchainQuery.equals(name)) {
                     mCallContact = CallContact.buildRingContact(new Uri(address), name);
-                    getView().displayNewContactRowWithName(name);
+                    getView().displayContact(mCallContact);
                     mLastBlockchainQuery = null;
                 } else {
                     if (("").equals(name) || ("").equals(address)) {
@@ -518,7 +518,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                         && mLastBlockchainQuery != null
                         && mLastBlockchainQuery.equals(name)) {
                     mCallContact = CallContact.buildUnknown(name, address);
-                    getView().displayNewContactRowWithName(name);
+                    getView().displayContact(mCallContact);
                 } else {
                     getView().hideSearchRow();
                 }
@@ -530,7 +530,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
                         && mLastBlockchainQuery != null
                         && mLastBlockchainQuery.equals(name)) {
                     mCallContact = CallContact.buildUnknown(name, address);
-                    getView().displayNewContactRowWithName(name);
+                    getView().displayContact(mCallContact);
                 } else {
                     getView().hideSearchRow();
                 }

@@ -35,6 +35,11 @@ import android.support.v17.leanback.widget.GuidedAction;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.List;
 
 import cx.ring.R;
@@ -47,6 +52,8 @@ import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.application.RingApplication;
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.tv.camera.CustomCameraActivity;
+import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.CircleTransform;
 
 public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCreationPresenter>
         implements ProfileCreationView {
@@ -59,6 +66,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     private static final int GALLERY = 2;
     private static final int CAMERA = 3;
     private static final int NEXT = 4;
+    private final int DEFAULT_SIZE = 256;
 
     private Bitmap mSourcePhoto;
 
@@ -110,7 +118,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
         String title = getString(R.string.account_create_title);
         String breadcrumb = "";
         String description = getString(R.string.profile_message_warning);
-        Drawable icon = getActivity().getResources().getDrawable(R.drawable.ic_contact_picture);
+        Drawable icon = getActivity().getResources().getDrawable(R.drawable.ic_contact_picture_fallback);
         return new GuidanceStylist.Guidance(title, description, breadcrumb, icon);
     }
 
@@ -194,8 +202,21 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     @Override
     public void photoUpdate(RingAccountViewModel ringAccountViewModel) {
         ((RingAccountViewModelImpl) ringAccountViewModel).setPhoto(mSourcePhoto);
+
         RingAccountViewModelImpl model = (RingAccountViewModelImpl) ringAccountViewModel;
-        getGuidanceStylist().getIconView().setImageBitmap(model.getPhoto());
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.ic_contact_picture_fallback)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false)
+                .transform(new CircleTransform());
+
+        Glide.with(getActivity())
+                .load(model.getPhoto())
+                .apply(options)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(getGuidanceStylist().getIconView());
     }
 
     public long onGuidedActionEditedAndProceed(GuidedAction action) {
@@ -215,9 +236,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     }
 
     public void updatePhoto(Bitmap image) {
-        mSourcePhoto = image;
+        mSourcePhoto = BitmapUtils.createScaledBitmap(image, DEFAULT_SIZE);
         presenter.photoUpdated();
     }
-
-
 }
