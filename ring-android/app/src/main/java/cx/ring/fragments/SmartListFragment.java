@@ -22,6 +22,7 @@ package cx.ring.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,6 +47,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -59,6 +62,7 @@ import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeScannerActivity;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
@@ -183,10 +187,11 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                 );
                 return false;
             case R.id.menu_contact_dial:
-                if (mSearchView.getInputType() == EditorInfo.TYPE_CLASS_PHONE)
+                if (mSearchView.getInputType() == EditorInfo.TYPE_CLASS_PHONE) {
                     mSearchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
-                else
+                } else {
                     mSearchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+                }
                 return true;
             case R.id.menu_scan_qr:
                 presenter.clickQRSearch();
@@ -363,12 +368,29 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void displayNewContactRowWithName(final String name) {
+    public void displayContact(final CallContact contact) {
         getActivity().runOnUiThread(() -> {
             if (mNewContact == null) {
                 return;
             }
-            ((TextView) mNewContact.findViewById(R.id.display_name)).setText(name);
+
+            TextView display_name = mNewContact.findViewById(R.id.display_name);
+            display_name.setText(contact.getRingUsername());
+
+            ImageView photo = mNewContact.findViewById(R.id.photo);
+
+            Drawable contactPicture = AvatarFactory.getAvatar(
+                    getActivity(),
+                    contact.getPhoto(),
+                    contact.getRingUsername(),
+                    contact.getIds().get(0));
+
+            Glide.with(getActivity())
+                    .load(contactPicture)
+                    .apply(AvatarFactory.getGlideOptions(true, false))
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(photo);
+
             mNewContact.setVisibility(View.VISIBLE);
         });
     }

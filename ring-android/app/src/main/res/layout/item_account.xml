@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:layout_height="40dp"
         android:layout_centerVertical="true"
         android:layout_marginEnd="16dp"
-        tools:src="@drawable/ic_contact_picture" />
+        tools:src="@drawable/ic_contact_picture_fallback" />
 
     <TextView
         android:id="@+id/account_alias"

@@ -20,17 +20,19 @@
 package cx.ring.tv.cards.contactrequests;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.view.ContextThemeWrapper;
 
 import cx.ring.R;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.tv.cards.AbstractCardPresenter;
 import cx.ring.tv.cards.Card;
+import cx.ring.tv.model.TVContactRequestViewModel;
 
 public class ContactRequestCardPresenter extends AbstractCardPresenter<ImageCardView> {
+
+    private static final String TAG = ContactRequestCardPresenter.class.getSimpleName();
 
     public ContactRequestCardPresenter(Context context, int resId) {
         super(new ContextThemeWrapper(context, resId));
@@ -43,19 +45,30 @@ public class ContactRequestCardPresenter extends AbstractCardPresenter<ImageCard
 
     @Override
     public void onBindViewHolder(Card card, ImageCardView cardView) {
-        cardView.setTitleText(card.getTitle());
-        cardView.setContentText(card.getDescription());
-        cardView.setBackgroundColor(cardView.getResources().getColor(R.color.color_primary_dark));
-
         ContactRequestCard contact = (ContactRequestCard) card;
-        if (contact.getPhoto() == null) {
-            cardView.setMainImage(getDefaultCardImage());
+
+        TVContactRequestViewModel model = contact.getModel();
+        if (model.getUserName().isEmpty() || model.getDisplayName().equals(model.getUserName())) {
+            cardView.setTitleText(model.getDisplayName());
+            cardView.setContentText("");
         } else {
-            cardView.setMainImage(new BitmapDrawable(cardView.getResources(), BitmapFactory.decodeByteArray(contact.getPhoto(), 0, contact.getPhoto().length)));
+            cardView.setTitleText(model.getUserName());
+            cardView.setContentText(model.getDisplayName());
         }
+
+        cardView.setBackgroundColor(cardView.getResources().getColor(R.color.color_primary_dark));
+        cardView.setMainImage(getCardImage(contact));
     }
 
-    public Drawable getDefaultCardImage() {
-        return getContext().getResources().getDrawable(R.drawable.ic_contact_picture);
+    public Drawable getCardImage(ContactRequestCard contact) {
+        String username = contact.getModel().getDisplayName();
+        if (username == null || username.isEmpty()) {
+            username = contact.getModel().getUserName();
+        }
+
+        return AvatarFactory.getAvatar(getContext(),
+                contact.getPhoto(),
+                username,
+                contact.getModel().getContactId());
     }
 }

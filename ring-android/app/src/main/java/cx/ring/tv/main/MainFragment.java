@@ -14,6 +14,7 @@
 package cx.ring.tv.main;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v17.leanback.app.BackgroundManager;
 import android.support.v17.leanback.app.GuidedStepFragment;
@@ -37,6 +38,7 @@ import java.util.List;
 
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.navigation.RingNavigationViewModel;
 import cx.ring.tv.about.AboutActivity;
 import cx.ring.tv.account.TVAccountExport;
@@ -275,14 +277,19 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                 return;
             }
 
+            List<Photo> photos = vcard.getPhotos();
             FormattedName formattedName = vcard.getFormattedName();
             if (formattedName != null) {
                 titleView.setAlias(formattedName.getValue());
-            }
 
-            List<Photo> photos = vcard.getPhotos();
-            if (!photos.isEmpty() && photos.get(0) != null) {
-                titleView.setCurrentAccountPhoto(photos.get(0).getData());
+                if (!photos.isEmpty() && photos.get(0) != null) {
+                    Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
+                            photos.get(0).getData(),
+                            formattedName.getValue(),
+                            address);
+
+                    titleView.setCurrentAccountPhoto(contactPicture);
+                }
             }
         });
     }
