@@ -22,6 +22,7 @@ package cx.ring.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,6 +47,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -59,6 +64,7 @@ import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeScannerActivity;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
@@ -67,6 +73,7 @@ import cx.ring.smartlist.SmartListPresenter;
 import cx.ring.smartlist.SmartListView;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ActionHelper;
+import cx.ring.utils.CircleTransform;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.viewholders.SmartListViewHolder;
 
@@ -182,10 +189,11 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                 );
                 return false;
             case R.id.menu_contact_dial:
-                if (mSearchView.getInputType() == EditorInfo.TYPE_CLASS_PHONE)
+                if (mSearchView.getInputType() == EditorInfo.TYPE_CLASS_PHONE) {
                     mSearchView.setInputType(EditorInfo.TYPE_CLASS_TEXT);
-                else
+                } else {
                     mSearchView.setInputType(EditorInfo.TYPE_CLASS_PHONE);
+                }
                 return true;
             case R.id.menu_scan_qr:
                 presenter.clickQRSearch();
@@ -362,12 +370,36 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void displayNewContactRowWithName(final String name) {
+    public void displayContact(final CallContact contact) {
         getActivity().runOnUiThread(() -> {
             if (mNewContact == null) {
                 return;
             }
-            ((TextView) mNewContact.findViewById(R.id.display_name)).setText(name);
+
+            TextView display_name = mNewContact.findViewById(R.id.display_name);
+            display_name.setText(contact.getRingUsername());
+
+            ImageView photo = mNewContact.findViewById(R.id.photo);
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .error(R.drawable.ic_contact_picture_fallback)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(false)
+                    .transform(new CircleTransform());
+
+            Drawable contactPicture = AvatarFactory.getAvatar(
+                    getActivity(),
+                    contact.getPhoto(),
+                    contact.getRingUsername(),
+                    contact.getIds().get(0));
+
+            Glide.with(getActivity())
+                    .load(contactPicture)
+                    .apply(options)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(photo);
+
             mNewContact.setVisibility(View.VISIBLE);
         });
     }
