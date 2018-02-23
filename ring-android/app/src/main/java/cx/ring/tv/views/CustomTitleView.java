@@ -24,6 +24,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import cx.ring.R;
 
@@ -101,17 +103,18 @@ public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.
         }
     }
 
-    public void setCurrentAccountPhoto(byte[] photo) {
-        if (photo != null && photo.length > 0) {
-            Glide.with(getContext())
-                    .load(photo)
-                    .error(R.drawable.ic_contact_picture)
-                    .into(mLogoView);
-        } else {
-            Glide.with(getContext())
-                    .load(R.drawable.ic_contact_picture)
-                    .into(mLogoView);
-        }
+    public void setCurrentAccountPhoto(Drawable photo) {
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.ic_contact_picture)
+                .error(R.drawable.ic_contact_picture)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false);
+
+        Glide.with(getContext())
+                .load(photo)
+                .apply(options)
+                .into(mLogoView);
+
         mLogoView.setVisibility(View.VISIBLE);
     }
 

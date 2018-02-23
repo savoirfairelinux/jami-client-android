@@ -41,6 +41,8 @@ import ezvcard.property.Uid;
 
 public class RingNavigationPresenter extends RootPresenter<RingNavigationView> implements Observer<ServiceEvent> {
 
+    private static final String TAG = RingNavigationPresenter.class.getSimpleName();
+
     private AccountService mAccountService;
     private DeviceRuntimeService mDeviceRuntimeService;
     private ConversationFacade mConversationFacade;
@@ -111,6 +113,9 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> i
     }
 
     public String getAlias(Account account) {
+        if (account == null) {
+            throw new IllegalArgumentException();
+        }
         VCard vcard = VCardUtils.loadLocalProfileFromDisk(mDeviceRuntimeService.provideFilesDir(), account.getAccountID());
         FormattedName name = vcard.getFormattedName();
         if (name != null) {
@@ -123,6 +128,9 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> i
     }
 
     public String getAccountAlias(Account account) {
+        if (account == null) {
+            throw new IllegalArgumentException();
+        }
         String alias = getAlias(account);
         return (alias == null) ? account.getAlias() : alias;
     }
