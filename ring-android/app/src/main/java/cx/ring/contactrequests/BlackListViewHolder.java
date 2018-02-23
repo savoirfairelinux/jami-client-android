@@ -19,6 +19,7 @@
  */
 package cx.ring.contactrequests;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
@@ -26,10 +27,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.CallContact;
 import cx.ring.utils.CircleTransform;
 
@@ -51,19 +56,25 @@ public class BlackListViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(final BlackListListeners clickListener, final CallContact contact) {
         byte[] photo = contact.getPhoto();
-        if (photo != null && photo.length > 0) {
-            Glide.with(itemView.getContext())
-                    .load(photo)
-                    .placeholder(R.drawable.ic_contact_picture)
-                    .crossFade()
-                    .transform(new CircleTransform(itemView.getContext()))
-                    .error(R.drawable.ic_contact_picture)
-                    .into(mPhoto);
-        } else {
-            Glide.with(itemView.getContext())
-                    .load(R.drawable.ic_contact_picture)
-                    .into(mPhoto);
-        }
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.ic_contact_picture_fallback)
+                .error(R.drawable.ic_contact_picture_fallback)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false)
+                .transform(new CircleTransform());
+
+        Drawable contactPicture = AvatarFactory.getAvatar(
+                itemView.getContext(),
+                photo,
+                contact.getUsername(),
+                contact.getPhones().get(0).getNumber().getHost());
+
+        Glide.with(itemView.getContext())
+                .load(contactPicture)
+                .apply(options)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(mPhoto);
 
         mDisplayname.setText(contact.getRingUsername());
 

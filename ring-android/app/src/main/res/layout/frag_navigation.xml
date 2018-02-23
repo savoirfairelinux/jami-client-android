@@ -31,7 +31,7 @@
                     android:layout_height="80dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    tools:src="@drawable/ic_contact_picture" />
+                    tools:src="@drawable/ic_contact_picture_fallback" />
 
                 <View
                     android:id="@+id/anchor"

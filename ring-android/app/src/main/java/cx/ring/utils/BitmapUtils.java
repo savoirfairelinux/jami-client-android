@@ -104,4 +104,24 @@ public final class BitmapUtils {
         Log.d(TAG, "reduceBitmap: bitmap size after reduce " + bmp.getByteCount());
         return bmp;
     }
+
+    public static Bitmap createScaledBitmap(Bitmap bitmap, int maxSize) {
+        if (bitmap == null || maxSize < 0) {
+            throw new IllegalArgumentException();
+        }
+        int width = bitmap.getHeight();
+        int height = bitmap.getWidth();
+        if (width != height) {
+            if (width < height) {
+                // portrait
+                height = maxSize;
+                width = (maxSize * bitmap.getWidth()) / bitmap.getHeight();
+            } else {
+                // landscape
+                height = (maxSize * bitmap.getHeight()) / bitmap.getWidth();
+                width = maxSize;
+            }
+        }
+        return Bitmap.createScaledBitmap(bitmap, width, height, false);
+    }
 }

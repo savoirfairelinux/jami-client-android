@@ -16,7 +16,7 @@
         android:layout_marginRight="16dp"
         android:contentDescription="@string/contact_picture_description"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/ic_contact_picture" />
+        app:srcCompat="@drawable/ic_contact_picture_fallback" />
 
     <TextView
         android:id="@+id/display_name"

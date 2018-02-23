@@ -110,7 +110,7 @@ public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresent
 
         if (mPhotoView.getDrawable() == null) {
             if (mSourcePhoto == null) {
-                mSourcePhoto = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.ic_contact_picture);
+                mSourcePhoto = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.ic_contact_picture_fallback);
             }
             mPhotoView.setImageBitmap(BitmapUtils.cropImageToCircle(mSourcePhoto));
         }

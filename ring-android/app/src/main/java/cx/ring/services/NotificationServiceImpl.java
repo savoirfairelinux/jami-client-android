@@ -358,8 +358,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 Photo photo = photos.get(0);
                 messageNotificationBuilder.setLargeIcon(BitmapUtils.bytesToBitmap(photo.getData()));
             } else {
-                Bitmap bmp;
-                bmp = BitmapFactory.decodeResource(res, R.drawable.ic_contact_picture);
+                Bitmap bmp = BitmapFactory.decodeResource(res, R.drawable.ic_contact_picture_fallback);
                 if (bmp != null) {
                     messageNotificationBuilder.setLargeIcon(Bitmap.createScaledBitmap(bmp, width, height, false));
                 }
