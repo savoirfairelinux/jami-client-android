@@ -21,6 +21,7 @@ package cx.ring.tv.call;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +29,7 @@ import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -40,6 +42,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.skyfishjy.library.RippleBackground;
 
 import java.util.Locale;
@@ -49,6 +53,7 @@ import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
@@ -319,20 +324,29 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @Override
     public void updateContactBubble(@NonNull final CallContact contact) {
         getActivity().runOnUiThread(() -> {
-            byte[] photo = contact.getPhoto();
-            if (photo != null && photo.length > 0) {
-                Glide.with(getActivity())
-                        .load(photo)
-                        .transform(new CircleTransform(getActivity()))
-                        .error(R.drawable.ic_contact_picture)
-                        .into(contactBubbleView);
-            } else {
-                Glide.with(getActivity())
-                        .load(R.drawable.ic_contact_picture)
-                        .into(contactBubbleView);
-            }
-
             String username = contact.getRingUsername();
+            String ringId = contact.getIds().get(0);
+
+            Log.d(TAG, "updateContactBubble: username=" + username + ", ringId=" + ringId);
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_contact_picture_fallback)
+                    .error(R.drawable.ic_contact_picture_fallback)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(false)
+                    .transform(new CircleTransform());
+
+            Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
+                    contact.getPhoto(),
+                    username,
+                    ringId);
+
+            Glide.with(getActivity())
+                    .load(contactPicture)
+                    .apply(AvatarFactory.getGlideOptions(true, true))
+                    .into(contactBubbleView);
+
             String displayName = contact.getDisplayName();
             boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
             boolean firstShow = contactBubbleTxt.getText() != null && contactBubbleTxt.getText().length() > 0;

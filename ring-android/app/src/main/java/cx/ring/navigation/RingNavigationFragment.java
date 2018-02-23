@@ -23,8 +23,8 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -32,7 +32,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +44,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
@@ -55,6 +56,7 @@ import cx.ring.account.AccountWizardActivity;
 import cx.ring.adapters.ContactDetailsTask;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseFragment;
@@ -62,7 +64,6 @@ import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
-import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 
 public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter> implements NavigationAdapter.OnNavigationItemClicked,
@@ -235,28 +236,26 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         }
     }
 
-    public void updateUserView(VCard vcard) {
+    public void updateUserView(final VCard vcard, final Account account) {
         if (getActivity() == null || vcard == null) {
+            Log.e(TAG, "Not able to update navigation view");
             return;
         }
 
-        if (vcard != null && !vcard.getPhotos().isEmpty()) {
-            Photo tmp = vcard.getPhotos().get(0);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(tmp.getData(), 0, tmp.getData().length);
-            mUserImage.setImageBitmap(BitmapUtils.cropImageToCircle(bitmap));
-        } else {
-            mUserImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null));
-        }
+        String username = presenter.getAccountAlias(account);
+        String ringId = account.getUri();
+        Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
+                vcard,
+                username,
+                ringId);
 
-        if (vcard != null) {
-            FormattedName name = vcard.getFormattedName();
-            if (name != null) {
-                String name_value = name.getValue();
-                if (!TextUtils.isEmpty(name_value)) {
-                    mSelectedAccountAlias.setText(name_value);
-                }
-            }
-        }
+        Log.d(TAG, "updateUserView: username=" + username + ", ringId=" + ringId);
+
+        Glide.with(getActivity())
+                .load(contactPicture)
+                .apply(AvatarFactory.getGlideOptions(true, true))
+                .into(mUserImage);
+
         Log.d(TAG, "updateUserView: User did change, updating user view.");
     }
 
@@ -324,7 +323,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture, null)) {
+            if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture_fallback, null)) {
                 //FIXME: Reduce the bitmap but not use it.
                 BitmapUtils.reduceBitmap(mSourcePhoto, VCardUtils.VCARD_PHOTO_SIZE);
                 mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -383,7 +382,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
     public void showViewModel(final RingNavigationViewModel viewModel) {
         RingApplication.uiHandler.post(() -> {
             mAccountAdapter.replaceAll(viewModel.getAccounts());
-            updateUserView(viewModel.getVcard(getActivity().getFilesDir()));
+            updateUserView(viewModel.getVcard(getActivity().getFilesDir()), viewModel.getAccount());
             updateSelectedAccountView(viewModel.getAccount());
 
             if (viewModel.getAccounts().isEmpty()) {
