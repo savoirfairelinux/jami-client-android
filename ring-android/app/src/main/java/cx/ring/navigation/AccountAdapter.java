@@ -21,6 +21,7 @@ package cx.ring.navigation;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +41,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
+import cx.ring.contacts.ContactPictureFactory;
 import cx.ring.model.Account;
+import cx.ring.model.Uri;
 import cx.ring.utils.CircleTransform;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
@@ -175,25 +181,40 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public void update(final Account account) {
             final Context context = itemView.getContext();
             VCard vcard = VCardUtils.loadLocalProfileFromDisk(context.getFilesDir(), account.getAccountID());
-            if (!vcard.getPhotos().isEmpty()) {
-                Glide.with(context)
-                        .load(vcard.getPhotos().get(0).getData())
-                        .placeholder(R.drawable.ic_contact_picture)
-                        .crossFade()
-                        .transform(new CircleTransform(context))
-                        .error(R.drawable.ic_contact_picture)
-                        .into(photo);
-            } else {
-                Glide.with(context)
-                        .load(R.drawable.ic_contact_picture)
-                        .into(photo);
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_contact_picture)
+                    .error(R.drawable.ic_contact_picture)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(false)
+                    .transform(new CircleTransform());
+
+
+            byte[] contactPhoto = null;
+            if (vcard != null && !vcard.getPhotos().isEmpty()) {
+                contactPhoto = vcard.getPhotos().get(0).getData();
             }
+
+            Uri uri = new Uri(account.getUsername());
+            Drawable accountPicture = ContactPictureFactory.getContactPicture(
+                    context,
+                    contactPhoto,
+                    mRingNavigationPresenter.getAccountAlias(account),
+                    uri.getHost());
+
+            Glide.with(context)
+                    .load(accountPicture)
+                    .apply(options)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(photo);
+
             alias.setText(mRingNavigationPresenter.getAccountAlias(account));
             host.setText(mRingNavigationPresenter.getUri(account, context.getText(R.string.account_type_ip2ip)));
             itemView.setEnabled(account.isEnabled());
             disabled_flag.setVisibility(account.isEnabled() ? View.GONE : View.VISIBLE);
             if (account.isEnabled()) {
-                this.alias.setTextColor(context.getResources().getColor(R.color.text_color_primary));
+                alias.setTextColor(context.getResources().getColor(R.color.text_color_primary));
                 if (!account.isActive()) {
                     error.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
                     error.setColorFilter(Color.BLACK);
@@ -218,7 +239,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     loading.setVisibility(View.GONE);
                 }
             } else {
-                this.alias.setTextColor(context.getResources().getColor(R.color.text_color_secondary));
+                alias.setTextColor(context.getResources().getColor(R.color.text_color_secondary));
                 error.setVisibility(View.GONE);
                 loading.setVisibility(View.GONE);
             }
