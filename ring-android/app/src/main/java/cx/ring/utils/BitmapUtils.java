@@ -27,6 +27,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -103,5 +105,50 @@ public final class BitmapUtils {
 
         Log.d(TAG, "reduceBitmap: bitmap size after reduce " + bmp.getByteCount());
         return bmp;
+    }
+
+    public static Bitmap createScaledBitmap(Bitmap bitmap, int maxSize) {
+        if (bitmap == null || maxSize < 0) {
+            throw new IllegalArgumentException();
+        }
+        int width = bitmap.getHeight();
+        int height = bitmap.getWidth();
+        if (width != height) {
+            if (width < height) {
+                // portrait
+                height = maxSize;
+                width = (maxSize * bitmap.getWidth()) / bitmap.getHeight();
+            } else {
+                // landscape
+                height = (maxSize * bitmap.getHeight()) / bitmap.getWidth();
+                width = maxSize;
+            }
+        }
+        return Bitmap.createScaledBitmap(bitmap, width, height, false);
+    }
+
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        if (drawable == null) {
+            throw new IllegalArgumentException();
+        }
+
+        Bitmap bitmap;
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            if (bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap();
+            }
+        }
+
+        if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888);
+        } else {
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
     }
 }
