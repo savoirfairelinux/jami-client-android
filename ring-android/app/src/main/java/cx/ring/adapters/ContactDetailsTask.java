@@ -219,14 +219,14 @@ public class ContactDetailsTask implements Runnable {
             }
 
             if (photoBmp == null) {
-                photoBmp = decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture, mViewWidth, mViewHeight);
+                photoBmp = decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture_fallback, mViewWidth, mViewHeight);
             }
 
             mContact.setPhoto(BitmapUtils.bitmapToBytes(photoBmp));
             externalBMP = BitmapUtils.cropImageToCircle(photoBmp);
             photoBmp.recycle();
         } else {
-            externalBMP = decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture, mViewWidth, mViewHeight);
+            externalBMP = decodeSampledBitmapFromResource(mContext.getResources(), R.drawable.ic_contact_picture_fallback, mViewWidth, mViewHeight);
         }
 
         synchronized (mCallbacks) {
