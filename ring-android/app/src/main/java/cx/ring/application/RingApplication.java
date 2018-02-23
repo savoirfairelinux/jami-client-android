@@ -163,7 +163,7 @@ public abstract class RingApplication extends Application {
 
                 if (mPreferencesService.getUserSettings().isAllowPushNotifications()) {
                     String token = getPushToken();
-                    Log.w(TAG, "Setting Firebase push token: " + token);
+                    Log.d(TAG, "bootstrapDaemon: setting Firebase push token: " + token);
                     Ringservice.setPushNotificationToken(token);
                 } else {
                     Ringservice.setPushNotificationToken("");

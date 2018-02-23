@@ -1206,7 +1206,8 @@ public class AccountService extends Observable {
                 new Callable<Void>() {
                     @Override
                     public Void call() throws Exception {
-                        Log.i(TAG, "setPushNotificationToken() " + pushNotificationToken);
+                        Log.i(TAG, "setPushNotificationToken()");
+                        Log.d(TAG, "setPushNotificationToken: pushNotificationToken=" + pushNotificationToken);
                         Ringservice.setPushNotificationToken(pushNotificationToken);
                         return null;
                     }

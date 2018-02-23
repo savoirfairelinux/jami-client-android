@@ -26,15 +26,8 @@ ant.properties
 CallManager.java
 CallManagerCallback.java
 ConfigurationManager.java
-ConfigurationCallback.java
 ManagerImpl.java
 SWIGTYPE*
-StringMap.java
-StringVect.java
-IntVect.java
-IntegerMap.java
-Callback.java
-VectMap.java
 *.o
 tests/bin
 /.gradle/
@@ -43,5 +36,4 @@ tests/bin
 /libringclient/build/
 /libringclient/src/main/java/cx/ring/daemon/*
 /build/
-/app/google-services.json
-/app/src/debug/google-services.json
+**/google-services.json
