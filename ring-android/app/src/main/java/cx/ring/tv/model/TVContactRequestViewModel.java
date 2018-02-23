@@ -103,6 +103,7 @@ public class TVContactRequestViewModel implements Parcelable {
         return m instanceof TVContactRequestViewModel && contactId.equals(((TVContactRequestViewModel) m).contactId);
     }
 
+    @Override
     public int describeContents() {
         return 0;
     }
