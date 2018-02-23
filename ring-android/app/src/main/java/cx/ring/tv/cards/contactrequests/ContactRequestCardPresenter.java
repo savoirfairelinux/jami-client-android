@@ -56,6 +56,6 @@ public class ContactRequestCardPresenter extends AbstractCardPresenter<ImageCard
     }
 
     public Drawable getDefaultCardImage() {
-        return getContext().getResources().getDrawable(R.drawable.ic_contact_picture);
+        return getContext().getResources().getDrawable(R.drawable.ic_account_box);
     }
 }
