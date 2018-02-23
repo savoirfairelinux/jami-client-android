@@ -18,6 +18,7 @@
  */
 package cx.ring.contactrequests;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -25,10 +26,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
 import cx.ring.R;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.utils.CircleTransform;
 import ezvcard.VCard;
 
@@ -60,25 +65,31 @@ public class ContactRequestsAdapter extends RecyclerView.Adapter<ContactRequestV
     public void onBindViewHolder(ContactRequestViewHolder holder, int position) {
         final PendingContactRequestsViewModel viewModel = mContactRequestsViewModels.get(position);
         VCard vcard = viewModel.getVCard();
-        if (vcard != null) {
-            if (!vcard.getPhotos().isEmpty()) {
-                Glide.with(holder.itemView.getContext())
-                        .load(vcard.getPhotos().get(0).getData())
-                        .placeholder(R.drawable.ic_contact_picture)
-                        .crossFade()
-                        .transform(new CircleTransform(holder.itemView.getContext()))
-                        .error(R.drawable.ic_contact_picture)
-                        .into(holder.mPhoto);
-            } else {
-                Glide.with(holder.itemView.getContext())
-                        .load(R.drawable.ic_contact_picture)
-                        .into(holder.mPhoto);
-            }
-        } else {
-            Glide.with(holder.itemView.getContext())
-                    .load(R.drawable.ic_contact_picture)
-                    .into(holder.mPhoto);
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.ic_contact_picture)
+                .error(R.drawable.ic_contact_picture)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false)
+                .transform(new CircleTransform());
+
+        byte[] contactPhoto = null;
+        if (vcard != null && !vcard.getPhotos().isEmpty()) {
+            contactPhoto = vcard.getPhotos().get(0).getData();
         }
+
+        Drawable contactPicture = AvatarFactory.getAvatar(
+                holder.itemView.getContext(),
+                contactPhoto,
+                viewModel.getUsername(),
+                viewModel.getUuid());
+
+        Glide.with(holder.itemView.getContext())
+                .load(contactPicture)
+                .apply(options)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(holder.mPhoto);
 
         String fullname = viewModel.getFullname();
         String username = viewModel.getUsername();
