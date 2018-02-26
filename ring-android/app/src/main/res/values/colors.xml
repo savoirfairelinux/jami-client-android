@@ -4,10 +4,6 @@
     <color name="color_primary_light">#3ac0d2</color>
     <color name="color_primary_dark">#004C60</color>
 
-    <color name="action_blue">#004C60</color>
-
-    <!-- SFL colors-->
-
     <color name="darker_gray">#aaaaaa</color>
     <color name="lighter_gray">#d3d3d3</color>
     <color name="light">#eee</color>
@@ -21,19 +17,10 @@
 
     <color name="transparent_light">#AAFFFFFF</color>
 
-    <!-- A light Holo shade of blue -->
-    <!-- A light Holo shade of green -->
     <!-- A light Holo shade of red -->
     <color name="holo_red_light">#ffff4444</color>
-    <!-- A dark Holo shade of blue -->
     <!-- A dark Holo shade of green -->
     <color name="holo_green_dark">#ff669900</color>
-    <!-- A dark Holo shade of red -->
-    <color name="holo_red_dark">#ffcc0000</color>
-    <!-- A Holo shade of purple -->
-    <!-- A light Holo shade of orange -->
-    <!-- A dark Holo shade of orange -->
-    <!-- A really bright Holo shade of blue -->
 
     <color name="transparent_grey">#AACCCCCC</color>
     <color name="transparent_dark_grey">#88424242</color>

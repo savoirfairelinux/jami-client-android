@@ -53,12 +53,6 @@
         <item name="android:textColor">@color/text_color_secondary</item>
     </style>
 
-    <style name="ActionEditText" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlNormal">@color/color_primary_light</item>
-        <item name="colorControlActivated">@color/color_primary_light</item>
-        <item name="colorControlHighlight">@color/color_primary_light</item>
-    </style>
-
     <style name="Wizard" parent="Theme.AppCompat">
         <item name="colorAccent">@color/color_primary_light</item>
         <item name="colorPrimary">@color/color_primary_dark</item>
@@ -95,10 +89,6 @@
 
     <style name="Widget.Ring.Leanback.FirstStepGuidanceIconStyle" parent="Widget.Leanback.GuidanceIconStyle">
         <item name="android:background">@color/color_primary_light</item>
-    </style>
-
-    <style name="Widget.Ring.Leanback.SecondStepGuidanceIconStyle" parent="Widget.Leanback.GuidanceIconStyle">
-        <item name="android:padding">24dp</item>
     </style>
 
     <style name="Theme.Ring.Leanback.GuidedStep" parent="Theme.Leanback.GuidedStep">
@@ -158,9 +148,6 @@
 
     <style name="ContactCompleteCardViewStyle" parent="DefaultCardStyle">
         <item name="lbImageCardViewType">Title|Content</item>
-    </style>
-    <style name="ContactCompleteCardOnlineViewStyle" parent="DefaultCardStyle">
-        <item name="lbImageCardViewType">Title|Content|IconOnRight</item>
     </style>
 
     <style name="IconCardImageStyle" parent="Widget.Leanback.ImageCardView.ImageStyle">
