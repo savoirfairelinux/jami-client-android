@@ -50,7 +50,7 @@ RUN (while sleep 1; do echo "y"; done) | sdkmanager --update
 
 # Android SDK libraries, NDK
 ENV ANDROID_DEPS=\
-'build-tools;26.0.3 \
+'build-tools;27.0.3 \
  platforms;android-27 \
  extras;android;m2repository \
  extras;google;m2repository \
