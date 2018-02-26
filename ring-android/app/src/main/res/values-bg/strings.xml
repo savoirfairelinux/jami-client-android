@@ -142,7 +142,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Изпращане</string>
   <string name="send_request_title">Изпращане на заявка за свързване с нов контакт</string>
-  <string name="send_request_msg">Трябва да изпратите заявка за свързване с нов контакт, за да можете да комуникирате с този потребител. Докато заявката Ви не бъде приета, ще можете да изпращате съобщения, но потребителят няма да може да ги чете.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 блокирани контакти</string>
   <!--Smartlist-->

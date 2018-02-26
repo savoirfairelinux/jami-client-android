@@ -32,6 +32,7 @@
   <string name="menu_item_home">Kreu</string>
   <string name="menu_item_contact_request">Kërkesa kontakti</string>
   <string name="menu_item_accounts">Administroni llogari</string>
+  <string name="menu_item_account">Administroni llogari</string>
   <string name="menu_item_settings">Rregullime</string>
   <string name="menu_item_share">Ndaji kontaktet e mia me të tjerët</string>
   <string name="menu_item_about">Mbi Ring-un</string>
@@ -61,6 +62,11 @@
   <string name="notif_channel_calls">Thirrje</string>
   <string name="notif_channel_messages">Mesazhe</string>
   <string name="notif_channel_requests">Kërkesa</string>
+  <string name="notif_channel_file_transfer">Shpërngulje kartelash</string>
+  <string name="notif_mark_as_read">Vëri shenjë si të lexuar</string>
+  <string name="notif_incoming_file_transfer_title">Shpërngulje kartele ardhëse</string>
+  <string name="notif_incoming_file_transfer">Dikush dëshiron t’ju dërgojë një kartelë</string>
+  <string name="action_open">Hape</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ju:</string>
   <string name="action_call_hangup">Mbylle thirrjen</string>
@@ -85,6 +91,7 @@
   <string name="send_message">Dërgoje mesazhin</string>
   <string name="message_sending">Po dërgohet mesazhi…</string>
   <string name="time_just_now">Mu tani</string>
+  <string name="send_file">Dërgo kartelë</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Leje për kamerën</string>
   <string name="permission_dialog_camera_message">Që të funksionojnë, bisedat me video lypin doemos leje për kamerën Ju lutemi, shihni mundësinë e akordimit të saj.</string>
@@ -144,7 +151,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Dërgoje</string>
   <string name="send_request_title">Dërgoni një kërkesë kontakti</string>
-  <string name="send_request_msg">Që të komunikoni me këtë përdorues duhet të dërgoni një kërkesë kontakti. Për sa kohë që kontakti juaj s\’e ka pranuar kërkesën, mund të dërgoni mesazhe, por kontakti juaj s’\i lexon dot.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 kontakte të bllokuar</string>
   <!--Smartlist-->
@@ -154,5 +160,20 @@
   <string name="tv_contact_row_header">Kontakte</string>
   <string name="gallery_error_title">S\’u gjet aplikacion galerie</string>
   <string name="gallery_error_message">Në këtë pajisje s\’u gjet aplikacion për të hapur Galerinë</string>
+  <string name="generic_error">Ndodhi një gabim i panjohur</string>
   <!--File Transfer-->
+  <string name="invalid_file">Kartelë e pavlefshme</string>
+  <string name="not_able_to_write_file">S’arrihet të shkruhet kartelë</string>
+  <string name="file_transfer_status_created">po gatitet shpërngulja</string>
+  <string name="file_transfer_status_unsupported">e pambuluar</string>
+  <string name="file_transfer_status_wait_peer_acceptance">po pritet për pranim nga ana tjetër</string>
+  <string name="file_transfer_status_wait_host_acceptance">po pritet për pranim nga strehuesi</string>
+  <string name="file_transfer_status_ongoing">në punë e sipër</string>
+  <string name="file_transfer_status_finished">e përfunduar</string>
+  <string name="file_transfer_status_closed_by_host">mbyllur nga strehuesi</string>
+  <string name="file_transfer_status_closed_by_peer">mbyllur nga ana tjetër</string>
+  <string name="file_transfer_status_invalid_pathname">emër i pavlefshëm shtegu</string>
+  <string name="file_transfer_status_unjoinable_peer">ortak që s’futet dot</string>
+  <string name="file_saved_in">Kartela u ruajt te %s</string>
+  <string name="no_space_left_on_device">S’ka më hapësirë në pajisje</string>
 </resources>

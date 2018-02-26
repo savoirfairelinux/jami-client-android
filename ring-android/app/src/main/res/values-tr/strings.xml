@@ -142,7 +142,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Gönder</string>
   <string name="send_request_title">Bir ileteşem isteği gönder</string>
-  <string name="send_request_msg">Bu kullanıcıyla iletişime geçmek için iletişim isteği göndermelisiniz. Kişiniz bu isteği kabul etmediği sürece, siz ona ileti gönderebilirsiniz fakat o bunları okuyamaz.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 engellenmiş kişi</string>
   <!--Smartlist-->

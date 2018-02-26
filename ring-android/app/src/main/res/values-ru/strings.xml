@@ -144,7 +144,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Отправить</string>
   <string name="send_request_title">Отправить запрос на добавление в контакты</string>
-  <string name="send_request_msg">Вы должны отправить запрос на добавление в контакты, чтобы связаться с этим пользователем. Пока ваш контакт не примет запрос, вы можете отправлять сообщения, но ваш контакт не сможет их прочитать.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 заблокированных контактов</string>
   <!--Smartlist-->

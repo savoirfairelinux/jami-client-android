@@ -152,7 +152,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Versturen</string>
   <string name="send_request_title">Contactverzoek versturen</string>
-  <string name="send_request_msg">Je moet een contactverzoek versturen om met deze gebruiker te communiceren. Je kunt berichten versturen, maar zolang de ander het verzoek niet aanvaardt zal hij/zij deze niet kunnen lezen.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 geblokkeerde contacten</string>
   <!--Smartlist-->
@@ -177,4 +176,5 @@
   <string name="file_transfer_status_invalid_pathname">ongeldige padnaam</string>
   <string name="file_transfer_status_unjoinable_peer">peer kan niet deelnemen</string>
   <string name="file_saved_in">Bestand opgeslagen in %s</string>
+  <string name="no_space_left_on_device">Geen vrije ruimte resterend op apparaat</string>
 </resources>

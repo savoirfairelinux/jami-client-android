@@ -137,7 +137,7 @@ Vous pouvez modifier le compte plus tard.</string>
   <string name="account_device_added_title">Appareil ajouté</string>
   <string name="account_device_added_message">Le compte Ring a été correctement configuré sur cet appareil.</string>
   <string name="account_device_updated_title">Appareil mis à jour</string>
-  <string name="account_device_updated_message">Mise à jour de votre compte Ring réalisée avec succès. </string>
+  <string name="account_device_updated_message">Mise à jour de votre compte Ring effectuée avec succès. </string>
   <string name="account_cannot_be_updated_message">La mise à jour de l\'appareil associé à ce compte a échouée. S.v.p. vérifier votre mot de passe.</string>
   <string name="account_sip_success_title">Compte SIP enregistré</string>
   <string name="account_sip_success_message">Compte SIP enregistré avec succès</string>

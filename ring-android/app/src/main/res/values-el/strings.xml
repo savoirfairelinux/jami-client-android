@@ -138,7 +138,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Αποστολή</string>
   <string name="send_request_title">Αποστολή αίτημα επαφής</string>
-  <string name="send_request_msg">Αποστείλετε ένα αίτημα επαφής ώστε να μπορέσετε να επικοινωνήσετε με αυτόν τον χρήστη. Ωσότου το αίτημα σας να γίνει αποδεκτό, μπορείτε να αποστείλετε μηνύματα αλλά ο χρήστης δεν θα μπορεί να τα διαβάσει.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 Μπλοκαρισμένες επαφές</string>
   <!--Smartlist-->

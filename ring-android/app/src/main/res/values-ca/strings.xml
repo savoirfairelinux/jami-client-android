@@ -140,7 +140,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
   <string name="send_request_title">Envia una petició de contacte</string>
-  <string name="send_request_msg">Heu d\'enviar una petició de contacte per a comunicar-vos amb aquest usuari. Mentre l\'usuari no hagi acceptat la petició, podreu enviar-li missatges però el vostre contacte no els podrà llegir.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 contactes bloquejats</string>
   <!--Smartlist-->

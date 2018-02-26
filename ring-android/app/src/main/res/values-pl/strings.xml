@@ -147,7 +147,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Wyślij</string>
   <string name="send_request_title">Wyślij zaproszenie</string>
-  <string name="send_request_msg">Aby komunikować się z tym użytkownikiem, musisz wysłać mu zaproszenie. Dopóki twój kontakt nie zaakceptuje zaproszenia nie będzie mógł odczytać wiadomości, choć ty możesz je wysyłać.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 zablokowanych kontaktów</string>
   <!--Smartlist-->

@@ -2,7 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Commentaire</string>
-  <string name="report">&lt;u&gt;Envoyez nous un courriel&lt;/u&gt;</string>
+  <string name="report">&lt;u&gt;Envoyez-nous un courriel&lt;/u&gt;</string>
   <string name="section_license">Licence</string>
   <string name="sponsor_section">Ring est un logiciel libre développé et soutenu par</string>
   <string name="copyright_section">Copyright</string>
@@ -10,7 +10,7 @@
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Application d\'envoi de courriel non-trouvée, installez-en un et renvoyez-nous votre rapport</string>
   <string name="no_browser_app_installed">Aucun navigateur internet trouvé, installez en un pour afficher cette page</string>
-  <string name="email_chooser_title">Envoi du courriel à travers ...</string>
+  <string name="email_chooser_title">Envoi du courriel en utilisant ...</string>
   <string name="website_chooser_title">Voir le site web avec...</string>
   <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations, 
 &lt;u&gt;GNU General Public License version 3 or later&lt;/u&gt;</string>
@@ -152,7 +152,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Envoyer</string>
   <string name="send_request_title">Envoyer une invitation</string>
-  <string name="send_request_msg">Pour communiquer avec cet utilisateur il est nécessaire de lui envoyer une invitation. Tant que cette personne n\'a pas accepté votre invitation, vous pouvez lui envoyer des messages mais ils ne pourront être lu.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Aucun contact bloqué</string>
   <!--Smartlist-->
@@ -177,4 +176,5 @@
   <string name="file_transfer_status_invalid_pathname">Chemin d\'accès invalide</string>
   <string name="file_transfer_status_unjoinable_peer">interlocuteur injoignable</string>
   <string name="file_saved_in">Fichier sauvegardé dans %s</string>
+  <string name="no_space_left_on_device">Espace de stockage insuffisant sur l\'appareil</string>
 </resources>

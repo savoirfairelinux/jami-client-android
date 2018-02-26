@@ -140,7 +140,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">发送</string>
   <string name="send_request_title">发送联系人请求</string>
-  <string name="send_request_msg">要与该用户通信，您必须先发送联系人请求。如果您的请求未被通过，您发送的消息将无法被对方阅读。</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0个屏蔽的联系人</string>
   <!--Smartlist-->

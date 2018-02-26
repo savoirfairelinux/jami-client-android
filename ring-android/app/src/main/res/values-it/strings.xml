@@ -152,7 +152,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Mandare</string>
   <string name="send_request_title">Invia una richiesta di contatto</string>
-  <string name="send_request_msg">Devi inviare una richiesta di contatto per comunicare con questo utente. Finché il tuo contatto non avrà accettato la richiesta, puoi inviare messaggi ma il tuo contatto non potrà leggerli.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 contatti bloccati</string>
   <!--Smartlist-->

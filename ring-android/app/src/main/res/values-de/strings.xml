@@ -147,7 +147,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Senden</string>
   <string name="send_request_title">Sende eine Kontaktanfrage</string>
-  <string name="send_request_msg">Sie müssen eine Kontaktanfrage senden, um mit diesem Benutzer zu kommunizieren. Solange Ihr Kontakt die Anforderung nicht akzeptiert hat, können Sie Nachrichten senden, aber Ihr Kontakt kann diese nicht lesen.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 gesperrte Kontakte</string>
   <!--Smartlist-->

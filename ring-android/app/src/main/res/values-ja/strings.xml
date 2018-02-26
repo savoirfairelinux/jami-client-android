@@ -141,7 +141,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">送信</string>
   <string name="send_request_title">連絡先リクエストを送信</string>
-  <string name="send_request_msg">このユーザーと通信するために連絡先のリクエストを送信する必要があります。 連絡先がリクエストを受け入れない限り、メッセージは送信できますが、連絡先はメッセージを読むことはできません。</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 のブロックした連絡先</string>
   <!--Smartlist-->
