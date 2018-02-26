@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -254,16 +255,18 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         boolean shouldSeparateByDetails = this.shouldSeparateByDetails(ht, position);
         boolean isConfigSameAsPreviousMsg = this.isMessageConfigSameAsPrevious(ht, position);
 
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.ic_contact_picture)
+                .error(R.drawable.ic_contact_picture)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false)
+                .transform(new CircleTransform());
+
         if (ht.isIncoming() && !isConfigSameAsPreviousMsg) {
             Glide.with(convViewHolder.itemView.getContext())
-                    .fromBytes()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .skipMemoryCache(false)
                     .load(mPhoto)
-                    .crossFade()
-                    .placeholder(R.drawable.ic_contact_picture)
-                    .transform(new CircleTransform(convViewHolder.itemView.getContext()))
-                    .error(R.drawable.ic_contact_picture)
+                    .apply(options)
                     .into(convViewHolder.mPhoto);
         }
 

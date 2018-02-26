@@ -26,6 +26,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,17 +54,24 @@ public class BlackListViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(final BlackListListeners clickListener, final CallContact contact) {
         byte[] photo = contact.getPhoto();
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.ic_contact_picture)
+                .error(R.drawable.ic_contact_picture)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false)
+                .transform(new CircleTransform());
+
         if (photo != null && photo.length > 0) {
             Glide.with(itemView.getContext())
                     .load(photo)
-                    .placeholder(R.drawable.ic_contact_picture)
-                    .crossFade()
-                    .transform(new CircleTransform(itemView.getContext()))
-                    .error(R.drawable.ic_contact_picture)
+                    .apply(options)
+                    .transition(DrawableTransitionOptions.withCrossFade())
                     .into(mPhoto);
         } else {
             Glide.with(itemView.getContext())
                     .load(R.drawable.ic_contact_picture)
+                    .apply(options)
                     .into(mPhoto);
         }
 
