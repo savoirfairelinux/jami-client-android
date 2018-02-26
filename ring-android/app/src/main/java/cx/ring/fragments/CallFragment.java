@@ -36,7 +36,6 @@ import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.Rational;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,6 +51,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.skyfishjy.library.RippleBackground;
 
 import java.util.ArrayList;
@@ -474,16 +475,24 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     @Override
     public void updateContactBubble(@NonNull final CallContact contact) {
         getActivity().runOnUiThread(() -> {
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_contact_picture)
+                    .error(R.drawable.ic_contact_picture)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(false)
+                    .transform(new CircleTransform());
+
             byte[] photo = contact.getPhoto();
             if (photo != null && photo.length > 0) {
                 Glide.with(getActivity())
                         .load(photo)
-                        .transform(new CircleTransform(getActivity()))
-                        .error(R.drawable.ic_contact_picture)
+                        .apply(options)
                         .into(contactBubbleView);
             } else {
                 Glide.with(getActivity())
                         .load(R.drawable.ic_contact_picture)
+                        .apply(options)
                         .into(contactBubbleView);
             }
 
