@@ -25,7 +25,7 @@
         Do të jeni në gjendje vetëm të bëni dhe të merrni thirrje ip të drejtpërdrejta.
         Llogarinë tuaj mund ta përpunoni më vonë</string>
   <string name="account_type_ip2ip">Llogari IP</string>
-  <string name="help_ring">Një llogari Ring ju lejon të lidheni në mënyrë të sigurt me njerëz, sipas modelit tek për te, përmes një rrjeti tërësisht të shpërndarë.</string>
+  <string name="help_ring">Një llogari Ring ju lejon të lidheni në mënyrë të sigurt me njerëz, sipas modelit tek për tek, përmes një rrjeti tërësisht të shpërndarë.</string>
   <string name="help_sip_title">Shtoni llogarinë tuaj SIP</string>
   <string name="help_sip">Formësoni një llogari SIP ekzistuese.</string>
   <string name="create_sip_account">Shtoni llogari SIP</string>
@@ -79,7 +79,11 @@
   <string name="account_turn_username_label">Emër përdoruesi TURN</string>
   <string name="account_turn_password_label">Fjalëkalim TURN</string>
   <string name="account_published_same_as_local_label">Publikuar njësoj si vendorja</string>
+  <string name="account_published_port_label">Portë Publikimi</string>
   <string name="account_published_address_label">Adresë e Publikuar</string>
+  <string name="account_proxy_label">Ndërmjetës DHT</string>
+  <string name="account_proxy_enable_label">Përdor ndërmjetës DHT</string>
+  <string name="account_proxy_server_label">Adresë ndërmjetësi DHT</string>
   <!--Security Details-->
   <string name="account_credentials_label">Kredenciale</string>
   <string name="account_credentials_edit">Përpunoni kredenciale</string>
@@ -143,7 +147,9 @@
   <string name="account_new_button">Krijoni një llogari Ring</string>
   <string name="account_link_export_button">Lidhni te kjo llogari një pajisje tjetër</string>
   <string name="account_link_export_info">Që të përdorni këtë llogari në pajisje të tjera, së pari duhet t\ia ekspozoni atë Ring-ut. Kështu do të prodhohet një kod PIN që duhet ta jepni te pajisja e re për të rregulluar llogarinë. PIN-i vlen për 10 minuta.</string>
+  <string name="account_start_export_button">Prodho PIN</string>
   <string name="account_end_export_button">mbylle</string>
+  <string name="account_end_export_infos">PIN-i juaj është:\n\n%%\n\nQë të plotësohet procesi, lypset të hapni Ring-un në pajisjen e re. Krijoni një llogari të re përmes \"Lidhe këtë pajisje te një llogari\". PIN-i juaj është i vlefshëm për 10 minuta.</string>
   <string name="account_link_export_info_light">Që të përdorni këtë llogari në pajisje të tjera, së pari duhet t\ia ekspozoni atë Ring-ut. Kështu do të prodhohet një kod PIN që duhet ta jepni te pajisja e re për të rregulluar llogarinë. PIN-i vlen për 10 minuta.</string>
   <string name="account_export_title">Shtoni pajisje</string>
   <!--Name registration-->
@@ -168,6 +174,7 @@
   <string name="account_link_title">Lidhe këtë pajisje</string>
   <string name="account_sip_cannot_be_registered">S\’regjistrohet dot llogaria</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Përpunoni profilin tuaj</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">Jepni fjalëkalimin që ta ripohoni</string>
   <string name="enter_password">Jepni fjalëkalimin</string>

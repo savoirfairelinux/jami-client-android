@@ -151,7 +151,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">傳送</string>
   <string name="send_request_title">傳送聯絡人請求</string>
-  <string name="send_request_msg">您必須傳送聯絡人請求來與這個使用者通話。只要您的聯絡人尚未接受請求，您還是可以傳送訊息，但您的聯絡人就無法閱讀它們。</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 個已阻擋的聯絡人</string>
   <!--Smartlist-->
@@ -176,4 +175,5 @@
   <string name="file_transfer_status_invalid_pathname">無效的路徑名稱</string>
   <string name="file_transfer_status_unjoinable_peer">對方無法加入</string>
   <string name="file_saved_in">檔案儲存在 %s</string>
+  <string name="no_space_left_on_device">裝置上沒有剩餘空間</string>
 </resources>

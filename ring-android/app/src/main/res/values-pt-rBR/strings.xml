@@ -65,6 +65,8 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="notif_channel_requests">Solicitações</string>
   <string name="notif_channel_file_transfer">Transferência de arquivo</string>
   <string name="notif_mark_as_read">Marcar como lida</string>
+  <string name="notif_incoming_file_transfer_title">Recebendo transferência de arquivo</string>
+  <string name="notif_incoming_file_transfer">Alguém quer enviar um arquivo</string>
   <string name="action_open">Abrir</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Você:</string>
@@ -150,7 +152,6 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
   <string name="send_request_title">Enviar uma solicitação de contato</string>
-  <string name="send_request_msg">Você deve enviar uma solicitação de contato para se comunicar com este usuário. Enquanto o contato não aceitar seu pedido, você pode enviar mensagens, mas ele não ira as ler.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 contatos bloqueados</string>
   <!--Smartlist-->
@@ -163,6 +164,17 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="generic_error">Um erro desconhecido ocorreu</string>
   <!--File Transfer-->
   <string name="invalid_file">Arquivo inválido</string>
+  <string name="not_able_to_write_file">Não foi possível gravar o arquivo</string>
+  <string name="file_transfer_status_created">iniciando transferência</string>
+  <string name="file_transfer_status_unsupported">não suportado</string>
+  <string name="file_transfer_status_wait_peer_acceptance">aguardando aprovação do destinatário</string>
+  <string name="file_transfer_status_wait_host_acceptance">aguardando aprovação do host</string>
   <string name="file_transfer_status_ongoing">em andamento</string>
   <string name="file_transfer_status_finished">concluído</string>
+  <string name="file_transfer_status_closed_by_host">encerrada pelo host</string>
+  <string name="file_transfer_status_closed_by_peer">encerrada pelo destinatário</string>
+  <string name="file_transfer_status_invalid_pathname">diretório inválido</string>
+  <string name="file_transfer_status_unjoinable_peer">contato indisponível</string>
+  <string name="file_saved_in">Arquivo salvo em %s</string>
+  <string name="no_space_left_on_device">Sem espaço no dispositivo</string>
 </resources>

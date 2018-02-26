@@ -152,7 +152,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Skicka</string>
   <string name="send_request_title">Skicka en kontaktförfrågan</string>
-  <string name="send_request_msg">Du måste skicka en kontaktförfrågan för att kommunicera med den här användaren. Så länge din kontakt inte har accepterat förfrågan, kan du skicka meddelanden, men din kontakt kan inte läsa dem.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 blockerade kontakter</string>
   <!--Smartlist-->

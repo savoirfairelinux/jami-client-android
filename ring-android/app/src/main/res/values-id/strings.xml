@@ -102,7 +102,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Kirim</string>
   <string name="send_request_title">Kirim permintaan kontak</string>
-  <string name="send_request_msg">Anda harus mengirimkan permintaan kontak agar dapat berkomunikasi dengan pengguna berikut. Selama pengguna tersebut belum menerima permintaan kontak, Anda dapat mengirimkan pesan namun pesan tersebut tidak akan terbaca.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 kontak diblokir</string>
   <!--Smartlist-->

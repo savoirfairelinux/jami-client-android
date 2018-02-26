@@ -141,7 +141,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Elküld</string>
   <string name="send_request_title">Parnerkérelem küldése</string>
-  <string name="send_request_msg">Partnerkérelmet kell küldenie ha kommunikálni akar ezzel a felhasználóval. Amíg a partner nem fogadja el a kérelmet, bár tud neki üzenetet írni, de a partner nem fogja tudja elolvasni.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 blokkolt partner</string>
   <!--Smartlist-->

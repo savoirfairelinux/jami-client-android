@@ -143,7 +143,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Send</string>
   <string name="send_request_title">Send en kontaktforespørgsel</string>
-  <string name="send_request_msg">Du skal sende en kontaktforespørgsel for at kommunikere med denne bruger. Så længe kontakten ikke har accepteret forespørgslen, kan du afsende beskeder men kontakten kan ikke læse læse dem. </string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 blokerede kontakter</string>
   <!--Smartlist-->

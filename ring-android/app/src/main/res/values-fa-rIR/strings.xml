@@ -140,7 +140,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">ارسال</string>
   <string name="send_request_title">ارسال یک درخواست تماس</string>
-  <string name="send_request_msg">برای ارتباط با این کاربر باید یک درخواست تماس ارسال کنید. مادامی که مخاطبتان درخواست را نپذیرفته، می‌توانید پیام بفرستید ولی مخاطبتان نمی‌تواند آن‌‌ها را بخواند.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">۰ مخاطب مسدود</string>
   <!--Smartlist-->

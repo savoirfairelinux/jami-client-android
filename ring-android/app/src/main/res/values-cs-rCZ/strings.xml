@@ -141,7 +141,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Odeslat</string>
   <string name="send_request_title">Poslat žádost o kontakt</string>
-  <string name="send_request_msg">Musíte poslat žádost o kontakt, abyste mohl hovořit a psát si s tímto uživatelem. Doku tento uživatel žádost nepřijme, můžete posílat zprávy, ale on si je nebude moci přečíst.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 blokovaných kontaktů</string>
   <!--Smartlist-->

@@ -132,7 +132,6 @@
   <!--Send contact requests-->
   <string name="send_request_button">Siųsti</string>
   <string name="send_request_title">Siųsti kontakto užklausą</string>
-  <string name="send_request_msg">Norėdami bendrauti su šiuo naudotoju, privalote išsiųsti kontakto užklausą. Kol kontaktas nepriims užklausos, jūs galite siųsti žinutes, tačiau kontaktas negalės jų perskaityti.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 užblokuotų kontaktų</string>
   <!--Smartlist-->
