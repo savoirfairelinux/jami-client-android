@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_fa01773a",
+        "filename": "ring-android/app/src/main/java/cx/ring/services/NotificationServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-02-27T21:31:28Z",
+      "side": 1,
+      "message": "* shouldn\u0027t be in NotificationService (unrelated to notifications)\n* incomingTrustRequest shoudn\u0027t be called since no trust request was actually received. The\"pending contacts\" panel should show every contact not in our contact list but with an history (like a message or a file transfer or a contact request).",
+      "range": {
+        "startLine": 517,
+        "startChar": 0,
+        "endLine": 522,
+        "endChar": 29
+      },
+      "revId": "7dbdf4aa3d113fe8691308239c015a305c81b83e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
