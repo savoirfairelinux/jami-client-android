@@ -161,7 +161,7 @@ public abstract class ContactService extends Observable {
             return false;
         }
         Log.w(TAG, "setRingContactName " + uri + " " + name);
-        CallContact contact = mContactsRing.get(uri.getRawUriString());
+        CallContact contact = findContact(uri);
         if (contact != null) {
             contact.setUsername(name);
             return true;
