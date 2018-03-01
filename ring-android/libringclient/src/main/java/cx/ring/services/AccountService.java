@@ -532,9 +532,8 @@ public class AccountService extends Observable {
      * @param password
      * @return the generated pin
      */
-    public String exportOnRing(final String accountId, final String password) {
-
-        return FutureUtils.executeDaemonThreadCallable(
+    public void exportOnRing(final String accountId, final String password) {
+        FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
