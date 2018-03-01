@@ -225,8 +225,8 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         }
 
         @Override
-        public String exportOnRing(final String accountId, final String password) {
-            return mAccountService.exportOnRing(accountId, password);
+        public void exportOnRing(final String accountId, final String password) {
+            mAccountService.exportOnRing(accountId, password);
         }
 
         public Map<String, String> getKnownRingDevices(final String accountId) {
