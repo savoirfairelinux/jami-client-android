@@ -21,21 +21,16 @@ package cx.ring.conversation;
 
 import java.io.File;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import cx.ring.daemon.Blob;
 import cx.ring.daemon.DataTransferInfo;
 import cx.ring.facades.ConversationFacade;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.model.DataTransferError;
-import cx.ring.model.DataTransferEventCode;
-import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryFileTransfer;
-import cx.ring.model.HistoryText;
 import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
@@ -46,7 +41,6 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
 import cx.ring.services.ContactService;
-import cx.ring.services.DataTransferWrapper;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
@@ -59,9 +53,6 @@ import cx.ring.utils.Observer;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import io.reactivex.Scheduler;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.observers.ResourceSingleObserver;
-import io.reactivex.schedulers.Schedulers;
 
 public class ConversationPresenter extends RootPresenter<ConversationView> implements Observer<ServiceEvent> {
 
@@ -116,6 +107,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         mAccountService.removeObserver(this);
         mHistoryService.removeObserver(this);
         mCallService.removeObserver(this);
+        mConversationFacade.removeObserver(this);
     }
 
     public void init(String contactRingId, String accountId) {
@@ -132,6 +124,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         mAccountService.addObserver(this);
         mHistoryService.addObserver(this);
         mCallService.addObserver(this);
+        mConversationFacade.addObserver(this);
     }
 
     public void pause() {
@@ -173,7 +166,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     public void sendTextMessage(String message) {
         if (message != null && !message.equals("")) {
             getView().clearMsgEdit();
-            Conference conference = mConversation == null ? null : mConversation.getCurrentCall();
+            if (mConversation == null)
+                mConversation = mConversationFacade.startConversation(mCurrentContact);
+            Conference conference = mConversation.getCurrentCall();
             TextMessage txtMessage;
             if (conference == null || !conference.isOnGoing()) {
                 long id = mCallService.sendAccountTextMessage(mAccountId, mContactRingId.getRawUriString(), message);
@@ -224,7 +219,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         dataTransferInfo.setPeer(mContactRingId.getHost());
         dataTransferInfo.setPath(filePath);
         dataTransferInfo.setDisplayName(file.getName());
-        mCallService.sendFile(0L, dataTransferInfo);
+        mAccountService.sendFile(0L, dataTransferInfo);
     }
 
     public void sendTrustRequest() {
@@ -280,65 +275,20 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     private void loadHistory() {
-
-        //Get all messages and calls to create a conversation
-        mCompositeDisposable.add(mHistoryService.getAllTextMessagesForAccountAndContactRingId(mAccountId, mContactRingId.getRawUriString())
-                .zipWith(mHistoryService.getAllCallsForAccountAndContactRingId(mAccountId, mContactRingId.getRawUriString()),
-                        (historyTexts, historyCalls) -> {
-
-                            mConversation.removeAll();
-
-                            for (HistoryCall call : historyCalls) {
-                                mConversation.addHistoryCall(call);
-                            }
-
-                            for (HistoryText htext : historyTexts) {
-                                TextMessage msg = new TextMessage(htext);
-                                mConversation.addTextMessage(msg);
-                            }
-
-
-                                List<HistoryFileTransfer> historyFileTransfers = mHistoryService.getFileTransfers(mAccountId, mContactRingId.getRawRingId());
-                                mConversation.addFileTransfers(historyFileTransfers);
-
-                            return mConversation;
-                        })
-                .subscribeOn(Schedulers.computation())
-                .observeOn(mMainScheduler)
-                .subscribeWith(new ResourceSingleObserver<Conversation>() {
-                    @Override
-                    public void onSuccess(@NonNull Conversation conversation) {
-                        mConversation = conversation;
-
-                        SipCall sipCall = mCallService.getCurrentCallForContactId(mContactRingId.getRawUriString());
-                        if (sipCall != null && sipCall.getCallState() != SipCall.State.INACTIVE) {
-                            mConversation.addConference(new Conference(sipCall));
-                            getView().displayOnGoingCallPane(true);
-                        } else {
-                            mConversation.removeConference(mConversation.getCurrentCall());
-                            getView().displayOnGoingCallPane(false);
-                        }
-
-                        getView().hideNumberSpinner();
-                        Log.d(TAG, "loadHistory: AggregateHistorySize=" + mConversation.getAggregateHistory().size());
-                        getView().refreshView(mConversation);
-
-                        mHistoryService.readMessages(mConversation);
-                        Conversation localConversation = mConversationFacade.getConversationByContact(mCurrentContact);
-                        if (localConversation != null) {
-                            localConversation.setVisible(true);
-                        }
-                        mNotificationService.cancelTextNotification(mContactRingId.getRawUriString());
-
-                        getView().displayContactPhoto(mConversation.getContact().getPhoto());
-                        getView().displayContactName(mConversation.getContact());
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Log.e(TAG, e.toString());
-                    }
-                }));
+        mConversation = mConversationFacade.startConversation(mCurrentContact);
+        mConversation.setVisible(true);
+        mHistoryService.readMessages(mConversation);
+        mNotificationService.cancelTextNotification(mContactRingId.getRawUriString());
+        getView().hideNumberSpinner();
+        getView().displayContactPhoto(mConversation.getContact().getPhoto());
+        getView().displayContactName(mConversation.getContact());
+        getView().refreshView(mConversation);
+        Conference conf = mConversation.getCurrentCall();
+        if (conf != null && conf.getState() != SipCall.State.INACTIVE) {
+            getView().displayOnGoingCallPane(true);
+        } else {
+            getView().displayOnGoingCallPane(false);
+        }
     }
 
     private void checkTrustRequestStatus() {
@@ -360,36 +310,27 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
                 getView().updateView(address, name, state);
             }
-        } else if (observable instanceof HistoryService && event != null) {
-            switch (event.getEventType()) {
-                case INCOMING_MESSAGE:
-                    TextMessage txt = event.getEventInput(ServiceEvent.EventInput.MESSAGE, TextMessage.class);
-                    mConversation.addTextMessage(txt);
-                    mHistoryService.readMessages(mConversation);
-                    Log.d(TAG, "update: AggregateHistorySize=" + mConversation.getAggregateHistory().size());
-                    getView().refreshView(mConversation);
-                    break;
-            }
-        } else if (observable instanceof CallService && event != null) {
+        } else if (observable instanceof ConversationFacade && event != null) {
             switch (event.getEventType()) {
                 case DATA_TRANSFER:
-                    Log.d(TAG, "update: data transfer callback received");
-
-                    Long transferId = event.getEventInput(ServiceEvent.EventInput.TRANSFER_ID, Long.class);
-                    DataTransferEventCode transferEventCode = event.getEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, DataTransferEventCode.class);
-
-                    handleDataTransferEvent(transferId, transferEventCode);
+                    getView().refreshView(mConversation);
                     break;
-                case INCOMING_CALL:
-                case CALL_STATE_CHANGED:
-                    loadHistory();
+                case INCOMING_MESSAGE:
+                    getView().refreshView(mConversation);
                     break;
             }
         }
     }
 
     private TrustRequest getIncomingTrustRequests() {
-        return mAccountService.getCurrentAccount().getRequest(mContactRingId.getHost());
+        if (mAccountService == null) {
+            return null;
+        }
+        Account acc = mAccountService.getCurrentAccount();
+        if (acc == null) {
+            return null;
+        }
+        return acc.getRequest(mContactRingId.getHost());
     }
 
     public void onBlockIncomingContactRequest() {
@@ -426,51 +367,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         }
 
         getView().switchToConversationView();
-    }
-
-    private void handleDataTransferEvent(Long transferId, DataTransferEventCode transferEventCode) {
-
-        // find corresponding transfer
-        mConversation.updateFileTransfer(transferId, transferEventCode);
-
-        DataTransferInfo dataTransferInfo = new DataTransferInfo();
-        DataTransferWrapper dataTransferWrapper = null;
-        if (transferEventCode == DataTransferEventCode.CREATED || transferEventCode == DataTransferEventCode.FINISHED) {
-            dataTransferWrapper = mCallService.dataTransferInfo(transferId, dataTransferInfo);
-
-            if (dataTransferWrapper.getDataTransferError() != DataTransferError.SUCCESS) {
-                Log.e(TAG, "handleDataTransferEvent: an error occurred during data transfer " + dataTransferWrapper.getDataTransferError().name());
-                return;
-            }
-        }
-
-        Log.d(TAG, "handleDataTransferEvent: " + transferEventCode.name());
-        switch (transferEventCode) {
-            case CREATED:
-                mConversation.addFileTransfer(transferId, dataTransferInfo.getDisplayName(),
-                        dataTransferWrapper.isOutgoing(), dataTransferInfo.getTotalSize(),
-                        dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
-                        dataTransferInfo.getAccountId());
-                break;
-            case FINISHED:
-                if (!dataTransferWrapper.isOutgoing()) {
-                    getView().writeCacheFile(dataTransferInfo.getDisplayName());
-                }
-                break;
-        }
-
-        Log.d(TAG, "handleDataTransferEvent: AggregateHistorySize=" + mConversation.getAggregateHistory().size() + ", transferEventCode=" + transferEventCode);
-        getView().refreshView(mConversation);
-    }
-
-    public void acceptDataTransfer(Long dataTransferId, String filePath) {
-        Log.d(TAG, "acceptDataTransfer: dataTransferId=" + dataTransferId);
-        mCallService.acceptFileTransfer(dataTransferId, filePath, 0);
-    }
-
-    public void cancelDataTransfer(Long dataTransferId) {
-        Log.d(TAG, "cancelDataTransfer: dataTransferId=" + dataTransferId);
-        mCallService.cancelDataTransfer(dataTransferId);
     }
 
     public DeviceRuntimeService getDeviceRuntimeService() {

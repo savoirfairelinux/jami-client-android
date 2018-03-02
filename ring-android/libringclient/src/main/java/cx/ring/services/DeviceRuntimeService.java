@@ -26,6 +26,7 @@ public abstract class DeviceRuntimeService implements DaemonService.SystemInfoCa
     public abstract void loadNativeLibrary();
 
     public abstract File provideFilesDir();
+    public abstract File getCacheDir();
 
     public abstract boolean isConnectedMobile();
 

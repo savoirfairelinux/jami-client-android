@@ -202,11 +202,11 @@ public class Conversation {
         return mHistory;
     }
 
-    public HistoryFileTransfer findConversationElement(Long transferId) {
+    public DataTransfer findConversationElement(Long transferId) {
         for (IConversationElement iConversationElement : mAggregateHistory) {
             if (iConversationElement != null && iConversationElement.getType() == IConversationElement.CEType.FILE) {
-                HistoryFileTransfer hft = (HistoryFileTransfer) iConversationElement;
-                if (transferId.equals(hft.getDataTransferId())) {
+                DataTransfer hft = (DataTransfer) iConversationElement;
+                if (transferId.equals(hft.getId())) {
                     return hft;
                 }
             }
@@ -214,28 +214,23 @@ public class Conversation {
         return null;
     }
 
-    public void addFileTransfer(Long transferId, String filename, boolean isOutgoing, long totalSize, long bytesProgress, String peerId, String accountId) {
-        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, filename, isOutgoing, totalSize, bytesProgress, peerId, accountId);
-        addFileTransfer(historyFileTransfer);
-    }
-
-    public void addFileTransfer(HistoryFileTransfer historyFileTransfer) {
-        if (mAggregateHistory.contains(historyFileTransfer)) {
+    public void addFileTransfer(DataTransfer dataTransfer) {
+        if (mAggregateHistory.contains(dataTransfer)) {
             return;
         }
-        mAggregateHistory.add(historyFileTransfer);
+        mAggregateHistory.add(dataTransfer);
     }
 
-    public void addFileTransfers(List<HistoryFileTransfer> historyFileTransfers) {
-        for (HistoryFileTransfer historyFileTransfer : historyFileTransfers) {
-            addFileTransfer(historyFileTransfer);
+    public void addDataTransfers(List<DataTransfer> dataTransfers) {
+        for (DataTransfer dataTransfer : dataTransfers) {
+            addFileTransfer(dataTransfer);
         }
     }
 
-    public void updateFileTransfer(long transferId, DataTransferEventCode eventCode) {
-        HistoryFileTransfer historyFileTransfer = findConversationElement(transferId);
-        if (historyFileTransfer != null) {
-            historyFileTransfer.setDataTransferEventCode(eventCode);
+    public void updateFileTransfer(DataTransfer transfer, DataTransferEventCode eventCode) {
+        DataTransfer dataTransfer = findConversationElement(transfer.getId());
+        if (dataTransfer != null) {
+            dataTransfer.setEventCode(eventCode);
         }
     }
 

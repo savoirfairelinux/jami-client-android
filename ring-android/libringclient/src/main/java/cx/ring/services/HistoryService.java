@@ -39,10 +39,9 @@ import cx.ring.daemon.StringMap;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
-import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
+import cx.ring.model.DataTransfer;
 import cx.ring.model.HistoryEntry;
-import cx.ring.model.HistoryFileTransfer;
 import cx.ring.model.HistoryText;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
@@ -73,6 +72,8 @@ public abstract class HistoryService extends Observable {
     protected abstract Dao<HistoryCall, Integer> getCallHistoryDao();
 
     protected abstract Dao<HistoryText, Long> getTextHistoryDao();
+
+    protected abstract Dao<DataTransfer, Long> getDataHistoryDao();
 
     public boolean insertNewEntry(Conference toInsert) {
 
@@ -131,16 +132,40 @@ public abstract class HistoryService extends Observable {
         return true;
     }
 
+    public boolean insertDataTransfer(DataTransfer dataTransfer) {
+        try {
+            getDataHistoryDao().create(dataTransfer);
+        } catch (SQLException e) {
+            Log.e(TAG, "Error while inserting data transfer", e);
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean updateDataTransfer(DataTransfer dataTransfer) {
+        try {
+            getDataHistoryDao().update(dataTransfer);
+        } catch (SQLException e) {
+            Log.e(TAG, "Error while updating data transfer", e);
+            return false;
+        }
+
+        return true;
+    }
+
     public void getCallAndTextAsyncForAccount(final String accountId) {
 
         mApplicationExecutor.submit(() -> {
             try {
                 List<HistoryCall> historyCalls = getAllForAccount(accountId);
                 List<HistoryText> historyTexts = getAllTextMessagesForAccount(accountId);
+                List<DataTransfer> historyTransfers = getHistoryDataTransfers(accountId);
 
                 ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.HISTORY_LOADED);
                 event.addEventInput(ServiceEvent.EventInput.HISTORY_CALLS, historyCalls);
                 event.addEventInput(ServiceEvent.EventInput.HISTORY_TEXTS, historyTexts);
+                event.addEventInput(ServiceEvent.EventInput.HISTORY_TRANSFERS, historyTransfers);
                 setChanged();
                 notifyObservers(event);
             } catch (SQLException e) {
@@ -205,9 +230,28 @@ public abstract class HistoryService extends Observable {
         return getCallHistoryDao().query(queryBuilder.prepare());
     }
 
-    public Single<List<HistoryFileTransfer>> getAllFilesForAccountAndContactRingId(final String accountId, final String contactRingId) {
-        // todo: implement a new table in db
-        return Single.fromCallable(ArrayList::new);
+    public Single<List<DataTransfer>> getAllFilesForAccount(final String accountId) {
+        return Single.fromCallable(() -> getHistoryDataTransfers(accountId));
+    }
+
+    public Single<List<DataTransfer>> getAllFilesForAccountAndContactRingId(final String accountId, final String contactRingId) {
+        return Single.fromCallable(() -> getHistoryDataTransfers(accountId, contactRingId));
+    }
+
+
+
+    public List<DataTransfer> getHistoryDataTransfers(String accountId) throws SQLException {
+        QueryBuilder<DataTransfer, Long> queryBuilder = getDataHistoryDao().queryBuilder();
+        queryBuilder.where().eq(DataTransfer.COLUMN_ACCOUNT_ID_NAME, accountId);
+        queryBuilder.orderBy(DataTransfer.COLUMN_TIMESTAMP_NAME, true);
+        return getDataHistoryDao().query(queryBuilder.prepare());
+    }
+
+    public List<DataTransfer> getHistoryDataTransfers(String accountId, String contactRingId) throws SQLException {
+        QueryBuilder<DataTransfer, Long> queryBuilder = getDataHistoryDao().queryBuilder();
+        queryBuilder.where().eq(DataTransfer.COLUMN_ACCOUNT_ID_NAME, accountId).and().eq(DataTransfer.COLUMN_PEER_ID_NAME, contactRingId);
+        queryBuilder.orderBy(DataTransfer.COLUMN_TIMESTAMP_NAME, true);
+        return getDataHistoryDao().query(queryBuilder.prepare());
     }
 
     public Completable clearHistoryForContactAndAccount(final String contactId, final String accoundId) {
@@ -222,6 +266,11 @@ public abstract class HistoryService extends Observable {
                     .deleteBuilder();
             deleteCallsHistoryBuilder.where().eq(HistoryCall.COLUMN_ACCOUNT_ID_NAME, accoundId).and().eq(HistoryCall.COLUMN_NUMBER_NAME, contactId);
             deleteCallsHistoryBuilder.delete();
+
+            DeleteBuilder<DataTransfer, Long> deleteDataTransferHistoryBuilder = getDataHistoryDao()
+                    .deleteBuilder();
+            deleteDataTransferHistoryBuilder.where().eq(DataTransfer.COLUMN_ACCOUNT_ID_NAME, accoundId).and().eq(DataTransfer.COLUMN_PEER_ID_NAME, contactId);
+            deleteDataTransferHistoryBuilder.delete();
         });
     }
 
@@ -267,6 +316,7 @@ public abstract class HistoryService extends Observable {
                             .deleteBuilder();
                     deleteTextHistoryBuilder.where().in(HistoryText.COLUMN_ID_NAME, textMessagesIds);
                     deleteTextHistoryBuilder.delete();
+
                     //~ Deleting calls
                     ArrayList<String> callIds = new ArrayList<>(entry.getValue().getCalls().size());
                     for (HistoryCall historyCall : entry.getValue().getCalls().values()) {
@@ -276,6 +326,16 @@ public abstract class HistoryService extends Observable {
                             .deleteBuilder();
                     deleteCallsHistoryBuilder.where().in(HistoryCall.COLUMN_CALL_ID_NAME, callIds);
                     deleteCallsHistoryBuilder.delete();
+
+                    //~ Deleting data transfers
+                    ArrayList<String> dataTransferIds = new ArrayList<>(entry.getValue().getDataTransfers().size());
+                    for (DataTransfer dataTransfer : entry.getValue().getDataTransfers().values()) {
+                        dataTransferIds.add(dataTransfer.getDataTransferId().toString());
+                    }
+                    DeleteBuilder<DataTransfer, Long> deleteDataTransfersHistoryBuilder = getDataHistoryDao()
+                            .deleteBuilder();
+                    deleteDataTransfersHistoryBuilder.where().in(DataTransfer.COLUMN_ID_NAME, dataTransferIds);
+                    deleteDataTransfersHistoryBuilder.delete();
                 }
 
                 // notify the observers
@@ -293,6 +353,7 @@ public abstract class HistoryService extends Observable {
         try {
             TableUtils.clearTable(getConnectionSource(), HistoryCall.class);
             TableUtils.clearTable(getConnectionSource(), HistoryText.class);
+            TableUtils.clearTable(getConnectionSource(), DataTransfer.class);
 
             // notify the observers
             setChanged();
@@ -357,50 +418,7 @@ public abstract class HistoryService extends Observable {
         notifyObservers(event);
     }
 
-    // todo insert in db
-    private List<HistoryFileTransfer> fileTransfers = new ArrayList<>();
-
-    public List<HistoryFileTransfer> getFileTransfers(String accountId, String contactRingId) {
-        List<HistoryFileTransfer> result = new ArrayList<>();
-        for (HistoryFileTransfer historyFileTransfer : fileTransfers) {
-            if (historyFileTransfer.getAccountId().equals(accountId) && historyFileTransfer.getPeerId().equals(contactRingId)) {
-                result.add(historyFileTransfer);
-            }
-        }
-        return result;
-    }
-
-    public void addFileTransfer(HistoryFileTransfer historyFileTransfer) {
-        HistoryFileTransfer lastFileTransfer = getFileTransfer(historyFileTransfer.getDataTransferId());
-        if (lastFileTransfer != null) {
-            fileTransfers.remove(lastFileTransfer);
-        }
-        fileTransfers.add(historyFileTransfer);
-    }
-
-    public void updateFileTransferStatus(Long transferId, DataTransferEventCode dataTransferEventCode) {
-        HistoryFileTransfer lastFileTransfer = getFileTransfer(transferId);
-        if (lastFileTransfer != null) {
-            lastFileTransfer.setDataTransferEventCode(dataTransferEventCode);
-        }
-    }
-
-    private HistoryFileTransfer getFileTransfer(Long transferId) {
-        HistoryFileTransfer result = null;
-        for (HistoryFileTransfer historyFileTransfer : fileTransfers) {
-            if (historyFileTransfer.getDataTransferId().equals(transferId)) {
-                result = historyFileTransfer;
-            }
-        }
-        return result;
-    }
-
     public boolean hasAnHistory(String accountId, String contactRingId) {
-        List<HistoryFileTransfer> fileTransfers = getFileTransfers(accountId, contactRingId);
-        if (!fileTransfers.isEmpty()) {
-            return true;
-        }
-
         try {
             List<HistoryCall> historyCalls = getHistoryCalls(accountId, contactRingId);
             if (!historyCalls.isEmpty()) {
@@ -411,10 +429,14 @@ public abstract class HistoryService extends Observable {
             if (!historyTexts.isEmpty()) {
                 return true;
             }
-        } catch (SQLException e) {
-            //ignored
-        }
 
+            List<DataTransfer> historyData = getHistoryDataTransfers(accountId, contactRingId);
+            if (!historyData.isEmpty()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "hasAnHistory: a sql error occurred", e);
+        }
         return false;
     }
 }

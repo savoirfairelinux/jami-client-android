@@ -330,11 +330,10 @@ public class DaemonService {
     }
 
     class DaemonDataTransferCallback extends DataTransferCallback {
-
         @Override
         public void dataTransferEvent(long transferId, int eventCode) {
             Log.d(TAG, "dataTransferEvent: transferId=" + transferId + ", eventCode=" + eventCode);
-            mCallService.dataTransferEvent(transferId, eventCode);
+            mAccountService.dataTransferEvent(transferId, eventCode);
         }
     }
 }
