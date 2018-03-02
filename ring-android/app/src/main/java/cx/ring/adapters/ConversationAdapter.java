@@ -27,9 +27,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -127,7 +130,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 }
             }
             if (conversationElement.getType() == IConversationElement.CEType.FILE) {
-                return ConversationMessageType.FILE_TRANSFER_TEXT_MESSAGE.getType();
+                DataTransfer file = (DataTransfer) conversationElement;
+                if (file.getEventCode() == DataTransferEventCode.FINISHED) {
+                    return ConversationMessageType.IMAGE.getType();
+                } else
+                    return ConversationMessageType.FILE_TRANSFER.getType();
             }
             if (conversationElement.getType() == IConversationElement.CEType.CALL) {
                 return ConversationMessageType.CALL_INFORMATION_TEXT_MESSAGE.getType();
@@ -143,8 +150,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             res = R.layout.item_conv_msg_peer;
         } else if (viewType == ConversationMessageType.OUTGOING_TEXT_MESSAGE.getType()) {
             res = R.layout.item_conv_msg_me;
-        } else if (viewType == ConversationMessageType.FILE_TRANSFER_TEXT_MESSAGE.getType()) {
+        } else if (viewType == ConversationMessageType.FILE_TRANSFER.getType()) {
             res = R.layout.item_conv_file;
+        } else if (viewType == ConversationMessageType.IMAGE.getType()) {
+            res = R.layout.item_conv_image;
         } else {
             res = R.layout.item_conv_call;
         }
@@ -173,7 +182,20 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
         DataTransfer file = (DataTransfer) conversationElement;
 
-        if (file.getDataTransferEventCode().isError()) {
+        if (file.getEventCode() == DataTransferEventCode.FINISHED) {
+            Context context = conversationViewHolder.mPhoto.getContext();
+            Glide.with(context)
+                    .load(context.getFileStreamPath(file.getDisplayName()))
+                    .asBitmap()
+                    .into(conversationViewHolder.mPhoto);
+            //boolean isMe = file.isOutgoing();
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.gravity = file.isOutgoing() ? Gravity.END : Gravity.START;
+            conversationViewHolder.mAnswerLayout.setLayoutParams(params);
+            return;
+        }
+
+        if (file.getEventCode().isError()) {
             conversationViewHolder.icon.setImageResource(R.drawable.ic_warning);
         } else {
             conversationViewHolder.icon.setImageResource(R.drawable.ic_clip_black);
@@ -466,7 +488,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         INCOMING_TEXT_MESSAGE(0),
         OUTGOING_TEXT_MESSAGE(1),
         CALL_INFORMATION_TEXT_MESSAGE(2),
-        FILE_TRANSFER_TEXT_MESSAGE(3);
+        FILE_TRANSFER(3),
+        IMAGE(4);
 
         int type;
 
