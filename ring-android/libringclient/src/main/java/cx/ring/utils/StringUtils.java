@@ -56,6 +56,13 @@ public final class StringUtils {
                 .replace(" ", "");
     }
 
+    public static String getFileExtension(String filename) {
+        int dot = filename.lastIndexOf('.');
+        if (dot == -1)
+            return "";
+        return filename.substring(dot + 1);
+    }
+
     public static Iterable<Integer> codePoints(final String string) {
         return () -> new Iterator<Integer>() {
             int nextIndex = 0;

@@ -19,10 +19,14 @@
  */
 package cx.ring.facades;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.inject.Inject;
@@ -382,11 +386,20 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
+    private static final Set<String> IMAGE_EXTENSIONS = new HashSet<>(Arrays.asList("jpg", "png", "jpeg"));
+    private static final int MAX_IMG_SIZE = 16 * 1024 * 1024;
+
     private void handleDataTransferEvent(DataTransfer transfer, DataTransferEventCode transferEventCode) {
         CallContact contact = mContactService.findContactByNumber(transfer.getPeerId());
         Conversation conversation = startConversation(contact);
         if (transferEventCode == DataTransferEventCode.CREATED) {
+            String extension = StringUtils.getFileExtension(transfer.getDisplayName());
+            if (IMAGE_EXTENSIONS.contains(extension) && transfer.getTotalSize() <= MAX_IMG_SIZE) {
+                File path = mDeviceRuntimeService.getFilePath(transfer.getDisplayName());
+                mAccountService.acceptFileTransfer(transfer.getDataTransferId(), path.getAbsolutePath(), 0);
+            }
             conversation.addFileTransfer(transfer);
+
         } else {
             conversation.updateFileTransfer(transfer, transferEventCode);
         }

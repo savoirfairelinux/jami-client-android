@@ -84,6 +84,11 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     }
 
     @Override
+    public File getFilePath(String filename) {
+        return mContext.getFileStreamPath(filename);
+    }
+
+    @Override
     public File getCacheDir() {
         return mContext.getCacheDir();
     }
