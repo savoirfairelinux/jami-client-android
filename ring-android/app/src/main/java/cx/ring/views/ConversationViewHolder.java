@@ -49,7 +49,7 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             mHistTxt = v.findViewById(R.id.call_hist_txt);
             mHistDetailTxt = v.findViewById(R.id.call_details_txt);
             mPhoto = v.findViewById(R.id.call_icon);
-        } else if (type == ConversationAdapter.ConversationMessageType.FILE_TRANSFER_TEXT_MESSAGE.getType()) {
+        } else if (type == ConversationAdapter.ConversationMessageType.FILE_TRANSFER.getType()) {
             mMsgTxt = v.findViewById(R.id.call_hist_filename);
             mMsgDetailTxt = v.findViewById(R.id.file_details_txt);
             mPhoto = v.findViewById(R.id.direction_icon);
@@ -58,6 +58,10 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             btnRefuse = v.findViewById(R.id.btnRefuse);
             progress = v.findViewById(R.id.progress);
             icon = v.findViewById(R.id.file_icon);
+        } else if (type == ConversationAdapter.ConversationMessageType.IMAGE.getType()) {
+            mPhoto = v.findViewById(R.id.image);
+            mAnswerLayout = v.findViewById(R.id.imageLayout);
+            mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
         } else {
             mMsgTxt = v.findViewById(R.id.msg_txt);
             mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
