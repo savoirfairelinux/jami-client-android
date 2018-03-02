@@ -20,8 +20,9 @@ along with this program; if not, write to the Free Software
 -->
 <resources>
 
+    <dimen name="padding_xsmall">2dp</dimen>
     <dimen name="padding_small">8dp</dimen>
-    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_medium">12dp</dimen>
     <dimen name="padding_large">16dp</dimen>
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
