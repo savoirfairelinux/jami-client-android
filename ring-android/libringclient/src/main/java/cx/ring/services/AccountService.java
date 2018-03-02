@@ -33,6 +33,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.daemon.Blob;
+import cx.ring.daemon.DataTransferInfo;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
@@ -42,6 +43,9 @@ import cx.ring.model.AccountConfig;
 import cx.ring.model.CallContact;
 import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
+import cx.ring.model.DataTransfer;
+import cx.ring.model.DataTransferError;
+import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.TrustRequest;
 import cx.ring.utils.FutureUtils;
@@ -98,6 +102,8 @@ public class AccountService extends Observable {
     private boolean mHasSipAccount;
     private boolean mHasRingAccount;
     private AtomicBoolean mAccountsLoaded = new AtomicBoolean(false);
+
+    private final Map<Long, DataTransfer> mDataTransfers = new HashMap<>();
 
     /**
      * @return true if at least one of the loaded accounts is a SIP one
@@ -1248,5 +1254,111 @@ public class AccountService extends Observable {
         event.addEventInput(ServiceEvent.EventInput.ADDRESS, address);
         event.addEventInput(ServiceEvent.EventInput.NAME, name);
         notifyObservers(event);
+    }
+
+
+    public DataTransferError sendFile(final Long dataTransferId, final DataTransferInfo dataTransferInfo) {
+        Long errorCode = FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                () -> {
+                    Log.i(TAG, "sendFile() thread running... accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
+                    return Ringservice.sendFile(dataTransferInfo, dataTransferId);
+                }
+        );
+        return getDataTransferError(errorCode);
+    }
+
+    public DataTransferError acceptFileTransfer(final Long dataTransferId, final String filePath, final long offset) {
+        Long errorCode = FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                () -> {
+                    Log.i(TAG, "acceptFileTransfer() thread running... dataTransferId=" + dataTransferId + ", filePath=" + filePath + ", offset=" + offset);
+                    return Ringservice.acceptFileTransfer(dataTransferId, filePath, offset);
+                }
+        );
+        return getDataTransferError(errorCode);
+    }
+
+    public DataTransferError cancelDataTransfer(final Long dataTransferId) {
+        Long errorCode = FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                () -> {
+                    Log.i(TAG, "cancelDataTransfer() thread running... dataTransferId=" + dataTransferId);
+                    return Ringservice.cancelDataTransfer(dataTransferId);
+                }
+        );
+        return getDataTransferError(errorCode);
+    }
+
+    public DataTransferWrapper dataTransferInfo(final Long dataTransferId, final DataTransferInfo dataTransferInfo) {
+        return FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                true,
+                () -> {
+                    Log.i(TAG, "dataTransferInfo() thread running... dataTransferId=" + dataTransferId);
+                    long errorCode = Ringservice.dataTransferInfo(dataTransferId, dataTransferInfo);
+                    return new DataTransferWrapper(dataTransferInfo, getDataTransferError(errorCode));
+                }
+        );
+    }
+
+    public void dataTransferEvent(long transferId, int eventCode) {
+        DataTransferEventCode dataEvent = getDataTransferEventCode(eventCode);
+        DataTransferInfo info = new DataTransferInfo();
+        dataTransferInfo(transferId, info);
+
+        DataTransfer transfer = mDataTransfers.get(transferId);
+        if (transfer == null) {
+            transfer = new DataTransfer(transferId, info.getDisplayName(),
+                    info.getFlags() == 0, info.getTotalSize(),
+                    info.getBytesProgress(), info.getPeer(), info.getAccountId());
+            mHistoryService.insertDataTransfer(transfer);
+            mDataTransfers.put(transferId, transfer);
+        } else {
+            transfer.setEventCode(dataEvent);
+            transfer.setBytesProgress(info.getBytesProgress());
+            mHistoryService.updateDataTransfer(transfer);
+        }
+
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DATA_TRANSFER);
+        event.addEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, dataEvent);
+        event.addEventInput(ServiceEvent.EventInput.TRANSFER_INFO, transfer);
+        notifyObservers(event);
+    }
+
+    private static DataTransferEventCode getDataTransferEventCode(int eventCode) {
+        DataTransferEventCode dataTransferEventCode = DataTransferEventCode.INVALID;
+        try {
+            dataTransferEventCode = DataTransferEventCode.values()[eventCode];
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+            Log.e(TAG, "getEventCode: invalid data transfer status from daemon");
+        }
+        return dataTransferEventCode;
+    }
+
+    private static DataTransferError getDataTransferError(Long errorCode) {
+        DataTransferError dataTransferError = DataTransferError.UNKNOWN;
+        if (errorCode == null) {
+            Log.e(TAG, "getDataTransferError: invalid error code");
+        } else {
+            try {
+                dataTransferError = DataTransferError.values()[errorCode.intValue()];
+            } catch (ArrayIndexOutOfBoundsException ignored) {
+                Log.e(TAG, "getDataTransferError: invalid data transfer error from daemon");
+            }
+        }
+        return dataTransferError;
+    }
+
+    public DataTransfer getDataTransfer(long id) {
+        return mDataTransfers.get(id);
     }
 }

@@ -46,4 +46,8 @@ public enum DataTransferEventCode {
     public boolean isError() {
         return isError;
     }
+
+    public boolean isOver() {
+        return isError() || this == FINISHED;
+    }
 }

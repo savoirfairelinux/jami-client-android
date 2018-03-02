@@ -83,6 +83,11 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
         return mContext.getFilesDir();
     }
 
+    @Override
+    public File getCacheDir() {
+        return mContext.getCacheDir();
+    }
+
     private boolean isNetworkConnectedForType(int connectivityManagerType) {
         NetworkInfo info = NetworkUtils.getNetworkInfo(mContext);
         return (info != null && info.isConnected() && info.getType() == connectivityManagerType);

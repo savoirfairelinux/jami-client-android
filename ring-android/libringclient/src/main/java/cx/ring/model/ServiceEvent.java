@@ -106,6 +106,7 @@ public class ServiceEvent {
         BANNED,
         HISTORY_CALLS,
         HISTORY_TEXTS,
+        HISTORY_TRANSFERS,
         REMOTE,
         ERROR,
         BUDDY_URI,
@@ -116,6 +117,7 @@ public class ServiceEvent {
         VIDEO_HEIGHT,
         TRANSFER_ID,
         TRANSFER_EVENT_CODE,
+        TRANSFER_INFO,
         VIDEO_CALL
     }
 

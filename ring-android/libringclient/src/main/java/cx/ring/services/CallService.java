@@ -366,57 +366,6 @@ public class CallService extends Observable {
         );
     }
 
-    public DataTransferError sendFile(final Long dataTransferId, final DataTransferInfo dataTransferInfo) {
-        Long errorCode = FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "sendFile() thread running... accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
-                    return Ringservice.sendFile(dataTransferInfo, dataTransferId);
-                }
-        );
-        return getDataTransferError(errorCode);
-    }
-
-    public DataTransferError acceptFileTransfer(final Long dataTransferId, final String filePath, final long offset) {
-        Long errorCode = FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "acceptFileTransfer() thread running... dataTransferId=" + dataTransferId + ", filePath=" + filePath + ", offset=" + offset);
-                    return Ringservice.acceptFileTransfer(dataTransferId, filePath, offset);
-                }
-        );
-        return getDataTransferError(errorCode);
-    }
-
-    public DataTransferError cancelDataTransfer(final Long dataTransferId) {
-        Long errorCode = FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "cancelDataTransfer() thread running... dataTransferId=" + dataTransferId);
-                    return Ringservice.cancelDataTransfer(dataTransferId);
-                }
-        );
-        return getDataTransferError(errorCode);
-    }
-
-    public DataTransferWrapper dataTransferInfo(final Long dataTransferId, final DataTransferInfo dataTransferInfo) {
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "dataTransferInfo() thread running... dataTransferId=" + dataTransferId);
-                    long errorCode = Ringservice.dataTransferInfo(dataTransferId, dataTransferInfo);
-                    return new DataTransferWrapper(dataTransferInfo, getDataTransferError(errorCode));
-                }
-        );
-    }
 
     public SipCall getCurrentCallForId(String callId) {
         return currentCalls.get(callId);
@@ -536,37 +485,4 @@ public class CallService extends Observable {
         notifyObservers(event);
     }
 
-    public void dataTransferEvent(long transferId, int eventCode) {
-        DataTransferEventCode dataTransferEventCode = getDataTransferEventCode(eventCode);
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DATA_TRANSFER);
-        event.addEventInput(ServiceEvent.EventInput.TRANSFER_ID, transferId);
-        event.addEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, dataTransferEventCode);
-        notifyObservers(event);
-    }
-
-    private static DataTransferEventCode getDataTransferEventCode(int eventCode) {
-        DataTransferEventCode dataTransferEventCode = DataTransferEventCode.INVALID;
-        try {
-            dataTransferEventCode = DataTransferEventCode.values()[eventCode];
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-            Log.e(TAG, "getDataTransferEventCode: invalid data transfer status from daemon");
-        }
-        return dataTransferEventCode;
-    }
-
-    private static DataTransferError getDataTransferError(Long errorCode) {
-        DataTransferError dataTransferError = DataTransferError.UNKNOWN;
-        if (errorCode == null) {
-            Log.e(TAG, "getDataTransferError: invalid error code");
-        } else {
-            try {
-                dataTransferError = DataTransferError.values()[errorCode.intValue()];
-            } catch (ArrayIndexOutOfBoundsException ignored) {
-                Log.e(TAG, "getDataTransferError: invalid data transfer error from daemon");
-            }
-        }
-        return dataTransferError;
-    }
 }
