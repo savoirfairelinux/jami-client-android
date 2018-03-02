@@ -21,6 +21,7 @@
 package cx.ring.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -43,9 +44,10 @@ import cx.ring.conversation.ConversationPresenter;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
-import cx.ring.model.HistoryFileTransfer;
+import cx.ring.model.DataTransfer;
 import cx.ring.model.IConversationElement;
 import cx.ring.model.TextMessage;
+import cx.ring.service.DRingService;
 import cx.ring.utils.CircleTransform;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.ResourceMapper;
@@ -169,9 +171,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         if (conversationViewHolder == null || conversationElement == null) {
             return;
         }
-        HistoryFileTransfer file = (HistoryFileTransfer) conversationElement;
+        DataTransfer file = (DataTransfer) conversationElement;
 
-        if (file.getDataTransferEventCode().isError()) {
+        if (file.getEventCode().isError()) {
             conversationViewHolder.icon.setImageResource(R.drawable.ic_warning);
         } else {
             conversationViewHolder.icon.setImageResource(R.drawable.ic_clip_black);
@@ -184,54 +186,36 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 file.getDate());
         conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
                 timeSeparationString, FileUtils.readableFileSize(file.getTotalSize()),
-                ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getDataTransferEventCode())));
+                ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getEventCode())));
         if (file.isOutgoing()) {
             conversationViewHolder.mPhoto.setImageResource(R.drawable.ic_outgoing_black);
         } else {
             conversationViewHolder.mPhoto.setImageResource(R.drawable.ic_incoming_black);
         }
 
-        if (file.getDataTransferEventCode() == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
+        if (file.getEventCode() == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
             conversationViewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
             conversationViewHolder.btnAccept.setOnClickListener(v -> {
-
                 if (!presenter.getDeviceRuntimeService().hasWriteExternalStoragePermission()) {
                     conversationFragment.askWriteExternalStoragePermission();
                     return;
                 }
-
-                File cacheDir = conversationFragment.getActivity().getCacheDir();
-                if (!cacheDir.exists()) {
-                    boolean mkdirs = cacheDir.mkdirs();
-                    if (!mkdirs) {
-                        Log.e(TAG, "configureForFileInfoTextMessage: not able to create directory at " + cacheDir.toString());
-                        return;
-                    }
-                }
-
+                Context context = v.getContext();
+                File cacheDir = context.getCacheDir();
                 long spaceLeft = FileUtils.getSpaceLeft(cacheDir.toString());
                 if (spaceLeft == -1L || file.getTotalSize() > spaceLeft) {
                     presenter.noSpaceLeft();
                     return;
                 }
-
-                File cacheFile = new File(cacheDir, file.getDisplayName());
-                if (cacheFile.exists()) {
-                    boolean delete = cacheFile.delete();
-                    if (!delete) {
-                        Log.e(TAG, "configureForFileInfoTextMessage: not able to delete cache file at " + cacheFile.toString());
-                        return;
-                    }
-                }
-
-                Log.d(TAG, "configureForFileInfoTextMessage: cacheFile=" + cacheFile + ",exists=" + cacheFile.exists());
-
-                conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
-                presenter.acceptDataTransfer(file.getDataTransferId(), cacheFile.toString());
+                context.startService(new Intent(DRingService.ACTION_FILE_ACCEPT)
+                        .setClass(context.getApplicationContext(), DRingService.class)
+                        .putExtra(DRingService.KEY_TRANSFER_ID, file.getDataTransferId()));
             });
             conversationViewHolder.btnRefuse.setOnClickListener(v -> {
-                conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
-                presenter.cancelDataTransfer(file.getDataTransferId());
+                Context context = v.getContext();
+                context.startService(new Intent(DRingService.ACTION_FILE_CANCEL)
+                        .setClass(context.getApplicationContext(), DRingService.class)
+                        .putExtra(DRingService.KEY_TRANSFER_ID, file.getDataTransferId()));
             });
         } else {
             conversationViewHolder.mAnswerLayout.setVisibility(View.GONE);
@@ -247,6 +231,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 continue;
             }
             Character.UnicodeBlock block = Character.UnicodeBlock.of(codePoint);
+
             // Ignore modifier
             if (block == Character.UnicodeBlock.VARIATION_SELECTORS) {
                 continue;

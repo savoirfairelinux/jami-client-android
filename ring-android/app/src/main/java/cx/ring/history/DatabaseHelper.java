@@ -33,6 +33,7 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import cx.ring.model.DataTransfer;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryText;
 
@@ -49,10 +50,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
     private static final String DATABASE_NAME = "history.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     private Dao<HistoryCall, Integer> historyDao = null;
     private Dao<HistoryText, Long> historyTextDao = null;
+    private Dao<DataTransfer, Long> historyDataDao = null;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -67,6 +69,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             TableUtils.createTable(connectionSource, HistoryCall.class);
             TableUtils.createTable(connectionSource, HistoryText.class);
+            TableUtils.createTable(connectionSource, DataTransfer.class);
         } catch (SQLException e) {
             Log.e(TAG, "Can't create database", e);
             throw new RuntimeException(e);
@@ -81,8 +84,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         Log.i(TAG, "onUpgrade " + oldVersion + " -> " + newVersion);
         try {
-            updateDatabase(oldVersion, db);
-        } catch (SQLiteException exc) {
+            updateDatabase(oldVersion, db, connectionSource);
+        } catch (SQLException exc) {
             exc.printStackTrace();
             clearDatabase(db);
             onCreate(db, connectionSource);
@@ -107,6 +110,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return historyTextDao;
     }
 
+    public Dao<DataTransfer, Long> getDataHistoryDao() throws SQLException {
+        if (historyDataDao == null) {
+            historyDataDao = getDao(DataTransfer.class);
+        }
+        return historyDataDao;
+    }
+
     /**
      * Close the database connections and clear any cached DAOs.
      */
@@ -122,9 +132,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      *
      * @param fromDatabaseVersion the old version of the database
      * @param db                  the SQLiteDatabase to work with
-     * @throws SQLiteException    database has failed to update to the last version
+     * @throws SQLiteException database has failed to update to the last version
      */
-    private void updateDatabase(int fromDatabaseVersion, SQLiteDatabase db) throws SQLiteException {
+    private void updateDatabase(int fromDatabaseVersion, SQLiteDatabase db, ConnectionSource connectionSource) throws SQLException {
         try {
             while (fromDatabaseVersion < DATABASE_VERSION) {
                 switch (fromDatabaseVersion) {
@@ -134,11 +144,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                     case 7:
                         updateDatabaseFrom7(db);
                         break;
+                    case 8:
+                        updateDatabaseFrom8(connectionSource);
+                        break;
                 }
                 fromDatabaseVersion++;
             }
             Log.d(TAG, "updateDatabase: Database has been updated to the last version.");
-        } catch (SQLiteException exc) {
+        } catch (SQLException exc) {
             Log.e(TAG, "updateDatabase: Database has failed to update to the last version.");
             throw exc;
         }
@@ -219,6 +232,16 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 Log.e(TAG, "updateDatabaseFrom7: Migration from database version 7 to next, failed.");
                 throw exception;
             }
+        }
+    }
+
+    private void updateDatabaseFrom8(ConnectionSource connectionSource) throws SQLException {
+        try {
+            TableUtils.createTable(connectionSource, DataTransfer.class);
+            Log.d(TAG, "Migration from database version 8 to next, done.");
+        } catch (SQLException e) {
+            Log.e(TAG, "Migration from database version 8 to next, failed.", e);
+            throw e;
         }
     }
 

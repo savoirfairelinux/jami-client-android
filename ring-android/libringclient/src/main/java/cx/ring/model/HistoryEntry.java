@@ -30,6 +30,7 @@ public class HistoryEntry {
     private CallContact mContact;
     private final NavigableMap<Long, HistoryCall> mCalls = new TreeMap<>();
     private final NavigableMap<Long, TextMessage> mTextMessages = new TreeMap<>();
+    private final NavigableMap<Long, DataTransfer> mDataTransfers = new TreeMap<>();
     private String mAccountId;
     int mMissedCount;
     int mOutgoingCount;
@@ -55,6 +56,10 @@ public class HistoryEntry {
 
     public NavigableMap<Long, TextMessage> getTextMessages() {
         return mTextMessages;
+    }
+
+    public NavigableMap<Long, DataTransfer> getDataTransfers() {
+        return mDataTransfers;
     }
 
     public CallContact getContact() {
@@ -96,6 +101,10 @@ public class HistoryEntry {
         }
     }
 
+    public void addDatatransfer(DataTransfer dataTransfer) {
+        mDataTransfers.put(dataTransfer.getTimestamp(), dataTransfer);
+    }
+
     public void updateTextMessage(TextMessage text) {
         long time = text.getDate();
         NavigableMap<Long, TextMessage> msgs = mTextMessages.subMap(time, true, time, true);
@@ -112,7 +121,11 @@ public class HistoryEntry {
     }
 
     public Date getLastInteractionDate() {
-        return new Date(Math.max(mCalls.isEmpty() ? 0 : mCalls.lastEntry().getKey(), mTextMessages.isEmpty() ? 0 : mTextMessages.lastEntry().getKey()));
+        long lastCall = mCalls.isEmpty() ? 0 : mCalls.lastEntry().getKey();
+        long lastTextMessage = mTextMessages.isEmpty() ? 0 : mTextMessages.lastEntry().getKey();
+        long lastInteraction = Math.max(lastCall, lastTextMessage);
+        long lastDataTransfer = mDataTransfers.isEmpty() ? 0 : mDataTransfers.lastEntry().getKey();
+        lastInteraction = Math.max(lastInteraction, lastDataTransfer);
+        return new Date(lastInteraction);
     }
-
 }

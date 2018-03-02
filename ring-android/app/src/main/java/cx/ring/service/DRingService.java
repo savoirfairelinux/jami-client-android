@@ -62,6 +62,7 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Codec;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransfer;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.services.AccountService;
@@ -93,6 +94,11 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
     static public final String ACTION_CONV_DISMISS = BuildConfig.APPLICATION_ID + ".action.CONV_DISMISS";
     static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
+
+    static public final String ACTION_FILE_ACCEPT = BuildConfig.APPLICATION_ID + ".action.FILE_ACCEPT";
+    static public final String ACTION_FILE_CANCEL = BuildConfig.APPLICATION_ID + ".action.FILE_CANCEL";
+    static public final String KEY_TRANSFER_ID = "transferId";
+
     public static final String ACTION_PUSH_RECEIVED = BuildConfig.APPLICATION_ID + ".action.PUSH_RECEIVED";
     public static final String ACTION_PUSH_TOKEN_CHANGED = BuildConfig.APPLICATION_ID + ".push.PUSH_TOKEN_CHANGED";
     public static final String PUSH_RECEIVED_FIELD_FROM = "from";
@@ -638,6 +644,12 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                     handleConvAction(action, extras);
                 }
                 break;
+            case ACTION_FILE_ACCEPT:
+            case ACTION_FILE_CANCEL:
+                if (extras != null) {
+                    handleFileAction(action, extras);
+                }
+                break;
             case ACTION_PUSH_TOKEN_CHANGED:
                 if (extras != null) {
                     handlePushTokenChanged(extras);
@@ -650,6 +662,41 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 break;
             default:
                 break;
+        }
+    }
+
+    private void handleFileAction(String action, Bundle extras) {
+        Long id = extras.getLong(KEY_TRANSFER_ID);
+        if (action.equals(ACTION_FILE_ACCEPT)) {
+            File cacheDir = getCacheDir();
+            if (!cacheDir.exists()) {
+                boolean mkdirs = cacheDir.mkdirs();
+                if (!mkdirs) {
+                    Log.e(TAG, "handleFileAction: not able to create directory at " + cacheDir.toString());
+                    return;
+                }
+            }
+
+            DataTransfer file = mAccountService.getDataTransfer(id);
+            if (file == null) {
+                Log.e(TAG, "handleFileAction: unknown data transfer " + id);
+                return;
+            }
+
+            File cacheFile = new File(cacheDir, file.getDisplayName());
+            if (cacheFile.exists()) {
+                boolean delete = cacheFile.delete();
+                if (!delete) {
+                    Log.e(TAG, "configureForFileInfoTextMessage: not able to delete cache file at " + cacheFile.toString());
+                    return;
+                }
+            }
+
+            Log.d(TAG, "configureForFileInfoTextMessage: cacheFile=" + cacheFile + ",exists=" + cacheFile.exists());
+
+            mAccountService.acceptFileTransfer(id, cacheFile.getAbsolutePath(), 0);
+        } else if (action.equals(ACTION_FILE_CANCEL)) {
+            mAccountService.cancelDataTransfer(id);
         }
     }
 

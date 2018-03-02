@@ -21,7 +21,6 @@
  */
 package cx.ring.account;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -208,14 +207,13 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @NonNull
     private AlertDialog createDeleteDialog() {
-        Activity ownerActivity = this;
-        AlertDialog alertDialog = new AlertDialog.Builder(ownerActivity)
+        AlertDialog alertDialog = new AlertDialog.Builder(AccountEditionActivity.this)
                 .setMessage(R.string.account_delete_dialog_message)
                 .setTitle(R.string.account_delete_dialog_title)
                 .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> mEditionPresenter.removeAccount())
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
-        alertDialog.setOwnerActivity(ownerActivity);
+        alertDialog.setOwnerActivity(AccountEditionActivity.this);
         return alertDialog;
     }
 

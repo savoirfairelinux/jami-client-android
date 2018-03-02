@@ -54,14 +54,14 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.ContactRequestsFragment;
-import cx.ring.daemon.DataTransferInfo;
+import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransfer;
 import cx.ring.model.DataTransferEventCode;
-import cx.ring.model.HistoryFileTransfer;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
@@ -391,37 +391,77 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     }
 
     @Override
-    public void showFileTransferNotification(Long dataTransferId, String contactAccountId) {
-        if (dataTransferId == null || contactAccountId == null) {
+    public void showFileTransferNotification(DataTransfer info, DataTransferEventCode event, CallContact contact) {
+        if (event == null || info == null) {
             return;
         }
+        long dataTransferId = info.getDataTransferId();
+        int notificationId = getFileTransferNotificationId(dataTransferId);
+        if (event == DataTransferEventCode.FINISHED) {
+            notificationManager.cancel(notificationId);
+            mNotificationBuilders.delete(notificationId);
+            return;
+        }
+        NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
+        if (messageNotificationBuilder == null) {
+            messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_FILE_TRANSFER);
+        }
 
-        String contactUri = new Uri(contactAccountId).getRawUriString();
+        boolean ongoing = event == DataTransferEventCode.CREATED || event == DataTransferEventCode.ONGOING;
+        boolean outgoing = info.isOutgoing();
 
+        String contactUri = new Uri(info.getPeerId()).getRawUriString();
         Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID())
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
 
-        int notificationId = getFileTransferNotificationId(dataTransferId);
-        NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
-
-        if (messageNotificationBuilder == null) {
-            messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_FILE_TRANSFER);
-        } else {
-            notificationManager.cancel(notificationId);
-        }
-
-        messageNotificationBuilder.setContentTitle(mContext.getString(R.string.notif_incoming_file_transfer_title))
+        String titleMessage = mContext.getString(outgoing ? R.string.notif_outgoing_file_transfer_title : R.string.notif_incoming_file_transfer_title, contact.getDisplayName());
+        byte[] photo = contact.getPhoto();
+        Bitmap photo_bmp = photo == null ? null : BitmapFactory.decodeByteArray(photo, 0, photo.length);
+        messageNotificationBuilder.setContentTitle(titleMessage)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setAutoCancel(true)
-                .setOngoing(true)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(false)
+                .setOngoing(ongoing)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
-                .setCategory(NotificationCompat.CATEGORY_SOCIAL)
-                .setContentText(mContext.getString(R.string.notif_incoming_file_transfer))
+                .setLargeIcon(photo_bmp)
+                .setCategory(NotificationCompat.CATEGORY_PROGRESS)
+                .setContentText(info.getDisplayName() + " state: " + event.name())
                 .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
                 .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
+        if (event.isOver()) {
+            messageNotificationBuilder.setProgress(0, 0, false);
+        } else if (ongoing) {
+            Log.w(TAG, "messageNotificationBuilder.setProgress " + info.getTotalSize() + " " + info.getBytesProgress());
+            messageNotificationBuilder.setProgress((int)info.getTotalSize(), (int)info.getBytesProgress(), false);
+        } else {
+            messageNotificationBuilder.setProgress(0, 0, true);
+        }
+        messageNotificationBuilder.mActions.clear();
+        if (event == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
+            messageNotificationBuilder
+                    .addAction(R.drawable.ic_incoming_black, mContext.getText(R.string.accept),
+                    PendingIntent.getService(mContext, random.nextInt(),
+                            new Intent(DRingService.ACTION_FILE_ACCEPT)
+                                    .setClass(mContext, DRingService.class)
+                                    .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId),
+                            PendingIntent.FLAG_ONE_SHOT))
+                    .addAction(R.drawable.ic_cancel_black_24dp, mContext.getText(R.string.refuse),
+                            PendingIntent.getService(mContext, random.nextInt(),
+                                    new Intent(DRingService.ACTION_FILE_CANCEL)
+                                            .setClass(mContext, DRingService.class)
+                                            .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId),
+                                    PendingIntent.FLAG_ONE_SHOT));
+        } else if (!event.isOver()) {
+            messageNotificationBuilder
+                    .addAction(R.drawable.ic_cancel_black_24dp, mContext.getText(android.R.string.cancel),
+                            PendingIntent.getService(mContext, random.nextInt(),
+                                    new Intent(DRingService.ACTION_FILE_CANCEL)
+                                            .setClass(mContext, DRingService.class)
+                                            .putExtra(DRingService.KEY_TRANSFER_ID, dataTransferId),
+                                    PendingIntent.FLAG_ONE_SHOT));
+        }
 
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
@@ -492,37 +532,6 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                         mPreferencesService.saveRequestPreferences(accountID, from);
                     } else {
                         Log.d(TAG, "INCOMING_TRUST_REQUEST: already notified for " + from);
-                    }
-                    break;
-                }
-            }
-        } else if (observable instanceof CallService && event != null) {
-            switch (event.getEventType()) {
-                case DATA_TRANSFER: {
-                    Long transferId = event.getEventInput(ServiceEvent.EventInput.TRANSFER_ID, Long.class);
-                    DataTransferEventCode transferEventCode = event.getEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, DataTransferEventCode.class);
-                    DataTransferInfo dataTransferInfo = new DataTransferInfo();
-                    mCallService.dataTransferInfo(transferId, dataTransferInfo);
-
-                    if (transferEventCode == DataTransferEventCode.CREATED) {
-
-                        HistoryFileTransfer historyFileTransfer = new HistoryFileTransfer(transferId, dataTransferInfo.getDisplayName(),
-                                dataTransferInfo.getFlags() == 0, dataTransferInfo.getTotalSize(),
-                                dataTransferInfo.getBytesProgress(), dataTransferInfo.getPeer(),
-                                dataTransferInfo.getAccountId());
-                        mHistoryService.addFileTransfer(historyFileTransfer);
-
-                        if (dataTransferInfo.getFlags() == 1){
-                            showFileTransferNotification(transferId, dataTransferInfo.getPeer());
-                        }
-                    }
-
-                    if (dataTransferInfo.getFlags() == 1) {
-                        mHistoryService.updateFileTransferStatus(transferId, transferEventCode);
-                    }
-
-                    if (transferEventCode == DataTransferEventCode.FINISHED) {
-                        notificationManager.cancel(getFileTransferNotificationId(transferId));
                     }
                     break;
                 }

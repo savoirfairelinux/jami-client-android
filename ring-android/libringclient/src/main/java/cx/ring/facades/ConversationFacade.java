@@ -20,8 +20,6 @@
 package cx.ring.facades;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +32,8 @@ import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.ConfigKey;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransfer;
+import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.HistoryText;
 import cx.ring.model.SecureSipCall;
@@ -272,6 +272,19 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
+    private void parseHistoryTransfers(List<DataTransfer> historyTexts, boolean acceptAllMessages) {
+        for (DataTransfer htext : historyTexts) {
+            CallContact contact = mContactService.findContactByNumber(htext.getPeerId());
+            String key = contact.getIds().get(0);
+            if (mConversationMap.containsKey(key)) {
+                mConversationMap.get(key).addFileTransfer(htext);
+            } else if (acceptAllMessages) {
+                Conversation conversation = new Conversation(contact);
+                conversation.addFileTransfer(htext);
+                mConversationMap.put(key, conversation);
+            }
+        }
+    }
 
     private void addContacts(boolean acceptAllMessages) {
         ArrayList<CallContact> contacts;
@@ -369,6 +382,17 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         }
     }
 
+    private void handleDataTransferEvent(DataTransfer transfer, DataTransferEventCode transferEventCode) {
+        CallContact contact = mContactService.findContactByNumber(transfer.getPeerId());
+        Conversation conversation = startConversation(contact);
+        if (transferEventCode == DataTransferEventCode.CREATED) {
+            conversation.addFileTransfer(transfer);
+        } else {
+            conversation.updateFileTransfer(transfer, transferEventCode);
+        }
+        mNotificationService.showFileTransferNotification(transfer, transferEventCode, contact);
+    }
+
     @Override
     public void update(Observable observable, ServiceEvent event) {
         if (event == null) {
@@ -421,6 +445,9 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
 
                         List<HistoryText> historyTexts = (List<HistoryText>) event.getEventInput(ServiceEvent.EventInput.HISTORY_TEXTS, ArrayList.class);
                         parseHistoryTexts(historyTexts, acceptAllMessages);
+
+                        List<DataTransfer> historyTransfers = (List<DataTransfer>) event.getEventInput(ServiceEvent.EventInput.HISTORY_TRANSFERS, ArrayList.class);
+                        parseHistoryTransfers(historyTransfers, acceptAllMessages);
 
                         aggregateHistory();
 
@@ -540,6 +567,14 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                         setChanged();
                         notifyObservers(new ServiceEvent(ServiceEvent.EventType.USERNAME_CHANGED));
                     }
+                    break;
+                }
+                case DATA_TRANSFER: {
+                    DataTransferEventCode transferEventCode = event.getEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, DataTransferEventCode.class);
+                    DataTransfer transfer = event.getEventInput(ServiceEvent.EventInput.TRANSFER_INFO, DataTransfer.class);
+                    handleDataTransferEvent(transfer, transferEventCode);
+                    setChanged();
+                    notifyObservers(new ServiceEvent(ServiceEvent.EventType.DATA_TRANSFER));
                     break;
                 }
             }
