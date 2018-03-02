@@ -21,6 +21,7 @@
 package cx.ring.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -48,6 +49,7 @@ import cx.ring.model.TextMessage;
 import cx.ring.utils.CircleTransform;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.ResourceMapper;
+import cx.ring.utils.StringUtils;
 import cx.ring.views.ConversationViewHolder;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
@@ -60,10 +62,17 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private final ConversationPresenter presenter;
     private final ConversationFragment conversationFragment;
     private byte[] mPhoto;
+    private final int hPadding;
+    private final int vPadding;
+    private final int vPaddingEmoticon;
 
     public ConversationAdapter(ConversationFragment conversationFragment, ConversationPresenter presenter) {
         this.conversationFragment = conversationFragment;
         this.presenter = presenter;
+        Context context = conversationFragment.getActivity();
+        hPadding = context.getResources().getDimensionPixelSize(R.dimen.padding_medium);
+        vPadding = context.getResources().getDimensionPixelSize(R.dimen.padding_small);
+        vPaddingEmoticon = context.getResources().getDimensionPixelSize(R.dimen.padding_xsmall);
     }
 
     /**
@@ -229,6 +238,30 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
     }
 
+    private static boolean isOnlyEmoticons(final String message) {
+        if (message == null || message.isEmpty() || Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return false;
+        }
+        for (int codePoint : StringUtils.codePoints(message)) {
+            if (Character.isWhitespace(codePoint)) {
+                continue;
+            }
+            Character.UnicodeBlock block = Character.UnicodeBlock.of(codePoint);
+            // Ignore modifier
+            if (block == Character.UnicodeBlock.VARIATION_SELECTORS) {
+                continue;
+            }
+            if (block != Character.UnicodeBlock.EMOTICONS &&
+                    block != Character.UnicodeBlock.MISCELLANEOUS_SYMBOLS &&
+                    block != Character.UnicodeBlock.MISCELLANEOUS_SYMBOLS_AND_PICTOGRAPHS &&
+                    block != Character.UnicodeBlock.MISCELLANEOUS_SYMBOLS_AND_ARROWS &&
+                    block != Character.UnicodeBlock.ENCLOSED_ALPHANUMERIC_SUPPLEMENT) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Configures the viewholder to display a classic text message, ie. not a call info text message
      *
@@ -246,7 +279,18 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         TextMessage ht = (TextMessage) convElement;
 
         convViewHolder.mCid = ht.getContact().getId();
-        convViewHolder.mMsgTxt.setText(ht.getMessage());
+        String message = ht.getMessage().trim();
+        if (isOnlyEmoticons(message)) {
+            convViewHolder.mMsgTxt.getBackground().setAlpha(0);
+            convViewHolder.mMsgTxt.setTextSize(24.f);
+            convViewHolder.mMsgTxt.setPadding(hPadding, vPaddingEmoticon, hPadding, vPaddingEmoticon);
+        } else {
+            convViewHolder.mMsgTxt.getBackground().setAlpha(255);
+            convViewHolder.mMsgTxt.setTextSize(16.f);
+            convViewHolder.mMsgTxt.setPadding(hPadding, vPadding, hPadding, vPadding);
+        }
+
+        convViewHolder.mMsgTxt.setText(message);
         if (convViewHolder.mPhoto != null) {
             convViewHolder.mPhoto.setImageBitmap(null);
         }
