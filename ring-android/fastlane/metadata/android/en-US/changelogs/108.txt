@@ -1,0 +1,8 @@
+- fix ring uri displayed in title instead of display name
+- improve default contact picture
+- improve menu disposition on tablet
+- remove "Add to contacts" popup
+- make Ring Infohash copyable
+- implement data transfer persistence
+- improve text message UI
+- translations update

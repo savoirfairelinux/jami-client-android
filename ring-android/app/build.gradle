@@ -4,11 +4,11 @@ def buildFirebase = project.hasProperty('buildFirebase')
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
-
     defaultConfig {
         minSdkVersion 18
         targetSdkVersion 27
+        versionCode 108
+        versionName "20180309"
         vectorDrawables.useSupportLibrary = true
     }
 
