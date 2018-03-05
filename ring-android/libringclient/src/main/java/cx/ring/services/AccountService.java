@@ -1218,26 +1218,29 @@ public class AccountService extends Observable {
         Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
 
         Account account = getAccount(accountId);
-        if (account != null) {
-            if (state == 0) {
-                CallContact contact = account.getContact(address);
-                if (contact != null) {
-                    contact.setUsername(name);
-                }
+        if (account == null) {
+            Log.e(TAG, "No account matching accountId=" + accountId);
+            return;
+        }
+
+        if (state == 0) {
+            CallContact contact = account.getContact(address);
+            if (contact != null) {
+                contact.setUsername(name);
             }
-            TrustRequest request = account.getRequest(address);
-            if (request != null) {
-                Log.d(TAG, "registeredNameFound: updating TrustRequest " + name);
-                boolean resolved = request.isNameResolved();
-                request.setUsername(name);
-                if (!resolved) {
-                    Log.d(TAG, "registeredNameFound: TrustRequest resolved " + name);
-                    setChanged();
-                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
-                    event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-                    event.addEventInput(ServiceEvent.EventInput.FROM, request.getContactId());
-                    notifyObservers(event);
-                }
+        }
+        TrustRequest request = account.getRequest(address);
+        if (request != null) {
+            Log.d(TAG, "registeredNameFound: updating TrustRequest " + name);
+            boolean resolved = request.isNameResolved();
+            request.setUsername(name);
+            if (!resolved) {
+                Log.d(TAG, "registeredNameFound: TrustRequest resolved " + name);
+                setChanged();
+                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
+                event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
+                event.addEventInput(ServiceEvent.EventInput.FROM, request.getContactId());
+                notifyObservers(event);
             }
         }
 

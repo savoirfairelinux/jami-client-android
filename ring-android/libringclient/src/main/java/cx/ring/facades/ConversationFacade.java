@@ -20,8 +20,6 @@
 package cx.ring.facades;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -528,7 +526,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             }
         } else if (observable instanceof AccountService) {
             switch (event.getEventType()) {
-                case REGISTERED_NAME_FOUND: {
+                case REGISTERED_NAME_FOUND:
                     int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
                     if (state != 0) {
                         break;
@@ -541,7 +539,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                         notifyObservers(new ServiceEvent(ServiceEvent.EventType.USERNAME_CHANGED));
                     }
                     break;
-                }
             }
         }
     }

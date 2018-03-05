@@ -76,6 +76,7 @@ public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView>
 
     public void updateList(boolean clear) {
         if (getView() == null) {
+            Log.d(TAG, "updateList: not able to get view");
             return;
         }
 
