@@ -1,0 +1,2 @@
+- translations update
+- fix ring uri displayed in title instead of display name
