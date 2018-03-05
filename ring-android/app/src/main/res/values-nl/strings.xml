@@ -152,6 +152,7 @@
   <!--Send contact requests-->
   <string name="send_request_button">Versturen</string>
   <string name="send_request_title">Contactverzoek versturen</string>
+  <string name="send_request_msg">Je moet een contactverzoek versturen om met deze gebruiker te communiceren. Je kunt berichten versturen, maar zolang de ander het verzoek niet aanvaardt zal hij/zij deze niet kunnen beantwoorden.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 geblokkeerde contacten</string>
   <!--Smartlist-->
@@ -162,6 +163,7 @@
   <string name="gallery_error_title">Geen Galerij-app gevonden</string>
   <string name="gallery_error_message">Geen app gevonden op dit apparaat om Galerij te openen</string>
   <string name="generic_error">Er is een onbekende fout opgetreden</string>
+  <string name="message_contact_not_trusted_yet">%s staat nog niet in je contacten.\nWil je dit contactverzoek aanvaarden of weigeren?</string>
   <!--File Transfer-->
   <string name="invalid_file">Ongeldig bestand</string>
   <string name="not_able_to_write_file">Kan bestand niet schrijven</string>

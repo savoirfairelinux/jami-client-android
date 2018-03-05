@@ -152,6 +152,7 @@
   <!--Send contact requests-->
   <string name="send_request_button">Skicka</string>
   <string name="send_request_title">Skicka en kontaktförfrågan</string>
+  <string name="send_request_msg">Du måste skicka en kontaktförfrågan för att kommunicera med den här användaren. Så länge som kontakten inte har accepterat din förfrågan, kan du skicka meddelanden men han/hon kan inte svara.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 blockerade kontakter</string>
   <!--Smartlist-->
@@ -162,6 +163,7 @@
   <string name="gallery_error_title">Ingen galleriapp hittades</string>
   <string name="gallery_error_message">Ingen app hittades på enheten, för att öppna Galleri</string>
   <string name="generic_error">Ett okänt fel inträffade</string>
+  <string name="message_contact_not_trusted_yet">%s finns ännu inte i din kontaktlista.\nAccepterar eller avslår du denna kontaktförfrågan?</string>
   <!--File Transfer-->
   <string name="invalid_file">Ogiltig fil</string>
   <string name="not_able_to_write_file">Kunde inte skriva fil</string>
@@ -176,4 +178,5 @@
   <string name="file_transfer_status_invalid_pathname">ogiltigt sökvägsnamn</string>
   <string name="file_transfer_status_unjoinable_peer">oanslutbar motpart</string>
   <string name="file_saved_in">Fil sparad i %s</string>
+  <string name="no_space_left_on_device">Det finns inget utrymme kvar på enheten</string>
 </resources>

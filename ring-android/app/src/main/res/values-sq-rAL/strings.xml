@@ -151,6 +151,7 @@
   <!--Send contact requests-->
   <string name="send_request_button">Dërgoje</string>
   <string name="send_request_title">Dërgoni një kërkesë kontakti</string>
+  <string name="send_request_msg">Duhet të dërgoni një kërkesë kontakti që të komunikoni me këtë përdorues. Për sa kohë që kontakti juaj s’e ka pranuar kërkesën, mund t’i dërgoni mesazhe, por ai s’do të jetë në gjendje t’ju përgjigjet.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 kontakte të bllokuar</string>
   <!--Smartlist-->
@@ -161,6 +162,7 @@
   <string name="gallery_error_title">S\’u gjet aplikacion galerie</string>
   <string name="gallery_error_message">Në këtë pajisje s\’u gjet aplikacion për të hapur Galerinë</string>
   <string name="generic_error">Ndodhi një gabim i panjohur</string>
+  <string name="message_contact_not_trusted_yet">%s s’gjendet ende te kontaktet tuaj.\nE pranoni apo e hidhni tej këtë kërkesë kontakti?</string>
   <!--File Transfer-->
   <string name="invalid_file">Kartelë e pavlefshme</string>
   <string name="not_able_to_write_file">S’arrihet të shkruhet kartelë</string>

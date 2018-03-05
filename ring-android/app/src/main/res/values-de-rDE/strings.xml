@@ -33,6 +33,7 @@
   <string name="menu_item_home">Home</string>
   <string name="menu_item_contact_request">Kontaktanfragen</string>
   <string name="menu_item_accounts">Konten verwalten</string>
+  <string name="menu_item_account">Konto verwalten</string>
   <string name="menu_item_settings">Einstellungen</string>
   <string name="menu_item_share">Teile meine RING-ID</string>
   <string name="menu_item_about">Über Ring</string>
@@ -60,6 +61,13 @@
   <string name="notif_current_call_title">Aktueller Anruf mit %1$s</string>
   <string name="notif_current_call">Aktueller Anruf</string>
   <string name="notif_channel_calls">Anrufe</string>
+  <string name="notif_channel_messages">Nachrichten</string>
+  <string name="notif_channel_requests">Anfragen</string>
+  <string name="notif_channel_file_transfer">Dateiübertragung</string>
+  <string name="notif_mark_as_read">Als gelesen markieren</string>
+  <string name="notif_incoming_file_transfer_title">Eingehende Dateiübertragung </string>
+  <string name="notif_incoming_file_transfer">Jemand möchte dir eine Datei senden</string>
+  <string name="action_open">Öffnen</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Sie:</string>
   <string name="action_call_hangup">Auflegen</string>
@@ -84,6 +92,7 @@
   <string name="send_message">Nachricht senden</string>
   <string name="message_sending">Nachricht senden...</string>
   <string name="time_just_now">Gerade eben</string>
+  <string name="send_file">Datei senden</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera-Berechtigung</string>
   <string name="permission_dialog_camera_message">Video-Konferenzen benötigen Zugriff auf die Kamera. Bitte erlauben Sie diesen Zugriff.</string>
@@ -111,6 +120,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Fügen %1$s hinzu?</string>
   <string name="prompt_new_password">Neues Passwort</string>
+  <string name="prompt_new_password_optional">Neues Passwort (optional)</string>
   <string name="prompt_new_password_repeat">Neues Passwort wiederholen</string>
   <string name="account_create_title">Erstelle ein Ring-Konto</string>
   <string name="prompt_new_username">Neuen Benutzername eingeben</string>
@@ -141,11 +151,20 @@
   <!--Send contact requests-->
   <string name="send_request_button">Senden</string>
   <string name="send_request_title">Eine Kontaktanfrage verschicken</string>
+  <string name="send_request_msg">Es ist eine Kontaktanfrage nötig, um mit dem Kontakt zu kommunizieren. So lange diese Anfrage vom Gegenüber nicht akzeptiert wurde, können weiterhin Nachrichten gesendet werden, aber dieser kann nicht antworten.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 blockierte Kontakte</string>
   <!--Smartlist-->
   <string name="no_contact_request">Keine Kontaktanfrage verschickt</string>
   <string name="contact_request_sent">Kontaktanfrage verschickt</string>
+  <string name="search_results">Suchergebnisse</string>
   <string name="tv_contact_row_header">Kontakte</string>
+  <string name="gallery_error_title">Keine Gallerie-Anwendung gefunden</string>
+  <string name="gallery_error_message">Keine Anwendung zum Öffnen von Gallerie auf dem Gerät vorhanden</string>
+  <string name="generic_error">Ein unbekannter Fehler ist aufgetreten</string>
   <!--File Transfer-->
+  <string name="invalid_file">Ungültige Datei</string>
+  <string name="not_able_to_write_file">Datei kann nicht geschrieben werden</string>
+  <string name="file_transfer_status_created">Initialisiere Dateiübertragung </string>
+  <string name="file_transfer_status_unsupported">Nicht unterstützt</string>
 </resources>

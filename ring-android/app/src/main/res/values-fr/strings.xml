@@ -2,7 +2,7 @@
 <resources>
   <!--About-->
   <string name="feedback_section">Commentaire</string>
-  <string name="report">&lt;u&gt;Envoyez-nous un courriel&lt;/u&gt;</string>
+  <string name="report">&lt;u&gt;Veuillez nous rejoindre via courriel&lt;/u&gt;</string>
   <string name="section_license">Licence</string>
   <string name="sponsor_section">Ring est un logiciel libre développé et soutenu par</string>
   <string name="copyright_section">Copyright</string>
@@ -14,7 +14,7 @@
   <string name="website_chooser_title">Voir le site web avec...</string>
   <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations, 
 &lt;u&gt;GNU General Public License version 3 or later&lt;/u&gt;</string>
-  <string name="description">Ring est un logiciel libre de communication universelle qui respecte les libertés et la vie privée de ses utilisateurs.</string>
+  <string name="description">Ring est un logiciel libre de communication universel qui respecte la liberté et la vie privée de ses utilisateurs.</string>
   <string name="credits">Crédits</string>
   <!--About dialog-->
   <string name="developed_by">Développé par</string>
@@ -152,6 +152,7 @@
   <!--Send contact requests-->
   <string name="send_request_button">Envoyer</string>
   <string name="send_request_title">Envoyer une invitation</string>
+  <string name="send_request_msg">Pour communiquer avec cet utilisateur il est nécessaire de lui envoyer une invitation. Tant que cette personne n\'a pas accepté votre invitation, vous pouvez lui envoyer des messages mais ils ne pourront être lu.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">Aucun contact bloqué</string>
   <!--Smartlist-->
@@ -162,6 +163,7 @@
   <string name="gallery_error_title">Aucune application Gallery sur l\'appareil</string>
   <string name="gallery_error_message">Aucune application trouvé sur l\'appareil pour ouvrir Gallery</string>
   <string name="generic_error">Une étrange erreur s\'est produite</string>
+  <string name="message_contact_not_trusted_yet">%sne fait pas partie actuellement de vos contacts.\n Acceptez-vous ou refusez-vous cette invitation ?</string>
   <!--File Transfer-->
   <string name="invalid_file">Fichier invalide</string>
   <string name="not_able_to_write_file">Impossible d\'écrire le fichier</string>
