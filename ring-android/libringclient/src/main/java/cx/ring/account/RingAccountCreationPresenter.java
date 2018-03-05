@@ -25,6 +25,7 @@ import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
+import cx.ring.utils.Log;
 import cx.ring.utils.NameLookupInputHandler;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -137,6 +138,7 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
 
     private void handleBlockchainResult(int state, String name) {
         if (getView() == null) {
+            Log.d(TAG, "handleBlockchainResult: not able to get view");
             return;
         }
         if (mRingAccountViewModel.getUsername() == null || mRingAccountViewModel.getUsername().isEmpty()) {
