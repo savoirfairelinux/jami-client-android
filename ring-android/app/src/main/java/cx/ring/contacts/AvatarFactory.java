@@ -53,7 +53,6 @@ public class AvatarFactory {
             R.color.brown_500, R.color.blue_grey_500
     };
     private static final int DEFAULT_AVATAR_SIZE = 128;
-    private static final int MIN_TV_SIZE = 160;
 
     private AvatarFactory() {
     }

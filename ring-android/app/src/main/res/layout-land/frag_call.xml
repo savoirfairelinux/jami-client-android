@@ -50,16 +50,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         android:orientation="horizontal"
         android:weightSum="100">
 
-        <com.skyfishjy.library.RippleBackground
-            android:id="@+id/ripple_animation"
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="50"
-            app:rb_color="@color/white"
-            app:rb_duration="5000"
-            app:rb_radius="20dp"
-            app:rb_rippleAmount="3"
-            app:rb_scale="6">
+            android:layout_margin="20dp"
+            android:layout_weight="50">
+
+            <com.rodolfonavalon.shaperipplelibrary.ShapeRipple
+                android:id="@+id/shape_ripple"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:enable_color_transition="true"
+                app:ripple_color="@color/white"
+                app:ripple_count="3"
+                app:ripple_duration="5000"
+                app:ripple_stroke_width="15dp" />
 
             <ImageView
                 android:id="@+id/contact_bubble"
@@ -67,7 +72,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 android:layout_height="160dp"
                 android:layout_centerInParent="true"
                 tools:src="@drawable/ic_contact_picture_fallback" />
-        </com.skyfishjy.library.RippleBackground>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="0dp"

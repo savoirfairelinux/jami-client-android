@@ -55,7 +55,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.skyfishjy.library.RippleBackground;
+import com.rodolfonavalon.shaperipplelibrary.ShapeRipple;
+import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -120,8 +121,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     @BindView(R.id.dialpad_edit_text)
     protected EditText mNumeralDialEditText;
 
-    @BindView(R.id.ripple_animation)
-    protected RippleBackground mPulseAnimation;
+    @BindView(R.id.shape_ripple)
+    protected ShapeRipple shapeRipple = null;
 
     @BindView(R.id.video_preview_surface)
     protected SurfaceView mVideoSurface = null;
@@ -138,6 +139,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     private PowerManager.WakeLock mScreenWakeLock;
     private DisplayManager.DisplayListener displayListener;
     private int mCurrentOrientation = Configuration.ORIENTATION_UNDEFINED;
+    private boolean firstUpdate = true;
 
     public static CallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean audioOnly) {
         Bundle bundle = new Bundle();
@@ -320,6 +322,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             }
         });
         mVideoPreview.setZOrderMediaOverlay(true);
+
+        shapeRipple.setRippleShape(new Circle());
     }
 
     @Override
@@ -497,13 +501,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                 .transform(new CircleTransform());
 
         getActivity().runOnUiThread(() -> {
-            Glide.with(getActivity())
-                    .load(contactPicture)
-                    .apply(options)
-                    .into(contactBubbleView);
-
             boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
-            boolean firstShow = contactBubbleTxt.getText() != null && contactBubbleTxt.getText().length() > 0;
 
             if (hasProfileName) {
                 contactBubbleNumTxt.setVisibility(View.VISIBLE);
@@ -514,8 +512,13 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                 contactBubbleTxt.setText(username);
             }
 
-            if (firstShow) {
-                mPulseAnimation.startRippleAnimation();
+            if (firstUpdate) {
+                firstUpdate = false;
+
+                Glide.with(getActivity())
+                        .load(contactPicture)
+                        .apply(options)
+                        .into(contactBubbleView);
             }
         });
     }
@@ -560,6 +563,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     @Override
     public void initNormalStateDisplay(final boolean audioOnly) {
         getActivity().runOnUiThread(() -> {
+            shapeRipple.stopRipple();
+
             acceptButton.setVisibility(View.GONE);
             refuseButton.setVisibility(View.GONE);
             hangupButton.setVisibility(View.VISIBLE);
