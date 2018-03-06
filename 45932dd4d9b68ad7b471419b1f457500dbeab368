@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "5a3f45e8_00db12ee",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/navigation/RingNavigationPresenter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-06T16:40:18Z",
+      "side": 1,
+      "message": "From the official documentation:\nhttps://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html\n\n\"Applications should throw instances of this class to indicate other illegal uses of the null object.\"",
+      "parentUuid": "5a3f45e8_60cc9636",
+      "range": {
+        "startLine": 117,
+        "startChar": 22,
+        "endLine": 117,
+        "endChar": 46
+      },
+      "revId": "45932dd4d9b68ad7b471419b1f457500dbeab368",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3f45e8_c0d12acf",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/navigation/RingNavigationPresenter.java",
         "patchSetId": 12
