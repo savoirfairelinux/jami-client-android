@@ -101,7 +101,7 @@ dependencies {
     implementation "com.jakewharton:butterknife:$butterknife_version"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
 
-    implementation 'com.skyfishjy.ripplebackground:library:1.0.1'
+    implementation 'com.rodolfonavalon:ShapeRippleLibrary:1.0.0'
 
     // Dagger dependency injection
     implementation "com.google.dagger:dagger:$dagger_version"

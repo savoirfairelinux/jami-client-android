@@ -44,7 +44,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.skyfishjy.library.RippleBackground;
+import com.rodolfonavalon.shaperipplelibrary.ShapeRipple;
+import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
 import java.util.Locale;
 
@@ -98,8 +99,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @BindView(R.id.call_status_txt)
     protected TextView mCallStatusTxt;
 
-    @BindView(R.id.ripple_animation)
-    protected RippleBackground mPulseAnimation;
+    @BindView(R.id.shape_ripple)
+    protected ShapeRipple shapeRipple = null;
 
     @BindView(R.id.video_preview_surface)
     protected SurfaceView mVideoSurface = null;
@@ -111,6 +112,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     private PowerManager.WakeLock mScreenWakeLock;
     private Handler handler;
     private Runnable runnable;
+    private boolean firstUpdate = true;
 
     public static TVCallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean audioOnly) {
         Bundle bundle = new Bundle();
@@ -235,6 +237,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         });
         mVideoPreview.setZOrderMediaOverlay(true);
 
+        shapeRipple.setRippleShape(new Circle());
+
         handler = new Handler();
         runnable = () -> presenter.uiVisibilityChanged(false);
     }
@@ -323,33 +327,27 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void updateContactBubble(@NonNull final CallContact contact) {
+        String username = contact.getRingUsername();
+        String displayName = contact.getDisplayName();
+
+        String ringId = contact.getIds().get(0);
+        Drawable contactPicture = AvatarFactory.getAvatar(
+                getActivity(),
+                contact.getPhoto(),
+                username,
+                ringId);
+
+        Log.d(TAG, "updateContactBubble: username=" + username + ", ringId=" + ringId);
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.ic_contact_picture_fallback)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(false)
+                .transform(new CircleTransform());
+
         getActivity().runOnUiThread(() -> {
-            String username = contact.getRingUsername();
-            String ringId = contact.getIds().get(0);
-
-            Log.d(TAG, "updateContactBubble: username=" + username + ", ringId=" + ringId);
-
-            RequestOptions options = new RequestOptions()
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_contact_picture_fallback)
-                    .error(R.drawable.ic_contact_picture_fallback)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(false)
-                    .transform(new CircleTransform());
-
-            Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
-                    contact.getPhoto(),
-                    username,
-                    ringId);
-
-            Glide.with(getActivity())
-                    .load(contactPicture)
-                    .apply(options)
-                    .into(contactBubbleView);
-
-            String displayName = contact.getDisplayName();
             boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
-            boolean firstShow = contactBubbleTxt.getText() != null && contactBubbleTxt.getText().length() > 0;
 
             if (hasProfileName) {
                 contactBubbleNumTxt.setVisibility(View.VISIBLE);
@@ -360,8 +358,13 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
                 contactBubbleTxt.setText(username);
             }
 
-            if (firstShow) {
-                mPulseAnimation.startRippleAnimation();
+            if (firstUpdate) {
+                firstUpdate = false;
+
+                Glide.with(getActivity())
+                        .load(contactPicture)
+                        .apply(options)
+                        .into(contactBubbleView);
             }
         });
     }
@@ -388,6 +391,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     @Override
     public void initNormalStateDisplay(final boolean audioOnly) {
         getActivity().runOnUiThread(() -> {
+            shapeRipple.stopRipple();
+
             acceptButton.setVisibility(View.GONE);
             refuseButton.setVisibility(View.GONE);
             hangupButton.setVisibility(View.VISIBLE);
