@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_e0e38603",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/views/CustomTitleView.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-06T16:37:59Z",
+      "side": 1,
+      "message": "static final",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 22
+      },
+      "revId": "aedd32e73c93c41579ec4676983b51aad0381f2c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
