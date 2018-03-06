@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_404ebac2",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVProfileCreationFragment.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-06T16:37:59Z",
+      "side": 1,
+      "message": "Profile picture should be kept at original resolution as long as possible, only resized for network transmission.",
+      "range": {
+        "startLine": 239,
+        "startChar": 23,
+        "endLine": 239,
+        "endChar": 34
+      },
+      "revId": "45932dd4d9b68ad7b471419b1f457500dbeab368",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_204baeb1",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVProfileEditingFragment.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-06T16:37:59Z",
+      "side": 1,
+      "message": "Options shall be static final, might be provided by AvatarFactory",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 50
+      },
+      "revId": "45932dd4d9b68ad7b471419b1f457500dbeab368",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_80c72212",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/views/CustomTitleView.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-06T16:37:59Z",
+      "side": 1,
+      "message": "Shall be private final, might be provided by AvatarFactory.\n\nWhy no disk cache ?",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 113,
+        "endChar": 50
+      },
+      "revId": "45932dd4d9b68ad7b471419b1f457500dbeab368",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_60cc9636",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/navigation/RingNavigationPresenter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-06T16:37:59Z",
+      "side": 1,
+      "message": "from https://stackoverflow.com/questions/3881/illegalargumentexception-or-nullpointerexception-for-a-null-parameter/8160#8160 :\nThe generally infallible \"Effective Java\" discusses this briefly in Item 42 (first edition), Item 60 (second edition), or Item 72 (third edition) \"Favor the use of standard exceptions\":\n\n\"Arguably, all erroneous method invocations boil down to an illegal argument or illegal state, but other exceptions are standardly used for certain kinds of illegal arguments and states. If a caller passes null in some parameter for which null values are prohibited, convention dictates that NullPointerException be thrown rather than IllegalArgumentException.\"",
+      "range": {
+        "startLine": 117,
+        "startChar": 22,
+        "endLine": 117,
+        "endChar": 46
+      },
+      "revId": "45932dd4d9b68ad7b471419b1f457500dbeab368",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_c0d12acf",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/navigation/RingNavigationPresenter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-06T16:37:59Z",
+      "side": 1,
+      "message": "idem",
+      "range": {
+        "startLine": 132,
+        "startChar": 22,
+        "endLine": 132,
+        "endChar": 46
+      },
+      "revId": "45932dd4d9b68ad7b471419b1f457500dbeab368",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
