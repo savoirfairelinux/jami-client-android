@@ -293,6 +293,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
     private void checkTrustRequestStatus() {
         if (getIncomingTrustRequests() != null) {
+            Log.d(TAG, "checkTrustRequestStatus: null getIncomingTrustRequests()");
             return;
         }
         if (mCurrentContact != null && CallContact.Status.NO_REQUEST.equals(mCurrentContact.getStatus())) {
@@ -324,13 +325,15 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
     private TrustRequest getIncomingTrustRequests() {
         if (mAccountService == null) {
+            Log.d(TAG, "getIncomingTrustRequests: not able to get account service");
             return null;
         }
-        Account acc = mAccountService.getCurrentAccount();
-        if (acc == null) {
+        Account currentAccount = mAccountService.getCurrentAccount();
+        if (currentAccount == null) {
+            Log.d(TAG, "getIncomingTrustRequests: not able to get current account");
             return null;
         }
-        return acc.getRequest(mContactRingId.getHost());
+        return currentAccount.getRequest(mContactRingId.getHost());
     }
 
     public void onBlockIncomingContactRequest() {
