@@ -36,7 +36,6 @@ import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.Rational;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -126,7 +125,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     protected SurfaceView mVideoPreview = null;
 
     private MenuItem speakerPhoneBtn = null;
-    private MenuItem addContactBtn = null;
     private MenuItem flipCameraBtn = null;
     private MenuItem dialPadBtn = null;
     private MenuItem changeScreenOrientationBtn = null;
@@ -352,7 +350,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         super.onCreateOptionsMenu(m, inf);
         inf.inflate(R.menu.ac_call, m);
         speakerPhoneBtn = m.findItem(R.id.menuitem_speaker);
-        addContactBtn = m.findItem(R.id.menuitem_addcontact);
         flipCameraBtn = m.findItem(R.id.menuitem_camera_flip);
         dialPadBtn = m.findItem(R.id.menuitem_dialpad);
         changeScreenOrientationBtn = m.findItem(R.id.menuitem_change_screen_orientation);
@@ -371,9 +368,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             case android.R.id.home:
             case R.id.menuitem_chat:
                 presenter.chatClick();
-                break;
-            case R.id.menuitem_addcontact:
-                presenter.acceptCall();
                 break;
             case R.id.menuitem_speaker:
                 presenter.speakerClick();
@@ -529,9 +523,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                 speakerPhoneBtn.getIcon().setAlpha(isSpeakerOn ? 255 : 128);
             }
             speakerPhoneBtn.setChecked(isSpeakerOn);
-        }
-        if (addContactBtn != null) {
-            addContactBtn.setVisible(hasContact);
         }
         if (flipCameraBtn != null) {
             flipCameraBtn.setVisible(displayFlip);

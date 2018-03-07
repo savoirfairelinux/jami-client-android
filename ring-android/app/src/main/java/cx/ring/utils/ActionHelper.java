@@ -112,26 +112,6 @@ public class ActionHelper {
         }
     }
 
-    public static void displayAddContactConfirmationDialog(final CallContact contact, final Context context) {
-        if (context == null) {
-            Log.d(TAG, "displayAddContactConfirmationDialog: context is null");
-            return;
-        }
-
-        new AlertDialog.Builder(context)
-                .setTitle(R.string.ab_action_contact_add_question)
-                .setMessage(context.getString(R.string.add_call_contact_number_to_contacts,
-                        contact.getDisplayName()))
-                .setPositiveButton(R.string.ab_action_contact_add, (dialog, whichButton) -> {
-                    Intent intent = getAddNumberIntentForContact(contact);
-                    context.startActivity(intent);
-                })
-                .setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
-                    /* Terminate with no action */
-                })
-                .show();
-    }
-
     public static Intent getAddNumberIntentForContact(CallContact contact) {
         final Intent intent = new Intent(Intent.ACTION_INSERT_OR_EDIT);
         intent.setType(ContactsContract.Contacts.CONTENT_ITEM_TYPE);
@@ -160,10 +140,7 @@ public class ActionHelper {
             return;
         }
 
-        if (contact.getId() == CallContact.UNKNOWN_ID) {
-            Log.d(TAG, "displayContact: contact is unknown");
-            ActionHelper.displayAddContactConfirmationDialog(contact, context);
-        } else {
+        if (contact.getId() != CallContact.UNKNOWN_ID) {
             Log.d(TAG, "displayContact: contact is known, displaying...");
             try {
                 Intent intent = new Intent(Intent.ACTION_VIEW);

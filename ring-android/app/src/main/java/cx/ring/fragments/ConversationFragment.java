@@ -324,7 +324,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.conversation_actions, menu);
-        mAddContactBtn = menu.findItem(R.id.menuitem_addcontact);
     }
 
     @Override
@@ -338,9 +337,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
                 return true;
             case R.id.conv_action_videocall:
                 presenter.callWithAudioOnly(false);
-                return true;
-            case R.id.menuitem_addcontact:
-                presenter.addContact();
                 return true;
             case R.id.menuitem_delete:
                 presenter.deleteAction();
