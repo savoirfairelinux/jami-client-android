@@ -511,10 +511,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void goToContact(CallContact callContact) {
-        Activity activity = getActivity();
-        if (activity != null) {
-            ActionHelper.displayContact(getActivity(), callContact);
-        }
+        ActionHelper.displayContact(getActivity(), callContact);
     }
 
     @Override

@@ -15,12 +15,6 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/menuitem_addcontact"
-        android:icon="@drawable/ic_person_add_white"
-        android:title="@string/ab_action_contact_add"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/menuitem_copy_content"
         android:icon="@drawable/ic_content_copy_white"
         android:title="@string/conversation_action_copy_peer_number"

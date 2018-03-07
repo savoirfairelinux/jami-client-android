@@ -191,7 +191,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
     }
 
     public void photoClicked(SmartListViewModel smartListViewModel) {
-        getView().goToContact(mContactService.getContact(new Uri(smartListViewModel.getUuid())));
+        // ignored
     }
 
     public void quickCallClicked() {
