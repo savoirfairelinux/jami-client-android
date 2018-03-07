@@ -28,6 +28,7 @@ import javax.inject.Inject;
 import cx.ring.daemon.Blob;
 import cx.ring.daemon.DataTransferInfo;
 import cx.ring.facades.ConversationFacade;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
@@ -343,6 +344,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
     private void checkTrustRequestStatus() {
         if (getIncomingTrustRequests() != null) {
+            Log.d(TAG, "checkTrustRequestStatus: null getIncomingTrustRequests()");
             return;
         }
         if (mCurrentContact != null && CallContact.Status.NO_REQUEST.equals(mCurrentContact.getStatus())) {
@@ -389,7 +391,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     private TrustRequest getIncomingTrustRequests() {
-        return mAccountService.getCurrentAccount().getRequest(mContactRingId.getHost());
+        Account currentAccount = mAccountService.getCurrentAccount();
+        if (currentAccount == null) {
+            Log.d(TAG, "getIncomingTrustRequests: not able to gert current account");
+            return null;
+        }
+        return currentAccount.getRequest(mContactRingId.getHost());
     }
 
     public void onBlockIncomingContactRequest() {
