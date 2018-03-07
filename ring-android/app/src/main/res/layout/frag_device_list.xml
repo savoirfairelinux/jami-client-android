@@ -96,6 +96,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:paddingRight="16dp"
                     android:paddingTop="8dp"
                     android:singleLine="true"
+                    android:textIsSelectable="true"
                     android:textStyle="bold"
                     tools:text="ring:8F29045378ACA68F2ACA2346078ACA68F2ACA290" />
 
