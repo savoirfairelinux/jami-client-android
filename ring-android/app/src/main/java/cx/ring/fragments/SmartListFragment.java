@@ -35,6 +35,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -203,7 +204,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        if (null != mLoader) {
+        if (mLoader != null) {
             // if there's another fragment on top of this one, when a rotation is done, this fragment is destroyed and
             // in the process of recreating it, as it is not shown on the top of the screen, the "onCreateView" method is never called, so the mLoader is null
             outState.putBoolean(STATE_LOADING, mLoader.isShown());
@@ -270,6 +271,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     public void setLoading(final boolean loading) {
         getActivity().runOnUiThread(() -> {
             if (mLoader == null) {
+                Log.d(TAG, "setLoading: not able to display loader");
                 return;
             }
             mLoader.setVisibility(loading ? View.VISIBLE : View.GONE);
@@ -299,7 +301,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
      * @param delay   time in ms
      */
     private void displayFloatingActionButtonWithDelay(boolean visible, int delay) {
-        if (this.mFloatingActionButton != null) {
+        if (mFloatingActionButton != null) {
             final int visibility = (visible) ? View.VISIBLE : View.GONE;
             new Handler().postDelayed(() -> mFloatingActionButton.setVisibility(visibility), delay);
         }
@@ -365,6 +367,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     public void displayNewContactRowWithName(final String name) {
         getActivity().runOnUiThread(() -> {
             if (mNewContact == null) {
+                Log.d(TAG, "displayNewContactRowWithName: not able to display new contact row");
                 return;
             }
             ((TextView) mNewContact.findViewById(R.id.display_name)).setText(name);
@@ -433,6 +436,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     public void hideSearchRow() {
         getActivity().runOnUiThread(() -> {
             if (mNewContact == null) {
+                Log.d(TAG, "hideSearchRow: not able to hide search row");
                 return;
             }
             mNewContact.setVisibility(View.GONE);
@@ -443,6 +447,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     public void hideErrorPanel() {
         getActivity().runOnUiThread(() -> {
             if (mErrorMessagePane == null) {
+                Log.d(TAG, "hideErrorPanel: not able to hide error panel");
                 return;
             }
             mErrorMessagePane.setVisibility(View.GONE);
@@ -521,6 +526,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     public void scrollToTop() {
         getActivity().runOnUiThread(() -> {
             if (mRecyclerView == null) {
+                Log.d(TAG, "scrollToTop: not able to scroll to top");
                 return;
             }
             mRecyclerView.scrollToPosition(0);
