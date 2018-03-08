@@ -294,8 +294,17 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     }
 
     private void getContactDetails() {
+        if (mSipCall == null) {
+            Log.e(TAG, "Not able to get SIP call");
+            return;
+        }
         CallContact callContact = mSipCall.getContact();
+        if (mContactService == null) {
+            Log.e(TAG, "Not able to get contact service");
+            return;
+        }
         mContactService.loadContactData(callContact);
+
         getView().updateContactBubble(callContact);
     }
 

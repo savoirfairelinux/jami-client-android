@@ -211,6 +211,10 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
     }
 
     public void selectSection(Section manage) {
+        if (mMenuAdapter == null) {
+            Log.e(TAG, "null menu adapter");
+            return;
+        }
         mMenuAdapter.setSelection(manage.position);
     }
 
