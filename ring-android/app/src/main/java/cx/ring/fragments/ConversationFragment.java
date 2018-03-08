@@ -18,9 +18,7 @@
 package cx.ring.fragments;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -86,7 +84,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     public static final String KEY_ACCOUNT_ID = "ACCOUNT_ID";
 
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
-    private static final int MIN_SIZE_TABLET = 960;
 
     private static final int REQUEST_CODE_FILE_PICKER = 1000;
     private static final int REQUEST_PERMISSION_CAMERA = 1001;
@@ -128,11 +125,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     private ConversationAdapter mAdapter = null;
     private NumberAdapter mNumberAdapter = null;
-
-    public static boolean isTabletMode(Context context) {
-        return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
-                && context.getResources().getConfiguration().screenWidthDp >= MIN_SIZE_TABLET;
-    }
 
     private static int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)

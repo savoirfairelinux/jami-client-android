@@ -68,6 +68,7 @@ import cx.ring.smartlist.SmartListView;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.ClipboardHelper;
+import cx.ring.utils.DeviceUtils;
 import cx.ring.viewholders.SmartListViewHolder;
 
 public class SmartListFragment extends BaseFragment<SmartListPresenter> implements SearchView.OnQueryTextListener,
@@ -234,7 +235,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
         mNewContact.setVisibility(View.GONE);
 
-        if (ConversationFragment.isTabletMode(getActivity())) {
+        if (DeviceUtils.isTablet(getActivity())) {
             isTabletMode = true;
         }
     }

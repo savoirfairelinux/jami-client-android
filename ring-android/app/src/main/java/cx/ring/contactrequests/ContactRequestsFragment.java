@@ -39,6 +39,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.utils.DeviceUtils;
 
 public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresenter> implements ContactRequestsView,
         ContactRequestViewHolder.ContactRequestListeners {
@@ -137,7 +138,7 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
 
     @Override
     public void goToConversation(String accountId, String contactId) {
-        if (ConversationFragment.isTabletMode(getActivity())) {
+        if (DeviceUtils.isTablet(getActivity())) {
             Bundle bundle = new Bundle();
             bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
             bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);

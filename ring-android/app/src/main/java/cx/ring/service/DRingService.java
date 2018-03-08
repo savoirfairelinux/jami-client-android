@@ -24,13 +24,11 @@
 package cx.ring.service;
 
 import android.app.Service;
-import android.app.UiModeManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
@@ -77,6 +75,7 @@ import cx.ring.services.NotificationService;
 import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.PreferencesService;
 import cx.ring.tv.call.TVCallActivity;
+import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
@@ -765,7 +764,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 mNotificationService.cancelCallNotification(callId.hashCode());
                 break;
             case ACTION_CALL_VIEW:
-                if (isTv()) {
+                if (DeviceUtils.isTv(this)) {
                     startActivity(new Intent(Intent.ACTION_VIEW)
                             .putExtras(extras)
                             .setClass(getApplicationContext(), TVCallActivity.class)
@@ -809,11 +808,6 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         }
     }
 
-    private boolean isTv() {
-        UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
-        return (uiModeManager != null && uiModeManager.getCurrentModeType() == Configuration.UI_MODE_TYPE_TELEVISION);
-    }
-
     public void refreshContacts() {
         if (mAccountService.getCurrentAccount() == null) {
             return;
@@ -853,7 +847,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                         extras.putString("callId", call.getCallId());
                         startActivity(new Intent(Intent.ACTION_VIEW)
                                 .putExtras(extras)
-                                .setClass(getApplicationContext(), isTv() ? TVCallActivity.class : CallActivity.class)
+                                .setClass(getApplicationContext(), DeviceUtils.isTv(this) ? TVCallActivity.class : CallActivity.class)
                                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
                     }
                     break;

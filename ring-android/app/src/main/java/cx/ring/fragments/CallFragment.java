@@ -73,6 +73,7 @@ import cx.ring.services.HardwareServiceImpl;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.CircleTransform;
+import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.MediaButtonsHelper;
 
@@ -624,7 +625,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     @Override
     public void goToConversation(String accountId, String conversationId) {
         Intent intent = new Intent();
-        if (ConversationFragment.isTabletMode(getActivity())) {
+        if (DeviceUtils.isTablet(getActivity())) {
             intent.setClass(getActivity(), HomeActivity.class)
                     .setAction(DRingService.ACTION_CONV_ACCEPT)
                     .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, conversationId);
