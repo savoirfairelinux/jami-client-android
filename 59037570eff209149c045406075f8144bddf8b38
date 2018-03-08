@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a3f45e8_7793bdfa",
+        "filename": "ring-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-03-08T22:03:47Z",
+      "side": 1,
+      "message": "This is just some automatic IDE code reformat. Nothing added here, and nothing removed.",
+      "parentUuid": "5a3f45e8_b7eee589",
+      "range": {
+        "startLine": 165,
+        "startChar": 12,
+        "endLine": 296,
+        "endChar": 27
+      },
+      "revId": "59037570eff209149c045406075f8144bddf8b38",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3f45e8_3702d53e",
         "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
         "patchSetId": 1
