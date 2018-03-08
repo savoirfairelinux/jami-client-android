@@ -22,6 +22,30 @@
       "revId": "253d5410a395bfd9fe5dd0361756b7af4b90bd3a",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_97e2c9d3",
+        "filename": "ring-android/app/build.gradle",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-03-08T16:52:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3f45e8_5773214d",
+      "range": {
+        "startLine": 40,
+        "startChar": 26,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "253d5410a395bfd9fe5dd0361756b7af4b90bd3a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
