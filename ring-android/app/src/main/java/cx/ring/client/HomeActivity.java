@@ -72,6 +72,7 @@ import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
+import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -269,7 +270,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
             presentTrustRequestFragment(extra.getString(ContactRequestsFragment.ACCOUNT_ID));
             return;
         }
-        if (!ConversationFragment.isTabletMode(this) || !DRingService.ACTION_CONV_ACCEPT.equals(intent.getAction())) {
+        if (!DeviceUtils.isTablet(this) || !DRingService.ACTION_CONV_ACCEPT.equals(intent.getAction())) {
             return;
         }
 
