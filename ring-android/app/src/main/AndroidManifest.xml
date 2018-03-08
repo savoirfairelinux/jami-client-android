@@ -162,9 +162,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".client.CallActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
             android:label="@string/app_name"
+            android:resizeableActivity="true"
             android:screenOrientation="fullUser"
             android:showOnLockScreen="true"
-            android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
             android:theme="@style/AppTheme.ActionBar.Transparent"
             android:windowSoftInputMode="adjustPan|stateHidden">
@@ -242,6 +242,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <service
             android:name=".service.DRingService"
+            android:enabled="true"
             android:exported="false">
             <intent-filter>
                 <action android:name=".service.DRingService" />
@@ -288,8 +289,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <activity
             android:name="cx.ring.tv.call.TVCallActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
-            android:showOnLockScreen="true"
             android:resizeableActivity="true"
+            android:showOnLockScreen="true"
             android:supportsPictureInPicture="true"
             android:theme="@style/AppThemeBase">
             <intent-filter>

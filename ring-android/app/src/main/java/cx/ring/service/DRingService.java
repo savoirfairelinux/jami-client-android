@@ -23,6 +23,7 @@
  */
 package cx.ring.service;
 
+import android.app.Notification;
 import android.app.Service;
 import android.app.UiModeManager;
 import android.content.BroadcastReceiver;
@@ -41,6 +42,7 @@ import android.os.PowerManager;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import java.io.File;
@@ -55,6 +57,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.BuildConfig;
+import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
@@ -82,6 +85,8 @@ import cx.ring.utils.Observer;
 
 public class DRingService extends Service implements Observer<ServiceEvent> {
 
+    private static final String TAG = DRingService.class.getSimpleName();
+
     public static final String ACTION_TRUST_REQUEST_ACCEPT = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_ACCEPT";
     public static final String ACTION_TRUST_REQUEST_REFUSE = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_REFUSE";
     public static final String ACTION_TRUST_REQUEST_BLOCK = BuildConfig.APPLICATION_ID + ".action.TRUST_REQUEST_BLOCK";
@@ -102,10 +107,12 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     public static final String ACTION_PUSH_RECEIVED = BuildConfig.APPLICATION_ID + ".action.PUSH_RECEIVED";
     public static final String ACTION_PUSH_TOKEN_CHANGED = BuildConfig.APPLICATION_ID + ".push.PUSH_TOKEN_CHANGED";
     public static final String PUSH_RECEIVED_FIELD_FROM = "from";
-    public static final String PUSH_RECEIVED_FIELD_DATA = "data";
     public static final String PUSH_TOKEN_FIELD_TOKEN = "token";
 
-    private static final String TAG = DRingService.class.getSimpleName();
+    public static final String PUSH_RECEIVED_FIELD_DATA = "data";
+
+    private static final int FOREGROUND_SERVICE_KEY = 1000;
+
     private final ContactsContentObserver contactContentObserver = new ContactsContentObserver();
     @Inject
     protected DaemonService mDaemonService;
@@ -534,13 +541,13 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     @Inject
     @Named("DaemonExecutor")
     protected ExecutorService mExecutor;
-
     public static boolean isRunning = false;
 
     @Override
     public void onCreate() {
-        Log.i(TAG, "onCreated");
         super.onCreate();
+
+        setForeground(true);
 
         // dependency injection
         RingApplication.getInstance().getRingInjectionComponent().inject(this);
@@ -568,6 +575,24 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         RingApplication.getInstance().bindDaemon();
     }
 
+    private void setForeground(boolean foreground) {
+        Log.d(TAG, "setForeground: foreground=" + foreground);
+        if (foreground) {
+            Notification notification = new NotificationCompat.Builder(this, NotificationServiceImpl.NOTIF_CHANNEL_OTHER)
+                    .setPriority(NotificationCompat.PRIORITY_MIN)
+                    .setAutoCancel(true)
+                    .setTimeoutAfter(NotificationServiceImpl.DEFAULT_TIMEOUT)
+                    .setSmallIcon(R.drawable.ic_ring_logo_white)
+                    .setCategory(NotificationCompat.CATEGORY_SOCIAL)
+                    .setContentTitle("Starting Ring...")
+                    .build();
+
+            startForeground(FOREGROUND_SERVICE_KEY, notification);
+        } else {
+            stopForeground(true);
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -579,11 +604,13 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         mConversationFacade.removeObserver(this);
         mCallService.removeObserver(this);
         isRunning = false;
+
+        setForeground(false);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
+        Log.d(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
 
         if (intent != null && intent.getAction() != null) {
             parseIntent(intent);
@@ -594,7 +621,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
     @Override
     public IBinder onBind(Intent arg0) {
-        Log.i(TAG, "onBound");
+        Log.d(TAG, "onBound");
         return mBinder;
     }
 
@@ -609,6 +636,8 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         if (mDaemonService.isStarted()) {
             mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected(), mPreferencesService.isPushAllowed());
             mHardwareService.connectivityChanged();
+
+            setForeground(false);
         }
     }
 
@@ -816,6 +845,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
     public void refreshContacts() {
         if (mAccountService.getCurrentAccount() == null) {
+            Log.d(TAG, "refreshContacts: not able to get current account");
             return;
         }
         mContactService.loadContacts(mAccountService.hasRingAccount(), mAccountService.hasSipAccount(), mAccountService.getCurrentAccount());

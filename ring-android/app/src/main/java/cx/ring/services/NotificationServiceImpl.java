@@ -54,7 +54,6 @@ import javax.inject.Inject;
 import cx.ring.R;
 import cx.ring.client.HomeActivity;
 import cx.ring.contactrequests.ContactRequestsFragment;
-import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
@@ -86,6 +85,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     private static final String NOTIF_CHANNEL_MESSAGE = "messages";
     private static final String NOTIF_CHANNEL_REQUEST = "requests";
     private static final String NOTIF_CHANNEL_FILE_TRANSFER = "file_transfer";
+    public static final String NOTIF_CHANNEL_OTHER = "other";
+    public static final long DEFAULT_TIMEOUT = 20000;
 
     private final SparseArray<NotificationCompat.Builder> mNotificationBuilders = new SparseArray<>();
     @Inject
