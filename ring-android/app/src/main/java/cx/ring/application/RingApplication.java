@@ -100,7 +100,7 @@ public abstract class RingApplication extends Application {
 
     public abstract String getPushToken();
 
-    private boolean mBound = false;
+    public boolean mBound = false;
     private final ServiceConnection mConnection = new ServiceConnection() {
 
         @Override

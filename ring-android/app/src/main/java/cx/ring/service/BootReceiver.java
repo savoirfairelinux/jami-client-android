@@ -45,7 +45,7 @@ public class BootReceiver extends BroadcastReceiver {
             boolean isAllowRingOnStartup = mPreferencesService.loadSettings().isAllowRingOnStartup();
 
             if (isAllowRingOnStartup) {
-                Log.w(TAG, "Starting Ring on boot");
+                Log.i(TAG, "Starting Ring on boot");
                 Intent serviceIntent = new Intent(context, DRingService.class);
                 context.startService(serviceIntent);
             }
