@@ -20,10 +20,8 @@
 package cx.ring.account;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.ActionBar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.view.View;
@@ -109,15 +107,6 @@ public class RingAccountCreationFragment extends BaseFragment<RingAccountCreatio
     @OnClick(R.id.create_account)
     public void onCreateAccountButtonClick() {
         presenter.createAccount();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        ActionBar ab = ((AccountWizardActivity) getActivity()).getSupportActionBar();
-        if (ab != null) {
-            ab.setTitle(R.string.account_create_title);
-        }
     }
 
     @OnTextChanged(value = R.id.ring_username, callback = OnTextChanged.Callback.TEXT_CHANGED)
