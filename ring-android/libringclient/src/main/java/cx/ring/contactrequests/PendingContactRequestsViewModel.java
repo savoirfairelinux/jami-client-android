@@ -31,6 +31,7 @@ public class PendingContactRequestsViewModel {
     private String mAccountUsername;
     private boolean hasPane;
     private String mContactId;
+    private final int mUuid;
 
     public PendingContactRequestsViewModel(Account account, TrustRequest trustRequest, boolean pane) {
         mVcard = trustRequest.getVCard();
@@ -39,6 +40,7 @@ public class PendingContactRequestsViewModel {
         hasPane = pane;
         mAccountUsername = account.getDisplayUsername();
         mContactId = trustRequest.getContactId();
+        mUuid = trustRequest.getUuid();
     }
 
     public String getAccountUsername() {
@@ -63,5 +65,9 @@ public class PendingContactRequestsViewModel {
 
     public String getContactId() {
         return mContactId;
+    }
+
+    public String getUuid() {
+        return mUuid + "";
     }
 }
