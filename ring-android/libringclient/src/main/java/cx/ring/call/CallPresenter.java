@@ -151,13 +151,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         getView().goToConversation(mAccountService.getCurrentAccount().getAccountID(), mSipCall.getContact().getIds().get(0));
     }
 
-    public void addContact() {
-        if (mSipCall == null || mSipCall.getContact() == null) {
-            return;
-        }
-        getView().goToAddContact(mSipCall.getContact());
-    }
-
     public void speakerClick() {
         mHardwareService.toggleSpeakerphone();
     }

@@ -2,6 +2,9 @@ buildscript {
     repositories {
         jcenter()
         google()
+        maven {
+            url 'https://dl.bintray.com/poldz123/maven/'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
