@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_d79e1156",
+        "filename": "ring-android/app/src/main/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-10T00:12:47Z",
+      "side": 1,
+      "message": "unrelated",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 43
+      },
+      "revId": "4908fbec64b019bd9096af8ec8ea22a8a37d08db",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_37a3f59f",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-10T00:12:47Z",
+      "side": 1,
+      "message": "reset firstUpdate here ? Otherwise the ripple would never start again",
+      "range": {
+        "startLine": 566,
+        "startChar": 12,
+        "endLine": 566,
+        "endChar": 37
+      },
+      "revId": "4908fbec64b019bd9096af8ec8ea22a8a37d08db",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
