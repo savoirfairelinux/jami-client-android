@@ -21,9 +21,20 @@
 package cx.ring.utils;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 
 public final class StringUtils {
+
+    static private final HashSet<Character.UnicodeBlock> EMOJI_BLOCKS = new HashSet<>(Arrays.asList(
+            Character.UnicodeBlock.EMOTICONS,
+            Character.UnicodeBlock.DINGBATS,
+            Character.UnicodeBlock.MISCELLANEOUS_SYMBOLS,
+            Character.UnicodeBlock.MISCELLANEOUS_SYMBOLS_AND_PICTOGRAPHS,
+            Character.UnicodeBlock.MISCELLANEOUS_SYMBOLS_AND_ARROWS,
+            Character.UnicodeBlock.ENCLOSED_ALPHANUMERIC_SUPPLEMENT,
+            Character.UnicodeBlock.TRANSPORT_AND_MAP_SYMBOLS
+    ));
 
     public static boolean isEmpty(String s) {
         return s == null || s.isEmpty();
@@ -71,6 +82,26 @@ public final class StringUtils {
                 throw new UnsupportedOperationException();
             }
         };
+    }
+
+    public static boolean isOnlyEmoji(final String message) {
+        if (message == null || message.isEmpty()) {
+            return false;
+        }
+        for (int codePoint : StringUtils.codePoints(message)) {
+            if (Character.isWhitespace(codePoint)) {
+                continue;
+            }
+            Character.UnicodeBlock block = Character.UnicodeBlock.of(codePoint);
+            // Ignore modifier
+            if (block == Character.UnicodeBlock.VARIATION_SELECTORS) {
+                continue;
+            }
+            if (!EMOJI_BLOCKS.contains(block)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
