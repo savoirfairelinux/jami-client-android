@@ -224,31 +224,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
     }
 
-    private static boolean isOnlyEmoticons(final String message) {
-        if (message == null || message.isEmpty() || Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            return false;
-        }
-        for (int codePoint : StringUtils.codePoints(message)) {
-            if (Character.isWhitespace(codePoint)) {
-                continue;
-            }
-            Character.UnicodeBlock block = Character.UnicodeBlock.of(codePoint);
-
-            // Ignore modifier
-            if (block == Character.UnicodeBlock.VARIATION_SELECTORS) {
-                continue;
-            }
-            if (block != Character.UnicodeBlock.EMOTICONS &&
-                    block != Character.UnicodeBlock.MISCELLANEOUS_SYMBOLS &&
-                    block != Character.UnicodeBlock.MISCELLANEOUS_SYMBOLS_AND_PICTOGRAPHS &&
-                    block != Character.UnicodeBlock.MISCELLANEOUS_SYMBOLS_AND_ARROWS &&
-                    block != Character.UnicodeBlock.ENCLOSED_ALPHANUMERIC_SUPPLEMENT) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     /**
      * Configures the viewholder to display a classic text message, ie. not a call info text message
      *
@@ -273,7 +248,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         convViewHolder.mCid = textMessage.getContact().getId();
         String message = textMessage.getMessage().trim();
-        if (isOnlyEmoticons(message)) {
+        if (StringUtils.isOnlyEmoji(message)) {
             convViewHolder.mMsgTxt.getBackground().setAlpha(0);
             convViewHolder.mMsgTxt.setTextSize(24.f);
             convViewHolder.mMsgTxt.setPadding(hPadding, vPaddingEmoticon, hPadding, vPaddingEmoticon);
