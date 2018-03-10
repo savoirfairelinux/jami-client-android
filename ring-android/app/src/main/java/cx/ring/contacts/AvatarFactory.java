@@ -59,6 +59,12 @@ public class AvatarFactory {
     private static final RequestOptions GLIDE_OPTIONS = new RequestOptions()
             .centerCrop()
             .error(R.drawable.ic_contact_picture_fallback);
+    private static final Paint AVATAR_TEXT_PAINT = new Paint();
+    static {
+        AVATAR_TEXT_PAINT.setTextAlign(Paint.Align.CENTER);
+        AVATAR_TEXT_PAINT.setColor(Color.WHITE);
+        AVATAR_TEXT_PAINT.setAntiAlias(true);
+    }
 
     private AvatarFactory() {
     }
@@ -109,20 +115,17 @@ public class AvatarFactory {
             throw new IllegalArgumentException();
         }
 
-        Drawable backgroundDrawable = new ColorDrawable(Color.TRANSPARENT);
         Bitmap canvasBitmap = Bitmap.createBitmap(pictureSize, pictureSize, Bitmap.Config.ARGB_8888);
 
-        Canvas backgroundCanvas = new Canvas(canvasBitmap);
-        backgroundDrawable.draw(backgroundCanvas);
-        backgroundCanvas.drawColor(context.getResources().getColor(backgroundColor));
+        Canvas canvas = new Canvas(canvasBitmap);
+        canvas.drawColor(context.getResources().getColor(backgroundColor));
 
-        Canvas avatarCanvas = new Canvas(canvasBitmap);
         Drawable drawable = ContextCompat.getDrawable(context, R.drawable.ic_contact_picture_box_default);
         if (drawable == null) {
             Log.e(TAG, "Not able to get default drawable");
         } else {
             drawable.setBounds(0, 0, pictureSize, pictureSize);
-            drawable.draw(avatarCanvas);
+            drawable.draw(canvas);
         }
 
         return new BitmapDrawable(context.getResources(), canvasBitmap);
@@ -133,20 +136,13 @@ public class AvatarFactory {
             throw new IllegalArgumentException();
         }
 
-        Drawable backgroundDrawable = new ColorDrawable(Color.TRANSPARENT);
         Bitmap canvasBitmap = Bitmap.createBitmap(pictureSize, pictureSize, Bitmap.Config.ARGB_8888);
 
-        Canvas backgroundCanvas = new Canvas(canvasBitmap);
-        backgroundDrawable.draw(backgroundCanvas);
-        backgroundCanvas.drawColor(context.getResources().getColor(backgroundColor));
+        Canvas canvas = new Canvas(canvasBitmap);
+        canvas.drawColor(context.getResources().getColor(backgroundColor));
 
-        Canvas letterCanvas = new Canvas(canvasBitmap);
-        Paint paint = new Paint();
-        paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(pictureSize / 2);
-        paint.setColor(Color.WHITE);
-        paint.setAntiAlias(true);
-        letterCanvas.drawText(Character.toString(firstCharacter), pictureSize * 0.51f, pictureSize * 0.7f, paint);
+        AVATAR_TEXT_PAINT.setTextSize(pictureSize / 2);
+        canvas.drawText(Character.toString(firstCharacter), pictureSize * 0.51f, pictureSize * 0.7f, AVATAR_TEXT_PAINT);
 
         return new BitmapDrawable(context.getResources(), canvasBitmap);
     }
