@@ -6,7 +6,7 @@ android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 108
         versionName "20180309"
