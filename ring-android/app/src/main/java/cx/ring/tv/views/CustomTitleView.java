@@ -17,6 +17,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v17.leanback.widget.TitleViewAdapter;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,6 +33,9 @@ import cx.ring.contacts.AvatarFactory;
  * Custom title view to be used in {@link android.support.v17.leanback.app.BrowseFragment}.
  */
 public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.Provider {
+
+    private static final String TAG = CustomTitleView.class.getSimpleName();
+
     private final TextView mAliasView;
     private final TextView mTitleView;
     private final ImageView mLogoView;
@@ -87,19 +91,23 @@ public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.
         setClipToPadding(false);
     }
 
-    public void setTitle(CharSequence title) {
-        if (title != null) {
-            mTitleView.setText(title);
-            mTitleView.setVisibility(View.VISIBLE);
-            mLogoView.setVisibility(View.VISIBLE);
+    public void setAlias(CharSequence alias) {
+        if (alias == null || alias.toString().isEmpty()) {
+            Log.e(TAG, "Null alias");
+            return;
         }
+        mAliasView.setText(alias);
+        mAliasView.setVisibility(VISIBLE);
     }
 
-    public void setAlias(CharSequence alias) {
-        if (alias != null) {
-            mAliasView.setText(alias);
-            mAliasView.setVisibility(VISIBLE);
+    public void setTitle(CharSequence title) {
+        if (title == null || title.toString().isEmpty()) {
+            Log.e(TAG, "Null title");
+            return;
         }
+        mTitleView.setText(title);
+        mTitleView.setVisibility(View.VISIBLE);
+        mLogoView.setVisibility(View.VISIBLE);
     }
 
     public void setCurrentAccountPhoto(Drawable photo) {
@@ -114,5 +122,13 @@ public class CustomTitleView extends RelativeLayout implements TitleViewAdapter.
     @Override
     public TitleViewAdapter getTitleViewAdapter() {
         return mTitleViewAdapter;
+    }
+
+    private boolean isAliasDefined() {
+        return !mAliasView.getText().toString().isEmpty();
+    }
+
+    private boolean isTitleDefined() {
+        return !mTitleView.getText().toString().isEmpty();
     }
 }
