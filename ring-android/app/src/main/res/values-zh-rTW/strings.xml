@@ -64,8 +64,8 @@
   <string name="notif_channel_requests">請求</string>
   <string name="notif_channel_file_transfer">檔案傳輸</string>
   <string name="notif_mark_as_read">標示為已讀</string>
-  <string name="notif_incoming_file_transfer_title">檔案傳入</string>
   <string name="notif_incoming_file_transfer">有人想要傳送檔案給您</string>
+  <string name="notif_outgoing_file_transfer">有人想要傳送檔案給您</string>
   <string name="action_open">開啟</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">你：</string>

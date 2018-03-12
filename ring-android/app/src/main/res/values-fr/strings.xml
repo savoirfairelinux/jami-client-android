@@ -65,8 +65,8 @@
   <string name="notif_channel_requests">Sollicitations</string>
   <string name="notif_channel_file_transfer">Transfert de fichier</string>
   <string name="notif_mark_as_read">Marquer comme lu</string>
-  <string name="notif_incoming_file_transfer_title">Transfert de fichier entrant</string>
   <string name="notif_incoming_file_transfer">Quelqu\'un souhaite vous envoyer un fichier</string>
+  <string name="notif_outgoing_file_transfer">Quelqu\'un souhaite vous envoyer un fichier</string>
   <string name="action_open">Ouvrir</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vous :</string>

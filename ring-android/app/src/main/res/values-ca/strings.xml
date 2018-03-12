@@ -65,6 +65,7 @@
   <string name="notif_channel_file_transfer">Transferència de fitxers</string>
   <string name="notif_mark_as_read">Marca com a llegit</string>
   <string name="notif_incoming_file_transfer">Alguna persona us està enviant un fitxer</string>
+  <string name="notif_outgoing_file_transfer">Alguna persona us està enviant un fitxer</string>
   <string name="action_open">Obre</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Usuari:</string>
