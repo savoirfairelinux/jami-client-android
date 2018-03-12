@@ -22,6 +22,30 @@
       "revId": "0c2968f2d07f720590385a4edb1f065b4828472a",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_ead1a0ce",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/views/CustomTitleView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-03-12T22:17:38Z",
+      "side": 1,
+      "message": "Moved to MainFragment.displayAccountInfos()",
+      "parentUuid": "5a3f45e8_8a173ca3",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 9
+      },
+      "revId": "0c2968f2d07f720590385a4edb1f065b4828472a",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
