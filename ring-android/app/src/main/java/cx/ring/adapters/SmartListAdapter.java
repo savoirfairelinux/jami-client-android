@@ -30,7 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.util.ArrayList;
 
@@ -97,7 +96,6 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         Glide.with(holder.itemView.getContext())
                 .load(contactPicture)
                 .apply(AvatarFactory.getGlideOptions(true, true))
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.photo);
 
         holder.online.setVisibility(smartListViewModel.isOnline() ? View.VISIBLE : View.GONE);
