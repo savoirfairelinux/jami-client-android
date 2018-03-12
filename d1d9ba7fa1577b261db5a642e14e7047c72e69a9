@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_6a20f0f7",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-12T21:42:39Z",
+      "side": 0,
+      "message": "What if the call ends while texting in the conversation ? resume woudn\u0027t be called",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 291,
+        "endChar": 9
+      },
+      "revId": "d1d9ba7fa1577b261db5a642e14e7047c72e69a9",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
