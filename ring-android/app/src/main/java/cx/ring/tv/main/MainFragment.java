@@ -277,19 +277,22 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                 return;
             }
 
+            byte[] data = null;
             List<Photo> photos = vcard.getPhotos();
             FormattedName formattedName = vcard.getFormattedName();
             if (formattedName != null) {
                 titleView.setAlias(formattedName.getValue());
 
                 if (!photos.isEmpty() && photos.get(0) != null) {
-                    Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
-                            photos.get(0).getData(),
-                            formattedName.getValue(),
-                            address);
-
-                    titleView.setCurrentAccountPhoto(contactPicture);
+                    data = photos.get(0).getData();
                 }
+
+                Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
+                        data,
+                        viewModel.getAccount().getDisplayUsername(),
+                        address);
+
+                titleView.setCurrentAccountPhoto(contactPicture);
             }
         });
     }
