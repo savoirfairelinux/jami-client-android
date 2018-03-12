@@ -138,13 +138,22 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
     public void resume() {
         loadHistory();
+        handleOngoingCallPane();
+        handleTrustRequestPane();
+    }
 
+    private void handleTrustRequestPane() {
         TrustRequest incomingTrustRequests = getIncomingTrustRequests();
         if (incomingTrustRequests == null) {
             getView().switchToConversationView();
         } else {
             getView().switchToIncomingTrustRequestView(incomingTrustRequests.getDisplayname());
         }
+    }
+
+    private void handleOngoingCallPane() {
+        Conference conf = mConversation.getCurrentCall();
+        getView().displayOnGoingCallPane(conf != null && conf.isOnGoing());
     }
 
     public void prepareMenu() {
@@ -283,12 +292,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         getView().displayContactPhoto(mConversation.getContact().getPhoto());
         getView().displayContactName(mConversation.getContact());
         getView().refreshView(mConversation);
-        Conference conf = mConversation.getCurrentCall();
-        if (conf != null && conf.getState() != SipCall.State.INACTIVE) {
-            getView().displayOnGoingCallPane(true);
-        } else {
-            getView().displayOnGoingCallPane(false);
-        }
     }
 
     private void checkTrustRequestStatus() {
