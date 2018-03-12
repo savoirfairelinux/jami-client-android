@@ -60,7 +60,6 @@ import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.search.SearchActivity;
 import cx.ring.tv.views.CustomTitleView;
 import ezvcard.VCard;
-import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
@@ -260,11 +259,6 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     @Override
     public void displayAccountInfos(final String address, final RingNavigationViewModel viewModel) {
         getActivity().runOnUiThread(() -> {
-            if (address != null) {
-                setTitle(address);
-            } else {
-                setTitle("");
-            }
 
             if (getActivity() == null) {
                 Log.e(TAG, "displayAccountInfos: Not able to get activity");
@@ -277,20 +271,29 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                 return;
             }
 
-            List<Photo> photos = vcard.getPhotos();
-            FormattedName formattedName = vcard.getFormattedName();
-            if (formattedName != null) {
-                titleView.setAlias(formattedName.getValue());
-
-                if (!photos.isEmpty() && photos.get(0) != null) {
-                    Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
-                            photos.get(0).getData(),
-                            formattedName.getValue(),
-                            address);
-
-                    titleView.setCurrentAccountPhoto(contactPicture);
+            String formattedName = vcard.getFormattedName().getValue();
+            if (formattedName != null && !formattedName.isEmpty()) {
+                titleView.setAlias(formattedName);
+                if (address != null) {
+                    setTitle(address);
+                } else {
+                    setTitle("");
                 }
+            } else {
+                titleView.setAlias(address);
             }
+
+            byte[] data = null;
+            List<Photo> photos = vcard.getPhotos();
+            if (!photos.isEmpty() && photos.get(0) != null) {
+                data = photos.get(0).getData();
+            }
+            Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
+                    data,
+                    viewModel.getAccount().getDisplayUsername(),
+                    address);
+
+            titleView.setCurrentAccountPhoto(contactPicture);
         });
     }
 
