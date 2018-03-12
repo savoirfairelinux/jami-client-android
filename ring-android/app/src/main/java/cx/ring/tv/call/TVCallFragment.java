@@ -334,11 +334,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
                     username,
                     ringId);
 
-            Glide.with(getActivity())
-                    .load(contactPicture)
-                    .apply(AvatarFactory.getGlideOptions(true, true))
-                    .into(contactBubbleView);
-
             String displayName = contact.getDisplayName();
             boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
 
