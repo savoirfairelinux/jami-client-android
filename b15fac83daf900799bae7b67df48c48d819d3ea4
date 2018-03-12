@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_aa603836",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-12T21:50:58Z",
+      "side": 1,
+      "message": "mBound means that RingApplication is bound to... this service (DRingService). Might use mDaemonService.isStarted() ?",
+      "range": {
+        "startLine": 573,
+        "startChar": 42,
+        "endLine": 573,
+        "endChar": 49
+      },
+      "revId": "b15fac83daf900799bae7b67df48c48d819d3ea4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
