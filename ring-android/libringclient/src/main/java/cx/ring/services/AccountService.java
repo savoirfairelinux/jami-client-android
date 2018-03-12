@@ -104,6 +104,7 @@ public class AccountService extends Observable {
     private AtomicBoolean mAccountsLoaded = new AtomicBoolean(false);
 
     private final Map<Long, DataTransfer> mDataTransfers = new HashMap<>();
+    private DataTransfer mStartingTransfer = null;
 
     /**
      * @return true if at least one of the loaded accounts is a SIP one
@@ -1256,15 +1257,22 @@ public class AccountService extends Observable {
         notifyObservers(event);
     }
 
+    public DataTransferError sendFile(final DataTransfer dataTransfer, File file) {
+        mStartingTransfer = dataTransfer;
 
-    public DataTransferError sendFile(final Long dataTransferId, final DataTransferInfo dataTransferInfo) {
+        DataTransferInfo dataTransferInfo = new DataTransferInfo();
+        dataTransferInfo.setAccountId(dataTransfer.getAccountId());
+        dataTransferInfo.setPeer(dataTransfer.getPeerId());
+        dataTransferInfo.setPath(file.getPath());
+        dataTransferInfo.setDisplayName(dataTransfer.getDisplayName());
+
         Long errorCode = FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 true,
                 () -> {
-                    Log.i(TAG, "sendFile() thread running... accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
-                    return Ringservice.sendFile(dataTransferInfo, dataTransferId);
+                    Log.i(TAG, "sendFile() thread running... id=" + dataTransfer.getId() + " accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
+                    return Ringservice.sendFile(dataTransferInfo, 0);
                 }
         );
         return getDataTransferError(errorCode);
@@ -1314,11 +1322,18 @@ public class AccountService extends Observable {
         DataTransferInfo info = new DataTransferInfo();
         dataTransferInfo(transferId, info);
 
+        boolean outgoing = info.getFlags() == 0;
         DataTransfer transfer = mDataTransfers.get(transferId);
+        if (transfer == null && outgoing && mStartingTransfer != null) {
+            transfer = mStartingTransfer;
+            mStartingTransfer = null;
+            transfer.setDataTransferId(transferId);
+            mDataTransfers.put(transferId, transfer);
+        }
         if (transfer == null) {
             transfer = new DataTransfer(transferId, info.getDisplayName(),
-                    info.getFlags() == 0, info.getTotalSize(),
-                    info.getBytesProgress(), info.getPeer(), info.getAccountId());
+                        outgoing, info.getTotalSize(),
+                        info.getBytesProgress(), info.getPeer(), info.getAccountId());
             mHistoryService.insertDataTransfer(transfer);
             mDataTransfers.put(transferId, transfer);
         } else {

@@ -194,32 +194,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         getView().openFilePicker();
     }
 
-    public void sendFile(String filePath) {
-        Log.d(TAG, "sendFile: sending file at " + filePath + " from accountId " + mAccountId + " to " + mContactRingId);
-
-        if (filePath == null) {
-            return;
-        }
-
-        // check file
-        File file = new File(filePath);
-        if (!file.exists()) {
-            Log.d(TAG, "sendFile: file not found");
-            return;
-        }
-
-        if (!file.canRead()) {
-            Log.d(TAG, "sendFile: file not readable");
-            return;
-        }
-
-        // send file
-        DataTransferInfo dataTransferInfo = new DataTransferInfo();
-        dataTransferInfo.setAccountId(mAccountId);
-        dataTransferInfo.setPeer(mContactRingId.getHost());
-        dataTransferInfo.setPath(filePath);
-        dataTransferInfo.setDisplayName(file.getName());
-        mAccountService.sendFile(0L, dataTransferInfo);
+    public void sendFile(File file) {
+        mConversationFacade.sendFile(mAccountId, mContactRingId, file);
     }
 
     public void sendTrustRequest() {

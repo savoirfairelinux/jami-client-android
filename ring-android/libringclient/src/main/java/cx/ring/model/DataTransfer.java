@@ -24,6 +24,14 @@ package cx.ring.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+import cx.ring.utils.HashUtils;
+import cx.ring.utils.StringUtils;
+
 @DatabaseTable(tableName = DataTransfer.TABLE_NAME)
 public class DataTransfer extends ConversationElement {
     public static final String TABLE_NAME = "historydata";
@@ -35,6 +43,9 @@ public class DataTransfer extends ConversationElement {
     public static final String COLUMN_PEER_ID_NAME = "peerId";
     public static final String COLUMN_ACCOUNT_ID_NAME = "accountId";
     public static final String COLUMN_DATA_TRANSFER_EVENT_CODE_NAME = "dataTransferEventCode";
+
+    private static final Set<String> IMAGE_EXTENSIONS = new HashSet<>(Arrays.asList("jpg", "jpeg", "png", "gif"));
+    private static final int MAX_IMG_SIZE = 16 * 1024 * 1024;
 
     @DatabaseField(index = true, generatedId = true, columnName = COLUMN_ID_NAME)
     long id;
@@ -53,7 +64,7 @@ public class DataTransfer extends ConversationElement {
     @DatabaseField(columnName = COLUMN_DATA_TRANSFER_EVENT_CODE_NAME)
     String eventCode;
 
-    final long dataTransferId;
+    private long dataTransferId;
     private long bytesProgress;
 
 
@@ -72,6 +83,19 @@ public class DataTransfer extends ConversationElement {
         this.bytesProgress = bytesProgress;
         this.peerId = peerId;
         this.accountId = accountId;
+    }
+
+    public boolean isPicture() {
+        String extension = StringUtils.getFileExtension(getDisplayName()).toLowerCase();
+        return IMAGE_EXTENSIONS.contains(extension) && getTotalSize() <= MAX_IMG_SIZE;
+    }
+
+    public boolean showPicture() {
+        return isPicture() && (isOutgoing() || !DataTransferEventCode.FINISHED.name().equals(eventCode));
+    }
+
+    public String getStoragePath() {
+        return Long.toString(id) + '_' + HashUtils.sha1(getDisplayName());
     }
 
     @Override
@@ -97,6 +121,9 @@ public class DataTransfer extends ConversationElement {
 
     public Long getDataTransferId() {
         return dataTransferId;
+    }
+    public void setDataTransferId(long id) {
+        dataTransferId = id;
     }
 
     public boolean isOutgoing() {

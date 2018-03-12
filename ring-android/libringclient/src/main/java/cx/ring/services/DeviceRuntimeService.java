@@ -28,6 +28,9 @@ public abstract class DeviceRuntimeService implements DaemonService.SystemInfoCa
     public abstract File provideFilesDir();
     public abstract File getCacheDir();
 
+    public abstract File getFilePath(String name);
+    public abstract File getConversationPath(String conversationId, String name);
+
     public abstract boolean isConnectedMobile();
 
     public abstract boolean isConnectedEthernet();
