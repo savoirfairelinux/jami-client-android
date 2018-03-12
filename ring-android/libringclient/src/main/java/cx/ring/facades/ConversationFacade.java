@@ -19,6 +19,7 @@
  */
 package cx.ring.facades;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +50,7 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
+import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
@@ -191,6 +193,36 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         TextMessage message = new TextMessage(false, txt, call.getNumberUri(), conf.getId(), call.getAccount());
         message.read();
         mHistoryService.insertNewTextMessage(message);
+    }
+
+    public void sendFile(String account, Uri to, File file) {
+        if (file == null) {
+            return;
+        }
+
+        // check file
+        if (!file.exists()) {
+            Log.w(TAG, "sendFile: file not found");
+            return;
+        }
+
+        if (!file.canRead()) {
+            Log.w(TAG, "sendFile: file not readable");
+            return;
+        }
+        String peerId = to.getRawRingId();
+        DataTransfer transfer = new DataTransfer(0L, file.getName(), true, file.length(), 0, peerId, account);
+        // get generated ID
+        mHistoryService.insertDataTransfer(transfer);
+
+        File dest = mDeviceRuntimeService.getConversationPath(peerId, transfer.getStoragePath());
+        if (!FileUtils.moveFile(file, dest)) {
+            Log.e(TAG, "sendFile: can't move file to " + dest);
+            return;
+        }
+
+        // send file
+        mAccountService.sendFile(transfer, dest);
     }
 
     public void refreshConversations() {
@@ -386,7 +418,12 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
         CallContact contact = mContactService.findContactByNumber(transfer.getPeerId());
         Conversation conversation = startConversation(contact);
         if (transferEventCode == DataTransferEventCode.CREATED) {
+            if (transfer.isPicture() && !transfer.isOutgoing()) {
+                File path = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
+                mAccountService.acceptFileTransfer(transfer.getDataTransferId(), path.getAbsolutePath(), 0);
+            }
             conversation.addFileTransfer(transfer);
+
         } else {
             conversation.updateFileTransfer(transfer, transferEventCode);
         }

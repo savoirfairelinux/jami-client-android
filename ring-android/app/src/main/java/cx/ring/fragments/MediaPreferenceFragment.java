@@ -45,7 +45,7 @@ import cx.ring.model.AccountConfig;
 import cx.ring.model.Codec;
 import cx.ring.model.ConfigKey;
 import cx.ring.mvp.BasePreferenceFragment;
-import cx.ring.utils.FileUtils;
+import cx.ring.utils.AndroidFileUtils;
 
 public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPreferencePresenter>
         implements FragmentCompat.OnRequestPermissionsResultCallback, MediaPreferenceView {
@@ -81,7 +81,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
                 getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled((Boolean) newValue);
                 if ((Boolean) newValue) {
                     findPreference(ConfigKey.RINGTONE_PATH.key()).setSummary(
-                            new File(FileUtils.ringtonesPath(getActivity()) + File.separator + "default.wav").getName());
+                            new File(AndroidFileUtils.ringtonesPath(getActivity()) + File.separator + "default.wav").getName());
                 }
             }
         } else if (key == ConfigKey.ACCOUNT_DTMF_TYPE) {
@@ -202,7 +202,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
         }
 
         if (requestCode == SELECT_RINGTONE_PATH) {
-            String path = FileUtils.getRealPathFromURI(getActivity(), data.getData());
+            String path = AndroidFileUtils.getRealPathFromURI(getActivity(), data.getData());
             String type = getActivity().getContentResolver().getType(data.getData());
             presenter.onFileFound(type, path);
         }

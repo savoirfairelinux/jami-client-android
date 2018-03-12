@@ -21,8 +21,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +47,8 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -66,8 +70,9 @@ import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
+import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ClipboardHelper;
-import cx.ring.utils.FileUtils;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaButtonsHelper;
 
 import static android.app.Activity.RESULT_OK;
@@ -87,6 +92,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     private static final int REQUEST_CODE_FILE_PICKER = 1000;
     private static final int REQUEST_PERMISSION_CAMERA = 1001;
+    private static final int REQUEST_CODE_TAKE_PICTURE = 1002;
 
     @BindView(R.id.msg_input_txt)
     protected EditText mMsgEditTxt;
@@ -105,6 +111,9 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @BindView(R.id.send_data)
     protected ImageButton sendData;
+
+    @BindView(R.id.btn_take_picture)
+    protected ImageButton takePicture;
 
     @BindView(R.id.cvMessageInput)
     protected View mMessageInput;
@@ -125,6 +134,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     private ConversationAdapter mAdapter = null;
     private NumberAdapter mNumberAdapter = null;
+
+    private File mCurrentPhoto = null;
 
     private static int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
@@ -205,6 +216,44 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         presenter.selectFile();
     }
 
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "img_" + timeStamp + "_";
+
+        // Save a file: path for use with ACTION_VIEW intents
+        return File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                getActivity().getExternalCacheDir()      /* directory */
+        );
+    }
+
+    @OnClick(R.id.btn_take_picture)
+    public void takePicture() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            Log.w(TAG, "takePicture: trying to save to " + photoFile);
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                mCurrentPhoto = photoFile;
+                android.net.Uri photoURI = FileProvider.getUriForFile(getActivity(),
+                        ContentUriHandler.AUTHORITY_FILES,
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PICTURE);
+            }
+        }
+    }
+
     @Override
     public void askWriteExternalStoragePermission() {
         ActivityCompat.requestPermissions(getActivity(),
@@ -223,29 +272,44 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        Log.w(TAG, "onActivityResult: " + requestCode + " " + resultCode + " " + resultData);
         super.onActivityResult(requestCode, resultCode, resultData);
+        if (resultData == null) {
+            return;
+        }
 
         if (requestCode == REQUEST_CODE_FILE_PICKER && resultCode == RESULT_OK) {
-            if (resultData != null) {
-                android.net.Uri uri = resultData.getData();
-                if (uri == null) {
-                    return;
-                }
-
-                new Thread(() -> {
-                    getActivity().runOnUiThread(() -> setLoading(true));
-
-                    try {
-                        File cacheFile = FileUtils.getCacheFile(getActivity(), uri);
-                        presenter.sendFile(cacheFile.toString());
-                    } catch (IOException e) {
-                        Log.e(TAG, "onActivityResult: not able to create cache file");
-                        getActivity().runOnUiThread(() -> displayErrorToast(RingError.INVALID_FILE));
-                    }
-
-                    getActivity().runOnUiThread(() -> setLoading(false));
-                }).start();
+            android.net.Uri uri = resultData.getData();
+            if (uri == null) {
+                return;
             }
+            setLoading(true);
+            new Thread(() -> {
+                try {
+                    File cacheFile = AndroidFileUtils.getCacheFile(getActivity(), uri);
+                    presenter.sendFile(cacheFile);
+                } catch (IOException e) {
+                    Log.e(TAG, "onActivityResult: not able to create cache file");
+                    getActivity().runOnUiThread(() -> displayErrorToast(RingError.INVALID_FILE));
+                }
+                getActivity().runOnUiThread(() -> setLoading(false));
+            }).start();
+        } else if (requestCode == REQUEST_CODE_TAKE_PICTURE) {
+            if (resultCode != RESULT_OK) {
+                mCurrentPhoto = null;
+                return;
+            }
+            Log.w(TAG, "onActivityResult: mCurrentPhoto "+mCurrentPhoto.getAbsolutePath() + " " + mCurrentPhoto.exists() + " " + mCurrentPhoto.length());
+            if (mCurrentPhoto == null || !mCurrentPhoto.exists() || mCurrentPhoto.length() == 0) {
+                Toast.makeText(getActivity(), "Can't find picture", Toast.LENGTH_SHORT).show();
+            }
+            setLoading(true);
+            new Thread(() -> {
+                File file = mCurrentPhoto;
+                mCurrentPhoto = null;
+                presenter.sendFile(file);
+                getActivity().runOnUiThread(() -> setLoading(false));
+            }).start();
         }
     }
 
@@ -254,7 +318,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         // todo use rx + move to presenter
         File cacheFile = new File(getActivity().getCacheDir(), cacheFilename);
         try {
-            String finalFilePath = FileUtils.writeCacheFileToExtStorage(getActivity(), android.net.Uri.fromFile(cacheFile), cacheFile.getName());
+            String finalFilePath = AndroidFileUtils.writeCacheFileToExtStorage(getActivity(), android.net.Uri.fromFile(cacheFile), cacheFile.getName());
 
             // Tell the media scanner about the new file so that it is immediately available to the user
             MediaScannerConnection.scanFile(getActivity(), new String[]{finalFilePath}, null, null);
@@ -546,9 +610,11 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     private void setLoading(boolean isLoading) {
         if (isLoading) {
+            takePicture.setVisibility(View.GONE);
             sendData.setVisibility(View.GONE);
             pbDataTransfer.setVisibility(View.VISIBLE);
         } else {
+            takePicture.setVisibility(View.VISIBLE);
             sendData.setVisibility(View.VISIBLE);
             pbDataTransfer.setVisibility(View.GONE);
         }

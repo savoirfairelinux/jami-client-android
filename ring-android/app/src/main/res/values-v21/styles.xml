@@ -10,4 +10,21 @@
         <item name="actionBarStyle">@style/ActionBar.Transparent</item>
     </style>
 
+    <style name="AppThemeBase.Dark" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="colorAccent">@color/color_primary_dark</item>
+        <item name="colorPrimary">@color/color_primary_light</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+
+    <style name="AppThemeBase" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/color_primary_dark</item>
+        <item name="colorPrimary">@color/color_primary_light</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+
+
 </resources>

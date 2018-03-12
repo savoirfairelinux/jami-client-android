@@ -1,0 +1,70 @@
+/*
+ *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
+ *
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package cx.ring.utils;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.DecimalFormat;
+
+public class FileUtils {
+    private static final String TAG = FileUtils.class.getSimpleName();
+
+    public static void copyFile(InputStream in, OutputStream out) throws IOException {
+        // Buffer size based on https://stackoverflow.com/questions/10143731/android-optimal-buffer-size
+        byte[] buffer = new byte[32 * 1024];
+        int read;
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
+    }
+
+    public static boolean moveFile(File file, File dest) {
+        if (!file.exists() || !file.canRead())
+            return false;
+        if (!file.renameTo(dest)) {
+            Log.w(TAG, "moveFile: can't rename file to " + dest);
+            try {
+                InputStream inputStream = new FileInputStream(file);
+                FileOutputStream outputStream = new FileOutputStream(dest);
+                copyFile(inputStream, outputStream);
+                inputStream.close();
+                file.delete();
+                outputStream.close();
+            } catch (IOException e) {
+                Log.w(TAG, "moveFile: can't copy file to " + dest, e);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static String readableFileSize(long size) {
+        if (size <= 0) {
+            return "0";
+        }
+        final String[] units = new String[]{"B", "kB", "MB", "GB", "TB"};
+        int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
+        return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+    }
+
+}
