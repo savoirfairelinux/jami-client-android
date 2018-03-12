@@ -174,7 +174,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             mBluetoothWrapper = new BluetoothWrapper(mContext);
             mBluetoothWrapper.registerScoUpdate();
             mBluetoothWrapper.registerBtConnection();
-            mBluetoothWrapper.setBluetoothChangeListener(HardwareServiceImpl.this);
+            mBluetoothWrapper.setBluetoothChangeListener(this);
         }
         obtainAudioFocus(isRinging || isOngoingVideo);
         if (isRinging) {

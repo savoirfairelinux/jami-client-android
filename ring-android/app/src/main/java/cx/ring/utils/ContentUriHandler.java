@@ -28,7 +28,10 @@ import cx.ring.BuildConfig;
  */
 public class ContentUriHandler {
 
-    private static final Uri AUTHORITY_URI = Uri.parse("content://" + BuildConfig.APPLICATION_ID);
+    public static final String AUTHORITY = BuildConfig.APPLICATION_ID;
+    public static final String AUTHORITY_FILES = AUTHORITY + ".file_provider";
+
+    private static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
 
     public static final Uri CONVERSATION_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "conversations");
     public static final Uri ACCOUNTS_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "accounts");
