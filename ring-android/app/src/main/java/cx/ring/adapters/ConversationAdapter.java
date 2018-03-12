@@ -21,18 +21,28 @@
 package cx.ring.adapters;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterInside;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -40,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import cx.ring.R;
+import cx.ring.client.MediaViewerActivity;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.fragments.ConversationFragment;
@@ -50,8 +61,11 @@ import cx.ring.model.DataTransfer;
 import cx.ring.model.IConversationElement;
 import cx.ring.model.TextMessage;
 import cx.ring.service.DRingService;
-import cx.ring.utils.CircleTransform;
+import cx.ring.utils.AndroidFileUtils;
+import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.FileUtils;
+import cx.ring.utils.GlideApp;
+import cx.ring.utils.GlideOptions;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.utils.StringUtils;
 import cx.ring.views.ConversationViewHolder;
@@ -69,14 +83,19 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private final int hPadding;
     private final int vPadding;
     private final int vPaddingEmoticon;
+    private final GlideOptions PICTURE_OPTIONS;
 
     public ConversationAdapter(ConversationFragment conversationFragment, ConversationPresenter presenter) {
         this.conversationFragment = conversationFragment;
         this.presenter = presenter;
         Context context = conversationFragment.getActivity();
-        hPadding = context.getResources().getDimensionPixelSize(R.dimen.padding_medium);
-        vPadding = context.getResources().getDimensionPixelSize(R.dimen.padding_small);
-        vPaddingEmoticon = context.getResources().getDimensionPixelSize(R.dimen.padding_xsmall);
+        Resources res = context.getResources();
+        hPadding = res.getDimensionPixelSize(R.dimen.padding_medium);
+        vPadding = res.getDimensionPixelSize(R.dimen.padding_small);
+        vPaddingEmoticon = res.getDimensionPixelSize(R.dimen.padding_xsmall);
+        int pictureMaxSize = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, res.getDisplayMetrics());
+        int corner = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, res.getDisplayMetrics());
+        PICTURE_OPTIONS = new GlideOptions().override(pictureMaxSize).transform(new CenterInside()).transform(new RoundedCorners(corner));
     }
 
     /**
@@ -129,7 +148,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 }
             }
             if (conversationElement.getType() == IConversationElement.CEType.FILE) {
-                return ConversationMessageType.FILE_TRANSFER_TEXT_MESSAGE.getType();
+                DataTransfer file = (DataTransfer) conversationElement;
+                if (file.showPicture()) {
+                    return ConversationMessageType.IMAGE.getType();
+                } else
+                    return ConversationMessageType.FILE_TRANSFER.getType();
             }
             if (conversationElement.getType() == IConversationElement.CEType.CALL) {
                 return ConversationMessageType.CALL_INFORMATION_TEXT_MESSAGE.getType();
@@ -145,8 +168,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             res = R.layout.item_conv_msg_peer;
         } else if (viewType == ConversationMessageType.OUTGOING_TEXT_MESSAGE.getType()) {
             res = R.layout.item_conv_msg_me;
-        } else if (viewType == ConversationMessageType.FILE_TRANSFER_TEXT_MESSAGE.getType()) {
+        } else if (viewType == ConversationMessageType.FILE_TRANSFER.getType()) {
             res = R.layout.item_conv_file;
+        } else if (viewType == ConversationMessageType.IMAGE.getType()) {
+            res = R.layout.item_conv_image;
         } else {
             res = R.layout.item_conv_call;
         }
@@ -155,7 +180,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     }
 
     @Override
-    public void onBindViewHolder(ConversationViewHolder conversationViewHolder, int position) {
+    public void onBindViewHolder(@NonNull ConversationViewHolder conversationViewHolder, int position) {
         IConversationElement conversationElement = mConversationElements.get(position);
         if (conversationElement != null) {
             if (conversationElement.getType() == IConversationElement.CEType.TEXT) {
@@ -175,6 +200,39 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
         DataTransfer file = (DataTransfer) conversationElement;
 
+        String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
+                conversationViewHolder.itemView.getContext(),
+                file.getDate());
+        if (file.getEventCode() == DataTransferEventCode.FINISHED) {
+            conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s",
+                    timeSeparationString, FileUtils.readableFileSize(file.getTotalSize())));
+        } else {
+            conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
+                    timeSeparationString, FileUtils.readableFileSize(file.getTotalSize()),
+                    ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getEventCode())));
+        }
+        if (file.showPicture()) {
+            Context context = conversationViewHolder.mPhoto.getContext();
+            File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
+            GlideApp.with(context)
+                    .load(path)
+                    .apply(PICTURE_OPTIONS)
+                    .into(conversationViewHolder.mPhoto);
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) conversationViewHolder.mAnswerLayout.getLayoutParams();
+            params.gravity = (file.isOutgoing() ? Gravity.END : Gravity.START) | Gravity.BOTTOM;
+            conversationViewHolder.mAnswerLayout.setLayoutParams(params);
+            ((LinearLayout)conversationViewHolder.mAnswerLayout).setGravity(file.isOutgoing() ? Gravity.END : Gravity.START);
+            conversationViewHolder.mPhoto.setOnClickListener(v -> {
+                Uri contentUri = FileProvider.getUriForFile(v.getContext(), ContentUriHandler.AUTHORITY_FILES, path);
+                Intent i = new Intent(context, MediaViewerActivity.class);
+                i.setAction(Intent.ACTION_VIEW).setDataAndType(contentUri, "image/*").setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                ActivityOptionsCompat options = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation(conversationFragment.getActivity(), conversationViewHolder.mPhoto, "picture");
+                conversationFragment.startActivityForResult(i, 3006, options.toBundle());
+            });
+            return;
+        }
+
         if (file.getEventCode().isError()) {
             conversationViewHolder.icon.setImageResource(R.drawable.ic_warning);
         } else {
@@ -183,17 +241,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         conversationViewHolder.mMsgTxt.setText(file.getDisplayName());
 
-        String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
-                conversationViewHolder.itemView.getContext(),
-                file.getDate());
-        conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
-                timeSeparationString, FileUtils.readableFileSize(file.getTotalSize()),
-                ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getEventCode())));
-        if (file.isOutgoing()) {
-            conversationViewHolder.mPhoto.setImageResource(R.drawable.ic_outgoing_black);
-        } else {
-            conversationViewHolder.mPhoto.setImageResource(R.drawable.ic_incoming_black);
-        }
+        ((LinearLayout)conversationViewHolder.mLayout).setGravity(file.isOutgoing() ? Gravity.END : Gravity.START);
 
         if (file.getEventCode() == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
             conversationViewHolder.mAnswerLayout.setVisibility(View.VISIBLE);
@@ -204,7 +252,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 }
                 Context context = v.getContext();
                 File cacheDir = context.getCacheDir();
-                long spaceLeft = FileUtils.getSpaceLeft(cacheDir.toString());
+                long spaceLeft = AndroidFileUtils.getSpaceLeft(cacheDir.toString());
                 if (spaceLeft == -1L || file.getTotalSize() > spaceLeft) {
                     presenter.noSpaceLeft();
                     return;
@@ -449,7 +497,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         INCOMING_TEXT_MESSAGE(0),
         OUTGOING_TEXT_MESSAGE(1),
         CALL_INFORMATION_TEXT_MESSAGE(2),
-        FILE_TRANSFER_TEXT_MESSAGE(3);
+        FILE_TRANSFER(3),
+        IMAGE(4);
 
         int type;
 

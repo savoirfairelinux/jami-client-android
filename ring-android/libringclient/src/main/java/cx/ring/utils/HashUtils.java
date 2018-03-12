@@ -32,13 +32,21 @@ public class HashUtils {
     }
 
     public static String md5(String s) {
+        return hash(s, "MD5");
+    }
+
+    public static String sha1(String s) {
+        return hash(s, "SHA-1");
+    }
+
+    private static String hash(final String s, final String algo) {
         String result = null;
         try {
-            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            MessageDigest messageDigest = MessageDigest.getInstance(algo);
             messageDigest.update(s.getBytes(), 0, s.length());
             result = new BigInteger(1, messageDigest.digest()).toString(16);
         } catch (NoSuchAlgorithmException e) {
-            android.util.Log.e(TAG, "Not able to find MD5 algorithm", e);
+            Log.e(TAG, "Not able to find MD5 algorithm", e);
         }
         return result;
     }

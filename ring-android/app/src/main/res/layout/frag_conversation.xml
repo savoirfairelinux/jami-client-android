@@ -150,6 +150,27 @@
                 android:visibility="visible"
                 tools:listitem="@layout/item_number_selected" />
 
+            <ImageButton
+                android:id="@+id/send_data"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/send_file"
+                android:padding="8dp"
+                android:tint="@android:color/darker_gray"
+                app:srcCompat="@drawable/ic_upload_black" />
+
+            <ImageButton
+                android:id="@+id/btn_take_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/take_a_photo"
+                android:padding="8dp"
+                android:tint="@android:color/darker_gray"
+                app:srcCompat="@drawable/ic_photo_camera" />
+
             <EditText
                 android:id="@+id/msg_input_txt"
                 android:layout_width="0dp"
@@ -161,17 +182,6 @@
                 android:inputType="textShortMessage|textImeMultiLine|text|textMultiLine|textCapSentences"
                 android:maxLines="5"
                 android:padding="8dp" />
-
-            <ImageButton
-                android:id="@+id/send_data"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:contentDescription="@string/send_file"
-                android:padding="8dp"
-                android:tint="@android:color/darker_gray"
-                app:srcCompat="@drawable/ic_upload_black" />
 
             <ProgressBar
                 android:id="@+id/pb_data_transfer"

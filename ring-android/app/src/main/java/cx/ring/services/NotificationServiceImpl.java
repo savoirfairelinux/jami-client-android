@@ -398,7 +398,6 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         byte[] photo = contact.getPhoto();
         Bitmap photo_bmp = photo == null ? null : BitmapFactory.decodeByteArray(photo, 0, photo.length);
         messageNotificationBuilder.setContentTitle(titleMessage)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(false)
                 .setOngoing(ongoing)
@@ -415,6 +414,11 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             messageNotificationBuilder.setProgress((int)info.getTotalSize(), (int)info.getBytesProgress(), false);
         } else {
             messageNotificationBuilder.setProgress(0, 0, true);
+        }
+        if (event == DataTransferEventCode.CREATED) {
+            messageNotificationBuilder.setDefaults(NotificationCompat.DEFAULT_VIBRATE);
+        } else {
+            messageNotificationBuilder.setDefaults(NotificationCompat.DEFAULT_LIGHTS);
         }
         messageNotificationBuilder.mActions.clear();
         if (event == DataTransferEventCode.WAIT_HOST_ACCEPTANCE) {
