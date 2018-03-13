@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_6a81108f",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/MediaViewerActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-03-13T21:19:01Z",
+      "side": 1,
+      "message": "is this some forgotten code?",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 64
+      },
+      "revId": "26ec4cd1ea4f38e891cd98057eb0145415a532f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_aa4af880",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/MediaViewerActivityFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-03-13T21:19:01Z",
+      "side": 1,
+      "message": "naming can be more explicit",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 51
+      },
+      "revId": "26ec4cd1ea4f38e891cd98057eb0145415a532f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_ea440076",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-03-13T21:19:01Z",
+      "side": 1,
+      "message": "will this always be a jpg file?",
+      "range": {
+        "startLine": 227,
+        "startChar": 16,
+        "endLine": 227,
+        "endChar": 22
+      },
+      "revId": "26ec4cd1ea4f38e891cd98057eb0145415a532f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_8a4f3c92",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-03-13T21:19:01Z",
+      "side": 1,
+      "message": "android studio already display this (ctrl+p)",
+      "range": {
+        "startLine": 228,
+        "startChar": 51,
+        "endLine": 228,
+        "endChar": 72
+      },
+      "revId": "26ec4cd1ea4f38e891cd98057eb0145415a532f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_ca49448d",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-03-13T21:19:01Z",
+      "side": 1,
+      "message": "info here and a new error log above would be more explicit",
+      "range": {
+        "startLine": 244,
+        "startChar": 16,
+        "endLine": 244,
+        "endChar": 17
+      },
+      "revId": "26ec4cd1ea4f38e891cd98057eb0145415a532f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
