@@ -17,85 +17,86 @@
   ~ along with this program; if not, write to the Free Software
   ~  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
   -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:id="@+id/file_layout"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="end|bottom"
     android:layout_marginBottom="8dp"
     android:layout_marginTop="8dp"
     android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     android:focusable="true"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:orientation="vertical"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
         android:background="@drawable/textmsg_call_background"
         android:orientation="horizontal"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp">
+        android:paddingTop="8dp">
 
         <ImageView
             android:id="@+id/file_icon"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="4dp"
             android:layout_marginStart="12dp"
-            android:alpha="0.75"
             app:srcCompat="@drawable/ic_clip_black" />
 
-        <ImageView
-            android:id="@+id/direction_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="12dp"
-            android:layout_marginStart="0dp"
-            android:alpha="0.75"
-            tools:src="@drawable/ic_incoming_black" />
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
-            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:minWidth="160dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/call_hist_filename"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:ellipsize="middle"
-                android:gravity="center"
+                android:maxWidth="200dp"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
+                android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="@color/text_color_primary"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                tools:text="a_very_very_very_long_filename.jpg" />
+                tools:text="test.jpg.jpg" />
 
             <TextView
                 android:id="@+id/file_details_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:maxWidth="200dp"
                 android:textColor="@color/text_color_secondary"
                 android:textSize="12sp"
-                tools:text="1 mo - 12 mars - En attente" />
+                tools:text="1 mo - 12 mars" />
 
             <ProgressBar
                 android:id="@+id/progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:indeterminate="false"
-                android:visibility="gone" />
+                android:paddingBottom="8dp"
+                android:visibility="gone"
+                tools:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/llAnswer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="42dp"
+                android:minWidth="350dp"
                 android:orientation="horizontal"
                 android:visibility="gone"
                 tools:visibility="visible">
@@ -103,8 +104,8 @@
                 <Button
                     android:id="@+id/btnRefuse"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="center"
@@ -114,8 +115,8 @@
                 <Button
                     android:id="@+id/btnAccept"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:background="?attr/selectableItemBackground"
                     android:gravity="center"
@@ -126,4 +127,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

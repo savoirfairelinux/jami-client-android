@@ -39,6 +39,7 @@ import javax.inject.Named;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.StringVect;
 import cx.ring.service.OpenSlParams;
+import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.NetworkUtils;
 import cx.ring.utils.StringUtils;
@@ -81,6 +82,16 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     @Override
     public File provideFilesDir() {
         return mContext.getFilesDir();
+    }
+
+    @Override
+    public File getFilePath(String filename) {
+        return AndroidFileUtils.getFilePath(mContext, filename);
+    }
+
+    @Override
+    public File getConversationPath(String conversationId, String name) {
+        return AndroidFileUtils.getConversationPath(mContext, conversationId, name);
     }
 
     @Override

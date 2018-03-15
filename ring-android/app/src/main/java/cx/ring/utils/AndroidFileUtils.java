@@ -18,7 +18,6 @@
  */
 package cx.ring.utils;
 
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -39,11 +38,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.DecimalFormat;
 
-public class FileUtils {
+public class AndroidFileUtils {
 
-    static final String TAG = FileUtils.class.getSimpleName();
+    private static final String TAG = AndroidFileUtils.class.getSimpleName();
 
     public static boolean copyAssetFolder(AssetManager assetManager, String fromAssetPath, String toPath) {
         try {
@@ -76,7 +74,7 @@ public class FileUtils {
             in = assetManager.open(fromAssetPath);
             new File(toPath).createNewFile();
             out = new FileOutputStream(toPath);
-            copyFile(in, out);
+            FileUtils.copyFile(in, out);
             in.close();
             out.flush();
             out.close();
@@ -84,14 +82,6 @@ public class FileUtils {
         } catch (IOException e) {
             Log.e(TAG, "Error while copying asset", e);
             return false;
-        }
-    }
-
-    public static void copyFile(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[1024];
-        int read;
-        while ((read = in.read(buffer)) != -1) {
-            out.write(buffer, 0, read);
         }
     }
 
@@ -172,16 +162,41 @@ public class FileUtils {
         return mimeType;
     }
 
-    public static File getCacheFile(Activity activity, android.net.Uri uri) throws IOException {
-        String filename = FileUtils.getFilename(activity, uri);
-        File file = new File(activity.getCacheDir(), filename);
+    public static File getCacheFile(Context context, android.net.Uri uri) throws IOException {
+        String filename = getFilename(context, uri);
+        File file = new File(context.getCacheDir(), filename);
         FileOutputStream output = new FileOutputStream(file);
-        InputStream inputStream = activity.getContentResolver().openInputStream(uri);
+        InputStream inputStream = context.getContentResolver().openInputStream(uri);
         FileUtils.copyFile(inputStream, output);
         return file;
     }
 
-    public static String writeCacheFileToExtStorage(Activity activity, Uri cacheFile, String targetFilename) throws IOException {
+    public static File getConversationFile(Context context, android.net.Uri uri, String conversationId, String name) throws IOException {
+        File file = getConversationPath(context, conversationId, name);
+        FileOutputStream output = new FileOutputStream(file);
+        InputStream inputStream = context.getContentResolver().openInputStream(uri);
+        FileUtils.copyFile(inputStream, output);
+        return file;
+    }
+
+    public static File getFilePath(Context context, String filename) {
+        return context.getFileStreamPath(filename);
+    }
+
+    public static File getConversationPath(Context context, String conversationId, String name) {
+        File conversationsDir = getFilePath(context, "conversation_data");
+
+        if (!conversationsDir.exists())
+            conversationsDir.mkdir();
+
+        File conversationDir = new File(conversationsDir, conversationId);
+        if (!conversationDir.exists())
+            conversationDir.mkdir();
+
+        return new File(conversationDir, name);
+    }
+
+    public static String writeCacheFileToExtStorage(Context context, Uri cacheFile, String targetFilename) throws IOException {
         File downloadsDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
         int fileCount = 0;
@@ -195,7 +210,7 @@ public class FileUtils {
         }
 
         Log.d(TAG, "writeCacheFileToExtStorage: finalFile=" + finalFile + ",exists=" + finalFile.exists());
-        InputStream inputStream = activity.getContentResolver().openInputStream(cacheFile);
+        InputStream inputStream = context.getContentResolver().openInputStream(cacheFile);
         FileOutputStream output = new FileOutputStream(finalFile);
         FileUtils.copyFile(inputStream, output);
         return finalFile.toString();
@@ -204,15 +219,6 @@ public class FileUtils {
     public static boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state);
-    }
-
-    public static String readableFileSize(long size) {
-        if (size <= 0) {
-            return "0";
-        }
-        final String[] units = new String[]{"B", "kB", "MB", "GB", "TB"};
-        int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
-        return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
     }
 
     private static boolean isExternalStorageDocument(Uri uri) {

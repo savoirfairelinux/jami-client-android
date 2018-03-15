@@ -72,8 +72,8 @@ import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
+import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.DeviceUtils;
-import cx.ring.utils.FileUtils;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 
@@ -322,10 +322,10 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
     @Override
     protected void onStart() {
-        String path = FileUtils.ringtonesPath(this);
+        String path = AndroidFileUtils.ringtonesPath(this);
         if (!(new File(path + "/default.wav")).exists()) {
             Log.d(TAG, "onStart: default.wav doesn't exist. Copying ringtones.");
-            FileUtils.copyAssetFolder(getAssets(), "ringtones", path);
+            AndroidFileUtils.copyAssetFolder(getAssets(), "ringtones", path);
         }
 
         super.onStart();
