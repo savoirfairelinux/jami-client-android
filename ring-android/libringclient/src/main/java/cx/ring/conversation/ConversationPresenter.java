@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,7 +26,6 @@ import java.util.Iterator;
 import javax.inject.Inject;
 
 import cx.ring.daemon.Blob;
-import cx.ring.daemon.DataTransferInfo;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
@@ -65,7 +65,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     private HardwareService mHardwareService;
     private ConversationFacade mConversationFacade;
     private CallService mCallService;
-    private Scheduler mMainScheduler;
     private VCardService mVCardService;
     private PreferencesService mPreferencesService;
     private DeviceRuntimeService mDeviceRuntimeService;
@@ -77,9 +76,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     private CallContact mCurrentContact;
 
     @Inject
-    public ConversationPresenter(ContactService mContactService,
-                                 AccountService mAccountService,
-                                 HistoryService mHistoryService,
+    public ConversationPresenter(ContactService contactService,
+                                 AccountService accountService,
+                                 HistoryService historyService,
                                  CallService callService,
                                  NotificationService notificationService,
                                  HardwareService hardwareService,
@@ -88,11 +87,10 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                                  PreferencesService preferencesService,
                                  DeviceRuntimeService deviceRuntimeService,
                                  Scheduler mainScheduler) {
-        this.mContactService = mContactService;
-        this.mAccountService = mAccountService;
-        this.mHistoryService = mHistoryService;
+        this.mContactService = contactService;
+        this.mAccountService = accountService;
+        this.mHistoryService = historyService;
         this.mCallService = callService;
-        this.mMainScheduler = mainScheduler;
         this.mNotificationService = notificationService;
         this.mHardwareService = hardwareService;
         this.mConversationFacade = conversationFacade;
@@ -117,9 +115,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     public void init(Uri contactRingId, String accountId) {
         mContactRingId = contactRingId;
         mAccountId = accountId;
-
         mCurrentContact = mContactService.getContact(mContactRingId);
-        this.mConversation = new Conversation(mCurrentContact);
 
         mAccountService.addObserver(this);
         mHistoryService.addObserver(this);
@@ -128,17 +124,16 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     public void pause() {
-        if (mConversation != null) {
-            Conversation localConversation = mConversationFacade.getConversationByContact(mCurrentContact);
-            if (localConversation != null) {
-                localConversation.setVisible(false);
-            }
+        if (mCurrentContact != null) {
+            mConversation.setVisible(false);
         }
     }
 
     public void resume() {
-        loadHistory();
-
+        if (mConversation == null)  {
+            loadHistory();
+        }
+        mConversation.setVisible(true);
         TrustRequest incomingTrustRequests = getIncomingTrustRequests();
         if (incomingTrustRequests == null) {
             getView().switchToConversationView();
@@ -194,32 +189,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         getView().openFilePicker();
     }
 
-    public void sendFile(String filePath) {
-        Log.d(TAG, "sendFile: sending file at " + filePath + " from accountId " + mAccountId + " to " + mContactRingId);
-
-        if (filePath == null) {
-            return;
-        }
-
-        // check file
-        File file = new File(filePath);
-        if (!file.exists()) {
-            Log.d(TAG, "sendFile: file not found");
-            return;
-        }
-
-        if (!file.canRead()) {
-            Log.d(TAG, "sendFile: file not readable");
-            return;
-        }
-
-        // send file
-        DataTransferInfo dataTransferInfo = new DataTransferInfo();
-        dataTransferInfo.setAccountId(mAccountId);
-        dataTransferInfo.setPeer(mContactRingId.getHost());
-        dataTransferInfo.setPath(filePath);
-        dataTransferInfo.setDisplayName(file.getName());
-        mAccountService.sendFile(0L, dataTransferInfo);
+    public void sendFile(File file) {
+        mConversationFacade.sendFile(mAccountId, mContactRingId, file);
     }
 
     public void sendTrustRequest() {
@@ -276,7 +247,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
     private void loadHistory() {
         mConversation = mConversationFacade.startConversation(mCurrentContact);
-        mConversation.setVisible(true);
         mHistoryService.readMessages(mConversation);
         mNotificationService.cancelTextNotification(mContactRingId.getRawUriString());
         getView().hideNumberSpinner();
@@ -289,6 +259,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         } else {
             getView().displayOnGoingCallPane(false);
         }
+        getView().scrollToEnd();
     }
 
     private void checkTrustRequestStatus() {
@@ -317,6 +288,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                     break;
                 case INCOMING_MESSAGE:
                     getView().refreshView(mConversation);
+                    getView().scrollToEnd();
                     break;
             }
         }

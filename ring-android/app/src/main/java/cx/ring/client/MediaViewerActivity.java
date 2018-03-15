@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
- *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,26 +17,20 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package cx.ring.utils;
+package cx.ring.client;
 
-import android.net.Uri;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
-import cx.ring.BuildConfig;
+import cx.ring.R;
 
-/**
- * This class distributes content uri used to pass along data in the app
- */
-public class ContentUriHandler {
+public class MediaViewerActivity extends AppCompatActivity {
 
-    public static final String AUTHORITY = BuildConfig.APPLICATION_ID;
-    public static final String AUTHORITY_FILES = AUTHORITY + ".file_provider";
-
-    private static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
-
-    public static final Uri CONVERSATION_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "conversations");
-    public static final Uri ACCOUNTS_CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "accounts");
-
-    private ContentUriHandler() {
-        // hidden constructor
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_media_viewer);
     }
+
 }

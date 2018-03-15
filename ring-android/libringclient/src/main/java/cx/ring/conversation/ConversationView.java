@@ -30,6 +30,8 @@ public interface ConversationView extends BaseView {
 
     void updateView(String address, String name, int state);
 
+    void scrollToEnd();
+
     void displayContactName(CallContact contact);
 
     void displayOnGoingCallPane(boolean display);
