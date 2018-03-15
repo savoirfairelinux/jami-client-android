@@ -247,7 +247,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </intent-filter>
         </service>
 
-        <!-- AndroidTV section  -->
+        <!-- AndroidTV section -->
         <activity
             android:name=".tv.launch.TVLaunchActivity"
             android:banner="@drawable/banner"
@@ -273,22 +273,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:theme="@style/AppThemeBase" />
 
         <activity
-            android:name="cx.ring.tv.search.SearchActivity"
+            android:name=".tv.search.SearchActivity"
             android:theme="@style/Theme.Leanback" />
 
         <activity
-            android:name="cx.ring.tv.about.AboutActivity"
+            android:name=".tv.about.AboutActivity"
             android:theme="@style/Theme.Leanback" />
 
         <activity
-            android:name="cx.ring.tv.account.TVProfileEditingActivity"
+            android:name=".tv.account.TVProfileEditingActivity"
             android:theme="@style/Theme.Leanback" />
 
         <activity
-            android:name="cx.ring.tv.call.TVCallActivity"
+            android:name=".tv.call.TVCallActivity"
             android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize"
-            android:showOnLockScreen="true"
             android:resizeableActivity="true"
+            android:showOnLockScreen="true"
             android:supportsPictureInPicture="true"
             android:theme="@style/AppThemeBase">
             <intent-filter>
@@ -298,7 +298,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </activity>
 
         <activity
-            android:name="cx.ring.tv.camera.CustomCameraActivity"
+            android:name=".tv.camera.CustomCameraActivity"
             android:theme="@style/AppThemeBase">
             <intent-filter>
                 <action android:name="cx.ring.action.CALL" />
@@ -312,6 +312,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".tv.account.TVSettingsActivity"
             android:theme="@style/LeanbackPreferences" />
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="cx.ring.file_provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <activity
+            android:name=".client.MediaViewerActivity"
+            android:label="@string/title_media_viewer"
+            android:theme="@style/AppThemeBase.Dark">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.OPENABLE" />
+                <data android:scheme="content" android:mimeType="image/*"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

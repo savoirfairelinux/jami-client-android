@@ -328,9 +328,9 @@ public abstract class HistoryService extends Observable {
                     deleteCallsHistoryBuilder.delete();
 
                     //~ Deleting data transfers
-                    ArrayList<String> dataTransferIds = new ArrayList<>(entry.getValue().getDataTransfers().size());
+                    ArrayList<Long> dataTransferIds = new ArrayList<>(entry.getValue().getDataTransfers().size());
                     for (DataTransfer dataTransfer : entry.getValue().getDataTransfers().values()) {
-                        dataTransferIds.add(dataTransfer.getDataTransferId().toString());
+                        dataTransferIds.add(dataTransfer.getId());
                     }
                     DeleteBuilder<DataTransfer, Long> deleteDataTransfersHistoryBuilder = getDataHistoryDao()
                             .deleteBuilder();
