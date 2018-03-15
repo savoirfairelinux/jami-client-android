@@ -236,7 +236,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                                     .putExtra(NotificationService.KEY_CALL_ID, sipCall.getCallId()), PendingIntent.FLAG_ONE_SHOT)));
             paramBuilder.setActions(actions);
             getActivity().enterPictureInPictureMode(paramBuilder.build());
-        } else {
+        } else if (DeviceUtils.isTv(getContext())) {
             getActivity().enterPictureInPictureMode();
         }
     }
