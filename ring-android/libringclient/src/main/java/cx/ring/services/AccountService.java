@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1360,5 +1361,24 @@ public class AccountService extends Observable {
 
     public DataTransfer getDataTransfer(long id) {
         return mDataTransfers.get(id);
+    }
+
+    public void enableRingProxy() {
+        FutureUtils.executeDaemonThreadCallable(
+                mExecutor,
+                mDeviceRuntimeService.provideDaemonThreadId(),
+                false,
+                () -> {
+                    for (Account acc : mAccountList){
+                        if (acc.isRing() && !acc.isDHTProxyEnabled()) {
+                            Log.d(TAG, "Enabling proxy for account " + acc.getAccountID());
+                            StringMap details = Ringservice.getAccountDetails(acc.getAccountID());
+                            details.set(ConfigKey.PROXY_ENABLED.key(), "true");
+                            Ringservice.setAccountDetails(acc.getAccountID(), details);
+                        }
+                    }
+                    return true;
+                }
+        );
     }
 }
