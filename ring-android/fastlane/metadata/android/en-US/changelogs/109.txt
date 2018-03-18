@@ -1,0 +1,5 @@
+* File transfer fixes
+* Show transferred images in the conversation
+* Take and send pictures directly from the app
+* Reduced network usage
+* Push notification fixes
