@@ -129,8 +129,11 @@ public class Account {
         mDetails.put(ConfigKey.ACCOUNT_ROUTESET, proxy);
     }
 
-    public boolean isDHTProxyEnabled() {
+    public boolean isDhtProxyEnabled() {
         return mDetails.getBool(ConfigKey.PROXY_ENABLED);
+    }
+    public void setDhtProxyEnabled(boolean active) {
+        mDetails.put(ConfigKey.PROXY_ENABLED, active ? "true" : "false");
     }
 
     public String getRegistrationState() {
