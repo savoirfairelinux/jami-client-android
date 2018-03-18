@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a3f45e8_ed09ba2d",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/MediaViewerActivity.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-18T16:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3f45e8_6a81108f",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 64
+      },
+      "revId": "26ec4cd1ea4f38e891cd98057eb0145415a532f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3f45e8_aa4af880",
         "filename": "ring-android/app/src/main/java/cx/ring/client/MediaViewerActivityFragment.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2018-03-13T21:19:01Z",
       "side": 1,
       "message": "naming can be more explicit",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 51
+      },
+      "revId": "26ec4cd1ea4f38e891cd98057eb0145415a532f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_cd0e7e34",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/MediaViewerActivityFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-18T16:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3f45e8_aa4af880",
       "range": {
         "startLine": 55,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5a3f45e8_adffb200",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-18T16:13:54Z",
+      "side": 1,
+      "message": "Yes at least for now. Even if it wasn\u0027t a jpg file it wouldn\u0027t be an issue, the important part is that it should be detected as an image. More advanced logic to be added lated if possible.",
+      "parentUuid": "5a3f45e8_ea440076",
+      "range": {
+        "startLine": 227,
+        "startChar": 16,
+        "endLine": 227,
+        "endChar": 22
+      },
+      "revId": "26ec4cd1ea4f38e891cd98057eb0145415a532f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3f45e8_8a4f3c92",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2018-03-13T21:19:01Z",
       "side": 1,
       "message": "android studio already display this (ctrl+p)",
+      "range": {
+        "startLine": 228,
+        "startChar": 51,
+        "endLine": 228,
+        "endChar": 72
+      },
+      "revId": "26ec4cd1ea4f38e891cd98057eb0145415a532f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_ca178450",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-18T16:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3f45e8_8a4f3c92",
       "range": {
         "startLine": 228,
         "startChar": 51,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5a3f45e8_0a096c31",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-18T16:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3f45e8_ca49448d",
+      "range": {
+        "startLine": 244,
+        "startChar": 16,
+        "endLine": 244,
+        "endChar": 17
+      },
+      "revId": "26ec4cd1ea4f38e891cd98057eb0145415a532f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3f45e8_aa31580d",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
         "patchSetId": 7
@@ -128,6 +248,30 @@
       "writtenOn": "2018-03-13T21:40:52Z",
       "side": 1,
       "message": "not working on samsung t813",
+      "range": {
+        "startLine": 273,
+        "startChar": 0,
+        "endLine": 314,
+        "endChar": 5
+      },
+      "revId": "26ec4cd1ea4f38e891cd98057eb0145415a532f8",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_6a063022",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-03-18T16:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3f45e8_aa31580d",
       "range": {
         "startLine": 273,
         "startChar": 0,
