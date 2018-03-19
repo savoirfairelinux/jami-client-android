@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -1318,7 +1320,7 @@ public class AccountService extends Observable {
         );
     }
 
-    public void dataTransferEvent(long transferId, int eventCode) {
+    public void dataTransferEvent(final long transferId, int eventCode) {
         DataTransferEventCode dataEvent = getDataTransferEventCode(eventCode);
         DataTransferInfo info = new DataTransferInfo();
         dataTransferInfo(transferId, info);
@@ -1338,6 +1340,23 @@ public class AccountService extends Observable {
             mHistoryService.insertDataTransfer(transfer);
             mDataTransfers.put(transferId, transfer);
         } else {
+            DataTransferEventCode oldState = transfer.getEventCode();
+            if (oldState != dataEvent) {
+                if (oldState == DataTransferEventCode.ONGOING) {
+                    transfer.timer.cancel();
+                    transfer.timer = null;
+                } else if (dataEvent == DataTransferEventCode.ONGOING) {
+                    if (transfer.timer == null) {
+                        transfer.timer = new Timer();
+                        transfer.timer.scheduleAtFixedRate(new TimerTask() {
+                            @Override
+                            public void run() {
+                                dataTransferEvent(transferId, eventCode);
+                            }
+                        }, 500, 500);
+                    }
+                }
+            }
             transfer.setEventCode(dataEvent);
             transfer.setBytesProgress(info.getBytesProgress());
             mHistoryService.updateDataTransfer(transfer);

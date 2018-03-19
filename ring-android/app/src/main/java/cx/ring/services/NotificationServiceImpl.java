@@ -69,9 +69,11 @@ import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.service.DRingService;
 import cx.ring.utils.BitmapUtils;
+import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import cx.ring.utils.ResourceMapper;
 import ezvcard.VCard;
 import ezvcard.property.Photo;
 
@@ -404,7 +406,10 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setLargeIcon(photo_bmp)
                 .setCategory(NotificationCompat.CATEGORY_PROGRESS)
-                .setContentText(info.getDisplayName() + " state: " + event.name())
+                .setOnlyAlertOnce(true)
+                .setContentText(event == DataTransferEventCode.ONGOING ?
+                        FileUtils.readableFileProgress(info.getBytesProgress(), info.getTotalSize()) :
+                        info.getDisplayName() + ": " + ResourceMapper.getReadableFileTransferStatus(mContext, event))
                 .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
                 .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
         if (event.isOver()) {

@@ -29,6 +29,9 @@ import java.text.DecimalFormat;
 public class FileUtils {
     private static final String TAG = FileUtils.class.getSimpleName();
 
+    private static final String[] SIZE_UNITS = new String[]{"B", "kB", "MB", "GB", "TB"};
+    private static final DecimalFormat SIZE_FORMAT = new DecimalFormat("#,##0.##");
+
     public static void copyFile(InputStream in, OutputStream out) throws IOException {
         // Buffer size based on https://stackoverflow.com/questions/10143731/android-optimal-buffer-size
         byte[] buffer = new byte[32 * 1024];
@@ -58,13 +61,24 @@ public class FileUtils {
         return true;
     }
 
+    private static int getSizeDigitGroup(long size) {
+        return (int) (Math.log10(size) / Math.log10(1024));
+    }
+
     public static String readableFileSize(long size) {
         if (size <= 0) {
             return "0";
         }
-        final String[] units = new String[]{"B", "kB", "MB", "GB", "TB"};
-        int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
-        return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+        int digitGroups = getSizeDigitGroup(size);
+        return SIZE_FORMAT.format(size / Math.pow(1024, digitGroups)) + " " + SIZE_UNITS[digitGroups];
     }
 
+    public static CharSequence readableFileProgress(long progress, long total) {
+        if (progress < 0 || total < 0)
+            return "";
+        int digitGroups = getSizeDigitGroup(Math.max(progress, total));
+        double den = Math.pow(1024, digitGroups);
+        String unit = SIZE_UNITS[digitGroups];
+        return SIZE_FORMAT.format(progress / den) + " / " + SIZE_FORMAT.format(total / den) + " " + unit;
+    }
 }
