@@ -336,7 +336,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
 
             VCard vCard = request.getVCard();
-            List<Photo> photos = vCard.getPhotos();
+            List<Photo> photos = vCard == null ? null : vCard.getPhotos();
             byte[] data = null;
             if (photos != null && !photos.isEmpty()) {
                 data = photos.get(0).getData();
