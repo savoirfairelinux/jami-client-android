@@ -91,7 +91,7 @@ public class DataTransfer extends ConversationElement {
     }
 
     public boolean showPicture() {
-        return isPicture() && (isOutgoing() || !DataTransferEventCode.FINISHED.name().equals(eventCode));
+        return isPicture() && (isOutgoing() || DataTransferEventCode.FINISHED.name().equals(eventCode));
     }
 
     public String getStoragePath() {
