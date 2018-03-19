@@ -65,7 +65,9 @@
   <string name="notif_channel_requests">Forespørsler</string>
   <string name="notif_channel_file_transfer">Filoverføring</string>
   <string name="notif_mark_as_read">Merk som lest</string>
+  <string name="notif_incoming_file_transfer_title">Innkommende fil fra %1$s</string>
   <string name="notif_incoming_file_transfer">Noen ønsker å sende deg ei fil</string>
+  <string name="notif_outgoing_file_transfer_title">Sender fil til %1$s</string>
   <string name="notif_outgoing_file_transfer">Noen ønsker å sende deg ei fil</string>
   <string name="action_open">Åpne</string>
   <!--Call Fragment-->

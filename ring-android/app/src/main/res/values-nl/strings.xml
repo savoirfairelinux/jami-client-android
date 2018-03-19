@@ -65,7 +65,9 @@
   <string name="notif_channel_requests">Verzoeken</string>
   <string name="notif_channel_file_transfer">Bestandsoverdracht</string>
   <string name="notif_mark_as_read">Markeren als gelezen</string>
+  <string name="notif_incoming_file_transfer_title">Inkomend bestand van %1$s</string>
   <string name="notif_incoming_file_transfer">Iemand wil je een bestand sturen</string>
+  <string name="notif_outgoing_file_transfer_title">Bestand wordt verstuurd naar %1$s</string>
   <string name="notif_outgoing_file_transfer">Iemand wil je een bestand sturen</string>
   <string name="action_open">Openen</string>
   <!--Call Fragment-->
