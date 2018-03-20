@@ -122,7 +122,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
         @Override
         public String placeCall(final String account, final String number, final boolean video) {
-            return mCallService.placeCall(account, number, video).getCallId();
+            return mConversationFacade.placeCall(account, number, video).getCallId();
         }
 
         @Override
@@ -504,6 +504,14 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     protected ContactService mContactService;
     @Inject
     protected PreferencesService mPreferencesService;
+    @Inject
+    protected ConversationFacade mConversationFacade;
+    @Inject
+    @Named("DaemonExecutor")
+    protected ExecutorService mExecutor;
+
+    public static boolean isRunning = false;
+
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -528,13 +536,6 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
             }
         }
     };
-    @Inject
-    protected ConversationFacade mConversationFacade;
-    @Inject
-    @Named("DaemonExecutor")
-    protected ExecutorService mExecutor;
-
-    public static boolean isRunning = false;
 
     @Override
     public void onCreate() {

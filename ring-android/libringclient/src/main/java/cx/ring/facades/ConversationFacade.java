@@ -617,4 +617,15 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
             }
         }
     }
+
+    public SipCall placeCall(String accountId, String number, boolean video) {
+        String rawId = new Uri(number).getRawRingId();
+        Account account = mAccountService.getAccount(accountId);
+        if (account != null) {
+            CallContact contact = account.getContact(rawId);
+            if (contact == null)
+                mAccountService.addContact(accountId, rawId);
+        }
+        return mCallService.placeCall(rawId, number, video);
+    }
 }
