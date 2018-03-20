@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.ServiceEvent;
@@ -51,6 +52,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     protected CallService mCallService;
     protected ContactService mContactService;
     protected HistoryService mHistoryService;
+    protected ConversationFacade mConversationFacade;
 
     private SipCall mSipCall;
     private boolean mOnGoingCall = false;
@@ -70,13 +72,15 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
                          HardwareService hardwareService,
                          CallService callService,
                          ContactService contactService,
-                         HistoryService historyService) {
+                         HistoryService historyService,
+                         ConversationFacade conversationFacade) {
         this.mAccountService = accountService;
         this.mNotificationService = notificationService;
         this.mHardwareService = hardwareService;
         this.mCallService = callService;
         this.mContactService = contactService;
         this.mHistoryService = historyService;
+        this.mConversationFacade = conversationFacade;
     }
 
     @Override
@@ -104,7 +108,7 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
             audioOnly = true;
         }
 
-        mSipCall = mCallService.placeCall(accountId, StringUtils.toNumber(contactRingId), audioOnly);
+        mSipCall = mConversationFacade.placeCall(accountId, StringUtils.toNumber(contactRingId), audioOnly);
         if (mSipCall == null) {
             Log.w(TAG, "initOutGoing: null Call");
             finish();
