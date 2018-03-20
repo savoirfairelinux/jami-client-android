@@ -38,22 +38,27 @@ public class FileUtils {
         }
     }
 
+    public static boolean copyFile(File src, File dest) {
+        try {
+            InputStream inputStream = new FileInputStream(src);
+            FileOutputStream outputStream = new FileOutputStream(dest);
+            copyFile(inputStream, outputStream);
+            inputStream.close();
+            outputStream.close();
+        } catch (IOException e) {
+            Log.w(TAG, "Can't copy file", e);
+            return false;
+        }
+        return true;
+    }
+
     public static boolean moveFile(File file, File dest) {
         if (!file.exists() || !file.canRead())
             return false;
         if (!file.renameTo(dest)) {
             Log.w(TAG, "moveFile: can't rename file to " + dest);
-            try {
-                InputStream inputStream = new FileInputStream(file);
-                FileOutputStream outputStream = new FileOutputStream(dest);
-                copyFile(inputStream, outputStream);
-                inputStream.close();
-                file.delete();
-                outputStream.close();
-            } catch (IOException e) {
-                Log.w(TAG, "moveFile: can't copy file to " + dest, e);
+            if (!copyFile(file, dest))
                 return false;
-            }
         }
         return true;
     }

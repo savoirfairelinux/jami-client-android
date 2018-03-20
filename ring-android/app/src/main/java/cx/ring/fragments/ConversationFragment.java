@@ -214,6 +214,13 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         }
     }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (mAdapter.onContextItemSelected(item))
+            return true;
+        return super.onContextItemSelected(item);
+    }
+
     @OnClick(R.id.msg_send)
     public void sendMessageText() {
         presenter.sendTextMessage(mMsgEditTxt.getText().toString());

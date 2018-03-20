@@ -439,4 +439,15 @@ public abstract class HistoryService extends Observable {
         }
         return false;
     }
+
+    public void deleteFileHistory(long id) {
+        try {
+            getDataHistoryDao().deleteById(id);
+        } catch (SQLException e) {
+            Log.e(TAG, "deleteFileHistory: SQL error occurred", e);
+        }
+        setChanged();
+        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.HISTORY_MODIFIED);
+        notifyObservers(event);
+    }
 }

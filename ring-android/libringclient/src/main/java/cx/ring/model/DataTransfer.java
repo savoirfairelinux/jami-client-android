@@ -89,9 +89,11 @@ public class DataTransfer extends ConversationElement {
         String extension = StringUtils.getFileExtension(getDisplayName()).toLowerCase();
         return IMAGE_EXTENSIONS.contains(extension) && getTotalSize() <= MAX_IMG_SIZE;
     }
-
+    public boolean isComplete() {
+        return isOutgoing() || DataTransferEventCode.FINISHED.name().equals(eventCode);
+    }
     public boolean showPicture() {
-        return isPicture() && (isOutgoing() || DataTransferEventCode.FINISHED.name().equals(eventCode));
+        return isPicture() && isComplete();
     }
 
     public String getStoragePath() {

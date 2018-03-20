@@ -31,6 +31,7 @@ import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransfer;
 import cx.ring.model.RingError;
 import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
@@ -47,12 +48,12 @@ import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
 import cx.ring.services.PreferencesService;
 import cx.ring.services.VCardService;
+import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
-import io.reactivex.Scheduler;
 
 public class ConversationPresenter extends RootPresenter<ConversationView> implements Observer<ServiceEvent> {
 
@@ -85,8 +86,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                                  ConversationFacade conversationFacade,
                                  VCardService vCardService,
                                  PreferencesService preferencesService,
-                                 DeviceRuntimeService deviceRuntimeService,
-                                 Scheduler mainScheduler) {
+                                 DeviceRuntimeService deviceRuntimeService) {
         this.mContactService = contactService;
         this.mAccountService = accountService;
         this.mHistoryService = historyService;
@@ -193,6 +193,23 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         mConversationFacade.sendFile(mAccountId, mContactRingId, file);
     }
 
+    public boolean downloadFile(DataTransfer transfer, File dest) {
+        if (!transfer.isComplete())
+            return false;
+        File file = getDeviceRuntimeService().getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
+        if (FileUtils.copyFile(file, dest)) {
+            Log.w(TAG, "Copied file to " + dest.getAbsolutePath() + " (" + FileUtils.readableFileSize(file.length()) + ")");
+            return true;
+        }
+        return false;
+    }
+
+    public void deleteFile(DataTransfer transfer) {
+        File file = getDeviceRuntimeService().getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
+        file.delete();
+        mHistoryService.deleteFileHistory(transfer.getId());
+    }
+
     public void sendTrustRequest() {
         VCard vCard = mVCardService.loadSmallVCard(mAccountId);
         mAccountService.sendTrustRequest(mAccountId, mContactRingId.getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard)));
@@ -290,6 +307,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                 case INCOMING_MESSAGE:
                     getView().refreshView(mConversation);
                     getView().scrollToEnd();
+                    break;
+                case CONVERSATIONS_CHANGED:
+                    loadHistory();
                     break;
             }
         }

@@ -20,11 +20,13 @@
  */
 package cx.ring.adapters;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -33,13 +35,17 @@ import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
@@ -87,6 +93,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private final int vPaddingEmoticon;
     private final int mPictureMaxSize;
     private final GlideOptions PICTURE_OPTIONS;
+    private RecyclerViewContextMenuInfo mCurrentLongItem = null;
 
     public ConversationAdapter(ConversationFragment conversationFragment, ConversationPresenter presenter) {
         this.conversationFragment = conversationFragment;
@@ -196,6 +203,15 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
     }
 
+    @Override
+    public void onViewRecycled(ConversationViewHolder holder) {
+        if (holder.itemView != null)
+            holder.itemView.setOnLongClickListener(null);
+        if (holder.mPhoto != null)
+            holder.mPhoto.setOnLongClickListener(null);
+        super.onViewRecycled(holder);
+    }
+
     private static void runJustBeforeBeingDrawn(final ImageView view, final Runnable runnable) {
 
         final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
@@ -208,6 +224,62 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         };
         view.getViewTreeObserver().addOnPreDrawListener(preDrawListener);
     }
+
+    public static class RecyclerViewContextMenuInfo implements ContextMenu.ContextMenuInfo {
+        public RecyclerViewContextMenuInfo(int position, long id) {
+            this.position = position;
+            this.id = id;
+        }
+        final public int position;
+        final public long id;
+    }
+
+    public RecyclerViewContextMenuInfo getCurrentLongItem() {
+        return mCurrentLongItem;
+    }
+
+    public boolean onContextItemSelected(MenuItem item) {
+        ConversationAdapter.RecyclerViewContextMenuInfo info = getCurrentLongItem();
+        if (info == null) {
+            return false;
+        }
+        IConversationElement conversationElement = mConversationElements.get(info.position);
+        if (conversationElement == null)
+            return false;
+        if (conversationElement.getType() != IConversationElement.CEType.FILE)
+            return false;
+        DataTransfer file = (DataTransfer) conversationElement;
+        Context context = conversationFragment.getActivity();
+        switch (item.getItemId()) {
+            case R.id.conv_action_download: {
+                File downloadDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Ring");
+                if (!downloadDir.mkdirs()) {
+                    Log.e(TAG, "Directory not created");
+                }
+                File newFile = new File(downloadDir, file.getDisplayName());
+                if (newFile.exists())
+                    newFile.delete();
+                if (presenter.downloadFile(file, newFile)) {
+                    DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+                    if (downloadManager != null) {
+                        downloadManager.addCompletedDownload(file.getDisplayName(),
+                                file.getDisplayName(),
+                                true,
+                                file.isPicture() ? "image/jpeg" : "text/plain",
+                                newFile.getAbsolutePath(),
+                                newFile.length(),
+                                true);
+                    }
+                }
+                break;
+            }
+            case R.id.conv_action_delete:
+                presenter.deleteFile(file);
+                break;
+        }
+        return true;
+    }
+
 
     private void configureForFileInfoTextMessage(final ConversationViewHolder conversationViewHolder,
                                                  final IConversationElement conversationElement) {
@@ -227,7 +299,23 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                     timeSeparationString, FileUtils.readableFileSize(file.getTotalSize()),
                     ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getEventCode())));
         }
-        if (file.showPicture()) {
+
+        boolean showPicture = file.showPicture();
+        View longPressView = showPicture ? conversationViewHolder.mPhoto : conversationViewHolder.itemView;
+        longPressView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
+            menu.setHeaderTitle(file.getDisplayName());
+            conversationFragment.onCreateContextMenu(menu, v, menuInfo);
+            MenuInflater inflater = conversationFragment.getActivity().getMenuInflater();
+            inflater.inflate(R.menu.conversation_item_actions, menu);
+            if (!file.isComplete())
+                menu.removeItem(R.id.conv_action_download);
+        });
+        longPressView.setOnLongClickListener(v -> {
+            mCurrentLongItem = new RecyclerViewContextMenuInfo(conversationViewHolder.getLayoutPosition(), v.getId());
+            return false;
+        });
+
+        if (showPicture) {
             Context context = conversationViewHolder.mPhoto.getContext();
             File path = presenter.getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
 
