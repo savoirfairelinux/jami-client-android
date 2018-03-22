@@ -171,8 +171,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         return ConversationMessageType.CALL_INFORMATION_TEXT_MESSAGE.getType();
     }
 
+    @NonNull
     @Override
-    public ConversationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ConversationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         int res;
         if (viewType == ConversationMessageType.INCOMING_TEXT_MESSAGE.getType()) {
             res = R.layout.item_conv_msg_peer;
@@ -204,7 +205,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     }
 
     @Override
-    public void onViewRecycled(ConversationViewHolder holder) {
+    public void onViewRecycled(@NonNull ConversationViewHolder holder) {
         if (holder.itemView != null)
             holder.itemView.setOnLongClickListener(null);
         if (holder.mPhoto != null)
@@ -223,6 +224,16 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             }
         };
         view.getViewTreeObserver().addOnPreDrawListener(preDrawListener);
+    }
+
+    public void updateTransfer(DataTransfer transfer) {
+        for(int i=mConversationElements.size()-1; i >= 0; i--){
+            IConversationElement e = mConversationElements.get(i);
+            if (e == transfer) {
+                notifyItemChanged(i);
+                return;
+            }
+        }
     }
 
     public static class RecyclerViewContextMenuInfo implements ContextMenu.ContextMenuInfo {

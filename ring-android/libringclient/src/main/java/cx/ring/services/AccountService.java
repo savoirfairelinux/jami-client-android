@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -83,6 +85,7 @@ public class AccountService extends Observable {
     private static final String TAG = AccountService.class.getSimpleName();
 
     private static final int VCARD_CHUNK_SIZE = 1000;
+    private static final long DATA_TRANSFER_REFRESH_PERIOD = 500;
 
     @Inject
     @Named("DaemonExecutor")
@@ -104,8 +107,9 @@ public class AccountService extends Observable {
     private boolean mHasRingAccount;
     private AtomicBoolean mAccountsLoaded = new AtomicBoolean(false);
 
-    private final Map<Long, DataTransfer> mDataTransfers = new HashMap<>();
+    private final HashMap<Long, DataTransfer> mDataTransfers = new HashMap<>();
     private DataTransfer mStartingTransfer = null;
+    private Timer mTransferRefreshTimer = null;
 
     /**
      * @return true if at least one of the loaded accounts is a SIP one
@@ -1318,7 +1322,26 @@ public class AccountService extends Observable {
         );
     }
 
-    public void dataTransferEvent(long transferId, int eventCode) {
+    private class DataTransferRefreshTask extends TimerTask {
+        private final DataTransfer mToUpdate;
+        DataTransferRefreshTask(DataTransfer t) {
+            mToUpdate = t;
+        }
+        @Override
+        public void run() {
+            DataTransferEventCode eventCode;
+            synchronized (mToUpdate) {
+                eventCode = mToUpdate.getEventCode();
+            }
+            if (eventCode == DataTransferEventCode.ONGOING) {
+                dataTransferEvent(mToUpdate.getDataTransferId(), eventCode.ordinal());
+            } else {
+                cancel();
+            }
+        }
+    }
+
+    public void dataTransferEvent(final long transferId, int eventCode) {
         DataTransferEventCode dataEvent = getDataTransferEventCode(eventCode);
         DataTransferInfo info = new DataTransferInfo();
         dataTransferInfo(transferId, info);
@@ -1338,6 +1361,18 @@ public class AccountService extends Observable {
             mHistoryService.insertDataTransfer(transfer);
             mDataTransfers.put(transferId, transfer);
         } else {
+            DataTransferEventCode oldState = transfer.getEventCode();
+            if (oldState != dataEvent) {
+                if (dataEvent == DataTransferEventCode.ONGOING) {
+                    if (mTransferRefreshTimer == null) {
+                        mTransferRefreshTimer = new Timer();
+                    }
+                    mTransferRefreshTimer.scheduleAtFixedRate(
+                            new DataTransferRefreshTask(transfer),
+                            DATA_TRANSFER_REFRESH_PERIOD,
+                            DATA_TRANSFER_REFRESH_PERIOD);
+                }
+            }
             transfer.setEventCode(dataEvent);
             transfer.setBytesProgress(info.getBytesProgress());
             mHistoryService.updateDataTransfer(transfer);

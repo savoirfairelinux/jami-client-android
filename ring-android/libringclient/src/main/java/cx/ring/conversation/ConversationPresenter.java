@@ -304,6 +304,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
                     getView().refreshView(mConversation);
                     getView().scrollToEnd();
                     break;
+                case DATA_TRANSFER_UPDATE: {
+                    DataTransfer transfer = event.getEventInput(ServiceEvent.EventInput.TRANSFER_INFO, DataTransfer.class);
+                    getView().updateTransfer(transfer);
+                    break;
+                }
                 case INCOMING_MESSAGE:
                     getView().refreshView(mConversation);
                     getView().scrollToEnd();
