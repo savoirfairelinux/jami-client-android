@@ -21,6 +21,7 @@ package cx.ring.conversation;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransfer;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseView;
 
@@ -75,4 +76,6 @@ public interface ConversationView extends BaseView {
     void openFilePicker();
 
     void writeCacheFile(String cacheFile);
+
+    void updateTransfer(DataTransfer transfer);
 }

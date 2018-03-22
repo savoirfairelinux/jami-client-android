@@ -423,9 +423,14 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                 mAccountService.acceptFileTransfer(transfer.getDataTransferId(), path.getAbsolutePath(), 0);
             }
             conversation.addFileTransfer(transfer);
-
+            setChanged();
+            notifyObservers(new ServiceEvent(ServiceEvent.EventType.DATA_TRANSFER));
         } else {
             conversation.updateFileTransfer(transfer, transferEventCode);
+            setChanged();
+            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DATA_TRANSFER_UPDATE);
+            event.addEventInput(ServiceEvent.EventInput.TRANSFER_INFO, transfer);
+            notifyObservers(event);
         }
         mNotificationService.showFileTransferNotification(transfer, transferEventCode, contact);
     }
@@ -610,8 +615,6 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     DataTransferEventCode transferEventCode = event.getEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, DataTransferEventCode.class);
                     DataTransfer transfer = event.getEventInput(ServiceEvent.EventInput.TRANSFER_INFO, DataTransfer.class);
                     handleDataTransferEvent(transfer, transferEventCode);
-                    setChanged();
-                    notifyObservers(new ServiceEvent(ServiceEvent.EventType.DATA_TRANSFER));
                     break;
                 }
             }

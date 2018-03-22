@@ -66,6 +66,7 @@ import cx.ring.conversation.ConversationView;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.DataTransfer;
 import cx.ring.model.Phone;
 import cx.ring.model.RingError;
 import cx.ring.model.Uri;
@@ -337,6 +338,13 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             Log.e(TAG, "writeCacheFile: ", e);
             getActivity().runOnUiThread(() -> displayErrorToast(RingError.NOT_ABLE_TO_WRITE_FILE));
         }
+    }
+
+    @Override
+    public void updateTransfer(DataTransfer transfer) {
+        getActivity().runOnUiThread(() -> {
+            mAdapter.updateTransfer(transfer);
+        });
     }
 
     @OnEditorAction(R.id.msg_input_txt)

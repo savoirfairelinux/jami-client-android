@@ -32,6 +32,7 @@ public class ServiceEvent {
         CONFERENCE_REMOVED,
         CONFERENCE_CHANGED,
         DATA_TRANSFER,
+        DATA_TRANSFER_UPDATE,
         RECORD_PLAYBACK_FILEPATH,
         RTCP_REPORT_RECEIVED,
         VOLUME_CHANGED,
