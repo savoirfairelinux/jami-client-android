@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_033e77b8",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/DataTransfer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-03-22T13:50:52Z",
+      "side": 1,
+      "message": "This information is not database related.\nMaybe there should be another model dedicated to information we have to deal with during runtime and a mapping with this one?\n\nDataTransfer is a DAO object.\nHere we have model objects that hold their DAO : https://github.com/googlesamples/android-architecture-components/blob/master/GithubBrowserSample/app/src/main/java/com/android/example/github/repository/RepoRepository.java\n\nThis code is related to this article : https://medium.com/google-developers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 30
+      },
+      "revId": "e9dd12d5cd287c545dabf5e6e4fa134c659a3862",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_2341f339",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-03-22T13:50:52Z",
+      "side": 1,
+      "message": "It would be better to export theses values in a constant",
+      "range": {
+        "startLine": 1356,
+        "startChar": 27,
+        "endLine": 1356,
+        "endChar": 35
+      },
+      "revId": "e9dd12d5cd287c545dabf5e6e4fa134c659a3862",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
