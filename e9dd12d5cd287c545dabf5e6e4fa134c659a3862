@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "5a3f45e8_43487f5b",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/DataTransfer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-03-22T13:52:00Z",
+      "side": 1,
+      "message": "Why is this timer stored here instead of in AccountService?",
+      "range": {
+        "startLine": 71,
+        "startChar": 3,
+        "endLine": 71,
+        "endChar": 30
+      },
+      "revId": "e9dd12d5cd287c545dabf5e6e4fa134c659a3862",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3f45e8_2341f339",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
         "patchSetId": 2
