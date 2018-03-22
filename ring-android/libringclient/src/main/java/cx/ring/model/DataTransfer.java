@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.Timer;
 
 import cx.ring.utils.HashUtils;
 import cx.ring.utils.StringUtils;
@@ -66,7 +67,6 @@ public class DataTransfer extends ConversationElement {
 
     private long dataTransferId;
     private long bytesProgress;
-
 
     /* Needed by ORMLite */
     public DataTransfer() {
