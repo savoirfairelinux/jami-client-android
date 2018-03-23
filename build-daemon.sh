@@ -128,9 +128,6 @@ elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
 fi
 EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR} -lm -latomic -landroid_support"
 
-EXTRA_CXXFLAGS="${EXTRA_CFLAGS}"
-EXTRA_CFLAGS="-std=c11 ${EXTRA_CFLAGS}"
-
 # Make in //
 UNAMES=$(uname -s)
 MAKEFLAGS=
@@ -282,6 +279,5 @@ ${NDK_TOOLCHAIN_PATH}/clang++ \
                 -I${RING_SRC_DIR}/src \
                 -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib \
                 ${STATIC_LIBS_ALL} \
-                ${STRIP_ARG} --std=c++11 \
+                ${STRIP_ARG} --std=c++14 \
                 -o ${LIBRING_JNI_DIR}/libring.so
-
