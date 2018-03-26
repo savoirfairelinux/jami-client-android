@@ -181,4 +181,5 @@
   <string name="file_transfer_status_unjoinable_peer">oanslutbar motpart</string>
   <string name="file_saved_in">Fil sparad i %s</string>
   <string name="no_space_left_on_device">Det finns inget utrymme kvar på enheten</string>
+  <string name="title_media_viewer">Mediaspelare</string>
 </resources>
