@@ -21,6 +21,7 @@ package cx.ring.services;
 
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,6 +35,7 @@ import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 
+
 public abstract class HardwareService extends Observable {
 
     private static final String TAG = HardwareService.class.getName();
@@ -41,6 +43,8 @@ public abstract class HardwareService extends Observable {
     @Inject
     @Named("DaemonExecutor")
     ExecutorService mExecutor;
+
+    ExecutorService mFrameExecutor = Executors.newSingleThreadExecutor();
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
@@ -164,19 +168,13 @@ public abstract class HardwareService extends Observable {
     }
 
     public void setVideoFrame(final byte[] data, final int width, final int height, final int rotation) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    long frame = RingserviceJNI.obtainFrame(data.length);
-                    if (frame != 0) {
-                        RingserviceJNI.setVideoFrame(data, data.length, frame, width, height, rotation);
-                    }
-                    RingserviceJNI.releaseFrame(frame);
-                    return true;
-                }
-        );
+        mFrameExecutor.submit(() -> {
+            long frame = RingserviceJNI.obtainFrame(data.length);
+            if (frame != 0) {
+                RingserviceJNI.setVideoFrame(data, data.length, frame, width, height, rotation);
+            }
+            RingserviceJNI.releaseFrame(frame);
+        });
     }
 
     public void addVideoDevice(String deviceId) {
