@@ -218,6 +218,7 @@ public class SipCall {
                 return State.SEARCHING;
             case "CONNECTING":
                 return State.CONNECTING;
+            case "INCOMING":
             case "RINGING":
                 return State.RINGING;
             case "CURRENT":

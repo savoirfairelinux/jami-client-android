@@ -516,7 +516,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                         return;
                     }
                     int newState = call.getCallState();
-                    mHardwareService.updateAudioState(call.isRinging() && call.isIncoming(), call.isOnGoing() && !call.isAudioOnly());
+                    mHardwareService.updateAudioState(newState == SipCall.State.RINGING && call.isIncoming(), call.isOnGoing() && !call.isAudioOnly());
 
                     for (Conversation conv : mConversationMap.values()) {
                         conference = conv.getConference(call.getCallId());
@@ -581,7 +581,7 @@ public class ConversationFacade extends Observable implements Observer<ServiceEv
                     mHardwareService.setPreviewSettings();
 
                     Conference currenConf = getCurrentCallingConf();
-                    mHardwareService.updateAudioState(currenConf.isRinging()
+                    mHardwareService.updateAudioState(currenConf.getState() == SipCall.State.RINGING
                             && currenConf.isIncoming(), false);
 
                     setChanged();
