@@ -144,7 +144,7 @@ public class ConversationTest {
     @Test
     public void addFileTransfer() throws Exception {
         int oldSize = conversation.getAggregateHistory().size();
-        conversation.addFileTransfer(new HistoryFileTransfer(1L, "photo.jpg", true, 10L, 0L, "1", "1"));
+        conversation.addFileTransfer(new DataTransfer(1L, "photo.jpg", true, 10L, 0L, "1", "1"));
         int newSize = conversation.getAggregateHistory().size();
 
         assertEquals(0, oldSize);
