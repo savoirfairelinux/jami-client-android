@@ -8,8 +8,8 @@
   <string name="copyright_section">Droits d\'auteurs</string>
   <string name="contribute_section">Contribuer</string>
   <string name="version_section">Version</string>
-  <string name="no_email_app_installed">Aucune adresse courriel n\'a été trouvée, ajoutez-en une pour nous envoyer un rapport.</string>
-  <string name="no_browser_app_installed">Aucun navigateur trouvé, en installer un afin de voir cette page.</string>
+  <string name="no_email_app_installed">Aucune application courriel n\'a été trouvée. Ajoutez-en une pour nous envoyer un rapport.</string>
+  <string name="no_browser_app_installed">Aucun navigateur trouvé. Ajoutez-en un afin de voir cette page.</string>
   <string name="email_chooser_title">Envoyer un courriel en utilisant</string>
   <string name="website_chooser_title">Visualiser le site web en utilisant...</string>
   <string name="license">Ce logiciel est fourni \"tel quel\", sans garantie d\'aucune sorte. Pour les détails, consulter
@@ -36,7 +36,7 @@
   <string name="menu_item_account">Gérer le compte</string>
   <string name="menu_item_settings">Réglages</string>
   <string name="menu_item_share">Partager mes informations de contact</string>
-  <string name="menu_item_about">A propos de Ring</string>
+  <string name="menu_item_about">À propos de Ring</string>
   <!--Dialing Fragment-->
   <string name="dial_number">Composer un numéro</string>
   <!--History Fragment-->

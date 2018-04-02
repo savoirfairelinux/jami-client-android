@@ -182,4 +182,6 @@
   <string name="file_saved_in">Fil lagret i %s</string>
   <string name="no_space_left_on_device">Ingen plass igjen på enheten</string>
   <string name="title_media_viewer">Mediaviser</string>
+  <string name="menu_file_download">Last ned fil</string>
+  <string name="menu_file_delete">Slett fil</string>
 </resources>

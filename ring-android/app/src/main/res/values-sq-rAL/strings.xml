@@ -181,4 +181,6 @@
   <string name="file_saved_in">Kartela u ruajt te %s</string>
   <string name="no_space_left_on_device">S’ka më hapësirë në pajisje</string>
   <string name="title_media_viewer">Parës mediash</string>
+  <string name="menu_file_download">Shkarkoje kartelën</string>
+  <string name="menu_file_delete">Fshije kartelën</string>
 </resources>

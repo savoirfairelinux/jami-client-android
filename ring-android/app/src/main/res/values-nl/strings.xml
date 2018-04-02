@@ -182,4 +182,6 @@
   <string name="file_saved_in">Bestand opgeslagen in %s</string>
   <string name="no_space_left_on_device">Geen vrije ruimte resterend op apparaat</string>
   <string name="title_media_viewer">Mediaweergave</string>
+  <string name="menu_file_download">Bestand downloaden</string>
+  <string name="menu_file_delete">Bestand verwijderen</string>
 </resources>
