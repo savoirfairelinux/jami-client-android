@@ -169,7 +169,9 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     }
 
     public void configurationChanged() {
-        mHardwareService.restartCamera(mSipCall.getCallId());
+        if (mSipCall != null) {
+            mHardwareService.restartCamera(mSipCall.getCallId());
+        }
     }
 
     public void dialpadClick() {
