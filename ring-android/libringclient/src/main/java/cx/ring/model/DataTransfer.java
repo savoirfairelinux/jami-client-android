@@ -96,7 +96,10 @@ public class DataTransfer extends ConversationElement {
     }
 
     public String getStoragePath() {
-        return Long.toString(id) + '_' + HashUtils.sha1(getDisplayName());
+        String ext = StringUtils.getFileExtension(getDisplayName());
+        if (ext.length() > 8)
+            ext = ext.substring(0, 8);
+        return Long.toString(id) + '_' + HashUtils.sha1(getDisplayName()) + '.' + ext;
     }
 
     @Override
