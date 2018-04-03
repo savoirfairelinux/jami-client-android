@@ -45,7 +45,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.ShareActionProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
@@ -284,6 +284,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 }
                 break;
             }
+            case R.id.conv_action_share: {
+                presenter.shareFile(file);
+                break;
+            }
             case R.id.conv_action_delete:
                 presenter.deleteFile(file);
                 break;
@@ -318,8 +322,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             conversationFragment.onCreateContextMenu(menu, v, menuInfo);
             MenuInflater inflater = conversationFragment.getActivity().getMenuInflater();
             inflater.inflate(R.menu.conversation_item_actions, menu);
-            if (!file.isComplete())
+            if (!file.isComplete()) {
                 menu.removeItem(R.id.conv_action_download);
+                menu.removeItem(R.id.conv_action_share);
+            }
         });
         longPressView.setOnLongClickListener(v -> {
             mCurrentLongItem = new RecyclerViewContextMenuInfo(conversationViewHolder.getLayoutPosition(), v.getId());
