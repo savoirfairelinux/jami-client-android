@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_01ab0ed9",
+        "filename": "ring-android/app/src/main/res/menu/conversation_item_actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-04-03T21:35:05Z",
+      "side": 1,
+      "message": "Should be app instead of android.\n\n\nShould use app:showAsAction with the appcompat library with xmlns:app\u003d\"http://schemas.android.com/apk/res-auto\" less... (Ctrl+F1) \nWhen using the appcompat library, menu resources should refer to the showAsAction (or actionViewClass, or actionProviderClass) in the app: namespace, not the android: namespace.  Similarly, when not using the appcompat library, you should be using the android:showAsAction (or actionViewClass, or actionProviderClass) attribute",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 15
+      },
+      "revId": "669c7355e008eb71ba370c4afbd0675b6e000b5c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
