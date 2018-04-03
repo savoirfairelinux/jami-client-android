@@ -204,6 +204,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         return false;
     }
 
+    public void shareFile(DataTransfer file) {
+        File path = getDeviceRuntimeService().getConversationPath(file.getPeerId(), file.getStoragePath());
+        getView().shareFile(path);
+    }
+
     public void deleteFile(DataTransfer transfer) {
         File file = getDeviceRuntimeService().getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
         file.delete();
