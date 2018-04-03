@@ -19,6 +19,8 @@
  */
 package cx.ring.conversation;
 
+import java.io.File;
+
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransfer;
@@ -78,4 +80,6 @@ public interface ConversationView extends BaseView {
     void writeCacheFile(String cacheFile);
 
     void updateTransfer(DataTransfer transfer);
+
+    void shareFile(File path);
 }
