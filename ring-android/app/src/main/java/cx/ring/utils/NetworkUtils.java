@@ -40,7 +40,9 @@ public final class NetworkUtils {
         return info != null && info.isConnected() && (info.getType() != ConnectivityManager.TYPE_MOBILE || allowMobile);
     }
     public static boolean isPushAllowed(Context context, boolean allowMobile) {
+        if (allowMobile)
+            return true;
         NetworkInfo info = NetworkUtils.getNetworkInfo(context);
-        return info != null && (info.getType() != ConnectivityManager.TYPE_MOBILE || allowMobile);
+        return info != null && info.getType() != ConnectivityManager.TYPE_MOBILE;
     }
 }
