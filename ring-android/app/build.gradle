@@ -34,10 +34,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
-        debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -73,7 +69,7 @@ android {
 }
 
 dependencies {
-    def android_support_version = "27.0.2"
+    def android_support_version = "27.1.1"
     def butterknife_version = "8.8.1"
     def dagger_version = "2.12"
 
@@ -115,7 +111,7 @@ dependencies {
 
     implementation 'com.jsibbold:zoomage:1.1.0'
 
-    withFirebaseImplementation 'com.google.firebase:firebase-messaging:11.8.0'
+    withFirebaseImplementation 'com.google.firebase:firebase-messaging:12.0.1'
 }
 
 if (buildFirebase) {
