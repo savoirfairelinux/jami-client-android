@@ -1,0 +1,3 @@
+* Fix crash on network connectivity change in some cases
+* Fix audio not working for some devices
+* Various bug fixes
