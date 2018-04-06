@@ -67,12 +67,18 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, HistoryCall.class);
-            TableUtils.createTable(connectionSource, HistoryText.class);
-            TableUtils.createTable(connectionSource, DataTransfer.class);
-        } catch (SQLException e) {
-            Log.e(TAG, "Can't create database", e);
-            throw new RuntimeException(e);
+            db.beginTransaction();
+            try {
+                TableUtils.createTable(connectionSource, HistoryCall.class);
+                TableUtils.createTable(connectionSource, HistoryText.class);
+                TableUtils.createTable(connectionSource, DataTransfer.class);
+                db.setTransactionSuccessful();
+            } catch (SQLException e) {
+                Log.e(TAG, "Can't create database", e);
+                throw new RuntimeException(e);
+            }
+        } finally {
+            db.endTransaction();
         }
     }
 
@@ -224,7 +230,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             try {
                 Log.d(TAG, "updateDatabaseFrom7: Will begin migration from database version 7 to next.");
                 db.beginTransaction();
-                db.execSQL("ALTER TABLE historytext ADD COLUMN state VARCHAR DEFAULT ``");
+                db.execSQL("ALTER TABLE historytext ADD COLUMN state VARCHAR DEFAULT ''");
                 db.setTransactionSuccessful();
                 db.endTransaction();
                 Log.d(TAG, "updateDatabaseFrom7: Migration from database version 7 to next, done.");
