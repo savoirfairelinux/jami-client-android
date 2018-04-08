@@ -30,6 +30,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.content.res.AppCompatResources;
 import android.util.Log;
 
 import com.bumptech.glide.request.RequestOptions;
@@ -120,7 +121,7 @@ public class AvatarFactory {
         Canvas canvas = new Canvas(canvasBitmap);
         canvas.drawColor(context.getResources().getColor(backgroundColor));
 
-        Drawable drawable = ContextCompat.getDrawable(context, R.drawable.ic_contact_picture_box_default);
+        Drawable drawable = AppCompatResources.getDrawable(context, R.drawable.ic_contact_picture_box_default);
         if (drawable == null) {
             Log.e(TAG, "Not able to get default drawable");
         } else {

@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Layout;
 import android.text.Spannable;
@@ -196,7 +197,7 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
             }
 
             mAccountStatus.setText(status);
-            Drawable drawable = ContextCompat.getDrawable(getActivity(), R.drawable.static_rounded_background);
+            Drawable drawable = AppCompatResources.getDrawable(getActivity(), R.drawable.static_rounded_background);
             Drawable wrapped = DrawableCompat.wrap(drawable);
             DrawableCompat.setTint(wrapped, color);
             mAccountStatus.setBackground(wrapped);
