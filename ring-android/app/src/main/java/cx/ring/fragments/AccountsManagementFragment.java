@@ -147,13 +147,15 @@ public class AccountsManagementFragment extends BaseFragment<AccountsManagementP
 
     @Override
     public void refresh(final List<Account> accounts) {
-        getActivity().runOnUiThread(() -> {
-            mAccountsAdapter.replaceAll(accounts);
-            if (mAccountsAdapter.isEmpty() && mDnDListView != null) {
-                mDnDListView.setEmptyView(mEmptyView);
-            }
-            mAccountsAdapter.notifyDataSetChanged();
-        });
+        mAccountsAdapter.replaceAll(accounts);
+        if (mAccountsAdapter.isEmpty() && mDnDListView != null) {
+            mDnDListView.setEmptyView(mEmptyView);
+        }
+    }
+
+    @Override
+    public void refreshAccount(final Account account) {
+        mAccountsAdapter.replaceAccount(account);
     }
 
     @Override

@@ -144,6 +144,9 @@ public class AccountsAdapter extends BaseAdapter {
         accounts.addAll(results);
         notifyDataSetChanged();
     }
+    public void replaceAccount(Account account) {
+        notifyDataSetChanged();
+    }
 
     public interface AccountListeners {
         void onItemClicked(String accountId, HashMap<String, String> details);

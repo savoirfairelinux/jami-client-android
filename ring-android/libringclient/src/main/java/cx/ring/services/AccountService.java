@@ -57,6 +57,9 @@ import cx.ring.utils.Observable;
 import cx.ring.utils.SwigNativeConverter;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 /**
  * This service handles the accounts (Ring and SIP)
@@ -110,6 +113,9 @@ public class AccountService extends Observable {
     private final HashMap<Long, DataTransfer> mDataTransfers = new HashMap<>();
     private DataTransfer mStartingTransfer = null;
     private Timer mTransferRefreshTimer = null;
+
+    private final BehaviorSubject<List<Account>> accountsSubject = BehaviorSubject.create();
+    private final Subject<Account> accountSubject = PublishSubject.create();
 
     /**
      * @return true if at least one of the loaded accounts is a SIP one
@@ -186,6 +192,7 @@ public class AccountService extends Observable {
             }
         }
         mAccountsLoaded.set(true);
+        accountsSubject.onNext(mAccountList);
     }
 
     private Account getAccountByName(final String name) {
@@ -307,6 +314,18 @@ public class AccountService extends Observable {
      */
     public List<Account> getAccounts() {
         return mAccountList;
+    }
+
+    public Subject<List<Account>> getObservableAccountList() {
+        return accountsSubject;
+    }
+
+    public Subject<Account> getObservableAccounts() {
+        return accountSubject;
+    }
+    public io.reactivex.Observable<Account> getObservableAccount(String accountId) {
+        return io.reactivex.Observable.fromCallable(() -> getAccount(accountId))
+                .concatWith(accountSubject.filter(acc -> acc.getAccountID().equals(accountId)));
     }
 
     /**
@@ -1073,6 +1092,7 @@ public class AccountService extends Observable {
         }
 
         if (!oldState.equals(newState)) {
+            accountSubject.onNext(account);
             setChanged();
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTRATION_STATE_CHANGED);
             event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
@@ -1151,6 +1171,7 @@ public class AccountService extends Observable {
         acc.setVolatileDetails(getVolatileAccountDetails(acc.getAccountID()));
         acc.setDetail(ConfigKey.ACCOUNT_REGISTERED_NAME, name);
 
+        accountSubject.onNext(acc);
         setChanged();
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.NAME_REGISTRATION_ENDED);
         event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);

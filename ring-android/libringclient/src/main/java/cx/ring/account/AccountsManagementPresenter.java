@@ -19,23 +19,25 @@
 
 package cx.ring.account;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.model.Account;
-import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
-import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.observers.DisposableObserver;
 
-public class AccountsManagementPresenter extends RootPresenter<AccountsManagementView> implements Observer<ServiceEvent> {
-
-    private static final String TAG = AccountsManagementPresenter.class.getSimpleName();
-
+public class AccountsManagementPresenter extends RootPresenter<AccountsManagementView> {
     private AccountService mAccountService;
+    private DisposableObserver<List<Account>> accountsObserver = null;
+    private DisposableObserver<Account> accountObserver = null;
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     @Inject
     public AccountsManagementPresenter(AccountService accountService) {
@@ -45,14 +47,43 @@ public class AccountsManagementPresenter extends RootPresenter<AccountsManagemen
     @Override
     public void bindView(AccountsManagementView view) {
         super.bindView(view);
-        mAccountService.addObserver(this);
-        view.refresh(mAccountService.getAccounts());
+        accountsObserver = mAccountService.getObservableAccountList()
+                .observeOn(mUiScheduler)
+                .subscribeWith(new DisposableObserver<List<Account>>() {
+            @Override
+            public void onNext(List<Account> accounts) {
+                getView().refresh(accounts);
+            }
+            @Override
+            public void onError(Throwable e) {}
+            @Override
+            public void onComplete() {}
+        });
+        accountObserver = mAccountService.getObservableAccounts()
+                .observeOn(mUiScheduler)
+                .subscribeWith(new DisposableObserver<Account>() {
+            @Override
+            public void onNext(Account account) {
+                getView().refreshAccount(account);
+            }
+            @Override
+            public void onError(Throwable e) {}
+            @Override
+            public void onComplete() {}
+        });
     }
 
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
+        if (accountsObserver != null) {
+            accountsObserver.dispose();
+            accountsObserver = null;
+        }
+        if (accountObserver != null) {
+            accountObserver.dispose();
+            accountObserver = null;
+        }
     }
 
     public void clickAccount(Account account) {
@@ -63,9 +94,7 @@ public class AccountsManagementPresenter extends RootPresenter<AccountsManagemen
         }
     }
 
-    public void refresh() {
-        getView().refresh(mAccountService.getAccounts());
-    }
+    public void refresh() {}
 
     public void addClicked() {
         getView().launchWizardActivity();
@@ -73,22 +102,5 @@ public class AccountsManagementPresenter extends RootPresenter<AccountsManagemen
 
     public void itemClicked(String accountId, Map<String, String> details) {
         mAccountService.setAccountDetails(accountId, details);
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
-            case REGISTRATION_STATE_CHANGED:
-                getView().refresh(mAccountService.getAccounts());
-                break;
-            default:
-                Log.d(TAG, "This event is not handled here");
-                break;
-        }
     }
 }

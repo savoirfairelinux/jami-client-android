@@ -22,28 +22,27 @@ package cx.ring.launch;
 import android.Manifest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import cx.ring.model.Account;
-import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
 
-public class LaunchPresenter extends RootPresenter<LaunchView> implements Observer<ServiceEvent> {
+public class LaunchPresenter extends RootPresenter<LaunchView> {
 
     protected AccountService mAccountService;
     protected DeviceRuntimeService mDeviceRuntimeService;
     protected PreferencesService mPreferencesService;
     protected HardwareService mHardwareService;
+    private DisposableObserver mAccountObserver = null;
 
     @Inject
     public LaunchPresenter(AccountService accountService, DeviceRuntimeService deviceRuntimeService,
@@ -56,24 +55,19 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
 
     @Override
     public void unbindView() {
+        if (mAccountObserver != null) {
+            mAccountObserver.dispose();
+            mAccountObserver = null;
+        }
         super.unbindView();
-        mAccountService.removeObserver(this);
     }
 
     public void init() {
         String[] toRequest = buildPermissionsToAsk();
-        ArrayList<String> permissionsWeCanAsk = new ArrayList<>();
-
-        permissionsWeCanAsk.addAll(Arrays.asList(toRequest));
-
-        if (!permissionsWeCanAsk.isEmpty()) {
-            getView().askPermissions(permissionsWeCanAsk);
+        if (toRequest.length == 0) {
+            checkAccounts();
         } else {
-            if (!mAccountService.isLoaded()) {
-                mAccountService.addObserver(this);
-            } else {
-                checkAccounts();
-            }
+            getView().askPermissions(toRequest);
         }
     }
 
@@ -94,13 +88,28 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
     }
 
     public void checkAccounts() {
-        List<Account> accounts = mAccountService.getAccounts();
-
-        if (accounts.isEmpty()) {
-            getView().goToAccountCreation();
-        } else {
-            getView().goToHome();
+        if (mAccountObserver != null) {
+            return;
         }
+        mAccountObserver = mAccountService.getObservableAccountList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<List<Account>>() {
+            @Override
+            public void onNext(List<Account> accounts) {
+                if (accounts != null) {
+                    if (accounts.isEmpty()) {
+                        getView().goToAccountCreation();
+                    } else {
+                        getView().goToHome();
+                    }
+                    dispose();
+                }
+            }
+            @Override
+            public void onError(Throwable e) {}
+            @Override
+            public void onComplete() {}
+        });
     }
 
     private String[] buildPermissionsToAsk() {
@@ -125,20 +134,5 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
         }
 
         return perms.toArray(new String[perms.size()]);
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
-                checkAccounts();
-                break;
-            default:
-                break;
-        }
     }
 }

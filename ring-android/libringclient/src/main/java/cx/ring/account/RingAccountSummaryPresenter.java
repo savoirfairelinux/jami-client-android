@@ -20,6 +20,7 @@
 package cx.ring.account;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.StringMap;
 import cx.ring.model.Account;
@@ -29,6 +30,8 @@ import cx.ring.services.AccountService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.observers.DisposableObserver;
 
 public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummaryView> implements Observer<ServiceEvent> {
 
@@ -40,6 +43,11 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
 
     private AccountService mAccountService;
     private String mAccountID;
+    private DisposableObserver<Account> mAccountObserver = null;
+
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     @Inject
     public RingAccountSummaryPresenter(AccountService accountService) {
@@ -70,10 +78,6 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
                 break;
             case KNOWN_DEVICES_CHANGED:
                 handleKnownDevices(event);
-                break;
-            case REGISTRATION_STATE_CHANGED:
-            case NAME_REGISTRATION_ENDED:
-                getView().accountChanged(mAccountService.getAccount(mAccountID));
                 break;
             case EXPORT_ON_RING_ENDED:
                 handleExportEnded(event);
@@ -149,11 +153,22 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
     }
 
     public void setAccountId(String accountID) {
-        if (getView() == null) {
-            return;
-        }
+        if (mAccountObserver != null && !mAccountObserver.isDisposed())
+            mAccountObserver.dispose();
         mAccountID = accountID;
-        getView().accountChanged(mAccountService.getAccount(mAccountID));
+        mAccountObserver = mAccountService.getObservableAccount(mAccountID)
+                .observeOn(mUiScheduler)
+                .subscribeWith(new DisposableObserver<Account>() {
+            @Override
+            public void onNext(Account account) {
+                if (getView() != null)
+                    getView().accountChanged(account);
+            }
+            @Override
+            public void onError(Throwable e) {}
+            @Override
+            public void onComplete() {}
+        });
     }
 
     public void enableAccount(boolean newValue) {
