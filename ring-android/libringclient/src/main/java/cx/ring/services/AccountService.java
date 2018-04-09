@@ -1362,6 +1362,12 @@ public class AccountService extends Observable {
             mDataTransfers.put(transferId, transfer);
         } else {
             DataTransferEventCode oldState = transfer.getEventCode();
+            // A timer task can try to update the transfer with an outgoing status
+            // do not update when a finished status has been already received.
+            if (oldState == DataTransferEventCode.FINISHED) {
+              Log.d(TAG, "File transfer already finished, do not update eventCode");
+              return;
+            }
             if (oldState != dataEvent) {
                 if (dataEvent == DataTransferEventCode.ONGOING) {
                     if (mTransferRefreshTimer == null) {
