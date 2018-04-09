@@ -53,4 +53,5 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">אנשי קשר</string>
   <!--File Transfer-->
+  <string name="menu_file_share">שתף קובץ</string>
 </resources>

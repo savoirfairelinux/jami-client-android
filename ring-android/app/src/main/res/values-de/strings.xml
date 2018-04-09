@@ -159,4 +159,5 @@
   <string name="generic_error">Ein unbekannter Fehler ist aufgetreten</string>
   <!--File Transfer-->
   <string name="invalid_file">Ungültige Datei</string>
+  <string name="menu_file_share">Datei teilen</string>
 </resources>

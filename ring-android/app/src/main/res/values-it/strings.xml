@@ -176,4 +176,5 @@
   <string name="file_transfer_status_invalid_pathname">Percorso non valido</string>
   <string name="file_transfer_status_unjoinable_peer">peer non collegabile</string>
   <string name="file_saved_in">File salvato in %s</string>
+  <string name="menu_file_share">Condividere file</string>
 </resources>
