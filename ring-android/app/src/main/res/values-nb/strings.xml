@@ -184,4 +184,5 @@
   <string name="title_media_viewer">Mediaviser</string>
   <string name="menu_file_download">Last ned fil</string>
   <string name="menu_file_delete">Slett fil</string>
+  <string name="menu_file_share">Del fil</string>
 </resources>

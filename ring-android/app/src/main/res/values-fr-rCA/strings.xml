@@ -158,4 +158,5 @@
   <string name="gallery_error_message">Pas d\'application trouvé dans l\'appareil pour ouvrir Galleries</string>
   <string name="generic_error">Une erreur inconnue s\'est produite</string>
   <!--File Transfer-->
+  <string name="menu_file_share">Partager le fichier</string>
 </resources>

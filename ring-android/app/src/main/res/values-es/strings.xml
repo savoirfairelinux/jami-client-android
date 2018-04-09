@@ -158,4 +158,5 @@
   <string name="gallery_error_message">No se encontró una aplicación en el dispositivo para abrir la galería</string>
   <string name="generic_error">Ocurrió un error desconocido</string>
   <!--File Transfer-->
+  <string name="menu_file_share">Compartir archivo</string>
 </resources>

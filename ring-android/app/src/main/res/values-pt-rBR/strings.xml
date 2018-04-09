@@ -177,4 +177,5 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="file_transfer_status_unjoinable_peer">contato indisponível</string>
   <string name="file_saved_in">Arquivo salvo em %s</string>
   <string name="no_space_left_on_device">Sem espaço no dispositivo</string>
+  <string name="menu_file_share">Compartilhar arquivo</string>
 </resources>

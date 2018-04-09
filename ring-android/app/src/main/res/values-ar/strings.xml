@@ -85,4 +85,5 @@
   <!--Smartlist-->
   <string name="tv_contact_row_header">الاتصالات</string>
   <!--File Transfer-->
+  <string name="menu_file_share">تقاسم الوثيقة</string>
 </resources>

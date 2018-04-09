@@ -183,4 +183,5 @@
   <string name="title_media_viewer">Parës mediash</string>
   <string name="menu_file_download">Shkarkoje kartelën</string>
   <string name="menu_file_delete">Fshije kartelën</string>
+  <string name="menu_file_share">Ndani kartelë me të tjerë</string>
 </resources>
