@@ -1332,11 +1332,11 @@ public class AccountService extends Observable {
             DataTransferEventCode eventCode;
             synchronized (mToUpdate) {
                 eventCode = mToUpdate.getEventCode();
-            }
-            if (eventCode == DataTransferEventCode.ONGOING) {
-                dataTransferEvent(mToUpdate.getDataTransferId(), eventCode.ordinal());
-            } else {
-                cancel();
+                if (eventCode == DataTransferEventCode.ONGOING) {
+                    dataTransferEvent(mToUpdate.getDataTransferId(), eventCode.ordinal());
+                } else {
+                    cancel();
+                }
             }
         }
     }
@@ -1348,34 +1348,36 @@ public class AccountService extends Observable {
 
         boolean outgoing = info.getFlags() == 0;
         DataTransfer transfer = mDataTransfers.get(transferId);
-        if (transfer == null && outgoing && mStartingTransfer != null) {
-            transfer = mStartingTransfer;
-            mStartingTransfer = null;
-            transfer.setDataTransferId(transferId);
-            mDataTransfers.put(transferId, transfer);
-        }
         if (transfer == null) {
-            transfer = new DataTransfer(transferId, info.getDisplayName(),
+            if (outgoing && mStartingTransfer != null) {
+                transfer = mStartingTransfer;
+                mStartingTransfer = null;
+                transfer.setDataTransferId(transferId);
+            } else {
+                transfer = new DataTransfer(transferId, info.getDisplayName(),
                         outgoing, info.getTotalSize(),
                         info.getBytesProgress(), info.getPeer(), info.getAccountId());
-            mHistoryService.insertDataTransfer(transfer);
+                mHistoryService.insertDataTransfer(transfer);
+            }
             mDataTransfers.put(transferId, transfer);
         } else {
-            DataTransferEventCode oldState = transfer.getEventCode();
-            if (oldState != dataEvent) {
-                if (dataEvent == DataTransferEventCode.ONGOING) {
-                    if (mTransferRefreshTimer == null) {
-                        mTransferRefreshTimer = new Timer();
+            synchronized (transfer) {
+                DataTransferEventCode oldState = transfer.getEventCode();
+                if (oldState != dataEvent) {
+                    if (dataEvent == DataTransferEventCode.ONGOING) {
+                        if (mTransferRefreshTimer == null) {
+                            mTransferRefreshTimer = new Timer();
+                        }
+                        mTransferRefreshTimer.scheduleAtFixedRate(
+                                new DataTransferRefreshTask(transfer),
+                                DATA_TRANSFER_REFRESH_PERIOD,
+                                DATA_TRANSFER_REFRESH_PERIOD);
                     }
-                    mTransferRefreshTimer.scheduleAtFixedRate(
-                            new DataTransferRefreshTask(transfer),
-                            DATA_TRANSFER_REFRESH_PERIOD,
-                            DATA_TRANSFER_REFRESH_PERIOD);
                 }
+                transfer.setEventCode(dataEvent);
+                transfer.setBytesProgress(info.getBytesProgress());
+                mHistoryService.updateDataTransfer(transfer);
             }
-            transfer.setEventCode(dataEvent);
-            transfer.setBytesProgress(info.getBytesProgress());
-            mHistoryService.updateDataTransfer(transfer);
         }
 
         setChanged();
