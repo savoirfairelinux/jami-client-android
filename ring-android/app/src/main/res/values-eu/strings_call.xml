@@ -24,5 +24,14 @@ along with this program; if not, write to the Free Software
     <string name="call_error_no_microphone">Deia bertan behera. Ez da mikrofonorik aurkitu.</string>
     <string name="call_error_no_camera_no_microphone">Deia bertan behera. Ez da kamera edo mikrofonorik detektatu.</string>
 
+    <!-- SipCalls -->
+    <string name="call_human_state_searching">Bilatzen</string>
+    <string name="call_human_state_connecting">Konektatzen</string>
+    <string name="call_human_state_ringing">Deitzen</string>
+    <string name="call_human_state_current">Hizketan</string>
+    <string name="call_human_state_hungup">Amaituta</string>
+    <string name="call_human_state_busy">Lanpetuta</string>
+    <string name="call_human_state_failure">Huts eginda</string>
+    <string name="call_human_state_over">Amaituta</string>
     <!-- Conferences -->
 </resources>
