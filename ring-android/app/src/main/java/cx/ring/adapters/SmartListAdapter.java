@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
@@ -43,7 +44,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     private ArrayList<SmartListViewModel> mSmartListViewModels;
     private SmartListViewHolder.SmartListListeners listener;
 
-    public SmartListAdapter(ArrayList<SmartListViewModel> smartListViewModels, SmartListViewHolder.SmartListListeners listener) {
+    public SmartListAdapter(List<SmartListViewModel> smartListViewModels, SmartListViewHolder.SmartListListeners listener) {
         this.listener = listener;
         this.mSmartListViewModels = new ArrayList<>();
         this.mSmartListViewModels.addAll(smartListViewModels);
@@ -93,6 +94,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
                 smartListViewModel.getContactName(),
                 smartListViewModel.getUuid());
 
+        holder.photo.setImageDrawable(null);
         Glide.with(holder.itemView.getContext())
                 .load(contactPicture)
                 .apply(AvatarFactory.getGlideOptions(true, true))
@@ -108,7 +110,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         return mSmartListViewModels.size();
     }
 
-    public void update(ArrayList<SmartListViewModel> smartListViewModels) {
+    public void update(List<SmartListViewModel> smartListViewModels) {
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new SmartListDiffUtil(this.mSmartListViewModels, smartListViewModels));
 
         this.mSmartListViewModels.clear();

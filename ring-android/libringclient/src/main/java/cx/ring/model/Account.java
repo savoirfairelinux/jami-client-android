@@ -21,14 +21,23 @@
 package cx.ring.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cx.ring.smartlist.SmartListPresenter;
+import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
+import io.reactivex.Observable;
+import io.reactivex.processors.ReplayProcessor;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 public class Account {
+    private static final String TAG = Account.class.getSimpleName();
 
     private String accountID;
 
@@ -39,6 +48,8 @@ public class Account {
     private Map<String, CallContact> mContacts = new HashMap<>();
     private Map<String, TrustRequest> mRequests = new HashMap<>();
 
+    private Map<String, CallContact> mContactCache = new HashMap<>();
+
     private static final String CONTACT_ADDED = "added";
     private static final String CONTACT_CONFIRMED = "confirmed";
     private static final String CONTACT_BANNED = "banned";
@@ -46,10 +57,66 @@ public class Account {
 
     public boolean registeringUsername = false;
 
+    private final BehaviorSubject<Collection<CallContact>> contactListSubject = BehaviorSubject.create();
+    private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
+    private final Subject<TrustRequest> trustRequestSubject = PublishSubject.create();
+
+    private final BehaviorSubject<CallContact> contactSubject = BehaviorSubject.create();
+
+    private final Observable<CallContact> contactsObservable = Observable.create(subscriber -> {
+        for (CallContact c : mContacts.values())
+            subscriber.onNext(c);
+        subscriber.onComplete();
+    });
+    private final Observable<CallContact> validContactsObservable = contactsObservable.filter(c -> !c.isBanned());
+    private final Observable<CallContact> bannedContactsObservable = contactsObservable.filter(CallContact::isBanned);
+
+    public Observable<CallContact> getValidContacts() {
+        return validContactsObservable;
+    }
+
+    public Observable<Collection<CallContact>> getContactsUpdates() {
+        return contactListSubject;
+    }
+    public Observable<Collection<TrustRequest>> getRequestsUpdates() {
+        return trustRequestsSubject;
+    }
+    public Observable<Collection<CallContact>> getValidContactsUpdates() {
+        return contactListSubject.concatMapSingle(list -> Observable.fromIterable(list).filter(c -> !c.isBanned()).toList());
+    }
+    public Observable<Collection<CallContact>> getBannedContactsUpdates() {
+        return contactListSubject.concatMapSingle(list -> Observable.fromIterable(list).filter(CallContact::isBanned).toList());
+    }
+
+    public CallContact getContactFromCache(Uri uri) {
+        String key = uri.getRawUriString();
+        CallContact contact = mContactCache.get(key);
+        if (contact == null) {
+            contact = CallContact.buildUnknown(uri);
+            mContactCache.put(key, contact);
+        }
+        //Log.w(TAG, "getContactFromCache " + uri + " -> " + contact);
+        return contact;
+    }
+    public CallContact getContactFromCache(String key) {
+        CallContact contact = mContactCache.get(key);
+        if (contact == null) {
+            contact = CallContact.buildUnknown(key);
+            mContactCache.put(key, contact);
+        }
+        return contact;
+    }
+
     public Account(String bAccountID) {
         accountID = bAccountID;
         mDetails = new AccountConfig();
         mVolatileDetails = new AccountConfig();
+    }
+
+    public void dispose() {
+        contactListSubject.onComplete();
+        contactSubject.onComplete();
+        trustRequestsSubject.onComplete();
     }
 
     public Account(String bAccountID, final Map<String, String> details,
@@ -306,7 +373,7 @@ public class Account {
     public void addContact(String id, boolean confirmed) {
         CallContact callContact = mContacts.get(id);
         if (callContact == null) {
-            callContact = CallContact.buildUnknown(new Uri(id));
+            callContact = getContactFromCache(new Uri(id));
             mContacts.put(id, callContact);
         }
         callContact.setAddedDate(new Date());
@@ -315,26 +382,28 @@ public class Account {
         } else {
             callContact.setStatus(CallContact.Status.REQUEST_SENT);
         }
+        contactListSubject.onNext(mContacts.values());
     }
 
     public void removeContact(String id, boolean banned) {
         if (banned) {
             CallContact callContact = mContacts.get(id);
             if (callContact == null) {
-                callContact = CallContact.buildUnknown(new Uri(id));
+                callContact = getContactFromCache(new Uri(id));
                 mContacts.put(id, callContact);
             }
             callContact.setStatus(CallContact.Status.BANNED);
         } else {
             mContacts.remove(id);
         }
+        contactListSubject.onNext(mContacts.values());
     }
 
-    public void addContact(Map<String, String> contact) {
+    private void addContact(Map<String, String> contact) {
         String contactId = contact.get(CONTACT_ID);
         CallContact callContact = mContacts.get(contactId);
         if (callContact == null) {
-            callContact = CallContact.buildUnknown(new Uri(contactId));
+            callContact = getContactFromCache(new Uri(contactId));
         }
         String addedStr = contact.get(CONTACT_ADDED);
         if (!StringUtils.isEmpty(addedStr)) {
@@ -355,6 +424,7 @@ public class Account {
         for (Map<String, String> contact : contacts) {
             addContact(contact);
         }
+        contactListSubject.onNext(mContacts.values());
     }
 
     public List<TrustRequest> getRequests() {
@@ -373,14 +443,20 @@ public class Account {
 
     public void addRequest(TrustRequest request) {
         mRequests.put(request.getContactId(), request);
+        trustRequestSubject.onNext(request);
+        trustRequestsSubject.onNext(mRequests.values());
     }
 
     public void setRequests(List<TrustRequest> requests) {
-        for (TrustRequest request : requests)
-            addRequest(request);
+        for (TrustRequest request : requests) {
+            mRequests.put(request.getContactId(), request);
+            trustRequestSubject.onNext(request);
+        }
+        trustRequestsSubject.onNext(mRequests.values());
     }
 
     public void removeRequest(String contactId) {
         mRequests.remove(contactId);
+        trustRequestsSubject.onNext(mRequests.values());
     }
 }

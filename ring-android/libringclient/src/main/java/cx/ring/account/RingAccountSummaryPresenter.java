@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,6 +21,7 @@
 package cx.ring.account;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.StringMap;
 import cx.ring.model.Account;
@@ -29,6 +31,8 @@ import cx.ring.services.AccountService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.observers.DisposableObserver;
 
 public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummaryView> implements Observer<ServiceEvent> {
 
@@ -40,6 +44,11 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
 
     private AccountService mAccountService;
     private String mAccountID;
+    private DisposableObserver<Account> mAccountObserver = null;
+
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     @Inject
     public RingAccountSummaryPresenter(AccountService accountService) {
@@ -48,18 +57,18 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
 
     @Override
     public void bindView(RingAccountSummaryView view) {
-        mAccountService.addObserver(this);
+        //mAccountService.addObserver(this);
         super.bindView(view);
     }
 
     @Override
     public void unbindView() {
-        mAccountService.removeObserver(this);
         super.unbindView();
     }
 
     @Override
     public void update(Observable observable, ServiceEvent event) {
+        //TODO move to rx
         if (event == null || getView() == null) {
             return;
         }
@@ -70,10 +79,6 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
                 break;
             case KNOWN_DEVICES_CHANGED:
                 handleKnownDevices(event);
-                break;
-            case REGISTRATION_STATE_CHANGED:
-            case NAME_REGISTRATION_ENDED:
-                getView().accountChanged(mAccountService.getAccount(mAccountID));
                 break;
             case EXPORT_ON_RING_ENDED:
                 handleExportEnded(event);
@@ -149,11 +154,25 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
     }
 
     public void setAccountId(String accountID) {
-        if (getView() == null) {
-            return;
-        }
+        if (mAccountObserver != null && !mAccountObserver.isDisposed())
+            mAccountObserver.dispose();
         mAccountID = accountID;
-        getView().accountChanged(mAccountService.getAccount(mAccountID));
+        mAccountObserver = mAccountService.getObservableAccount(mAccountID)
+                .observeOn(mUiScheduler)
+                .subscribeWith(new DisposableObserver<Account>() {
+            @Override
+            public void onNext(Account account) {
+                if (getView() != null)
+                    getView().accountChanged(account);
+            }
+            @Override
+            public void onError(Throwable e) {}
+            @Override
+            public void onComplete() {}
+        });
+        mCompositeDisposable.add(mAccountObserver);
+        Account account = mAccountService.getAccount(mAccountID);
+        //account.
     }
 
     public void enableAccount(boolean newValue) {

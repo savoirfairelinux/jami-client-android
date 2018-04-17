@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -86,7 +87,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
         mCallService.removeObserver(this);
         mHardwareService.removeObserver(this);
 
@@ -98,7 +98,11 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     @Override
     public void bindView(CallView view) {
         super.bindView(view);
-        mAccountService.addObserver(this);
+        mCompositeDisposable.add(mAccountService.getRegisteredNames().subscribe(r -> {
+            if (mSipCall != null && mSipCall.getContact() != null) {
+                getView().updateContactBubble(mSipCall.getContact());
+            }
+        }));
         mCallService.addObserver(this);
         mHardwareService.addObserver(this);
     }
@@ -338,14 +342,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
 
                     parseCall(call, state);
                     confUpdate();
-                    break;
-            }
-        } else if (observable instanceof AccountService) {
-            switch (event.getEventType()) {
-                case REGISTERED_NAME_FOUND:
-                    if (mSipCall != null && mSipCall.getContact() != null) {
-                        getView().updateContactBubble(mSipCall.getContact());
-                    }
                     break;
             }
         } else if (observable instanceof HardwareService) {

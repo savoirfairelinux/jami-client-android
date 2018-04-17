@@ -20,6 +20,7 @@
 package cx.ring.services;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -32,6 +33,7 @@ import cx.ring.daemon.DataTransferInfo;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.DataTransferError;
 import cx.ring.model.DataTransferEventCode;
@@ -41,6 +43,9 @@ import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
+import io.reactivex.observables.ConnectableObservable;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 public class CallService extends Observable {
 
@@ -64,6 +69,12 @@ public class CallService extends Observable {
     DeviceRuntimeService mDeviceRuntimeService;
 
     private Map<String, SipCall> currentCalls = new HashMap<>();
+    private final PublishSubject<SipCall> callSubject = PublishSubject.create();
+    //private final ConnectableObservable<SipCall> callObservable = ((PublishSubject<SipCall>)callSubject).publish();
+
+    public Subject<SipCall> getCallSubject() {
+        return callSubject;
+    }
 
     public SipCall placeCall(final String account, final String number, final boolean audioOnly) {
         return FutureUtils.executeDaemonThreadCallable(
@@ -405,7 +416,7 @@ public class CallService extends Observable {
             Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
             sipCall = new SipCall(callId, callDetails);
             sipCall.setCallState(callState);
-            CallContact contact = mContactService.findContact(sipCall.getNumberUri());
+            CallContact contact = mContactService.findContact(sipCall.getAccount(), sipCall.getNumberUri());
             String registeredName = callDetails.get("REGISTERED_NAME");
             if (registeredName != null && !registeredName.isEmpty()) {
                 contact.setUsername(registeredName);
@@ -426,6 +437,7 @@ public class CallService extends Observable {
                 ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CALL_STATE_CHANGED);
                 event.addEventInput(ServiceEvent.EventInput.CALL, call);
                 notifyObservers(event);
+                callSubject.onNext(call);
 
                 if (call.getCallState() == SipCall.State.OVER) {
                     currentCalls.remove(call.getCallId());
@@ -445,6 +457,7 @@ public class CallService extends Observable {
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
         event.addEventInput(ServiceEvent.EventInput.CALL, call);
         notifyObservers(event);
+        callSubject.onNext(call);
     }
 
     public void incomingMessage(String callId, String from, StringMap messages) {
@@ -457,17 +470,7 @@ public class CallService extends Observable {
             mContactService.saveVCardContactData(sipCall.getContact());
         }
         if (messages.has_key(MIME_TEXT_PLAIN)) {
-            mHistoryService.incomingMessage(sipCall.getAccount(), callId, from, messages);
-        }
-    }
-
-    public void incomingAccountMessage(String accountId, String from, StringMap messages) {
-
-        mHistoryService.incomingMessage(accountId, null, from, messages);
-
-        CallContact contact = mAccountService.getCurrentAccount().getContact(from);
-        if (!mHistoryService.hasAnHistory(accountId, from) && contact == null) {
-            mAccountService.incomingTrustRequest(accountId, from, "", System.currentTimeMillis());
+            mAccountService.incomingAccountMessage(sipCall.getAccount(), callId, from, messages);
         }
     }
 

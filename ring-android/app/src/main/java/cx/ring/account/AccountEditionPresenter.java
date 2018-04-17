@@ -19,6 +19,7 @@
 package cx.ring.account;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.model.Account;
 import cx.ring.model.ServiceEvent;
@@ -27,6 +28,7 @@ import cx.ring.services.AccountService;
 import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import io.reactivex.Scheduler;
 
 public class AccountEditionPresenter extends RootPresenter<AccountEditionView> implements Observer<ServiceEvent> {
 
@@ -35,6 +37,9 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> i
     protected AccountService mAccountService;
 
     private Account mAccount;
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     @Inject
     public AccountEditionPresenter(AccountService accountService) {
@@ -52,7 +57,6 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> i
             case ACCOUNTS_CHANGED:
                 // refresh the selected account
                 getView().displayAccountName(mAccount.getAlias());
-
                 break;
             default:
                 Log.d(TAG, "update: Event " + event.getEventType() + " is not handled here");
@@ -63,13 +67,13 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> i
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
     }
 
     @Override
     public void bindView(AccountEditionView view) {
         super.bindView(view);
-        mAccountService.addObserver(this);
+
+        //mAccountService.addObserver(this);
     }
 
     public void init(String accountId) {
@@ -85,6 +89,9 @@ public class AccountEditionPresenter extends RootPresenter<AccountEditionView> i
             getView().displaySummary(mAccount.getAccountID());
         }
         getView().initViewPager(mAccount.getAccountID(), mAccount.isRing());
+        mCompositeDisposable.add(mAccountService.getObservableAccount(accountId)
+                .observeOn(mUiScheduler)
+                .subscribe(account -> getView().displayAccountName(account.getAlias())));
     }
 
     public void goToBlackList() {

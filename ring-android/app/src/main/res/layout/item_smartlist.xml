@@ -42,7 +42,7 @@ along with this program; if not, write to the Free Software
         android:paddingEnd="4dp"
         android:paddingStart="0dp"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/ic_contact_picture_fallback" />
+        tools:src="@drawable/ic_contact_picture_fallback" />
 
     <ImageView
         android:id="@+id/online"

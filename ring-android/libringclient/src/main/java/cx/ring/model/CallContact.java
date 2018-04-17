@@ -24,11 +24,13 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 
+import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.Tuple;
 import ezvcard.VCard;
 
 public class CallContact {
+    protected static final String TAG = CallContact.class.getSimpleName();
 
 
     public static final int UNKNOWN_ID = -1;
@@ -52,6 +54,8 @@ public class CallContact {
 
     public boolean detailsLoaded = false;
     public VCard vcard = null;
+
+    //protected final PublishSubject<CallContact> onAdd;
 
     public CallContact(long cID) {
         this(cID, null, null, UNKNOWN_ID);
@@ -172,10 +176,10 @@ public class CallContact {
         return false;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return getRingUsername();
-    }
+    }*/
 
     public void setId(long id) {
         this.mId = id;
@@ -183,6 +187,13 @@ public class CallContact {
 
     public String getKey() {
         return mKey;
+    }
+
+    public String getPrimaryNumber() {
+        return getPrimaryUri().getRawRingId();
+    }
+    public Uri getPrimaryUri() {
+        return getPhones().get(0).getNumber();
     }
 
     public void setStared() {
@@ -277,6 +288,7 @@ public class CallContact {
     }
 
     public void setUsername(String name) {
+        Log.w(TAG, "setUsername " + this + " " + name);
         mUsername = name;
     }
 

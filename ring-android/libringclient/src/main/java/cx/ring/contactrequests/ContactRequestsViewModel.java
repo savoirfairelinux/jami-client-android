@@ -20,10 +20,11 @@
 package cx.ring.contactrequests;
 
 import cx.ring.model.Account;
+import cx.ring.model.CallContact;
 import cx.ring.model.TrustRequest;
 import ezvcard.VCard;
 
-public class PendingContactRequestsViewModel {
+public class ContactRequestsViewModel {
 
     private VCard mVcard;
     private String mFullname;
@@ -31,16 +32,17 @@ public class PendingContactRequestsViewModel {
     private String mAccountUsername;
     private boolean hasPane;
     private String mContactId;
-    private final int mUuid;
 
-    public PendingContactRequestsViewModel(Account account, TrustRequest trustRequest, boolean pane) {
-        mVcard = trustRequest.getVCard();
-        mFullname = trustRequest.getFullname();
-        mUsername = trustRequest.getDisplayname();
-        hasPane = pane;
-        mAccountUsername = account.getDisplayUsername();
-        mContactId = trustRequest.getContactId();
-        mUuid = trustRequest.getUuid();
+    private final String mUuid;
+
+    public ContactRequestsViewModel(CallContact contact) {
+        mVcard = contact.vcard;
+        mFullname = contact.getDisplayName();
+        mUsername = contact.getRingUsername();
+        hasPane = false;
+        mAccountUsername = contact.getDisplayName();
+        mContactId = contact.getPrimaryNumber();
+        mUuid = contact.getPrimaryNumber();
     }
 
     public String getAccountUsername() {

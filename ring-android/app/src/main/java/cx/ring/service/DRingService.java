@@ -221,7 +221,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         // Hashmap runtime cast
         @Override
         public String addAccount(final Map map) {
-            return mAccountService.addAccount(map).getAccountID();
+            return mAccountService.addAccount(map).blockingFirst().getAccountID();
         }
 
         @Override
@@ -561,7 +561,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         updateConnectivityState();
 
         mPreferencesService.addObserver(this);
-        mAccountService.addObserver(this);
+        //mAccountService.addObserver(this);
         mConversationFacade.addObserver(this);
         mCallService.addObserver(this);
 
@@ -575,7 +575,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         getContentResolver().unregisterContentObserver(contactContentObserver);
 
         mPreferencesService.removeObserver(this);
-        mAccountService.removeObserver(this);
+        //mAccountService.removeObserver(this);
         mConversationFacade.removeObserver(this);
         mCallService.removeObserver(this);
         isRunning = false;
@@ -792,7 +792,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
             case ACTION_CONV_READ:
                 Conversation conversation = mConversationFacade.getConversationById(ringId);
                 if (conversation != null) {
-                    mHistoryService.readMessages(conversation);
+                    mConversationFacade.readMessages(conversation);
                     mNotificationService.cancelTextNotification(ringId);
                 }
                 break;
@@ -821,7 +821,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         if (observable instanceof PreferencesService) {
             refreshContacts();
             updateConnectivityState();
-        } else if (observable instanceof AccountService && arg != null) {
+        } /*else if (observable instanceof AccountService && arg != null) {
             switch (arg.getEventType()) {
                 case ACCOUNTS_CHANGED:
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DRingService.this);
@@ -836,7 +836,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                     refreshContacts();
                     break;
             }
-        } else if (observable instanceof CallService && arg != null) {
+        }*/ else if (observable instanceof CallService && arg != null) {
             switch (arg.getEventType()) {
                 case INCOMING_CALL:
 

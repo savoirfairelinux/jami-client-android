@@ -66,7 +66,7 @@ public class SmartListViewModel {
         this.lastInteraction = smartListViewModel.getLastInteraction();
     }
 
-    public static class SmartListComparator implements Comparator<SmartListViewModel> {
+    public static class Comparator implements java.util.Comparator<SmartListViewModel> {
         @Override
         public int compare(SmartListViewModel lhs, SmartListViewModel rhs) {
             if (lhs.hasOngoingCall) {

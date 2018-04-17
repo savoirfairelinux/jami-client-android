@@ -146,13 +146,13 @@ public class PresenceService extends Observable {
 
         mPresenceMap.put(CallContact.PREFIX_RING + buddyUri, status == 1);
 
-        setChanged();
+        /*setChanged();
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.NEW_BUDDY_NOTIFICATION);
         event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
         event.addEventInput(ServiceEvent.EventInput.BUDDY_URI, buddyUri);
         event.addEventInput(ServiceEvent.EventInput.STATE, status);
         event.addEventInput(ServiceEvent.EventInput.LINE_STATE, lineStatus);
-        notifyObservers(event);
+        notifyObservers(event);*/
     }
 
     public void subscriptionStateChanged(String accountId, String buddyUri, int state) {

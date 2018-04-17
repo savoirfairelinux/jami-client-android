@@ -23,6 +23,7 @@ package cx.ring.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +32,10 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import cx.ring.utils.Log;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 public class Conversation {
 
@@ -38,18 +43,21 @@ public class Conversation {
 
     private CallContact mContact;
 
-    private final Map<String, HistoryEntry> mHistory;
-    private final ArrayList<Conference> mCurrentCalls;
-    private final ArrayList<IConversationElement> mAggregateHistory;
+    private final Map<String, HistoryEntry> mHistory = new HashMap<>();
+    private final ArrayList<Conference> mCurrentCalls = new ArrayList<>();
+    private final ArrayList<ConversationElement> mAggregateHistory = new ArrayList<>(32);
+
+    private Subject<TextMessage> messagesSubject = PublishSubject.create();
+    private Subject<DataTransfer> dataTransferSubject = PublishSubject.create();
+
+    private Subject<ConversationElement> newElementSubject = PublishSubject.create();
+    private Subject<ConversationElement> updatedElementSubject = PublishSubject.create();
 
     // runtime flag set to true if the user is currently viewing this conversation
     private boolean mVisible = false;
 
     public Conversation(CallContact contact) {
         setContact(contact);
-        mHistory = new HashMap<>();
-        mCurrentCalls = new ArrayList<>();
-        mAggregateHistory = new ArrayList<>(32);
     }
 
     public Conference getConference(String id) {
@@ -58,6 +66,13 @@ public class Conversation {
                 return c;
             }
         return null;
+    }
+
+    public Observable<ConversationElement> getNewElements() {
+        return newElementSubject;
+    }
+    public Observable<ConversationElement> getUpdatedElements() {
+        return updatedElementSubject;
     }
 
     public void addConference(final Conference conference) {
@@ -129,22 +144,55 @@ public class Conversation {
             mHistory.put(accountId, accountEntry);
         }
         mAggregateHistory.add(txt);
+        messagesSubject.onNext(txt);
+        newElementSubject.onNext(txt);
+    }
+
+    public void addRequestEvent(TrustRequest request) {
+        //HistoryEntry accountEntry = mHistory.get(accountId);
+        mAggregateHistory.add(new ContactEvent(mContact, request));
+        //accountEntry.addContactEvent(new ContactEvent(mContact));
+    }
+
+    public void addContactEvent() {
+        //HistoryEntry accountEntry = mHistory.get(accountId);
+        mAggregateHistory.add(new ContactEvent(mContact));
+        //accountEntry.addContactEvent(new ContactEvent(mContact));
     }
 
     public void updateTextMessage(TextMessage txt) {
         HistoryEntry accountEntry = mHistory.get(txt.getAccount());
+        TextMessage msg = null;
         if (accountEntry != null) {
-            accountEntry.updateTextMessage(txt);
+            msg = accountEntry.updateTextMessage(txt);
+        }
+        if (msg == null) {
+            Log.e(TAG, "Can't find message to update: " + txt.getId());
+        } else {
+            messagesSubject.onNext(msg);
+            updatedElementSubject.onNext(msg);
         }
     }
 
     public Map<String, HistoryEntry> getHistory() {
         return mHistory;
     }
+    public HistoryEntry getHistory(String accountId) {
+        return mHistory.get(accountId);
+    }
 
-    public ArrayList<IConversationElement> getAggregateHistory() {
-        Collections.sort(mAggregateHistory);
+    public ArrayList<ConversationElement> getAggregateHistory() {
         return mAggregateHistory;
+    }
+
+    private final Single<List<ConversationElement>> sortedHistory = Single.fromCallable(() -> {
+        synchronized (mAggregateHistory) {
+            Collections.sort(mAggregateHistory, (c1, c2) -> Long.compare(c1.getDate(), c2.getDate()));
+        }
+        return mAggregateHistory;
+    });
+    public Single<List<ConversationElement>> getSortedHistory() {
+        return sortedHistory;
     }
 
     public Set<String> getAccountsUsed() {
@@ -178,8 +226,8 @@ public class Conversation {
 
     public Collection<HistoryCall> getHistoryCalls() {
         List<HistoryCall> result = new ArrayList<>();
-        for (IConversationElement ce : mAggregateHistory) {
-            if (ce.getType() == IConversationElement.CEType.CALL) {
+        for (ConversationElement ce : mAggregateHistory) {
+            if (ce.getType() == ConversationElement.CEType.CALL) {
                 result.add((HistoryCall) ce);
             }
         }
@@ -203,8 +251,8 @@ public class Conversation {
     }
 
     public DataTransfer findConversationElement(Long transferId) {
-        for (IConversationElement iConversationElement : mAggregateHistory) {
-            if (iConversationElement != null && iConversationElement.getType() == IConversationElement.CEType.FILE) {
+        for (ConversationElement iConversationElement : mAggregateHistory) {
+            if (iConversationElement != null && iConversationElement.getType() == ConversationElement.CEType.FILE) {
                 DataTransfer hft = (DataTransfer) iConversationElement;
                 if (transferId.equals(hft.getId())) {
                     return hft;
@@ -219,6 +267,8 @@ public class Conversation {
             return;
         }
         mAggregateHistory.add(dataTransfer);
+        dataTransferSubject.onNext(dataTransfer);
+        newElementSubject.onNext(dataTransfer);
     }
 
     public void addDataTransfers(List<DataTransfer> dataTransfers) {
@@ -232,6 +282,8 @@ public class Conversation {
         if (dataTransfer != null) {
             dataTransfer.setEventCode(eventCode);
         }
+        dataTransferSubject.onNext(dataTransfer);
+        updatedElementSubject.onNext(dataTransfer);
     }
 
     public void removeAll() {
