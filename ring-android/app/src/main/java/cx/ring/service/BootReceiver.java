@@ -33,21 +33,23 @@ public class BootReceiver extends BroadcastReceiver {
     @Inject
     PreferencesService mPreferencesService;
 
-    public BootReceiver() {
-    }
+    public BootReceiver() {}
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+            try {
+                ((RingApplication) context.getApplicationContext()).getRingInjectionComponent().inject(this);
+                boolean isAllowRingOnStartup = mPreferencesService.loadSettings().isAllowRingOnStartup();
 
-            ((RingApplication) context.getApplicationContext()).getRingInjectionComponent().inject(this);
-            boolean isAllowRingOnStartup = mPreferencesService.loadSettings().isAllowRingOnStartup();
-
-            if (isAllowRingOnStartup) {
-                Log.w(TAG, "Starting Ring on boot");
-                Intent serviceIntent = new Intent(context, DRingService.class);
-                context.startService(serviceIntent);
+                if (isAllowRingOnStartup) {
+                    Log.w(TAG, "Starting Ring on boot");
+                    Intent serviceIntent = new Intent(context, DRingService.class);
+                    context.startService(serviceIntent);
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "Can't start Ring on boot", e);
             }
         }
     }
