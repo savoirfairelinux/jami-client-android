@@ -34,15 +34,19 @@ public class RingFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.d(TAG, "onMessageReceived: " + remoteMessage.getFrom());
-        Map<String, String> data = remoteMessage.getData();
-        Bundle bundle = new Bundle();
-        for (Map.Entry<String, String> entry : data.entrySet()) {
-            bundle.putString(entry.getKey(), entry.getValue());
+        try {
+            Log.d(TAG, "onMessageReceived: " + remoteMessage.getFrom());
+            Map<String, String> data = remoteMessage.getData();
+            Bundle bundle = new Bundle();
+            for (Map.Entry<String, String> entry : data.entrySet()) {
+                bundle.putString(entry.getKey(), entry.getValue());
+            }
+            startService(new Intent(DRingService.ACTION_PUSH_RECEIVED)
+                    .setClass(this, DRingService.class)
+                    .putExtra(DRingService.PUSH_RECEIVED_FIELD_FROM, remoteMessage.getFrom())
+                    .putExtra(DRingService.PUSH_RECEIVED_FIELD_DATA, bundle));
+        } catch (Exception e) {
+            Log.w(TAG, "Error handling push notification", e);
         }
-        startService(new Intent(DRingService.ACTION_PUSH_RECEIVED)
-                .setClass(this, DRingService.class)
-                .putExtra(DRingService.PUSH_RECEIVED_FIELD_FROM, remoteMessage.getFrom())
-                .putExtra(DRingService.PUSH_RECEIVED_FIELD_DATA, bundle));
     }
 }
