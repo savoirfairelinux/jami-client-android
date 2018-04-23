@@ -990,6 +990,7 @@ public class AccountService extends Observable {
     }
 
     public void pushNotificationReceived(final String from, final Map<String, String> data) {
+        setAccountsActive(true, true);
         FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
