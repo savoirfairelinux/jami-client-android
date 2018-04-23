@@ -21,6 +21,7 @@ package cx.ring.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.NetworkInfo;
 
 public final class NetworkUtils {
@@ -28,11 +29,27 @@ public final class NetworkUtils {
      * Get the network info
      */
     public static NetworkInfo getNetworkInfo(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager != null) {
-            return connectivityManager.getActiveNetworkInfo();
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null)
+            return null;
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null && activeNetwork.isConnected())
+            return activeNetwork;
+        else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            for (Network n: cm.getAllNetworks()) {
+                NetworkInfo nInfo = cm.getNetworkInfo(n);
+                if(nInfo.isConnected())
+                    return nInfo;
+            }
+        } else {
+            NetworkInfo[] info = cm.getAllNetworkInfo();
+            if (info != null)
+                for (NetworkInfo anInfo : info)
+                    if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
+                        return anInfo;
+                    }
         }
-        return null;
+        return activeNetwork;
     }
 
     public static boolean isConnectivityAllowed(Context context, boolean allowMobile) {
