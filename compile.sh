@@ -15,6 +15,7 @@ TOP=$(pwd)/ring-android
 
 RELEASE=0
 DAEMON_ONLY=0
+NO_GRADLE=0
 for i in ${@}; do
     case "$i" in
         release|--release)
@@ -22,6 +23,9 @@ for i in ${@}; do
         ;;
         daemon|--daemon)
         DAEMON_ONLY=1
+        ;;
+        no-gradle|--no-gradle)
+        NO_GRADLE=1
         ;;
         *)
         ;;
@@ -39,16 +43,20 @@ for i in ${ANDROID_ABI_LIST}; do
     echo "$i build OK"
 done
 
-if [ -z "$RING_BUILD_FIREBASE" ]; then
-    echo "Building without Firebase support"
-else
-    GRADLE_PROPERTIES="-PbuildFirebase"
-    echo "Building with Firebase support"
-fi
-if [[ $DAEMON_ONLY -eq 0 ]]; then
-    if [[ $RELEASE -eq 1 ]]; then
-        cd $TOP && ./gradlew $GRADLE_PROPERTIES assembleRelease
+if [[ $NO_GRADLE -eq 0 ]]; then
+    if [ -z "$RING_BUILD_FIREBASE" ]; then
+        echo "Building without Firebase support"
     else
-        cd $TOP && ./gradlew $GRADLE_PROPERTIES assembleDebug
+        GRADLE_PROPERTIES="-PbuildFirebase"
+        echo "Building with Firebase support"
     fi
+    if [[ $DAEMON_ONLY -eq 0 ]]; then
+        if [[ $RELEASE -eq 1 ]]; then
+            cd $TOP && ./gradlew $GRADLE_PROPERTIES assembleRelease
+        else
+            cd $TOP && ./gradlew $GRADLE_PROPERTIES assembleDebug
+        fi
+    fi
+else
+    echo "Stopping before gradle build as requested."
 fi
