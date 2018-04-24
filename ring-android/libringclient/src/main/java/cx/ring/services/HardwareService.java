@@ -49,7 +49,7 @@ public abstract class HardwareService extends Observable {
 
     public abstract boolean isVideoAvailable();
 
-    public abstract void updateAudioState(boolean isRinging, boolean isOngoingVideo);
+    public abstract void updateAudioState(int state, boolean isOngoingVideo);
 
     public abstract void closeAudioState();
 
@@ -57,17 +57,11 @@ public abstract class HardwareService extends Observable {
 
     public abstract void toggleSpeakerphone();
 
-    public abstract void setSpeakerPhone(boolean activateSpeaker);
-
     public abstract void startRinging();
 
     public abstract void stopRinging();
 
     public abstract void abandonAudioFocus();
-
-    public abstract void obtainAudioFocus(boolean requesSpeakerOn);
-
-    public abstract void switchAudioToCurrentMode();
 
     public abstract void decodingStarted(String id, String shmPath, int width, int height, boolean isMixer);
 
