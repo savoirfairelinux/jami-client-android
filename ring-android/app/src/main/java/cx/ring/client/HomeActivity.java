@@ -46,6 +46,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -62,7 +63,6 @@ import cx.ring.fragments.ConversationFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
-import cx.ring.model.ServiceEvent;
 import cx.ring.navigation.RingNavigationFragment;
 import cx.ring.service.DRingService;
 import cx.ring.services.AccountService;
@@ -74,11 +74,10 @@ import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.DeviceUtils;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
 
-public class HomeActivity extends AppCompatActivity implements RingNavigationFragment.OnNavigationSectionSelected,
-        Observer<ServiceEvent> {
+public class HomeActivity extends AppCompatActivity implements RingNavigationFragment.OnNavigationSectionSelected {
 
     public static final int REQUEST_CODE_CREATE_ACCOUNT = 7;
     public static final int REQUEST_CODE_CALL = 3;
@@ -138,26 +137,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     private Boolean isDrawerLocked = false;
     private String mAccountWithPendingrequests = null;
     private float mToolbarSize;
-
-    @Override
-    public void update(Observable o, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
-                for (Account account : mAccountService.getAccounts()) {
-                    if (account.needsMigration()) {
-                        showMigrationDialog();
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-
-    }
+    private DisposableObserver<List<Account>> accountObserver = null;
 
     /* called before activity is killed, e.g. rotation */
     @Override
@@ -364,7 +344,25 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     @Override
     protected void onResume() {
         super.onResume();
-        mAccountService.addObserver(this);
+        if (accountObserver != null && !accountObserver.isDisposed())
+            accountObserver.dispose();
+        accountObserver = mAccountService.getObservableAccountList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<List<Account>>() {
+                    @Override
+                    public void onNext(List<Account> accounts) {
+                        for (Account account : accounts) {
+                            if (account.needsMigration()) {
+                                showMigrationDialog();
+                            }
+                        }
+                    }
+                    @Override
+                    public void onError(Throwable e) {}
+                    @Override
+                    public void onComplete() {}
+                });
+
         mConnectivityChecker.run();
         mHandler.postDelayed(mConnectivityChecker, 100);
         setVideoEnabledFromPermission();
@@ -399,7 +397,8 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     @Override
     protected void onPause() {
         super.onPause();
-        mAccountService.removeObserver(this);
+        accountObserver.dispose();
+        accountObserver = null;
     }
 
     @Override

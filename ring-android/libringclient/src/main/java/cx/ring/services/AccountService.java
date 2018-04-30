@@ -49,14 +49,20 @@ import cx.ring.model.ConfigKey;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.DataTransferError;
 import cx.ring.model.DataTransferEventCode;
-import cx.ring.model.ServiceEvent;
+import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
 import cx.ring.utils.SwigNativeConverter;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import io.reactivex.Single;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
+import io.reactivex.Observable;
 
 /**
  * This service handles the accounts (Ring and SIP)
@@ -80,7 +86,7 @@ import ezvcard.VCard;
  * - MIGRATION_ENDED
  * - INCOMING_TRUST_REQUEST
  */
-public class AccountService extends Observable {
+public class AccountService {
 
     private static final String TAG = AccountService.class.getSimpleName();
 
@@ -111,6 +117,32 @@ public class AccountService extends Observable {
     private DataTransfer mStartingTransfer = null;
     private Timer mTransferRefreshTimer = null;
 
+    private final BehaviorSubject<List<Account>> accountsSubject = BehaviorSubject.create();
+    private final Subject<Account> accountSubject = PublishSubject.create();
+    private final Observable<Account> currentAccountSubject = accountsSubject.map(l -> l.get(0)).distinctUntilChanged();
+
+    private final Subject<TextMessage> incomingMessageSubject = PublishSubject.create();
+    private final Subject<TextMessage> messageSubject = PublishSubject.create();
+    private final Subject<DataTransfer> dataTransferSubject = PublishSubject.create();
+
+    public class RegisteredName {
+        public String accountId;
+        public String name;
+        public String address;
+        public int state;
+    };
+    private final Subject<RegisteredName> registeredNameSubject = PublishSubject.create();
+
+    public Observable<RegisteredName> getRegisteredNames() {
+        return registeredNameSubject;
+    }
+    public Observable<TextMessage> getIncomingMessages() {
+        return incomingMessageSubject;
+    }
+    public Observable<TextMessage> getMessageStateChanges() {
+        return messageSubject;
+    }
+
     /**
      * @return true if at least one of the loaded accounts is a SIP one
      */
@@ -135,36 +167,37 @@ public class AccountService extends Observable {
      * @param isConnected sets the initial connection state of the accounts
      */
     public void loadAccountsFromDaemon(final boolean isConnected, final boolean pushAllowed) {
-
-        mApplicationExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                refreshAccountsCacheFromDaemon();
-
-                if (!mAccountList.isEmpty()) {
-                    setCurrentAccount(mAccountList.get(0));
-                } else {
-                    setChanged();
-                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNTS_CHANGED);
-                    notifyObservers(event);
-                }
-
-                setAccountsActive(isConnected, pushAllowed);
-                Ringservice.connectivityChanged();
-            }
+        mApplicationExecutor.submit(() -> {
+            refreshAccountsCacheFromDaemon();
+            setAccountsActive(isConnected, pushAllowed);
+            Ringservice.connectivityChanged();
         });
     }
 
     private void refreshAccountsCacheFromDaemon() {
+        Log.w(TAG, "refreshAccountsCacheFromDaemon");
         mAccountsLoaded.set(false);
-        mAccountList = new ArrayList<>();
-        List<String> accountIds = getAccountList();
+        List<String> accountIds = new ArrayList<>(Ringservice.getAccountList());
+        List<Account> newAccounts = new ArrayList<>(accountIds.size());
+        for (String id : accountIds) {
+            for (Account acc : mAccountList)
+                if (acc.getAccountID().equals(id))
+                    newAccounts.add(acc);
+        }
+        Log.w(TAG, "refreshAccountsCacheFromDaemon: recycled " + newAccounts.size());
         for (String accountId : accountIds) {
+            Account account = getAccount(accountId);
             Map<String, String> details = getAccountDetails(accountId);
             List<Map<String, String>> credentials = getCredentials(accountId);
             Map<String, String> volatileAccountDetails = getVolatileAccountDetails(accountId);
-            Account account = new Account(accountId, details, credentials, volatileAccountDetails);
-            mAccountList.add(account);
+            if (account == null) {
+                account = new Account(accountId, details, credentials, volatileAccountDetails);
+                newAccounts.add(account);
+            } else {
+                account.setDetails(details);
+                account.setCredentials(credentials);
+                account.setVolatileDetails(volatileAccountDetails);
+            }
 
             if (account.isSip()) {
                 mHasSipAccount = true;
@@ -185,6 +218,14 @@ public class AccountService extends Observable {
                 }
             }
         }
+        mAccountList = newAccounts;
+        if (!mAccountList.isEmpty()) {
+            Account newAccount = mAccountList.get(0);
+            if (mCurrentAccount != newAccount) {
+                mCurrentAccount = newAccount;
+            }
+        }
+        accountsSubject.onNext(mAccountList);
         mAccountsLoaded.set(true);
     }
 
@@ -218,46 +259,34 @@ public class AccountService extends Observable {
      */
     @SuppressWarnings("unchecked")
     // Hashmap runtime cast
-    public Account addAccount(final Map map) {
-
-        String accountId = FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "addAccount() thread running...");
-                    return Ringservice.addAccount(StringMap.toSwig(map));
-                }
-        );
-
-        if (accountId == null) {
-            return null;
-        }
-
-        Map<String, String> accountDetails = getAccountDetails(accountId);
-        Map<String, String> accountVolatileDetails = getVolatileAccountDetails(accountId);
-        List<Map<String, String>> accountCredentials = getCredentials(accountId);
-        Map<String, String> accountDevices = getKnownRingDevices(accountId);
-
-        Account account = getAccount(accountId);
-
-        if (account == null) {
-            account = new Account(accountId, accountDetails, accountCredentials, accountVolatileDetails);
-            account.setDevices(accountDevices);
-            if (account.isSip()) {
-                account.setRegistrationState(AccountConfig.STATE_READY, -1);
+    public Observable<Account> addAccount(final Map map) {
+        return Observable.fromCallable(() -> {
+            String accountId = Ringservice.addAccount(StringMap.toSwig(map));
+            if (accountId == null) {
+                throw new RuntimeException("Can't create account.");
             }
-        }
 
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNT_ADDED);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(ServiceEvent.EventInput.STATE, account.getRegistrationState());
-        notifyObservers(event);
+            Map<String, String> accountDetails = getAccountDetails(accountId);
+            Map<String, String> accountVolatileDetails = getVolatileAccountDetails(accountId);
+            List<Map<String, String>> accountCredentials = getCredentials(accountId);
+            Map<String, String> accountDevices = getKnownRingDevices(accountId);
 
-        setCurrentAccount(account);
-
-        return account;
+            Account account = getAccount(accountId);
+            if (account == null) {
+                account = new Account(accountId, accountDetails, accountCredentials, accountVolatileDetails);
+                account.setDevices(accountDevices);
+                if (account.isSip()) {
+                    account.setRegistrationState(AccountConfig.STATE_READY, -1);
+                }
+                mAccountList.add(account);
+                accountsSubject.onNext(mAccountList);
+            }
+            return account;
+        })
+                .flatMap(account -> accountSubject
+                    .filter(acc -> acc.getAccountID().equals(account.getAccountID()))
+                    .startWith(account))
+                .subscribeOn(Schedulers.from(mExecutor));
     }
 
     /**
@@ -271,6 +300,8 @@ public class AccountService extends Observable {
      * Sets the current Account in the local cache (also sends a ACCOUNTS_CHANGED event)
      */
     public void setCurrentAccount(Account currentAccount) {
+        if (mCurrentAccount == currentAccount)
+            return;
         mCurrentAccount = currentAccount;
 
         // the account order is changed
@@ -295,7 +326,7 @@ public class AccountService extends Observable {
     public Account getAccount(String accountId) {
         for (Account account : mAccountList) {
             String accountID = account.getAccountID();
-            if (accountID != null && accountID.equals(accountId)) {
+            if (accountID.equals(accountId)) {
                 return account;
             }
         }
@@ -307,6 +338,21 @@ public class AccountService extends Observable {
      */
     public List<Account> getAccounts() {
         return mAccountList;
+    }
+
+    public Subject<List<Account>> getObservableAccountList() {
+        return accountsSubject;
+    }
+
+    public Subject<Account> getObservableAccounts() {
+        return accountSubject;
+    }
+    public Observable<Account> getObservableAccount(String accountId) {
+        return Observable.fromCallable(() -> getAccount(accountId))
+                .concatWith(accountSubject.filter(acc -> acc.getAccountID().equals(accountId)));
+    }
+    public Observable<Account> getCurrentAccountSubject() {
+        return currentAccountSubject;
     }
 
     /**
@@ -469,10 +515,6 @@ public class AccountService extends Observable {
         for (Account account : mAccountList) {
             account.setDetail(ConfigKey.VIDEO_ENABLED, isEnabled);
         }
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNTS_CHANGED);
-        notifyObservers(event);
     }
 
     /**
@@ -852,13 +894,7 @@ public class AccountService extends Observable {
                 false,
                 () -> {
                     Log.i(TAG, "acceptTrustRequest() thread running...");
-                    boolean ok = Ringservice.acceptTrustRequest(accountId, from);
-                    if (ok) {
-                        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
-                        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-                        notifyObservers(event);
-                    }
-                    return ok;
+                    return Ringservice.acceptTrustRequest(accountId, from);
                 }
         );
     }
@@ -873,15 +909,9 @@ public class AccountService extends Observable {
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
-                (Callable<Void>) () -> {
+                () -> {
                     Log.i(TAG, "discardTrustRequest() " + accountId + " " + from);
-                    boolean ok = Ringservice.discardTrustRequest(accountId, from);
-                    if (ok) {
-                        setChanged();
-                        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
-                        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-                        notifyObservers(event);
-                    }
+                    Ringservice.discardTrustRequest(accountId, from);
                     return null;
                 }
         );
@@ -972,6 +1002,31 @@ public class AccountService extends Observable {
         );
     }
 
+    public Single<RegisteredName> findRegistrationByName(final String account, final String nameserver, final String name) {
+        if (name == null || name.isEmpty()) {
+            return Single.create(l -> {
+                l.onError(new IllegalArgumentException());
+            });
+        }
+        return Single.<RegisteredName>create(l -> {
+            getRegisteredNames()
+                    .filter(r -> account.equals(r.accountId) && name.equals(r.name))
+                    .first(new RegisteredName())
+                    .subscribeWith(new DisposableSingleObserver<RegisteredName>() {
+                        @Override
+                        public void onSuccess(RegisteredName registeredName) {
+                            l.onSuccess(registeredName);
+                        }
+                        @Override
+                        public void onError(Throwable e) {
+                            l.onError(e);
+                        }
+                    });
+            Ringservice.lookupName(account, nameserver, name);
+        })
+                .subscribeOn(Schedulers.from(mExecutor));
+    }
+
     /**
      * Reverse looks up the address in the blockchain to find the name
      */
@@ -995,7 +1050,6 @@ public class AccountService extends Observable {
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
                 () -> {
-                    Log.i(TAG, "pushNotificationReceived() " + from + " " + data.size());
                     Ringservice.pushNotificationReceived(from, StringMap.toSwig(data));
                     return true;
                 }
@@ -1016,42 +1070,26 @@ public class AccountService extends Observable {
     }
 
     public void volumeChanged(String device, int value) {
-        setChanged();
+        Log.w(TAG, "volumeChanged " + device + " " + value);
+        /*setChanged();
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VOLUME_CHANGED);
         event.addEventInput(ServiceEvent.EventInput.DEVICE, device);
         event.addEventInput(ServiceEvent.EventInput.VALUE, value);
-        notifyObservers(event);
+        notifyObservers(event);*/
     }
 
     public void accountsChanged() {
-        String currentAccountId = mCurrentAccount == null ? "" : mCurrentAccount.getAccountID();
-
         // Accounts have changed in Daemon, we have to update our local cache
         refreshAccountsCacheFromDaemon();
-
-        // if there was a current account we restore it according to the new list
-        Account currentAccount = getAccount(currentAccountId);
-        if (currentAccount != null) {
-            mCurrentAccount = currentAccount;
-        } else if (!mAccountList.isEmpty()) {
-            // no current account, by default it will be the first one
-            mCurrentAccount = mAccountList.get(0);
-        } else {
-            mCurrentAccount = null;
-        }
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNTS_CHANGED);
-        notifyObservers(event);
     }
 
     public void stunStatusFailure(String accountId) {
         Log.d(TAG, "stun status failure: " + accountId);
 
-        setChanged();
+        /*setChanged();
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.STUN_STATUS_FAILURE);
         event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        notifyObservers(event);
+        notifyObservers(event);*/
     }
 
     public void registrationStateChanged(String accountId, String newState, int code, String detailString) {
@@ -1073,13 +1111,7 @@ public class AccountService extends Observable {
         }
 
         if (!oldState.equals(newState)) {
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTRATION_STATE_CHANGED);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.STATE, newState);
-            event.addEventInput(ServiceEvent.EventInput.DETAIL_CODE, code);
-            event.addEventInput(ServiceEvent.EventInput.DETAIL_STRING, detailString);
-            notifyObservers(event);
+            accountSubject.onNext(account);
         }
     }
 
@@ -1092,25 +1124,33 @@ public class AccountService extends Observable {
         account.setVolatileDetails(details.toNative());
     }
 
+    public void incomingAccountMessage(String accountId, String callId, String from, StringMap messages) {
+        String message = null;
+        final String textPlainMime = "text/plain";
+        if (null != messages && messages.has_key(textPlainMime)) {
+            message = messages.getRaw(textPlainMime).toJavaString();
+        }
+        if (message != null) {
+            mHistoryService.incomingMessage(accountId, callId, from, message)
+                    .subscribe(m -> incomingMessageSubject.onNext(m));
+        }
+    }
+
     public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
         Log.d(TAG, "accountMessageStatusChanged: " + accountId + ", " + messageId + ", " + to + ", " + status);
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNT_MESSAGE_STATUS_CHANGED);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(ServiceEvent.EventInput.MESSAGE_ID, messageId);
-        event.addEventInput(ServiceEvent.EventInput.TO, to);
-        event.addEventInput(ServiceEvent.EventInput.STATE, status);
-        notifyObservers(event);
+        mHistoryService.accountMessageStatusChanged(accountId, messageId, to, status)
+                .subscribe(
+                        m -> messageSubject.onNext(m),
+                        e -> Log.e(TAG, "Error updating message",e));
     }
 
     public void errorAlert(int alert) {
         Log.d(TAG, "errorAlert : " + alert);
 
-        setChanged();
+        /*setChanged();
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ERROR_ALERT);
         event.addEventInput(ServiceEvent.EventInput.ALERT, alert);
-        notifyObservers(event);
+        notifyObservers(event);*/
     }
 
     public void knownDevicesChanged(String accountId, StringMap devices) {
@@ -1119,23 +1159,23 @@ public class AccountService extends Observable {
         Account accountChanged = getAccount(accountId);
         if (accountChanged != null) {
             accountChanged.setDevices(devices.toNative());
-            setChanged();
+            /*setChanged();
             ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.KNOWN_DEVICES_CHANGED);
             event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
             event.addEventInput(ServiceEvent.EventInput.DEVICES, devices);
-            notifyObservers(event);
+            notifyObservers(event);*/
         }
     }
 
     public void exportOnRingEnded(String accountId, int code, String pin) {
         Log.d(TAG, "exportOnRingEnded: " + accountId + ", " + code + ", " + pin);
 
-        setChanged();
+        /*setChanged();
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.EXPORT_ON_RING_ENDED);
         event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
         event.addEventInput(ServiceEvent.EventInput.CODE, code);
         event.addEventInput(ServiceEvent.EventInput.PIN, pin);
-        notifyObservers(event);
+        notifyObservers(event);*/
     }
 
     public void nameRegistrationEnded(String accountId, int state, String name) {
@@ -1151,33 +1191,34 @@ public class AccountService extends Observable {
         acc.setVolatileDetails(getVolatileAccountDetails(acc.getAccountID()));
         acc.setDetail(ConfigKey.ACCOUNT_REGISTERED_NAME, name);
 
-        setChanged();
+        accountSubject.onNext(acc);
+        /*setChanged();
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.NAME_REGISTRATION_ENDED);
         event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
         event.addEventInput(ServiceEvent.EventInput.STATE, state);
         event.addEventInput(ServiceEvent.EventInput.NAME, name);
-        notifyObservers(event);
+        notifyObservers(event);*/
     }
 
     public void migrationEnded(String accountId, String state) {
         Log.d(TAG, "migrationEnded: " + accountId + ", " + state);
 
-        setChanged();
+        /*setChanged();
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.MIGRATION_ENDED);
         event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
         event.addEventInput(ServiceEvent.EventInput.STATE, state);
-        notifyObservers(event);
+        notifyObservers(event);*/
     }
 
     public void deviceRevocationEnded(String accountId, String device, int state) {
         Log.d(TAG, "deviceRevocationEnded: " + accountId + ", " + device + ", " + state);
 
-        setChanged();
+        /*setChanged();
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DEVICE_REVOCATION_ENDED);
         event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
         event.addEventInput(ServiceEvent.EventInput.DEVICE, device);
         event.addEventInput(ServiceEvent.EventInput.STATE, state);
-        notifyObservers(event);
+        notifyObservers(event);*/
     }
 
     public void incomingTrustRequest(String accountId, String from, String message, long received) {
@@ -1186,11 +1227,14 @@ public class AccountService extends Observable {
         Account account = getAccount(accountId);
         if (account != null) {
             TrustRequest request = new TrustRequest(accountId, from, received, message);
+            VCard vcard = request.getVCard();
+            if (vcard != null) {
+                VCardUtils.savePeerProfileToDisk(vcard, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
+            }
             account.addRequest(request);
             lookupAddress(accountId, "", from);
         }
     }
-
 
     public void contactAdded(String accountId, String uri, boolean confirmed) {
         Log.d(TAG, "contactAdded: " + accountId + ", " + uri + ", " + confirmed);
@@ -1201,12 +1245,6 @@ public class AccountService extends Observable {
             return;
         }
         account.addContact(uri, confirmed);
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_ADDED);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(ServiceEvent.EventInput.CONFIRMED, confirmed);
-        notifyObservers(event);
     }
 
     public void contactRemoved(String accountId, String uri, boolean banned) {
@@ -1218,12 +1256,6 @@ public class AccountService extends Observable {
             return;
         }
         account.removeContact(uri, banned);
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_REMOVED);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(ServiceEvent.EventInput.BANNED, banned);
-        notifyObservers(event);
     }
 
     public void registeredNameFound(String accountId, int state, String address, String name) {
@@ -1232,7 +1264,7 @@ public class AccountService extends Observable {
         Account account = getAccount(accountId);
         if (account != null) {
             if (state == 0) {
-                CallContact contact = account.getContact(address);
+                CallContact contact = account.getContactFromCache(address);
                 if (contact != null) {
                     contact.setUsername(name);
                 }
@@ -1244,22 +1276,16 @@ public class AccountService extends Observable {
                 request.setUsername(name);
                 if (!resolved) {
                     Log.d(TAG, "registeredNameFound: TrustRequest resolved " + name);
-                    setChanged();
-                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
-                    event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-                    event.addEventInput(ServiceEvent.EventInput.FROM, request.getContactId());
-                    notifyObservers(event);
                 }
             }
         }
 
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTERED_NAME_FOUND);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(ServiceEvent.EventInput.STATE, state);
-        event.addEventInput(ServiceEvent.EventInput.ADDRESS, address);
-        event.addEventInput(ServiceEvent.EventInput.NAME, name);
-        notifyObservers(event);
+        RegisteredName r = new RegisteredName();
+        r.accountId = accountId;
+        r.address = address;
+        r.name = name;
+        r.state = state;
+        registeredNameSubject.onNext(r);
     }
 
     public DataTransferError sendFile(final DataTransfer dataTransfer, File file) {
@@ -1360,31 +1386,25 @@ public class AccountService extends Observable {
                 mHistoryService.insertDataTransfer(transfer);
             }
             mDataTransfers.put(transferId, transfer);
-        } else {
-            synchronized (transfer) {
-                DataTransferEventCode oldState = transfer.getEventCode();
-                if (oldState != dataEvent) {
-                    if (dataEvent == DataTransferEventCode.ONGOING) {
-                        if (mTransferRefreshTimer == null) {
-                            mTransferRefreshTimer = new Timer();
-                        }
-                        mTransferRefreshTimer.scheduleAtFixedRate(
-                                new DataTransferRefreshTask(transfer),
-                                DATA_TRANSFER_REFRESH_PERIOD,
-                                DATA_TRANSFER_REFRESH_PERIOD);
+        } else synchronized (transfer) {
+            DataTransferEventCode oldState = transfer.getEventCode();
+            if (oldState != dataEvent) {
+                if (dataEvent == DataTransferEventCode.ONGOING) {
+                    if (mTransferRefreshTimer == null) {
+                        mTransferRefreshTimer = new Timer();
                     }
+                    mTransferRefreshTimer.scheduleAtFixedRate(
+                            new DataTransferRefreshTask(transfer),
+                            DATA_TRANSFER_REFRESH_PERIOD,
+                            DATA_TRANSFER_REFRESH_PERIOD);
                 }
-                transfer.setEventCode(dataEvent);
-                transfer.setBytesProgress(info.getBytesProgress());
-                mHistoryService.updateDataTransfer(transfer);
             }
+            transfer.setEventCode(dataEvent);
+            transfer.setBytesProgress(info.getBytesProgress());
+            mHistoryService.updateDataTransfer(transfer);
         }
 
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DATA_TRANSFER);
-        event.addEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, dataEvent);
-        event.addEventInput(ServiceEvent.EventInput.TRANSFER_INFO, transfer);
-        notifyObservers(event);
+        dataTransferSubject.onNext(transfer);
     }
 
     private static DataTransferEventCode getDataTransferEventCode(int eventCode) {
@@ -1413,6 +1433,15 @@ public class AccountService extends Observable {
 
     public DataTransfer getDataTransfer(long id) {
         return mDataTransfers.get(id);
+    }
+
+    public Subject<DataTransfer> getDataTransfers() {
+        return dataTransferSubject;
+    }
+    public Observable<DataTransfer> observeDataTransfer(DataTransfer transfer) {
+        return dataTransferSubject
+                .filter(t -> t == transfer)
+                .startWith(transfer);
     }
 
     public void enableRingProxy() {

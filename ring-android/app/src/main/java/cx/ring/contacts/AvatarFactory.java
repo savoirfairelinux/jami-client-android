@@ -33,11 +33,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.Log;
 
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
 import cx.ring.R;
 import cx.ring.model.Uri;
 import cx.ring.utils.CircleTransform;
+import cx.ring.utils.GlideOptions;
 import cx.ring.utils.HashUtils;
 import ezvcard.VCard;
 
@@ -177,9 +180,6 @@ public class AvatarFactory {
         RequestOptions glideOptions = GLIDE_OPTIONS;
         if (circle) {
             glideOptions = glideOptions.transform(new CircleTransform());
-        }
-        if (withPlaceholder) {
-            glideOptions = glideOptions.placeholder(R.drawable.ic_contact_picture_fallback);
         }
         return glideOptions;
     }

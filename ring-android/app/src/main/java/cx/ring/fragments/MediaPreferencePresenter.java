@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.model.Account;
 import cx.ring.model.Codec;
@@ -36,8 +37,9 @@ import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import io.reactivex.Scheduler;
 
-public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView> implements Observer<ServiceEvent> {
+public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView> {
 
     public static final String TAG = MediaPreferencePresenter.class.getSimpleName();
 
@@ -49,10 +51,13 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
     public static final int MAX_SIZE_RINGTONE = 800;
 
     protected AccountService mAccountService;
-
     protected DeviceRuntimeService mDeviceRuntimeService;
 
     private Account mAccount;
+
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     @Inject
     public MediaPreferencePresenter(AccountService accountService, DeviceRuntimeService deviceRuntimeService) {
@@ -63,23 +68,19 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
     }
 
     @Override
     public void bindView(MediaPreferenceView view) {
         super.bindView(view);
-        mAccountService.addObserver(this);
     }
 
     void init(String accountId) {
         mAccount = mAccountService.getAccount(accountId);
-
-        if (mAccount == null) {
-            return;
-        }
-
-        getCodecs();
+        mCompositeDisposable.clear();
+        mCompositeDisposable.add(mAccountService.getObservableAccount(accountId)
+                .observeOn(mUiScheduler)
+                .subscribe(this::getCodecs));
     }
 
     void onFileFound(String type, String path) {
@@ -97,8 +98,7 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
     void codecChanged(ArrayList<Long> codecs) {
         mAccountService.setActiveCodecList(codecs, mAccount.getAccountID());
         updateAccount();
-
-        getCodecs();
+        getCodecs(mAccount);
     }
 
     void audioPreferenceChanged(ConfigKey key, Object newValue) {
@@ -147,15 +147,15 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
         mAccountService.setAccountDetails(mAccount.getAccountID(), mAccount.getDetails());
     }
 
-    private void getCodecs() {
-        boolean isRingtoneEnabled = Boolean.valueOf(mAccount.getDetail(ConfigKey.RINGTONE_ENABLED));
-        boolean isCustomRingtoneEnabled = isRingtoneEnabled && Boolean.valueOf(mAccount.getDetail(ConfigKey.RINGTONE_CUSTOM));
+    private void getCodecs(Account account) {
+        boolean isRingtoneEnabled = Boolean.valueOf(account.getDetail(ConfigKey.RINGTONE_ENABLED));
+        boolean isCustomRingtoneEnabled = isRingtoneEnabled && Boolean.valueOf(account.getDetail(ConfigKey.RINGTONE_CUSTOM));
         getView().initPreferences(isRingtoneEnabled, isCustomRingtoneEnabled);
 
         final ArrayList<Codec> audioCodec = new ArrayList<>();
         final ArrayList<Codec> videoCodec = new ArrayList<>();
         try {
-            final List<Codec> codecList = mAccountService.getCodecList(mAccount.getAccountID());
+            final List<Codec> codecList = mAccountService.getCodecList(account.getAccountID());
             for (Codec codec : codecList) {
                 if (codec.getType() == Codec.Type.AUDIO) {
                     audioCodec.add(codec);
@@ -167,22 +167,6 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
             Log.e(TAG, "Exception in accountChanged", e);
         }
 
-        getView().accountChanged(mAccount, audioCodec, videoCodec);
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null || getView() == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
-            case REGISTRATION_STATE_CHANGED:
-                getCodecs();
-                break;
-            default:
-                break;
-        }
+        getView().accountChanged(account, audioCodec, videoCodec);
     }
 }
