@@ -143,7 +143,9 @@ public abstract class RingApplication extends Application {
 
         mExecutor.submit(() -> {
             try {
-
+                if (mDaemonService.isStarted()) {
+                    return;
+                }
                 mDaemonService.startDaemon();
 
                 // Check if the camera hardware feature is available.
@@ -174,8 +176,6 @@ public abstract class RingApplication extends Application {
             } catch (Exception e) {
                 Log.e(TAG, "DRingService start failed", e);
             }
-
-            return true;
         });
 
     }

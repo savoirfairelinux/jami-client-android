@@ -34,6 +34,7 @@ import cx.ring.daemon.IntVect;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.PresenceCallback;
 import cx.ring.daemon.Ringservice;
+import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.UintVect;
@@ -114,7 +115,7 @@ public class DaemonService {
     }
 
     private void startRingServicePolling() {
-        mScheduledExecutor.scheduleAtFixedRate(() -> mExecutor.submit(Ringservice::pollEvents), 0, POLLING_TIMEOUT, TimeUnit.MILLISECONDS);
+        mScheduledExecutor.scheduleAtFixedRate(() -> mExecutor.submit(RingserviceJNI::pollEvents), 0, POLLING_TIMEOUT, TimeUnit.MILLISECONDS);
     }
 
     public void stopDaemon() {
@@ -157,12 +158,12 @@ public class DaemonService {
 
         @Override
         public void incomingAccountMessage(String accountId, String from, StringMap messages) {
-            mCallService.incomingAccountMessage(accountId, from, messages);
+            mAccountService.incomingAccountMessage(accountId, null, from, messages);
         }
 
         @Override
         public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
-            mHistoryService.accountMessageStatusChanged(accountId, messageId, to, status);
+            mAccountService.accountMessageStatusChanged(accountId, messageId, to, status);
         }
 
         @Override

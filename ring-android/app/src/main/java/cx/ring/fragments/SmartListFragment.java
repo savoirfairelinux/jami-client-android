@@ -53,6 +53,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -274,12 +275,10 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void setLoading(final boolean loading) {
-        getActivity().runOnUiThread(() -> {
             if (mLoader == null) {
                 return;
             }
             mLoader.setVisibility(loading ? View.VISIBLE : View.GONE);
-        });
     }
 
     /**
@@ -483,7 +482,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void updateList(final ArrayList<SmartListViewModel> smartListViewModels) {
+    public void updateList(final List<SmartListViewModel> smartListViewModels) {
         if (mRecyclerView.getAdapter() == null) {
             mSmartListAdapter = new SmartListAdapter(smartListViewModels, SmartListFragment.this);
             mRecyclerView.setAdapter(mSmartListAdapter);

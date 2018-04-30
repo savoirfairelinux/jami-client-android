@@ -20,10 +20,19 @@
 
 package cx.ring.model;
 
-public abstract class ConversationElement implements IConversationElement, Comparable<IConversationElement> {
+public abstract class ConversationElement {
 
-    @Override
-    public int compareTo(IConversationElement iConversationElement) {
-        return (int) ((getDate() - iConversationElement.getDate()) / 1000L);
+    public abstract CEType getType();
+
+    public abstract long getDate();
+
+    public abstract Uri getContactNumber();
+
+    public abstract boolean isRead();
+
+    public abstract long getId();
+
+    public enum CEType {
+        TEXT, CALL, FILE, CONTACT
     }
 }

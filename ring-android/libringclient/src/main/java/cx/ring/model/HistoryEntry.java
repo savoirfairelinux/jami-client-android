@@ -105,15 +105,16 @@ public class HistoryEntry {
         mDataTransfers.put(dataTransfer.getTimestamp(), dataTransfer);
     }
 
-    public void updateTextMessage(TextMessage text) {
+    public TextMessage updateTextMessage(TextMessage text) {
         long time = text.getDate();
         NavigableMap<Long, TextMessage> msgs = mTextMessages.subMap(time, true, time, true);
         for (TextMessage txt : msgs.values()) {
             if (txt.equals(text)) {
                 txt.setStatus(text.getStatus());
-                break;
+                return txt;
             }
         }
+        return null;
     }
 
     public String getNumber() {

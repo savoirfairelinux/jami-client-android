@@ -79,7 +79,7 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     @Override
     public void bindView(MainView view) {
         super.bindView(view);
-        mAccountService.addObserver(this);
+        //mAccountService.addObserver(this);
         mContactService.addObserver(this);
         mPresenceService.addObserver(this);
     }
@@ -87,7 +87,7 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
+        //mAccountService.removeObserver(this);
         mContactService.removeObserver(this);
         mPresenceService.removeObserver(this);
     }

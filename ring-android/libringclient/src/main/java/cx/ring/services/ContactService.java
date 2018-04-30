@@ -59,6 +59,8 @@ public abstract class ContactService extends Observable {
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
+    @Inject
+    AccountService mAccountService;
 
     @Inject
     @Named("ApplicationExecutor")
@@ -71,9 +73,7 @@ public abstract class ContactService extends Observable {
     public abstract Map<Long, CallContact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
 
     protected abstract CallContact findContactByIdFromSystem(Long contactId, String contactKey);
-
     protected abstract CallContact findContactBySipNumberFromSystem(String number);
-
     protected abstract CallContact findContactByNumberFromSystem(String number);
 
     public abstract void loadContactData(CallContact callContact);
@@ -152,17 +152,14 @@ public abstract class ContactService extends Observable {
         return CallContact.buildUnknown(uri);
     }
 
-    public boolean setRingContactName(String accountId, Uri uri, String name) {
-        if (!accountId.equals(mAccountId)) {
-            return false;
-        }
+    public CallContact setRingContactName(String accountId, Uri uri, String name) {
         Log.w(TAG, "setRingContactName " + uri + " " + name);
-        CallContact contact = findContact(uri);
+        CallContact contact = findContact(accountId, uri);
         if (contact != null) {
             contact.setUsername(name);
-            return true;
+            return contact;
         }
-        return false;
+        return null;
     }
 
     private Collection<CallContact> getContacts() {
@@ -249,14 +246,38 @@ public abstract class ContactService extends Observable {
         return findContact(new Uri(number));
     }
 
-    public CallContact findContact(Uri uri) {
-        if (uri == null) {
+    public CallContact findContact(Account account, Uri uri) {
+        if (uri == null || account == null) {
             return null;
         }
-        String searchedCanonicalNumber = uri.getRawUriString();
+        if (account.isRing()) {
+            return account.getContactFromCache(uri);
+        }
+        Settings settings = mPreferencesService.loadSettings();
+        if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
+            CallContact contact = findContactByNumberFromSystem(uri.getRawUriString());
+            if (contact != null) {
+                mContactList.put(contact.getId(), contact);
+                return contact;
+            }
+        }
+        return CallContact.buildUnknown(uri);
+    }
 
-        // Look for Ring contact by ID
+    public CallContact findContact(String accountId, Uri uri) {
+        return findContact(mAccountService.getAccount(accountId), uri);
+    }
+    public CallContact findContact(Uri uri) {
+        return findContact(mAccountService.getCurrentAccount(), uri);
+        /*if (uri == null) {
+            return null;
+        }
         boolean isRingId = uri.isRingId();
+        if (isRingId) {
+            return mAccountService.getCurrentAccount().getContactFromCache(uri);
+        }
+        String searchedCanonicalNumber = uri.getRawUriString();
+        // Look for Ring contact by ID
         if (isRingId) {
             CallContact contact = mContactsRing.get(searchedCanonicalNumber);
             if (contact != null) {
@@ -282,7 +303,7 @@ public abstract class ContactService extends Observable {
 
         CallContact contact = CallContact.buildUnknown(uri);
         mContactsRing.put(searchedCanonicalNumber, contact);
-        return contact;
+        return contact;*/
     }
 
     /**

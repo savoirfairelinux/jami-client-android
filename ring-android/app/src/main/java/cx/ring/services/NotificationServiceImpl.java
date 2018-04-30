@@ -46,7 +46,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.TreeMap;
 
 import javax.inject.Inject;
@@ -62,7 +61,6 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.DataTransferEventCode;
-import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
@@ -71,13 +69,11 @@ import cx.ring.service.DRingService;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 import cx.ring.utils.ResourceMapper;
 import ezvcard.VCard;
 import ezvcard.property.Photo;
 
-public class NotificationServiceImpl extends NotificationService implements Observer<ServiceEvent> {
+public class NotificationServiceImpl extends NotificationService {
 
     private static final String TAG = NotificationServiceImpl.class.getSimpleName();
 
@@ -96,8 +92,6 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     @Inject
     protected AccountService mAccountService;
     @Inject
-    protected CallService mCallService;
-    @Inject
     protected PreferencesService mPreferencesService;
     @Inject
     protected HistoryService mHistoryService;
@@ -110,8 +104,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         if (notificationManager == null) {
             notificationManager = NotificationManagerCompat.from(mContext);
         }
-        mAccountService.addObserver(this);
-        mCallService.addObserver(this);
+        //mAccountService.addObserver(this);
+        //mCallService.addObserver(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             registerNotificationChannels();
         }
@@ -525,6 +519,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         messageNotificationBuilder.setLargeIcon(circleBitmap);
     }
 
+    /*
     @Override
     public void update(Observable observable, ServiceEvent event) {
         if (observable instanceof AccountService && event != null) {
@@ -545,5 +540,5 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 }
             }
         }
-    }
+    }*/
 }

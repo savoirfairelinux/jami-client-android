@@ -20,7 +20,6 @@
  */
 package cx.ring.client;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -39,6 +38,8 @@ public class ConversationActivity extends AppCompatActivity {
     Toolbar mToolbar;
 
     private ConversationFragment mConversationFragment;
+    private String contactUri = null;
+    private String accountId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +52,54 @@ public class ConversationActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (getIntent() != null || getIntent().getExtras() != null) {
+            contactUri = getIntent().getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
+            accountId = getIntent().getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
+        } else if (savedInstanceState != null) {
+            contactUri = savedInstanceState.getString(ConversationFragment.KEY_CONTACT_RING_ID);
+            accountId = savedInstanceState.getString(ConversationFragment.KEY_ACCOUNT_ID);
+        }
+        if (mConversationFragment == null) {
+            Bundle bundle = new Bundle();
+            bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, getIntent().getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID));
+            bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, getIntent().getStringExtra(ConversationFragment.KEY_ACCOUNT_ID));
+
+            mConversationFragment = new ConversationFragment();
+            mConversationFragment.setArguments(bundle);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.main_frame, mConversationFragment, null)
+                    .commit();
+        }
     }
 
+    /*@Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (mConversationFragment == null) {
+            Bundle bundle = new Bundle();
+            bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, getIntent().getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID));
+            bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, getIntent().getStringExtra(ConversationFragment.KEY_ACCOUNT_ID));
+
+            mConversationFragment = new ConversationFragment();
+            mConversationFragment.setArguments(bundle);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.main_frame, mConversationFragment, null)
+                    .commit();
+        }
+    }*/
+
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
+        outState.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
+        super.onSaveInstanceState(outState);
+    }
+
+    /*@Override
     protected void onResume() {
         super.onResume();
+
+
         if (getIntent() == null || getIntent().getExtras() == null) {
             return;
         }
@@ -71,14 +115,13 @@ public class ConversationActivity extends AppCompatActivity {
                     .replace(R.id.main_frame, mConversationFragment, null)
                     .commit();
         }
-
     }
 
     @Override
     public void onBackPressed() {
         startActivity(new Intent(this, HomeActivity.class));
         finish();
-    }
+    }*/
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
