@@ -60,6 +60,9 @@
   <string name="notif_current_call_title">Текущ разговор с %1$s</string>
   <string name="notif_current_call">Текущ разговор</string>
   <string name="notif_channel_calls">Обаждания</string>
+  <string name="notif_channel_messages">Съобщения</string>
+  <string name="notif_channel_requests">Заявки</string>
+  <string name="action_open">Отваряне</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вие:</string>
   <string name="action_call_hangup">Затваряне</string>
