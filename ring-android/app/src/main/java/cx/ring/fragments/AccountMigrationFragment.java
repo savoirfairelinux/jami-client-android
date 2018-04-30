@@ -108,7 +108,7 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
     @Override
     public void onResume() {
         super.onResume();
-        mAccountService.addObserver(this);
+        //mAccountService.addObserver(this);
         if (getArguments() != null) {
             mAccountId = getArguments().getString(ACCOUNT_ID);
         }
@@ -117,7 +117,7 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
     @Override
     public void onPause() {
         super.onPause();
-        mAccountService.removeObserver(this);
+        //mAccountService.removeObserver(this);
     }
 
     @SuppressWarnings("unchecked")

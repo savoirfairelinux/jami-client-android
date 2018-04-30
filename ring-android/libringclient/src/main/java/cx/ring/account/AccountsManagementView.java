@@ -32,4 +32,6 @@ public interface AccountsManagementView {
     void launchAccountEditActivity(Account account);
 
     void launchWizardActivity();
+
+    void refreshAccount(Account account);
 }

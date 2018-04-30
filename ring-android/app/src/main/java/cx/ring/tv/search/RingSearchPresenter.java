@@ -20,25 +20,23 @@
 package cx.ring.tv.search;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.Blob;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.RingError;
-import cx.ring.model.ServiceEvent;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.VCardService;
 import cx.ring.utils.NameLookupInputHandler;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import io.reactivex.Scheduler;
 
-
-public class RingSearchPresenter extends RootPresenter<RingSearchView> implements Observer<ServiceEvent> {
+public class RingSearchPresenter extends RootPresenter<RingSearchView> {
 
     private AccountService mAccountService;
     private HardwareService mHardwareService;
@@ -47,6 +45,9 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> implement
     private NameLookupInputHandler mNameLookupInputHandler;
     private String mLastBlockchainQuery = null;
     private CallContact mCallContact;
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     @Inject
     public RingSearchPresenter(AccountService accountService,
@@ -60,33 +61,14 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> implement
     @Override
     public void bindView(RingSearchView view) {
         super.bindView(view);
-        mAccountService.addObserver(this);
+        mCompositeDisposable.add(mAccountService.getRegisteredNames()
+                .observeOn(mUiScheduler)
+                .subscribe(r -> parseEventState(r.name, r.address, r.state)));
     }
 
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case REGISTERED_NAME_FOUND:
-                String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                if (mLastBlockchainQuery != null
-                        && (mLastBlockchainQuery.equals("") || !mLastBlockchainQuery.equals(name))) {
-                    return;
-                }
-                String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-                int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
-                parseEventState(name, address, state);
-                break;
-        }
     }
 
     public void queryTextChanged(String query) {
@@ -118,6 +100,10 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> implement
     }
 
     private void parseEventState(String name, String address, int state) {
+        if (mLastBlockchainQuery != null
+                && (mLastBlockchainQuery.equals("") || !mLastBlockchainQuery.equals(name))) {
+            return;
+        }
         switch (state) {
             case 0:
                 // on found

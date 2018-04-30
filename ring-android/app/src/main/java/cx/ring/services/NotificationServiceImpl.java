@@ -20,6 +20,7 @@
  */
 package cx.ring.services;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -62,7 +63,6 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.DataTransferEventCode;
-import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
@@ -71,13 +71,12 @@ import cx.ring.service.DRingService;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 import cx.ring.utils.ResourceMapper;
 import ezvcard.VCard;
 import ezvcard.property.Photo;
+import io.reactivex.disposables.CompositeDisposable;
 
-public class NotificationServiceImpl extends NotificationService implements Observer<ServiceEvent> {
+public class NotificationServiceImpl extends NotificationService {
 
     private static final String TAG = NotificationServiceImpl.class.getSimpleName();
 
@@ -96,26 +95,43 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     @Inject
     protected AccountService mAccountService;
     @Inject
-    protected CallService mCallService;
-    @Inject
     protected PreferencesService mPreferencesService;
     @Inject
     protected HistoryService mHistoryService;
     @Inject
     protected DeviceRuntimeService mDeviceRuntimeService;
     private NotificationManagerCompat notificationManager;
-    private Random random;
+    private final Random random = new Random();
 
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
+
+    @SuppressLint("CheckResult")
     public void initHelper() {
         if (notificationManager == null) {
             notificationManager = NotificationManagerCompat.from(mContext);
         }
-        mAccountService.addObserver(this);
-        mCallService.addObserver(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             registerNotificationChannels();
         }
-        random = new Random();
+        mAccountService.getCurrentAccountSubject().subscribe(
+                account -> {
+                    showIncomingTrustRequestNotification(account);
+                    mDisposable.clear();
+                    mDisposable.add(account.getRequestsEvents().subscribe(
+                            event -> {
+                                Log.d(TAG, "update: INCOMING_TRUST_REQUEST " + event.request.getContactId());
+                                String from = event.request.getContactId();
+                                Set<String> notifiedRequests = mPreferencesService.loadRequestsPreferences(account.getAccountID());
+                                if (notifiedRequests == null || !notifiedRequests.contains(from)) {
+                                    showIncomingTrustRequestNotification(account);
+                                    mPreferencesService.saveRequestPreferences(account.getAccountID(), from);
+                                } else {
+                                    Log.d(TAG, "INCOMING_TRUST_REQUEST: already notified for " + from);
+                                }
+                            },
+                            error -> Log.e(TAG, "Error loading requests", error),
+                            () -> cancelTrustRequestNotification(account.getAccountID())));
+                });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -308,6 +324,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         }
 
         Collection<TrustRequest> requests = account.getRequests();
+        Log.w(TAG, "showIncomingTrustRequestNotification " + requests.size());
         if (requests.isEmpty()) {
             return;
         } else if (requests.size() == 1) {
@@ -525,6 +542,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         messageNotificationBuilder.setLargeIcon(circleBitmap);
     }
 
+    /*
     @Override
     public void update(Observable observable, ServiceEvent event) {
         if (observable instanceof AccountService && event != null) {
@@ -545,5 +563,5 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 }
             }
         }
-    }
+    }*/
 }
