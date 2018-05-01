@@ -1,0 +1,2 @@
+* Fix audio on Android TV (tested on Nvidia Shield TV)
+* Miscellaneous bug fixes
