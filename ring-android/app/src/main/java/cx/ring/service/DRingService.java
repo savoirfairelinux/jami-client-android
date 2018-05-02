@@ -28,7 +28,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
@@ -37,7 +36,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
-import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.util.Log;
 
@@ -47,7 +45,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -508,7 +506,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     protected ConversationFacade mConversationFacade;
     @Inject
     @Named("DaemonExecutor")
-    protected ExecutorService mExecutor;
+    protected ScheduledExecutorService mExecutor;
 
     public static boolean isRunning = false;
 
