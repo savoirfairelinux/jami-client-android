@@ -27,11 +27,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.Log;
+import android.util.LruCache;
 
 import com.bumptech.glide.request.RequestOptions;
 
@@ -67,6 +66,16 @@ public class AvatarFactory {
         AVATAR_TEXT_PAINT.setAntiAlias(true);
     }
 
+    private static final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+
+    // Use 1/8th of the available memory for this memory cache.
+    private static final LruCache<String, BitmapDrawable> mMemoryCache = new LruCache<String, BitmapDrawable>(maxMemory / 8) {
+        @Override
+        protected int sizeOf(String key, BitmapDrawable bitmap) {
+            return bitmap.getBitmap().getByteCount() / 1024;
+        }
+    };
+
     private AvatarFactory() {
     }
 
@@ -95,23 +104,34 @@ public class AvatarFactory {
         if (context == null || pictureSize <= 0) {
             throw new IllegalArgumentException();
         }
+        String key = ringId + pictureSize + username;
+        BitmapDrawable bmp = mMemoryCache.get(key);
+        if (bmp != null)
+            return bmp;
+
         Log.d(TAG, "getAvatar: username=" + username + ", ringid=" + ringId + ", pictureSize=" + pictureSize);
 
         if (photo != null && photo.length > 0) {
-            return new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(photo, 0, photo.length));
+            bmp = new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(photo, 0, photo.length));
+            mMemoryCache.put(key, bmp);
+            return bmp;
         }
 
         Uri uriUsername = new Uri(username);
         Uri uri = new Uri(ringId);
         Character firstCharacter = getFirstCharacter(uriUsername.getRawRingId());
         if (uri.isEmpty() || uriUsername.isRingId() || firstCharacter == null) {
-            return createDefaultAvatar(context, generateAvatarColor(uri.getRawUriString()), pictureSize);
+            bmp = createDefaultAvatar(context, generateAvatarColor(uri.getRawUriString()), pictureSize);
+            mMemoryCache.put(key, bmp);
+            return bmp;
         }
 
-        return createLetterAvatar(context, firstCharacter, generateAvatarColor(uri.getRawUriString()), pictureSize);
+        bmp = createLetterAvatar(context, firstCharacter, generateAvatarColor(uri.getRawUriString()), pictureSize);
+        mMemoryCache.put(key, bmp);
+        return bmp;
     }
 
-    private static Drawable createDefaultAvatar(Context context, int backgroundColor, int pictureSize) {
+    private static BitmapDrawable createDefaultAvatar(Context context, int backgroundColor, int pictureSize) {
         if (context == null || pictureSize <= 0) {
             throw new IllegalArgumentException();
         }
@@ -132,7 +152,7 @@ public class AvatarFactory {
         return new BitmapDrawable(context.getResources(), canvasBitmap);
     }
 
-    private static Drawable createLetterAvatar(Context context, char firstCharacter, int backgroundColor, int pictureSize) {
+    private static BitmapDrawable createLetterAvatar(Context context, char firstCharacter, int backgroundColor, int pictureSize) {
         if (context == null || pictureSize <= 0) {
             throw new IllegalArgumentException();
         }
@@ -182,5 +202,9 @@ public class AvatarFactory {
             glideOptions = glideOptions.placeholder(R.drawable.ic_contact_picture_fallback);
         }
         return glideOptions;
+    }
+
+    public static void onLowMemory() {
+        mMemoryCache.evictAll();
     }
 }

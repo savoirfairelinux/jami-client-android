@@ -40,6 +40,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.BuildConfig;
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.daemon.Ringservice;
 import cx.ring.dependencyinjection.DaggerRingInjectionComponent;
 import cx.ring.dependencyinjection.RingInjectionComponent;
@@ -121,6 +122,12 @@ public abstract class RingApplication extends Application {
     private void ringerModeChanged(int newMode) {
         boolean mute = newMode == AudioManager.RINGER_MODE_VIBRATE || newMode == AudioManager.RINGER_MODE_SILENT;
         mCallService.muteRingTone(mute);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        AvatarFactory.onLowMemory();
     }
 
     private void setDefaultUncaughtExceptionHandler() {
