@@ -254,6 +254,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setPriority(Notification.PRIORITY_HIGH)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setContentTitle(contact.getDisplayName())
                 .setContentText(last.getMessage())
@@ -353,6 +354,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         messageNotificationBuilder
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
                 .setCategory(NotificationCompat.CATEGORY_SOCIAL)
@@ -401,6 +403,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         Bitmap photo_bmp = photo == null ? null : BitmapFactory.decodeByteArray(photo, 0, photo.length);
         messageNotificationBuilder.setContentTitle(titleMessage)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setAutoCancel(false)
                 .setOngoing(ongoing)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
