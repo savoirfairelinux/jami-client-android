@@ -67,8 +67,8 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         edit.putBoolean(RING_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications());
 
         edit.apply();
-        if (!mUserSettings.isAllowPushNotifications() && settings.isAllowPushNotifications()) {
-            mAccountService.enableRingProxy();
+        if (mUserSettings.isAllowPushNotifications() != settings.isAllowPushNotifications()) {
+            mAccountService.setProxyEnabled(settings.isAllowPushNotifications());
         }
         mUserSettings = settings;
 
