@@ -29,7 +29,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
@@ -89,11 +89,7 @@ public class AccountService extends Observable {
 
     @Inject
     @Named("DaemonExecutor")
-    ExecutorService mExecutor;
-
-    @Inject
-    @Named("ApplicationExecutor")
-    ExecutorService mApplicationExecutor;
+    ScheduledExecutorService mExecutor;
 
     @Inject
     HistoryService mHistoryService;
@@ -135,23 +131,19 @@ public class AccountService extends Observable {
      * @param isConnected sets the initial connection state of the accounts
      */
     public void loadAccountsFromDaemon(final boolean isConnected, final boolean pushAllowed) {
+        mExecutor.execute(() -> {
+            refreshAccountsCacheFromDaemon();
 
-        mApplicationExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                refreshAccountsCacheFromDaemon();
-
-                if (!mAccountList.isEmpty()) {
-                    setCurrentAccount(mAccountList.get(0));
-                } else {
-                    setChanged();
-                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNTS_CHANGED);
-                    notifyObservers(event);
-                }
-
-                setAccountsActive(isConnected, pushAllowed);
-                Ringservice.connectivityChanged();
+            if (!mAccountList.isEmpty()) {
+                setCurrentAccount(mAccountList.get(0));
+            } else {
+                setChanged();
+                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNTS_CHANGED);
+                notifyObservers(event);
             }
+
+            setAccountsActive(isConnected, pushAllowed);
+            Ringservice.connectivityChanged();
         });
     }
 
