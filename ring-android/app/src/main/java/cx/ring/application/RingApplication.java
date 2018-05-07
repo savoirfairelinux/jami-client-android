@@ -33,8 +33,8 @@ import android.os.Looper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -70,7 +70,7 @@ public abstract class RingApplication extends Application {
     private static RingApplication sInstance = null;
     @Inject
     @Named("DaemonExecutor")
-    ExecutorService mExecutor;
+    ScheduledExecutorService mExecutor;
     @Inject
     DaemonService mDaemonService;
     @Inject
