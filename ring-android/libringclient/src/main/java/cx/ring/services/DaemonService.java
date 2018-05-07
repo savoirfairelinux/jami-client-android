@@ -19,7 +19,6 @@
  */
 package cx.ring.services;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +33,7 @@ import cx.ring.daemon.IntVect;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.PresenceCallback;
 import cx.ring.daemon.Ringservice;
+import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.UintVect;
@@ -48,10 +48,7 @@ public class DaemonService {
 
     @Inject
     @Named("DaemonExecutor")
-    ExecutorService mExecutor;
-
-    @Inject
-    ScheduledExecutorService mScheduledExecutor;
+    ScheduledExecutorService mExecutor;
 
     @Inject
     HistoryService mHistoryService;
@@ -114,11 +111,11 @@ public class DaemonService {
     }
 
     private void startRingServicePolling() {
-        mScheduledExecutor.scheduleAtFixedRate(() -> mExecutor.submit(Ringservice::pollEvents), 0, POLLING_TIMEOUT, TimeUnit.MILLISECONDS);
+        mExecutor.scheduleAtFixedRate(RingserviceJNI::pollEvents, 0, POLLING_TIMEOUT, TimeUnit.MILLISECONDS);
     }
 
     public void stopDaemon() {
-        mScheduledExecutor.shutdown();
+        mExecutor.shutdown();
 
         if (mDaemonStarted) {
             Log.i(TAG, "stopping daemon ...");
