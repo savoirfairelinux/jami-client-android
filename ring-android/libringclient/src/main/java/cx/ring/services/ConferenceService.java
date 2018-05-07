@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,7 +42,7 @@ public class ConferenceService extends Observable {
 
     @Inject
     @Named("DaemonExecutor")
-    ExecutorService mExecutor;
+    ScheduledExecutorService mExecutor;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;

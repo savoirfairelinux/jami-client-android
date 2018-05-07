@@ -20,10 +20,12 @@
 package cx.ring.dependencyinjection;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -184,8 +186,8 @@ public class ServiceInjectionModule {
     @Provides
     @Named("DaemonExecutor")
     @Singleton
-    ExecutorService provideDaemonExecutorService() {
-        return Executors.newSingleThreadExecutor();
+    ScheduledExecutorService provideDaemonExecutorService() {
+        return Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, "DRing"));
     }
 
     @Provides
@@ -193,11 +195,5 @@ public class ServiceInjectionModule {
     @Singleton
     ExecutorService provideApplicationExecutorService() {
         return Executors.newFixedThreadPool(5);
-    }
-
-    @Provides
-    @Singleton
-    ScheduledExecutorService provideScheduledExecutorService() {
-        return Executors.newSingleThreadScheduledExecutor();
     }
 }
