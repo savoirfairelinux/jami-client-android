@@ -20,7 +20,7 @@
 package cx.ring.services;
 
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -40,7 +40,7 @@ public abstract class HardwareService extends Observable {
 
     @Inject
     @Named("DaemonExecutor")
-    ExecutorService mExecutor;
+    ScheduledExecutorService mExecutor;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;

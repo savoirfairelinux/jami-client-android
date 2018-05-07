@@ -30,8 +30,7 @@ import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
 
 import java.io.File;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -54,12 +53,12 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     protected Context mContext;
     @Inject
     @Named("DaemonExecutor")
-    ExecutorService mExecutor;
+    ScheduledExecutorService mExecutor;
     private long mDaemonThreadId = -1;
 
     @Override
     public void loadNativeLibrary() {
-        Future<Boolean> result = mExecutor.submit(() -> {
+        mExecutor.submit(() -> {
             try {
                 mDaemonThreadId = Thread.currentThread().getId();
                 System.loadLibrary("ring");
@@ -69,13 +68,6 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
                 return false;
             }
         });
-
-        try {
-            result.get();
-            Log.i(TAG, "Ring library has been successfully loaded");
-        } catch (Exception e) {
-            Log.e(TAG, "Could not load Ring library", e);
-        }
     }
 
 

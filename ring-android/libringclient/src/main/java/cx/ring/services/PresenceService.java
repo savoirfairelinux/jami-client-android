@@ -21,7 +21,7 @@ package cx.ring.services;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,11 +36,11 @@ import cx.ring.utils.Log;
 import cx.ring.utils.Observable;
 
 public class PresenceService extends Observable {
-    private static final String TAG = PresenceService.class.getName();
+    private static final String TAG = PresenceService.class.getSimpleName();
 
     @Inject
     @Named("DaemonExecutor")
-    ExecutorService mExecutor;
+    ScheduledExecutorService mExecutor;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
