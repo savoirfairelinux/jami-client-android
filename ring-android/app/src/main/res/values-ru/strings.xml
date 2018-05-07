@@ -33,6 +33,7 @@
   <string name="menu_item_home">Домой</string>
   <string name="menu_item_contact_request">Запросы на добавление в контакты</string>
   <string name="menu_item_accounts">Управление аккаунтами</string>
+  <string name="menu_item_account">Управление аккаунтом</string>
   <string name="menu_item_settings">Настройки</string>
   <string name="menu_item_share">Поделиться моим контактом</string>
   <string name="menu_item_about">О программе</string>
@@ -62,6 +63,15 @@
   <string name="notif_current_call_title">Текущий вызов с %1$s</string>
   <string name="notif_current_call">Текущий вызов</string>
   <string name="notif_channel_calls">Звонки</string>
+  <string name="notif_channel_messages">Сообщения</string>
+  <string name="notif_channel_requests">Запросы</string>
+  <string name="notif_channel_file_transfer">Передача файла</string>
+  <string name="notif_mark_as_read">Отметить как прочитанное</string>
+  <string name="notif_incoming_file_transfer_title">Входящий файл от %1$s</string>
+  <string name="notif_incoming_file_transfer">Кто-то хочет отправить вам файл</string>
+  <string name="notif_outgoing_file_transfer_title">Отправка файла %1$s</string>
+  <string name="notif_outgoing_file_transfer">Кто-то хочет отправить вам файл</string>
+  <string name="action_open">Открыть</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вы:</string>
   <string name="action_call_hangup">Повесить трубку</string>
@@ -86,6 +96,7 @@
   <string name="send_message">Отправить сообщение</string>
   <string name="message_sending">Отправка сообщения...</string>
   <string name="time_just_now">Только сейчас</string>
+  <string name="send_file">Отправить файл</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на доступ к камере</string>
   <string name="permission_dialog_camera_message">Видеосвязь требует для работы разрешения на доступ к камере. Пожалуйста, предоставьте его.</string>
@@ -113,6 +124,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
+  <string name="prompt_new_password_optional">Новый пароль (необязательно)</string>
   <string name="prompt_new_password_repeat">Повторите новый пароль</string>
   <string name="account_create_title">Создать аккаунт Ring</string>
   <string name="prompt_new_username">Введите новое имя пользователя</string>
@@ -144,12 +156,30 @@
   <!--Send contact requests-->
   <string name="send_request_button">Отправить</string>
   <string name="send_request_title">Отправить запрос на добавление в контакты</string>
+  <string name="send_request_msg">Вы должны отправить запрос для связи с этим пользователем. До тех пор, пока пользователь не примет запрос, вы можете отправлять сообщения, но он не сможет отвечать.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 заблокированных контактов</string>
   <!--Smartlist-->
   <string name="no_contact_request">Нет отправленных запросов на добавление в контакты</string>
   <string name="contact_request_sent">Запрос на добавление в контакты отправлен</string>
+  <string name="search_results">Результаты поиска</string>
   <string name="tv_contact_row_header">Контакты</string>
+  <string name="generic_error">Произошла неизвестная ошибка</string>
+  <string name="message_contact_not_trusted_yet">%s не находится в вашем списке контактов. Вы хотите принять или отклонить этот запрос?</string>
   <!--File Transfer-->
+  <string name="invalid_file">Некорректный файл</string>
+  <string name="not_able_to_write_file">Невозможно записать файл</string>
+  <string name="file_transfer_status_created">инициализация передачи</string>
+  <string name="file_transfer_status_wait_peer_acceptance">ожидание принятия пиром</string>
+  <string name="file_transfer_status_wait_host_acceptance">ожидание принятия</string>
+  <string name="file_transfer_status_ongoing">передача</string>
+  <string name="file_transfer_status_finished">принят</string>
+  <string name="file_transfer_status_closed_by_peer">остановлено пиром</string>
+  <string name="file_transfer_status_invalid_pathname">Некорректный путь</string>
+  <string name="file_transfer_status_unjoinable_peer">пир недоступен</string>
+  <string name="file_saved_in">Файл сохранён в %s</string>
+  <string name="no_space_left_on_device">На устройстве не осталось свободного места</string>
+  <string name="menu_file_download">Загрузить файл</string>
+  <string name="menu_file_delete">Удалить файл</string>
   <string name="menu_file_share">Поделиться файлом</string>
 </resources>

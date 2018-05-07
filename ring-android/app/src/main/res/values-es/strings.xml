@@ -63,7 +63,13 @@
   <string name="notif_channel_calls">Llamadas</string>
   <string name="notif_channel_messages">Mensajes</string>
   <string name="notif_channel_requests">Solicitudes</string>
+  <string name="notif_channel_file_transfer">Transferencia de archivos</string>
   <string name="notif_mark_as_read">Marcar como leído</string>
+  <string name="notif_incoming_file_transfer_title">Archivo entrante de %1$s</string>
+  <string name="notif_incoming_file_transfer">Alguien quiere enviarle un archivo</string>
+  <string name="notif_outgoing_file_transfer_title">Enviando archivo a %1$s</string>
+  <string name="notif_outgoing_file_transfer">Alguien quiere enviarle un archivo</string>
+  <string name="action_open">Abrir</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Tú:</string>
   <string name="action_call_hangup">Colgar</string>
@@ -88,6 +94,7 @@
   <string name="send_message">Enviar mensaje</string>
   <string name="message_sending">Enviando mensaje...</string>
   <string name="time_just_now">En este momento</string>
+  <string name="send_file">Enviar archivo</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permiso de cámara</string>
   <string name="permission_dialog_camera_message">Las conversaciones con vídeo requieren utilizar la cámara. Considera conceder este permiso.</string>
@@ -147,6 +154,7 @@
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
   <string name="send_request_title">Enviar una solicitud de contacto</string>
+  <string name="send_request_msg">Debe enviar una solicitud de contacto para comunicarse con este usuario. Hasta que su contacto no haya aceptado la solicitud, puede enviar mensajes pero no podrá contestarle.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 contactos bloqueados</string>
   <!--Smartlist-->
@@ -157,6 +165,24 @@
   <string name="gallery_error_title">No se encontró una aplicación de galería</string>
   <string name="gallery_error_message">No se encontró una aplicación en el dispositivo para abrir la galería</string>
   <string name="generic_error">Ocurrió un error desconocido</string>
+  <string name="message_contact_not_trusted_yet">%s no está en sus contactos aún.\n¿Acepta o rechaza esta solicitud de contacto?</string>
   <!--File Transfer-->
-  <string name="menu_file_share">Compartir archivo</string>
+  <string name="invalid_file">Archivo no válido</string>
+  <string name="not_able_to_write_file">No se puede escribir el archivo</string>
+  <string name="file_transfer_status_created">iniciando la transferencia</string>
+  <string name="file_transfer_status_unsupported">no soportado</string>
+  <string name="file_transfer_status_wait_peer_acceptance">esperando la aceptación de los pares</string>
+  <string name="file_transfer_status_wait_host_acceptance">esperando la aceptación del anfitrión</string>
+  <string name="file_transfer_status_ongoing">en curso</string>
+  <string name="file_transfer_status_finished">terminado</string>
+  <string name="file_transfer_status_closed_by_host">cerrado por el anfitrión</string>
+  <string name="file_transfer_status_closed_by_peer">cerrado por el par</string>
+  <string name="file_transfer_status_invalid_pathname">nombre de ruta no válido</string>
+  <string name="file_transfer_status_unjoinable_peer">no se puede unir a este par</string>
+  <string name="file_saved_in">Archivo guardado en %s</string>
+  <string name="no_space_left_on_device">No queda espacio libre en el dispositivo</string>
+  <string name="title_media_viewer">Visor de medios</string>
+  <string name="menu_file_download">Descargar el archivo</string>
+  <string name="menu_file_delete">Borrar el archivo</string>
+  <string name="menu_file_share">Compartir el archivo</string>
 </resources>

@@ -6,6 +6,8 @@
   <string name="pref_category_privacy">Privatsphäre</string>
   <string name="pref_mobileData_title">Mobildaten</string>
   <string name="pref_mobileData_summary">Ring die Nutzung von 3G/LTE neben WLAN erlauben</string>
+  <string name="pref_pushNotifications_title">Push-Benachrichtigungen</string>
+  <string name="pref_pushNotifications_summary">Google-Server verwenden, um Anrufe/Nachrichten im Hintergrund empfangen zu können.</string>
   <string name="pref_systemContacts_title">Systemkontakte benutzen</string>
   <string name="pref_systemContacts_summary">Systemkontakte benutzen, um Anruferdetails anzuzeigen</string>
   <string name="pref_systemDialer_title">Auch normale Anrufe über Ring abwickeln</string>
