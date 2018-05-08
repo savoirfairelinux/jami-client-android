@@ -11,23 +11,22 @@ android {
         versionCode 117
         versionName "20180501"
         vectorDrawables.useSupportLibrary = true
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_STL=c++_static",
+                          "-DANDROID_PLATFORM=android-21",
+                          "-DANDROID_JNI_DIR=" + projectDir.getParentFile().getAbsolutePath() + "/libringclient/src/main/java/cx/ring/daemon"
+            }
+        }
+        ndk {
+            abiFilters 'x86_64', 'arm64-v8a'
+        }
     }
 
     sourceSets {
         main {
             aidl.srcDirs = ['src/main/java']
-            jniLibs.srcDir 'src/main/libs'
-            jni.srcDirs = []
         }
-
-        // Move the build types to build-types/<type>
-        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
-        // This moves them out of them default location under src/<type>/... which would
-        // conflict with src/ being used by the main source set.
-        // Adding new build types or product flavors should be accompanied
-        // by a similar customization.
-        debug.setRoot('build-types/debug')
-        release.setRoot('build-types/release')
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -37,7 +36,7 @@ android {
         debug {
             minifyEnabled true
             debuggable true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled true
@@ -62,13 +61,10 @@ android {
     lintOptions {
         disable 'MissingTranslation'
     }
-    splits {
-        abi {
-            enable true
-            reset()
-            def sp = archs.split(',')
-            include(sp)
-            universalApk true
+    externalNativeBuild {
+        cmake {
+            version "3.11.1"
+            path "../../../daemon/bin/android/CMakeLists.txt"
         }
     }
 }
