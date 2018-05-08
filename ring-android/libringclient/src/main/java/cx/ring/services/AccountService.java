@@ -1408,23 +1408,17 @@ public class AccountService extends Observable {
         return mDataTransfers.get(id);
     }
 
-    public void enableRingProxy() {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    for (Account acc : mAccountList){
-                        if (acc.isRing() && !acc.isDhtProxyEnabled()) {
-                            Log.d(TAG, "Enabling proxy for account " + acc.getAccountID());
-                            StringMap details = Ringservice.getAccountDetails(acc.getAccountID());
-                            details.set(ConfigKey.PROXY_ENABLED.key(), "true");
-                            Ringservice.setAccountDetails(acc.getAccountID(), details);
-                            acc.setDhtProxyEnabled(true);
-                        }
-                    }
-                    return true;
+    public void setProxyEnabled(boolean enabled) {
+        mExecutor.execute(() -> {
+            for (Account acc : mAccountList){
+                if (acc.isRing() && (acc.isDhtProxyEnabled() != enabled)) {
+                    Log.d(TAG, (enabled ? "Enabling" : "Disabling") + " proxy for account " + acc.getAccountID());
+                    acc.setDhtProxyEnabled(enabled);
+                    StringMap details = Ringservice.getAccountDetails(acc.getAccountID());
+                    details.set(ConfigKey.PROXY_ENABLED.key(), enabled ? "true" : "false");
+                    Ringservice.setAccountDetails(acc.getAccountID(), details);
                 }
-        );
+            }
+        });
     }
 }
