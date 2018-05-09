@@ -68,6 +68,7 @@ if [ "${HAVE_64}" = 1 ];then
 else
     ANDROID_API_VERS=19
     LIBDIR=lib
+    EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -landroid_support"
 fi
 ANDROID_API=android-$ANDROID_API_VERS
 
@@ -126,7 +127,7 @@ elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
 elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
     EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/sysroot/usr/lib -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/lib"
 fi
-EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR} -lm -latomic -landroid_support"
+EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR} -lm -latomic"
 
 # Make in //
 UNAMES=$(uname -s)

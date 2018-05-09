@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 ENV LANG en_US.utf8
 ENV LC_ALL en_US.utf8
@@ -24,13 +24,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	lib32stdc++6 \
 	lib32z1 \
 	libtool \
+	locales \
 	m4 \
 	openjdk-8-jdk \
 	pkg-config \
-	python-software-properties \
+	software-properties-common \
 	ssh \
 	swig \
-	software-properties-common \
 	unzip \
 	wget \
 	curl \
@@ -41,7 +41,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Android SDK tools
 RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip && \
 	mkdir -p /opt/android-sdk && \
-	unzip -d /opt/android-sdk /tmp/android-tools.zip && \
+	unzip -q -d /opt/android-sdk /tmp/android-tools.zip && \
 	rm -f /tmp/android-tools.zip && \
 	chown -R root:root /opt/android-sdk
 ENV ANDROID_HOME=/opt/android-sdk
@@ -54,7 +54,8 @@ ENV ANDROID_DEPS=\
  platforms;android-27 \
  extras;android;m2repository \
  extras;google;m2repository \
- ndk-bundle'
+ ndk-bundle \
+ cmake'
 RUN (while sleep 1; do echo "y"; done) | sdkmanager $ANDROID_DEPS
 ENV ANDROID_SDK=/opt/android-sdk
 ENV ANDROID_NDK=/opt/android-sdk/ndk-bundle
