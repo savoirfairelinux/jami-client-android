@@ -114,7 +114,7 @@ if [ ! -d "$DAEMON_DIR" ]; then
     exit 1
 fi
 
-EXTRA_CFLAGS="${EXTRA_CFLAGS} -O3"
+EXTRA_CFLAGS="${EXTRA_CFLAGS} -fno-integrated-as -O3"
 
 # Setup LDFLAGS
 if [ ${ANDROID_ABI} = "armeabi-v7a-hard" ] ; then
@@ -126,7 +126,7 @@ elif [ ${ANDROID_ABI} = "armeabi-v7a" ] ; then
 elif [ ${ANDROID_ABI} = "arm64-v8a" ] ; then
     EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/sysroot/usr/lib -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/lib"
 fi
-EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR} -lm -latomic -landroid_support"
+EXTRA_LDFLAGS="${EXTRA_LDFLAGS} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR}/${ANDROID_ABI} -L${ANDROID_TOOLCHAIN}/${TARGET_TUPLE}/${LIBDIR} -lm -latomic"
 
 # Make in //
 UNAMES=$(uname -s)
@@ -261,6 +261,10 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -largon2 \
                 -liconv"
 
+if [ ! "${HAVE_64}" = 1 ];then
+    STATIC_LIBS_ALL="${STATIC_LIBS_ALL} -landroid_support"
+fi
+
 LIBRING_JNI_DIR=${ANDROID_APP_DIR}/app/src/main/libs/${ANDROID_ABI}
 
 echo "Building Ring JNI library for Android to ${LIBRING_JNI_DIR}"
@@ -279,5 +283,5 @@ ${NDK_TOOLCHAIN_PATH}/clang++ \
                 -I${RING_SRC_DIR}/src \
                 -L${RING_SRC_DIR}/contrib/${TARGET_TUPLE}/lib \
                 ${STATIC_LIBS_ALL} \
-                ${STRIP_ARG} --std=c++14 \
+                ${STRIP_ARG} --std=c++14 -O3 \
                 -o ${LIBRING_JNI_DIR}/libring.so
