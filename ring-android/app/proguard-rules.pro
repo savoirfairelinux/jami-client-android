@@ -9,6 +9,10 @@
 -keep,includedescriptorclasses class cx.ring.** { *; }
 -keepclassmembers class cx.ring.** { *; }
 
+# Firebase
+-keep class com.firebase.** { *; }
+-keep class com.google.firebase.** { *; }
+
 # ORMLite
 -keep class com.j256.**
 -keepclassmembers class com.j256.** { *; }
