@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 ENV LANG en_US.utf8
 ENV LC_ALL en_US.utf8
@@ -24,10 +24,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	lib32stdc++6 \
 	lib32z1 \
 	libtool \
+    locales \
 	m4 \
 	openjdk-8-jdk \
 	pkg-config \
-	python-software-properties \
+	software-properties-common \
 	ssh \
 	swig \
 	software-properties-common \
@@ -54,7 +55,8 @@ ENV ANDROID_DEPS=\
  platforms;android-27 \
  extras;android;m2repository \
  extras;google;m2repository \
- ndk-bundle'
+ ndk-bundle \
+ cmake'
 RUN (while sleep 1; do echo "y"; done) | sdkmanager $ANDROID_DEPS
 ENV ANDROID_SDK=/opt/android-sdk
 ENV ANDROID_NDK=/opt/android-sdk/ndk-bundle
