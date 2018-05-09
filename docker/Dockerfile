@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 ENV LANG en_US.utf8
 ENV LC_ALL en_US.utf8
@@ -24,24 +24,25 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	lib32stdc++6 \
 	lib32z1 \
 	libtool \
+	locales \
 	m4 \
 	openjdk-8-jdk \
 	pkg-config \
-	python-software-properties \
+	software-properties-common \
 	ssh \
 	swig \
-	software-properties-common \
 	unzip \
 	wget \
 	curl \
 	yasm \
 	zip \
-	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL
+	&& locale-gen $LANG $LC_ALL && update-locale $LANG $LC_ALL \
+	&& update-java-alternatives --set java-1.8.0-openjdk
 
 # Android SDK tools
 RUN wget -O /tmp/android-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip && \
 	mkdir -p /opt/android-sdk && \
-	unzip -d /opt/android-sdk /tmp/android-tools.zip && \
+	unzip -q -d /opt/android-sdk /tmp/android-tools.zip && \
 	rm -f /tmp/android-tools.zip && \
 	chown -R root:root /opt/android-sdk
 ENV ANDROID_HOME=/opt/android-sdk
