@@ -195,7 +195,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (account.isEnabled()) {
                 alias.setTextColor(context.getResources().getColor(R.color.text_color_primary));
                 if (!account.isActive()) {
-                    error.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
+                    error.setImageResource(R.drawable.baseline_sync_disabled_24px);
                     error.setColorFilter(Color.BLACK);
                     error.setVisibility(View.VISIBLE);
                     loading.setVisibility(View.GONE);

@@ -62,7 +62,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_centerVertical="true"
                         android:layout_gravity="start"
                         android:contentDescription="@string/pref_mobileData_summary"
-                        app:srcCompat="@drawable/ic_perm_data_setting_black_24dp" />
+                        app:srcCompat="@drawable/baseline_perm_data_setting_24px" />
 
 
                     <LinearLayout
