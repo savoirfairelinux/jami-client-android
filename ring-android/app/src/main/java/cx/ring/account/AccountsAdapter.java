@@ -108,7 +108,7 @@ public class AccountsAdapter extends BaseAdapter {
 
         if (item.isEnabled()) {
             if (!item.isActive()) {
-                entryView.errorIndicator.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
+                entryView.errorIndicator.setImageResource(R.drawable.baseline_sync_disabled_24px);
                 entryView.errorIndicator.setColorFilter(Color.BLACK);
                 entryView.errorIndicator.setVisibility(View.VISIBLE);
                 entryView.loadingIndicator.setVisibility(View.GONE);

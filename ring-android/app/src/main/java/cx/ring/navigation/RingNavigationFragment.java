@@ -344,7 +344,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         mSelectedAccountDisabled.setVisibility(selectedAccount.isEnabled() ? View.GONE : View.VISIBLE);
         if (selectedAccount.isEnabled()) {
             if (!selectedAccount.isEnabled()) {
-                mSelectedAccountError.setImageResource(R.drawable.ic_network_disconnect_black_24dp);
+                mSelectedAccountError.setImageResource(R.drawable.baseline_sync_disabled_24px);
                 mSelectedAccountError.setColorFilter(Color.BLACK);
                 mSelectedAccountError.setVisibility(View.VISIBLE);
                 mSelectedAccountLoading.setVisibility(View.GONE);
