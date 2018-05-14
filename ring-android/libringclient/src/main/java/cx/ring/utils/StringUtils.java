@@ -61,6 +61,8 @@ public final class StringUtils {
     }
 
     public static String toNumber(String s) {
+        if (s == null)
+            return null;
         return s.replace("(", "")
                 .replace(")", "")
                 .replace("-", "")
