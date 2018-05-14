@@ -52,6 +52,7 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_username_label">Nombre de usuario</string>
   <string name="account_password_label">Contraseña</string>
   <string name="account_optionnal_category">Parámetros Opcionales</string>
+  <string name="account_useragent_label">Agente de usuario</string>
   <string name="account_upnp_label">Activar UPnP</string>
   <string name="account_proxy_field">Proxy</string>
   <!--Audio Details-->
@@ -78,12 +79,30 @@ Podrá editar su cuenta más tarde.</string>
   <string name="account_turn_password_label">Contraseña TURN</string>
   <!--Security Details-->
   <!--SRTP Details-->
+  <string name="account_preferences_security_tab">Seguridad</string>
   <!--SIP-->
   <!--TLS Details-->
   <!--restore/backup-->
+  <string name="error_password_char_count">6 carateres mínimo</string>
+  <string name="account_export_end_error_title">Error</string>
+  <string name="account_enter_password">Ingresar contraseña</string>
+  <string name="ring_account">Cuenta Ring</string>
+  <string name="account_cannot_be_found_title">No se pudo encontrar la cuenta</string>
+  <string name="account_no_network_title">No se puede conectar a la red</string>
+  <string name="account_link_button">Vincular este dispositivo a una cuenta</string>
+  <string name="account_link_prompt_pin">Introducir PIN</string>
+  <string name="account_new_button">Crear cuenta Ring</string>
+  <string name="account_link_export_button">Vincular otro dispositivo a esta cuenta</string>
   <!--Name registration-->
+  <string name="account_status_connecting">Conectando</string>
+  <string name="account_status_unknown">Desconocido</string>
   <!--Create account-->
+  <string name="account_creation_home">Bienvenido a Ring</string>
+  <string name="account_creation_profile">Creá tu perfil</string>
+  <string name="account_creation_ring">Crear tu cuenta Ring</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">Editar tu perfil</string>
   <!--Devices-->
+  <string name="enter_password">Ingresar contraseña</string>
   <string name="revoke_device_title">Revocar dispositivo</string>
 </resources>
