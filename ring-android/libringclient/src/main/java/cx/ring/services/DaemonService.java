@@ -44,7 +44,7 @@ public class DaemonService {
 
     private static final String TAG = DaemonService.class.getSimpleName();
 
-    private static final int POLLING_TIMEOUT = 50;
+    private static final int POLLING_TIMEOUT = 20;
 
     @Inject
     @Named("DaemonExecutor")
