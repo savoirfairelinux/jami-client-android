@@ -147,6 +147,11 @@ public class TextMessage extends ConversationElement {
         return mTimestamp;
     }
 
+    @Override
+    public Uri getContactNumber() {
+        return getNumberUri();
+    }
+
     public void setAccount(String account) {
         mAccount = account;
     }

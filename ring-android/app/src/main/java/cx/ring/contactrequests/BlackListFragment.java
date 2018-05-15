@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -94,7 +95,7 @@ public class BlackListFragment extends BaseFragment<BlackListPresenter> implemen
     }
 
     @Override
-    public void updateView(final List<CallContact> list) {
+    public void updateView(final Collection<CallContact> list) {
         getActivity().runOnUiThread(() -> {
             mBlacklist.setVisibility(View.VISIBLE);
             if (mBlacklist.getAdapter() != null) {

@@ -25,6 +25,7 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceViewHolder;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,7 @@ class CodecPreference extends Preference {
         int firstHeight;
         int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
 
+        Log.w(TAG, "setListViewHeight " + listAdapter.getCount());
         for (int i = 0; i < listAdapter.getCount(); i++) {
             View listItem = listAdapter.getView(i, null, listView);
             listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
@@ -85,6 +87,7 @@ class CodecPreference extends Preference {
         super.onBindViewHolder(holder);
 
         ListView mCodecList = (ListView) holder.findViewById(R.id.dndlistview);
+        mCodecList.setFocusable(false);
         if (mCodecList.getAdapter() != listAdapter)
             mCodecList.setAdapter(listAdapter);
         mCodecList.setOnItemClickListener((arg0, arg1, pos, arg3) -> {
@@ -108,6 +111,8 @@ class CodecPreference extends Preference {
 
     void setCodecs(ArrayList<Codec> codecs) {
         listAdapter.setDataset(codecs);
+        notifyChanged();
+        notifyHierarchyChanged();
     }
 
     void refresh() {
@@ -117,7 +122,6 @@ class CodecPreference extends Preference {
     }
 
     private static class CodecAdapter extends BaseAdapter {
-
         private final ArrayList<Codec> items = new ArrayList<>();
         private Context mContext;
 
@@ -137,11 +141,6 @@ class CodecPreference extends Preference {
 
         @Override
         public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
             return 0;
         }
 
@@ -177,34 +176,10 @@ class CodecPreference extends Preference {
             return rowView;
         }
 
-        @Override
-        public int getViewTypeCount() {
-            return 1;
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return true;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return getCount() == 0;
-        }
-
-        @Override
-        public boolean areAllItemsEnabled() {
-            return true;
-        }
-
-        @Override
-        public boolean isEnabled(int position) {
-            return true;
-        }
-
         void setDataset(ArrayList<Codec> codecs) {
             items.clear();
             items.addAll(codecs);
+            notifyDataSetChanged();
         }
 
         class CodecView {
