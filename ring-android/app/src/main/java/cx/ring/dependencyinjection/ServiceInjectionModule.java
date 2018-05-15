@@ -56,6 +56,8 @@ import cx.ring.services.VCardServiceImpl;
 import cx.ring.utils.Log;
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 @Module
 public class ServiceInjectionModule {
@@ -195,5 +197,12 @@ public class ServiceInjectionModule {
     @Singleton
     ExecutorService provideApplicationExecutorService() {
         return Executors.newFixedThreadPool(5);
+    }
+
+    @Provides
+    @Named("UiScheduler")
+    @Singleton
+    Scheduler provideUiScheduler() {
+        return AndroidSchedulers.mainThread();
     }
 }

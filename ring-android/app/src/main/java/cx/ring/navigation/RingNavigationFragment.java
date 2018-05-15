@@ -166,8 +166,6 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        presenter.updateUser();
-
         setupNavigationMenu();
         setupAccountList();
         if (savedInstanceState != null) {
@@ -270,8 +268,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
 
     private void setupNavigationMenu() {
         mMenuView.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager2 = new LinearLayoutManager(getActivity());
-        mMenuView.setLayoutManager(mLayoutManager2);
+        mMenuView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         ArrayList<NavigationItem> menu = new ArrayList<>();
         menu.add(0, new NavigationItem(R.string.menu_item_home, R.drawable.ic_home_black));
@@ -311,9 +308,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         gallery.setOnClickListener(v -> presenter.galleryClicked());
 
         builder.setView(view);
-
         builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel());
-
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
 
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -330,7 +325,6 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
                 presenter.saveVCardFormattedName(editText.getText().toString().trim());
             }
         });
-
         builder.show();
     }
 
@@ -374,19 +368,16 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
 
     @Override
     public void showViewModel(final RingNavigationViewModel viewModel) {
-        RingApplication.uiHandler.post(() -> {
-            mAccountAdapter.replaceAll(viewModel.getAccounts());
-            updateUserView(viewModel.getVcard(getActivity().getFilesDir()), viewModel.getAccount());
-            updateSelectedAccountView(viewModel.getAccount());
-
-            if (viewModel.getAccounts().isEmpty()) {
-                mNewAccountBtn.setVisibility(View.VISIBLE);
-                mSelectedAccountLayout.setVisibility(View.GONE);
-            } else {
-                mNewAccountBtn.setVisibility(View.GONE);
-                mSelectedAccountLayout.setVisibility(View.VISIBLE);
-            }
-        });
+        mAccountAdapter.replaceAll(viewModel.getAccounts());
+        updateUserView(viewModel.getVcard(getActivity().getFilesDir()), viewModel.getAccount());
+        updateSelectedAccountView(viewModel.getAccount());
+        if (viewModel.getAccounts().isEmpty()) {
+            mNewAccountBtn.setVisibility(View.VISIBLE);
+            mSelectedAccountLayout.setVisibility(View.GONE);
+        } else {
+            mNewAccountBtn.setVisibility(View.GONE);
+            mSelectedAccountLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

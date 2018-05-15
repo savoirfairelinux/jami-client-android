@@ -48,8 +48,9 @@ import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
 import cx.ring.utils.RegisteredNameFilter;
 import cx.ring.utils.RegisteredNameTextWatcher;
+import io.reactivex.disposables.Disposable;
 
-public class RegisterNameDialog extends DialogFragment implements Observer<ServiceEvent> {
+public class RegisterNameDialog extends DialogFragment {
     static final String TAG = RegisterNameDialog.class.getSimpleName();
     @BindView(R.id.ring_username_txt_box)
     public TextInputLayout mUsernameTxtBox;
@@ -76,26 +77,10 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
     private TextWatcher mUsernameTextWatcher;
     private RegisterNameDialogListener mListener = null;
 
+    private Disposable mDisposableListener;
+
     public void setListener(RegisterNameDialogListener l) {
         mListener = l;
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case REGISTERED_NAME_FOUND:
-                int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
-                String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                handleBlockchainResult(state, name);
-                break;
-            default:
-                Log.d(TAG, "update: This event " + event.getEventType() + " is not handled here");
-                break;
-        }
     }
 
     private void handleBlockchainResult(final int state, final String name) {
@@ -169,10 +154,8 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
                 );
 
         AlertDialog result = builder.create();
-
-        result.setOnShowListener(dialog12 -> {
-
-            Button positiveButton = ((AlertDialog) dialog12).getButton(AlertDialog.BUTTON_POSITIVE);
+        result.setOnShowListener(d -> {
+            Button positiveButton = ((AlertDialog) d).getButton(AlertDialog.BUTTON_POSITIVE);
             positiveButton.setOnClickListener(view1 -> {
                 if (validate()) {
                     dismiss();
@@ -194,13 +177,13 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
     @Override
     public void onResume() {
         super.onResume();
-        mAccountService.addObserver(this);
+        mDisposableListener = mAccountService.getRegisteredNames().subscribe(r -> handleBlockchainResult(r.state, r.name));
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mAccountService.removeObserver(this);
+        mDisposableListener.dispose();
     }
 
     @Override
@@ -230,13 +213,15 @@ public class RegisterNameDialog extends DialogFragment implements Observer<Servi
         mUsernameTxtBox.setErrorEnabled(false);
         mUsernameTxtBox.setError(null);
 
-        if (mPasswordTxt.getText().toString().isEmpty()) {
-            mPasswordTxtBox.setErrorEnabled(true);
-            mPasswordTxtBox.setError(mPromptPassword);
-            return false;
-        } else {
-            mPasswordTxtBox.setErrorEnabled(false);
-            mPasswordTxtBox.setError(null);
+        if (mPasswordTxtBox.getVisibility() == View.VISIBLE) {
+            if (mPasswordTxt.getText().toString().isEmpty()) {
+                mPasswordTxtBox.setErrorEnabled(true);
+                mPasswordTxtBox.setError(mPromptPassword);
+                return false;
+            } else {
+                mPasswordTxtBox.setErrorEnabled(false);
+                mPasswordTxtBox.setError(null);
+            }
         }
         return true;
     }

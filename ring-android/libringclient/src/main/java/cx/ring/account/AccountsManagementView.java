@@ -24,8 +24,9 @@ import java.util.List;
 import cx.ring.model.Account;
 
 public interface AccountsManagementView {
-
     void refresh(List<Account> accounts);
+
+    void refreshAccount(Account account);
 
     void launchAccountMigrationActivity(Account account);
 
