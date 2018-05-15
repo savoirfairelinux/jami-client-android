@@ -49,12 +49,14 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.target.ImageViewTarget;
 
 import java.io.File;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import cx.ring.R;
 import cx.ring.client.MediaViewerActivity;
@@ -62,10 +64,11 @@ import cx.ring.contacts.AvatarFactory;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.CallContact;
+import cx.ring.model.ContactEvent;
+import cx.ring.model.ConversationElement;
 import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.HistoryCall;
 import cx.ring.model.DataTransfer;
-import cx.ring.model.IConversationElement;
 import cx.ring.model.TextMessage;
 import cx.ring.service.DRingService;
 import cx.ring.utils.AndroidFileUtils;
@@ -83,7 +86,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private static final double MINUTE = 60L * 1000L;
     private static final double HOUR = 3600L * 1000L;
 
-    private final ArrayList<IConversationElement> mConversationElements = new ArrayList<>();
+    private final ArrayList<ConversationElement> mConversationElements = new ArrayList<>();
     private final ConversationPresenter presenter;
     private final ConversationFragment conversationFragment;
     private byte[] mPhoto;
@@ -104,7 +107,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         vPaddingEmoticon = res.getDimensionPixelSize(R.dimen.padding_xsmall);
         mPictureMaxSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, res.getDisplayMetrics());
         int corner = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, res.getDisplayMetrics());
-        PICTURE_OPTIONS = new GlideOptions().override(mPictureMaxSize).transform(new CenterInside()).transform(new RoundedCorners(corner));
+        PICTURE_OPTIONS = new GlideOptions()
+                .override(mPictureMaxSize)
+                .transform(new CenterInside())
+                .transform(new RoundedCorners(corner));
     }
 
     /**
@@ -112,16 +118,32 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      *
      * @param list an arraylist of IConversationElement
      */
-    public void updateDataset(final ArrayList<IConversationElement> list) {
+    public void updateDataset(final List<ConversationElement> list) {
         Log.d(TAG, "updateDataset: list size=" + list.size());
-
-        if (list.size() > mConversationElements.size()) {
+        if (mConversationElements.isEmpty()) {
+            mConversationElements.addAll(list);
+        } else if (list.size() > mConversationElements.size()) {
             mConversationElements.addAll(list.subList(mConversationElements.size(), list.size()));
         } else {
             mConversationElements.clear();
             mConversationElements.addAll(list);
         }
         notifyDataSetChanged();
+    }
+
+    public void add(ConversationElement e) {
+        mConversationElements.add(e);
+        notifyItemInserted(mConversationElements.size()-1);
+    }
+
+    public void update(ConversationElement e) {
+        for(int i=mConversationElements.size()-1; i >= 0; i--){
+            ConversationElement element = mConversationElements.get(i);
+            if (e == element) {
+                notifyItemChanged(i);
+                break;
+            }
+        }
     }
 
     /**
@@ -141,30 +163,33 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     @Override
     public long getItemId(int position) {
-        return mConversationElements.get(position).hashCode();
+        return mConversationElements.get(position).getId();
     }
 
     @Override
     public int getItemViewType(int position) {
-        IConversationElement conversationElement = mConversationElements.get(position);
+        ConversationElement conversationElement = mConversationElements.get(position);
         if (conversationElement != null) {
-            if (conversationElement.getType() == IConversationElement.CEType.TEXT) {
-                TextMessage ht = (TextMessage) conversationElement;
-                if (ht.isIncoming()) {
-                    return ConversationMessageType.INCOMING_TEXT_MESSAGE.getType();
-                } else {
-                    return ConversationMessageType.OUTGOING_TEXT_MESSAGE.getType();
+            switch (conversationElement.getType()) {
+                case TEXT: {
+                    TextMessage ht = (TextMessage) conversationElement;
+                    if (ht.isIncoming()) {
+                        return ConversationMessageType.INCOMING_TEXT_MESSAGE.getType();
+                    } else {
+                        return ConversationMessageType.OUTGOING_TEXT_MESSAGE.getType();
+                    }
                 }
-            }
-            if (conversationElement.getType() == IConversationElement.CEType.FILE) {
-                DataTransfer file = (DataTransfer) conversationElement;
-                if (file.showPicture()) {
-                    return ConversationMessageType.IMAGE.getType();
-                } else
-                    return ConversationMessageType.FILE_TRANSFER.getType();
-            }
-            if (conversationElement.getType() == IConversationElement.CEType.CALL) {
-                return ConversationMessageType.CALL_INFORMATION_TEXT_MESSAGE.getType();
+                case FILE: {
+                    DataTransfer file = (DataTransfer) conversationElement;
+                    if (file.showPicture()) {
+                        return ConversationMessageType.IMAGE.getType();
+                    } else
+                        return ConversationMessageType.FILE_TRANSFER.getType();
+                }
+                case CALL:
+                    return ConversationMessageType.CALL_INFORMATION_TEXT_MESSAGE.getType();
+                case CONTACT:
+                    return ConversationMessageType.CONTACT_EVENT.getType();
             }
         }
         return ConversationMessageType.CALL_INFORMATION_TEXT_MESSAGE.getType();
@@ -182,6 +207,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             res = R.layout.item_conv_file;
         } else if (viewType == ConversationMessageType.IMAGE.getType()) {
             res = R.layout.item_conv_image;
+        } else if (viewType == ConversationMessageType.CONTACT_EVENT.getType()) {
+            res = R.layout.item_conv_contact;
         } else {
             res = R.layout.item_conv_call;
         }
@@ -191,14 +218,16 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ConversationViewHolder conversationViewHolder, int position) {
-        IConversationElement conversationElement = mConversationElements.get(position);
+        ConversationElement conversationElement = mConversationElements.get(position);
         if (conversationElement != null) {
-            if (conversationElement.getType() == IConversationElement.CEType.TEXT) {
-                this.configureForTextMessage(conversationViewHolder, conversationElement, position);
-            } else if (conversationElement.getType() == IConversationElement.CEType.FILE) {
-                this.configureForFileInfoTextMessage(conversationViewHolder, conversationElement);
-            } else if (conversationElement.getType() == IConversationElement.CEType.CALL) {
-                this.configureForCallInfoTextMessage(conversationViewHolder, conversationElement);
+            if (conversationElement.getType() == ConversationElement.CEType.TEXT) {
+                configureForTextMessage(conversationViewHolder, conversationElement, position);
+            } else if (conversationElement.getType() == ConversationElement.CEType.FILE) {
+                configureForFileInfoTextMessage(conversationViewHolder, conversationElement);
+            } else if (conversationElement.getType() == ConversationElement.CEType.CALL) {
+                configureForCallInfoTextMessage(conversationViewHolder, conversationElement);
+            } else if (conversationElement.getType() == ConversationElement.CEType.CONTACT) {
+                configureForContactEvent(conversationViewHolder, conversationElement);
             }
         }
     }
@@ -226,8 +255,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     }
 
     public void updateTransfer(DataTransfer transfer) {
-        for(int i=mConversationElements.size()-1; i >= 0; i--){
-            IConversationElement e = mConversationElements.get(i);
+        for(int i=mConversationElements.size()-1; i >= 0; i--) {
+            ConversationElement e = mConversationElements.get(i);
             if (e == transfer) {
                 notifyItemChanged(i);
                 return;
@@ -253,10 +282,10 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         if (info == null) {
             return false;
         }
-        IConversationElement conversationElement = mConversationElements.get(info.position);
+        ConversationElement conversationElement = mConversationElements.get(info.position);
         if (conversationElement == null)
             return false;
-        if (conversationElement.getType() != IConversationElement.CEType.FILE)
+        if (conversationElement.getType() != ConversationElement.CEType.FILE)
             return false;
         DataTransfer file = (DataTransfer) conversationElement;
         Context context = conversationFragment.getActivity();
@@ -294,9 +323,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         return true;
     }
 
-
     private void configureForFileInfoTextMessage(final ConversationViewHolder conversationViewHolder,
-                                                 final IConversationElement conversationElement) {
+                                                 final ConversationElement conversationElement) {
         if (conversationViewHolder == null || conversationElement == null) {
             return;
         }
@@ -420,14 +448,13 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * @param position       The position of the viewHolder
      */
     private void configureForTextMessage(final ConversationViewHolder convViewHolder,
-                                         final IConversationElement convElement,
+                                         final ConversationElement convElement,
                                          int position) {
         if (convViewHolder == null || convElement == null) {
             return;
         }
 
         TextMessage textMessage = (TextMessage) convElement;
-
         CallContact contact = textMessage.getContact();
         if (contact == null) {
             Log.e(TAG, "Invalid contact, not able to display message correctly");
@@ -464,6 +491,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             Glide.with(convViewHolder.itemView.getContext())
                     .load(contactPicture)
                     .apply(AvatarFactory.getGlideOptions(true, true))
+                    //.transition(DrawableTransitionOptions.withCrossFade())
                     .into(convViewHolder.mPhoto);
         }
 
@@ -481,6 +509,18 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
     }
 
+    private void configureForContactEvent(final ConversationViewHolder viewHolder, final ConversationElement conversationElement) {
+        if (viewHolder == null || conversationElement == null) {
+            return;
+        }
+        ContactEvent event = (ContactEvent) conversationElement;
+        if (event.event == ContactEvent.Event.ADDED) {
+            viewHolder.mMsgTxt.setText("Contact added");
+        } else if (event.event == ContactEvent.Event.INCOMING_REQUEST) {
+            viewHolder.mMsgTxt.setText("Request received");
+        }
+    }
+
     /**
      * Configures the viewholder to display a call info text message, ie. not a classic text message
      *
@@ -488,7 +528,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * @param convElement    The conversation element to display
      */
     private void configureForCallInfoTextMessage(final ConversationViewHolder convViewHolder,
-                                                 final IConversationElement convElement) {
+                                                 final ConversationElement convElement) {
         if (convViewHolder == null || convElement == null) {
             return;
         }
@@ -555,8 +595,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     @Nullable
     private TextMessage getPreviousMessageFromPosition(int position) {
         if (!mConversationElements.isEmpty() && position > 0) {
-            IConversationElement conversationElement = mConversationElements.get(position - 1);
-            if (conversationElement.getType() == IConversationElement.CEType.TEXT) {
+            ConversationElement conversationElement = mConversationElements.get(position - 1);
+            if (conversationElement.getType() == ConversationElement.CEType.TEXT) {
                 return (TextMessage) conversationElement;
             }
         }
@@ -572,8 +612,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     @Nullable
     private TextMessage getNextMessageFromPosition(int position) {
         if (!mConversationElements.isEmpty() && position < mConversationElements.size() - 1) {
-            IConversationElement conversationElement = mConversationElements.get(position + 1);
-            if (conversationElement.getType() == IConversationElement.CEType.TEXT) {
+            ConversationElement conversationElement = mConversationElements.get(position + 1);
+            if (conversationElement.getType() == ConversationElement.CEType.TEXT) {
                 return (TextMessage) conversationElement;
             }
         }
@@ -638,7 +678,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         OUTGOING_TEXT_MESSAGE(1),
         CALL_INFORMATION_TEXT_MESSAGE(2),
         FILE_TRANSFER(3),
-        IMAGE(4);
+        IMAGE(4),
+        CONTACT_EVENT(5);
 
         int type;
 

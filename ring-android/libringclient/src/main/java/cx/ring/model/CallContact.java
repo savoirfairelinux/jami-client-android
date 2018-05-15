@@ -24,11 +24,13 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 
+import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.Tuple;
 import ezvcard.VCard;
 
 public class CallContact {
+    protected static final String TAG = CallContact.class.getSimpleName();
 
 
     public static final int UNKNOWN_ID = -1;
@@ -49,6 +51,7 @@ public class CallContact {
     private boolean isFromSystem = false;
     private Status mStatus = Status.NO_REQUEST;
     private Date mAddedDate = null;
+    private boolean mOnline = false;
 
     public boolean detailsLoaded = false;
     public VCard vcard = null;
@@ -83,7 +86,7 @@ public class CallContact {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, 0));
 
-        return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
+        return new CallContact(UNKNOWN_ID, null, null, 0, phones, "", false);
     }
 
     public static CallContact buildUnknown(String to, String address) {
@@ -107,6 +110,14 @@ public class CallContact {
         CallContact contact = buildUnknown(ringId);
         contact.setUsername(username);
         return contact;
+    }
+
+    public boolean isOnline() {
+        return mOnline;
+    }
+
+    public void setOnline(boolean present) {
+        mOnline = present;
     }
 
     public void setContactInfos(String k, String displayName, long photo_id) {
@@ -172,10 +183,10 @@ public class CallContact {
         return false;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return getRingUsername();
-    }
+    }*/
 
     public void setId(long id) {
         this.mId = id;
@@ -183,6 +194,13 @@ public class CallContact {
 
     public String getKey() {
         return mKey;
+    }
+
+    public String getPrimaryNumber() {
+        return getPrimaryUri().getRawRingId();
+    }
+    public Uri getPrimaryUri() {
+        return getPhones().get(0).getNumber();
     }
 
     public void setStared() {
@@ -277,6 +295,7 @@ public class CallContact {
     }
 
     public void setUsername(String name) {
+        Log.w(TAG, "setUsername " + this + " " + name);
         mUsername = name;
     }
 

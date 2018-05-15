@@ -6,13 +6,12 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/llTrustRequestMessage"
+        android:id="@+id/trustRequestMessageLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tvTrustRequestMessage"
@@ -34,15 +33,15 @@
         android:id="@+id/hist_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/llTrustRequestMessage"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:clipToPadding="false"
         android:divider="@null"
         android:listSelector="@color/transparent"
-        android:paddingBottom="60dp"
         android:paddingTop="8dp"
+        android:paddingBottom="60dp"
         tools:listitem="@layout/item_conv_msg_peer" />
 
     <LinearLayout
@@ -52,7 +51,7 @@
         android:layout_below="@id/main_toolbar"
         android:background="#e3c1c1"
         android:gravity="center"
-        tools:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -63,78 +62,104 @@
             android:textColor="@color/text_color_primary" />
     </LinearLayout>
 
-
-    <LinearLayout
-        android:id="@+id/llTrustRequestPrompt"
+    <android.support.v7.widget.CardView
+        android:id="@+id/unknownContactPrompt"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/lighter_gray" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="12dp"
+        android:padding="0dp"
+        app:cardCornerRadius="8dp">
 
         <LinearLayout
+            style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="42dp"
+            android:layout_margin="0dp"
             android:background="@color/white"
             android:gravity="center"
+            android:padding="0dp">
+            <Button
+                android:id="@+id/btnAcceptContact"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:text="@string/ab_action_contact_add"
+                android:textColor="#4CAF50"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/trustRequestPrompt"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="12dp"
+        android:padding="0dp"
+        app:cardCornerRadius="8dp">
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_margin="0dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:padding="0dp"
             android:weightSum="1">
 
             <Button
                 android:id="@+id/btnBlock"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.33"
                 android:background="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:text="@string/block"
-                android:textColor="@color/color_primary_dark" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/lighter_gray" />
+                android:textColor="@color/error_red"/>
 
             <Button
                 android:id="@+id/btnRefuse"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.33"
                 android:background="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:text="@string/refuse"
-                android:textColor="@color/color_primary_dark" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/lighter_gray" />
+                android:textColor="@color/color_primary_dark"/>
 
             <Button
                 android:id="@+id/btnAccept"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.33"
                 android:background="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:text="@string/accept"
-                android:textColor="@color/color_primary_dark" />
+                android:textColor="#4CAF50"/>
         </LinearLayout>
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/cvMessageInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="12dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="12dp"
+        tools:visibility="gone"
         app:cardCornerRadius="8dp">
 
         <LinearLayout
@@ -179,9 +204,10 @@
                 android:background="@null"
                 android:hint="@string/write_a_message"
                 android:imeOptions="actionSend|flagNoExtractUi"
+                android:importantForAutofill="no"
                 android:inputType="textShortMessage|textImeMultiLine|text|textMultiLine|textCapSentences"
                 android:maxLines="5"
-                android:padding="8dp" />
+                android:padding="8dp"/>
 
             <ProgressBar
                 android:id="@+id/pb_data_transfer"

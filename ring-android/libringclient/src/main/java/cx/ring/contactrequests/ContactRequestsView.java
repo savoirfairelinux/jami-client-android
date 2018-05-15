@@ -19,11 +19,11 @@
 
 package cx.ring.contactrequests;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ContactRequestsView {
 
-    void updateView(ArrayList<PendingContactRequestsViewModel> list);
+    void updateView(List<ContactRequestsViewModel> list);
 
     void goToConversation(String accountId, String contactId);
 }
