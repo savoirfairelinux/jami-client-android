@@ -24,7 +24,6 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -52,12 +51,11 @@ import cx.ring.application.RingApplication;
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
-import cx.ring.model.ServiceEvent;
 import cx.ring.services.AccountService;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 
-public class AccountMigrationFragment extends Fragment implements Observer<ServiceEvent> {
+public class AccountMigrationFragment extends Fragment {
     public static final String ACCOUNT_ID = "ACCOUNT_ID";
     static final String TAG = AccountMigrationFragment.class.getSimpleName();
     @Inject
@@ -70,9 +68,12 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
 
     private boolean migratingAccount = false;
 
+    private final CompositeDisposable mDisposableBag = new CompositeDisposable();
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onDestroy() {
+        super.onDestroy();
+        mDisposableBag.clear();
     }
 
     @Override
@@ -108,7 +109,6 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
     @Override
     public void onResume() {
         super.onResume();
-        mAccountService.addObserver(this);
         if (getArguments() != null) {
             mAccountId = getArguments().getString(ACCOUNT_ID);
         }
@@ -117,7 +117,6 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
     @Override
     public void onPause() {
         super.onPause();
-        mAccountService.removeObserver(this);
     }
 
     @SuppressWarnings("unchecked")
@@ -130,7 +129,24 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
 
         //orientation is locked during the migration of account to avoid the destruction of the thread
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-        new MigrateAccountTask(mAccountId, password).execute();
+
+        mProgress = new ProgressDialog(getActivity());
+        mProgress.setTitle(R.string.dialog_wait_update);
+        mProgress.setMessage(getString(R.string.dialog_wait_update_details));
+        mProgress.setCancelable(false);
+        mProgress.setCanceledOnTouchOutside(false);
+        mProgress.show();
+
+        final Account account = mAccountService.getAccount(mAccountId);
+        HashMap<String, String> details = account.getDetails();
+        details.put(ConfigKey.ARCHIVE_PASSWORD.key(), password);
+
+        mAccountService.setAccountDetails(account.getAccountID(), details);
+
+        mDisposableBag.add(mAccountService
+                .migrateAccount(mAccountId, password)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::handleMigrationState));
     }
 
     private boolean checkPassword(@NonNull TextView pwd, TextView confirm) {
@@ -157,119 +173,46 @@ public class AccountMigrationFragment extends Fragment implements Observer<Servi
         return error;
     }
 
-    @Override
-    public void update(Observable observable, final ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
+    private void handleMigrationState(String newState) {
+        migratingAccount = false;
 
-        switch (event.getEventType()) {
-            case MIGRATION_ENDED:
-                handleMigrationState(event);
-                break;
-            default:
-                Log.d(TAG, "update: This event " + event.getEventType() + " is not handled here");
-                break;
-        }
-    }
-
-
-    private void handleMigrationState(final ServiceEvent event) {
-        RingApplication.uiHandler.post(() -> {
-
-            String newState = event.getEventInput(ServiceEvent.EventInput.STATE, String.class);
-            if (TextUtils.isEmpty(newState)) {
-                if (mProgress != null) {
-                    mProgress.dismiss();
-                    mProgress = null;
-                }
-                return;
-            }
-
+        if (TextUtils.isEmpty(newState)) {
             if (mProgress != null) {
                 mProgress.dismiss();
                 mProgress = null;
             }
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-            dialogBuilder.setPositiveButton(android.R.string.ok, (dialog, id) -> {
-                //do things
-            });
-            boolean success = false;
-            switch (newState) {
-                case AccountConfig.STATE_INVALID:
-                    dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
-                            .setMessage(R.string.account_cannot_be_updated_message);
-                    break;
-                default:
-                    dialogBuilder.setTitle(R.string.account_device_updated_title)
-                            .setMessage(R.string.account_device_updated_message);
-                    success = true;
-                    break;
-            }
-            AlertDialog dialogSuccess = dialogBuilder.show();
-            if (success) {
-                dialogSuccess.setOnDismissListener(dialogInterface -> {
-                    getActivity().setResult(Activity.RESULT_OK, new Intent());
-                    //unlock the screen orientation
-                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                    getActivity().finish();
-                });
-            }
+            return;
+        }
+
+        if (mProgress != null) {
+            mProgress.dismiss();
+            mProgress = null;
+        }
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        dialogBuilder.setPositiveButton(android.R.string.ok, (dialog, id) -> {
+            //do things
         });
-    }
-
-    private class MigrateAccountTask extends AsyncTask<HashMap<String, String>, Void, String> {
-        private final String mAccountId;
-        private final String mPassword;
-
-        MigrateAccountTask(String accountId, String password) {
-            mAccountId = accountId;
-            mPassword = password;
+        boolean success = false;
+        switch (newState) {
+            case AccountConfig.STATE_INVALID:
+                dialogBuilder.setTitle(R.string.account_cannot_be_found_title)
+                        .setMessage(R.string.account_cannot_be_updated_message);
+                break;
+            default:
+                dialogBuilder.setTitle(R.string.account_device_updated_title)
+                        .setMessage(R.string.account_device_updated_message);
+                success = true;
+                break;
         }
-
-        @Override
-        protected void onPreExecute() {
-            mProgress = new ProgressDialog(getActivity());
-            mProgress.setTitle(R.string.dialog_wait_update);
-            mProgress.setMessage(getString(R.string.dialog_wait_update_details));
-            mProgress.setCancelable(false);
-            mProgress.setCanceledOnTouchOutside(false);
-            mProgress.show();
-        }
-
-        @SafeVarargs
-        @Override
-        protected final String doInBackground(HashMap<String, String>... accs) {
-
-            final Account account = mAccountService.getAccount(mAccountId);
-            if (account == null) {
-                getActivity().runOnUiThread(() -> {
-                    if (mProgress != null) {
-                        mProgress.dismiss();
-                        mProgress = null;
-                    }
-                    Log.e(TAG, "doInBackground: Error updating account, no account or remote service");
-                    new AlertDialog.Builder(getActivity())
-                            .setPositiveButton(android.R.string.ok, null)
-                            .setTitle(R.string.generic_error_migration)
-                            .setMessage(R.string.generic_error_migration_message)
-                            .show();
-                });
-                return null;
-            }
-
-            HashMap<String, String> details = account.getDetails();
-            details.put(ConfigKey.ARCHIVE_PASSWORD.key(), mPassword);
-
-            mAccountService.setAccountDetails(account.getAccountID(), details);
-
-            return account.getAccountID();
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            migratingAccount = false;
+        AlertDialog dialogSuccess = dialogBuilder.show();
+        if (success) {
+            dialogSuccess.setOnDismissListener(dialogInterface -> {
+                getActivity().setResult(Activity.RESULT_OK, new Intent());
+                //unlock the screen orientation
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                getActivity().finish();
+            });
         }
     }
+
 }

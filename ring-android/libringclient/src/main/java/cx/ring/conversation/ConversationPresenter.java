@@ -24,6 +24,7 @@ import java.io.File;
 import java.util.Iterator;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.daemon.Blob;
 import cx.ring.facades.ConversationFacade;
@@ -33,7 +34,6 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.RingError;
-import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
@@ -50,12 +50,14 @@ import cx.ring.services.PreferencesService;
 import cx.ring.services.VCardService;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
+import cx.ring.utils.StringUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import io.reactivex.Scheduler;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
-public class ConversationPresenter extends RootPresenter<ConversationView> implements Observer<ServiceEvent> {
+public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     private static final String TAG = ConversationPresenter.class.getSimpleName();
     private ContactService mContactService;
@@ -74,7 +76,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     private Uri mContactRingId;
     private String mAccountId;
 
-    private CallContact mCurrentContact;
+    private CompositeDisposable mConversationDisposable;
+
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     @Inject
     public ConversationPresenter(ContactService contactService,
@@ -102,10 +108,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
-        mHistoryService.removeObserver(this);
-        mCallService.removeObserver(this);
-        mConversationFacade.removeObserver(this);
+    }
+
+    @Override
+    public void bindView(ConversationView view) {
+        super.bindView(view);
     }
 
     public void init(String contactRingId, String accountId) {
@@ -113,33 +120,77 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     public void init(Uri contactRingId, String accountId) {
+        Log.w(TAG, "init " + contactRingId + " " + accountId);
         mContactRingId = contactRingId;
         mAccountId = accountId;
-        mCurrentContact = mContactService.getContact(mContactRingId);
+        mCompositeDisposable.add(mConversationFacade.startConversation(accountId, contactRingId)
+                .subscribe(this::setConversation));
+    }
 
-        mAccountService.addObserver(this);
-        mHistoryService.addObserver(this);
-        mCallService.addObserver(this);
-        mConversationFacade.addObserver(this);
+    private void setConversation(final Conversation conversation) {
+        if (conversation == null || mConversation == conversation)
+            return;
+        mConversation = conversation;
+        if (getView() != null)
+            initView(conversation, getView());
     }
 
     public void pause() {
-        if (mCurrentContact != null) {
+        if (mConversation != null) {
             mConversation.setVisible(false);
         }
     }
 
     public void resume() {
-        if (mConversation == null)  {
-            loadHistory();
+        if (mConversation != null) {
+            mConversation.setVisible(true);
+            mConversationFacade.readMessages(mConversation);
+            mNotificationService.cancelTextNotification(mContactRingId.getRawUriString());
         }
-        mConversation.setVisible(true);
-        TrustRequest incomingTrustRequests = getIncomingTrustRequests();
-        if (incomingTrustRequests == null) {
-            getView().switchToConversationView();
+    }
+
+    private void initView(final Conversation c, final ConversationView view) {
+        Log.w(TAG, "initView");
+        if (mConversationDisposable == null) {
+            mConversationDisposable = new CompositeDisposable();
+            mCompositeDisposable.add(mConversationDisposable);
+        }
+        mConversationDisposable.clear();
+
+        Account acc = mAccountService.getAccount(mAccountId);
+        CallContact contact = acc.getContact(mContactRingId.getRawRingId());
+        if (contact == null) {
+            contact = acc.getContactFromCache(mContactRingId);
+            TrustRequest req = acc.getRequest(mContactRingId.getRawRingId());
+            if (req == null) {
+                getView().switchToUnknownView(contact.getRingUsername());
+            } else {
+                getView().switchToIncomingTrustRequestView(req.getDisplayname());
+            }
         } else {
-            getView().switchToIncomingTrustRequestView(incomingTrustRequests.getDisplayname());
+            getView().switchToConversationView();
         }
+        view.hideNumberSpinner();
+        view.displayContactPhoto(c.getContact().getPhoto());
+        view.displayContactName(c.getContact());
+        updateOngoingCallView();
+
+        mConversationDisposable.add(c.getSortedHistory()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(mUiScheduler)
+                .subscribe(view::refreshView));
+        mConversationDisposable.add(mAccountService.getRegisteredNames()
+                .observeOn(mUiScheduler)
+                .subscribe(r -> view.updateView(r.address, r.name, r.state)));
+        mConversationDisposable.add(c.getNewElements()
+                .observeOn(mUiScheduler)
+                .subscribe(view::addElement));
+        mConversationDisposable.add(c.getUpdatedElements()
+                .observeOn(mUiScheduler)
+                .subscribe(view::updateElement));
+        mConversationDisposable.add(c.getRemovedElements()
+                .observeOn(mUiScheduler)
+                .subscribe(view::removeElement));
     }
 
     public void prepareMenu() {
@@ -159,29 +210,14 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     }
 
     public void sendTextMessage(String message) {
-        if (message != null && !message.equals("")) {
-            getView().clearMsgEdit();
-            if (mConversation == null)
-                mConversation = mConversationFacade.startConversation(mCurrentContact);
-            Conference conference = mConversation.getCurrentCall();
-            TextMessage txtMessage;
-            if (conference == null || !conference.isOnGoing()) {
-                long id = mCallService.sendAccountTextMessage(mAccountId, mContactRingId.getRawUriString(), message);
-                txtMessage = new TextMessage(false, message, mContactRingId, null, mAccountId);
-                txtMessage.setID(id);
-            } else {
-                mCallService.sendTextMessage(conference.getId(), message);
-                SipCall call = conference.getParticipants().get(0);
-                txtMessage = new TextMessage(false, message, call.getNumberUri(), conference.getId(), call.getAccount());
-            }
-            txtMessage.read();
-            mHistoryService.insertNewTextMessage(txtMessage);
-            mConversation.addTextMessage(txtMessage);
-
-            checkTrustRequestStatus();
-
-            Log.d(TAG, "sendTextMessage: AggregateHistorySize=" + mConversation.getAggregateHistory().size());
-            getView().refreshView(mConversation);
+        if (StringUtils.isEmpty(message)) {
+            return;
+        }
+        Conference conference = mConversation.getCurrentCall();
+        if (conference == null || !conference.isOnGoing()) {
+            mConversationFacade.sendTextMessage(mAccountId, mConversation, mContactRingId, message);
+        } else {
+            mConversationFacade.sendTextMessage(mConversation, conference, message);
         }
     }
 
@@ -212,6 +248,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
     public void deleteFile(DataTransfer transfer) {
         File file = getDeviceRuntimeService().getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
         file.delete();
+        mConversationFacade.deleteFile(transfer);
         mHistoryService.deleteFileHistory(transfer.getId());
     }
 
@@ -219,7 +256,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         VCard vCard = mVCardService.loadSmallVCard(mAccountId);
         mAccountService.sendTrustRequest(mAccountId, mContactRingId.getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard)));
 
-        CallContact contact = mContactService.findContact(mContactRingId);
+        CallContact contact = mContactService.findContact(mAccountId, mContactRingId);
         if (contact == null) {
             Log.e(TAG, "sendTrustRequest: not able to find contact");
             return;
@@ -268,14 +305,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         getView().goToHome();
     }
 
-    private void loadHistory() {
-        mConversation = mConversationFacade.startConversation(mCurrentContact);
-        mHistoryService.readMessages(mConversation);
-        mNotificationService.cancelTextNotification(mContactRingId.getRawUriString());
-        getView().hideNumberSpinner();
-        getView().displayContactPhoto(mConversation.getContact().getPhoto());
-        getView().displayContactName(mConversation.getContact());
-        getView().refreshView(mConversation);
+    private void updateOngoingCallView() {
         Conference conf = mConversation.getCurrentCall();
         if (conf != null && conf.getState() != SipCall.State.INACTIVE) {
             getView().displayOnGoingCallPane(true);
@@ -285,56 +315,14 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
         getView().scrollToEnd();
     }
 
-    private void checkTrustRequestStatus() {
-        if (getIncomingTrustRequests() != null) {
-            return;
-        }
-        if (mCurrentContact != null && CallContact.Status.NO_REQUEST.equals(mCurrentContact.getStatus())) {
-            sendTrustRequest();
-        }
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (observable instanceof AccountService && event != null) {
-            if (event.getEventType() == ServiceEvent.EventType.REGISTERED_NAME_FOUND) {
-                final String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                final String address = event.getEventInput(ServiceEvent.EventInput.ADDRESS, String.class);
-                final int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
-
-                getView().updateView(address, name, state);
-            }
-        } else if (observable instanceof ConversationFacade && event != null) {
-            switch (event.getEventType()) {
-                case DATA_TRANSFER:
-                    getView().refreshView(mConversation);
-                    getView().scrollToEnd();
-                    break;
-                case DATA_TRANSFER_UPDATE: {
-                    DataTransfer transfer = event.getEventInput(ServiceEvent.EventInput.TRANSFER_INFO, DataTransfer.class);
-                    getView().updateTransfer(transfer);
-                    break;
-                }
-                case INCOMING_MESSAGE:
-                    getView().refreshView(mConversation);
-                    getView().scrollToEnd();
-                    break;
-                case CONVERSATIONS_CHANGED:
-                    loadHistory();
-                    break;
-            }
-        }
-    }
-
     private TrustRequest getIncomingTrustRequests() {
-        if (mAccountService == null) {
-            return null;
+        if (mAccountService != null) {
+            Account acc = mAccountService.getAccount(mAccountId);
+            if (acc != null) {
+                return acc.getRequest(mContactRingId.getHost());
+            }
         }
-        Account acc = mAccountService.getCurrentAccount();
-        if (acc == null) {
-            return null;
-        }
-        return acc.getRequest(mContactRingId.getHost());
+        return null;
     }
 
     public void onBlockIncomingContactRequest() {
@@ -348,28 +336,19 @@ public class ConversationPresenter extends RootPresenter<ConversationView> imple
 
     public void onRefuseIncomingContactRequest() {
         String accountId = mAccountId == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountId;
-        mAccountService.discardTrustRequest(accountId, mContactRingId.getHost());
-        mPreferencesService.removeRequestPreferences(accountId, mContactRingId.getHost());
+
+        mConversationFacade.discardRequest(accountId, mContactRingId);
 
         getView().goToHome();
     }
 
     public void onAcceptIncomingContactRequest() {
-        String currentAccountId = mAccountId == null ? mAccountService.getCurrentAccount().getAccountID() : mAccountId;
-        mAccountService.acceptTrustRequest(currentAccountId, mContactRingId.getHost());
-        mPreferencesService.removeRequestPreferences(mAccountId, mContactRingId.getHost());
+        mConversationFacade.acceptTrustRequest(mAccountId, mContactRingId);
+        getView().switchToConversationView();
+    }
 
-        for (Iterator<TrustRequest> it = mAccountService.getCurrentAccount().getRequests().iterator(); it.hasNext(); ) {
-            TrustRequest request = it.next();
-            if (mAccountId.equals(request.getAccountId()) && mAccountId.equals(request.getContactId())) {
-                VCard vCard = request.getVCard();
-                if (vCard != null) {
-                    VCardUtils.savePeerProfileToDisk(vCard, mContactRingId.getHost() + ".vcf", mDeviceRuntimeService.provideFilesDir());
-                }
-                it.remove();
-            }
-        }
-
+    public void onAddContact() {
+        mAccountService.addContact(mAccountId, mContactRingId.getRawRingId());
         getView().switchToConversationView();
     }
 
