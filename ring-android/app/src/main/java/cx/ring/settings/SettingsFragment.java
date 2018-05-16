@@ -32,6 +32,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -54,6 +55,8 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
 
     @BindView(R.id.settings_mobile_data)
     Switch mViewMobileData;
+    @BindView(R.id.settings_push_notifications_layout)
+    ViewGroup mGroupPushNotifications;
     @BindView(R.id.settings_push_notifications)
     Switch mViewPushNotifications;
     @BindView(R.id.settings_contacts)
@@ -78,6 +81,9 @@ public class SettingsFragment extends BaseFragment<SettingsPresenter> implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
+        if (TextUtils.isEmpty(RingApplication.getInstance().getPushToken())) {
+            mGroupPushNotifications.setVisibility(View.GONE);
+        }
     }
 
     @Override

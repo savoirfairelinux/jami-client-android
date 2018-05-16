@@ -103,7 +103,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    android:id="@+id/settings_push_notifications_layout">
 
                     <ImageView
                         android:id="@+id/push_image"

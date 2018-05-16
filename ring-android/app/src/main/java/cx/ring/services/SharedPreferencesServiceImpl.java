@@ -23,6 +23,7 @@ package cx.ring.services;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -145,6 +146,6 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     @Override
     public boolean isPushAllowed() {
         String token = RingApplication.getInstance().getPushToken();
-        return getUserSettings().isAllowPushNotifications() && !token.isEmpty() && NetworkUtils.isPushAllowed(mContext, getUserSettings().isAllowMobileData());
+        return getUserSettings().isAllowPushNotifications() && !TextUtils.isEmpty(token) && NetworkUtils.isPushAllowed(mContext, getUserSettings().isAllowMobileData());
     }
 }
