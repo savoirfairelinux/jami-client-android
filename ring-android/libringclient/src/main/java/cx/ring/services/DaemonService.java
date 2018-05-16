@@ -154,12 +154,12 @@ public class DaemonService {
 
         @Override
         public void incomingAccountMessage(String accountId, String from, StringMap messages) {
-            mCallService.incomingAccountMessage(accountId, from, messages);
+            mAccountService.incomingAccountMessage(accountId, null, from, messages);
         }
 
         @Override
         public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
-            mHistoryService.accountMessageStatusChanged(accountId, messageId, to, status);
+            mAccountService.accountMessageStatusChanged(accountId, messageId, to, status);
         }
 
         @Override

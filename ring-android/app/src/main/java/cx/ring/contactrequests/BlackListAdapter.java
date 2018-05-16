@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import cx.ring.R;
@@ -35,12 +36,12 @@ public class BlackListAdapter extends RecyclerView.Adapter<BlackListViewHolder> 
     private final BlackListViewHolder.BlackListListeners mListener;
     private final ArrayList<CallContact> mBlacklisted;
 
-    public BlackListAdapter(List<CallContact> viewModels, BlackListViewHolder.BlackListListeners listener) {
+    public BlackListAdapter(Collection<CallContact> viewModels, BlackListViewHolder.BlackListListeners listener) {
         mBlacklisted = new ArrayList<>(viewModels);
         mListener = listener;
     }
 
-    public void replaceAll(List<CallContact> viewModels) {
+    public void replaceAll(Collection<CallContact> viewModels) {
         mBlacklisted.clear();
         mBlacklisted.addAll(viewModels);
         notifyDataSetChanged();
