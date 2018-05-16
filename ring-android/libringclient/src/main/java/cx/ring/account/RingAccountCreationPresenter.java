@@ -21,15 +21,12 @@ package cx.ring.account;
 
 import javax.inject.Inject;
 
-import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.utils.NameLookupInputHandler;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 
-public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreationView> implements Observer<ServiceEvent> {
+public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreationView> {
 
     public static final String TAG = RingAccountCreationPresenter.class.getSimpleName();
     public static final int PASSWORD_MIN_LENGTH = 6;
@@ -54,13 +51,12 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
     }
 
     @Override
     public void bindView(RingAccountCreationView view) {
         super.bindView(view);
-        mAccountService.addObserver(this);
+        mCompositeDisposable.add(mAccountService.getRegisteredNames().subscribe(r -> handleBlockchainResult(r.state, r.name)));
     }
 
     public void init(RingAccountViewModel ringAccountViewModel) {
@@ -170,22 +166,5 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
             }
         }
         checkForms();
-    }
-
-    @Override
-    public void update(Observable observable, final ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case REGISTERED_NAME_FOUND:
-                int state = event.getEventInput(ServiceEvent.EventInput.STATE, Integer.class);
-                String name = event.getEventInput(ServiceEvent.EventInput.NAME, String.class);
-                handleBlockchainResult(state, name);
-                break;
-            default:
-                break;
-        }
     }
 }

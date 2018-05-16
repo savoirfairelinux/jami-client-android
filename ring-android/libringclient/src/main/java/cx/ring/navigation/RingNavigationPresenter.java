@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,30 +24,33 @@ package cx.ring.navigation;
 import java.io.File;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
-import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
+import io.reactivex.Scheduler;
 
-public class RingNavigationPresenter extends RootPresenter<RingNavigationView> implements Observer<ServiceEvent> {
+public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
 
     private static final String TAG = RingNavigationPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
     private DeviceRuntimeService mDeviceRuntimeService;
     private ConversationFacade mConversationFacade;
+
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     @Inject
     public RingNavigationPresenter(AccountService accountService,
@@ -59,13 +63,17 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> i
 
     @Override
     public void bindView(RingNavigationView view) {
-        mAccountService.addObserver(this);
         super.bindView(view);
+        mCompositeDisposable.add(mAccountService.getObservableAccounts()
+                .observeOn(mUiScheduler)
+                .subscribe(r -> updateUser()));
+        mCompositeDisposable.add(mAccountService.getCurrentAccountSubject()
+                .observeOn(mUiScheduler)
+                .subscribe(r -> updateUser()));
     }
 
     @Override
     public void unbindView() {
-        mAccountService.removeObserver(this);
         super.unbindView();
     }
 
@@ -82,7 +90,6 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> i
         if (getView() == null) {
             return;
         }
-        mConversationFacade.clearConversations();
         mAccountService.setCurrentAccount(selectedAccount);
     }
 
@@ -161,21 +168,6 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> i
             getView().goToGallery();
         } else {
             getView().askGalleryPermission();
-        }
-    }
-
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
-            case REGISTRATION_STATE_CHANGED:
-                updateUser();
-                break;
         }
     }
 }

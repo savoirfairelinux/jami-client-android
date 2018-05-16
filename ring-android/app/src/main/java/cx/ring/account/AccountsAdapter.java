@@ -19,7 +19,9 @@
 package cx.ring.account;
 
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,10 +35,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.model.Account;
 
-public class AccountsAdapter extends BaseAdapter {
+public class AccountsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     static final String TAG = AccountsAdapter.class.getSimpleName();
     private final ArrayList<Account> accounts = new ArrayList<>();
     private AccountListeners mListeners;
@@ -46,51 +50,29 @@ public class AccountsAdapter extends BaseAdapter {
     }
 
     @Override
-    public boolean hasStableIds() {
-        return true;
-    }
-
-    @Override
-    public int getCount() {
+    public int getItemCount() {
         return accounts.size();
     }
 
+    public Account getItem(int position) {
+        return accounts.get(position);
+    }
+
+    @NonNull
     @Override
-    public Account getItem(int pos) {
-        return accounts.get(pos);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View holderView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.item_account_pref, parent, false);
+        return new AccountView(holderView);
     }
 
     @Override
-    public long getItemId(int pos) {
-        return 0;
-    }
-
-    @Override
-    public View getView(final int pos, View convertView, ViewGroup parent) {
-        View rowView = convertView;
-        AccountView entryView;
-
-        if (rowView == null) {
-            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            rowView = inflater.inflate(R.layout.item_account_pref, parent, false);
-
-            entryView = new AccountView();
-            entryView.alias = rowView.findViewById(R.id.account_alias);
-            entryView.host = rowView.findViewById(R.id.account_host);
-            entryView.loadingIndicator = rowView.findViewById(R.id.loading_indicator);
-            entryView.errorIndicator = rowView.findViewById(R.id.error_indicator);
-            entryView.enabled = rowView.findViewById(R.id.account_checked);
-            entryView.errorIndicator.setColorFilter(parent.getContext().getResources().getColor(R.color.error_red));
-            entryView.errorIndicator.setVisibility(View.GONE);
-            entryView.loadingIndicator.setVisibility(View.GONE);
-            rowView.setTag(entryView);
-        } else {
-            entryView = (AccountView) rowView.getTag();
-        }
-
-        final Account item = accounts.get(pos);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        Log.d(TAG, "onBindViewHolder");
+        AccountView entryView = (AccountView) holder;
+        final Account item = accounts.get(position);
         entryView.alias.setText(item.getAlias());
-        entryView.host.setTextColor(ContextCompat.getColor(parent.getContext(), R.color.text_color_secondary));
+        entryView.host.setTextColor(ContextCompat.getColor(entryView.itemView.getContext(), R.color.text_color_secondary));
 
         if (item.isIP2IP()) {
             entryView.host.setText(item.getRegistrationState());
@@ -105,6 +87,7 @@ public class AccountsAdapter extends BaseAdapter {
             item.setEnabled(!item.isEnabled());
             mListeners.onItemClicked(item.getAccountID(), item.getDetails());
         });
+
 
         if (item.isEnabled()) {
             if (!item.isActive()) {
@@ -134,8 +117,6 @@ public class AccountsAdapter extends BaseAdapter {
             entryView.errorIndicator.setVisibility(View.GONE);
             entryView.loadingIndicator.setVisibility(View.GONE);
         }
-
-        return rowView;
     }
 
     public void replaceAll(List<Account> results) {
@@ -144,21 +125,39 @@ public class AccountsAdapter extends BaseAdapter {
         accounts.addAll(results);
         notifyDataSetChanged();
     }
+    public void replaceAccount(Account account) {
+        Log.d(TAG, "replaceAccount " + account);
+        notifyDataSetChanged();
+    }
 
     public interface AccountListeners {
         void onItemClicked(String accountId, HashMap<String, String> details);
+        void onItemClicked(Account account);
     }
 
-    /**
-     * ******************
-     * ViewHolder Pattern
-     * *******************
-     */
-    public class AccountView {
+    public class AccountView extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(R.id.account_alias)
         public TextView alias;
+        @BindView(R.id.account_host)
         public TextView host;
+        @BindView(R.id.loading_indicator)
         public View loadingIndicator;
+        @BindView(R.id.error_indicator)
         public ImageView errorIndicator;
+        @BindView(R.id.account_checked)
         public CheckBox enabled;
+
+        public AccountView(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int data = getAdapterPosition();
+            mListeners.onItemClicked(accounts.get(data));
+        }
+
     }
 }
