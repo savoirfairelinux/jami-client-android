@@ -21,6 +21,7 @@
 package cx.ring.services;
 
 import java.io.File;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -49,43 +49,36 @@ import cx.ring.model.ConfigKey;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.DataTransferError;
 import cx.ring.model.DataTransferEventCode;
-import cx.ring.model.ServiceEvent;
+import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
-import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
+import cx.ring.utils.StringUtils;
 import cx.ring.utils.SwigNativeConverter;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
+import io.reactivex.Observable;
 
 /**
  * This service handles the accounts (Ring and SIP)
  * - Load and manage the accounts stored in the daemon
  * - Keep a local cache of the accounts
  * - handle the callbacks that are send by the daemon
- * <p>
- * Events are broadcasted by the daemon's callbacks:
- * - ACCOUNTS_CHANGED
- * - ACCOUNT_ADDED
- * - VOLUME_CHANGED
- * - STUN_STATUS_FAILURE
- * - REGISTRATION_STATE_CHANGED
- * - INCOMING_ACCOUNT_MESSAGE
- * - ACCOUNT_MESSAGE_STATUS_CHANGED
- * - ERROR_ALERT
- * - GET_APP_DATA_PATH
- * - EXPORT_ON_RING_ENDED
- * - NAME_REGISTRATION_ENDED
- * - REGISTERED_NAME_FOUND
- * - MIGRATION_ENDED
- * - INCOMING_TRUST_REQUEST
  */
-public class AccountService extends Observable {
+public class AccountService {
 
     private static final String TAG = AccountService.class.getSimpleName();
 
     private static final int VCARD_CHUNK_SIZE = 1000;
     private static final long DATA_TRANSFER_REFRESH_PERIOD = 500;
+
+    private static final int PIN_GENERATION_SUCCESS = 0;
+    private static final int PIN_GENERATION_WRONG_PASSWORD = 1;
+    private static final int PIN_GENERATION_NETWORK_ERROR = 2;
 
     @Inject
     @Named("DaemonExecutor")
@@ -106,6 +99,53 @@ public class AccountService extends Observable {
     private final HashMap<Long, DataTransfer> mDataTransfers = new HashMap<>();
     private DataTransfer mStartingTransfer = null;
     private Timer mTransferRefreshTimer = null;
+
+    private final BehaviorSubject<List<Account>> accountsSubject = BehaviorSubject.create();
+    private final Subject<Account> accountSubject = PublishSubject.create();
+    private final Observable<Account> currentAccountSubject = accountsSubject
+            .filter(l -> !l.isEmpty())
+            .map(l -> l.get(0))
+            .distinctUntilChanged();
+
+    private final Subject<TextMessage> incomingMessageSubject = PublishSubject.create();
+    private final Subject<TextMessage> messageSubject = PublishSubject.create();
+    private final Subject<DataTransfer> dataTransferSubject = PublishSubject.create();
+
+    public class RegisteredName {
+        public String accountId;
+        public String name;
+        public String address;
+        public int state;
+    }
+    private final Subject<RegisteredName> registeredNameSubject = PublishSubject.create();
+
+    private class ExportOnRingResult {
+        String accountId;
+        int code;
+        String pin;
+    }
+    private class DeviceRevocationResult {
+        String accountId;
+        String deviceId;
+        int code;
+    }
+    private class MigrationResult {
+        String accountId;
+        String state;
+    }
+    private final Subject<ExportOnRingResult> mExportSubject = PublishSubject.create();
+    private final Subject<DeviceRevocationResult> mDeviceRevocationSubject = PublishSubject.create();
+    private final Subject<MigrationResult> mMigrationSubject = PublishSubject.create();
+
+    public Observable<RegisteredName> getRegisteredNames() {
+        return registeredNameSubject;
+    }
+    public Observable<TextMessage> getIncomingMessages() {
+        return incomingMessageSubject;
+    }
+    public Observable<TextMessage> getMessageStateChanges() {
+        return messageSubject;
+    }
 
     /**
      * @return true if at least one of the loaded accounts is a SIP one
@@ -133,39 +173,46 @@ public class AccountService extends Observable {
     public void loadAccountsFromDaemon(final boolean isConnected, final boolean pushAllowed) {
         mExecutor.execute(() -> {
             refreshAccountsCacheFromDaemon();
-
-            if (!mAccountList.isEmpty()) {
-                setCurrentAccount(mAccountList.get(0));
-            } else {
-                setChanged();
-                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNTS_CHANGED);
-                notifyObservers(event);
-            }
-
             setAccountsActive(isConnected, pushAllowed);
             Ringservice.connectivityChanged();
         });
     }
 
     private void refreshAccountsCacheFromDaemon() {
+        Log.w(TAG, "refreshAccountsCacheFromDaemon");
         mAccountsLoaded.set(false);
-        mAccountList = new ArrayList<>();
-        List<String> accountIds = getAccountList();
+        List<String> accountIds = new ArrayList<>(Ringservice.getAccountList());
+        List<Account> newAccounts = new ArrayList<>(accountIds.size());
+        for (String id : accountIds) {
+            for (Account acc : mAccountList)
+                if (acc.getAccountID().equals(id)) {
+                    newAccounts.add(acc);
+                    break;
+                }
+        }
+        Log.w(TAG, "refreshAccountsCacheFromDaemon: recycled " + newAccounts.size());
         for (String accountId : accountIds) {
-            Map<String, String> details = getAccountDetails(accountId);
-            List<Map<String, String>> credentials = getCredentials(accountId);
-            Map<String, String> volatileAccountDetails = getVolatileAccountDetails(accountId);
-            Account account = new Account(accountId, details, credentials, volatileAccountDetails);
-            mAccountList.add(account);
+            Account account = getAccount(accountId);
+            Map<String, String> details = Ringservice.getAccountDetails(accountId).toNative();
+            List<Map<String, String>> credentials = Ringservice.getCredentials(accountId).toNative();
+            Map<String, String> volatileAccountDetails = Ringservice.getVolatileAccountDetails(accountId).toNative();
+            if (account == null) {
+                account = new Account(accountId, details, credentials, volatileAccountDetails);
+                newAccounts.add(account);
+            } else {
+                account.setDetails(details);
+                account.setCredentials(credentials);
+                account.setVolatileDetails(volatileAccountDetails);
+            }
 
             if (account.isSip()) {
                 mHasSipAccount = true;
             } else if (account.isRing()) {
                 mHasRingAccount = true;
 
-                account.setDevices(getKnownRingDevices(accountId));
-                account.setContacts(getContacts(accountId));
-                List<Map<String, String>> requests = getTrustRequests(accountId);
+                account.setDevices(Ringservice.getKnownRingDevices(accountId).toNative());
+                account.setContacts(Ringservice.getContacts(accountId).toNative());
+                List<Map<String, String>> requests = Ringservice.getTrustRequests(accountId).toNative();
                 for (Map<String, String> requestInfo : requests) {
                     TrustRequest request = new TrustRequest(accountId, requestInfo);
                     account.addRequest(request);
@@ -173,10 +220,19 @@ public class AccountService extends Observable {
                     lookupAddress(accountId, "", request.getContactId());
                 }
                 for (CallContact contact : account.getContacts().values()) {
-                    lookupAddress(accountId, "", contact.getPhones().get(0).getNumber().getRawRingId());
+                    if (StringUtils.isEmpty(contact.getUsername()))
+                        lookupAddress(accountId, "", contact.getPhones().get(0).getNumber().getRawRingId());
                 }
             }
         }
+        mAccountList = newAccounts;
+        if (!mAccountList.isEmpty()) {
+            Account newAccount = mAccountList.get(0);
+            if (mCurrentAccount != newAccount) {
+                mCurrentAccount = newAccount;
+            }
+        }
+        accountsSubject.onNext(mAccountList);
         mAccountsLoaded.set(true);
     }
 
@@ -208,48 +264,34 @@ public class AccountService extends Observable {
      * @param map the account details
      * @return the created Account
      */
-    @SuppressWarnings("unchecked")
-    // Hashmap runtime cast
-    public Account addAccount(final Map map) {
-
-        String accountId = FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "addAccount() thread running...");
-                    return Ringservice.addAccount(StringMap.toSwig(map));
-                }
-        );
-
-        if (accountId == null) {
-            return null;
-        }
-
-        Map<String, String> accountDetails = getAccountDetails(accountId);
-        Map<String, String> accountVolatileDetails = getVolatileAccountDetails(accountId);
-        List<Map<String, String>> accountCredentials = getCredentials(accountId);
-        Map<String, String> accountDevices = getKnownRingDevices(accountId);
-
-        Account account = getAccount(accountId);
-
-        if (account == null) {
-            account = new Account(accountId, accountDetails, accountCredentials, accountVolatileDetails);
-            account.setDevices(accountDevices);
-            if (account.isSip()) {
-                account.setRegistrationState(AccountConfig.STATE_READY, -1);
+    public Observable<Account> addAccount(final Map<String, String> map) {
+        return Observable.fromCallable(() -> {
+            String accountId = Ringservice.addAccount(StringMap.toSwig(map));
+            if (accountId == null) {
+                throw new RuntimeException("Can't create account.");
             }
-        }
 
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNT_ADDED);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(ServiceEvent.EventInput.STATE, account.getRegistrationState());
-        notifyObservers(event);
+            Map<String, String> accountDetails = Ringservice.getAccountDetails(accountId).toNative();
+            List<Map<String, String>> accountCredentials = Ringservice.getCredentials(accountId).toNative();
+            Map<String, String> accountVolatileDetails = Ringservice.getVolatileAccountDetails(accountId).toNative();
+            Map<String, String> accountDevices = Ringservice.getKnownRingDevices(accountId).toNative();
 
-        setCurrentAccount(account);
-
-        return account;
+            Account account = getAccount(accountId);
+            if (account == null) {
+                account = new Account(accountId, accountDetails, accountCredentials, accountVolatileDetails);
+                account.setDevices(accountDevices);
+                if (account.isSip()) {
+                    account.setRegistrationState(AccountConfig.STATE_READY, -1);
+                }
+                mAccountList.add(account);
+                accountsSubject.onNext(mAccountList);
+            }
+            return account;
+        })
+                .flatMap(account -> accountSubject
+                    .filter(acc -> acc.getAccountID().equals(account.getAccountID()))
+                    .startWith(account))
+                .subscribeOn(Schedulers.from(mExecutor));
     }
 
     /**
@@ -263,6 +305,8 @@ public class AccountService extends Observable {
      * Sets the current Account in the local cache (also sends a ACCOUNTS_CHANGED event)
      */
     public void setCurrentAccount(Account currentAccount) {
+        if (mCurrentAccount == currentAccount)
+            return;
         mCurrentAccount = currentAccount;
 
         // the account order is changed
@@ -287,7 +331,7 @@ public class AccountService extends Observable {
     public Account getAccount(String accountId) {
         for (Account account : mAccountList) {
             String accountID = account.getAccountID();
-            if (accountID != null && accountID.equals(accountId)) {
+            if (accountID.equals(accountId)) {
                 return account;
             }
         }
@@ -301,11 +345,30 @@ public class AccountService extends Observable {
         return mAccountList;
     }
 
+    public Subject<List<Account>> getObservableAccountList() {
+        return accountsSubject;
+    }
+
+    public Subject<Account> getObservableAccounts() {
+        return accountSubject;
+    }
+    public Observable<Account> getObservableAccountUpdates(String accountId) {
+        return accountSubject.filter(acc -> acc.getAccountID().equals(accountId));
+    }
+    public Observable<Account> getObservableAccount(String accountId) {
+        return Observable.fromCallable(() -> getAccount(accountId))
+                .concatWith(getObservableAccountUpdates(accountId));
+    }
+
+    public Observable<Account> getCurrentAccountSubject() {
+        return currentAccountSubject;
+    }
+
     /**
      * put VCard on the DHT
      */
     public void sendProfile(final String callId, final String accountId) {
-        mExecutor.submit(() -> {
+        mExecutor.execute(() -> {
             VCard vcard = VCardUtils.loadLocalProfileFromDisk(
                     mDeviceRuntimeService.provideFilesDir(),
                     accountId);
@@ -337,16 +400,15 @@ public class AccountService extends Observable {
      * @return Account Ids list from Daemon
      */
     public List<String> getAccountList() {
-
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                (Callable<List<String>>) () -> {
-                    Log.i(TAG, "getAccountList() thread running...");
-                    return new ArrayList<>(Ringservice.getAccountList());
-                }
-        );
+        try {
+            return mExecutor.submit(() -> {
+                Log.i(TAG, "getAccountList() running...");
+                return new ArrayList<>(Ringservice.getAccountList());
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getAccountList()", e);
+        }
+        return new ArrayList<>();
     }
 
     /**
@@ -355,103 +417,72 @@ public class AccountService extends Observable {
      * @param accountOrder The ordered list of account ids
      */
     public void setAccountOrder(final List<String> accountOrder) {
-        StringBuilder order = new StringBuilder();
-        for (String accountId : accountOrder) {
-            order.append(accountId);
-            order.append(File.separator);
-        }
-        final String orderForDaemon = order.toString();
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "setAccountsOrder() " + orderForDaemon + " thread running...");
-                    Ringservice.setAccountsOrder(orderForDaemon);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            final StringBuilder order = new StringBuilder();
+            for (String accountId : accountOrder) {
+                order.append(accountId);
+                order.append(File.separator);
+            }
+            Ringservice.setAccountsOrder(order.toString());
+        });
     }
 
     /**
      * @return the account details from the Daemon
      */
     public Map<String, String> getAccountDetails(final String accountId) {
-
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                (Callable<Map<String, String>>) () -> {
-                    Log.i(TAG, "getAccountDetails() thread running...");
-                    return Ringservice.getAccountDetails(accountId).toNative();
-                }
-        );
+        try {
+            return mExecutor.submit(() -> Ringservice.getAccountDetails(accountId).toNative()).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getAccountDetails()", e);
+        }
+        return null;
     }
 
     /**
      * Sets the account details in the Daemon
      */
-    @SuppressWarnings("unchecked")
-    // Hashmap runtime cast
-    public void setAccountDetails(final String accountId, final Map map) {
+    public void setAccountDetails(final String accountId, final Map<String, String> map) {
         Log.i(TAG, "setAccountDetails() " + map.get("Account.hostname"));
-        final StringMap swigmap = StringMap.toSwig(map);
+        mExecutor.execute(() -> Ringservice.setAccountDetails(accountId, StringMap.toSwig(map)));
+    }
 
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Ringservice.setAccountDetails(accountId, swigmap);
-                    Log.i(TAG, "setAccountDetails() thread running... " + swigmap.get("Account.hostname"));
-                    return true;
-                }
-        );
-
+    public Single<String> migrateAccount(String accountId, String password) {
+        return mMigrationSubject
+                .filter(r -> r.accountId.equals(accountId))
+                .map(r -> r.state)
+                .firstOrError()
+                .doOnSubscribe(s -> {
+                    final Account account = getAccount(accountId);
+                    HashMap<String, String> details = account.getDetails();
+                    details.put(ConfigKey.ARCHIVE_PASSWORD.key(), password);
+                    mExecutor.execute(() -> Ringservice.setAccountDetails(accountId, StringMap.toSwig(details)));
+                })
+                .subscribeOn(Schedulers.from(mExecutor));
     }
 
     /**
      * Sets the activation state of the account in the Daemon
      */
     public void setAccountActive(final String accountId, final boolean active) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "setAccountActive() thread running... " + accountId + " -> " + active);
-                    Ringservice.setAccountActive(accountId, active);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> Ringservice.setAccountActive(accountId, active));
     }
 
     /**
      * Sets the activation state of all the accounts in the Daemon
      */
     public void setAccountsActive(final boolean active, final boolean allowProxy) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                        Log.i(TAG, "setAccountsActive() thread running... " + active);
-                        StringVect list = Ringservice.getAccountList();
-                        for (int i = 0, n = list.size(); i < n; i++) {
-                            String accountId =list.get(i);
-                            Account a = getAccount(accountId);
-                            if (!allowProxy || active|| a == null || !a.isDhtProxyEnabled()) {
-                                Ringservice.setAccountActive(accountId, active);
-                            }
-                        }
-                        return true;
-
+        mExecutor.execute(() -> {
+            Log.i(TAG, "setAccountsActive() running... " + active);
+            StringVect list = Ringservice.getAccountList();
+            for (int i = 0, n = list.size(); i < n; i++) {
+                String accountId =list.get(i);
+                Account a = getAccount(accountId);
+                if (!allowProxy || active|| a == null || !a.isDhtProxyEnabled()) {
+                    Ringservice.setAccountActive(accountId, active);
                 }
-        );
+            }
+        });
     }
 
     /**
@@ -461,26 +492,18 @@ public class AccountService extends Observable {
         for (Account account : mAccountList) {
             account.setDetail(ConfigKey.VIDEO_ENABLED, isEnabled);
         }
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNTS_CHANGED);
-        notifyObservers(event);
     }
 
     /**
      * @return the account volatile details from the Daemon
      */
     public Map<String, String> getVolatileAccountDetails(final String accountId) {
-
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                (Callable<Map<String, String>>) () -> {
-                    Log.i(TAG, "getVolatileAccountDetails() thread running...");
-                    return Ringservice.getVolatileAccountDetails(accountId).toNative();
-                }
-        );
+        try {
+            return mExecutor.submit(() -> Ringservice.getVolatileAccountDetails(accountId).toNative()).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getVolatileAccountDetails()", e);
+        }
+        return null;
     }
 
     /**
@@ -495,50 +518,47 @@ public class AccountService extends Observable {
      * Removes the account in the Daemon
      */
     public void removeAccount(final String accountId) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "removeAccount() thread running...");
-                    Ringservice.removeAccount(accountId);
-                    return true;
-                }
-        );
+        Log.i(TAG, "removeAccount() " + accountId);
+        mExecutor.execute(() -> Ringservice.removeAccount(accountId));
     }
 
     /**
-     * Exports the account on the DHT (used for multidevices feature)
-     *
-     * @return the generated pin
+     * Exports the account on the DHT (used for multi-devices feature)
      */
-    public void exportOnRing(final String accountId, final String password) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "exportOnRing() thread running...");
-                    return Ringservice.exportOnRing(accountId, password);
-                }
-        );
+    public Single<String> exportOnRing(final String accountId, final String password) {
+        return mExportSubject
+                .filter(r -> r.accountId.equals(accountId))
+                .firstOrError()
+                .map(result -> {
+                    switch (result.code) {
+                        case PIN_GENERATION_SUCCESS:
+                            return result.pin;
+                        case PIN_GENERATION_WRONG_PASSWORD:
+                            throw new IllegalArgumentException();
+                        case PIN_GENERATION_NETWORK_ERROR:
+                            throw new SocketException();
+                        default:
+                            throw new UnsupportedOperationException();
+                    }
+                })
+                .doOnSubscribe(l -> {
+                    Log.i(TAG, "exportOnRing() " + accountId);
+                    mExecutor.execute(() -> Ringservice.exportOnRing(accountId, password));
+                })
+                .subscribeOn(Schedulers.io());
     }
 
     /**
      * @return the list of the account's devices from the Daemon
      */
     public Map<String, String> getKnownRingDevices(final String accountId) {
-
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                (Callable<Map<String, String>>) () -> {
-                    Log.i(TAG, "getKnownRingDevices() thread running...");
-                    return Ringservice.getKnownRingDevices(accountId).toNative();
-                }
-        );
+        Log.i(TAG, "getKnownRingDevices() " + accountId);
+        try {
+            return mExecutor.submit(() -> Ringservice.getKnownRingDevices(accountId).toNative()).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getKnownRingDevices()", e);
+        }
+        return null;
     }
 
     /**
@@ -546,16 +566,13 @@ public class AccountService extends Observable {
      * @param deviceId  id of the device to revoke
      * @param password  password of the account
      */
-    public void revokeDevice(final String accountId, final String password, final String deviceId) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "revokeDevice() thread running...");
-                    return Ringservice.revokeDevice(accountId, password, deviceId);
-                }
-        );
+    public Single<Integer> revokeDevice(final String accountId, final String password, final String deviceId) {
+        return mDeviceRevocationSubject
+                .filter(r -> r.accountId.equals(accountId) && r.deviceId.equals(deviceId))
+                .firstOrError()
+                .map(r -> r.code)
+                .doOnSubscribe(l -> mExecutor.execute(() -> Ringservice.revokeDevice(accountId, password, deviceId)))
+                .subscribeOn(Schedulers.io());
     }
 
     /**
@@ -564,133 +581,109 @@ public class AccountService extends Observable {
      */
     public void renameDevice(final String accountId, final String newName) {
         final Account account = getAccount(accountId);
-        account.setDevices(FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                (Callable<Map<String, String>>) () -> {
-                    Log.i(TAG, "renameDevice() thread running... " + newName);
-                    StringMap details = Ringservice.getAccountDetails(accountId);
-                    details.set(ConfigKey.ACCOUNT_DEVICE_NAME.key(), newName);
-                    Ringservice.setAccountDetails(accountId, details);
-                    return Ringservice.getKnownRingDevices(accountId).toNative();
-                }
-        ));
-        account.setDetail(ConfigKey.ACCOUNT_DEVICE_NAME, newName);
+        mExecutor.execute(() -> {
+            Log.i(TAG, "renameDevice() thread running... " + newName);
+            StringMap details = Ringservice.getAccountDetails(accountId);
+            details.set(ConfigKey.ACCOUNT_DEVICE_NAME.key(), newName);
+            Ringservice.setAccountDetails(accountId, details);
+            account.setDetail(ConfigKey.ACCOUNT_DEVICE_NAME, newName);
+            account.setDevices(Ringservice.getKnownRingDevices(accountId).toNative());
+        });
     }
 
     /**
      * Sets the active codecs list of the account in the Daemon
      */
-    public void setActiveCodecList(final List codecs, final String accountId) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "setActiveCodecList() thread running...");
-                    UintVect list = new UintVect(codecs.size());
-                    for (Object codec : codecs) {
-                        list.add((Long) codec);
-                    }
-                    Ringservice.setActiveCodecList(accountId, list);
-
-                    return true;
-                }
-        );
+    public void setActiveCodecList(final String accountId, final List<Long> codecs) {
+        mExecutor.execute(() -> {
+            UintVect list = new UintVect(codecs.size());
+            for (Long codec : codecs) {
+                list.add(codec);
+            }
+            Ringservice.setActiveCodecList(accountId, list);
+            accountSubject.onNext(getAccount(accountId));
+        });
     }
 
     /**
      * @return The account's codecs list from the Daemon
      */
-    public List<Codec> getCodecList(final String accountId) {
+    public Single<List<Codec>> getCodecList(final String accountId) {
+        return Single.fromCallable(() -> {
+            List<Codec> results = new ArrayList<>();
 
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                (Callable<List<Codec>>) () -> {
-                    Log.i(TAG, "getCodecList() thread running...");
-                    ArrayList<Codec> results = new ArrayList<>();
+            UintVect activePayloads = Ringservice.getActiveCodecList(accountId);
+            for (int i = 0; i < activePayloads.size(); ++i) {
+                Log.i(TAG, "getCodecDetails(" + accountId + ", " + activePayloads.get(i) + ")");
+                StringMap codecsDetails = Ringservice.getCodecDetails(accountId, activePayloads.get(i));
+                results.add(new Codec(activePayloads.get(i), codecsDetails.toNative(), true));
+            }
+            UintVect payloads = Ringservice.getCodecList();
 
-                    UintVect activePayloads = Ringservice.getActiveCodecList(accountId);
-                    for (int i = 0; i < activePayloads.size(); ++i) {
-                        Log.i(TAG, "getCodecDetails(" + accountId + ", " + activePayloads.get(i) + ")");
-                        StringMap codecsDetails = Ringservice.getCodecDetails(accountId, activePayloads.get(i));
-                        results.add(new Codec(activePayloads.get(i), codecsDetails.toNative(), true));
+            cl:
+            for (int i = 0; i < payloads.size(); ++i) {
+                for (Codec co : results) {
+                    if (co.getPayload() == payloads.get(i)) {
+                        continue cl;
                     }
-                    UintVect payloads = Ringservice.getCodecList();
-
-                    cl:
-                    for (int i = 0; i < payloads.size(); ++i) {
-                        for (Codec co : results) {
-                            if (co.getPayload() == payloads.get(i)) {
-                                continue cl;
-                            }
-                        }
-                        StringMap details = Ringservice.getCodecDetails(accountId, payloads.get(i));
-                        if (details.size() > 1) {
-                            results.add(new Codec(payloads.get(i), details.toNative(), false));
-                        } else {
-                            Log.i(TAG, "Error loading codec " + i);
-                        }
-                    }
-                    return results;
                 }
-        );
+                StringMap details = Ringservice.getCodecDetails(accountId, payloads.get(i));
+                if (details.size() > 1) {
+                    results.add(new Codec(payloads.get(i), details.toNative(), false));
+                } else {
+                    Log.i(TAG, "Error loading codec " + i);
+                }
+            }
+            return results;
+        }).subscribeOn(Schedulers.from(mExecutor));
     }
 
     public Map<String, String> validateCertificatePath(final String accountID, final String certificatePath, final String privateKeyPath, final String privateKeyPass) {
-
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                (Callable<Map<String, String>>) () -> {
-                    Log.i(TAG, "validateCertificatePath() thread running...");
-                    return Ringservice.validateCertificatePath(accountID, certificatePath, privateKeyPath, "", "").toNative();
-                }
-        );
+        try {
+            return mExecutor.submit(() -> {
+                        Log.i(TAG, "validateCertificatePath() running...");
+                        return Ringservice.validateCertificatePath(accountID, certificatePath, privateKeyPath, privateKeyPass, "").toNative();
+                    }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running validateCertificatePath()", e);
+        }
+        return null;
     }
 
     public Map<String, String> validateCertificate(final String accountId, final String certificate) {
-
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                (Callable<Map<String, String>>) () -> {
-                    Log.i(TAG, "validateCertificate() thread running...");
-                    return Ringservice.validateCertificate(accountId, certificate).toNative();
-                }
-        );
+        try {
+            return mExecutor.submit(() -> {
+                Log.i(TAG, "validateCertificate() running...");
+                return Ringservice.validateCertificate(accountId, certificate).toNative();
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running validateCertificate()", e);
+        }
+        return null;
     }
 
     public Map<String, String> getCertificateDetailsPath(final String certificatePath) {
-
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                (Callable<Map<String, String>>) () -> {
-                    Log.i(TAG, "getCertificateDetailsPath() thread running...");
-                    return Ringservice.getCertificateDetails(certificatePath).toNative();
-                }
-        );
+        try {
+            return mExecutor.submit(() -> {
+                Log.i(TAG, "getCertificateDetailsPath() running...");
+                return Ringservice.getCertificateDetails(certificatePath).toNative();
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getCertificateDetailsPath()", e);
+        }
+        return null;
     }
 
     public Map<String, String> getCertificateDetails(final String certificateRaw) {
-
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                (Callable<Map<String, String>>) () -> {
-                    Log.i(TAG, "getCertificateDetails() thread running...");
-                    return Ringservice.getCertificateDetails(certificateRaw).toNative();
-                }
-        );
+        try {
+            return mExecutor.submit(() -> {
+                Log.i(TAG, "getCertificateDetails() running...");
+                return Ringservice.getCertificateDetails(certificateRaw).toNative();
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getCertificateDetails()", e);
+        }
+        return null;
     }
 
     /**
@@ -705,83 +698,59 @@ public class AccountService extends Observable {
      * @return the account's credentials from the Daemon
      */
     public List<Map<String, String>> getCredentials(final String accountId) {
-
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                (Callable<List<Map<String, String>>>) () -> {
-                    Log.i(TAG, "getCredentials() thread running...");
-                    return Ringservice.getCredentials(accountId).toNative();
-                }
-        );
+        try {
+            return mExecutor.submit(() -> {
+                Log.i(TAG, "getCredentials() running...");
+                return Ringservice.getCredentials(accountId).toNative();
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getCredentials()", e);
+        }
+        return null;
     }
 
     /**
      * Sets the account's credentials in the Daemon
      */
-    public void setCredentials(final String accountId, final List creds) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "setCredentials() thread running...");
-                    Ringservice.setCredentials(accountId, SwigNativeConverter.convertFromNativeToSwig(creds));
-                    return true;
-                }
-        );
+    public void setCredentials(final String accountId, final List credentials) {
+        Log.i(TAG, "setCredentials() " + accountId);
+        mExecutor.execute(() -> Ringservice.setCredentials(accountId, SwigNativeConverter.convertFromNativeToSwig(credentials)));
     }
 
     /**
      * Sets the registration state to true for all the accounts in the Daemon
      */
     public void registerAllAccounts() {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "registerAllAccounts() thread running...");
-                    Ringservice.registerAllAccounts();
-                    return true;
-                }
-        );
+        Log.i(TAG, "registerAllAccounts()");
+        mExecutor.execute(this::registerAllAccounts);
     }
 
     /**
      * Backs  up all the accounts into to an archive in the path
      */
-    public int backupAccounts(final List accountIds, final String toDir, final String password) {
-
-        //noinspection ConstantConditions
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    StringVect ids = new StringVect();
-                    for (Object s : accountIds) {
-                        ids.add((String) s);
-                    }
-                    return Ringservice.exportAccounts(ids, toDir, password);
-                }
-        );
+    public int backupAccounts(final List<String> accountIds, final String toDir, final String password) {
+        try {
+            return mExecutor.submit(() -> {
+                StringVect ids = new StringVect();
+                ids.addAll(accountIds);
+                return Ringservice.exportAccounts(ids, toDir, password);
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running backupAccounts()", e);
+        }
+        return 1;
     }
 
     /**
      * Restores the saved accounts from a path
      */
     public int restoreAccounts(final String archivePath, final String password) {
-        //noinspection ConstantConditions
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> Ringservice.importAccounts(archivePath, password)
-        );
+        try {
+            return mExecutor.submit(() -> Ringservice.importAccounts(archivePath, password)).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running restoreAccounts()", e);
+        }
+        return 1;
     }
 
     /**
@@ -801,17 +770,8 @@ public class AccountService extends Observable {
      * Register a new name on the blockchain for the account Id
      */
     public void registerName(final String account, final String password, final String name) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "registerName() thread running...");
-                    Ringservice.registerName(account, password, name);
-                    return true;
-                }
-        );
+        Log.i(TAG, "registerName()");
+        mExecutor.execute(() -> Ringservice.registerName(account, password, name));
     }
 
     /* contact requests */
@@ -820,39 +780,22 @@ public class AccountService extends Observable {
      * @return all trust requests from the daemon for the account Id
      */
     public List<Map<String, String>> getTrustRequests(final String accountId) {
-
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                (Callable<List<Map<String, String>>>) () -> {
-                    Log.i(TAG, "getTrustRequests() thread running...");
-                    return Ringservice.getTrustRequests(accountId).toNative();
-                }
-        );
+        try {
+            return mExecutor.submit(() -> Ringservice.getTrustRequests(accountId).toNative()).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getTrustRequests()", e);
+        }
+        return null;
     }
 
     /**
      * Accepts a pending trust request
      */
-    public Boolean acceptTrustRequest(final String accountId, final String from) {
+    public void acceptTrustRequest(final String accountId, final String from) {
+        Log.i(TAG, "acceptTrustRequest() " + accountId + " " + from);
         Account account = getAccount(accountId);
         account.removeRequest(from);
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "acceptTrustRequest() thread running...");
-                    boolean ok = Ringservice.acceptTrustRequest(accountId, from);
-                    if (ok) {
-                        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
-                        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-                        notifyObservers(event);
-                    }
-                    return ok;
-                }
-        );
+        mExecutor.execute(() -> Ringservice.acceptTrustRequest(accountId, from));
     }
 
     /**
@@ -861,39 +804,15 @@ public class AccountService extends Observable {
     public void discardTrustRequest(final String accountId, final String from) {
         Account account = getAccount(accountId);
         account.removeRequest(from);
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                (Callable<Void>) () -> {
-                    Log.i(TAG, "discardTrustRequest() " + accountId + " " + from);
-                    boolean ok = Ringservice.discardTrustRequest(accountId, from);
-                    if (ok) {
-                        setChanged();
-                        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
-                        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-                        notifyObservers(event);
-                    }
-                    return null;
-                }
-        );
+        mExecutor.execute(() -> Ringservice.discardTrustRequest(accountId, from));
     }
 
     /**
      * Sends a new trust request
      */
     public void sendTrustRequest(final String accountId, final String to, final Blob message) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "sendTrustRequest() thread running...");
-                    Ringservice.sendTrustRequest(accountId, to, message);
-                    return true;
-                }
-        );
+        Log.i(TAG, "sendTrustRequest() " + accountId + " " + to);
+        mExecutor.execute(() -> Ringservice.sendTrustRequest(accountId, to, message));
     }
 
 
@@ -901,154 +820,85 @@ public class AccountService extends Observable {
      * Add a new contact for the account Id on the Daemon
      */
     public void addContact(final String accountId, final String uri) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "addContact() thread running...");
-                    Ringservice.addContact(accountId, uri);
-                    return true;
-                }
-        );
+        Log.i(TAG, "addContact() " + accountId + " " + uri);
+        mExecutor.execute(() -> Ringservice.addContact(accountId, uri));
     }
 
     /**
      * Remove an existing contact for the account Id on the Daemon
      */
     public void removeContact(final String accountId, final String uri, final boolean ban) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "removeContact() thread running...");
-                    Ringservice.removeContact(accountId, uri, ban);
-                    return true;
-                }
-        );
+        Log.i(TAG, "addContact() " + accountId + " " + uri + " ban:" + ban);
+        mExecutor.execute(() -> Ringservice.removeContact(accountId, uri, ban));
     }
 
     /**
      * @return the contacts list from the daemon
      */
     public List<Map<String, String>> getContacts(final String accountId) {
-
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                (Callable<List<Map<String, String>>>) () -> {
-                    Log.i(TAG, "getContacts() thread running...");
-                    return Ringservice.getContacts(accountId).toNative();
-                }
-        );
+        try {
+            return mExecutor.submit(() -> Ringservice.getContacts(accountId).toNative()).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getContacts()", e);
+        }
+        return null;
     }
 
     /**
      * Looks up for the availibility of the name on the blockchain
      */
     public void lookupName(final String account, final String nameserver, final String name) {
+        Log.i(TAG, "lookupName() " + account + " " + nameserver + " " + name);
+        mExecutor.execute(() -> Ringservice.lookupName(account, nameserver, name));
+    }
 
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "lookupName() thread running...");
-                    Ringservice.lookupName(account, nameserver, name);
-                    return true;
-                }
-        );
+    public Single<RegisteredName> findRegistrationByName(final String account, final String nameserver, final String name) {
+        if (name == null || name.isEmpty()) {
+            return Single.create(l -> l.onError(new IllegalArgumentException()));
+        }
+        return getRegisteredNames()
+                .filter(r -> account.equals(r.accountId) && name.equals(r.name))
+                .firstOrError()
+                .doOnSubscribe(s -> {
+                    mExecutor.execute(() -> Ringservice.lookupName(account, nameserver, name));
+                })
+                .subscribeOn(Schedulers.from(mExecutor));
     }
 
     /**
      * Reverse looks up the address in the blockchain to find the name
      */
     public void lookupAddress(final String account, final String nameserver, final String address) {
-
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "lookupAddress() " + address);
-                    Ringservice.lookupAddress(account, nameserver, address);
-                    return true;
-                }
-        );
+        Log.i(TAG, "lookupAddress() " + account + " " + nameserver + " " + address);
+        mExecutor.execute(() -> Ringservice.lookupAddress(account, nameserver, address));
     }
 
     public void pushNotificationReceived(final String from, final Map<String, String> data) {
+        Log.i(TAG, "pushNotificationReceived()");
         setAccountsActive(true, true);
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "pushNotificationReceived() " + from + " " + data.size());
-                    Ringservice.pushNotificationReceived(from, StringMap.toSwig(data));
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> Ringservice.pushNotificationReceived(from, StringMap.toSwig(data)));
     }
 
     public void setPushNotificationToken(final String pushNotificationToken) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                (Callable<Void>) () -> {
-                    Log.i(TAG, "setPushNotificationToken()");
-                    Ringservice.setPushNotificationToken(pushNotificationToken);
-                    return null;
-                }
-        );
+        Log.i(TAG, "setPushNotificationToken()");
+        mExecutor.execute(() -> Ringservice.setPushNotificationToken(pushNotificationToken));
     }
 
-    public void volumeChanged(String device, int value) {
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VOLUME_CHANGED);
-        event.addEventInput(ServiceEvent.EventInput.DEVICE, device);
-        event.addEventInput(ServiceEvent.EventInput.VALUE, value);
-        notifyObservers(event);
+    void volumeChanged(String device, int value) {
+        Log.w(TAG, "volumeChanged " + device + " " + value);
     }
 
-    public void accountsChanged() {
-        String currentAccountId = mCurrentAccount == null ? "" : mCurrentAccount.getAccountID();
-
+    void accountsChanged() {
         // Accounts have changed in Daemon, we have to update our local cache
         refreshAccountsCacheFromDaemon();
-
-        // if there was a current account we restore it according to the new list
-        Account currentAccount = getAccount(currentAccountId);
-        if (currentAccount != null) {
-            mCurrentAccount = currentAccount;
-        } else if (!mAccountList.isEmpty()) {
-            // no current account, by default it will be the first one
-            mCurrentAccount = mAccountList.get(0);
-        } else {
-            mCurrentAccount = null;
-        }
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNTS_CHANGED);
-        notifyObservers(event);
     }
 
-    public void stunStatusFailure(String accountId) {
+    void stunStatusFailure(String accountId) {
         Log.d(TAG, "stun status failure: " + accountId);
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.STUN_STATUS_FAILURE);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        notifyObservers(event);
     }
 
-    public void registrationStateChanged(String accountId, String newState, int code, String detailString) {
-        Log.d(TAG, "stun status registrationStateChanged: " + accountId + ", " + newState + ", " + code + ", " + detailString);
+    void registrationStateChanged(String accountId, String newState, int code, String detailString) {
+        Log.d(TAG, "registrationStateChanged: " + accountId + ", " + newState + ", " + code + ", " + detailString);
 
         Account account = getAccount(accountId);
         if (account == null) {
@@ -1057,26 +907,20 @@ public class AccountService extends Observable {
         String oldState = account.getRegistrationState();
         if (oldState.contentEquals(AccountConfig.STATE_INITIALIZING) &&
                 !newState.contentEquals(AccountConfig.STATE_INITIALIZING)) {
-            account.setDetails(getAccountDetails(account.getAccountID()));
-            account.setCredentials(getCredentials(account.getAccountID()));
-            account.setDevices(getKnownRingDevices(account.getAccountID()));
-            account.setVolatileDetails(getVolatileAccountDetails(account.getAccountID()));
+            account.setDetails(Ringservice.getAccountDetails(account.getAccountID()).toNative());
+            account.setCredentials(Ringservice.getCredentials(account.getAccountID()).toNative());
+            account.setDevices(Ringservice.getKnownRingDevices(account.getAccountID()).toNative());
+            account.setVolatileDetails(Ringservice.getVolatileAccountDetails(account.getAccountID()).toNative());
         } else {
             account.setRegistrationState(newState, code);
         }
 
         if (!oldState.equals(newState)) {
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTRATION_STATE_CHANGED);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.STATE, newState);
-            event.addEventInput(ServiceEvent.EventInput.DETAIL_CODE, code);
-            event.addEventInput(ServiceEvent.EventInput.DETAIL_STRING, detailString);
-            notifyObservers(event);
+            accountSubject.onNext(account);
         }
     }
 
-    public void volatileAccountDetailsChanged(String accountId, StringMap details) {
+    void volatileAccountDetailsChanged(String accountId, StringMap details) {
         Account account = getAccount(accountId);
         if (account == null) {
             return;
@@ -1085,53 +929,48 @@ public class AccountService extends Observable {
         account.setVolatileDetails(details.toNative());
     }
 
-    public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
+    void incomingAccountMessage(String accountId, String callId, String from, StringMap messages) {
+        String message = null;
+        final String textPlainMime = "text/plain";
+        if (null != messages && messages.has_key(textPlainMime)) {
+            message = messages.getRaw(textPlainMime).toJavaString();
+        }
+        if (message != null) {
+            mHistoryService.incomingMessage(accountId, callId, from, message)
+                    .subscribe(incomingMessageSubject::onNext);
+        }
+    }
+
+    void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
         Log.d(TAG, "accountMessageStatusChanged: " + accountId + ", " + messageId + ", " + to + ", " + status);
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ACCOUNT_MESSAGE_STATUS_CHANGED);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(ServiceEvent.EventInput.MESSAGE_ID, messageId);
-        event.addEventInput(ServiceEvent.EventInput.TO, to);
-        event.addEventInput(ServiceEvent.EventInput.STATE, status);
-        notifyObservers(event);
+        mHistoryService.accountMessageStatusChanged(accountId, messageId, to, status)
+                .subscribe(messageSubject::onNext, e -> Log.e(TAG, "Error updating message",e));
     }
 
-    public void errorAlert(int alert) {
+    void errorAlert(int alert) {
         Log.d(TAG, "errorAlert : " + alert);
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.ERROR_ALERT);
-        event.addEventInput(ServiceEvent.EventInput.ALERT, alert);
-        notifyObservers(event);
     }
 
-    public void knownDevicesChanged(String accountId, StringMap devices) {
+    void knownDevicesChanged(String accountId, StringMap devices) {
         Log.d(TAG, "knownDevicesChanged: " + accountId + ", " + devices);
 
         Account accountChanged = getAccount(accountId);
         if (accountChanged != null) {
             accountChanged.setDevices(devices.toNative());
-            setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.KNOWN_DEVICES_CHANGED);
-            event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-            event.addEventInput(ServiceEvent.EventInput.DEVICES, devices);
-            notifyObservers(event);
+            accountSubject.onNext(accountChanged);
         }
     }
 
-    public void exportOnRingEnded(String accountId, int code, String pin) {
+    void exportOnRingEnded(String accountId, int code, String pin) {
         Log.d(TAG, "exportOnRingEnded: " + accountId + ", " + code + ", " + pin);
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.EXPORT_ON_RING_ENDED);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(ServiceEvent.EventInput.CODE, code);
-        event.addEventInput(ServiceEvent.EventInput.PIN, pin);
-        notifyObservers(event);
+        ExportOnRingResult result = new ExportOnRingResult();
+        result.accountId = accountId;
+        result.code = code;
+        result.pin = pin;
+        mExportSubject.onNext(result);
     }
 
-    public void nameRegistrationEnded(String accountId, int state, String name) {
+    void nameRegistrationEnded(String accountId, int state, String name) {
         Log.d(TAG, "nameRegistrationEnded: " + accountId + ", " + state + ", " + name);
 
         Account acc = getAccount(accountId);
@@ -1141,51 +980,56 @@ public class AccountService extends Observable {
         }
 
         acc.registeringUsername = false;
-        acc.setVolatileDetails(getVolatileAccountDetails(acc.getAccountID()));
-        acc.setDetail(ConfigKey.ACCOUNT_REGISTERED_NAME, name);
+        acc.setVolatileDetails(Ringservice.getVolatileAccountDetails(acc.getAccountID()).toNative());
+        if (state == 0) {
+            acc.setDetail(ConfigKey.ACCOUNT_REGISTERED_NAME, name);
+        }
 
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.NAME_REGISTRATION_ENDED);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(ServiceEvent.EventInput.STATE, state);
-        event.addEventInput(ServiceEvent.EventInput.NAME, name);
-        notifyObservers(event);
+        accountSubject.onNext(acc);
     }
 
-    public void migrationEnded(String accountId, String state) {
+    void migrationEnded(String accountId, String state) {
         Log.d(TAG, "migrationEnded: " + accountId + ", " + state);
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.MIGRATION_ENDED);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(ServiceEvent.EventInput.STATE, state);
-        notifyObservers(event);
+        MigrationResult result = new MigrationResult();
+        result.accountId = accountId;
+        result.state = state;
+        mMigrationSubject.onNext(result);
     }
 
-    public void deviceRevocationEnded(String accountId, String device, int state) {
+    void deviceRevocationEnded(String accountId, String device, int state) {
         Log.d(TAG, "deviceRevocationEnded: " + accountId + ", " + device + ", " + state);
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DEVICE_REVOCATION_ENDED);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(ServiceEvent.EventInput.DEVICE, device);
-        event.addEventInput(ServiceEvent.EventInput.STATE, state);
-        notifyObservers(event);
+        DeviceRevocationResult result = new DeviceRevocationResult();
+        result.accountId = accountId;
+        result.deviceId = device;
+        result.code = state;
+        if (state == 0) {
+            Account account = getAccount(accountId);
+            if (account != null) {
+                Map<String, String> devices = account.getDevices();
+                devices.remove(device);
+                account.setDevices(devices);
+                accountSubject.onNext(account);
+            }
+        }
+        mDeviceRevocationSubject.onNext(result);
     }
 
-    public void incomingTrustRequest(String accountId, String from, String message, long received) {
+    void incomingTrustRequest(String accountId, String from, String message, long received) {
         Log.d(TAG, "incomingTrustRequest: " + accountId + ", " + from + ", " + message + ", " + received);
 
         Account account = getAccount(accountId);
         if (account != null) {
             TrustRequest request = new TrustRequest(accountId, from, received, message);
+            VCard vcard = request.getVCard();
+            if (vcard != null) {
+                VCardUtils.savePeerProfileToDisk(vcard, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
+            }
             account.addRequest(request);
             lookupAddress(accountId, "", from);
         }
     }
 
-
-    public void contactAdded(String accountId, String uri, boolean confirmed) {
+    void contactAdded(String accountId, String uri, boolean confirmed) {
         Log.d(TAG, "contactAdded: " + accountId + ", " + uri + ", " + confirmed);
 
         Account account = getAccount(accountId);
@@ -1194,15 +1038,10 @@ public class AccountService extends Observable {
             return;
         }
         account.addContact(uri, confirmed);
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_ADDED);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(ServiceEvent.EventInput.CONFIRMED, confirmed);
-        notifyObservers(event);
+        lookupAddress(accountId, "", uri);
     }
 
-    public void contactRemoved(String accountId, String uri, boolean banned) {
+    void contactRemoved(String accountId, String uri, boolean banned) {
         Log.d(TAG, "contactRemoved: " + accountId + ", " + uri + ", " + banned);
 
         Account account = getAccount(accountId);
@@ -1211,48 +1050,22 @@ public class AccountService extends Observable {
             return;
         }
         account.removeContact(uri, banned);
-
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACT_REMOVED);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(ServiceEvent.EventInput.BANNED, banned);
-        notifyObservers(event);
     }
 
-    public void registeredNameFound(String accountId, int state, String address, String name) {
+    void registeredNameFound(String accountId, int state, String address, String name) {
         Log.d(TAG, "registeredNameFound: " + accountId + ", " + state + ", " + name + ", " + address);
 
         Account account = getAccount(accountId);
         if (account != null) {
-            if (state == 0) {
-                CallContact contact = account.getContact(address);
-                if (contact != null) {
-                    contact.setUsername(name);
-                }
-            }
-            TrustRequest request = account.getRequest(address);
-            if (request != null) {
-                Log.d(TAG, "registeredNameFound: updating TrustRequest " + name);
-                boolean resolved = request.isNameResolved();
-                request.setUsername(name);
-                if (!resolved) {
-                    Log.d(TAG, "registeredNameFound: TrustRequest resolved " + name);
-                    setChanged();
-                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_TRUST_REQUEST);
-                    event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-                    event.addEventInput(ServiceEvent.EventInput.FROM, request.getContactId());
-                    notifyObservers(event);
-                }
-            }
+            account.registeredNameFound(state, address, name);
         }
 
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.REGISTERED_NAME_FOUND);
-        event.addEventInput(ServiceEvent.EventInput.ACCOUNT_ID, accountId);
-        event.addEventInput(ServiceEvent.EventInput.STATE, state);
-        event.addEventInput(ServiceEvent.EventInput.ADDRESS, address);
-        event.addEventInput(ServiceEvent.EventInput.NAME, name);
-        notifyObservers(event);
+        RegisteredName r = new RegisteredName();
+        r.accountId = accountId;
+        r.address = address;
+        r.name = name;
+        r.state = state;
+        registeredNameSubject.onNext(r);
     }
 
     public DataTransferError sendFile(final DataTransfer dataTransfer, File file) {
@@ -1264,55 +1077,27 @@ public class AccountService extends Observable {
         dataTransferInfo.setPath(file.getPath());
         dataTransferInfo.setDisplayName(dataTransfer.getDisplayName());
 
-        Long errorCode = FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "sendFile() thread running... id=" + dataTransfer.getId() + " accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
-                    return Ringservice.sendFile(dataTransferInfo, 0);
-                }
-        );
-        return getDataTransferError(errorCode);
+        Log.i(TAG, "sendFile() id=" + dataTransfer.getId() + " accountId=" + dataTransferInfo.getAccountId() + ", peer=" + dataTransferInfo.getPeer() + ", filePath=" + dataTransferInfo.getPath());
+        try {
+            return getDataTransferError(mExecutor.submit(() -> Ringservice.sendFile(dataTransferInfo, 0)).get());
+        } catch (Exception ignored) {}
+        return DataTransferError.UNKNOWN;
     }
 
     public DataTransferError acceptFileTransfer(final Long dataTransferId, final String filePath, final long offset) {
-        Long errorCode = FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "acceptFileTransfer() thread running... dataTransferId=" + dataTransferId + ", filePath=" + filePath + ", offset=" + offset);
-                    return Ringservice.acceptFileTransfer(dataTransferId, filePath, offset);
-                }
-        );
-        return getDataTransferError(errorCode);
+        Log.i(TAG, "acceptFileTransfer() dataTransferId=" + dataTransferId + ", filePath=" + filePath + ", offset=" + offset);
+        try {
+            return getDataTransferError(mExecutor.submit(() -> Ringservice.acceptFileTransfer(dataTransferId, filePath, offset)).get());
+        } catch (Exception ignored) {}
+        return DataTransferError.UNKNOWN;
     }
 
     public DataTransferError cancelDataTransfer(final Long dataTransferId) {
-        Long errorCode = FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "cancelDataTransfer() thread running... dataTransferId=" + dataTransferId);
-                    return Ringservice.cancelDataTransfer(dataTransferId);
-                }
-        );
-        return getDataTransferError(errorCode);
-    }
-
-    public DataTransferWrapper dataTransferInfo(final Long dataTransferId, final DataTransferInfo dataTransferInfo) {
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "dataTransferInfo() thread running... dataTransferId=" + dataTransferId);
-                    long errorCode = Ringservice.dataTransferInfo(dataTransferId, dataTransferInfo);
-                    return new DataTransferWrapper(dataTransferInfo, getDataTransferError(errorCode));
-                }
-        );
+        Log.i(TAG, "cancelDataTransfer() dataTransferId=" + dataTransferId);
+        try {
+            return getDataTransferError(mExecutor.submit(() -> Ringservice.cancelDataTransfer(dataTransferId)).get());
+        } catch (Exception ignored) {}
+        return DataTransferError.UNKNOWN;
     }
 
     private class DataTransferRefreshTask extends TimerTask {
@@ -1334,10 +1119,11 @@ public class AccountService extends Observable {
         }
     }
 
-    public void dataTransferEvent(final long transferId, int eventCode) {
+    void dataTransferEvent(final long transferId, int eventCode) {
         DataTransferEventCode dataEvent = getDataTransferEventCode(eventCode);
         DataTransferInfo info = new DataTransferInfo();
-        dataTransferInfo(transferId, info);
+        if (getDataTransferError(Ringservice.dataTransferInfo(transferId, info)) != DataTransferError.SUCCESS)
+            return;
 
         boolean outgoing = info.getFlags() == 0;
         DataTransfer transfer = mDataTransfers.get(transferId);
@@ -1353,31 +1139,25 @@ public class AccountService extends Observable {
                 mHistoryService.insertDataTransfer(transfer);
             }
             mDataTransfers.put(transferId, transfer);
-        } else {
-            synchronized (transfer) {
-                DataTransferEventCode oldState = transfer.getEventCode();
-                if (oldState != dataEvent) {
-                    if (dataEvent == DataTransferEventCode.ONGOING) {
-                        if (mTransferRefreshTimer == null) {
-                            mTransferRefreshTimer = new Timer();
-                        }
-                        mTransferRefreshTimer.scheduleAtFixedRate(
-                                new DataTransferRefreshTask(transfer),
-                                DATA_TRANSFER_REFRESH_PERIOD,
-                                DATA_TRANSFER_REFRESH_PERIOD);
+        } else synchronized (transfer) {
+            DataTransferEventCode oldState = transfer.getEventCode();
+            if (oldState != dataEvent) {
+                if (dataEvent == DataTransferEventCode.ONGOING) {
+                    if (mTransferRefreshTimer == null) {
+                        mTransferRefreshTimer = new Timer();
                     }
+                    mTransferRefreshTimer.scheduleAtFixedRate(
+                            new DataTransferRefreshTask(transfer),
+                            DATA_TRANSFER_REFRESH_PERIOD,
+                            DATA_TRANSFER_REFRESH_PERIOD);
                 }
-                transfer.setEventCode(dataEvent);
-                transfer.setBytesProgress(info.getBytesProgress());
-                mHistoryService.updateDataTransfer(transfer);
             }
+            transfer.setEventCode(dataEvent);
+            transfer.setBytesProgress(info.getBytesProgress());
+            mHistoryService.updateDataTransfer(transfer);
         }
 
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.DATA_TRANSFER);
-        event.addEventInput(ServiceEvent.EventInput.TRANSFER_EVENT_CODE, dataEvent);
-        event.addEventInput(ServiceEvent.EventInput.TRANSFER_INFO, transfer);
-        notifyObservers(event);
+        dataTransferSubject.onNext(transfer);
     }
 
     private static DataTransferEventCode getDataTransferEventCode(int eventCode) {
@@ -1406,6 +1186,15 @@ public class AccountService extends Observable {
 
     public DataTransfer getDataTransfer(long id) {
         return mDataTransfers.get(id);
+    }
+
+    public Subject<DataTransfer> getDataTransfers() {
+        return dataTransferSubject;
+    }
+    public Observable<DataTransfer> observeDataTransfer(DataTransfer transfer) {
+        return dataTransferSubject
+                .filter(t -> t == transfer)
+                .startWith(transfer);
     }
 
     public void setProxyEnabled(boolean enabled) {
