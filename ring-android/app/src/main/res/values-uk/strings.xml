@@ -44,6 +44,7 @@
   <plurals name="home_conferences_title">
     <item quantity="one">%d груповий чат</item>
     <item quantity="few">%d групових чатів</item>
+    <item quantity="many">%d групові чати</item>
     <item quantity="other">%d групові чати</item>
   </plurals>
   <!--ContactList Fragment-->

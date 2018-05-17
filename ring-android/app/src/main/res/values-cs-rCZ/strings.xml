@@ -44,6 +44,7 @@
   <plurals name="home_conferences_title">
     <item quantity="one">%d Konverzace</item>
     <item quantity="few">%d Konverzace</item>
+    <item quantity="many">%d konverzací</item>
     <item quantity="other">%d konverzací</item>
   </plurals>
   <!--ContactList Fragment-->

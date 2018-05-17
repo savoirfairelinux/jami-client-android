@@ -42,6 +42,7 @@
   <plurals name="home_conferences_title">
     <item quantity="one">%d pokalbis</item>
     <item quantity="few">%d pokalbiai</item>
+    <item quantity="many">%d pokalbių</item>
     <item quantity="other">%d pokalbių</item>
   </plurals>
   <!--ContactList Fragment-->

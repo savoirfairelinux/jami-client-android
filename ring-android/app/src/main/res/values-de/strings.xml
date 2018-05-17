@@ -64,6 +64,10 @@
   <string name="notif_channel_messages">Nachrichten</string>
   <string name="notif_channel_requests">Anfragen</string>
   <string name="notif_mark_as_read">Als gelesen markieren</string>
+  <string name="notif_incoming_file_transfer">Jemand möchte Ihnen eine Datei schicken</string>
+  <string name="notif_outgoing_file_transfer_title">Datei an %1$s senden</string>
+  <string name="notif_outgoing_file_transfer">Jemand möchte Ihnen eine Datei schicken</string>
+  <string name="action_open">Öffnen</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
   <string name="action_call_hangup">Auflegen</string>
@@ -88,6 +92,7 @@
   <string name="send_message">Nachricht senden</string>
   <string name="message_sending">Nachricht wird gesendet…</string>
   <string name="time_just_now">Gerade eben</string>
+  <string name="send_file">Datei senden</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera Berechtigung</string>
   <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die Anwendung Zugriff auf die Kamera. Bitte erteilen Sie diese Berechtigung.</string>
@@ -147,6 +152,7 @@
   <!--Send contact requests-->
   <string name="send_request_button">Senden</string>
   <string name="send_request_title">Sende eine Kontaktanfrage</string>
+  <string name="send_request_msg">Sie müssen eine Kontaktanfrage senden, um mit diesem Benutzer zu kommunizieren. Solange Ihr Kontakt die Anforderung nicht akzeptiert hat, können Sie Nachrichten senden, aber Ihr Kontakt kann diese nicht beantworten.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 gesperrte Kontakte</string>
   <!--Smartlist-->
@@ -154,10 +160,14 @@
   <string name="contact_request_sent">Kontaktanfrage gesendet</string>
   <string name="search_results">Suchergebnisse</string>
   <string name="tv_contact_row_header">Kontakte</string>
-  <string name="gallery_error_title">Keine Galerie App gefunden</string>
-  <string name="gallery_error_message">Auf dem Gerät wurde keine Applikation gefunden um die Galerie zu öffnen</string>
+  <string name="gallery_error_title">Keine Galerie-App gefunden</string>
+  <string name="gallery_error_message">Auf dem Gerät wurde keine Applikation gefunden, um die Galerie zu öffnen</string>
   <string name="generic_error">Ein unbekannter Fehler ist aufgetreten</string>
   <!--File Transfer-->
   <string name="invalid_file">Ungültige Datei</string>
+  <string name="file_saved_in">Datei gespeichert in %s</string>
+  <string name="no_space_left_on_device">Kein Speicherplatz mehr auf dem Gerät</string>
+  <string name="menu_file_download">Datei herunterladen</string>
+  <string name="menu_file_delete">Datei löschen</string>
   <string name="menu_file_share">Datei teilen</string>
 </resources>

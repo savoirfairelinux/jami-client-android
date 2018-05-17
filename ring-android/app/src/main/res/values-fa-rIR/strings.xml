@@ -42,6 +42,7 @@
   <!--DetailsHistory Fragment-->
   <!--Home Fragment-->
   <plurals name="home_conferences_title">
+    <item quantity="one">%d گفتگو</item>
     <item quantity="other">%d گفتگو</item>
   </plurals>
   <!--ContactList Fragment-->
