@@ -22,6 +22,7 @@ package cx.ring.adapters;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -87,6 +89,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     private final ConversationPresenter presenter;
     private final ConversationFragment conversationFragment;
     private byte[] mPhoto;
+    private final ColorStateList mErrorColor;
     private final int hPadding;
     private final int vPadding;
     private final int vPaddingEmoticon;
@@ -99,6 +102,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         this.presenter = presenter;
         Context context = conversationFragment.getActivity();
         Resources res = context.getResources();
+        mErrorColor = ColorStateList.valueOf(res.getColor(R.color.red_200));
         hPadding = res.getDimensionPixelSize(R.dimen.padding_medium);
         vPadding = res.getDimensionPixelSize(R.dimen.padding_small);
         vPaddingEmoticon = res.getDimensionPixelSize(R.dimen.padding_xsmall);
@@ -453,31 +457,43 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
         boolean shouldSeparateByDetails = this.shouldSeparateByDetails(textMessage, position);
         boolean isConfigSameAsPreviousMsg = this.isMessageConfigSameAsPrevious(textMessage, position);
+        final Context context = convViewHolder.itemView.getContext();
 
         if (textMessage.isIncoming() && !isConfigSameAsPreviousMsg) {
             Drawable contactPicture = AvatarFactory.getAvatar(
-                    convViewHolder.itemView.getContext(),
+                    context,
                     mPhoto,
                     contact.getUsername(),
                     textMessage.getNumberUri().getHost());
 
-            Glide.with(convViewHolder.itemView.getContext())
+            Glide.with(context)
                     .load(contactPicture)
                     .apply(AvatarFactory.getGlideOptions(true, true))
                     .into(convViewHolder.mPhoto);
         }
 
-        if (textMessage.getStatus() == TextMessage.Status.SENDING) {
-            convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
-            convViewHolder.mMsgDetailTxt.setText(R.string.message_sending);
-        } else if (shouldSeparateByDetails) {
-            convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
-            String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
-                    convViewHolder.itemView.getContext(),
-                    textMessage.getDate());
-            convViewHolder.mMsgDetailTxt.setText(timeSeparationString);
-        } else {
-            convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
+        switch (textMessage.getStatus()) {
+            case SENDING:
+                convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
+                convViewHolder.mMsgDetailTxt.setText(R.string.message_sending);
+                ViewCompat.setBackgroundTintList(convViewHolder.mMsgTxt, null);
+                break;
+            case FAILURE:
+                convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
+                ViewCompat.setBackgroundTintList(convViewHolder.mMsgTxt, mErrorColor);
+                convViewHolder.mMsgDetailTxt.setText(R.string.message_failed);
+                break;
+            default:
+                ViewCompat.setBackgroundTintList(convViewHolder.mMsgTxt, null);
+                if (shouldSeparateByDetails) {
+                    convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
+                    String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
+                            context,
+                            textMessage.getDate());
+                    convViewHolder.mMsgDetailTxt.setText(timeSeparationString);
+                } else {
+                    convViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
+                }
         }
     }
 
