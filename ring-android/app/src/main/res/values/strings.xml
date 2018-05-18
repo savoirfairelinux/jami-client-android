@@ -137,6 +137,7 @@ along with this program; if not, write to the Free Software
     <!-- Text messages -->
     <string name="send_message">Send message</string>
     <string name="message_sending">Sending message…</string>
+    <string name="message_failed">Failed</string>
     <string name="time_just_now">Just now</string>
     <string name="send_file">Send file</string>
 
