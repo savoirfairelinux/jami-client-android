@@ -63,6 +63,9 @@ public class ConversationViewHolder extends RecyclerView.ViewHolder {
             mPhoto = v.findViewById(R.id.image);
             mAnswerLayout = v.findViewById(R.id.imageLayout);
             mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);
+        } else if (type == ConversationAdapter.ConversationMessageType.CONTACT_EVENT.getType()) {
+            mMsgTxt = v.findViewById(R.id.contact_event_txt);
+            mMsgDetailTxt = v.findViewById(R.id.contact_event_details_txt);
         } else {
             mMsgTxt = v.findViewById(R.id.msg_txt);
             mMsgDetailTxt = v.findViewById(R.id.msg_details_txt);

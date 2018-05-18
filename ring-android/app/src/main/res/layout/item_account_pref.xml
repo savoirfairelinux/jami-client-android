@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="72dp">
+    android:layout_height="72dp"
+    android:minHeight="72dp"
+    android:background="?android:attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/account_alias"
@@ -54,6 +55,7 @@
     <ProgressBar
         android:id="@+id/loading_indicator"
         style="?android:attr/progressBarStyleSmall"
+        android:focusable="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
