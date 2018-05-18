@@ -23,27 +23,28 @@ package cx.ring.services;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.daemon.Blob;
-import cx.ring.daemon.DataTransferInfo;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.CallContact;
-import cx.ring.model.DataTransferError;
-import cx.ring.model.DataTransferEventCode;
-import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
-public class CallService extends Observable {
+public class CallService {
 
     private final static String TAG = CallService.class.getSimpleName();
     private final static String MIME_TEXT_PLAIN = "text/plain";
@@ -65,31 +66,45 @@ public class CallService extends Observable {
     DeviceRuntimeService mDeviceRuntimeService;
 
     private Map<String, SipCall> currentCalls = new HashMap<>();
+    private final PublishSubject<SipCall> callSubject = PublishSubject.create();
 
-    public SipCall placeCall(final String account, final String number, final boolean audioOnly) {
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "placeCall() thread running... " + number + " audioOnly: " + audioOnly);
+    public Subject<SipCall> getCallSubject() {
+        return callSubject;
+    }
 
-                    HashMap<String, String> volatileDetails = new HashMap<>();
-                    volatileDetails.put(SipCall.KEY_AUDIO_ONLY, String.valueOf(audioOnly));
+    public Observable<SipCall> getCallUpdates(final SipCall call) {
+        return callSubject.filter(c -> c == call).startWith(call);
+    }
+    public Observable<SipCall> getCallUpdates(final String callId) {
+        SipCall call = getCurrentCallForId(callId);
+        Observable<SipCall> callUpdates = callSubject.filter(c -> c.getCallId().equals(callId));
+        return call == null ? callUpdates : callUpdates.startWith(call);
+    }
 
-                    String callId = Ringservice.placeCall(account, number, StringMap.toSwig(volatileDetails));
-                    if (callId == null || callId.isEmpty())
-                        return null;
-                    if (audioOnly) {
-                        Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
-                    }
-                    CallContact contact = mContactService.findContactByNumber(number);
-                    SipCall call = addCall(account, callId, number, SipCall.Direction.OUTGOING);
-                    call.muteVideo(audioOnly);
-                    call.setContact(contact);
-                    return call;
-                }
-        );
+    public Observable<SipCall> placeCallObservable(final String accountId, final String number, final boolean audioOnly) {
+        return placeCall(accountId, number, audioOnly)
+                .flatMapObservable(this::getCallUpdates);
+    }
+
+    public Single<SipCall> placeCall(final String account, final String number, final boolean audioOnly) {
+        return Single.fromCallable(() -> {
+            Log.i(TAG, "placeCall() thread running... " + number + " audioOnly: " + audioOnly);
+
+            HashMap<String, String> volatileDetails = new HashMap<>();
+            volatileDetails.put(SipCall.KEY_AUDIO_ONLY, String.valueOf(audioOnly));
+
+            String callId = Ringservice.placeCall(account, number, StringMap.toSwig(volatileDetails));
+            if (callId == null || callId.isEmpty())
+                return null;
+            if (audioOnly) {
+                Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
+            }
+            CallContact contact = mContactService.findContactByNumber(number);
+            SipCall call = addCall(account, callId, number, SipCall.Direction.OUTGOING);
+            call.muteVideo(audioOnly);
+            call.setContact(contact);
+            return call;
+        }).subscribeOn(Schedulers.from(mExecutor));
     }
 
     public void refuse(final String callId) {
@@ -339,34 +354,22 @@ public class CallService extends Observable {
     }
 
     public void sendTextMessage(final String callId, final String msg) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "sendTextMessage() thread running...");
-                    StringMap messages = new StringMap();
-                    messages.setRaw("text/plain", Blob.fromString(msg));
-                    Ringservice.sendTextMessage(callId, messages, "", false);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            Log.i(TAG, "sendTextMessage() thread running...");
+            StringMap messages = new StringMap();
+            messages.setRaw("text/plain", Blob.fromString(msg));
+            Ringservice.sendTextMessage(callId, messages, "", false);
+        });
     }
 
-    public Long sendAccountTextMessage(final String accountId, final String to, final String msg) {
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "sendAccountTextMessage() thread running... " + accountId + " " + to + " " + msg);
-                    StringMap msgs = new StringMap();
-                    msgs.setRaw("text/plain", Blob.fromString(msg));
-                    return Ringservice.sendAccountTextMessage(accountId, to, msgs);
-                }
-        );
+    public Single<Long> sendAccountTextMessage(final String accountId, final String to, final String msg) {
+        return Single.fromCallable(() -> {
+            Log.i(TAG, "sendAccountTextMessage() running... " + accountId + " " + to + " " + msg);
+            StringMap msgs = new StringMap();
+            msgs.setRaw("text/plain", Blob.fromString(msg));
+            return Ringservice.sendAccountTextMessage(accountId, to, msgs);
+        }).subscribeOn(Schedulers.from(mExecutor));
     }
-
 
     public SipCall getCurrentCallForId(String callId) {
         return currentCalls.get(callId);
@@ -406,7 +409,7 @@ public class CallService extends Observable {
             Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
             sipCall = new SipCall(callId, callDetails);
             sipCall.setCallState(callState);
-            CallContact contact = mContactService.findContact(sipCall.getNumberUri());
+            CallContact contact = mContactService.findContact(sipCall.getAccount(), sipCall.getNumberUri());
             String registeredName = callDetails.get("REGISTERED_NAME");
             if (registeredName != null && !registeredName.isEmpty()) {
                 contact.setUsername(registeredName);
@@ -422,12 +425,7 @@ public class CallService extends Observable {
         try {
             SipCall call = parseCallState(callId, newState);
             if (call != null) {
-                setChanged();
-
-                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CALL_STATE_CHANGED);
-                event.addEventInput(ServiceEvent.EventInput.CALL, call);
-                notifyObservers(event);
-
+                callSubject.onNext(call);
                 if (call.getCallState() == SipCall.State.OVER) {
                     currentCalls.remove(call.getCallId());
                 }
@@ -441,11 +439,7 @@ public class CallService extends Observable {
         Log.d(TAG, "incoming call: " + accountId + ", " + callId + ", " + from);
 
         SipCall call = addCall(accountId, callId, from, SipCall.Direction.INCOMING);
-        setChanged();
-
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
-        event.addEventInput(ServiceEvent.EventInput.CALL, call);
-        notifyObservers(event);
+        callSubject.onNext(call);
     }
 
     public void incomingMessage(String callId, String from, StringMap messages) {
@@ -458,17 +452,7 @@ public class CallService extends Observable {
             mContactService.saveVCardContactData(sipCall.getContact());
         }
         if (messages.has_key(MIME_TEXT_PLAIN)) {
-            mHistoryService.incomingMessage(sipCall.getAccount(), callId, from, messages);
-        }
-    }
-
-    public void incomingAccountMessage(String accountId, String from, StringMap messages) {
-
-        mHistoryService.incomingMessage(accountId, null, from, messages);
-
-        CallContact contact = mAccountService.getCurrentAccount().getContact(from);
-        if (!mHistoryService.hasAnHistory(accountId, from) && contact == null) {
-            mAccountService.incomingTrustRequest(accountId, from, "", System.currentTimeMillis());
+            mAccountService.incomingAccountMessage(sipCall.getAccount(), callId, from, messages);
         }
     }
 
@@ -479,11 +463,11 @@ public class CallService extends Observable {
 
     void onRtcpReportReceived(String callId, IntegerMap stats) {
         Log.i(TAG, "on RTCP report received: " + callId);
-        setChanged();
+        /*setChanged();
         ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_CHANGED);
         event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
         event.addEventInput(ServiceEvent.EventInput.STATS, stats);
-        notifyObservers(event);
+        notifyObservers(event);*/
     }
 
 }

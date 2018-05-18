@@ -78,6 +78,7 @@ import cx.ring.tv.call.TVCallActivity;
 import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.Observable;
 import cx.ring.utils.Observer;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class DRingService extends Service implements Observer<ServiceEvent> {
 
@@ -122,7 +123,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
         @Override
         public String placeCall(final String account, final String number, final boolean video) {
-            return mConversationFacade.placeCall(account, number, video).getCallId();
+            return mConversationFacade.placeCall(account, number, video).blockingGet().getCallId();
         }
 
         @Override
@@ -221,7 +222,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         // Hashmap runtime cast
         @Override
         public String addAccount(final Map map) {
-            return mAccountService.addAccount(map).getAccountID();
+            return mAccountService.addAccount((Map<String, String>)map).blockingFirst().getAccountID();
         }
 
         @Override
@@ -358,12 +359,12 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
         @Override
         public long sendAccountTextMessage(final String accountID, final String to, final String msg) {
-            return mCallService.sendAccountTextMessage(accountID, to, msg);
+            return mCallService.sendAccountTextMessage(accountID, to, msg).blockingGet();
         }
 
         @Override
         public List<Codec> getCodecList(final String accountID) throws RemoteException {
-            return mAccountService.getCodecList(accountID);
+            return mAccountService.getCodecList(accountID).blockingGet();
         }
 
         @Override
@@ -388,7 +389,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
         @Override
         public void setActiveCodecList(final List codecs, final String accountID) throws RemoteException {
-            mAccountService.setActiveCodecList(codecs, accountID);
+            mAccountService.setActiveCodecList(accountID, codecs);
         }
 
         @Override
@@ -537,6 +538,8 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         }
     };
 
+    private final CompositeDisposable mDisposableBag = new CompositeDisposable();
+
     @Override
     public void onCreate() {
         Log.i(TAG, "onCreated");
@@ -561,9 +564,19 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         updateConnectivityState();
 
         mPreferencesService.addObserver(this);
-        mAccountService.addObserver(this);
-        mConversationFacade.addObserver(this);
-        mCallService.addObserver(this);
+        mDisposableBag.add(mCallService.getCallSubject().subscribe(call -> {
+            int newState = call.getCallState();
+            boolean incomingCall = newState == SipCall.State.RINGING && call.isIncoming();
+            if (incomingCall) {
+                Bundle extras = new Bundle();
+                extras.putString("account", mAccountService.getCurrentAccount().getAccountID());
+                extras.putString(NotificationService.KEY_CALL_ID, call.getCallId());
+                startActivity(new Intent(Intent.ACTION_VIEW)
+                        .putExtras(extras)
+                        .setClass(getApplicationContext(), DeviceUtils.isTv(this) ? TVCallActivity.class : CallActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+            }
+        }));
 
         RingApplication.getInstance().bindDaemon();
     }
@@ -575,9 +588,10 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         getContentResolver().unregisterContentObserver(contactContentObserver);
 
         mPreferencesService.removeObserver(this);
-        mAccountService.removeObserver(this);
-        mConversationFacade.removeObserver(this);
-        mCallService.removeObserver(this);
+        mDisposableBag.clear();
+        //mAccountService.removeObserver(this);
+        //mConversationFacade.removeObserver(this);
+        //mCallService.removeObserver(this);
         isRunning = false;
     }
 
@@ -792,7 +806,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
             case ACTION_CONV_READ:
                 Conversation conversation = mConversationFacade.getConversationById(ringId);
                 if (conversation != null) {
-                    mHistoryService.readMessages(conversation);
+                    mConversationFacade.readMessages(conversation);
                     mNotificationService.cancelTextNotification(ringId);
                 }
                 break;
@@ -802,7 +816,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 startActivity(new Intent(Intent.ACTION_VIEW)
                         .putExtras(extras)
                         .setClass(getApplicationContext(), ConversationActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
             default:
                 break;
@@ -821,7 +835,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         if (observable instanceof PreferencesService) {
             refreshContacts();
             updateConnectivityState();
-        } else if (observable instanceof AccountService && arg != null) {
+        } /*else if (observable instanceof AccountService && arg != null) {
             switch (arg.getEventType()) {
                 case ACCOUNTS_CHANGED:
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(DRingService.this);
@@ -845,7 +859,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                         Log.d(TAG, "call id : " + call.getCallId());
                         Bundle extras = new Bundle();
                         extras.putString("account", mAccountService.getCurrentAccount().getAccountID());
-                        extras.putString("callId", call.getCallId());
+                        extras.putString(NotificationService.KEY_CALL_ID, call.getCallId());
                         startActivity(new Intent(Intent.ACTION_VIEW)
                                 .putExtras(extras)
                                 .setClass(getApplicationContext(), DeviceUtils.isTv(this) ? TVCallActivity.class : CallActivity.class)
@@ -853,7 +867,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                     }
                     break;
             }
-        }
+        }*/
     }
 
     private class ContactsContentObserver extends ContentObserver {

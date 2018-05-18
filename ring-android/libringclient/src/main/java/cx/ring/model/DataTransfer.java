@@ -112,6 +112,16 @@ public class DataTransfer extends ConversationElement {
         return timestamp;
     }
 
+    @Override
+    public Uri getContactNumber() {
+        return new Uri(peerId);
+    }
+
+    @Override
+    public boolean isRead() {
+        return true;
+    }
+
     public long getTimestamp() {
         return timestamp;
     }
