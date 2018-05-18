@@ -328,6 +328,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     public void onStop() {
         super.onStop();
 
+        //presenter.
+
         DisplayManager displayManager = (DisplayManager) getActivity().getSystemService(Context.DISPLAY_SERVICE);
         if (displayManager != null) {
             displayManager.unregisterDisplayListener(displayListener);
@@ -402,15 +404,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void blockScreenRotation() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-            return;
-        }
-        if (mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
     }
 
     @Override

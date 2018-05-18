@@ -20,18 +20,18 @@
 package cx.ring.conversation;
 
 import java.io.File;
+import java.util.List;
 
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.ConversationElement;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseView;
 
 public interface ConversationView extends BaseView {
 
-    void refreshView(Conversation conversation);
-
-    void updateView(String address, String name, int state);
+    void refreshView(List<ConversationElement> conversation);
 
     void scrollToEnd();
 
@@ -63,11 +63,7 @@ public interface ConversationView extends BaseView {
 
     void goToCallActivityWithResult(String accountId, String contactRingId, boolean audioOnly);
 
-    void blockContactRequest();
-
-    void refuseContactRequest();
-
-    void acceptContactRequest();
+    void switchToUnknownView(String name);
 
     void switchToIncomingTrustRequestView(String message);
 
@@ -82,4 +78,9 @@ public interface ConversationView extends BaseView {
     void updateTransfer(DataTransfer transfer);
 
     void shareFile(File path);
+
+    void addElement(ConversationElement e);
+    void updateElement(ConversationElement e);
+    void removeElement(ConversationElement e);
+
 }

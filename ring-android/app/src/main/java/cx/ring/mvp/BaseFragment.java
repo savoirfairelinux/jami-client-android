@@ -105,7 +105,6 @@ public abstract class BaseFragment<T extends RootPresenter> extends Fragment imp
     }
 
     protected void initPresenter(T presenter) {
-
     }
 
     protected void replaceFragmentWithSlide(Fragment fragment, @IdRes int content) {

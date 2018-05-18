@@ -22,6 +22,7 @@ package cx.ring.adapters;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -32,9 +33,15 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
+import cx.ring.model.ContactEvent;
+import cx.ring.model.ConversationElement;
+import cx.ring.model.DataTransfer;
+import cx.ring.model.HistoryCall;
+import cx.ring.model.TextMessage;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.viewholders.SmartListViewHolder;
 
@@ -43,21 +50,21 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     private ArrayList<SmartListViewModel> mSmartListViewModels;
     private SmartListViewHolder.SmartListListeners listener;
 
-    public SmartListAdapter(ArrayList<SmartListViewModel> smartListViewModels, SmartListViewHolder.SmartListListeners listener) {
+    public SmartListAdapter(List<SmartListViewModel> smartListViewModels, SmartListViewHolder.SmartListListeners listener) {
         this.listener = listener;
         this.mSmartListViewModels = new ArrayList<>();
         this.mSmartListViewModels.addAll(smartListViewModels);
     }
 
+    @NonNull
     @Override
-    public SmartListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SmartListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_smartlist, parent, false);
-
         return new SmartListViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(SmartListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SmartListViewHolder holder, int position) {
         final SmartListViewModel smartListViewModel = mSmartListViewModels.get(position);
 
         holder.convParticipants.setText(smartListViewModel.getContactName());
@@ -69,10 +76,8 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         holder.convTime.setText(lastInteractionStr);
         if (smartListViewModel.hasOngoingCall()) {
             holder.convStatus.setText(holder.itemView.getContext().getString(R.string.ongoing_call));
-        } else if (smartListViewModel.getLastInteraction() != null) {
-            holder.convStatus.setText(getLastInteractionSummary(smartListViewModel.getLastEntryType(),
-                    smartListViewModel.getLastInteraction(),
-                    holder.itemView.getContext()));
+        } else if (smartListViewModel.getLastEvent() != null) {
+            holder.convStatus.setText(getLastEventSummary(smartListViewModel.getLastEvent(), holder.itemView.getContext()));
         } else {
             holder.convStatus.setVisibility(View.GONE);
         }
@@ -93,6 +98,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
                 smartListViewModel.getContactName(),
                 smartListViewModel.getUuid());
 
+        holder.photo.setImageDrawable(null);
         Glide.with(holder.itemView.getContext())
                 .load(contactPicture)
                 .apply(AvatarFactory.getGlideOptions(true, true))
@@ -108,7 +114,7 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         return mSmartListViewModels.size();
     }
 
-    public void update(ArrayList<SmartListViewModel> smartListViewModels) {
+    public void update(List<SmartListViewModel> smartListViewModels) {
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new SmartListDiffUtil(this.mSmartListViewModels, smartListViewModels));
 
         this.mSmartListViewModels.clear();
@@ -117,18 +123,37 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
         diffResult.dispatchUpdatesTo(this);
     }
 
-    private String getLastInteractionSummary(int type, String lastInteraction, Context context) {
-        switch (type) {
-            case SmartListViewModel.TYPE_INCOMING_CALL:
-                return String.format(context.getString(R.string.hist_in_call), lastInteraction);
-            case SmartListViewModel.TYPE_OUTGOING_CALL:
-                return String.format(context.getString(R.string.hist_out_call), lastInteraction);
-            case SmartListViewModel.TYPE_INCOMING_MESSAGE:
-                return lastInteraction;
-            case SmartListViewModel.TYPE_OUTGOING_MESSAGE:
-                return context.getText(R.string.you_txt_prefix) + " " + lastInteraction;
-            default:
-                return null;
+    private String getLastEventSummary(ConversationElement e, Context context) {
+        if (e instanceof HistoryCall) {
+            HistoryCall call = (HistoryCall) e;
+            if (call.isIncoming())
+                return String.format(context.getString(R.string.hist_in_call), call.getDurationString());
+            else
+                return String.format(context.getString(R.string.hist_out_call), call.getDurationString());
+        } else if (e instanceof TextMessage) {
+            TextMessage t = (TextMessage) e;
+            if (t.isIncoming()) {
+                return t.getMessage();
+            } else {
+                return context.getText(R.string.you_txt_prefix) + " " + t.getMessage();
+            }
+        } else if (e instanceof ContactEvent) {
+            ContactEvent t = (ContactEvent) e;
+            if (t.event == ContactEvent.Event.ADDED) {
+                return "Contact added";
+            } else if (t.event == ContactEvent.Event.INCOMING_REQUEST) {
+                return "Incoming request";
+            }
+        } else if(e instanceof DataTransfer) {
+            DataTransfer d = (DataTransfer) e;
+            if (d.isOutgoing()) {
+                return "File sent";
+            } else {
+                return "File received";
+            }
+        } else {
+            return "other";
         }
+        return null;
     }
 }
