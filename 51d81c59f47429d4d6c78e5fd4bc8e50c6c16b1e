@@ -1,0 +1,786 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa57193c_fda98325",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/ConversationAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 505,
+        "startChar": 20,
+        "endLine": 505,
+        "endChar": 76
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_9dacc737",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "wht not e.getType() \u003d\u003d CALL? See http://www.javapractices.com/topic/TopicAction.do?Id\u003d31",
+      "range": {
+        "startLine": 127,
+        "startChar": 11,
+        "endLine": 127,
+        "endChar": 36
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_3dbc9b6c",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "should be translatable",
+      "range": {
+        "startLine": 143,
+        "startChar": 23,
+        "endLine": 143,
+        "endChar": 38
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_1dc1d7e4",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 145,
+        "startChar": 23,
+        "endLine": 145,
+        "endChar": 42
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_7db6138c",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 150,
+        "startChar": 23,
+        "endLine": 150,
+        "endChar": 35
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_5dbb4f72",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 152,
+        "startChar": 23,
+        "endLine": 152,
+        "endChar": 39
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_bdaf0b2b",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 155,
+        "startChar": 19,
+        "endLine": 155,
+        "endChar": 27
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_5da4ef56",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 331,
+        "startChar": 8,
+        "endLine": 331,
+        "endChar": 20
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_1d9a7714",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 45
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_3d95bbe4",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 202,
+        "startChar": 11,
+        "endLine": 202,
+        "endChar": 27
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_ddf8ff4b",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/SmartListFragment.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 391,
+        "startChar": 20,
+        "endLine": 391,
+        "endChar": 76
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_fdfb4345",
+        "filename": "ring-android/app/src/main/java/cx/ring/launch/LaunchPresenter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "should log the error",
+      "range": {
+        "startLine": 109,
+        "startChar": 45,
+        "endLine": 109,
+        "endChar": 47
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_9dfe8737",
+        "filename": "ring-android/app/src/main/java/cx/ring/navigation/AccountAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 186,
+        "startChar": 20,
+        "endLine": 186,
+        "endChar": 76
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_7dd1f3cc",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "not required",
+      "range": {
+        "startLine": 592,
+        "startChar": 8,
+        "endLine": 594,
+        "endChar": 44
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_bd01cb3b",
+        "filename": "ring-android/app/src/main/java/cx/ring/service/DRingService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 838,
+        "startChar": 9,
+        "endLine": 870,
+        "endChar": 11
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_3d601b35",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 44
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_1d655745",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 106,
+        "startChar": 9,
+        "endLine": 106,
+        "endChar": 41
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_dd73df13",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/contactrequests/BlackListPresenter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "not required",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 23
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_fd76a305",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/contactrequests/ContactRequestsPresenter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "isn\u0027t it required?",
+      "range": {
+        "startLine": 118,
+        "startChar": 32,
+        "endLine": 118,
+        "endChar": 62
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_9d220700",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 225,
+        "startChar": 12,
+        "endLine": 225,
+        "endChar": 80
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_bd254b0c",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/facades/ConversationFacade.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 502,
+        "startChar": 12,
+        "endLine": 502,
+        "endChar": 68
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_7db0d3dd",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Account.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "what is the meaning of 0?",
+      "range": {
+        "startLine": 497,
+        "startChar": 8,
+        "endLine": 497,
+        "endChar": 25
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_5db50fcc",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/CallContact.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "Should it be removed?",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 7
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_bdc9cb5c",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Conversation.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "why is it commented?",
+      "range": {
+        "startLine": 181,
+        "startChar": 12,
+        "endLine": 181,
+        "endChar": 42
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_9dc68748",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Conversation.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 303,
+        "startChar": 8,
+        "endLine": 303,
+        "endChar": 51
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_fdc34336",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/Conversation.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 332,
+        "startChar": 8,
+        "endLine": 332,
+        "endChar": 51
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_ddc0ff2c",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/model/ConversationElement.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "switch to an interface could help maintenance by avoiding some errors",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_bdf70b8c",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/CallService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "should it be removed?",
+      "range": {
+        "startLine": 466,
+        "startChar": 8,
+        "endLine": 470,
+        "endChar": 33
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_9d3b2738",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/ContactService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "should be removed",
+      "range": {
+        "startLine": 270,
+        "startChar": 7,
+        "endLine": 304,
+        "endChar": 25
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_3d12dbb4",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/HistoryService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 405,
+        "startChar": 16,
+        "endLine": 408,
+        "endChar": 41
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_dd459fb4",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/HistoryService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 422,
+        "startChar": 12,
+        "endLine": 424,
+        "endChar": 32
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_fd4863ce",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/HistoryService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 493,
+        "startChar": 8,
+        "endLine": 495,
+        "endChar": 33
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_1d1717a5",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/PresenceService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "should log the exception",
+      "range": {
+        "startLine": 88,
+        "startChar": 12,
+        "endLine": 88,
+        "endChar": 32
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_7d0c5395",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/PresenceService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-22T15:44:13Z",
+      "side": 1,
+      "message": "1 is meaningless. Use an enum?",
+      "range": {
+        "startLine": 110,
+        "startChar": 32,
+        "endLine": 110,
+        "endChar": 37
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
