@@ -203,8 +203,8 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         }
 
         @Override
-        public void setAccountsActive(final boolean active, final boolean allowProxy) {
-            mAccountService.setAccountsActive(active, allowProxy);
+        public void setAccountsActive(final boolean active) {
+            mAccountService.setAccountsActive(active);
         }
 
         @Override
@@ -607,7 +607,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
 
     private void updateConnectivityState() {
         if (mDaemonService.isStarted()) {
-            mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected(), mPreferencesService.isPushAllowed());
+            mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
             mHardwareService.connectivityChanged();
         }
     }

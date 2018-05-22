@@ -114,7 +114,7 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     private final Runnable mConnectivityChecker = new Runnable() {
         @Override
         public void run() {
-            mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected(), mPreferencesService.isPushAllowed());
+            mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
         }
     };
     @Inject

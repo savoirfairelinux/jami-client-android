@@ -166,7 +166,7 @@ public abstract class RingApplication extends Application {
                 registerReceiver(ringerModeListener, RINGER_FILTER);
 
                 // load accounts from Daemon
-                mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected(), mPreferencesService.isPushAllowed());
+                mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected());
 
                 if (mPreferencesService.getUserSettings().isAllowPushNotifications()) {
                     String token = getPushToken();
