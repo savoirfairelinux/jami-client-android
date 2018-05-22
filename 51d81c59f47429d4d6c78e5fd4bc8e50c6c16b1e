@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_fd80638d",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-05-22T21:41:28Z",
+      "side": 1,
+      "message": "Using instanceof is not the issue (even performance-wise). We should do something like e.getLastEventSummary() however ConversationElement is part of the model and getLastEventSummary is a presentation thing that depends on the client implementation (Context \u0026 al for Android).\n\nTo be discussed",
+      "parentUuid": "fa57193c_9dacc737",
+      "range": {
+        "startLine": 127,
+        "startChar": 11,
+        "endLine": 127,
+        "endChar": 36
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_3dbc9b6c",
         "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
         "patchSetId": 13
@@ -59,6 +83,30 @@
       "writtenOn": "2018-05-22T15:44:13Z",
       "side": 1,
       "message": "should be translatable",
+      "range": {
+        "startLine": 143,
+        "startChar": 23,
+        "endLine": 143,
+        "endChar": 38
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_a0d99e85",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-05-22T21:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_3dbc9b6c",
       "range": {
         "startLine": 143,
         "startChar": 23,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_00e7aa41",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-05-22T21:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_1dc1d7e4",
+      "range": {
+        "startLine": 145,
+        "startChar": 23,
+        "endLine": 145,
+        "endChar": 42
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_7db6138c",
         "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
         "patchSetId": 13
@@ -105,6 +177,30 @@
       "writtenOn": "2018-05-22T15:44:13Z",
       "side": 1,
       "message": "^",
+      "range": {
+        "startLine": 150,
+        "startChar": 23,
+        "endLine": 150,
+        "endChar": 35
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_e0e39631",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-05-22T21:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_7db6138c",
       "range": {
         "startLine": 150,
         "startChar": 23,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_40d08253",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-05-22T21:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_5dbb4f72",
+      "range": {
+        "startLine": 152,
+        "startChar": 23,
+        "endLine": 152,
+        "endChar": 39
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_bdaf0b2b",
         "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
         "patchSetId": 13
@@ -151,6 +271,30 @@
       "writtenOn": "2018-05-22T15:44:13Z",
       "side": 1,
       "message": "^",
+      "range": {
+        "startLine": 155,
+        "startChar": 19,
+        "endLine": 155,
+        "endChar": 27
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_80ca9a9f",
+        "filename": "ring-android/app/src/main/java/cx/ring/adapters/SmartListAdapter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-05-22T21:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_bdaf0b2b",
       "range": {
         "startLine": 155,
         "startChar": 19,
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_c0c3f288",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/CallFragment.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-05-22T21:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_5da4ef56",
+      "range": {
+        "startLine": 331,
+        "startChar": 8,
+        "endLine": 331,
+        "endChar": 20
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_1d9a7714",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
         "patchSetId": 13
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_a0c07e7d",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-05-22T21:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_1d9a7714",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 45
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_3d95bbe4",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
         "patchSetId": 13
@@ -220,6 +412,30 @@
       "writtenOn": "2018-05-22T15:44:13Z",
       "side": 1,
       "message": "^",
+      "range": {
+        "startLine": 202,
+        "startChar": 11,
+        "endLine": 202,
+        "endChar": 27
+      },
+      "revId": "51d81c59f47429d4d6c78e5fd4bc8e50c6c16b1e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_00be8aff",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-05-22T21:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_3d95bbe4",
       "range": {
         "startLine": 202,
         "startChar": 11,
