@@ -58,6 +58,7 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
 
     @Override
     public void saveSettings(Settings settings) {
+        boolean allowPush = settings.isAllowPushNotifications();
         SharedPreferences appPrefs = mContext.getSharedPreferences(RING_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = appPrefs.edit();
         edit.clear();
@@ -65,11 +66,12 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         edit.putBoolean(RING_SYSTEM_CONTACTS, settings.isAllowSystemContacts());
         edit.putBoolean(RING_PLACE_CALLS, settings.isAllowPlaceSystemCalls());
         edit.putBoolean(RING_ON_STARTUP, settings.isAllowRingOnStartup());
-        edit.putBoolean(RING_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications());
-
+        edit.putBoolean(RING_PUSH_NOTIFICATIONS, allowPush);
         edit.apply();
-        if (mUserSettings.isAllowPushNotifications() != settings.isAllowPushNotifications()) {
-            mAccountService.setProxyEnabled(settings.isAllowPushNotifications());
+
+        if (mUserSettings.isAllowPushNotifications() != allowPush) {
+            mAccountService.setPushNotificationToken(allowPush ? RingApplication.getInstance().getPushToken() : "");
+            mAccountService.setProxyEnabled(allowPush);
         }
         mUserSettings = settings;
 
