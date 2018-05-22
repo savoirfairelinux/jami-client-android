@@ -432,24 +432,29 @@ public class AccountService extends Observable {
     /**
      * Sets the activation state of all the accounts in the Daemon
      */
-    public void setAccountsActive(final boolean active, final boolean allowProxy) {
-
+    public void setAccountsActive(final boolean active, final boolean pushAllowed) {
         FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
                 () -> {
-                        Log.i(TAG, "setAccountsActive() thread running... " + active);
-                        StringVect list = Ringservice.getAccountList();
-                        for (int i = 0, n = list.size(); i < n; i++) {
-                            String accountId =list.get(i);
-                            Account a = getAccount(accountId);
-                            if (!allowProxy || active|| a == null || !a.isDhtProxyEnabled()) {
-                                Ringservice.setAccountActive(accountId, active);
-                            }
-                        }
-                        return true;
+                      Log.i(TAG, "setAccountsActive() thread running... " + active);
+                      StringVect list = Ringservice.getAccountList();
+                      for (int i = 0, n = list.size(); i < n; i++) {
+                          String accountId =list.get(i);
+                          Account a = getAccount(accountId);
 
+                          // If the proxy is enabled we can considered the account
+                          // as always active
+                          if (a.isDhtProxyEnabled()) {
+                              Ringservice.setAccountActive(accountId, true);
+                              Log.i(TAG, "setAccountsActive() thread running... TRUE FORCED");
+                          } else {
+                              Ringservice.setAccountActive(accountId, active);
+                          }
+
+                      }
+                      return true;
                 }
         );
     }
