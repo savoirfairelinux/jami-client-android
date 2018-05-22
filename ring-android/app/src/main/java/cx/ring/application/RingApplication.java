@@ -148,9 +148,11 @@ public abstract class RingApplication extends Application {
             return;
         }
 
-        mExecutor.submit(() -> {
+        mExecutor.execute(() -> {
             try {
-
+                if (mDaemonService.isStarted()) {
+                    return;
+                }
                 mDaemonService.startDaemon();
 
                 // Check if the camera hardware feature is available.
@@ -168,7 +170,7 @@ public abstract class RingApplication extends Application {
                 // load accounts from Daemon
                 mAccountService.loadAccountsFromDaemon(mPreferencesService.hasNetworkConnected(), mPreferencesService.isPushAllowed());
 
-                if (mPreferencesService.getUserSettings().isAllowPushNotifications()) {
+                if (mPreferencesService.getSettings().isAllowPushNotifications()) {
                     String token = getPushToken();
                     Ringservice.setPushNotificationToken(token);
                 } else {
@@ -181,10 +183,7 @@ public abstract class RingApplication extends Application {
             } catch (Exception e) {
                 Log.e(TAG, "DRingService start failed", e);
             }
-
-            return true;
         });
-
     }
 
     public void terminateDaemon() {

@@ -51,6 +51,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -66,6 +67,7 @@ import cx.ring.conversation.ConversationView;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
+import cx.ring.model.ConversationElement;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Phone;
 import cx.ring.model.RingError;
@@ -123,11 +125,14 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @BindView(R.id.cvMessageInput)
     protected View mMessageInput;
 
-    @BindView(R.id.llTrustRequestPrompt)
+    @BindView(R.id.unknownContactPrompt)
+    protected View mUnknownPrompt;
+
+    @BindView(R.id.trustRequestPrompt)
     protected View mTrustRequestPrompt;
 
-    @BindView(R.id.llTrustRequestMessage)
-    protected View mLlTrustRequestMessage;
+    @BindView(R.id.trustRequestMessageLayout)
+    protected View mTrustRequestMessageLayout;
 
     @BindView(R.id.tvTrustRequestMessage)
     protected TextView mTvTrustRequestMessage;
@@ -151,25 +156,21 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void refreshView(final Conversation conversation) {
+    public void refreshView(final List<ConversationElement> conversation) {
         if (conversation == null) {
             return;
         }
-        getActivity().runOnUiThread(() -> {
-            if (mAdapter != null) {
-                mAdapter.updateDataset(conversation.getAggregateHistory());
-            }
-            getActivity().invalidateOptionsMenu();
-        });
+        if (mAdapter != null) {
+            mAdapter.updateDataset(conversation);
+        }
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override
     public void scrollToEnd() {
-        getActivity().runOnUiThread(() -> {
-            if (mAdapter.getItemCount() > 0) {
-                mHistList.smoothScrollToPosition(mAdapter.getItemCount() - 1);
-            }
-        });
+        if (mAdapter.getItemCount() > 0) {
+            mHistList.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+        }
     }
 
     @Override
@@ -195,7 +196,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
         if (mHistList != null) {
             mHistList.setLayoutManager(mLayoutManager);
-            mHistList.setAdapter(mAdapter);
+            mHistList.setAdapter(null);
             mHistList.setItemAnimator(new DefaultItemAnimator());
         }
 
@@ -203,9 +204,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         mDeleteConversation = savedInstanceState != null && savedInstanceState.getBoolean(CONVERSATION_DELETE);
 
         setHasOptionsMenu(true);
-
-        mAdapter = new ConversationAdapter(this, presenter);
-
         if (mHistList != null) {
             mHistList.setAdapter(mAdapter);
         }
@@ -224,7 +222,9 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @OnClick(R.id.msg_send)
     public void sendMessageText() {
-        presenter.sendTextMessage(mMsgEditTxt.getText().toString());
+        String message = mMsgEditTxt.getText().toString();
+        clearMsgEdit();
+        presenter.sendTextMessage(message);
     }
 
     @OnClick(R.id.send_data)
@@ -342,9 +342,21 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public void updateTransfer(DataTransfer transfer) {
-        getActivity().runOnUiThread(() -> {
-            mAdapter.updateTransfer(transfer);
-        });
+        mAdapter.updateTransfer(transfer);
+    }
+
+    @Override
+    public void addElement(ConversationElement element) {
+        mAdapter.add(element);
+        scrollToEnd();
+    }
+    @Override
+    public void updateElement(ConversationElement element) {
+        mAdapter.update(element);
+    }
+    @Override
+    public void removeElement(ConversationElement element) {
+        mAdapter.remove(element);
     }
 
     @Override
@@ -375,7 +387,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     public boolean actionSendMsgText(int actionId) {
         switch (actionId) {
             case EditorInfo.IME_ACTION_SEND:
-                presenter.sendTextMessage(mMsgEditTxt.getText().toString());
+                sendMessageText();
                 return true;
         }
         return false;
@@ -478,81 +490,56 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         super.initPresenter(presenter);
         String contactRingID = getArguments().getString(KEY_CONTACT_RING_ID);
         String accountId = getArguments().getString(KEY_ACCOUNT_ID);
+        mAdapter = new ConversationAdapter(this, presenter);
         presenter.init(contactRingID, accountId);
     }
 
     @Override
-    public void updateView(final String address, final String name, final int state) {
-        getActivity().runOnUiThread(() -> {
-            if (state != 0 || mNumberAdapter == null || mNumberAdapter.isEmpty()) {
-                return;
-            }
-
-            for (int i = 0; i < mNumberAdapter.getCount(); i++) {
-                Phone phone = (Phone) mNumberAdapter.getItem(i);
-                if (phone.getNumber() != null) {
-                    String ringID = phone.getNumber().getRawUriString();
-                    if (address.equals(ringID)) {
-                        phone.getNumber().setUsername(name);
-                        mNumberAdapter.notifyDataSetChanged();
-                    }
-                }
-            }
-        });
-    }
-
-    @Override
     public void displayContactName(final CallContact contact) {
-        getActivity().runOnUiThread(() -> {
-            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (actionBar == null) {
-                return;
-            }
-            String displayName = contact.getDisplayName();
-            actionBar.setTitle(displayName);
-            String identity = contact.getRingUsername();
-            if (identity != null && !identity.equals(displayName)) {
-                actionBar.setSubtitle(identity);
-            }
-        });
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar == null) {
+            return;
+        }
+        String displayName = contact.getDisplayName();
+        actionBar.setTitle(displayName);
+        String identity = contact.getRingUsername();
+        if (identity != null && !identity.equals(displayName)) {
+            actionBar.setSubtitle(identity);
+        }
     }
 
     @Override
     public void displayOnGoingCallPane(final boolean display) {
-        getActivity().runOnUiThread(() -> mTopPane.setVisibility(display ? View.VISIBLE : View.GONE));
+        mTopPane.setVisibility(display ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void displayContactPhoto(final byte[] photo) {
-        getActivity().runOnUiThread(() -> mAdapter.setPhoto(photo));
+        mAdapter.setPhoto(photo);
     }
 
     @Override
     public void displayNumberSpinner(final Conversation conversation, final Uri number) {
-        getActivity().runOnUiThread(() -> {
-            mNumberSpinner.setVisibility(View.VISIBLE);
-            mNumberAdapter = new NumberAdapter(getActivity(),
-                    conversation.getContact(),
-                    false);
-            mNumberSpinner.setAdapter(mNumberAdapter);
-            mNumberSpinner.setSelection(getIndex(mNumberSpinner, number));
-        });
+        mNumberSpinner.setVisibility(View.VISIBLE);
+        mNumberAdapter = new NumberAdapter(getActivity(),
+                conversation.getContact(),
+                false);
+        mNumberSpinner.setAdapter(mNumberAdapter);
+        mNumberSpinner.setSelection(getIndex(mNumberSpinner, number));
     }
 
     @Override
     public void displayAddContact(final boolean display) {
-        getActivity().runOnUiThread(() -> {
-            if (mAddContactBtn != null) {
-                mAddContactBtn.setVisible(display);
-            }
-        });
+        if (mAddContactBtn != null) {
+            mAddContactBtn.setVisible(display);
+        }
     }
 
     @Override
     public void displayDeleteDialog(final Conversation conversation) {
-        getActivity().runOnUiThread(() -> mDeleteDialog = ActionHelper.launchDeleteAction(getActivity(),
+        mDeleteDialog = ActionHelper.launchDeleteAction(getActivity(),
                 conversation.getContact(),
-                ConversationFragment.this));
+                ConversationFragment.this);
     }
 
     @Override
@@ -564,7 +551,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public void hideNumberSpinner() {
-        getActivity().runOnUiThread(() -> mNumberSpinner.setVisibility(View.GONE));
+        mNumberSpinner.setVisibility(View.GONE);
     }
 
     @Override
@@ -601,37 +588,50 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         startActivityForResult(intent, HomeActivity.REQUEST_CODE_CALL);
     }
 
-    @Override
     @OnClick(R.id.btnBlock)
     public void blockContactRequest() {
         presenter.onBlockIncomingContactRequest();
     }
 
-    @Override
     @OnClick(R.id.btnRefuse)
     public void refuseContactRequest() {
         presenter.onRefuseIncomingContactRequest();
     }
 
-    @Override
     @OnClick(R.id.btnAccept)
     public void acceptContactRequest() {
         presenter.onAcceptIncomingContactRequest();
     }
 
+    @OnClick(R.id.btnAddContact)
+    public void addContact() {
+        presenter.onAddContact();
+    }
+
+    @Override
+    public void switchToUnknownView(String contactDisplayName) {
+        mMessageInput.setVisibility(View.GONE);
+        mUnknownPrompt.setVisibility(View.VISIBLE);
+        mTrustRequestPrompt.setVisibility(View.GONE);
+        mTvTrustRequestMessage.setText(String.format(getString(R.string.message_contact_not_trusted), contactDisplayName));
+        mTrustRequestMessageLayout.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void switchToIncomingTrustRequestView(String contactDisplayName) {
         mMessageInput.setVisibility(View.GONE);
-        mTvTrustRequestMessage.setText(String.format(getString(R.string.message_contact_not_trusted_yet), contactDisplayName));
+        mUnknownPrompt.setVisibility(View.GONE);
         mTrustRequestPrompt.setVisibility(View.VISIBLE);
-        mLlTrustRequestMessage.setVisibility(View.VISIBLE);
+        mTvTrustRequestMessage.setText(String.format(getString(R.string.message_contact_not_trusted_yet), contactDisplayName));
+        mTrustRequestMessageLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void switchToConversationView() {
         mMessageInput.setVisibility(View.VISIBLE);
+        mUnknownPrompt.setVisibility(View.GONE);
         mTrustRequestPrompt.setVisibility(View.GONE);
-        mLlTrustRequestMessage.setVisibility(View.GONE);
+        mTrustRequestMessageLayout.setVisibility(View.GONE);
     }
 
     @Override
