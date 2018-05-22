@@ -29,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cx.ring.R;
 import cx.ring.contacts.AvatarFactory;
@@ -36,15 +37,15 @@ import ezvcard.VCard;
 
 public class ContactRequestsAdapter extends RecyclerView.Adapter<ContactRequestViewHolder> {
 
-    private ArrayList<PendingContactRequestsViewModel> mContactRequestsViewModels;
+    private ArrayList<ContactRequestsViewModel> mContactRequestsViewModels;
     private ContactRequestViewHolder.ContactRequestListeners mListener;
 
-    public ContactRequestsAdapter(ArrayList<PendingContactRequestsViewModel> viewModels, ContactRequestViewHolder.ContactRequestListeners listener) {
+    public ContactRequestsAdapter(List<ContactRequestsViewModel> viewModels, ContactRequestViewHolder.ContactRequestListeners listener) {
         mContactRequestsViewModels = new ArrayList<>(viewModels);
         mListener = listener;
     }
 
-    public void replaceAll(ArrayList<PendingContactRequestsViewModel> list) {
+    public void replaceAll(List<ContactRequestsViewModel> list) {
         mContactRequestsViewModels.clear();
         mContactRequestsViewModels.addAll(list);
         notifyDataSetChanged();
@@ -60,7 +61,7 @@ public class ContactRequestsAdapter extends RecyclerView.Adapter<ContactRequestV
 
     @Override
     public void onBindViewHolder(ContactRequestViewHolder holder, int position) {
-        final PendingContactRequestsViewModel viewModel = mContactRequestsViewModels.get(position);
+        final ContactRequestsViewModel viewModel = mContactRequestsViewModels.get(position);
         VCard vcard = viewModel.getVCard();
 
         byte[] contactPhoto = null;

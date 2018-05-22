@@ -192,6 +192,9 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
         if (null != videoCodecsPref) {
             videoCodecsPref.refresh();
         }
+        if (null != audioCodecsPref) {
+            audioCodecsPref.refresh();
+        }
     }
 
     @Override

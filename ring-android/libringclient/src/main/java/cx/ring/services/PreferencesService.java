@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,19 +22,52 @@ package cx.ring.services;
 
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import cx.ring.model.Settings;
-import cx.ring.utils.Observable;
+import io.reactivex.Observable;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
 
-public abstract class PreferencesService extends Observable {
+public abstract class PreferencesService {
 
-    protected Settings mUserSettings;
+    @Inject
+    AccountService mAccountService;
 
-    public abstract void saveSettings(Settings settings);
+    @Inject
+    DeviceRuntimeService mDeviceService;
 
-    public abstract Settings loadSettings();
+    private Settings mUserSettings;
+    private Subject<Settings> mSettingsSubject = BehaviorSubject.create();
 
-    public Settings getUserSettings() {
+    protected abstract Settings loadSettings();
+    protected abstract void saveSettings(Settings settings);
+
+    public Settings getSettings() {
+        if (mUserSettings == null) {
+            mUserSettings = loadSettings();
+            mSettingsSubject.onNext(mUserSettings);
+        }
         return mUserSettings;
+    }
+
+    public void setSettings(Settings settings) {
+        saveSettings(settings);
+        boolean allowPush = settings.isAllowPushNotifications();
+        if (mUserSettings.isAllowPushNotifications() != allowPush) {
+            mAccountService.setPushNotificationToken(allowPush ? mDeviceService.getPushToken() : "");
+            mAccountService.setProxyEnabled(allowPush);
+        }
+        mUserSettings = settings;
+        mSettingsSubject.onNext(settings);
+    }
+
+    protected Settings getUserSettings() {
+        return mUserSettings;
+    }
+
+    public Observable<Settings> getSettingsSubject() {
+        return mSettingsSubject;
     }
 
     public abstract boolean hasNetworkConnected();
