@@ -432,24 +432,30 @@ public class AccountService extends Observable {
     /**
      * Sets the activation state of all the accounts in the Daemon
      */
-    public void setAccountsActive(final boolean active, final boolean allowProxy) {
-
+    public void setAccountsActive(final boolean active, final boolean pushAllowed) {
         FutureUtils.executeDaemonThreadCallable(
                 mExecutor,
                 mDeviceRuntimeService.provideDaemonThreadId(),
                 false,
                 () -> {
-                        Log.i(TAG, "setAccountsActive() thread running... " + active);
-                        StringVect list = Ringservice.getAccountList();
-                        for (int i = 0, n = list.size(); i < n; i++) {
-                            String accountId =list.get(i);
-                            Account a = getAccount(accountId);
-                            if (!allowProxy || active|| a == null || !a.isDhtProxyEnabled()) {
-                                Ringservice.setAccountActive(accountId, active);
-                            }
-                        }
-                        return true;
+                      Log.i(TAG, "setAccountsActive() thread running... " + active);
+                      StringVect list = Ringservice.getAccountList();
+                      for (int i = 0, n = list.size(); i < n; i++) {
+                          String accountId =list.get(i);
+                          Account a = getAccount(accountId);
 
+                          if (a == null || active
+                          || (pushAllowed ^ a.isDhtProxyEnabled())) {
+                            // This handle the case where we don't use a dht proxy
+                            // with push notifications enabled.
+                            Ringservice.setAccountActive(accountId, active);
+                          } else if (pushAllowed && a.isDhtProxyEnabled()) {
+                            // If we use push notifications and the dhtproxy, the
+                            // account can be considered as always active.
+                            Ringservice.setAccountActive(accountId, true);
+                          }
+                      }
+                      return true;
                 }
         );
     }
