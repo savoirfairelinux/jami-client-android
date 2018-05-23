@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,96 +20,45 @@
  */
 package cx.ring.smartlist;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
 import cx.ring.model.CallContact;
+import cx.ring.model.ConversationElement;
 
-public class SmartListViewModel {
-
-    public static final int TYPE_INCOMING_MESSAGE = 0;
-    public static final int TYPE_OUTGOING_MESSAGE = 1;
-    public static final int TYPE_INCOMING_CALL = 2;
-    public static final int TYPE_OUTGOING_CALL = 3;
-
+public class SmartListViewModel
+{
     private String uuid;
     private String contactName;
-    private String lastInteraction = "";
     private byte[] photoData;
-    private long lastInteractionTime;
     private boolean hasUnreadTextMessage;
     private boolean hasOngoingCall;
     private CallContact.Status status;
     private boolean isOnline = false;
-    private int lastEntryType;
+    private ConversationElement lastEvent;
 
-    public SmartListViewModel(String id, CallContact.Status status, String contactName, byte[] photoData, long lastInteractionTime, int lastEntrytype, String lastInteraction, boolean hasUnreadTextMessage) {
+    public SmartListViewModel(String id, CallContact.Status status, String contactName, byte[] photoData, ConversationElement lastEvent) {
         this.uuid = id;
         this.contactName = contactName;
         this.photoData = photoData;
-        this.lastInteractionTime = lastInteractionTime;
-        this.hasUnreadTextMessage = hasUnreadTextMessage;
+        this.hasUnreadTextMessage = !lastEvent.isRead();
         this.hasOngoingCall = false;
         this.status = status;
-        this.lastEntryType = lastEntrytype;
-        this.lastInteraction = lastInteraction;
+        this.lastEvent = lastEvent;
     }
 
     public SmartListViewModel(SmartListViewModel smartListViewModel) {
         this.uuid = smartListViewModel.getUuid();
         this.contactName = smartListViewModel.getContactName();
         this.photoData = smartListViewModel.getPhotoData();
-        this.lastInteractionTime = smartListViewModel.getLastInteractionTime();
         this.hasUnreadTextMessage = smartListViewModel.hasUnreadTextMessage();
         this.hasOngoingCall = smartListViewModel.hasOngoingCall();
         this.status = smartListViewModel.getStatus();
-        this.lastEntryType = smartListViewModel.getLastEntryType();
-        this.lastInteraction = smartListViewModel.getLastInteraction();
-    }
-
-    public static class SmartListComparator implements Comparator<SmartListViewModel> {
-        @Override
-        public int compare(SmartListViewModel lhs, SmartListViewModel rhs) {
-            if (lhs.hasOngoingCall) {
-                return -1;
-            }
-            if (rhs.getLastInteractionTime() != lhs.getLastInteractionTime()) {
-                return (int) ((rhs.getLastInteractionTime() - lhs.getLastInteractionTime()) / 1000L);
-            } else {
-                return (rhs.getContactName().compareTo(lhs.getContactName()));
-            }
-        }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof SmartListViewModel) {
-            SmartListViewModel slvm = (SmartListViewModel) o;
-            return !(this.photoData != null && !Arrays.equals(this.photoData, slvm.photoData))
-                    && this.uuid.equals(slvm.getUuid())
-                    && this.contactName.equals(slvm.getContactName())
-                    && this.lastInteraction.equals(slvm.getLastInteraction())
-                    && this.lastInteractionTime == slvm.getLastInteractionTime()
-                    && this.hasUnreadTextMessage == slvm.hasUnreadTextMessage()
-                    && this.hasOngoingCall == slvm.hasOngoingCall()
-                    && this.lastEntryType == slvm.getLastEntryType()
-                    && this.isOnline == slvm.isOnline()
-                    && this.status == slvm.getStatus();
-        } else {
-            return false;
-        }
     }
 
     public String getContactName() {
         return contactName;
     }
 
-    public String getLastInteraction() {
-        return lastInteraction;
-    }
-
     public long getLastInteractionTime() {
-        return lastInteractionTime;
+        return lastEvent.getDate();
     }
 
     public boolean hasUnreadTextMessage() {
@@ -147,7 +97,7 @@ public class SmartListViewModel {
         this.hasOngoingCall = hasOngoingCall;
     }
 
-    public int getLastEntryType() {
-        return lastEntryType;
+    public ConversationElement getLastEvent() {
+        return lastEvent;
     }
 }

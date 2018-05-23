@@ -36,6 +36,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -53,6 +54,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -116,10 +118,10 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     private Boolean isTabletMode = false;
 
+    @Override
     public void onResume() {
         super.onResume();
-
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
+        ((HomeActivity) getActivity()).setToolbarState(false,R.string.app_name);
 
         presenter.refresh();
     }
@@ -274,12 +276,10 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void setLoading(final boolean loading) {
-        getActivity().runOnUiThread(() -> {
             if (mLoader == null) {
                 return;
             }
             mLoader.setVisibility(loading ? View.VISIBLE : View.GONE);
-        });
     }
 
     /**
@@ -360,7 +360,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                 R.drawable.ic_settings_white,
                 v -> {
                     Activity activity = getActivity();
-                    if (activity != null && activity instanceof HomeActivity) {
+                    if (activity instanceof HomeActivity) {
                         HomeActivity homeActivity = (HomeActivity) activity;
                         homeActivity.goToSettings();
                     }
@@ -388,7 +388,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
             Glide.with(getActivity())
                     .load(contactPicture)
                     .apply(AvatarFactory.getGlideOptions(true, false))
-                    .transition(DrawableTransitionOptions.withCrossFade())
+                    //.transition(DrawableTransitionOptions.withCrossFade())
                     .into(photo);
 
             mNewContact.setVisibility(View.VISIBLE);
@@ -483,7 +483,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void updateList(final ArrayList<SmartListViewModel> smartListViewModels) {
+    public void updateList(final List<SmartListViewModel> smartListViewModels) {
         if (mRecyclerView.getAdapter() == null) {
             mSmartListAdapter = new SmartListAdapter(smartListViewModels, SmartListFragment.this);
             mRecyclerView.setAdapter(mSmartListAdapter);
@@ -494,6 +494,13 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
         }
         mRecyclerView.setVisibility(View.VISIBLE);
         mSmartListAdapter.update(smartListViewModels);
+    }
+
+    @Override
+    public void update(int position) {
+        if (mSmartListAdapter != null) {
+            mSmartListAdapter.notifyItemChanged(position);
+        }
     }
 
     @Override

@@ -46,19 +46,12 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
     private static final String RING_PLACE_CALLS = "place_calls";
     private static final String RING_ON_STARTUP = "on_startup";
     private final Map<String, Set<String>> mNotifiedRequests = new HashMap<>();
+
     @Inject
     protected Context mContext;
 
-    @Inject
-    AccountService mAccountService;
-
-    public SharedPreferencesServiceImpl() {
-        mUserSettings = null;
-    }
-
     @Override
-    public void saveSettings(Settings settings) {
-        boolean allowPush = settings.isAllowPushNotifications();
+    protected void saveSettings(Settings settings) {
         SharedPreferences appPrefs = mContext.getSharedPreferences(RING_SETTINGS, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = appPrefs.edit();
         edit.clear();
@@ -66,45 +59,23 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
         edit.putBoolean(RING_SYSTEM_CONTACTS, settings.isAllowSystemContacts());
         edit.putBoolean(RING_PLACE_CALLS, settings.isAllowPlaceSystemCalls());
         edit.putBoolean(RING_ON_STARTUP, settings.isAllowRingOnStartup());
-        edit.putBoolean(RING_PUSH_NOTIFICATIONS, allowPush);
+        edit.putBoolean(RING_PUSH_NOTIFICATIONS, settings.isAllowPushNotifications());
         edit.apply();
-
-        if (mUserSettings.isAllowPushNotifications() != allowPush) {
-            mAccountService.setPushNotificationToken(allowPush ? RingApplication.getInstance().getPushToken() : "");
-            mAccountService.setProxyEnabled(allowPush);
-        }
-        mUserSettings = settings;
-
-        // notify the observers
-        setChanged();
-        notifyObservers();
-
-        loadSettings();
     }
 
     @Override
-    public Settings loadSettings() {
+    protected Settings loadSettings() {
         SharedPreferences appPrefs = mContext.getSharedPreferences(RING_SETTINGS, Context.MODE_PRIVATE);
-
-        if (null == mUserSettings) {
-            mUserSettings = new Settings();
+        Settings settings = getUserSettings();
+        if (settings == null) {
+            settings = new Settings();
         }
-
-        mUserSettings.setAllowMobileData(appPrefs.getBoolean(RING_MOBILE_DATA, false));
-        mUserSettings.setAllowSystemContacts(appPrefs.getBoolean(RING_SYSTEM_CONTACTS, false));
-        mUserSettings.setAllowPlaceSystemCalls(appPrefs.getBoolean(RING_PLACE_CALLS, false));
-        mUserSettings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
-        mUserSettings.setAllowPushNotifications(appPrefs.getBoolean(RING_PUSH_NOTIFICATIONS, false));
-
-        return mUserSettings;
-    }
-
-    @Override
-    public Settings getUserSettings() {
-        if (null == mUserSettings) {
-            mUserSettings = loadSettings();
-        }
-        return mUserSettings;
+        settings.setAllowMobileData(appPrefs.getBoolean(RING_MOBILE_DATA, false));
+        settings.setAllowSystemContacts(appPrefs.getBoolean(RING_SYSTEM_CONTACTS, false));
+        settings.setAllowPlaceSystemCalls(appPrefs.getBoolean(RING_PLACE_CALLS, false));
+        settings.setAllowRingOnStartup(appPrefs.getBoolean(RING_ON_STARTUP, true));
+        settings.setAllowPushNotifications(appPrefs.getBoolean(RING_PUSH_NOTIFICATIONS, false));
+        return settings;
     }
 
     private void saveRequests(String accountId, Set<String> requests) {
@@ -142,12 +113,12 @@ public class SharedPreferencesServiceImpl extends PreferencesService {
 
     @Override
     public boolean hasNetworkConnected() {
-        return NetworkUtils.isConnectivityAllowed(mContext, getUserSettings().isAllowMobileData());
+        return NetworkUtils.isConnectivityAllowed(mContext, getSettings().isAllowMobileData());
     }
 
     @Override
     public boolean isPushAllowed() {
         String token = RingApplication.getInstance().getPushToken();
-        return getUserSettings().isAllowPushNotifications() && !TextUtils.isEmpty(token) && NetworkUtils.isPushAllowed(mContext, getUserSettings().isAllowMobileData());
+        return getSettings().isAllowPushNotifications() && !TextUtils.isEmpty(token) /*&& NetworkUtils.isPushAllowed(mContext, getSettings().isAllowMobileData())*/;
     }
 }
