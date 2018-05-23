@@ -104,6 +104,11 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     }
 
     public void initOutGoing(String accountId, String contactRingId, boolean audioOnly) {
+        if (accountId == null || contactRingId == null) {
+            Log.e(TAG, "initOutGoing: null account or contact");
+            getView().finish();
+            return;
+        }
         if (mHardwareService.getCameraCount() == 0) {
             audioOnly = true;
         }
