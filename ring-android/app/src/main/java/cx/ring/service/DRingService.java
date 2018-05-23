@@ -698,6 +698,11 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     }
 
     private void handlePushReceived(Bundle extras) {
+        PowerManager pm = (PowerManager)getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "wake:push");
+        wl.setReferenceCounted(false);
+        wl.acquire(20 * 1000);
+
         String from = extras.getString(PUSH_RECEIVED_FIELD_FROM);
         Bundle data = extras.getBundle(PUSH_RECEIVED_FIELD_DATA);
         if (from == null || data == null) {
