@@ -22,6 +22,30 @@
       "revId": "c209c4d896c401124ffc7edb725bc4eaec6b01af",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_e0c43661",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/call/CallPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-05-23T15:20:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_c04ad226",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 31
+      },
+      "revId": "c209c4d896c401124ffc7edb725bc4eaec6b01af",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
