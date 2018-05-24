@@ -22,6 +22,30 @@
       "revId": "d7d82cbe946b5b3ff39b697e73552056ed2c9dfa",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_6325d0aa",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/services/AccountService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 220
+      },
+      "writtenOn": "2018-05-24T18:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_4079a2fb",
+      "range": {
+        "startLine": 453,
+        "startChar": 26,
+        "endLine": 453,
+        "endChar": 55
+      },
+      "revId": "d7d82cbe946b5b3ff39b697e73552056ed2c9dfa",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
