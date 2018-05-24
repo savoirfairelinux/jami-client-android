@@ -39,6 +39,8 @@ import android.os.PowerManager;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
 import java.io.File;
@@ -522,9 +524,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
             }
             Log.d(TAG, "receiver.onReceive: " + action);
             switch (action) {
-                case PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED:
-                case ConnectivityManager.CONNECTIVITY_ACTION:
-                case RingApplication.DRING_CONNECTION_CHANGED: {
+                case ConnectivityManager.CONNECTIVITY_ACTION: {
                     updateConnectivityState();
                     break;
                 }
@@ -571,6 +571,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.i(TAG, "onDestroy()");
         unregisterReceiver(receiver);
         getContentResolver().unregisterContentObserver(contactContentObserver);
 
@@ -584,11 +585,10 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "onStartCommand " + (intent == null ? "null" : intent.getAction()) + " " + flags + " " + startId);
-
-        if (intent != null && intent.getAction() != null) {
+        if (intent != null) {
             parseIntent(intent);
+            WakefulBroadcastReceiver.completeWakefulIntent(intent);
         }
-
         return START_STICKY; /* started and stopped explicitly */
     }
 
@@ -612,10 +612,7 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
         }
     }
 
-    private void parseIntent(Intent intent) {
-        if (intent == null) {
-            return;
-        }
+    private void parseIntent(@NonNull Intent intent) {
         String action = intent.getAction();
         if (action == null) {
             return;
