@@ -1,0 +1,4 @@
+* Improve push notifications and DHT proxy support
+* Better handling of failed messages
+* Updated translations
+* Miscellaneous bug fixes
