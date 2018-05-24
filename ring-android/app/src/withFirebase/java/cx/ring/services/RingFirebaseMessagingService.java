@@ -20,6 +20,7 @@ package cx.ring.services;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -41,10 +42,11 @@ public class RingFirebaseMessagingService extends FirebaseMessagingService {
             for (Map.Entry<String, String> entry : data.entrySet()) {
                 bundle.putString(entry.getKey(), entry.getValue());
             }
-            startService(new Intent(DRingService.ACTION_PUSH_RECEIVED)
+            Intent serviceIntent = new Intent(DRingService.ACTION_PUSH_RECEIVED)
                     .setClass(this, DRingService.class)
                     .putExtra(DRingService.PUSH_RECEIVED_FIELD_FROM, remoteMessage.getFrom())
-                    .putExtra(DRingService.PUSH_RECEIVED_FIELD_DATA, bundle));
+                    .putExtra(DRingService.PUSH_RECEIVED_FIELD_DATA, bundle);
+            WakefulBroadcastReceiver.startWakefulService(this, serviceIntent);
         } catch (Exception e) {
             Log.w(TAG, "Error handling push notification", e);
         }
