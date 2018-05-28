@@ -19,6 +19,7 @@
   <!--Notifications-->
   <!--Call Fragment-->
   <!--Text messages-->
+  <string name="message_failed">Huts eginda</string>
   <!--MediaPreferenceFragment-->
   <!--Read contacts permission-->
   <!--Write call log permission-->

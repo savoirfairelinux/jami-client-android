@@ -91,6 +91,7 @@
   <!--Text messages-->
   <string name="send_message">Invia messaggio</string>
   <string name="message_sending">Invio messaggio in corso...</string>
+  <string name="message_failed">Fallito</string>
   <string name="time_just_now">Immediatamente</string>
   <string name="send_file">Invia file</string>
   <!--MediaPreferenceFragment-->

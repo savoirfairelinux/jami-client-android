@@ -85,6 +85,7 @@
   <!--Text messages-->
   <string name="send_message">Відправити повідомлення</string>
   <string name="message_sending"> Повідомлення надсилається...</string>
+  <string name="message_failed">Невдало</string>
   <string name="time_just_now">Прямо зараз</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Дозволи для камери</string>

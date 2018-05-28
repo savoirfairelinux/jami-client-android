@@ -87,6 +87,7 @@
   <!--Text messages-->
   <string name="send_message">Envoyer le message</string>
   <string name="message_sending">Transmission du message</string>
+  <string name="message_failed">Échoué</string>
   <string name="time_just_now">Maintenant</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Droits d\'accès à la caméra</string>

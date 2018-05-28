@@ -68,6 +68,7 @@
   <!--Text messages-->
   <string name="send_message">Hantar pesan</string>
   <string name="message_sending">Sedang menghantar pesan…</string>
+  <string name="message_failed">Gagal</string>
   <string name="time_just_now">Seketika yang lalu</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Akses kamera</string>

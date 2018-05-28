@@ -92,6 +92,7 @@
   <!--Text messages-->
   <string name="send_message">傳送訊息</string>
   <string name="message_sending">正在傳送訊息...</string>
+  <string name="message_failed">失敗</string>
   <string name="time_just_now">剛剛</string>
   <string name="send_file">傳送檔案</string>
   <!--MediaPreferenceFragment-->

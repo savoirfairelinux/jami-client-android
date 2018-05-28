@@ -91,6 +91,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <!--Text messages-->
   <string name="send_message">Enviar mensagem</string>
   <string name="message_sending">Enviando mensagem...</string>
+  <string name="message_failed">Falhou</string>
   <string name="time_just_now">Agora há pouco</string>
   <string name="send_file">Enviar arquivo</string>
   <!--MediaPreferenceFragment-->

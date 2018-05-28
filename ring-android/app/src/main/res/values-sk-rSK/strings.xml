@@ -45,6 +45,7 @@ GNU General Public Licence verziu 3 alebo neskoršie</string>
   <string name="ab_action_flipcamera">Otoč kameru</string>
   <!--Text messages-->
   <string name="send_message">Vyšli správu</string>
+  <string name="message_failed">Zlyhal</string>
   <!--MediaPreferenceFragment-->
   <string name="ringtone_error_title">Chyba</string>
   <string name="ringtone_error_format_not_supported">Tento formát nie je podporovaný.</string>

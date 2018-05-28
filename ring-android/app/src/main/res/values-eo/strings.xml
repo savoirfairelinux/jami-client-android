@@ -63,6 +63,7 @@
   <!--Text messages-->
   <string name="send_message">Sendi mesaĝon</string>
   <string name="message_sending">Sendanta mesaĝon…</string>
+  <string name="message_failed">Fiaskinta</string>
   <string name="time_just_now">Ĵus</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permeso je kamerao</string>

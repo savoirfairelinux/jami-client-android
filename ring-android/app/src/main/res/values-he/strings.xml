@@ -32,6 +32,7 @@
   <string name="action_call_hangup">   נתק</string>
   <!--Text messages-->
   <string name="send_message">שלח הודעה</string>
+  <string name="message_failed">של</string>
   <!--MediaPreferenceFragment-->
   <string name="ringtone_error_title">שגיאה</string>
   <!--Read contacts permission-->

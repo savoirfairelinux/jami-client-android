@@ -83,6 +83,7 @@
   <!--Text messages-->
   <string name="send_message">ارسال پیام</string>
   <string name="message_sending">در حال ارسال پیام…</string>
+  <string name="message_failed">شکست خورد</string>
   <string name="time_just_now">هم‌اکنون</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">دسترسی دوربین</string>

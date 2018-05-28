@@ -85,6 +85,7 @@
   <!--Text messages-->
   <string name="send_message">Odeslat zprávu</string>
   <string name="message_sending">Odesílám zprávu…</string>
+  <string name="message_failed">Hovor selhal</string>
   <string name="time_just_now">Právě teď</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Povolení ke kameře</string>

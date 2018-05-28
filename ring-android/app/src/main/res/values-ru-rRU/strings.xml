@@ -70,6 +70,7 @@
   <!--Text messages-->
   <string name="send_message">Отправить сообщение</string>
   <string name="message_sending">Отправка сообщения...</string>
+  <string name="message_failed">Сбой</string>
   <string name="time_just_now">В данный момент</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на использование камеры</string>

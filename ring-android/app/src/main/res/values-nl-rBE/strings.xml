@@ -93,6 +93,7 @@
   <!--Text messages-->
   <string name="send_message">Bericht versturen</string>
   <string name="message_sending">Bericht word verstuurd…</string>
+  <string name="message_failed">Mislukt</string>
   <string name="time_just_now">Zojuist</string>
   <string name="send_file">Bestand versturen</string>
   <!--MediaPreferenceFragment-->
