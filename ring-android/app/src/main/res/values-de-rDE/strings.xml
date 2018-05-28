@@ -91,6 +91,7 @@
   <!--Text messages-->
   <string name="send_message">Nachricht senden</string>
   <string name="message_sending">Nachricht senden...</string>
+  <string name="message_failed">Fehlgeschlagen</string>
   <string name="time_just_now">Gerade eben</string>
   <string name="send_file">Datei senden</string>
   <!--MediaPreferenceFragment-->

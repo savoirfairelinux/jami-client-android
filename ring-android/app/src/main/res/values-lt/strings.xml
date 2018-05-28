@@ -80,6 +80,7 @@
   <!--Text messages-->
   <string name="send_message">Siųsti žinutę</string>
   <string name="message_sending">Siunčiama žinutė...</string>
+  <string name="message_failed">Nepavyko</string>
   <string name="time_just_now">Ką tik</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameros leidimas</string>

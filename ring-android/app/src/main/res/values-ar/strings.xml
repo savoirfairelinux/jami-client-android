@@ -62,6 +62,7 @@
   <string name="ab_action_flipcamera">قلب الكاميرا</string>
   <!--Text messages-->
   <string name="send_message">إبعث رسالة</string>
+  <string name="message_failed">فشل</string>
   <string name="time_just_now">للتوّ</string>
   <!--MediaPreferenceFragment-->
   <string name="ringtone_error_title">خطأ</string>

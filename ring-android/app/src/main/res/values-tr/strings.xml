@@ -83,6 +83,7 @@
   <!--Text messages-->
   <string name="send_message">İleti gönder</string>
   <string name="message_sending">İleti gönderiliyor...</string>
+  <string name="message_failed">Başarısız</string>
   <string name="time_just_now">Şimdi</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera izni</string>

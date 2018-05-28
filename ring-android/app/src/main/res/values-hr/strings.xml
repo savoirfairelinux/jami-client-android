@@ -76,6 +76,7 @@
   <!--Text messages-->
   <string name="send_message">Pošalji poruku</string>
   <string name="message_sending">Šaljem poruku...</string>
+  <string name="message_failed">Neuspjelo</string>
   <string name="time_just_now">Upravo sada</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dozvola kamere</string>

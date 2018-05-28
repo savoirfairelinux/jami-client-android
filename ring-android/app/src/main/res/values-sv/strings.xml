@@ -93,6 +93,7 @@
   <!--Text messages-->
   <string name="send_message">Skicka meddelande</string>
   <string name="message_sending">Skickar meddelande...</string>
+  <string name="message_failed">Misslyckades</string>
   <string name="time_just_now">Just nu</string>
   <string name="send_file">Skicka fil</string>
   <!--MediaPreferenceFragment-->

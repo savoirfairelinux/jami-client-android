@@ -67,6 +67,7 @@
   <!--Text messages-->
   <string name="send_message">Lähetä viesti</string>
   <string name="message_sending">Viestiä lähetetään...</string>
+  <string name="message_failed">Epäonnistui</string>
   <string name="time_just_now">Juuri nyt</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera oikeudet</string>

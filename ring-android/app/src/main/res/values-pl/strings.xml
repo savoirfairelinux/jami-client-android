@@ -87,6 +87,7 @@
   <!--Text messages-->
   <string name="send_message">Wyślij wiadomość</string>
   <string name="message_sending">Trwa wysyłanie wiadomości...</string>
+  <string name="message_failed">Nie powiodła się</string>
   <string name="time_just_now">W tej chwili</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Uprawnienia do aparatu</string>

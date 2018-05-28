@@ -81,6 +81,7 @@
   <!--Text messages-->
   <string name="send_message">发消息</string>
   <string name="message_sending">正在发送消息…</string>
+  <string name="message_failed">失败</string>
   <string name="time_just_now">刚才</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">摄像头使用权限</string>

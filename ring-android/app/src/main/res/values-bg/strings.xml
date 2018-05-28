@@ -86,6 +86,7 @@
   <!--Text messages-->
   <string name="send_message">Изпращане на съобщение</string>
   <string name="message_sending">Изпращане на съобщение…</string>
+  <string name="message_failed">Неуспешно</string>
   <string name="time_just_now">Току-що</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Право за използване на камерата</string>

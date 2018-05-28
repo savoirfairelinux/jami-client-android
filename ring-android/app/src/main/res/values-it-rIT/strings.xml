@@ -83,6 +83,7 @@
   <!--Text messages-->
   <string name="send_message">Invia messaggio</string>
   <string name="message_sending">Sto inviando il messaggio...</string>
+  <string name="message_failed">Errore</string>
   <string name="time_just_now">Proprio ora</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permesso videocamera</string>

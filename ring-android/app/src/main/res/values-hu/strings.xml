@@ -82,6 +82,7 @@
   <!--Text messages-->
   <string name="send_message">Üzenet küldése</string>
   <string name="message_sending">Üzenet küldése…</string>
+  <string name="message_failed">Sikertelen</string>
   <string name="time_just_now">Épp most</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameraengedély</string>

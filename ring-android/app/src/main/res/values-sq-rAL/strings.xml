@@ -92,6 +92,7 @@
   <!--Text messages-->
   <string name="send_message">Dërgoje mesazhin</string>
   <string name="message_sending">Po dërgohet mesazhi…</string>
+  <string name="message_failed">Dështoi</string>
   <string name="time_just_now">Mu tani</string>
   <string name="send_file">Dërgo kartelë</string>
   <!--MediaPreferenceFragment-->

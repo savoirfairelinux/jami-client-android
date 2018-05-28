@@ -82,6 +82,7 @@
   <!--Text messages-->
   <string name="send_message">メッセージを送信</string>
   <string name="message_sending">メッセージを送信中…</string>
+  <string name="message_failed">失敗しました</string>
   <string name="time_just_now">ちょうど今</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">カメラのアクセス許可</string>

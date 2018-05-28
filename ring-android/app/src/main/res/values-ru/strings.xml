@@ -4,21 +4,21 @@
   <string name="feedback_section">Обратная связь</string>
   <string name="report">&lt;u&gt;Отправить нам письмо&lt;/u&gt;</string>
   <string name="section_license">Лицензия</string>
-  <string name="sponsor_section">Ring — свободное программное обеспечение, разработанное и поддерживаемое</string>
+  <string name="sponsor_section">Ring — свободное программное обеспечение, разрабатываемое и поддерживаемое</string>
   <string name="copyright_section">Авторское право</string>
-  <string name="contribute_section">Внести вклад</string>
+  <string name="contribute_section">Помочь проекту</string>
   <string name="version_section">Версия</string>
-  <string name="no_email_app_installed">Не найден почтовый клиент; установите его, чтобы отправить нам сообщение</string>
-  <string name="no_browser_app_installed">Не найден веб-браузер, установите его, чтобы просмотреть эту страницу</string>
+  <string name="no_email_app_installed">Не найден почтовый клиент. Установите его, чтобы отправить нам сообщение.</string>
+  <string name="no_browser_app_installed">Не найден веб-браузер. Установите его, чтобы просмотреть эту страницу.</string>
   <string name="email_chooser_title">Отправить письмо используя…</string>
   <string name="website_chooser_title">Просмотреть веб-сайт с помощью…</string>
-  <string name="license">Это программное обеспечение предоставляется \"как есть\", без каких либо гарантий. Для получения дополнительной информации смотрите
+  <string name="license">Это программное обеспечение предоставляется \"как есть\", без каких-либо гарантий. Для получения дополнительной информации смотрите
 &lt;u&gt; Лицензию GNU General Public 3 или более поздней версии&lt;/u&gt;</string>
-  <string name="description">Ring — это свободная программа для всеобщей связи, уважающая свободы и конфиденциальность ее пользователей.</string>
+  <string name="description">Ring — это свободная программа для связи, уважающая свободы и конфиденциальность ее пользователей.</string>
   <string name="credits">Благодарности</string>
   <!--About dialog-->
   <string name="developed_by">Разработано</string>
-  <string name="designed_by">Оформление</string>
+  <string name="designed_by">Оформлено</string>
   <!--RingActivity-->
   <string name="title_activity_sflphone_home">Ring</string>
   <string name="error_no_network">Нет подключения к сети</string>
@@ -55,7 +55,7 @@
   <!--TransferDFragment-->
   <!--Notifications-->
   <string name="notif_missed_incoming_call">Пропущенный входящий вызов</string>
-  <string name="notif_missed_outgoing_call">Пропущенный исходящий вызов</string>
+  <string name="notif_missed_outgoing_call">Непринятый исходящий вызов</string>
   <string name="notif_incoming_call_title">Входящий вызов от %1$s</string>
   <string name="notif_incoming_call">Входящий вызов</string>
   <string name="notif_outgoing_call_title">Исходящий вызов к %1$s</string>
@@ -95,6 +95,7 @@
   <!--Text messages-->
   <string name="send_message">Отправить сообщение</string>
   <string name="message_sending">Отправка сообщения...</string>
+  <string name="message_failed">Сбой</string>
   <string name="time_just_now">Только сейчас</string>
   <string name="send_file">Отправить файл</string>
   <!--MediaPreferenceFragment-->
@@ -137,7 +138,7 @@
   <string name="profile">Мой профиль</string>
   <string name="profile_message_warning">Ваш профиль доступен только вашим контактам</string>
   <string name="open_the_gallery">Открыть галерею</string>
-  <string name="take_a_photo">Сделать фото</string>
+  <string name="take_a_photo">Сфотографировать</string>
   <string name="profile_name_hint">Введите ваше имя (опционально)</string>
   <!--Share fragment-->
   <string name="share_message">Отсканируйте этот QR-код встроенным сканером приложения Ring, которое хочет с вами связаться.</string>
@@ -164,21 +165,26 @@
   <string name="contact_request_sent">Запрос на добавление в контакты отправлен</string>
   <string name="search_results">Результаты поиска</string>
   <string name="tv_contact_row_header">Контакты</string>
+  <string name="gallery_error_title">Не найдено приложение Галерея</string>
+  <string name="gallery_error_message">На устройстве не найдено приложения для открытия Галереи</string>
   <string name="generic_error">Произошла неизвестная ошибка</string>
   <string name="message_contact_not_trusted_yet">%s не находится в вашем списке контактов. Вы хотите принять или отклонить этот запрос?</string>
   <!--File Transfer-->
   <string name="invalid_file">Некорректный файл</string>
   <string name="not_able_to_write_file">Невозможно записать файл</string>
   <string name="file_transfer_status_created">инициализация передачи</string>
+  <string name="file_transfer_status_unsupported">не поддерживается</string>
   <string name="file_transfer_status_wait_peer_acceptance">ожидание принятия пиром</string>
   <string name="file_transfer_status_wait_host_acceptance">ожидание принятия</string>
   <string name="file_transfer_status_ongoing">передача</string>
   <string name="file_transfer_status_finished">принят</string>
+  <string name="file_transfer_status_closed_by_host">закрыто хостом</string>
   <string name="file_transfer_status_closed_by_peer">остановлено пиром</string>
   <string name="file_transfer_status_invalid_pathname">Некорректный путь</string>
   <string name="file_transfer_status_unjoinable_peer">пир недоступен</string>
   <string name="file_saved_in">Файл сохранён в %s</string>
   <string name="no_space_left_on_device">На устройстве не осталось свободного места</string>
+  <string name="title_media_viewer">Просмотрщик медиа</string>
   <string name="menu_file_download">Загрузить файл</string>
   <string name="menu_file_delete">Удалить файл</string>
   <string name="menu_file_share">Поделиться файлом</string>

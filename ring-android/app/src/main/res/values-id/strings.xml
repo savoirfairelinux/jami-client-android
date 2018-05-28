@@ -45,6 +45,7 @@
   <!--Text messages-->
   <string name="send_message">Kirim pesan</string>
   <string name="message_sending">Mengirimkan pesan...</string>
+  <string name="message_failed">Gagal</string>
   <string name="time_just_now">Baru saja</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Izin kamera</string>

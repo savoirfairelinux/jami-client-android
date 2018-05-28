@@ -78,6 +78,7 @@
   <!--Text messages-->
   <string name="send_message">Pošlji sporočilo</string>
   <string name="message_sending">Pošiljam sporočilo...</string>
+  <string name="message_failed">Neuspelo</string>
   <string name="time_just_now">Ravnokar</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Dovoljenje kamere</string>
