@@ -53,15 +53,12 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
             clickListener.onItemLongClick(smartListViewModel);
             return true;
         });
-        photo.setOnClickListener(v -> clickListener.onPhotoClick(smartListViewModel));
     }
 
     public interface SmartListListeners {
         void onItemClick(SmartListViewModel smartListViewModel);
 
         void onItemLongClick(SmartListViewModel smartListViewModel);
-
-        void onPhotoClick(SmartListViewModel smartListViewModel);
     }
 
 }

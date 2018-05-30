@@ -190,10 +190,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> implements 
         getView().displayConversationDialog(smartListViewModel);
     }
 
-    public void photoClicked(SmartListViewModel smartListViewModel) {
-        // ignored
-    }
-
     public void quickCallClicked() {
         if (mCallContact != null) {
             if (mCallContact.getPhones().size() > 1) {

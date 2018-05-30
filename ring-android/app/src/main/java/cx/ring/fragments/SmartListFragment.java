@@ -556,9 +556,4 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     public void onItemLongClick(SmartListViewModel smartListViewModel) {
         presenter.conversationLongClicked(smartListViewModel);
     }
-
-    @Override
-    public void onPhotoClick(SmartListViewModel smartListViewModel) {
-        presenter.photoClicked(smartListViewModel);
-    }
 }
