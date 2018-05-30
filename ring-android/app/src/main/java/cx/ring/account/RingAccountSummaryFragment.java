@@ -130,81 +130,81 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
     private boolean mAccountHasPassword = true;
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        if (getArguments() == null || getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY) == null) {
-            return;
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mLinkAccountView.setContainer(this);
+        hidePopWizard();
+        if (getArguments() != null) {
+            String accountId = getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY);
+            if (accountId != null) {
+                presenter.setAccountId(accountId);
+            }
         }
-        presenter.setAccountId(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
     }
 
     @Override
     public void accountChanged(final Account account) {
-        RingApplication.uiHandler.post(() -> {
-            if (account == null) {
-                Log.w(TAG, "No account to display!");
-                return;
-            }
-            mDeviceAdapter = new DeviceAdapter(getActivity(), account.getDevices(), account.getDeviceId(),
-                    RingAccountSummaryFragment.this);
-            mDeviceList.setAdapter(mDeviceAdapter);
+        if (account == null) {
+            Log.w(TAG, "No account to display!");
+            return;
+        }
+        mDeviceAdapter = new DeviceAdapter(getActivity(), account.getDevices(), account.getDeviceId(),
+                RingAccountSummaryFragment.this);
+        mDeviceList.setAdapter(mDeviceAdapter);
 
-            int totalHeight = 0;
-            for (int i = 0; i < mDeviceAdapter.getCount(); i++) {
-                View listItem = mDeviceAdapter.getView(i, null, mDeviceList);
-                listItem.measure(0, 0);
-                totalHeight += listItem.getMeasuredHeight();
-            }
+        int totalHeight = 0;
+        for (int i = 0; i < mDeviceAdapter.getCount(); i++) {
+            View listItem = mDeviceAdapter.getView(i, null, mDeviceList);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
 
-            ViewGroup.LayoutParams par = mDeviceList.getLayoutParams();
-            par.height = totalHeight + (mDeviceList.getDividerHeight() * (mDeviceAdapter.getCount() - 1));
-            mDeviceList.setLayoutParams(par);
-            mDeviceList.requestLayout();
+        ViewGroup.LayoutParams par = mDeviceList.getLayoutParams();
+        par.height = totalHeight + (mDeviceList.getDividerHeight() * (mDeviceAdapter.getCount() - 1));
+        mDeviceList.setLayoutParams(par);
+        mDeviceList.requestLayout();
 
-            mAccountSwitch.setChecked(account.isEnabled());
-            mAccountNameTxt.setText(account.getAlias());
-            mAccountIdTxt.setText(account.getUsername());
-            String username = account.getRegisteredName();
-            boolean currentRegisteredName = account.registeringUsername;
-            boolean hasRegisteredName = !currentRegisteredName && username != null && !username.isEmpty();
-            registeringNameGroup.setVisibility(currentRegisteredName ? View.VISIBLE : View.GONE);
-            mRegisterNameGroup.setVisibility((!hasRegisteredName && !currentRegisteredName) ? View.VISIBLE : View.GONE);
-            mRegisteredNameGroup.setVisibility(hasRegisteredName ? View.VISIBLE : View.GONE);
-            if (hasRegisteredName) {
-                mAccountUsernameTxt.setText(username);
-            }
+        mAccountSwitch.setChecked(account.isEnabled());
+        mAccountNameTxt.setText(account.getAlias());
+        mAccountIdTxt.setText(account.getUsername());
+        String username = account.getRegisteredName();
+        boolean currentRegisteredName = account.registeringUsername;
+        boolean hasRegisteredName = !currentRegisteredName && username != null && !username.isEmpty();
+        registeringNameGroup.setVisibility(currentRegisteredName ? View.VISIBLE : View.GONE);
+        mRegisterNameGroup.setVisibility((!hasRegisteredName && !currentRegisteredName) ? View.VISIBLE : View.GONE);
+        mRegisteredNameGroup.setVisibility(hasRegisteredName ? View.VISIBLE : View.GONE);
+        if (hasRegisteredName) {
+            mAccountUsernameTxt.setText(username);
+        }
 
-            int color = ContextCompat.getColor(getActivity(), R.color.holo_red_light);
-            String status;
+        int color = ContextCompat.getColor(getActivity(), R.color.holo_red_light);
+        String status;
 
-            if (account.isEnabled()) {
-                if (account.isTrying()) {
-                    status = getString(R.string.account_status_connecting);
-                } else if (account.needsMigration()) {
-                    status = getString(R.string.account_update_needed);
-                } else if (account.isInError()) {
-                    status = getString(R.string.account_status_connection_error);
-                } else if (account.isRegistered()) {
-                    status = getString(R.string.account_status_online);
-                    color = ContextCompat.getColor(getActivity(), R.color.holo_green_dark);
-                } else {
-                    status = getString(R.string.account_status_unknown);
-                }
+        if (account.isEnabled()) {
+            if (account.isTrying()) {
+                status = getString(R.string.account_status_connecting);
+            } else if (account.needsMigration()) {
+                status = getString(R.string.account_update_needed);
+            } else if (account.isInError()) {
+                status = getString(R.string.account_status_connection_error);
+            } else if (account.isRegistered()) {
+                status = getString(R.string.account_status_online);
+                color = ContextCompat.getColor(getActivity(), R.color.holo_green_dark);
             } else {
-                color = ContextCompat.getColor(getActivity(), R.color.darker_gray);
-                status = getString(R.string.account_status_offline);
+                status = getString(R.string.account_status_unknown);
             }
+        } else {
+            color = ContextCompat.getColor(getActivity(), R.color.darker_gray);
+            status = getString(R.string.account_status_offline);
+        }
 
-            mAccountStatus.setText(status);
-            Drawable drawable = AppCompatResources.getDrawable(getActivity(), R.drawable.static_rounded_background);
-            Drawable wrapped = DrawableCompat.wrap(drawable);
-            DrawableCompat.setTint(wrapped, color);
-            mAccountStatus.setBackground(wrapped);
+        mAccountStatus.setText(status);
+        Drawable wrapped = DrawableCompat.wrap(AppCompatResources.getDrawable(getActivity(), R.drawable.static_rounded_background));
+        DrawableCompat.setTint(wrapped, color);
+        mAccountStatus.setBackground(wrapped);
 
-            mAccountHasPassword = account.getDetailBoolean(ConfigKey.ARCHIVE_HAS_PASSWORD);
-            mPasswordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
-        });
+        mAccountHasPassword = account.getDetailBoolean(ConfigKey.ARCHIVE_HAS_PASSWORD);
+        mPasswordLayout.setVisibility(mAccountHasPassword ? View.VISIBLE : View.GONE);
     }
 
     /*
@@ -356,13 +356,6 @@ public class RingAccountSummaryFragment extends BaseFragment<RingAccountSummaryP
     @Override
     public void injectFragment(RingInjectionComponent component) {
         component.inject(this);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mLinkAccountView.setContainer(this);
-        hidePopWizard();
     }
 
     @Override

@@ -123,6 +123,15 @@ public class HistoryCall extends ConversationElement implements Serializable {
         return number;
     }
 
+    public Uri getContactNumber() {
+        return new Uri(number);
+    }
+
+    @Override
+    public boolean isRead() {
+        return true;
+    }
+
     public boolean isIncoming() {
         return direction == SipCall.Direction.INCOMING;
     }
@@ -170,5 +179,10 @@ public class HistoryCall extends ConversationElement implements Serializable {
     @Override
     public long getDate() {
         return call_start;
+    }
+
+    @Override
+    public long getId() {
+        return callID.hashCode();
     }
 }
