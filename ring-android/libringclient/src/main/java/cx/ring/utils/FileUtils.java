@@ -58,11 +58,19 @@ public class FileUtils {
     public static boolean moveFile(File file, File dest) {
         if (!file.exists() || !file.canRead())
             return false;
+        if (file.equals(dest))
+            return true;
         if (!file.renameTo(dest)) {
-            Log.w(TAG, "moveFile: can't rename file to " + dest);
-            if (!copyFile(file, dest))
+            Log.w(TAG, "moveFile: can't rename file, trying copy+delete to " + dest);
+            if (!copyFile(file, dest)) {
+                Log.w(TAG, "moveFile: can't copy file to " + dest);
                 return false;
+            }
+            if (!file.delete()) {
+                Log.w(TAG, "moveFile: can't delete old file from " + file);
+            }
         }
+        Log.d(TAG, "moveFile: moved " + file + " to " + dest);
         return true;
     }
 
