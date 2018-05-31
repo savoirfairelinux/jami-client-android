@@ -1088,20 +1088,25 @@ public class AccountService {
         return DataTransferError.UNKNOWN;
     }
 
-    public DataTransferError acceptFileTransfer(final Long dataTransferId, final String filePath, final long offset) {
-        Log.i(TAG, "acceptFileTransfer() dataTransferId=" + dataTransferId + ", filePath=" + filePath + ", offset=" + offset);
-        try {
-            return getDataTransferError(mExecutor.submit(() -> Ringservice.acceptFileTransfer(dataTransferId, filePath, offset)).get());
-        } catch (Exception ignored) {}
-        return DataTransferError.UNKNOWN;
+    public void acceptFileTransfer(long id) {
+        acceptFileTransfer(getDataTransfer(id));
     }
 
-    public DataTransferError cancelDataTransfer(final Long dataTransferId) {
-        Log.i(TAG, "cancelDataTransfer() dataTransferId=" + dataTransferId);
-        try {
-            return getDataTransferError(mExecutor.submit(() -> Ringservice.cancelDataTransfer(dataTransferId)).get());
-        } catch (Exception ignored) {}
-        return DataTransferError.UNKNOWN;
+    public void acceptFileTransfer(DataTransfer transfer) {
+        if (transfer == null)
+            return;
+        File path = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
+        acceptFileTransfer(transfer.getDataTransferId(), path.getAbsolutePath(), 0);
+    }
+
+    private void acceptFileTransfer(final Long dataTransferId, final String filePath, final long offset) {
+        Log.i(TAG, "acceptFileTransfer() id=" + dataTransferId + ", path=" + filePath + ", offset=" + offset);
+        mExecutor.execute(() -> Ringservice.acceptFileTransfer(dataTransferId, filePath, offset));
+    }
+
+    public void cancelDataTransfer(final Long dataTransferId) {
+        Log.i(TAG, "cancelDataTransfer() id=" + dataTransferId);
+        mExecutor.execute(() -> Ringservice.cancelDataTransfer(dataTransferId));
     }
 
     private class DataTransferRefreshTask extends TimerTask {
