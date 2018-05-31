@@ -52,6 +52,7 @@ import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
+import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.SwigNativeConverter;
@@ -1096,7 +1097,7 @@ public class AccountService {
     public void acceptFileTransfer(DataTransfer transfer) {
         if (transfer == null)
             return;
-        File path = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
+        File path = mDeviceRuntimeService.getTemporaryPath(transfer.getPeerId(), transfer.getStoragePath());
         acceptFileTransfer(transfer.getDataTransferId(), path.getAbsolutePath(), 0);
     }
 
@@ -1153,13 +1154,23 @@ public class AccountService {
             DataTransferEventCode oldState = transfer.getEventCode();
             if (oldState != dataEvent) {
                 if (dataEvent == DataTransferEventCode.ONGOING) {
-                    if (mTransferRefreshTimer == null) {
+                    if (mTransferRefreshTimer == null)
                         mTransferRefreshTimer = new Timer();
-                    }
                     mTransferRefreshTimer.scheduleAtFixedRate(
                             new DataTransferRefreshTask(transfer),
                             DATA_TRANSFER_REFRESH_PERIOD,
                             DATA_TRANSFER_REFRESH_PERIOD);
+                } else if (dataEvent.isError()) {
+                    if (!transfer.isOutgoing()) {
+                        File tmpPath = mDeviceRuntimeService.getTemporaryPath(transfer.getPeerId(), transfer.getStoragePath());
+                        tmpPath.delete();
+                    }
+                } else if (dataEvent == DataTransferEventCode.FINISHED) {
+                    if (!transfer.isOutgoing()) {
+                        File tmpPath = mDeviceRuntimeService.getTemporaryPath(transfer.getPeerId(), transfer.getStoragePath());
+                        File path = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
+                        FileUtils.moveFile(tmpPath, path);
+                    }
                 }
             }
             transfer.setEventCode(dataEvent);
