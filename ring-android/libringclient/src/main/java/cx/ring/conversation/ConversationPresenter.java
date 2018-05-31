@@ -21,6 +21,7 @@
 package cx.ring.conversation;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -49,6 +50,7 @@ import cx.ring.utils.StringUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import io.reactivex.Scheduler;
+import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -232,15 +234,25 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mConversationFacade.sendFile(mAccountId, mContactRingId, file);
     }
 
-    public boolean downloadFile(DataTransfer transfer, File dest) {
-        if (!transfer.isComplete())
-            return false;
-        File file = getDeviceRuntimeService().getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
-        if (FileUtils.copyFile(file, dest)) {
-            Log.w(TAG, "Copied file to " + dest.getAbsolutePath() + " (" + FileUtils.readableFileSize(file.length()) + ")");
-            return true;
-        }
-        return false;
+    public void downloadFile(final DataTransfer transfer, final File dest) {
+        mCompositeDisposable.add(
+                Single.fromCallable(() -> {
+                    if (!transfer.isComplete())
+                        throw new IllegalStateException();
+                    File file = getDeviceRuntimeService().getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
+                    if (FileUtils.copyFile(file, dest)) {
+                        Log.w(TAG, "Copied file to " + dest.getAbsolutePath() + " (" + FileUtils.readableFileSize(file.length()) + ")");
+                        return dest;
+                    }
+                    throw new IOException();
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(mUiScheduler)
+                .subscribe(file -> {
+                    getView().displayCompletedDownload(transfer, file);
+                }, error -> {
+                    Log.e(TAG, "Can't download file " + dest, error);
+                }));
     }
 
     public void shareFile(DataTransfer file) {
