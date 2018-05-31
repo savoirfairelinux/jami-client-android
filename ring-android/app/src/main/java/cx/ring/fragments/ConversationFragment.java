@@ -20,6 +20,8 @@
 package cx.ring.fragments;
 
 import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
@@ -658,6 +660,20 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             takePicture.setVisibility(View.VISIBLE);
             sendData.setVisibility(View.VISIBLE);
             pbDataTransfer.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void displayCompletedDownload(DataTransfer transfer, File destination) {
+        DownloadManager downloadManager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
+        if (downloadManager != null) {
+            downloadManager.addCompletedDownload(transfer.getDisplayName(),
+                    transfer.getDisplayName(),
+                    true,
+                    transfer.isPicture() ? "image/jpeg" : "text/plain",
+                    destination.getAbsolutePath(),
+                    destination.length(),
+                    true);
         }
     }
 }
