@@ -352,8 +352,7 @@ public class ConversationFacade {
         DataTransferEventCode transferEventCode = transfer.getEventCode();
         if (transferEventCode == DataTransferEventCode.CREATED) {
             if (transfer.isPicture() && !transfer.isOutgoing()) {
-                File path = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
-                mAccountService.acceptFileTransfer(transfer.getDataTransferId(), path.getAbsolutePath(), 0);
+                mAccountService.acceptFileTransfer(transfer);
             }
             conversation.addFileTransfer(transfer);
             conversationsSubject.onNext(mConversations);
