@@ -697,33 +697,7 @@ public class DRingService extends Service {
     private void handleFileAction(String action, Bundle extras) {
         Long id = extras.getLong(KEY_TRANSFER_ID);
         if (action.equals(ACTION_FILE_ACCEPT)) {
-            File cacheDir = getCacheDir();
-            if (!cacheDir.exists()) {
-                boolean mkdirs = cacheDir.mkdirs();
-                if (!mkdirs) {
-                    Log.e(TAG, "handleFileAction: not able to create directory at " + cacheDir.toString());
-                    return;
-                }
-            }
-
-            DataTransfer file = mAccountService.getDataTransfer(id);
-            if (file == null) {
-                Log.e(TAG, "handleFileAction: unknown data transfer " + id);
-                return;
-            }
-
-            File cacheFile = new File(cacheDir, file.getDisplayName());
-            if (cacheFile.exists()) {
-                boolean delete = cacheFile.delete();
-                if (!delete) {
-                    Log.e(TAG, "configureForFileInfoTextMessage: not able to delete cache file at " + cacheFile.toString());
-                    return;
-                }
-            }
-
-            Log.d(TAG, "configureForFileInfoTextMessage: cacheFile=" + cacheFile + ",exists=" + cacheFile.exists());
-
-            mAccountService.acceptFileTransfer(id, cacheFile.getAbsolutePath(), 0);
+            mAccountService.acceptFileTransfer(id);
         } else if (action.equals(ACTION_FILE_CANCEL)) {
             mAccountService.cancelDataTransfer(id);
         }
