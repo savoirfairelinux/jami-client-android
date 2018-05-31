@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,7 +29,6 @@ import javax.inject.Inject;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.RingError;
-import cx.ring.model.ServiceEvent;
 import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
@@ -40,8 +40,6 @@ import cx.ring.services.PresenceService;
 import cx.ring.tv.model.TVContactRequestViewModel;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
@@ -49,7 +47,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.observers.ResourceSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainPresenter extends RootPresenter<MainView> implements Observer<ServiceEvent> {
+public class MainPresenter extends RootPresenter<MainView> {
 
     private static final String TAG = MainPresenter.class.getSimpleName();
 
@@ -67,8 +65,6 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
                          PresenceService presenceService,
                          HardwareService hardwareService,
                          Scheduler mainScheduler) {
-
-
         mAccountService = accountService;
         mContactService = contactService;
         mPresenceService = presenceService;
@@ -79,59 +75,24 @@ public class MainPresenter extends RootPresenter<MainView> implements Observer<S
     @Override
     public void bindView(MainView view) {
         super.bindView(view);
-        mAccountService.addObserver(this);
-        mContactService.addObserver(this);
-        mPresenceService.addObserver(this);
+        mCompositeDisposable.add(mPresenceService.getPresenceUpdates()
+                .observeOn(mMainScheduler)
+                .subscribe(this::refreshContact));
     }
 
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
-        mContactService.removeObserver(this);
-        mPresenceService.removeObserver(this);
     }
 
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case CONVERSATIONS_CHANGED:
-            case ACCOUNTS_CHANGED:
-            case NAME_REGISTRATION_ENDED:
-                reloadConversations();
-                reloadAccountInfos();
-                break;
-            case INCOMING_TRUST_REQUEST:
-                loadContactRequest();
-                break;
-        }
-        if (observable instanceof PresenceService) {
-            switch (event.getEventType()) {
-                case NEW_BUDDY_NOTIFICATION:
-                    refreshContact(
-                            event.getString(ServiceEvent.EventInput.BUDDY_URI));
-                    break;
-            }
-        }
-    }
-
-    private void refreshContact(String buddy) {
+    private void refreshContact(CallContact buddy) {
         for (int i = 0; i < mTvListViewModels.size(); i++) {
             TVListViewModel tvListViewModel = mTvListViewModels.get(i);
             CallContact callContact = tvListViewModel.getCallContact();
-
-            if (callContact.getIds().get(0).equals("ring:" + buddy)) {
-                TVListViewModel updatedTvListViewModel = new TVListViewModel(
-                        callContact,
-                        mPresenceService.isBuddyOnline(callContact.getIds().get(0)));
-
-                if (!updatedTvListViewModel.equals(tvListViewModel)) {
-                    getView().refreshContact(i, updatedTvListViewModel);
-                }
+            if (callContact == buddy) {
+                tvListViewModel.setOnline(callContact.isOnline());
+                getView().refreshContact(i, tvListViewModel);
+                break;
             }
         }
     }

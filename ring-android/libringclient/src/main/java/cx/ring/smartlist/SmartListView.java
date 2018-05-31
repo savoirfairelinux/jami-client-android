@@ -19,7 +19,7 @@
  */
 package cx.ring.smartlist;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import cx.ring.model.CallContact;
 import cx.ring.mvp.BaseView;
@@ -54,7 +54,8 @@ public interface SmartListView extends BaseView {
 
     void hideNoConversationMessage();
 
-    void updateList(ArrayList<SmartListViewModel> smartListViewModels);
+    void updateList(List<SmartListViewModel> smartListViewModels);
+    void update(int position);
 
     void goToConversation(String accountId, String contactId);
 

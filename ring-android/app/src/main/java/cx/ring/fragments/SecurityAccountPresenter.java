@@ -26,14 +26,11 @@ import javax.inject.Inject;
 import cx.ring.model.Account;
 import cx.ring.model.AccountCredentials;
 import cx.ring.model.ConfigKey;
-import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 import cx.ring.utils.Tuple;
 
-public class SecurityAccountPresenter extends RootPresenter<SecurityAccountView> implements Observer<ServiceEvent> {
+public class SecurityAccountPresenter extends RootPresenter<SecurityAccountView> {
 
     protected AccountService mAccountService;
 
@@ -96,22 +93,5 @@ public class SecurityAccountPresenter extends RootPresenter<SecurityAccountView>
         mAccount.setDetail(key, filePath);
         mAccountService.setCredentials(mAccount.getAccountID(), mAccount.getCredentialsHashMapList());
         mAccountService.setAccountDetails(mAccount.getAccountID(), mAccount.getDetails());
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null || getView() == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
-            case REGISTRATION_STATE_CHANGED:
-                getView().removeAllCredentials();
-                getView().addAllCredentials(mAccount.getCredentials());
-                break;
-            default:
-                break;
-        }
     }
 }

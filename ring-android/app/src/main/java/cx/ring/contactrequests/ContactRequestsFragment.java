@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import cx.ring.R;
@@ -104,36 +105,34 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
     }
 
     @Override
-    public void onContactRequestClick(PendingContactRequestsViewModel viewModel) {
+    public void onContactRequestClick(ContactRequestsViewModel viewModel) {
         presenter.contactRequestClicked(viewModel.getContactId());
     }
 
     @Override
-    public void updateView(final ArrayList<PendingContactRequestsViewModel> list) {
-        RingApplication.uiHandler.post(() -> {
-            if (mPaneTextView == null || mEmptyTextView == null) {
-                return;
-            }
+    public void updateView(final List<ContactRequestsViewModel> list) {
+        if (mPaneTextView == null || mEmptyTextView == null) {
+            return;
+        }
 
-            if (!list.isEmpty()) {
-                PendingContactRequestsViewModel viewModel = list.get(0);
-                if (viewModel.hasPane()) {
-                    mPaneTextView.setText(getString(R.string.contact_request_account, viewModel.getAccountUsername()));
-                }
-                mPaneTextView.setVisibility(viewModel.hasPane() ? View.VISIBLE : View.GONE);
+        if (!list.isEmpty()) {
+            ContactRequestsViewModel viewModel = list.get(0);
+            if (viewModel.hasPane()) {
+                mPaneTextView.setText(getString(R.string.contact_request_account, viewModel.getAccountUsername()));
             }
+            mPaneTextView.setVisibility(viewModel.hasPane() ? View.VISIBLE : View.GONE);
+        }
 
-            mEmptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
+        mEmptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
 
-            if (mRequestsList.getAdapter() != null) {
-                mAdapter.replaceAll(list);
-            } else {
-                mAdapter = new ContactRequestsAdapter(list, ContactRequestsFragment.this);
-                mRequestsList.setAdapter(mAdapter);
-                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                mRequestsList.setLayoutManager(mLayoutManager);
-            }
-        });
+        if (mRequestsList.getAdapter() != null) {
+            mAdapter.replaceAll(list);
+        } else {
+            mAdapter = new ContactRequestsAdapter(list, ContactRequestsFragment.this);
+            mRequestsList.setAdapter(mAdapter);
+            LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+            mRequestsList.setLayoutManager(mLayoutManager);
+        }
     }
 
     @Override
