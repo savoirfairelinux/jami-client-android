@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_542cc44a",
+        "filename": "ring-android/.gitlab/issue_templates/Bug.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-31T18:36:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_e9ed41f1",
+      "range": {
+        "startLine": 23,
+        "startChar": 76,
+        "endLine": 23,
+        "endChar": 83
+      },
+      "revId": "201c680f56adac13f166b0a85a00b7feb67ac2e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_49ba6de2",
         "filename": "ring-android/.gitlab/issue_templates/Bug.md",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fa57193c_343150a3",
+        "filename": "ring-android/.gitlab/issue_templates/Bug.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-31T18:36:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_49ba6de2",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 10
+      },
+      "revId": "201c680f56adac13f166b0a85a00b7feb67ac2e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa57193c_29bf39d2",
         "filename": "ring-android/.gitlab/issue_templates/Bug.md",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2018-05-30T17:23:07Z",
       "side": 1,
       "message": "Maybe just add a list like:\n- Step 1\n- Step 2\n- etc.\n?",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 11
+      },
+      "revId": "201c680f56adac13f166b0a85a00b7feb67ac2e4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa57193c_94265c67",
+        "filename": "ring-android/.gitlab/issue_templates/Bug.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-05-31T18:36:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa57193c_29bf39d2",
       "range": {
         "startLine": 31,
         "startChar": 10,
