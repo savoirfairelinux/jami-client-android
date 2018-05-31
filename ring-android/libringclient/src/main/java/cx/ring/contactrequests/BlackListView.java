@@ -19,13 +19,14 @@
 
 package cx.ring.contactrequests;
 
+import java.util.Collection;
 import java.util.List;
 
 import cx.ring.model.CallContact;
 
 public interface BlackListView {
 
-    void updateView(List<CallContact> list);
+    void updateView(Collection<CallContact> list);
 
     void hideListView();
 

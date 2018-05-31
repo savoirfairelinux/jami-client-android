@@ -85,6 +85,7 @@ class CodecPreference extends Preference {
         super.onBindViewHolder(holder);
 
         ListView mCodecList = (ListView) holder.findViewById(R.id.dndlistview);
+        mCodecList.setFocusable(false);
         if (mCodecList.getAdapter() != listAdapter)
             mCodecList.setAdapter(listAdapter);
         mCodecList.setOnItemClickListener((arg0, arg1, pos, arg3) -> {
@@ -108,6 +109,8 @@ class CodecPreference extends Preference {
 
     void setCodecs(ArrayList<Codec> codecs) {
         listAdapter.setDataset(codecs);
+        notifyChanged();
+        notifyHierarchyChanged();
     }
 
     void refresh() {
@@ -117,7 +120,6 @@ class CodecPreference extends Preference {
     }
 
     private static class CodecAdapter extends BaseAdapter {
-
         private final ArrayList<Codec> items = new ArrayList<>();
         private Context mContext;
 
@@ -137,11 +139,6 @@ class CodecPreference extends Preference {
 
         @Override
         public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public int getItemViewType(int position) {
             return 0;
         }
 
@@ -177,34 +174,10 @@ class CodecPreference extends Preference {
             return rowView;
         }
 
-        @Override
-        public int getViewTypeCount() {
-            return 1;
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return true;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return getCount() == 0;
-        }
-
-        @Override
-        public boolean areAllItemsEnabled() {
-            return true;
-        }
-
-        @Override
-        public boolean isEnabled(int position) {
-            return true;
-        }
-
         void setDataset(ArrayList<Codec> codecs) {
             items.clear();
             items.addAll(codecs);
+            notifyDataSetChanged();
         }
 
         class CodecView {
