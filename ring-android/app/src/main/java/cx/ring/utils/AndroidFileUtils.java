@@ -179,12 +179,29 @@ public class AndroidFileUtils {
         return file;
     }
 
+    public static File getCachePath(Context context, String filename) {
+        return new File(context.getCacheDir(), filename);
+    }
+
     public static File getFilePath(Context context, String filename) {
         return context.getFileStreamPath(filename);
     }
 
     public static File getConversationPath(Context context, String conversationId, String name) {
         File conversationsDir = getFilePath(context, "conversation_data");
+
+        if (!conversationsDir.exists())
+            conversationsDir.mkdir();
+
+        File conversationDir = new File(conversationsDir, conversationId);
+        if (!conversationDir.exists())
+            conversationDir.mkdir();
+
+        return new File(conversationDir, name);
+    }
+
+    public static File getTempPath(Context context, String conversationId, String name) {
+        File conversationsDir = getCachePath(context, "conversation_data");
 
         if (!conversationsDir.exists())
             conversationsDir.mkdir();

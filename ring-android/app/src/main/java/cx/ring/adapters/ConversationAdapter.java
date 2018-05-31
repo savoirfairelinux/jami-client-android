@@ -302,28 +302,14 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         if (conversationElement.getType() != ConversationElement.CEType.FILE)
             return false;
         DataTransfer file = (DataTransfer) conversationElement;
-        Context context = conversationFragment.getActivity();
         switch (item.getItemId()) {
             case R.id.conv_action_download: {
                 File downloadDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Ring");
-                if (!downloadDir.mkdirs()) {
-                    Log.e(TAG, "Directory not created");
-                }
+                downloadDir.mkdirs();
                 File newFile = new File(downloadDir, file.getDisplayName());
                 if (newFile.exists())
                     newFile.delete();
-                if (presenter.downloadFile(file, newFile)) {
-                    DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-                    if (downloadManager != null) {
-                        downloadManager.addCompletedDownload(file.getDisplayName(),
-                                file.getDisplayName(),
-                                true,
-                                file.isPicture() ? "image/jpeg" : "text/plain",
-                                newFile.getAbsolutePath(),
-                                newFile.length(),
-                                true);
-                    }
-                }
+                presenter.downloadFile(file, newFile);
                 break;
             }
             case R.id.conv_action_share: {
