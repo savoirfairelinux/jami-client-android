@@ -51,6 +51,8 @@ public interface ConversationView extends BaseView {
 
     void displayErrorToast(int error);
 
+    void displayCompletedDownload(DataTransfer transfer, File destination);
+
     void hideNumberSpinner();
 
     void clearMsgEdit();
