@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa57193c_69b931e9",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/smartlist/SmartListPresenter.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-06-01T20:55:32Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 245,
+        "startChar": 16,
+        "endLine": 246,
+        "endChar": 84
+      },
+      "revId": "636a065f603447f6c8472befd93c6b52e74ebfe3",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
