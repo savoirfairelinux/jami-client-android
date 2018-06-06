@@ -32,8 +32,11 @@ public final class StringUtils {
             Character.UnicodeBlock.MISCELLANEOUS_SYMBOLS,
             Character.UnicodeBlock.MISCELLANEOUS_SYMBOLS_AND_PICTOGRAPHS,
             Character.UnicodeBlock.MISCELLANEOUS_SYMBOLS_AND_ARROWS,
+            Character.UnicodeBlock.ALCHEMICAL_SYMBOLS,
+            Character.UnicodeBlock.ARROWS,
             Character.UnicodeBlock.ENCLOSED_ALPHANUMERIC_SUPPLEMENT,
-            Character.UnicodeBlock.TRANSPORT_AND_MAP_SYMBOLS
+            Character.UnicodeBlock.TRANSPORT_AND_MAP_SYMBOLS,
+            Character.UnicodeBlock.VARIATION_SELECTORS // Ignore modifier
     ));
 
     public static boolean isEmpty(String s) {
@@ -101,11 +104,11 @@ public final class StringUtils {
             if (Character.isWhitespace(codePoint)) {
                 continue;
             }
-            Character.UnicodeBlock block = Character.UnicodeBlock.of(codePoint);
-            // Ignore modifier
-            if (block == Character.UnicodeBlock.VARIATION_SELECTORS) {
+            // Common Emoji range: https://en.wikipedia.org/wiki/Unicode_block
+            if (codePoint >= 0x1F000 && codePoint < 0x20000) {
                 continue;
             }
+            Character.UnicodeBlock block = Character.UnicodeBlock.of(codePoint);
             if (!EMOJI_BLOCKS.contains(block)) {
                 return false;
             }
