@@ -37,6 +37,7 @@ import javax.inject.Named;
 
 import cx.ring.daemon.Blob;
 import cx.ring.daemon.DataTransferInfo;
+import cx.ring.daemon.Message;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.StringVect;
@@ -697,7 +698,7 @@ public class AccountService {
      */
     public List<String> getTlsSupportedMethods() {
         Log.i(TAG, "getTlsSupportedMethods()");
-        return SwigNativeConverter.convertSwigToNative(Ringservice.getSupportedTlsMethod());
+        return SwigNativeConverter.toJava(Ringservice.getSupportedTlsMethod());
     }
 
     /**
@@ -720,7 +721,7 @@ public class AccountService {
      */
     public void setCredentials(final String accountId, final List credentials) {
         Log.i(TAG, "setCredentials() " + accountId);
-        mExecutor.execute(() -> Ringservice.setCredentials(accountId, SwigNativeConverter.convertFromNativeToSwig(credentials)));
+        mExecutor.execute(() -> Ringservice.setCredentials(accountId, SwigNativeConverter.toSwig(credentials)));
     }
 
     /**
@@ -1088,6 +1089,15 @@ public class AccountService {
             return getDataTransferError(mExecutor.submit(() -> Ringservice.sendFile(dataTransferInfo, 0)).get());
         } catch (Exception ignored) {}
         return DataTransferError.UNKNOWN;
+    }
+
+    public List<Message> getLastMessages(String accountId, long baseTime) {
+        try {
+            return mExecutor.submit(() -> SwigNativeConverter.toJava(Ringservice.getLastMessages(accountId, baseTime))).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
     public void acceptFileTransfer(long id) {
