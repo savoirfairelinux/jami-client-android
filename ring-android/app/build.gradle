@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-def buildFirebase = project.hasProperty('buildFirebase')
+def buildFirebase = project.hasProperty('buildFirebase') || getGradle().getStartParameter().getTaskRequests().toString().contains('Firebase')
 
 android {
     compileSdkVersion 27
