@@ -22,28 +22,28 @@ package cx.ring.utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 
 public class CircleTransform extends BitmapTransformation {
+    // Using the fully qualified class name (not {@link Class#getName()}) to avoid proguard obfuscation
+    private static final String ID = "cx.ring.utils.CircleTransform";
+    private static final byte[] ID_BYTES = ID.getBytes(CHARSET);
 
-    private static Bitmap circleCrop(BitmapPool pool, Bitmap source) {
-        if (source == null) {
-            return null;
-        }
-
+    @Override
+    protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap source, int outWidth, int outHeight) {
         int size = Math.min(source.getWidth(), source.getHeight());
         int x = (source.getWidth() - size) / 2;
         int y = (source.getHeight() - size) / 2;
-
         Bitmap squared = Bitmap.createBitmap(source, x, y, size, size);
-
-        Bitmap result = pool.get(size, size, Bitmap.Config.ARGB_8888);
+        Bitmap result = pool.get(size, size, source.getConfig());
 
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
@@ -55,13 +55,17 @@ public class CircleTransform extends BitmapTransformation {
     }
 
     @Override
-    protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
-        return circleCrop(pool, toTransform);
+    public boolean equals(Object o) {
+        return o instanceof CircleTransform;
+    }
+
+    @Override
+    public int hashCode() {
+        return ID.hashCode();
     }
 
     @Override
     public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
-        //do nothing
+        messageDigest.update(ID_BYTES);
     }
 }
-

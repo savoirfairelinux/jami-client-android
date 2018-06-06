@@ -35,6 +35,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import cx.ring.application.RingApplication;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.StringVect;
 import cx.ring.service.OpenSlParams;
@@ -89,6 +90,11 @@ public class DeviceRuntimeServiceImpl extends DeviceRuntimeService {
     @Override
     public File getCacheDir() {
         return mContext.getCacheDir();
+    }
+
+    @Override
+    public String getPushToken() {
+        return RingApplication.getInstance().getPushToken();
     }
 
     private boolean isNetworkConnectedForType(int connectivityManagerType) {

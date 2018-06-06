@@ -257,7 +257,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         super.onViewCreated(view, savedInstanceState);
         mCurrentOrientation = getResources().getConfiguration().orientation;
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
-        mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "cx.ring.onIncomingCall");
+        mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "cx.ring:onIncomingCall");
         mScreenWakeLock.setReferenceCounted(false);
 
         if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
@@ -402,15 +402,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void blockScreenRotation() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
-            return;
-        }
-        if (mCurrentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
     }
 
     @Override
@@ -420,10 +412,9 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void displayVideoSurface(final boolean display) {
-        getActivity().runOnUiThread(() -> {
-            mVideoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
-            mVideoPreview.setVisibility(display ? View.VISIBLE : View.GONE);
-        });
+        mVideoSurface.setVisibility(display ? View.VISIBLE : View.GONE);
+        mVideoPreview.setVisibility(display ? View.VISIBLE : View.GONE);
+        updateMenu();
     }
 
     @Override
@@ -548,90 +539,82 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void initNormalStateDisplay(final boolean audioOnly) {
-        getActivity().runOnUiThread(() -> {
-            shapeRipple.stopRipple();
+        shapeRipple.stopRipple();
 
-            acceptButton.setVisibility(View.GONE);
-            refuseButton.setVisibility(View.GONE);
-            hangupButton.setVisibility(View.VISIBLE);
+        acceptButton.setVisibility(View.GONE);
+        refuseButton.setVisibility(View.GONE);
+        hangupButton.setVisibility(View.VISIBLE);
 
-            contactBubbleLayout.setVisibility(audioOnly ? View.VISIBLE : View.INVISIBLE);
+        contactBubbleLayout.setVisibility(audioOnly ? View.VISIBLE : View.INVISIBLE);
 
-            getActivity().invalidateOptionsMenu();
-        });
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override
     public void initIncomingCallDisplay() {
-        getActivity().runOnUiThread(() -> {
-            acceptButton.setVisibility(View.VISIBLE);
-            refuseButton.setVisibility(View.VISIBLE);
-            hangupButton.setVisibility(View.GONE);
+        acceptButton.setVisibility(View.VISIBLE);
+        refuseButton.setVisibility(View.VISIBLE);
+        hangupButton.setVisibility(View.GONE);
 
-            getActivity().invalidateOptionsMenu();
-        });
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override
     public void initOutGoingCallDisplay() {
-        getActivity().runOnUiThread(() -> {
-            acceptButton.setVisibility(View.GONE);
-            refuseButton.setVisibility(View.VISIBLE);
-            hangupButton.setVisibility(View.GONE);
+        acceptButton.setVisibility(View.GONE);
+        refuseButton.setVisibility(View.VISIBLE);
+        hangupButton.setVisibility(View.GONE);
 
-            getActivity().invalidateOptionsMenu();
-        });
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override
     public void resetVideoSize(final int videoWidth, final int videoHeight, final int previewWidth, final int previewHeight) {
-        getActivity().runOnUiThread(() -> {
-            ViewGroup rootView = (ViewGroup) getView();
-            if (rootView == null)
-                return;
+        ViewGroup rootView = (ViewGroup) getView();
+        if (rootView == null)
+            return;
 
-            double videoRatio = videoWidth / (double) videoHeight;
-            double screenRatio = getView().getWidth() / (double) getView().getHeight();
+        double videoRatio = videoWidth / (double) videoHeight;
+        double screenRatio = getView().getWidth() / (double) getView().getHeight();
 
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mVideoSurface.getLayoutParams();
-            int oldW = params.width;
-            int oldH = params.height;
-            if (videoRatio >= screenRatio) {
-                params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
-                params.height = (int) (videoHeight * (double) rootView.getWidth() / (double) videoWidth);
-            } else {
-                params.height = RelativeLayout.LayoutParams.MATCH_PARENT;
-                params.width = (int) (videoWidth * (double) rootView.getHeight() / (double) videoHeight);
-            }
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mVideoSurface.getLayoutParams();
+        int oldW = params.width;
+        int oldH = params.height;
+        if (videoRatio >= screenRatio) {
+            params.width = RelativeLayout.LayoutParams.MATCH_PARENT;
+            params.height = (int) (videoHeight * (double) rootView.getWidth() / (double) videoWidth);
+        } else {
+            params.height = RelativeLayout.LayoutParams.MATCH_PARENT;
+            params.width = (int) (videoWidth * (double) rootView.getHeight() / (double) videoHeight);
+        }
 
-            if (oldW != params.width || oldH != params.height) {
-                mVideoSurface.setLayoutParams(params);
-            }
+        if (oldW != params.width || oldH != params.height) {
+            mVideoSurface.setLayoutParams(params);
+        }
 
-            final int mPreviewWidth;
-            final int mPreviewHeight;
+        final int mPreviewWidth;
+        final int mPreviewHeight;
 
-            if (mCurrentOrientation == Configuration.ORIENTATION_PORTRAIT) {
-                mPreviewWidth = HardwareServiceImpl.VIDEO_HEIGHT;
-                mPreviewHeight = HardwareServiceImpl.VIDEO_WIDTH;
-            } else {
-                mPreviewWidth = HardwareServiceImpl.VIDEO_WIDTH;
-                mPreviewHeight = HardwareServiceImpl.VIDEO_HEIGHT;
-            }
+        if (mCurrentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+            mPreviewWidth = HardwareServiceImpl.VIDEO_HEIGHT;
+            mPreviewHeight = HardwareServiceImpl.VIDEO_WIDTH;
+        } else {
+            mPreviewWidth = HardwareServiceImpl.VIDEO_WIDTH;
+            mPreviewHeight = HardwareServiceImpl.VIDEO_HEIGHT;
+        }
 
-            DisplayMetrics metrics = getResources().getDisplayMetrics();
-            RelativeLayout.LayoutParams paramsPreview = (RelativeLayout.LayoutParams) mVideoPreview.getLayoutParams();
-            oldW = paramsPreview.width;
-            oldH = paramsPreview.height;
-            double previewMaxDim = Math.max(mPreviewWidth, mPreviewHeight);
-            double previewRatio = metrics.density * 160. / previewMaxDim;
-            paramsPreview.width = (int) (mPreviewWidth * previewRatio);
-            paramsPreview.height = (int) (mPreviewHeight * previewRatio);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        RelativeLayout.LayoutParams paramsPreview = (RelativeLayout.LayoutParams) mVideoPreview.getLayoutParams();
+        oldW = paramsPreview.width;
+        oldH = paramsPreview.height;
+        double previewMaxDim = Math.max(mPreviewWidth, mPreviewHeight);
+        double previewRatio = metrics.density * 160. / previewMaxDim;
+        paramsPreview.width = (int) (mPreviewWidth * previewRatio);
+        paramsPreview.height = (int) (mPreviewHeight * previewRatio);
 
-            if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
-                mVideoPreview.setLayoutParams(paramsPreview);
-            }
-        });
+        if (oldW != paramsPreview.width || oldH != paramsPreview.height) {
+            mVideoPreview.setLayoutParams(paramsPreview);
+        }
     }
 
     @Override

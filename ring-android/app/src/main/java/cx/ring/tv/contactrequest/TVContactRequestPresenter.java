@@ -24,7 +24,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import cx.ring.facades.ConversationFacade;
 import cx.ring.model.TrustRequest;
+import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
@@ -36,14 +38,17 @@ import ezvcard.VCard;
 public class TVContactRequestPresenter extends RootPresenter<TVContactRequestView> {
 
     private AccountService mAccountService;
+    private ConversationFacade mConversationService;
     private PreferencesService mPreferencesService;
     private DeviceRuntimeService mDeviceRuntimeService;
 
     @Inject
     public TVContactRequestPresenter(AccountService accountService,
+                                     ConversationFacade conversationService,
                                      PreferencesService sharedPreferencesService,
                                      DeviceRuntimeService deviceRuntimeService) {
         mAccountService = accountService;
+        mConversationService = conversationService;
         mPreferencesService = sharedPreferencesService;
         this.mDeviceRuntimeService = deviceRuntimeService;
     }
@@ -64,27 +69,22 @@ public class TVContactRequestPresenter extends RootPresenter<TVContactRequestVie
             }
         }
 
-        mAccountService.acceptTrustRequest(accountId, contactId);
-        mPreferencesService.removeRequestPreferences(accountId, contactId);
+        mConversationService.acceptRequest(accountId, new Uri(contactId));
 
         getView().finishView();
     }
 
     public void refuseTrustRequest(TVContactRequestViewModel viewModel) {
         String accountId = mAccountService.getCurrentAccount().getAccountID();
-        String contactId = viewModel.getContactId();
-        mAccountService.discardTrustRequest(accountId, contactId);
-        mPreferencesService.removeRequestPreferences(accountId, contactId);
+        mAccountService.discardTrustRequest(accountId, new Uri(viewModel.getContactId()));
         getView().finishView();
-
     }
 
     public void blockTrustRequest(TVContactRequestViewModel viewModel) {
         String accountId = mAccountService.getCurrentAccount().getAccountID();
         String contactId = viewModel.getContactId();
-        mAccountService.discardTrustRequest(accountId, contactId);
+        mConversationService.discardRequest(accountId, new Uri(contactId));
         mAccountService.removeContact(accountId, contactId, true);
-        mPreferencesService.removeRequestPreferences(accountId, contactId);
         getView().finishView();
     }
 

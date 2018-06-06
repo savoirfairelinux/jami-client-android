@@ -2,6 +2,7 @@
  * Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  * Author: Pierre Duchemin <pierre.duchemin@savoirfairelinux.com>
+ * Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,10 +21,19 @@
 
 package cx.ring.model;
 
-public abstract class ConversationElement implements IConversationElement, Comparable<IConversationElement> {
+public interface ConversationElement {
 
-    @Override
-    public int compareTo(IConversationElement iConversationElement) {
-        return (int) ((getDate() - iConversationElement.getDate()) / 1000L);
+    CEType getType();
+
+    long getDate();
+
+    Uri getContactNumber();
+
+    boolean isRead();
+
+    long getId();
+
+    enum CEType {
+        TEXT, CALL, FILE, CONTACT
     }
 }

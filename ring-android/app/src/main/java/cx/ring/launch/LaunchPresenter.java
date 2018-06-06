@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>s
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,23 +23,22 @@ package cx.ring.launch;
 import android.Manifest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import cx.ring.application.RingApplication;
 import cx.ring.model.Account;
-import cx.ring.model.ServiceEvent;
 import cx.ring.model.Settings;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
 
-public class LaunchPresenter extends RootPresenter<LaunchView> implements Observer<ServiceEvent> {
+public class LaunchPresenter extends RootPresenter<LaunchView> {
 
     protected AccountService mAccountService;
     protected DeviceRuntimeService mDeviceRuntimeService;
@@ -54,26 +54,12 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
         this.mHardwareService = hardwareService;
     }
 
-    @Override
-    public void unbindView() {
-        super.unbindView();
-        mAccountService.removeObserver(this);
-    }
-
     public void init() {
         String[] toRequest = buildPermissionsToAsk();
-        ArrayList<String> permissionsWeCanAsk = new ArrayList<>();
-
-        permissionsWeCanAsk.addAll(Arrays.asList(toRequest));
-
-        if (!permissionsWeCanAsk.isEmpty()) {
-            getView().askPermissions(permissionsWeCanAsk);
+        if (toRequest.length == 0) {
+            checkAccounts();
         } else {
-            if (!mAccountService.isLoaded()) {
-                mAccountService.addObserver(this);
-            } else {
-                checkAccounts();
-            }
+            getView().askPermissions(toRequest);
         }
     }
 
@@ -94,13 +80,19 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
     }
 
     public void checkAccounts() {
-        List<Account> accounts = mAccountService.getAccounts();
-
-        if (accounts.isEmpty()) {
-            getView().goToAccountCreation();
-        } else {
-            getView().goToHome();
-        }
+        mCompositeDisposable.add(mAccountService.getObservableAccountList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(accounts -> {
+                    if (accounts != null) {
+                        RingApplication.loadingEvents.put(System.nanoTime(), "Accounts loaded");
+                        if (accounts.isEmpty()) {
+                            getView().goToAccountCreation();
+                        } else {
+                            getView().goToHome();
+                        }
+                        mCompositeDisposable.clear();
+                    }
+                }));
     }
 
     private String[] buildPermissionsToAsk() {
@@ -110,7 +102,7 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
             perms.add(Manifest.permission.RECORD_AUDIO);
         }
 
-        Settings settings = mPreferencesService.loadSettings();
+        Settings settings = mPreferencesService.getSettings();
 
         if (settings.isAllowSystemContacts() && !mDeviceRuntimeService.hasContactPermission()) {
             perms.add(Manifest.permission.READ_CONTACTS);
@@ -125,20 +117,5 @@ public class LaunchPresenter extends RootPresenter<LaunchView> implements Observ
         }
 
         return perms.toArray(new String[perms.size()]);
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
-                checkAccounts();
-                break;
-            default:
-                break;
-        }
     }
 }
