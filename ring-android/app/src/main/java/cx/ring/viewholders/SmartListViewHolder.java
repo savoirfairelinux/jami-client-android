@@ -28,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cx.ring.R;
 import cx.ring.smartlist.SmartListViewModel;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class SmartListViewHolder extends RecyclerView.ViewHolder {
 

@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,7 +29,6 @@ import javax.inject.Inject;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conference;
-import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
@@ -38,11 +38,9 @@ import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 import cx.ring.utils.StringUtils;
 
-public class CallPresenter extends RootPresenter<CallView> implements Observer<ServiceEvent> {
+public class CallPresenter extends RootPresenter<CallView> {
 
     public final static String TAG = CallPresenter.class.getSimpleName();
 
@@ -86,10 +84,6 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
-        mCallService.removeObserver(this);
-        mHardwareService.removeObserver(this);
-
         if (!mAudioOnly) {
             mHardwareService.stopCapture();
         }
@@ -98,9 +92,12 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     @Override
     public void bindView(CallView view) {
         super.bindView(view);
-        mAccountService.addObserver(this);
-        mCallService.addObserver(this);
-        mHardwareService.addObserver(this);
+        mCompositeDisposable.add(mAccountService.getRegisteredNames().subscribe(r -> {
+            if (mSipCall != null && mSipCall.getContact() != null) {
+                getView().updateContactBubble(mSipCall.getContact());
+            }
+        }));
+        mCompositeDisposable.add(mHardwareService.getVideoEvents().subscribe(this::onVideoEvent));
     }
 
     public void initOutGoing(String accountId, String contactRingId, boolean audioOnly) {
@@ -112,34 +109,27 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         if (mHardwareService.getCameraCount() == 0) {
             audioOnly = true;
         }
-
-        mSipCall = mConversationFacade.placeCall(accountId, StringUtils.toNumber(contactRingId), audioOnly);
-        if (mSipCall == null) {
-            Log.w(TAG, "initOutGoing: null Call");
-            finish();
-            return;
-        }
-
-        mAudioOnly = mSipCall.isAudioOnly();
-
-        getView().updateMenu();
-
-        confUpdate();
-        getContactDetails();
         getView().blockScreenRotation();
+
+        mCompositeDisposable.add(mCallService.placeCallObservable(accountId, StringUtils.toNumber(contactRingId), audioOnly)
+        .subscribe(call ->  {
+            mSipCall = call;
+            mAudioOnly = mSipCall.isAudioOnly();
+            getView().updateMenu();
+            confUpdate();
+            getContactDetails();
+        }));
     }
 
     public void initIncoming(String confId) {
-        mSipCall = mCallService.getCurrentCallForId(confId);
-        if (mSipCall == null) {
-            Log.w(TAG, "initIncoming: null Call");
-            finish();
-            return;
-        }
-        mAudioOnly = mSipCall.isAudioOnly();
-        confUpdate();
-        getContactDetails();
         getView().blockScreenRotation();
+        mCompositeDisposable.add(mCallService.getCallUpdates(confId).subscribe(call -> {
+            mSipCall = call;
+            mAudioOnly = mSipCall.isAudioOnly();
+            getView().updateMenu();
+            confUpdate();
+            getContactDetails();
+        }));
     }
 
     public void prepareOptionMenu() {
@@ -198,9 +188,10 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
     }
 
     public void refuseCall() {
-        if (mSipCall != null) {
-            mCallService.refuse(mSipCall.getCallId());
-            mNotificationService.cancelCallNotification(mSipCall.getCallId().hashCode());
+        final SipCall call = mSipCall;
+        if (call != null) {
+            mCallService.refuse(call.getCallId());
+            mNotificationService.cancelCallNotification(call.getCallId().hashCode());
         }
         finish();
     }
@@ -327,56 +318,21 @@ public class CallPresenter extends RootPresenter<CallView> implements Observer<S
         }
     }
 
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
+    private void onVideoEvent(HardwareService.VideoEvent event) {
+        Log.d(TAG, "VIDEO_EVENT: " + event.start + " " + event.callId);
+        previewHeight = event.w;
+        previewWidth = event.h;
 
-        if (observable instanceof CallService) {
-            switch (event.getEventType()) {
-                case CALL_STATE_CHANGED:
-                    SipCall call = event.getEventInput(ServiceEvent.EventInput.CALL, SipCall.class);
-                    int state = call.getCallState();
-
-                    Log.d(TAG, "CALL_STATE_CHANGED: " + call.getCallId() + " " + state);
-
-                    parseCall(call, state);
-                    confUpdate();
-                    break;
-            }
-        } else if (observable instanceof AccountService) {
-            switch (event.getEventType()) {
-                case REGISTERED_NAME_FOUND:
-                    if (mSipCall != null && mSipCall.getContact() != null) {
-                        getView().updateContactBubble(mSipCall.getContact());
-                    }
-                    break;
-            }
-        } else if (observable instanceof HardwareService) {
-            switch (event.getEventType()) {
-                case VIDEO_EVENT:
-                    boolean videoStart = event.getEventInput(ServiceEvent.EventInput.VIDEO_START, Boolean.class, false);
-                    String callId = event.getEventInput(ServiceEvent.EventInput.VIDEO_CALL, String.class);
-
-                    Log.d(TAG, "VIDEO_EVENT: " + videoStart + " " + callId);
-                    previewHeight = event.getEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, Integer.class, 0);
-                    previewWidth = event.getEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, Integer.class, 0);
-
-                    if (videoStart) {
-                        getView().displayVideoSurface(true);
-                    } else if (mSipCall != null && callId != null && mSipCall.getCallId().equals(callId)) {
-                        boolean videoStarted = event.getEventInput(ServiceEvent.EventInput.VIDEO_STARTED, Boolean.class, false);
-                        getView().displayVideoSurface(videoStarted);
-                        if (videoStarted) {
-                            videoWidth = event.getEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, Integer.class, 0);
-                            videoHeight = event.getEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, Integer.class, 0);
-                        }
-                    }
-                    getView().resetVideoSize(videoWidth, videoHeight, previewWidth, previewHeight);
-                    break;
+        if (event.start) {
+            getView().displayVideoSurface(true);
+        } else if (mSipCall != null && mSipCall.getCallId().equals(event.callId)) {
+            getView().displayVideoSurface(event.started);
+            if (event.started) {
+                videoWidth = event.w;
+                videoHeight = event.h;
             }
         }
+        getView().resetVideoSize(videoWidth, videoHeight, previewWidth, previewHeight);
     }
 
     public void positiveButtonClicked() {

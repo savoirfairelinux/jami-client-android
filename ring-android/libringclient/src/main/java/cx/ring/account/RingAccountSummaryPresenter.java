@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,114 +20,31 @@
 
 package cx.ring.account;
 
-import javax.inject.Inject;
+import java.net.SocketException;
 
-import cx.ring.daemon.StringMap;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import cx.ring.model.Account;
-import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
+import io.reactivex.Scheduler;
 
-public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummaryView> implements Observer<ServiceEvent> {
+public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummaryView> {
 
     private static final String TAG = RingAccountSummaryPresenter.class.getSimpleName();
-
-    private static final int PIN_GENERATION_SUCCESS = 0;
-    private static final int PIN_GENERATION_WRONG_PASSWORD = 1;
-    private static final int PIN_GENERATION_NETWORK_ERROR = 2;
 
     private AccountService mAccountService;
     private String mAccountID;
 
     @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
+
+    @Inject
     public RingAccountSummaryPresenter(AccountService accountService) {
         this.mAccountService = accountService;
-    }
-
-    @Override
-    public void bindView(RingAccountSummaryView view) {
-        mAccountService.addObserver(this);
-        super.bindView(view);
-    }
-
-    @Override
-    public void unbindView() {
-        mAccountService.removeObserver(this);
-        super.unbindView();
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null || getView() == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case DEVICE_REVOCATION_ENDED:
-                handleRevocationEnded(event);
-                break;
-            case KNOWN_DEVICES_CHANGED:
-                handleKnownDevices(event);
-                break;
-            case REGISTRATION_STATE_CHANGED:
-            case NAME_REGISTRATION_ENDED:
-                getView().accountChanged(mAccountService.getAccount(mAccountID));
-                break;
-            case EXPORT_ON_RING_ENDED:
-                handleExportEnded(event);
-                break;
-            default:
-                Log.d(TAG, "This event " + event.getEventType() + " is not handled here");
-                break;
-        }
-    }
-
-    private void handleRevocationEnded(ServiceEvent event) {
-        String accountId = event.getString(ServiceEvent.EventInput.ACCOUNT_ID);
-        if (!mAccountID.equals(accountId)) {
-            return;
-        }
-        String device = event.getString(ServiceEvent.EventInput.DEVICE);
-        int code = event.getInt(ServiceEvent.EventInput.STATE);
-        getView().deviceRevocationEnded(device, code);
-    }
-
-    private void handleExportEnded(ServiceEvent event) {
-        String accountId = event.getString(ServiceEvent.EventInput.ACCOUNT_ID);
-        if (!mAccountID.equals(accountId) || getView() == null || mAccountService.getAccount(mAccountID) == null) {
-            return;
-        }
-
-        final int code = event.getEventInput(ServiceEvent.EventInput.CODE, Integer.class);
-        final String pin = event.getEventInput(ServiceEvent.EventInput.PIN, String.class);
-
-        switch (code) {
-            case PIN_GENERATION_SUCCESS:
-                getView().showPIN(pin);
-                return;
-            case PIN_GENERATION_WRONG_PASSWORD:
-                getView().showPasswordError();
-                return;
-            case PIN_GENERATION_NETWORK_ERROR:
-                getView().showNetworkError();
-                break;
-            default:
-                getView().showGenericError();
-                break;
-        }
-    }
-
-    private void handleKnownDevices(ServiceEvent event) {
-        String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
-        Account currentAccount = mAccountService.getAccount(mAccountID);
-        if (currentAccount == null || !mAccountID.equals(accountId) || getView() == null) {
-            return;
-        }
-        final StringMap devices = event.getEventInput(ServiceEvent.EventInput.DEVICES, StringMap.class);
-        getView().updateDeviceList(devices.toNative(), currentAccount.getDeviceId());
     }
 
     public void registerName(String name, String password) {
@@ -142,18 +60,37 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
         if (getView() == null) {
             return;
         }
-
         getView().showExportingProgressDialog();
-        // TODO: this may need to be in the Application Executor
-        mAccountService.exportOnRing(mAccountID, password);
+        mCompositeDisposable.add(mAccountService
+                .exportOnRing(mAccountID, password)
+                .observeOn(mUiScheduler)
+                .subscribe(pin -> getView().showPIN(pin),
+                           error -> {
+                    if (error instanceof IllegalArgumentException) {
+                        getView().showPasswordError();
+                    } else if (error instanceof SocketException) {
+                        getView().showNetworkError();
+                    } else {
+                        getView().showGenericError();
+                    }
+                }));
     }
 
     public void setAccountId(String accountID) {
-        if (getView() == null) {
-            return;
-        }
+        mCompositeDisposable.clear();
         mAccountID = accountID;
-        getView().accountChanged(mAccountService.getAccount(mAccountID));
+        RingAccountSummaryView v = getView();
+        if (v != null)
+            v.accountChanged(mAccountService.getAccount(mAccountID));
+        mCompositeDisposable.add(mAccountService.getObservableAccountUpdates(mAccountID)
+                .observeOn(mUiScheduler)
+                .subscribe(account -> {
+                    RingAccountSummaryView view = getView();
+                    if (view != null) {
+                        view.accountChanged(account);
+                        view.updateDeviceList(account.getDevices(), account.getDeviceId());
+                    }
+                }));
     }
 
     public void enableAccount(boolean newValue) {
@@ -168,11 +105,14 @@ public class RingAccountSummaryPresenter extends RootPresenter<RingAccountSummar
         mAccountService.setAccountDetails(account.getAccountID(), account.getDetails());
     }
 
-    public void revokeDevice(String deviceId, String password) {
+    public void revokeDevice(final String deviceId, String password) {
         if (getView() != null) {
             getView().showRevokingProgressDialog();
         }
-        mAccountService.revokeDevice(mAccountID, password, deviceId);
+        mCompositeDisposable.add(mAccountService
+                .revokeDevice(mAccountID, password, deviceId)
+                .observeOn(mUiScheduler)
+                .subscribe(result -> getView().deviceRevocationEnded(deviceId, result)));
     }
 
     public void renameDevice(String newName) {

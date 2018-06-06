@@ -101,8 +101,7 @@ public class CallActivity extends AppCompatActivity {
             // Reload a new view
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            callFragment = CallFragment.newInstance(CallFragment.ACTION_GET_CALL,
-                    confId);
+            callFragment = CallFragment.newInstance(CallFragment.ACTION_GET_CALL, confId);
             fragmentTransaction.replace(R.id.main_call_layout, callFragment, CALL_FRAGMENT_TAG).commit();
         }
     }

@@ -126,6 +126,8 @@ along with this program; if not, write to the Free Software
     <string name="ab_action_speakerphone">Enable speaker</string>
     <string name="ab_action_contact_add">Add to contacts</string>
     <string name="ab_action_contact_add_question">Add to contacts ?</string>
+    <string name="hist_contact_added">Contact added</string>
+    <string name="hist_invitation_received">Invitation received</string>
     <string name="ab_action_audio_call">Audio call</string>
     <string name="ab_action_video_call">Video call</string>
     <string name="ab_action_change_screen_orientation">Change screen orientation</string>
@@ -140,6 +142,8 @@ along with this program; if not, write to the Free Software
     <string name="message_failed">Failed</string>
     <string name="time_just_now">Just now</string>
     <string name="send_file">Send file</string>
+    <string name="hist_file_sent">File sent</string>
+    <string name="hist_file_received">File received</string>
 
     <!-- MediaPreferenceFragment -->
     <string name="permission_dialog_camera_title">Camera permission</string>
@@ -206,6 +210,8 @@ along with this program; if not, write to the Free Software
     <string name="contact_request_msg">You have %1$s contact requests</string>
     <string name="contact_request_account">For %1$s</string>
     <string name="no_requests">0 contact requests</string>
+    <string name="message_contact_not_trusted_yet">%s is not in your contacts yet.\nDo you accept or refuse this contact request?</string>
+    <string name="message_contact_not_trusted">%s is not in your contacts.\nAdd a new contact?</string>
 
     <!-- Send contact requests -->
     <string name="send_request_button">Send</string>
@@ -225,7 +231,6 @@ along with this program; if not, write to the Free Software
     <string name="gallery_error_message">No application found on device to open Gallery</string>
 
     <string name="generic_error">An unknown error occurred</string>
-    <string name="message_contact_not_trusted_yet">%s is not in your contacts yet.\nDo you accept or refuse this contact request?</string>
 
     <!--File Transfer-->
     <string name="invalid_file">Invalid file</string>
