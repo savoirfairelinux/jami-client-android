@@ -328,11 +328,11 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
             // the spacer and the action button become visible
             mToolbarSpacerView.setVisibility(View.VISIBLE);
-            actionButton.setVisibility(View.VISIBLE);
+            actionButton.show();
         } else {
             // hide the toolbar spacer and the action button
             mToolbarSpacerView.setVisibility(View.GONE);
-            actionButton.setVisibility(View.GONE);
+            actionButton.hide();
             mToolbar.setTitle(titleRes);
         }
     }

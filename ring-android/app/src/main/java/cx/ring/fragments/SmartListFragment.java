@@ -134,7 +134,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 mDialpadMenuItem.setVisible(false);
-                displayFloatingActionButtonWithDelay(true, 50);
+                mFloatingActionButton.show();
                 setOverflowMenuVisible(menu, true);
                 return true;
             }
@@ -142,7 +142,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
                 mDialpadMenuItem.setVisible(true);
-                displayFloatingActionButtonWithDelay(false, 0);
+                mFloatingActionButton.hide();
                 setOverflowMenuVisible(menu, false);
                 return true;
             }
@@ -292,19 +292,6 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
             if (null != scanQrMenuItem) {
                 scanQrMenuItem.setVisible(visible);
             }
-        }
-    }
-
-    /**
-     * Hides or displays the floating action button after a delay
-     *
-     * @param visible true to display, false to hide
-     * @param delay   time in ms
-     */
-    private void displayFloatingActionButtonWithDelay(boolean visible, int delay) {
-        if (this.mFloatingActionButton != null) {
-            final int visibility = (visible) ? View.VISIBLE : View.GONE;
-            new Handler().postDelayed(() -> mFloatingActionButton.setVisibility(visibility), delay);
         }
     }
 
