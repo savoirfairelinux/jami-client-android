@@ -6,7 +6,6 @@
 
     <item
         android:id="@+id/menu_contact_search"
-        android:actionViewClass="android.widget.SearchView"
         android:hint="@string/searchbar_hint"
         android:icon="@drawable/ic_search_white"
         android:title="@string/searchbar_hint"
