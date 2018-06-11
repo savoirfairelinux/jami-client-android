@@ -257,7 +257,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         super.onViewCreated(view, savedInstanceState);
         mCurrentOrientation = getResources().getConfiguration().orientation;
         PowerManager powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
-        mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "cx.ring:onIncomingCall");
+        mScreenWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "ring:callLock");
         mScreenWakeLock.setReferenceCounted(false);
 
         if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
