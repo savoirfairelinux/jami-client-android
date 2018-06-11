@@ -36,6 +36,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -48,16 +49,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.adapters.SmartListAdapter;
+import cx.ring.application.RingApplication;
 import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
@@ -116,10 +119,10 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     private Boolean isTabletMode = false;
 
+    @Override
     public void onResume() {
         super.onResume();
-
-        ((HomeActivity) getActivity()).setToolbarState(false, R.string.app_name);
+        ((HomeActivity) getActivity()).setToolbarState(false,R.string.app_name);
 
         presenter.refresh();
     }
@@ -274,12 +277,10 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void setLoading(final boolean loading) {
-        getActivity().runOnUiThread(() -> {
             if (mLoader == null) {
                 return;
             }
             mLoader.setVisibility(loading ? View.VISIBLE : View.GONE);
-        });
     }
 
     /**
@@ -350,26 +351,25 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void displayNetworkErrorPanel() {
-        getActivity().runOnUiThread(() -> showErrorPanel(R.string.error_no_network, false, 0, null));
+        showErrorPanel(R.string.error_no_network, false, 0, null);
     }
 
     @Override
     public void displayMobileDataPanel() {
-        getActivity().runOnUiThread(() -> showErrorPanel(R.string.error_mobile_network_available_but_disabled,
+        showErrorPanel(R.string.error_mobile_network_available_but_disabled,
                 true,
                 R.drawable.ic_settings_white,
                 v -> {
                     Activity activity = getActivity();
-                    if (activity != null && activity instanceof HomeActivity) {
+                    if (activity instanceof HomeActivity) {
                         HomeActivity homeActivity = (HomeActivity) activity;
                         homeActivity.goToSettings();
                     }
-                }));
+                });
     }
 
     @Override
     public void displayContact(final CallContact contact) {
-        getActivity().runOnUiThread(() -> {
             if (mNewContact == null) {
                 return;
             }
@@ -388,11 +388,10 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
             Glide.with(getActivity())
                     .load(contactPicture)
                     .apply(AvatarFactory.getGlideOptions(true, false))
-                    .transition(DrawableTransitionOptions.withCrossFade())
+                    //.transition(DrawableTransitionOptions.withCrossFade())
                     .into(photo);
 
             mNewContact.setVisibility(View.VISIBLE);
-        });
     }
 
     @Override
@@ -454,22 +453,18 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
 
     @Override
     public void hideSearchRow() {
-        getActivity().runOnUiThread(() -> {
             if (mNewContact == null) {
                 return;
             }
             mNewContact.setVisibility(View.GONE);
-        });
     }
 
     @Override
     public void hideErrorPanel() {
-        getActivity().runOnUiThread(() -> {
             if (mErrorMessagePane == null) {
                 return;
             }
             mErrorMessagePane.setVisibility(View.GONE);
-        });
     }
 
     @Override
@@ -483,7 +478,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void updateList(final ArrayList<SmartListViewModel> smartListViewModels) {
+    public void updateList(final List<SmartListViewModel> smartListViewModels) {
         if (mRecyclerView.getAdapter() == null) {
             mSmartListAdapter = new SmartListAdapter(smartListViewModels, SmartListFragment.this);
             mRecyclerView.setAdapter(mSmartListAdapter);
@@ -491,13 +486,21 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
             LinearLayoutManager llm = new LinearLayoutManager(getActivity());
             llm.setOrientation(LinearLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(llm);
+        } else {
+            mSmartListAdapter.update(smartListViewModels);
         }
         mRecyclerView.setVisibility(View.VISIBLE);
-        mSmartListAdapter.update(smartListViewModels);
     }
 
     @Override
-    public void goToConversation(String accountId, String contactId) {
+    public void update(int position) {
+        if (mSmartListAdapter != null) {
+            mSmartListAdapter.notifyItemChanged(position);
+        }
+    }
+
+    @Override
+    public void goToConversation(String accountId, cx.ring.model.Uri contactId) {
         if (mSearchMenuItem != null) {
             mSearchMenuItem.collapseActionView();
         }
@@ -507,11 +510,11 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                     .setClass(getActivity(), ConversationActivity.class)
                     .setAction(Intent.ACTION_VIEW)
                     .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
-                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+                    .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId.toString());
             startActivity(intent);
         } else {
             Bundle bundle = new Bundle();
-            bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+            bundle.putString(ConversationFragment.KEY_CONTACT_RING_ID, contactId.toString());
             bundle.putString(ConversationFragment.KEY_ACCOUNT_ID, accountId);
             ((HomeActivity) getActivity()).startConversationTablet(bundle);
         }

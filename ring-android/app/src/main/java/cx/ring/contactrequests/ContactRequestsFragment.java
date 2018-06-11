@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import cx.ring.R;
@@ -76,9 +77,18 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
 
     public void presentForAccount(Bundle bundle) {
         if (bundle != null && bundle.containsKey(ACCOUNT_ID)) {
-            boolean shouldUpdateList = (bundle.getString(ACCOUNT_ID) == null);
-            presenter.updateAccount(bundle.getString(ACCOUNT_ID), shouldUpdateList);
-            getArguments().putString(ACCOUNT_ID, bundle.getString(ACCOUNT_ID));
+            String accountId = bundle.getString(ACCOUNT_ID);
+            presenter.updateAccount(accountId);
+            getArguments().putString(ACCOUNT_ID, accountId);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Bundle arguments = getArguments();
+        if (arguments != null && arguments.containsKey(ACCOUNT_ID)) {
+            presenter.updateAccount(getArguments().getString(ACCOUNT_ID));
         }
     }
 
@@ -86,11 +96,6 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
     public void onResume() {
         super.onResume();
         ((HomeActivity) getActivity()).setToolbarState(false, R.string.menu_item_contact_request);
-
-        Bundle arguments = getArguments();
-        if (arguments != null && arguments.containsKey(ACCOUNT_ID)) {
-            presenter.updateAccount(getArguments().getString(ACCOUNT_ID), true);
-        }
     }
 
     @Override
@@ -104,36 +109,34 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
     }
 
     @Override
-    public void onContactRequestClick(PendingContactRequestsViewModel viewModel) {
+    public void onContactRequestClick(ContactRequestsViewModel viewModel) {
         presenter.contactRequestClicked(viewModel.getContactId());
     }
 
     @Override
-    public void updateView(final ArrayList<PendingContactRequestsViewModel> list) {
-        RingApplication.uiHandler.post(() -> {
-            if (mPaneTextView == null || mEmptyTextView == null) {
-                return;
-            }
+    public void updateView(final List<ContactRequestsViewModel> list) {
+        if (mPaneTextView == null || mEmptyTextView == null) {
+            return;
+        }
 
-            if (!list.isEmpty()) {
-                PendingContactRequestsViewModel viewModel = list.get(0);
-                if (viewModel.hasPane()) {
-                    mPaneTextView.setText(getString(R.string.contact_request_account, viewModel.getAccountUsername()));
-                }
-                mPaneTextView.setVisibility(viewModel.hasPane() ? View.VISIBLE : View.GONE);
+        if (!list.isEmpty()) {
+            ContactRequestsViewModel viewModel = list.get(0);
+            if (viewModel.hasPane()) {
+                mPaneTextView.setText(getString(R.string.contact_request_account, viewModel.getAccountUsername()));
             }
+            mPaneTextView.setVisibility(viewModel.hasPane() ? View.VISIBLE : View.GONE);
+        }
 
-            mEmptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
+        mEmptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
 
-            if (mRequestsList.getAdapter() != null) {
-                mAdapter.replaceAll(list);
-            } else {
-                mAdapter = new ContactRequestsAdapter(list, ContactRequestsFragment.this);
-                mRequestsList.setAdapter(mAdapter);
-                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                mRequestsList.setLayoutManager(mLayoutManager);
-            }
-        });
+        if (mRequestsList.getAdapter() != null) {
+            mAdapter.replaceAll(list);
+        } else {
+            mAdapter = new ContactRequestsAdapter(list, ContactRequestsFragment.this);
+            mRequestsList.setAdapter(mAdapter);
+            LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+            mRequestsList.setLayoutManager(mLayoutManager);
+        }
     }
 
     @Override

@@ -67,8 +67,8 @@ public class TVLaunchActivity extends BaseActivity<LaunchPresenter> implements L
 
 
     @Override
-    public void askPermissions(ArrayList<String> permissionsWeCanAsk) {
-        ActivityCompat.requestPermissions(this, permissionsWeCanAsk.toArray(new String[permissionsWeCanAsk.size()]), RingApplication.PERMISSIONS_REQUEST);
+    public void askPermissions(String[] permissionsWeCanAsk) {
+        ActivityCompat.requestPermissions(this, permissionsWeCanAsk, RingApplication.PERMISSIONS_REQUEST);
     }
 
 

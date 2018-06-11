@@ -19,6 +19,7 @@
  */
 package cx.ring.viewholders;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -41,6 +42,8 @@ public class SmartListViewHolder extends RecyclerView.ViewHolder {
     public ImageView photo;
     @BindView(R.id.online)
     public ImageView online;
+
+    public Drawable picture = null;
 
     public SmartListViewHolder(View itemView) {
         super(itemView);

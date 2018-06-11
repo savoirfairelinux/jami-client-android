@@ -22,20 +22,18 @@ package cx.ring.account;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.model.Account;
-import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
-import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
+import io.reactivex.Scheduler;
 
-public class AccountsManagementPresenter extends RootPresenter<AccountsManagementView> implements Observer<ServiceEvent> {
-
-    private static final String TAG = AccountsManagementPresenter.class.getSimpleName();
-
+public class AccountsManagementPresenter extends RootPresenter<AccountsManagementView> {
     private AccountService mAccountService;
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     @Inject
     public AccountsManagementPresenter(AccountService accountService) {
@@ -45,14 +43,12 @@ public class AccountsManagementPresenter extends RootPresenter<AccountsManagemen
     @Override
     public void bindView(AccountsManagementView view) {
         super.bindView(view);
-        mAccountService.addObserver(this);
-        view.refresh(mAccountService.getAccounts());
-    }
-
-    @Override
-    public void unbindView() {
-        super.unbindView();
-        mAccountService.removeObserver(this);
+        mCompositeDisposable.add(mAccountService.getObservableAccountList()
+                .observeOn(mUiScheduler)
+                .subscribe(accounts -> getView().refresh(accounts)));
+        mCompositeDisposable.add(mAccountService.getObservableAccounts()
+                .observeOn(mUiScheduler)
+                .subscribe(account -> getView().refreshAccount(account)));
     }
 
     public void clickAccount(Account account) {
@@ -63,32 +59,11 @@ public class AccountsManagementPresenter extends RootPresenter<AccountsManagemen
         }
     }
 
-    public void refresh() {
-        getView().refresh(mAccountService.getAccounts());
-    }
-
     public void addClicked() {
         getView().launchWizardActivity();
     }
 
     public void itemClicked(String accountId, Map<String, String> details) {
         mAccountService.setAccountDetails(accountId, details);
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
-            case REGISTRATION_STATE_CHANGED:
-                getView().refresh(mAccountService.getAccounts());
-                break;
-            default:
-                Log.d(TAG, "This event is not handled here");
-                break;
-        }
     }
 }
