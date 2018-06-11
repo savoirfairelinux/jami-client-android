@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,22 +23,24 @@ package cx.ring.fragments;
 import android.util.Log;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.model.Account;
 import cx.ring.model.ConfigKey;
-import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
+import io.reactivex.Scheduler;
 
-public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> implements Observer<ServiceEvent> {
+public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
 
     private static final String TAG = GeneralAccountPresenter.class.getSimpleName();
 
     protected AccountService mAccountService;
 
     private Account mAccount;
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     @Inject
     public GeneralAccountPresenter(AccountService accountService) {
@@ -47,13 +50,11 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> i
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
     }
 
     @Override
     public void bindView(GeneralAccountView view) {
         super.bindView(view);
-        mAccountService.addObserver(this);
     }
 
     // Init with current account
@@ -74,7 +75,10 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> i
             } else {
                 getView().addSIPPreferences();
             }
-            getView().accountChanged(mAccount);
+            mCompositeDisposable.clear();
+            mCompositeDisposable.add(mAccountService.getObservableAccount(accountId)
+                .observeOn(mUiScheduler)
+                .subscribe(account -> getView().accountChanged(account)));
         }
     }
 
@@ -110,21 +114,5 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> i
     private void updateAccount() {
         mAccountService.setCredentials(mAccount.getAccountID(), mAccount.getCredentialsHashMapList());
         mAccountService.setAccountDetails(mAccount.getAccountID(), mAccount.getDetails());
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null || getView() == null) {
-            return;
-        }
-
-        switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
-            case REGISTRATION_STATE_CHANGED:
-                getView().accountChanged(mAccount);
-                break;
-            default:
-                break;
-        }
     }
 }

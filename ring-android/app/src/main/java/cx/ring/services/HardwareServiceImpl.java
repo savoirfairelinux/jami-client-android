@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -283,20 +284,18 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 if (shm.window == 0) {
                     Log.i(TAG, "DRingService.decodingStarted() no window !");
 
-                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-                    event.addEventInput(ServiceEvent.EventInput.VIDEO_START, true);
-                    setChanged();
-                    notifyObservers(event);
+                    VideoEvent event = new VideoEvent();
+                    event.start = true;
+                    videoEvents.onNext(event);
                     return;
                 }
 
-                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-                event.addEventInput(ServiceEvent.EventInput.VIDEO_CALL, shm.id);
-                event.addEventInput(ServiceEvent.EventInput.VIDEO_STARTED, true);
-                event.addEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, shm.w);
-                event.addEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, shm.h);
-                setChanged();
-                notifyObservers(event);
+                VideoEvent event = new VideoEvent();
+                event.callId = shm.id;
+                event.started = true;
+                event.w = shm.w;
+                event.h = shm.h;
+                videoEvents.onNext(event);
             }
         }
     }
@@ -420,10 +419,9 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             Log.w(TAG, "Can't start capture: no surface registered.");
             previewParams = videoParams;
 
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-            event.addEventInput(ServiceEvent.EventInput.VIDEO_START, true);
-            setChanged();
-            notifyObservers(event);
+            VideoEvent event = new VideoEvent();
+            event.start = true;
+            videoEvents.onNext(event);
             return;
         }
 
@@ -501,12 +499,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         previewCamera = preview;
         previewParams = videoParams;
 
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_STARTED, true);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, videoParams.rotWidth);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, videoParams.rotHeight);
-        setChanged();
-        notifyObservers(event);
+        VideoEvent event = new VideoEvent();
+        event.started = true;
+        event.w = videoParams.rotWidth;
+        event.h = videoParams.rotHeight;
+        videoEvents.onNext(event);
     }
 
     @Override
@@ -525,12 +522,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 Log.e(TAG, "stopCapture error" + e);
             }
 
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-            event.addEventInput(ServiceEvent.EventInput.VIDEO_STARTED, false);
-            event.addEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, params.width);
-            event.addEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, params.height);
-            setChanged();
-            notifyObservers(event);
+            VideoEvent event = new VideoEvent();
+            event.started = false;
+            event.w = params.width;
+            event.h = params.height;
+            videoEvents.onNext(event);
         }
     }
 
@@ -552,20 +548,18 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         if (shm == null || shm.window == 0) {
             Log.i(TAG, "DRingService.addVideoSurface() no window !");
 
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-            event.addEventInput(ServiceEvent.EventInput.VIDEO_START, true);
-            setChanged();
-            notifyObservers(event);
+            VideoEvent event = new VideoEvent();
+            event.start = true;
+            videoEvents.onNext(event);
             return;
         }
 
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_CALL, shm.id);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_STARTED, true);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, shm.w);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, shm.h);
-        setChanged();
-        notifyObservers(event);
+        VideoEvent event = new VideoEvent();
+        event.callId = shm.id;
+        event.started = true;
+        event.w = shm.w;
+        event.h = shm.h;
+        videoEvents.onNext(event);
 
     }
 
@@ -597,11 +591,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             shm.window = 0;
         }
 
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_CALL, shm.id);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_STARTED, false);
-        setChanged();
-        notifyObservers(event);
+        VideoEvent event = new VideoEvent();
+        event.callId = shm.id;
+        event.started = false;
+        videoEvents.onNext(event);
     }
 
     @Override

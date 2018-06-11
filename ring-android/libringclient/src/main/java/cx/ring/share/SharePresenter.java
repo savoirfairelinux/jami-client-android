@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,15 +23,11 @@ package cx.ring.share;
 import javax.inject.Inject;
 
 import cx.ring.model.Account;
-import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.GenericView;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 
-public class SharePresenter extends RootPresenter<GenericView<ShareViewModel>> implements Observer<ServiceEvent> {
-
+public class SharePresenter extends RootPresenter<GenericView<ShareViewModel>> {
     private AccountService mAccountService;
 
     @Inject
@@ -41,31 +38,22 @@ public class SharePresenter extends RootPresenter<GenericView<ShareViewModel>> i
     @Override
     public void bindView(GenericView<ShareViewModel> view) {
         super.bindView(view);
-        mAccountService.addObserver(this);
+        mCompositeDisposable.add(mAccountService.getCurrentAccountSubject().subscribe(this::loadContactInformation));
     }
 
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
     }
 
     public void loadContactInformation() {
+        loadContactInformation(mAccountService.getCurrentAccount());
+    }
+    public void loadContactInformation(Account a) {
         if (getView() == null) {
             return;
         }
-
-        // ask for the current account
-        Account currentAccount = mAccountService.getCurrentAccount();
-
         // let the view display the ViewModel
-        getView().showViewModel(new ShareViewModel(currentAccount));
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent o) {
-        if (observable instanceof AccountService) {
-            loadContactInformation();
-        }
+        getView().showViewModel(new ShareViewModel(a));
     }
 }

@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.Locale;
 
 @DatabaseTable(tableName = HistoryCall.TABLE_NAME)
-public class HistoryCall extends ConversationElement implements Serializable {
+public class HistoryCall implements ConversationElement, Serializable {
 
     public static final String TABLE_NAME = "historycall";
     public static final String COLUMN_TIMESTAMP_START_NAME = "TIMESTAMP_START";
@@ -123,6 +123,15 @@ public class HistoryCall extends ConversationElement implements Serializable {
         return number;
     }
 
+    public Uri getContactNumber() {
+        return new Uri(number);
+    }
+
+    @Override
+    public boolean isRead() {
+        return true;
+    }
+
     public boolean isIncoming() {
         return direction == SipCall.Direction.INCOMING;
     }
@@ -135,6 +144,7 @@ public class HistoryCall extends ConversationElement implements Serializable {
         return callID;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -160,6 +170,14 @@ public class HistoryCall extends ConversationElement implements Serializable {
         result = 31 * result + (int) (contactID ^ (contactID >>> 32));
         result = 31 * result + (callID != null ? callID.hashCode() : 0);
         return result;
+    }*/
+
+    private long code() {
+        long result = call_start ^ (call_start >>> 32);
+        result = 31 * result + (call_end ^ (call_end >>> 32));
+        result = 31 * result + (contactID ^ (contactID >>> 32));
+        result = 31 * result + (callID != null ? callID.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -170,5 +188,10 @@ public class HistoryCall extends ConversationElement implements Serializable {
     @Override
     public long getDate() {
         return call_start;
+    }
+
+    @Override
+    public long getId() {
+        return code();
     }
 }

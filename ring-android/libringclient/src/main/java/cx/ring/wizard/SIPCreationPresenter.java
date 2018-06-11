@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,25 +24,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.model.Account;
 import cx.ring.model.AccountConfig;
 import cx.ring.model.ConfigKey;
-import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.mvp.SIPCreationView;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.property.FormattedName;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
+import io.reactivex.Scheduler;
+import io.reactivex.observers.DisposableObserver;
 
-public class SIPCreationPresenter extends RootPresenter<SIPCreationView> implements Observer<ServiceEvent> {
+public class SIPCreationPresenter extends RootPresenter<SIPCreationView> {
 
     private static final String TAG = SIPCreationPresenter.class.getSimpleName();
 
@@ -50,6 +51,11 @@ public class SIPCreationPresenter extends RootPresenter<SIPCreationView> impleme
     private DeviceRuntimeService mDeviceService;
 
     private Account mAccount;
+
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
+
 
     @Inject
     public SIPCreationPresenter(AccountService mAccountService, DeviceRuntimeService mDeviceService) {
@@ -65,56 +71,6 @@ public class SIPCreationPresenter extends RootPresenter<SIPCreationView> impleme
     @Override
     public void unbindView() {
         super.unbindView();
-        mAccountService.removeObserver(this);
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-        switch (event.getEventType()) {
-            case ACCOUNT_ADDED: {
-                String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
-                mAccount = mAccountService.getAccount(accountId);
-                handleNewAccountState(event.getEventInput(ServiceEvent.EventInput.STATE, String.class));
-                break;
-            }
-            case REGISTRATION_STATE_CHANGED: {
-                String accountId = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
-                mAccount = mAccountService.getAccount(accountId);
-                if (mAccount == null || !mAccount.getAccountID().contentEquals(accountId)) {
-                    return;
-                }
-                handleNewAccountState(event.getEventInput(ServiceEvent.EventInput.STATE, String.class));
-                break;
-            }
-            default:
-                break;
-        }
-    }
-
-    private void handleNewAccountState(String accountState) {
-        switch (accountState) {
-            case AccountConfig.STATE_REGISTERED:
-            case AccountConfig.STATE_SUCCESS:
-            case AccountConfig.STATE_READY:
-                saveProfile(mAccount.getAccountID());
-                getView().showRegistrationSuccess();
-                mAccountService.removeObserver(this);
-                break;
-            case AccountConfig.STATE_ERROR_NETWORK:
-                getView().showRegistrationNetworkError();
-                mAccountService.removeObserver(this);
-                break;
-            case AccountConfig.STATE_TRYING:
-            case AccountConfig.STATE_UNREGISTERED:
-                return;
-            default:
-                getView().showRegistrationError();
-                mAccountService.removeObserver(this);
-                break;
-        }
     }
 
     /**
@@ -180,8 +136,45 @@ public class SIPCreationPresenter extends RootPresenter<SIPCreationView> impleme
 
     private void registerAccount(final HashMap<String, String> accountDetails) {
         getView().showLoading();
-        mAccountService.addObserver(SIPCreationPresenter.this);
-        mAccountService.addAccount(accountDetails);
+        mCompositeDisposable.add(
+                mAccountService.addAccount(accountDetails)
+                .observeOn(mUiScheduler)
+                .subscribeWith(new DisposableObserver<Account>() {
+                    @Override
+                    public void onNext(Account account) {
+                        switch (account.getRegistrationState()) {
+                            case AccountConfig.STATE_REGISTERED:
+                            case AccountConfig.STATE_SUCCESS:
+                            case AccountConfig.STATE_READY:
+                                saveProfile(mAccount.getAccountID());
+                                getView().showRegistrationSuccess();
+                                dispose();
+                                break;
+                            case AccountConfig.STATE_ERROR_NETWORK:
+                                getView().showRegistrationNetworkError();
+                                dispose();
+                                break;
+                            case AccountConfig.STATE_TRYING:
+                            case AccountConfig.STATE_UNREGISTERED:
+                                return;
+                            default:
+                                getView().showRegistrationError();
+                                dispose();
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().showRegistrationError();
+                        dispose();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        dispose();
+                    }
+                }));
     }
 
     private HashMap<String, String> initAccountDetails() {
