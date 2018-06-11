@@ -232,16 +232,13 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
 
     @Override
     public void displayAccountName(final String name) {
-        RingApplication.uiHandler.post(() -> {
-            Toolbar toolbar = findViewById(R.id.main_toolbar);
-            setSupportActionBar(toolbar);
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setTitle(name);
-            }
-        });
-
+        Toolbar toolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(name);
+        }
     }
 
     private static class PreferencesPagerAdapter extends FragmentPagerAdapter {

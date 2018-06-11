@@ -21,16 +21,29 @@
 package cx.ring.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
+import io.reactivex.Observable;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 public class Account {
+    private static final String TAG = Account.class.getSimpleName();
 
-    private String accountID;
+    private static final String CONTACT_ADDED = "added";
+    private static final String CONTACT_CONFIRMED = "confirmed";
+    private static final String CONTACT_BANNED = "banned";
+    private static final String CONTACT_ID = "id";
+
+    private final String accountID;
 
     private AccountConfig mVolatileDetails;
     private AccountConfig mDetails;
@@ -38,18 +51,270 @@ public class Account {
     private Map<String, String> devices = new HashMap<>();
     private Map<String, CallContact> mContacts = new HashMap<>();
     private Map<String, TrustRequest> mRequests = new HashMap<>();
+    private Map<String, CallContact> mContactCache = new HashMap<>();
 
-    private static final String CONTACT_ADDED = "added";
-    private static final String CONTACT_CONFIRMED = "confirmed";
-    private static final String CONTACT_BANNED = "banned";
-    private static final String CONTACT_ID = "id";
+    private final Map<String, Conversation> conversations = new HashMap<>();
+    private final Map<String, Conversation> pending = new HashMap<>();
+    private final Map<String, Conversation> cache = new HashMap<>();
+
+    private final List<Conversation> sortedConversations = new ArrayList<>();
+    private final List<Conversation> sortedPending = new ArrayList<>();
+
+    private final BehaviorSubject<List<Conversation>> conversationsSubject = BehaviorSubject.create();
+    private final BehaviorSubject<List<Conversation>> pendingSubject = BehaviorSubject.create();
 
     public boolean registeringUsername = false;
+    private boolean conversationsChanged = true;
+    private boolean pendingsChanged = true;
+    private boolean historyLoaded = false;
+
+    /*private final Observable<List<Conversation>> sortedConversationsSubject = conversationsSubject.map(convs -> {
+        if (conversationsChanged) {
+            sortedConversations.clear();
+            sortedConversations.addAll(convs.values());
+            for (Conversation c : sortedConversations)
+                c.sortHistory();
+            long start = System.nanoTime();
+            Collections.sort(sortedConversations, (a, b) -> Long.compare(b.getLastEvent().getDate(), a.getLastEvent().getDate()));
+            long end = System.nanoTime();
+            Log.w(TAG, "sorting conversations (full) took " + ((end - start)/ 1000L) + " us");
+            conversationsChanged = false;
+        }
+        return sortedConversations;
+    });
+    private final Observable<List<Conversation>> sortedPendingSubject = BehaviorSubject.create();*/
+
+    private final BehaviorSubject<Collection<CallContact>> contactListSubject = BehaviorSubject.create();
+    private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
+    private final Subject<RequestEvent> trustRequestSubject = PublishSubject.create();
+
+
+    public Collection<Conversation> getConversations() {
+        return conversations.values();
+    }
+
+    public Observable<List<Conversation>> getConversationSubject() {
+        return conversationsSubject;
+    }
+    public Observable<List<Conversation>> getPendingSubject() {
+        return pendingSubject;
+    }
+
+    public Subject<Account> historyLoader;
+
+    private List<Conversation> getSortedConversations() {
+        Log.w(TAG, "getSortedConversations() " + Thread.currentThread().getId());
+        synchronized (sortedConversations) {
+            if (conversationsChanged) {
+                sortedConversations.clear();
+                synchronized (conversations) {
+                    sortedConversations.addAll(conversations.values());
+                }
+                for (Conversation c : sortedConversations)
+                    c.sortHistory();
+                long start = System.nanoTime();
+                Collections.sort(sortedConversations, (a, b) -> Long.compare(b.getLastEvent().getDate(), a.getLastEvent().getDate()));
+                long end = System.nanoTime();
+                Log.w(TAG, "sorting " + sortedConversations.size() + " conversations (full) took " + ((end - start) / 1000L) + " us");
+                conversationsChanged = false;
+            }
+        }
+        return sortedConversations;
+    }
+
+    private List<Conversation> getSortedPending() {
+        synchronized (sortedPending) {
+            if (pendingsChanged) {
+                sortedPending.clear();
+                synchronized (pending) {
+                    sortedPending.addAll(pending.values());
+                }
+                for (Conversation c : sortedPending)
+                    c.sortHistory();
+                long start = System.nanoTime();
+                Collections.sort(sortedPending, (a, b) -> Long.compare(b.getLastEvent().getDate(), a.getLastEvent().getDate()));
+                long end = System.nanoTime();
+                Log.w(TAG, "sorting " + sortedPending.size() + " pending (full) took " + ((end - start) / 1000L) + " us");
+                pendingsChanged = false;
+            }
+        }
+        return sortedPending;
+    }
+
+    public Collection<Conversation> getPending() {
+        return pending.values();
+    }
+
+    public void pendingRefreshed() {
+        if (historyLoaded)
+            pendingSubject.onNext(getSortedPending());
+    }
+    public void pendingChanged() {
+        pendingsChanged = true;
+        pendingRefreshed();
+    }
+    public void pendingUpdated(Conversation conversation) {
+        if (!historyLoaded)
+            return;
+        if (pendingsChanged) {
+            getSortedPending();
+        } else {
+            if (conversation != null)
+                conversation.sortHistory();
+            long start = System.nanoTime();
+            Collections.sort(sortedPending, (a, b) -> Long.compare(b.getLastEvent().getDate(), a.getLastEvent().getDate()));
+            long end = System.nanoTime();
+            Log.w(TAG, "sorting pending took " + ((end - start)/ 1000L) + " us");
+        }
+        pendingSubject.onNext(getSortedPending());
+    }
+
+    public void conversationRefreshed() {
+        if (historyLoaded)
+            conversationsSubject.onNext(getSortedConversations());
+    }
+    public void conversationChanged() {
+        conversationsChanged = true;
+        conversationRefreshed();
+    }
+    public void conversationUpdated(Conversation conversation) {
+        if (!historyLoaded)
+            return;
+        synchronized (sortedConversations) {
+            if (conversationsChanged) {
+                getSortedConversations();
+            } else {
+                if (conversation != null)
+                    conversation.sortHistory();
+                long start = System.nanoTime();
+                Collections.sort(sortedConversations, (a, b) -> Long.compare(b.getLastEvent().getDate(), a.getLastEvent().getDate()));
+                long end = System.nanoTime();
+                Log.w(TAG, "sorting conversations took " + ((end - start)/ 1000L) + " us");
+            }
+            conversationsSubject.onNext(sortedConversations);
+        }
+    }
+
+    public void clearHistory(Uri contact) {
+        Conversation conversation = getByUri(contact);
+        conversation.clearHistory();
+        conversationsChanged = true;
+    }
+
+    /*public CallContact setRingContactName(Uri uri, String name) {
+        CallContact contact = getContactFromCache(uri);
+        if (contact != null) {
+            contact.setUsername(name);
+            conversationRefreshed();
+            return contact;
+        }
+        return null;
+    }*/
+
+    public void addTextMessage(TextMessage txt) {
+        Conversation conversation;
+        if (!StringUtils.isEmpty(txt.getCallId())) {
+            conversation = getConversationByCallId(txt.getCallId());
+        } else {
+            conversation = getByUri(txt.getNumberUri());
+            txt.setContact(conversation.getContact());
+        }
+        conversation.addTextMessage(txt);
+        conversationUpdated(conversation);
+    }
+
+    public Conversation onDataTransferEvent(DataTransfer transfer) {
+        Conversation conversation = getByUri(new Uri(transfer.getPeerId()));
+        DataTransferEventCode transferEventCode = transfer.getEventCode();
+        if (transferEventCode == DataTransferEventCode.CREATED) {
+            /*if (transfer.isPicture() && !transfer.isOutgoing()) {
+                mAccountService.acceptFileTransfer(transfer);
+            }*/
+            conversation.addFileTransfer(transfer);
+            //conversationsSubject.onNext(mConversations);
+        } else {
+            conversation.updateFileTransfer(transfer, transferEventCode);
+            //conversationSubject.onNext(conversation);
+        }
+        conversationUpdated(conversation);
+        return conversation;
+    }
+
+    public static class ContactEvent {
+        public final CallContact contact;
+        public final boolean added;
+        ContactEvent(CallContact c, boolean a) { contact=c; added=a;}
+    }
+    public static class RequestEvent {
+        public final TrustRequest request;
+        public final boolean added;
+        RequestEvent(TrustRequest c, boolean a) { request=c; added=a;}
+    }
+
+    /*private final Disposable op = trustRequestsSubject.subscribe(requests -> {
+        for (TrustRequest req : requests) {
+            String key = new Uri(req.getContactId()).getRawUriString();
+            Conversation conversation = pending.get(key);
+            if (conversation == null) {
+                conversation = getByKey(key);
+                pending.put(key, conversation);
+                conversation.addRequestEvent(req);
+            }
+        }
+    });*/
+
+    //private final Subject<ContactEvent> contactSubject = PublishSubject.create();
+
+    private final Observable<CallContact> contactsObservable = Observable.create(subscriber -> {
+        for (CallContact c : mContacts.values())
+            subscriber.onNext(c);
+        subscriber.onComplete();
+    });
+    private final Observable<CallContact> validContactsObservable = contactsObservable.filter(c -> !c.isBanned());
+    private final Observable<CallContact> bannedContactsObservable = contactsObservable.filter(CallContact::isBanned);
+
+    public Observable<CallContact> getValidContacts() {
+        return validContactsObservable;
+    }
+
+    public Observable<Collection<CallContact>> getContactsUpdates() {
+        return contactListSubject;
+    }
+    public Observable<Collection<TrustRequest>> getRequestsUpdates() {
+        return trustRequestsSubject;
+    }
+    public Observable<RequestEvent> getRequestsEvents() {
+        return trustRequestSubject;
+    }
+    public Observable<Collection<CallContact>> getValidContactsUpdates() {
+        return contactListSubject.concatMapSingle(list -> Observable.fromIterable(list).filter(c -> !c.isBanned()).toList());
+    }
+    public Observable<Collection<CallContact>> getBannedContactsUpdates() {
+        return contactListSubject.concatMapSingle(list -> Observable.fromIterable(list).filter(CallContact::isBanned).toList());
+    }
+
+    public CallContact getContactFromCache(String key) {
+        CallContact contact = mContactCache.get(key);
+        if (contact == null) {
+            contact = CallContact.buildUnknown(key);
+            mContactCache.put(key, contact);
+        }
+        return contact;
+    }
+    public CallContact getContactFromCache(Uri uri) {
+        return getContactFromCache(uri.getRawUriString());
+    }
 
     public Account(String bAccountID) {
         accountID = bAccountID;
         mDetails = new AccountConfig();
         mVolatileDetails = new AccountConfig();
+    }
+
+    public void dispose() {
+        contactListSubject.onComplete();
+        //contactSubject.onComplete();
+        trustRequestsSubject.onComplete();
     }
 
     public Account(String bAccountID, final Map<String, String> details,
@@ -306,7 +571,7 @@ public class Account {
     public void addContact(String id, boolean confirmed) {
         CallContact callContact = mContacts.get(id);
         if (callContact == null) {
-            callContact = CallContact.buildUnknown(new Uri(id));
+            callContact = getContactFromCache(new Uri(id));
             mContacts.put(id, callContact);
         }
         callContact.setAddedDate(new Date());
@@ -315,26 +580,44 @@ public class Account {
         } else {
             callContact.setStatus(CallContact.Status.REQUEST_SENT);
         }
+        TrustRequest req = mRequests.get(id);
+        if (req != null) {
+            mRequests.remove(id);
+            trustRequestsSubject.onNext(mRequests.values());
+        }
+        contactAdded(callContact);
+        //contactSubject.onNext(new ContactEvent(callContact, true));
+        contactListSubject.onNext(mContacts.values());
     }
 
     public void removeContact(String id, boolean banned) {
+        CallContact callContact = mContacts.get(id);
         if (banned) {
-            CallContact callContact = mContacts.get(id);
             if (callContact == null) {
-                callContact = CallContact.buildUnknown(new Uri(id));
+                callContact = getContactFromCache(new Uri(id));
                 mContacts.put(id, callContact);
             }
             callContact.setStatus(CallContact.Status.BANNED);
         } else {
             mContacts.remove(id);
         }
+        TrustRequest req = mRequests.get(id);
+        if (req != null) {
+            mRequests.remove(id);
+            trustRequestsSubject.onNext(mRequests.values());
+        }
+        if (callContact != null) {
+            contactRemoved(callContact.getPrimaryUri());
+            //contactSubject.onNext(new ContactEvent(callContact, false));
+        }
+        contactListSubject.onNext(mContacts.values());
     }
 
-    public void addContact(Map<String, String> contact) {
+    private void addContact(Map<String, String> contact) {
         String contactId = contact.get(CONTACT_ID);
         CallContact callContact = mContacts.get(contactId);
         if (callContact == null) {
-            callContact = CallContact.buildUnknown(new Uri(contactId));
+            callContact = getContactFromCache(new Uri(contactId));
         }
         String addedStr = contact.get(CONTACT_ADDED);
         if (!StringUtils.isEmpty(addedStr)) {
@@ -352,9 +635,12 @@ public class Account {
     }
 
     public void setContacts(List<Map<String, String>> contacts) {
+        Log.w(TAG, "setContacts");
         for (Map<String, String> contact : contacts) {
             addContact(contact);
         }
+        contactListSubject.onNext(mContacts.values());
+        conversationChanged();
     }
 
     public List<TrustRequest> getRequests() {
@@ -372,15 +658,223 @@ public class Account {
     }
 
     public void addRequest(TrustRequest request) {
-        mRequests.put(request.getContactId(), request);
+        synchronized (pending) {
+            mRequests.put(request.getContactId(), request);
+            CallContact contact = getContactFromCache(request.getContactId());
+            if (contact.vcard == null) {
+                contact.vcard = request.getVCard();
+            }
+            trustRequestSubject.onNext(new RequestEvent(request, true));
+            trustRequestsSubject.onNext(mRequests.values());
+
+            String key = new Uri(request.getContactId()).getRawUriString();
+            Conversation conversation = pending.get(key);
+            if (conversation == null) {
+                conversation = getByKey(key);
+                pending.put(key, conversation);
+                conversation.addRequestEvent(request);
+                pendingChanged();
+            }
+        }
     }
 
     public void setRequests(List<TrustRequest> requests) {
-        for (TrustRequest request : requests)
-            addRequest(request);
+        Log.w(TAG, "setRequests");
+        synchronized (pending) {
+            for (TrustRequest request : requests) {
+                mRequests.put(request.getContactId(), request);
+                String key = new Uri(request.getContactId()).getRawUriString();
+                Conversation conversation = pending.get(key);
+                if (conversation == null) {
+                    conversation = getByKey(key);
+                    pending.put(key, conversation);
+                    conversation.addRequestEvent(request);
+                }
+                trustRequestSubject.onNext(new RequestEvent(request, true));
+            }
+            trustRequestsSubject.onNext(mRequests.values());
+            pendingChanged();
+        }
     }
 
-    public void removeRequest(String contactId) {
-        mRequests.remove(contactId);
+    public boolean removeRequest(Uri contact) {
+        synchronized (pending) {
+            TrustRequest request = mRequests.remove(contact.getRawUriString());
+            if (request != null) {
+                trustRequestSubject.onNext(new RequestEvent(request, true));
+                trustRequestsSubject.onNext(mRequests.values());
+            }
+            if (pending.remove(contact.getRawUriString()) != null) {
+                pendingChanged();
+                return true;
+            }
+        }
+        return false;
     }
+
+    public void registeredNameFound(int state, String address, String name) {
+        if (state == 0) {
+            Log.w(TAG, "registeredNameFound " + address + " " + name);
+            Uri uri = new Uri(address);
+            CallContact contact = getContactFromCache(uri);
+            if (contact.setUsername(name)) {
+                String key = uri.getRawUriString();
+                synchronized (conversations) {
+                    if (conversations.containsKey(key))
+                        conversationRefreshed();
+                }
+                synchronized (pending) {
+                    if (pending.containsKey(key))
+                        pendingRefreshed();
+                }
+            }
+        }
+        /*TrustRequest request = getRequest(address);
+        if (request != null) {
+            Log.d(TAG, "registeredNameFound: updating TrustRequest " + name);
+            boolean resolved = request.isNameResolved();
+            request.setUsername(name);
+            if (!resolved) {
+                Log.d(TAG, "registeredNameFound: TrustRequest resolved " + name);
+                trustRequestsSubject.onNext(mRequests.values());
+            }
+        }*/
+    }
+
+    public Conversation getByUri(Uri uri) {
+        if (uri != null) {
+            return getByKey(uri.getRawUriString());
+        }
+        return null;
+    }
+
+    public Conversation getByKey(String key) {
+        Conversation conversation = cache.get(key);
+        if (conversation != null) {
+            return conversation;
+        }
+            CallContact contact = getContactFromCache(key);
+            conversation = new Conversation(contact);
+            cache.put(key, conversation);
+        return conversation;
+    }
+
+    public void contactAdded(CallContact contact) {
+        Uri uri = contact.getPrimaryUri();
+        String key = uri.getRawUriString();
+        synchronized (conversations) {
+            if (conversations.get(key) != null)
+                return;
+            synchronized (pending) {
+                Conversation pendingConversation = pending.get(key);
+                if (pendingConversation == null) {
+                    pendingConversation = getByKey(key);
+                    conversations.put(key, pendingConversation);
+                } else {
+                    pending.remove(key);
+                    conversations.put(key, pendingConversation);
+                    pendingChanged();
+                }
+                pendingConversation.addContactEvent();
+            }
+            conversationChanged();
+        }
+    }
+
+    public void contactRemoved(Uri uri) {
+        String key = uri.getRawUriString();
+        synchronized (conversations) {
+            synchronized (pending) {
+                if (pending.remove(key) != null)
+                    pendingChanged();
+            }
+            conversations.remove(key);
+            conversationChanged();
+        }
+    }
+
+    private void addConversation(String key, Conversation value, boolean b) {
+        cache.put(key, value);
+        if (b) {
+            synchronized (conversations) {
+                conversations.put(key, value);
+            }
+        }
+    }
+
+    public boolean isHistoryLoaded() {
+        return historyLoaded;
+    }
+
+    public void loadHistory(HashMap<String, Conversation> history) {
+        Log.w(TAG, "loadHistory: start");
+        Map<String, CallContact> contacts = getContacts();
+        List<TrustRequest> requests = getRequests();
+        for (Map.Entry<String, Conversation> c : history.entrySet()) {
+            CallContact contact = contacts.get(c.getValue().getContact().getPrimaryNumber());
+            addConversation(c.getKey(), c.getValue(), contact != null && !contact.isBanned());
+        }
+        synchronized (conversations) {
+            for (CallContact contact : contacts.values()) {
+                String key = contact.getIds().get(0);
+                if (!contact.isBanned()) {
+                    Conversation conversation = getByKey(key);
+                    Conversation old = conversations.put(key, conversation);
+                    if (old == null) {
+                        conversation.addContactEvent();
+                    }
+                }
+            }
+        }
+        synchronized (pending) {
+            for (TrustRequest req : requests) {
+                String key = new Uri(req.getContactId()).getRawUriString();
+                Conversation conversation = getByKey(key);
+                Conversation old = pending.put(key, conversation);
+                if (old == null) {
+                    conversation.addRequestEvent(req);
+                }
+            }
+        }
+        Log.w(TAG, "loadHistory: ending");
+        historyLoaded = true;
+        if (historyLoader != null) {
+            historyLoader.onNext(this);
+            historyLoader.onComplete();
+        }
+        conversationChanged();
+        pendingChanged();
+    }
+
+    public Conversation getConversationById(String id) {
+        return conversations.get(id);
+    }
+
+    public Conversation getConversationByContact(CallContact contact) {
+        if (contact != null) {
+            ArrayList<String> keys = contact.getIds();
+            for (String key : keys) {
+                Conversation conversation = conversations.get(key);
+                if (conversation != null) {
+                    return conversation;
+                }
+                conversation = pending.get(key);
+                if (conversation != null) {
+                    return conversation;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Conversation getConversationByCallId(String callId) {
+        for (Conversation conversation : conversations.values()) {
+            Conference conf = conversation.getConference(callId);
+            if (conf != null) {
+                return conversation;
+            }
+        }
+        return null;
+    }
+
 }

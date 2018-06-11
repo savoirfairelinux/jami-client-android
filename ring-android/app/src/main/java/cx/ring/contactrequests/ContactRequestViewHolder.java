@@ -33,7 +33,7 @@ import cx.ring.R;
 public class ContactRequestViewHolder extends RecyclerView.ViewHolder {
 
     private ContactRequestListeners clickListener;
-    private PendingContactRequestsViewModel viewModel;
+    private ContactRequestsViewModel viewModel;
 
     @BindView(R.id.rlContactRequest)
     protected RelativeLayout rlContactRequest;
@@ -58,7 +58,7 @@ public class ContactRequestViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, view);
     }
 
-    public void bind(final ContactRequestListeners clickListener, final PendingContactRequestsViewModel viewModel) {
+    public void bind(final ContactRequestListeners clickListener, final ContactRequestsViewModel viewModel) {
         this.clickListener = clickListener;
         this.viewModel = viewModel;
     }
@@ -69,6 +69,6 @@ public class ContactRequestViewHolder extends RecyclerView.ViewHolder {
     }
 
     public interface ContactRequestListeners {
-        void onContactRequestClick(PendingContactRequestsViewModel viewModel);
+        void onContactRequestClick(ContactRequestsViewModel viewModel);
     }
 }

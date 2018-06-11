@@ -19,11 +19,9 @@
  */
 package cx.ring.launch;
 
-import java.util.ArrayList;
-
 public interface LaunchView {
 
-    void askPermissions(ArrayList<String> permissionsWeCanAsk);
+    void askPermissions(String[] permissionsWeCanAsk);
 
     void goToHome();
 

@@ -20,6 +20,7 @@
  */
 package cx.ring.services;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -62,7 +63,6 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.DataTransferEventCode;
-import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.TrustRequest;
@@ -71,13 +71,12 @@ import cx.ring.service.DRingService;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
 import cx.ring.utils.ResourceMapper;
 import ezvcard.VCard;
 import ezvcard.property.Photo;
+import io.reactivex.disposables.CompositeDisposable;
 
-public class NotificationServiceImpl extends NotificationService implements Observer<ServiceEvent> {
+public class NotificationServiceImpl extends NotificationService {
 
     private static final String TAG = NotificationServiceImpl.class.getSimpleName();
 
@@ -96,26 +95,43 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     @Inject
     protected AccountService mAccountService;
     @Inject
-    protected CallService mCallService;
-    @Inject
     protected PreferencesService mPreferencesService;
     @Inject
     protected HistoryService mHistoryService;
     @Inject
     protected DeviceRuntimeService mDeviceRuntimeService;
     private NotificationManagerCompat notificationManager;
-    private Random random;
+    private final Random random = new Random();
 
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
+
+    @SuppressLint("CheckResult")
     public void initHelper() {
         if (notificationManager == null) {
             notificationManager = NotificationManagerCompat.from(mContext);
         }
-        mAccountService.addObserver(this);
-        mCallService.addObserver(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             registerNotificationChannels();
         }
-        random = new Random();
+        mAccountService.getCurrentAccountSubject().subscribe(
+                account -> {
+                    showIncomingTrustRequestNotification(account);
+                    mDisposable.clear();
+                    mDisposable.add(account.getRequestsEvents().subscribe(
+                            event -> {
+                                Log.d(TAG, "update: INCOMING_TRUST_REQUEST " + event.request.getContactId());
+                                String from = event.request.getContactId();
+                                Set<String> notifiedRequests = mPreferencesService.loadRequestsPreferences(account.getAccountID());
+                                if (notifiedRequests == null || !notifiedRequests.contains(from)) {
+                                    showIncomingTrustRequestNotification(account);
+                                    mPreferencesService.saveRequestPreferences(account.getAccountID(), from);
+                                } else {
+                                    Log.d(TAG, "INCOMING_TRUST_REQUEST: already notified for " + from);
+                                }
+                            },
+                            error -> Log.e(TAG, "Error loading requests", error),
+                            () -> cancelTrustRequestNotification(account.getAccountID())));
+                });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -234,8 +250,9 @@ public class NotificationServiceImpl extends NotificationService implements Obse
 
     @Override
     public void showTextNotification(CallContact contact, Conversation conversation, TreeMap<Long, TextMessage> texts) {
+        Uri contactUri = contact.getPrimaryUri();
         if (texts.isEmpty()) {
-            cancelTextNotification(contact);
+            cancelTextNotification(contactUri);
             return;
         }
         TextMessage last = texts.lastEntry().getValue();
@@ -243,12 +260,12 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
-                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPhones().get(0).getNumber().toString());
+                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
 
         Intent intentDelete = new Intent(DRingService.ACTION_CONV_DISMISS)
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
-                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPhones().get(0).getNumber().toString());
+                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
 
         NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
@@ -289,10 +306,10 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         Intent intentRead = new Intent(DRingService.ACTION_CONV_READ)
                 .setClass(mContext, DRingService.class)
                 .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
-                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contact.getPhones().get(0).getNumber().toString());
+                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
 
         messageNotificationBuilder.addAction(0, mContext.getString(R.string.notif_mark_as_read), PendingIntent.getService(mContext, Long.valueOf(System.currentTimeMillis()).intValue(), intentRead, 0));
-        int notificationId = getTextNotificationId(contact);
+        int notificationId = getTextNotificationId(contactUri);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);
     }
@@ -309,6 +326,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         }
 
         Collection<TrustRequest> requests = account.getRequests();
+        Log.w(TAG, "showIncomingTrustRequestNotification " + requests.size());
         if (requests.isEmpty()) {
             return;
         } else if (requests.size() == 1) {
@@ -373,8 +391,12 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     }
 
     @Override
-    public void showFileTransferNotification(DataTransfer info, DataTransferEventCode event, CallContact contact) {
-        if (event == null || info == null) {
+    public void showFileTransferNotification(DataTransfer info, CallContact contact) {
+        if (info == null) {
+            return;
+        }
+        DataTransferEventCode event = info.getEventCode();
+        if (event == null) {
             return;
         }
         long dataTransferId = info.getDataTransferId();
@@ -458,7 +480,7 @@ public class NotificationServiceImpl extends NotificationService implements Obse
     }
 
     @Override
-    public void cancelTextNotification(CallContact contact) {
+    public void cancelTextNotification(Uri contact) {
         if (contact == null) {
             return;
         }
@@ -499,8 +521,8 @@ public class NotificationServiceImpl extends NotificationService implements Obse
         return (NOTIF_TRUST_REQUEST + accountId).hashCode();
     }
 
-    private int getTextNotificationId(CallContact contact) {
-        return (NOTIF_MSG + contact.getPhones().get(0).getNumber().toString()).hashCode();
+    private int getTextNotificationId(Uri contact) {
+        return (NOTIF_MSG + contact.toString()).hashCode();
     }
 
     private int getFileTransferNotificationId(Long dataTransferId) {
@@ -526,27 +548,5 @@ public class NotificationServiceImpl extends NotificationService implements Obse
             return;
         }
         messageNotificationBuilder.setLargeIcon(circleBitmap);
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (observable instanceof AccountService && event != null) {
-            switch (event.getEventType()) {
-                case INCOMING_TRUST_REQUEST: {
-                    final String accountID = event.getEventInput(ServiceEvent.EventInput.ACCOUNT_ID, String.class);
-                    final String from = event.getEventInput(ServiceEvent.EventInput.FROM, String.class);
-                    Log.d(TAG, "update: INCOMING_TRUST_REQUEST " + accountID + " " + from);
-                    Account account = mAccountService.getAccount(accountID);
-                    Set<String> notifiedRequests = mPreferencesService.loadRequestsPreferences(accountID);
-                    if (notifiedRequests == null || !notifiedRequests.contains(from)) {
-                        showIncomingTrustRequestNotification(account);
-                        mPreferencesService.saveRequestPreferences(accountID, from);
-                    } else {
-                        Log.d(TAG, "INCOMING_TRUST_REQUEST: already notified for " + from);
-                    }
-                    break;
-                }
-            }
-        }
     }
 }

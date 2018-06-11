@@ -32,7 +32,7 @@ import cx.ring.utils.HashUtils;
 import cx.ring.utils.StringUtils;
 
 @DatabaseTable(tableName = DataTransfer.TABLE_NAME)
-public class DataTransfer extends ConversationElement {
+public class DataTransfer implements ConversationElement {
     public static final String TABLE_NAME = "historydata";
     public static final String COLUMN_ID_NAME = "id";
     public static final String COLUMN_TIMESTAMP_NAME = "TIMESTAMP";
@@ -110,6 +110,16 @@ public class DataTransfer extends ConversationElement {
     @Override
     public long getDate() {
         return timestamp;
+    }
+
+    @Override
+    public Uri getContactNumber() {
+        return new Uri(peerId);
+    }
+
+    @Override
+    public boolean isRead() {
+        return true;
     }
 
     public long getTimestamp() {

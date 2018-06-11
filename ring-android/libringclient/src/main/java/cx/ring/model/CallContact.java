@@ -27,9 +27,12 @@ import java.util.Date;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.Tuple;
 import ezvcard.VCard;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 public class CallContact {
-
+    protected static final String TAG = CallContact.class.getSimpleName();
 
     public static final int UNKNOWN_ID = -1;
     public static final int DEFAULT_ID = 0;
@@ -49,9 +52,16 @@ public class CallContact {
     private boolean isFromSystem = false;
     private Status mStatus = Status.NO_REQUEST;
     private Date mAddedDate = null;
+    private boolean mOnline = false;
 
     public boolean detailsLoaded = false;
     public VCard vcard = null;
+
+    private Subject<CallContact> mContactUpdates = PublishSubject.create();
+
+    public Observable<CallContact> getUpdates() {
+        return mContactUpdates;
+    }
 
     public CallContact(long cID) {
         this(cID, null, null, UNKNOWN_ID);
@@ -83,7 +93,7 @@ public class CallContact {
         ArrayList<Phone> phones = new ArrayList<>();
         phones.add(new Phone(to, 0));
 
-        return new CallContact(UNKNOWN_ID, null, to, 0, phones, "", false);
+        return new CallContact(UNKNOWN_ID, null, null, 0, phones, "", false);
     }
 
     public static CallContact buildUnknown(String to, String address) {
@@ -107,6 +117,14 @@ public class CallContact {
         CallContact contact = buildUnknown(ringId);
         contact.setUsername(username);
         return contact;
+    }
+
+    public boolean isOnline() {
+        return mOnline;
+    }
+
+    public void setOnline(boolean present) {
+        mOnline = present;
     }
 
     public void setContactInfos(String k, String displayName, long photo_id) {
@@ -183,6 +201,13 @@ public class CallContact {
 
     public String getKey() {
         return mKey;
+    }
+
+    public String getPrimaryNumber() {
+        return getPrimaryUri().getRawRingId();
+    }
+    public Uri getPrimaryUri() {
+        return getPhones().get(0).getNumber();
     }
 
     public void setStared() {
@@ -266,7 +291,7 @@ public class CallContact {
         if (!StringUtils.isEmpty(mUsername)) {
             return mUsername;
         } else if (!mPhones.isEmpty()) {
-            return mPhones.get(0).getNumber().getRawUriString();
+            return getPrimaryUri().getRawUriString();
         } else {
             return "";
         }
@@ -276,8 +301,13 @@ public class CallContact {
         return mUsername;
     }
 
-    public void setUsername(String name) {
-        mUsername = name;
+    public boolean setUsername(String name) {
+        if (!name.equals(mUsername)) {
+            mUsername = name;
+            mContactUpdates.onNext(this);
+            return true;
+        }
+        return false;
     }
 
     private static Tuple<String, byte[]> readVCardContactData(VCard vcard) {
@@ -308,6 +338,7 @@ public class CallContact {
             setPhoto(photo);
         }
         detailsLoaded = true;
+        mContactUpdates.onNext(this);
     }
 
     public void setVCardProfile(VCard vcard) {
