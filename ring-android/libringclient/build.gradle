@@ -4,6 +4,8 @@ dependencies {
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
+
     // VCard parsing
     compile('com.googlecode.ez-vcard:ez-vcard:0.10.2') {
         exclude module: 'freemarker'
