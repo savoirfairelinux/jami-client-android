@@ -34,6 +34,11 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Looper;
+import android.system.ErrnoException;
+import android.system.Os;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -220,6 +225,18 @@ public abstract class RingApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+
+        setDefaultUncaughtExceptionHandler();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            try {
+                Os.setenv("AVLOGLEVEL", "40", true);
+            } catch (ErrnoException e) {
+                e.printStackTrace();
+            }
+        }
+
+        mPermissionsBeingAsked = new HashMap<>();
 
         // building injection dependency tree
         mRingInjectionComponent = DaggerRingInjectionComponent.builder()
