@@ -27,9 +27,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.system.ErrnoException;
+import android.system.Os;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -212,6 +215,14 @@ public abstract class RingApplication extends Application {
         sInstance = this;
 
         setDefaultUncaughtExceptionHandler();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            try {
+                Os.setenv("AVLOGLEVEL", "40", true);
+            } catch (ErrnoException e) {
+                e.printStackTrace();
+            }
+        }
 
         mPermissionsBeingAsked = new HashMap<>();
 
