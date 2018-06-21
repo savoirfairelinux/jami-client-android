@@ -20,7 +20,6 @@
  */
 package cx.ring.model;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +39,6 @@ public class SipCall {
     public final static String KEY_PEER_HOLDING = "PEER_HOLDING";
     public final static String KEY_AUDIO_MUTED = "PEER_NUMBER";
     public final static String KEY_VIDEO_MUTED = "VIDEO_MUTED";
-
 
     private final String mCallID;
     private final String mAccount;

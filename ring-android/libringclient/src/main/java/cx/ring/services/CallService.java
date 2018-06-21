@@ -22,28 +22,26 @@ package cx.ring.services;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ScheduledExecutorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.daemon.Blob;
-import cx.ring.daemon.DataTransferInfo;
 import cx.ring.daemon.IntegerMap;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringMap;
 import cx.ring.model.CallContact;
-import cx.ring.model.DataTransferError;
-import cx.ring.model.DataTransferEventCode;
-import cx.ring.model.ServiceEvent;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
-import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
-public class CallService extends Observable {
+public class CallService {
 
     private final static String TAG = CallService.class.getSimpleName();
     private final static String MIME_TEXT_PLAIN = "text/plain";
@@ -65,109 +63,93 @@ public class CallService extends Observable {
     DeviceRuntimeService mDeviceRuntimeService;
 
     private Map<String, SipCall> currentCalls = new HashMap<>();
+    private final PublishSubject<SipCall> callSubject = PublishSubject.create();
 
-    public SipCall placeCall(final String account, final String number, final boolean audioOnly) {
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "placeCall() thread running... " + number + " audioOnly: " + audioOnly);
+    public Subject<SipCall> getCallSubject() {
+        return callSubject;
+    }
 
-                    HashMap<String, String> volatileDetails = new HashMap<>();
-                    volatileDetails.put(SipCall.KEY_AUDIO_ONLY, String.valueOf(audioOnly));
+    public Observable<SipCall> getCallUpdates(final SipCall call) {
+        return callSubject.filter(c -> c == call).startWith(call);
+    }
+    public Observable<SipCall> getCallUpdates(final String callId) {
+        SipCall call = getCurrentCallForId(callId);
+        Observable<SipCall> callUpdates = callSubject.filter(c -> c.getCallId().equals(callId));
+        return call == null ? callUpdates : callUpdates.startWith(call);
+    }
 
-                    String callId = Ringservice.placeCall(account, number, StringMap.toSwig(volatileDetails));
-                    if (callId == null || callId.isEmpty())
-                        return null;
-                    if (audioOnly) {
-                        Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
-                    }
-                    CallContact contact = mContactService.findContactByNumber(number);
-                    SipCall call = addCall(account, callId, number, SipCall.Direction.OUTGOING);
-                    call.muteVideo(audioOnly);
-                    call.setContact(contact);
-                    return call;
-                }
-        );
+    public Observable<SipCall> placeCallObservable(final String accountId, final String number, final boolean audioOnly) {
+        return placeCall(accountId, number, audioOnly)
+                .flatMapObservable(this::getCallUpdates);
+    }
+
+    public Single<SipCall> placeCall(final String account, final String number, final boolean audioOnly) {
+        return Single.fromCallable(() -> {
+            Log.i(TAG, "placeCall() thread running... " + number + " audioOnly: " + audioOnly);
+
+            HashMap<String, String> volatileDetails = new HashMap<>();
+            volatileDetails.put(SipCall.KEY_AUDIO_ONLY, String.valueOf(audioOnly));
+
+            String callId = Ringservice.placeCall(account, number, StringMap.toSwig(volatileDetails));
+            if (callId == null || callId.isEmpty())
+                return null;
+            if (audioOnly) {
+                Ringservice.muteLocalMedia(callId, "MEDIA_TYPE_VIDEO", true);
+            }
+            CallContact contact = mContactService.findContactByNumber(account, number);
+            SipCall call = addCall(account, callId, number, SipCall.Direction.OUTGOING);
+            call.muteVideo(audioOnly);
+            call.setContact(contact);
+            return call;
+        }).subscribeOn(Schedulers.from(mExecutor));
     }
 
     public void refuse(final String callId) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "refuse() thread running...");
-                    Ringservice.refuse(callId);
-                    Ringservice.hangUp(callId);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            Log.i(TAG, "refuse() running... " + callId);
+            Ringservice.refuse(callId);
+            Ringservice.hangUp(callId);
+        });
     }
 
     public void accept(final String callId) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "accept() thread running...");
-                    Ringservice.accept(callId);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            Log.i(TAG, "accept() running... " + callId);
+            Ringservice.accept(callId);
+        });
     }
 
     public void hangUp(final String callId) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "hangUp() thread running...");
-                    Ringservice.hangUp(callId);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            Log.i(TAG, "hangUp() running... " + callId);
+            Ringservice.hangUp(callId);
+        });
     }
 
     public void hold(final String callId) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "hold() thread running...");
-                    Ringservice.hold(callId);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            Log.i(TAG, "hold() running... " + callId);
+            Ringservice.hold(callId);
+        });
     }
 
     public void unhold(final String callId) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "unhold() thread running...");
-                    Ringservice.unhold(callId);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            Log.i(TAG, "unhold() running... " + callId);
+            Ringservice.unhold(callId);
+        });
     }
 
     public Map<String, String> getCallDetails(final String callId) {
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                (Callable<Map<String, String>>) () -> {
-                    Log.i(TAG, "getCallDetails() thread running...");
-                    return Ringservice.getCallDetails(callId).toNative();
-                }
-        );
+        try {
+            return mExecutor.submit(() -> {
+                Log.i(TAG, "getCallDetails() running... " + callId);
+                return Ringservice.getCallDetails(callId).toNative();
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getCallDetails()", e);
+        }
+        return null;
     }
 
     public void muteRingTone(boolean mute) {
@@ -176,197 +158,117 @@ public class CallService extends Observable {
     }
 
     public void setAudioPlugin(final String audioPlugin) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "setAudioPlugin() thread running...");
-                    Ringservice.setAudioPlugin(audioPlugin);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            Log.i(TAG, "setAudioPlugin() running...");
+            Ringservice.setAudioPlugin(audioPlugin);
+        });
     }
 
     public String getCurrentAudioOutputPlugin() {
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "getCurrentAudioOutputPlugin() thread running...");
-                    return Ringservice.getCurrentAudioOutputPlugin();
-                }
-        );
+        try {
+            return mExecutor.submit(() -> {
+                Log.i(TAG, "getCurrentAudioOutputPlugin() running...");
+                return Ringservice.getCurrentAudioOutputPlugin();
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running getCallDetails()", e);
+        }
+        return null;
     }
 
     public void playDtmf(final String key) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "playDtmf() thread running...");
-                    Ringservice.playDTMF(key);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            Log.i(TAG, "playDTMF() running...");
+            Ringservice.playDTMF(key);
+        });
     }
 
     public void setMuted(final boolean mute) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "setMuted() thread running...");
-                    Ringservice.muteCapture(mute);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            Log.i(TAG, "muteCapture() running...");
+            Ringservice.muteCapture(mute);
+        });
     }
 
-    @SuppressWarnings("ConstantConditions")
     public boolean isCaptureMuted() {
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "isCaptureMuted() thread running...");
-                    return Ringservice.isCaptureMuted();
-                }
-        );
+        try {
+            return mExecutor.submit(() -> {
+                Log.i(TAG, "isCaptureMuted() running...");
+                return Ringservice.isCaptureMuted();
+            }).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running isCaptureMuted()", e);
+        }
+        return false;
     }
 
     public void transfer(final String callId, final String to) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "transfer() thread running...");
-                    if (Ringservice.transfer(callId, to)) {
-                        Log.i(TAG, "OK");
-                    } else {
-                        Log.i(TAG, "NOT OK");
-                    }
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            Log.i(TAG, "transfer() thread running...");
+            if (Ringservice.transfer(callId, to)) {
+                Log.i(TAG, "OK");
+            } else {
+                Log.i(TAG, "NOT OK");
+            }
+        });
     }
 
     public void attendedTransfer(final String transferId, final String targetID) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "attendedTransfer() thread running...");
-                    if (Ringservice.attendedTransfer(transferId, targetID)) {
-                        Log.i(TAG, "OK");
-                    } else {
-                        Log.i(TAG, "NOT OK");
-                    }
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            Log.i(TAG, "attendedTransfer() thread running...");
+            if (Ringservice.attendedTransfer(transferId, targetID)) {
+                Log.i(TAG, "OK");
+            } else {
+                Log.i(TAG, "NOT OK");
+            }
+        });
     }
 
     public String getRecordPath() {
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "getRecordPath() thread running...");
-                    return Ringservice.getRecordPath();
-                }
-        );
+        try {
+            return mExecutor.submit(Ringservice::getRecordPath).get();
+        } catch (Exception e) {
+            Log.e(TAG, "Error running isCaptureMuted()", e);
+        }
+        return null;
     }
 
     @SuppressWarnings("ConstantConditions")
     public boolean toggleRecordingCall(final String id) {
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "toggleRecordingCall() thread running...");
-                    return Ringservice.toggleRecording(id);
-                }
-        );
+        mExecutor.execute(() -> Ringservice.toggleRecording(id));
+        return false;
     }
 
     public boolean startRecordedFilePlayback(final String filepath) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "setRecordingCall() thread running...");
-                    Ringservice.startRecordedFilePlayback(filepath);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> Ringservice.startRecordedFilePlayback(filepath));
         return false;
     }
 
     public void stopRecordedFilePlayback() {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "stopRecordedFilePlayback() thread running...");
-                    Ringservice.stopRecordedFilePlayback();
-                    return true;
-                }
-        );
+        mExecutor.execute(Ringservice::stopRecordedFilePlayback);
     }
 
     public void setRecordPath(final String path) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "setRecordPath() " + path + " thread running...");
-                    Ringservice.setRecordPath(path);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> Ringservice.setRecordPath(path));
     }
 
     public void sendTextMessage(final String callId, final String msg) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "sendTextMessage() thread running...");
-                    StringMap messages = new StringMap();
-                    messages.setRaw("text/plain", Blob.fromString(msg));
-                    Ringservice.sendTextMessage(callId, messages, "", false);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            Log.i(TAG, "sendTextMessage() thread running...");
+            StringMap messages = new StringMap();
+            messages.setRaw("text/plain", Blob.fromString(msg));
+            Ringservice.sendTextMessage(callId, messages, "", false);
+        });
     }
 
-    public Long sendAccountTextMessage(final String accountId, final String to, final String msg) {
-        return FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                true,
-                () -> {
-                    Log.i(TAG, "sendAccountTextMessage() thread running... " + accountId + " " + to + " " + msg);
-                    StringMap msgs = new StringMap();
-                    msgs.setRaw("text/plain", Blob.fromString(msg));
-                    return Ringservice.sendAccountTextMessage(accountId, to, msgs);
-                }
-        );
+    public Single<Long> sendAccountTextMessage(final String accountId, final String to, final String msg) {
+        return Single.fromCallable(() -> {
+            Log.i(TAG, "sendAccountTextMessage() running... " + accountId + " " + to + " " + msg);
+            StringMap msgs = new StringMap();
+            msgs.setRaw("text/plain", Blob.fromString(msg));
+            return Ringservice.sendAccountTextMessage(accountId, to, msgs);
+        }).subscribeOn(Schedulers.from(mExecutor));
     }
-
 
     public SipCall getCurrentCallForId(String callId) {
         return currentCalls.get(callId);
@@ -405,8 +307,12 @@ public class CallService extends Observable {
         } else if (callState != SipCall.State.OVER) {
             Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
             sipCall = new SipCall(callId, callDetails);
+            if (!callDetails.containsKey(SipCall.KEY_PEER_NUMBER)) {
+                Log.w(TAG, "No number");
+                return null;
+            }
             sipCall.setCallState(callState);
-            CallContact contact = mContactService.findContact(sipCall.getNumberUri());
+            CallContact contact = mContactService.findContact(sipCall.getAccount(), sipCall.getNumberUri());
             String registeredName = callDetails.get("REGISTERED_NAME");
             if (registeredName != null && !registeredName.isEmpty()) {
                 contact.setUsername(registeredName);
@@ -422,12 +328,7 @@ public class CallService extends Observable {
         try {
             SipCall call = parseCallState(callId, newState);
             if (call != null) {
-                setChanged();
-
-                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CALL_STATE_CHANGED);
-                event.addEventInput(ServiceEvent.EventInput.CALL, call);
-                notifyObservers(event);
-
+                callSubject.onNext(call);
                 if (call.getCallState() == SipCall.State.OVER) {
                     currentCalls.remove(call.getCallId());
                 }
@@ -441,11 +342,7 @@ public class CallService extends Observable {
         Log.d(TAG, "incoming call: " + accountId + ", " + callId + ", " + from);
 
         SipCall call = addCall(accountId, callId, from, SipCall.Direction.INCOMING);
-        setChanged();
-
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.INCOMING_CALL);
-        event.addEventInput(ServiceEvent.EventInput.CALL, call);
-        notifyObservers(event);
+        callSubject.onNext(call);
     }
 
     public void incomingMessage(String callId, String from, StringMap messages) {
@@ -458,17 +355,7 @@ public class CallService extends Observable {
             mContactService.saveVCardContactData(sipCall.getContact());
         }
         if (messages.has_key(MIME_TEXT_PLAIN)) {
-            mHistoryService.incomingMessage(sipCall.getAccount(), callId, from, messages);
-        }
-    }
-
-    public void incomingAccountMessage(String accountId, String from, StringMap messages) {
-
-        mHistoryService.incomingMessage(accountId, null, from, messages);
-
-        CallContact contact = mAccountService.getCurrentAccount().getContact(from);
-        if (!mHistoryService.hasAnHistory(accountId, from) && contact == null) {
-            mAccountService.incomingTrustRequest(accountId, from, "", System.currentTimeMillis());
+            mAccountService.incomingAccountMessage(sipCall.getAccount(), callId, from, messages);
         }
     }
 
@@ -479,11 +366,6 @@ public class CallService extends Observable {
 
     void onRtcpReportReceived(String callId, IntegerMap stats) {
         Log.i(TAG, "on RTCP report received: " + callId);
-        setChanged();
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONFERENCE_CHANGED);
-        event.addEventInput(ServiceEvent.EventInput.CALL_ID, callId);
-        event.addEventInput(ServiceEvent.EventInput.STATS, stats);
-        notifyObservers(event);
     }
 
 }

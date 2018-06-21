@@ -20,24 +20,25 @@
 
 package cx.ring.contactrequests;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
-import cx.ring.model.Account;
 import cx.ring.model.CallContact;
-import cx.ring.model.ServiceEvent;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
-import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
+import io.reactivex.Scheduler;
 
-public class BlackListPresenter extends RootPresenter<BlackListView> implements Observer<ServiceEvent> {
+public class BlackListPresenter extends RootPresenter<BlackListView> {
     static private final String TAG = BlackListPresenter.class.getSimpleName();
 
     private AccountService mAccountService;
     private String mAccountID;
+
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     @Inject
     public BlackListPresenter(AccountService accountService) {
@@ -46,28 +47,21 @@ public class BlackListPresenter extends RootPresenter<BlackListView> implements 
 
     @Override
     public void bindView(BlackListView view) {
-        mAccountService.addObserver(this);
         super.bindView(view);
-        updateList();
+        if (mAccountID != null) {
+            setAccountId(mAccountID);
+        }
     }
 
     @Override
     public void unbindView() {
-        mAccountService.removeObserver(this);
         super.unbindView();
     }
 
-    public void updateList() {
+    public void updateList(Collection<CallContact> list) {
         if (getView() == null) {
             return;
         }
-
-        Account account = mAccountService.getAccount(mAccountID);
-        if (account == null) {
-            return;
-        }
-
-        List<CallContact> list = account.getBannedContacts();
         if(list.isEmpty()) {
             getView().hideListView();
             getView().displayEmptyListMessage(true);
@@ -81,32 +75,16 @@ public class BlackListPresenter extends RootPresenter<BlackListView> implements 
         if (getView() == null) {
             return;
         }
+        mCompositeDisposable.clear();
+        mCompositeDisposable.add(mAccountService.getAccount(accountID).getBannedContactsUpdates()
+                .subscribeOn(mUiScheduler)
+                .subscribe(this::updateList));
         mAccountID = accountID;
-        updateList();
     }
 
     public void unblockClicked(CallContact contact) {
         String contactId = contact.getPhones().get(0).getNumber().getRawRingId();
         mAccountService.addContact(mAccountID, contactId);
-        updateList();
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-        Log.d(TAG, "update " + event.getEventType());
-
-        switch (event.getEventType()) {
-            case ACCOUNTS_CHANGED:
-            case CONTACT_ADDED:
-            case CONTACT_REMOVED:
-                updateList();
-                break;
-            default:
-                Log.d(TAG, "Event " + event.getEventType() + " is not handled here");
-                break;
-        }
+        //updateList();
     }
 }

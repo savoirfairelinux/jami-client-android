@@ -31,8 +31,8 @@ public class SmartListDiffUtil extends DiffUtil.Callback {
     private List<SmartListViewModel> mNewList;
 
     public SmartListDiffUtil(List<SmartListViewModel> oldList, List<SmartListViewModel> newList) {
-        this.mOldList = oldList;
-        this.mNewList = newList;
+        mOldList = oldList;
+        mNewList = newList;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class SmartListDiffUtil extends DiffUtil.Callback {
 
     @Override
     public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-        return mNewList.get(newItemPosition).getUuid().equals(mOldList.get(oldItemPosition).getUuid());
+        return mNewList.get(newItemPosition).getContact() == mOldList.get(oldItemPosition).getContact();
     }
 
     @Override

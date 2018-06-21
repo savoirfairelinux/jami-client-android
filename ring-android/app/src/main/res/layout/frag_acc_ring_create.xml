@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/create_account"
-        android:layout_centerInParent="true"
         app:bounded_width="500dp">
 
         <LinearLayout
