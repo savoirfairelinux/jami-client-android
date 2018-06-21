@@ -28,7 +28,6 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -96,7 +95,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     static public final String ACTION_PRESENT_TRUST_REQUEST_FRAGMENT = BuildConfig.APPLICATION_ID + "presentTrustRequestFragment";
     static final String TAG = HomeActivity.class.getSimpleName();
     private static final String NAVIGATION_TAG = "Navigation";
-    private final Handler mHandler = new Handler();
     protected android.app.Fragment fContent;
     protected RingNavigationFragment fNavigation;
     protected ConversationFragment fConversation;
@@ -111,12 +109,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
     @Inject
     AccountService mAccountService;
-    private final Runnable mConnectivityChecker = new Runnable() {
-        @Override
-        public void run() {
-            mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
-        }
-    };
     @Inject
     NotificationService mNotificationService;
     @BindView(R.id.left_drawer)
@@ -365,8 +357,6 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     protected void onResume() {
         super.onResume();
         mAccountService.addObserver(this);
-        mConnectivityChecker.run();
-        mHandler.postDelayed(mConnectivityChecker, 100);
         setVideoEnabledFromPermission();
     }
 

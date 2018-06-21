@@ -34,6 +34,7 @@ import android.hardware.usb.UsbManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
@@ -60,6 +61,7 @@ import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
+import cx.ring.model.Account;
 import cx.ring.model.Codec;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransfer;
@@ -512,6 +514,22 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
     @Named("DaemonExecutor")
     protected ScheduledExecutorService mExecutor;
 
+    private final Handler mHandler = new Handler();
+    private final Runnable mConnectivityChecker = new Runnable() {
+        @Override
+        public void run() {
+            mAccountService.setAccountsActive(mPreferencesService.hasNetworkConnected());
+
+            for (Account account : mAccountService.getAccounts()) {
+                if (account.isActive() && !account.isRegistered()) {
+                    // Account is active, but still not connected. Execute connectivityChanged
+                    mHardwareService.connectivityChanged();
+                    break;
+                }
+            }
+        }
+    };
+
     public static boolean isRunning = false;
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -532,6 +550,10 @@ public class DRingService extends Service implements Observer<ServiceEvent> {
                 case UsbManager.ACTION_USB_DEVICE_DETACHED: {
                     mHardwareService.initVideo();
                     break;
+                }
+                case PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED: {
+                  mConnectivityChecker.run();
+                  mHandler.postDelayed(mConnectivityChecker, 100);
                 }
             }
         }
