@@ -85,7 +85,7 @@ dependencies {
     implementation 'com.j256.ormlite:ormlite-android:4.48'
 
     // Barcode scanning
-    implementation 'com.journeyapps:zxing-android-embedded:3.5.0@aar'
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0@aar'
 
     // Butterknife
     implementation "com.jakewharton:butterknife:$butterknife_version"
