@@ -206,11 +206,9 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public void refreshContact(final int index, final TVListViewModel contact) {
-        getActivity().runOnUiThread(() -> {
-            ContactCard contactCard = (ContactCard) cardRowAdapter.get(index);
-            contactCard.setModel(contact);
-            cardRowAdapter.notifyArrayItemRangeChanged(index, 1);
-        });
+        ContactCard contactCard = (ContactCard) cardRowAdapter.get(index);
+        contactCard.setModel(contact);
+        cardRowAdapter.notifyArrayItemRangeChanged(index, 1);
     }
 
     @Override

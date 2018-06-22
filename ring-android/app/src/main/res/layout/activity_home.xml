@@ -89,15 +89,16 @@ along with this program; if not, write to the Free Software
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/toolbar_spacer"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="@dimen/action_button_bpadding"
             android:layout_marginStart="@dimen/action_button_lpadding"
+            android:layout_marginBottom="@dimen/action_button_bpadding"
             android:adjustViewBounds="false"
             android:baselineAlignBottom="false"
             android:visibility="gone"
             app:elevation="6dp"
             app:fabSize="mini"
             app:pressedTranslationZ="12dp"
-            app:rippleColor="@android:color/white" />
+            app:rippleColor="@android:color/white"
+            app:srcCompat="@drawable/ic_add_white" />
 
     </RelativeLayout>
 

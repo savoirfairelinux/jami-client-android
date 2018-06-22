@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Thibault Wittemberg <thibault.wittemberg@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,11 +31,12 @@ import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
-import cx.ring.utils.FutureUtils;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
-public abstract class HardwareService extends Observable {
+public abstract class HardwareService {
 
     private static final String TAG = HardwareService.class.getName();
 
@@ -44,6 +46,19 @@ public abstract class HardwareService extends Observable {
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
+
+    public class VideoEvent {
+        public boolean start = false;
+        public boolean started = false;
+        public int w = 0, h = 0;
+        public String callId = null;
+    }
+
+    protected final Subject<VideoEvent> videoEvents = PublishSubject.create();
+
+    public Observable<VideoEvent> getVideoEvents() {
+        return videoEvents;
+    }
 
     public abstract void initVideo();
 
@@ -96,45 +111,25 @@ public abstract class HardwareService extends Observable {
     public abstract boolean isPreviewFromFrontCamera();
 
     public void connectivityChanged() {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "connectivityChange() thread running...");
-                    Ringservice.connectivityChanged();
-                    return true;
-                }
-        );
+        Log.i(TAG, "connectivityChange()");
+        mExecutor.execute(Ringservice::connectivityChanged);
     }
 
     public void switchInput(final String id, final String uri, final StringMap map) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "switchInput() thread running..." + uri);
-                    Ringservice.applySettings(id, map);
-                    Ringservice.switchInput(id, uri);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            Log.i(TAG, "switchInput() running..." + uri);
+            Ringservice.applySettings(id, map);
+            Ringservice.switchInput(id, uri);
+        });
     }
 
     public void setPreviewSettings(final Map<String, StringMap> cameraMaps) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    Log.i(TAG, "applySettings() thread running...");
-                    for (Map.Entry<String, StringMap> entry : cameraMaps.entrySet()) {
-                        Ringservice.applySettings(entry.getKey(), entry.getValue());
-                    }
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            Log.i(TAG, "applySettings() thread running...");
+            for (Map.Entry<String, StringMap> entry : cameraMaps.entrySet()) {
+                Ringservice.applySettings(entry.getKey(), entry.getValue());
+            }
+        });
     }
 
     public long startVideo(final String inputId, final Object surface, final int width, final int height) {
@@ -158,19 +153,13 @@ public abstract class HardwareService extends Observable {
     }
 
     public void setVideoFrame(final byte[] data, final int width, final int height, final int rotation) {
-        FutureUtils.executeDaemonThreadCallable(
-                mExecutor,
-                mDeviceRuntimeService.provideDaemonThreadId(),
-                false,
-                () -> {
-                    long frame = RingserviceJNI.obtainFrame(data.length);
-                    if (frame != 0) {
-                        RingserviceJNI.setVideoFrame(data, data.length, frame, width, height, rotation);
-                    }
-                    RingserviceJNI.releaseFrame(frame);
-                    return true;
-                }
-        );
+        mExecutor.execute(() -> {
+            long frame = RingserviceJNI.obtainFrame(data.length);
+            if (frame != 0) {
+                RingserviceJNI.setVideoFrame(data, data.length, frame, width, height, rotation);
+            }
+            RingserviceJNI.releaseFrame(frame);
+        });
     }
 
     public void addVideoDevice(String deviceId) {

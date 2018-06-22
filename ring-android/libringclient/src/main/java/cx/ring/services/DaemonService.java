@@ -97,6 +97,7 @@ public class DaemonService {
 
     public void startDaemon() {
         if (!mDaemonStarted) {
+            mDaemonStarted = true;
             Log.i(TAG, "Starting daemon ...");
             mHardwareCallback = new DaemonVideoCallback();
             mPresenceCallback = new DaemonPresenceCallback();
@@ -105,7 +106,6 @@ public class DaemonService {
             mDataCallback = new DaemonDataTransferCallback();
             Ringservice.init(mConfigurationCallback, mCallAndConferenceCallback, mPresenceCallback, mDataCallback, mHardwareCallback);
             startRingServicePolling();
-            mDaemonStarted = true;
             Log.i(TAG, "DaemonService started");
         }
     }
@@ -154,12 +154,12 @@ public class DaemonService {
 
         @Override
         public void incomingAccountMessage(String accountId, String from, StringMap messages) {
-            mCallService.incomingAccountMessage(accountId, from, messages);
+            mAccountService.incomingAccountMessage(accountId, null, from, messages);
         }
 
         @Override
         public void accountMessageStatusChanged(String accountId, long messageId, String to, int status) {
-            mHistoryService.accountMessageStatusChanged(accountId, messageId, to, status);
+            mAccountService.accountMessageStatusChanged(accountId, messageId, to, status);
         }
 
         @Override
