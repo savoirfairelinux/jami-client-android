@@ -8,7 +8,7 @@ dependencies {
     compile 'com.googlecode.ez-vcard:ez-vcard:0.10.4'
 
     // QRCode encoding
-    compile 'com.google.zxing:core:3.3.2'
+    compile 'com.google.zxing:core:3.3.3'
 
     // dependency injection
     compile 'javax.inject:javax.inject:1'
