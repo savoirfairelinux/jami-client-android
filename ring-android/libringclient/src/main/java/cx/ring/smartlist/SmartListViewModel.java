@@ -51,7 +51,7 @@ public class SmartListViewModel
     }
 
     public long getLastInteractionTime() {
-        return lastEvent.getDate();
+        return (lastEvent == null) ? 0 : lastEvent.getDate();
     }
 
     public boolean hasUnreadTextMessage() {
