@@ -43,7 +43,7 @@ public class BootReceiver extends BroadcastReceiver {
         if (Intent.ACTION_BOOT_COMPLETED.equals(action) || Intent.ACTION_REBOOT.equals(action)) {
             try {
                 ((RingApplication) context.getApplicationContext()).getRingInjectionComponent().inject(this);
-                boolean isAllowRingOnStartup = mPreferencesService.loadSettings().isAllowRingOnStartup();
+                boolean isAllowRingOnStartup = mPreferencesService.getSettings().isAllowRingOnStartup();
 
                 if (isAllowRingOnStartup) {
                     Log.w(TAG, "Starting Ring on boot");

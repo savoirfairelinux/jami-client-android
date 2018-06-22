@@ -25,6 +25,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -54,10 +56,13 @@ public class AccountsManagementFragment extends BaseFragment<AccountsManagementP
     public static final int ACCOUNT_CREATE_REQUEST = 1;
     public static final int ACCOUNT_EDIT_REQUEST = 2;
     static final String TAG = AccountsManagementFragment.class.getSimpleName();
+
     @BindView(R.id.accounts_list)
-    protected ListView mDnDListView;
+    protected RecyclerView mDnDListView;
+
     @BindView(R.id.empty_account_list)
     protected View mEmptyView;
+
     private AccountsAdapter mAccountsAdapter;
 
     @Override
@@ -84,23 +89,37 @@ public class AccountsManagementFragment extends BaseFragment<AccountsManagementP
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        mDnDListView.setFocusable(false);
+        mDnDListView.setHasFixedSize(true);
+        mDnDListView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mDnDListView.setAdapter(mAccountsAdapter);
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @OnItemClick(R.id.accounts_list)
-    @SuppressWarnings("unused")
-    void onItemClick(int pos) {
-        presenter.clickAccount(mAccountsAdapter.getItem(pos));
+    @Override
+    public void onItemClicked(Account account) {
+        presenter.clickAccount(account);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
+        Log.w(TAG, "onResume()");
         FloatingActionButton button = ((HomeActivity) getActivity()).getActionButton();
-        button.setImageResource(R.drawable.ic_add_white);
         button.setOnClickListener(v -> presenter.addClicked());
+        ((HomeActivity) getActivity()).setToolbarState(true, R.string.menu_item_accounts);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.w(TAG, "onPause()");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.w(TAG, "onStop()");
     }
 
     @Override
@@ -142,18 +161,23 @@ public class AccountsManagementFragment extends BaseFragment<AccountsManagementP
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        presenter.refresh();
     }
 
     @Override
     public void refresh(final List<Account> accounts) {
-        getActivity().runOnUiThread(() -> {
-            mAccountsAdapter.replaceAll(accounts);
-            if (mAccountsAdapter.isEmpty() && mDnDListView != null) {
-                mDnDListView.setEmptyView(mEmptyView);
-            }
-            mAccountsAdapter.notifyDataSetChanged();
-        });
+        mAccountsAdapter.replaceAll(accounts);
+        if (accounts.isEmpty()) {
+            mDnDListView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        } else {
+            mDnDListView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void refreshAccount(final Account account) {
+        mAccountsAdapter.replaceAccount(account);
     }
 
     @Override

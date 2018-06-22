@@ -123,7 +123,7 @@ public class Uri implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || !(o instanceof Uri)) {
+        if (!(o instanceof Uri)) {
             return false;
         }
         Uri uo = (Uri) o;

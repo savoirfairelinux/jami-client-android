@@ -29,6 +29,7 @@ import cx.ring.model.Conversation;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.TextMessage;
+import cx.ring.model.Uri;
 
 public abstract class NotificationService {
 
@@ -43,7 +44,7 @@ public abstract class NotificationService {
 
     public abstract void cancelCallNotification(int notificationId);
 
-    public abstract void cancelTextNotification(CallContact contact);
+    public abstract void cancelTextNotification(Uri contact);
 
     public abstract void cancelTextNotification(String ringId);
 
@@ -53,6 +54,6 @@ public abstract class NotificationService {
 
     public abstract void cancelTrustRequestNotification(String accountID);
 
-    public abstract void showFileTransferNotification(DataTransfer info, DataTransferEventCode event, CallContact contact);
+    public abstract void showFileTransferNotification(DataTransfer info, CallContact contact);
 
 }

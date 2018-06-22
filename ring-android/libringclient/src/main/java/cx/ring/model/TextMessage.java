@@ -19,7 +19,7 @@
  */
 package cx.ring.model;
 
-public class TextMessage extends ConversationElement {
+public class TextMessage implements ConversationElement {
 
     private long mID = 0;
     private String mAccount = null;
@@ -145,6 +145,11 @@ public class TextMessage extends ConversationElement {
     @Override
     public long getDate() {
         return mTimestamp;
+    }
+
+    @Override
+    public Uri getContactNumber() {
+        return getNumberUri();
     }
 
     public void setAccount(String account) {
