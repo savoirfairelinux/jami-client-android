@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da5c1566_253479dd",
+        "filename": "ring-android/app/src/main/res/layout/tv_activity_search.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-06-22T20:53:21Z",
+      "side": 1,
+      "message": "Missing header",
+      "revId": "87810c73dddf26c56bcd736aed416c01953631bb",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    }
+  ]
+}
