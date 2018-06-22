@@ -53,7 +53,7 @@ public class QRCodeScannerActivity extends CaptureActivity {
             return;
         }
         intentIntegrator.setPrompt(promptString);
-        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
         intentIntegrator.setCaptureActivity(QRCodeScannerActivity.class);
         intentIntegrator.setBarcodeImageEnabled(true);
         intentIntegrator.setOrientationLocked(false);
