@@ -384,6 +384,8 @@ public class ContactServiceImpl extends ContactService {
             callContact = findContactBySipNumberFromSystem(number);
         }
 
+        if (callContact != null)
+            callContact.setFromSystem(true);
         return callContact;
     }
 
@@ -402,11 +404,8 @@ public class ContactServiceImpl extends ContactService {
     @Override
     public void saveVCardContactData(CallContact contact) {
         if (contact.vcard != null) {
-            String id = contact.getPhones().get(0).getNumber().getRawRingId();
-            String filename = id + ".vcf";
-            VCardUtils.savePeerProfileToDisk(contact.vcard,
-                    filename,
-                    mContext.getApplicationContext().getFilesDir());
+            String filename = contact.getPrimaryUri().getRawRingId() + ".vcf";
+            VCardUtils.savePeerProfileToDisk(contact.vcard, filename, mContext.getFilesDir());
         }
     }
 

@@ -57,9 +57,6 @@ public class AdvancedAccountPresenter extends RootPresenter<AdvancedAccountView>
     }
 
     public void twoStatePreferenceChanged(ConfigKey configKey, Object newValue) {
-        if (configKey != null && configKey.equals(ConfigKey.DHT_PUBLIC_IN)) {
-            mConversationFacade.clearConversations();
-        }
         mAccount.setDetail(configKey, newValue.toString());
         updateAccount();
     }

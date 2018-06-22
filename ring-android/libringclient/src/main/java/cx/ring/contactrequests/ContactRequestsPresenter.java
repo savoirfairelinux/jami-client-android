@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Aline Bonnet <aline.bonnet@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,117 +21,67 @@
 package cx.ring.contactrequests;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
+import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
-import cx.ring.model.ServiceEvent;
-import cx.ring.model.TrustRequest;
+import cx.ring.model.Conversation;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
-import cx.ring.services.AccountService;
-import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
-import cx.ring.utils.Observable;
-import cx.ring.utils.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.disposables.CompositeDisposable;
 
-public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView> implements Observer<ServiceEvent> {
+public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView> {
 
     static private final String TAG = ContactRequestsPresenter.class.getSimpleName();
 
-    private AccountService mAccountService;
-    private NotificationService mNotificationService;
-
-    private String mAccountID;
-    private ArrayList<PendingContactRequestsViewModel> mContactRequestsViewModels;
+    private String mAccountId;
+    private final ConversationFacade mConversationFacade;
+    private CompositeDisposable mConversationDisposable;
 
     @Inject
-    public ContactRequestsPresenter(AccountService accountService,
-                                    NotificationService notificationService) {
-        mAccountService = accountService;
-        mNotificationService = notificationService;
-    }
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
-    final private List<TrustRequest> mTrustRequests = new ArrayList<>();
+    @Inject
+    public ContactRequestsPresenter(ConversationFacade conversationFacade) {
+        mConversationFacade = conversationFacade;
+    }
 
     @Override
     public void bindView(ContactRequestsView view) {
-        mAccountService.addObserver(this);
         super.bindView(view);
-        updateList(true);
+        mConversationDisposable = new CompositeDisposable();
+        mCompositeDisposable.add(mConversationDisposable);
     }
 
-    public void updateAccount(String accountId, boolean shouldUpdateList) {
-        mAccountID = accountId;
-        if (shouldUpdateList) {
-            updateList(true);
-        }
-    }
-
-    @Override
-    public void unbindView() {
-        mAccountService.removeObserver(this);
-        super.unbindView();
-    }
-
-    public void updateList(boolean clear) {
-        if (getView() == null) {
-            return;
-        }
-
-        Log.d(TAG, "updateList");
-        Account currentAccount = ((mAccountID == null) ? mAccountService.getCurrentAccount() : mAccountService.getAccount(mAccountID));
-        if (currentAccount == null) {
-            return;
-        }
-        boolean hasPane = !currentAccount.equals(mAccountService.getCurrentAccount());
-
-        if (clear) {
-            mTrustRequests.clear();
-            mTrustRequests.addAll(currentAccount.getRequests());
-        }
-
-        if (mContactRequestsViewModels == null) {
-            mContactRequestsViewModels = new ArrayList<>();
-        } else {
-            mContactRequestsViewModels.clear();
-        }
-        for (TrustRequest request : mTrustRequests) {
-            mContactRequestsViewModels.add(new PendingContactRequestsViewModel(currentAccount, request, hasPane));
-        }
-
-        getView().updateView(mContactRequestsViewModels);
-        mNotificationService.cancelTrustRequestNotification(currentAccount.getAccountID());
+    public void updateAccount(String accountId) {
+        mAccountId = accountId;
+        mConversationDisposable.clear();
+        mConversationDisposable.add(
+                mConversationFacade.getAccountSubject(accountId)
+                        .flatMapObservable(Account::getPendingSubject)
+                        .map(pending -> {
+                            ArrayList<ContactRequestsViewModel> viewmodel = new ArrayList<>(pending.size());
+                            for (Conversation c : pending)
+                                viewmodel.add(new ContactRequestsViewModel(c.getContact()));
+                            return viewmodel;
+                        })
+                        .observeOn(mUiScheduler)
+                        .subscribe(smartListViewModels -> {
+                                Log.d(TAG, "updateList subscribe onSuccess");
+                                getView().updateView(smartListViewModels);
+                            }, e -> {
+                                //getView().setLoading(false);
+                                Log.d(TAG, "updateList subscribe onError", e);
+                            }));
     }
 
     public void contactRequestClicked(String contactId) {
         String rawUriString = new Uri(contactId).getRawUriString();
-        getView().goToConversation(mAccountService.getCurrentAccount().getAccountID(), rawUriString);
-    }
-
-    @Override
-    public void update(Observable observable, ServiceEvent event) {
-        if (event == null) {
-            return;
-        }
-        Log.d(TAG, "update " + event.getEventType());
-
-        switch (event.getEventType()) {
-            case INCOMING_TRUST_REQUEST:
-                updateList(false);
-                break;
-            case INCOMING_CALL:
-            case INCOMING_MESSAGE:
-            case ACCOUNTS_CHANGED:
-                updateList(true);
-                break;
-            case REGISTERED_NAME_FOUND:
-                updateList(false);
-                break;
-            default:
-                Log.d(TAG, "Event " + event.getEventType() + " is not handled here");
-                break;
-        }
+        getView().goToConversation(mAccountId, rawUriString);
     }
 }

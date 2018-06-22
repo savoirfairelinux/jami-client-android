@@ -22,6 +22,7 @@ package cx.ring.navigation;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +32,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,10 +81,10 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return TYPE_ACCOUNT;
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                      int viewType) {
-        RecyclerView.ViewHolder viewHolder;
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder viewHolder = null;
         View holderView;
         switch (viewType) {
             case TYPE_ACCOUNT:
@@ -98,16 +98,13 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         .inflate(R.layout.item_menu, parent, false);
                 viewHolder = new AddAccountView(holderView, viewType);
                 break;
-            default:
-                return null;
         }
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case TYPE_ACCOUNT: {
                 ((AccountView) holder).update(mDataset.get(position));
@@ -185,7 +182,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             Glide.with(context)
                     .load(accountPicture)
                     .apply(AvatarFactory.getGlideOptions(true, true))
-                    .transition(DrawableTransitionOptions.withCrossFade())
+                    //.transition(DrawableTransitionOptions.withCrossFade())
                     .into(photo);
 
             alias.setText(mRingNavigationPresenter.getAccountAlias(account));
@@ -222,9 +219,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 error.setVisibility(View.GONE);
                 loading.setVisibility(View.GONE);
             }
-
         }
-
     }
 
     class AddAccountView extends RecyclerView.ViewHolder implements View.OnClickListener {

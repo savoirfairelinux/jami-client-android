@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,12 +26,18 @@ import android.content.res.Configuration;
 import android.graphics.ImageFormat;
 import android.graphics.Point;
 import android.hardware.Camera;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.LongSparseArray;
+import android.util.Range;
+import android.util.Size;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
@@ -64,11 +71,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     private static Map<String, WeakReference<SurfaceHolder>> videoSurfaces = Collections.synchronizedMap(new HashMap<String, WeakReference<SurfaceHolder>>());
     private final Map<String, Shm> videoInputs = new HashMap<>();
     private final HashMap<String, VideoParams> mParams = new HashMap<>();
-    private final LongSparseArray<DeviceParams> mNativeParams = new LongSparseArray<>();
+    private final Map<String, DeviceParams> mNativeParams = new HashMap<>();
     private Context mContext;
-    private int cameraFront = 0;
-    private int cameraBack = 0;
-    private int currentCamera = -1;
+    private String cameraFront = null;
+    private String cameraBack = null;
+    private String currentCamera = null;
     private VideoParams previewParams = null;
     private Camera previewCamera = null;
 
@@ -85,24 +92,48 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     public void initVideo() {
         Log.i(TAG, "initVideo()");
         mNativeParams.clear();
-        int numberCameras = Camera.getNumberOfCameras();
-        if (numberCameras > 0) {
-            Camera.CameraInfo camInfo = new Camera.CameraInfo();
-            for (int i = 0; i < numberCameras; i++) {
-                addVideoDevice(Integer.toString(i));
-                Camera.getCameraInfo(i, camInfo);
-                if (camInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                    cameraFront = i;
-                } else {
-                    cameraBack = i;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            CameraManager manager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
+            if (manager == null)
+                return;
+            try {
+                String[] ids = manager.getCameraIdList();
+                for (String id : ids) {
+                    addVideoDevice(id);
+                    CameraCharacteristics cc = manager.getCameraCharacteristics(id);
+                    int facing = cc.get(CameraCharacteristics.LENS_FACING);
+                    if (facing == CameraCharacteristics.LENS_FACING_FRONT) {
+                        cameraFront = id;
+                    } else if (facing == CameraCharacteristics.LENS_FACING_BACK) {
+                        cameraBack = id;
+                    }
                 }
+                currentCamera = cameraFront;
+                setDefaultVideoDevice(cameraFront);
+            } catch (Exception e) {
+                Log.w(TAG, "initVideo: can't enumerate devices", e);
             }
-            currentCamera = cameraFront;
-            setDefaultVideoDevice(Integer.toString(cameraFront));
-        } else {
-            Log.w(TAG, "initVideo: No camera available");
-            currentCamera = -1;
-            cameraFront = -1;
+        }
+        else {
+            int numberCameras = Camera.getNumberOfCameras();
+            if (numberCameras > 0) {
+                Camera.CameraInfo camInfo = new Camera.CameraInfo();
+                for (int i = 0; i < numberCameras; i++) {
+                    addVideoDevice(Integer.toString(i));
+                    Camera.getCameraInfo(i, camInfo);
+                    if (camInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                        cameraFront = Integer.toString(i);
+                    } else {
+                        cameraBack = Integer.toString(i);
+                    }
+                }
+                currentCamera = cameraFront;
+                setDefaultVideoDevice(cameraFront);
+            } else {
+                Log.w(TAG, "initVideo: No camera available");
+                currentCamera = null;
+                cameraFront = null;
+            }
         }
     }
 
@@ -283,20 +314,18 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 if (shm.window == 0) {
                     Log.i(TAG, "DRingService.decodingStarted() no window !");
 
-                    ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-                    event.addEventInput(ServiceEvent.EventInput.VIDEO_START, true);
-                    setChanged();
-                    notifyObservers(event);
+                    VideoEvent event = new VideoEvent();
+                    event.start = true;
+                    videoEvents.onNext(event);
                     return;
                 }
 
-                ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-                event.addEventInput(ServiceEvent.EventInput.VIDEO_CALL, shm.id);
-                event.addEventInput(ServiceEvent.EventInput.VIDEO_STARTED, true);
-                event.addEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, shm.w);
-                event.addEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, shm.h);
-                setChanged();
-                notifyObservers(event);
+                VideoEvent event = new VideoEvent();
+                event.callId = shm.id;
+                event.started = true;
+                event.w = shm.w;
+                event.h = shm.h;
+                videoEvents.onNext(event);
             }
         }
     }
@@ -321,80 +350,111 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     @Override
     public void getCameraInfo(String camId, IntVect formats, UintVect sizes, UintVect rates) {
         Log.d(TAG, "getCameraInfo: " + camId);
-        int id = Integer.valueOf(camId);
-
-        if (id < 0 || id >= Camera.getNumberOfCameras()) {
-            return;
-        }
-
-        Camera cam;
-        try {
-            cam = Camera.open(id);
-        } catch (Exception e) {
-            Log.e(TAG, "An error occurred getting camera info", e);
-            return;
-        }
-
-        Camera.Parameters param = cam.getParameters();
-        cam.release();
-
-        for (int fmt : param.getSupportedPreviewFormats()) {
-            formats.add(fmt);
-        }
-
-        DeviceParams p = new DeviceParams();
 
         // Use a larger resolution for Android 6.0+, 64 bits devices
         final boolean useLargerSize = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.SUPPORTED_64_BIT_ABIS.length > 0;
         int MIN_WIDTH = useLargerSize ? VIDEO_WIDTH : MIN_VIDEO_WIDTH;
-        Point size = new Point(0, 0);
-        /* {@link Camera.Parameters#getSupportedPreviewSizes} :
-         * "This method will always return a list with at least one element."
-         * Attempt to find the size with width closest (but above) MIN_WIDTH. */
-        for (Camera.Size s : param.getSupportedPreviewSizes()) {
-            if (s.width < s.height) {
-                continue;
+
+        DeviceParams p = new DeviceParams();
+        p.size = new Point(0, 0);
+
+        rates.clear();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            CameraManager manager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
+            if (manager == null)
+                return;
+            try {
+                CameraCharacteristics cc = manager.getCameraCharacteristics(camId);
+                StreamConfigurationMap streamConfigs = cc.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                Size[] rawSizes = streamConfigs.getOutputSizes(ImageFormat.YUV_420_888);
+                Size newSize = rawSizes[0];
+                for (Size s : rawSizes) {
+                    if (s.getWidth() < s.getHeight()) {
+                        continue;
+                    }
+                    if (p.size.x < MIN_WIDTH ? s.getWidth() > p.size.x : (s.getWidth() > MIN_WIDTH && s.getWidth() < p.size.x)) {
+                        newSize = s;
+                    }
+                }
+                p.size.x = newSize.getWidth();
+                p.size.y = newSize.getHeight();
+
+                long minDuration = streamConfigs.getOutputMinFrameDuration(ImageFormat.YUV_420_888, newSize);
+                double maxfps = 1e9d / minDuration;
+                Log.w(TAG, "res: " + newSize + " maxFPS: " + maxfps);
+                rates.add((long) maxfps);
+                p.rate = (long) maxfps;
+
+            } catch (CameraAccessException e) {
+                e.printStackTrace();
             }
-            if (size.x < MIN_WIDTH ? s.width > size.x : (s.width >= MIN_WIDTH && s.width < size.x)) {
-                size.x = s.width;
-                size.y = s.height;
+        } else {
+            int id = Integer.valueOf(camId);
+            if (id < 0 || id >= Camera.getNumberOfCameras()) {
+                return;
             }
+            Camera cam;
+            try {
+                cam = Camera.open(id);
+            } catch (Exception e) {
+                Log.e(TAG, "An error occurred getting camera info", e);
+                return;
+            }
+            Camera.Parameters param = cam.getParameters();
+            cam.release();
+            for (int fmt : param.getSupportedPreviewFormats()) {
+                formats.add(fmt);
+            }
+
+            /* {@link Camera.Parameters#getSupportedPreviewSizes} :
+             * "This method will always return a list with at least one element."
+             * Attempt to find the size with width closest (but above) MIN_WIDTH. */
+            for (Camera.Size s : param.getSupportedPreviewSizes()) {
+                if (s.width < s.height) {
+                    continue;
+                }
+                if (p.size.x < MIN_WIDTH ? s.width > p.size.x : (s.width >= MIN_WIDTH && s.width < p.size.x)) {
+                    p.size.x = s.width;
+                    p.size.y = s.height;
+                }
+            }
+
+            for (int fps[] : param.getSupportedPreviewFpsRange()) {
+                int rate = (fps[Camera.Parameters.PREVIEW_FPS_MIN_INDEX] + fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]) / 2;
+                rates.add(rate);
+            }
+            p.rate = rates.get(0);
+            Log.d(TAG, "getCameraInfo: using resolution " + p.size.x + "x" + p.size.y + " " + p.rate / 1000 + " FPS");
+
+            p.infos = new Camera.CameraInfo();
+            Camera.getCameraInfo(id, p.infos);
+
         }
 
-        p.size = size;
-
+        sizes.clear();
         sizes.add(p.size.x);
         sizes.add(p.size.y);
         sizes.add(p.size.y);
         sizes.add(p.size.x);
 
-        for (int fps[] : param.getSupportedPreviewFpsRange()) {
-            int rate = (fps[Camera.Parameters.PREVIEW_FPS_MIN_INDEX] + fps[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]) / 2;
-            rates.add(rate);
-        }
-        p.rate = rates.get(0);
-        Log.d(TAG, "getCameraInfo: using resolution " + p.size.x + "x" + p.size.y + " " + p.rate / 1000 + " FPS");
-
-        p.infos = new Camera.CameraInfo();
-        Camera.getCameraInfo(id, p.infos);
-
-        mNativeParams.put(id, p);
+        mNativeParams.put(camId, p);
     }
 
     @Override
     public void setParameters(String camId, int format, int width, int height, int rate) {
         Log.d(TAG, "setParameters: " + camId + ", " + format + ", " + width + ", " + height + ", " + rate);
-        int id = Integer.valueOf(camId);
-        DeviceParams deviceParams = mNativeParams.get(id);
-        VideoParams newParams = new VideoParams(id, format, deviceParams.size.x, deviceParams.size.y, rate);
+        DeviceParams deviceParams = mNativeParams.get(camId);
+        VideoParams newParams = new VideoParams(camId, format, deviceParams.size.x, deviceParams.size.y, rate);
         newParams.rotWidth = width;
         newParams.rotHeight = height;
-        WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        int rotation = rotationToDegrees(windowManager.getDefaultDisplay().getRotation());
-        if (deviceParams.infos.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-            newParams.rotation = (deviceParams.infos.orientation + rotation + 360) % 360;
-        } else {
-            newParams.rotation = (deviceParams.infos.orientation - rotation + 360) % 360;
+        if (deviceParams.infos != null) {
+            WindowManager windowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+            int rotation = rotationToDegrees(windowManager.getDefaultDisplay().getRotation());
+            if (deviceParams.infos.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                newParams.rotation = (deviceParams.infos.orientation + rotation + 360) % 360;
+            } else {
+                newParams.rotation = (deviceParams.infos.orientation - rotation + 360) % 360;
+            }
         }
         mParams.put(camId, newParams);
     }
@@ -420,10 +480,9 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             Log.w(TAG, "Can't start capture: no surface registered.");
             previewParams = videoParams;
 
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-            event.addEventInput(ServiceEvent.EventInput.VIDEO_START, true);
-            setChanged();
-            notifyObservers(event);
+            VideoEvent event = new VideoEvent();
+            event.start = true;
+            videoEvents.onNext(event);
             return;
         }
 
@@ -439,8 +498,9 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 previewCamera.release();
                 previewCamera = null;
             }
-            preview = Camera.open(videoParams.id);
-            setCameraDisplayOrientation(videoParams.id, preview);
+            int id = Integer.parseInt(videoParams.id);
+            preview = Camera.open(id);
+            setCameraDisplayOrientation(id, preview);
         } catch (Exception e) {
             Log.e(TAG, "Camera.open: " + e.getMessage());
             return;
@@ -501,12 +561,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         previewCamera = preview;
         previewParams = videoParams;
 
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_STARTED, true);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, videoParams.rotWidth);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, videoParams.rotHeight);
-        setChanged();
-        notifyObservers(event);
+        VideoEvent event = new VideoEvent();
+        event.started = true;
+        event.w = videoParams.rotWidth;
+        event.h = videoParams.rotHeight;
+        videoEvents.onNext(event);
     }
 
     @Override
@@ -525,12 +584,11 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 Log.e(TAG, "stopCapture error" + e);
             }
 
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-            event.addEventInput(ServiceEvent.EventInput.VIDEO_STARTED, false);
-            event.addEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, params.width);
-            event.addEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, params.height);
-            setChanged();
-            notifyObservers(event);
+            VideoEvent event = new VideoEvent();
+            event.started = false;
+            event.w = params.width;
+            event.h = params.height;
+            videoEvents.onNext(event);
         }
     }
 
@@ -552,20 +610,18 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         if (shm == null || shm.window == 0) {
             Log.i(TAG, "DRingService.addVideoSurface() no window !");
 
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-            event.addEventInput(ServiceEvent.EventInput.VIDEO_START, true);
-            setChanged();
-            notifyObservers(event);
+            VideoEvent event = new VideoEvent();
+            event.start = true;
+            videoEvents.onNext(event);
             return;
         }
 
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_CALL, shm.id);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_STARTED, true);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_WIDTH, shm.w);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_HEIGHT, shm.h);
-        setChanged();
-        notifyObservers(event);
+        VideoEvent event = new VideoEvent();
+        event.callId = shm.id;
+        event.started = true;
+        event.w = shm.w;
+        event.h = shm.h;
+        videoEvents.onNext(event);
 
     }
 
@@ -597,11 +653,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             shm.window = 0;
         }
 
-        ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.VIDEO_EVENT);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_CALL, shm.id);
-        event.addEventInput(ServiceEvent.EventInput.VIDEO_STARTED, false);
-        setChanged();
-        notifyObservers(event);
+        VideoEvent event = new VideoEvent();
+        event.callId = shm.id;
+        event.started = false;
+        videoEvents.onNext(event);
     }
 
     @Override
@@ -614,8 +669,8 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     public void switchInput(String id) {
         Log.w(TAG, "switchInput " + id);
 
-        final int camId;
-        if (currentCamera == cameraBack) {
+        String camId;
+        if (currentCamera.equals(cameraBack)) {
             camId = cameraFront;
         } else {
             camId = cameraBack;
@@ -624,7 +679,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
         final String uri = "camera://" + camId;
         final StringMap map = mNativeParams.get(camId).toMap(mContext.getResources().getConfiguration().orientation);
-        this.switchInput(id, uri, map);
+        switchInput(id, uri, map);
     }
 
     @Override
@@ -633,7 +688,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         setPreviewSettings();
         final String uri = "camera://" + currentCamera;
         final StringMap map = mNativeParams.get(currentCamera).toMap(mContext.getResources().getConfiguration().orientation);
-        this.switchInput(id, uri, map);
+        switchInput(id, uri, map);
     }
 
     @Override
@@ -695,7 +750,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     private static class VideoParams {
-        public int id;
+        public String id;
         public int format;
         // size as captured by Android
         public int width;
@@ -706,7 +761,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         public int rate;
         public int rotation;
 
-        public VideoParams(int id, int format, int width, int height, int rate) {
+        public VideoParams(String id, int format, int width, int height, int rate) {
             this.id = id;
             this.format = format;
             this.width = width;
