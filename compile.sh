@@ -43,20 +43,28 @@ for i in ${ANDROID_ABI_LIST}; do
     echo "$i build OK"
 done
 
-if [[ $NO_GRADLE -eq 0 ]]; then
+if [[ $NO_GRADLE -eq 1 ]]; then
+    echo "Stopping before gradle build as requested."
+    exit 0
+fi
+
+if [[ $DAEMON_ONLY -eq 1 ]]; then
+    echo "Only building daemon as requested."
+    exit 0
+fi
+
+if [[ $RELEASE -eq 1 ]]; then
     if [ -z "$RING_BUILD_FIREBASE" ]; then
-        echo "Building without Firebase support"
-    else
-        GRADLE_PROPERTIES="-PbuildFirebase"
         echo "Building with Firebase support"
-    fi
-    if [[ $DAEMON_ONLY -eq 0 ]]; then
-        if [[ $RELEASE -eq 1 ]]; then
-            cd $TOP && ./gradlew $GRADLE_PROPERTIES assembleRelease
-        else
-            cd $TOP && ./gradlew $GRADLE_PROPERTIES assembleDebug
-        fi
+        cd $TOP && ./gradlew -PbuildFirebase withFirebaseRelease
+    else
+        cd $TOP && ./gradlew noPushRelease
     fi
 else
-    echo "Stopping before gradle build as requested."
+    if [ -z "$RING_BUILD_FIREBASE" ]; then
+        echo "Building with Firebase support"
+        cd $TOP && ./gradlew -PbuildFirebase withFirebaseDebug
+    else
+        cd $TOP && ./gradlew noPushDebug
+    fi
 fi
