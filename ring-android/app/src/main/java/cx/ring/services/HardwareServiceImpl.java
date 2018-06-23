@@ -35,8 +35,6 @@ import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.support.annotation.Nullable;
-import android.util.LongSparseArray;
-import android.util.Range;
 import android.util.Size;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -52,8 +50,8 @@ import java.util.Map;
 import cx.ring.daemon.IntVect;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
-import cx.ring.model.ServiceEvent;
 import cx.ring.utils.BluetoothWrapper;
+import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.Ringer;
 
@@ -61,10 +59,11 @@ import static cx.ring.model.SipCall.State;
 
 public class HardwareServiceImpl extends HardwareService implements AudioManager.OnAudioFocusChangeListener, BluetoothWrapper.BluetoothChangeListener {
 
+    private static final int VIDEO_WIDTH_HD = 1280;
     public static final int VIDEO_WIDTH = 640;
-    public static final int MIN_VIDEO_WIDTH = 320;
+    private static final int VIDEO_WIDTH_MIN = 320;
     public static final int VIDEO_HEIGHT = 480;
-    public static final int MIN_VIDEO_HEIGHT = 240;
+    private static final int MIN_VIDEO_HEIGHT = 240;
 
     public static final String TAG = HardwareServiceImpl.class.getName();
     private static WeakReference<SurfaceHolder> mCameraPreviewSurface = new WeakReference<>(null);
@@ -353,10 +352,12 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
         // Use a larger resolution for Android 6.0+, 64 bits devices
         final boolean useLargerSize = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.SUPPORTED_64_BIT_ABIS.length > 0;
-        int MIN_WIDTH = useLargerSize ? VIDEO_WIDTH : MIN_VIDEO_WIDTH;
+        final boolean useHD = DeviceUtils.isTv(mContext);
+        int MIN_WIDTH = useLargerSize ? (useHD ? VIDEO_WIDTH_HD : VIDEO_WIDTH) : VIDEO_WIDTH_MIN;
 
         DeviceParams p = new DeviceParams();
         p.size = new Point(0, 0);
+        p.infos = new Camera.CameraInfo();
 
         rates.clear();
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -372,7 +373,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                     if (s.getWidth() < s.getHeight()) {
                         continue;
                     }
-                    if (p.size.x < MIN_WIDTH ? s.getWidth() > p.size.x : (s.getWidth() > MIN_WIDTH && s.getWidth() < p.size.x)) {
+                    if (newSize.getWidth() < MIN_WIDTH
+                            ? s.getWidth() > newSize.getWidth()
+                            : (s.getWidth() >= MIN_WIDTH && s.getWidth() < newSize.getWidth()))
+                    {
                         newSize = s;
                     }
                 }
@@ -381,10 +385,13 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
 
                 long minDuration = streamConfigs.getOutputMinFrameDuration(ImageFormat.YUV_420_888, newSize);
                 double maxfps = 1e9d / minDuration;
-                Log.w(TAG, "res: " + newSize + " maxFPS: " + maxfps);
-                rates.add((long) maxfps);
-                p.rate = (long) maxfps;
+                long fps = (long) maxfps;
+                rates.add(fps);
+                p.rate = fps * 1000L;
 
+                int facing = cc.get(CameraCharacteristics.LENS_FACING);
+                p.infos.orientation =  cc.get(CameraCharacteristics.SENSOR_ORIENTATION);
+                p.infos.facing = facing == CameraCharacteristics.LENS_FACING_FRONT ? Camera.CameraInfo.CAMERA_FACING_FRONT : Camera.CameraInfo.CAMERA_FACING_BACK;
             } catch (CameraAccessException e) {
                 e.printStackTrace();
             }
@@ -424,12 +431,9 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 rates.add(rate);
             }
             p.rate = rates.get(0);
-            Log.d(TAG, "getCameraInfo: using resolution " + p.size.x + "x" + p.size.y + " " + p.rate / 1000 + " FPS");
-
-            p.infos = new Camera.CameraInfo();
             Camera.getCameraInfo(id, p.infos);
-
         }
+        Log.d(TAG, "getCameraInfo: using resolution " + p.size.x + "x" + p.size.y + " " + p.rate / 1000 + " FPS");
 
         sizes.clear();
         sizes.add(p.size.x);
