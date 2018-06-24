@@ -45,6 +45,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cx.ring.daemon.IntVect;
@@ -133,6 +134,24 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 currentCamera = null;
                 cameraFront = null;
             }
+        }
+    }
+
+    private String[] getCameraIds() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            CameraManager manager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
+            try {
+                return manager.getCameraIdList();
+            } catch (Exception e) {
+                Log.w(TAG, "getCameraIds: can't enumerate devices", e);
+                return new String[0];
+            }
+        } else {
+            int numberCameras = Camera.getNumberOfCameras();
+            String[] ids = new String[numberCameras];
+            for (int i = 0; i < numberCameras; i++)
+                ids[i] = Integer.toString(i);
+            return ids;
         }
     }
 
@@ -433,7 +452,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             p.rate = rates.get(0);
             Camera.getCameraInfo(id, p.infos);
         }
-        Log.d(TAG, "getCameraInfo: using resolution " + p.size.x + "x" + p.size.y + " " + p.rate / 1000 + " FPS");
+        Log.d(TAG, "getCameraInfo: using resolution " + p.size.x + "x" + p.size.y + " " + p.rate / 1000 + " FPS orientation: " + p.infos.orientation);
 
         sizes.clear();
         sizes.add(p.size.x);
@@ -698,13 +717,14 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     @Override
     public void setPreviewSettings() {
         Map<String, StringMap> camSettings = new HashMap<>();
-        for (int i = 0; i < Camera.getNumberOfCameras(); i++) {
-            if (mNativeParams.get(i) != null) {
-                camSettings.put(Integer.toString(i), mNativeParams.get(i).toMap(mContext.getResources().getConfiguration().orientation));
-                Log.w(TAG, "setPreviewSettings camera:" + Integer.toString(i));
+        for (String id : getCameraIds()) {
+            DeviceParams params = mNativeParams.get(id);
+            if (params != null) {
+                camSettings.put(id, params.toMap(mContext.getResources().getConfiguration().orientation));
+                Log.w(TAG, "setPreviewSettings camera:" + id);
             }
         }
-        this.setPreviewSettings(camSettings);
+        setPreviewSettings(camSettings);
     }
 
     @Override
