@@ -111,7 +111,9 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         Log.w(TAG, "init " + contactRingId + " " + accountId);
         mContactRingId = contactRingId;
         mAccountId = accountId;
-        setConversation(mConversationFacade.startConversation(accountId, contactRingId));
+        mCompositeDisposable.add(mConversationFacade.startConversation(accountId, contactRingId)
+                .subscribeOn(mUiScheduler)
+                .subscribe(this::setConversation, e -> getView().goToHome()));
     }
 
     private void setConversation(final Conversation conversation) {
