@@ -83,6 +83,8 @@
   <string name="ab_action_speakerphone">Aktiver høytaler</string>
   <string name="ab_action_contact_add">Legg til kontakter</string>
   <string name="ab_action_contact_add_question">Legg til kontakter?</string>
+  <string name="hist_contact_added">Kontakt lagt til</string>
+  <string name="hist_invitation_received">Invitasjon mottatt</string>
   <string name="ab_action_audio_call">Talesamtale</string>
   <string name="ab_action_video_call">Videosamtale</string>
   <string name="ab_action_change_screen_orientation">Endre skjermretning</string>
@@ -152,6 +154,7 @@
   <string name="contact_request_msg">Du har %1$s kontaktforspørsler</string>
   <string name="contact_request_account">For %1$s</string>
   <string name="no_requests">0 kontaktforespørsler</string>
+  <string name="message_contact_not_trusted_yet">%s er ikke i din kontaktliste enda.\nØnsker du å godta eller avslå denne kontaktforespørselen?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Send</string>
   <string name="send_request_title">Send en kontaktforespørsel</string>
@@ -166,7 +169,6 @@
   <string name="gallery_error_title">Fant ingen galleriprogrammer</string>
   <string name="gallery_error_message">Fant ingen programmer på enheten for åpning av galleri</string>
   <string name="generic_error">En ukjent feil inntraff</string>
-  <string name="message_contact_not_trusted_yet">%s er ikke i din kontaktliste enda.\nØnsker du å godta eller avslå denne kontaktforespørselen?</string>
   <!--File Transfer-->
   <string name="invalid_file">Ugyldig fil</string>
   <string name="not_able_to_write_file">Kunne ikke skrive fil</string>

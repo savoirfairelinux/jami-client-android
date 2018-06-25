@@ -82,6 +82,8 @@
   <string name="ab_action_speakerphone">Aktivizoni altoparlantin</string>
   <string name="ab_action_contact_add">Shtoje te kontaktet</string>
   <string name="ab_action_contact_add_question">Të shtohet te kontaktet?</string>
+  <string name="hist_contact_added">Kontakti u shtua</string>
+  <string name="hist_invitation_received">Ftesa u mor</string>
   <string name="ab_action_audio_call">Thirrje audio</string>
   <string name="ab_action_video_call">Thirrje video</string>
   <string name="ab_action_change_screen_orientation">Ndryshoni drejtim ekrani</string>
@@ -119,6 +121,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s u kopjua te e papastra</string>
   <string name="conversation_action_select_peer_number">Përzgjidhni një numër</string>
   <string name="conversation_action_block_this">Bllokoje këtë kontakt</string>
+  <string name="conversation_action_go_to_call">Rikthehu te thirrja që po bëhej</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Të shtohet %1$s ?</string>
   <string name="prompt_new_password">Fjalëkalim i ri</string>
@@ -151,6 +154,7 @@
   <string name="contact_request_msg">Keni %1$s kërkesa kontakti</string>
   <string name="contact_request_account">Për %1$s</string>
   <string name="no_requests">0 kërkesa kontakti</string>
+  <string name="message_contact_not_trusted_yet">%s s’gjendet ende te kontaktet tuaj.\nE pranoni apo e hidhni tej këtë kërkesë kontakti?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Dërgoje</string>
   <string name="send_request_title">Dërgoni një kërkesë kontakti</string>
@@ -165,7 +169,6 @@
   <string name="gallery_error_title">S\’u gjet aplikacion galerie</string>
   <string name="gallery_error_message">Në këtë pajisje s\’u gjet aplikacion për të hapur Galerinë</string>
   <string name="generic_error">Ndodhi një gabim i panjohur</string>
-  <string name="message_contact_not_trusted_yet">%s s’gjendet ende te kontaktet tuaj.\nE pranoni apo e hidhni tej këtë kërkesë kontakti?</string>
   <!--File Transfer-->
   <string name="invalid_file">Kartelë e pavlefshme</string>
   <string name="not_able_to_write_file">S’arrihet të shkruhet kartelë</string>

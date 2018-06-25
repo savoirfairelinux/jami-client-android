@@ -83,6 +83,8 @@
   <string name="ab_action_speakerphone">Aktivera högtalare</string>
   <string name="ab_action_contact_add">Lägg till i kontakter</string>
   <string name="ab_action_contact_add_question">Vill du lägga till i kontakter?</string>
+  <string name="hist_contact_added">Kontakt tillagt</string>
+  <string name="hist_invitation_received">Inbjudan mottagen</string>
   <string name="ab_action_audio_call">Ljudsamtal</string>
   <string name="ab_action_video_call">Videosamtal</string>
   <string name="ab_action_change_screen_orientation">Ändra skärmorientering</string>
@@ -120,6 +122,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s kopierat till urklipp</string>
   <string name="conversation_action_select_peer_number">Välj ett nummer</string>
   <string name="conversation_action_block_this">Blockera den här kontakten</string>
+  <string name="conversation_action_go_to_call">Återgå till pågående samtal</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Vill du lägga till %1$s ?</string>
   <string name="prompt_new_password">Nytt lösenord</string>
@@ -152,6 +155,7 @@
   <string name="contact_request_msg">Du har %1$s kontaktförfrågningar</string>
   <string name="contact_request_account">För %1$s</string>
   <string name="no_requests">0 kontaktförfrågningar</string>
+  <string name="message_contact_not_trusted_yet">%s finns ännu inte i din kontaktlista.\nAccepterar eller avslår du denna kontaktförfrågan?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Skicka</string>
   <string name="send_request_title">Skicka en kontaktförfrågan</string>
@@ -166,7 +170,6 @@
   <string name="gallery_error_title">Ingen galleriapp hittades</string>
   <string name="gallery_error_message">Ingen app hittades på enheten, för att öppna Galleri</string>
   <string name="generic_error">Ett okänt fel inträffade</string>
-  <string name="message_contact_not_trusted_yet">%s finns ännu inte i din kontaktlista.\nAccepterar eller avslår du denna kontaktförfrågan?</string>
   <!--File Transfer-->
   <string name="invalid_file">Ogiltig fil</string>
   <string name="not_able_to_write_file">Kunde inte skriva fil</string>

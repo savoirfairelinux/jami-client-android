@@ -81,6 +81,8 @@
   <string name="ab_action_speakerphone">Lautsprecher einschalten</string>
   <string name="ab_action_contact_add">Kontakte hinzufügen</string>
   <string name="ab_action_contact_add_question">Zu Kontakten hinzufügen?</string>
+  <string name="hist_contact_added">Kontakt hinzugefügt</string>
+  <string name="hist_invitation_received">Einladung erhalten</string>
   <string name="ab_action_audio_call">Audioanruf</string>
   <string name="ab_action_video_call">Videoanruf</string>
   <string name="ab_action_change_screen_orientation">Bildschirmausrichtung ändern</string>

@@ -83,6 +83,8 @@
   <string name="ab_action_speakerphone">Aktiver højtaler</string>
   <string name="ab_action_contact_add">Tilføj til kontakt</string>
   <string name="ab_action_contact_add_question">Tilføj til kontakter?</string>
+  <string name="hist_contact_added">Kontakt tilføjet</string>
+  <string name="hist_invitation_received">Invitation modtaget</string>
   <string name="ab_action_audio_call">Lydopkald</string>
   <string name="ab_action_video_call">Videoopkald</string>
   <string name="ab_action_change_screen_orientation">Ændr skærm-orientering</string>
@@ -152,6 +154,7 @@
   <string name="contact_request_msg">Du har %1$s kontakt-anmodninger</string>
   <string name="contact_request_account">For %1$s</string>
   <string name="no_requests">0 kontaktforespørgsler</string>
+  <string name="message_contact_not_trusted_yet">%s er ikke blandt dine kontakter endnu.\nVil du acceptere eller afvise denne kontaktforespørgsel?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Send</string>
   <string name="send_request_title">Send en kontaktforespørgsel</string>
@@ -166,7 +169,6 @@
   <string name="gallery_error_title">Ingen Galleri-applikation fundet</string>
   <string name="gallery_error_message">Der blev ikke funden nogen applikation på enheden der kan vise Galleriet</string>
   <string name="generic_error">En ukendt fejl opstod</string>
-  <string name="message_contact_not_trusted_yet">%s er ikke blandt dine kontakter endnu.\nVil du acceptere eller afvise denne kontaktforespørgsel?</string>
   <!--File Transfer-->
   <string name="invalid_file">Ugyldig fil</string>
   <string name="not_able_to_write_file">Kan ikke skrive fil</string>

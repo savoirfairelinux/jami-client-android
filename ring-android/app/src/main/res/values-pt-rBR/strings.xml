@@ -65,7 +65,9 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="notif_channel_requests">Solicitações</string>
   <string name="notif_channel_file_transfer">Transferência de arquivo</string>
   <string name="notif_mark_as_read">Marcar como lida</string>
+  <string name="notif_incoming_file_transfer_title">Recebendo arquivo de %1$s</string>
   <string name="notif_incoming_file_transfer">Alguém quer enviar um arquivo</string>
+  <string name="notif_outgoing_file_transfer_title">Enviando arquivo para %1$s</string>
   <string name="notif_outgoing_file_transfer">Alguém quer enviar um arquivo</string>
   <string name="action_open">Abrir</string>
   <!--Call Fragment-->
@@ -81,6 +83,8 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="ab_action_speakerphone">Habilitar viva-voz</string>
   <string name="ab_action_contact_add">Adicionar aos contatos</string>
   <string name="ab_action_contact_add_question">Adicionar aos contatos?</string>
+  <string name="hist_contact_added">Contato adicionado</string>
+  <string name="hist_invitation_received">Convite recebido</string>
   <string name="ab_action_audio_call">Voz da chamada</string>
   <string name="ab_action_video_call">Chamada de Vídeo</string>
   <string name="ab_action_change_screen_orientation">Mudar orientação de tela</string>
@@ -118,6 +122,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copiado para área de transferência</string>
   <string name="conversation_action_select_peer_number">Selecione um numero</string>
   <string name="conversation_action_block_this">Bloquear este contato</string>
+  <string name="conversation_action_go_to_call">Voltar à chamada em andamento</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Adicionar %1$s ?</string>
   <string name="prompt_new_password">Nova senha</string>
@@ -150,9 +155,11 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="contact_request_msg">Você tem %1$s requisição de contato</string>
   <string name="contact_request_account">para %1$s</string>
   <string name="no_requests">0 solicitações de contato</string>
+  <string name="message_contact_not_trusted_yet">%s não está em seus contatos ainda.\nVocê aceita ou recusa esta solicitação de contato?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
   <string name="send_request_title">Enviar uma solicitação de contato</string>
+  <string name="send_request_msg">Você deve enviar uma solicitação de contato para se comunicar com esse usuário. Enquanto seu contato não aceitar a solicitação, você pode enviar mensagens, mas ele não poderá respondê-las.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">0 contatos bloqueados</string>
   <!--Smartlist-->
@@ -178,5 +185,8 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="file_transfer_status_unjoinable_peer">contato indisponível</string>
   <string name="file_saved_in">Arquivo salvo em %s</string>
   <string name="no_space_left_on_device">Sem espaço no dispositivo</string>
+  <string name="title_media_viewer">Visualizador de mídia</string>
+  <string name="menu_file_download">Baixar arquivo</string>
+  <string name="menu_file_delete">Excluir arquivo</string>
   <string name="menu_file_share">Compartilhar arquivo</string>
 </resources>

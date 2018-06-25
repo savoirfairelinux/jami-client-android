@@ -85,6 +85,8 @@
   <string name="ab_action_speakerphone">Включить громкоговоритель</string>
   <string name="ab_action_contact_add">Добавить в контакты</string>
   <string name="ab_action_contact_add_question">Добавить в контакты?</string>
+  <string name="hist_contact_added">Контакт добавлен</string>
+  <string name="hist_invitation_received">Получено приглашение</string>
   <string name="ab_action_audio_call">Голосовой вызов</string>
   <string name="ab_action_video_call">Видео звонок</string>
   <string name="ab_action_change_screen_orientation">Изменить ориентацию экрана</string>
@@ -154,6 +156,7 @@
   <string name="contact_request_msg">У вас %1$s запросов на добавление в контакты</string>
   <string name="contact_request_account">Для %1$s</string>
   <string name="no_requests">0 запросов на добавление в контакты</string>
+  <string name="message_contact_not_trusted_yet">%s не находится в вашем списке контактов. Вы хотите принять или отклонить этот запрос?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Отправить</string>
   <string name="send_request_title">Отправить запрос на добавление в контакты</string>
@@ -168,7 +171,6 @@
   <string name="gallery_error_title">Не найдено приложение Галерея</string>
   <string name="gallery_error_message">На устройстве не найдено приложения для открытия Галереи</string>
   <string name="generic_error">Произошла неизвестная ошибка</string>
-  <string name="message_contact_not_trusted_yet">%s не находится в вашем списке контактов. Вы хотите принять или отклонить этот запрос?</string>
   <!--File Transfer-->
   <string name="invalid_file">Некорректный файл</string>
   <string name="not_able_to_write_file">Невозможно записать файл</string>

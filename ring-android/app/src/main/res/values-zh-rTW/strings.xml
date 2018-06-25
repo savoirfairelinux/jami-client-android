@@ -82,6 +82,8 @@
   <string name="ab_action_speakerphone">啟用喇叭</string>
   <string name="ab_action_contact_add">加到聯絡人</string>
   <string name="ab_action_contact_add_question">加到聯絡人？</string>
+  <string name="hist_contact_added">已新增聯絡人</string>
+  <string name="hist_invitation_received">已收到邀請</string>
   <string name="ab_action_audio_call">音訊通話</string>
   <string name="ab_action_video_call">視訊通話</string>
   <string name="ab_action_change_screen_orientation">變更螢幕方向</string>
@@ -119,6 +121,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s 複製到剪貼簿</string>
   <string name="conversation_action_select_peer_number">選擇號碼</string>
   <string name="conversation_action_block_this">阻擋聯絡人</string>
+  <string name="conversation_action_go_to_call">回到進行中的通話</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">加入 %1$s 嗎？</string>
   <string name="prompt_new_password">新密碼</string>
@@ -151,6 +154,7 @@
   <string name="contact_request_msg">您有 %1$s 個聯絡人請求</string>
   <string name="contact_request_account">給 %1$s</string>
   <string name="no_requests">0 個聯絡人請求</string>
+  <string name="message_contact_not_trusted_yet">%s 不在您的聯絡人清單裡。\n您要接受或是回絕此聯絡人請求？</string>
   <!--Send contact requests-->
   <string name="send_request_button">傳送</string>
   <string name="send_request_title">傳送聯絡人請求</string>
@@ -165,7 +169,6 @@
   <string name="gallery_error_title">找不到相簿應用程式</string>
   <string name="gallery_error_message">在裝置上找不到可以開啟相簿的應用程式</string>
   <string name="generic_error">遇到未知的錯誤</string>
-  <string name="message_contact_not_trusted_yet">%s 不在您的聯絡人清單裡。\n您要接受或是回絕此聯絡人請求？</string>
   <!--File Transfer-->
   <string name="invalid_file">無效的檔案</string>
   <string name="not_able_to_write_file">無法寫入檔案</string>

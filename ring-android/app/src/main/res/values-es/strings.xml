@@ -83,6 +83,7 @@
   <string name="ab_action_speakerphone">Activar el altavoz</string>
   <string name="ab_action_contact_add">Añadir a contactos</string>
   <string name="ab_action_contact_add_question">¿Añadir a contactos?</string>
+  <string name="hist_contact_added">Contacto añadido</string>
   <string name="ab_action_audio_call">Llamada de voz</string>
   <string name="ab_action_video_call">Videollamada</string>
   <string name="ab_action_change_screen_orientation">Cambiar la orientación de la pantalla</string>
@@ -152,6 +153,7 @@
   <string name="contact_request_msg">Tienes %1$ssolicitudes de contacto</string>
   <string name="contact_request_account">Para %1$s</string>
   <string name="no_requests">0 solicitudes de contacto</string>
+  <string name="message_contact_not_trusted_yet">%s no está en sus contactos aún.\n¿Acepta o rechaza esta solicitud de contacto?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
   <string name="send_request_title">Enviar una solicitud de contacto</string>
@@ -166,7 +168,6 @@
   <string name="gallery_error_title">No se encontró una aplicación de galería</string>
   <string name="gallery_error_message">No se encontró una aplicación en el dispositivo para abrir la galería</string>
   <string name="generic_error">Ocurrió un error desconocido</string>
-  <string name="message_contact_not_trusted_yet">%s no está en sus contactos aún.\n¿Acepta o rechaza esta solicitud de contacto?</string>
   <!--File Transfer-->
   <string name="invalid_file">Archivo no válido</string>
   <string name="not_able_to_write_file">No se puede escribir el archivo</string>

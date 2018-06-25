@@ -83,6 +83,8 @@
   <string name="ab_action_speakerphone">Luidspreker inschakelen</string>
   <string name="ab_action_contact_add">Aan contacten toevoegen</string>
   <string name="ab_action_contact_add_question">Aan contacten toevoegen?</string>
+  <string name="hist_contact_added">Contact toegevoegd</string>
+  <string name="hist_invitation_received">Uitnodiging ontvangen</string>
   <string name="ab_action_audio_call">Audio-oproep</string>
   <string name="ab_action_video_call">Video-oproep</string>
   <string name="ab_action_change_screen_orientation">Schermoriëntatie aanpassen</string>
@@ -152,6 +154,7 @@
   <string name="contact_request_msg">G’hebt %1$s contactverzoeken</string>
   <string name="contact_request_account">Voor %1$s</string>
   <string name="no_requests">0 contactverzoeken</string>
+  <string name="message_contact_not_trusted_yet">%s staat nog nie in uw contacten.\nWilde dit contactverzoek aanvaarden of weigeren?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Versturen</string>
   <string name="send_request_title">Contactverzoek versturen</string>
@@ -166,7 +169,6 @@
   <string name="gallery_error_title">Gene Galerij-app gevonden</string>
   <string name="gallery_error_message">Genen app gevonden op dit apparaat voor Galerij t’openen</string>
   <string name="generic_error">Der is een onbekende fout opgetreden</string>
-  <string name="message_contact_not_trusted_yet">%s staat nog nie in uw contacten.\nWilde dit contactverzoek aanvaarden of weigeren?</string>
   <!--File Transfer-->
   <string name="invalid_file">Ongeldig bestand</string>
   <string name="not_able_to_write_file">Kan bestand nie schrijven</string>
