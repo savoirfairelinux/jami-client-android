@@ -97,8 +97,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             if (manager == null)
                 return;
             try {
-                String[] ids = manager.getCameraIdList();
-                for (String id : ids) {
+                for (String id : manager.getCameraIdList()) {
                     addVideoDevice(id);
                     CameraCharacteristics cc = manager.getCameraCharacteristics(id);
                     int facing = cc.get(CameraCharacteristics.LENS_FACING);
@@ -403,10 +402,10 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 p.size.y = newSize.getHeight();
 
                 long minDuration = streamConfigs.getOutputMinFrameDuration(ImageFormat.YUV_420_888, newSize);
-                double maxfps = 1e9d / minDuration;
+                double maxfps = 1000e9d / minDuration;
                 long fps = (long) maxfps;
                 rates.add(fps);
-                p.rate = fps * 1000L;
+                p.rate = fps;
 
                 int facing = cc.get(CameraCharacteristics.LENS_FACING);
                 p.infos.orientation =  cc.get(CameraCharacteristics.SENSOR_ORIENTATION);
@@ -452,7 +451,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             p.rate = rates.get(0);
             Camera.getCameraInfo(id, p.infos);
         }
-        Log.d(TAG, "getCameraInfo: using resolution " + p.size.x + "x" + p.size.y + " " + p.rate / 1000 + " FPS orientation: " + p.infos.orientation);
+        Log.d(TAG, "getCameraInfo: using resolution " + p.size.x + "x" + p.size.y + " " + p.rate + " FPS orientation: " + p.infos.orientation);
 
         sizes.clear();
         sizes.add(p.size.x);
