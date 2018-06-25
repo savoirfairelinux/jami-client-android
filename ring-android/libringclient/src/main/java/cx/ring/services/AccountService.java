@@ -341,6 +341,20 @@ public class AccountService {
         return null;
     }
 
+    public Single<Account> getAccountSingle(final String accountId) {
+        return accountsSubject
+                .firstOrError()
+                .map(accounts -> {
+                    for (Account account : accounts) {
+                        String accountID = account.getAccountID();
+                        if (accountID.equals(accountId)) {
+                            return account;
+                        }
+                    }
+                    throw new IllegalArgumentException();
+                });
+    }
+
     /**
      * @return Accounts list from the local cache
      */

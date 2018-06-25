@@ -130,8 +130,10 @@ public class ConversationFacade {
         mDisposableBag.add(mAccountService.getDataTransfers().subscribe(this::handleDataTransferEvent));
     }
 
-    public Conversation startConversation(String accountId, final Uri contactId) {
-        return mAccountService.getAccount(accountId).getByUri(contactId);
+    public Single<Conversation> startConversation(String accountId, final Uri contactId) {
+        return mAccountService
+                .getAccountSingle(accountId)
+                .map(account -> account.getByUri(contactId));
     }
 
     public Observable<Account> getCurrentAccountSubject() {
@@ -232,8 +234,9 @@ public class ConversationFacade {
         File file = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
         file.delete();
         mHistoryService.deleteFileHistory(transfer.getId());
-        Conversation conversation = startConversation(transfer.getAccountId(), transfer.getContactNumber());
-        conversation.removeFileTransfer(transfer);
+        startConversation(transfer.getAccountId(), transfer.getContactNumber()).subscribe(c -> {
+            c.removeFileTransfer(transfer);
+        });
     }
 
     private Single<Account> loadConversations(final Account account) {
