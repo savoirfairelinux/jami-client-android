@@ -232,11 +232,11 @@ public class ConversationFacade {
 
     public void deleteFile(DataTransfer transfer) {
         File file = mDeviceRuntimeService.getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
-        file.delete();
-        mHistoryService.deleteFileHistory(transfer.getId());
-        startConversation(transfer.getAccountId(), transfer.getContactNumber()).subscribe(c -> {
-            c.removeFileTransfer(transfer);
-        });
+        Completable.mergeArrayDelayError(
+                        mHistoryService.deleteFileHistory(transfer.getId()),
+                        Completable.fromAction(file::delete).subscribeOn(Schedulers.io()))
+                .andThen(startConversation(transfer.getAccountId(), transfer.getContactNumber()))
+                .subscribe(c -> c.removeFileTransfer(transfer));
     }
 
     private Single<Account> loadConversations(final Account account) {

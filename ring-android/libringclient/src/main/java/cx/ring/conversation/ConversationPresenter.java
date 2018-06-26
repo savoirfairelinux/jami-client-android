@@ -263,10 +263,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void deleteFile(DataTransfer transfer) {
-        File file = getDeviceRuntimeService().getConversationPath(transfer.getPeerId(), transfer.getStoragePath());
-        file.delete();
         mConversationFacade.deleteFile(transfer);
-        mHistoryService.deleteFileHistory(transfer.getId());
     }
 
     public void sendTrustRequest() {
