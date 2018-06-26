@@ -101,6 +101,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -249,19 +250,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </service>
 
         <!-- AndroidTV section -->
-        <activity
-            android:name=".tv.launch.TVLaunchActivity"
-            android:banner="@drawable/banner"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/title_activity_sflphone_home"
-            android:logo="@mipmap/ic_launcher"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppThemeBase">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".tv.main.HomeActivity"
             android:label="@string/title_activity_sflphone_home"
