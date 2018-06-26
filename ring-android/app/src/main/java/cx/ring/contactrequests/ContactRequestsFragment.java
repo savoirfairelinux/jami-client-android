@@ -29,21 +29,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import cx.ring.R;
-import cx.ring.application.RingApplication;
+import cx.ring.adapters.SmartListAdapter;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.DeviceUtils;
+import cx.ring.viewholders.SmartListViewHolder;
 
 public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresenter> implements ContactRequestsView,
-        ContactRequestViewHolder.ContactRequestListeners {
+        SmartListViewHolder.SmartListListeners {
 
     static final String TAG = ContactRequestsFragment.class.getSimpleName();
     public static final String ACCOUNT_ID = TAG + "accountID";
@@ -57,7 +58,7 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
     @BindView(R.id.emptyTextView)
     protected TextView mEmptyTextView;
 
-    private ContactRequestsAdapter mAdapter;
+    private SmartListAdapter mAdapter;
 
     @Override
     public int getLayout() {
@@ -109,30 +110,21 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
     }
 
     @Override
-    public void onContactRequestClick(ContactRequestsViewModel viewModel) {
-        presenter.contactRequestClicked(viewModel.getContactId());
-    }
-
-    @Override
-    public void updateView(final List<ContactRequestsViewModel> list) {
+    public void updateView(final List<SmartListViewModel> list) {
         if (mPaneTextView == null || mEmptyTextView == null) {
             return;
         }
 
         if (!list.isEmpty()) {
-            ContactRequestsViewModel viewModel = list.get(0);
-            if (viewModel.hasPane()) {
-                mPaneTextView.setText(getString(R.string.contact_request_account, viewModel.getAccountUsername()));
-            }
-            mPaneTextView.setVisibility(viewModel.hasPane() ? View.VISIBLE : View.GONE);
+            mPaneTextView.setVisibility(/*viewModel.hasPane() ? View.VISIBLE :*/ View.GONE);
         }
 
         mEmptyTextView.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
 
         if (mRequestsList.getAdapter() != null) {
-            mAdapter.replaceAll(list);
+            mAdapter.update(list);
         } else {
-            mAdapter = new ContactRequestsAdapter(list, ContactRequestsFragment.this);
+            mAdapter = new SmartListAdapter(list, ContactRequestsFragment.this);
             mRequestsList.setAdapter(mAdapter);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             mRequestsList.setLayoutManager(mLayoutManager);
@@ -154,5 +146,15 @@ public class ContactRequestsFragment extends BaseFragment<ContactRequestsPresent
                     .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onItemClick(SmartListViewModel viewModel) {
+        presenter.contactRequestClicked(viewModel.getAccountId(), viewModel.getContact());
+    }
+
+    @Override
+    public void onItemLongClick(SmartListViewModel smartListViewModel) {
+
     }
 }
