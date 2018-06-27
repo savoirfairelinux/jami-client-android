@@ -458,9 +458,7 @@ public abstract class HistoryService {
     }
 
     public Single<TextMessage> incomingMessage(final String accountId, final String callId, final String from, final String message) {
-        Log.w(TAG, "incomingMessage");
         return Single.fromCallable(() -> {
-            Log.w(TAG, "incomingMessage Callable");
             String f = from;
             if (!f.contains(CallContact.PREFIX_RING)) {
                 f = CallContact.PREFIX_RING + from;

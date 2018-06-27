@@ -70,26 +70,9 @@ public class Account {
     private boolean pendingsChanged = true;
     private boolean historyLoaded = false;
 
-    /*private final Observable<List<Conversation>> sortedConversationsSubject = conversationsSubject.map(convs -> {
-        if (conversationsChanged) {
-            sortedConversations.clear();
-            sortedConversations.addAll(convs.values());
-            for (Conversation c : sortedConversations)
-                c.sortHistory();
-            long start = System.nanoTime();
-            Collections.sort(sortedConversations, (a, b) -> Long.compare(b.getLastEvent().getDate(), a.getLastEvent().getDate()));
-            long end = System.nanoTime();
-            Log.w(TAG, "sorting conversations (full) took " + ((end - start)/ 1000L) + " us");
-            conversationsChanged = false;
-        }
-        return sortedConversations;
-    });
-    private final Observable<List<Conversation>> sortedPendingSubject = BehaviorSubject.create();*/
-
     private final BehaviorSubject<Collection<CallContact>> contactListSubject = BehaviorSubject.create();
     private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
     private final Subject<RequestEvent> trustRequestSubject = PublishSubject.create();
-
 
     public Collection<Conversation> getConversations() {
         return conversations.values();
@@ -135,10 +118,7 @@ public class Account {
                 }
                 for (Conversation c : sortedConversations)
                     c.sortHistory();
-                long start = System.nanoTime();
                 Collections.sort(sortedConversations, CONVERSATION_COMPARATOR);
-                long end = System.nanoTime();
-                Log.w(TAG, "sorting " + sortedConversations.size() + " conversations (full) took " + ((end - start) / 1000L) + " us");
                 conversationsChanged = false;
             }
         }
@@ -154,10 +134,7 @@ public class Account {
                 }
                 for (Conversation c : sortedPending)
                     c.sortHistory();
-                long start = System.nanoTime();
                 Collections.sort(sortedPending, CONVERSATION_COMPARATOR);
-                long end = System.nanoTime();
-                Log.w(TAG, "sorting " + sortedPending.size() + " pending (full) took " + ((end - start) / 1000L) + " us");
                 pendingsChanged = false;
             }
         }
@@ -184,10 +161,7 @@ public class Account {
         } else {
             if (conversation != null)
                 conversation.sortHistory();
-            long start = System.nanoTime();
             Collections.sort(sortedPending, (a, b) -> Long.compare(b.getLastEvent().getDate(), a.getLastEvent().getDate()));
-            long end = System.nanoTime();
-            Log.w(TAG, "sorting pending took " + ((end - start)/ 1000L) + " us");
         }
         pendingSubject.onNext(getSortedPending());
     }
@@ -210,10 +184,7 @@ public class Account {
             } else {
                 if (conversation != null)
                     conversation.sortHistory();
-                long start = System.nanoTime();
                 Collections.sort(sortedConversations, (a, b) -> Long.compare(b.getLastEvent().getDate(), a.getLastEvent().getDate()));
-                long end = System.nanoTime();
-                Log.w(TAG, "sorting conversations took " + ((end - start)/ 1000L) + " us");
             }
             conversationsSubject.onNext(sortedConversations);
         }
@@ -225,15 +196,12 @@ public class Account {
         conversationChanged();
     }
 
-    /*public CallContact setRingContactName(Uri uri, String name) {
-        CallContact contact = getContactFromCache(uri);
-        if (contact != null) {
-            contact.setUsername(name);
-            conversationRefreshed();
-            return contact;
-        }
-        return null;
-    }*/
+    private void updated(Conversation conversation) {
+        if (conversations.containsValue(conversation))
+            conversationUpdated(conversation);
+        else if (pending.containsValue(conversation))
+            pendingUpdated(conversation);
+    }
 
     public void addTextMessage(TextMessage txt) {
         Conversation conversation;
@@ -244,23 +212,18 @@ public class Account {
             txt.setContact(conversation.getContact());
         }
         conversation.addTextMessage(txt);
-        conversationUpdated(conversation);
+        updated(conversation);
     }
 
     public Conversation onDataTransferEvent(DataTransfer transfer) {
         Conversation conversation = getByUri(new Uri(transfer.getPeerId()));
         DataTransferEventCode transferEventCode = transfer.getEventCode();
         if (transferEventCode == DataTransferEventCode.CREATED) {
-            /*if (transfer.isPicture() && !transfer.isOutgoing()) {
-                mAccountService.acceptFileTransfer(transfer);
-            }*/
             conversation.addFileTransfer(transfer);
-            //conversationsSubject.onNext(mConversations);
         } else {
             conversation.updateFileTransfer(transfer, transferEventCode);
-            //conversationSubject.onNext(conversation);
         }
-        conversationUpdated(conversation);
+        updated(conversation);
         return conversation;
     }
 
@@ -274,20 +237,6 @@ public class Account {
         public final boolean added;
         RequestEvent(TrustRequest c, boolean a) { request=c; added=a;}
     }
-
-    /*private final Disposable op = trustRequestsSubject.subscribe(requests -> {
-        for (TrustRequest req : requests) {
-            String key = new Uri(req.getContactId()).getRawUriString();
-            Conversation conversation = pending.get(key);
-            if (conversation == null) {
-                conversation = getByKey(key);
-                pending.put(key, conversation);
-                conversation.addRequestEvent(req);
-            }
-        }
-    });*/
-
-    //private final Subject<ContactEvent> contactSubject = PublishSubject.create();
 
     private final Observable<CallContact> contactsObservable = Observable.create(subscriber -> {
         for (CallContact c : mContacts.values())

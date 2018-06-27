@@ -25,6 +25,7 @@ import cx.ring.model.ConversationElement;
 
 public class SmartListViewModel
 {
+    private final String accountId;
     private final CallContact contact;
     private final String uuid;
     private final String contactName;
@@ -33,7 +34,8 @@ public class SmartListViewModel
     private boolean isOnline = false;
     private final ConversationElement lastEvent;
 
-    public SmartListViewModel(CallContact contact, String id, ConversationElement lastEvent) {
+    public SmartListViewModel(String accountId, CallContact contact, String id, ConversationElement lastEvent) {
+        this.accountId = accountId;
         this.contact = contact;
         this.uuid = id;
         this.contactName = contact.getDisplayName();
@@ -93,5 +95,9 @@ public class SmartListViewModel
                 && lastEvent == other.lastEvent
                 && hasOngoingCall == other.hasOngoingCall
                 && hasUnreadTextMessage == other.hasUnreadTextMessage;
+    }
+
+    public String getAccountId() {
+        return accountId;
     }
 }

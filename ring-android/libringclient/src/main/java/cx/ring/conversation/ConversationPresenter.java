@@ -42,7 +42,6 @@ import cx.ring.services.AccountService;
 import cx.ring.services.ContactService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
-import cx.ring.services.HistoryService;
 import cx.ring.services.VCardService;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
@@ -53,6 +52,8 @@ import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
 
 public class ConversationPresenter extends RootPresenter<ConversationView> {
 
@@ -60,7 +61,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     private ContactService mContactService;
 
     private final AccountService mAccountService;
-    private final HistoryService mHistoryService;
     private final HardwareService mHardwareService;
     private final ConversationFacade mConversationFacade;
     private final VCardService mVCardService;
@@ -71,22 +71,23 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     private String mAccountId;
 
     private CompositeDisposable mConversationDisposable;
+    private final CompositeDisposable mVisibilityDisposable = new CompositeDisposable();
 
     @Inject
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
 
+    private final Subject<Conversation> mConversationSubject = BehaviorSubject.create();
+
     @Inject
     public ConversationPresenter(ContactService contactService,
                                  AccountService accountService,
-                                 HistoryService historyService,
                                  HardwareService hardwareService,
                                  ConversationFacade conversationFacade,
                                  VCardService vCardService,
                                  DeviceRuntimeService deviceRuntimeService) {
         this.mContactService = contactService;
         this.mAccountService = accountService;
-        this.mHistoryService = historyService;
         this.mHardwareService = hardwareService;
         this.mConversationFacade = conversationFacade;
         this.mVCardService = vCardService;
@@ -94,13 +95,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     @Override
-    public void unbindView() {
-        super.unbindView();
-    }
-
-    @Override
     public void bindView(ConversationView view) {
         super.bindView(view);
+        mCompositeDisposable.add(mVisibilityDisposable);
+        if (mConversationDisposable == null && mConversation != null)
+            initView(mConversation, view);
     }
 
     public void init(String contactRingId, String accountId) {
@@ -112,7 +111,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         mContactRingId = contactRingId;
         mAccountId = accountId;
         mCompositeDisposable.add(mConversationFacade.startConversation(accountId, contactRingId)
-                .subscribeOn(mUiScheduler)
+                .observeOn(mUiScheduler)
                 .subscribe(this::setConversation, e -> getView().goToHome()));
     }
 
@@ -120,11 +119,14 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         if (conversation == null || mConversation == conversation)
             return;
         mConversation = conversation;
-        if (getView() != null)
-            initView(conversation, getView());
+        mConversationSubject.onNext(conversation);
+        ConversationView view = getView();
+        if (view != null)
+            initView(conversation, view);
     }
 
     public void pause() {
+        mVisibilityDisposable.clear();
         if (mConversation != null) {
             mConversation.setVisible(false);
         }
@@ -132,10 +134,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     public void resume() {
         Log.w(TAG, "resume " + mConversation + " " + mAccountId + " " + mContactRingId);
-        if (mConversation != null) {
-            mConversation.setVisible(true);
-            mConversationFacade.readMessages(mAccountId, mContactRingId);
-        }
+        mVisibilityDisposable.clear();
+        mVisibilityDisposable.add(mConversationSubject.firstOrError().subscribe(conversation -> {
+            conversation.setVisible(true);
+            mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation);
+        }));
     }
 
     private CallContact initContact(final Account account, final Uri uri, final ConversationView view) {
@@ -180,8 +183,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         CallContact contact = initContact(account, mContactRingId, view);
 
         mConversationDisposable.add(c.getSortedHistory()
-                .subscribeOn(Schedulers.computation())
-                .observeOn(mUiScheduler)
                 .subscribe(view::refreshView));
         mConversationDisposable.add(contact.getUpdates()
                 .observeOn(mUiScheduler)
