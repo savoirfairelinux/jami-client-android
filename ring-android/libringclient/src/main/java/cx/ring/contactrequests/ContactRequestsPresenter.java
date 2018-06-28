@@ -17,7 +17,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 package cx.ring.contactrequests;
 
 import java.util.ArrayList;
@@ -26,62 +25,54 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import cx.ring.facades.ConversationFacade;
-import cx.ring.model.Account;
+import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
-import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.Log;
 import io.reactivex.Scheduler;
-import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.subjects.BehaviorSubject;
 
 public class ContactRequestsPresenter extends RootPresenter<ContactRequestsView> {
 
     static private final String TAG = ContactRequestsPresenter.class.getSimpleName();
 
-    private String mAccountId;
-    private final ConversationFacade mConversationFacade;
-    private CompositeDisposable mConversationDisposable;
-
     @Inject
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
 
+    private final ConversationFacade mConversationFacade;
+    private final BehaviorSubject<String> mAccount = BehaviorSubject.create();
+
     @Inject
-    public ContactRequestsPresenter(ConversationFacade conversationFacade) {
-        mConversationFacade = conversationFacade;
+    public ContactRequestsPresenter(ConversationFacade facade) {
+        mConversationFacade = facade;
     }
 
     @Override
     public void bindView(ContactRequestsView view) {
         super.bindView(view);
-        mConversationDisposable = new CompositeDisposable();
-        mCompositeDisposable.add(mConversationDisposable);
+        mCompositeDisposable.add(mAccount
+                .distinctUntilChanged()
+                .flatMapSingle(mConversationFacade::getAccountSubject)
+                .switchMap(a -> a
+                        .getPendingSubject()
+                        .map(pending -> {
+                            ArrayList<SmartListViewModel> viewmodel = new ArrayList<>(pending.size());
+                            for (Conversation c : pending)
+                                viewmodel.add(new SmartListViewModel(a.getAccountID(), c.getContact(), c.getContact().getPrimaryNumber(), c.getLastEvent()));
+                            return viewmodel;
+                        }))
+                .observeOn(mUiScheduler)
+                .subscribe(viewModels -> getView().updateView(viewModels),
+                        e -> Log.d(TAG, "updateList subscribe onError", e)));
     }
 
     public void updateAccount(String accountId) {
-        mAccountId = accountId;
-        mConversationDisposable.clear();
-        mConversationDisposable.add(
-                mConversationFacade.getAccountSubject(accountId)
-                        .flatMapObservable(Account::getPendingSubject)
-                        .map(pending -> {
-                            ArrayList<ContactRequestsViewModel> viewmodel = new ArrayList<>(pending.size());
-                            for (Conversation c : pending)
-                                viewmodel.add(new ContactRequestsViewModel(c.getContact()));
-                            return viewmodel;
-                        })
-                        .observeOn(mUiScheduler)
-                        .subscribe(smartListViewModels -> {
-                                Log.d(TAG, "updateList subscribe onSuccess");
-                                getView().updateView(smartListViewModels);
-                            }, e -> {
-                                //getView().setLoading(false);
-                                Log.d(TAG, "updateList subscribe onError", e);
-                            }));
+        mAccount.onNext(accountId);
     }
 
-    public void contactRequestClicked(String contactId) {
-        String rawUriString = new Uri(contactId).getRawUriString();
-        getView().goToConversation(mAccountId, rawUriString);
+    public void contactRequestClicked(String accountId, CallContact contactId) {
+        getView().goToConversation(accountId, contactId.getPrimaryNumber());
     }
 }

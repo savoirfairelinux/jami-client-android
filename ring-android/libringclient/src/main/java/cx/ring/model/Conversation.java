@@ -208,12 +208,9 @@ public class Conversation {
 
     public void sortHistory() {
         if (mDirty) {
-            long start = System.nanoTime();
             synchronized (mAggregateHistory) {
                 Collections.sort(mAggregateHistory, (c1, c2) -> Long.compare(c1.getDate(), c2.getDate()));
             }
-            long end = System.nanoTime();
-            Log.w(TAG, "sorting history took " + ((end - start)/ 1000L) + " us");
             mDirty = false;
         }
     }

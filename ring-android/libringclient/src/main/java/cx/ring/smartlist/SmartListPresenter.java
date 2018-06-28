@@ -101,13 +101,14 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                 .share();
 
         conversationViews = accountSubject
-                .switchMap(Account::getConversationsSubject)
-                .map(conversations -> {
-                    ArrayList<SmartListViewModel> viewModel = new ArrayList<>(conversations.size());
-                    for (Conversation c : conversations)
-                        viewModel.add(modelToViewModel(c));
-                    return viewModel;
-                })
+                .switchMap(a -> a
+                        .getConversationsSubject()
+                        .map(conversations -> {
+                            ArrayList<SmartListViewModel> viewModel = new ArrayList<>(conversations.size());
+                            for (Conversation c : conversations)
+                                viewModel.add(modelToViewModel(a, c));
+                            return viewModel;
+                        }))
                 .observeOn(mUiScheduler);
     }
 
@@ -190,11 +191,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         if (mCallContact == null) {
             return;
         }
-        startConversation(mCallContact);
+        startConversation(mAccount.getAccountID(), mCallContact);
     }
 
     public void conversationClicked(SmartListViewModel smartListViewModel) {
-        startConversation(smartListViewModel.getContact());
+        startConversation(smartListViewModel.getAccountId(), smartListViewModel.getContact());
     }
 
     public void conversationLongClicked(SmartListViewModel smartListViewModel) {
@@ -227,8 +228,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         getView().displayMenuItem();
     }
 
-    public void startConversation(CallContact c) {
-        getView().goToConversation(mAccount.getAccountID(), c.getPrimaryUri());
+    public void startConversation(String accountId, CallContact c) {
+        getView().goToConversation(accountId, c.getPrimaryUri());
     }
 
     public void startConversation(Uri uri) {
@@ -276,11 +277,13 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
 
         Log.w(TAG, "loadConversations() subscribe");
         mConversationDisposable.add(accountSubject
-                        .switchMap(Account::getConversationSubject)
+                        .switchMap(a -> a
+                                .getConversationSubject()
+                                .map(c -> modelToViewModel(a, c)))
                         .observeOn(mUiScheduler)
-                        .subscribe(c -> {
-                            Log.d(TAG, "getConversationSubject " + c);
-                            getView().update(modelToViewModel(c));
+                        .subscribe(vm -> {
+                            Log.d(TAG, "getConversationSubject " + vm);
+                            getView().update(vm);
                         }));
 
         mConversationDisposable.add(mPresenceService.getPresenceUpdates()
@@ -301,11 +304,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                 }));
     }
 
-    private SmartListViewModel modelToViewModel(Conversation conversation) {
+    private SmartListViewModel modelToViewModel(Account account, Conversation conversation) {
         CallContact contact = conversation.getContact();
         String primaryId = contact.getIds().get(0);
         mContactService.loadContactData(contact);
-        SmartListViewModel smartListViewModel = new SmartListViewModel(contact, primaryId,
+        SmartListViewModel smartListViewModel = new SmartListViewModel(account.getAccountID(), contact, primaryId,
                 conversation.getLastEvent());
         smartListViewModel.setOnline(mPresenceService.isBuddyOnline(primaryId));
         return smartListViewModel;

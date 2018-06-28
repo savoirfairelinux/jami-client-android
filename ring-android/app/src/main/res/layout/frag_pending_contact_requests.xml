@@ -28,7 +28,7 @@
         android:layout_marginStart="0dp"
         android:clipToPadding="false"
         android:divider="@null"
-        android:elevation="2dp"
+        android:paddingTop="8dp"
         android:paddingBottom="8dp"
         tools:listitem="@layout/item_contact_request" />
 
