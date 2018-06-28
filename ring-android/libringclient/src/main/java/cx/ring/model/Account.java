@@ -74,9 +74,6 @@ public class Account {
     private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
     private final Subject<RequestEvent> trustRequestSubject = PublishSubject.create();
 
-    public Collection<Conversation> getConversations() {
-        return conversations.values();
-    }
 
     public Observable<List<Conversation>> getConversationsSubject() {
         return conversationsSubject;
@@ -141,6 +138,10 @@ public class Account {
         return sortedPending;
     }
 
+    public Collection<Conversation> getConversations() {
+        return conversations.values();
+    }
+
     public Collection<Conversation> getPending() {
         return pending.values();
     }
@@ -201,6 +202,13 @@ public class Account {
             conversationUpdated(conversation);
         else if (pending.containsValue(conversation))
             pendingUpdated(conversation);
+    }
+
+    public void refreshed(Conversation conversation) {
+        if (conversations.containsValue(conversation))
+            conversationRefreshed(conversation);
+        else if (pending.containsValue(conversation))
+            pendingRefreshed();
     }
 
     public void addTextMessage(TextMessage txt) {

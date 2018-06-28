@@ -48,7 +48,7 @@ public class TrustRequest {
     }
 
     public TrustRequest(String accountId, Map<String, String> info) {
-        this(accountId, info.get("from"), Long.decode(info.get("received")), info.get("payload"));
+        this(accountId, info.get("from"), Long.decode(info.get("received")) * 1000L, info.get("payload"));
     }
 
     public int getUuid() {
