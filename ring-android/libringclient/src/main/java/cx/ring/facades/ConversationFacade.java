@@ -124,12 +124,14 @@ public class ConversationFacade {
                         }))
                 .subscribe(this::parseNewMessage));
 
-        mDisposableBag.add(mAccountService.getMessageStateChanges().subscribe(txt -> {
-            Conversation conv = mAccountService.getAccount(txt.getAccount()).getByUri(txt.getNumberUri());
-            if (conv != null) {
-                conv.updateTextMessage(txt);
-            }
-        }));
+        mDisposableBag.add(mAccountService
+                .getMessageStateChanges()
+                .subscribe(txt -> {
+                    Conversation conv = mAccountService.getAccount(txt.getAccount()).getByUri(txt.getNumberUri());
+                    if (conv != null) {
+                        conv.updateTextMessage(txt);
+                    }
+                }));
         mDisposableBag.add(mAccountService.getDataTransfers().subscribe(this::handleDataTransferEvent));
     }
 
@@ -161,7 +163,8 @@ public class ConversationFacade {
     public void readMessages(Account account, Conversation conversation) {
         if (conversation != null) {
             if (readMessages(conversation)) {
-                account.conversationRefreshed(conversation);
+                //account.conversationRefreshed(conversation);
+                account.refreshed(conversation);
                 mNotificationService.cancelTextNotification(conversation.getContact().getPrimaryUri());
             }
         }

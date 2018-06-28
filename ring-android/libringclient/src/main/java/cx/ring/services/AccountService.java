@@ -1036,11 +1036,11 @@ public class AccountService {
     }
 
     void incomingTrustRequest(String accountId, String from, String message, long received) {
-        Log.d(TAG, "incomingTrustRequest: " + accountId + ", " + from + ", " + message + ", " + received);
+        Log.d(TAG, "incomingTrustRequest: " + accountId + ", " + from + ", " + received);
 
         Account account = getAccount(accountId);
         if (account != null) {
-            TrustRequest request = new TrustRequest(accountId, from, received, message);
+            TrustRequest request = new TrustRequest(accountId, from, received * 1000L, message);
             VCard vcard = request.getVCard();
             if (vcard != null) {
                 VCardUtils.savePeerProfileToDisk(vcard, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
