@@ -113,25 +113,14 @@ public class NotificationServiceImpl extends NotificationService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             registerNotificationChannels();
         }
-        mAccountService.getCurrentAccountSubject().subscribe(
-                account -> {
-                    showIncomingTrustRequestNotification(account);
-                    mDisposable.clear();
-                    mDisposable.add(account.getRequestsEvents().subscribe(
-                            event -> {
-                                Log.d(TAG, "update: INCOMING_TRUST_REQUEST " + event.request.getContactId());
-                                String from = event.request.getContactId();
-                                Set<String> notifiedRequests = mPreferencesService.loadRequestsPreferences(account.getAccountID());
-                                if (notifiedRequests == null || !notifiedRequests.contains(from)) {
-                                    showIncomingTrustRequestNotification(account);
-                                    mPreferencesService.saveRequestPreferences(account.getAccountID(), from);
-                                } else {
-                                    Log.d(TAG, "INCOMING_TRUST_REQUEST: already notified for " + from);
-                                }
-                            },
-                            error -> Log.e(TAG, "Error loading requests", error),
-                            () -> cancelTrustRequestNotification(account.getAccountID())));
-                });
+        mAccountService.getCurrentAccountSubject()
+                .switchMap(a -> a
+                        .getPendingSubject()
+                        .map(p -> {
+                            showIncomingTrustRequestNotification(a);
+                            return a;
+                        }))
+                .subscribe();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -316,7 +305,7 @@ public class NotificationServiceImpl extends NotificationService {
     }
 
     @Override
-    public void showIncomingTrustRequestNotification(Account account) {
+    public void showIncomingTrustRequestNotification(final Account account) {
         int notificationId = getIncomingTrustNotificationId(account.getAccountID());
         NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
 
@@ -326,17 +315,25 @@ public class NotificationServiceImpl extends NotificationService {
             messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_REQUEST);
         }
 
-        Collection<TrustRequest> requests = account.getRequests();
+        Set<String> notifiedRequests = mPreferencesService.loadRequestsPreferences(account.getAccountID());
+
+        Collection<Conversation> requests = account.getPending();
         Log.w(TAG, "showIncomingTrustRequestNotification " + requests.size());
         if (requests.isEmpty()) {
             return;
         } else if (requests.size() == 1) {
-            TrustRequest request = requests.iterator().next();
+            Conversation request = requests.iterator().next();
+            CallContact contact = request.getContact();
+            String contactKey = contact.getKey();
+            if (notifiedRequests.contains(contactKey)) {
+                return;
+            }
+            mPreferencesService.saveRequestPreferences(account.getAccountID(), contactKey);
             messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_REQUEST);
             Bundle info = new Bundle();
             info.putString(TRUST_REQUEST_NOTIFICATION_ACCOUNT_ID, account.getAccountID());
-            info.putString(TRUST_REQUEST_NOTIFICATION_FROM, request.getContactId());
-            messageNotificationBuilder.setContentText(request.getDisplayname())
+            info.putString(TRUST_REQUEST_NOTIFICATION_FROM, contact.getPrimaryNumber());
+            messageNotificationBuilder.setContentText(contact.getRingUsername())
                     .addAction(R.drawable.ic_action_accept, mContext.getText(R.string.accept),
                             PendingIntent.getService(mContext, random.nextInt(),
                                     new Intent(DRingService.ACTION_TRUST_REQUEST_ACCEPT)
@@ -357,14 +354,24 @@ public class NotificationServiceImpl extends NotificationService {
                                     PendingIntent.FLAG_ONE_SHOT));
 
 
-            VCard vCard = request.getVCard();
-            List<Photo> photos = vCard == null ? null : vCard.getPhotos();
+            List<Photo> photos = contact.vcard == null ? null : contact.vcard.getPhotos();
             byte[] data = null;
             if (photos != null && !photos.isEmpty()) {
                 data = photos.get(0).getData();
             }
-            setContactPicture(data, request.getDisplayname(), request.getContactId(), messageNotificationBuilder);
+            setContactPicture(data, contact.getRingUsername(), contact.getPrimaryNumber(), messageNotificationBuilder);
         } else {
+            boolean newRequest = false;
+            for (Conversation request : requests) {
+                CallContact contact = request.getContact();
+                String contactKey = contact.getKey();
+                if (!notifiedRequests.contains(contactKey)) {
+                    newRequest = true;
+                    mPreferencesService.saveRequestPreferences(account.getAccountID(), contactKey);
+                }
+            }
+            if (!newRequest)
+                return;
             messageNotificationBuilder.setContentText(String.format(mContext.getString(R.string.contact_request_msg), Integer.toString(requests.size())));
             messageNotificationBuilder.setLargeIcon(null);
             messageNotificationBuilder.mActions.clear();
