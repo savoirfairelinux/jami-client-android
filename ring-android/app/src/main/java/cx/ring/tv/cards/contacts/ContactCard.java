@@ -26,7 +26,7 @@ import cx.ring.tv.cards.Card;
 import cx.ring.tv.model.TVListViewModel;
 
 public class ContactCard extends Card {
-    private TVListViewModel mModel = null;
+    private TVListViewModel mModel;
     private byte[] mPhoto = null;
 
     public ContactCard(CallContact pCallContact, Type type) {
@@ -42,12 +42,12 @@ public class ContactCard extends Card {
 
     public ContactCard(TVListViewModel model) {
         mModel = model;
-        setTitle(mModel.getCallContact().getDisplayName());
-        setDescription(mModel.getCallContact().getRingUsername());
-        if (mModel.getCallContact().getPhoto() != null) {
-            mPhoto = mModel.getCallContact().getPhoto();
+        setTitle(mModel.getContact().getDisplayName());
+        setDescription(mModel.getContact().getRingUsername());
+        if (mModel.getContact().getPhoto() != null) {
+            mPhoto = mModel.getContact().getPhoto();
         }
-        if (mModel.getCallContact().getDisplayName().equals(mModel.getCallContact().getRingUsername())) {
+        if (mModel.getContact().getDisplayName().equals(mModel.getContact().getRingUsername())) {
             if (model.isOnline()) {
                 setType(Type.CONTACT_ONLINE);
             } else {
@@ -63,14 +63,10 @@ public class ContactCard extends Card {
     }
 
     public void setModel(TVListViewModel model) {
-        if (model == null || model.equals(this.mModel)) {
-            return;
-        }
-
         mModel = model;
 
-        setTitle(model.getCallContact().getDisplayName());
-        setDescription(model.getCallContact().getRingUsername());
+        setTitle(model.getContact().getDisplayName());
+        setDescription(model.getContact().getRingUsername());
 
         if (model.isOnline()) {
             setType(Type.CONTACT_WITH_USERNAME_ONLINE);
@@ -78,8 +74,8 @@ public class ContactCard extends Card {
             setType(Type.CONTACT_WITH_USERNAME);
         }
 
-        if (model.getCallContact().getPhoto() != null && !Arrays.equals(mPhoto, model.getCallContact().getPhoto())) {
-            mPhoto = model.getCallContact().getPhoto();
+        if (model.getContact().getPhoto() != null && !Arrays.equals(mPhoto, model.getContact().getPhoto())) {
+            mPhoto = model.getContact().getPhoto();
         }
     }
 
@@ -90,19 +86,6 @@ public class ContactCard extends Card {
 
     public byte[] getPhoto() {
         return mPhoto;
-    }
-
-    @Override
-    public boolean equals(Object pO) {
-        if (this == pO) return true;
-        if (pO == null || getClass() != pO.getClass()) return false;
-
-        ContactCard that = (ContactCard) pO;
-
-        if (mModel != null) {
-            return mModel.getCallContact().equals(that.mModel.getCallContact());
-        }
-        return Arrays.equals(mPhoto, that.mPhoto);
     }
 
 }

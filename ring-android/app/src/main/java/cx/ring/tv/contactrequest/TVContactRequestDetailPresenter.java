@@ -21,18 +21,19 @@ package cx.ring.tv.contactrequest;
 
 import android.support.v17.leanback.widget.AbstractDetailsDescriptionPresenter;
 
-import cx.ring.tv.model.TVContactRequestViewModel;
+import cx.ring.tv.model.TVListViewModel;
 
 public class TVContactRequestDetailPresenter extends AbstractDetailsDescriptionPresenter {
 
     @Override
     protected void onBindDescription(ViewHolder viewHolder, Object item) {
-        TVContactRequestViewModel contactRequestViewModel = (TVContactRequestViewModel) item;
-
-        if (contactRequestViewModel != null) {
-            viewHolder.getTitle().setText(contactRequestViewModel.getUserName());
-            viewHolder.getSubtitle().setText(contactRequestViewModel.getDisplayName());
-            viewHolder.getBody().setText(contactRequestViewModel.getMessage());
+        TVListViewModel viewModel = (TVListViewModel) item;
+        if (viewModel != null) {
+            String id = viewModel.getContact().getRingUsername();
+            String displayName = viewModel.getContact().getDisplayName();
+            viewHolder.getTitle().setText(displayName);
+            if (!displayName.equals(id))
+                viewHolder.getSubtitle().setText(id);
         }
     }
 }

@@ -266,7 +266,7 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
             IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (scanResult != null && resultCode == Activity.RESULT_OK) {
                 String contact_uri = scanResult.getContents();
-                presenter.startConversation(CallContact.buildUnknown(contact_uri));
+                presenter.startConversation(new cx.ring.model.Uri(contact_uri));
             }
         }
     }

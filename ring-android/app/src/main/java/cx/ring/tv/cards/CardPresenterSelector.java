@@ -22,7 +22,6 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 
 import cx.ring.R;
-import cx.ring.tv.cards.contactrequests.ContactRequestCardPresenter;
 import cx.ring.tv.cards.contacts.ContactCardPresenter;
 import cx.ring.tv.cards.iconcards.IconCardPresenter;
 
@@ -70,17 +69,11 @@ public class CardPresenterSelector extends PresenterSelector {
                 case CONTACT_WITH_USERNAME_ONLINE:
                     presenter = new ContactCardPresenter(mContext, R.style.ContactCompleteCardOnlineTheme);
                     break;
-                case CONTACT_REQUEST:
-                    presenter = new ContactRequestCardPresenter(mContext, R.style.ContactCardTheme);
-                    break;
-                case CONTACT_REQUEST_WITH_USERNAME:
-                    presenter = new ContactRequestCardPresenter(mContext, R.style.ContactCompleteCardTheme);
-                    break;
                 default:
                     throw new InvalidParameterException("Uncatched card type");
             }
+            presenters.put(card.getType(), presenter);
         }
-        presenters.put(card.getType(), presenter);
         return presenter;
     }
 

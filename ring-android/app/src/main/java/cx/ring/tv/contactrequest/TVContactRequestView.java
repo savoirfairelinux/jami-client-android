@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,9 +21,9 @@
 package cx.ring.tv.contactrequest;
 
 import cx.ring.mvp.BaseView;
+import cx.ring.tv.model.TVListViewModel;
 
 public interface TVContactRequestView extends BaseView {
-
-    void finishView();
-
+     void showRequest(TVListViewModel model);
+     void finishView();
 }

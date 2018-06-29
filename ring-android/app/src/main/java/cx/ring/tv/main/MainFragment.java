@@ -1,15 +1,21 @@
 /*
- * Copyright (C) 2014 The Android Open Source Project
+ *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>s
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 package cx.ring.tv.main;
 
@@ -23,11 +29,9 @@ import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.OnItemViewClickedListener;
 import android.support.v17.leanback.widget.Presenter;
-import android.support.v17.leanback.widget.PresenterSelector;
 import android.support.v17.leanback.widget.Row;
 import android.support.v17.leanback.widget.RowPresenter;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,12 +54,10 @@ import cx.ring.tv.cards.CardListRow;
 import cx.ring.tv.cards.CardPresenterSelector;
 import cx.ring.tv.cards.CardRow;
 import cx.ring.tv.cards.ShadowRowPresenterSelector;
-import cx.ring.tv.cards.contactrequests.ContactRequestCard;
 import cx.ring.tv.cards.contacts.ContactCard;
 import cx.ring.tv.cards.iconcards.IconCard;
 import cx.ring.tv.cards.iconcards.IconCardHelper;
 import cx.ring.tv.contactrequest.TVContactRequestActivity;
-import cx.ring.tv.model.TVContactRequestViewModel;
 import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.search.SearchActivity;
 import cx.ring.tv.views.CustomTitleView;
@@ -71,11 +73,12 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     private static final int TRUST_REQUEST_ROW_POSITION = 1;
     SpinnerFragment mSpinnerFragment;
     private ArrayObjectAdapter mRowsAdapter;
-    private DisplayMetrics mMetrics;
     private BackgroundManager mBackgroundManager;
     private ArrayObjectAdapter cardRowAdapter;
     private ArrayObjectAdapter contactRequestRowAdapter;
     private CustomTitleView titleView;
+    private CardListRow requestsRow;
+    private CardPresenterSelector selector;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -93,17 +96,14 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
     @Override
     public void onResume() {
         super.onResume();
-        presenter.reloadConversations();
-        presenter.reloadAccountInfos();
-        presenter.loadContactRequest();
         mBackgroundManager.setDrawable(getResources().getDrawable(R.drawable.tv_background));
+        presenter.reloadAccountInfos();
     }
 
     private void setupUIElements() {
+        selector = new CardPresenterSelector(getActivity());
         mBackgroundManager = BackgroundManager.getInstance(getActivity());
         mBackgroundManager.attach(getActivity().getWindow());
-        mMetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(mMetrics);
         // over title
         setHeadersState(HEADERS_ENABLED);
         setHeadersTransitionOnBackEnabled(true);
@@ -116,14 +116,13 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         mRowsAdapter = new ArrayObjectAdapter(new ShadowRowPresenterSelector());
 
         /* Contact Presenter */
-        List<Card> cards = new ArrayList<>();
         CardRow contactRow = new CardRow(
                 CardRow.TYPE_DEFAULT,
                 true,
                 getString(R.string.tv_contact_row_header),
-                cards);
+                new ArrayList<>());
         HeaderItem cardPresenterHeader = new HeaderItem(HEADER_CONTACTS, getString(R.string.tv_contact_row_header));
-        cardRowAdapter = new ArrayObjectAdapter(new CardPresenterSelector(getActivity()));
+        cardRowAdapter = new ArrayObjectAdapter(selector);
 
         CardListRow contactListRow = new CardListRow(cardPresenterHeader, cardRowAdapter, contactRow);
 
@@ -150,8 +149,7 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                 titleSection,
                 cards);
 
-        PresenterSelector presenterSelector = new CardPresenterSelector(getActivity());
-        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(presenterSelector);
+        ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(selector);
         for (Card card : cards) {
             listRowAdapter.add(card);
         }
@@ -168,15 +166,14 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
         return createRow(getString(R.string.ring_account), cards, false);
     }
 
-    private Row createContactRequestRow() {
-        List<Card> cards = new ArrayList<>();
+    private CardListRow createContactRequestRow(List<ContactCard> list) {
         CardRow contactRequestRow = new CardRow(
                 CardRow.TYPE_DEFAULT,
                 true,
                 getString(R.string.menu_item_contact_request),
-                cards);
+                list);
 
-        contactRequestRowAdapter = new ArrayObjectAdapter(new CardPresenterSelector(getActivity()));
+        contactRequestRowAdapter = new ArrayObjectAdapter(selector);
 
         return new CardListRow(new HeaderItem(HEADER_MISC, getString(R.string.menu_item_contact_request)),
                 contactRequestRowAdapter,
@@ -194,56 +191,48 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public void showLoading(final boolean show) {
-        getActivity().runOnUiThread(() -> {
-            if (show) {
-                mSpinnerFragment = new SpinnerFragment();
-                getFragmentManager().beginTransaction().replace(R.id.main_browse_fragment, mSpinnerFragment).commitAllowingStateLoss();
-            } else {
-                getFragmentManager().beginTransaction().remove(mSpinnerFragment).commitAllowingStateLoss();
-            }
-        });
+        if (show) {
+            mSpinnerFragment = new SpinnerFragment();
+            getFragmentManager().beginTransaction().replace(R.id.main_browse_fragment, mSpinnerFragment).commitAllowingStateLoss();
+        } else {
+            getFragmentManager().beginTransaction().remove(mSpinnerFragment).commitAllowingStateLoss();
+        }
     }
 
     @Override
     public void refreshContact(final int index, final TVListViewModel contact) {
         ContactCard contactCard = (ContactCard) cardRowAdapter.get(index);
         contactCard.setModel(contact);
-        cardRowAdapter.notifyArrayItemRangeChanged(index, 1);
+        cardRowAdapter.replace(index, contactCard);
     }
 
     @Override
     public void showContacts(final List<TVListViewModel> contacts) {
-        getActivity().runOnUiThread(() -> {
-            cardRowAdapter.clear();
-            if (!contacts.isEmpty()) {
-                for (TVListViewModel contact : contacts) {
-                    cardRowAdapter.add(new ContactCard(contact));
-                }
-                cardRowAdapter.notifyArrayItemRangeChanged(0, contacts.size());
-            }
-        });
+        List<ContactCard> cards = new ArrayList<>(contacts.size());
+        for (TVListViewModel contact : contacts)
+            cards.add(new ContactCard(contact));
+        cardRowAdapter.setItems(cards,null);
     }
 
     @Override
-    public void showContactRequestsRow(boolean display) {
+    public void showContactRequests(final List<TVListViewModel> contacts) {
         CardListRow row = (CardListRow) mRowsAdapter.get(TRUST_REQUEST_ROW_POSITION);
-        boolean isContactRequestRowDisplayed = row.getCardRow().getTitle().equals(getString(R.string.menu_item_contact_request));
+        boolean isRowDisplayed = row == requestsRow;
 
-        if (display && !isContactRequestRowDisplayed) {
-            mRowsAdapter.add(TRUST_REQUEST_ROW_POSITION, createContactRequestRow());
-        } else if (!display && isContactRequestRowDisplayed) {
+        List<ContactCard> cards = new ArrayList<>(contacts.size());
+        for (TVListViewModel contact : contacts)
+            cards.add(new ContactCard(contact));
+
+        if (isRowDisplayed && contacts.isEmpty()) {
             mRowsAdapter.removeItems(TRUST_REQUEST_ROW_POSITION, 1);
+        } else if (!contacts.isEmpty()) {
+            if (requestsRow == null)
+                requestsRow = createContactRequestRow(cards);
+            else
+                contactRequestRowAdapter.setItems(cards, null);
+            if (!isRowDisplayed)
+                mRowsAdapter.add(TRUST_REQUEST_ROW_POSITION, requestsRow);
         }
-    }
-
-    @Override
-    public void showContactRequests(final ArrayList<TVContactRequestViewModel> contactRequests) {
-        contactRequestRowAdapter.clear();
-        for (TVContactRequestViewModel contact : contactRequests) {
-            contactRequestRowAdapter.add(new ContactRequestCard(contact));
-        }
-        contactRequestRowAdapter.notifyArrayItemRangeChanged(0, contactRequests.size());
-        mRowsAdapter.notifyItemRangeChanged(2, 3);
     }
 
     @Override
@@ -256,43 +245,40 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public void displayAccountInfos(final String address, final RingNavigationViewModel viewModel) {
-        getActivity().runOnUiThread(() -> {
+        if (getActivity() == null) {
+            Log.e(TAG, "displayAccountInfos: Not able to get activity");
+            return;
+        }
 
-            if (getActivity() == null) {
-                Log.e(TAG, "displayAccountInfos: Not able to get activity");
-                return;
-            }
+        VCard vcard = viewModel.getVcard(getActivity().getFilesDir());
+        if (vcard == null) {
+            Log.e(TAG, "displayAccountInfos: Not able to get vcard");
+            return;
+        }
 
-            VCard vcard = viewModel.getVcard(getActivity().getFilesDir());
-            if (vcard == null) {
-                Log.e(TAG, "displayAccountInfos: Not able to get vcard");
-                return;
-            }
-
-            String formattedName = vcard.getFormattedName().getValue();
-            if (formattedName != null && !formattedName.isEmpty()) {
-                titleView.setAlias(formattedName);
-                if (address != null) {
-                    setTitle(address);
-                } else {
-                    setTitle("");
-                }
+        String formattedName = vcard.getFormattedName().getValue();
+        if (formattedName != null && !formattedName.isEmpty()) {
+            titleView.setAlias(formattedName);
+            if (address != null) {
+                setTitle(address);
             } else {
-                titleView.setAlias(address);
+                setTitle("");
             }
+        } else {
+            titleView.setAlias(address);
+        }
 
-            byte[] data = null;
-            List<Photo> photos = vcard.getPhotos();
-            if (!photos.isEmpty() && photos.get(0) != null) {
-                data = photos.get(0).getData();
-            }
-            Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
-                    data,
-                    viewModel.getAccount().getDisplayUsername(),
-                    address);
+        byte[] data = null;
+        List<Photo> photos = vcard.getPhotos();
+        if (!photos.isEmpty() && photos.get(0) != null) {
+            data = photos.get(0).getData();
+        }
+        Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
+                data,
+                viewModel.getAccount().getDisplayUsername(),
+                address);
 
-            titleView.setCurrentAccountPhoto(contactPicture);
-        });
+        titleView.setCurrentAccountPhoto(contactPicture);
     }
 
     @Override
@@ -326,17 +312,19 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
                                   RowPresenter.ViewHolder rowViewHolder, Row row) {
 
             if (item instanceof ContactCard) {
-                presenter.contactClicked(((ContactCard) item).getModel());
-            } else if (item instanceof ContactRequestCard) {
-                Intent intent = new Intent(getActivity(), TVContactRequestActivity.class);
-                intent.putExtra(TVContactRequestActivity.CONTACT_REQUEST, ((ContactRequestCard) item).getModel());
+                TVListViewModel model = ((ContactCard) item).getModel();
+                if (row == requestsRow) {
+                    Intent intent = new Intent(getActivity(), TVContactRequestActivity.class);
+                    intent.putExtra(TVContactRequestActivity.CONTACT_REQUEST, model.getContact().getPrimaryUri());
 
-                Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        getActivity(),
-                        ((ImageCardView) itemViewHolder.view).getMainImageView(),
-                        TVContactRequestActivity.SHARED_ELEMENT_NAME).toBundle();
-                getActivity().startActivity(intent, bundle);
-
+                    Bundle bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            getActivity(),
+                            ((ImageCardView) itemViewHolder.view).getMainImageView(),
+                            TVContactRequestActivity.SHARED_ELEMENT_NAME).toBundle();
+                    getActivity().startActivity(intent, bundle);
+                } else {
+                    presenter.contactClicked(model);
+                }
             } else if (item instanceof IconCard) {
                 IconCard card = (IconCard) item;
                 switch (card.getType()) {
