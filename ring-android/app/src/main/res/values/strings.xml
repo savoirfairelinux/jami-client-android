@@ -51,7 +51,6 @@ along with this program; if not, write to the Free Software
     <string name="credits_developer" translatable="false">Adrien Béraud\nAlexandr Sergheev\nAlexandre Lision\nAlexandre Viau\nAline Bonnet\nAndreas Traczyk\nAnthony Léonard\nCyrille Béraud\nEdric Milaret\nÉloi Bail\nEmmanuel Lepage-Vallée\nFrédéric Guimont\nGuillaume Roguez\nHadrien De Sousa\nJulien Grossholtz\nKateryna Kostiuk\nLoïc Siret\nMarianne Forget\nMichel Schmit\nNicolas Jäger\nNicolas Reynaud\nOlivier Gregoire\nOlivier Soldano\nPatrick Keroulas\nPierre Duchemin\nPhilippe Gorley\nRomain Bertozzi\nSaher Azer\nSébastien Blin\nSeva Ivanov\nSilbino Gonçalves Matado\nSimon Désaulniers\nStepan Salenikovich\nSimon Zeni\nThibault Wittemberg</string>
 
     <!-- RingActivity -->
-    <string name="title_activity_sflphone_home">Ring</string>
     <string name="error_no_network">No network connectivity</string>
     <string name="error_mobile_network_available_but_disabled">Please grant access to cellular network in the settings screen.</string>
 
