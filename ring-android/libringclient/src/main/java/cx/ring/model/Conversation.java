@@ -43,7 +43,7 @@ public class Conversation {
 
     private static final String TAG = Conversation.class.getSimpleName();
 
-    private CallContact mContact;
+    private final CallContact mContact;
 
     private final Map<String, HistoryEntry> mHistory = new HashMap<>();
     private final ArrayList<Conference> mCurrentCalls = new ArrayList<>();
@@ -62,7 +62,7 @@ public class Conversation {
     private boolean mDirty = false;
 
     public Conversation(CallContact contact) {
-        setContact(contact);
+        mContact = contact;
     }
 
     public Conference getConference(String id) {
@@ -107,10 +107,6 @@ public class Conversation {
     public void removeConference(Conference c) {
         mCurrentCalls.remove(c);
         callsSubject.onNext(mCurrentCalls);
-    }
-
-    public void setContact(CallContact contact) {
-        mContact = contact;
     }
 
     public boolean isVisible() {
@@ -208,12 +204,9 @@ public class Conversation {
 
     public void sortHistory() {
         if (mDirty) {
-            long start = System.nanoTime();
             synchronized (mAggregateHistory) {
                 Collections.sort(mAggregateHistory, (c1, c2) -> Long.compare(c1.getDate(), c2.getDate()));
             }
-            long end = System.nanoTime();
-            Log.w(TAG, "sorting history took " + ((end - start)/ 1000L) + " us");
             mDirty = false;
         }
     }

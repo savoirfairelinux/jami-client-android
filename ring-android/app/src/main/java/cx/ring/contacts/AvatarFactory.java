@@ -32,14 +32,11 @@ import android.support.v7.content.res.AppCompatResources;
 import android.util.Log;
 import android.util.LruCache;
 
-import com.bumptech.glide.load.DecodeFormat;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
 import cx.ring.R;
 import cx.ring.model.Uri;
 import cx.ring.utils.CircleTransform;
-import cx.ring.utils.GlideOptions;
 import cx.ring.utils.HashUtils;
 import ezvcard.VCard;
 
@@ -59,9 +56,16 @@ public class AvatarFactory {
             R.color.brown_500, R.color.blue_grey_500
     };
     private static final int DEFAULT_AVATAR_SIZE = 128;
+
     private static final RequestOptions GLIDE_OPTIONS = new RequestOptions()
             .centerCrop()
             .error(R.drawable.ic_contact_picture_fallback);
+
+    private static final RequestOptions GLIDE_OPTIONS_CIRCLE = new RequestOptions()
+            .centerCrop()
+            .error(R.drawable.ic_contact_picture_fallback)
+            .transform(new CircleTransform());
+
     private static final Paint AVATAR_TEXT_PAINT = new Paint();
     static {
         AVATAR_TEXT_PAINT.setTextAlign(Paint.Align.CENTER);
@@ -197,11 +201,7 @@ public class AvatarFactory {
     }
 
     public static RequestOptions getGlideOptions(boolean circle, boolean withPlaceholder) {
-        RequestOptions glideOptions = GLIDE_OPTIONS;
-        if (circle) {
-            glideOptions = glideOptions.transform(new CircleTransform());
-        }
-        return glideOptions;
+        return circle ? GLIDE_OPTIONS_CIRCLE : GLIDE_OPTIONS;
     }
 
     public static void onLowMemory() {

@@ -850,7 +850,7 @@ public class AccountService {
      * Remove an existing contact for the account Id on the Daemon
      */
     public void removeContact(final String accountId, final String uri, final boolean ban) {
-        Log.i(TAG, "addContact() " + accountId + " " + uri + " ban:" + ban);
+        Log.i(TAG, "removeContact() " + accountId + " " + uri + " ban:" + ban);
         mExecutor.execute(() -> Ringservice.removeContact(accountId, uri, ban));
     }
 

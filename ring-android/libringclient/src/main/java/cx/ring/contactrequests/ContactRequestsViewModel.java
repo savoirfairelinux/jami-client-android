@@ -19,14 +19,12 @@
 
 package cx.ring.contactrequests;
 
-import cx.ring.model.Account;
 import cx.ring.model.CallContact;
-import cx.ring.model.TrustRequest;
 import ezvcard.VCard;
 
 public class ContactRequestsViewModel {
-
-    private VCard mVcard;
+    private String accountId;
+    private CallContact mContact;
     private String mFullname;
     private String mUsername;
     private String mAccountUsername;
@@ -36,8 +34,9 @@ public class ContactRequestsViewModel {
 
     private final String mUuid;
 
-    public ContactRequestsViewModel(CallContact contact) {
-        mVcard = contact.vcard;
+    public ContactRequestsViewModel(String account, CallContact contact) {
+        accountId = account;
+        mContact = contact;
         mFullname = contact.getDisplayName();
         mUsername = contact.getRingUsername();
         hasPane = false;
@@ -51,7 +50,7 @@ public class ContactRequestsViewModel {
     }
 
     public VCard getVCard() {
-        return mVcard;
+        return mContact.vcard;
     }
 
     public String getUsername() {
@@ -72,5 +71,13 @@ public class ContactRequestsViewModel {
 
     public String getUuid() {
         return mUuid + "";
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public CallContact getContact() {
+        return mContact;
     }
 }
