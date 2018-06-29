@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,72 +20,54 @@
  */
 package cx.ring.tv.contactrequest;
 
-import java.util.Iterator;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import cx.ring.facades.ConversationFacade;
-import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
-import cx.ring.services.DeviceRuntimeService;
-import cx.ring.services.PreferencesService;
-import cx.ring.tv.model.TVContactRequestViewModel;
-import cx.ring.utils.VCardUtils;
-import ezvcard.VCard;
+import cx.ring.tv.model.TVListViewModel;
+import io.reactivex.Scheduler;
 
 public class TVContactRequestPresenter extends RootPresenter<TVContactRequestView> {
 
-    private AccountService mAccountService;
-    private ConversationFacade mConversationService;
-    private PreferencesService mPreferencesService;
-    private DeviceRuntimeService mDeviceRuntimeService;
+    private final AccountService mAccountService;
+    private final ConversationFacade mConversationService;
+    private final Scheduler mUiScheduler;
 
     @Inject
     public TVContactRequestPresenter(AccountService accountService,
                                      ConversationFacade conversationService,
-                                     PreferencesService sharedPreferencesService,
-                                     DeviceRuntimeService deviceRuntimeService) {
+                                     Scheduler uiScheduler) {
         mAccountService = accountService;
         mConversationService = conversationService;
-        mPreferencesService = sharedPreferencesService;
-        this.mDeviceRuntimeService = deviceRuntimeService;
+        mUiScheduler = uiScheduler;
     }
 
-    public void acceptTrustRequest(TVContactRequestViewModel viewModel) {
+    public void setContact(Uri uri) {
+        mCompositeDisposable.add(mConversationService
+                .getCurrentAccountSubject()
+                .map(a -> new TVListViewModel(a.getByUri(uri).getContact()))
+                .observeOn(mUiScheduler)
+                .subscribe(c -> getView().showRequest(c)));
+    }
+
+    public void acceptTrustRequest(Uri viewModel) {
         String accountId = mAccountService.getCurrentAccount().getAccountID();
-        String contactId = viewModel.getContactId();
-
-        List<TrustRequest> trustRequests = mAccountService.getCurrentAccount().getRequests();
-        for (Iterator<TrustRequest> it = trustRequests.iterator(); it.hasNext(); ) {
-            TrustRequest request = it.next();
-            if (accountId.equals(request.getAccountId()) && contactId.equals(request.getContactId())) {
-                VCard vCard = request.getVCard();
-                if (vCard != null) {
-                    VCardUtils.savePeerProfileToDisk(vCard, contactId + ".vcf", mDeviceRuntimeService.provideFilesDir());
-                }
-                it.remove();
-            }
-        }
-
-        mConversationService.acceptRequest(accountId, new Uri(contactId));
-
+        mConversationService.acceptRequest(accountId, viewModel);
         getView().finishView();
     }
 
-    public void refuseTrustRequest(TVContactRequestViewModel viewModel) {
+    public void refuseTrustRequest(Uri viewModel) {
         String accountId = mAccountService.getCurrentAccount().getAccountID();
-        mAccountService.discardTrustRequest(accountId, new Uri(viewModel.getContactId()));
+        mAccountService.discardTrustRequest(accountId, viewModel);
         getView().finishView();
     }
 
-    public void blockTrustRequest(TVContactRequestViewModel viewModel) {
+    public void blockTrustRequest(Uri viewModel) {
         String accountId = mAccountService.getCurrentAccount().getAccountID();
-        String contactId = viewModel.getContactId();
-        mConversationService.discardRequest(accountId, new Uri(contactId));
-        mAccountService.removeContact(accountId, contactId, true);
+        mConversationService.discardRequest(accountId, viewModel);
+        mAccountService.removeContact(accountId, viewModel.getRawRingId(), true);
         getView().finishView();
     }
 

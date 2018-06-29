@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,8 +49,9 @@ import com.bumptech.glide.Glide;
 import cx.ring.R;
 import cx.ring.application.RingApplication;
 import cx.ring.contacts.AvatarFactory;
+import cx.ring.model.Uri;
 import cx.ring.tv.main.BaseDetailFragment;
-import cx.ring.tv.model.TVContactRequestViewModel;
+import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.views.DetailsOverviewRowTarget;
 
 public class TVContactRequestFragment extends BaseDetailFragment<TVContactRequestPresenter> implements TVContactRequestView {
@@ -58,21 +60,16 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
     private static final int ACTION_REFUSE = 2;
     private static final int ACTION_BLOCK = 3;
 
-    private TVContactRequestViewModel mSelectedContactRequest;
+    private Uri mSelectedContactRequest;
     private ArrayObjectAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
-        mSelectedContactRequest = getActivity().getIntent()
-                .getParcelableExtra(TVContactRequestActivity.CONTACT_REQUEST);
+        mSelectedContactRequest = (Uri) getActivity().getIntent()
+                .getSerializableExtra(TVContactRequestActivity.CONTACT_REQUEST);
 
-        prepareBackgroundManager();
-        if (mSelectedContactRequest != null) {
-            setupAdapter();
-            setupDetailsOverviewRow();
-        }
     }
 
     @Override
@@ -84,6 +81,11 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
         // Override down navigation as we do not use it in this screen
         // Only the detailPresenter will be displayed
         layout.setOnDispatchKeyListener((v, keyCode, event) -> event.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN);
+        prepareBackgroundManager();
+        if (mSelectedContactRequest != null) {
+            setupAdapter();
+        }
+        presenter.setContact(mSelectedContactRequest);
     }
 
     private void prepareBackgroundManager() {
@@ -128,13 +130,13 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
         setAdapter(mAdapter);
     }
 
-    private void setupDetailsOverviewRow() {
-        final DetailsOverviewRow row = new DetailsOverviewRow(mSelectedContactRequest);
+    public void showRequest(TVListViewModel model) {
+        final DetailsOverviewRow row = new DetailsOverviewRow(model);
 
         Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
-                mSelectedContactRequest.getPhoto(),
-                mSelectedContactRequest.getDisplayName(),
-                mSelectedContactRequest.getContactId());
+                model.getContact().getPhoto(),
+                model.getContact().getDisplayName(),
+                model.getContact().getPrimaryNumber());
 
         Glide.with(this)
                 .load(contactPicture)
@@ -142,7 +144,6 @@ public class TVContactRequestFragment extends BaseDetailFragment<TVContactReques
                 .into(new DetailsOverviewRowTarget(row, contactPicture));
 
         SparseArrayObjectAdapter adapter = new SparseArrayObjectAdapter();
-
         adapter.set(ACTION_ACCEPT, new Action(ACTION_ACCEPT, getResources()
                 .getString(R.string.accept)));
         adapter.set(ACTION_REFUSE, new Action(ACTION_REFUSE, getResources().getString(R.string.refuse)));

@@ -85,8 +85,8 @@ public class Conference {
         mParticipants.add(part);
     }
 
-    public void removeParticipant(SipCall toRemove) {
-        mParticipants.remove(toRemove);
+    public boolean removeParticipant(SipCall toRemove) {
+        return mParticipants.remove(toRemove);
     }
 
     boolean contains(String callID) {

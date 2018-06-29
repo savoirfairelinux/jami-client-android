@@ -29,11 +29,10 @@ import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.CallContact;
 import cx.ring.tv.cards.AbstractCardPresenter;
 import cx.ring.tv.cards.Card;
-import cx.ring.tv.cards.contactrequests.ContactRequestCardPresenter;
 
 public class ContactCardPresenter extends AbstractCardPresenter<ImageCardView> {
 
-    private static final String TAG = ContactRequestCardPresenter.class.getSimpleName();
+    private static final String TAG = ContactCardPresenter.class.getSimpleName();
 
     public ContactCardPresenter(Context context, int resId) {
         super(new ContextThemeWrapper(context, resId));
@@ -48,7 +47,7 @@ public class ContactCardPresenter extends AbstractCardPresenter<ImageCardView> {
     public void onBindViewHolder(Card card, ImageCardView cardView) {
         ContactCard contact = (ContactCard) card;
 
-        CallContact model = contact.getModel().getCallContact();
+        CallContact model = contact.getModel().getContact();
         String username = model.getUsername();
 
         if (username == null) {
@@ -67,15 +66,15 @@ public class ContactCardPresenter extends AbstractCardPresenter<ImageCardView> {
         cardView.setMainImage(getCardImage(contact));
     }
 
-    public Drawable getCardImage(ContactCard contact) {
-        String username = contact.getModel().getCallContact().getDisplayName();
+    private Drawable getCardImage(ContactCard contact) {
+        String username = contact.getModel().getContact().getDisplayName();
         if (username == null || username.isEmpty()) {
-            username = contact.getModel().getCallContact().getUsername();
+            username = contact.getModel().getContact().getUsername();
         }
 
         return AvatarFactory.getAvatar(getContext(),
                 contact.getPhoto(),
                 username,
-                contact.getModel().getCallContact().getIds().get(0));
+                contact.getModel().getContact().getIds().get(0));
     }
 }

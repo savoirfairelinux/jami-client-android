@@ -32,9 +32,9 @@ public class CardRow {
     // Used to determine whether the row shall use shadows when displaying its cards or not.
     private boolean mShadow = true;
     private String mTitle;
-    private List<Card> mCards;
+    private List<? extends Card> mCards;
 
-    public CardRow(int pType, boolean pShadow, String pTitle, List<Card> pCards) {
+    public CardRow(int pType, boolean pShadow, String pTitle, List<? extends Card> pCards) {
         mType = pType;
         mShadow = pShadow;
         mTitle = pTitle;
@@ -62,7 +62,7 @@ public class CardRow {
     }
 
     public List<Card> getCards() {
-        return mCards;
+        return (List<Card>) mCards;
     }
 
     public void setCards(List<Card> pCards) {
