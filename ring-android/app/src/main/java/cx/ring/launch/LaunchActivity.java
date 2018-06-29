@@ -35,6 +35,8 @@ import cx.ring.account.AccountWizardActivity;
 import cx.ring.application.RingApplication;
 import cx.ring.client.HomeActivity;
 import cx.ring.mvp.BaseActivity;
+import cx.ring.tv.account.TVAccountWizard;
+import cx.ring.utils.DeviceUtils;
 
 public class LaunchActivity extends BaseActivity<LaunchPresenter> implements LaunchView {
 
@@ -57,13 +59,13 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
 
     @Override
     public void goToHome() {
-        startActivity(new Intent(LaunchActivity.this, HomeActivity.class));
+        startActivity(new Intent(LaunchActivity.this, DeviceUtils.isTv(this) ? cx.ring.tv.main.HomeActivity.class : HomeActivity.class));
         finish();
     }
 
     @Override
     public void goToAccountCreation() {
-        startActivity(new Intent(LaunchActivity.this, AccountWizardActivity.class));
+        startActivity(new Intent(LaunchActivity.this, DeviceUtils.isTv(this) ? TVAccountWizard.class : AccountWizardActivity.class));
         finish();
     }
 
