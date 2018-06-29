@@ -35,6 +35,7 @@ import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Size;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -98,6 +99,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                 return;
             try {
                 for (String id : manager.getCameraIdList()) {
+                    currentCamera = id;
                     addVideoDevice(id);
                     CameraCharacteristics cc = manager.getCameraCharacteristics(id);
                     int facing = cc.get(CameraCharacteristics.LENS_FACING);
@@ -107,8 +109,9 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
                         cameraBack = id;
                     }
                 }
-                currentCamera = cameraFront;
-                setDefaultVideoDevice(cameraFront);
+                if (!TextUtils.isEmpty(cameraFront))
+                    currentCamera = cameraFront;
+                setDefaultVideoDevice(currentCamera);
             } catch (Exception e) {
                 Log.w(TAG, "initVideo: can't enumerate devices", e);
             }
@@ -260,7 +263,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
         if (mBluetoothWrapper != null && mBluetoothWrapper.canBluetooth()) {
             Log.d(TAG, "setAudioRouting: Try to enable bluetooth");
             mBluetoothWrapper.setBluetoothOn(true);
-        } else if (!mAudioManager.isWiredHeadsetOn() && hasSpeakerphone()) {
+        } else if (!mAudioManager.isWiredHeadsetOn() && hasSpeakerphone() && !DeviceUtils.isTv(mContext)) {
             mAudioManager.setSpeakerphoneOn(requestSpeakerOn);
         }
     }
