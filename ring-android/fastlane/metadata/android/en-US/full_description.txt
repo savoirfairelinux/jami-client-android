@@ -1,14 +1,23 @@
-Ring allows to make audio or video calls, and to send messages, safely and freely, in confidence. Developed by Savoir-faire Linux, Ring is a Free and open source software that requires no central server.
+Ring (a GNU package) allows to make free and secure audio or video calls, to send pictures and messages around the world, without depending on a centralized service. Ring is a Free and open source software that is fully decentralized and distributed.
 
-What can you do with Ring:
+★ Communicate freely with Ring:
   - send text messages
   - make audio calls
   - make video calls
-  - send files
-  - use your existing SIP account
+  - share pictures and files
+
+★ Reach your peers directly in peer to peer !
+
+★ Use your Ring account on multiple devices !
+
+★ Available on Windows, macOS, iOS, GNU/Linux, Android and Android TV !
+
+★ SIP account support available !
+
+Ring for Android TV is tested on NVidia Shield TV with Logitech cameras.
 
 There are plenty of ways to help us, check out: https://ring.cx/en/contribute
-
-You can also install Ring on Windows, macOS, iOS and GNU/Linux.
-
 All the info is on https://ring.cx/en
+
+Ring is published under the GPL licence, version 3 or higher.
+Copyright © Savoir-faire Linux

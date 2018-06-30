@@ -1,0 +1,7 @@
+• Improved connectivity
+• Improved IPv6 support
+• Improved Android TV support
+• Added HD 720p support for Android TV
+• Improved contact management
+• Improved performance
+• Bug fixes
