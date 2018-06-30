@@ -81,22 +81,23 @@ public abstract class HistoryService {
         return scheduler;
     }
 
-    public boolean insertNewEntry(Conference toInsert) {
+    public Completable insertNewEntry(Conference toInsert) {
+        return Completable.fromAction(() -> {
+            for (SipCall call : toInsert.getParticipants()) {
+                if (call.getTimestampEnd() == 0)
+                    call.setTimestampEnd(System.currentTimeMillis());
 
-        for (SipCall call : toInsert.getParticipants()) {
-            call.setTimestampEnd(System.currentTimeMillis());
-
-            HistoryCall persistent = new HistoryCall(call);
-            try {
+                HistoryCall persistent = new HistoryCall(call);
                 Log.d(TAG, "HistoryDao().create() " + persistent.getNumber() + " " + persistent.getStartDate().toString() + " " + persistent.getEndDate());
                 getCallHistoryDao().create(persistent);
-            } catch (SQLException e) {
-                Log.e(TAG, "Error while inserting text conference entry", e);
-                return false;
             }
-        }
+        }).subscribeOn(scheduler);
+    }
 
-        return true;
+    public Completable insertNewEntry(final HistoryCall call) {
+        return Completable
+                .fromAction(() -> getCallHistoryDao().create(call))
+                .subscribeOn(scheduler);
     }
 
     private boolean insertNewTextMessage(HistoryText txt) {

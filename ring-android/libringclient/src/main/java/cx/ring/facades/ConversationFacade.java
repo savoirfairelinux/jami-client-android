@@ -369,7 +369,7 @@ public class ConversationFacade {
                 return;
             conference = new Conference(call);
             conversation.addConference(conference);
-            account.conversationUpdated(null);
+            account.updated(conversation);
         }
 
         Log.w(TAG, "CALL_STATE_CHANGED : updating call state to " + newState);
@@ -396,14 +396,15 @@ public class ConversationFacade {
                 call.setTimestampEnd(now);
             }
             if (conference.removeParticipant(call)) {
-                mHistoryService.insertNewEntry(conference);
-                conversation.addHistoryCall(new HistoryCall(call));
+                HistoryCall historyCall = new HistoryCall(call);
+                mHistoryService.insertNewEntry(historyCall).subscribe();
+                conversation.addHistoryCall(historyCall);
                 account.updated(conversation);
             }
             mCallService.removeCallForId(call.getCallId());
-        }
-        if (conference.getParticipants().isEmpty()) {
-            conversation.removeConference(conference);
+            if (conference.getParticipants().isEmpty()) {
+                conversation.removeConference(conference);
+            }
         }
     }
 
