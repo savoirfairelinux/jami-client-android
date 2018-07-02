@@ -97,6 +97,8 @@
   <string name="message_failed">Dështoi</string>
   <string name="time_just_now">Mu tani</string>
   <string name="send_file">Dërgo kartelë</string>
+  <string name="hist_file_sent">Kartela u dërgua</string>
+  <string name="hist_file_received">Kartela u mor</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Leje për kamerën</string>
   <string name="permission_dialog_camera_message">Që të funksionojnë, bisedat me video lypin doemos leje për kamerën Ju lutemi, shihni mundësinë e akordimit të saj.</string>
@@ -155,6 +157,7 @@
   <string name="contact_request_account">Për %1$s</string>
   <string name="no_requests">0 kërkesa kontakti</string>
   <string name="message_contact_not_trusted_yet">%s s’gjendet ende te kontaktet tuaj.\nE pranoni apo e hidhni tej këtë kërkesë kontakti?</string>
+  <string name="message_contact_not_trusted">%s s’gjendet në kontaktet tuaja.\nTë shtohet një kontakt i ri?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Dërgoje</string>
   <string name="send_request_title">Dërgoni një kërkesë kontakti</string>

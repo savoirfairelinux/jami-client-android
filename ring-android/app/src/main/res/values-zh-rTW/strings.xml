@@ -97,6 +97,8 @@
   <string name="message_failed">失敗</string>
   <string name="time_just_now">剛剛</string>
   <string name="send_file">傳送檔案</string>
+  <string name="hist_file_sent">檔案已傳送</string>
+  <string name="hist_file_received">檔案已收到</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">攝影機權限</string>
   <string name="permission_dialog_camera_message">視訊通話需要攝影機權限以正常運作。請考慮啟用它。</string>
@@ -155,6 +157,7 @@
   <string name="contact_request_account">給 %1$s</string>
   <string name="no_requests">0 個聯絡人請求</string>
   <string name="message_contact_not_trusted_yet">%s 不在您的聯絡人清單裡。\n您要接受或是回絕此聯絡人請求？</string>
+  <string name="message_contact_not_trusted">%s 不是您的聯絡人。\n新增新聯絡人嗎？</string>
   <!--Send contact requests-->
   <string name="send_request_button">傳送</string>
   <string name="send_request_title">傳送聯絡人請求</string>

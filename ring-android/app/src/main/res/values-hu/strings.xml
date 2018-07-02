@@ -59,6 +59,7 @@
   <string name="notif_outgoing_call">Kimenő hívás</string>
   <string name="notif_current_call_title">Jelenlegi hívás a következővel: %1$s</string>
   <string name="notif_current_call">Jelenlegi hívás</string>
+  <string name="notif_channel_calls">Hívások</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ön:</string>
   <string name="action_call_hangup">Letétel</string>
@@ -72,6 +73,8 @@
   <string name="ab_action_speakerphone">Hangszóró engedélyezése</string>
   <string name="ab_action_contact_add">Hozzáadás a partnerekhez</string>
   <string name="ab_action_contact_add_question">Hozzáadja a partnerekhez?</string>
+  <string name="hist_contact_added">Kapcsolat hozzáadva</string>
+  <string name="hist_invitation_received">Meghívó érkezett</string>
   <string name="ab_action_audio_call">Hanghívás</string>
   <string name="ab_action_video_call">Videóhívás</string>
   <string name="ab_action_change_screen_orientation">Képernyő tájolásának módosítása</string>

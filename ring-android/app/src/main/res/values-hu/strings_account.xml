@@ -30,6 +30,8 @@
   <string name="account_delete_dialog_message">Ez a művelet nem vonható vissza.</string>
   <!--AccountManagementFragment-->
   <string name="normal_accounts_titles">Fiókok</string>
+  <string name="normal_devices_titles">Ring-fiókhoz kapcsolódó ismert eszközök</string>
+  <string name="account_device_revoke">Eszköz visszavonása</string>
   <!--Basic Details-->
   <string name="account_preferences_basic_tab">Általános</string>
   <string name="account_hostname_label">Kiszolgálónév</string>
@@ -54,17 +56,25 @@
   <!--TLS Details-->
   <string name="account_rtp_port_range">Hang RTP port korlát</string>
   <!--restore/backup-->
+  <string name="error_password_char_count">Legalább 6 karakter</string>
   <string name="account_export_end_network_title">Hálózati hiba</string>
   <string name="account_export_end_error_title">Hiba</string>
+  <string name="account_cannot_be_found_title">A fiók nem található</string>
+  <string name="account_no_network_title">Nem tud csatlakozni a hálózathoz</string>
   <string name="account_device_updated_message">Sikeresen frissítette a Ringfiókját.</string>
   <string name="account_link_button">Ezen eszköz fiókhoz kapcsolása</string>
+  <string name="account_link_prompt_pin">PIN-kód megadása</string>
   <string name="account_new_button">Egy Ringfiók létrehozása</string>
+  <string name="account_link_export_button">Másik eszköz hozzárendelése ehhez a fiókhoz</string>
   <!--Name registration-->
   <string name="username_already_taken">A felhasználónév már regisztrálva van</string>
   <string name="invalid_username">Érvénytelen felhasználónév</string>
   <string name="account_status_connecting">Kapcsolódás</string>
   <string name="account_status_unknown">Ismeretlen</string>
   <!--Create account-->
+  <string name="account_creation_home">Üdvözöljük a Ringben</string>
+  <string name="account_creation_ring"> Ring-fiókjának létrehozása </string>
   <!--Edit profile-->
   <!--Devices-->
+  <string name="revoke_device_title">Eszköz visszavonása</string>
 </resources>

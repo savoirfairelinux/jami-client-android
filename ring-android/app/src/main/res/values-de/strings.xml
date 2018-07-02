@@ -63,7 +63,9 @@
   <string name="notif_channel_calls">Anrufe</string>
   <string name="notif_channel_messages">Nachrichten</string>
   <string name="notif_channel_requests">Anfragen</string>
+  <string name="notif_channel_file_transfer">Dateitransfer</string>
   <string name="notif_mark_as_read">Als gelesen markieren</string>
+  <string name="notif_incoming_file_transfer_title">Eingehende Datei von %1$s</string>
   <string name="notif_incoming_file_transfer">Jemand möchte Ihnen eine Datei schicken</string>
   <string name="notif_outgoing_file_transfer_title">Datei an %1$s senden</string>
   <string name="notif_outgoing_file_transfer">Jemand möchte Ihnen eine Datei schicken</string>
@@ -96,6 +98,8 @@
   <string name="message_failed">Fehlgeschlagen</string>
   <string name="time_just_now">Gerade eben</string>
   <string name="send_file">Datei senden</string>
+  <string name="hist_file_sent">Datei gesendet</string>
+  <string name="hist_file_received">Datei erhalten</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamera Berechtigung</string>
   <string name="permission_dialog_camera_message">Für Video-Konversationen benötigt die Anwendung Zugriff auf die Kamera. Bitte erteilen Sie diese Berechtigung.</string>
@@ -120,6 +124,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s in die Zwischenablage kopiert</string>
   <string name="conversation_action_select_peer_number">Suche eine Nummer aus</string>
   <string name="conversation_action_block_this">Kontakt sperren</string>
+  <string name="conversation_action_go_to_call">Zurück zum laufenden Anruf</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">%1$s hinzufügen?</string>
   <string name="prompt_new_password">Neues Passwort</string>
@@ -168,6 +173,7 @@
   <string name="generic_error">Ein unbekannter Fehler ist aufgetreten</string>
   <!--File Transfer-->
   <string name="invalid_file">Ungültige Datei</string>
+  <string name="file_transfer_status_finished">abgeschlossen</string>
   <string name="file_saved_in">Datei gespeichert in %s</string>
   <string name="no_space_left_on_device">Kein Speicherplatz mehr auf dem Gerät</string>
   <string name="menu_file_download">Datei herunterladen</string>

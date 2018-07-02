@@ -98,6 +98,8 @@
   <string name="message_failed">Misslyckades</string>
   <string name="time_just_now">Just nu</string>
   <string name="send_file">Skicka fil</string>
+  <string name="hist_file_sent">Fil skickad</string>
+  <string name="hist_file_received">Fil mottagen</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kamerarättighet</string>
   <string name="permission_dialog_camera_message">Videokonversationer kräver kamerarättigheter. Överväg att aktivera det.</string>
@@ -156,6 +158,7 @@
   <string name="contact_request_account">För %1$s</string>
   <string name="no_requests">0 kontaktförfrågningar</string>
   <string name="message_contact_not_trusted_yet">%s finns ännu inte i din kontaktlista.\nAccepterar eller avslår du denna kontaktförfrågan?</string>
+  <string name="message_contact_not_trusted">%s finns inte i dina kontakter.\nVill du lägga till ny kontakt?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Skicka</string>
   <string name="send_request_title">Skicka en kontaktförfrågan</string>
