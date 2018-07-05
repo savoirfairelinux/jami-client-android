@@ -248,8 +248,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
 
     @Override
     public void onViewRecycled(@NonNull ConversationViewHolder holder) {
-        if (holder.itemView != null)
-            holder.itemView.setOnLongClickListener(null);
+        holder.itemView.setOnLongClickListener(null);
         if (holder.mPhoto != null)
             holder.mPhoto.setOnLongClickListener(null);
         super.onViewRecycled(holder);
@@ -323,11 +322,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         return true;
     }
 
-    private void configureForFileInfoTextMessage(final ConversationViewHolder conversationViewHolder,
-                                                 final ConversationElement conversationElement) {
-        if (conversationViewHolder == null || conversationElement == null) {
-            return;
-        }
+    private void configureForFileInfoTextMessage(@NonNull final ConversationViewHolder conversationViewHolder,
+                                                 @NonNull final ConversationElement conversationElement) {
         DataTransfer file = (DataTransfer) conversationElement;
 
         String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
@@ -447,13 +443,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * @param convElement    The conversation element to display
      * @param position       The position of the viewHolder
      */
-    private void configureForTextMessage(final ConversationViewHolder convViewHolder,
-                                         final ConversationElement convElement,
+    private void configureForTextMessage(@NonNull final ConversationViewHolder convViewHolder,
+                                         @NonNull final ConversationElement convElement,
                                          int position) {
-        if (convViewHolder == null || convElement == null) {
-            return;
-        }
-
         TextMessage textMessage = (TextMessage) convElement;
         CallContact contact = textMessage.getContact();
         if (contact == null) {
@@ -521,16 +513,16 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
     }
 
-    private void configureForContactEvent(final ConversationViewHolder viewHolder, final ConversationElement conversationElement) {
-        if (viewHolder == null || conversationElement == null) {
-            return;
-        }
+    private void configureForContactEvent(@NonNull final ConversationViewHolder viewHolder, @NonNull final ConversationElement conversationElement) {
         ContactEvent event = (ContactEvent) conversationElement;
         if (event.event == ContactEvent.Event.ADDED) {
-            viewHolder.mMsgTxt.setText("Contact added");
+            viewHolder.mMsgTxt.setText(R.string.hist_contact_added);
         } else if (event.event == ContactEvent.Event.INCOMING_REQUEST) {
-            viewHolder.mMsgTxt.setText("Request received");
+            viewHolder.mMsgTxt.setText(R.string.hist_invitation_received);
         }
+        final Context context = viewHolder.itemView.getContext();
+        String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(context, conversationElement.getDate());
+        viewHolder.mMsgDetailTxt.setText(timeSeparationString);
     }
 
     /**
@@ -539,12 +531,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * @param convViewHolder The conversation viewHolder
      * @param convElement    The conversation element to display
      */
-    private void configureForCallInfoTextMessage(final ConversationViewHolder convViewHolder,
-                                                 final ConversationElement convElement) {
-        if (convViewHolder == null || convElement == null) {
-            return;
-        }
-
+    private void configureForCallInfoTextMessage(@NonNull final ConversationViewHolder convViewHolder,
+                                                 @NonNull final ConversationElement convElement) {
         int pictureResID;
         String historyTxt;
         convViewHolder.mPhoto.setScaleY(1);

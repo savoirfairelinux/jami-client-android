@@ -23,23 +23,35 @@ along with this program; if not, write to the Free Software
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="end|bottom"
-    android:layout_marginBottom="8dp"
     android:layout_marginTop="8dp"
-    android:clickable="true"
+    android:layout_marginBottom="8dp"
     android:descendantFocusability="blocksDescendants"
     android:focusable="false"
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toStartOf="@id/contactDetailsGroup"
+        app:srcCompat="@drawable/baseline_person_black_24" />
+
+    <LinearLayout
+        android:id="@+id/contactDetailsGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/textmsg_call_background"
-        android:gravity="center"
         android:orientation="vertical"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp">
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
 
         <TextView
             android:id="@+id/contact_event_txt"
@@ -50,7 +62,7 @@ along with this program; if not, write to the Free Software
             android:singleLine="false"
             android:textColor="@color/text_color_primary"
             android:textSize="14sp"
-            tools:text="Contact ajouté" />
+            tools:text="@string/hist_contact_added" />
 
         <TextView
             android:id="@+id/contact_event_details_txt"
@@ -59,6 +71,7 @@ along with this program; if not, write to the Free Software
             android:textColor="@color/text_color_secondary"
             android:textSize="12sp"
             tools:text="Adrien - 12 mars" />
+
     </LinearLayout>
 
 </RelativeLayout>
