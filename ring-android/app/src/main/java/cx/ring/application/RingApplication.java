@@ -31,6 +31,8 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 
+import com.bumptech.glide.Glide;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -128,6 +130,7 @@ public abstract class RingApplication extends Application {
     public void onLowMemory() {
         super.onLowMemory();
         AvatarFactory.onLowMemory();
+        Glide.get(this).clearMemory();
     }
 
     private void setDefaultUncaughtExceptionHandler() {

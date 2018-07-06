@@ -45,4 +45,6 @@ along with this program; if not, write to the Free Software
 
     <dimen name="search_image_card_width">100dp</dimen>
     <dimen name="search_image_card_height">90dp</dimen>
+
+    <dimen name="share_preview_height">120dp</dimen>
 </resources>

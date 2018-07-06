@@ -55,8 +55,9 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
 
     public SmartListAdapter(List<SmartListViewModel> smartListViewModels, SmartListViewHolder.SmartListListeners listener) {
         this.listener = listener;
-        this.mSmartListViewModels = new ArrayList<>();
-        this.mSmartListViewModels.addAll(smartListViewModels);
+        mSmartListViewModels = new ArrayList<>();
+        if (smartListViewModels != null)
+            mSmartListViewModels.addAll(smartListViewModels);
     }
 
     @NonNull

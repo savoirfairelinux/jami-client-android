@@ -30,7 +30,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 @Module
 public class RingInjectionModule {
 
-    RingApplication mRingApplication;
+    private final RingApplication mRingApplication;
 
     public RingInjectionModule(RingApplication app) {
         mRingApplication = app;

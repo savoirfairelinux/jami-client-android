@@ -21,6 +21,7 @@ package cx.ring.fragments;
 
 import android.Manifest;
 import android.app.DownloadManager;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
@@ -674,6 +675,35 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
                     destination.getAbsolutePath(),
                     destination.length(),
                     true);
+        }
+    }
+
+    public void handleShareIntent(Intent intent) {
+        String type = intent.getType();
+        Log.w(TAG, "handleShareIntent " + type);
+        if (type != null) {
+            if (type.startsWith("text/")) {
+                mMsgEditTxt.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
+            } else if (type.startsWith("image/") || type.startsWith("video/") || type.startsWith("application/")) {
+                android.net.Uri uri = intent.getData();
+                ClipData clip = intent.getClipData();
+                if (uri == null && clip != null && clip.getItemCount() > 0)
+                    uri = clip.getItemAt(0).getUri();
+                if (uri == null)
+                    return;
+                final android.net.Uri shareUri = uri;
+                setLoading(true);
+                new Thread(() -> {
+                    try {
+                        File cacheFile = AndroidFileUtils.getCacheFile(getActivity(), shareUri);
+                        presenter.sendFile(cacheFile);
+                    } catch (IOException e) {
+                        Log.e(TAG, "onActivityResult: not able to create cache file");
+                        getActivity().runOnUiThread(() -> displayErrorToast(RingError.INVALID_FILE));
+                    }
+                    getActivity().runOnUiThread(() -> setLoading(false));
+                }).start();
+            }
         }
     }
 }

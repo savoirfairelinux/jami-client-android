@@ -103,11 +103,11 @@ public class AvatarFactory {
         return getAvatar(context, contactPhoto, username, ringId, pictureSize);
     }
 
-    public static Drawable getAvatar(Context context, byte[] photo, String username, String ringId) {
+    public static BitmapDrawable getAvatar(Context context, byte[] photo, String username, String ringId) {
         return getAvatar(context, photo, username, ringId, Float.valueOf(context.getResources().getDisplayMetrics().density * DEFAULT_AVATAR_SIZE).intValue());
     }
 
-    public static Drawable getAvatar(Context context, byte[] photo, String username, String ringId, int pictureSize) {
+    public static BitmapDrawable getAvatar(Context context, byte[] photo, String username, String ringId, int pictureSize) {
         if (context == null || pictureSize <= 0) {
             throw new IllegalArgumentException();
         }
