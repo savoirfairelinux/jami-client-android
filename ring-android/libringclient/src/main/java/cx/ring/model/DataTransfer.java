@@ -171,4 +171,8 @@ public class DataTransfer implements ConversationElement {
     public String getAccountId() {
         return accountId;
     }
+
+    public boolean isError() {
+        return getEventCode().isError();
+    }
 }

@@ -699,7 +699,7 @@ public class DRingService extends Service {
         if (action.equals(ACTION_FILE_ACCEPT)) {
             mAccountService.acceptFileTransfer(id);
         } else if (action.equals(ACTION_FILE_CANCEL)) {
-            mAccountService.cancelDataTransfer(id);
+            mConversationFacade.cancelFileTransfer(id);
         }
     }
 
