@@ -28,7 +28,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
 import android.media.RingtoneManager;
@@ -43,6 +43,9 @@ import android.text.Spanned;
 import android.text.format.DateUtils;
 import android.util.SparseArray;
 
+import com.bumptech.glide.Glide;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -65,14 +68,12 @@ import cx.ring.model.DataTransfer;
 import cx.ring.model.DataTransferEventCode;
 import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
-import cx.ring.model.TrustRequest;
 import cx.ring.model.Uri;
 import cx.ring.service.DRingService;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.FileUtils;
 import cx.ring.utils.Log;
 import cx.ring.utils.ResourceMapper;
-import ezvcard.VCard;
 import ezvcard.property.Photo;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -83,11 +84,13 @@ public class NotificationServiceImpl extends NotificationService {
     private static final String NOTIF_MSG = "MESSAGE";
     private static final String NOTIF_TRUST_REQUEST = "TRUST REQUEST";
     private static final String NOTIF_FILE_TRANSFER = "FILE_TRANSFER";
+    private static final String NOTIF_MISSED_CALL = "MISSED_CALL";
 
     private static final String NOTIF_CHANNEL_CALL = "call";
     private static final String NOTIF_CHANNEL_MESSAGE = "messages";
     private static final String NOTIF_CHANNEL_REQUEST = "requests";
     private static final String NOTIF_CHANNEL_FILE_TRANSFER = "file_transfer";
+    private static final String NOTIF_CHANNEL_MISSED_CALL = "missed_call";
 
     private final SparseArray<NotificationCompat.Builder> mNotificationBuilders = new SparseArray<>();
     @Inject
@@ -152,6 +155,11 @@ public class NotificationServiceImpl extends NotificationService {
         fileTransferChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
         fileTransferChannel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), soundAttributes);
         notificationManager.createNotificationChannel(fileTransferChannel);
+
+        // Missed calls channel
+        NotificationChannel missedCallsChannel = new NotificationChannel(NOTIF_CHANNEL_MISSED_CALL, mContext.getString(R.string.notif_channel_file_transfer), NotificationManager.IMPORTANCE_DEFAULT);
+        missedCallsChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        notificationManager.createNotificationChannel(missedCallsChannel);
     }
 
     @Override
@@ -230,7 +238,18 @@ public class NotificationServiceImpl extends NotificationService {
     }
 
     @Override
-    public void showTextNotification(CallContact contact, Conversation conversation, TreeMap<Long, TextMessage> texts) {
+    public void showTextNotification(String accountId, Conversation conversation) {
+        TreeMap<Long, TextMessage> texts = conversation.getUnreadTextMessages();
+
+        CallContact contact = conversation.getContact();
+        if (texts.isEmpty() || conversation.isVisible()) {
+            cancelTextNotification(contact.getPrimaryUri());
+            return;
+        }
+        if (texts.lastEntry().getValue().isNotified()) {
+            return;
+        }
+
         Uri contactUri = contact.getPrimaryUri();
         if (texts.isEmpty()) {
             cancelTextNotification(contactUri);
@@ -241,12 +260,12 @@ public class NotificationServiceImpl extends NotificationService {
 
         Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
                 .setClass(mContext, DRingService.class)
-                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
+                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
 
         Intent intentDelete = new Intent(DRingService.ACTION_CONV_DISMISS)
                 .setClass(mContext, DRingService.class)
-                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
+                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
 
         NotificationCompat.Builder messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MESSAGE)
@@ -401,9 +420,39 @@ public class NotificationServiceImpl extends NotificationService {
         }
         long dataTransferId = info.getDataTransferId();
         int notificationId = getFileTransferNotificationId(dataTransferId);
-        if (event == DataTransferEventCode.FINISHED) {
+
+        String contactUri = new Uri(info.getPeerId()).getRawUriString();
+        Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
+                .setClass(mContext, DRingService.class)
+                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID())
+                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
+
+        if (event.isOver()) {
             notificationManager.cancel(notificationId);
             mNotificationBuilders.delete(notificationId);
+            if (!info.isOutgoing() && info.showPicture()) {
+                File path = mDeviceRuntimeService.getConversationPath(info.getPeerId(), info.getStoragePath());
+                Bitmap img;
+                try {
+                    BitmapDrawable d = (BitmapDrawable) Glide.with(mContext)
+                            .load(path)
+                            .submit()
+                            .get();
+                    img = d.getBitmap();
+                } catch (Exception e) {
+                    Log.w(TAG, "Can't load image for notification", e);
+                    return;
+                }
+                NotificationCompat.Builder notif = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_FILE_TRANSFER)
+                        .setContentTitle(mContext.getString(R.string.notif_incoming_picture, contact.getDisplayName()))
+                        .setSmallIcon(R.drawable.ic_ring_logo_white)
+                        .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
+                        .setAutoCancel(true)
+                        .setStyle(new NotificationCompat.BigPictureStyle()
+                                .bigPicture(img));
+                setContactPicture(contact, notif);
+                notificationManager.notify(random.nextInt(), notif.build());
+            }
             return;
         }
         NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
@@ -412,24 +461,13 @@ public class NotificationServiceImpl extends NotificationService {
         }
 
         boolean ongoing = event == DataTransferEventCode.CREATED || event == DataTransferEventCode.ONGOING;
-        boolean outgoing = info.isOutgoing();
-
-        String contactUri = new Uri(info.getPeerId()).getRawUriString();
-        Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
-                .setClass(mContext, DRingService.class)
-                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID())
-                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
-
-        String titleMessage = mContext.getString(outgoing ? R.string.notif_outgoing_file_transfer_title : R.string.notif_incoming_file_transfer_title, contact.getDisplayName());
-        byte[] photo = contact.getPhoto();
-        Bitmap photo_bmp = photo == null ? null : BitmapFactory.decodeByteArray(photo, 0, photo.length);
+        String titleMessage = mContext.getString(info.isOutgoing() ? R.string.notif_outgoing_file_transfer_title : R.string.notif_incoming_file_transfer_title, contact.getDisplayName());
         messageNotificationBuilder.setContentTitle(titleMessage)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setAutoCancel(false)
                 .setOngoing(ongoing)
                 .setSmallIcon(R.drawable.ic_ring_logo_white)
-                .setLargeIcon(photo_bmp)
                 .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                 .setOnlyAlertOnce(true)
                 .setContentText(event == DataTransferEventCode.ONGOING ?
@@ -437,10 +475,10 @@ public class NotificationServiceImpl extends NotificationService {
                         info.getDisplayName() + ": " + ResourceMapper.getReadableFileTransferStatus(mContext, event))
                 .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
                 .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
+        setContactPicture(contact, messageNotificationBuilder);
         if (event.isOver()) {
             messageNotificationBuilder.setProgress(0, 0, false);
         } else if (ongoing) {
-            Log.w(TAG, "messageNotificationBuilder.setProgress " + info.getTotalSize() + " " + info.getBytesProgress());
             messageNotificationBuilder.setProgress((int)info.getTotalSize(), (int)info.getBytesProgress(), false);
         } else {
             messageNotificationBuilder.setProgress(0, 0, true);
@@ -480,6 +518,36 @@ public class NotificationServiceImpl extends NotificationService {
     }
 
     @Override
+    public void showMissedCallNotification(SipCall call) {
+        final int notificationId = call.getCallId().hashCode();
+        NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
+        if (messageNotificationBuilder == null) {
+            messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_MISSED_CALL);
+        }
+
+        String contactUri = call.getNumberUri().getRawUriString();
+        Intent intentConversation = new Intent(DRingService.ACTION_CONV_ACCEPT)
+                .setClass(mContext, DRingService.class)
+                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, mAccountService.getCurrentAccount().getAccountID())
+                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactUri);
+
+        String titleMessage = mContext.getString(R.string.notif_missed_incoming_call);
+        messageNotificationBuilder.setContentTitle(titleMessage)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setSmallIcon(R.drawable.ic_call_missed_incoming_black)
+                .setCategory(NotificationCompat.CATEGORY_CALL)
+                .setOnlyAlertOnce(true)
+                .setAutoCancel(true)
+                .setContentText(call.getContact().getDisplayName())
+                .setContentIntent(PendingIntent.getService(mContext, random.nextInt(), intentConversation, 0))
+                .setColor(ResourcesCompat.getColor(mContext.getResources(), R.color.color_primary_dark, null));
+
+        setContactPicture(call.getContact(), messageNotificationBuilder);
+        notificationManager.notify(notificationId, messageNotificationBuilder.build());
+    }
+
+    @Override
     public void cancelTextNotification(Uri contact) {
         if (contact == null) {
             return;
@@ -509,6 +577,13 @@ public class NotificationServiceImpl extends NotificationService {
     public void cancelCallNotification(int notificationId) {
         notificationManager.cancel(notificationId);
         mNotificationBuilders.remove(notificationId);
+    }
+
+    @Override
+    public void cancelFileNotification(long fileId) {
+        int nId = getFileTransferNotificationId(fileId);
+        notificationManager.cancel(nId);
+        mNotificationBuilders.remove(nId);
     }
 
     @Override
