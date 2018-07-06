@@ -278,4 +278,7 @@ public abstract class ContactService {
         return contact;
     }
 
+//    public boolean deleteContact() {
+//
+//    }
 }

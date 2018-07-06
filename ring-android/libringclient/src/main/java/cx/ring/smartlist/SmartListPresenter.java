@@ -250,6 +250,12 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                 .subscribeOn(Schedulers.computation()).subscribe());
     }
 
+    public void deleteConversation(final CallContact callContact) {
+        mConversationDisposable.add(mConversationFacade
+                .clearHistory(mAccount.getAccountID(), callContact.getPrimaryUri())
+                .subscribeOn(Schedulers.computation()).subscribe());
+    }
+
     public void clickQRSearch() {
         getView().goToQRActivity();
     }

@@ -294,6 +294,13 @@ public class ConversationFacade {
                 });
     }
 
+    public Completable removeConversation(final String accountId, final Uri contact) {
+        // with rx !
+
+        mAccountService.removeContact(accountId, contact.getRawUriString(), false);
+        clearHistory(accountId, contact);
+    }
+
     public void updateTextNotifications() {
         Log.d(TAG, "updateTextNotifications()");
 
