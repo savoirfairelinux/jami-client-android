@@ -208,7 +208,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         getView().goToAddContact(mConversation.getContact());
     }
 
-    public void deleteAction() {
+    public void clearHistoryAction() {
         getView().displayDeleteDialog(mConversation);
     }
 

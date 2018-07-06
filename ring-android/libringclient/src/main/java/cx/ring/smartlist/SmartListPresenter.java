@@ -230,11 +230,11 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         getView().copyNumber(smartListViewModel.getContact());
     }
 
-    public void deleteConversation(SmartListViewModel smartListViewModel) {
+    public void clearHistory(SmartListViewModel smartListViewModel) {
         getView().displayDeleteDialog(smartListViewModel.getContact());
     }
 
-    public void deleteConversation(final CallContact callContact) {
+    public void clearHistory(final CallContact callContact) {
         mConversationDisposable.add(mConversationFacade
                 .clearHistory(mAccount.getAccountID(), callContact.getPrimaryUri())
                 .subscribeOn(Schedulers.computation()).subscribe());

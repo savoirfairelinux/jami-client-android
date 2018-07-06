@@ -177,6 +177,8 @@ along with this program; if not, write to the Free Software
     <string name="conversation_action_select_peer_number">Select a number</string>
     <string name="conversation_action_block_this">Block this contact</string>
     <string name="conversation_action_go_to_call">Return to ongoing call</string>
+    <string name="conversation_action_clear_history">Clear history</string>
+    <string name="conversation_action_delete_history_title">Delete history?</string>
 
     <!-- Contacts -->
     <string name="add_call_contact_number_to_contacts">Add %1$s ?</string>

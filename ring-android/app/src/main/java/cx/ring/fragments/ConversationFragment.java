@@ -223,7 +223,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         }
 
         if (mDeleteConversation) {
-            presenter.deleteAction();
+            presenter.clearHistoryAction();
         }
     }
 
@@ -461,8 +461,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             case R.id.conv_action_videocall:
                 presenter.callWithAudioOnly(false);
                 return true;
-            case R.id.menuitem_delete:
-                presenter.deleteAction();
+            case R.id.menuitem_clear_history:
+                presenter.clearHistoryAction();
                 return true;
             case R.id.menuitem_copy_content:
                 presenter.copyToClipboard();
@@ -476,7 +476,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void deleteConversation(CallContact callContact) {
+    public void clearHistory(CallContact callContact) {
         presenter.deleteConversation();
     }
 

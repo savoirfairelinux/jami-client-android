@@ -23,9 +23,9 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/menuitem_delete"
+        android:id="@+id/menuitem_clear_history"
         android:icon="@drawable/ic_delete_white"
-        android:title="@string/conversation_action_delete_this"
+        android:title="@string/conversation_action_clear_history"
         app:showAsAction="never" />
 
     <item

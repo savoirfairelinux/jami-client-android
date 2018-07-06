@@ -188,7 +188,7 @@ public class AccountEditionActivity extends AppCompatActivity implements Account
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.menuitem_delete:
+            case R.id.menuitem_clear_history:
                 AlertDialog deleteDialog = createDeleteDialog();
                 deleteDialog.show();
                 break;

@@ -23,7 +23,6 @@ package cx.ring.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -360,7 +359,7 @@ public class Conversation {
 
     public interface ConversationActionCallback {
 
-        void deleteConversation(CallContact callContact);
+        void clearHistory(CallContact callContact);
 
         void copyContactNumberToClipboard(String contactNumber);
 
