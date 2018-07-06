@@ -49,24 +49,10 @@ public class PresenceService {
     @Inject
     ContactService mContactService;
 
-    private final Map<String, Boolean> mPresenceMap = new HashMap<>();
     private final PublishSubject<CallContact> presentSubject = PublishSubject.create();
 
     public Observable<CallContact> getPresenceUpdates() {
         return presentSubject;
-    }
-
-    /**
-     * Check service cache for latest presence value
-     *
-     * @param uri URI of the contact
-     * @return true if this URI is online according to latest daemon update
-     */
-    public boolean isBuddyOnline(String uri) {
-        if (uri != null && mPresenceMap.containsKey(uri)) {
-            return mPresenceMap.get(uri);
-        }
-        return false;
     }
 
     public void publish(final String accountID, final boolean status, final String note) {
@@ -103,9 +89,6 @@ public class PresenceService {
     }
 
     public void newBuddyNotification(String accountId, String buddyUri, int status, String lineStatus) {
-        Log.d(TAG, "newBuddyNotification: " + accountId + ", " + buddyUri + ", " + status + ", " + lineStatus);
-        mPresenceMap.put(CallContact.PREFIX_RING + buddyUri, status == 1);
-
         CallContact contact = mContactService.findContact(accountId, new Uri(CallContact.PREFIX_RING + buddyUri));
         contact.setOnline(status == 1);
         presentSubject.onNext(contact);

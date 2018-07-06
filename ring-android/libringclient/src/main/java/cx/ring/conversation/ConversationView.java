@@ -43,8 +43,6 @@ public interface ConversationView extends BaseView {
 
     void displayNumberSpinner(Conversation conversation, Uri number);
 
-    void displayAddContact(boolean display);
-
     void displayDeleteDialog(Conversation conversation);
 
     void displayCopyToClipboard(CallContact callContact);
@@ -84,5 +82,4 @@ public interface ConversationView extends BaseView {
     void addElement(ConversationElement e);
     void updateElement(ConversationElement e);
     void removeElement(ConversationElement e);
-
 }
