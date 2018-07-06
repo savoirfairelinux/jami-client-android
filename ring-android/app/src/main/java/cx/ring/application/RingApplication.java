@@ -30,6 +30,7 @@ import android.media.AudioManager;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.support.v7.app.AppCompatDelegate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -209,6 +210,9 @@ public abstract class RingApplication extends Application {
         super.onCreate();
 
         sInstance = this;
+
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
+            AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         setDefaultUncaughtExceptionHandler();
 

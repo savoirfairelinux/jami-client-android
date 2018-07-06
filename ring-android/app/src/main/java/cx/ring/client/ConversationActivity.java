@@ -44,6 +44,7 @@ public class ConversationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         RingApplication.getInstance().startDaemon();
 
         setContentView(R.layout.activity_conversation);
