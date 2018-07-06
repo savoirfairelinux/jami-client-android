@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import io.reactivex.Observable;
@@ -62,81 +63,55 @@ public class Account {
     private final List<Conversation> sortedConversations = new ArrayList<>();
     private final List<Conversation> sortedPending = new ArrayList<>();
 
-    private final Subject<Conversation> conversationSubject = PublishSubject.create();
-    private final Subject<List<Conversation>> conversationsSubject = BehaviorSubject.create();
-    private final Subject<List<Conversation>> pendingSubject = BehaviorSubject.create();
-
     public boolean registeringUsername = false;
     private boolean conversationsChanged = true;
     private boolean pendingsChanged = true;
     private boolean historyLoaded = false;
 
+    private final Subject<Conversation> conversationSubject = PublishSubject.create();
+    private final Subject<List<Conversation>> conversationsSubject = BehaviorSubject.create();
+    private final Subject<List<Conversation>> pendingSubject = BehaviorSubject.create();
+
     private final BehaviorSubject<Collection<CallContact>> contactListSubject = BehaviorSubject.create();
     private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
-    private final Subject<RequestEvent> trustRequestSubject = PublishSubject.create();
+    public Subject<Account> historyLoader;
 
+    public Account(String bAccountID) {
+        accountID = bAccountID;
+        mDetails = new AccountConfig();
+        mVolatileDetails = new AccountConfig();
+    }
+    public Account(String bAccountID, final Map<String, String> details,
+                   final List<Map<String, String>> credentials,
+                   final Map<String, String> volDetails) {
+        accountID = bAccountID;
+        mDetails = new AccountConfig(details);
+        mVolatileDetails = new AccountConfig(volDetails);
+        setCredentials(credentials);
+    }
 
     public Observable<List<Conversation>> getConversationsSubject() {
         return conversationsSubject;
     }
+    public Observable<List<SmartListViewModel>> getConversationsViewModels() {
+        return conversationsSubject
+                .map(conversations -> {
+                    ArrayList<SmartListViewModel> viewModel = new ArrayList<>(conversations.size());
+                    for (Conversation c : conversations)
+                        viewModel.add(new SmartListViewModel(accountID, c.getContact(), c.getLastEvent()));
+                    return viewModel;
+                });
+    }
+
     public Observable<Conversation> getConversationSubject() {
         return conversationSubject;
     }
+    public Observable<SmartListViewModel> getConversationViewModel() {
+        return conversationSubject.map(c -> new SmartListViewModel(accountID, c.getContact(), c.getLastEvent()));
+    }
+
     public Observable<List<Conversation>> getPendingSubject() {
         return pendingSubject;
-    }
-
-    public Subject<Account> historyLoader;
-
-    private static class ConversationComparator implements Comparator<Conversation> {
-        @Override
-        public int compare(Conversation a, Conversation b) {
-            ConversationElement eventA = a.getLastEvent();
-            ConversationElement eventB = b.getLastEvent();
-            if (eventA == null) {
-                if (eventB == null)
-                    return 0;
-                return 1;
-            }
-            if (eventB == null)
-                return -1;
-            return Long.compare(eventB.getDate(), eventA.getDate());
-        }
-    }
-
-    private static final ConversationComparator CONVERSATION_COMPARATOR = new ConversationComparator();
-
-    private List<Conversation> getSortedConversations() {
-        Log.w(TAG, "getSortedConversations() " + Thread.currentThread().getId());
-        synchronized (sortedConversations) {
-            if (conversationsChanged) {
-                sortedConversations.clear();
-                synchronized (conversations) {
-                    sortedConversations.addAll(conversations.values());
-                }
-                for (Conversation c : sortedConversations)
-                    c.sortHistory();
-                Collections.sort(sortedConversations, CONVERSATION_COMPARATOR);
-                conversationsChanged = false;
-            }
-        }
-        return sortedConversations;
-    }
-
-    private List<Conversation> getSortedPending() {
-        synchronized (sortedPending) {
-            if (pendingsChanged) {
-                sortedPending.clear();
-                synchronized (pending) {
-                    sortedPending.addAll(pending.values());
-                }
-                for (Conversation c : sortedPending)
-                    c.sortHistory();
-                Collections.sort(sortedPending, CONVERSATION_COMPARATOR);
-                pendingsChanged = false;
-            }
-        }
-        return sortedPending;
     }
 
     public Collection<Conversation> getConversations() {
@@ -147,11 +122,11 @@ public class Account {
         return pending.values();
     }
 
-    public void pendingRefreshed() {
+    private void pendingRefreshed() {
         if (historyLoaded)
             pendingSubject.onNext(getSortedPending());
     }
-    public void pendingChanged() {
+    private void pendingChanged() {
         pendingsChanged = true;
         pendingRefreshed();
     }
@@ -168,11 +143,11 @@ public class Account {
         pendingSubject.onNext(getSortedPending());
     }
 
-    public void conversationRefreshed(Conversation conversation) {
+    private void conversationRefreshed(Conversation conversation) {
         if (historyLoaded)
             conversationSubject.onNext(conversation);
     }
-    public void conversationChanged() {
+    private void conversationChanged() {
         conversationsChanged = true;
         if (historyLoaded)
             conversationsSubject.onNext(getSortedConversations());
@@ -241,43 +216,6 @@ public class Account {
         return conversation;
     }
 
-    public static class ContactEvent {
-        public final CallContact contact;
-        public final boolean added;
-        ContactEvent(CallContact c, boolean a) { contact=c; added=a;}
-    }
-    public static class RequestEvent {
-        public final TrustRequest request;
-        public final boolean added;
-        RequestEvent(TrustRequest c, boolean a) { request=c; added=a;}
-    }
-
-    private final Observable<CallContact> contactsObservable = Observable.create(subscriber -> {
-        for (CallContact c : mContacts.values())
-            subscriber.onNext(c);
-        subscriber.onComplete();
-    });
-    private final Observable<CallContact> validContactsObservable = contactsObservable.filter(c -> !c.isBanned());
-    private final Observable<CallContact> bannedContactsObservable = contactsObservable.filter(CallContact::isBanned);
-
-    public Observable<CallContact> getValidContacts() {
-        return validContactsObservable;
-    }
-
-    public Observable<Collection<CallContact>> getContactsUpdates() {
-        return contactListSubject;
-    }
-    public Observable<Collection<TrustRequest>> getRequestsUpdates() {
-        return trustRequestsSubject;
-    }
-    public Observable<RequestEvent> getRequestsEvents() {
-        return trustRequestSubject;
-    }
-    public Observable<Collection<CallContact>> getValidContactsUpdates() {
-        return contactListSubject
-                .concatMapSingle(list -> Observable.fromIterable(list)
-                        .filter(c -> !c.isBanned()).toList());
-    }
     public Observable<Collection<CallContact>> getBannedContactsUpdates() {
         return contactListSubject.concatMapSingle(list -> Observable.fromIterable(list).filter(CallContact::isBanned).toList());
     }
@@ -294,25 +232,9 @@ public class Account {
         return getContactFromCache(uri.getRawUriString());
     }
 
-    public Account(String bAccountID) {
-        accountID = bAccountID;
-        mDetails = new AccountConfig();
-        mVolatileDetails = new AccountConfig();
-    }
-
     public void dispose() {
         contactListSubject.onComplete();
-        //contactSubject.onComplete();
         trustRequestsSubject.onComplete();
-    }
-
-    public Account(String bAccountID, final Map<String, String> details,
-                   final List<Map<String, String>> credentials,
-                   final Map<String, String> volDetails) {
-        accountID = bAccountID;
-        mDetails = new AccountConfig(details);
-        mVolatileDetails = new AccountConfig(volDetails);
-        setCredentials(credentials);
     }
 
     public Map<String, String> getDevices() {
@@ -431,7 +353,7 @@ public class Account {
         mDetails.put(ConfigKey.ACCOUNT_ALIAS, alias);
     }
 
-    public String getDetail(ConfigKey key) {
+    private String getDetail(ConfigKey key) {
         return mDetails.get(key);
     }
 
@@ -510,7 +432,7 @@ public class Account {
         return mDetails.getBool(ConfigKey.SRTP_ENABLE) || mDetails.getBool(ConfigKey.TLS_ENABLE);
     }
 
-    public String getUri(boolean display) {
+    private String getUri(boolean display) {
         String username = display ? getDisplayUsername() : getUsername();
         if (isRing()) {
             return username;
@@ -651,10 +573,10 @@ public class Account {
         synchronized (pending) {
             mRequests.put(request.getContactId(), request);
             CallContact contact = getContactFromCache(request.getContactId());
-            if (contact.vcard == null) {
-                contact.vcard = request.getVCard();
+            if (!contact.detailsLoaded) {
+                contact.setVCardProfile(request.getVCard());
             }
-            trustRequestSubject.onNext(new RequestEvent(request, true));
+            //trustRequestSubject.onNext(new RequestEvent(request, true));
             trustRequestsSubject.onNext(mRequests.values());
 
             String key = new Uri(request.getContactId()).getRawUriString();
@@ -680,7 +602,7 @@ public class Account {
                     pending.put(key, conversation);
                     conversation.addRequestEvent(request);
                 }
-                trustRequestSubject.onNext(new RequestEvent(request, true));
+                //trustRequestSubject.onNext(new RequestEvent(request, true));
             }
             trustRequestsSubject.onNext(mRequests.values());
             pendingChanged();
@@ -691,7 +613,7 @@ public class Account {
         synchronized (pending) {
             TrustRequest request = mRequests.remove(contact.getRawUriString());
             if (request != null) {
-                trustRequestSubject.onNext(new RequestEvent(request, true));
+                //trustRequestSubject.onNext(new RequestEvent(request, true));
                 trustRequestsSubject.onNext(mRequests.values());
             }
             if (pending.remove(contact.getRawUriString()) != null) {
@@ -730,7 +652,59 @@ public class Account {
         return null;
     }
 
-    public Conversation getByKey(String key) {
+    public boolean isHistoryLoaded() {
+        return historyLoaded;
+    }
+
+    public void setHistoryLoaded(Set<Conversation> conversations) {
+        if (historyLoaded)
+            return;
+        Log.w(TAG, "setHistoryLoaded() " + conversations.size());
+        for (Conversation c : conversations)
+            updated(c);
+        historyLoaded = true;
+        if (historyLoader != null) {
+            historyLoader.onNext(this);
+            historyLoader.onComplete();
+        }
+        conversationChanged();
+        pendingChanged();
+    }
+
+    private List<Conversation> getSortedConversations() {
+        Log.w(TAG, "getSortedConversations() " + Thread.currentThread().getId());
+        synchronized (sortedConversations) {
+            if (conversationsChanged) {
+                sortedConversations.clear();
+                synchronized (conversations) {
+                    sortedConversations.addAll(conversations.values());
+                }
+                for (Conversation c : sortedConversations)
+                    c.sortHistory();
+                Collections.sort(sortedConversations, new ConversationComparator());
+                conversationsChanged = false;
+            }
+        }
+        return sortedConversations;
+    }
+
+    private List<Conversation> getSortedPending() {
+        synchronized (sortedPending) {
+            if (pendingsChanged) {
+                sortedPending.clear();
+                synchronized (pending) {
+                    sortedPending.addAll(pending.values());
+                }
+                for (Conversation c : sortedPending)
+                    c.sortHistory();
+                Collections.sort(sortedPending, new ConversationComparator());
+                pendingsChanged = false;
+            }
+        }
+        return sortedPending;
+    }
+
+    private Conversation getByKey(String key) {
         Conversation conversation = cache.get(key);
         if (conversation != null) {
             return conversation;
@@ -741,7 +715,7 @@ public class Account {
         return conversation;
     }
 
-    public void contactAdded(CallContact contact) {
+    private void contactAdded(CallContact contact) {
         Uri uri = contact.getPrimaryUri();
         String key = uri.getRawUriString();
         synchronized (conversations) {
@@ -763,7 +737,7 @@ public class Account {
         }
     }
 
-    public void contactRemoved(Uri uri) {
+    private void contactRemoved(Uri uri) {
         String key = uri.getRawUriString();
         synchronized (conversations) {
             synchronized (pending) {
@@ -775,26 +749,7 @@ public class Account {
         }
     }
 
-    public boolean isHistoryLoaded() {
-        return historyLoaded;
-    }
-
-    public void setHistoryLoaded(Set<Conversation> conversations) {
-        if (historyLoaded)
-            return;
-        Log.w(TAG, "setHistoryLoaded() " + conversations.size());
-        for (Conversation c : conversations)
-            updated(c);
-        historyLoaded = true;
-        if (historyLoader != null) {
-            historyLoader.onNext(this);
-            historyLoader.onComplete();
-        }
-        conversationChanged();
-        pendingChanged();
-    }
-
-    public Conversation getConversationByCallId(String callId) {
+    private Conversation getConversationByCallId(String callId) {
         for (Conversation conversation : conversations.values()) {
             Conference conf = conversation.getConference(callId);
             if (conf != null) {
@@ -802,6 +757,22 @@ public class Account {
             }
         }
         return null;
+    }
+
+    private static class ConversationComparator implements Comparator<Conversation> {
+        @Override
+        public int compare(Conversation a, Conversation b) {
+            ConversationElement eventA = a.getLastEvent();
+            ConversationElement eventB = b.getLastEvent();
+            if (eventA == null) {
+                if (eventB == null)
+                    return 0;
+                return 1;
+            }
+            if (eventB == null)
+                return -1;
+            return Long.compare(eventB.getDate(), eventA.getDate());
+        }
     }
 
 }

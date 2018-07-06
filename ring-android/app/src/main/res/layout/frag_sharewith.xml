@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+        app:title="Share with..." />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#888888"
+        android:elevation="2dp">
+
+        <EditText
+            android:id="@+id/previewText"
+            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:maxHeight="@dimen/share_preview_height"
+            android:singleLine="false"
+            android:visibility="gone"
+            tools:text="Test text message" />
+
+        <ImageView
+            android:id="@+id/previewImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/share_preview_height"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <cx.ring.views.PreviewVideoView
+            android:id="@+id/previewVideo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/share_preview_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/shareList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:context=".fragments.ShareWithFragment"
+        tools:listitem="@layout/item_smartlist" />
+
+</LinearLayout>
