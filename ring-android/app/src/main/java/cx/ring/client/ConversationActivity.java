@@ -20,6 +20,7 @@
  */
 package cx.ring.client;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -41,6 +42,8 @@ public class ConversationActivity extends AppCompatActivity {
     private String contactUri = null;
     private String accountId = null;
 
+    private Intent mPendingIntent = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +56,12 @@ public class ConversationActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (getIntent() != null || getIntent().getExtras() != null) {
-            contactUri = getIntent().getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
-            accountId = getIntent().getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
+        Intent intent = getIntent();
+        String action = intent == null ? null : intent.getAction();
+
+        if (intent != null) {
+            contactUri = intent.getStringExtra(ConversationFragment.KEY_CONTACT_RING_ID);
+            accountId = intent.getStringExtra(ConversationFragment.KEY_ACCOUNT_ID);
         } else if (savedInstanceState != null) {
             contactUri = savedInstanceState.getString(ConversationFragment.KEY_CONTACT_RING_ID);
             accountId = savedInstanceState.getString(ConversationFragment.KEY_ACCOUNT_ID);
@@ -71,6 +77,29 @@ public class ConversationActivity extends AppCompatActivity {
                     .replace(R.id.main_frame, mConversationFragment, null)
                     .commit();
         }
+        if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
+            mPendingIntent = intent;
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mPendingIntent != null) {
+            handleShareIntent(mPendingIntent);
+            mPendingIntent = null;
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleShareIntent(intent);
+    }
+
+    private void handleShareIntent(Intent intent) {
+        if (mConversationFragment != null)
+            mConversationFragment.handleShareIntent(intent);
     }
 
     @Override

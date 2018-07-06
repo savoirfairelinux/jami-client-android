@@ -42,6 +42,17 @@ public class SmartListViewModel
         hasUnreadTextMessage = (lastEvent != null) && !lastEvent.isRead();
         this.hasOngoingCall = false;
         this.lastEvent = lastEvent;
+        isOnline = contact.isOnline();
+    }
+    public SmartListViewModel(String accountId, CallContact contact, ConversationElement lastEvent) {
+        this.accountId = accountId;
+        this.contact = contact;
+        this.uuid = contact.getIds().get(0);
+        this.contactName = contact.getDisplayName();
+        hasUnreadTextMessage = (lastEvent != null) && !lastEvent.isRead();
+        this.hasOngoingCall = false;
+        this.lastEvent = lastEvent;
+        isOnline = contact.isOnline();
     }
 
     public CallContact getContact() {
