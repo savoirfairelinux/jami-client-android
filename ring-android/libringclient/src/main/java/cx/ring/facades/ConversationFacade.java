@@ -88,7 +88,6 @@ public class ConversationFacade {
     @Inject
     PreferencesService mPreferencesService;
 
-    private Account mConversations = null;
     private final CompositeDisposable mDisposableBag = new CompositeDisposable();
 
     private final Observable<Account> currentAccountSubject;
@@ -108,13 +107,22 @@ public class ConversationFacade {
                 .subscribe(this::onCallStateChange));
 
         mDisposableBag.add(currentAccountSubject
-                .subscribe(account -> {
-                    Log.d(TAG, "refreshConversations() " + account);
-                    mConversations = account;
-                    for (Conversation conversation : account.getConversations()) {
-                        mPresenceService.subscribeBuddy(account.getAccountID(), conversation.getContact().getPrimaryUri().getRawUriString(), true);
-                    }
-                }));
+                .switchMap(a -> Observable
+                        .merge(a.getConversationsSubject(), a.getPendingSubject())
+                        .doOnNext(c -> {
+                            for (Conversation conversation : c) {
+                                Uri id = conversation.getContact().getPrimaryUri();
+                                mPresenceService.subscribeBuddy(a.getAccountID(), id.getRawUriString(), true);
+                                mContactService.loadContactData(conversation.getContact());
+                                mAccountService.lookupAddress(a.getAccountID(), "", id.getRawRingId());
+                            }
+                        }))
+                .subscribeOn(Schedulers.computation())
+                .subscribe());
+
+        mDisposableBag.add(mAccountService.getIncomingRequests()
+                .switchMapSingle(r -> getAccountSubject(r.getAccountId()))
+                .subscribe(a -> mNotificationService.showIncomingTrustRequestNotification(a)));
 
         mDisposableBag.add(mAccountService
                 .getIncomingMessages()
@@ -133,6 +141,7 @@ public class ConversationFacade {
                         conv.updateTextMessage(txt);
                     }
                 }));
+
         mDisposableBag.add(mAccountService.getDataTransfers().subscribe(this::handleDataTransferEvent));
     }
 
@@ -294,10 +303,10 @@ public class ConversationFacade {
                 });
     }
 
-    public void updateTextNotifications() {
+    public void updateTextNotifications(List<Conversation> conversations) {
         Log.d(TAG, "updateTextNotifications()");
 
-        for (Conversation conversation : mConversations.getConversations()) {
+        for (Conversation conversation : conversations) {
             TreeMap<Long, TextMessage> texts = conversation.getUnreadTextMessages();
 
             CallContact contact = conversation.getContact();
@@ -316,7 +325,11 @@ public class ConversationFacade {
         if (txt.isRead()) {
             mHistoryService.updateTextMessage(new HistoryText(txt)).subscribe();
         }
-        updateTextNotifications();
+        getAccountSubject(txt.getAccount())
+                .flatMapObservable(Account::getConversationsSubject)
+                .firstOrError()
+                .subscribeOn(Schedulers.computation())
+                .subscribe(this::updateTextNotifications);
     }
 
     public void acceptRequest(String accountId, Uri contactUri) {

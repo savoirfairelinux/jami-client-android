@@ -149,7 +149,7 @@ public class CallContact {
     }
 
     public ArrayList<String> getIds() {
-        ArrayList<String> ret = new ArrayList<>(1 + mPhones.size());
+        ArrayList<String> ret = new ArrayList<>(mPhones.size() + (mId == UNKNOWN_ID ? 0 : 1));
         if (mId != UNKNOWN_ID)
             ret.add("c:" + Long.toHexString(mId));
         for (Phone p : mPhones)
