@@ -36,6 +36,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -201,13 +203,15 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
         // if app opened from notification display trust request fragment when mService will connected
         Intent intent = getIntent();
         Bundle extra = intent.getExtras();
-        if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(intent.getAction())) {
+        String action = intent.getAction();
+        if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(action)) {
             if (extra == null || extra.getString(ContactRequestsFragment.ACCOUNT_ID) == null) {
                 return;
             }
             mAccountWithPendingrequests = extra.getString(ContactRequestsFragment.ACCOUNT_ID);
+        } else if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
+            handleShareIntent(intent);
         }
-
 
         setVideoEnabledFromPermission();
 
@@ -230,19 +234,38 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
 
     }
 
+    private void handleShareIntent(Intent intent) {
+        String action = intent.getAction();
+        if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
+            Bundle extra = intent.getExtras();
+            if (extra != null) {
+                String accountId = extra.getString(ConversationFragment.KEY_ACCOUNT_ID);
+                String uri = extra.getString(ConversationFragment.KEY_CONTACT_RING_ID);
+                if (!TextUtils.isEmpty(accountId) && !TextUtils.isEmpty(uri)) {
+                    intent.setClass(this, ConversationActivity.class);
+                    startActivity(intent);
+                }
+            }
+        }
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log.d(TAG, "onNewIntent: " + intent);
-        if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(intent.getAction())) {
+        String action = intent.getAction();
+        if (ACTION_PRESENT_TRUST_REQUEST_FRAGMENT.equals(action)) {
             Bundle extra = intent.getExtras();
             if (extra == null || extra.getString(ContactRequestsFragment.ACCOUNT_ID) == null) {
                 return;
             }
             presentTrustRequestFragment(extra.getString(ContactRequestsFragment.ACCOUNT_ID));
             return;
+        } else if (Intent.ACTION_SEND.equals(action) || Intent.ACTION_SEND_MULTIPLE.equals(action)) {
+            handleShareIntent(intent);
+            return;
         }
-        if (!DeviceUtils.isTablet(this) || !DRingService.ACTION_CONV_ACCEPT.equals(intent.getAction())) {
+        if (!DeviceUtils.isTablet(this) || !DRingService.ACTION_CONV_ACCEPT.equals(action)) {
             return;
         }
 

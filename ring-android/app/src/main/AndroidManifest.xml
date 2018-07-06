@@ -134,6 +134,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <data android:scheme="ring" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".client.ShareActivity"
+            android:theme="@style/AppThemeBase"
+            android:parentActivityName=".client.HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="video/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.service.chooser.chooser_target_service"
+                android:value=".services.RingChooserTargetService" />
+        </activity>
+
         <activity
             android:name=".account.AccountWizardActivity"
             android:configChanges="screenSize|screenLayout|smallestScreenSize"
@@ -316,7 +347,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:name=".client.MediaViewerActivity"
             android:exported="false"
             android:label="@string/title_media_viewer"
-            android:theme="@style/AppThemeBase.Dark"></activity>
+            android:theme="@style/AppThemeBase.Dark" />
+
+        <service
+            android:name=".services.RingChooserTargetService"
+            android:label="ChooserTargetService"
+            android:permission="android.permission.BIND_CHOOSER_TARGET_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.chooser.ChooserTargetService" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

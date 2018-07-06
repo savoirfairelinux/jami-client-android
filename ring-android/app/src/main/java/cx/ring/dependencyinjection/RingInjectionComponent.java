@@ -44,6 +44,7 @@ import cx.ring.fragments.GeneralAccountFragment;
 import cx.ring.fragments.MediaPreferenceFragment;
 import cx.ring.fragments.SIPAccountCreationFragment;
 import cx.ring.fragments.SecurityAccountFragment;
+import cx.ring.fragments.ShareWithFragment;
 import cx.ring.fragments.SmartListFragment;
 import cx.ring.launch.LaunchActivity;
 import cx.ring.navigation.RingNavigationFragment;
@@ -59,6 +60,7 @@ import cx.ring.services.HardwareService;
 import cx.ring.services.HistoryServiceImpl;
 import cx.ring.services.NotificationServiceImpl;
 import cx.ring.services.PresenceService;
+import cx.ring.services.RingChooserTargetService;
 import cx.ring.services.SharedPreferencesServiceImpl;
 import cx.ring.settings.SettingsFragment;
 import cx.ring.share.ShareFragment;
@@ -192,4 +194,8 @@ public interface RingInjectionComponent {
     void inject(TVSettingsFragment tvSettingsFragment);
 
     void inject(TVSettingsFragment.PrefsFragment prefsFragment);
+
+    void inject(RingChooserTargetService service);
+
+    void inject(ShareWithFragment fragment);
 }
