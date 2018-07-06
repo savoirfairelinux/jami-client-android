@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2e36822_c8696875",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-07-06T20:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81c8e7b4_232a6014",
+      "range": {
+        "startLine": 532,
+        "startChar": 4,
+        "endLine": 538,
+        "endChar": 7
+      },
+      "revId": "9d232281fd15d7d6aec335a22c3e6809bd867c77",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e154f032_e8fd4b52",
         "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2018-07-06T20:03:50Z",
       "side": 1,
       "message": "add log?",
+      "range": {
+        "startLine": 668,
+        "startChar": 8,
+        "endLine": 669,
+        "endChar": 19
+      },
+      "revId": "9d232281fd15d7d6aec335a22c3e6809bd867c77",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdcedc54_3771ede8",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-07-06T20:26:10Z",
+      "side": 1,
+      "message": "Might happen in normal conditions",
+      "parentUuid": "e154f032_e8fd4b52",
       "range": {
         "startLine": 668,
         "startChar": 8,
