@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f277472_93e8b753",
+        "filename": "ring-android/app/src/main/java/cx/ring/client/HomeActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-07-06T19:57:32Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 15
+      },
+      "revId": "cd4253d4504c57f6e0a91def8eae8ff46b1c545c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8b7746_4229b327",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ConversationFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-07-06T19:57:32Z",
+      "side": 1,
+      "message": "would be better to not fail silently\nwhy not:\nif (type \u003d\u003d null) {\n  log.e...\n  return;\n}\n...\nthis version also avoid nesting",
+      "range": {
+        "startLine": 684,
+        "startChar": 8,
+        "endLine": 684,
+        "endChar": 27
+      },
+      "revId": "cd4253d4504c57f6e0a91def8eae8ff46b1c545c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42549f02_cb92699b",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-07-06T19:57:32Z",
+      "side": 1,
+      "message": "should not fail silently",
+      "range": {
+        "startLine": 105,
+        "startChar": 12,
+        "endLine": 105,
+        "endChar": 27
+      },
+      "revId": "cd4253d4504c57f6e0a91def8eae8ff46b1c545c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5e9ce4_fd584b74",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-07-06T19:57:32Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 109,
+        "startChar": 8,
+        "endLine": 109,
+        "endChar": 37
+      },
+      "revId": "cd4253d4504c57f6e0a91def8eae8ff46b1c545c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "846776fe_1a44f5c1",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-07-06T19:57:32Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 168,
+        "startChar": 20,
+        "endLine": 168,
+        "endChar": 40
+      },
+      "revId": "cd4253d4504c57f6e0a91def8eae8ff46b1c545c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2719c0f2_9268860a",
+        "filename": "ring-android/app/src/main/java/cx/ring/fragments/ShareWithFragment.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-07-06T19:57:32Z",
+      "side": 1,
+      "message": "^",
+      "range": {
+        "startLine": 187,
+        "startChar": 8,
+        "endLine": 187,
+        "endChar": 28
+      },
+      "revId": "cd4253d4504c57f6e0a91def8eae8ff46b1c545c",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
