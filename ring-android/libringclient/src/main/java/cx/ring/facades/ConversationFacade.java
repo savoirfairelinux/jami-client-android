@@ -303,25 +303,15 @@ public class ConversationFacade {
                 });
     }
 
-    public void updateTextNotifications(List<Conversation> conversations) {
+    public void updateTextNotifications(String accountId, List<Conversation> conversations) {
         Log.d(TAG, "updateTextNotifications()");
 
         for (Conversation conversation : conversations) {
-            TreeMap<Long, TextMessage> texts = conversation.getUnreadTextMessages();
-
-            CallContact contact = conversation.getContact();
-            if (texts.isEmpty() || conversation.isVisible()) {
-                mNotificationService.cancelTextNotification(contact.getPrimaryUri());
-                continue;
-            }
-            if (texts.lastEntry().getValue().isNotified()) {
-                continue;
-            }
-            mNotificationService.showTextNotification(contact, conversation, texts);
+            mNotificationService.showTextNotification(accountId, conversation);
         }
     }
 
-    private void parseNewMessage(TextMessage txt) {
+    private void parseNewMessage(final TextMessage txt) {
         if (txt.isRead()) {
             mHistoryService.updateTextMessage(new HistoryText(txt)).subscribe();
         }
@@ -329,7 +319,7 @@ public class ConversationFacade {
                 .flatMapObservable(Account::getConversationsSubject)
                 .firstOrError()
                 .subscribeOn(Schedulers.computation())
-                .subscribe(this::updateTextNotifications);
+                .subscribe(c -> updateTextNotifications(txt.getAccount(), c));
     }
 
     public void acceptRequest(String accountId, Uri contactUri) {
@@ -362,7 +352,8 @@ public class ConversationFacade {
                 mAccountService.acceptFileTransfer(transfer);
             }
         }
-        mNotificationService.showFileTransferNotification(transfer, conversation.getContact());
+        if (!conversation.isVisible())
+            mNotificationService.showFileTransferNotification(transfer, conversation.getContact());
     }
 
     private void onCallStateChange(SipCall call) {
@@ -412,6 +403,9 @@ public class ConversationFacade {
                 HistoryCall historyCall = new HistoryCall(call);
                 mHistoryService.insertNewEntry(historyCall).subscribe();
                 conversation.addHistoryCall(historyCall);
+                if (historyCall.isIncoming() && historyCall.isMissed()) {
+                    mNotificationService.showMissedCallNotification(call);
+                }
                 account.updated(conversation);
             }
             mCallService.removeCallForId(call.getCallId());
@@ -430,5 +424,12 @@ public class ConversationFacade {
                 mAccountService.addContact(accountId, rawId);
         }
         return mCallService.placeCall(rawId, number, video);
+    }
+
+    public void cancelFileTransfer(long id) {
+        mAccountService.cancelDataTransfer(id);
+        DataTransfer transfer = mAccountService.getDataTransfer(id);
+        if (transfer != null)
+            deleteFile(transfer);
     }
 }
