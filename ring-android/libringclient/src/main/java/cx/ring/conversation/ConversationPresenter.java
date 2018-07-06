@@ -202,7 +202,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void prepareMenu() {
-        getView().displayAddContact(mConversation != null && mConversation.getContact().getId() < 0);
     }
 
     public void addContact() {
