@@ -39,7 +39,7 @@ public class ActionHelper {
 
     public static final String TAG = ActionHelper.class.getSimpleName();
     public static final int ACTION_COPY = 0;
-    public static final int ACTION_DELETE = 1;
+    public static final int ACTION_CLEAR_HISTORY = 1;
     public static final int ACTION_BLOCK = 2;
 
     private ActionHelper() {
@@ -59,11 +59,11 @@ public class ActionHelper {
         }
 
         return new AlertDialog.Builder(context)
-                .setTitle(R.string.conversation_action_delete_this_title)
+                .setTitle(R.string.conversation_action_delete_history_title)
                 .setMessage(R.string.conversation_action_delete_this_message)
                 .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
                     if (callback != null) {
-                        callback.deleteConversation(callContact);
+                        callback.clearHistory(callContact);
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
