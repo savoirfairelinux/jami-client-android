@@ -113,6 +113,7 @@ public class AccountService {
     private final Subject<TextMessage> incomingMessageSubject = PublishSubject.create();
     private final Subject<TextMessage> messageSubject = PublishSubject.create();
     private final Subject<DataTransfer> dataTransferSubject = PublishSubject.create();
+    private final Subject<TrustRequest> incomingRequestsSubject = PublishSubject.create();
 
     public class RegisteredName {
         public String accountId;
@@ -148,6 +149,9 @@ public class AccountService {
     }
     public Observable<TextMessage> getMessageStateChanges() {
         return messageSubject;
+    }
+    public Observable<TrustRequest> getIncomingRequests() {
+        return incomingRequestsSubject;
     }
 
     /**
@@ -1047,7 +1051,9 @@ public class AccountService {
             }
             account.addRequest(request);
             lookupAddress(accountId, "", from);
+            incomingRequestsSubject.onNext(request);
         }
+
     }
 
     void contactAdded(String accountId, String uri, boolean confirmed) {

@@ -113,14 +113,6 @@ public class NotificationServiceImpl extends NotificationService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             registerNotificationChannels();
         }
-        mAccountService.getCurrentAccountSubject()
-                .switchMap(a -> a
-                        .getPendingSubject()
-                        .map(p -> {
-                            showIncomingTrustRequestNotification(a);
-                            return a;
-                        }))
-                .subscribe();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
