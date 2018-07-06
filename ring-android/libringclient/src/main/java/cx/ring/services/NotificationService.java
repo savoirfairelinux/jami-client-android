@@ -28,6 +28,7 @@ import cx.ring.model.Conference;
 import cx.ring.model.Conversation;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.DataTransferEventCode;
+import cx.ring.model.SipCall;
 import cx.ring.model.TextMessage;
 import cx.ring.model.Uri;
 
@@ -40,7 +41,7 @@ public abstract class NotificationService {
 
     public abstract void showCallNotification(Conference conference);
 
-    public abstract void showTextNotification(CallContact contact, Conversation conversation, TreeMap<Long, TextMessage> texts);
+    public abstract void showTextNotification(String accountId, Conversation conversation);
 
     public abstract void cancelCallNotification(int notificationId);
 
@@ -56,4 +57,7 @@ public abstract class NotificationService {
 
     public abstract void showFileTransferNotification(DataTransfer info, CallContact contact);
 
+    public abstract void showMissedCallNotification(SipCall call);
+
+    public abstract void cancelFileNotification(long id);
 }
