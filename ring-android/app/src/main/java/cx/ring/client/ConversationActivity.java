@@ -22,6 +22,7 @@ package cx.ring.client;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 
@@ -44,6 +45,10 @@ public class ConversationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
+            AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
         RingApplication.getInstance().startDaemon();
 
         setContentView(R.layout.activity_conversation);
