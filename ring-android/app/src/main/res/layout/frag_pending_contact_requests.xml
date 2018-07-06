@@ -25,12 +25,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/pane_ringID"
-        android:layout_marginStart="0dp"
         android:clipToPadding="false"
         android:divider="@null"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        tools:listitem="@layout/item_contact_request" />
+        tools:listitem="@layout/item_smartlist" />
 
     <TextView
         android:id="@+id/emptyTextView"
@@ -38,6 +37,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/no_requests" />
+        android:text="@string/no_requests"
+        android:visibility="gone" />
 
 </RelativeLayout>

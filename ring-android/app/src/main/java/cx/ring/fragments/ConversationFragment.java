@@ -59,6 +59,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import cx.ring.BuildConfig;
 import cx.ring.R;
 import cx.ring.adapters.ConversationAdapter;
 import cx.ring.adapters.NumberAdapter;
@@ -95,8 +96,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     public static final int REQ_ADD_CONTACT = 42;
 
-    public static final String KEY_CONTACT_RING_ID = "CONTACT_RING_ID";
-    public static final String KEY_ACCOUNT_ID = "ACCOUNT_ID";
+    public static final String KEY_CONTACT_RING_ID = BuildConfig.APPLICATION_ID + "CONTACT_RING_ID";
+    public static final String KEY_ACCOUNT_ID = BuildConfig.APPLICATION_ID + "ACCOUNT_ID";
 
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
 
@@ -143,7 +144,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     private AlertDialog mDeleteDialog;
     private boolean mDeleteConversation = false;
 
-    private MenuItem mAddContactBtn = null;
+    private MenuItem mAudioCallBtn = null;
+    private MenuItem mVideoCallBtn = null;
 
     private ConversationAdapter mAdapter = null;
     private NumberAdapter mNumberAdapter = null;
@@ -432,14 +434,10 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        presenter.prepareMenu();
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.conversation_actions, menu);
+        mAudioCallBtn = menu.findItem(R.id.conv_action_audiocall);
+        mVideoCallBtn = menu.findItem(R.id.conv_action_videocall);
     }
 
     @Override
@@ -531,12 +529,13 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         mNumberSpinner.setSelection(getIndex(mNumberSpinner, number));
     }
 
+    /*
     @Override
     public void displayAddContact(final boolean display) {
         if (mAddContactBtn != null) {
             mAddContactBtn.setVisible(display);
         }
-    }
+    }*/
 
     @Override
     public void displayDeleteDialog(final Conversation conversation) {
@@ -612,12 +611,23 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        boolean visible = mMessageInput.getVisibility() == View.VISIBLE;
+        if (mAudioCallBtn != null)
+            mAudioCallBtn.setVisible(visible);
+        if (mVideoCallBtn != null)
+            mVideoCallBtn.setVisible(visible);
+    }
+
+    @Override
     public void switchToUnknownView(String contactDisplayName) {
         mMessageInput.setVisibility(View.GONE);
         mUnknownPrompt.setVisibility(View.VISIBLE);
         mTrustRequestPrompt.setVisibility(View.GONE);
         mTvTrustRequestMessage.setText(String.format(getString(R.string.message_contact_not_trusted), contactDisplayName));
         mTrustRequestMessageLayout.setVisibility(View.VISIBLE);
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -627,6 +637,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         mTrustRequestPrompt.setVisibility(View.VISIBLE);
         mTvTrustRequestMessage.setText(String.format(getString(R.string.message_contact_not_trusted_yet), contactDisplayName));
         mTrustRequestMessageLayout.setVisibility(View.VISIBLE);
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -635,6 +646,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         mUnknownPrompt.setVisibility(View.GONE);
         mTrustRequestPrompt.setVisibility(View.GONE);
         mTrustRequestMessageLayout.setVisibility(View.GONE);
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -653,6 +665,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     private void setLoading(boolean isLoading) {
+        if (takePicture == null || sendData == null || pbDataTransfer == null)
+            return;
         if (isLoading) {
             takePicture.setVisibility(View.GONE);
             sendData.setVisibility(View.GONE);

@@ -30,7 +30,6 @@ import javax.inject.Named;
 import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.model.CallContact;
-import cx.ring.model.Conversation;
 import cx.ring.model.Phone;
 import cx.ring.model.RingError;
 import cx.ring.model.Uri;
@@ -71,10 +70,8 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
 
     private final PublishSubject<String> contactQuery = PublishSubject.create();
     private final Observable<Account> accountSubject;
-    private final Observable<ArrayList<SmartListViewModel>> conversationViews;
+    private final Observable<List<SmartListViewModel>> conversationViews;
 
-    //@Inject
-    //@Named("UiScheduler")
     private final Scheduler mUiScheduler;
 
     private CompositeDisposable mConversationDisposable;
@@ -101,14 +98,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                 .share();
 
         conversationViews = accountSubject
-                .switchMap(a -> a
-                        .getConversationsSubject()
-                        .map(conversations -> {
-                            ArrayList<SmartListViewModel> viewModel = new ArrayList<>(conversations.size());
-                            for (Conversation c : conversations)
-                                viewModel.add(modelToViewModel(a, c));
-                            return viewModel;
-                        }))
+                .switchMap(Account::getConversationsViewModels)
                 .observeOn(mUiScheduler);
     }
 
@@ -277,9 +267,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
 
         Log.w(TAG, "loadConversations() subscribe");
         mConversationDisposable.add(accountSubject
-                        .switchMap(a -> a
-                                .getConversationSubject()
-                                .map(c -> modelToViewModel(a, c)))
+                        .switchMap(Account::getConversationViewModel)
                         .observeOn(mUiScheduler)
                         .subscribe(vm -> {
                             Log.d(TAG, "getConversationSubject " + vm);
@@ -302,16 +290,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                         }
                     }
                 }));
-    }
-
-    private SmartListViewModel modelToViewModel(Account account, Conversation conversation) {
-        CallContact contact = conversation.getContact();
-        String primaryId = contact.getIds().get(0);
-        mContactService.loadContactData(contact);
-        SmartListViewModel smartListViewModel = new SmartListViewModel(account.getAccountID(), contact, primaryId,
-                conversation.getLastEvent());
-        smartListViewModel.setOnline(mPresenceService.isBuddyOnline(primaryId));
-        return smartListViewModel;
     }
 
     private List<SmartListViewModel> filter(List<SmartListViewModel> list, String query) {
