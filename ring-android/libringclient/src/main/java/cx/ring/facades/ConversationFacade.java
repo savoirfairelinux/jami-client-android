@@ -120,6 +120,11 @@ public class ConversationFacade {
                 .subscribeOn(Schedulers.computation())
                 .subscribe());
 
+        mDisposableBag.add(currentAccountSubject
+                .switchMap(a -> a.getPendingSubject()
+                        .doOnNext(p -> mNotificationService.showIncomingTrustRequestNotification(a)))
+                .subscribe());
+
         mDisposableBag.add(mAccountService.getIncomingRequests()
                 .switchMapSingle(r -> getAccountSubject(r.getAccountId()))
                 .subscribe(a -> mNotificationService.showIncomingTrustRequestNotification(a)));

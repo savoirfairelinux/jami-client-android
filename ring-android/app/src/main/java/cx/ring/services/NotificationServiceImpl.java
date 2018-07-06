@@ -318,24 +318,16 @@ public class NotificationServiceImpl extends NotificationService {
     @Override
     public void showIncomingTrustRequestNotification(final Account account) {
         int notificationId = getIncomingTrustNotificationId(account.getAccountID());
-        NotificationCompat.Builder messageNotificationBuilder = mNotificationBuilders.get(notificationId);
-
-        if (messageNotificationBuilder != null) {
-            notificationManager.cancel(notificationId);
-        } else {
-            messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_REQUEST);
-        }
-
+        NotificationCompat.Builder messageNotificationBuilder;
         Set<String> notifiedRequests = mPreferencesService.loadRequestsPreferences(account.getAccountID());
 
         Collection<Conversation> requests = account.getPending();
-        Log.w(TAG, "showIncomingTrustRequestNotification " + requests.size());
         if (requests.isEmpty()) {
             return;
         } else if (requests.size() == 1) {
             Conversation request = requests.iterator().next();
             CallContact contact = request.getContact();
-            String contactKey = contact.getKey();
+            String contactKey = contact.getPrimaryUri().getRawRingId();
             if (notifiedRequests.contains(contactKey)) {
                 return;
             }
@@ -372,10 +364,11 @@ public class NotificationServiceImpl extends NotificationService {
             }
             setContactPicture(data, contact.getRingUsername(), contact.getPrimaryNumber(), messageNotificationBuilder);
         } else {
+            messageNotificationBuilder = new NotificationCompat.Builder(mContext, NOTIF_CHANNEL_REQUEST);
             boolean newRequest = false;
             for (Conversation request : requests) {
                 CallContact contact = request.getContact();
-                String contactKey = contact.getKey();
+                String contactKey = contact.getPrimaryUri().getRawRingId();
                 if (!notifiedRequests.contains(contactKey)) {
                     newRequest = true;
                     mPreferencesService.saveRequestPreferences(account.getAccountID(), contactKey);
