@@ -296,8 +296,8 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void deleteConversation(CallContact callContact) {
-        presenter.deleteConversation(callContact);
+    public void clearHistory(CallContact callContact) {
+        presenter.clearHistory(callContact);
     }
 
     @Override
@@ -406,8 +406,8 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                         case ActionHelper.ACTION_COPY:
                             presenter.copyNumber(smartListViewModel);
                             break;
-                        case ActionHelper.ACTION_DELETE:
-                            presenter.deleteConversation(smartListViewModel);
+                        case ActionHelper.ACTION_CLEAR_HISTORY:
+                            presenter.clearHistory(smartListViewModel);
                             break;
                         case ActionHelper.ACTION_BLOCK:
                             presenter.removeContact(smartListViewModel);
