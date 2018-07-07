@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -49,6 +50,18 @@ public class RingFirebaseMessagingService extends FirebaseMessagingService {
             WakefulBroadcastReceiver.startWakefulService(this, serviceIntent);
         } catch (Exception e) {
             Log.w(TAG, "Error handling push notification", e);
+        }
+    }
+
+    @Override
+    public void onNewToken(String refreshedToken) {
+        try {
+            Log.d(TAG, "onTokenRefresh: refreshed token: " + refreshedToken);
+            startService(new Intent(DRingService.ACTION_PUSH_TOKEN_CHANGED)
+                    .setClass(this, DRingService.class)
+                    .putExtra(DRingService.PUSH_TOKEN_FIELD_TOKEN, refreshedToken));
+        } catch (Exception e) {
+            Log.w(TAG, "Error handling token refresh", e);
         }
     }
 }
