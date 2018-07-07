@@ -93,7 +93,6 @@
   <string name="permission_dialog_camera_message">Разговорите с видео изискват правото за използване на камерата. Моля, дайте това право на приложението.</string>
   <string name="ringtone_error_title">Грешка</string>
   <string name="ringtone_error_format_not_supported">Този формат не се поддържа.</string>
-  <string name="ringtone_error_size_too_big">Файлът е твърде голям. Максималният размер е %1$iКБ.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring се нуждае от правото за четене на контактите, за да работи тази функционалност. Моля, разрешете го.</string>
   <!--Write call log permission-->

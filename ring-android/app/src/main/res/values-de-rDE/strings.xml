@@ -99,7 +99,6 @@
   <string name="permission_dialog_camera_message">Video-Konferenzen benötigen Zugriff auf die Kamera. Bitte erlauben Sie diesen Zugriff.</string>
   <string name="ringtone_error_title">Fehler</string>
   <string name="ringtone_error_format_not_supported">Dieses Format wird nicht unterstützt.</string>
-  <string name="ringtone_error_size_too_big">Diese Datei ist zu groß. Maximal %1$ikB sind erlaubt.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring benötigt für diese Funktion die Erlaubnis \"Kontakte lesen\". Bitte zulassen.</string>
   <!--Write call log permission-->

@@ -75,7 +75,6 @@
   <string name="permission_dialog_camera_message">Perbualan video memerlukan akses kepada kamera untuk bekerja dengan sempurna. Sila pertimbangkan untuk membenarkan akses tersebut.</string>
   <string name="ringtone_error_title">Gagal</string>
   <string name="ringtone_error_format_not_supported">Format ini tidak disokong.</string>
-  <string name="ringtone_error_size_too_big">Saiz fail ini adalah terlalu besar. Had maksimum untuk saiz fail adalah %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring memerlukan keizinan akses kepada kenalan untuk mengaktifkan fungsi ini. Sila pertimbangkan untuk membenarkan akses tersebut.</string>
   <!--Write call log permission-->

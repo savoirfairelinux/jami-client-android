@@ -92,7 +92,6 @@
   <string name="permission_dialog_camera_message">Для здійснення відерозмови необхідно надати доступ до камери. Будь ласка, розгляньте дану можливість.</string>
   <string name="ringtone_error_title">Помилка</string>
   <string name="ringtone_error_format_not_supported">Цей формат не підтримується</string>
-  <string name="ringtone_error_size_too_big">Файл занадто довгий.  Максимальний розмір складає %1$i kB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Для включення цього функціоналу Ring потребує прав \"Читання контактів\".  Будь ласка, надайте їх.</string>
   <!--Write call log permission-->

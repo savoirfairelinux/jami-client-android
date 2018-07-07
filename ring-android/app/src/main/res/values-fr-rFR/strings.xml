@@ -73,7 +73,6 @@
   <string name="permission_dialog_camera_message">Les conversations en mode vidéo demandent à ce que les permissions soient accordées. Merci d\'activer les permissions.</string>
   <string name="ringtone_error_title">Erreur</string>
   <string name="ringtone_error_format_not_supported">Ce format n\'est pas supporté</string>
-  <string name="ringtone_error_size_too_big">Ce document est trop lourd. La taille maximum autorisé est de %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring souhaite accéder à vos contacts pour activer cette fonctionnalité. Merci d\'accorder les permissions nécessaires.</string>
   <!--Write call log permission-->

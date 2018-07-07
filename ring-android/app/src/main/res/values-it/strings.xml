@@ -99,7 +99,6 @@
   <string name="permission_dialog_camera_message">La videochiamata richiede l\'attivazione della videocamera. Concedi il permesso.</string>
   <string name="ringtone_error_title">Errore</string>
   <string name="ringtone_error_format_not_supported">Questo formato non è supportato.</string>
-  <string name="ringtone_error_size_too_big">Il file è troppo grande. La dimensione massima è %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring richiede permesso di \"Lettura dei contatti\" per abilitare questa funzione. Concedi il permesso.</string>
   <!--Write call log permission-->

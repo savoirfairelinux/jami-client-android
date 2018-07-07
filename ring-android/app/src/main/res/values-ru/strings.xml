@@ -100,12 +100,13 @@
   <string name="message_failed">Сбой</string>
   <string name="time_just_now">Только сейчас</string>
   <string name="send_file">Отправить файл</string>
+  <string name="hist_file_sent">Файл отправлен</string>
+  <string name="hist_file_received">Файл получен</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Разрешение на доступ к камере</string>
   <string name="permission_dialog_camera_message">Видеосвязь требует для работы разрешения на доступ к камере. Пожалуйста, предоставьте его.</string>
   <string name="ringtone_error_title">Ошибка</string>
   <string name="ringtone_error_format_not_supported">Этот формат не поддерживается</string>
-  <string name="ringtone_error_size_too_big">Файл слишком большой. Максимальный размер — %1$i кБ.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Приложению требуется разрешение «Чтение контактов», чтобы включить эту функцию. Пожалуйста, предоставьте его.</string>
   <!--Write call log permission-->
@@ -124,6 +125,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">%1$s скопировано в буфер обмена</string>
   <string name="conversation_action_select_peer_number">Выбрать номер</string>
   <string name="conversation_action_block_this">Заблокировать этот контакт</string>
+  <string name="conversation_action_go_to_call">Вернуться к текущему вызову</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Добавить %1$s?</string>
   <string name="prompt_new_password">Новый пароль</string>
@@ -157,6 +159,7 @@
   <string name="contact_request_account">Для %1$s</string>
   <string name="no_requests">0 запросов на добавление в контакты</string>
   <string name="message_contact_not_trusted_yet">%s не находится в вашем списке контактов. Вы хотите принять или отклонить этот запрос?</string>
+  <string name="message_contact_not_trusted">%s отсутствует в ваших контактах.\nДобавить новый контакт?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Отправить</string>
   <string name="send_request_title">Отправить запрос на добавление в контакты</string>

@@ -86,7 +86,6 @@
   <string name="permission_dialog_camera_message">Οι κλήσεις μέσω βίντεο χρειάζεται την άδεια στην κάμερά  για να δουλέψει. Παρακαλώ σκεφτείτε να την ενεργοποιήσετε.</string>
   <string name="ringtone_error_title">Σφάλμα</string>
   <string name="ringtone_error_format_not_supported">Η μορφή δεν υποστιρίζεται.</string>
-  <string name="ringtone_error_size_too_big">Το αρχείο είναι πολύ μεγάλο. Το μέγιστο μέγεθος είναι %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Η εφαρμογή Ring χρειάζεται να διαβάσει τις επαφές σας ώστε να ενεργοποιήσει αυτή την λειτουργία. Παρακαλώ δώστε την.</string>
   <!--Write call log permission-->

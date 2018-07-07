@@ -88,7 +88,6 @@
   <string name="permission_dialog_camera_message">视频会话需要使用摄像头，请设置相应权限。</string>
   <string name="ringtone_error_title">错误</string>
   <string name="ringtone_error_format_not_supported">不支持的文件格式。</string>
-  <string name="ringtone_error_size_too_big">文件过大：上限为%1$ikB</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">要开启此功能，Ring需要能够读取您的通讯录，请设置相应权限。</string>
   <!--Write call log permission-->

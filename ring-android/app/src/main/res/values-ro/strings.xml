@@ -74,7 +74,6 @@
   <!--MediaPreferenceFragment-->
   <string name="ringtone_error_title">Eroare</string>
   <string name="ringtone_error_format_not_supported">Acest format nu este suportat</string>
-  <string name="ringtone_error_size_too_big">Acest fișier este prea mare. Dimensiunea maximă este de %1$ikB.</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->

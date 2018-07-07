@@ -84,6 +84,7 @@
   <string name="ab_action_contact_add">Añadir a contactos</string>
   <string name="ab_action_contact_add_question">¿Añadir a contactos?</string>
   <string name="hist_contact_added">Contacto añadido</string>
+  <string name="hist_invitation_received">Invitación recibida</string>
   <string name="ab_action_audio_call">Llamada de voz</string>
   <string name="ab_action_video_call">Videollamada</string>
   <string name="ab_action_change_screen_orientation">Cambiar la orientación de la pantalla</string>
@@ -97,12 +98,13 @@
   <string name="message_failed">Falló</string>
   <string name="time_just_now">En este momento</string>
   <string name="send_file">Enviar archivo</string>
+  <string name="hist_file_sent">Archivo enviado</string>
+  <string name="hist_file_received">Archivo recibido</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permiso de cámara</string>
   <string name="permission_dialog_camera_message">Las conversaciones con vídeo requieren utilizar la cámara. Considera conceder este permiso.</string>
   <string name="ringtone_error_title">Error</string>
   <string name="ringtone_error_format_not_supported">Este formato no está soportado.</string>
-  <string name="ringtone_error_size_too_big">El archivo es demasiado grande. El tamaño máximo es %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring necesita permiso para leer los contactos. Por favor, concede este permiso.</string>
   <!--Write call log permission-->
@@ -121,6 +123,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">Se ha copiado %1$s al portapapeles</string>
   <string name="conversation_action_select_peer_number">Escoge un número</string>
   <string name="conversation_action_block_this">Bloquear este contacto</string>
+  <string name="conversation_action_go_to_call">Volver a la llamada en curso</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">¿Añadir %1$s ?</string>
   <string name="prompt_new_password">Contraseña nueva</string>
@@ -154,6 +157,7 @@
   <string name="contact_request_account">Para %1$s</string>
   <string name="no_requests">0 solicitudes de contacto</string>
   <string name="message_contact_not_trusted_yet">%s no está en sus contactos aún.\n¿Acepta o rechaza esta solicitud de contacto?</string>
+  <string name="message_contact_not_trusted">%s no esta en tus contactos.\n¿Agregar un nuevo contacto?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
   <string name="send_request_title">Enviar una solicitud de contacto</string>

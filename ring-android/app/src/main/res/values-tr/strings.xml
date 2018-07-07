@@ -90,7 +90,6 @@
   <string name="permission_dialog_camera_message">Görüntülü görüşmelerin çalışması için kamera izni gerekir. Lütfen etkinleştirmeyi göz ardı etmeyin.</string>
   <string name="ringtone_error_title">Hata</string>
   <string name="ringtone_error_format_not_supported">Bu biçim desteklenmiyor.</string>
-  <string name="ringtone_error_size_too_big">Bu dosya çok büyük. En büyük boyut %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring bu özelliği etkinleştirmek için \"Kişileri okuma\" iznine gereksiniyor. Lütfen verin.</string>
   <!--Write call log permission-->

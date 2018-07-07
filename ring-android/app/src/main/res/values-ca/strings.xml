@@ -97,7 +97,6 @@
   <string name="permission_dialog_camera_message">Habiliteu el permís de la càmera perquè funcionin les trucades de vídeo. </string>
   <string name="ringtone_error_title">Error</string>
   <string name="ringtone_error_format_not_supported">Aquest format no és compatible.</string>
-  <string name="ringtone_error_size_too_big">L\'arxiu és massa gran. La mida màxim és de %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Habiliteu l\'accés als contactes perquè funcioni aquesta característica del Ring.</string>
   <!--Write call log permission-->

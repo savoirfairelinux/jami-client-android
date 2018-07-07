@@ -90,7 +90,6 @@
   <string name="permission_dialog_camera_message">گفت‌وگوی ویدیویی برای کار کردن نیاز به دسترسی دوربین دارد. لطفاً آن را فعّال کنید.</string>
   <string name="ringtone_error_title">خطا</string>
   <string name="ringtone_error_format_not_supported">این قالب پشتیبانی نمی‌شود.</string>
-  <string name="ringtone_error_size_too_big">این پرونده خیلی بزرگ است. بیشینهٔ اندازه %1$iک‌ب است.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">رینگ برای فعّال کردن این ویژگی نیاز به دسترسی «خواندن مخاطبان» دارد. لطفاً اعطایش کنید.</string>
   <!--Write call log permission-->
@@ -147,7 +146,13 @@
   <!--Smartlist-->
   <string name="no_contact_request">هیچ درخواست تماسی ارسال نشده</string>
   <string name="contact_request_sent">درخواست تماس ارسال شد</string>
+  <string name="search_results">نتایج جستجو</string>
   <string name="tv_contact_row_header">مخاطبان</string>
   <!--File Transfer-->
-  <string name="menu_file_share">هم‌رسانی پرونده</string>
+  <string name="invalid_file">فایل نامعتبر</string>
+  <string name="file_transfer_status_invalid_pathname">مسیر نامعتبر</string>
+  <string name="file_saved_in">فایل در %s ذخیره شد</string>
+  <string name="menu_file_download">دانلود فایل</string>
+  <string name="menu_file_delete">حذف فایل</string>
+  <string name="menu_file_share">به اشتراک گذاری فایل</string>
 </resources>

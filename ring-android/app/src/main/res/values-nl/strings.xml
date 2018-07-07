@@ -103,7 +103,6 @@
   <string name="permission_dialog_camera_message">Videogesprekken vereisen machtiging voor gebruik van de camera. Gelieve te overwegen deze machtiging alsnog toe te kennen.</string>
   <string name="ringtone_error_title">Fout</string>
   <string name="ringtone_error_format_not_supported">Dit formaat wordt niet ondersteund.</string>
-  <string name="ringtone_error_size_too_big">Dit bestand is te groot. De maximale grootte is %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring vereist de ‘Contacten lezen’-machtiging voor deze functie. Gelieve deze machtiging toe te kennen.</string>
   <!--Write call log permission-->

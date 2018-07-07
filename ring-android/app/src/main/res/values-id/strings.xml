@@ -52,7 +52,6 @@
   <string name="permission_dialog_camera_message">Percakapan video memerlukan izin kamera agar dapat bekerja.</string>
   <string name="ringtone_error_title">Galat</string>
   <string name="ringtone_error_format_not_supported">Format tidak didukung.</string>
-  <string name="ringtone_error_size_too_big">Ukuran berkas terlalu besar. Ukuran maksimal adalah %1$ikB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring memerlukan izin \"Baca kontak\" untuk mengaktifkan fitur ini.</string>
   <!--Write call log permission-->

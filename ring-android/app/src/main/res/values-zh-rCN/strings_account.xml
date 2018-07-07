@@ -81,6 +81,9 @@
   <string name="account_published_same_as_local_label">公开参数与本地相同</string>
   <string name="account_published_port_label">公开端口</string>
   <string name="account_published_address_label">公开地址</string>
+  <string name="account_proxy_label">DHT代理</string>
+  <string name="account_proxy_enable_label">使用DHT代理</string>
+  <string name="account_proxy_server_label">DHT代理地址</string>
   <!--Security Details-->
   <string name="account_credentials_label">认证信息</string>
   <string name="account_credentials_edit">编辑认证信息</string>
@@ -143,7 +146,9 @@
   <string name="account_link_prompt_pin">输入PIN</string>
   <string name="account_new_button">创建Ring帐户</string>
   <string name="account_link_export_button">将另一设备与该帐户进行连接</string>
+  <string name="account_start_export_button">生成PIN</string>
   <string name="account_end_export_button">关闭</string>
+  <string name="account_export_title">添加设备</string>
   <!--Name registration-->
   <string name="error_username_empty">输入用户名</string>
   <string name="no_registered_name_for_account">该帐户尚未注册用户名</string>
@@ -165,6 +170,7 @@
   <string name="account_link_title">连接此设备</string>
   <string name="account_sip_cannot_be_registered">无法注册帐户</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">修改您的帐户资料</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">输入密码以确认</string>
   <string name="enter_password">输入密码</string>

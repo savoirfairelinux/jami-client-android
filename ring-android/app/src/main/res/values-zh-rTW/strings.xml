@@ -104,7 +104,6 @@
   <string name="permission_dialog_camera_message">視訊通話需要攝影機權限以正常運作。請考慮啟用它。</string>
   <string name="ringtone_error_title">錯誤</string>
   <string name="ringtone_error_format_not_supported">不支援此格式。</string>
-  <string name="ringtone_error_size_too_big">這個檔案太大了。最大大小是 %1$i kB。</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring 需要「讀取聯絡人」權限以啟用此功能。請給予它。</string>
   <!--Write call log permission-->
