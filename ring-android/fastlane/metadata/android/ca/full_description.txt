@@ -1,0 +1,23 @@
+Ring (un paquet GNU) us permet crear trucades gratuïtes i segures d'àudio o vídeo, enviar missatges i contingut multimèdia a tot el món, sense dependre d'un servei centralitzat. El Ring és programari lliure i gratuït totalment descentralitzada.
+
+★ Communicació lliure amb el Ring:
+  - enviament de missatges de text
+  - trucades d'àudio
+  - vídeo trucades
+  - compartició d'imatges i fitxers
+
+★ Contactes accessibles directament d'igual a igual (P2P)!
+
+★ Podeu utitlitzar el compte del Ring en diversos dispositius!
+
+★ Disponible per a GNU/Linux, macOS, Windows, iOS, Android i Android TV!
+
+★ Suposrt a comptes SIP disponible!
+
+El Ring per a Android TV s'ha verificat mitjançant NVIDIA SHIELD TV amb càmeres Logitech.
+
+Podeu ajudar-nos de diverses formes. Feu un cop d'ull a https://ring.cx/en/contribute
+Tota la informació està disponible a https://ring.cx/en
+
+El Ring s'ha publicat mitjançant la llicència GPL, versió 3 o superior.
+Copyright © Savoir-faire Linux

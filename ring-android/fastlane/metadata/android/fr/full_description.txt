@@ -1,0 +1,23 @@
+Ring, un paquet GNU, vous permet de faire gratuitement et de manière sécurisée des appels audio et video, d'envoyer des images et des messages textes partout à travers le monde. GNU Ring est un logiciel libre entièrement distribué et décentralisé.
+
+★ Communiquer gratuitement avec Ring
+-   envoyer des messages textes,
+- faire des appels audio
+- faire des appels vidéo
+- partager des photos et fichiers
+
+★ Connexion point à point 
+
+★ Support d'appareil multiples par compte Ring
+
+Disponible sur Windows 10 Store, Windows 7+, macOS, iOS, GNU/Linux, Android et Android TV
+
+★ Support SIP
+
+Ring pour Android TV est testé sur NVIDIA SHIELD TV avec des caméras Logitech 
+
+Il y a de nombreuses manières de nous aider. Rendez vous à https://ring.cx/en/contribute
+Vous trouverez toutes les informations sur https://ring.cx
+
+Ring est Publié sous licence GPL, version 3 ou supérieure.
+Copyright © Savoir-faire Linux

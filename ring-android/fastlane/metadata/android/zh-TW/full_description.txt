@@ -1,0 +1,23 @@
+Ring（一個 GNU 軟體包）讓您可以使用免費且安全的音訊或視訊通話，傳送圖片與訊息給世界各地的人們，而不需要依賴於中心化的服務。Ring 是自由與開放原始碼軟體，其完全去中心化且分散。
+
+★ 以 Ring 通訊：
+  - 傳送文字訊息
+  - 使用語音通話
+  - 使用視訊通話
+  - 分享圖片與檔案
+
+★ 與您的夥伴點對點通訊！
+
+★ 在多個裝置上使用您的 Ring 帳號！
+
+★ 在 Windows、macOS、iOS、GNU/Linux、Android 與 Android TV 上均可使用！
+
+★ 提供對 SIP 帳號的支援！
+
+Android TV 上的 Ring 在 NVIDIA SHIELD TV 與羅技的攝影機一同測試過。
+
+有許多方式可以協助我們，來看看吧：https://ring.cx/en/contribute
+所有的資訊都在 https://ring.cx/en
+
+Ring 以 GPL 授權條款第三版或更新版授權。
+Copyright © Savoir-faire Linux

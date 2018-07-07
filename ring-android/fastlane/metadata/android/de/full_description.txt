@@ -1,0 +1,23 @@
+Ring (ein GNU-Paket) ermöglicht kostenlose und sichere Audio- oder Videoanrufe, um Bilder und Nachrichten in die ganze Welt zu senden, ohne auf einen zentralen Dienst angewiesen zu sein. Ring ist eine freie und quelloffene Software, die vollständig dezentralisiert und verteilt ist.
+
+★ Freie Kommunikation mit Ring:
+- Textnachrichten senden
+- Audioanrufe tätigen
+- Videoanrufe tätigen
+- Bilder und Dateien teilen
+
+★ Erreichen Sie Ihre Gesprächspartner direkt per Peer-to-Peer !
+
+★ Verwenden Sie Ihr Ring-Konto auf mehreren Geräten !
+
+★ Verfügbar für Windows, macOS, iOS, GNU/Linux, Android und Android TV !
+
+★ SIP-Konto Unterstützung verfügbar !
+
+Ring für Android TV wurde auf NVIDIA SHIELD TV mit Logitech-Kameras getestet.
+
+Es gibt viele Möglichkeiten, uns zu helfen, siehe hier: https://ring.cx/en/contribute
+Alle Informationen finden Sie unter https://ring.cx/en
+
+Ring wird unter der GPL-Lizenz, Version 3 oder höher, veröffentlicht.
+Copyright © Savoir-faire Linux
