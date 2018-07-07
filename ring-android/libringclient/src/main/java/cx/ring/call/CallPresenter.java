@@ -310,21 +310,6 @@ public class CallPresenter extends RootPresenter<CallView> {
         getView().updateContactBubble(callContact);
     }
 
-    private void parseCall(SipCall call, int callState) {
-        if (mSipCall == null || mSipCall != call) {
-            return;
-        }
-
-        if (callState == SipCall.State.HUNGUP
-                || callState == SipCall.State.BUSY
-                || callState == SipCall.State.FAILURE
-                || callState == SipCall.State.OVER) {
-            finish();
-        } else if (callState != SipCall.State.INACTIVE) {
-            mNotificationService.showCallNotification(new Conference(mSipCall));
-        }
-    }
-
     private void onVideoEvent(HardwareService.VideoEvent event) {
         Log.d(TAG, "VIDEO_EVENT: " + event.start + " " + event.callId);
         previewHeight = event.w;

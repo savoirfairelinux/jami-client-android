@@ -52,6 +52,7 @@ public abstract class ContactService {
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
+
     @Inject
     AccountService mAccountService;
 
@@ -60,7 +61,6 @@ public abstract class ContactService {
     ExecutorService mApplicationExecutor;
 
     private Map<Long, CallContact> mContactList = new HashMap<>();
-    private Map<String, CallContact> mContactsRing = new HashMap<>();
 
     public abstract Map<Long, CallContact> loadContactsFromSystem(boolean loadRingContacts, boolean loadSipContacts);
 
@@ -88,115 +88,7 @@ public abstract class ContactService {
             if (settings.isAllowSystemContacts() && mDeviceRuntimeService.hasContactPermission()) {
                 mContactList = loadContactsFromSystem(loadRingContacts, loadSipContacts);
             }
-            mContactsRing.clear();
-            Map<String, CallContact> ringContacts = account.getContacts();
-            for (CallContact contact : ringContacts.values()) {
-                mContactsRing.put(contact.getPhones().get(0).getNumber().getRawUriString(), contact);
-            }
-            /*setChanged();
-            ServiceEvent event = new ServiceEvent(ServiceEvent.EventType.CONTACTS_CHANGED);
-            notifyObservers(event);*/
         });
-    }
-
-    /*public void updateContactUserName(Uri contactId, String userName) {
-        CallContact callContact = getContact(contactId);
-        callContact.setUsername(userName);
-    }*/
-
-    /**
-     * Add a contact to the local cache
-     */
-    public void addContact(CallContact contact) {
-        if (contact == null) {
-            return;
-        }
-
-        if (contact.getId() == CallContact.UNKNOWN_ID) {
-            Log.w(TAG, "addContact " + contact);
-            mContactsRing.put(contact.getPhones().get(0).getNumber().getRawUriString(), contact);
-        } else {
-            mContactList.put(contact.getId(), contact);
-        }
-    }
-
-    /**
-     * Get a contact from the local cache
-     * @return null if contact does not exist in the cache
-     */
-    public CallContact getContact(Uri uri) {
-        if (uri == null || uri.isEmpty()) {
-            return null;
-        }
-
-        CallContact contact = mContactsRing.get(uri.getRawUriString());
-        if (contact != null) {
-            return contact;
-        }
-
-        for (CallContact c : mContactList.values()) {
-            if (c.hasNumber(uri)) {
-                return c;
-            }
-        }
-
-        return CallContact.buildUnknown(uri);
-    }
-
-    /*public CallContact setRingContactName(String accountId, Uri uri, String name) {
-        Log.w(TAG, "setRingContactName " + uri + " " + name);
-        CallContact contact = findContact(accountId, uri);
-        if (contact != null) {
-            contact.setUsername(name);
-            return contact;
-        }
-        return null;
-    }*/
-
-    private Collection<CallContact> getContacts() {
-        List<CallContact> contacts = new ArrayList<>(mContactList.values());
-        List<CallContact> contactsRing = new ArrayList<>(mContactsRing.values());
-        for (CallContact contact : contacts) {
-            if (!contactsRing.contains(contact)) {
-                contactsRing.add(contact);
-            }
-        }
-        return contactsRing;
-    }
-
-    public Collection<CallContact> getContactsNoBanned() {
-        List<CallContact> contacts = new ArrayList<>(getContacts());
-        Iterator<CallContact> it = contacts.iterator();
-        while (it.hasNext()) {
-            CallContact contact = it.next();
-            if (contact.isBanned()) {
-                it.remove();
-            }
-        }
-        return contacts;
-    }
-
-    public Collection<CallContact> getContactsDaemon() {
-        List<CallContact> contacts = new ArrayList<>(mContactsRing.values());
-        Iterator<CallContact> it = contacts.iterator();
-        while (it.hasNext()) {
-            CallContact contact = it.next();
-            if (contact.isBanned()) {
-                it.remove();
-            }
-        }
-        return contacts;
-    }
-
-
-    /**
-     * Searches a contact in the local cache and then in the system repository
-     * In the last case, the contact is created and added to the local cache
-     *
-     * @return The found/created contact
-     */
-    public CallContact findContactById(long id) {
-        return findContactById(id, null);
     }
 
     /**
@@ -206,7 +98,6 @@ public abstract class ContactService {
      * @return The found/created contact
      */
     public CallContact findContactById(long id, String key) {
-
         if (id <= CallContact.DEFAULT_ID) {
             return null;
         }
