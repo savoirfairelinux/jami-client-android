@@ -159,6 +159,7 @@ public class NotificationServiceImpl extends NotificationService {
         // Missed calls channel
         NotificationChannel missedCallsChannel = new NotificationChannel(NOTIF_CHANNEL_MISSED_CALL, mContext.getString(R.string.notif_channel_missed_calls), NotificationManager.IMPORTANCE_DEFAULT);
         missedCallsChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        missedCallsChannel.setSound(null, null);
         notificationManager.createNotificationChannel(missedCallsChannel);
     }
 
