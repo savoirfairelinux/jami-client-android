@@ -44,7 +44,7 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
     public static final String MPEG3 = "audio/mpeg3";
     public static final String XMPEG3 = "audio/x-mpeg-3";
 
-    public static final int MAX_SIZE_RINGTONE = 800;
+    public static final int MAX_SIZE_RINGTONE = 64 * 1024;
 
     protected AccountService mAccountService;
     protected DeviceRuntimeService mDeviceRuntimeService;
@@ -74,10 +74,12 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
     void init(String accountId) {
         mAccount = mAccountService.getAccount(accountId);
         mCompositeDisposable.clear();
-        mCompositeDisposable.add(mAccountService.getObservableAccount(accountId)
-                .subscribe(account -> mCompositeDisposable.add(mAccountService.getCodecList(accountId)
+        mCompositeDisposable.add(mAccountService
+                .getObservableAccount(accountId)
+                .switchMapSingle(account -> mAccountService
+                        .getCodecList(accountId)
                         .observeOn(mUiScheduler)
-                        .subscribe(codecList -> {
+                        .doOnSuccess(codecList -> {
                             final ArrayList<Codec> audioCodec = new ArrayList<>();
                             final ArrayList<Codec> videoCodec = new ArrayList<>();
                             for (Codec codec : codecList) {
@@ -88,7 +90,8 @@ public class MediaPreferencePresenter extends RootPresenter<MediaPreferenceView>
                                 }
                             }
                             getView().accountChanged(account, audioCodec, videoCodec);
-                        }))));
+                        }))
+                .subscribe());
     }
 
     void onFileFound(String type, String path) {
