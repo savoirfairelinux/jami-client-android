@@ -1,0 +1,23 @@
+A Ring (GNU csomag) lehetővé teszi, hogy ingyenes és biztonságos hang- vagy videohívásokat, képeket és üzeneteket küldjön világszerte, a centralizált szolgáltatástól függően. A Ring egy szabad és nyílt forráskódú szoftver, amely teljesen decentralizált és megosztott.
+
+★ Kommunikáljon ingyenesen a Ring-el:
+- üzenetek küldése
+- hívások kezdeményezése
+- video hívások kezdeményezése
+- képek és fájlok megosztása
+
+★ Érje el a társait közvetlenül egyenrangú félként!
+
+★ A Ring-fiókot több eszközön is használhatja!
+
+★ Rendelkezésre áll  Windows, macOS, iOS, GNU/Linux, Android és Android TV-en!
+
+★ SIP támogatás elérhető!
+
+A Ring-et Android TV-hez a NVIDIA SHIELD TV-n teszteltük a Logitech kamerával.
+
+Rengeteg mód van arra, hogy segítsen nekünk, nézze meg: https://ring.cx/en/contribute
+Az összes információ a https://ring.cx/en oldalon elérhető
+
+A Ring-et közzéteszik a GPL engedélyével, a 3-as vagy magasabb verziókkal.
+Szerzői jog © Savoir-faire Linux
