@@ -1,0 +1,4 @@
+• Added possibility to share text and media from other apps
+• Improved notifications
+• Improved performance
+• Bug fixes
