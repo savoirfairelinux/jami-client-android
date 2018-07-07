@@ -36,6 +36,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import cx.ring.contacts.AvatarFactory;
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
 import cx.ring.utils.Tuple;
@@ -406,6 +407,7 @@ public class ContactServiceImpl extends ContactService {
         if (contact.vcard != null) {
             String filename = contact.getPrimaryUri().getRawRingId() + ".vcf";
             VCardUtils.savePeerProfileToDisk(contact.vcard, filename, mContext.getFilesDir());
+            AvatarFactory.clearCache();
         }
     }
 

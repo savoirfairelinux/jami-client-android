@@ -130,7 +130,7 @@ public abstract class RingApplication extends Application {
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        AvatarFactory.onLowMemory();
+        AvatarFactory.clearCache();
         Glide.get(this).clearMemory();
     }
 

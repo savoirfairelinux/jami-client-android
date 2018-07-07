@@ -32,6 +32,7 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.DeviceRuntimeService;
 import cx.ring.utils.Log;
+import cx.ring.utils.StringUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.property.FormattedName;
@@ -114,6 +115,29 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
 
         VCard vcard = VCardUtils.loadLocalProfileFromDisk(filesDir, accountId);
         vcard.setFormattedName(username);
+        vcard.removeProperties(RawProperty.class);
+        VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir);
+
+        updateUser();
+    }
+
+    public void saveVCard(Account account, String username, Photo photo) {
+        String accountId = account.getAccountID();
+        String ringId = account.getUsername();
+        File filesDir = mDeviceRuntimeService.provideFilesDir();
+
+        VCard vcard = VCardUtils.loadLocalProfileFromDisk(filesDir, accountId);
+        vcard.setUid(new Uid(ringId));
+
+        if (photo != null) {
+            vcard.removeProperties(Photo.class);
+            vcard.addPhoto(photo);
+        }
+
+        if (!StringUtils.isEmpty(username)) {
+            vcard.setFormattedName(username);
+        }
+
         vcard.removeProperties(RawProperty.class);
         VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir);
 

@@ -204,7 +204,7 @@ public class AvatarFactory {
         return circle ? GLIDE_OPTIONS_CIRCLE : GLIDE_OPTIONS;
     }
 
-    public static void onLowMemory() {
+    public static void clearCache() {
         mMemoryCache.evictAll();
     }
 }

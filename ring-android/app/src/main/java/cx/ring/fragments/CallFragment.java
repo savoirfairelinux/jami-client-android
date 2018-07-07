@@ -137,7 +137,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     private PowerManager.WakeLock mScreenWakeLock;
     private DisplayManager.DisplayListener displayListener;
     private int mCurrentOrientation = Configuration.ORIENTATION_UNDEFINED;
-    private boolean firstUpdate = true;
 
     public static CallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean audioOnly) {
         Bundle bundle = new Bundle();
@@ -476,31 +475,22 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
                 username,
                 ringId);
 
-        Log.d(TAG, "updateContactBubble: username=" + username + ", ringId=" + ringId);
+        Log.d(TAG, "updateContactBubble: contact=" + contact + " username=" + username + ", ringId=" + ringId);
 
-        RequestOptions glideOptions = AvatarFactory.getGlideOptions(true, false);
+        boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
+        if (hasProfileName) {
+            contactBubbleNumTxt.setVisibility(View.VISIBLE);
+            contactBubbleTxt.setText(displayName);
+            contactBubbleNumTxt.setText(username);
+        } else {
+            contactBubbleNumTxt.setVisibility(View.GONE);
+            contactBubbleTxt.setText(username);
+        }
 
-        getActivity().runOnUiThread(() -> {
-            boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
-
-            if (hasProfileName) {
-                contactBubbleNumTxt.setVisibility(View.VISIBLE);
-                contactBubbleTxt.setText(displayName);
-                contactBubbleNumTxt.setText(username);
-            } else {
-                contactBubbleNumTxt.setVisibility(View.GONE);
-                contactBubbleTxt.setText(username);
-            }
-
-            if (firstUpdate) {
-                firstUpdate = false;
-
-                Glide.with(getActivity())
-                        .load(contactPicture)
-                        .apply(glideOptions)
-                        .into(contactBubbleView);
-            }
-        });
+        Glide.with(getActivity())
+                .load(contactPicture)
+                .apply(AvatarFactory.getGlideOptions(true, false))
+                .into(contactBubbleView);
     }
 
     @Override

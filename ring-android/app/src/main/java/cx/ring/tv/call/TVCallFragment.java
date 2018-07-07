@@ -109,7 +109,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     private PowerManager.WakeLock mScreenWakeLock;
     private Handler handler;
     private Runnable runnable;
-    private boolean firstUpdate = true;
 
     public static TVCallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean audioOnly) {
         Bundle bundle = new Bundle();
@@ -258,7 +257,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void displayContactBubble(final boolean display) {
-        getActivity().runOnUiThread(() -> contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE));
+        contactBubbleLayout.setVisibility(display ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -328,33 +327,27 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         String ringId = contact.getIds().get(0);
         Log.d(TAG, "updateContactBubble: username=" + username + ", ringId=" + ringId);
 
-        getActivity().runOnUiThread(() -> {
-            Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
-                    contact.getPhoto(),
-                    username,
-                    ringId);
+        Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
+                contact.getPhoto(),
+                username,
+                ringId);
 
-            String displayName = contact.getDisplayName();
-            boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
+        String displayName = contact.getDisplayName();
+        boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
 
-            if (hasProfileName) {
-                contactBubbleNumTxt.setVisibility(View.VISIBLE);
-                contactBubbleTxt.setText(displayName);
-                contactBubbleNumTxt.setText(username);
-            } else {
-                contactBubbleNumTxt.setVisibility(View.GONE);
-                contactBubbleTxt.setText(username);
-            }
+        if (hasProfileName) {
+            contactBubbleNumTxt.setVisibility(View.VISIBLE);
+            contactBubbleTxt.setText(displayName);
+            contactBubbleNumTxt.setText(username);
+        } else {
+            contactBubbleNumTxt.setVisibility(View.GONE);
+            contactBubbleTxt.setText(username);
+        }
 
-            if (firstUpdate) {
-                firstUpdate = false;
-
-                Glide.with(getActivity())
-                        .load(contactPicture)
-                        .apply(AvatarFactory.getGlideOptions(true, true))
-                        .into(contactBubbleView);
-            }
-        });
+        Glide.with(getActivity())
+                .load(contactPicture)
+                .apply(AvatarFactory.getGlideOptions(true, true))
+                .into(contactBubbleView);
     }
 
     @Override
@@ -378,37 +371,31 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void initNormalStateDisplay(final boolean audioOnly) {
-        getActivity().runOnUiThread(() -> {
-            shapeRipple.stopRipple();
+        shapeRipple.stopRipple();
 
-            acceptButton.setVisibility(View.GONE);
-            refuseButton.setVisibility(View.GONE);
-            hangupButton.setVisibility(View.VISIBLE);
+        acceptButton.setVisibility(View.GONE);
+        refuseButton.setVisibility(View.GONE);
+        hangupButton.setVisibility(View.VISIBLE);
 
-            contactBubbleLayout.setVisibility(audioOnly ? View.INVISIBLE : View.VISIBLE);
+        contactBubbleLayout.setVisibility(audioOnly ? View.INVISIBLE : View.VISIBLE);
 
-            getActivity().invalidateOptionsMenu();
+        getActivity().invalidateOptionsMenu();
 
-            handleVisibilityTimer();
-        });
+        handleVisibilityTimer();
     }
 
     @Override
     public void initIncomingCallDisplay() {
-        getActivity().runOnUiThread(() -> {
-            acceptButton.setVisibility(View.VISIBLE);
-            refuseButton.setVisibility(View.VISIBLE);
-            hangupButton.setVisibility(View.GONE);
-        });
+        acceptButton.setVisibility(View.VISIBLE);
+        refuseButton.setVisibility(View.VISIBLE);
+        hangupButton.setVisibility(View.GONE);
     }
 
     @Override
     public void initOutGoingCallDisplay() {
-        getActivity().runOnUiThread(() -> {
-            acceptButton.setVisibility(View.GONE);
-            refuseButton.setVisibility(View.VISIBLE);
-            hangupButton.setVisibility(View.GONE);
-        });
+        acceptButton.setVisibility(View.GONE);
+        refuseButton.setVisibility(View.VISIBLE);
+        hangupButton.setVisibility(View.GONE);
     }
 
     @Override
