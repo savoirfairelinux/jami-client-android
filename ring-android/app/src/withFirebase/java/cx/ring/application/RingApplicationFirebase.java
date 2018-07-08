@@ -18,28 +18,38 @@
  */
 package cx.ring.application;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import cx.ring.service.DRingService;
+
 public class RingApplicationFirebase extends RingApplication {
     static private String TAG = RingApplicationFirebase.class.getSimpleName();
 
+    static private String pushToken = "";
+
     @Override
     public void onCreate() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(c -> {
+            Log.w(TAG, "Found push token");
+            pushToken = c.getResult().getToken();
+            startService(new Intent(DRingService.ACTION_PUSH_TOKEN_CHANGED)
+                    .setClass(this, DRingService.class)
+                    .putExtra(DRingService.PUSH_TOKEN_FIELD_TOKEN, pushToken));
+        });
         super.onCreate();
-        FirebaseApp.initializeApp(this);
     }
 
     @Override
     public String getPushToken() {
-        try {
-            return FirebaseInstanceId.getInstance().getToken();
-        } catch (Exception e) {
-            Log.e(TAG, "Error retrieving Firebase token", e);
-            return "";
-        }
+        return pushToken;
+    }
+
+    public static void setPushToken(String token) {
+        pushToken = token;
     }
 
 }
