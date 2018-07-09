@@ -81,6 +81,7 @@ import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
+import cx.ring.utils.FileUtils;
 import cx.ring.utils.MediaButtonsHelper;
 import cx.ring.views.MessageEditText;
 
@@ -686,7 +687,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             downloadManager.addCompletedDownload(transfer.getDisplayName(),
                     transfer.getDisplayName(),
                     true,
-                    transfer.isPicture() ? "image/jpeg" : "text/plain",
+                    AndroidFileUtils.getMimeType(destination.getAbsolutePath()),
                     destination.getAbsolutePath(),
                     destination.length(),
                     true);
