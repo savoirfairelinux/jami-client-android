@@ -79,7 +79,7 @@ public class AvatarFactory {
     private static final LruCache<String, BitmapDrawable> mMemoryCache = new LruCache<String, BitmapDrawable>(maxMemory / 8) {
         @Override
         protected int sizeOf(String key, BitmapDrawable bitmap) {
-            return bitmap.getBitmap().getByteCount() / 1024;
+            return bitmap.getBitmap() == null ? 0 : bitmap.getBitmap().getByteCount() / 1024;
         }
     };
 
@@ -100,19 +100,23 @@ public class AvatarFactory {
             contactPhoto = vcard.getPhotos().get(0).getData();
         }
 
-        return getAvatar(context, contactPhoto, username, ringId, pictureSize);
+        return getAvatar(context, contactPhoto, username, ringId, pictureSize, false);
+    }
+
+    public static BitmapDrawable getAvatar(Context context, byte[] photo, String username, String ringId, boolean noCache) {
+        return getAvatar(context, photo, username, ringId, Float.valueOf(context.getResources().getDisplayMetrics().density * DEFAULT_AVATAR_SIZE).intValue(), noCache);
     }
 
     public static BitmapDrawable getAvatar(Context context, byte[] photo, String username, String ringId) {
-        return getAvatar(context, photo, username, ringId, Float.valueOf(context.getResources().getDisplayMetrics().density * DEFAULT_AVATAR_SIZE).intValue());
+        return getAvatar(context, photo, username, ringId, Float.valueOf(context.getResources().getDisplayMetrics().density * DEFAULT_AVATAR_SIZE).intValue(), false);
     }
 
-    public static BitmapDrawable getAvatar(Context context, byte[] photo, String username, String ringId, int pictureSize) {
+    public static BitmapDrawable getAvatar(Context context, byte[] photo, String username, String ringId, int pictureSize, boolean noCache) {
         if (context == null || pictureSize <= 0) {
             throw new IllegalArgumentException();
         }
         String key = ringId + pictureSize + username;
-        BitmapDrawable bmp = mMemoryCache.get(key);
+        BitmapDrawable bmp = noCache ? null : mMemoryCache.get(key);
         if (bmp != null)
             return bmp;
 

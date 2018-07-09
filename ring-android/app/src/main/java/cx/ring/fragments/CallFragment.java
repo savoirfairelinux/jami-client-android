@@ -28,7 +28,6 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.hardware.display.DisplayManager;
 import android.os.Build;
@@ -52,7 +51,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.rodolfonavalon.shaperipplelibrary.ShapeRipple;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
@@ -80,6 +78,10 @@ import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.Log;
 import cx.ring.utils.MediaButtonsHelper;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class CallFragment extends BaseFragment<CallPresenter> implements CallView, MediaButtonsHelper.MediaButtonsHelperCallback {
 
@@ -137,6 +139,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     private PowerManager.WakeLock mScreenWakeLock;
     private DisplayManager.DisplayListener displayListener;
     private int mCurrentOrientation = Configuration.ORIENTATION_UNDEFINED;
+
+    private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     public static CallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean audioOnly) {
         Bundle bundle = new Bundle();
@@ -324,6 +328,12 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mCompositeDisposable.clear();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
 
@@ -469,12 +479,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         String displayName = contact.getDisplayName();
 
         String ringId = contact.getIds().get(0);
-        Drawable contactPicture = AvatarFactory.getAvatar(
-                getActivity(),
-                contact.getPhoto(),
-                username,
-                ringId);
-
         Log.d(TAG, "updateContactBubble: contact=" + contact + " username=" + username + ", ringId=" + ringId);
 
         boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
@@ -487,10 +491,18 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             contactBubbleTxt.setText(username);
         }
 
-        Glide.with(getActivity())
-                .load(contactPicture)
+        mCompositeDisposable.add(Single.fromCallable(() -> Glide.with(getActivity())
+                .load(AvatarFactory.getAvatar(
+                        getActivity(),
+                        contact.getPhoto(),
+                        username,
+                        ringId, true))
                 .apply(AvatarFactory.getGlideOptions(true, false))
-                .into(contactBubbleView);
+                .submit()
+                .get())
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(d -> contactBubbleView.setImageDrawable(d)));
     }
 
     @Override

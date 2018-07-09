@@ -353,7 +353,6 @@ public class CallService {
         }
         if (sipCall.appendToVCard(messages)) {
             mContactService.saveVCardContactData(sipCall.getContact());
-            callSubject.onNext(sipCall);
         }
         if (messages.has_key(MIME_TEXT_PLAIN)) {
             mAccountService.incomingAccountMessage(sipCall.getAccount(), callId, from, messages);

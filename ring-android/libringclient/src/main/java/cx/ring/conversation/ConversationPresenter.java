@@ -180,13 +180,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         view.hideNumberSpinner();
 
         Account account = mAccountService.getAccount(mAccountId);
-        CallContact contact = initContact(account, mContactRingId, view);
 
         mConversationDisposable.add(c.getSortedHistory()
                 .subscribe(view::refreshView));
-        mConversationDisposable.add(contact.getUpdates()
+        mConversationDisposable.add(c.getContact().getUpdates()
                 .observeOn(mUiScheduler)
-                .subscribe(r -> initContact(account, mContactRingId, view)));
+                .subscribe(contact -> initContact(account, mContactRingId, view)));
         mConversationDisposable.add(c.getNewElements()
                 .observeOn(mUiScheduler)
                 .subscribe(view::addElement));
@@ -267,7 +266,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void sendTrustRequest() {
-        VCard vCard = mVCardService.loadSmallVCard(mAccountId);
+        VCard vCard = mVCardService.loadSmallVCard(mAccountId, VCardService.MAX_SIZE_REQUEST);
         mAccountService.sendTrustRequest(mAccountId, mContactRingId.getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard)));
 
         CallContact contact = mContactService.findContact(mAccountId, mContactRingId);

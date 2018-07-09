@@ -40,16 +40,16 @@ public class VCardServiceImpl extends VCardService {
     }
 
     @Override
-    public VCard loadSmallVCard(String accountId) {
+    public VCard loadSmallVCard(String accountId, int maxSize) {
         VCard vcard = VCardUtils.loadLocalProfileFromDisk(mContext.getFilesDir(), accountId);
         if (vcard != null && !vcard.getPhotos().isEmpty()) {
             // Reduce photo size to fit in one DHT packet
             Bitmap photo = BitmapUtils.bytesToBitmap(vcard.getPhotos().get(0).getData());
-            photo = BitmapUtils.reduceBitmap(photo, 30000);
+            photo = BitmapUtils.reduceBitmap(photo, maxSize);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            photo.compress(Bitmap.CompressFormat.JPEG, 92, stream);
             vcard.removeProperties(Photo.class);
-            vcard.addPhoto(new Photo(stream.toByteArray(), ImageType.PNG));
+            vcard.addPhoto(new Photo(stream.toByteArray(), ImageType.JPEG));
             vcard.removeProperties(RawProperty.class);
         }
         return vcard;
