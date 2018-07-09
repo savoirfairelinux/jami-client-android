@@ -267,7 +267,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void sendTrustRequest() {
-        VCard vCard = mVCardService.loadSmallVCard(mAccountId);
+        VCard vCard = mVCardService.loadSmallVCard(mAccountId, VCardService.MAX_SIZE_REQUEST);
         mAccountService.sendTrustRequest(mAccountId, mContactRingId.getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard)));
 
         CallContact contact = mContactService.findContact(mAccountId, mContactRingId);
