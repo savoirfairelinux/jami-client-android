@@ -191,7 +191,7 @@
                 android:tint="@android:color/darker_gray"
                 app:srcCompat="@drawable/ic_photo_camera" />
 
-            <EditText
+            <cx.ring.views.MessageEditText
                 android:id="@+id/msg_input_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
