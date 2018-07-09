@@ -60,6 +60,7 @@
   <string name="notif_current_call_title">目前和 %1$s 通話</string>
   <string name="notif_current_call">目前通話</string>
   <string name="notif_channel_calls">通話</string>
+  <string name="notif_channel_missed_calls">錯過的通話</string>
   <string name="notif_channel_messages">訊息</string>
   <string name="notif_channel_requests">請求</string>
   <string name="notif_channel_file_transfer">檔案傳輸</string>
@@ -68,6 +69,7 @@
   <string name="notif_incoming_file_transfer">有人想要傳送檔案給您</string>
   <string name="notif_outgoing_file_transfer_title">傳送檔案給 %1$s</string>
   <string name="notif_outgoing_file_transfer">有人想要傳送檔案給您</string>
+  <string name="notif_incoming_picture">圖片從 %1$s</string>
   <string name="action_open">開啟</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">你：</string>
@@ -104,6 +106,7 @@
   <string name="permission_dialog_camera_message">視訊通話需要攝影機權限以正常運作。請考慮啟用它。</string>
   <string name="ringtone_error_title">錯誤</string>
   <string name="ringtone_error_format_not_supported">不支援此格式。</string>
+  <string name="ringtone_error_size_too_big">這個檔案太大了。最大的大小為 %1$d kB。</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring 需要「讀取聯絡人」權限以啟用此功能。請給予它。</string>
   <!--Write call log permission-->

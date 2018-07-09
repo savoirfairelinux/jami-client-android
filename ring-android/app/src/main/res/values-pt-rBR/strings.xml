@@ -61,6 +61,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="notif_current_call_title">Chamada atual com %1$s</string>
   <string name="notif_current_call">Chamada atual</string>
   <string name="notif_channel_calls">Chamadas</string>
+  <string name="notif_channel_missed_calls">Chamadas não atendidas</string>
   <string name="notif_channel_messages">Mensagens</string>
   <string name="notif_channel_requests">Solicitações</string>
   <string name="notif_channel_file_transfer">Transferência de arquivo</string>
@@ -69,6 +70,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="notif_incoming_file_transfer">Alguém quer enviar um arquivo</string>
   <string name="notif_outgoing_file_transfer_title">Enviando arquivo para %1$s</string>
   <string name="notif_outgoing_file_transfer">Alguém quer enviar um arquivo</string>
+  <string name="notif_incoming_picture">Foto de %1$s</string>
   <string name="action_open">Abrir</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Você:</string>
@@ -98,11 +100,14 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="message_failed">Falhou</string>
   <string name="time_just_now">Agora há pouco</string>
   <string name="send_file">Enviar arquivo</string>
+  <string name="hist_file_sent">Arquivo enviado</string>
+  <string name="hist_file_received">Arquivo recebido</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Permissão de câmera</string>
   <string name="permission_dialog_camera_message">Conversas de vídeo requerem permissão para acesso à câmera. Considere habilitá-la.</string>
   <string name="ringtone_error_title">Erro</string>
   <string name="ringtone_error_format_not_supported">Este formato não é suportado.</string>
+  <string name="ringtone_error_size_too_big">Este arquivo é grande demais. O tamanho máximo é %1$dkB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">O Ring precisa de permissão para \"Acessar contatos\" para habilitar esta função. Permita, por favor.</string>
   <!--Write call log permission-->
@@ -155,6 +160,7 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="contact_request_account">para %1$s</string>
   <string name="no_requests">0 solicitações de contato</string>
   <string name="message_contact_not_trusted_yet">%s não está em seus contatos ainda.\nVocê aceita ou recusa esta solicitação de contato?</string>
+  <string name="message_contact_not_trusted">%s não está em seus contatos.\nDeseja adicionar novo contato?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Enviar</string>
   <string name="send_request_title">Enviar uma solicitação de contato</string>

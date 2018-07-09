@@ -31,6 +31,7 @@
   <string name="menu_item_home">Pradžia</string>
   <string name="menu_item_contact_request">Kontaktų užklausos</string>
   <string name="menu_item_accounts">Tvarkyti paskyras</string>
+  <string name="menu_item_account">Tvarkyti paskyrą</string>
   <string name="menu_item_settings">Nustatymai</string>
   <string name="menu_item_share">Bendrinti mano kontaktus</string>
   <string name="menu_item_about">Apie Ring</string>
@@ -58,6 +59,7 @@
   <string name="notif_current_call_title">Esamas skambutis su %1$s</string>
   <string name="notif_current_call">Esamas skambutis</string>
   <string name="notif_channel_calls">Skambučiai</string>
+  <string name="action_open">Atverti</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Jūs:</string>
   <string name="action_call_hangup">Padėti ragelį</string>
@@ -70,6 +72,7 @@
   <string name="ab_action_speakerphone">Įjungti garsiakalbį</string>
   <string name="ab_action_contact_add">Pridėti prie kontaktų</string>
   <string name="ab_action_contact_add_question">Pridėti prie kontaktų ?</string>
+  <string name="hist_contact_added">Kontaktas pridėtas</string>
   <string name="ab_action_audio_call">Garso skambutis</string>
   <string name="ab_action_video_call">Vaizdo skambutis</string>
   <string name="ab_action_change_screen_orientation">Keisti ekrano orientaciją</string>
@@ -82,10 +85,13 @@
   <string name="message_sending">Siunčiama žinutė...</string>
   <string name="message_failed">Nepavyko</string>
   <string name="time_just_now">Ką tik</string>
+  <string name="send_file">Siųsti failą</string>
+  <string name="hist_file_sent">Failas išsiųstas</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">Kameros leidimas</string>
   <string name="ringtone_error_title">Klaida</string>
   <string name="ringtone_error_format_not_supported">Šis formatas yra nepalaikomas.</string>
+  <string name="ringtone_error_size_too_big">Šis failas yra per didelis. Didžiausias dydis yra %1$dkB.</string>
   <!--Read contacts permission-->
   <!--Write call log permission-->
   <!--QRCode Scan-->
@@ -104,6 +110,7 @@
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">Pridėti %1$s ?</string>
   <string name="prompt_new_password">Naujas slaptažodis</string>
+  <string name="prompt_new_password_optional">Naujas slaptažodis (nebūtina)</string>
   <string name="prompt_new_password_repeat">Pakartokite naują slaptažodį</string>
   <string name="account_create_title">Sukurti Ring paskyrą</string>
   <string name="prompt_new_username">Įveskite naują naudotojo vardą</string>
@@ -139,6 +146,14 @@
   <string name="no_contact_request">Jokia kontakto užklausa neišsiųsta</string>
   <string name="contact_request_sent">Kontakto užklausa išsiųsta</string>
   <string name="tv_contact_row_header">Kontaktai</string>
+  <string name="generic_error">Įvyko nežinoma klaida</string>
   <!--File Transfer-->
+  <string name="invalid_file">Neteisingas failas</string>
+  <string name="file_transfer_status_created">inicijuojamas persiuntimas</string>
+  <string name="file_transfer_status_unsupported">nepalaikoma</string>
+  <string name="file_saved_in">Failas įrašytas į %s</string>
+  <string name="no_space_left_on_device">Įrenginyje nebeliko vietos</string>
+  <string name="menu_file_download">Atsisiųsti failą</string>
+  <string name="menu_file_delete">Ištrinti failą</string>
   <string name="menu_file_share">Bendrinti failą</string>
 </resources>

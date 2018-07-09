@@ -61,6 +61,7 @@
   <string name="notif_current_call_title">Appel en cours avec %1$s</string>
   <string name="notif_current_call">Revenir à l’appel vidéo</string>
   <string name="notif_channel_calls">Appels</string>
+  <string name="notif_channel_missed_calls">Appels manqués</string>
   <string name="notif_channel_messages">Messages</string>
   <string name="notif_channel_requests">Sollicitations</string>
   <string name="notif_channel_file_transfer">Transfert de fichier</string>
@@ -69,6 +70,7 @@
   <string name="notif_incoming_file_transfer">Quelqu\'un souhaite vous envoyer un fichier</string>
   <string name="notif_outgoing_file_transfer_title">Envoie d\'un fichier à %1$s</string>
   <string name="notif_outgoing_file_transfer">Quelqu\'un souhaite vous envoyer un fichier</string>
+  <string name="notif_incoming_picture">Image de %1$s</string>
   <string name="action_open">Ouvrir</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Vous :</string>
@@ -105,6 +107,7 @@
   <string name="permission_dialog_camera_message">Les conversation vidéo nécessitent la permission d\'utiliser l\'objectif. Merci de l\'autoriser.</string>
   <string name="ringtone_error_title">Erreur</string>
   <string name="ringtone_error_format_not_supported">Ce format de fichier n\'est pas supporté.</string>
+  <string name="ringtone_error_size_too_big">Le fichier est trop grand. La taille maximum est %1$d kB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring a besoin d\'accéder en lecture à votre liste de contact. SVP autorisez-le.</string>
   <!--Write call log permission-->

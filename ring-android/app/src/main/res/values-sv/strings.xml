@@ -61,6 +61,7 @@
   <string name="notif_current_call_title">Aktuellt samtal med %1$s</string>
   <string name="notif_current_call">Aktuellt samtal</string>
   <string name="notif_channel_calls">Samtal</string>
+  <string name="notif_channel_missed_calls">Missade samtal</string>
   <string name="notif_channel_messages">Meddelanden</string>
   <string name="notif_channel_requests">Förfrågningar</string>
   <string name="notif_channel_file_transfer">Filöverföring</string>
@@ -69,6 +70,7 @@
   <string name="notif_incoming_file_transfer">Någon vill skicka en fil till dig</string>
   <string name="notif_outgoing_file_transfer_title">Skickar fil till %1$s</string>
   <string name="notif_outgoing_file_transfer">Någon vill skicka en fil till dig</string>
+  <string name="notif_incoming_picture">Bild från %1$s</string>
   <string name="action_open">Oppna</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Du:</string>
@@ -105,6 +107,7 @@
   <string name="permission_dialog_camera_message">Videokonversationer kräver kamerarättigheter. Överväg att aktivera det.</string>
   <string name="ringtone_error_title">Fel</string>
   <string name="ringtone_error_format_not_supported">Detta format saknar stöd.</string>
+  <string name="ringtone_error_size_too_big">Denna fil är för stor. Maximal storlek är %1$dkB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring behöver rättighet att läsa kontakter för att aktivera den här funktionen. Överväg att tilldela rättigheter.</string>
   <!--Write call log permission-->

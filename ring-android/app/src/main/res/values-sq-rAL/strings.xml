@@ -60,6 +60,7 @@
   <string name="notif_current_call_title">Thirrje e tanishme me %1$s</string>
   <string name="notif_current_call">Thirrja e tanishme</string>
   <string name="notif_channel_calls">Thirrje</string>
+  <string name="notif_channel_missed_calls">Thirrje të humbura</string>
   <string name="notif_channel_messages">Mesazhe</string>
   <string name="notif_channel_requests">Kërkesa</string>
   <string name="notif_channel_file_transfer">Shpërngulje kartelash</string>
@@ -68,6 +69,7 @@
   <string name="notif_incoming_file_transfer">Dikush dëshiron t’ju dërgojë një kartelë</string>
   <string name="notif_outgoing_file_transfer_title">Po dërgohet kartelë te %1$s</string>
   <string name="notif_outgoing_file_transfer">Dikush dëshiron t’ju dërgojë një kartelë</string>
+  <string name="notif_incoming_picture">Foto nga %1$s</string>
   <string name="action_open">Hape</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ju:</string>
@@ -104,6 +106,7 @@
   <string name="permission_dialog_camera_message">Që të funksionojnë, bisedat me video lypin doemos leje për kamerën Ju lutemi, shihni mundësinë e akordimit të saj.</string>
   <string name="ringtone_error_title">Gabim</string>
   <string name="ringtone_error_format_not_supported">Ky format nuk mbulohet.</string>
+  <string name="ringtone_error_size_too_big">Kjo kartelë është shumë e madhe. Madhësia maksimum është %1$dkB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Ring-ut i duhet leja \"Lexo në kontakte\" që të aktivizojë këtë veçori. Ju lutemi, akordojani.</string>
   <!--Write call log permission-->
