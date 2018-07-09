@@ -686,7 +686,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             downloadManager.addCompletedDownload(transfer.getDisplayName(),
                     transfer.getDisplayName(),
                     true,
-                    transfer.isPicture() ? "image/jpeg" : "text/plain",
+                    AndroidFileUtils.getMimeType(destination.getAbsolutePath()),
                     destination.getAbsolutePath(),
                     destination.length(),
                     true);
