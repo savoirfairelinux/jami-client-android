@@ -43,7 +43,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -83,6 +82,7 @@ import cx.ring.utils.AndroidFileUtils;
 import cx.ring.utils.ClipboardHelper;
 import cx.ring.utils.ContentUriHandler;
 import cx.ring.utils.MediaButtonsHelper;
+import cx.ring.views.MessageEditText;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -106,7 +106,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     private static final int REQUEST_CODE_TAKE_PICTURE = 1002;
 
     @BindView(R.id.msg_input_txt)
-    protected EditText mMsgEditTxt;
+    protected MessageEditText mMsgEditTxt;
 
     @BindView(R.id.ongoingcall_pane)
     protected ViewGroup mTopPane;
@@ -191,6 +191,15 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mMsgEditTxt.setMediaListener(contentInfo -> {
+            try {
+                presenter.sendFile(AndroidFileUtils.getCacheFile(getActivity(), contentInfo.getContentUri()));
+                contentInfo.releasePermission();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         if (mTopPane != null) {
             mTopPane.setVisibility(View.GONE);
