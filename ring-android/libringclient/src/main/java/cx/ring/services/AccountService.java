@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -59,6 +60,7 @@ import cx.ring.utils.StringUtils;
 import cx.ring.utils.SwigNativeConverter;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
@@ -88,10 +90,17 @@ public class AccountService {
     ScheduledExecutorService mExecutor;
 
     @Inject
+    @Named("ApplicationExecutor")
+    ExecutorService mApplicationExecutor;
+
+    @Inject
     HistoryService mHistoryService;
 
     @Inject
     DeviceRuntimeService mDeviceRuntimeService;
+
+    @Inject
+    VCardService mVCardService;
 
     private Account mCurrentAccount;
     private List<Account> mAccountList = new ArrayList<>();
@@ -385,36 +394,40 @@ public class AccountService {
         return currentAccountSubject;
     }
 
+    Single<VCard> loadVCard(String accountId, int maxSize) {
+        return Single.fromCallable(() -> mVCardService.loadSmallVCard(accountId, maxSize))
+                .subscribeOn(Schedulers.from(mApplicationExecutor));
+    }
+
     /**
      * put VCard on the DHT
      */
     public void sendProfile(final String callId, final String accountId) {
-        mExecutor.execute(() -> {
-            VCard vcard = VCardUtils.loadLocalProfileFromDisk(
-                    mDeviceRuntimeService.provideFilesDir(),
-                    accountId);
-            String stringVCard = VCardUtils.vcardToString(vcard);
+        loadVCard(accountId, VCardService.MAX_SIZE_SIP)
+                .observeOn(Schedulers.from(mExecutor))
+                .subscribe(vcard -> {
+                    String stringVCard = VCardUtils.vcardToString(vcard);
 
-            int nbTotal = stringVCard.length() / VCARD_CHUNK_SIZE + (stringVCard.length() % VCARD_CHUNK_SIZE != 0 ? 1 : 0);
-            int i = 1;
-            Random r = new Random(System.currentTimeMillis());
-            int key = r.nextInt();
+                    int nbTotal = stringVCard.length() / VCARD_CHUNK_SIZE + (stringVCard.length() % VCARD_CHUNK_SIZE != 0 ? 1 : 0);
+                    int i = 1;
+                    Random r = new Random(System.currentTimeMillis());
+                    int key = r.nextInt();
 
-            Log.d(TAG, "sendProfile, vcard " + stringVCard);
+                    Log.d(TAG, "sendProfile, vcard " + stringVCard);
 
-            while (i <= nbTotal) {
-                HashMap<String, String> chunk = new HashMap<>();
-                Log.d(TAG, "length vcard " + stringVCard.length() + " id " + key + " part " + i + " nbTotal " + nbTotal);
-                String keyHashMap = VCardUtils.MIME_RING_PROFILE_VCARD + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
-                String message = stringVCard.substring(0, Math.min(VCARD_CHUNK_SIZE, stringVCard.length()));
-                chunk.put(keyHashMap, message);
-                if (stringVCard.length() > VCARD_CHUNK_SIZE) {
-                    stringVCard = stringVCard.substring(VCARD_CHUNK_SIZE);
-                }
-                i++;
-                Ringservice.sendTextMessage(callId, StringMap.toSwig(chunk), "Me", false);
-            }
-        });
+                    while (i <= nbTotal) {
+                        HashMap<String, String> chunk = new HashMap<>();
+                        Log.d(TAG, "length vcard " + stringVCard.length() + " id " + key + " part " + i + " nbTotal " + nbTotal);
+                        String keyHashMap = VCardUtils.MIME_RING_PROFILE_VCARD + "; id=" + key + ",part=" + i + ",of=" + nbTotal;
+                        String message = stringVCard.substring(0, Math.min(VCARD_CHUNK_SIZE, stringVCard.length()));
+                        chunk.put(keyHashMap, message);
+                        if (stringVCard.length() > VCARD_CHUNK_SIZE) {
+                            stringVCard = stringVCard.substring(VCARD_CHUNK_SIZE);
+                        }
+                        i++;
+                        Ringservice.sendTextMessage(callId, StringMap.toSwig(chunk), "Me", false);
+                    }
+                });
     }
 
     /**
