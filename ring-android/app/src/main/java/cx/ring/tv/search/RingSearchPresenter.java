@@ -149,7 +149,7 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> {
         String accountId = mAccountService.getCurrentAccount().getAccountID();
 
         if (contact.getStatus() == CallContact.Status.NO_REQUEST) {
-            VCard vCard = mVCardService.loadSmallVCard(accountId);
+            VCard vCard = mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST);
             mAccountService.sendTrustRequest(accountId,
                     contact.getPhones().get(0).getNumber().getRawRingId(),
                     Blob.fromString(VCardUtils.vcardToString(vCard)));
