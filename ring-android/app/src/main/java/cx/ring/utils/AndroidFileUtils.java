@@ -156,10 +156,18 @@ public class AndroidFileUtils {
             ContentResolver cr = context.getContentResolver();
             mimeType = cr.getType(uri);
         } else {
-            String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uri.toString());
-            mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension.toLowerCase());
+            mimeType = getMimeType(uri.toString());
         }
         return mimeType;
+    }
+
+    public static String getMimeType(String filename) {
+        int pos = filename.lastIndexOf(".");
+        if (pos >= 0) {
+            String fileExtension = MimeTypeMap.getFileExtensionFromUrl(filename.substring(pos));
+            return MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension.toLowerCase());
+        }
+        return "application/octet-stream";
     }
 
     public static File getCacheFile(Context context, android.net.Uri uri) throws IOException {
@@ -168,6 +176,8 @@ public class AndroidFileUtils {
         FileOutputStream output = new FileOutputStream(file);
         InputStream inputStream = context.getContentResolver().openInputStream(uri);
         FileUtils.copyFile(inputStream, output);
+        inputStream.close();
+        output.close();
         return file;
     }
 
