@@ -23,6 +23,9 @@ import ezvcard.VCard;
 
 public abstract class VCardService {
 
-    public abstract VCard loadSmallVCard(String accountId);
+    public static final int MAX_SIZE_SIP = 54 * 1024;
+    public static final int MAX_SIZE_REQUEST = 32 * 1024;
+
+    public abstract VCard loadSmallVCard(String accountId, int maxSize);
 
 }

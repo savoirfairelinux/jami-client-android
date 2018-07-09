@@ -311,8 +311,6 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture_fallback, null)) {
-                //FIXME: Reduce the bitmap but not use it.
-                BitmapUtils.reduceBitmap(mSourcePhoto, VCardUtils.VCARD_PHOTO_SIZE);
                 mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
                 AvatarFactory.clearCache();

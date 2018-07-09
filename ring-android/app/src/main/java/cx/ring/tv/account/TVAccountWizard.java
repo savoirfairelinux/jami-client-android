@@ -199,8 +199,7 @@ public class TVAccountWizard
             vcard.setUid(new Uid(ringAccountViewModelImpl.getUsername()));
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             if (ringAccountViewModelImpl.getPhoto() != null) {
-                Bitmap reduced = BitmapUtils.reduceBitmap(ringAccountViewModelImpl.getPhoto(), VCardUtils.VCARD_PHOTO_SIZE);
-                reduced.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                ringAccountViewModelImpl.getPhoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
                 Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
                 vcard.removeProperties(Photo.class);
                 vcard.addPhoto(photoVCard);
