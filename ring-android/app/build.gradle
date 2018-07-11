@@ -108,7 +108,7 @@ dependencies {
     implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
 
     withFirebaseImplementation 'com.google.firebase:firebase-core:16.0.1'
-    withFirebaseImplementation 'com.google.firebase:firebase-messaging:17.0.0'
+    withFirebaseImplementation 'com.google.firebase:firebase-messaging:17.1.0'
 }
 
 if (buildFirebase) {
