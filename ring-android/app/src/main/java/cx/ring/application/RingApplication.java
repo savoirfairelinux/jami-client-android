@@ -233,7 +233,11 @@ public abstract class RingApplication extends Application {
 
     public void startDaemon() {
         if (!DRingService.isRunning) {
-            startService(new Intent(this, DRingService.class));
+            try {
+                startService(new Intent(this, DRingService.class));
+            } catch (Exception e) {
+                Log.w(TAG, "Error starting daemon service");
+            }
         }
         bindDaemon();
     }
