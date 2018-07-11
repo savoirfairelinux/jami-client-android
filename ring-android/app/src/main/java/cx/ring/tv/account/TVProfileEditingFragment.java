@@ -236,7 +236,6 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         image = BitmapUtils.cropImageToCircle(image);
-        image = BitmapUtils.reduceBitmap(image, VCardUtils.VCARD_PHOTO_SIZE);
         image.compress(Bitmap.CompressFormat.PNG, 100, stream);
         Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
 

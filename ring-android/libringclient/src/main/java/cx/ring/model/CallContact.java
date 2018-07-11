@@ -24,10 +24,12 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 
+import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import cx.ring.utils.Tuple;
 import ezvcard.VCard;
 import io.reactivex.Observable;
+import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
@@ -57,7 +59,7 @@ public class CallContact {
     public boolean detailsLoaded = false;
     public VCard vcard = null;
 
-    private Subject<CallContact> mContactUpdates = PublishSubject.create();
+    private Subject<CallContact> mContactUpdates = BehaviorSubject.create();
 
     public Observable<CallContact> getUpdates() {
         return mContactUpdates;
@@ -324,6 +326,7 @@ public class CallContact {
                 try {
                     photo = vcard.getPhotos().get(0).getData();
                 } catch (Exception e) {
+                    Log.w(TAG, "Can't read photo from VCard", e);
                     photo = null;
                 }
             }

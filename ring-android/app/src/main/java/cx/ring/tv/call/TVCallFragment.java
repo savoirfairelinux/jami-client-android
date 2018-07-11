@@ -21,7 +21,6 @@ package cx.ring.tv.call;
 
 import android.content.Context;
 import android.graphics.PixelFormat;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -58,6 +57,10 @@ import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.services.HardwareServiceImpl;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class TVCallFragment extends BaseFragment<CallPresenter> implements CallView {
 
@@ -107,8 +110,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     // Screen wake lock for incoming call
     private PowerManager.WakeLock mScreenWakeLock;
-    private Handler handler;
     private Runnable runnable;
+    private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     public static TVCallFragment newInstance(@NonNull String action, @Nullable String accountID, @Nullable String contactRingId, boolean audioOnly) {
         Bundle bundle = new Bundle();
@@ -235,8 +238,13 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
         shapeRipple.setRippleShape(new Circle());
 
-        handler = new Handler();
         runnable = () -> presenter.uiVisibilityChanged(false);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mCompositeDisposable.clear();
     }
 
     @Override
@@ -325,12 +333,7 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     public void updateContactBubble(@NonNull final CallContact contact) {
         String username = contact.getRingUsername();
         String ringId = contact.getIds().get(0);
-        Log.d(TAG, "updateContactBubble: username=" + username + ", ringId=" + ringId);
-
-        Drawable contactPicture = AvatarFactory.getAvatar(getActivity(),
-                contact.getPhoto(),
-                username,
-                ringId);
+        Log.d(TAG, "updateContactBubble: username=" + username + ", ringId=" + ringId + " photo:" + contact.getPhoto());
 
         String displayName = contact.getDisplayName();
         boolean hasProfileName = displayName != null && !displayName.contentEquals(username);
@@ -344,15 +347,22 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
             contactBubbleTxt.setText(username);
         }
 
-        Glide.with(getActivity())
-                .load(contactPicture)
-                .apply(AvatarFactory.getGlideOptions(true, true))
-                .into(contactBubbleView);
+        mCompositeDisposable.add(Single.fromCallable(() -> Glide.with(getActivity())
+                .load(AvatarFactory.getAvatar(
+                        getActivity(),
+                        contact.getPhoto(),
+                        username,
+                        ringId, true))
+                .apply(AvatarFactory.getGlideOptions(true, false))
+                .submit()
+                .get())
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(d -> contactBubbleView.setImageDrawable(d)));
     }
 
     @Override
     public void updateCallStatus(final int callState) {
-        getActivity().runOnUiThread(() -> {
             switch (callState) {
                 case SipCall.State.NONE:
                     mCallStatusTxt.setText("");
@@ -361,7 +371,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
                     mCallStatusTxt.setText(callStateToHumanState(callState));
                     break;
             }
-        });
     }
 
     @Override
@@ -488,12 +497,12 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     private void handleVisibilityTimer() {
         presenter.uiVisibilityChanged(true);
-        handler.postDelayed(runnable, 5000);
+        contactBubbleLayout.getHandler().postDelayed(runnable, 5000);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        handler.removeCallbacks(runnable);
+        contactBubbleLayout.getHandler().removeCallbacks(runnable);
     }
 }

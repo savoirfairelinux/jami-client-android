@@ -27,13 +27,10 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cx.ring.model.CallContact;
-import cx.ring.model.Conference;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.CallService;
-import cx.ring.services.ContactService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
@@ -48,7 +45,6 @@ public class CallPresenter extends RootPresenter<CallView> {
     private NotificationService mNotificationService;
     private HardwareService mHardwareService;
     private CallService mCallService;
-    private ContactService mContactService;
 
     private SipCall mSipCall;
     private boolean mOnGoingCall = false;
@@ -70,13 +66,11 @@ public class CallPresenter extends RootPresenter<CallView> {
     public CallPresenter(AccountService accountService,
                          NotificationService notificationService,
                          HardwareService hardwareService,
-                         CallService callService,
-                         ContactService contactService) {
+                         CallService callService) {
         mAccountService = accountService;
         mNotificationService = notificationService;
         mHardwareService = hardwareService;
         mCallService = callService;
-        mContactService = contactService;
     }
 
     @Override
@@ -117,12 +111,11 @@ public class CallPresenter extends RootPresenter<CallView> {
                 .placeCallObservable(accountId, StringUtils.toNumber(contactRingId), audioOnly)
                 .observeOn(mUiScheduler)
                 .subscribe(call ->  {
-            mSipCall = call;
-            mAudioOnly = mSipCall.isAudioOnly();
-            getView().updateMenu();
-            confUpdate();
-            getContactDetails();
-        }));
+                    contactUpdate(call);
+                    mAudioOnly = call.isAudioOnly();
+                    getView().updateMenu();
+                    confUpdate();
+                }));
     }
 
     public void initIncoming(String confId) {
@@ -130,12 +123,11 @@ public class CallPresenter extends RootPresenter<CallView> {
         mCompositeDisposable.add(mCallService.getCallUpdates(confId)
                 .observeOn(mUiScheduler)
                 .subscribe(call -> {
-            mSipCall = call;
-            mAudioOnly = mSipCall.isAudioOnly();
-            getView().updateMenu();
-            confUpdate();
-            getContactDetails();
-        }));
+                    contactUpdate(call);
+                    mAudioOnly = call.isAudioOnly();
+                    getView().updateMenu();
+                    confUpdate();
+                }));
     }
 
     public void prepareOptionMenu() {
@@ -247,6 +239,16 @@ public class CallPresenter extends RootPresenter<CallView> {
         getView().finish();
     }
 
+    private void contactUpdate(final SipCall call) {
+        if (mSipCall != call) {
+            mSipCall = call;
+            mCompositeDisposable.add(call.getContact()
+                    .getUpdates()
+                    .observeOn(mUiScheduler)
+                    .subscribe(c -> getView().updateContactBubble(c)));
+        }
+    }
+
     private void confUpdate() {
         if (mSipCall == null) {
             return;
@@ -256,7 +258,6 @@ public class CallPresenter extends RootPresenter<CallView> {
         if (mSipCall.isOnGoing()) {
             mOnGoingCall = true;
             view.initNormalStateDisplay(mAudioOnly);
-            view.updateContactBubble(mSipCall.getContact());
             view.updateMenu();
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
@@ -272,13 +273,11 @@ public class CallPresenter extends RootPresenter<CallView> {
                     mCallService.accept(mSipCall.getCallId());
                 } else {
                     view.initIncomingCallDisplay();
-                    view.updateContactBubble(mSipCall.getContact());
                 }
             } else {
                 mOnGoingCall = false;
                 view.updateCallStatus(mSipCall.getCallState());
                 view.initOutGoingCallDisplay();
-                view.updateContactBubble(mSipCall.getContact());
             }
         } else {
             finish();
@@ -293,21 +292,6 @@ public class CallPresenter extends RootPresenter<CallView> {
                 getView().updateTime(duration);
             }
         }
-    }
-
-    private void getContactDetails() {
-        if (mSipCall == null) {
-            Log.e(TAG, "Not able to get SIP call");
-            return;
-        }
-        CallContact callContact = mSipCall.getContact();
-        if (mContactService == null) {
-            Log.e(TAG, "Not able to get contact service");
-            return;
-        }
-        mContactService.loadContactData(callContact);
-
-        getView().updateContactBubble(callContact);
     }
 
     private void onVideoEvent(HardwareService.VideoEvent event) {
