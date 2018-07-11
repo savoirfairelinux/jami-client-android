@@ -24,7 +24,6 @@ import android.app.DownloadManager;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
@@ -36,6 +35,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -208,20 +208,16 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setStackFromEnd(true);
 
-        if (mHistList != null) {
-            mHistList.setLayoutManager(mLayoutManager);
-            mHistList.setAdapter(null);
-            mHistList.setItemAnimator(new DefaultItemAnimator());
-        }
+        mHistList.setLayoutManager(mLayoutManager);
+        mHistList.setAdapter(null);
+        SimpleItemAnimator animator = new DefaultItemAnimator();
+        animator.setSupportsChangeAnimations(false);
+        mHistList.setItemAnimator(animator);
+        mHistList.setAdapter(mAdapter);
+        setHasOptionsMenu(true);
 
         // reload delete conversation state (before rotation)
         mDeleteConversation = savedInstanceState != null && savedInstanceState.getBoolean(CONVERSATION_DELETE);
-
-        setHasOptionsMenu(true);
-        if (mHistList != null) {
-            mHistList.setAdapter(mAdapter);
-        }
-
         if (mDeleteConversation) {
             presenter.deleteAction();
         }
@@ -335,28 +331,6 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
                 getActivity().runOnUiThread(() -> setLoading(false));
             }).start();
         }
-    }
-
-    @Override
-    public void writeCacheFile(String cacheFilename) {
-        // todo use rx + move to presenter
-        File cacheFile = new File(getActivity().getCacheDir(), cacheFilename);
-        try {
-            String finalFilePath = AndroidFileUtils.writeCacheFileToExtStorage(getActivity(), android.net.Uri.fromFile(cacheFile), cacheFile.getName());
-
-            // Tell the media scanner about the new file so that it is immediately available to the user
-            MediaScannerConnection.scanFile(getActivity(), new String[]{finalFilePath}, null, null);
-
-            getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), getActivity().getString(R.string.file_saved_in, finalFilePath), Toast.LENGTH_LONG).show());
-        } catch (IOException e) {
-            Log.e(TAG, "writeCacheFile: ", e);
-            getActivity().runOnUiThread(() -> displayErrorToast(RingError.NOT_ABLE_TO_WRITE_FILE));
-        }
-    }
-
-    @Override
-    public void updateTransfer(DataTransfer transfer) {
-        mAdapter.updateTransfer(transfer);
     }
 
     @Override

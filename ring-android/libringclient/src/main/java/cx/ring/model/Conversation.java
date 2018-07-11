@@ -342,8 +342,8 @@ public class Conversation {
         DataTransfer dataTransfer = findConversationElement(transfer.getId());
         if (dataTransfer != null) {
             dataTransfer.setEventCode(eventCode);
+            updatedElementSubject.onNext(dataTransfer);
         }
-        updatedElementSubject.onNext(dataTransfer);
     }
 
     public void removeFileTransfer(DataTransfer transfer) {

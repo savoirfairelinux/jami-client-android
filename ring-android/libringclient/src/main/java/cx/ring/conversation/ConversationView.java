@@ -73,10 +73,6 @@ public interface ConversationView extends BaseView {
 
     void openFilePicker();
 
-    void writeCacheFile(String cacheFile);
-
-    void updateTransfer(DataTransfer transfer);
-
     void shareFile(File path);
 
     void addElement(ConversationElement e);

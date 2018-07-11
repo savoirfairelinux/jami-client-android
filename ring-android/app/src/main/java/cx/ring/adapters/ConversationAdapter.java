@@ -20,7 +20,6 @@
  */
 package cx.ring.adapters;
 
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -51,7 +50,6 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.target.ImageViewTarget;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -80,6 +78,9 @@ import cx.ring.utils.GlideOptions;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.utils.StringUtils;
 import cx.ring.views.ConversationViewHolder;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
     private final static String TAG = ConversationAdapter.class.getSimpleName();
@@ -135,8 +136,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     }
 
     public void add(ConversationElement e) {
+        boolean update = !mConversationElements.isEmpty();
         mConversationElements.add(e);
         notifyItemInserted(mConversationElements.size()-1);
+        if (update)
+            notifyItemChanged(mConversationElements.size()-2);
     }
 
     public void update(ConversationElement e) {
@@ -237,7 +241,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             if (conversationElement.getType() == ConversationElement.CEType.TEXT) {
                 configureForTextMessage(conversationViewHolder, conversationElement, position);
             } else if (conversationElement.getType() == ConversationElement.CEType.FILE) {
-                configureForFileInfoTextMessage(conversationViewHolder, conversationElement);
+                configureForFileInfoTextMessage(conversationViewHolder, conversationElement, position);
             } else if (conversationElement.getType() == ConversationElement.CEType.CALL) {
                 configureForCallInfoTextMessage(conversationViewHolder, conversationElement);
             } else if (conversationElement.getType() == ConversationElement.CEType.CONTACT) {
@@ -265,16 +269,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             }
         };
         view.getViewTreeObserver().addOnPreDrawListener(preDrawListener);
-    }
-
-    public void updateTransfer(DataTransfer transfer) {
-        for(int i=mConversationElements.size()-1; i >= 0; i--) {
-            ConversationElement e = mConversationElements.get(i);
-            if (e == transfer) {
-                notifyItemChanged(i);
-                return;
-            }
-        }
     }
 
     public static class RecyclerViewContextMenuInfo implements ContextMenu.ContextMenuInfo {
@@ -323,16 +317,22 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
     }
 
     private void configureForFileInfoTextMessage(@NonNull final ConversationViewHolder conversationViewHolder,
-                                                 @NonNull final ConversationElement conversationElement) {
+                                                 @NonNull final ConversationElement conversationElement, int position) {
         DataTransfer file = (DataTransfer) conversationElement;
 
         String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
                 conversationViewHolder.itemView.getContext(),
                 file.getDate());
         if (file.getEventCode() == DataTransferEventCode.FINISHED) {
-            conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s",
-                    timeSeparationString, FileUtils.readableFileSize(file.getTotalSize())));
+            boolean separateByDetails = shouldSeparateByDetails(conversationElement, position);
+            if (separateByDetails) {
+                conversationViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
+                conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s",
+                        timeSeparationString, FileUtils.readableFileSize(file.getTotalSize())));
+            } else
+                conversationViewHolder.mMsgDetailTxt.setVisibility(View.GONE);
         } else {
+            conversationViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
             conversationViewHolder.mMsgDetailTxt.setText(String.format("%s - %s - %s",
                     timeSeparationString, FileUtils.readableFileSize(file.getTotalSize()),
                     ResourceMapper.getReadableFileTransferStatus(conversationFragment.getActivity(), file.getEventCode())));
@@ -370,20 +370,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             GlideApp.with(context)
                     .load(path)
                     .apply(PICTURE_OPTIONS)
-                    .into(new ImageViewTarget<Drawable>(conversationViewHolder.mPhoto) {
-                        @Override
-                        protected void setResource(@Nullable Drawable resource) {
-                            ImageView view = getView();
-                            runJustBeforeBeingDrawn(view, () -> {
-                                if (view.getDrawable() != null) {
-                                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-                                    params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                                    view.setLayoutParams(params);
-                                }
-                            });
-                            view.setImageDrawable(resource);
-                        }
-                    });
+                    .into(conversationViewHolder.mPhoto);
 
             ((LinearLayout)conversationViewHolder.mAnswerLayout).setGravity(file.isOutgoing() ? Gravity.END : Gravity.START);
             conversationViewHolder.mPhoto.setOnClickListener(v -> {
@@ -470,11 +457,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
             convViewHolder.mPhoto.setImageBitmap(null);
         }
 
-        boolean shouldSeparateByDetails = this.shouldSeparateByDetails(textMessage, position);
-        boolean isConfigSameAsPreviousMsg = this.isMessageConfigSameAsPrevious(textMessage, position);
+        boolean separateByDetails = shouldSeparateByDetails(textMessage, position);
+        boolean sameAsPreviousMsg = isMessageConfigSameAsPrevious(textMessage, position);
         final Context context = convViewHolder.itemView.getContext();
 
-        if (textMessage.isIncoming() && !isConfigSameAsPreviousMsg) {
+        if (textMessage.isIncoming() && !sameAsPreviousMsg) {
             Drawable contactPicture = AvatarFactory.getAvatar(
                     context,
                     mPhoto,
@@ -501,7 +488,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
                 break;
             default:
                 ViewCompat.setBackgroundTintList(convViewHolder.mMsgTxt, null);
-                if (shouldSeparateByDetails) {
+                if (separateByDetails) {
                     convViewHolder.mMsgDetailTxt.setVisibility(View.VISIBLE);
                     String timeSeparationString = computeTimeSeparationStringFromMsgTimeStamp(
                             context,
@@ -593,12 +580,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * @return the previous TextMessage if any, null otherwise
      */
     @Nullable
-    private TextMessage getPreviousMessageFromPosition(int position) {
+    private ConversationElement getPreviousMessageFromPosition(int position) {
         if (!mConversationElements.isEmpty() && position > 0) {
-            ConversationElement conversationElement = mConversationElements.get(position - 1);
-            if (conversationElement.getType() == ConversationElement.CEType.TEXT) {
-                return (TextMessage) conversationElement;
-            }
+            return mConversationElements.get(position - 1);
         }
         return null;
     }
@@ -610,12 +594,9 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * @return the next TextMessage if any, null otherwise
      */
     @Nullable
-    private TextMessage getNextMessageFromPosition(int position) {
+    private ConversationElement getNextMessageFromPosition(int position) {
         if (!mConversationElements.isEmpty() && position < mConversationElements.size() - 1) {
-            ConversationElement conversationElement = mConversationElements.get(position + 1);
-            if (conversationElement.getType() == ConversationElement.CEType.TEXT) {
-                return (TextMessage) conversationElement;
-            }
+            return mConversationElements.get(position + 1);
         }
         return null;
     }
@@ -628,16 +609,15 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
      * @param position The position of the current message
      * @return true if a text details string should be displayed under the message
      */
-    private boolean shouldSeparateByDetails(final TextMessage ht, int position) {
+    private boolean shouldSeparateByDetails(final ConversationElement ht, int position) {
         if (ht == null) {
             return false;
         }
-
         boolean shouldSeparateMsg = false;
-        TextMessage previousTextMessage = getPreviousMessageFromPosition(position);
+        ConversationElement previousTextMessage = getPreviousMessageFromPosition(position);
         if (previousTextMessage != null) {
             shouldSeparateMsg = true;
-            TextMessage nextTextMessage = getNextMessageFromPosition(position);
+            ConversationElement nextTextMessage = getNextMessageFromPosition(position);
             if (nextTextMessage != null) {
                 long diff = nextTextMessage.getDate() - ht.getDate();
                 if (diff < MINUTE) {
@@ -663,11 +643,11 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         }
 
         boolean sameConfig = false;
-        TextMessage previousMessage = getPreviousMessageFromPosition(position);
+        ConversationElement previousMessage = getPreviousMessageFromPosition(position);
         if (previousMessage != null &&
-                previousMessage.isIncoming() &&
+                textMessage.getType() == previousMessage.getType() &&
                 textMessage.isIncoming() &&
-                previousMessage.getNumber().equals(textMessage.getNumber())) {
+                previousMessage.getContactNumber().equals(textMessage.getContactNumber())) {
             sameConfig = true;
         }
         return sameConfig;

@@ -110,7 +110,11 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         Log.w(TAG, "init " + contactRingId + " " + accountId);
         mContactRingId = contactRingId;
         mAccountId = accountId;
-        mCompositeDisposable.add(mConversationFacade.startConversation(accountId, contactRingId)
+        Account account = mAccountService.getAccount(accountId);
+        if (account != null)
+            initContact(account, contactRingId, getView());
+        mCompositeDisposable.add(mConversationFacade
+                .startConversation(accountId, contactRingId)
                 .observeOn(mUiScheduler)
                 .subscribe(this::setConversation, e -> getView().goToHome()));
     }
@@ -135,10 +139,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     public void resume() {
         Log.w(TAG, "resume " + mConversation + " " + mAccountId + " " + mContactRingId);
         mVisibilityDisposable.clear();
-        mVisibilityDisposable.add(mConversationSubject.firstOrError().subscribe(conversation -> {
-            conversation.setVisible(true);
-            mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation);
-        }));
+        mVisibilityDisposable.add(mConversationSubject
+                .firstOrError()
+                .subscribe(conversation -> {
+                    conversation.setVisible(true);
+                    mConversationFacade.readMessages(mAccountService.getAccount(mAccountId), conversation);
+                }));
     }
 
     private CallContact initContact(final Account account, final Uri uri, final ConversationView view) {
@@ -150,12 +156,12 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
                 contact = account.getContactFromCache(uri);
                 TrustRequest req = account.getRequest(rawId);
                 if (req == null) {
-                    getView().switchToUnknownView(contact.getRingUsername());
+                    view.switchToUnknownView(contact.getRingUsername());
                 } else {
-                    getView().switchToIncomingTrustRequestView(req.getDisplayname());
+                    view.switchToIncomingTrustRequestView(req.getDisplayname());
                 }
             } else {
-                getView().switchToConversationView();
+                view.switchToConversationView();
             }
             Log.w(TAG, "initContact " + contact.getUsername());
             if (contact.getUsername() == null) {
@@ -163,7 +169,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
             }
         } else {
             contact = mContactService.findContact(account, uri);
-            getView().switchToConversationView();
+            view.switchToConversationView();
         }
         view.displayContactPhoto(contact.getPhoto());
         view.displayContactName(contact);
@@ -326,16 +332,6 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
             getView().displayOnGoingCallPane(false);
         }
         getView().scrollToEnd();
-    }
-
-    private TrustRequest getIncomingTrustRequests() {
-        if (mAccountService != null) {
-            Account acc = mAccountService.getAccount(mAccountId);
-            if (acc != null) {
-                return acc.getRequest(mContactRingId.getHost());
-            }
-        }
-        return null;
     }
 
     public void onBlockIncomingContactRequest() {

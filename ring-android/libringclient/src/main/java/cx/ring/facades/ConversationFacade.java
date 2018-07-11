@@ -111,10 +111,13 @@ public class ConversationFacade {
                         .merge(a.getConversationsSubject(), a.getPendingSubject())
                         .doOnNext(c -> {
                             for (Conversation conversation : c) {
-                                Uri id = conversation.getContact().getPrimaryUri();
-                                mPresenceService.subscribeBuddy(a.getAccountID(), id.getRawUriString(), true);
-                                mContactService.loadContactData(conversation.getContact());
-                                mAccountService.lookupAddress(a.getAccountID(), "", id.getRawRingId());
+                                CallContact contact = conversation.getContact();
+                                if (contact.subscribe()) {
+                                    Uri id = contact.getPrimaryUri();
+                                    mPresenceService.subscribeBuddy(a.getAccountID(), id.getRawUriString(), true);
+                                    mContactService.loadContactData(conversation.getContact());
+                                    mAccountService.lookupAddress(a.getAccountID(), "", id.getRawRingId());
+                                }
                             }
                         }))
                 .subscribeOn(Schedulers.computation())
@@ -126,12 +129,12 @@ public class ConversationFacade {
                 .subscribe());
 
         mDisposableBag.add(mAccountService.getIncomingRequests()
-                .switchMapSingle(r -> getAccountSubject(r.getAccountId()))
+                .concatMapSingle(r -> getAccountSubject(r.getAccountId()))
                 .subscribe(a -> mNotificationService.showIncomingTrustRequestNotification(a)));
 
         mDisposableBag.add(mAccountService
                 .getIncomingMessages()
-                .switchMapSingle(msg -> getAccountSubject(msg.getAccount())
+                .concatMapSingle(msg -> getAccountSubject(msg.getAccount())
                         .map(a -> {
                             a.addTextMessage(msg);
                             return msg;
@@ -140,12 +143,10 @@ public class ConversationFacade {
 
         mDisposableBag.add(mAccountService
                 .getMessageStateChanges()
-                .subscribe(txt -> {
-                    Conversation conv = mAccountService.getAccount(txt.getAccount()).getByUri(txt.getNumberUri());
-                    if (conv != null) {
-                        conv.updateTextMessage(txt);
-                    }
-                }));
+                .concatMapSingle(txt -> getAccountSubject(txt.getAccount())
+                        .map(a -> a.getByUri(txt.getNumberUri()))
+                        .doOnSuccess(conv -> conv.updateTextMessage(txt)))
+                .subscribe());
 
         mDisposableBag.add(mAccountService.getDataTransfers().subscribe(this::handleDataTransferEvent));
     }
@@ -178,7 +179,6 @@ public class ConversationFacade {
     public void readMessages(Account account, Conversation conversation) {
         if (conversation != null) {
             if (readMessages(conversation)) {
-                //account.conversationRefreshed(conversation);
                 account.refreshed(conversation);
                 mNotificationService.cancelTextNotification(conversation.getContact().getPrimaryUri());
             }
@@ -186,7 +186,6 @@ public class ConversationFacade {
     }
 
     private boolean readMessages(Conversation conversation) {
-        Log.w(TAG, "readMessages");
         boolean updated = false;
         for (HistoryEntry h : conversation.getRawHistory().values()) {
             NavigableMap<Long, TextMessage> messages = h.getTextMessages();
@@ -357,7 +356,9 @@ public class ConversationFacade {
                 mAccountService.acceptFileTransfer(transfer);
             }
         }
-        if (!conversation.isVisible())
+        if (conversation.isVisible())
+            mNotificationService.cancelFileNotification(transfer.getId());
+        else
             mNotificationService.showFileTransferNotification(transfer, conversation.getContact());
     }
 
@@ -422,13 +423,12 @@ public class ConversationFacade {
 
     public Single<SipCall> placeCall(String accountId, String number, boolean video) {
         String rawId = new Uri(number).getRawRingId();
-        Account account = mAccountService.getAccount(accountId);
-        if (account != null) {
+        return getAccountSubject(accountId).flatMap(account -> {
             CallContact contact = account.getContact(rawId);
             if (contact == null)
                 mAccountService.addContact(accountId, rawId);
-        }
-        return mCallService.placeCall(rawId, number, video);
+            return mCallService.placeCall(rawId, number, video);
+        });
     }
 
     public void cancelFileTransfer(long id) {

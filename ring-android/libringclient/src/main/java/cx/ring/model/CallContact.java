@@ -56,6 +56,7 @@ public class CallContact {
     private Date mAddedDate = null;
     private boolean mOnline = false;
 
+    public boolean subscribed = false;
     public boolean detailsLoaded = false;
     public VCard vcard = null;
 
@@ -119,6 +120,13 @@ public class CallContact {
         CallContact contact = buildUnknown(ringId);
         contact.setUsername(username);
         return contact;
+    }
+
+    public boolean subscribe() {
+        if (subscribed)
+            return false;
+        subscribed = true;
+        return true;
     }
 
     public boolean matches(String query) {
