@@ -28,6 +28,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
+import cx.ring.application.RingApplicationFirebase;
 import cx.ring.service.DRingService;
 
 public class RingFirebaseMessagingService extends FirebaseMessagingService {
@@ -49,6 +50,19 @@ public class RingFirebaseMessagingService extends FirebaseMessagingService {
             WakefulBroadcastReceiver.startWakefulService(this, serviceIntent);
         } catch (Exception e) {
             Log.w(TAG, "Error handling push notification", e);
+        }
+    }
+
+    @Override
+    public void onNewToken(String refreshedToken) {
+        try {
+            Log.d(TAG, "onTokenRefresh: refreshed token: " + refreshedToken);
+            RingApplicationFirebase.setPushToken(refreshedToken);
+            startService(new Intent(DRingService.ACTION_PUSH_TOKEN_CHANGED)
+                    .setClass(this, DRingService.class)
+                    .putExtra(DRingService.PUSH_TOKEN_FIELD_TOKEN, refreshedToken));
+        } catch (Exception e) {
+            Log.w(TAG, "Error handling token refresh", e);
         }
     }
 }
