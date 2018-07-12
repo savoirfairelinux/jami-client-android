@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b539460_d72eef8e",
+        "filename": "ring-android/app/src/main/java/cx/ring/contacts/AvatarFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-07-12T17:25:00Z",
+      "side": 1,
+      "message": "not from this commit, and would rightfully throw NPE in that case",
+      "parentUuid": "654e82d3_7fb4333b",
+      "range": {
+        "startLine": 107,
+        "startChar": 73,
+        "endLine": 107,
+        "endChar": 115
+      },
+      "revId": "2c378b3f7697b90700d2cfa1754b4a5e23cab6fc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9697460f_98b1445f",
         "filename": "ring-android/app/src/main/java/cx/ring/contacts/AvatarFactory.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ab133127_018eb1d6",
+        "filename": "ring-android/app/src/main/java/cx/ring/contacts/AvatarFactory.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-07-12T17:25:00Z",
+      "side": 1,
+      "message": "not from this commit, and would rightfully throw NPE in that case",
+      "parentUuid": "9697460f_98b1445f",
+      "range": {
+        "startLine": 111,
+        "startChar": 73,
+        "endLine": 111,
+        "endChar": 115
+      },
+      "revId": "2c378b3f7697b90700d2cfa1754b4a5e23cab6fc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54ec9c83_cf177f67",
         "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2018-07-12T17:16:27Z",
       "side": 1,
       "message": "can be null",
+      "range": {
+        "startLine": 186,
+        "startChar": 38,
+        "endLine": 186,
+        "endChar": 50
+      },
+      "revId": "2c378b3f7697b90700d2cfa1754b4a5e23cab6fc",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69d3e80_af449833",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-07-12T17:25:00Z",
+      "side": 1,
+      "message": "no it can\u0027t (see Conversation constructor and usage)",
+      "parentUuid": "54ec9c83_cf177f67",
       "range": {
         "startLine": 186,
         "startChar": 38,
