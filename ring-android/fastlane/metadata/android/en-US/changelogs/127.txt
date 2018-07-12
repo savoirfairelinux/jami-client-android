@@ -1,0 +1,4 @@
+• Send GIFs and images with Ring using your keyboard!
+• Fix avatar overlay issue on Android TV
+• Improved performance
+• Bug fixes
