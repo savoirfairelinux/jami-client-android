@@ -22,6 +22,30 @@
       "revId": "bee7eea6747aaf2d32eeb46ae3ee5cef1a36e3f4",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495d1b47_a9d04bab",
+        "filename": "ring-android/app/src/main/java/cx/ring/tv/account/TVAccountWizard.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-07-12T14:08:06Z",
+      "side": 1,
+      "message": "Only used once for the local profile so can\u0027t really accumulate. Allows to preserve source image without quality loss.",
+      "parentUuid": "5543ea42_8cfa2b66",
+      "range": {
+        "startLine": 202,
+        "startChar": 83,
+        "endLine": 202,
+        "endChar": 86
+      },
+      "revId": "bee7eea6747aaf2d32eeb46ae3ee5cef1a36e3f4",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
     }
   ]
 }
