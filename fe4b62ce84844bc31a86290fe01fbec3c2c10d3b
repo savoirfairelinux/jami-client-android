@@ -22,6 +22,30 @@
       "revId": "fe4b62ce84844bc31a86290fe01fbec3c2c10d3b",
       "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d6f2b9_a4b3d966",
+        "filename": "ring-android/app/src/main/java/cx/ring/application/RingApplication.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-07-12T18:24:59Z",
+      "side": 1,
+      "message": "Done: bindDaemon can start the service if needed, but should also be protected in a try block since it could also throw",
+      "parentUuid": "03c998f8_60628aeb",
+      "range": {
+        "startLine": 242,
+        "startChar": 8,
+        "endLine": 242,
+        "endChar": 21
+      },
+      "revId": "fe4b62ce84844bc31a86290fe01fbec3c2c10d3b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": false
     }
   ]
 }
