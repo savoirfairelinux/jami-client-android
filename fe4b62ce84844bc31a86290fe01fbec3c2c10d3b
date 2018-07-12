@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03c998f8_60628aeb",
+        "filename": "ring-android/app/src/main/java/cx/ring/application/RingApplication.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 567
+      },
+      "writtenOn": "2018-07-12T17:23:14Z",
+      "side": 1,
+      "message": "if startService throw an exception, do we want to do that?",
+      "range": {
+        "startLine": 242,
+        "startChar": 8,
+        "endLine": 242,
+        "endChar": 21
+      },
+      "revId": "fe4b62ce84844bc31a86290fe01fbec3c2c10d3b",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
