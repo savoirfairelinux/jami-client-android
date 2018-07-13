@@ -25,6 +25,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -141,6 +142,9 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @BindView(R.id.tvTrustRequestMessage)
     protected TextView mTvTrustRequestMessage;
 
+    @BindView(R.id.pb_loading)
+    protected ProgressBar mLoadingIndicator;
+
     private AlertDialog mDeleteDialog;
     private boolean mDeleteConversation = false;
 
@@ -151,6 +155,9 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     private NumberAdapter mNumberAdapter = null;
 
     private File mCurrentPhoto = null;
+
+    private Handler mHandler = new Handler();
+    private static final int RESHESH_INTERVAL = 10000;
 
     private static int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
@@ -165,11 +172,34 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         if (conversation == null) {
             return;
         }
+        if (mLoadingIndicator != null)
+            mLoadingIndicator.setVisibility(View.GONE);
         if (mAdapter != null) {
             mAdapter.updateDataset(conversation);
         }
         getActivity().invalidateOptionsMenu();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mHandler.postDelayed(mRefreshTask, RESHESH_INTERVAL);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mHandler.removeCallbacks(mRefreshTask);
+    }
+
+    private final Runnable mRefreshTask = new Runnable() {
+        @Override
+        public void run() {
+            if (mAdapter != null)
+                mAdapter.notifyDataSetChanged();
+            mHandler.postDelayed(mRefreshTask, RESHESH_INTERVAL);
+        }
+    };
 
     @Override
     public void scrollToEnd() {
