@@ -63,6 +63,7 @@
   <string name="notif_current_call_title">Текущий вызов с %1$s</string>
   <string name="notif_current_call">Текущий вызов</string>
   <string name="notif_channel_calls">Звонки</string>
+  <string name="notif_channel_missed_calls">Пропущенные вызовы</string>
   <string name="notif_channel_messages">Сообщения</string>
   <string name="notif_channel_requests">Запросы</string>
   <string name="notif_channel_file_transfer">Передача файла</string>
@@ -71,6 +72,7 @@
   <string name="notif_incoming_file_transfer">Кто-то хочет отправить вам файл</string>
   <string name="notif_outgoing_file_transfer_title">Отправка файла %1$s</string>
   <string name="notif_outgoing_file_transfer">Кто-то хочет отправить вам файл</string>
+  <string name="notif_incoming_picture">Изображение от %1$s</string>
   <string name="action_open">Открыть</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Вы:</string>
@@ -107,6 +109,7 @@
   <string name="permission_dialog_camera_message">Видеосвязь требует для работы разрешения на доступ к камере. Пожалуйста, предоставьте его.</string>
   <string name="ringtone_error_title">Ошибка</string>
   <string name="ringtone_error_format_not_supported">Этот формат не поддерживается</string>
+  <string name="ringtone_error_size_too_big">Этот файл слишком большой. Максимальный размер — %1$dКб.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">Приложению требуется разрешение «Чтение контактов», чтобы включить эту функцию. Пожалуйста, предоставьте его.</string>
   <!--Write call log permission-->
