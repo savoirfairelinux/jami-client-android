@@ -23,7 +23,7 @@ along with this program; if not, write to the Free Software
     <!-- About -->
     <string name="app_name" translatable="false">Ring</string>
     <string name="app_author" translatable="false">Savoir-faire Linux Inc.</string>
-    <string name="app_release" translatable="false">In varietate concordia - %1$s</string>
+    <string name="app_release" translatable="false">Live free or die - %1$s</string>
     <string name="app_website_contribute" translatable="false">&lt;u>https://ring.cx/contribute&lt;/u></string>
     <string name="gnu_license_website" translatable="false">https://www.gnu.org/licenses/gpl.html</string>
     <string name="ring_contribute_website" translatable="false">https://ring.cx/contribute</string>
