@@ -24,6 +24,7 @@ import android.app.DownloadManager;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
@@ -36,6 +37,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -98,6 +101,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     public static final String KEY_CONTACT_RING_ID = BuildConfig.APPLICATION_ID + "CONTACT_RING_ID";
     public static final String KEY_ACCOUNT_ID = BuildConfig.APPLICATION_ID + "ACCOUNT_ID";
+    public static final String KEY_PREFERENCE_PENDING_MESSAGE = "pendingMessage";
 
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
 
@@ -150,6 +154,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     private ConversationAdapter mAdapter = null;
     private NumberAdapter mNumberAdapter = null;
 
+    private SharedPreferences mPreferences;
+
     private File mCurrentPhoto = null;
 
     private static int getIndex(Spinner spinner, Uri myString) {
@@ -198,6 +204,25 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
                 contentInfo.releasePermission();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        });
+        if (mPreferences != null) {
+            String pendingMessage = mPreferences.getString(KEY_PREFERENCE_PENDING_MESSAGE, null);
+            if (pendingMessage != null)
+                mMsgEditTxt.setText(pendingMessage);
+        }
+        mMsgEditTxt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mPreferences != null) {
+                    mPreferences.edit().putString(KEY_PREFERENCE_PENDING_MESSAGE, s.toString()).apply();
+                }
             }
         });
 
@@ -475,6 +500,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         String contactRingID = getArguments().getString(KEY_CONTACT_RING_ID);
         String accountId = getArguments().getString(KEY_ACCOUNT_ID);
         mAdapter = new ConversationAdapter(this, presenter);
+        mPreferences = getActivity().getSharedPreferences(accountId + "_" + contactRingID, Context.MODE_PRIVATE);
         presenter.init(contactRingID, accountId);
     }
 
