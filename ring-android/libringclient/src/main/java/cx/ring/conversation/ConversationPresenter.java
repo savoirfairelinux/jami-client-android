@@ -58,8 +58,7 @@ import io.reactivex.subjects.Subject;
 public class ConversationPresenter extends RootPresenter<ConversationView> {
 
     private static final String TAG = ConversationPresenter.class.getSimpleName();
-    private ContactService mContactService;
-
+    private final ContactService mContactService;
     private final AccountService mAccountService;
     private final HardwareService mHardwareService;
     private final ConversationFacade mConversationFacade;

@@ -43,8 +43,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
@@ -78,9 +76,6 @@ import cx.ring.utils.GlideOptions;
 import cx.ring.utils.ResourceMapper;
 import cx.ring.utils.StringUtils;
 import cx.ring.views.ConversationViewHolder;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHolder> {
     private final static String TAG = ConversationAdapter.class.getSimpleName();
@@ -256,19 +251,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationViewHo
         if (holder.mPhoto != null)
             holder.mPhoto.setOnLongClickListener(null);
         super.onViewRecycled(holder);
-    }
-
-    private static void runJustBeforeBeingDrawn(final ImageView view, final Runnable runnable) {
-
-        final ViewTreeObserver.OnPreDrawListener preDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                view.getViewTreeObserver().removeOnPreDrawListener(this);
-                runnable.run();
-                return true;
-            }
-        };
-        view.getViewTreeObserver().addOnPreDrawListener(preDrawListener);
     }
 
     public static class RecyclerViewContextMenuInfo implements ContextMenu.ContextMenuInfo {
