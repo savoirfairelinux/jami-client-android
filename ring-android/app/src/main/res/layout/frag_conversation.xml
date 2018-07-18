@@ -3,7 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/grey_25">
+
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_centerInParent="true"
+        android:indeterminate="true" />
 
     <LinearLayout
         android:id="@+id/trustRequestMessageLayout"
@@ -42,6 +50,9 @@
         android:listSelector="@color/transparent"
         android:paddingTop="8dp"
         android:paddingBottom="60dp"
+        android:transcriptMode="normal"
+        app:layoutManager="LinearLayoutManager"
+        app:stackFromEnd="true"
         tools:listitem="@layout/item_conv_msg_peer" />
 
     <LinearLayout
@@ -72,8 +83,9 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="12dp"
         android:padding="0dp"
+        android:visibility="gone"
         app:cardBackgroundColor="#4CAF50"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="@dimen/radius_message_input">
 
         <Button
             android:id="@+id/btnAddContact"
@@ -99,7 +111,7 @@
         android:layout_marginBottom="12dp"
         android:padding="0dp"
         android:visibility="gone"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="@dimen/radius_message_input">
 
         <LinearLayout
             style="?android:attr/buttonBarStyle"
@@ -152,10 +164,11 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="8dp"
         android:visibility="gone"
-        app:cardCornerRadius="8dp"
-        tools:visibility="gone">
+        app:cardCornerRadius="@dimen/radius_message_input"
+        app:cardElevation="6dp"
+        tools:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"

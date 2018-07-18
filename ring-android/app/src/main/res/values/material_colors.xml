@@ -262,9 +262,10 @@
     <color name="orange_A400">#FF9100</color>
     <color name="orange_A700">#FF6D00</color>
 
+    <color name="grey_25">#fdfdfd</color>
     <color name="grey_50">#FAFAFA</color>
     <color name="grey_100">#F5F5F5</color>
-    <color name="grey_200">#EEEEEE</color>
+    <color name="grey_200">#EaEaEa</color>
     <color name="grey_300">#E0E0E0</color>
     <color name="grey_400">#BDBDBD</color>
     <color name="grey_500">#9E9E9E</color>
