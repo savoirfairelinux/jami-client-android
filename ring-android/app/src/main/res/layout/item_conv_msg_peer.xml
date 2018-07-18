@@ -25,12 +25,12 @@ along with this program; if not, write to the Free Software
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
     android:focusable="false"
-    android:paddingBottom="4dp"
-    android:paddingEnd="@dimen/padding_large"
-    android:paddingLeft="@dimen/padding_large"
-    android:paddingRight="@dimen/padding_large"
     android:paddingStart="@dimen/padding_large"
-    android:paddingTop="4dp">
+    android:paddingLeft="@dimen/padding_large"
+    android:paddingTop="4dp"
+    android:paddingEnd="@dimen/padding_large"
+    android:paddingRight="@dimen/padding_large"
+    android:paddingBottom="4dp">
 
     <ImageView
         android:id="@+id/photo"
@@ -54,16 +54,16 @@ along with this program; if not, write to the Free Software
         android:ellipsize="marquee"
         android:focusable="true"
         android:marqueeRepeatLimit="marquee_forever"
-        android:paddingBottom="@dimen/padding_small"
         android:paddingLeft="@dimen/padding_medium"
+        android:paddingTop="5dp"
         android:paddingRight="@dimen/padding_medium"
-        android:paddingTop="@dimen/padding_small"
+        android:paddingBottom="@dimen/padding_small"
         android:scrollHorizontally="true"
         android:singleLine="false"
         android:textColor="@color/text_color_primary"
         android:textIsSelectable="true"
         android:textSize="16sp"
-        tools:text="yo"/>
+        tools:text="yo" />
 
     <TextView
         android:id="@+id/msg_details_txt"
@@ -74,6 +74,6 @@ along with this program; if not, write to the Free Software
         android:layout_toEndOf="@id/photo"
         android:textColor="@color/text_color_secondary"
         android:textSize="14sp"
-        tools:text="@string/message_sending"/>
+        tools:text="@string/time_just_now" />
 
 </RelativeLayout>

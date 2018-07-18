@@ -25,6 +25,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -33,7 +34,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
@@ -141,6 +141,9 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     @BindView(R.id.tvTrustRequestMessage)
     protected TextView mTvTrustRequestMessage;
 
+    @BindView(R.id.pb_loading)
+    protected ProgressBar mLoadingIndicator;
+
     private AlertDialog mDeleteDialog;
     private boolean mDeleteConversation = false;
 
@@ -151,6 +154,9 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     private NumberAdapter mNumberAdapter = null;
 
     private File mCurrentPhoto = null;
+
+    private Handler mHandler = new Handler();
+    private static final int REFRESH_INTERVAL = 10000;
 
     private static int getIndex(Spinner spinner, Uri myString) {
         for (int i = 0, n = spinner.getCount(); i < n; i++)
@@ -165,6 +171,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         if (conversation == null) {
             return;
         }
+        if (mLoadingIndicator != null)
+            mLoadingIndicator.setVisibility(View.GONE);
         if (mAdapter != null) {
             mAdapter.updateDataset(conversation);
         }
@@ -172,9 +180,36 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        restartTimer();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mHandler.removeCallbacks(mRefreshTask);
+
+    }
+
+    private void restartTimer() {
+        mHandler.removeCallbacks(mRefreshTask);
+        mHandler.postDelayed(mRefreshTask, REFRESH_INTERVAL);
+    }
+
+    private final Runnable mRefreshTask = new Runnable() {
+        @Override
+        public void run() {
+            if (mAdapter != null)
+                mAdapter.notifyDataSetChanged();
+            mHandler.postDelayed(mRefreshTask, REFRESH_INTERVAL);
+        }
+    };
+
+    @Override
     public void scrollToEnd() {
         if (mAdapter.getItemCount() > 0) {
-            mHistList.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+            mHistList.scrollToPosition(mAdapter.getItemCount() - 1);
         }
     }
 
@@ -205,14 +240,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             mTopPane.setVisibility(View.GONE);
         }
 
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mLayoutManager.setStackFromEnd(true);
-
-        mHistList.setLayoutManager(mLayoutManager);
-        mHistList.setAdapter(null);
-        SimpleItemAnimator animator = new DefaultItemAnimator();
+        DefaultItemAnimator animator = (DefaultItemAnimator) mHistList.getItemAnimator();
         animator.setSupportsChangeAnimations(false);
-        mHistList.setItemAnimator(animator);
         mHistList.setAdapter(mAdapter);
         setHasOptionsMenu(true);
 
@@ -337,7 +366,9 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     public void addElement(ConversationElement element) {
         mAdapter.add(element);
         scrollToEnd();
+        restartTimer();
     }
+
     @Override
     public void updateElement(ConversationElement element) {
         mAdapter.update(element);
