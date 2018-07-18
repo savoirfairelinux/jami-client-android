@@ -25,11 +25,10 @@ along with this program; if not, write to the Free Software
     android:layout_gravity="end|bottom"
     android:layout_marginBottom="8dp"
     android:layout_marginTop="8dp"
-    android:clickable="true"
     android:descendantFocusability="blocksDescendants"
     android:focusable="false"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:paddingStart="72dp"
+    android:paddingEnd="72dp">
 
     <LinearLayout
         android:layout_width="match_parent"
