@@ -57,7 +57,6 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     private final ContactService mContactService;
     private final ConversationFacade mConversationFacade;
     private final PreferencesService mPreferencesService;
-    private final PresenceService mPresenceService;
     private final DeviceRuntimeService mDeviceRuntimeService;
     private final HardwareService mHardwareService;
 
@@ -79,7 +78,7 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
     @Inject
     public SmartListPresenter(AccountService accountService, ContactService contactService,
                               ConversationFacade conversationFacade,
-                              PresenceService presenceService, PreferencesService sharedPreferencesService,
+                              PreferencesService sharedPreferencesService,
                               DeviceRuntimeService deviceRuntimeService,
                               HardwareService hardwareService,
                               @Named("UiScheduler") Scheduler uiScheduler) {
@@ -87,15 +86,13 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
         mContactService = contactService;
         mConversationFacade = conversationFacade;
         mPreferencesService = sharedPreferencesService;
-        mPresenceService = presenceService;
         mDeviceRuntimeService = deviceRuntimeService;
         mHardwareService = hardwareService;
         mUiScheduler = uiScheduler;
 
         accountSubject = mConversationFacade
                 .getCurrentAccountSubject()
-                .doOnNext(a -> mAccount = a)
-                .share();
+                .doOnNext(a -> mAccount = a);
 
         conversationViews = accountSubject
                 .switchMap(Account::getConversationsViewModels)
@@ -270,26 +267,13 @@ public class SmartListPresenter extends RootPresenter<SmartListView> {
                         .switchMap(Account::getConversationViewModel)
                         .observeOn(mUiScheduler)
                         .subscribe(vm -> {
-                            Log.d(TAG, "getConversationSubject " + vm);
+                            if (mSmartListViewModels == null)
+                                return;
+                            for (int i=0; i<mSmartListViewModels.size(); i++)
+                                if (mSmartListViewModels.get(i).getContact() == vm.getContact())
+                                    mSmartListViewModels.set(i, vm);
                             getView().update(vm);
                         }));
-
-        mConversationDisposable.add(mPresenceService.getPresenceUpdates()
-                .observeOn(mUiScheduler)
-                .subscribe(contact -> {
-                    if (mSmartListViewModels == null)
-                        return;
-                    for (int i=0; i<mSmartListViewModels.size(); i++) {
-                        SmartListViewModel vm = mSmartListViewModels.get(i);
-                        if (vm.getContact() == contact) {
-                            if (vm.isOnline() != contact.isOnline()) {
-                                vm.setOnline(contact.isOnline());
-                                getView().update(i);
-                            }
-                            break;
-                        }
-                    }
-                }));
     }
 
     private List<SmartListViewModel> filter(List<SmartListViewModel> list, String query) {

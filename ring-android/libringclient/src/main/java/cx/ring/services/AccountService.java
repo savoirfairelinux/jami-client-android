@@ -220,6 +220,7 @@ public class AccountService {
                 mHasSipAccount = true;
             } else if (account.isRing()) {
                 mHasRingAccount = true;
+                boolean enabled = account.isEnabled();
 
                 account.setDevices(Ringservice.getKnownRingDevices(accountId).toNative());
                 account.setContacts(Ringservice.getContacts(accountId).toNative());
@@ -228,11 +229,14 @@ public class AccountService {
                     TrustRequest request = new TrustRequest(accountId, requestInfo);
                     account.addRequest(request);
                     // If name is in cache this can be synchronous
-                    lookupAddress(accountId, "", request.getContactId());
+                    if (enabled)
+                        Ringservice.lookupAddress(accountId, "", request.getContactId());
                 }
-                for (CallContact contact : account.getContacts().values()) {
-                    if (StringUtils.isEmpty(contact.getUsername()))
-                        lookupAddress(accountId, "", contact.getPhones().get(0).getNumber().getRawRingId());
+                if (enabled) {
+                    for (CallContact contact : account.getContacts().values()) {
+                        if (!contact.isUsernameLoaded())
+                            Ringservice.lookupAddress(accountId, "", contact.getPrimaryUri().getRawRingId());
+                    }
                 }
             }
         }
@@ -243,7 +247,6 @@ public class AccountService {
                 mCurrentAccount = newAccount;
             }
         }
-        Log.w(TAG, "refreshAccountsCacheFromDaemon accountsSubject.onNext");
         accountsSubject.onNext(mAccountList);
         mAccountsLoaded.set(true);
     }
@@ -469,7 +472,7 @@ public class AccountService {
      * Sets the account details in the Daemon
      */
     public void setAccountDetails(final String accountId, final Map<String, String> map) {
-        Log.i(TAG, "setAccountDetails() " + map.get("Account.hostname"));
+        Log.i(TAG, "setAccountDetails() " + accountId);
         mExecutor.execute(() -> Ringservice.setAccountDetails(accountId, StringMap.toSwig(map)));
     }
 
@@ -1055,33 +1058,26 @@ public class AccountService {
                 VCardUtils.savePeerProfileToDisk(vcard, from + ".vcf", mDeviceRuntimeService.provideFilesDir());
             }
             account.addRequest(request);
-            lookupAddress(accountId, "", from);
+            if (account.isEnabled())
+                lookupAddress(accountId, "", from);
             incomingRequestsSubject.onNext(request);
         }
 
     }
 
     void contactAdded(String accountId, String uri, boolean confirmed) {
-        Log.d(TAG, "contactAdded: " + accountId + ", " + uri + ", " + confirmed);
-
         Account account = getAccount(accountId);
-        if (account == null) {
-            Log.d(TAG, "contactAdded: unknown account" + accountId);
-            return;
+        if (account != null) {
+            account.addContact(uri, confirmed);
+            if (account.isEnabled())
+                lookupAddress(accountId, "", uri);
         }
-        account.addContact(uri, confirmed);
-        lookupAddress(accountId, "", uri);
     }
 
     void contactRemoved(String accountId, String uri, boolean banned) {
-        Log.d(TAG, "contactRemoved: " + accountId + ", " + uri + ", " + banned);
-
         Account account = getAccount(accountId);
-        if (account == null) {
-            Log.d(TAG, "contactRemoved: unknown account" + accountId);
-            return;
-        }
-        account.removeContact(uri, banned);
+        if (account != null)
+            account.removeContact(uri, banned);
     }
 
     void registeredNameFound(String accountId, int state, String address, String name) {

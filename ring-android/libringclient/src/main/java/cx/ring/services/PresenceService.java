@@ -30,6 +30,7 @@ import javax.inject.Named;
 import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.StringVect;
 import cx.ring.daemon.VectMap;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
 import cx.ring.utils.Log;
@@ -48,6 +49,9 @@ public class PresenceService {
 
     @Inject
     ContactService mContactService;
+
+    @Inject
+    AccountService mAccountService;
 
     private final PublishSubject<CallContact> presentSubject = PublishSubject.create();
 
@@ -89,9 +93,8 @@ public class PresenceService {
     }
 
     public void newBuddyNotification(String accountId, String buddyUri, int status, String lineStatus) {
-        CallContact contact = mContactService.findContact(accountId, new Uri(CallContact.PREFIX_RING + buddyUri));
-        contact.setOnline(status == 1);
-        presentSubject.onNext(contact);
+        Account account = mAccountService.getAccount(accountId);
+        account.presenceUpdate(buddyUri, status == 1);
     }
 
     public void subscriptionStateChanged(String accountId, String buddyUri, int state) {
