@@ -547,12 +547,11 @@ public class Account {
     }
 
     public void setContacts(List<Map<String, String>> contacts) {
-        Log.w(TAG, "setContacts");
+        Log.w(TAG, "setContacts " + accountID);
         for (Map<String, String> contact : contacts) {
             addContact(contact);
         }
         contactListSubject.onNext(mContacts.values());
-        conversationChanged();
     }
 
     public List<TrustRequest> getRequests() {
@@ -625,22 +624,20 @@ public class Account {
     }
 
     public void registeredNameFound(int state, String address, String name) {
-        if (state == 0) {
-            Log.w(TAG, "registeredNameFound " + address + " " + name);
-            Uri uri = new Uri(address);
-            CallContact contact = getContactFromCache(uri);
-            if (contact.setUsername(name)) {
-                Log.w(TAG, "username set " + name);
-                String key = uri.getRawUriString();
-                synchronized (conversations) {
-                    Conversation conversation = conversations.get(key);
-                    if (conversation != null)
-                        conversationRefreshed(conversation);
-                }
-                synchronized (pending) {
-                    if (pending.containsKey(key))
-                        pendingRefreshed();
-                }
+        Log.w(TAG, "registeredNameFound " + address + " " + name);
+        Uri uri = new Uri(address);
+        CallContact contact = getContactFromCache(uri);
+        if (contact.setUsername(state == 0 ? name : null)) {
+            Log.w(TAG, "username set " + name);
+            String key = uri.getRawUriString();
+            synchronized (conversations) {
+                Conversation conversation = conversations.get(key);
+                if (conversation != null)
+                    conversationRefreshed(conversation);
+            }
+            synchronized (pending) {
+                if (pending.containsKey(key))
+                    pendingRefreshed();
             }
         }
     }
@@ -757,6 +754,24 @@ public class Account {
             }
         }
         return null;
+    }
+
+    public void presenceUpdate(String contactUri, boolean isOnline) {
+        String key = CallContact.PREFIX_RING + contactUri;
+        CallContact contact = getContactFromCache(key);
+        if (contact.isOnline() == isOnline)
+            return;
+        contact.setOnline(isOnline);
+        synchronized (conversations) {
+            Conversation conversation = conversations.get(key);
+            if (conversation != null) {
+                conversationRefreshed(conversation);
+            }
+        }
+        synchronized (pending) {
+            if (pending.containsKey(key))
+                pendingRefreshed();
+        }
     }
 
     private static class ConversationComparator implements Comparator<Conversation> {

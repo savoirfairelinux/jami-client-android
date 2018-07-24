@@ -57,6 +57,7 @@ public class CallContact {
     private boolean mOnline = false;
 
     public boolean subscribed = false;
+    public boolean usernameLoaded = false;
     public boolean detailsLoaded = false;
     public VCard vcard = null;
 
@@ -306,7 +307,7 @@ public class CallContact {
     public String getRingUsername() {
         if (!StringUtils.isEmpty(mUsername)) {
             return mUsername;
-        } else if (!mPhones.isEmpty()) {
+        } else if (usernameLoaded && !mPhones.isEmpty()) {
             return getPrimaryUri().getRawUriString();
         } else {
             return "";
@@ -318,12 +319,17 @@ public class CallContact {
     }
 
     public boolean setUsername(String name) {
-        if (!name.equals(mUsername)) {
+        if (!usernameLoaded || (name != null && !name.equals(mUsername))) {
             mUsername = name;
+            usernameLoaded = true;
             mContactUpdates.onNext(this);
             return true;
         }
         return false;
+    }
+
+    public boolean isUsernameLoaded() {
+        return usernameLoaded;
     }
 
     private static Tuple<String, byte[]> readVCardContactData(VCard vcard) {
