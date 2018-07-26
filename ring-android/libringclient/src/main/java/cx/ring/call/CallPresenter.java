@@ -227,7 +227,9 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void uiVisibilityChanged(boolean displayed) {
-        getView().displayHangupButton(mOnGoingCall && displayed);
+        CallView view = getView();
+        if (view != null)
+            view.displayHangupButton(mOnGoingCall && displayed);
     }
 
     private void finish() {
