@@ -20,8 +20,6 @@
  */
 package cx.ring.call;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -36,6 +34,7 @@ import cx.ring.services.NotificationService;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
 import io.reactivex.Scheduler;
+import io.reactivex.disposables.Disposable;
 
 public class CallPresenter extends RootPresenter<CallView> {
 
@@ -55,8 +54,8 @@ public class CallPresenter extends RootPresenter<CallView> {
     private int previewWidth = -1;
     private int previewHeight = -1;
 
-    private ScheduledExecutorService executor;
     private Runnable timeRunnable = this::updateTime;
+    private Disposable timeUpdateTask = null;
 
     @Inject
     @Named("UiScheduler")
@@ -232,8 +231,9 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     private void finish() {
-        if (executor != null && !executor.isShutdown()) {
-            executor.shutdown();
+        if (timeUpdateTask != null && !timeUpdateTask.isDisposed()) {
+            timeUpdateTask.dispose();
+            timeUpdateTask = null;
         }
         mSipCall = null;
         getView().finish();
@@ -263,10 +263,9 @@ public class CallPresenter extends RootPresenter<CallView> {
                 mHardwareService.setPreviewSettings();
                 view.displayVideoSurface(true);
             }
-            if (executor == null || executor.isShutdown()) {
-                executor = Executors.newSingleThreadScheduledExecutor();
-                executor.scheduleAtFixedRate(timeRunnable, 0, 1, TimeUnit.SECONDS);
-            }
+            if (timeUpdateTask != null)
+                timeUpdateTask.dispose();
+            timeUpdateTask = mUiScheduler.schedulePeriodicallyDirect(timeRunnable, 0, 1, TimeUnit.SECONDS);
         } else if (mSipCall.isRinging()) {
             if (mSipCall.isIncoming()) {
                 if (mAccountService.getAccount(mSipCall.getAccount()).isAutoanswerEnabled()) {

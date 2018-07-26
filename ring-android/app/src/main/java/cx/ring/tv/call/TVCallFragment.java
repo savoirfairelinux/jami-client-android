@@ -326,7 +326,8 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     @Override
     public void updateTime(final long duration) {
-        getActivity().runOnUiThread(() -> mCallStatusTxt.setText(String.format(Locale.getDefault(), "%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60)));
+        if (mCallStatusTxt != null)
+            mCallStatusTxt.setText(String.format(Locale.getDefault(), "%d:%02d:%02d", duration / 3600, duration % 3600 / 60, duration % 60));
     }
 
     @Override
