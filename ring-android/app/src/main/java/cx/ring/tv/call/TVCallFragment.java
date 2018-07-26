@@ -497,12 +497,24 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
 
     private void handleVisibilityTimer() {
         presenter.uiVisibilityChanged(true);
-        contactBubbleLayout.getHandler().postDelayed(runnable, 5000);
+        View view = getView();
+        if (view != null && runnable != null) {
+            Handler handler = view.getHandler();
+            if (handler != null) {
+                handler.removeCallbacks(runnable);
+                handler.postDelayed(runnable, 5000);
+            }
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        contactBubbleLayout.getHandler().removeCallbacks(runnable);
+        View view = getView();
+        if (view != null && runnable != null) {
+            Handler handler = view.getHandler();
+            if (handler != null)
+                handler.removeCallbacks(runnable);
+        }
     }
 }
