@@ -200,15 +200,17 @@ public class ConversationFacade {
         return updated;
     }
 
-    public void sendTextMessage(String account, Conversation c, Uri to, String txt) {
-        mCallService.sendAccountTextMessage(account, to.getRawUriString(), txt)
-                .subscribe(id -> {
+    public Single<TextMessage> sendTextMessage(String account, Conversation c, Uri to, String txt) {
+        return mCallService.sendAccountTextMessage(account, to.getRawUriString(), txt)
+                .map(id -> {
                     TextMessage message = new TextMessage(false, txt, to, null, account);
                     message.setID(id);
-                    message.read();
+                    if (c.isVisible())
+                        message.read();
                     mHistoryService.insertNewTextMessage(message).subscribe();
                     c.addTextMessage(message);
                     mAccountService.getAccount(account).conversationUpdated(c);
+                    return message;
                 });
     }
 

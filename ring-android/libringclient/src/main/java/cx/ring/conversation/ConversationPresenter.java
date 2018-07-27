@@ -226,7 +226,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         }
         Conference conference = mConversation.getCurrentCall();
         if (conference == null || !conference.isOnGoing()) {
-            mConversationFacade.sendTextMessage(mAccountId, mConversation, mContactRingId, message);
+            mConversationFacade.sendTextMessage(mAccountId, mConversation, mContactRingId, message).subscribe();
         } else {
             mConversationFacade.sendTextMessage(mConversation, conference, message);
         }

@@ -37,6 +37,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.RemoteInput;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Html;
 import android.text.Spanned;
@@ -289,28 +290,40 @@ public class NotificationServiceImpl extends NotificationService {
             last.setNotified(true);
             messageNotificationBuilder.setStyle(null);
         } else {
-            ArrayList<Spanned> txts = new ArrayList<>(3);
-            int i = 0;
-            for (TextMessage textMessage : texts.descendingMap().values()) {
-                if (i == 5)
-                    break;
-                txts.add(0, Html.fromHtml("<b>" + DateUtils.formatDateTime(mContext, textMessage.getDate(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL) + "</b> " + textMessage.getMessage()));
-                textMessage.setNotified(true);
-                i++;
+            NotificationCompat.MessagingStyle history = new NotificationCompat.MessagingStyle(contact.getDisplayName());
+            for (TextMessage textMessage : texts.values()) {
+                history.addMessage(new NotificationCompat.MessagingStyle.Message(
+                        textMessage.getMessage(),
+                        textMessage.getDate(),
+                        textMessage.isIncoming() ? contact.getDisplayName() : "You"));
             }
-            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-            for (Spanned spanned : txts) {
-                inboxStyle.addLine(spanned);
-            }
-            messageNotificationBuilder.setStyle(inboxStyle);
+            messageNotificationBuilder.setStyle(history);
         }
+
+        CharSequence replyLabel = mContext.getText(R.string.notif_reply);
+        RemoteInput remoteInput = new RemoteInput.Builder(DRingService.KEY_TEXT_REPLY)
+                .setLabel(replyLabel)
+                .build();
+        Intent intentReply = new Intent(DRingService.ACTION_CONV_REPLY_INLINE)
+                .setClass(mContext, DRingService.class)
+                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
+                .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+        PendingIntent replyPendingIntent = PendingIntent.getService(mContext, random.nextInt(),
+                        intentReply,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Action action =
+                new NotificationCompat.Action.Builder(R.drawable.baseline_reply_black_24,
+                        replyLabel, replyPendingIntent)
+                        .addRemoteInput(remoteInput)
+                        .build();
+        messageNotificationBuilder.addAction(action);
 
         Intent intentRead = new Intent(DRingService.ACTION_CONV_READ)
                 .setClass(mContext, DRingService.class)
-                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, conversation.getLastAccountUsed())
+                .putExtra(ConversationFragment.KEY_ACCOUNT_ID, accountId)
                 .putExtra(ConversationFragment.KEY_CONTACT_RING_ID, contactId);
+        messageNotificationBuilder.addAction(0, mContext.getString(R.string.notif_dismiss), PendingIntent.getService(mContext, Long.valueOf(System.currentTimeMillis()).intValue(), intentRead, 0));
 
-        messageNotificationBuilder.addAction(0, mContext.getString(R.string.notif_mark_as_read), PendingIntent.getService(mContext, Long.valueOf(System.currentTimeMillis()).intValue(), intentRead, 0));
         int notificationId = getTextNotificationId(contactUri);
         notificationManager.notify(notificationId, messageNotificationBuilder.build());
         mNotificationBuilders.put(notificationId, messageNotificationBuilder);

@@ -39,7 +39,9 @@ import android.os.PowerManager;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.v4.app.RemoteInput;
 import android.support.v4.content.WakefulBroadcastReceiver;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
@@ -61,8 +63,6 @@ import cx.ring.facades.ConversationFacade;
 import cx.ring.fragments.ConversationFragment;
 import cx.ring.model.Account;
 import cx.ring.model.Codec;
-import cx.ring.model.Conversation;
-import cx.ring.model.DataTransfer;
 import cx.ring.model.SipCall;
 import cx.ring.model.Uri;
 import cx.ring.services.AccountService;
@@ -94,10 +94,12 @@ public class DRingService extends Service {
     static public final String ACTION_CONV_READ = BuildConfig.APPLICATION_ID + ".action.CONV_READ";
     static public final String ACTION_CONV_DISMISS = BuildConfig.APPLICATION_ID + ".action.CONV_DISMISS";
     static public final String ACTION_CONV_ACCEPT = BuildConfig.APPLICATION_ID + ".action.CONV_ACCEPT";
+    static public final String ACTION_CONV_REPLY_INLINE = BuildConfig.APPLICATION_ID + ".action.CONV_REPLY";
 
     static public final String ACTION_FILE_ACCEPT = BuildConfig.APPLICATION_ID + ".action.FILE_ACCEPT";
     static public final String ACTION_FILE_CANCEL = BuildConfig.APPLICATION_ID + ".action.FILE_CANCEL";
     static public final String KEY_TRANSFER_ID = "transferId";
+    static public final String KEY_TEXT_REPLY = "textReply";
 
     public static final String ACTION_PUSH_RECEIVED = BuildConfig.APPLICATION_ID + ".action.PUSH_RECEIVED";
     public static final String ACTION_PUSH_TOKEN_CHANGED = BuildConfig.APPLICATION_ID + ".push.PUSH_TOKEN_CHANGED";
@@ -669,8 +671,9 @@ public class DRingService extends Service {
             case ACTION_CONV_READ:
             case ACTION_CONV_ACCEPT:
             case ACTION_CONV_DISMISS:
+            case ACTION_CONV_REPLY_INLINE:
                 if (extras != null) {
-                    handleConvAction(action, extras);
+                    handleConvAction(intent, action, extras);
                 }
                 break;
             case ACTION_FILE_ACCEPT:
@@ -792,7 +795,7 @@ public class DRingService extends Service {
         }
     }
 
-    private void handleConvAction(String action, Bundle extras) {
+    private void handleConvAction(Intent intent, String action, Bundle extras) {
         String accountId = extras.getString(ConversationFragment.KEY_ACCOUNT_ID);
         String ringId = extras.getString(ConversationFragment.KEY_CONTACT_RING_ID);
 
@@ -806,6 +809,20 @@ public class DRingService extends Service {
                 break;
             case ACTION_CONV_DISMISS:
                 break;
+            case ACTION_CONV_REPLY_INLINE: { Bundle remoteInput = RemoteInput.getResultsFromIntent(intent);
+                if (remoteInput != null) {
+                    CharSequence reply = remoteInput.getCharSequence(KEY_TEXT_REPLY);
+                    if (!TextUtils.isEmpty(reply)) {
+                        Uri uri = new Uri(ringId);
+                        String message = reply.toString();
+                        mConversationFacade.startConversation(accountId, uri)
+                                .flatMap(c -> mConversationFacade.sendTextMessage(accountId, c, uri, message)
+                                        .doOnSuccess(msg -> mNotificationService.showTextNotification(accountId, c)))
+                                .subscribe();
+                    }
+                }
+                break;
+            }
             case ACTION_CONV_ACCEPT:
                 startActivity(new Intent(Intent.ACTION_VIEW)
                         .putExtras(extras)
