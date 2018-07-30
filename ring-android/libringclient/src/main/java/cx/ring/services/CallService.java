@@ -304,7 +304,7 @@ public class CallService {
         if (sipCall != null) {
             sipCall.setCallState(callState);
             sipCall.setDetails(Ringservice.getCallDetails(callId).toNative());
-        } else if (callState != SipCall.State.OVER) {
+        } else if (callState != SipCall.State.OVER && callState != SipCall.State.FAILURE) {
             Map<String, String> callDetails = Ringservice.getCallDetails(callId).toNative();
             sipCall = new SipCall(callId, callDetails);
             if (!callDetails.containsKey(SipCall.KEY_PEER_NUMBER)) {
