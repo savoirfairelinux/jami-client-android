@@ -374,6 +374,10 @@ public class ConversationFacade {
 
         Account account = mAccountService.getAccount(call.getAccount());
         Conversation conversation = account.getByUri(call.getContact().getPrimaryUri());
+        if (conversation == null) {
+            Log.e(TAG, "CALL_STATE_CHANGED : can't find conversation for  " + call.getContact().getPrimaryUri());
+            return;
+        }
         Conference conference = conversation.getConference(call.getCallId());
         if (conference == null) {
             if (newState == SipCall.State.OVER)
