@@ -24,12 +24,9 @@ import android.Manifest;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
-import cx.ring.application.RingApplication;
-import cx.ring.model.Account;
 import cx.ring.model.Settings;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
@@ -37,7 +34,6 @@ import cx.ring.services.DeviceRuntimeService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.PreferencesService;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableObserver;
 
 public class LaunchPresenter extends RootPresenter<LaunchView> {
     protected static final String TAG = LaunchPresenter.class.getSimpleName();
@@ -94,6 +90,7 @@ public class LaunchPresenter extends RootPresenter<LaunchView> {
                     mCompositeDisposable.clear();
                 }));
     }
+
     private String[] buildPermissionsToAsk() {
         ArrayList<String> perms = new ArrayList<>();
 
