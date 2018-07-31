@@ -47,16 +47,6 @@ public class GeneralAccountPresenter extends RootPresenter<GeneralAccountView> {
         this.mAccountService = accountService;
     }
 
-    @Override
-    public void unbindView() {
-        super.unbindView();
-    }
-
-    @Override
-    public void bindView(GeneralAccountView view) {
-        super.bindView(view);
-    }
-
     // Init with current account
     public void init() {
         Account currentAccount = mAccountService.getCurrentAccount();
