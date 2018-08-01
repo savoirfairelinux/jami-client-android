@@ -118,7 +118,7 @@
   <string name="clear_history_dialog_message">這個動作無法被復原。</string>
   <string name="clear_history_completed">記錄已經被清除。</string>
   <!--Conversation-->
-  <string name="conversation_action_delete_this">刪除此對話</string>
+  <string name="conversation_action_clear_this">刪除此對話</string>
   <string name="conversation_action_delete_this_title">刪除此對話嗎？</string>
   <string name="conversation_action_delete_this_message">這個動作無法被復原。</string>
   <string name="conversation_action_copy_peer_number">複製號碼</string>

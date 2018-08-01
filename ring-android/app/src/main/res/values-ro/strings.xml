@@ -81,7 +81,7 @@
   <string name="clear_history_dialog_title">Ștergi istoria ?</string>
   <string name="clear_history_completed">Istoria a fost ștearsă</string>
   <!--Conversation-->
-  <string name="conversation_action_delete_this">Șterge aceasta istorie</string>
+  <string name="conversation_action_clear_this">Șterge aceasta istorie</string>
   <!--Contacts-->
   <string name="prompt_new_password">Parolă nouă</string>
   <string name="account_create_title">Crează un cont Ring</string>

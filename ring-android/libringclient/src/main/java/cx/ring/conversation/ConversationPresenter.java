@@ -212,8 +212,8 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         getView().goToAddContact(mConversation.getContact());
     }
 
-    public void deleteAction() {
-        getView().displayDeleteDialog(mConversation);
+    public void clearAction() {
+        getView().displayClearDialog(mConversation);
     }
 
     public void copyToClipboard() {
@@ -287,6 +287,10 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         getView().goToHome();
     }
 
+    public void removeConversation() {
+        getView().displayDeleteDialog(mConversation, mAccountService, mAccountService.getAccount(mAccountId));
+    }
+
     public void clickOnGoingPane() {
         Conference conf = mConversation.getCurrentCall();
         if (conf != null) {
@@ -318,7 +322,7 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
         }
     }
 
-    public void deleteConversation() {
+    public void clearConversation() {
         mConversationFacade.clearHistory(mAccountId, mContactRingId).subscribe();
         getView().goToHome();
     }

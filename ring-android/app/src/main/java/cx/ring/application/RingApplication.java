@@ -27,10 +27,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.support.v7.app.AppCompatDelegate;
+import android.system.ErrnoException;
+import android.system.Os;
 
 import com.bumptech.glide.Glide;
 
@@ -176,6 +179,7 @@ public abstract class RingApplication extends Application {
 
                 if (mPreferencesService.getSettings().isAllowPushNotifications()) {
                     String token = getPushToken();
+
                     Ringservice.setPushNotificationToken(token);
                 } else {
                     Ringservice.setPushNotificationToken("");
@@ -213,6 +217,15 @@ public abstract class RingApplication extends Application {
         super.onCreate();
 
         sInstance = this;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            try {
+                Os.setenv("SIPLOGLEVEL", "6", true);
+                Os.setenv("DHTLOGLEVEL", "3", true);
+            } catch (ErrnoException e) {
+                e.printStackTrace();
+            }
+        }
 
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP)
             AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);

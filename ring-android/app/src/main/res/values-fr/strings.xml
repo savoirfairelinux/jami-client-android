@@ -119,7 +119,7 @@
   <string name="clear_history_dialog_message">Cette action est irréversible.</string>
   <string name="clear_history_completed">Le journal d\'appels a été effacé.</string>
   <!--Conversation-->
-  <string name="conversation_action_delete_this">Supprimer la conversation</string>
+  <string name="conversation_action_clear_this">Supprimer la conversation</string>
   <string name="conversation_action_delete_this_title">Supprimer la conversation ?</string>
   <string name="conversation_action_delete_this_message">Cette action est irréversible.</string>
   <string name="conversation_action_copy_peer_number">Copier le numéro ou identifiant Ring</string>

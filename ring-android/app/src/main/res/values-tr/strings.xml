@@ -101,7 +101,7 @@
   <string name="clear_history_dialog_message">Bu eylem geri alınamaz.</string>
   <string name="clear_history_completed">Geçmiş temizlenmiş.</string>
   <!--Conversation-->
-  <string name="conversation_action_delete_this">Bu konuşmayı sil</string>
+  <string name="conversation_action_clear_this">Bu konuşmayı sil</string>
   <string name="conversation_action_delete_this_title">Bu konuşmayı sil ?</string>
   <string name="conversation_action_delete_this_message">Bu eylem geri alınamaz.</string>
   <string name="conversation_action_copy_peer_number">Numarayı kopyala</string>
