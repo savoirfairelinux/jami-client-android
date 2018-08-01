@@ -77,9 +77,9 @@ public class TVRingLinkAccountFragment extends RingGuidedStepFragment<RingLinkAc
 
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
-        addPasswordAction(actions, PASSWORD, getString(R.string.account_enter_password), "", "");
-        addPasswordAction(actions, PIN, getString(R.string.account_link_prompt_pin), "", "");
-        addDisabledAction(actions, LINK, getString(R.string.account_link_title), "", null, true);
+        addPasswordAction(getActivity(), actions, PASSWORD, getString(R.string.account_enter_password), "", "");
+        addPasswordAction(getActivity(), actions, PIN, getString(R.string.account_link_prompt_pin), "", "");
+        addDisabledAction(getActivity(), actions, LINK, getString(R.string.account_link_title), "", null, true);
     }
 
     @Override
