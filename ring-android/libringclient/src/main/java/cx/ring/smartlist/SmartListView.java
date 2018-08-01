@@ -21,9 +21,11 @@ package cx.ring.smartlist;
 
 import java.util.List;
 
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseView;
+import cx.ring.services.AccountService;
 
 public interface SmartListView extends BaseView {
 
@@ -39,7 +41,9 @@ public interface SmartListView extends BaseView {
 
     void displayConversationDialog(SmartListViewModel smartListViewModel);
 
-    void displayDeleteDialog(CallContact callContact);
+    void displayClearDialog(CallContact callContact);
+
+    void displayDeleteDialog(CallContact callContact, AccountService accountService, Account account);
 
     void copyNumber(CallContact callContact);
 

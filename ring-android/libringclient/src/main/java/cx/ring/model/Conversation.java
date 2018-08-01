@@ -360,7 +360,7 @@ public class Conversation {
 
     public interface ConversationActionCallback {
 
-        void deleteConversation(CallContact callContact);
+        void clearConversation(CallContact callContact);
 
         void copyContactNumberToClipboard(String contactNumber);
 

@@ -71,6 +71,7 @@ import cx.ring.client.HomeActivity;
 import cx.ring.conversation.ConversationPresenter;
 import cx.ring.conversation.ConversationView;
 import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.ConversationElement;
@@ -79,6 +80,7 @@ import cx.ring.model.Phone;
 import cx.ring.model.RingError;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.services.AccountService;
 import cx.ring.services.NotificationService;
 import cx.ring.utils.ActionHelper;
 import cx.ring.utils.AndroidFileUtils;
@@ -103,6 +105,7 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     public static final String KEY_ACCOUNT_ID = BuildConfig.APPLICATION_ID + "ACCOUNT_ID";
     public static final String KEY_PREFERENCE_PENDING_MESSAGE = "pendingMessage";
 
+    private static final String CONVERSATION_CLEAR = "CONVERSATION_CLEAR";
     private static final String CONVERSATION_DELETE = "CONVERSATION_DELETE";
 
     private static final int REQUEST_CODE_FILE_PICKER = 1000;
@@ -144,6 +147,9 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @BindView(R.id.tvTrustRequestMessage)
     protected TextView mTvTrustRequestMessage;
+
+    private AlertDialog mClearDialog;
+    private boolean mClearConversation = false;
 
     private AlertDialog mDeleteDialog;
     private boolean mDeleteConversation = false;
@@ -242,9 +248,13 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         setHasOptionsMenu(true);
 
         // reload delete conversation state (before rotation)
+        mClearConversation = savedInstanceState != null && savedInstanceState.getBoolean(CONVERSATION_CLEAR);
+        if (mClearConversation) {
+            presenter.clearAction();
+        }
         mDeleteConversation = savedInstanceState != null && savedInstanceState.getBoolean(CONVERSATION_DELETE);
         if (mDeleteConversation) {
-            presenter.deleteAction();
+            presenter.removeConversation();
         }
     }
 
@@ -425,6 +435,9 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
 
     @Override
     public void onDestroy() {
+        if (mClearConversation) {
+            mClearDialog.dismiss();
+        }
         if (mDeleteConversation) {
             mDeleteDialog.dismiss();
         }
@@ -437,6 +450,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
         super.onSaveInstanceState(outState);
 
         // persist the delete popup state in case of Activity rotation
+        mClearConversation = mClearDialog != null && mClearDialog.isShowing();
+        outState.putBoolean(CONVERSATION_CLEAR, mClearConversation);
         mDeleteConversation = mDeleteDialog != null && mDeleteDialog.isShowing();
         outState.putBoolean(CONVERSATION_DELETE, mDeleteConversation);
     }
@@ -460,11 +475,14 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
             case R.id.conv_action_videocall:
                 presenter.callWithAudioOnly(false);
                 return true;
-            case R.id.menuitem_delete:
-                presenter.deleteAction();
+            case R.id.menuitem_clean:
+                presenter.clearAction();
                 return true;
             case R.id.menuitem_copy_content:
                 presenter.copyToClipboard();
+                return true;
+            case R.id.menuitem_delete:
+                presenter.removeConversation();
                 return true;
             case R.id.menuitem_block:
                 presenter.blockContact();
@@ -475,8 +493,8 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void deleteConversation(CallContact callContact) {
-        presenter.deleteConversation();
+    public void clearConversation(CallContact callContact) {
+        presenter.clearConversation();
     }
 
     @Override
@@ -539,8 +557,17 @@ public class ConversationFragment extends BaseFragment<ConversationPresenter> im
     }
 
     @Override
-    public void displayDeleteDialog(final Conversation conversation) {
+    public void displayClearDialog(final Conversation conversation) {
+        mClearDialog = ActionHelper.launchClearAction(getActivity(),
+                conversation.getContact(),
+                ConversationFragment.this);
+    }
+
+    @Override
+    public void displayDeleteDialog(final Conversation conversation, final AccountService accountService, final Account account) {
         mDeleteDialog = ActionHelper.launchDeleteAction(getActivity(),
+                accountService,
+                account,
                 conversation.getContact(),
                 ConversationFragment.this);
     }
