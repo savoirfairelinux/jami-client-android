@@ -125,11 +125,11 @@ public class TVRingAccountCreationFragment
 
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
-        addEditTextAction(actions, USERNAME, getString(R.string.register_username), getString(R.string.prompt_new_username), "");
-        addDisabledAction(actions, CHECK, "", "", null);
-        addPasswordAction(actions, PASSWORD, getString(R.string.prompt_new_password_optional), getString(R.string.enter_password), "");
-        addPasswordAction(actions, PASSWORD_CONFIRMATION, getString(R.string.prompt_new_password_repeat), getString(R.string.enter_password), "");
-        addDisabledAction(actions, CONTINUE, getString(R.string.action_create), "", null, true);
+        addEditTextAction(getActivity(), actions, USERNAME, getString(R.string.register_username), getString(R.string.prompt_new_username), "");
+        addDisabledAction(getActivity(), actions, CHECK, "", "", null);
+        addPasswordAction(getActivity(), actions, PASSWORD, getString(R.string.prompt_new_password_optional), getString(R.string.enter_password), "");
+        addPasswordAction(getActivity(), actions, PASSWORD_CONFIRMATION, getString(R.string.prompt_new_password_repeat), getString(R.string.enter_password), "");
+        addDisabledAction(getActivity(), actions, CONTINUE, getString(R.string.action_create), "", null, true);
     }
 
     @Override
