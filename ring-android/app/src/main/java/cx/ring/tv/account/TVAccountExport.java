@@ -77,7 +77,7 @@ public class TVAccountExport
 
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
-        addPasswordAction(actions, PASSWORD, getString(R.string.account_enter_password), "", "");
+        addPasswordAction(getActivity(), actions, PASSWORD, getString(R.string.account_enter_password), "", "");
     }
 
     @Override

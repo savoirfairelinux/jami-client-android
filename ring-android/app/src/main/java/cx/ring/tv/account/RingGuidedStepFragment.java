@@ -17,6 +17,7 @@
  */
 package cx.ring.tv.account;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v17.leanback.app.GuidedStepFragment;
@@ -37,15 +38,15 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
     @Inject
     protected T presenter;
 
-    protected static void addAction(List<GuidedAction> actions, long id, String title, String desc) {
-        actions.add(new GuidedAction.Builder()
+    protected static void addAction(Context context, List<GuidedAction> actions, long id, String title, String desc) {
+        actions.add(new GuidedAction.Builder(context)
                 .id(id)
                 .title(title)
                 .description(desc)
                 .build());
     }
-    protected static void addAction(List<GuidedAction> actions, long id, String title, String desc, boolean next) {
-        actions.add(new GuidedAction.Builder()
+    protected static void addAction(Context context, List<GuidedAction> actions, long id, String title, String desc, boolean next) {
+        actions.add(new GuidedAction.Builder(context)
                 .id(id)
                 .title(title)
                 .description(desc)
@@ -53,8 +54,8 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
                 .build());
     }
 
-    protected static void addDisabledAction(List<GuidedAction> actions, long id, String title, String desc) {
-        actions.add(new GuidedAction.Builder()
+    protected static void addDisabledAction(Context context, List<GuidedAction> actions, long id, String title, String desc) {
+        actions.add(new GuidedAction.Builder(context)
                 .id(id)
                 .title(title)
                 .description(desc)
@@ -62,8 +63,8 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
                 .build());
     }
 
-    protected static void addDisabledAction(List<GuidedAction> actions, long id, String title, String desc, Drawable icon) {
-        actions.add(new GuidedAction.Builder()
+    protected static void addDisabledAction(Context context, List<GuidedAction> actions, long id, String title, String desc, Drawable icon) {
+        actions.add(new GuidedAction.Builder(context)
                 .id(id)
                 .title(title)
                 .description(desc)
@@ -71,8 +72,8 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
                 .icon(icon)
                 .build());
     }
-    protected static void addDisabledAction(List<GuidedAction> actions, long id, String title, String desc, Drawable icon,boolean next) {
-        actions.add(new GuidedAction.Builder()
+    protected static void addDisabledAction(Context context, List<GuidedAction> actions, long id, String title, String desc, Drawable icon,boolean next) {
+        actions.add(new GuidedAction.Builder(context)
                 .id(id)
                 .title(title)
                 .description(desc)
@@ -82,10 +83,10 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
                 .build());
     }
 
-    protected static void addEditTextAction(List<GuidedAction> actions, long id,
+    protected static void addEditTextAction(Context context, List<GuidedAction> actions, long id,
                                             String title, String desc, String editdesc) {
         actions.add(
-                new GuidedAction.Builder()
+                new GuidedAction.Builder(context)
                         .id(id)
                         .title(title)
                         .description(desc)
@@ -95,10 +96,10 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
                         .build());
     }
 
-    protected static void addPasswordAction(List<GuidedAction> actions, long id,
+    protected static void addPasswordAction(Context context, List<GuidedAction> actions, long id,
                                             String title, String desc, String editdesc) {
         actions.add(
-                new GuidedAction.Builder()
+                new GuidedAction.Builder(context)
                         .id(id)
                         .title(title)
                         .description(desc)

@@ -129,9 +129,9 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
         String desc = getString(R.string.account_edit_profile);
         String editdesc = getString(R.string.profile_name_hint);
-        addEditTextAction(actions, USER_NAME, desc, editdesc, "");
-        addAction(actions, CAMERA, getActivity().getResources().getString(R.string.take_a_photo), "");
-        addAction(actions, GALLERY, getActivity().getResources().getString(R.string.open_the_gallery), "");
+        addEditTextAction(getActivity(), actions, USER_NAME, desc, editdesc, "");
+        addAction(getActivity(), actions, CAMERA, getActivity().getResources().getString(R.string.take_a_photo), "");
+        addAction(getActivity(), actions, GALLERY, getActivity().getResources().getString(R.string.open_the_gallery), "");
         this.actions = actions;
     }
 
