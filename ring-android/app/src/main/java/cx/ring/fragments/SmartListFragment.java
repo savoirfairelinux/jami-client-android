@@ -296,8 +296,13 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void deleteConversation(CallContact callContact) {
-        presenter.deleteConversation(callContact);
+    public void removeConversation(CallContact callContact) {
+        presenter.removeConversation(callContact);
+    }
+
+    @Override
+    public void clearConversation(CallContact callContact) {
+        presenter.clearConversation(callContact);
     }
 
     @Override
@@ -406,15 +411,23 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                         case ActionHelper.ACTION_COPY:
                             presenter.copyNumber(smartListViewModel);
                             break;
+                        case ActionHelper.ACTION_CLEAR:
+                            presenter.clearConversation(smartListViewModel);
+                            break;
                         case ActionHelper.ACTION_DELETE:
-                            presenter.deleteConversation(smartListViewModel);
+                            presenter.removeConversation(smartListViewModel);
                             break;
                         case ActionHelper.ACTION_BLOCK:
-                            presenter.removeContact(smartListViewModel);
+                            presenter.banContact(smartListViewModel);
                             break;
                     }
                 })
                 .show();
+    }
+
+    @Override
+    public void displayClearDialog(CallContact callContact) {
+        ActionHelper.launchClearAction(getActivity(), callContact, SmartListFragment.this);
     }
 
     @Override

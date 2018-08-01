@@ -39,6 +39,8 @@ public interface SmartListView extends BaseView {
 
     void displayConversationDialog(SmartListViewModel smartListViewModel);
 
+    void displayClearDialog(CallContact callContact);
+
     void displayDeleteDialog(CallContact callContact);
 
     void copyNumber(CallContact callContact);

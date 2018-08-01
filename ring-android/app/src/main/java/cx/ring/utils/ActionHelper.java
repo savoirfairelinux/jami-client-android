@@ -39,10 +39,38 @@ public class ActionHelper {
 
     public static final String TAG = ActionHelper.class.getSimpleName();
     public static final int ACTION_COPY = 0;
-    public static final int ACTION_DELETE = 1;
-    public static final int ACTION_BLOCK = 2;
+    public static final int ACTION_CLEAR = 1;
+    public static final int ACTION_DELETE = 2;
+    public static final int ACTION_BLOCK = 3;
 
     private ActionHelper() {
+    }
+
+    public static AlertDialog launchClearAction(final Context context,
+                                                 final CallContact callContact,
+                                                 final Conversation.ConversationActionCallback callback) {
+        if (context == null) {
+            Log.d(TAG, "launchClearAction: activity is null");
+            return null;
+        }
+
+        if (callContact == null) {
+            Log.d(TAG, "launchClearAction: conversation is null");
+            return null;
+        }
+
+        return new AlertDialog.Builder(context)
+                .setTitle(R.string.conversation_action_delete_this_title)
+                .setMessage(R.string.conversation_action_delete_this_message)
+                .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
+                    if (callback != null) {
+                        callback.clearConversation(callContact);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
+                    /* Terminate with no action */
+                })
+                .show();
     }
 
     public static AlertDialog launchDeleteAction(final Context context,
@@ -59,11 +87,11 @@ public class ActionHelper {
         }
 
         return new AlertDialog.Builder(context)
-                .setTitle(R.string.conversation_action_delete_this_title)
-                .setMessage(R.string.conversation_action_delete_this_message)
+                .setTitle(R.string.conversation_action_remove_this_title)
+                .setMessage(R.string.conversation_action_remove_this_message)
                 .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
                     if (callback != null) {
-                        callback.deleteConversation(callContact);
+                        callback.removeConversation(callContact);
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, (dialog, whichButton) -> {
