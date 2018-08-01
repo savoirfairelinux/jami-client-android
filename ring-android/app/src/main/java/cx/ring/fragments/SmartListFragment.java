@@ -63,9 +63,11 @@ import cx.ring.client.HomeActivity;
 import cx.ring.client.QRCodeScannerActivity;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.mvp.BaseFragment;
+import cx.ring.services.AccountService;
 import cx.ring.smartlist.SmartListPresenter;
 import cx.ring.smartlist.SmartListView;
 import cx.ring.smartlist.SmartListViewModel;
@@ -296,8 +298,13 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void deleteConversation(CallContact callContact) {
-        presenter.deleteConversation(callContact);
+    public void removeConversation(CallContact callContact) {
+        presenter.removeConversation(callContact);
+    }
+
+    @Override
+    public void clearConversation(CallContact callContact) {
+        presenter.clearConversation(callContact);
     }
 
     @Override
@@ -406,11 +413,14 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
                         case ActionHelper.ACTION_COPY:
                             presenter.copyNumber(smartListViewModel);
                             break;
+                        case ActionHelper.ACTION_CLEAR:
+                            presenter.clearConversation(smartListViewModel);
+                            break;
                         case ActionHelper.ACTION_DELETE:
-                            presenter.deleteConversation(smartListViewModel);
+                            presenter.removeConversation(smartListViewModel);
                             break;
                         case ActionHelper.ACTION_BLOCK:
-                            presenter.removeContact(smartListViewModel);
+                            presenter.banContact(smartListViewModel);
                             break;
                     }
                 })
@@ -418,8 +428,13 @@ public class SmartListFragment extends BaseFragment<SmartListPresenter> implemen
     }
 
     @Override
-    public void displayDeleteDialog(CallContact callContact) {
-        ActionHelper.launchDeleteAction(getActivity(), callContact, SmartListFragment.this);
+    public void displayClearDialog(CallContact callContact) {
+        ActionHelper.launchClearAction(getActivity(), callContact, SmartListFragment.this);
+    }
+
+    @Override
+    public void displayDeleteDialog(CallContact callContact, AccountService accountService, Account account) {
+        ActionHelper.launchDeleteAction(getActivity(), accountService, account, callContact, SmartListFragment.this);
     }
 
     @Override

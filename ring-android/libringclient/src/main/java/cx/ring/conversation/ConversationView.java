@@ -22,12 +22,14 @@ package cx.ring.conversation;
 import java.io.File;
 import java.util.List;
 
+import cx.ring.model.Account;
 import cx.ring.model.CallContact;
 import cx.ring.model.Conversation;
 import cx.ring.model.ConversationElement;
 import cx.ring.model.DataTransfer;
 import cx.ring.model.Uri;
 import cx.ring.mvp.BaseView;
+import cx.ring.services.AccountService;
 
 public interface ConversationView extends BaseView {
 
@@ -43,7 +45,9 @@ public interface ConversationView extends BaseView {
 
     void displayNumberSpinner(Conversation conversation, Uri number);
 
-    void displayDeleteDialog(Conversation conversation);
+    void displayClearDialog(Conversation conversation);
+
+    void displayDeleteDialog(Conversation conversation, AccountService accountService, Account account);
 
     void displayCopyToClipboard(CallContact callContact);
 
