@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55fa788c_cb5fb2dc",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/ActionHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-08-02T19:54:51Z",
+      "side": 1,
+      "message": "unused",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 71
+      },
+      "revId": "1aafb3881d9e992b6cc3e10465c19af91c20faa6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d6d082_f6a1c520",
+        "filename": "ring-android/libringclient/src/main/java/cx/ring/conversation/ConversationPresenter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-08-02T19:54:51Z",
+      "side": 1,
+      "message": "factorize business logic in ConversationFacade",
+      "range": {
+        "startLine": 295,
+        "startChar": 8,
+        "endLine": 296,
+        "endChar": 83
+      },
+      "revId": "1aafb3881d9e992b6cc3e10465c19af91c20faa6",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
