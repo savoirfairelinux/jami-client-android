@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0af1a27_5674360f",
+        "filename": "ring-android/app/src/main/java/cx/ring/application/RingApplication.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-08-02T14:45:30Z",
+      "side": 1,
+      "message": "unrelated",
+      "range": {
+        "startLine": 221,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 9
+      },
+      "revId": "e5f3f711317eda19eafb2ed716364cd03ae06f3e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047b8fdb_4f96ee51",
+        "filename": "ring-android/app/src/main/java/cx/ring/utils/ActionHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-08-02T14:45:30Z",
+      "side": 1,
+      "message": "add method to ConversationActionCallback",
+      "range": {
+        "startLine": 99,
+        "startChar": 24,
+        "endLine": 99,
+        "endChar": 52
+      },
+      "revId": "e5f3f711317eda19eafb2ed716364cd03ae06f3e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5816c9_466a7fef",
+        "filename": "ring-android/app/src/main/res/values-fr/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 6
+      },
+      "writtenOn": "2018-08-02T14:45:30Z",
+      "side": 1,
+      "message": "One does not simply change a translation key. Create a new string instead.",
+      "range": {
+        "startLine": 122,
+        "startChar": 16,
+        "endLine": 122,
+        "endChar": 46
+      },
+      "revId": "e5f3f711317eda19eafb2ed716364cd03ae06f3e",
+      "serverId": "1e26b4c1-6b8c-47ff-9df7-501b633d3b5a",
+      "unresolved": true
+    }
+  ]
+}
