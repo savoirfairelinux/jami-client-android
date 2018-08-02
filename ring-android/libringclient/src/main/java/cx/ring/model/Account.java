@@ -33,6 +33,7 @@ import java.util.Set;
 import cx.ring.smartlist.SmartListViewModel;
 import cx.ring.utils.Log;
 import cx.ring.utils.StringUtils;
+import ezvcard.VCard;
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
@@ -75,6 +76,7 @@ public class Account {
     private final BehaviorSubject<Collection<CallContact>> contactListSubject = BehaviorSubject.create();
     private final BehaviorSubject<Collection<TrustRequest>> trustRequestsSubject = BehaviorSubject.create();
     public Subject<Account> historyLoader;
+    private VCard mProfile;
 
     public Account(String bAccountID) {
         accountID = bAccountID;
@@ -772,6 +774,14 @@ public class Account {
             if (pending.containsKey(key))
                 pendingRefreshed();
         }
+    }
+
+    public void setProfile(VCard vcard) {
+        mProfile = vcard;
+    }
+
+    public VCard getProfile() {
+        return mProfile;
     }
 
     private static class ConversationComparator implements Comparator<Conversation> {

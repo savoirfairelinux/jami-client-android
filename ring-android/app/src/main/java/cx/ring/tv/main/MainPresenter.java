@@ -46,11 +46,10 @@ public class MainPresenter extends RootPresenter<MainView> {
 
     private static final String TAG = MainPresenter.class.getSimpleName();
 
-    private AccountService mAccountService;
-    private ContactService mContactService;
-    private final ConversationFacade mConversationFacade;
-    private PresenceService mPresenceService;
-    private HardwareService mHardwareService;
+    private final AccountService mAccountService;
+    private final ContactService mContactService;
+    private final PresenceService mPresenceService;
+    private final HardwareService mHardwareService;
     private List<TVListViewModel> mTvListViewModels;
 
     private final Scheduler mUiScheduler;
@@ -69,10 +68,9 @@ public class MainPresenter extends RootPresenter<MainView> {
         mContactService = contactService;
         mPresenceService = presenceService;
         mHardwareService = hardwareService;
-        mConversationFacade = conversationFacade;
         mUiScheduler = uiScheduler;
 
-        accountSubject = mConversationFacade
+        accountSubject = conversationFacade
                 .getCurrentAccountSubject();
 
         conversationViews = accountSubject
@@ -85,7 +83,6 @@ public class MainPresenter extends RootPresenter<MainView> {
                             return viewModel;
                         }))
                 .observeOn(mUiScheduler);
-
     }
 
     @Override
@@ -134,6 +131,8 @@ public class MainPresenter extends RootPresenter<MainView> {
                 .observeOn(mUiScheduler)
                 .subscribe(vm -> {
                     Log.d(TAG, "getConversationSubject " + vm);
+                    if (mTvListViewModels == null)
+                        return;
                     for (int i=0; i<mTvListViewModels.size(); i++) {
                         if (mTvListViewModels.get(i).getContact() == vm.getContact()) {
                             getView().refreshContact(i, vm);
@@ -185,14 +184,13 @@ public class MainPresenter extends RootPresenter<MainView> {
             Log.e(TAG, "reloadAccountInfos: No account service available");
             return;
         }
-        String displayableAddress = null;
-        List<Account> accounts = mAccountService.getAccounts();
-        for (Account account : accounts) {
-            displayableAddress = account.getDisplayUri();
-        }
-
-        RingNavigationViewModel viewModel = new RingNavigationViewModel(mAccountService.getCurrentAccount(), accounts);
-        getView().displayAccountInfos(displayableAddress, viewModel);
+        mCompositeDisposable.add(mAccountService.getProfileAccountList()
+                .observeOn(mUiScheduler)
+                .subscribe(accounts -> {
+                    Account account = accounts.isEmpty() ? null : accounts.get(0);
+                    RingNavigationViewModel viewModel = new RingNavigationViewModel(account, accounts);
+                    getView().displayAccountInfos(account == null ? null : account.getDisplayUri(), viewModel);
+                }));
     }
 
     public void onExportClicked() {

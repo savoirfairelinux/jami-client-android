@@ -21,6 +21,7 @@ package cx.ring.navigation;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -59,7 +60,6 @@ import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.model.Account;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.utils.BitmapUtils;
-import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.Photo;
@@ -119,9 +119,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
 
     @Override
     public void onAccountSelected(Account selectedAccount) {
-
         toggleAccountList();
-
         presenter.setAccountOrder(selectedAccount);
 
         if (mSectionListener != null) {
@@ -146,12 +144,6 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        presenter.updateUser();
-    }
-
-    @Override
     public int getLayout() {
         return R.layout.frag_navigation;
     }
@@ -168,20 +160,21 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         setupNavigationMenu();
         setupAccountList();
         if (savedInstanceState != null) {
-            if (getFragmentManager().findFragmentByTag(HomeActivity.CONTACT_REQUESTS_TAG) != null &&
-                    getFragmentManager().findFragmentByTag(HomeActivity.CONTACT_REQUESTS_TAG).isAdded()) {
+            FragmentManager fm = getFragmentManager();
+            if (fm.findFragmentByTag(HomeActivity.CONTACT_REQUESTS_TAG) != null &&
+                    fm.findFragmentByTag(HomeActivity.CONTACT_REQUESTS_TAG).isAdded()) {
                 selectSection(Section.CONTACT_REQUESTS);
-            } else if (getFragmentManager().findFragmentByTag(HomeActivity.ACCOUNTS_TAG) != null &&
-                    getFragmentManager().findFragmentByTag(HomeActivity.ACCOUNTS_TAG).isAdded()) {
+            } else if (fm.findFragmentByTag(HomeActivity.ACCOUNTS_TAG) != null &&
+                    fm.findFragmentByTag(HomeActivity.ACCOUNTS_TAG).isAdded()) {
                 selectSection(RingNavigationFragment.Section.MANAGE);
-            } else if (getFragmentManager().findFragmentByTag(HomeActivity.SETTINGS_TAG) != null &&
-                    getFragmentManager().findFragmentByTag(HomeActivity.SETTINGS_TAG).isAdded()) {
+            } else if (fm.findFragmentByTag(HomeActivity.SETTINGS_TAG) != null &&
+                    fm.findFragmentByTag(HomeActivity.SETTINGS_TAG).isAdded()) {
                 selectSection(RingNavigationFragment.Section.SETTINGS);
-            } else if (getFragmentManager().findFragmentByTag(HomeActivity.SHARE_TAG) != null &&
-                    getFragmentManager().findFragmentByTag(HomeActivity.SHARE_TAG).isAdded()) {
+            } else if (fm.findFragmentByTag(HomeActivity.SHARE_TAG) != null &&
+                    fm.findFragmentByTag(HomeActivity.SHARE_TAG).isAdded()) {
                 selectSection(RingNavigationFragment.Section.SHARE);
-            } else if (getFragmentManager().findFragmentByTag(HomeActivity.ABOUT_TAG) != null &&
-                    getFragmentManager().findFragmentByTag(HomeActivity.ABOUT_TAG).isAdded()) {
+            } else if (fm.findFragmentByTag(HomeActivity.ABOUT_TAG) != null &&
+                    fm.findFragmentByTag(HomeActivity.ABOUT_TAG).isAdded()) {
                 selectSection(RingNavigationFragment.Section.ABOUT);
             } else {
                 selectSection(RingNavigationFragment.Section.HOME);
@@ -236,8 +229,8 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         }
     }
 
-    public void updateUserView(final VCard vcard, final Account account) {
-        if (getActivity() == null || vcard == null) {
+    private void updateUserView(final VCard vcard, final Account account) {
+        if (getActivity() == null || vcard == null || account == null) {
             Log.e(TAG, "Not able to update navigation view");
             return;
         }
@@ -309,8 +302,8 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
         builder.setView(view);
         builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel());
         builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
             if (mSourcePhoto != null && mProfilePhoto.getDrawable() != ResourcesCompat.getDrawable(getResources(), R.drawable.ic_contact_picture_fallback, null)) {
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 mSourcePhoto.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
                 AvatarFactory.clearCache();
@@ -364,7 +357,7 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
     @Override
     public void showViewModel(final RingNavigationViewModel viewModel) {
         mAccountAdapter.replaceAll(viewModel.getAccounts());
-        updateUserView(viewModel.getVcard(getActivity().getFilesDir()), viewModel.getAccount());
+        updateUserView(viewModel.getVcard(), viewModel.getAccount());
         updateSelectedAccountView(viewModel.getAccount());
         if (viewModel.getAccounts().isEmpty()) {
             mNewAccountBtn.setVisibility(View.VISIBLE);

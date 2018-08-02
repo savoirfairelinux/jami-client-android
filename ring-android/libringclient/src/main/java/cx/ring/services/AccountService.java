@@ -120,6 +120,10 @@ public class AccountService {
     private final Subject<DataTransfer> dataTransferSubject = PublishSubject.create();
     private final Subject<TrustRequest> incomingRequestsSubject = PublishSubject.create();
 
+    public void refreshAccounts() {
+        accountsSubject.onNext(mAccountList);
+    }
+
     public class RegisteredName {
         public String accountId;
         public String name;
@@ -378,6 +382,31 @@ public class AccountService {
         return accountsSubject;
     }
 
+    private Single<List<Account>> loadAccountProfiles(List<Account> accounts) {
+        if (accounts.isEmpty())
+            return Single.just(accounts);
+        List<Single<Account>> loadedAccounts = new ArrayList<>(accounts.size());
+        for (Account account : accounts)
+            loadedAccounts.add(loadAccountProfile(account));
+        return Single.concatEager(loadedAccounts).toList(accounts.size());
+    }
+
+    public Observable<List<Account>> getProfileAccountList() {
+        return accountsSubject.concatMapSingle(this::loadAccountProfiles);
+    }
+
+    private Single<Account> loadAccountProfile(Account account) {
+        if (account.getProfile() == null)
+            return VCardUtils.loadLocalProfileFromDisk(mDeviceRuntimeService.provideFilesDir(), account.getAccountID())
+                    .subscribeOn(Schedulers.io())
+                    .map(vCard -> {
+                        account.setProfile(vCard);
+                        return account;
+                    });
+        else
+            return Single.just(account);
+    }
+
     public Subject<Account> getObservableAccounts() {
         return accountSubject;
     }
@@ -397,7 +426,7 @@ public class AccountService {
      * Send profile through SIP
      */
     public void sendProfile(final String callId, final String accountId) {
-        Single.fromCallable(() -> mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_SIP))
+        mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_SIP)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(Schedulers.from(mExecutor))
                 .subscribe(vcard -> {
