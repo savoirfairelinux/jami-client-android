@@ -26,7 +26,6 @@ import java.io.File;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import cx.ring.facades.ConversationFacade;
 import cx.ring.model.Account;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
@@ -40,6 +39,7 @@ import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
 import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 
 public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
 
@@ -47,7 +47,6 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
 
     private AccountService mAccountService;
     private DeviceRuntimeService mDeviceRuntimeService;
-    private ConversationFacade mConversationFacade;
 
     @Inject
     @Named("UiScheduler")
@@ -55,70 +54,66 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
 
     @Inject
     public RingNavigationPresenter(AccountService accountService,
-                                   DeviceRuntimeService deviceRuntimeService,
-                                   ConversationFacade conversationFacade) {
-        this.mAccountService = accountService;
-        this.mDeviceRuntimeService = deviceRuntimeService;
-        this.mConversationFacade = conversationFacade;
+                                   DeviceRuntimeService deviceRuntimeService) {
+        mAccountService = accountService;
+        mDeviceRuntimeService = deviceRuntimeService;
     }
 
     @Override
     public void bindView(RingNavigationView view) {
         super.bindView(view);
-        mCompositeDisposable.add(mAccountService.getObservableAccounts()
+        mCompositeDisposable.add(mAccountService.getProfileAccountList()
                 .observeOn(mUiScheduler)
-                .subscribe(r -> updateUser()));
-        mCompositeDisposable.add(mAccountService.getCurrentAccountSubject()
-                .observeOn(mUiScheduler)
-                .subscribe(r -> updateUser()));
-    }
-
-    @Override
-    public void unbindView() {
-        super.unbindView();
-    }
-
-    public void updateUser() {
-        if (getView() == null) {
-            return;
-        }
-
-        Account currentAccount = mAccountService.getCurrentAccount();
-        getView().showViewModel(new RingNavigationViewModel(currentAccount, mAccountService.getAccounts()));
+                .subscribe(accounts -> {
+                    RingNavigationView v = getView();
+                    if (v != null)
+                        v.showViewModel(new RingNavigationViewModel(accounts.isEmpty() ? null : accounts.get(0), accounts));
+                }));
     }
 
     public void setAccountOrder(Account selectedAccount) {
-        if (getView() == null) {
-            return;
-        }
         mAccountService.setCurrentAccount(selectedAccount);
     }
 
     public void saveVCardPhoto(Photo photo) {
-        String accountId = mAccountService.getCurrentAccount().getAccountID();
-        String ringId = mAccountService.getCurrentAccount().getUsername();
+        Account account = mAccountService.getCurrentAccount();
+        String accountId = account.getAccountID();
+        String ringId = account.getUsername();
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
-        VCard vcard = VCardUtils.loadLocalProfileFromDisk(filesDir, accountId);
-        vcard.setUid(new Uid(ringId));
-        vcard.removeProperties(Photo.class);
-        vcard.addPhoto(photo);
-        vcard.removeProperties(RawProperty.class);
-        VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir);
-
-        updateUser();
+        mCompositeDisposable.add(VCardUtils
+                .loadLocalProfileFromDisk(filesDir, accountId)
+                .doOnSuccess(vcard -> {
+                    vcard.setUid(new Uid(ringId));
+                    vcard.removeProperties(Photo.class);
+                    vcard.addPhoto(photo);
+                    vcard.removeProperties(RawProperty.class);
+                })
+                .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir))
+                .subscribeOn(Schedulers.io())
+                .subscribe(vcard -> {
+                    account.setProfile(vcard);
+                    mAccountService.refreshAccounts();
+                }));
     }
 
     public void saveVCardFormattedName(String username) {
-        String accountId = mAccountService.getCurrentAccount().getAccountID();
+        Account account = mAccountService.getCurrentAccount();
+        String accountId = account.getAccountID();
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
-        VCard vcard = VCardUtils.loadLocalProfileFromDisk(filesDir, accountId);
-        vcard.setFormattedName(username);
-        vcard.removeProperties(RawProperty.class);
-        VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir);
-
-        updateUser();
+        mCompositeDisposable.add(VCardUtils
+                .loadLocalProfileFromDisk(filesDir, accountId)
+                .doOnSuccess(vcard -> {
+                    vcard.setFormattedName(username);
+                    vcard.removeProperties(RawProperty.class);
+                })
+                .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir))
+                .subscribeOn(Schedulers.io())
+                .subscribe(vcard -> {
+                    account.setProfile(vcard);
+                    mAccountService.refreshAccounts();
+                }));
     }
 
     public void saveVCard(Account account, String username, Photo photo) {
@@ -126,22 +121,25 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
         String ringId = account.getUsername();
         File filesDir = mDeviceRuntimeService.provideFilesDir();
 
-        VCard vcard = VCardUtils.loadLocalProfileFromDisk(filesDir, accountId);
-        vcard.setUid(new Uid(ringId));
-
-        if (photo != null) {
-            vcard.removeProperties(Photo.class);
-            vcard.addPhoto(photo);
-        }
-
-        if (!StringUtils.isEmpty(username)) {
-            vcard.setFormattedName(username);
-        }
-
-        vcard.removeProperties(RawProperty.class);
-        VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir);
-
-        updateUser();
+        mCompositeDisposable.add(VCardUtils
+                .loadLocalProfileFromDisk(filesDir, accountId)
+                .doOnSuccess(vcard -> {
+                    vcard.setUid(new Uid(ringId));
+                    if (photo != null) {
+                        vcard.removeProperties(Photo.class);
+                        vcard.addPhoto(photo);
+                    }
+                    if (!StringUtils.isEmpty(username)) {
+                        vcard.setFormattedName(username);
+                    }
+                    vcard.removeProperties(RawProperty.class);
+                })
+                .flatMap(vcard -> VCardUtils.saveLocalProfileToDisk(vcard, accountId, filesDir))
+                .subscribeOn(Schedulers.io())
+                .subscribe(vcard -> {
+                    account.setProfile(vcard);
+                    mAccountService.refreshAccounts();
+                }));
     }
 
     public String getAlias(Account account) {
@@ -149,12 +147,14 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
             Log.e(TAG, "Not able to get alias");
             return null;
         }
-        VCard vcard = VCardUtils.loadLocalProfileFromDisk(mDeviceRuntimeService.provideFilesDir(), account.getAccountID());
-        FormattedName name = vcard.getFormattedName();
-        if (name != null) {
-            String name_value = name.getValue();
-            if (name_value != null && !name_value.isEmpty()) {
-                return name_value;
+        VCard vcard = account.getProfile();
+        if (vcard != null) {
+            FormattedName name = vcard.getFormattedName();
+            if (name != null) {
+                String name_value = name.getValue();
+                if (name_value != null && !name_value.isEmpty()) {
+                    return name_value;
+                }
             }
         }
         return null;

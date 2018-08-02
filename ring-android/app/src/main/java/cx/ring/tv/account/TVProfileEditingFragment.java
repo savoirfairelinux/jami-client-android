@@ -108,7 +108,6 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ((RingApplication) getActivity().getApplication()).getRingInjectionComponent().inject(this);
         super.onViewCreated(view, savedInstanceState);
-        presenter.updateUser();
     }
 
     @Override
@@ -133,7 +132,6 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
         addEditTextAction(actions, USER_NAME, desc, editdesc, "");
         addAction(actions, CAMERA, getActivity().getResources().getString(R.string.take_a_photo), "");
         addAction(actions, GALLERY, getActivity().getResources().getString(R.string.open_the_gallery), "");
-
         this.actions = actions;
     }
 
@@ -161,7 +159,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
     @Override
     public void showViewModel(RingNavigationViewModel viewModel) {
         // displays account available info
-        VCard vcard = viewModel.getVcard(getActivity().getFilesDir());
+        VCard vcard = viewModel.getVcard();
         Account account = viewModel.getAccount();
         if (account == null) {
             Log.e(TAG, "Not able to get current account");
@@ -169,7 +167,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
         }
 
         if (!this.actions.isEmpty() && this.actions.get(0).getId() == USER_NAME) {
-            this.actions.get(0).setEditDescription(account.getAlias());
+            this.actions.get(0).setEditDescription(presenter.getAlias(account));
         }
 
         if (vcard == null || vcard.getPhotos().isEmpty()) {
@@ -235,10 +233,10 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
         }
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image = BitmapUtils.cropImageToCircle(image);
         image.compress(Bitmap.CompressFormat.PNG, 100, stream);
         Photo photo = new Photo(stream.toByteArray(), ImageType.PNG);
 
+        AvatarFactory.clearCache();
         presenter.saveVCardPhoto(photo);
     }
 }

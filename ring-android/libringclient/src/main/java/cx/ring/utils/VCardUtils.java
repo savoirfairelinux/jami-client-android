@@ -30,6 +30,7 @@ import ezvcard.VCard;
 import ezvcard.VCardVersion;
 import ezvcard.io.text.VCardWriter;
 import ezvcard.property.Uid;
+import io.reactivex.Single;
 
 public final class VCardUtils {
     public static final String TAG = VCardUtils.class.getSimpleName();
@@ -69,11 +70,13 @@ public final class VCardUtils {
         saveToDisk(vcard, filename, path);
     }
 
-    public static void saveLocalProfileToDisk(VCard vcard, String accountId, File filesDir) {
-        String path = localProfilePath(filesDir);
-        String filename = accountId + ".vcf";
-
-        saveToDisk(vcard, filename, path);
+    public static Single<VCard> saveLocalProfileToDisk(VCard vcard, String accountId, File filesDir) {
+        return Single.fromCallable(() -> {
+            String path = localProfilePath(filesDir);
+            String filename = accountId + ".vcf";
+            saveToDisk(vcard, filename, path);
+            return vcard;
+        });
     }
 
     /**
@@ -108,22 +111,24 @@ public final class VCardUtils {
         return loadFromDisk(path);
     }
 
-    public static VCard loadLocalProfileFromDisk(File filesDir, String accountId) {
-        VCard vcard = null;
-        String path = localProfilePath(filesDir);
-        if (!"".equals(path)) {
-            File vcardPath = new File(path + File.separator + accountId + ".vcf");
-            if (vcardPath.exists()) {
-                vcard = loadFromDisk(vcardPath.getAbsolutePath());
+    public static Single<VCard> loadLocalProfileFromDisk(File filesDir, String accountId) {
+        return Single.fromCallable(() -> {
+            VCard vcard = null;
+            String path = localProfilePath(filesDir);
+            if (!"".equals(path)) {
+                File vcardPath = new File(path + File.separator + accountId + ".vcf");
+                if (vcardPath.exists()) {
+                    vcard = loadFromDisk(vcardPath.getAbsolutePath());
+                }
             }
-        }
 
-        if (vcard == null) {
-            Log.d(TAG, "load default profile");
-            vcard = setupDefaultProfile(filesDir, accountId);
-        }
+            if (vcard == null) {
+                Log.d(TAG, "load default profile");
+                vcard = setupDefaultProfile(filesDir, accountId);
+            }
 
-        return vcard;
+            return vcard;
+        });
     }
 
     /**
