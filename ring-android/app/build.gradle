@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 127
-        versionName "20180712"
+        versionCode 128
+        versionName "20180802"
         vectorDrawables.useSupportLibrary = true
     }
 
