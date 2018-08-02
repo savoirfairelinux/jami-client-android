@@ -173,7 +173,7 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public void update(final Account account) {
             final Context context = itemView.getContext();
-            VCard vcard = VCardUtils.loadLocalProfileFromDisk(context.getFilesDir(), account.getAccountID());
+            VCard vcard = account.getProfile();
 
             Drawable accountPicture = AvatarFactory.getAvatar(context, vcard,
                     account.getRegisteredName(),
