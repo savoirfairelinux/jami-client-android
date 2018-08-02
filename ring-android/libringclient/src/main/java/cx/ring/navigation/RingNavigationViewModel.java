@@ -20,42 +20,29 @@
 
 package cx.ring.navigation;
 
-import java.io.File;
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import cx.ring.model.Account;
-import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 
 public class RingNavigationViewModel {
 
-    final private WeakReference<Account> mAccount;
+    final private Account mAccount;
     final private List<Account> mAccounts;
+    final private VCard mProfile;
 
     public RingNavigationViewModel(Account account, List<Account> accounts) {
-        mAccount = new WeakReference<>(account);
+        mAccount = account;
         mAccounts = accounts;
+        mProfile = account == null ? null : account.getProfile();
     }
 
-    private boolean isAccountValid() {
-        return mAccount.get() != null;
-    }
-
-    public VCard getVcard(File filesDir) {
-        Account account = mAccount.get();
-        if (account == null) {
-            return null;
-        }
-        String accountId = isAccountValid() ? account.getAccountID() : null;
-        return VCardUtils.loadLocalProfileFromDisk(filesDir, accountId);
+    public VCard getVcard() {
+        return mProfile;
     }
 
     public Account getAccount() {
-        if (!isAccountValid()) {
-            return null;
-        }
-        return mAccount.get();
+        return mAccount;
     }
 
     public List<Account> getAccounts() {

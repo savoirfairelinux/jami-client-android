@@ -62,6 +62,7 @@ import cx.ring.tv.model.TVListViewModel;
 import cx.ring.tv.search.SearchActivity;
 import cx.ring.tv.views.CustomTitleView;
 import ezvcard.VCard;
+import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
@@ -249,13 +250,14 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
             return;
         }
 
-        VCard vcard = viewModel.getVcard(getActivity().getFilesDir());
+        VCard vcard = viewModel.getVcard();
         if (vcard == null) {
             Log.e(TAG, "displayAccountInfos: Not able to get vcard");
             return;
         }
 
-        String formattedName = vcard.getFormattedName().getValue();
+        FormattedName fn = vcard.getFormattedName();
+        String formattedName = fn == null ? null : fn.getValue();
         if (formattedName != null && !formattedName.isEmpty()) {
             titleView.setAlias(formattedName);
             if (address != null) {

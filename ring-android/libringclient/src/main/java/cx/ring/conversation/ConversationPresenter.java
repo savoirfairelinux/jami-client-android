@@ -271,15 +271,17 @@ public class ConversationPresenter extends RootPresenter<ConversationView> {
     }
 
     public void sendTrustRequest() {
-        VCard vCard = mVCardService.loadSmallVCard(mAccountId, VCardService.MAX_SIZE_REQUEST);
-        mAccountService.sendTrustRequest(mAccountId, mContactRingId.getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard)));
-
-        CallContact contact = mContactService.findContact(mAccountId, mContactRingId);
-        if (contact == null) {
-            Log.e(TAG, "sendTrustRequest: not able to find contact");
-            return;
-        }
-        contact.setStatus(CallContact.Status.REQUEST_SENT);
+        final String accountId = mAccountId;
+        final Uri contactId = mContactRingId;
+        mVCardService.loadSmallVCard(accountId, VCardService.MAX_SIZE_REQUEST).subscribe(vCard -> {
+            mAccountService.sendTrustRequest(accountId, contactId.getRawRingId(), Blob.fromString(VCardUtils.vcardToString(vCard)));
+            CallContact contact = mContactService.findContact(accountId, contactId);
+            if (contact == null) {
+                Log.e(TAG, "sendTrustRequest: not able to find contact");
+                return;
+            }
+            contact.setStatus(CallContact.Status.REQUEST_SENT);
+        });
     }
 
     public void blockContact() {
