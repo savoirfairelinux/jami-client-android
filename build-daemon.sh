@@ -256,7 +256,7 @@ STATIC_LIBS_ALL="-llog -lOpenSLES -landroid \
                 -lavformat -lavdevice -lavfilter -lavcodec -lswresample -lswscale -lavutil \
                 -lpcre -lyaml-cpp -ljsoncpp \
                 -luuid -lz \
-                -lvpx -lopus -lspeex -lvorbis -lvorbisenc -logg -lFLAC \
+                -lvpx -lopus -lspeex \
                 -largon2 \
                 -liconv"
 
