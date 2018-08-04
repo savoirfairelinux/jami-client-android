@@ -35,12 +35,11 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
 
     @Inject
     public ProfileCreationPresenter(DeviceRuntimeService deviceRuntimeService) {
-        this.mDeviceRuntimeService = deviceRuntimeService;
+        mDeviceRuntimeService = deviceRuntimeService;
     }
 
     public void initPresenter(RingAccountViewModel ringAccountViewModel) {
-        this.mRingAccountViewModel = ringAccountViewModel;
-        //~ Checking the state of the READ_CONTACTS permission
+        mRingAccountViewModel = ringAccountViewModel;
         if (mDeviceRuntimeService.hasContactPermission()) {
             String profileName = mDeviceRuntimeService.getProfileName();
             if (profileName != null) {
@@ -56,7 +55,9 @@ public class ProfileCreationPresenter extends RootPresenter<ProfileCreationView>
     }
 
     public void photoUpdated() {
-        getView().photoUpdate(mRingAccountViewModel);
+        ProfileCreationView view = getView();
+        if (view != null)
+            view.photoUpdate(mRingAccountViewModel);
     }
 
     public void galleryClick() {
