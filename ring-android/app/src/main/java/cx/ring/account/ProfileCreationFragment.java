@@ -23,14 +23,17 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,6 +51,7 @@ import cx.ring.dependencyinjection.RingInjectionComponent;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.utils.BitmapUtils;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresenter> implements ProfileCreationView, TextWatcher {
     public static final String TAG = ProfileCreationFragment.class.getSimpleName();
@@ -150,8 +154,26 @@ public class ProfileCreationFragment extends BaseFragment<ProfileCreationPresent
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case ProfileCreationFragment.REQUEST_PERMISSION_CAMERA:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.cameraClick();
+                }
+                break;
+            case ProfileCreationFragment.REQUEST_PERMISSION_READ_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.galleryClick();
+                }
+                break;
+        }
+    }
+
     public void updatePhoto(Uri uriImage) {
-        updatePhoto(ContactDetailsTask.loadProfilePhotoFromUri(getActivity(), uriImage));
+        ContactDetailsTask.loadProfilePhotoFromUri(getActivity(), uriImage)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image", e));
     }
 
     public void updatePhoto(Bitmap image) {

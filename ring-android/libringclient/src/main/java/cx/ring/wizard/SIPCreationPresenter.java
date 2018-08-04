@@ -207,7 +207,7 @@ public class SIPCreationPresenter extends RootPresenter<SIPCreationView> {
         String vcardUid = formattedName + accountID;
         vcard.setUid(new Uid(vcardUid));
         vcard.removeProperties(RawProperty.class);
-        VCardUtils.saveLocalProfileToDisk(vcard, accountID, mDeviceService.provideFilesDir());
+        VCardUtils.saveLocalProfileToDisk(vcard, accountID, mDeviceService.provideFilesDir()).subscribe();
         mAccount.setProfile(vcard);
     }
 }

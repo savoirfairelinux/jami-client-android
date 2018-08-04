@@ -186,7 +186,7 @@ public final class VCardUtils {
     private static VCard setupDefaultProfile(File filesDir, String accountId) {
         VCard vcard = new VCard();
         vcard.setUid(new Uid(accountId));
-        saveLocalProfileToDisk(vcard, accountId, filesDir);
+        saveLocalProfileToDisk(vcard, accountId, filesDir).subscribe();
         return vcard;
     }
 }

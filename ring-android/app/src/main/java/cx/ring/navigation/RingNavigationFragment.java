@@ -63,6 +63,7 @@ import cx.ring.utils.BitmapUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.Photo;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter> implements NavigationAdapter.OnNavigationItemClicked,
         AccountAdapter.OnAccountActionClicked, RingNavigationView {
@@ -244,8 +245,9 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
     }
 
     public void updatePhoto(Uri uriImage) {
-        Bitmap imageProfile = ContactDetailsTask.loadProfilePhotoFromUri(getActivity(), uriImage);
-        updatePhoto(imageProfile);
+        ContactDetailsTask.loadProfilePhotoFromUri(getActivity(), uriImage)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image", e));
     }
 
     public void updatePhoto(Bitmap image) {
