@@ -42,6 +42,8 @@ import cx.ring.model.CallContact;
 import cx.ring.utils.BitmapUtils;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 public class ContactDetailsTask implements Runnable {
     static final String TAG = ContactDetailsTask.class.getSimpleName();
@@ -50,7 +52,7 @@ public class ContactDetailsTask implements Runnable {
     private final static String MIME_TYPE_PNG = "image/png";
     private final static int ORIENTATION_LEFT = 270;
     private final static int ORIENTATION_RIGHT = 90;
-    private final static int MAX_IMAGE_DIMENSION = 200;
+    private final static int MAX_IMAGE_DIMENSION = 1024;
     private final CallContact mContact;
     private final ArrayList<DetailsLoadedCallback> mCallbacks = new ArrayList<>(1);
     private final int mViewWidth, mViewHeight;
@@ -110,8 +112,8 @@ public class ContactDetailsTask implements Runnable {
         return inSampleSize;
     }
 
-    public static Bitmap loadProfilePhotoFromUri(Context context, Uri uriImage) {
-        try {
+    public static Single<Bitmap> loadProfilePhotoFromUri(Context context, Uri uriImage) {
+        return Single.fromCallable(() -> {
             InputStream is = context.getContentResolver().openInputStream(uriImage);
             BitmapFactory.Options dbo = new BitmapFactory.Options();
             dbo.inJustDecodeBounds = true;
@@ -152,21 +154,8 @@ public class ContactDetailsTask implements Runnable {
                 srcBitmap = Bitmap.createBitmap(srcBitmap, 0, 0, srcBitmap.getWidth(),
                         srcBitmap.getHeight(), matrix, true);
             }
-
-            String type = context.getContentResolver().getType(uriImage);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            if (type.equals(MIME_TYPE_PNG)) {
-                srcBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-            } else if (type.equals(MIME_TYPE_JPG) || type.equals(MIME_TYPE_JPEG)) {
-                srcBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            }
-            byte[] bMapArray = baos.toByteArray();
-            baos.close();
-            return BitmapFactory.decodeByteArray(bMapArray, 0, bMapArray.length);
-        } catch (Exception e) {
-            Log.e(TAG, "Error while loading photo from URI", e);
-            return null;
-        }
+            return srcBitmap;
+        }).subscribeOn(Schedulers.io());
     }
 
     public static int getOrientation(Context context, Uri photoUri) {

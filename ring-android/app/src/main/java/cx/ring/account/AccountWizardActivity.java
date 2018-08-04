@@ -52,6 +52,7 @@ import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
+import io.reactivex.schedulers.Schedulers;
 
 public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> implements AccountWizardView {
     static final String TAG = AccountWizardActivity.class.getName();
@@ -122,7 +123,6 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
     public void saveProfile(final String accountID, final RingAccountViewModel ringAccountViewModel) {
         runOnUiThread(() -> {
             RingAccountViewModelImpl ringAccountViewModelImpl = (RingAccountViewModelImpl) ringAccountViewModel;
-
             VCard vcard = new VCard();
             vcard.setFormattedName(new FormattedName(ringAccountViewModelImpl.getFullName()));
             vcard.setUid(new Uid(ringAccountViewModelImpl.getUsername()));
@@ -134,7 +134,9 @@ public class AccountWizardActivity extends BaseActivity<AccountWizardPresenter> 
                 vcard.addPhoto(photoVCard);
             }
             vcard.removeProperties(RawProperty.class);
-            VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir());
+            VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe();
         });
     }
 

@@ -35,6 +35,7 @@ import android.support.v17.leanback.app.GuidedStepSupportFragment;
 import android.support.v17.leanback.widget.GuidanceStylist;
 import android.support.v17.leanback.widget.GuidedAction;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -53,6 +54,7 @@ import cx.ring.application.RingApplication;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.tv.camera.CustomCameraActivity;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCreationPresenter>
         implements ProfileCreationView {
@@ -234,7 +236,9 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     }
 
     public void updatePhoto(Uri uriImage) {
-        updatePhoto(ContactDetailsTask.loadProfilePhotoFromUri(getActivity(), uriImage));
+        ContactDetailsTask.loadProfilePhotoFromUri(getActivity(), uriImage)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image", e));
     }
 
     public void updatePhoto(Bitmap image) {
