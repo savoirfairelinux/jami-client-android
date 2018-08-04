@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Alexandre Lision <alexandre.lision@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +20,8 @@
  */
 package cx.ring.tv.search;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -31,39 +34,40 @@ import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
 import cx.ring.services.HardwareService;
 import cx.ring.services.VCardService;
-import cx.ring.utils.NameLookupInputHandler;
 import cx.ring.utils.VCardUtils;
-import ezvcard.VCard;
 import io.reactivex.Scheduler;
+import io.reactivex.subjects.PublishSubject;
 
 public class RingSearchPresenter extends RootPresenter<RingSearchView> {
 
-    private AccountService mAccountService;
-    private HardwareService mHardwareService;
-    private VCardService mVCardService;
+    private final AccountService mAccountService;
+    private final HardwareService mHardwareService;
+    private final VCardService mVCardService;
 
-    private NameLookupInputHandler mNameLookupInputHandler;
-    private String mLastQuery = null;
     private CallContact mCallContact;
     @Inject
     @Named("UiScheduler")
     protected Scheduler mUiScheduler;
 
+    private final PublishSubject<String> contactQuery = PublishSubject.create();
+
     @Inject
     public RingSearchPresenter(AccountService accountService,
                                HardwareService hardwareService,
                                VCardService vCardService) {
-        this.mAccountService = accountService;
-        this.mHardwareService = hardwareService;
-        this.mVCardService = vCardService;
+        mAccountService = accountService;
+        mHardwareService = hardwareService;
+        mVCardService = vCardService;
     }
 
     @Override
     public void bindView(RingSearchView view) {
         super.bindView(view);
-        mCompositeDisposable.add(mAccountService.getRegisteredNames()
+        mCompositeDisposable.add(contactQuery
+                .debounce(350, TimeUnit.MILLISECONDS)
+                .switchMapSingle(q -> mAccountService.findRegistrationByName(mAccountService.getCurrentAccount().getAccountID(), "", q))
                 .observeOn(mUiScheduler)
-                .subscribe(r -> parseEventState(r.name, r.address, r.state)));
+                .subscribe(q -> parseEventState(mAccountService.getAccount(q.accountId), q.name, q.address, q.state)));
     }
 
     @Override
@@ -82,44 +86,28 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> {
 
             Uri uri = new Uri(query);
             if (uri.isRingId()) {
-                mCallContact = CallContact.buildUnknown(uri);
+                mCallContact = currentAccount.getContactFromCache(uri);
                 getView().displayContact(mCallContact);
             } else {
                 getView().clearSearch();
-
-                // Ring search
-                if (mNameLookupInputHandler == null) {
-                    mNameLookupInputHandler = new NameLookupInputHandler(mAccountService, currentAccount.getAccountID());
-                }
-
-                mLastQuery = query;
-                mNameLookupInputHandler.enqueueNextLookup(query);
+                contactQuery.onNext(query);
             }
-
         }
     }
 
-    private void parseEventState(String name, String address, int state) {
-        if (mLastQuery != null
-                && (mLastQuery.equals("") || !mLastQuery.equals(name))) {
-            return;
-        }
+    private void parseEventState(Account account, String name, String address, int state) {
         switch (state) {
             case 0:
                 // on found
-                if (mLastQuery != null && mLastQuery.equals(name)) {
-                    mCallContact = CallContact.buildRingContact(new Uri(address), name);
-                    getView().displayContact(mCallContact);
-                    mLastQuery = null;
-                }
+                mCallContact = account.getContactFromCache(address);
+                mCallContact.setUsername(name);
+                getView().displayContact(mCallContact);
                 break;
             case 1:
                 // invalid name
                 Uri uriName = new Uri(name);
-                if (uriName.isRingId()
-                        && mLastQuery != null
-                        && mLastQuery.equals(name)) {
-                    mCallContact = CallContact.buildUnknown(name, address);
+                if (uriName.isRingId()) {
+                    mCallContact = account.getContactFromCache(uriName);
                     getView().displayContact(mCallContact);
                 } else {
                     getView().clearSearch();
@@ -128,10 +116,8 @@ public class RingSearchPresenter extends RootPresenter<RingSearchView> {
             default:
                 // on error
                 Uri uriAddress = new Uri(address);
-                if (uriAddress.isRingId()
-                        && mLastQuery != null
-                        && mLastQuery.equals(name)) {
-                    mCallContact = CallContact.buildUnknown(name, address);
+                if (uriAddress.isRingId()) {
+                    mCallContact = account.getContactFromCache(uriAddress);
                     getView().displayContact(mCallContact);
                 } else {
                     getView().clearSearch();
