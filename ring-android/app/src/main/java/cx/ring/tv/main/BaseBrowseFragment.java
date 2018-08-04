@@ -20,7 +20,7 @@
 package cx.ring.tv.main;
 
 import android.os.Bundle;
-import android.support.v17.leanback.app.BrowseFragment;
+import android.support.v17.leanback.app.BrowseSupportFragment;
 import android.view.View;
 import android.widget.Toast;
 
@@ -31,7 +31,7 @@ import cx.ring.model.RingError;
 import cx.ring.mvp.BaseView;
 import cx.ring.mvp.RootPresenter;
 
-public class BaseBrowseFragment<T extends RootPresenter> extends BrowseFragment implements BaseView {
+public class BaseBrowseFragment<T extends RootPresenter> extends BrowseSupportFragment implements BaseView {
 
     protected static final String TAG = BaseBrowseFragment.class.getSimpleName();
 

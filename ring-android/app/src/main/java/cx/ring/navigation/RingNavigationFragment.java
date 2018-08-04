@@ -369,6 +369,13 @@ public class RingNavigationFragment extends BaseFragment<RingNavigationPresenter
     }
 
     @Override
+    public void updateModel(Account account) {
+        mAccountAdapter.replace(account);
+        if (mSelectedAccount == account)
+            updateSelectedAccountView(account);
+    }
+
+    @Override
     public void gotToImageCapture() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         getActivity().startActivityForResult(intent, HomeActivity.REQUEST_CODE_PHOTO);
