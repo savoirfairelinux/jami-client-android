@@ -2,6 +2,7 @@
  * Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Loïc Siret <loic.siret@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +23,8 @@ package cx.ring.tv.camera;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.widget.FrameLayout;
@@ -29,16 +32,19 @@ import android.widget.FrameLayout;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.ring.R;
+import cx.ring.utils.BitmapUtils;
 
 public class CustomCameraActivity extends Activity {
     int cameraFront;
     int cameraBack;
     int currentCamera;
-    Camera.PictureCallback mPicture = (input, camera) -> {
-        Bundle conData = new Bundle();
-        conData.putByteArray("data", input);
+    private Camera mCamera;
+    private CameraPreview mCameraPreview;
+    private final Camera.PictureCallback mPicture = (input, camera) -> {
+        Bitmap photo = BitmapFactory.decodeByteArray(input, 0, input.length);
+        Bitmap scaled = BitmapUtils.createScaledBitmap(photo, 256);
         Intent intent = new Intent();
-        intent.putExtras(conData);
+        intent.putExtra("data", scaled);
         if (getParent() == null) {
             setResult(RESULT_OK, intent);
         } else {
@@ -46,8 +52,6 @@ public class CustomCameraActivity extends Activity {
         }
         finish();
     };
-    private Camera mCamera;
-    private CameraPreview mCameraPreview;
 
     @OnClick(R.id.button_capture)
     public void takePicture(){

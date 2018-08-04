@@ -20,7 +20,7 @@ package cx.ring.tv.account;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v17.leanback.app.GuidedStepFragment;
+import android.support.v17.leanback.app.GuidedStepSupportFragment;
 import android.support.v17.leanback.widget.GuidedAction;
 import android.text.InputType;
 import android.view.View;
@@ -31,7 +31,7 @@ import javax.inject.Inject;
 
 import cx.ring.mvp.RootPresenter;
 
-public abstract class RingGuidedStepFragment<T extends RootPresenter> extends GuidedStepFragment {
+public abstract class RingGuidedStepFragment<T extends RootPresenter> extends GuidedStepSupportFragment {
 
     protected static final String TAG = RingGuidedStepFragment.class.getSimpleName();
 
@@ -83,17 +83,18 @@ public abstract class RingGuidedStepFragment<T extends RootPresenter> extends Gu
                 .build());
     }
 
-    protected static void addEditTextAction(Context context, List<GuidedAction> actions, long id,
-                                            String title, String desc, String editdesc) {
+    protected static GuidedAction addEditTextAction(Context context, List<GuidedAction> actions, long id,
+                                            int title, int desc) {
         actions.add(
                 new GuidedAction.Builder(context)
                         .id(id)
                         .title(title)
+                        .editTitle("")
                         .description(desc)
-                        .editDescription(editdesc)
-                        .descriptionEditInputType(InputType.TYPE_CLASS_TEXT)
-                        .descriptionEditable(true)
+                        .inputType(InputType.TYPE_CLASS_TEXT)
+                        .editable(true)
                         .build());
+        return actions.get(actions.size()-1);
     }
 
     protected static void addPasswordAction(Context context, List<GuidedAction> actions, long id,

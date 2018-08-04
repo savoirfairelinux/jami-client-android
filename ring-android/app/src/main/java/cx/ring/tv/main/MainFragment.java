@@ -23,7 +23,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v17.leanback.app.BackgroundManager;
-import android.support.v17.leanback.app.GuidedStepFragment;
+import android.support.v17.leanback.app.GuidedStepSupportFragment;
 import android.support.v17.leanback.widget.ArrayObjectAdapter;
 import android.support.v17.leanback.widget.HeaderItem;
 import android.support.v17.leanback.widget.ImageCardView;
@@ -63,7 +63,6 @@ import cx.ring.tv.search.SearchActivity;
 import cx.ring.tv.views.CustomTitleView;
 import ezvcard.VCard;
 import ezvcard.property.FormattedName;
-import ezvcard.property.Photo;
 
 public class MainFragment extends BaseBrowseFragment<MainPresenter> implements MainView {
 
@@ -284,8 +283,8 @@ public class MainFragment extends BaseBrowseFragment<MainPresenter> implements M
 
     @Override
     public void showExportDialog(String pAccountID) {
-        GuidedStepFragment wizard = TVAccountExport.createInstance(pAccountID);
-        GuidedStepFragment.add(getFragmentManager(), wizard, R.id.main_browse_fragment);
+        GuidedStepSupportFragment wizard = TVAccountExport.createInstance(pAccountID);
+        GuidedStepSupportFragment.add(getFragmentManager(), wizard, R.id.main_browse_fragment);
     }
 
     @Override

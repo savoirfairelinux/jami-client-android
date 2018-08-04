@@ -22,17 +22,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v17.leanback.app.GuidedStepFragment;
+import android.support.v17.leanback.app.GuidedStepSupportFragment;
 import android.support.v17.leanback.widget.GuidanceStylist;
 import android.support.v17.leanback.widget.GuidedAction;
-import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -52,8 +52,6 @@ import cx.ring.navigation.RingNavigationPresenter;
 import cx.ring.navigation.RingNavigationView;
 import cx.ring.navigation.RingNavigationViewModel;
 import cx.ring.tv.camera.CustomCameraActivity;
-import cx.ring.utils.BitmapUtils;
-import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.Photo;
@@ -61,17 +59,13 @@ import ezvcard.property.Photo;
 public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigationPresenter>
         implements RingNavigationView {
 
-    public static final int REQUEST_CODE_PHOTO = 1;
-    public static final int REQUEST_CODE_GALLERY = 2;
-    public static final int REQUEST_PERMISSION_CAMERA = 3;
-    public static final int REQUEST_PERMISSION_READ_STORAGE = 4;
     private static final int USER_NAME = 1;
     private static final int GALLERY = 2;
     private static final int CAMERA = 3;
 
     private List<GuidedAction> actions;
 
-    public static GuidedStepFragment newInstance() {
+    public static GuidedStepSupportFragment newInstance() {
         return new TVProfileEditingFragment();
     }
 
@@ -85,13 +79,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
                         Log.e(TAG, "onActivityResult: Not able to get picture from extra");
                         return;
                     }
-                    byte[] input = extras.getByteArray("data");
-                    if (input == null) {
-                        Log.e(TAG, "onActivityResult: Not able to get byte[] from extra");
-                        return;
-                    }
-                    Bitmap original = BitmapFactory.decodeByteArray(input, 0, input.length);
-                    updatePhoto(original);
+                    updatePhoto((Bitmap) extras.get("data"));
                 }
                 break;
             case ProfileCreationFragment.REQUEST_CODE_GALLERY:
@@ -100,6 +88,22 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
                 }
                 break;
             default:
+                break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case ProfileCreationFragment.REQUEST_PERMISSION_CAMERA:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.cameraClicked();
+                }
+                break;
+            case ProfileCreationFragment.REQUEST_PERMISSION_READ_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.galleryClicked();
+                }
                 break;
         }
     }
@@ -127,9 +131,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
 
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
-        String desc = getString(R.string.account_edit_profile);
-        String editdesc = getString(R.string.profile_name_hint);
-        addEditTextAction(getActivity(), actions, USER_NAME, desc, editdesc, "");
+        addEditTextAction(getActivity(), actions, USER_NAME, R.string.account_edit_profile, R.string.profile_name_hint);
         addAction(getActivity(), actions, CAMERA, getActivity().getResources().getString(R.string.take_a_photo), "");
         addAction(getActivity(), actions, GALLERY, getActivity().getResources().getString(R.string.open_the_gallery), "");
         this.actions = actions;
@@ -137,7 +139,7 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
 
     public long onGuidedActionEditedAndProceed(GuidedAction action) {
         if (action.getId() == USER_NAME) {
-            String username = action.getEditDescription().toString();
+            String username = action.getEditTitle().toString();
             presenter.saveVCardFormattedName(username);
         } else if (action.getId() == CAMERA) {
             presenter.cameraClicked();
@@ -166,9 +168,24 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
             return;
         }
 
-        if (!this.actions.isEmpty() && this.actions.get(0).getId() == USER_NAME) {
-            this.actions.get(0).setEditDescription(presenter.getAlias(account));
+        String alias = presenter.getAlias(account);
+        GuidedAction action = actions.isEmpty() ? null : actions.get(0);
+        if (action != null && action.getId() == USER_NAME) {
+            if (TextUtils.isEmpty(alias)) {
+                action.setEditTitle("");
+                action.setTitle(getString(R.string.account_edit_profile));
+
+            } else {
+                action.setEditTitle(alias);
+                action.setTitle(alias);
+            }
+            notifyActionChanged(0);
         }
+
+        if (TextUtils.isEmpty(alias))
+            getGuidanceStylist().getTitleView().setText(R.string.profile);
+        else
+            getGuidanceStylist().getTitleView().setText(alias);
 
         if (vcard == null || vcard.getPhotos().isEmpty()) {
             getGuidanceStylist().getIconView().setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_contact_picture_fallback));
@@ -189,30 +206,32 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
     }
 
     @Override
+    public void updateModel(Account account) {
+    }
+
+    @Override
     public void gotToImageCapture() {
         Intent intent = new Intent(getActivity(), CustomCameraActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_PHOTO);
+        startActivityForResult(intent, ProfileCreationFragment.REQUEST_CODE_PHOTO);
     }
 
     @Override
     public void askCameraPermission() {
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                REQUEST_PERMISSION_CAMERA);
+        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                ProfileCreationFragment.REQUEST_PERMISSION_CAMERA);
     }
 
     @Override
     public void askGalleryPermission() {
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                REQUEST_PERMISSION_READ_STORAGE);
+        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                ProfileCreationFragment.REQUEST_PERMISSION_READ_STORAGE);
     }
 
     @Override
     public void goToGallery() {
         try {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, REQUEST_CODE_GALLERY);
+            startActivityForResult(intent, ProfileCreationFragment.REQUEST_CODE_GALLERY);
         } catch (ActivityNotFoundException e) {
             new AlertDialog.Builder(getActivity())
                     .setPositiveButton(android.R.string.ok, null)

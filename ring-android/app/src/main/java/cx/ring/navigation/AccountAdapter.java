@@ -70,6 +70,16 @@ class AccountAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mDataset.addAll(results);
     }
 
+    public void replace(Account account) {
+        for (int i = 0; i<mDataset.size(); i++) {
+            Account a = mDataset.get(i);
+            if (a == account) {
+                notifyItemChanged(i);
+                break;
+            }
+        }
+    }
+
     @Override
     public int getItemViewType(int position) {
         if (position == mDataset.size()) {

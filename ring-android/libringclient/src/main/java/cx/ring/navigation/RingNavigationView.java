@@ -19,9 +19,13 @@
  */
 package cx.ring.navigation;
 
+import cx.ring.model.Account;
+
 public interface RingNavigationView {
 
     void showViewModel(RingNavigationViewModel viewModel);
+
+    void updateModel(Account account);
 
     void gotToImageCapture();
 
