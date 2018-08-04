@@ -55,26 +55,21 @@ public class TVRingAccountCreationFragment
     private static final int PASSWORD_CONFIRMATION = 2;
     private static final int CHECK = 3;
     private static final int CONTINUE = 4;
+
     private TextWatcher mUsernameWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
         @Override
         public void afterTextChanged(Editable s) {
-            Log.d(TAG, "afterTextChanged: userNameChanged(" + s.toString() + ")");
-            findActionById(USERNAME).setDescription(s.toString());
-            boolean empty = s.toString().isEmpty();
-            if (!empty) {
-                presenter.userNameChanged(s.toString());
-            }
+            String newName = s.toString();
+            boolean empty = newName.isEmpty();
             presenter.ringCheckChanged(!empty);
+            if (!empty)
+                presenter.userNameChanged(newName);
         }
     };
 
@@ -125,7 +120,7 @@ public class TVRingAccountCreationFragment
 
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
-        addEditTextAction(getActivity(), actions, USERNAME, getString(R.string.register_username), getString(R.string.prompt_new_username), "");
+        addEditTextAction(getActivity(), actions, USERNAME, R.string.register_username, R.string.prompt_new_username);
         addDisabledAction(getActivity(), actions, CHECK, "", "", null);
         addPasswordAction(getActivity(), actions, PASSWORD, getString(R.string.prompt_new_password_optional), getString(R.string.enter_password), "");
         addPasswordAction(getActivity(), actions, PASSWORD_CONFIRMATION, getString(R.string.prompt_new_password_repeat), getString(R.string.enter_password), "");
@@ -134,14 +129,15 @@ public class TVRingAccountCreationFragment
 
     @Override
     public void onGuidedActionFocused(GuidedAction action) {
-        if (action.getId() == USERNAME) {
-            ViewGroup view = (ViewGroup) getActionItemView(findActionPositionById(USERNAME));
-            EditText text = view.findViewById(R.id.guidedactions_item_description);
+        ViewGroup view = (ViewGroup) getActionItemView(findActionPositionById(USERNAME));
+        if (view != null) {
+            EditText text = view.findViewById(R.id.guidedactions_item_title);
             text.removeTextChangedListener(mUsernameWatcher);
-            text.addTextChangedListener(mUsernameWatcher);
+            if (action.getId() == USERNAME) {
+                text.addTextChangedListener(mUsernameWatcher);
+            }
         }
     }
-
 
     @Override
     public long onGuidedActionEditedAndProceed(GuidedAction action) {
@@ -149,6 +145,22 @@ public class TVRingAccountCreationFragment
             passwordChanged(action);
         } else if (action.getId() == PASSWORD_CONFIRMATION) {
             confirmPasswordChanged(action);
+        } else if (action.getId() == USERNAME) {
+            ViewGroup view = (ViewGroup) getActionItemView(findActionPositionById(USERNAME));
+            if (view != null) {
+                EditText text = view.findViewById(R.id.guidedactions_item_title);
+                text.removeTextChangedListener(mUsernameWatcher);
+            }
+            String username = action.getEditTitle().toString();
+            boolean empty = username.isEmpty();
+            if (empty) {
+                action.setTitle(getString(R.string.register_username));
+            } else {
+                action.setTitle(username);
+            }
+            GuidedAction a = findActionById(CHECK);
+            a.setEnabled(!empty);
+            notifyActionChanged(findActionPositionById(CHECK));
         }
         return GuidedAction.ACTION_ID_NEXT;
     }
@@ -182,41 +194,43 @@ public class TVRingAccountCreationFragment
 
     @Override
     public void enableTextError() {
-        findActionById(CHECK).setIcon(null);
-
-        findActionById(CHECK).setTitle(getString(R.string.looking_for_username_availability));
+        GuidedAction action = findActionById(CHECK);
+        action.setIcon(null);
+        action.setTitle(getString(R.string.looking_for_username_availability));
         notifyActionChanged(findActionPositionById(CHECK));
     }
 
     @Override
     public void disableTextError() {
-        findActionById(CHECK).setIcon(null);
-        findActionById(CHECK).setDescription("");
-
+        GuidedAction action = findActionById(CHECK);
+        action.setIcon(null);
+        action.setDescription("");
         notifyActionChanged(findActionPositionById(CHECK));
     }
 
     @Override
     public void showExistingNameError() {
-        findActionById(CHECK).setIcon(getResources().getDrawable(R.drawable.ic_error_red));
-        findActionById(CHECK).setDescription(getString(R.string.username_already_taken));
-
+        GuidedAction action = findActionById(CHECK);
+        action.setIcon(getResources().getDrawable(R.drawable.ic_error_red));
+        action.setDescription(getString(R.string.username_already_taken));
         notifyActionChanged(findActionPositionById(CHECK));
     }
 
     @Override
     public void showInvalidNameError() {
-        findActionById(CHECK).setIcon(getResources().getDrawable(R.drawable.ic_error_red));
-        findActionById(CHECK).setDescription(getString(R.string.invalid_username));
+        GuidedAction action = findActionById(CHECK);
+        action.setIcon(getResources().getDrawable(R.drawable.ic_error_red));
+        action.setDescription(getString(R.string.invalid_username));
         notifyActionChanged(findActionPositionById(CHECK));
     }
 
     @Override
     public void showInvalidPasswordError(boolean display) {
         if (display) {
-            findActionById(CONTINUE).setIcon(getResources().getDrawable(R.drawable.ic_error_red));
-            findActionById(CONTINUE).setDescription(getString(R.string.error_password_char_count));
-            findActionById(CONTINUE).setEnabled(false);
+            GuidedAction action = findActionById(CONTINUE);
+            action.setIcon(getResources().getDrawable(R.drawable.ic_error_red));
+            action.setDescription(getString(R.string.error_password_char_count));
+            action.setEnabled(false);
         }
         notifyActionChanged(findActionPositionById(CONTINUE));
     }
@@ -224,9 +238,10 @@ public class TVRingAccountCreationFragment
     @Override
     public void showNonMatchingPasswordError(boolean display) {
         if (display) {
-            findActionById(CONTINUE).setIcon(getResources().getDrawable(R.drawable.ic_error_red));
-            findActionById(CONTINUE).setDescription(getString(R.string.error_passwords_not_equals));
-            findActionById(CONTINUE).setEnabled(false);
+            GuidedAction action = findActionById(CONTINUE);
+            action.setIcon(getResources().getDrawable(R.drawable.ic_error_red));
+            action.setDescription(getString(R.string.error_passwords_not_equals));
+            action.setEnabled(false);
         }
         notifyActionChanged(findActionPositionById(CONTINUE));
     }
@@ -240,7 +255,6 @@ public class TVRingAccountCreationFragment
         Log.d(TAG, "enableNextButton: " + enabled);
         GuidedAction actionCheck = findActionById(CHECK);
         GuidedAction actionContinue = findActionById(CONTINUE);
-
         if (enabled) {
             actionCheck.setIcon(getResources().getDrawable(R.drawable.ic_good_green));
             actionCheck.setTitle(getString(R.string.no_registered_name_for_account));
@@ -256,7 +270,7 @@ public class TVRingAccountCreationFragment
     @Override
     public void goToAccountCreation(RingAccountViewModel ringAccountViewModel) {
         Activity wizardActivity = getActivity();
-        if (wizardActivity != null && wizardActivity instanceof TVAccountWizard) {
+        if (wizardActivity instanceof TVAccountWizard) {
             TVAccountWizard wizard = (TVAccountWizard) wizardActivity;
             wizard.createAccount(ringAccountViewModel);
         }

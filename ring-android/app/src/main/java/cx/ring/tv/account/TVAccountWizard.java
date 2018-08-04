@@ -23,10 +23,9 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v17.leanback.app.GuidedStepFragment;
+import android.support.v17.leanback.app.GuidedStepSupportFragment;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
@@ -42,8 +41,6 @@ import cx.ring.model.AccountConfig;
 import cx.ring.mvp.BaseActivity;
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.tv.main.HomeActivity;
-import cx.ring.utils.BitmapUtils;
-import cx.ring.utils.Log;
 import cx.ring.utils.VCardUtils;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
@@ -51,6 +48,7 @@ import ezvcard.property.FormattedName;
 import ezvcard.property.Photo;
 import ezvcard.property.RawProperty;
 import ezvcard.property.Uid;
+import io.reactivex.schedulers.Schedulers;
 
 public class TVAccountWizard
         extends BaseActivity<AccountWizardPresenter>
@@ -68,12 +66,10 @@ public class TVAccountWizard
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         // dependency injection
         RingApplication.getInstance().getRingInjectionComponent().inject(this);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -84,9 +80,9 @@ public class TVAccountWizard
         }
 
         if (savedInstanceState == null) {
-            GuidedStepFragment.addAsRoot(this, mHomeFragment, android.R.id.content);
+            GuidedStepSupportFragment.addAsRoot(this, mHomeFragment, android.R.id.content);
         } else {
-            mProfileFragment = (TVProfileCreationFragment) getFragmentManager().getFragment(savedInstanceState, PROFILE_TAG);
+            mProfileFragment = (TVProfileCreationFragment) getSupportFragmentManager().getFragment(savedInstanceState, PROFILE_TAG);
             mFullname = savedInstanceState.getString("mFullname");
             mLinkAccount = savedInstanceState.getBoolean("mLinkAccount");
         }
@@ -98,7 +94,7 @@ public class TVAccountWizard
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mProfileFragment.isAdded()) {
-            getFragmentManager().putFragment(outState, PROFILE_TAG, mProfileFragment);
+            getSupportFragmentManager().putFragment(outState, PROFILE_TAG, mProfileFragment);
         }
         outState.putString("mFullname", mFullname);
         outState.putBoolean("mLinkAccount", mLinkAccount);
@@ -111,12 +107,6 @@ public class TVAccountWizard
             mProgress = null;
         }
         super.onDestroy();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        Log.i(TAG, "onConfigurationChanged " + newConfig);
-        super.onConfigurationChanged(newConfig);
     }
 
     public void createAccount(RingAccountViewModel ringAccountViewModel) {
@@ -192,20 +182,23 @@ public class TVAccountWizard
     @Override
     public void saveProfile(final String accountID, final RingAccountViewModel ringAccountViewModel) {
         runOnUiThread(() -> {
-            RingAccountViewModelImpl ringAccountViewModelImpl = (RingAccountViewModelImpl) ringAccountViewModel;
+            RingAccountViewModelImpl viewModel = (RingAccountViewModelImpl) ringAccountViewModel;
 
             VCard vcard = new VCard();
-            vcard.setFormattedName(new FormattedName(ringAccountViewModelImpl.getFullName()));
-            vcard.setUid(new Uid(ringAccountViewModelImpl.getUsername()));
+            vcard.setFormattedName(new FormattedName(viewModel.getFullName()));
+            vcard.setUid(new Uid(viewModel.getUsername()));
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            if (ringAccountViewModelImpl.getPhoto() != null) {
-                ringAccountViewModelImpl.getPhoto().compress(Bitmap.CompressFormat.PNG, 100, stream);
+            Bitmap photo = viewModel.getPhoto();
+            if (photo != null) {
+                photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
                 Photo photoVCard = new Photo(stream.toByteArray(), ImageType.PNG);
                 vcard.removeProperties(Photo.class);
                 vcard.addPhoto(photoVCard);
             }
             vcard.removeProperties(RawProperty.class);
-            VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir());
+            VCardUtils.saveLocalProfileToDisk(vcard, accountID, getFilesDir())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe();
         });
     }
 

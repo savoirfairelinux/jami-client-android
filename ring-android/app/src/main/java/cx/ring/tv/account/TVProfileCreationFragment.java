@@ -1,6 +1,8 @@
 /*
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 3 of the License, or
@@ -22,17 +24,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v17.leanback.app.GuidedStepFragment;
+import android.support.v17.leanback.app.GuidedStepSupportFragment;
 import android.support.v17.leanback.widget.GuidanceStylist;
 import android.support.v17.leanback.widget.GuidedAction;
-import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -51,24 +53,18 @@ import cx.ring.application.RingApplication;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.tv.camera.CustomCameraActivity;
-import cx.ring.utils.BitmapUtils;
 
 public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCreationPresenter>
         implements ProfileCreationView {
 
-    public static final int REQUEST_CODE_PHOTO = 1;
-    public static final int REQUEST_CODE_GALLERY = 2;
-    public static final int REQUEST_PERMISSION_CAMERA = 3;
-    public static final int REQUEST_PERMISSION_READ_STORAGE = 4;
     private static final int USER_NAME = 1;
     private static final int GALLERY = 2;
     private static final int CAMERA = 3;
     private static final int NEXT = 4;
-    private final int DEFAULT_SIZE = 256;
 
     private Bitmap mSourcePhoto;
 
-    public static GuidedStepFragment newInstance(RingAccountViewModelImpl pRingAccountViewModel) {
+    public static GuidedStepSupportFragment newInstance(RingAccountViewModelImpl pRingAccountViewModel) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(RingAccountCreationFragment.KEY_RING_ACCOUNT, pRingAccountViewModel);
         TVProfileCreationFragment fragment = new TVProfileCreationFragment();
@@ -81,9 +77,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
         switch (requestCode) {
             case ProfileCreationFragment.REQUEST_CODE_PHOTO:
                 if (resultCode == Activity.RESULT_OK && data != null) {
-                    byte[] input = data.getExtras().getByteArray("data");
-                    Bitmap original = BitmapFactory.decodeByteArray(input, 0, input.length);
-                    updatePhoto(original);
+                    updatePhoto((Bitmap) data.getExtras().get("data"));
                 }
                 break;
             case ProfileCreationFragment.REQUEST_CODE_GALLERY:
@@ -92,6 +86,23 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
                 }
                 break;
             default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case ProfileCreationFragment.REQUEST_PERMISSION_CAMERA:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.cameraClick();
+                }
+                break;
+            case ProfileCreationFragment.REQUEST_PERMISSION_READ_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.galleryClick();
+                }
                 break;
         }
     }
@@ -127,9 +138,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
 
     @Override
     public void onCreateActions(@NonNull List<GuidedAction> actions, Bundle savedInstanceState) {
-        String desc = getString(R.string.account_creation_profile);
-        String editdesc = getString(R.string.profile_name_hint);
-        addEditTextAction(getActivity(), actions, USER_NAME, desc, editdesc, "");
+        addEditTextAction(getActivity(), actions, USER_NAME, R.string.profile_name_hint, R.string.profile_name_hint);
         addAction(getActivity(), actions, CAMERA, getActivity().getResources().getString(R.string.take_a_photo), "");
         addAction(getActivity(), actions, GALLERY, getActivity().getResources().getString(R.string.open_the_gallery), "");
         addAction(getActivity(), actions, NEXT, getActivity().getResources().getString(R.string.wizard_next), "", true);
@@ -156,7 +165,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     public void goToGallery() {
         try {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(intent, REQUEST_CODE_GALLERY);
+            startActivityForResult(intent, ProfileCreationFragment.REQUEST_CODE_GALLERY);
         } catch (ActivityNotFoundException e) {
             new AlertDialog.Builder(getActivity())
                     .setPositiveButton(android.R.string.ok, null)
@@ -169,32 +178,30 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     @Override
     public void goToPhotoCapture() {
         Intent intent = new Intent(getActivity(), CustomCameraActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_PHOTO);
+        startActivityForResult(intent, ProfileCreationFragment.REQUEST_CODE_PHOTO);
     }
 
     @Override
     public void askStoragePermission() {
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                REQUEST_PERMISSION_READ_STORAGE);
+        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                ProfileCreationFragment.REQUEST_PERMISSION_READ_STORAGE);
     }
 
     @Override
     public void askPhotoPermission() {
-        ActivityCompat.requestPermissions(getActivity(),
-                new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                REQUEST_PERMISSION_CAMERA);
+        requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                ProfileCreationFragment.REQUEST_PERMISSION_CAMERA);
     }
 
     @Override
     public void goToNext(RingAccountViewModel ringAccountViewModel) {
-        GuidedStepFragment next;
+        GuidedStepSupportFragment next;
         if (ringAccountViewModel.isLink()) {
             next = TVRingLinkAccountFragment.newInstance((RingAccountViewModelImpl) ringAccountViewModel);
         } else {
             next = TVRingAccountCreationFragment.newInstance((RingAccountViewModelImpl) ringAccountViewModel);
         }
-        GuidedStepFragment.add(getFragmentManager(), next);
+        GuidedStepSupportFragment.add(getFragmentManager(), next);
     }
 
     @Override
@@ -212,8 +219,12 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
 
     public long onGuidedActionEditedAndProceed(GuidedAction action) {
         if (action.getId() == USER_NAME) {
-            String username = action.getEditDescription().toString();
+            String username = action.getEditTitle().toString();
             presenter.fullNameUpdated(username);
+            if (TextUtils.isEmpty(username))
+                action.setTitle(getString(R.string.profile_name_hint));
+            else
+                action.setTitle(username);
         } else if (action.getId() == CAMERA) {
             presenter.cameraClick();
         } else if (action.getId() == GALLERY) {
@@ -227,7 +238,7 @@ public class TVProfileCreationFragment extends RingGuidedStepFragment<ProfileCre
     }
 
     public void updatePhoto(Bitmap image) {
-        mSourcePhoto = BitmapUtils.createScaledBitmap(image, DEFAULT_SIZE);
+        mSourcePhoto = image;
         presenter.photoUpdated();
     }
 }
