@@ -69,6 +69,13 @@ public class RingNavigationPresenter extends RootPresenter<RingNavigationView> {
                     if (v != null)
                         v.showViewModel(new RingNavigationViewModel(accounts.isEmpty() ? null : accounts.get(0), accounts));
                 }));
+        mCompositeDisposable.add(mAccountService.getObservableAccounts()
+                .observeOn(mUiScheduler)
+                .subscribe(account -> {
+                    RingNavigationView v = getView();
+                    if (v != null)
+                        v.updateModel(account);
+                }));
     }
 
     public void setAccountOrder(Account selectedAccount) {
