@@ -55,6 +55,7 @@ import cx.ring.tv.camera.CustomCameraActivity;
 import ezvcard.VCard;
 import ezvcard.parameter.ImageType;
 import ezvcard.property.Photo;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigationPresenter>
         implements RingNavigationView {
@@ -242,7 +243,9 @@ public class TVProfileEditingFragment extends RingGuidedStepFragment<RingNavigat
     }
 
     public void updatePhoto(Uri uriImage) {
-        updatePhoto(ContactDetailsTask.loadProfilePhotoFromUri(getActivity(), uriImage));
+        ContactDetailsTask.loadProfilePhotoFromUri(getActivity(), uriImage)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::updatePhoto, e -> Log.e(TAG, "Error loading image", e));
     }
 
     public void updatePhoto(Bitmap image) {
