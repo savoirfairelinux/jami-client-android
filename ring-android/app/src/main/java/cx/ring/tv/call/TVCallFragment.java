@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,7 +41,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.rodolfonavalon.shaperipplelibrary.ShapeRipple;
 import com.rodolfonavalon.shaperipplelibrary.model.Circle;
 
@@ -57,10 +57,7 @@ import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseFragment;
 import cx.ring.services.HardwareServiceImpl;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class TVCallFragment extends BaseFragment<CallPresenter> implements CallView {
 
@@ -245,17 +242,16 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     public void onDestroyView() {
         super.onDestroyView();
         mCompositeDisposable.clear();
+        presenter.hangupCall();
+        runnable = null;
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
         }
-
-        presenter.hangupCall();
     }
 
     @Override
@@ -499,11 +495,12 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     private void handleVisibilityTimer() {
         presenter.uiVisibilityChanged(true);
         View view = getView();
-        if (view != null && runnable != null) {
+        Runnable r = runnable;
+        if (view != null && r != null) {
             Handler handler = view.getHandler();
             if (handler != null) {
-                handler.removeCallbacks(runnable);
-                handler.postDelayed(runnable, 5000);
+                handler.removeCallbacks(r);
+                handler.postDelayed(r, 5000);
             }
         }
     }
@@ -512,10 +509,11 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     public void onPause() {
         super.onPause();
         View view = getView();
-        if (view != null && runnable != null) {
+        Runnable r = runnable;
+        if (view != null && r != null) {
             Handler handler = view.getHandler();
             if (handler != null)
-                handler.removeCallbacks(runnable);
+                handler.removeCallbacks(r);
         }
     }
 }
