@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *  Author: Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,12 +20,16 @@
  */
 package cx.ring.account;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cx.ring.mvp.RingAccountViewModel;
 import cx.ring.mvp.RootPresenter;
 import cx.ring.services.AccountService;
-import cx.ring.utils.NameLookupInputHandler;
+import io.reactivex.Scheduler;
+import io.reactivex.subjects.PublishSubject;
 
 public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreationView> {
 
@@ -33,7 +38,9 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
 
     protected AccountService mAccountService;
 
-    private NameLookupInputHandler mNameLookupInputHandler;
+    @Inject
+    @Named("UiScheduler")
+    protected Scheduler mUiScheduler;
 
     private RingAccountViewModel mRingAccountViewModel;
 
@@ -42,6 +49,8 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     private boolean isConfirmCorrect = true;
     private boolean isRegisterUsernameChecked = true;
     private String mPasswordConfirm = "";
+
+    private final PublishSubject<String> contactQuery = PublishSubject.create();
 
     @Inject
     public RingAccountCreationPresenter(AccountService accountService) {
@@ -56,7 +65,12 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
     @Override
     public void bindView(RingAccountCreationView view) {
         super.bindView(view);
-        mCompositeDisposable.add(mAccountService.getRegisteredNames().subscribe(r -> handleBlockchainResult(r.state, r.name)));
+        mCompositeDisposable.add(contactQuery
+                .debounce(350, TimeUnit.MILLISECONDS)
+                .switchMapSingle(q -> mAccountService.findRegistrationByName("", "", q))
+                .observeOn(mUiScheduler)
+                .subscribe(q -> handleBlockchainResult(q.name, q.address, q.state)));
+
     }
 
     public void init(RingAccountViewModel ringAccountViewModel) {
@@ -65,14 +79,12 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
 
     public void userNameChanged(String userName) {
         if (!userName.isEmpty()) {
-            if (mNameLookupInputHandler == null) {
-                mNameLookupInputHandler = new NameLookupInputHandler(mAccountService, "");
-            }
             mRingAccountViewModel.setUsername(userName);
-            mNameLookupInputHandler.enqueueNextLookup(userName);
+            contactQuery.onNext(userName);
             isRingUserNameCorrect = false;
             getView().enableTextError();
         } else {
+            mRingAccountViewModel.setUsername("");
             getView().disableTextError();
         }
         checkForms();
@@ -131,38 +143,37 @@ public class RingAccountCreationPresenter extends RootPresenter<RingAccountCreat
         }
     }
 
-    private void handleBlockchainResult(int state, String name) {
-        if (getView() == null) {
+    private void handleBlockchainResult(String name, String address, int state) {
+        RingAccountCreationView view = getView();
+        if (view == null) {
             return;
         }
-        if (mRingAccountViewModel.getUsername() == null || mRingAccountViewModel.getUsername().isEmpty()) {
-            getView().disableTextError();
+        if (name == null || name.isEmpty()) {
+            view.disableTextError();
             isRingUserNameCorrect = false;
         } else {
-            if (mRingAccountViewModel.getUsername().equals(name)) {
-                switch (state) {
-                    case 0:
-                        // on found
-                        getView().showExistingNameError();
-                        isRingUserNameCorrect = false;
-                        break;
-                    case 1:
-                        // invalid name
-                        getView().showInvalidNameError();
-                        isRingUserNameCorrect = false;
-                        break;
-                    case 2:
-                        // available
-                        getView().disableTextError();
-                        mRingAccountViewModel.setUsername(name);
-                        isRingUserNameCorrect = true;
-                        break;
-                    default:
-                        // on error
-                        getView().disableTextError();
-                        isRingUserNameCorrect = false;
-                        break;
-                }
+            switch (state) {
+                case 0:
+                    // on found
+                    view.showExistingNameError();
+                    isRingUserNameCorrect = false;
+                    break;
+                case 1:
+                    // invalid name
+                    view.showInvalidNameError();
+                    isRingUserNameCorrect = false;
+                    break;
+                case 2:
+                    // available
+                    view.disableTextError();
+                    mRingAccountViewModel.setUsername(name);
+                    isRingUserNameCorrect = true;
+                    break;
+                default:
+                    // on error
+                    view.disableTextError();
+                    isRingUserNameCorrect = false;
+                    break;
             }
         }
         checkForms();
