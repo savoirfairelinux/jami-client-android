@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
+    android:keepScreenOn="true"
     tools:context=".tv.call.TVCallActivity">
 
     <SurfaceView

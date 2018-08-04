@@ -238,7 +238,9 @@ public class CallPresenter extends RootPresenter<CallView> {
             timeUpdateTask = null;
         }
         mSipCall = null;
-        getView().finish();
+        CallView view = getView();
+        if (view != null)
+            view.finish();
     }
 
     private void contactUpdate(final SipCall call) {
