@@ -24,8 +24,11 @@ import android.os.Bundle;
 import android.support.v17.leanback.app.GuidedStepSupportFragment;
 import android.support.v4.app.FragmentActivity;
 
+import java.io.File;
+
 import cx.ring.R;
 import cx.ring.application.RingApplication;
+import cx.ring.utils.AndroidFileUtils;
 
 public class HomeActivity extends FragmentActivity {
     @Override
@@ -42,5 +45,14 @@ public class HomeActivity extends FragmentActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        String path = AndroidFileUtils.ringtonesPath(this);
+        if (!(new File(path + "/default.wav")).exists()) {
+            AndroidFileUtils.copyAssetFolder(getAssets(), "ringtones", path);
+        }
+        super.onStart();
     }
 }
