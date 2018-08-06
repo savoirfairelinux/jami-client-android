@@ -65,6 +65,8 @@
   <string name="notif_channel_requests">請求</string>
   <string name="notif_channel_file_transfer">檔案傳輸</string>
   <string name="notif_mark_as_read">標示為已讀</string>
+  <string name="notif_dismiss">忽略</string>
+  <string name="notif_reply">回覆</string>
   <string name="notif_incoming_file_transfer_title">從 %1$s 而來的檔案</string>
   <string name="notif_incoming_file_transfer">有人想要傳送檔案給您</string>
   <string name="notif_outgoing_file_transfer_title">傳送檔案給 %1$s</string>

@@ -33,6 +33,7 @@
   <string name="menu_item_home">خانه</string>
   <string name="menu_item_contact_request">درخواست‌های تماس</string>
   <string name="menu_item_accounts">مدیریت حساب‌ها</string>
+  <string name="menu_item_account">مدیریت حساب</string>
   <string name="menu_item_settings">تنظیمات</string>
   <string name="menu_item_share">هم‌رسانی اطّلاعات تماس</string>
   <string name="menu_item_about">دربارهٔ رینگ</string>
@@ -60,6 +61,10 @@
   <string name="notif_current_call_title">تماس کنونی با %1$s</string>
   <string name="notif_current_call">تماس کنونی</string>
   <string name="notif_channel_calls">تماس‌ها</string>
+  <string name="notif_channel_messages">پیام ها</string>
+  <string name="notif_channel_requests">درخواست ها</string>
+  <string name="notif_channel_file_transfer">انتقال فایل</string>
+  <string name="action_open">باز کردن</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">شما:</string>
   <string name="action_call_hangup">قطع کردن</string>
@@ -73,6 +78,8 @@
   <string name="ab_action_speakerphone">فعال کردن بلندگو</string>
   <string name="ab_action_contact_add">افزودن به مخاطبان</string>
   <string name="ab_action_contact_add_question">افزودن به مخاطبان؟</string>
+  <string name="hist_contact_added">مخاطب افزوده شد</string>
+  <string name="hist_invitation_received">دعوت نامه دریافت شد</string>
   <string name="ab_action_audio_call">تماس صوتی</string>
   <string name="ab_action_video_call">تماس ویدیویی</string>
   <string name="ab_action_change_screen_orientation">تغییر جهت صفحه</string>
@@ -85,6 +92,9 @@
   <string name="message_sending">در حال ارسال پیام…</string>
   <string name="message_failed">شکست خورد</string>
   <string name="time_just_now">هم‌اکنون</string>
+  <string name="send_file">ارسال فایل</string>
+  <string name="hist_file_sent">فایل ارسال شد</string>
+  <string name="hist_file_received">فایل دریافت شد</string>
   <!--MediaPreferenceFragment-->
   <string name="permission_dialog_camera_title">دسترسی دوربین</string>
   <string name="permission_dialog_camera_message">گفت‌وگوی ویدیویی برای کار کردن نیاز به دسترسی دوربین دارد. لطفاً آن را فعّال کنید.</string>
@@ -150,6 +160,7 @@
   <string name="tv_contact_row_header">مخاطبان</string>
   <!--File Transfer-->
   <string name="invalid_file">فایل نامعتبر</string>
+  <string name="file_transfer_status_finished">پایان یافته</string>
   <string name="file_transfer_status_invalid_pathname">مسیر نامعتبر</string>
   <string name="file_saved_in">فایل در %s ذخیره شد</string>
   <string name="menu_file_download">دانلود فایل</string>

@@ -66,6 +66,8 @@
   <string name="notif_channel_requests">Förfrågningar</string>
   <string name="notif_channel_file_transfer">Filöverföring</string>
   <string name="notif_mark_as_read">Markera som läst</string>
+  <string name="notif_dismiss">Avfärda</string>
+  <string name="notif_reply">Svara</string>
   <string name="notif_incoming_file_transfer_title">Inkommande fil från %1$s</string>
   <string name="notif_incoming_file_transfer">Någon vill skicka en fil till dig</string>
   <string name="notif_outgoing_file_transfer_title">Skickar fil till %1$s</string>

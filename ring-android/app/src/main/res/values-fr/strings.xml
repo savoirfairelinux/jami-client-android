@@ -6,10 +6,10 @@
   <string name="section_license">Licence</string>
   <string name="sponsor_section">Ring est un logiciel libre développé et soutenu par</string>
   <string name="copyright_section">Copyright</string>
-  <string name="contribute_section">Contribuer</string>
+  <string name="contribute_section">Contribuez</string>
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Application d\'envoi de courriel non-trouvée, installez-en un et renvoyez-nous votre rapport</string>
-  <string name="no_browser_app_installed">Aucun navigateur internet trouvé, installez en un pour afficher cette page</string>
+  <string name="no_browser_app_installed">Aucun navigateur internet trouvé. Vous devez en installer un afin de voir cette page</string>
   <string name="email_chooser_title">Envoi du courriel en utilisant ...</string>
   <string name="website_chooser_title">Voir le site web avec...</string>
   <string name="license">Ce logiciel est offert \"tel quel\", sans aucune garantie. Pour plus d\'informations, 
@@ -47,7 +47,7 @@
     <item quantity="other">%d Conversations</item>
   </plurals>
   <!--ContactList Fragment-->
-  <string name="searchbar_hint">Taper un nom ou un numéro…</string>
+  <string name="searchbar_hint">Entrez un nom ou un numéro…</string>
   <string name="choose_number">Choisissez un numéro</string>
   <!--FileExplorerDFragement-->
   <!--TransferDFragment-->
@@ -66,6 +66,8 @@
   <string name="notif_channel_requests">Sollicitations</string>
   <string name="notif_channel_file_transfer">Transfert de fichier</string>
   <string name="notif_mark_as_read">Marquer comme lu</string>
+  <string name="notif_dismiss">Rejeter</string>
+  <string name="notif_reply">Répondre</string>
   <string name="notif_incoming_file_transfer_title">Réception d\'un fichier provenant de %1$s</string>
   <string name="notif_incoming_file_transfer">Quelqu\'un souhaite vous envoyer un fichier</string>
   <string name="notif_outgoing_file_transfer_title">Envoie d\'un fichier à %1$s</string>

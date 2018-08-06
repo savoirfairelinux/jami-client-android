@@ -61,14 +61,18 @@
   <string name="notif_current_call_title">Jelenlegi hívás a következővel: %1$s</string>
   <string name="notif_current_call">Jelenlegi hívás</string>
   <string name="notif_channel_calls">Hívások</string>
+  <string name="notif_channel_missed_calls">Nem fogadott hívások</string>
   <string name="notif_channel_messages">Üzenetek</string>
   <string name="notif_channel_requests">Kérések</string>
   <string name="notif_channel_file_transfer">Fájl átvitel</string>
   <string name="notif_mark_as_read">Megjelölés olvasottként</string>
+  <string name="notif_dismiss">Elutasítás</string>
+  <string name="notif_reply">Válasz</string>
   <string name="notif_incoming_file_transfer_title">Bejövő fájl innen%1$s</string>
   <string name="notif_incoming_file_transfer">Valaki szeretne küldeni egy fájlt Önnek</string>
   <string name="notif_outgoing_file_transfer_title">Fájl küldése %1$s</string>
   <string name="notif_outgoing_file_transfer">Valaki szeretne küldeni egy fájlt Önnek</string>
+  <string name="notif_incoming_picture">%1$sképe</string>
   <string name="action_open">Megnyitás</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Ön:</string>
@@ -105,6 +109,7 @@
   <string name="permission_dialog_camera_message">A videóhívások működéséhez szükséges a kamera engedély. Fontolja meg az engedélyezését!</string>
   <string name="ringtone_error_title">Hiba</string>
   <string name="ringtone_error_format_not_supported">Ez a formátum nem támogatott</string>
+  <string name="ringtone_error_size_too_big">Ez a fájl túl nagy. A maximum méret %1$d kB.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">A Ringnek szüksége van a „Névjegyek olvasása” engedélyre. Kérjük, engedélyezze.</string>
   <!--Write call log permission-->

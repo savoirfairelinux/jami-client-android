@@ -66,6 +66,8 @@ Para maiores detalhes, consulte a &lt;u&gt;Licença GPL versão 3 ou mais recent
   <string name="notif_channel_requests">Solicitações</string>
   <string name="notif_channel_file_transfer">Transferência de arquivo</string>
   <string name="notif_mark_as_read">Marcar como lida</string>
+  <string name="notif_dismiss">Dispensar</string>
+  <string name="notif_reply">Responder</string>
   <string name="notif_incoming_file_transfer_title">Recebendo arquivo de %1$s</string>
   <string name="notif_incoming_file_transfer">Alguém quer enviar um arquivo</string>
   <string name="notif_outgoing_file_transfer_title">Enviando arquivo para %1$s</string>

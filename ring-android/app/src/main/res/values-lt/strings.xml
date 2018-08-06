@@ -59,6 +59,17 @@
   <string name="notif_current_call_title">Esamas skambutis su %1$s</string>
   <string name="notif_current_call">Esamas skambutis</string>
   <string name="notif_channel_calls">Skambučiai</string>
+  <string name="notif_channel_missed_calls">Praleisti skambučiai</string>
+  <string name="notif_channel_messages">Žinutės</string>
+  <string name="notif_channel_requests">Užklausos</string>
+  <string name="notif_channel_file_transfer">Failų persiuntimas</string>
+  <string name="notif_mark_as_read">Žymėti kaip skaitytą</string>
+  <string name="notif_reply">Atsakyti</string>
+  <string name="notif_incoming_file_transfer_title">Gaunamas failas nuo %1$s</string>
+  <string name="notif_incoming_file_transfer">Kažkas nori išsiųsti jums failą</string>
+  <string name="notif_outgoing_file_transfer_title">Siunčiamas failas naudotojui %1$s</string>
+  <string name="notif_outgoing_file_transfer">Kažkas nori išsiųsti jums failą</string>
+  <string name="notif_incoming_picture">Paveikslas nuo %1$s</string>
   <string name="action_open">Atverti</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">Jūs:</string>
@@ -121,6 +132,7 @@
   <string name="wizard_back">Atgal</string>
   <!--MenuHeaderView-->
   <string name="profile">Mano profilis</string>
+  <string name="profile_message_warning">Jūsų profilis yra bendrinamas tik su jūsų kontaktais</string>
   <string name="open_the_gallery">Atverti galeriją</string>
   <string name="take_a_photo">Padaryti nuotrauką</string>
   <string name="profile_name_hint">Įveskite savo vardą (nebūtina)</string>
@@ -137,6 +149,8 @@
   <string name="contact_request_msg">Jūs turite %1$s kontaktų užklausų</string>
   <string name="contact_request_account">Skirta %1$s</string>
   <string name="no_requests">0 kontaktų užklausų</string>
+  <string name="message_contact_not_trusted_yet">%s kol kas nėra jūsų kontaktų sąraše.\nJūs priimate ar atmetate šią kontakto užklausą?</string>
+  <string name="message_contact_not_trusted">%s nėra jūsų kontaktų sąraše.\nPridėti naują kontaktą?</string>
   <!--Send contact requests-->
   <string name="send_request_button">Siųsti</string>
   <string name="send_request_title">Siųsti kontakto užklausą</string>
@@ -153,6 +167,7 @@
   <string name="file_transfer_status_unsupported">nepalaikoma</string>
   <string name="file_saved_in">Failas įrašytas į %s</string>
   <string name="no_space_left_on_device">Įrenginyje nebeliko vietos</string>
+  <string name="title_media_viewer">Medijos žiūryklė</string>
   <string name="menu_file_download">Atsisiųsti failą</string>
   <string name="menu_file_delete">Ištrinti failą</string>
   <string name="menu_file_share">Bendrinti failą</string>

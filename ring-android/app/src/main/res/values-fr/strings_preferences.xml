@@ -12,7 +12,7 @@
   <string name="pref_systemContacts_summary">Utiliser les contacts de l\'appareil pour afficher les détails du correspondant.</string>
   <string name="pref_systemDialer_title">Utiliser Ring par defaut pour les appels</string>
   <string name="pref_systemDialer_summary">Utiliser Ring par défaut pour les appels, si possible</string>
-  <string name="pref_startOnBoot_title">Lancer Ring au démarrage</string>
+  <string name="pref_startOnBoot_title">Lancer Ring au démarrage de la session</string>
   <string name="pref_startOnBoot_summary">Lancer ring en arrière plan au démarrage de l\'appareil.</string>
   <string name="pref_clearHistory_title">Effacer l\'historique</string>
   <string name="pref_clearHistory_summary">Effacer les historiques de conversation. L\'action est irréversible.</string>

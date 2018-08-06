@@ -163,6 +163,7 @@
   <string name="account_link_title">پیوند این افزاره</string>
   <string name="account_sip_cannot_be_registered">نمی‌توان حساب را ثبت کرد</string>
   <!--Edit profile-->
+  <string name="account_edit_profile">ویرایش پروفایل</string>
   <!--Devices-->
   <string name="account_revoke_device_hint">رمز عبور خود را مجددا وارد نمایید</string>
   <string name="enter_password">گذرواژه را وارد کنید</string>

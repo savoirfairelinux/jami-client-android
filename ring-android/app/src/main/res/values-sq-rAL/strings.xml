@@ -65,6 +65,8 @@
   <string name="notif_channel_requests">Kërkesa</string>
   <string name="notif_channel_file_transfer">Shpërngulje kartelash</string>
   <string name="notif_mark_as_read">Vëri shenjë si të lexuar</string>
+  <string name="notif_dismiss">Hidhe Tej</string>
+  <string name="notif_reply">Përgjigjuni</string>
   <string name="notif_incoming_file_transfer_title">Kartelë ardhëse nga %1$s</string>
   <string name="notif_incoming_file_transfer">Dikush dëshiron t’ju dërgojë një kartelë</string>
   <string name="notif_outgoing_file_transfer_title">Po dërgohet kartelë te %1$s</string>
