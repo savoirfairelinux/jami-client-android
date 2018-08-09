@@ -368,7 +368,7 @@ public class ConversationFacade {
             Log.w(TAG, "CALL_STATE_CHANGED : call is null");
             return;
         }
-        int newState = call.getCallState();
+        SipCall.State newState = call.getCallState();
         boolean incomingCall = newState == SipCall.State.RINGING && call.isIncoming();
         mHardwareService.updateAudioState(newState, !call.isAudioOnly());
 

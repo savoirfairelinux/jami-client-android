@@ -194,7 +194,7 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     @Override
-    public void updateAudioState(final int state, final boolean isOngoingVideo) {
+    public void updateAudioState(final State state, final boolean isOngoingVideo) {
         if (mBluetoothWrapper == null) {
             mBluetoothWrapper = new BluetoothWrapper(mContext);
             mBluetoothWrapper.registerScoUpdate();
@@ -202,19 +202,19 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
             mBluetoothWrapper.setBluetoothChangeListener(this);
         }
         switch (state) {
-            case State.RINGING:
+            case RINGING:
                 startRinging();
                 mAudioManager.requestAudioFocus(this, AudioManager.STREAM_VOICE_CALL, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                 setAudioRouting(true);
                 mAudioManager.setMode(AudioManager.MODE_RINGTONE);
                 break;
-            case State.CURRENT:
+            case CURRENT:
                 stopRinging();
                 mAudioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
                 setAudioRouting(isOngoingVideo);
                 break;
-            case State.HOLD:
-            case State.UNHOLD:
+            case HOLD:
+            case UNHOLD:
                 break;
             default:
                 stopRinging();
