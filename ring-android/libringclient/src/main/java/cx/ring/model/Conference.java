@@ -27,7 +27,7 @@ import java.util.Random;
 public class Conference {
 
     private String mId;
-    private int mConfState;
+    private SipCall.State mConfState;
     private ArrayList<SipCall> mParticipants;
     private boolean mRecording;
     private int uuid;
@@ -71,7 +71,7 @@ public class Conference {
         }
     }
 
-    public int getState() {
+    public SipCall.State getState() {
         if (mParticipants.size() == 1) {
             return mParticipants.get(0).getCallState();
         }

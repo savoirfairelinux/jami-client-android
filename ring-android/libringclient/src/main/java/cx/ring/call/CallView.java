@@ -46,7 +46,7 @@ public interface CallView {
 
     void updateContactBubble(CallContact contact);
 
-    void updateCallStatus(int callState);
+    void updateCallStatus(SipCall.State callState);
 
     void initMenu(boolean isSpeakerOn, boolean hasContact, boolean displayFlip, boolean canDial, boolean onGoingCall);
 

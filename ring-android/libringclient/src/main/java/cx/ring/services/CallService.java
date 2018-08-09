@@ -299,7 +299,7 @@ public class CallService {
     }
 
     private SipCall parseCallState(String callId, String newState) {
-        int callState = SipCall.stateFromString(newState);
+        SipCall.State callState = SipCall.stateFromString(newState);
         SipCall sipCall = currentCalls.get(callId);
         if (sipCall != null) {
             sipCall.setCallState(callState);
