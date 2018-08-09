@@ -31,6 +31,7 @@ import cx.ring.daemon.Ringservice;
 import cx.ring.daemon.RingserviceJNI;
 import cx.ring.daemon.StringMap;
 import cx.ring.daemon.UintVect;
+import cx.ring.model.SipCall;
 import cx.ring.utils.Log;
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
@@ -64,7 +65,7 @@ public abstract class HardwareService {
 
     public abstract boolean isVideoAvailable();
 
-    public abstract void updateAudioState(int state, boolean isOngoingVideo);
+    public abstract void updateAudioState(SipCall.State state, boolean isOngoingVideo);
 
     public abstract void closeAudioState();
 
