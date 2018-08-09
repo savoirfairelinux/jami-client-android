@@ -162,31 +162,31 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         return countDownFragment;
     }
 
-    public static int callStateToHumanState(final int state) {
+    public static int callStateToHumanState(final SipCall.State state) {
         switch (state) {
-            case SipCall.State.SEARCHING:
+            case SEARCHING:
                 return R.string.call_human_state_searching;
-            case SipCall.State.CONNECTING:
+            case CONNECTING:
                 return R.string.call_human_state_connecting;
-            case SipCall.State.RINGING:
+            case RINGING:
                 return R.string.call_human_state_ringing;
-            case SipCall.State.CURRENT:
+            case CURRENT:
                 return R.string.call_human_state_current;
-            case SipCall.State.HUNGUP:
+            case HUNGUP:
                 return R.string.call_human_state_hungup;
-            case SipCall.State.BUSY:
+            case BUSY:
                 return R.string.call_human_state_busy;
-            case SipCall.State.FAILURE:
+            case FAILURE:
                 return R.string.call_human_state_failure;
-            case SipCall.State.HOLD:
+            case HOLD:
                 return R.string.call_human_state_hold;
-            case SipCall.State.UNHOLD:
+            case UNHOLD:
                 return R.string.call_human_state_unhold;
-            case SipCall.State.OVER:
+            case OVER:
                 return R.string.call_human_state_over;
-            case SipCall.State.NONE:
+            case NONE:
             default:
-                return R.string.call_human_state_none;
+                return 0;
         }
     }
 
@@ -507,10 +507,10 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     }
 
     @Override
-    public void updateCallStatus(final int callState) {
+    public void updateCallStatus(final SipCall.State callState) {
         getActivity().runOnUiThread(() -> {
             switch (callState) {
-                case SipCall.State.NONE:
+                case NONE:
                     mCallStatusTxt.setText("");
                     break;
                 default:

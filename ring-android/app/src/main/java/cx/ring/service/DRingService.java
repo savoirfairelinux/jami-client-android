@@ -588,7 +588,7 @@ public class DRingService extends Service {
             updateConnectivityState();
         }));
         mDisposableBag.add(mCallService.getCallSubject().subscribe(call -> {
-            int newState = call.getCallState();
+            SipCall.State newState = call.getCallState();
             boolean incomingCall = newState == SipCall.State.RINGING && call.isIncoming();
             if (incomingCall) {
                 Bundle extras = new Bundle();
