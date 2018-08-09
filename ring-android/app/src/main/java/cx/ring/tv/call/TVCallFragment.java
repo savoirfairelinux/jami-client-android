@@ -54,6 +54,7 @@ import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
 import cx.ring.contacts.AvatarFactory;
 import cx.ring.dependencyinjection.RingInjectionComponent;
+import cx.ring.fragments.CallFragment;
 import cx.ring.model.CallContact;
 import cx.ring.model.SipCall;
 import cx.ring.mvp.BaseFragment;
@@ -132,34 +133,6 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
         TVCallFragment countDownFragment = new TVCallFragment();
         countDownFragment.setArguments(bundle);
         return countDownFragment;
-    }
-
-    public static int callStateToHumanState(final int state) {
-        switch (state) {
-            case SipCall.State.SEARCHING:
-                return R.string.call_human_state_searching;
-            case SipCall.State.CONNECTING:
-                return R.string.call_human_state_connecting;
-            case SipCall.State.RINGING:
-                return R.string.call_human_state_ringing;
-            case SipCall.State.CURRENT:
-                return R.string.call_human_state_current;
-            case SipCall.State.HUNGUP:
-                return R.string.call_human_state_hungup;
-            case SipCall.State.BUSY:
-                return R.string.call_human_state_busy;
-            case SipCall.State.FAILURE:
-                return R.string.call_human_state_failure;
-            case SipCall.State.HOLD:
-                return R.string.call_human_state_hold;
-            case SipCall.State.UNHOLD:
-                return R.string.call_human_state_unhold;
-            case SipCall.State.OVER:
-                return R.string.call_human_state_over;
-            case SipCall.State.NONE:
-            default:
-                return R.string.call_human_state_none;
-        }
     }
 
     @Override
@@ -363,13 +336,13 @@ public class TVCallFragment extends BaseFragment<CallPresenter> implements CallV
     }
 
     @Override
-    public void updateCallStatus(final int callState) {
+    public void updateCallStatus(final SipCall.State callState) {
             switch (callState) {
-                case SipCall.State.NONE:
+                case NONE:
                     mCallStatusTxt.setText("");
                     break;
                 default:
-                    mCallStatusTxt.setText(callStateToHumanState(callState));
+                    mCallStatusTxt.setText(CallFragment.callStateToHumanState(callState));
                     break;
             }
     }

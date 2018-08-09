@@ -54,7 +54,7 @@ public class SipCall {
     private boolean missed = true;
 
     private int mCallType;
-    private int mCallState = State.NONE;
+    private State mCallState = State.NONE;
 
     private ProfileChunk mProfileChunk = null;
 
@@ -109,7 +109,7 @@ public class SipCall {
     }
 
 
-    public int getCallState() {
+    public State getCallState() {
         return mCallState;
     }
 
@@ -133,19 +133,24 @@ public class SipCall {
         int OUTGOING = 1;
     }
 
-    public interface State {
-        int NONE = 0;
-        int SEARCHING = 1;
-        int CONNECTING = 2;
-        int RINGING = 3;
-        int CURRENT = 4;
-        int HUNGUP = 5;
-        int BUSY = 6;
-        int FAILURE = 7;
-        int HOLD = 8;
-        int UNHOLD = 9;
-        int INACTIVE = 10;
-        int OVER = 11;
+    public enum State {
+        NONE(0),
+        SEARCHING(1),
+        CONNECTING(2),
+        RINGING(3),
+        CURRENT(4),
+        HUNGUP(5),
+        BUSY(6),
+        FAILURE(7),
+        HOLD(8),
+        UNHOLD(9),
+        INACTIVE(10),
+        OVER(11);
+
+        private final int value;
+        State(int value){
+            this.value = value;
+        }
     }
 
     public String getCallId() {
@@ -172,7 +177,7 @@ public class SipCall {
         return mAccount;
     }
 
-    public void setCallState(int callState) {
+    public void setCallState(State callState) {
         mCallState = callState;
         if (mCallState == State.CURRENT)
             missed = false;
@@ -210,7 +215,7 @@ public class SipCall {
         return mNumber;
     }
 
-    public static int stateFromString(String state) {
+    public static State stateFromString(String state) {
         switch (state) {
             case "SEARCHING":
                 return State.SEARCHING;
