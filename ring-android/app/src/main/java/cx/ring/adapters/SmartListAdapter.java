@@ -141,10 +141,14 @@ public class SmartListAdapter extends RecyclerView.Adapter<SmartListViewHolder> 
     private String getLastEventSummary(ConversationElement e, Context context) {
         if (e instanceof HistoryCall) {
             HistoryCall call = (HistoryCall) e;
-            if (call.isIncoming())
-                return String.format(context.getString(R.string.hist_in_call), call.getDurationString());
+            if (call.isMissed())
+                return call.isIncoming() ?
+                        context.getString(R.string.notif_missed_incoming_call) :
+                        context.getString(R.string.notif_missed_outgoing_call);
             else
-                return String.format(context.getString(R.string.hist_out_call), call.getDurationString());
+                return call.isIncoming() ?
+                        String.format(context.getString(R.string.hist_in_call), call.getDurationString()) :
+                        String.format(context.getString(R.string.hist_out_call), call.getDurationString());
         } else if (e instanceof TextMessage) {
             TextMessage t = (TextMessage) e;
             if (t.isIncoming()) {
