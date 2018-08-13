@@ -9,9 +9,9 @@
   <string name="contribute_section">Contribuer</string>
   <string name="version_section">Version</string>
   <string name="no_email_app_installed">Aucune application courriel n\'a été trouvée. Ajoutez-en une pour nous envoyer un rapport.</string>
-  <string name="no_browser_app_installed">Aucun navigateur trouvé. Ajoutez-en un afin de voir cette page.</string>
+  <string name="no_browser_app_installed">Aucun navigateur trouvé; ajoutez-en un afin de voir cette page</string>
   <string name="email_chooser_title">Envoyer un courriel en utilisant</string>
-  <string name="website_chooser_title">Visualiser le site web en utilisant...</string>
+  <string name="website_chooser_title">Visualiser le site web en utilisant ...</string>
   <string name="license">Ce logiciel est fourni \"tel quel\", sans garantie d\'aucune sorte. Pour les détails, consulter
 &lt;u&gt;GNU General Public License version 3 ou plus&lt;/u&gt;</string>
   <string name="description">Ring est un logiciel libre de communication universel qui respecte la liberté et vie privée de ses utilisateurs.</string>
@@ -70,13 +70,13 @@
   <string name="ongoing_call">Appel en cours</string>
   <string name="hist_in_call">Appel entrant de %1$s</string>
   <string name="hist_out_call">Appel sortant de %1$s</string>
-  <string name="start_error_title">Impossible de démarrer Ring!</string>
+  <string name="start_error_title">Impossible de démarrer Ring !</string>
   <string name="start_error_mic_required">Ring requiert l\'accès au microphone pour fonctionner</string>
-  <string name="action_call_accept">Répondre à un appel</string>
+  <string name="action_call_accept">Répondre</string>
   <string name="action_call_decline">Refuser</string>
   <string name="ab_action_speakerphone">Activer le haut-parleur</string>
   <string name="ab_action_contact_add">Ajouter aux contacts</string>
-  <string name="ab_action_contact_add_question">Ajouter aux contacts?</string>
+  <string name="ab_action_contact_add_question">Ajouter aux contacts ?</string>
   <string name="ab_action_audio_call">Appel audio</string>
   <string name="ab_action_video_call">Appel vidéo</string>
   <string name="ab_action_change_screen_orientation">Modifier l\'orientation de l\'écran</string>
@@ -106,7 +106,7 @@
   <string name="clear_history_completed">L\'historique a été effacé.</string>
   <!--Conversation-->
   <string name="conversation_action_delete_this">Supprimer cette conversation</string>
-  <string name="conversation_action_delete_this_title">Supprimer cette conversation?</string>
+  <string name="conversation_action_delete_this_title">Supprimer cette conversation ?</string>
   <string name="conversation_action_delete_this_message">Cette action ne peut être annulée.</string>
   <string name="conversation_action_copy_peer_number">Copier le numéro</string>
   <string name="conversation_action_copied_peer_number_clipboard">%1$s copié dans le presse papiers</string>
@@ -121,7 +121,7 @@
   <string name="prompt_new_username">Entrer un nouveau nom d\'utilisateur</string>
   <string name="help_password_choose">Choisir un mot de passe fort dont vous vous souviendrez pour protéger votre compte Ring.</string>
   <string name="help_password_enter">Entrer votre mot de passe Ring principal</string>
-  <string name="help_pin_enter">Entrer le NIP d\'un autre compte Ring déjà configuré. Utiliser la fonction \"exporter le compte dans Ring\" pour obtenir un PIN.</string>
+  <string name="help_pin_enter">Entrer le NIP d\'un autre compte Ring déjà configuré. Utiliser la fonction \"exporter le compte dans Ring\" pour obtenir un NIP.</string>
   <string name="wizard_next">Suivant</string>
   <string name="wizard_back">Précédent</string>
   <!--MenuHeaderView-->
@@ -132,7 +132,7 @@
   <string name="profile_name_hint">Entrer votre nom (optionnel)</string>
   <!--Share fragment-->
   <string name="share_message">Numériser ce code QR à partir du scan intégré de l\'application Ring qui veut communiquer avec vous.</string>
-  <string name="share_message_no_account">S\'il vous plaît sélectionner un compte à partager.</string>
+  <string name="share_message_no_account">S\'il vous plaît, sélectionnez un compte à partager.</string>
   <string name="share_your_account_information">Partager mes informations de contact</string>
   <string name="generic_error_migration">Erreur</string>
   <string name="generic_error_migration_message">Une erreur s\'est produite durant la migration.</string>

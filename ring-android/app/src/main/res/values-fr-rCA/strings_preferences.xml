@@ -7,7 +7,6 @@
   <string name="pref_mobileData_title">Données mobiles</string>
   <string name="pref_mobileData_summary">Autoriser Ring à passer par le réseau 3G/LTE en plus du Wi-Fi</string>
   <string name="pref_systemContacts_title">Utiliser les contacts du système</string>
-  <string name="pref_systemContacts_summary">Montrer les informations de l\'appelant en utilisant le système des contacts</string>
   <string name="pref_systemDialer_title">Placer les appels en utilisant Ring</string>
   <string name="pref_systemDialer_summary">Placer les appels téléphoniques en utilisant Ring quand c\'est possible</string>
   <string name="pref_startOnBoot_title">Exécuter Ring lors du démarrage du téléphone</string>
