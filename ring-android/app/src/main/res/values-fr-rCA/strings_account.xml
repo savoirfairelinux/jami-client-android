@@ -23,14 +23,14 @@
   <string name="dialog_warn_ip2ip_account_title">Créer un compte SIP vide?</string>
   <string name="dialog_warn_ip2ip_account_message">Vous êtes sur le point de créer un compte SIP sans un nom de domaine valide.
 Vous ne pourrez qu\'émettre et recevoir des appels ip directs.
-Vous pouvez modifier votre compte plus tard.</string>
+Vous pourrez modifier votre compte plus tard.</string>
   <string name="account_type_ip2ip">Compte IP</string>
   <string name="help_ring">Un compte Ring vous permet de contacter des personnes de façon sécuritaire en pair à pair à travers un réseau pleinement distribué.</string>
   <string name="help_sip_title">Ajouter un compte SIP</string>
   <string name="help_sip">Configurer un compte SIP existant</string>
   <string name="create_sip_account">Ajouter un compte SIP</string>
   <!--Strings related to account deletion-->
-  <string name="account_delete_dialog_title">Supprimer le compte?</string>
+  <string name="account_delete_dialog_title">Supprimer le compte ?</string>
   <string name="account_delete_dialog_message">Cette action ne peut être annulée</string>
   <!--AccountManagementFragment-->
   <string name="empty_account_list">Aucun compte enregistré</string>
@@ -72,13 +72,12 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_registration_exp_label">Inscription expirée</string>
   <string name="account_local_interface_label">Interface locale</string>
   <string name="account_local_port_label">Port local</string>
-  <string name="account_stun_enable_label">Utiliser le Stun</string>
+  <string name="account_stun_enable_label">Utiliser le STUN</string>
   <string name="account_stun_server_label">Serveur Stun</string>
   <string name="account_turn_enable_label">Utiliser le TURN</string>
   <string name="account_turn_server_label">Serveur TURN</string>
   <string name="account_turn_username_label">Nom d\'utilisateur TURN</string>
   <string name="account_turn_password_label">Mot de passe TURN</string>
-  <string name="account_published_same_as_local_label">publié pareille que la version local</string>
   <string name="account_published_port_label">Port publié</string>
   <string name="account_published_address_label">Adresse publiée</string>
   <!--Security Details-->
@@ -118,7 +117,7 @@ Vous pouvez modifier votre compte plus tard.</string>
   <string name="account_enter_password">Entrer le mot de passe</string>
   <string name="account_share_body">Contactez-moi en utilisant \'%1$s\' sur la plateforme de communication distribuée de Ring: https://ring.cx </string>
   <string name="account_share_body_with_username">Contactez-moi en utilisant \'%1$s\' ou mon nom d\'utilisateur public \'%2$s\' sur la plateforme de communication distribuée de Ring: https://ring.cx </string>
-  <string name="account_contact_me">Contactez-moi sur Ring!</string>
+  <string name="account_contact_me">Contactez-moi sur Ring !</string>
   <string name="update_account">Mettre à jour le compte</string>
   <string name="account_migration">Votre compte Ring peut être mis à jour.\nS\'il vous plaît, entrer votre mot de passe.</string>
   <string name="ring_account">Compte Ring</string>

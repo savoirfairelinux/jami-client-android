@@ -61,9 +61,18 @@
   <string name="notif_current_call_title">تماس کنونی با %1$s</string>
   <string name="notif_current_call">تماس کنونی</string>
   <string name="notif_channel_calls">تماس‌ها</string>
+  <string name="notif_channel_missed_calls">تماس از دست رفته</string>
   <string name="notif_channel_messages">پیام ها</string>
   <string name="notif_channel_requests">درخواست ها</string>
   <string name="notif_channel_file_transfer">انتقال فایل</string>
+  <string name="notif_mark_as_read">به عنوان خوانده شده علامت بزن</string>
+  <string name="notif_dismiss"> رد کنید</string>
+  <string name="notif_reply">لطفا پاسخ دهید</string>
+  <string name="notif_incoming_file_transfer_title">فایل ورودی از%1$s</string>
+  <string name="notif_incoming_file_transfer">شخصی می خواهد به شما یک فایل ارسال کند</string>
+  <string name="notif_outgoing_file_transfer_title">ارسال فایل به %1$s</string>
+  <string name="notif_outgoing_file_transfer">شخصی می خواهد به شما یک فایل ارسال کند</string>
+  <string name="notif_incoming_picture">تصویر از%1$s</string>
   <string name="action_open">باز کردن</string>
   <!--Call Fragment-->
   <string name="you_txt_prefix">شما:</string>
@@ -100,6 +109,7 @@
   <string name="permission_dialog_camera_message">گفت‌وگوی ویدیویی برای کار کردن نیاز به دسترسی دوربین دارد. لطفاً آن را فعّال کنید.</string>
   <string name="ringtone_error_title">خطا</string>
   <string name="ringtone_error_format_not_supported">این قالب پشتیبانی نمی‌شود.</string>
+  <string name="ringtone_error_size_too_big">این فایل خیلی بزرگ است.حداکثر اندازه %1$d ک‌.ب. است.</string>
   <!--Read contacts permission-->
   <string name="permission_dialog_read_contacts_message">رینگ برای فعّال کردن این ویژگی نیاز به دسترسی «خواندن مخاطبان» دارد. لطفاً اعطایش کنید.</string>
   <!--Write call log permission-->
@@ -118,6 +128,7 @@
   <string name="conversation_action_copied_peer_number_clipboard">‫%1$s در حافظه رونویسی شد</string>
   <string name="conversation_action_select_peer_number">گزینش یک شماره</string>
   <string name="conversation_action_block_this">مسدود کردن این مخاطب</string>
+  <string name="conversation_action_go_to_call">بازگشت به تماس در حال جريان</string>
   <!--Contacts-->
   <string name="add_call_contact_number_to_contacts">افزودن%1$s؟</string>
   <string name="prompt_new_password">گذرواژه جدید</string>
@@ -146,11 +157,16 @@
   <string name="accept">قبول</string>
   <string name="refuse">رد</string>
   <string name="block">مسدود</string>
+  <string name="contact_request_title"> درخواست مخاطب نو</string>
+  <string name="contact_request_msg">‫ %1$s درخواست تماس در انتظار دارید</string>
   <string name="contact_request_account">برای %1$s</string>
   <string name="no_requests">۰</string>
+  <string name="message_contact_not_trusted_yet">%s هنوز در مخاطبین شما نیست. آیا این درخواست تماس را قبول یا رد میکنید؟</string>
+  <string name="message_contact_not_trusted">%s هنوز در مخاطبین شما نیست. آیا این درخواست تماس را قبول یا رد میکنید؟</string>
   <!--Send contact requests-->
   <string name="send_request_button">ارسال</string>
   <string name="send_request_title">ارسال یک درخواست تماس</string>
+  <string name="send_request_msg">برای ارتباط با این کاربر باید یک درخواست تماس ارسال کنید. مادامی که مخاطبتان درخواست را نپذیرفته، می‌توانید پیام بفرستید ولی او نمی تواند به آنها پاسخ دهد.</string>
   <!--Blacklist-->
   <string name="no_blocked_contact">۰ مخاطب مسدود</string>
   <!--Smartlist-->
@@ -158,11 +174,25 @@
   <string name="contact_request_sent">درخواست تماس ارسال شد</string>
   <string name="search_results">نتایج جستجو</string>
   <string name="tv_contact_row_header">مخاطبان</string>
+  <string name="gallery_error_title">هیچ برنامه گالری یافت نشد.</string>
+  <string name="gallery_error_message">هیچ برنامه کاربردی موجود در دستگاه برای باز کردن گالری وجود ندارد.</string>
+  <string name="generic_error">یک خطای ناشناخته رخ داده است.</string>
   <!--File Transfer-->
   <string name="invalid_file">فایل نامعتبر</string>
+  <string name="not_able_to_write_file">قادر به نوشتن فایل نیست.</string>
+  <string name="file_transfer_status_created">شروع به ارسال</string>
+  <string name="file_transfer_status_unsupported">پشتیبانی نشده است.</string>
+  <string name="file_transfer_status_wait_peer_acceptance"> در انتظار پذیرش همکار است.</string>
+  <string name="file_transfer_status_wait_host_acceptance">در انتظار پذیرش میزبان</string>
+  <string name="file_transfer_status_ongoing">روند در حال انجام</string>
   <string name="file_transfer_status_finished">پایان یافته</string>
+  <string name="file_transfer_status_closed_by_host">توسط میزبان بسته شده است</string>
+  <string name="file_transfer_status_closed_by_peer">توسط همکار بسته شده است</string>
   <string name="file_transfer_status_invalid_pathname">مسیر نامعتبر</string>
+  <string name="file_transfer_status_unjoinable_peer">همکار نمی تواند پیوست شود.</string>
   <string name="file_saved_in">فایل در %s ذخیره شد</string>
+  <string name="no_space_left_on_device">هیچ فضایی در دستگاه وجود ندارد.</string>
+  <string name="title_media_viewer">بیننده رسانه ای</string>
   <string name="menu_file_download">دانلود فایل</string>
   <string name="menu_file_delete">حذف فایل</string>
   <string name="menu_file_share">به اشتراک گذاری فایل</string>
