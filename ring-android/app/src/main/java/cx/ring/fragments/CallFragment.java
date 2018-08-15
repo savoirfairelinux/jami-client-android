@@ -2,6 +2,7 @@
  *  Copyright (C) 2004-2018 Savoir-faire Linux Inc.
  *
  *  Author: Hadrien De Sousa <hadrien.desousa@savoirfairelinux.com>
+ *          Adrien Béraud <adrien.beraud@savoirfairelinux.com>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,7 +30,6 @@ import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Icon;
-import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -63,6 +63,7 @@ import butterknife.OnClick;
 import cx.ring.R;
 import cx.ring.call.CallPresenter;
 import cx.ring.call.CallView;
+import cx.ring.client.CallActivity;
 import cx.ring.client.ConversationActivity;
 import cx.ring.client.HomeActivity;
 import cx.ring.contacts.AvatarFactory;
@@ -78,6 +79,7 @@ import cx.ring.utils.DeviceUtils;
 import cx.ring.utils.KeyboardVisibilityManager;
 import cx.ring.utils.Log;
 import cx.ring.utils.MediaButtonsHelper;
+import cx.ring.views.CheckableImageButton;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -96,7 +98,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     public static final String KEY_AUDIO_ONLY = "AUDIO_ONLY";
 
     @BindView(R.id.contact_bubble_layout)
-    protected View contactBubbleLayout;
+    protected ViewGroup contactBubbleLayout;
 
     @BindView(R.id.contact_bubble)
     protected ImageView contactBubbleView;
@@ -116,6 +118,12 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     @BindView(R.id.call_hangup_btn)
     protected View hangupButton;
 
+    @BindView(R.id.call_speaker_btn)
+    protected CheckableImageButton speakerButton;
+
+    @BindView(R.id.call_mic_btn)
+    protected CheckableImageButton micButton;
+
     @BindView(R.id.call_status_txt)
     protected TextView mCallStatusTxt;
 
@@ -131,13 +139,15 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     @BindView(R.id.camera_preview_surface)
     protected SurfaceView mVideoPreview = null;
 
-    private MenuItem speakerPhoneBtn = null;
+    @BindView(R.id.call_control_group)
+    protected ViewGroup controlLayout;
+
     private MenuItem flipCameraBtn = null;
     private MenuItem dialPadBtn = null;
     private MenuItem changeScreenOrientationBtn = null;
+    private boolean restartVideo = false;
 
     private PowerManager.WakeLock mScreenWakeLock;
-    private DisplayManager.DisplayListener displayListener;
     private int mCurrentOrientation = Configuration.ORIENTATION_UNDEFINED;
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
@@ -255,6 +265,23 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if (restartVideo) {
+            displayVideoSurface(true);
+            restartVideo = false;
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mVideoSurface.getVisibility() == View.VISIBLE) {
+            restartVideo = true;
+        }
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onViewCreated(view, savedInstanceState);
@@ -266,21 +293,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
         if (mScreenWakeLock != null && !mScreenWakeLock.isHeld()) {
             mScreenWakeLock.acquire();
         }
-
-        displayListener = new DisplayManager.DisplayListener() {
-            @Override
-            public void onDisplayAdded(int displayId) {
-            }
-
-            @Override
-            public void onDisplayRemoved(int displayId) {
-            }
-
-            @Override
-            public void onDisplayChanged(int displayId) {
-                getActivity().runOnUiThread(() -> presenter.displayChanged());
-            }
-        };
 
         mVideoSurface.getHolder().setFormat(PixelFormat.RGBA_8888);
         mVideoSurface.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -323,25 +335,14 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             }
         });
         mVideoPreview.setZOrderMediaOverlay(true);
-
         shapeRipple.setRippleShape(new Circle());
+        speakerButton.setChecked(presenter.isSpeakerphoneOn());
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mCompositeDisposable.clear();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        DisplayManager displayManager = (DisplayManager) getActivity().getSystemService(Context.DISPLAY_SERVICE);
-        if (displayManager != null) {
-            displayManager.unregisterDisplayListener(displayListener);
-        }
-
         if (mScreenWakeLock != null && mScreenWakeLock.isHeld()) {
             mScreenWakeLock.release();
         }
@@ -366,7 +367,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     public void onCreateOptionsMenu(Menu m, MenuInflater inf) {
         super.onCreateOptionsMenu(m, inf);
         inf.inflate(R.menu.ac_call, m);
-        speakerPhoneBtn = m.findItem(R.id.menuitem_speaker);
         flipCameraBtn = m.findItem(R.id.menuitem_camera_flip);
         dialPadBtn = m.findItem(R.id.menuitem_dialpad);
         changeScreenOrientationBtn = m.findItem(R.id.menuitem_change_screen_orientation);
@@ -386,10 +386,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
             case R.id.menuitem_chat:
                 presenter.chatClick();
                 break;
-            case R.id.menuitem_speaker:
-                presenter.speakerClick();
-                getActivity().invalidateOptionsMenu();
-                break;
             case R.id.menuitem_camera_flip:
                 presenter.switchVideoInputClick();
                 break;
@@ -406,6 +402,10 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
+        if (isInPictureInPictureMode)
+            ((CallActivity) getActivity()).getSupportActionBar().hide();
+        else
+            ((CallActivity) getActivity()).getSupportActionBar().show();
         presenter.pipModeChanged(isInPictureInPictureMode);
     }
 
@@ -439,7 +439,7 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void displayHangupButton(boolean display) {
-        hangupButton.setVisibility(display ? View.VISIBLE : View.GONE);
+        controlLayout.setVisibility(display ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -522,13 +522,6 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
 
     @Override
     public void initMenu(boolean isSpeakerOn, boolean hasContact, boolean displayFlip, boolean canDial, boolean onGoingCall) {
-        if (speakerPhoneBtn != null) {
-            speakerPhoneBtn.setVisible(onGoingCall);
-            if (speakerPhoneBtn.getIcon() != null) {
-                speakerPhoneBtn.getIcon().setAlpha(isSpeakerOn ? 255 : 128);
-            }
-            speakerPhoneBtn.setChecked(isSpeakerOn);
-        }
         if (flipCameraBtn != null) {
             flipCameraBtn.setVisible(displayFlip);
         }
@@ -541,14 +534,15 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     }
 
     @Override
-    public void initNormalStateDisplay(final boolean audioOnly) {
+    public void initNormalStateDisplay(final boolean audioOnly, boolean isSpeakerphoneOn) {
         shapeRipple.stopRipple();
 
         acceptButton.setVisibility(View.GONE);
         refuseButton.setVisibility(View.GONE);
-        hangupButton.setVisibility(View.VISIBLE);
+        controlLayout.setVisibility(View.VISIBLE);
 
-        contactBubbleLayout.setVisibility(audioOnly ? View.VISIBLE : View.INVISIBLE);
+        contactBubbleLayout.setVisibility(audioOnly ? View.VISIBLE : View.GONE);
+        speakerButton.setChecked(isSpeakerphoneOn);
 
         getActivity().invalidateOptionsMenu();
     }
@@ -557,8 +551,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     public void initIncomingCallDisplay() {
         acceptButton.setVisibility(View.VISIBLE);
         refuseButton.setVisibility(View.VISIBLE);
-        hangupButton.setVisibility(View.GONE);
-
+        controlLayout.setVisibility(View.GONE);
+        contactBubbleLayout.setVisibility(View.VISIBLE);
         getActivity().invalidateOptionsMenu();
     }
 
@@ -566,8 +560,8 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     public void initOutGoingCallDisplay() {
         acceptButton.setVisibility(View.GONE);
         refuseButton.setVisibility(View.VISIBLE);
-        hangupButton.setVisibility(View.GONE);
-
+        controlLayout.setVisibility(View.GONE);
+        contactBubbleLayout.setVisibility(View.VISIBLE);
         getActivity().invalidateOptionsMenu();
     }
 
@@ -647,6 +641,16 @@ public class CallFragment extends BaseFragment<CallPresenter> implements CallVie
     @Override
     public void finish() {
         getActivity().finish();
+    }
+
+    @OnClick({R.id.call_speaker_btn})
+    public void speakerClicked() {
+        presenter.speakerClick(speakerButton.isChecked());
+    }
+
+    @OnClick({R.id.call_mic_btn})
+    public void micClicked() {
+        presenter.muteMicrophoneToggled(micButton.isChecked());
     }
 
     @OnClick({R.id.call_hangup_btn})
