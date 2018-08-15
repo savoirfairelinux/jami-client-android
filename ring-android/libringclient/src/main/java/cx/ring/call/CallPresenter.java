@@ -292,11 +292,12 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     private void updateTime() {
-        if (mSipCall != null) {
+        CallView view = getView();
+        if (view != null && mSipCall != null) {
             long duration = System.currentTimeMillis() - mSipCall.getTimestampStart();
             duration = duration / 1000;
             if (mSipCall.isOnGoing()) {
-                getView().updateTime(duration);
+                view.updateTime(duration);
             }
         }
     }
@@ -341,7 +342,7 @@ public class CallPresenter extends RootPresenter<CallView> {
     }
 
     public void requestPipMode() {
-        if (mSipCall.isOnGoing() && !mSipCall.isAudioOnly()) {
+        if (mSipCall != null && mSipCall.isOnGoing() && !mSipCall.isAudioOnly()) {
             getView().enterPipMode(mSipCall);
         }
     }
