@@ -73,16 +73,18 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
     private final Preference.OnPreferenceChangeListener changeAudioPreferenceListener = (preference, newValue) -> {
         final ConfigKey key = ConfigKey.fromString(preference.getKey());
         if (preference instanceof TwoStatePreference) {
+            boolean value = (Boolean) newValue;
             if (key == ConfigKey.RINGTONE_ENABLED) {
-                mRingtoneCustom.setEnabled((Boolean) newValue);
-                Boolean isEnabled = (Boolean) newValue && mRingtoneCustom.isChecked();
+                mRingtoneCustom.setEnabled(value);
+                Boolean isEnabled = value && mRingtoneCustom.isChecked();
                 getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(isEnabled);
             } else if (key == ConfigKey.RINGTONE_CUSTOM) {
-                getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled((Boolean) newValue);
-                if ((Boolean) newValue) {
-                    findPreference(ConfigKey.RINGTONE_PATH.key()).setSummary(
-                            new File(AndroidFileUtils.ringtonesPath(getActivity()) + File.separator + "default.wav").getName());
+                getPreferenceScreen().findPreference(ConfigKey.RINGTONE_PATH.key()).setEnabled(value);
+                if (value) {
+                    presenter.audioPreferenceChanged(ConfigKey.RINGTONE_PATH, "");
                 }
+                // not a daemon preference
+                return true;
             }
         } else if (key == ConfigKey.ACCOUNT_DTMF_TYPE) {
             preference.setSummary(((String) newValue).contentEquals("overrtp") ? "RTP" : "SIP");
@@ -114,13 +116,9 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
         addPreferencesFromResource(R.xml.account_media_prefs);
         audioCodecsPref = (CodecPreference) findPreference("Account.audioCodecs");
         videoCodecsPref = (CodecPreference) findPreference("Account.videoCodecs");
-        mRingtoneCustom = (SwitchPreference) findPreference("Account.ringtoneCustom");
+        mRingtoneCustom = (SwitchPreference) findPreference(ConfigKey.RINGTONE_CUSTOM.key());
 
         presenter.init(getArguments().getString(AccountEditionActivity.ACCOUNT_ID_KEY));
-
-        addPreferenceListener(ConfigKey.VIDEO_ENABLED, changeVideoPreferenceListener);
-        mRingtoneCustom.setOnPreferenceChangeListener(changeAudioPreferenceListener);
-
     }
 
     @Override
@@ -133,6 +131,7 @@ public class MediaPreferenceFragment extends BasePreferenceFragment<MediaPrefere
         videoCodecsPref.setCodecs(videoCodec);
 
         addPreferenceListener(account.getConfig(), changeAudioPreferenceListener);
+        addPreferenceListener(ConfigKey.VIDEO_ENABLED, changeVideoPreferenceListener);
         audioCodecsPref.setOnPreferenceChangeListener(changeCodecListener);
         videoCodecsPref.setOnPreferenceChangeListener(changeCodecListener);
         mRingtoneCustom.setOnPreferenceChangeListener(changeAudioPreferenceListener);
