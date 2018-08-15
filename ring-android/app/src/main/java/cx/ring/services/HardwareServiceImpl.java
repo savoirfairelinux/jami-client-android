@@ -296,17 +296,17 @@ public class HardwareServiceImpl extends HardwareService implements AudioManager
     }
 
     @Override
-    public void toggleSpeakerphone() {
-        if (!hasSpeakerphone()) {
+    public void toggleSpeakerphone(boolean checked) {
+        if (!hasSpeakerphone() || checked == mAudioManager.isSpeakerphoneOn()) {
             return;
         }
-        if (mAudioManager.isSpeakerphoneOn()) {
+        if (checked) {
+            mAudioManager.setSpeakerphoneOn(true);
+        } else {
             mAudioManager.setSpeakerphoneOn(false);
             if (mBluetoothWrapper != null && mBluetoothWrapper.canBluetooth()) {
                 routeToBTHeadset();
             }
-        } else {
-            mAudioManager.setSpeakerphoneOn(true);
         }
     }
 
