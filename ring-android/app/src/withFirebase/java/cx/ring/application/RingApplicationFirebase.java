@@ -35,8 +35,8 @@ public class RingApplicationFirebase extends RingApplication {
     public void onCreate() {
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(c -> {
             Log.w(TAG, "Found push token");
-            pushToken = c.getResult().getToken();
             try {
+                pushToken = c.getResult().getToken();
                 startService(new Intent(DRingService.ACTION_PUSH_TOKEN_CHANGED)
                         .setClass(this, DRingService.class)
                         .putExtra(DRingService.PUSH_TOKEN_FIELD_TOKEN, pushToken));
