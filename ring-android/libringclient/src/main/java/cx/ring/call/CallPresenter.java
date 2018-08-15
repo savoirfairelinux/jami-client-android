@@ -147,8 +147,12 @@ public class CallPresenter extends RootPresenter<CallView> {
         getView().goToConversation(mSipCall.getAccount(), mSipCall.getContact().getIds().get(0));
     }
 
-    public void speakerClick() {
-        mHardwareService.toggleSpeakerphone();
+    public void speakerClick(boolean checked) {
+        mHardwareService.toggleSpeakerphone(checked);
+    }
+
+    public void muteMicrophoneToggled(boolean checked) {
+        mCallService.setMuted(checked);
     }
 
     public void switchVideoInputClick() {
@@ -261,7 +265,7 @@ public class CallPresenter extends RootPresenter<CallView> {
         mAudioOnly = mSipCall.isAudioOnly();
         if (mSipCall.isOnGoing()) {
             mOnGoingCall = true;
-            view.initNormalStateDisplay(mAudioOnly);
+            view.initNormalStateDisplay(mAudioOnly, mHardwareService.isSpeakerPhoneOn());
             view.updateMenu();
             if (!mAudioOnly) {
                 mHardwareService.setPreviewSettings();
@@ -349,5 +353,9 @@ public class CallPresenter extends RootPresenter<CallView> {
         } else {
             getView().displayPreviewSurface(true);
         }
+    }
+
+    public boolean isSpeakerphoneOn() {
+        return mHardwareService.isSpeakerPhoneOn();
     }
 }
