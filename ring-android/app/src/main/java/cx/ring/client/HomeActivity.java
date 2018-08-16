@@ -318,11 +318,10 @@ public class HomeActivity extends AppCompatActivity implements RingNavigationFra
     @Override
     protected void onStart() {
         String path = AndroidFileUtils.ringtonesPath(this);
-        if (!(new File(path + "/default.wav")).exists()) {
-            Log.d(TAG, "onStart: default.wav doesn't exist. Copying ringtones.");
+        if (!(new File(path + "/default.opus")).exists()) {
+            Log.d(TAG, "onStart: default.opus doesn't exist. Copying ringtones.");
             AndroidFileUtils.copyAssetFolder(getAssets(), "ringtones", path);
         }
-
         super.onStart();
     }
 
