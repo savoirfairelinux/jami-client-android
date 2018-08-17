@@ -18,11 +18,11 @@
  */
 package cx.ring.views;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v14.preference.PreferenceDialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,10 +61,6 @@ public class CredentialPreferenceDialog extends PreferenceDialogFragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(SAVE_STATE_TEXT, creds);
-    }
-
-    protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
-        super.onPrepareDialogBuilder(builder);
     }
 
     @Override
