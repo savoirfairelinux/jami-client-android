@@ -20,11 +20,11 @@
 package cx.ring.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
