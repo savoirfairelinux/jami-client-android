@@ -18,7 +18,6 @@
  */
 package cx.ring.tv.account;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -26,6 +25,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v17.leanback.widget.GuidanceStylist;
 import android.support.v17.leanback.widget.GuidedAction;
+import android.support.v7.app.AlertDialog;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
